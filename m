@@ -4,127 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE36C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 21:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54621C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 21:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRf1l-0004Sq-Fd; Wed, 10 Jul 2024 17:39:05 -0400
+	id 1sRfAW-0001kO-Gh; Wed, 10 Jul 2024 17:48:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRf1Z-0004MM-6x; Wed, 10 Jul 2024 17:38:54 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sRfAS-0001jn-PY
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:48:04 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRf1O-00047o-Qc; Wed, 10 Jul 2024 17:38:52 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C55E621991;
- Wed, 10 Jul 2024 21:38:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720647510; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Axj6GCY7rkHKt8FR3q6mmgasH01jh9aUBrNnSOVZ8tE=;
- b=WxJ1kzmEjdOIKPK2iTykTqGWA+D2+2yIVzGN/9qryLIQvbp2ul9Fam16Q4QC8UM1pIYQA6
- sH7vnjEj6aFO6U5ADt6hL6jo5D2n8od0/E109Z9hTxnicXwc1radM4mJMjUJo+2q8AiR3z
- ElQgsgHhGnNghVrepjLJwD3Xl9G+n8s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720647510;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Axj6GCY7rkHKt8FR3q6mmgasH01jh9aUBrNnSOVZ8tE=;
- b=T/wjpVPyANorcY8tqysIKhySE3VAsbqcg6mbHsn+uSYAsvWOnI/LohW8evtHfPX6LATw0E
- uYsmBVH6kT7fvNCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ZZRY7TUE;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VPjJNCCW
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720647509; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Axj6GCY7rkHKt8FR3q6mmgasH01jh9aUBrNnSOVZ8tE=;
- b=ZZRY7TUEyvWs67KYP9vRkvPYC3KIP93595mMFD/ywrIMgK4Y/u+q7gll/HypeU2xM1BAY+
- 3X4pJZqFEEPWd48MvgZn59SWwwgJ188tl6n6mC1LXYQunTbgzIUPVEdS9KpfL4XPPLo+QW
- lpaqtDld3sTIAilqx1bc1mOfYVYQJtg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720647509;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Axj6GCY7rkHKt8FR3q6mmgasH01jh9aUBrNnSOVZ8tE=;
- b=VPjJNCCWeFcGL+ftxqY+tPCPyjnFxsNs1HT9OXdojQRxgKpo2Bj2LkI89sK+JsDzYI7T7R
- XTw5XRm5Z7iXA+Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3F417137D2;
- Wed, 10 Jul 2024 21:38:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WpgmAlX/jmaINAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 10 Jul 2024 21:38:29 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>, Tyrone Ting
- <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>, Hao Wu
- <wuhaotsh@google.com>, Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-arm@nongnu.org, Joel
- Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- devel@lists.libvirt.org, Luc Michel <luc.michel@amd.com>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on
- block drive (CMD56)
-In-Reply-To: <Zo7rCXtap2lWd4IB@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de> <Zo6iZjc8YpI1_9dW@x1n>
- <874j8xfc9s.fsf@suse.de> <Zo7dcF8OKfH92RlR@x1n> <871q41f2pk.fsf@suse.de>
- <Zo7rCXtap2lWd4IB@x1n>
-Date: Wed, 10 Jul 2024 18:38:26 -0300
-Message-ID: <87ttgxdj1p.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sRfAD-0006cP-3k
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:48:04 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1f70ec6ff8bso63175ad.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 14:47:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1720648066; x=1721252866; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NR4rjK7A5xqVWp1g1Wi/6Wp1b61pjIpOtbU6yTUYobY=;
+ b=RyJ9wYiCYs7mr+6K4XMq1+MzhZi8Wn5LP1ZcC8CkyLkgX5aR61uOqNvmOVNrRkSr6c
+ t94wLdnYTrcdG1sLh9X53SQwaYcW0y7hZxJckNyPAGAKART8rDwDst36Uq8icX1/Hs1l
+ /OtSy5/x5n4RcmFt2lWW6yl14aRgCWT37xOlqB4YuWjpImohXYp7p0ODRXgu9CQ2VdVc
+ OAmT4NxdKng4/vwBrC8NkgVOdkxFpo2TqKiyvefQReoq9USacoGmawhnLGxx/TJA2TUK
+ Igygpd/CirAc61CRwB15iEF1eRoznHVLPvuPWFlUEjP65BiyWSQNmYLwH1Pqunl4cTkI
+ Zwkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720648066; x=1721252866;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NR4rjK7A5xqVWp1g1Wi/6Wp1b61pjIpOtbU6yTUYobY=;
+ b=uT55suVVCoXu0iVpqBUZh2yDgnvxNT01IH25D4AltiaIQ0TjYO/eALBFz7B/eomL3L
+ dTapibUV3eAaPa92C7jiSHkttXMdQbgwJvUOVidKxMzOJHdCtf0QJDlf5CJJoFjfRe8g
+ /ojIeY59RqsvzRmQedoRabw1GTgmpoDx6ql9RUFepzwsuu0vgkldLiJJVKZhGCENLmS5
+ lIqQSzk29F867868sNh0MRJqUulZ8cSNpWfvkg2o9KsovRioiBvZAkL9sYlf6PiR4cHU
+ WWchUQ9Z1HXe+Eo+qxBdyK7nVbdIsttAPc5o5DnPHuEvsRnOjIemDRUWmWGK+FY7fupd
+ jm/A==
+X-Gm-Message-State: AOJu0YzLcDE9S0TQmLVkRk7UaGVt17TzBFU0JPtbRM5FaLbGoRdZZqUx
+ 64+Fk0ioTaHtg03GbBUkQCJnq4TgDB/wGMf5zokYJk142dc6F7fdLZ4OFj/YsnNGirCOHPu7xU0
+ rwqlgvnsY48ojoN8g2Wm+tw8Xt1u8l750IUBIqOfp028/i6/DQg==
+X-Google-Smtp-Source: AGHT+IHQ/TH+w5LbVQA+Hi/J4RhDLHA5QxH6WUfwOZEHRA2qxBx4OT1tJSqXgFuC6KaVcRJDP17lFskxg2+wfekDtpo=
+X-Received: by 2002:a17:902:fb44:b0:1fa:191c:fe4e with SMTP id
+ d9443c01a7336-1fbdec6e2e5mr291975ad.21.1720648066183; Wed, 10 Jul 2024
+ 14:47:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[18];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FREEMAIL_CC(0.00)[linaro.org,nongnu.org,redhat.com,nuvoton.com,gmail.com,google.com,amd.com,kaod.org,jms.id.au,lists.libvirt.org];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:dkim,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: C55E621991
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240708181709.27410-1-rkir@google.com>
+ <CAFEAcA_r9ee+5VLSEVPN-g8AzFOb7j7ft+_GYCYLFVe=ieBMiA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_r9ee+5VLSEVPN-g8AzFOb7j7ft+_GYCYLFVe=ieBMiA@mail.gmail.com>
+From: Roman Kiryanov <rkir@google.com>
+Date: Wed, 10 Jul 2024 14:47:35 -0700
+Message-ID: <CAOGAQeryFuYVmn=75i4zyF5kmXsyH0LbccjoAN9RrXsu+07LYQ@mail.gmail.com>
+Subject: Re: [PATCH] iov: don't use void* in pointer arithmetic in headers
+To: Peter Maydell <peter.maydell@linaro.org>, jansene@google.com
+Cc: qemu-devel@nongnu.org, mett@google.com, jpcottin@google.com, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=rkir@google.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,73 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi Peter, thank you for looking into this.
 
-> On Wed, Jul 10, 2024 at 04:48:23PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Wed, Jul 10, 2024 at 01:21:51PM -0300, Fabiano Rosas wrote:
->> >> It's not about trust, we simply don't support migrations other than
->> >> n->n+1 and (maybe) n->n-1. So QEMU from 2016 is certainly not included.
->> >
->> > Where does it come from?  I thought we suppport that..
->> 
->> I'm taking that from:
->> 
->> docs/devel/migration/main.rst:
->>   "In general QEMU tries to maintain forward migration compatibility
->>   (i.e. migrating from QEMU n->n+1) and there are users who benefit from
->>   backward compatibility as well."
->> 
->> But of course it doesn't say whether that comes with a transitive rule
->> allowing n->n+2 migrations.
->
-> I'd say that "i.e." implies n->n+1 is not the only forward migration we
-> would support.
->
-> I _think_ we should support all forward migration as long as the machine
-> type matches.
->
->> 
->> >
->> > The same question would be: are we requesting an OpenStack cluster to
->> > always upgrade QEMU with +1 versions, otherwise migration will fail?
->> 
->> Will an OpenStack cluster be using upstream QEMU? If not, then that's a
->
-> It's an example to show what I meant! :) Nothing else. Definitely not
-> saying that everyone should use an upstream released QEMU (but in reality,
-> it's not a problem, I think, and I do feel like people use them, perhaps
-> more with the stable releases).
->
->> question for the distro. In a very practical sense, we're not requesting
->> anything. We barely test n->n+1/n->n-1, even if we had a strong support
->> statement I wouldn't be confident saying migration from QEMU 2.7 -> QEMU
->> 9.1 should succeed.
->
-> No matter what we test in CI, I don't think we should break that for >1
-> versions..  I hope 2.7->9.1 keeps working, otherwise I think it's legal to
-> file a bug by anyone.
->
-> For example, I randomly fetched a bug report:
->
-> https://gitlab.com/qemu-project/qemu/-/issues/1937
->
-> QEMU version:                6.2 and 7.2.5
->
-> And I believe that's the common case even for upstream.  If we don't do
-> that right for upstream, it can be impossible tasks for downstream and for
-> all of us to maintain.
+On Tue, Jul 9, 2024 at 2:39=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+> We had the question on a previous "make this C++
+> compatible" patch of "how much of this stuff is there?".
 
-But do we do that right currently? I have no idea. Have we ever done
-it? And we're here discussing a hypothetical 2.7->9.1 ...
+Unfortunately, we don't know yet (we are still upgrading to QEMU8).
 
-So we cannot reuse the UNUSED field because QEMU from 2016 might send
-their data and QEMU from 2024 would interpret it wrong.
+If this is a burden for QEMU, we can keep the changes on our end
+and send them once we have a bigger picture (e.g. when upgrading
+to QEMU9).
 
-How do we proceed? Add a subsection. And make the code survive when
-receiving 0.
-
-@Peter is that it? What about backwards-compat? We'll need a property as
-well it seems.
+Regards,
+Roman.
 
