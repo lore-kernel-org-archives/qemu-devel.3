@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87D7C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 01:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A18DEC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 01:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRMCs-0005nD-88; Tue, 09 Jul 2024 21:33:18 -0400
+	id 1sRMJe-0002jU-Km; Tue, 09 Jul 2024 21:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRMCo-0005ki-Ax; Tue, 09 Jul 2024 21:33:14 -0400
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ id 1sRMJV-0002hl-Gh; Tue, 09 Jul 2024 21:40:12 -0400
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRMCk-0001UH-0l; Tue, 09 Jul 2024 21:33:12 -0400
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-4e7eadf3668so2286727e0c.0; 
- Tue, 09 Jul 2024 18:33:08 -0700 (PDT)
+ id 1sRMJS-0002o0-DJ; Tue, 09 Jul 2024 21:40:07 -0400
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-48ffd139a9cso1550250137.0; 
+ Tue, 09 Jul 2024 18:40:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720575187; x=1721179987; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720575604; x=1721180404; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qkx8kStre13Ac+v7aPPQ9slogI60apbpl/3c2FMpLxA=;
- b=TBp87x5nsgJiTVTbYO2UXltu2ynQOEONiodBWcv4UDrisauNKXrFbTlZeVfd2tmc4P
- NNAa2e125YaG6DytSwfBYo5ttXN2VHE3C/Ve2GsSmUoHsdtk6XN2PLc8q6HzUxmsNFmI
- 14Mu78dCadXggfd8xBqiPM5Opuo0iWlHNYq02oo+Os3aTE1Bmv1rzygjF8pLHzBle6D1
- zNq9lEVEAp6Z2SiLq6ZP+uydd67P+Nk7/bMT6rbMY6X439tVpAIky17v5Hxr8sUy3yS7
- fciAMOy2ibxi37BMTUE0T2+TJhbq1D6LvEm4TGBy7GwKlCapJFBO21/qL4F+uDzEwRsg
- dK2w==
+ bh=Ln9ryFhpSTFy7Z4FZZEnNtTFEPHa12Z0au9dXUIJ4yg=;
+ b=ibvDucxcd3xvjAm2QJxtr7z4fdVJdjqqyPJ1kU/+0BRRiUy+5uBs24jFE3rpDZgqHN
+ JqoV+C25lexIzTMT3EdPh83rLXHIOKw7k3r/oMpnMF1pBNtpYmjy/ynX1tTGnKF+GkF1
+ KtS3uLjDPK09jftt3A11s0CrKaXkkZkI4Z1P6P6ukzYwkRK4laNmdwgUkUZPclkCyfva
+ 2cIDaTqVwdQb/moOvogC9hePaWxm0vywCmgrKvSxmGtzqFRu81OVcLI/EOccywEOdvLQ
+ uT38HXPYgChLi8IIE5EbL/PinPmZydfnMqgpRTpFyhE6GOWjT6x9mTf3ezNsv/szfpZa
+ Lj2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720575187; x=1721179987;
+ d=1e100.net; s=20230601; t=1720575604; x=1721180404;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qkx8kStre13Ac+v7aPPQ9slogI60apbpl/3c2FMpLxA=;
- b=JvVG2vIQk3SO3U/Wo0tphyXPFRCWy4usjfJqth8NeFkNtwzEvzv/i2PJUgphV4u3tX
- VAWPdIyJNPM7zOvVdbkKA7TGtot4+HYg+G8FHLgG9SvCgquStXDwpS0nFgXUDF/mAMlB
- M5Nt0bK4bS13PYjezG13ozm9oFNA3DfLEwNIxtD0Ohvf+ejR1fTKZ7RCPqS2CfxMyJs7
- Ci68P9Mh6lVKogrDonXuz6AmY1tJs338oDxHVkvuaQTK8fO5oVc48xPEQrPJb+XhkD4q
- EsJvSdhmsQwPhbOD7R5RhqVaNwb8MknZaH6XMFZpKKX6HrZSNghMggIReotRgLLcHxaf
- hJow==
+ bh=Ln9ryFhpSTFy7Z4FZZEnNtTFEPHa12Z0au9dXUIJ4yg=;
+ b=wHUPli3mJQoQVrEpI7Uc0s8MBMb9okAR9gRpZWXGe5ns3UdjNt5+SEH6jpBz8paKrn
+ u5iwffVMTAEQNL5PxUwl93ks4fm6dxDjQQIgjrFT5AAg7n3EWjc8UBpYuxzClVFO6q2j
+ p8Dsd+S+o9upfzyF5HbnmnVCyIlqBMoKDYGA6X5DKd8xWpohXf37P6pVVlNMeq20TiKv
+ KbYVMSu2+E8PQc8NIwqya2Jc0L8GINswva1iOJKw4avl5qksm5p+TgnlPSLVfuO2lgPF
+ f5hrH7jWmNuKzIy9e4Rqi4p3vhJ6i7sPBPJiyQ78Zffq3q51u8oYi1XD1iiesdAj7wPl
+ 1Y4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1GH6HdBr1tw/+soMatBawyHUWkmlhG3xU2hL0rK1j2YwZdukQU0vntcvdu2uI2X7FtGjUn3rdCTWnLwZjDsatTc+M8Ok=
-X-Gm-Message-State: AOJu0YyeoCSFfr4jl8Eje/LfJ4klk3citzacdmnSTx+Lh18U/3n8xq7P
- +2Zotn/ysLzdXOR5nFgFTDCgkwgunwtsS0j+cNMViPQDWqkzOJwGFx1rVMnwvYtLd6fsfZWZqe+
- QVuLMqhMrqKpStW8IEPo36PB7Bsg=
-X-Google-Smtp-Source: AGHT+IElsuui7GpqoZopKMDfOpyvkIr/FEqKTeBrb+FX+NnYsAWAZp5xKjtfp+FAwroKjjyyI8mAY3d7165GhmMNb/g=
-X-Received: by 2002:a05:6102:1505:b0:48f:eb37:fd86 with SMTP id
- ada2fe7eead31-4903220aeffmr5234339137.30.1720575187505; Tue, 09 Jul 2024
- 18:33:07 -0700 (PDT)
+ AJvYcCUghubQlFKosuzrRQFZ6WdF7bkG5XxZGTwHdpDRTdBgt6i7W8a0267mJE25U+yTh6OLtasfY+4n7fl6lnolzOH8A7oBEfU=
+X-Gm-Message-State: AOJu0Yye8fB1+AMkKS1eIwr2xDoQL8RgUj0FZeZxO1Kdj9gXvZBY+uM6
+ MKFsqRJFaMTuopbDI6zStrLymBAMloAOWPcwIKDFovNLxLxeE0vcuHiWc5/YZVkjckSb3vKWYpG
+ KkeyyxgsgzHqZUdJQnxbPr7wQXOg=
+X-Google-Smtp-Source: AGHT+IHP3vh62Gbe/YkEOfvJBRTunL+lXNtX/3w7nyVjwBQTq2cf9gccHS0fwnAoZFcUznYlZkOn6xxtOTV1enUM1Ho=
+X-Received: by 2002:a05:6102:26c9:b0:48f:e4cd:a877 with SMTP id
+ ada2fe7eead31-490321130cbmr4913446137.4.1720575604148; Tue, 09 Jul 2024
+ 18:40:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240708131645.1345-1-zhiwei_liu@linux.alibaba.com>
- <20240708131645.1345-6-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240708131645.1345-6-zhiwei_liu@linux.alibaba.com>
+References: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 10 Jul 2024 11:32:41 +1000
-Message-ID: <CAKmqyKN3U_iwf+vqJsaWpibpn8OjMFrfwBWgXUvnPWgCmXhF3w@mail.gmail.com>
-Subject: Re: [PATCH v4 5/7] target/riscv: Correct mcause/scause bit width for
- RV32 in RV64 QEMU
+Date: Wed, 10 Jul 2024 11:39:37 +1000
+Message-ID: <CAKmqyKNTgYtAQJZtJ6MYDcWoSWouRY0809-xb_qkPjxbUdTWaw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/11] target/riscv: Support zimop/zcmop/zama16b/zabha
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, richard.henderson@linaro.org, philmd@linaro.org, 
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+ bmeng.cn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,61 +92,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 8, 2024 at 11:21=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
+On Tue, Jul 9, 2024 at 9:41=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
+.com> wrote:
 >
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> I once used a wrong major opcode for zimop. It should use 0x73 as major o=
+pcode.
+> This was detected after I got a toolchain with zimop support. Before that=
+, I tested
+> this implementation with hardwire code instruction instead of assemble co=
+de.
 >
-> Ensure mcause high bit is correctly set by using 32-bit width for RV32
-> mode and 64-bit width for RV64 mode.
+> This patch set has been queued to alistair/riscv-to-apply.next, but it is=
+ still not
+> merged by the master branch. I think we had better fix it before merging =
+into the
+> master.
 >
-> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> v3->v4:
+>     1. Fix zimop opcode and disassemble
+>
+> v2->v3:
+>     1. Add review tags.
+>     2. Reword the patch 10 in commit log
+>
+> v1->v2:
+>     1. Fix the isa orders.
+>     2. Make zimop/zcmop/zama16b/zabha depend on priviledged 1.13
+>     3. Add review tags.
+>
+> The v2 patch set is here
+> https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00489.html
+>
+> The v1 patch set is here
+>     1. zimop/zcmop
+>         https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00207.htm=
+l
+>     2. zama16b
+>         https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00212.htm=
+l
+>     3. zabha
+>         https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00214.htm=
+l
+>
+> LIU Zhiwei (11):
+>   target/riscv: Add zimop extension
+>   disas/riscv: Support zimop disassemble
+>   target/riscv: Add zcmop extension
+>   disas/riscv: Support zcmop disassemble
+>   target/riscv: Support Zama16b extension
+>   target/riscv: Move gen_amo before implement Zabha
+>   target/riscv: Add AMO instructions for Zabha
+>   target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
+>   target/riscv: Add amocas.[b|h] for Zabha
+>   target/riscv: Expose zabha extension as a cpu property
+>   disas/riscv: Support zabha disassemble
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/cpu_helper.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 4f0ab90ac7..3eedb26cd9 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1673,6 +1673,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->      target_ulong tinst =3D 0;
->      target_ulong htval =3D 0;
->      target_ulong mtval2 =3D 0;
-> +    int sxlen =3D 0;
-> +    int mxlen =3D 0;
+>  disas/riscv.c                               | 181 ++++++++++++++++++++
+>  target/riscv/cpu.c                          |   8 +
+>  target/riscv/cpu_cfg.h                      |   4 +
+>  target/riscv/insn16.decode                  |   1 +
+>  target/riscv/insn32.decode                  |  33 ++++
+>  target/riscv/insn_trans/trans_rva.c.inc     |  51 ++----
+>  target/riscv/insn_trans/trans_rvd.c.inc     |  14 +-
+>  target/riscv/insn_trans/trans_rvf.c.inc     |  14 +-
+>  target/riscv/insn_trans/trans_rvi.c.inc     |   6 +
+>  target/riscv/insn_trans/trans_rvzabha.c.inc | 145 ++++++++++++++++
+>  target/riscv/insn_trans/trans_rvzacas.c.inc |  13 --
+>  target/riscv/insn_trans/trans_rvzcmop.c.inc |  29 ++++
+>  target/riscv/insn_trans/trans_rvzimop.c.inc |  37 ++++
+>  target/riscv/tcg/tcg-cpu.c                  |   5 +
+>  target/riscv/translate.c                    |  38 ++++
+>  15 files changed, 529 insertions(+), 50 deletions(-)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
+>  create mode 100644 target/riscv/insn_trans/trans_rvzcmop.c.inc
+>  create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
 >
->      if (!async) {
->          /* set tval to badaddr for traps with address information */
-> @@ -1799,7 +1801,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->          s =3D set_field(s, MSTATUS_SPP, env->priv);
->          s =3D set_field(s, MSTATUS_SIE, 0);
->          env->mstatus =3D s;
-> -        env->scause =3D cause | ((target_ulong)async << (TARGET_LONG_BIT=
-S - 1));
-> +        sxlen =3D 16 << riscv_cpu_sxl(env);
-> +        env->scause =3D cause | ((target_ulong)async << (sxlen - 1));
->          env->sepc =3D env->pc;
->          env->stval =3D tval;
->          env->htval =3D htval;
-> @@ -1830,7 +1833,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->          s =3D set_field(s, MSTATUS_MPP, env->priv);
->          s =3D set_field(s, MSTATUS_MIE, 0);
->          env->mstatus =3D s;
-> -        env->mcause =3D cause | ~(((target_ulong)-1) >> async);
-> +        mxlen =3D 16 << riscv_cpu_mxl(env);
-> +        env->mcause =3D cause | ((target_ulong)async << (mxlen - 1));
->          env->mepc =3D env->pc;
->          env->mtval =3D tval;
->          env->mtval2 =3D mtval2;
 > --
-> 2.43.0
+> 2.25.1
 >
 >
 
