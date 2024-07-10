@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A131C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E91FC41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRO0X-0000nf-LJ; Tue, 09 Jul 2024 23:28:41 -0400
+	id 1sRO0d-0001E1-OM; Tue, 09 Jul 2024 23:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0V-0000cp-9g
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:39 -0400
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ id 1sRO0Z-0000xP-SV
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:43 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0J-0003nB-Qk
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:39 -0400
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3d6301e7279so3819774b6e.3
+ id 1sRO0K-0003n5-Jp
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:43 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-70aec66c936so4113751b3a.0
  for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1720582105; x=1721186905; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8t94LsejldqmNfhg1NCwYzoxnTmvwOZ4iKKvyvaKHa0=;
- b=ie7K0hB1o9cGw3Pr5fX7Y4XBK8FCFBu/1DR82GfZ2RBt4EMb32zIh/vjPanOuyhyjX
- XlRPlaLkgAbhL+1NTGBGYgOiux+dJUkbQdfFPbNM/8+gAsJgMlc0TP5diGq9/WOVJVKv
- ogf86Y0BtQluNNc8ZFTqF07JweVUQP0oclZ2Ete0W/Lg6K/bnOmwljQKFxfZ76YGnnsH
- nowe/pIbiVEnJrqdRPqQk4m/+GIBsxE0ukzoJv10lg1F7zPgcjOKG77UnTQQ/ajAv1BG
- qszSG6I94hKwKsueeJ5eBuxoF7p4WVimrG130M8I2Uwd1pWDfS0NHCVgoVmxbZ+iQxnq
- xIAQ==
+ bh=Q2ROPOTsOZR6XgFa32G2l+m6EsgEMNZclNZBvV6yeOg=;
+ b=WelwTHQrBKJCZ7mD4FflzdLlXczc9T96H+bEVRqns4Ovded2fFekoyhknDRa7R+oYW
+ gIZ+ylRkuJK4+kyCGt4ncSZzHnTbz4CmOUVDb6DKs51qbqq5eNbxGssHLI1UBtRQq8AA
+ clkorqqMe0oRBrOkEqOdDSmkxSWaUpFfY3n6V3gFLoNKhAc/JKLsu+IP7PchuwGuYmDa
+ 12RRWP/IYn/px3tk3gDYcSP/FP5b4Qjlej52g/cQKF0e3DfdVOIOcbx6KCtgshjzm4qm
+ qwwdQ0o97OzVTiS4BIYJBnxfBCxswAiMO0jVPbwhl2tzJI6/pxKyvlaiGqv2PoPNKPXo
+ ekGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1720582105; x=1721186905;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8t94LsejldqmNfhg1NCwYzoxnTmvwOZ4iKKvyvaKHa0=;
- b=iB6AgsscLJTHFMNVY2ODea0q/6XJHtlMaH7GOT+H5tFxBDHc4raWLm0xY23HmjJ+Qv
- JbBYSKs6XOaVhgHo9oLWDUH6kibdVsqi6XINCjk0DtMWWcESZ1bUoi7LfOLiSX3NzyyI
- FZBrL+ByOrdNKcwHhJhH2P7IuKZuByFBebW/Yz4qATefqOSutsmyh6jKAktkZxgmYsYx
- U+ndR8Qw00pa7kk33YD84LtuhQwGKM2hGhY6dAh8Zo8e3vg7jndWMZtfdr9T86+7o4G3
- obA7/VaElLQfd84F1SxwRnHNtvcaDaBEVHntGfNtcdmVQbQ8JgulhZ+z3qmug7nVIbod
- 6p5g==
-X-Gm-Message-State: AOJu0YyyAAPJml63CgFveaAcSWX+yzPlfj3mRUNtCdb7/PXr8hVE4L0t
- 3VUGFapGWauabm+9avQE18+bq2UVmqR6Up2uFS6QSaFzzCIJZzlixON71VBQcJ6h3QwCM75agC5
- HygE=
-X-Google-Smtp-Source: AGHT+IF5xlE1Zdp/y7Msj1BWwchXEEm0fbtfsZsXSTKThUxSA7qK94eMWrLjYqyh6y7V8z1f/lWu0g==
-X-Received: by 2002:a05:6808:1312:b0:3d9:243a:7ae8 with SMTP id
- 5614622812f47-3d93c08c8cfmr4333386b6e.39.1720582104075; 
+ bh=Q2ROPOTsOZR6XgFa32G2l+m6EsgEMNZclNZBvV6yeOg=;
+ b=AFAQI6KEpOAafKIlTcV/hiQJubVpYN0XRivg3lIKyIGMmx9nI+oUgyL5Vkh0KawYqC
+ lF+6fXTyjQapLj1e5aWgWpttMXhMmwv9+GeZelBvvOvuKjqpz0a4/rS5iJ3I0lzFVBVs
+ W0gd0FFx4cha2LcWVlZJMn/5tu5Ca6U/gEsoQSLZbITpeFievko6TVtMuVlfbYgVYVc+
+ fWYa0k8seF9wCqnKC8gudDS3hVDkxXNma8nxGLrTSmTRHKCJlQsUueVBY+k0vC5COUyk
+ stO/raAB35nAtLyxnC4xmvcALYp+f/yB8/5tMKU0UhWVNzNcxspc1XjIvUMjC87XnJeY
+ f6XA==
+X-Gm-Message-State: AOJu0Yxaa/EURNP7jyD8FSe6WeXB7P0qScsSHKX9Klav7Lf1tp05Pq46
+ rz5kYVOZyNt9tZtNXcxc2+lXgBV2wo4I0nvdkY8WhpnTnBkA/VclRPp4uOyFpvVf5u7LBZQhR1P
+ LMM0=
+X-Google-Smtp-Source: AGHT+IG+in3GLvVs2R+GN0G5h8RGXmFxzz8gj4xs5zKY+OX6ABZwS05mPla7EqK8jsYJeo/yN3B4pQ==
+X-Received: by 2002:a05:6a00:9285:b0:704:32dc:c4e4 with SMTP id
+ d2e1a72fcca58-70b4351f97bmr5273776b3a.1.1720582104861; 
  Tue, 09 Jul 2024 20:28:24 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.23
+ d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 20:28:23 -0700 (PDT)
+ Tue, 09 Jul 2024 20:28:24 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongu.org, qemu-s390x@nongnu.org,
  qemu-riscv@nongnu.org, balaton@eik.bme.hu, max.chou@sifive.com
-Subject: [PATCH v2 08/13] target/ppc: Merge helper_{dcbz,dcbzep}
-Date: Tue,  9 Jul 2024 20:28:09 -0700
-Message-ID: <20240710032814.104643-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 09/13] target/ppc: Improve helper_dcbz for user-only
+Date: Tue,  9 Jul 2024 20:28:10 -0700
+Message-ID: <20240710032814.104643-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240710032814.104643-1-richard.henderson@linaro.org>
 References: <20240710032814.104643-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -95,92 +95,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge the two and pass the mmu_idx directly from translation.
-Swap the argument order in dcbz_common to avoid extra swaps.
+Mark the reserve_addr check unlikely.  Use tlb_vaddr_to_host
+instead of probe_write, relying on the memset itself to test
+for page writability.  Use set/clear_helper_retaddr so that
+we can properly unwind on segfault.
+
+With this, a trivial loop around guest memset will spend
+nearly 50% of runtime within helper_dcbz and host memset.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/ppc/helper.h     |  3 +--
- target/ppc/mem_helper.c | 14 ++++----------
- target/ppc/translate.c  |  4 ++--
- 3 files changed, 7 insertions(+), 14 deletions(-)
+ target/ppc/mem_helper.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index afc56855ff..4fa089cbf9 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -46,8 +46,7 @@ DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
- DEF_HELPER_4(lsw, void, env, tl, i32, i32)
- DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
- DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
--DEF_HELPER_FLAGS_2(dcbz, TCG_CALL_NO_WG, void, env, tl)
--DEF_HELPER_FLAGS_2(dcbzep, TCG_CALL_NO_WG, void, env, tl)
-+DEF_HELPER_FLAGS_3(dcbz, TCG_CALL_NO_WG, void, env, tl, int)
- #ifdef TARGET_PPC64
- DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
- #endif
 diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index d4957efd6e..24bae3b80c 100644
+index 24bae3b80c..fa4c4f9fa9 100644
 --- a/target/ppc/mem_helper.c
 +++ b/target/ppc/mem_helper.c
-@@ -271,7 +271,7 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
- }
+@@ -280,20 +280,26 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+     addr &= mask;
  
- static void dcbz_common(CPUPPCState *env, target_ulong addr,
--                        int dcbz_size, int mmu_idx, uintptr_t retaddr)
-+                        int mmu_idx, int dcbz_size, uintptr_t retaddr)
- {
-     target_ulong mask = ~(target_ulong)(dcbz_size - 1);
-     void *haddr;
-@@ -296,15 +296,9 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
-     }
- }
- 
--void helper_dcbz(CPUPPCState *env, target_ulong addr)
-+void helper_dcbz(CPUPPCState *env, target_ulong addr, int mmu_idx)
- {
--    dcbz_common(env, addr, env->dcache_line_size,
--                ppc_env_mmu_index(env, false), GETPC());
--}
--
--void helper_dcbzep(CPUPPCState *env, target_ulong addr)
--{
--    dcbz_common(env, addr, env->dcache_line_size, PPC_TLB_EPID_STORE, GETPC());
-+    dcbz_common(env, addr, mmu_idx, env->dcache_line_size, GETPC());
- }
- 
- #ifdef TARGET_PPC64
-@@ -320,7 +314,7 @@ void helper_dcbzl(CPUPPCState *env, target_ulong addr)
-         dcbz_size = 32;
+     /* Check reservation */
+-    if ((env->reserve_addr & mask) == addr)  {
++    if (unlikely((env->reserve_addr & mask) == addr))  {
+         env->reserve_addr = (target_ulong)-1ULL;
      }
  
--    dcbz_common(env, addr, dcbz_size, ppc_env_mmu_index(env, false), GETPC());
-+    dcbz_common(env, addr, ppc_env_mmu_index(env, false), dcbz_size, GETPC());
- }
- #endif
- 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 2664c94522..285734065b 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4458,7 +4458,7 @@ static void gen_dcbz(DisasContext *ctx)
+     /* Try fast path translate */
++#ifdef CONFIG_USER_ONLY
++    haddr = tlb_vaddr_to_host(env, addr, MMU_DATA_STORE, mmu_idx);
++#else
+     haddr = probe_write(env, addr, dcbz_size, mmu_idx, retaddr);
+-    if (haddr) {
+-        memset(haddr, 0, dcbz_size);
+-    } else {
++    if (unlikely(!haddr)) {
+         /* Slow path */
+         for (int i = 0; i < dcbz_size; i += 8) {
+             cpu_stq_mmuidx_ra(env, addr + i, 0, mmu_idx, retaddr);
+         }
      }
- #endif
- 
--    gen_helper_dcbz(tcg_env, tcgv_addr);
-+    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(ctx->mem_idx));
++#endif
++
++    set_helper_retaddr(retaddr);
++    memset(haddr, 0, dcbz_size);
++    clear_helper_retaddr();
  }
  
- /* dcbzep */
-@@ -4468,7 +4468,7 @@ static void gen_dcbzep(DisasContext *ctx)
- 
-     gen_set_access_type(ctx, ACCESS_CACHE);
-     gen_addr_reg_index(ctx, tcgv_addr);
--    gen_helper_dcbzep(tcg_env, tcgv_addr);
-+    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(PPC_TLB_EPID_STORE));
- }
- 
- /* dst / dstt */
+ void helper_dcbz(CPUPPCState *env, target_ulong addr, int mmu_idx)
 -- 
 2.43.0
 
