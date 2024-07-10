@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4664C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F00C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRZMk-0003c0-5c; Wed, 10 Jul 2024 11:36:22 -0400
+	id 1sRZUK-00021a-6Z; Wed, 10 Jul 2024 11:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
- id 1sRZMd-0003T0-Lm; Wed, 10 Jul 2024 11:36:15 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sRZUI-0001yY-Bc
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:44:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
- id 1sRZMa-0002CN-GW; Wed, 10 Jul 2024 11:36:15 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WK2521sbQz4x3J;
- Thu, 11 Jul 2024 01:36:06 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sRZUG-0003a7-5j
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:44:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720626246;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NH0YphbLJIChi/3SkiNAIIFjNtwVxbllg4kSIpTdYuo=;
+ b=EIcoGfRy3leD2pJHL5X+e2PuDKeUxIHVSBvudUpuAeuu2+2yR9h8JbXiQky0UZwuJq273k
+ jnI2TszlXq7mxCNBds16sf6IrAri7Dkli3fpkKJqKwIihakod8LlxFwsDfToa/sDS/oBLb
+ B4vwCFPlNt7tNRVgvlrPQnjYOyTs59Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-X00OlGg2Ouajqc9bsQ_Q5Q-1; Wed,
+ 10 Jul 2024 11:42:54 -0400
+X-MC-Unique: X00OlGg2Ouajqc9bsQ_Q5Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WK24w1q7mz4x3d;
- Thu, 11 Jul 2024 01:35:59 +1000 (AEST)
-Message-ID: <09a1a960-5a79-4aa9-a57f-1c1efd809901@kaod.org>
-Date: Wed, 10 Jul 2024 17:35:53 +0200
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DAFF019560AB; Wed, 10 Jul 2024 15:42:50 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.152])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 354363000182; Wed, 10 Jul 2024 15:42:47 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ darren@os.amperecomputing.com, gankulkarni@os.amperecomputing.com
+Subject: Re: [PATCH] arm/kvm: add support for MTE
+In-Reply-To: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Wed, 10 Jul 2024 17:42:45 +0200
+Message-ID: <875xtdcky2.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v48 00/12] hw/sd/sdcard: Add eMMC support
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Luc Michel <luc.michel@amd.com>,
- qemu-arm@nongnu.org, qemu-block@nongnu.org, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-References: <20240710141408.69275-1-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240710141408.69275-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=VgH8=OK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,56 +86,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/24 4:13 PM, Philippe Mathieu-Daudé wrote:
-> Tag to test Aspeed tree:
->    https://gitlab.com/philmd/qemu/-/tags/aspeed_emmc-v8
-> 
-> Since v43:
-> - Reordered and squashed commits (Cédric)
-> 
-> Since v42:
-> - Stick to spec v4.3 (re-simplified EXT_CSD register & migrate)
-> - Fill CID register
-> - Few changes to CSD register
-> - Implement 'boot-mode' reset timing
-> - Add 'boot-size' property
-> 
-> Cédric Le Goater (2):
->    hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR handler (CMD3)
->    hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
-> 
-> Joel Stanley (1):
->    hw/sd/sdcard: Support boot area in emmc image
-> 
-> Luc Michel (1):
->    hw/sd/sdcard: Implement eMMC sleep state (CMD5)
-> 
-> Philippe Mathieu-Daudé (6):
->    hw/sd/sdcard: Basis for eMMC support
->    hw/sd/sdcard: Register generic command handlers
->    hw/sd/sdcard: Register unimplemented command handlers
->    hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
->    hw/sd/sdcard: Add eMMC 'boot-size' property
->    hw/sd/sdcard: Implement eMMC 'boot-mode'
-> 
-> Sai Pavan Boddu (1):
->    hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
-> 
-> Vincent Palatin (1):
->    hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
-> 
->   include/hw/sd/sd.h |   3 +
->   hw/sd/sd.c         | 418 ++++++++++++++++++++++++++++++++++++++++++++-
->   hw/sd/trace-events |   3 +
->   3 files changed, 418 insertions(+), 6 deletions(-)
+On Mon, Jul 08 2024, Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com> wrote:
 
+> Extend the 'mte' property for the virt machine to cover KVM as
+> well. For KVM, we don't allocate tag memory, but instead enable
+> the capability.
+>
+> If MTE has been enabled, we need to disable migration, as we do not
+> yet have a way to migrate the tags as well. Therefore, MTE will stay
+> off with KVM unless requested explicitly.
+>
+> This patch is rework of commit b320e21c48ce64853904bea6631c0158cc2ef227
+> which broke TCG since it made the TCG -cpu max
+> report the presence of MTE to the guest even if the board hadn't
+> enabled MTE by wiring up the tag RAM. This meant that if the guest
+> then tried to use MTE QEMU would segfault accessing the
+> non-existent tag RAM.
 
-Shall we merge now ?
+So, the main difference to my original patch is that we don't end up
+with MTE in the max model if we didn't configure tag memory, but the
+rest of the behaviour stays the same?
 
-Thanks,
+>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
 
-C.
+(...)
 
+> +void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
+> +{
+> +    static bool tried_to_enable;
+> +    static bool succeeded_to_enable;
+> +    Error *mte_migration_blocker = NULL;
+> +    int ret;
+> +
+> +    if (!tried_to_enable) {
+> +        /*
+> +         * MTE on KVM is enabled on a per-VM basis (and retrying doesn't make
+> +         * sense), and we only want a single migration blocker as well.
+> +         */
+> +        tried_to_enable = true;
+> +
+> +        ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_MTE, 0);
+> +        if (ret) {
+> +            error_setg_errno(errp, -ret, "Failed to enable KVM_CAP_ARM_MTE");
+> +            return;
+> +        }
+> +
+> +        /* TODO: Migration is not supported with MTE enabled */
 
+Do you have a plan for enabling migration in the future? From what I
+remember, pre-copy support should be doable within QEMU (with a similar
+approach to e.g. s390 skey), but post-copy would need a kernel API
+extension to support getting additional data while faulting in a page.
+
+> +        error_setg(&mte_migration_blocker,
+> +                   "Live migration disabled due to MTE enabled");
+> +        if (migrate_add_blocker(&mte_migration_blocker, errp)) {
+> +            error_free(mte_migration_blocker);
+> +            return;
+> +        }
+> +        succeeded_to_enable = true;
+> +    }
+> +    if (succeeded_to_enable) {
+> +        object_property_set_bool(cpuobj, "has_mte", true, NULL);
+> +    }
+> +}
 
 
