@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F5D4C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15FF6C3DA47
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRY4m-0004Ff-PQ; Wed, 10 Jul 2024 10:13:44 -0400
+	id 1sRY5c-0006G1-GU; Wed, 10 Jul 2024 10:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRY4i-0004EY-Ud
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:13:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRY4d-0003fc-Jh
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:13:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720620814;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sOqN3xVOsEEQkK4Qkb2LFpu1wYXF9OWAkkvBOLYi0oM=;
- b=RRYPd8if5dDH9x4WO+o/w7pDi8RH/N3IPbWKw36svsiE0bQwrTWlNVmysVVjjryRIkwlOi
- wufs1e8tPpWmwfZpNraN8Vr6hLllewMk5P1Em8eXMSJPCZg6XQxn9LtMb0MOPJvb5hullr
- eHNREuPd4r0DYdqdVwyO2ShCTqIlB/k=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-hMSbvUZuNV2vgfhHSRpJqA-1; Wed, 10 Jul 2024 10:13:32 -0400
-X-MC-Unique: hMSbvUZuNV2vgfhHSRpJqA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-367987cff30so4145364f8f.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:13:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY5b-0006D8-Pq
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:14:35 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY5Z-0003tD-Fr
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:14:35 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4266ea6a412so19081485e9.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720620872; x=1721225672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3I/yTIseLTK5bt0dkyKiRUKUXbkR7H64cwH+I5yJrCY=;
+ b=ZY7dKOF6Hk6YQfYEtJPlbBYCd9BJ2vtPUydxRrm7MGC0JuXjp4OodqjCV0Tnp7oL0m
+ RwakwA1GHTeCL2bZ7qUnnRwuy7JNRLOjH/Koc3slugICYN8kXDwqgBtUE71P02ACNWao
+ OsmxAPo9XfEqliXMR42rcfDyolXKQmAgNe+qRYUstU5Nu5OsT1wR5w8GyK+eE5f4XTNz
+ HJCs6a8jcf3jA/pNBPASmEMpzn8M54QtApps9eI19xMcCbMc7hrY4G3UpXftz039YZk7
+ /z/vS1A3l+ClACrsKGMRpEX7VNVA2kq5SEWl+ySDTocBdMpkqgY+VRE1mQm2mvRLS0Fm
+ ZkBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720620810; x=1721225610;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sOqN3xVOsEEQkK4Qkb2LFpu1wYXF9OWAkkvBOLYi0oM=;
- b=drMrBkCiyVOJ4PMI+XPpD3TgP3KylwDZ/p2qNlyeAKN9+EFLM8iuPR5HTdhej+r2Db
- UXumpwmDnWyZ+jTkepo4yD56xrwtNJpJOsHX8oMnVYHkkZeSC9SQqnvHbOudkALtzra8
- rIIiOPZ8UrqVOZ8BtN4gK/9NJrHxgvsaESfEjIo9yC4Hk3B6q3k94qA+syq5vYOUm9GH
- PXNWYpz3Es1PORO8LEfL7aN/Rb4CdcYFljKwISPi/i5n8udIFK5TQcG941UPoMxyhpSM
- pODY5JWolAWVOloHpw322lQ7/9xHXj7gwIbGGJ3oafEug6ZnpSKm0vQPcfn1CgEHHk56
- LbVw==
-X-Gm-Message-State: AOJu0YyhEg3x66AwnkvJJkVt4MQvionc5/fThlo9nsxkhDvcIAyn0ANi
- UKgfwo/87NY24w7zTy2Nzus/4pH4tiaXHxEG+kLUHa5dJWkL3FYjVrPLTc2ElRUSiB650dI6KuY
- fG3VAarQrqLaBa2uDP9tjkZpwX/XHXXQSC7wczYErtmZU7pv17UaOuT8TpIwyFrooHJkTFqqteH
- TtgoMwp37/Gc13xR03HLJKY2npYnVSV5e51uZP
-X-Received: by 2002:adf:f383:0:b0:367:8e4d:5d49 with SMTP id
- ffacd0b85a97d-367ceacb3a0mr3584989f8f.48.1720620810519; 
- Wed, 10 Jul 2024 07:13:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyJbFK+TQf3iscWXWhgnZdDhEr3dB1MgFpf2LJp3vT/Swr+I5bd0CWGFaLkd6DrqnByTR31g==
-X-Received: by 2002:adf:f383:0:b0:367:8e4d:5d49 with SMTP id
- ffacd0b85a97d-367ceacb3a0mr3584971f8f.48.1720620810063; 
- Wed, 10 Jul 2024 07:13:30 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
+ d=1e100.net; s=20230601; t=1720620872; x=1721225672;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3I/yTIseLTK5bt0dkyKiRUKUXbkR7H64cwH+I5yJrCY=;
+ b=eopX7UuQSfEGzxV325IUYiaMLcjMPUJ3NpeTjqPpuPfJImBMlS9OSW99eB2AaYNoUe
+ Je/eN8PBvXBgQAT17Hr+9kXWslEO9XhxDKmapz0CLf9Zsa/02lo1E6VoV6JBVMuYX10m
+ txJ381NOKOLXSSIIzji0qimjDvy0O3DjQhPrg8V89yS9wYluvyuh2JZdy+aRpuoSleZq
+ FzighraqzGgzqdJws/5akpyaTv65aYh5iI02uiIZXAJAJkDfQ/ASidR0Hmmdee3hJpe8
+ FxshGivfEcn3UVw72lcu2CHqRMp/y+9fVEwgh0VnXidr9pDnUtBJiNeQUFIMR8vZLR/V
+ chaA==
+X-Gm-Message-State: AOJu0Yxnt2gja5vBTB2l8J7/zl1eQ3wCbgpiSy6wbaTu1P1IhwEEJ9le
+ D6T1T5B1iZtgURU6cQGypP+b6f9jOC9coEVTazshYMMRXmQ2l6K/DiVpnFMBN6kl0uL5XT6L6iW
+ 9
+X-Google-Smtp-Source: AGHT+IG+lUZBbSVHdGO0jy1gox7O6Be1AM76DGFVl4UVCceHiNcLV3OGqPdJ1m83AXvoMKvjkYfJAw==
+X-Received: by 2002:a05:600c:17d5:b0:426:5fbc:f319 with SMTP id
+ 5b1f17b1804b1-426708f04b8mr36225415e9.33.1720620871819; 
+ Wed, 10 Jul 2024 07:14:31 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.167.117])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cdfb22aasm5442090f8f.117.2024.07.10.07.13.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 07:13:29 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ 5b1f17b1804b1-4266f6f5a32sm83616825e9.24.2024.07.10.07.14.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 10 Jul 2024 07:14:31 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH] target/i386/tcg: fix POP to memory in long mode
-Date: Wed, 10 Jul 2024 16:13:28 +0200
-Message-ID: <20240710141328.388955-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
+Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Luc Michel <luc.michel@amd.com>,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v48 03/12] hw/sd/sdcard: Register unimplemented command
+ handlers
+Date: Wed, 10 Jul 2024 16:13:59 +0200
+Message-ID: <20240710141408.69275-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240710141408.69275-1-philmd@linaro.org>
+References: <20240710141408.69275-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,50 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In long mode, POP to memory will write a full 64-bit value.  However,
-the call to gen_writeback() in gen_POP will use MO_32 because the
-decoding table is incorrect.
+Per the spec v4.3 these commands are mandatory,
+but we don't implement them.
 
-The bug was latent until commit aea49fbb01a ("target/i386: use gen_writeback()
-within gen_POP()", 2024-06-08), and then became visible because gen_op_st_v
-now receives op->ot instead of the "ot" returned by gen_pop_T0.
-
-Analyzed-by: Clément Chigot <chigot@adacore.com>
-Fixes: 5e9e21bcc4d ("target/i386: move 60-BF opcodes to new decoder", 2024-05-07)
-Tested-by: Clément Chigot <chigot@adacore.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/tcg/decode-new.c.inc | 2 +-
- target/i386/tcg/emit.c.inc       | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ hw/sd/sd.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 0d846c32c22..d2da1d396d5 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1717,7 +1717,7 @@ static const X86OpEntry opcodes_root[256] = {
-     [0x8C] = X86_OP_ENTRYwr(MOV, E,v, S,w, op0_Mw),
-     [0x8D] = X86_OP_ENTRYwr(LEA, G,v, M,v, nolea),
-     [0x8E] = X86_OP_ENTRYwr(MOV, S,w, E,w),
--    [0x8F] = X86_OP_GROUPw(group1A, E,v),
-+    [0x8F] = X86_OP_GROUPw(group1A, E,d64),
- 
-     [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
-     [0x99] = X86_OP_ENTRYwr(CWD,   2,v, 0,v), /* rDX, rAX */
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index fc7477833bc..c6c2c7257b9 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -2788,6 +2788,8 @@ static void gen_POP(DisasContext *s, X86DecodedInsn *decode)
-     X86DecodedOp *op = &decode->op[0];
-     MemOp ot = gen_pop_T0(s);
- 
-+    /* Only 16/32-bit access in 32-bit mode, 16/64-bit access in long mode.  */
-+    assert(ot == op->ot);
-     if (op->has_ea || op->unit == X86_OP_SEG) {
-         /* NOTE: order is important for MMU exceptions */
-         gen_writeback(s, decode, 0, s->T0);
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index fc78d4e561..0e36b0cc2e 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2445,24 +2445,33 @@ static const SDProto sd_proto_emmc = {
+         [0]  = {0,  sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+         [1]  = {0,  sd_bcr,  "SEND_OP_COND", sd_cmd_SEND_OP_COND},
+         [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
++        [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
+         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
+         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
+         [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
++        [11] = {1,  sd_adtc, "READ_DAT_UNTIL_STOP", sd_cmd_unimplemented},
+         [12] = {0,  sd_ac,   "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
+         [13] = {0,  sd_ac,   "SEND_STATUS", sd_cmd_SEND_STATUS},
++        [14] = {0,  sd_adtc, "BUSTEST_R", sd_cmd_unimplemented},
+         [15] = {0,  sd_ac,   "GO_INACTIVE_STATE", sd_cmd_GO_INACTIVE_STATE},
+         [16] = {2,  sd_ac,   "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
+         [17] = {2,  sd_adtc, "READ_SINGLE_BLOCK", sd_cmd_READ_SINGLE_BLOCK},
++        [19] = {0,  sd_adtc, "BUSTEST_W", sd_cmd_unimplemented},
++        [20] = {3,  sd_adtc, "WRITE_DAT_UNTIL_STOP", sd_cmd_unimplemented},
+         [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+         [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
+         [27] = {4,  sd_adtc, "PROGRAM_CSD", sd_cmd_PROGRAM_CSD},
+         [28] = {6,  sd_ac,   "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
+         [29] = {6,  sd_ac,   "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
+         [30] = {6,  sd_adtc, "SEND_WRITE_PROT", sd_cmd_SEND_WRITE_PROT},
++        [31] = {6,  sd_adtc, "SEND_WRITE_PROT_TYPE", sd_cmd_unimplemented},
+         [35] = {5,  sd_ac,   "ERASE_WR_BLK_START", sd_cmd_ERASE_WR_BLK_START},
+         [36] = {5,  sd_ac,   "ERASE_WR_BLK_END", sd_cmd_ERASE_WR_BLK_END},
+         [38] = {5,  sd_ac,   "ERASE", sd_cmd_ERASE},
++        [39] = {9,  sd_ac,   "FAST_IO", sd_cmd_unimplemented},
++        [40] = {9,  sd_bcr,  "GO_IRQ_STATE", sd_cmd_unimplemented},
+         [42] = {7,  sd_adtc, "LOCK_UNLOCK", sd_cmd_LOCK_UNLOCK},
++        [49] = {0,  sd_adtc, "SET_TIME", sd_cmd_unimplemented},
+         [55] = {8,  sd_ac,   "APP_CMD", sd_cmd_APP_CMD},
+         [56] = {8,  sd_adtc, "GEN_CMD", sd_cmd_GEN_CMD},
+     },
 -- 
-2.45.2
+2.41.0
 
 
