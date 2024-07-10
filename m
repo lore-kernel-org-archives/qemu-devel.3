@@ -4,205 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6009DC3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 20:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0388DC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 21:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRdzZ-0006XR-Ov; Wed, 10 Jul 2024 16:32:45 -0400
+	id 1sReRH-00079C-TN; Wed, 10 Jul 2024 17:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sRdzX-0006WV-Hf
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:32:43 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sRdzU-00056X-6E
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:32:42 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46AG3Icf012180;
- Wed, 10 Jul 2024 20:32:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=hQuQYh68QO+19sVnfjv/Xz1U7PkIjyRkHRCfb4wOmiE=; b=
- WOFYlnTkWcYL0ZRho8GkTqUQu//R5gPIu3EK3aOUMDfdkfbHxP5q2cWJKcFwwOvJ
- vcDiPmrELsLpuLgyc6NpLxtvM2Q6iOAQNyQVCtoJvIaqH4o90vUUmzJRLHAHsjrD
- XnB5MqUgXCsWrIocennPHytt8+WyBb2lt9HU5kdjWAF/igjTpZmraMEGnMsBPA8l
- Jklp7w1ixIASu8eSGf5cTndvg1R7ay4r1XnyoWJBSja0w0Qo8fkfwZ6v5BPBpe9i
- MRAtzJjh55jM4tD88N/cccUkOq5qCT3HEV+YyFnqnmhVFQfDwGKCfaoGUBHmyU5B
- Xxs8lze5U/RlVrZ87Jqgpw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emsyhqs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 10 Jul 2024 20:32:37 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46AKPdkp010347; Wed, 10 Jul 2024 20:32:36 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10lp2100.outbound.protection.outlook.com [104.47.58.100])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 409vv4v03u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 10 Jul 2024 20:32:36 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hQ96ds45YzwgjPxL6zwsVb7tbiXxB+4stmi/+Zk3IBMR0as6RMGItILasyqu2aCK3nma/gu+ZHzWAmSHA4wX1/CMjGm4m1ILFKIOarJBSVRanFVQ0iDqwo6iKlfX3i+lcPAm8D9kWNIiCDqa1Vl74Isi0DZI7w3ZlbHw58PQAfmtYUasZcgEzJrvTi9k6rEpH8glByqkK9NeoNv/go9UC3lGffCHqrvCsrakxlDn1zL85QGYZr1OkAZ8cHenJ8Nf36aDATZP0W7lKt6lzpFLefkpa/3WqQ4cf5ePJwTrKr4wI5pHrroDMFcSjyZPApW0ldpTtxfuTG3gvAVVgkWgaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hQuQYh68QO+19sVnfjv/Xz1U7PkIjyRkHRCfb4wOmiE=;
- b=UiY/KeKyMYtqAIOPMNm9+J6/5pByJNmWwCFhEnU5WcmZTZ7C9aj6bnlwMLaDHfuB9rf35w9t1w+QDanlpYkHEeT0/GOGwzBezLROPD0rkhJ59i4iykpPgkqkr9q/ZhbYADis5twd9w59UvJaqPBWeHaYWfISJNQPn+qw8loibEISzGh8Z/UizGMULuN8ewYOuUT63D8JbsGzDBGev7yBAIGK0ecjF1mKQHoAcBxkVZgO78L5JU0d4FrSb+Pz5yHCibuBp8YNgv7RJAnIKqhOhku09IlQ2jjPjwXqlwreJ62NWuLJt4fP0qBp9FFue9WnoELAaulWzfDwHIY+ZdlYzw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
+ id 1sReR7-00078N-QZ
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:01:13 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
+ id 1sReR3-0003jm-Q8
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:01:12 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52ea5185ba7so19554e87.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 14:01:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hQuQYh68QO+19sVnfjv/Xz1U7PkIjyRkHRCfb4wOmiE=;
- b=oQwdxqcC778DST4fxt/roSK5Vh9Gd30xh49wKrpvuvtuGoZ1M8enOvGBU/W+6vEaOMHpsro6Ckx7JjXyamvGddvtgY41YaY5xnWNDKgCBkghuDu0r0lHcMQjVjy85eaT+OR1V5Cn2bSHQJghj02T30J7m9YmW4EWUpjAR4cGlnc=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by PH7PR10MB7852.namprd10.prod.outlook.com (2603:10b6:510:2fe::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.36; Wed, 10 Jul
- 2024 20:32:34 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.7719.028; Wed, 10 Jul 2024
- 20:32:33 +0000
-Message-ID: <059a1fff-901f-458e-af53-cc9910bcd80e@oracle.com>
-Date: Wed, 10 Jul 2024 16:32:29 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 4/8] vfio-pci: cpr part 1 (fd and dma)
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, Cedric Le Goater <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <1720558737-451106-1-git-send-email-steven.sistare@oracle.com>
- <1720558737-451106-5-git-send-email-steven.sistare@oracle.com>
- <20240710140301.4491b9b1.alex.williamson@redhat.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <20240710140301.4491b9b1.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR03CA0241.namprd03.prod.outlook.com
- (2603:10b6:a03:3a0::6) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=gmail.com; s=20230601; t=1720645265; x=1721250065; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ej8caCvnV8WdEYJJo0T9sN+3EhuU+AUrqu1zOzWotdM=;
+ b=I4hawMRAYfvMVtFTO6gsHy+1+UiZtCqvQ19lhpSCuP/1b3QHK1xvxzBNgafgdwJSSa
+ UyDBRyeFZRjefCw5/eS9bvGe5gSbDHRu99XKUvVGk2/RCd4/BG1tRHYaq72+mxR3YdLR
+ 9uAlVR1iFtDsx+gga0dR6AkUvpZRa8aHZsLbrWl6jpwYsvlxKBeOYkWk8nnXxZ/x6NNN
+ 8i3GBW+nN7x1unWzwpAyuGWZ7kIixxmSSTs8ZAPGPC/4F3WT26GccaoB6x60+D67/81s
+ S38VsXb/JJxoZWrKMrtY/+VcALmivApraEB5WhxtVegxD6PAx20buCO2XK3Jax8E/KYD
+ lpwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720645265; x=1721250065;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ej8caCvnV8WdEYJJo0T9sN+3EhuU+AUrqu1zOzWotdM=;
+ b=Cq0czVnqkxMOv5eMTk7j3iTyYF55gQ3TUvYUt9s1IDzaglKam8jBWYfbXGnsAPOG86
+ 6JFnVff8Hdw+4khKAQTDa1csBukINJCNGXxixHQMPp8A/CpLEZspZw8E49zAsESj5CtZ
+ 9uhvcqoXsrCfNpB8D6QRn2UFYxTwE+TxfxeG56QHHC349JPvdEezpjxqN276YhrAvuNM
+ 4InlEWYv4FBTojpXrLfT0w6F8ugL21ZjNU/7GgL06+cXQTK2M1Dk4v9roArRHE/ENAuX
+ RW9i5yldHah/vRnCEVBhEej0KYxEZw9bQuBk/MneMN+5cxLaqF59sKZ7uCNNLyDpAWEf
+ IFUA==
+X-Gm-Message-State: AOJu0YzHhr+0PanmxL8IuykzE55RVUOOd2yUUKlHrFxDrjLhoYbing8D
+ +7GjGXMwAqpCC63GTC9tgqVcbf6VliGRNO1DguWL4jfdcmJEUoJX8dIycI90qu0LKgukdSocZpJ
+ YBKd8XtZuwTyNX93YkaYiOkMl8FoPYA==
+X-Google-Smtp-Source: AGHT+IF4XNPO2hJgLLHpDFpoJnxRLFaOXKcPbpvlfIaQCJ516DzMq7daZVZorD30BTGQO2NlzDO/gY6UIJOV8yGdpmM=
+X-Received: by 2002:a2e:3606:0:b0:2ee:8d03:9127 with SMTP id
+ 38308e7fff4ca-2eec98c6bccmr1738151fa.5.1720645264161; Wed, 10 Jul 2024
+ 14:01:04 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH7PR10MB7852:EE_
-X-MS-Office365-Filtering-Correlation-Id: 11182b58-4ee3-4d12-42e2-08dca11f6dbd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OFNaTWJrVEsxMGNVZjJaVHFJa2s0bXVkeGpxZlpKNmVDR1FTQmJIK2J0Tm5P?=
- =?utf-8?B?cHJLbkRaYUhVOGNkWU4xMmU3azhWZk4zVWJYellqNlFhZGp4VWFEVkpqTHp6?=
- =?utf-8?B?eVV3OUFKSmZ0UDVoa3ErbDl0K0x3M3VhRDQ2a05QN1lyZStqMUxXOVhKdlNN?=
- =?utf-8?B?dTBpVGVmU3BiMFZOaC8xdEw5Y0QrRXduQjU5ZzBxUlhLeVVWUitUeWhzWFo2?=
- =?utf-8?B?ajk5MmpZYTdXV09yR1VrK3RDZEt5ZjU4NzZZcXF2U3ZyZ1MxTU83VlRoN0tl?=
- =?utf-8?B?d3kwNjBGNnNtcTVjT0tLU0lDeHN5OGRsR1FVdWdkVzBPbXptM2plWWY1V1Vy?=
- =?utf-8?B?T1Zxdml1MjF0RExvcTZVc3ZlOVFSbXFLNWVtcE1QOElQNVV2aFVhVk8yYWpI?=
- =?utf-8?B?VzR3RFl6VEErZk1pcTNseTY0RDZ1TnBhblVpK0VSbGszbWk3VXNjY0JnNEJu?=
- =?utf-8?B?VVVtMmMrcE05TXZyc0d5bGZic0REQzNMYVpjODRNRTBvQlpHTnBka3F3S0JW?=
- =?utf-8?B?T2haWkk5d0U1aHVUblRTMkk5ZWRHTnd6VDBwaDdqZlkrcTVCZFhxMjBsSEwr?=
- =?utf-8?B?djZVdldrR0wwdXVEMld4OVdLMHErSWw1ZFNuNUxYZjBUbTdzZ1lFaEgwaWRp?=
- =?utf-8?B?Sk9MeEI1UmJtcFpFd2JldDhHbTZhSjdIbFNnd2ZiTktoSkNBb0FFUXhrSzVi?=
- =?utf-8?B?eHM4bmVmL1FmNzlkZ3d1a2luMWI5YU93Z2RLdExlVDZmbGUxYnZGOHNXdy9N?=
- =?utf-8?B?RndLZDNXMUtDRnk3bytXWHBiVzV6dDdSRjE4OFJmZ2p3VmtDWG5mYVV3amxp?=
- =?utf-8?B?SW9PRlJpTi94VUF6aTFwVE90M1FJSGI1T0VFbEVGQXhQdDhCYnNFL0M2aWNV?=
- =?utf-8?B?NjVCRHlTUDcxM2ZLTnlqVGMvWlcyU0ZwTld6NVV2aGJCTFMwNGNQQzRSek5q?=
- =?utf-8?B?MWdHeVE3SVVTWThid2Qva0cwZk9wUzFjSnFHZ0NyTGZKNUFQZGsxSTBOREpr?=
- =?utf-8?B?bFA2UUgvMHIvY1pnT2krVm1ybG5CcVFLZUdZMXdNRi94TldEQWNCOE81T2hx?=
- =?utf-8?B?VmhPaTdjMWQ0ZTFhMWd2d2FaRXlOT2xkcHE0TVNETXdLazFGM3dzRzc4Q2Iw?=
- =?utf-8?B?TkdISmdKNEJMQjR6U09ncWRPV3BKQXNaWkVhMk9lV0ZVOWp3TUlMUzVxaStk?=
- =?utf-8?B?TmxLSGVRMXg1T0ZVSlM1QlhWZVVhVDFHMTNHd0ZRNVhVaXBOc0t5dFZERGFE?=
- =?utf-8?B?b1F4QXRWRUJWVVZXL0F5bWtsSnQ4UzZGVWw3dm44M3FsY09Hd09XcWQ0bkJq?=
- =?utf-8?B?cDYxdXZZWk0yTWFEcXZUZjhjUHNGeTl3Yi80Q0lNNFBCOE1vRHFiei8zSnha?=
- =?utf-8?B?Rk5yZ0VJbEtKRG4wMERRYi80dHNlcjhYOGViZ2VKb2RudHdRMkR3d3pNQlFk?=
- =?utf-8?B?VWFOSm41QjBwUzJObmIzV1BoQVB1bHhmNVNVYnp1K2Z1WThqR2t4LzM3c2F5?=
- =?utf-8?B?ME1LSmp3ckVNUTFrdFYrYkFENytzNmU5MlpTNG5rQW9Dc29YYVJ3Rjg3Zzkx?=
- =?utf-8?B?bHBXZVlPYzhFOFhLV3lDaU9aTjFpczdMa0t3RmUwbmVqbUxLODJ1ZlArdG0z?=
- =?utf-8?B?ZURiQ3NyRXJXbmVGY2poMWswMVc3Si9udERldm96Tm9aeWZOdjUvRUQrdlFx?=
- =?utf-8?B?b1VYaDRJQlUwVWp6TXBtUlFZWU5BZVNCenNKcnNPZ2lBc0h1UkZzM1RVc3Ey?=
- =?utf-8?B?UVlvb0xZYWphS3J2bEEwQm94NzQyemdTOGg3RHFwZzFiRFRxSmhWeFdiM2oz?=
- =?utf-8?B?MnE5ejdJMUY1dnRtaG1IZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UURNRDJFVGxFWXp4Rm9KZ3ZGaWpCa3ZESnRMNVhCSDlmU1hib3ZQbjBreWg3?=
- =?utf-8?B?Q2hTOE9MbkZRYmNpS1pSUTJSakhPOTNOSWgzRWd1NVphZ0NzWlJPQmhzS2NS?=
- =?utf-8?B?K2VoYnhVSjUwMWRaaWJpWTNzV3RJNEcxVXd2NDBBa05EZ0hwekxIcGI0aXpx?=
- =?utf-8?B?cit0L0xLV1NtQnpidmxPYnZRS2ZLby8zWlE2YTdvZnJtVXVHeFU5OTlWam9I?=
- =?utf-8?B?b2ZKZm5EQWZ1V3hwamp6SlBXdWluMEFyOHFiaUI5WEVHeW5HTXVpRnNtTk10?=
- =?utf-8?B?NW5VcEVpV0RZZlpsL1hsSkxnMDhMT1pKTjlhT0RDTHI2ZXdEelFMR1pESDJh?=
- =?utf-8?B?Y3dYTk9hSzhnTW50SE5iVWVBTk9GTGlMdmxxQ3U3T0psNTdjZ0M0SFRrSHl6?=
- =?utf-8?B?MTNGZDE4NU1BNi93a2dmTHJCTkQvWFhmajE1b0RpbzFLSUZFOHBCeXFrOWJK?=
- =?utf-8?B?bXFZT0ZvTWcvWnFKeXRHRnM1VGo4ZWdORjE0VGZzM0xZZWN4RjY3aHpDR2hG?=
- =?utf-8?B?UGJpcGg3NHVqcUhrMWhvVW9EbityRWRCU1lpSWdUdmVSMDJWQUdyZ0hpZWhK?=
- =?utf-8?B?MWJsdkR4anpwU3hzbUhLc2VKeVZlOTduVVBJalZnTUMxTGJ4MjlBMTV2bzhB?=
- =?utf-8?B?NDNOQVVObjlxRmJtbjBWZ2RrSWoyOS9MS2hLelJuZngrUDEwZkJzamJ2QkFQ?=
- =?utf-8?B?ejlBQ2YrUmhpUGFvNDFsZUNTQjE2aWluRFVidXdzYVVSOWp5U1dCcldoRWpx?=
- =?utf-8?B?OFBUUDJSMjBDZjFOU2dtWm9jNm1rVHVWVktMR21nUXN4cGtYUnYwdFkrODZh?=
- =?utf-8?B?bkZqait6bEd2VThFaFZ0MU1JR3NldFFYYmw5RTRxbnpsMnozZ0NGTUpGcDJW?=
- =?utf-8?B?d3M5dlhIWHVCR2J0MXZsRUN5UUxNTUhiU0hTdFpHMWxKVktDU3p5cnJ4UkRE?=
- =?utf-8?B?WXpxV1ljK0pJYVlDOFM3bEsxWEJhVC9mWlZHMWlBSmEwbWhGbk8rRWhFd2Y0?=
- =?utf-8?B?WWI3RFY4UERiaVVKR2wxZFY1Nmo5VFlTVnhpM3F4ajkvdFdpY3J4a3psM0Yw?=
- =?utf-8?B?MnJVcTZTRWdCeWRDN3M2SENzZjRwNDRCL3diNlNwVEhXYWd6NTl2bmpCTE1y?=
- =?utf-8?B?YjdRRE10UCtqMWdLRWpVTngzcHV5cFFiVmpWWldWQ3VMZ29EM0JvYXNBWmE5?=
- =?utf-8?B?Mi90V08wMC96MWRWZGZHekhyNjJqYVN5UWY5VDRLc2xiOU5ZSXZVdmgrQ255?=
- =?utf-8?B?U2pxSDlROXBnaGVWOUdGeGxLWUEyaDlRV0xPZHYrNXBkRmF3MVhzRDBmcXk1?=
- =?utf-8?B?OXdVVnBPajNQS0trUlVwQzRuQytZSllUTVIxVDRxckYwNU13RE9UTnFBT0xp?=
- =?utf-8?B?MlFSb0dZWk9yZGNDcnZHZm1rTzM2MC9sNEswV1E5ZVBrbTNOWjZMalRsdFJ0?=
- =?utf-8?B?VmZqZHBNYnZRZnprbkF3ejJwbWVSRCtDdEpoakUyU0FoWE05NGdtUWZRb3M4?=
- =?utf-8?B?d2NCeG9hbzFnUUpoaVQ5by9hbDJ1ZFlLZzNTY2RpdG8zUE9CRWEvMXRUWnFN?=
- =?utf-8?B?VjR3a0hoaHU1cTlGMk9OS09RMkVBSHpURktacG9FUUJHOUxaREVxcEJsQ2Vp?=
- =?utf-8?B?aGFTZW1kWHplRER6Qm1yQVdocjNSemc3eG1KczBHZUZmd1hIVmdBbTAxSitw?=
- =?utf-8?B?Z21OcENyUnRZUXNmOUg5dU9mZ2RNN1lOS0hNQWZYRTkrYXhaTXdJQ29LRVdJ?=
- =?utf-8?B?alZLb3UwREllVzU0cS9lL1Y4S0t2amVoNHhVTmtlYjNFa1diOXhieG5JbWdK?=
- =?utf-8?B?ZStBSkgyS2c5OGZkdzYwaEFqYXBEZDVLeVBoUmNIWGloYU14S0k3c0hyR0hS?=
- =?utf-8?B?NHh6My9MdWlRczh1V0dJKzhFNk1mTGpUK01LQk4vZTR6U21ZZWoyMWNhU2l6?=
- =?utf-8?B?NVVTOWNLY1lRL2prOXQ0UnY3Qm9JTllaQjJCQko2RS8ya01JcEVmQWNvRzdR?=
- =?utf-8?B?WmpSYTk1SDE3WHRhZ1paUHpRSHhuRkRIN3JYcXZRMWVCWStyZTJTZTJoaDFH?=
- =?utf-8?B?WWV0eUpiRGtCQ0ovZmJOVGtFdElLZzg1eXArWmhzREFCZnlja0x6V0NmSnA3?=
- =?utf-8?B?OUVqRnNYSHZ1dEU1SmprTFRVR3VXTE93NXRiWE5BSFNrUVJZQW56SHBwc0hu?=
- =?utf-8?B?K1E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 2P05e3vXZ68Lzug4FxYIiCvk9NaFkomgzhsNmFsSIzaznPHNrBa4eRTVmHg+EE6bq94+5wO/vmvS0OKH6O28lCcEbPLlPBlWbh7uh0E+YvpyJO44t+3alXGPtGzjoMQhmJNvKeumNhM548GCruj2LGZapY2bfFjJNefMDZ5eowRzCDGsc4bRBjAHBHDe9amlmAmzH/AQ+pmNqDSksQgDPyiWzFpT83n7NyinZHNacczphaTxdkxzUuzSAre0co6yvhrhqCcHF9VKJMPD1qGf2ZbAcvoqQd4q8/n6dK32+G5UGEga5lRwP040SkagWpeTIlDrq1nA4yZdPjNA6+cYa/nEZhUm0pg2AOC9SgrX3/GURDhqm5EoetSkWYZYYUGTQ5pGtwB9ksQcwsnR20Q8tP1kWYnoR8YU1ta9H3l5yYtqrPVNmL7apccWeE+PSRJgYOz45SBHVei1XKzt5E9AYenqXYh96/uLw3izJP4cuYeinnIDMot6rxxkamMKY+PWg5zVeXyU5MZOnm+RSnmVs+WuAGXdZO0pD0GB7cUf4uz/J/Z3xCbzJG/haV87s/OinIlqUDN8ySZK76LpmvIVX1ZOZViJLOi3Z5InmDMOAFY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11182b58-4ee3-4d12-42e2-08dca11f6dbd
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2024 20:32:33.8772 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GnCgtPIfIwvZWw0zWcBWhMnCDlSSWOqTniJITlOLHDsLnrJ+lrPMwrRHnC4xuGSa2UG/8OgvPNm+2KNdRhjQjju519lViKV8sA8gUXBeOcE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB7852
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-10_15,2024-07-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
- definitions=main-2407100145
-X-Proofpoint-GUID: uDrVQ44ejxgj3aelqZdzahN3hxa41PlD
-X-Proofpoint-ORIG-GUID: uDrVQ44ejxgj3aelqZdzahN3hxa41PlD
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240710062920.73063-1-pbonzini@redhat.com>
+In-Reply-To: <20240710062920.73063-1-pbonzini@redhat.com>
+From: Robert Henry <rrh.henry@gmail.com>
+Date: Wed, 10 Jul 2024 14:00:52 -0700
+Message-ID: <CAEYr_8kbN6U3wUntTK_kCBQ4fHRsWhjbQBFiX0V0PS6qXfyECA@mail.gmail.com>
+Subject: Re: [PATCH 00/10] target/i386/tcg: fixes for seg_helper.c
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: multipart/alternative; boundary="000000000000c1443b061ceaf1e3"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=rrh.henry@gmail.com; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,43 +87,499 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/2024 4:03 PM, Alex Williamson wrote:
-> On Tue,  9 Jul 2024 13:58:53 -0700
-> Steve Sistare <steven.sistare@oracle.com> wrote:
-> 
->> Enable vfio-pci devices to be saved and restored across a cpr-exec of qemu.
->>
->> At vfio creation time, save the value of vfio container, group, and device
->> descriptors in CPR state.
->>
->> In the container pre_save handler, suspend the use of virtual addresses
->> in DMA mappings with VFIO_DMA_UNMAP_FLAG_VADDR, because guest ram will
->> be remapped at a different VA after exec.  DMA to already-mapped pages
->> continues.  Save the msi message area as part of vfio-pci vmstate, and
->> save the interrupt and notifier eventfd's in vmstate.
->>
->> On qemu restart, vfio_realize() finds the saved descriptors, uses the
->> descriptors, and notes that the device is being reused.  Device and iommu
->> state is already configured, so operations in vfio_realize that would
->> modify the configuration are skipped for a reused device, including vfio
->> ioctl's and writes to PCI configuration space.  Vfio PCI device reset
->> is also suppressed. The result is that vfio_realize constructs qemu
->> data structures that reflect the current state of the device.  However,
->> the reconstruction is not complete until migrate_incoming is called.
->> migrate_incoming loads the msi data, the vfio post_load handler finds
->> eventfds in CPR state, rebuilds vector data structures, and attaches the
->> interrupts to the new KVM instance.  The container post_load handler then
->> invokes the main vfio listener callback, which walks the flattened ranges
->> of the vfio address space and calls VFIO_DMA_MAP_FLAG_VADDR to inform the
->> kernel of the new VA's.  Lastly, migration resumes the VM.
-> 
-> Hi Steve,
-> 
-> What's the iommufd plan for cpr?  Thanks,
+--000000000000c1443b061ceaf1e3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I am working on vdpa and iommufd as we speak, with working prototypes for both.
-I plan to submit the kernel and qemu RFC for vdpa next week, followed by vacation,
-and iommfd in the weeks after that.
+I have only skimmed the diffs.  Your knowledge of the deep semantics,
+gained by close differential reading of intel and amd docs, is truly
+amazing.  Many thanks for pushing this through!
 
-- Steve
+I have 2 nits, perhaps stylistic only.
+
+For code like "sp -=3D 2" or "sp +=3D 2" followed or preceded by a write to=
+ the
+stack pointer of a uint16_t variable 'x',  would it be better/more robust
+to rewrite as: "sp -=3D sizeof(x)"  ?
+
+There are a lot of masks constructed using -1.  I think it would be clearer
+to use 0xffffffff (for 32-bit masks) as that reminds the reader that this
+is a bit mask.  But it seems that using -1 is how the original code was
+written.
+
+On Tue, Jul 9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+
+> This includes bugfixes:
+> - allowing IRET from user mode to user mode with SMAP (do not use implici=
+t
+>   kernel accesses, which break if the stack is in userspace)
+>
+> - use DPL-level accesses for interrupts and call gates
+>
+> - various fixes for task switching
+>
+> And two related cleanups: computing MMU index once for far calls and
+> returns
+> (including task switches), and using X86Access for TSS access.
+>
+> Tested with a really ugly patch to kvm-unit-tests, included after
+> signature.
+>
+> Paolo Bonzini (7):
+>   target/i386/tcg: Allow IRET from user mode to user mode with SMAP
+>   target/i386/tcg: use PUSHL/PUSHW for error code
+>   target/i386/tcg: Compute MMU index once
+>   target/i386/tcg: Use DPL-level accesses for interrupts and call gates
+>   target/i386/tcg: check for correct busy state before switching to a
+>     new task
+>   target/i386/tcg: use X86Access for TSS access
+>   target/i386/tcg: save current task state before loading new one
+>
+> Richard Henderson (3):
+>   target/i386/tcg: Remove SEG_ADDL
+>   target/i386/tcg: Reorg push/pop within seg_helper.c
+>   target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
+>
+>  target/i386/cpu.h            |  11 +-
+>  target/i386/cpu.c            |  27 +-
+>  target/i386/tcg/seg_helper.c | 606 +++++++++++++++++++----------------
+>  3 files changed, 354 insertions(+), 290 deletions(-)
+>
+> --
+> 2.45.2
+>
+> diff --git a/lib/x86/usermode.c b/lib/x86/usermode.c
+> index c3ec0ad7..0bf40c6d 100644
+> --- a/lib/x86/usermode.c
+> +++ b/lib/x86/usermode.c
+> @@ -5,13 +5,15 @@
+>  #include "x86/desc.h"
+>  #include "x86/isr.h"
+>  #include "alloc.h"
+> +#include "alloc_page.h"
+>  #include "setjmp.h"
+>  #include "usermode.h"
+>
+>  #include "libcflat.h"
+>  #include <stdint.h>
+>
+> -#define USERMODE_STACK_SIZE    0x2000
+> +#define USERMODE_STACK_ORDER   1 /* 8k */
+> +#define USERMODE_STACK_SIZE    (1 << (12 + USERMODE_STACK_ORDER))
+>  #define RET_TO_KERNEL_IRQ      0x20
+>
+>  static jmp_buf jmpbuf;
+> @@ -37,9 +39,14 @@ uint64_t run_in_user(usermode_func func, unsigned int
+> fault_vector,
+>  {
+>         extern char ret_to_kernel;
+>         volatile uint64_t rax =3D 0;
+> -       static unsigned char user_stack[USERMODE_STACK_SIZE];
+> +       static unsigned char *user_stack;
+>         handler old_ex;
+>
+> +       if (!user_stack) {
+> +               user_stack =3D alloc_pages(USERMODE_STACK_ORDER);
+> +               printf("%p\n", user_stack);
+> +       }
+> +
+>         *raised_vector =3D 0;
+>         set_idt_entry(RET_TO_KERNEL_IRQ, &ret_to_kernel, 3);
+>         old_ex =3D handle_exception(fault_vector,
+> @@ -51,6 +58,8 @@ uint64_t run_in_user(usermode_func func, unsigned int
+> fault_vector,
+>                 return 0;
+>         }
+>
+> +       memcpy(user_stack + USERMODE_STACK_SIZE - 8, &func, 8);
+> +
+>         asm volatile (
+>                         /* Prepare kernel SP for exception handlers */
+>                         "mov %%rsp, %[rsp0]\n\t"
+> @@ -63,12 +72,13 @@ uint64_t run_in_user(usermode_func func, unsigned int
+> fault_vector,
+>                         "pushq %[user_stack_top]\n\t"
+>                         "pushfq\n\t"
+>                         "pushq %[user_cs]\n\t"
+> -                       "lea user_mode(%%rip), %%rax\n\t"
+> +                       "lea user_mode+0x800000(%%rip), %%rax\n\t" //
+> smap.flat places usermode addresses at 8MB-16MB
+>                         "pushq %%rax\n\t"
+>                         "iretq\n"
+>
+>                         "user_mode:\n\t"
+>                         /* Back up volatile registers before invoking fun=
+c
+> */
+> +                       "pop %%rax\n\t"
+>                         "push %%rcx\n\t"
+>                         "push %%rdx\n\t"
+>                         "push %%rdi\n\t"
+> @@ -78,11 +88,12 @@ uint64_t run_in_user(usermode_func func, unsigned int
+> fault_vector,
+>                         "push %%r10\n\t"
+>                         "push %%r11\n\t"
+>                         /* Call user mode function */
+> +                       "add $0x800000,%%rbp\n\t"
+>                         "mov %[arg1], %%rdi\n\t"
+>                         "mov %[arg2], %%rsi\n\t"
+>                         "mov %[arg3], %%rdx\n\t"
+>                         "mov %[arg4], %%rcx\n\t"
+> -                       "call *%[func]\n\t"
+> +                       "call *%%rax\n\t"
+>                         /* Restore registers */
+>                         "pop %%r11\n\t"
+>                         "pop %%r10\n\t"
+> @@ -112,12 +123,11 @@ uint64_t run_in_user(usermode_func func, unsigned
+> int fault_vector,
+>                         [arg2]"m"(arg2),
+>                         [arg3]"m"(arg3),
+>                         [arg4]"m"(arg4),
+> -                       [func]"m"(func),
+>                         [user_ds]"i"(USER_DS),
+>                         [user_cs]"i"(USER_CS),
+>                         [kernel_ds]"rm"(KERNEL_DS),
+>                         [user_stack_top]"r"(user_stack +
+> -                                       sizeof(user_stack)),
+> +                                       USERMODE_STACK_SIZE - 8),
+>                         [kernel_entry_vector]"i"(RET_TO_KERNEL_IRQ));
+>
+>         handle_exception(fault_vector, old_ex);
+> diff --git a/x86/smap.c b/x86/smap.c
+> index 9a823a55..65119442 100644
+> --- a/x86/smap.c
+> +++ b/x86/smap.c
+> @@ -2,6 +2,7 @@
+>  #include <alloc_page.h>
+>  #include "x86/desc.h"
+>  #include "x86/processor.h"
+> +#include "x86/usermode.h"
+>  #include "x86/vm.h"
+>
+>  volatile int pf_count =3D 0;
+> @@ -89,6 +90,31 @@ static void check_smap_nowp(void)
+>         write_cr3(read_cr3());
+>  }
+>
+> +#ifdef __x86_64__
+> +static void iret(void)
+> +{
+> +       asm volatile(
+> +           "mov %%rsp, %%rcx;"
+> +           "movl %%ss, %%ebx; pushq %%rbx; pushq %%rcx;"
+> +           "pushf;"
+> +           "movl %%cs, %%ebx; pushq %%rbx; "
+> +           "lea 1f(%%rip), %%rbx; pushq %%rbx; iretq; 1:"
+> +
+> +               : : : "ebx", "ecx", "cc"); /* RPL=3D0 */
+> +}
+> +
+> +static void test_user_iret(void)
+> +{
+> +       bool raised_vector;
+> +       uintptr_t user_iret =3D (uintptr_t)iret + USER_BASE;
+> +
+> +       run_in_user((usermode_func)user_iret, PF_VECTOR, 0, 0, 0, 0,
+> +                   &raised_vector);
+> +
+> +       report(!raised_vector, "No #PF on CPL=3D3 DPL=3D3 iret");
+> +}
+> +#endif
+> +
+>  int main(int ac, char **av)
+>  {
+>         unsigned long i;
+> @@ -196,7 +222,9 @@ int main(int ac, char **av)
+>
+>         check_smap_nowp();
+>
+> -       // TODO: implicit kernel access from ring 3 (e.g. int)
+> +#ifdef __x86_64__
+> +       test_user_iret();
+> +#endif
+>
+>         return report_summary();
+>  }
+>
+>
+>
+>
+
+--000000000000c1443b061ceaf1e3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I have only skimmed the diffs.=C2=A0 Your knowledge of the=
+ deep semantics, gained by close differential reading of intel and amd docs=
+, is truly amazing.=C2=A0 Many thanks for pushing this through!<div><br></d=
+iv><div>I have 2 nits, perhaps stylistic only.</div><div><br></div><div>For=
+ code like &quot;sp -=3D 2&quot; or &quot;sp=C2=A0+=3D 2&quot; followed or =
+preceded by a write to the stack pointer of a uint16_t variable &#39;x&#39;=
+,=C2=A0 would it be better/more robust to rewrite as: &quot;sp -=3D sizeof(=
+x)&quot;=C2=A0 ?</div><div><br></div><div>There are a lot of masks construc=
+ted using -1.=C2=A0 I think it would be clearer to use 0xffffffff (for 32-b=
+it masks) as that reminds the reader that this is a bit mask.=C2=A0 But it =
+seems that using -1 is how the original code was written.</div></div><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul =
+9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@re=
+dhat.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">This includes bugfixes:<br>
+- allowing IRET from user mode to user mode with SMAP (do not use implicit<=
+br>
+=C2=A0 kernel accesses, which break if the stack is in userspace)<br>
+<br>
+- use DPL-level accesses for interrupts and call gates<br>
+<br>
+- various fixes for task switching<br>
+<br>
+And two related cleanups: computing MMU index once for far calls and return=
+s<br>
+(including task switches), and using X86Access for TSS access.<br>
+<br>
+Tested with a really ugly patch to kvm-unit-tests, included after signature=
+.<br>
+<br>
+Paolo Bonzini (7):<br>
+=C2=A0 target/i386/tcg: Allow IRET from user mode to user mode with SMAP<br=
+>
+=C2=A0 target/i386/tcg: use PUSHL/PUSHW for error code<br>
+=C2=A0 target/i386/tcg: Compute MMU index once<br>
+=C2=A0 target/i386/tcg: Use DPL-level accesses for interrupts and call gate=
+s<br>
+=C2=A0 target/i386/tcg: check for correct busy state before switching to a<=
+br>
+=C2=A0 =C2=A0 new task<br>
+=C2=A0 target/i386/tcg: use X86Access for TSS access<br>
+=C2=A0 target/i386/tcg: save current task state before loading new one<br>
+<br>
+Richard Henderson (3):<br>
+=C2=A0 target/i386/tcg: Remove SEG_ADDL<br>
+=C2=A0 target/i386/tcg: Reorg push/pop within seg_helper.c<br>
+=C2=A0 target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl<br>
+<br>
+=C2=A0target/i386/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 11=
+ +-<br>
+=C2=A0target/i386/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 27=
+ +-<br>
+=C2=A0target/i386/tcg/seg_helper.c | 606 +++++++++++++++++++---------------=
+-<br>
+=C2=A03 files changed, 354 insertions(+), 290 deletions(-)<br>
+<br>
+-- <br>
+2.45.2<br>
+<br>
+diff --git a/lib/x86/usermode.c b/lib/x86/usermode.c<br>
+index c3ec0ad7..0bf40c6d 100644<br>
+--- a/lib/x86/usermode.c<br>
++++ b/lib/x86/usermode.c<br>
+@@ -5,13 +5,15 @@<br>
+=C2=A0#include &quot;x86/desc.h&quot;<br>
+=C2=A0#include &quot;x86/isr.h&quot;<br>
+=C2=A0#include &quot;alloc.h&quot;<br>
++#include &quot;alloc_page.h&quot;<br>
+=C2=A0#include &quot;setjmp.h&quot;<br>
+=C2=A0#include &quot;usermode.h&quot;<br>
+<br>
+=C2=A0#include &quot;libcflat.h&quot;<br>
+=C2=A0#include &lt;stdint.h&gt;<br>
+<br>
+-#define USERMODE_STACK_SIZE=C2=A0 =C2=A0 0x2000<br>
++#define USERMODE_STACK_ORDER=C2=A0 =C2=A01 /* 8k */<br>
++#define USERMODE_STACK_SIZE=C2=A0 =C2=A0 (1 &lt;&lt; (12 + USERMODE_STACK_=
+ORDER))<br>
+=C2=A0#define RET_TO_KERNEL_IRQ=C2=A0 =C2=A0 =C2=A0 0x20<br>
+<br>
+=C2=A0static jmp_buf jmpbuf;<br>
+@@ -37,9 +39,14 @@ uint64_t run_in_user(usermode_func func, unsigned int fa=
+ult_vector,<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 extern char ret_to_kernel;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 volatile uint64_t rax =3D 0;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0static unsigned char user_stack[USERMODE_STACK_=
+SIZE];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0static unsigned char *user_stack;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 handler old_ex;<br>
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0if (!user_stack) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0user_stack =3D allo=
+c_pages(USERMODE_STACK_ORDER);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf(&quot;%p\n&q=
+uot;, user_stack);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *raised_vector =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_idt_entry(RET_TO_KERNEL_IRQ, &amp;ret_to_ke=
+rnel, 3);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 old_ex =3D handle_exception(fault_vector,<br>
+@@ -51,6 +58,8 @@ uint64_t run_in_user(usermode_func func, unsigned int fau=
+lt_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy(user_stack + USERMODE_STACK_SIZE - 8, &a=
+mp;func, 8);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 asm volatile (<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 /* Prepare kernel SP for exception handlers */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;mov %%rsp, %[rsp0]\n\t&quot;<br>
+@@ -63,12 +72,13 @@ uint64_t run_in_user(usermode_func func, unsigned int f=
+ault_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pushq %[user_stack_top]\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pushfq\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pushq %[user_cs]\n\t&quot;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;lea user_mode(%%rip), %%rax\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;lea user_mode+0x800000(%%rip), %%rax\n\t&quot; // smap.flat=
+ places usermode addresses at 8MB-16MB<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pushq %%rax\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;iretq\n&quot;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;user_mode:\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 /* Back up volatile registers before invoking func */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;pop %%rax\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;push %%rcx\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;push %%rdx\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;push %%rdi\n\t&quot;<br>
+@@ -78,11 +88,12 @@ uint64_t run_in_user(usermode_func func, unsigned int f=
+ault_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;push %%r10\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;push %%r11\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 /* Call user mode function */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;add $0x800000,%%rbp\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;mov %[arg1], %%rdi\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;mov %[arg2], %%rsi\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;mov %[arg3], %%rdx\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;mov %[arg4], %%rcx\n\t&quot;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;call *%[func]\n\t&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;call *%%rax\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 /* Restore registers */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pop %%r11\n\t&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;pop %%r10\n\t&quot;<br>
+@@ -112,12 +123,11 @@ uint64_t run_in_user(usermode_func func, unsigned int=
+ fault_vector,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [arg2]&quot;m&quot;(arg2),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [arg3]&quot;m&quot;(arg3),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [arg4]&quot;m&quot;(arg4),<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0[func]&quot;m&quot;(func),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [user_ds]&quot;i&quot;(USER_DS),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [user_cs]&quot;i&quot;(USER_CS),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [kernel_ds]&quot;rm&quot;(KERNEL_DS),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [user_stack_top]&quot;r&quot;(user_stack +<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(us=
+er_stack)),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0USERMODE_=
+STACK_SIZE - 8),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 [kernel_entry_vector]&quot;i&quot;(RET_TO_KERNEL_IRQ));<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 handle_exception(fault_vector, old_ex);<br>
+diff --git a/x86/smap.c b/x86/smap.c<br>
+index 9a823a55..65119442 100644<br>
+--- a/x86/smap.c<br>
++++ b/x86/smap.c<br>
+@@ -2,6 +2,7 @@<br>
+=C2=A0#include &lt;alloc_page.h&gt;<br>
+=C2=A0#include &quot;x86/desc.h&quot;<br>
+=C2=A0#include &quot;x86/processor.h&quot;<br>
++#include &quot;x86/usermode.h&quot;<br>
+=C2=A0#include &quot;x86/vm.h&quot;<br>
+<br>
+=C2=A0volatile int pf_count =3D 0;<br>
+@@ -89,6 +90,31 @@ static void check_smap_nowp(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 write_cr3(read_cr3());<br>
+=C2=A0}<br>
+<br>
++#ifdef __x86_64__<br>
++static void iret(void)<br>
++{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0asm volatile(<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;mov %%rsp, %%rcx;&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;movl %%ss, %%ebx; pushq %%r=
+bx; pushq %%rcx;&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;pushf;&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;movl %%cs, %%ebx; pushq %%r=
+bx; &quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;lea 1f(%%rip), %%rbx; pushq=
+ %%rbx; iretq; 1:&quot;<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: : : &quot;ebx&quo=
+t;, &quot;ecx&quot;, &quot;cc&quot;); /* RPL=3D0 */<br>
++}<br>
++<br>
++static void test_user_iret(void)<br>
++{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0bool raised_vector;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0uintptr_t user_iret =3D (uintptr_t)iret + USER_=
+BASE;<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0run_in_user((usermode_func)user_iret, PF_VECTOR=
+, 0, 0, 0, 0,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;=
+raised_vector);<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0report(!raised_vector, &quot;No #PF on CPL=3D3 =
+DPL=3D3 iret&quot;);<br>
++}<br>
++#endif<br>
++<br>
+=C2=A0int main(int ac, char **av)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned long i;<br>
+@@ -196,7 +222,9 @@ int main(int ac, char **av)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 check_smap_nowp();<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0// TODO: implicit kernel access from ring 3 (e.=
+g. int)<br>
++#ifdef __x86_64__<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0test_user_iret();<br>
++#endif<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return report_summary();<br>
+=C2=A0}<br>
+<br>
+<br>
+<br>
+</blockquote></div>
+
+--000000000000c1443b061ceaf1e3--
 
