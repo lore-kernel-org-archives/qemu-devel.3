@@ -4,58 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29325C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE9DC38150
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRSP5-0006SA-Jw; Wed, 10 Jul 2024 04:10:19 -0400
+	id 1sRSlx-0006Wd-Be; Wed, 10 Jul 2024 04:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
- id 1sRSP3-0006PI-KX; Wed, 10 Jul 2024 04:10:17 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
- id 1sRSP1-0002EQ-NI; Wed, 10 Jul 2024 04:10:17 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WJrBR1lVGz4wym;
- Wed, 10 Jul 2024 18:10:07 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WJr9z3Q9vz4wcl;
- Wed, 10 Jul 2024 18:09:42 +1000 (AEST)
-Message-ID: <eec0090f-1a0f-44d1-86b8-956411037f34@kaod.org>
-Date: Wed, 10 Jul 2024 10:09:36 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sRSlv-0006WA-JL
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:33:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sRSls-0006vp-FU
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:33:55 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxG_BnR45meMgCAA--.8424S3;
+ Wed, 10 Jul 2024 16:33:43 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Bx28ZkR45mUkdCAA--.20973S3; 
+ Wed, 10 Jul 2024 16:33:41 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch/gdbstub: Add vector registers support
+From: gaosong <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, richard.henderson@linaro.org,
+ maobibo@loongson.cn
+References: <20240621065406.864232-1-gaosong@loongson.cn>
+Message-ID: <53dfa64f-515c-ffec-9cd1-10c59116d590@loongson.cn>
+Date: Wed, 10 Jul 2024 16:33:51 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v47 00/19] hw/sd/sdcard: Add eMMC support
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-block@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
-References: <20240709152556.52896-1-philmd@linaro.org>
- <e9c273ff-32bd-40fc-8f50-cb47784cf741@kaod.org>
- <fc8b71b9-e946-4161-8750-fffe37d3c925@linaro.org>
- <b48bec6b-707a-4434-aba6-6b7416400480@kaod.org>
-Content-Language: en-US, fr
-In-Reply-To: <b48bec6b-707a-4434-aba6-6b7416400480@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20240621065406.864232-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=VgH8=OK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Bx28ZkR45mUkdCAA--.20973S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3ur4DJw45ur4UZF1DKryUJwc_yoWkuw4rpF
+ n3Arn8Jr4Igay2yrZIq3s093Z8Ar1xuF4ruF1fX34xCFZ7Xr1jqw4ktryYvrWfWan5Xrya
+ gr40qw18Ca13XrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
+ VUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.431, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,54 +83,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/24 6:58 AM, Cédric Le Goater wrote:
-> On 7/9/24 11:39 PM, Philippe Mathieu-Daudé wrote:
->> On 9/7/24 17:58, Cédric Le Goater wrote:
->>> On 7/9/24 5:25 PM, Philippe Mathieu-Daudé wrote:
->>>> Since v42:
->>>> - Stick to spec v4.3 (re-simplified EXT_CSD register & migrate)
->>>> - Fill CID register
->>>> - Few changes to CSD register
->>>> - Implement 'boot-mode' reset timing
->>>> - Add 'boot-size' property
->>>>
->>>> Change required for aspeed branch:
->>>> -- >8 --
->>>> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
->>>> index 8c0e36badd..563816b710 100644
->>>> --- a/hw/arm/aspeed.c
->>>> +++ b/hw/arm/aspeed.c
->>>> @@ -344,3 +344,3 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
->>>>           if (emmc) {
->>>> -            qdev_prop_set_uint8(card, "boot-config", boot_emmc ? 0x48 : 0x0);
->>>> +            qdev_prop_set_uint64(card, "boot-size", 1 * MiB);
->>>>           }
->>>> (I'm still reluctant to merge patches 16-18)...
->>>
->>> Then, please drop all changes related to the boot partitions. I will keep
->>> the original patches in my tree and address the feature when I have time.
->>> TYPE_EMMC is already great to have.
->>
->> As you mentioned on today's community call, eMMC is a chipset soldered
->> on a board, so our boards exactly knows what size to expect on the card,
->> and whether boot partitions are present or not. 
-> 
-> My remark was on the use of 3 blockdevs to represent the eMMC contents.
-> 1 should be enough.
-> 
-> Having a "boot-size" property to set the BOOT_SIZE_MULT register is fine.
-> The Aspeed model does some assumption today when installing the first
-> boot area as a boot ROM :
-> 
->      aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
-> 
-> The "boot-size" property will clarify the settings. Please keep it.
+Ping !
 
-64 * KiB is not related to the eMMC partition size. It is a SRAM
-limit in which the SoC loads the boot data.
+�� 2024/6/21 ����2:54, Song Gao д��:
+> GDB already support LoongArch vector extension[1], QEMU gdb adds
+> LoongArch vector registers support, so that users can use 'info all-registers'
+> to get all vector registers values.
+>
+> [1]: https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=1e9569f383a3d5a88ee07d0c2401bd95613c222e
+>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+> based-on:
+>   https://patchew.org/QEMU/20240607035016.2975799-1-maobibo@loongson.cn/
+>
+>   configs/targets/loongarch64-linux-user.mak |  2 +-
+>   configs/targets/loongarch64-softmmu.mak    |  2 +-
+>   gdb-xml/loongarch-lasx.xml                 | 60 +++++++++++++++++++
+>   gdb-xml/loongarch-lsx.xml                  | 59 ++++++++++++++++++
+>   target/loongarch/gdbstub.c                 | 70 +++++++++++++++++++++-
+>   5 files changed, 189 insertions(+), 4 deletions(-)
+>   create mode 100644 gdb-xml/loongarch-lasx.xml
+>   create mode 100644 gdb-xml/loongarch-lsx.xml
+>
+> diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
+> index d878e5a113..ea9b7e839a 100644
+> --- a/configs/targets/loongarch64-linux-user.mak
+> +++ b/configs/targets/loongarch64-linux-user.mak
+> @@ -1,4 +1,4 @@
+>   # Default configuration for loongarch64-linux-user
+>   TARGET_ARCH=loongarch64
+>   TARGET_BASE_ARCH=loongarch
+> -TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
+> +TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+> diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+> index 65b65e0c34..ce19ab6a16 100644
+> --- a/configs/targets/loongarch64-softmmu.mak
+> +++ b/configs/targets/loongarch64-softmmu.mak
+> @@ -2,6 +2,6 @@ TARGET_ARCH=loongarch64
+>   TARGET_BASE_ARCH=loongarch
+>   TARGET_KVM_HAVE_GUEST_DEBUG=y
+>   TARGET_SUPPORTS_MTTCG=y
+> -TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
+> +TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+>   # all boards require libfdt
+>   TARGET_NEED_FDT=y
+> diff --git a/gdb-xml/loongarch-lasx.xml b/gdb-xml/loongarch-lasx.xml
+> new file mode 100644
+> index 0000000000..753b982c65
+> --- /dev/null
+> +++ b/gdb-xml/loongarch-lasx.xml
+> @@ -0,0 +1,60 @@
+> +<?xml version="1.0"?>
+> +<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
+> +
+> +     Copying and distribution of this file, with or without modification,
+> +     are permitted in any medium without royalty provided the copyright
+> +     notice and this notice are preserved.  -->
+> +
+> +<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> +<feature name="org.gnu.gdb.loongarch.lasx">
+> +  <vector id="v8f32" type="ieee_single" count="8"/>
+> +  <vector id="v4f64" type="ieee_double" count="4"/>
+> +  <vector id="v32i8" type="int8" count="32"/>
+> +  <vector id="v16i16" type="int16" count="16"/>
+> +  <vector id="v8i32" type="int32" count="8"/>
+> +  <vector id="v4i64" type="int64" count="4"/>
+> +  <vector id="v2ui128" type="uint128" count="2"/>
+> +
+> +  <union id="lasxv">
+> +    <field name="v8_float" type="v8f32"/>
+> +    <field name="v4_double" type="v4f64"/>
+> +    <field name="v32_int8" type="v32i8"/>
+> +    <field name="v16_int16" type="v16i16"/>
+> +    <field name="v8_int32" type="v8i32"/>
+> +    <field name="v4_int64" type="v4i64"/>
+> +    <field name="v2_uint128" type="v2ui128"/>
+> +  </union>
+> +
+> +  <reg name="xr0" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr1" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr2" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr3" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr4" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr5" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr6" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr7" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr8" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr9" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr10" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr11" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr12" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr13" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr14" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr15" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr16" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr17" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr18" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr19" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr20" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr21" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr22" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr23" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr24" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr25" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr26" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr27" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr28" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr29" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr30" bitsize="256" type="lasxv" group="lasx"/>
+> +  <reg name="xr31" bitsize="256" type="lasxv" group="lasx"/>
+> +</feature>
+> diff --git a/gdb-xml/loongarch-lsx.xml b/gdb-xml/loongarch-lsx.xml
+> new file mode 100644
+> index 0000000000..51af1c6fd5
+> --- /dev/null
+> +++ b/gdb-xml/loongarch-lsx.xml
+> @@ -0,0 +1,59 @@
+> +<?xml version="1.0"?>
+> +<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
+> +
+> +     Copying and distribution of this file, with or without modification,
+> +     are permitted in any medium without royalty provided the copyright
+> +     notice and this notice are preserved.  -->
+> +
+> +<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> +<feature name="org.gnu.gdb.loongarch.lsx">
+> +  <vector id="v4f32" type="ieee_single" count="4"/>
+> +  <vector id="v2f64" type="ieee_double" count="2"/>
+> +  <vector id="v16i8" type="int8" count="16"/>
+> +  <vector id="v8i16" type="int16" count="8"/>
+> +  <vector id="v4i32" type="int32" count="4"/>
+> +  <vector id="v2i64" type="int64" count="2"/>
+> +
+> +  <union id="lsxv">
+> +    <field name="v4_float" type="v4f32"/>
+> +    <field name="v2_double" type="v2f64"/>
+> +    <field name="v16_int8" type="v16i8"/>
+> +    <field name="v8_int16" type="v8i16"/>
+> +    <field name="v4_int32" type="v4i32"/>
+> +    <field name="v2_int64" type="v2i64"/>
+> +    <field name="uint128" type="uint128"/>
+> +  </union>
+> +
+> +  <reg name="vr0" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr1" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr2" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr3" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr4" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr5" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr6" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr7" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr8" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr9" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr10" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr11" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr12" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr13" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr14" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr15" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr16" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr17" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr18" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr19" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr20" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr21" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr22" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr23" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr25" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr27" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr28" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr29" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr30" bitsize="128" type="lsxv" group="lsx"/>
+> +  <reg name="vr31" bitsize="128" type="lsxv" group="lsx"/>
+> +</feature>
+> diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
+> index a0e1439bd0..c9e2ddd943 100644
+> --- a/target/loongarch/gdbstub.c
+> +++ b/target/loongarch/gdbstub.c
+> @@ -116,8 +116,74 @@ static int loongarch_gdb_set_fpu(CPUState *cs, uint8_t *mem_buf, int n)
+>       return length;
+>   }
+>   
+> +static int loongarch_gdb_get_vec(CPUState *cs, GByteArray *mem_buf, int n, int vl)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +    CPULoongArchState *env = &cpu->env;
+> +    int i, length = 0;
+> +
+> +    if (0 <= n && n < 32) {
+> +        for (i = 0; i < vl / 64; i++) {
+> +            length += gdb_get_reg64(mem_buf, env->fpr[n].vreg.D(i));
+> +	}
+> +    }
+> +
+> +    return length;
+> +}
+> +
+> +static int loongarch_gdb_set_vec(CPUState *cs, uint8_t *mem_buf, int n, int vl)
+> +{
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +    CPULoongArchState *env = &cpu->env;
+> +    int i, length = 0;
+> +
+> +    if (0 <= n && n < 32) {
+> +        for (i = 0; i < vl / 64; i++) {
+> +            env->fpr[n].vreg.D(i) = ldq_le_p(mem_buf + 8 * i);
+> +            length += 8;
+> +        }
+> +    }
+> +
+> +    return length;
+> +}
+> +
+> +static int loongarch_gdb_get_lsx(CPUState *cs, GByteArray *mem_buf, int n)
+> +{
+> +    return loongarch_gdb_get_vec(cs, mem_buf, n, LSX_LEN);
+> +}
+> +
+> +static int loongarch_gdb_set_lsx(CPUState *cs, uint8_t *mem_buf, int n)
+> +{
+> +    return loongarch_gdb_set_vec(cs, mem_buf, n, LSX_LEN);
+> +}
+> +
+> +static int loongarch_gdb_get_lasx(CPUState *cs, GByteArray *mem_buf, int n)
+> +{
+> +    return loongarch_gdb_get_vec(cs, mem_buf, n, LASX_LEN);
+> +}
+> +
+> +static int loongarch_gdb_set_lasx(CPUState *cs, uint8_t *mem_buf, int n)
+> +{
+> +    return loongarch_gdb_set_vec(cs, mem_buf, n, LASX_LEN);
+> +}
+> +
+>   void loongarch_cpu_register_gdb_regs_for_features(CPUState *cs)
+>   {
+> -    gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
+> -                             gdb_find_static_feature("loongarch-fpu.xml"), 0);
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> +    CPULoongArchState *env = &cpu->env;
+> +
+> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
+> +        gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
+> +                                 gdb_find_static_feature("loongarch-fpu.xml"), 0);
+> +    }
+> +
+> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LSX)) {
+> +        gdb_register_coprocessor(cs, loongarch_gdb_get_lsx, loongarch_gdb_set_lsx,
+> +                                 gdb_find_static_feature("loongarch-lsx.xml"), 0);
+> +    }
+> +
+> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LASX)) {
+> +        gdb_register_coprocessor(cs, loongarch_gdb_get_lasx, loongarch_gdb_set_lasx,
+> +                                 gdb_find_static_feature("loongarch-lasx.xml"), 0);
+> +    }
+>   }
 
-Thanks,
-
-C.
-  
 
