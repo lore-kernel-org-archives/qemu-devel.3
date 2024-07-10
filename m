@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFF0C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B72FC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRY71-0003ys-Qb; Wed, 10 Jul 2024 10:16:04 -0400
+	id 1sRY7A-0005Xy-9b; Wed, 10 Jul 2024 10:16:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY62-0008Il-Td
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:07 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6m-0002DQ-GT
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:49 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY5z-0003zW-IJ
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:01 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2eebc76119aso15808781fa.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:14:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6W-0004Ek-AM
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:48 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-36798e62aeeso4244983f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:15:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720620896; x=1721225696; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720620926; x=1721225726; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MdllFDvAAAapWc9IpfzuQduI83NS5VUSC4hX+cxnlVQ=;
- b=ITtBZ9IL/y7oWbbPMgltYBk+YJ1xs0mclnl70ur1403UXjtrHUx/E+uRe/LhVZkhf8
- tkteQ+9Ycd8fX91Qc737yrksnrBUJrOk6cpb2Ks/YBjwWThCoOqjy1jib6oP8elXXQj4
- 36d10M+AwO0znbTxqOQPbpVlqKzSfcHAANUE8CFtmt4sLVzo2k3ICUb2pnFQRw0R5OFw
- nDNOvKCcQ2APBYRlGpa/zTYAFqcLQEZVrNGPPzlXCJS3Q74ek9MP85/QR/+QQgcHnfEd
- CKGfJCW5x0J2i2UPiiyLkXJ3EVN8YQOv/KGuYv0ERyAmHsyygWDv6WV3SM/Tplo/mHoR
- sC6Q==
+ bh=E592VUjNM/e32MWHdD7KwMvGh3P49D6D0LHQIn1oaLY=;
+ b=f+gtcbBtKrwwRBjIxCkoZUpe7GC7ZnimP78p8wUbldvdcJsZSlfJ1lfeuv5Fv7csd7
+ j1tnaooeo9r4NdmIY1rG1Hbfvn0voNLrW+wh2x7ymSjrSHE/vQmVfScFUmBVgITWd6qW
+ 5Rl9ZTWOPVHyXzMnDdJG509cPB15xafckqg6DXWxd/6VPORYdCQeO50NW6XJTh37nI1B
+ 0Rts45t/NjSp3RByiQrNs+W5BmwsMzo4/jSFFvj+0RZmi0vXkvpjy34BzNirYi8mCn7r
+ IaJdySSbu0dZQ8GPQQY09Tq1Qujthdp+L9tRsD0GNmWD5y1hj3uAmvSEhJSpJzk8Y6uX
+ avMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720620896; x=1721225696;
+ d=1e100.net; s=20230601; t=1720620926; x=1721225726;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MdllFDvAAAapWc9IpfzuQduI83NS5VUSC4hX+cxnlVQ=;
- b=iT4tepzz6KdtYGHzakVybXlYcWno3SHGHE5g3EnmcXufI/ffqP3QSruPglnpJ2EOzT
- mxdFavcXnJPo+TL6U9yY7BMWCp1CD0Je+7jOZIjF19atldLquJz8nT4AqbUjEuDS5p/d
- omg6mvXhSdO4/ZAP/LmtPlQSIkdSrMYelPJI4hqA7DkXZGIVJIHH9+vRlv59tdZK14Qa
- p9GPi2HQ2d0MI33WTJcVQCeaYzfZu5+e19rXyLrqz90gkHC2GRhg0nbvzaZ/dTleVMHi
- Ju/sh1ihHwXE3nYwOx1RtXCuTwQm4s4CEoNBTq31gXTdVX168+72lIyYQYEutQgI6UwW
- 2Vnw==
-X-Gm-Message-State: AOJu0Yycj1ncaW+mBETJ6fScd1aiAeD2DIw3gl/KmFwblujC3sQ6jFho
- N913Nmn7jty7dMrO0S/TsDp782nk5ugxSPT/QzEWTujbteyXOr2+PMcS2QKJxVCCMoPFR3SWRE8
- A
-X-Google-Smtp-Source: AGHT+IH3riRoxUpZsNolTqMmwUEi/L2akq/ZiKjuuvL66J8w6hxcvduQvHb81do9H1SOAKMZ+L7iDg==
-X-Received: by 2002:a2e:b0d2:0:b0:2ec:556f:3474 with SMTP id
- 38308e7fff4ca-2eeb318b5demr39410081fa.52.1720620896236; 
- Wed, 10 Jul 2024 07:14:56 -0700 (PDT)
+ bh=E592VUjNM/e32MWHdD7KwMvGh3P49D6D0LHQIn1oaLY=;
+ b=tJObPlczPsaMIllKBPui7i3PsddqvfIuHss3VLru01kJSNTsvmtBrphPd1FypZ6RMM
+ 2RUTAdUReRqKwq7mQgaw14fL6WCRwUv9bceBm0mwYxposZO+BLds2KPfjon98H33dLCg
+ wht7SMrAzEAtNMQQNlZwau/iP/flHwXyhLozsG1WKfSWfVNKS7JTY4tbTlsrCFHTF9OI
+ 0WbR8Ov0iFIDw+8TwURhvwXD6fsgnyM9B8mnns8pSNOOvUXnsjPfl0VnK/kzMUYU0tnq
+ yo2pqMZ5AbcVJZSlJX/24riuEobPz8eBCzOg/onABM+jWqdQ7uK28zN/HL9HK0mFpi0x
+ pfWw==
+X-Gm-Message-State: AOJu0Yz6ne2LamtLVdAn4FQRAPGWuDTLlyPEO0ljAdCkTlOiyNch72w2
+ Yh6kg8dx1TwqC+834Z/uAPIb2xAsKnTkczQe9GMc+LZoLHBA9IsAPyTRbW3YOoREaylGDK/U0xX
+ h
+X-Google-Smtp-Source: AGHT+IGzmVXduSvpxciVazkyRa9xURlFZEQnmCrmjjc4MZ1v5Y4aPM1pbwcjxC5QJC2ArB1pamsWWQ==
+X-Received: by 2002:adf:fdc3:0:b0:367:8a2f:a6dc with SMTP id
+ ffacd0b85a97d-367cead15b8mr3771606f8f.44.1720620926710; 
+ Wed, 10 Jul 2024 07:15:26 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.167.117])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f7430ffsm84124195e9.44.2024.07.10.07.14.54
+ ffacd0b85a97d-367cdfab161sm5414331f8f.91.2024.07.10.07.15.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 10 Jul 2024 07:14:55 -0700 (PDT)
+ Wed, 10 Jul 2024 07:15:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -68,26 +68,24 @@ Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v48 07/12] hw/sd/sdcard: Implement eMMC sleep state (CMD5)
-Date: Wed, 10 Jul 2024 16:14:03 +0200
-Message-ID: <20240710141408.69275-8-philmd@linaro.org>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v48 12/12] hw/sd/sdcard: Support boot area in emmc image
+Date: Wed, 10 Jul 2024 16:14:08 +0200
+Message-ID: <20240710141408.69275-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240710141408.69275-1-philmd@linaro.org>
 References: <20240710141408.69275-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,107 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+From: Joel Stanley <joel@jms.id.au>
 
-The JEDEC standards specifies a sleep state where the eMMC won't
-answer any command appart from RESET and WAKEUP and go to low power
-state.  Implement this state and the corresponding command number 5.
+This assumes a specially constructed image:
 
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
+  dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
+  dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
+  dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
+  cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
+  truncate --size 16GB mmc.img
+
+For now this still requires a mtd image to load the SPL:
+
+  qemu-system-arm -M tacoma-bmc -nographic \
+   -global driver=sd-card,property=emmc,value=true \
+   -drive file=mmc.img,if=sd,index=2,format=raw
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/sd/sd.c | 47 +++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 45 insertions(+), 2 deletions(-)
+ hw/sd/sd.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 3628686832..cf130ad1e3 100644
+index 86b857d414..8c68494b8b 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1236,8 +1236,19 @@ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
- /* CMD0 */
- static sd_rsp_type_t sd_cmd_GO_IDLE_STATE(SDState *sd, SDRequest req)
- {
--    sd->state = sd_idle_state;
--    sd_reset(DEVICE(sd));
-+    if (sd->state == sd_sleep_state) {
-+        switch (req.arg) {
-+        case 0x00000000:
-+        case 0xf0f0f0f0:
-+            break;
-+        default:
-+            return sd_r0;
-+        }
-+    }
-+    if (sd->state != sd_inactive_state) {
-+        sd->state = sd_idle_state;
-+        sd_reset(DEVICE(sd));
-+    }
- 
-     return sd_is_spi(sd) ? sd_r1 : sd_r0;
- }
-@@ -1294,6 +1305,30 @@ static sd_rsp_type_t emmc_cmd_SET_RELATIVE_ADDR(SDState *sd, SDRequest req)
-     }
+@@ -774,6 +774,40 @@ static uint32_t sd_blk_len(SDState *sd)
+     return sd->blk_len;
  }
  
-+/* CMD5 */
-+static sd_rsp_type_t emmc_cmd_sleep_awake(SDState *sd, SDRequest req)
++/*
++ * This requires a disk image that has two boot partitions inserted at the
++ * beginning of it. The size of the boot partitions is the "boot-size"
++ * property.
++ */
++static uint32_t sd_bootpart_offset(SDState *sd)
 +{
-+    bool do_sleep = extract32(req.arg, 15, 1);
++    bool partitions_enabled;
++    unsigned partition_access;
 +
-+    switch (sd->state) {
-+    case sd_sleep_state:
-+        if (!do_sleep) {
-+            /* Awake */
-+            sd->state = sd_standby_state;
-+        }
-+        return sd_r1b;
++    if (!sd->boot_part_size || !sd_is_emmc(sd)) {
++        return 0;
++    }
 +
-+    case sd_standby_state:
-+        if (do_sleep) {
-+            sd->state = sd_sleep_state;
-+        }
-+        return sd_r1b;
++    partitions_enabled = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                                   & EXT_CSD_PART_CONFIG_EN_MASK;
++    if (!partitions_enabled) {
++        return 0;
++    }
 +
++    partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
++                                 & EXT_CSD_PART_CONFIG_ACC_MASK;
++    switch (partition_access) {
++    case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
++        return sd->boot_part_size * 2;
++    case EXT_CSD_PART_CONFIG_ACC_BOOT0:
++        return 0;
++    case EXT_CSD_PART_CONFIG_ACC_BOOT0 + 1:
++        return sd->boot_part_size * 1;
 +    default:
-+        return sd_invalid_state_for_cmd(sd, req);
++         g_assert_not_reached();
 +    }
 +}
 +
- /* CMD6 */
- static sd_rsp_type_t sd_cmd_SWITCH_FUNCTION(SDState *sd, SDRequest req)
+ static uint64_t sd_req_get_address(SDState *sd, SDRequest req)
  {
-@@ -1696,6 +1731,7 @@ static sd_rsp_type_t sd_cmd_APP_CMD(SDState *sd, SDRequest req)
-     case sd_ready_state:
-     case sd_identification_state:
-     case sd_inactive_state:
-+    case sd_sleep_state:
-         return sd_invalid_state_for_cmd(sd, req);
-     case sd_idle_state:
-         if (!sd_is_spi(sd) && sd_req_get_rca(sd, req) != 0x0000) {
-@@ -2018,6 +2054,12 @@ int sd_do_command(SDState *sd, SDRequest *req,
-         req->cmd &= 0x3f;
+     uint64_t addr;
+@@ -806,6 +840,7 @@ static void sd_reset(DeviceState *dev)
+         sect = 0;
      }
+     size = sect << HWBLOCK_SHIFT;
++    size -= sd_bootpart_offset(sd);
  
-+    if (sd->state == sd_sleep_state && req->cmd) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "SD: Card is sleeping\n");
-+        rtype = sd_r0;
-+        goto send_response;
-+    }
-+
-     if (sd->card_status & CARD_IS_LOCKED) {
-         if (!cmd_valid_while_locked(sd, req->cmd)) {
-             sd->card_status |= ILLEGAL_COMMAND;
-@@ -2467,6 +2509,7 @@ static const SDProto sd_proto_emmc = {
-         [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
-         [3]  = {0,  sd_ac,   "SET_RELATIVE_ADDR", emmc_cmd_SET_RELATIVE_ADDR},
-         [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
-+        [5]  = {0,  sd_ac,   "SLEEP/AWAKE", emmc_cmd_sleep_awake},
-         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
-         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
-         [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
+     sect = sd_addr_to_wpnum(size) + 1;
+ 
+@@ -1029,6 +1064,7 @@ void sd_set_cb(SDState *sd, qemu_irq readonly, qemu_irq insert)
+ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ {
+     trace_sdcard_read_block(addr, len);
++    addr += sd_bootpart_offset(sd);
+     if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
+         fprintf(stderr, "sd_blk_read: read error on host side\n");
+     }
+@@ -1037,6 +1073,7 @@ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+ {
+     trace_sdcard_write_block(addr, len);
++    addr += sd_bootpart_offset(sd);
+     if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
+         fprintf(stderr, "sd_blk_write: write error on host side\n");
+     }
 -- 
 2.41.0
 
