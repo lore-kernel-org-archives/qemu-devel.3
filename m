@@ -4,69 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2758DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DD4C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRNhO-0006OL-Cu; Tue, 09 Jul 2024 23:08:54 -0400
+	id 1sRNnq-0002i5-3u; Tue, 09 Jul 2024 23:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sRNhL-0006NX-WE
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:08:52 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sRNhJ-0000WW-5r
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:08:51 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Ax0PEz+41m9bECAA--.8567S3;
- Wed, 10 Jul 2024 11:08:36 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx78cv+41ma_FBAA--.20398S3; 
- Wed, 10 Jul 2024 11:08:33 +0800 (CST)
-Subject: Re: [PATCH v2] target/loongarch: Remove avail_64 in trans_srai_w()
- and simplify it
-To: Feiyang Chen <chris.chenfeiyang@gmail.com>, richard.henderson@linaro.org
-Cc: c@jia.je, qemu-devel@nongnu.org
-References: <20240628033357.50027-1-chris.chenfeiyang@gmail.com>
- <CACWXhKkxXZF+6-V38BuFiRQPR+Wo+V0B1kh-wMU6YE5ibH0TZA@mail.gmail.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <82279357-2c18-061d-dafd-8f78279926de@loongson.cn>
-Date: Wed, 10 Jul 2024 11:08:42 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRNnn-0002ha-LR
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:15:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRNnh-0001sG-UK
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:15:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720581322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TK3JJW5BzyUQ+bDihznlgYyxLET6t/6FQENHsaUxxfs=;
+ b=f2ZoivPK5XN/i/chQg2/lSFsqTGicp+mZ+OROidJQqXpqbKIH8pqKvvoZTIBmeV+AiZUlD
+ cGafjurW4qnxMxiKG6YS7xlAMqEF56iJIpHEmkACqio8QwXB4xSBF4y0k/kMM32YIMYetm
+ W/gswjtru1IXncLfP6UxB4woZWNZLXY=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-120-ajWQlqzIP-GPlQkbUYGqLA-1; Tue, 09 Jul 2024 23:15:21 -0400
+X-MC-Unique: ajWQlqzIP-GPlQkbUYGqLA-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2c97ff21741so4374782a91.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:15:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720581320; x=1721186120;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TK3JJW5BzyUQ+bDihznlgYyxLET6t/6FQENHsaUxxfs=;
+ b=c92CaRN27Z7FRgdlSYG7/52aBsXhliKTeBd2Bxhg+UN9niH32BVBCCoLl29XhWq9ta
+ UXPedxLKKX0226Q0QQeuVjtPC26k8103e0hV2X/Blawr6bKfKZu/KcwrwYEXQECoUBSD
+ NlPro6K7u++w9+pyMafNfnLantCWhyNl3lKjiOrugOeObD8MYchj7oUMH1h+apv88Zcq
+ Sh/jctnK1sbnIoXaC5HbOxY0yofz+8pJzdhsR1xAfwSjMuFZ6VA4vPlfo9j22CPJ3MnE
+ 2Fl28OOHNX8U6QDXR1fjL4fTrsLpmgOHumxGmSHCkAdjceKFPeKRgsbMDpDW9oTf8v0k
+ WIHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWi7L869ITfKoaql5yifL9KUHFwkEdJfkRZDj1QU4/9anjM5s2oKED78No9gN73l88ArGhkY1mrSv1go7IH4p6QX4hy44=
+X-Gm-Message-State: AOJu0YzGgMJ75RGC/V3jEppMdUl7MhN0FiiQdGWDCDmwq7rAZMlTOJJn
+ prt7gqVwE3u6l8tmU7T6Ph1kyqm/rAqpka4sEH/1YwzQbBJW0swPRXr8wVbwGJoleR13lJSnzq+
+ bGqhGYE6KSv3zXDT/xDiyTQbxsQu2RBdCGkd/Sw/XyIriuWj3BH+E
+X-Received: by 2002:a17:90a:c590:b0:2c7:ab29:a751 with SMTP id
+ 98e67ed59e1d1-2ca35c78f02mr3642512a91.29.1720581320002; 
+ Tue, 09 Jul 2024 20:15:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHufQ8MxDo8T6SLgux9h4RBJVmq7z1vV6aNzQgqPKvKp454HNQrzKY7CgGcRzJzUOoCwlcX7w==
+X-Received: by 2002:a17:90a:c590:b0:2c7:ab29:a751 with SMTP id
+ 98e67ed59e1d1-2ca35c78f02mr3642503a91.29.1720581319534; 
+ Tue, 09 Jul 2024 20:15:19 -0700 (PDT)
+Received: from [172.20.2.228] ([4.28.11.157]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c99aa8d106sm10824662a91.50.2024.07.09.20.15.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jul 2024 20:15:19 -0700 (PDT)
+Message-ID: <6f99d0dc-8cad-435c-ad58-ffa69f44b2c0@redhat.com>
+Date: Wed, 10 Jul 2024 05:15:18 +0200
 MIME-Version: 1.0
-In-Reply-To: <CACWXhKkxXZF+6-V38BuFiRQPR+Wo+V0B1kh-wMU6YE5ibH0TZA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] virtio-balloon: make it spec compliant
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <8de2d4a6407d796d4d793975fc88e2f929f6025d.1720128585.git.mst@redhat.com>
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8Cx78cv+41ma_FBAA--.20398S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WryfXw1xZFWkGry8Ar43urX_yoW5JrykpF
- 4UCF1UKF48XrZ3ZrZ7Zw4DWFyDXFsFya12gw4IkFn5Cw4Dtr10grZ293yagryqy34Iqr40
- vFZa934qgay5J3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
- xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
- 6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
- 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
- JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU88Ma5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.431,
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <8de2d4a6407d796d4d793975fc88e2f929f6025d.1720128585.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,65 +151,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/7/10 上午10:43, Feiyang Chen 写道:
-> ping
->
-> https://lore.kernel.org/qemu-devel/20240628033357.50027-1-chris.chenfeiyang@gmail.com/
-Hi,
+On 04.07.24 23:30, Michael S. Tsirkin wrote:
+> Currently, if VIRTIO_BALLOON_F_FREE_PAGE_HINT is off but
+> VIRTIO_BALLOON_F_REPORTING is on, then the reporting vq
+> gets number 3 while spec says it's number 4.
+> It happens to work because the linux virtio pci driver
+> is *also* out of spec.
+> 
+> To fix:
+> 1. add vq4 as per spec
+> 2. to help out the buggy Linux driver, in the above configuration,
+>     also create vq3, and handle it exactly as we do vq4.
+> 
+> I think that some clever hack is doable to address the issue
+> for existing machine types (which would get it in user's hands
+> sooner), but I'm not 100% sure what, exactly.
+> 
+> This is a simpler, straight-forward approach.
+> 
+> Reported-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+> 
+> I don't think I'll stop here, I want to fix exiting machine types,
+> but sending this here for comparison.
+> I'll send a Linux patch later.
 
-I'll be pushing the LoongArch patches this week.
+The downside is that new machine types will stop working with mainline 
+Linux / major distros in that feature combination, right?
 
-Thanks.
-Song Gao
-> h
-> On Fri, Jun 28, 2024 at 1:34 PM Feiyang Chen
-> <chris.chenfeiyang@gmail.com> wrote:
->> Since srai.w is a valid instruction on la32, remove the avail_64 check
->> and simplify trans_srai_w().
->>
->> Fixes: c0c0461e3a06 ("target/loongarch: Add avail_64 to check la64-only instructions")
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Feiyang Chen <chris.chenfeiyang@gmail.com>
->> ---
->>   target/loongarch/tcg/insn_trans/trans_shift.c.inc | 15 +++------------
->>   1 file changed, 3 insertions(+), 12 deletions(-)
->>
->> diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
->> index 2f4bd6ff28..377307785a 100644
->> --- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
->> +++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
->> @@ -67,19 +67,9 @@ static void gen_rotr_d(TCGv dest, TCGv src1, TCGv src2)
->>       tcg_gen_rotr_tl(dest, src1, t0);
->>   }
->>
->> -static bool trans_srai_w(DisasContext *ctx, arg_srai_w *a)
->> +static void gen_sari_w(TCGv dest, TCGv src1, target_long imm)
->>   {
->> -    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
->> -    TCGv src1 = gpr_src(ctx, a->rj, EXT_ZERO);
->> -
->> -    if (!avail_64(ctx)) {
->> -        return false;
->> -    }
->> -
->> -    tcg_gen_sextract_tl(dest, src1, a->imm, 32 - a->imm);
->> -    gen_set_gpr(a->rd, dest, EXT_NONE);
->> -
->> -    return true;
->> +    tcg_gen_sextract_tl(dest, src1, imm, 32 - imm);
->>   }
->>
->>   TRANS(sll_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_sll_w)
->> @@ -94,6 +84,7 @@ TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
->>   TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
->>   TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, tcg_gen_shri_tl)
->>   TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
->> +TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
->>   TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
->>   TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
->>   TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
->> --
->> 2.34.1
->>
+What's the approach that you are thinking of?
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
