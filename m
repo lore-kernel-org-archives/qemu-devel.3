@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B3FC38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 06:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E364C38150
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 06:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRQVA-0005yE-L2; Wed, 10 Jul 2024 02:08:28 -0400
+	id 1sRQad-0002lE-Nz; Wed, 10 Jul 2024 02:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sRQV7-0005xD-Ik
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:08:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sRQV4-00062f-NY
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:08:25 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxLOtQJY5mI70CAA--.8235S3;
- Wed, 10 Jul 2024 14:08:16 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx78dNJY5mFhpCAA--.20698S3; 
- Wed, 10 Jul 2024 14:08:15 +0800 (CST)
-Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, QEMU devel <qemu-devel@nongnu.org>
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
- <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
- <db13dadd-6a04-4da1-893e-e613ad39ab15@app.fastmail.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <88a085c5-9de0-90a2-87c3-5fa885a97d80@loongson.cn>
-Date: Wed, 10 Jul 2024 14:08:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRQac-0002kU-U5
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:14:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRQab-0007AH-DT
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:14:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720592042;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROJclNC9vTiIqL+/uBAN7yosMldTLVHEhyrJJaaZ058=;
+ b=RW0P0IwpaCmRsjD7Wv1etV6Bm/8nxdjLYqcujxQcl19lDqWbfjsdTD2Ot5MFqXnuJok2I0
+ ZtUDEzBBRZfms+DYQbuzbgNQKuLu2Nl59GGaPMa6o5ygTKUIRFYuctSdh8F394VA0J6m5X
+ f66NvBo2VQ6ELGjHeA5Dfn6L8y0khQE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-134-HhQzvVXZM6O1ciHEGC7foQ-1; Wed, 10 Jul 2024 02:14:00 -0400
+X-MC-Unique: HhQzvVXZM6O1ciHEGC7foQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3678e549a1eso222135f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 23:14:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720592039; x=1721196839;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ROJclNC9vTiIqL+/uBAN7yosMldTLVHEhyrJJaaZ058=;
+ b=Xjz9XSnw37reWddA41vNVuYWWZzb/MKGE9gS0uFQ/602+qy4rBhjxPeHCeBcpQZ0gg
+ xTFQzqFU2VpYpEgAxk7aUBx0rWK630/bgIjMIQgPV5+UStghMNopZLGDMLzjPDFQTjUM
+ D/CAg6Zhei1yoG9n7wW11TzU0Xm0O5lBIWW3kAWlpiiSYxcMZkW6xYV/h9iX/TMk/zlz
+ D9ffqxWhy/PFeH1vX5TbI3VP6m+fLEC8hjr+ovRQuiBspUSICpp2HJSDlU601QOm7e5J
+ ZvS/p5cjugVsMTjAPifjAQ+r9jVx6RG13fJJ26ClgaWJ2/cZVUDeGRLDq0cNghXVhG3a
+ b31Q==
+X-Gm-Message-State: AOJu0YwgxnTl/fwMpW9TZfuLXROkZq6Tbf6CxWukFl8FDkOiCVRnci70
+ bp5ZwsUTDywt8AgyNakSFe9YkEXduYSM2GkTjmKI40qmdcrVAenctVDQW5kxicAfbq5LsxKNmTG
+ 1LYltM8nvUGar6yZW9NkEEsbueamvoUIhpQxZ7gmZnNIyrJ76EdhJ
+X-Received: by 2002:a5d:6943:0:b0:367:938f:550 with SMTP id
+ ffacd0b85a97d-367d2e6ad38mr3606316f8f.25.1720592039444; 
+ Tue, 09 Jul 2024 23:13:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkXDsRmxmSF/Z/x32Z1YpbYzNZxZiRnabMxSfG6iIJr8Z4JJEszxKEhaMMwuuzjrpQzAO6RQ==
+X-Received: by 2002:a5d:6943:0:b0:367:938f:550 with SMTP id
+ ffacd0b85a97d-367d2e6ad38mr3606286f8f.25.1720592038878; 
+ Tue, 09 Jul 2024 23:13:58 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:174:f6ae:a6e3:8cbc:2cbd:b8ff])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f6f5f25sm68444365e9.26.2024.07.09.23.13.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jul 2024 23:13:58 -0700 (PDT)
+Date: Wed, 10 Jul 2024 02:13:55 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH RFC] virtio-balloon: make it spec compliant
+Message-ID: <20240710021321-mutt-send-email-mst@kernel.org>
+References: <8de2d4a6407d796d4d793975fc88e2f929f6025d.1720128585.git.mst@redhat.com>
+ <6f99d0dc-8cad-435c-ad58-ffa69f44b2c0@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <db13dadd-6a04-4da1-893e-e613ad39ab15@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cx78dNJY5mFhpCAA--.20698S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuryrJryDuFyUZr15uFyrXwc_yoW5GryrpF
- W3C3Wa9r48Jry7Jrnaqas8XFy5Arn3GrW2vF1S934xCr90vF1Fvw18Ar93Way3A34DJFyj
- vFWrKryUWF1UA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
- F4_UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.431,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f99d0dc-8cad-435c-ad58-ffa69f44b2c0@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,77 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jul 10, 2024 at 05:15:18AM +0200, David Hildenbrand wrote:
+> On 04.07.24 23:30, Michael S. Tsirkin wrote:
+> > Currently, if VIRTIO_BALLOON_F_FREE_PAGE_HINT is off but
+> > VIRTIO_BALLOON_F_REPORTING is on, then the reporting vq
+> > gets number 3 while spec says it's number 4.
+> > It happens to work because the linux virtio pci driver
+> > is *also* out of spec.
+> > 
+> > To fix:
+> > 1. add vq4 as per spec
+> > 2. to help out the buggy Linux driver, in the above configuration,
+> >     also create vq3, and handle it exactly as we do vq4.
+> > 
+> > I think that some clever hack is doable to address the issue
+> > for existing machine types (which would get it in user's hands
+> > sooner), but I'm not 100% sure what, exactly.
+> > 
+> > This is a simpler, straight-forward approach.
+> > 
+> > Reported-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+> > 
+> > I don't think I'll stop here, I want to fix exiting machine types,
+> > but sending this here for comparison.
+> > I'll send a Linux patch later.
+> 
+> The downside is that new machine types will stop working with mainline Linux
+> / major distros in that feature combination, right?
 
+The should keep working, that's why I put in part 2. above.
 
-On 2024/7/10 下午12:00, Jiaxun Yang wrote:
+> What's the approach that you are thinking of?
 > 
+> -- 
+> Cheers,
 > 
-> 在2024年7月9日七月 下午8:04，maobibo写道：
->> Hi Philippe/Jiaxun,
->>
->> Could you do me a favor giving a review about this patch?
-> 
-> Hi Bibo,
-> 
-> I’m currently traveling, will test and review next week.
-> 
-> I’m not really convinced to give a R-b but I’m fine with a T-b.
-That is ok for me, have a good time.
-
-Regards
-Bibo Mao
-> 
-> Thanks
-> 
->>
->> Regards
->> Bibo Mao
->>
->> On 2024/7/4 上午11:37, Bibo Mao wrote:
->>> Now loongson ipi and loongarch ipi share the same code with different
->>> macro, loongson ipi has its separate function such mmio region,
->>> loongarch ipi has other requirement such as irqchip in kernel.
->>>
->>> Interrupt irqchip has strong relationship with architecture, since
->>> it sends irq to vcpu and interfaces to get irqchip register is also
->>> architecture specific.
->>>
->>> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
->>> is added, it comes from loongson ipi mostly. And it defined four abstract
->>> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 machine,
->>> also can be used for 3A5000 irqchip in kernel mode soon.
->>>
->>> Also Loongarch ipi and loongson ipi device are added here, it inherits
->>> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
->>> loongson ipi device only passes to compile and make check, it is not
->>> tested.
->>>
->>> Bibo Mao (4):
->>>     hw/intc/loongson_ipi_common: Add loongson ipi common class
->>>     hw/intc/loongarch_ipi: Add loongarch ipi support
->>>     hw/loongarch/virt: Replace loongson ipi with loongarch ipi
->>>     hw/intc/loongson_ipi: reconstruct driver inherit from common class
->>>
->>>    hw/intc/Kconfig                       |   3 +
->>>    hw/intc/loongarch_ipi.c               |  80 ++++++
->>>    hw/intc/loongson_ipi.c                | 330 ++-------------------
->>>    hw/intc/loongson_ipi_common.c         | 394 ++++++++++++++++++++++++++
->>>    hw/intc/meson.build                   |   3 +-
->>>    hw/loongarch/Kconfig                  |   2 +-
->>>    hw/loongarch/virt.c                   |   4 +-
->>>    include/hw/intc/loongarch_ipi.h       |  33 +++
->>>    include/hw/intc/loongson_ipi.h        |  54 ++--
->>>    include/hw/intc/loongson_ipi_common.h |  77 +++++
->>>    include/hw/loongarch/virt.h           |   1 -
->>>    11 files changed, 632 insertions(+), 349 deletions(-)
->>>    create mode 100644 hw/intc/loongarch_ipi.c
->>>    create mode 100644 hw/intc/loongson_ipi_common.c
->>>    create mode 100644 include/hw/intc/loongarch_ipi.h
->>>    create mode 100644 include/hw/intc/loongson_ipi_common.h
->>>
->>>
->>> base-commit: 6746482d12da3b6e4d3cdf06481a0027a797f719
->>>
-> 
+> David / dhildenb
 
 
