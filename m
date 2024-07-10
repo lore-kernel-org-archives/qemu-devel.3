@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D655C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AADDC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRZfj-00034M-3Z; Wed, 10 Jul 2024 11:55:59 -0400
+	id 1sRZhB-0006QV-BQ; Wed, 10 Jul 2024 11:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRZfh-00033b-73
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:55:57 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1sRZh8-0006Eg-Dd
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:57:26 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRZff-0005wL-Dk
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:55:56 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7669d62b5bfso3381800a12.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:55:54 -0700 (PDT)
+ id 1sRZh6-000628-NB
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:57:26 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-75c5bdab7faso3583322a12.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720626953; x=1721231753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720627043; x=1721231843; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hY37YlJoWvkT+jXQ4WvxZso7KTj0Lrpth2qy3uayfBE=;
- b=oIVYphMhUOHg76FK2pUYy2jO/qQEVGJynabnqgQl+bFC4owTwe6OSHoC9Gj70kJ5wE
- v2prC5gqd28qHi2Tnjx0HOLXUnnASN9XboCWK/M5IgmToT1dN9eTMRciZzY7csZY+yyV
- AEAan+oto7xpCjEJSf7dzA14+esRRIqPn7hOmxAgieyPBdO34GIEtSH56LGlOZxG88+k
- 20TkvPWFEpMRoIAnFcmYmofSsv27a4cB5L3bAEDUaJ4UebOhGUr6hiWlKR20Bg2+zFo7
- bX8RE0bKHyfP09AARV2a8c7x6Dnq2fHKfMYc6vp9qD5ypLepxU7z6tTH20PxLGqwW2Ho
- Rmzg==
+ bh=23AWD9dpEkddx+eo2Q6j8rjbwacngLnBtXcRsy+AZDI=;
+ b=yzxFPujTd6ti3f9f7EI8QayQEV7O2x7M8Q1NRBT7HQfq6Tnyb0BQ/F5prcLGe1ylXf
+ gPiC9eQsnuVQ/+RqtcdBA/c1YVrbjSMGDYmHMnnyxqKdC0hPJssu5KsOv63Bcwh/rxm0
+ Qvg7RO7/Yv5pXkT2v4rPiKoDAxrS+Q9tHAwBocENh/XctVeixub+rivv1SZFjfLwzLex
+ WgoLafdK+x4VfB/3uGN8okHDImABhF6IROtEfg/t2yjkxb132ZMgQvBTkBzVpOQGvZL4
+ 1RY8gdlRgycEradmCoIfBBmBV+ArJcox4KXup9m7yGbqeL7cBBYLRzAUi67PllOdc5Z4
+ yr8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720626953; x=1721231753;
+ d=1e100.net; s=20230601; t=1720627043; x=1721231843;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hY37YlJoWvkT+jXQ4WvxZso7KTj0Lrpth2qy3uayfBE=;
- b=lhbl8Tv4X7blbf401Q8IBKH7TiWhzHs/b+Q6FC7wAmt8mZFORpMr9bDtrQh5u7139C
- BPLCQfxyOrrOZNnNt6IYHrh0cym2GiehB6jSwknK7xjF5UKs0tBfwBnFswz7JJ5sfIuX
- CVebHspAcL4W25BP6SSgmmTZICorm3anjsoHDshDcPh8H/xQBnk8tNhR497IrVTJeeJb
- bcE7RDJpH6ab1ZNdjWCHdNvo/Axo2h5uMRadDGOLylV9fVaaAmcBUzfuB7ERctzsOwdO
- YHWa2A+AVIWmrgz+C2bIO8xoWQrJIzM8Najw6eghd4bkgjyncd8y71JgvsGMLBNjoLV8
- UqGA==
+ bh=23AWD9dpEkddx+eo2Q6j8rjbwacngLnBtXcRsy+AZDI=;
+ b=dchl7XUwPX/qznghP6V0Q923+DH4BYZyzf3DZUTg5y4SwWktJ56K1z8On3Ci9hICB8
+ ijgDYTWAPnR/1kSXxN+UrFZrCv9L3TfkTtfubmr+n8c6L70OulJZSTzAAJsnq/DUpdl3
+ mrR8zZVwedt5qeOBZOUCGQJUv08OIjnJdEojmYPZGHM0CkL+j9KI1s5Ovzm0ujtWsEwq
+ dU6A3EGYBQbktMbuAB1psTL4ymDnLsvxzI92rauzpTHu8JYXMQme/i6lerSv2AS2+kdY
+ F2ZOapgXj3TuQ8BkU/cWhBdOw8NGwfQuZBcVP7KkcBtWFGBit9KaYf520ctpGjFHOMQn
+ nD3g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRVIgVwvfrTlZ9JQAc7PBxvYy3s42BmkQGWPTKEIAdaUGuUxQskvyaFiP0NvMbCFzY6b07t53sfBkLIRwmIpburbIsEJM=
-X-Gm-Message-State: AOJu0Yw7DM+Wwj1pgn2lhMkvt4qI4UuW+cTNB2M2DQrxos257DBdBdWU
- b6XokteICiwb/nTb0dlgzClCQq7PLCxmhE8Txr0dTB1gZhDj9iApCSrsdmm0ZZo=
-X-Google-Smtp-Source: AGHT+IGl7av8jmlIQMdCxbAtb+FCnQT322f6pdgKdBxSo5VVU/AVZEcWDSB230elB65MMqEpjrX4xw==
-X-Received: by 2002:a05:6a20:1589:b0:1c2:8eb7:19cd with SMTP id
- adf61e73a8af0-1c2984c871emr6661824637.42.1720626953346; 
- Wed, 10 Jul 2024 08:55:53 -0700 (PDT)
+ AJvYcCVcsgOUsScje7BUSjXDyrnH4TtCK/eZ23w7dfWEiPaXt1WGuFIHsG/KPrwgIjYVLfj8B8nI67uZgmgrnhSRd/GS34J+pC4=
+X-Gm-Message-State: AOJu0Yx99BDWHODg4+wAYgUIOzFfMSFAOARJHJjY01CidoudhlCenoGC
+ uoLnpb9QxYcDJZGuNwr4T+C8+GgiTQW+1wBFzvPRc3K194IExmN0B9Mhz5Zcf2k=
+X-Google-Smtp-Source: AGHT+IEk193aBYoZxHSHuK1bot1dUBIZT2ZxdEX6HGvv1VLM+UjLD39CG6gbMeoX6JaETUemCrKwNw==
+X-Received: by 2002:a05:6a21:789f:b0:1c2:8b95:de15 with SMTP id
+ adf61e73a8af0-1c2984e11c1mr7200930637.53.1720627043108; 
+ Wed, 10 Jul 2024 08:57:23 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6ab75ffsm35389685ad.175.2024.07.10.08.55.52
+ d2e1a72fcca58-70b438bfa94sm3958461b3a.50.2024.07.10.08.57.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jul 2024 08:55:52 -0700 (PDT)
-Message-ID: <babc100c-35f7-4926-a1c5-afc0c49c47dd@linaro.org>
-Date: Wed, 10 Jul 2024 08:55:51 -0700
+ Wed, 10 Jul 2024 08:57:22 -0700 (PDT)
+Message-ID: <77dbe97a-01a2-4db9-8939-6d0976c69764@linaro.org>
+Date: Wed, 10 Jul 2024 08:57:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] target/i386/tcg: Compute MMU index once
+Subject: Re: [PATCH 07/10] target/i386/tcg: Use DPL-level accesses for
+ interrupts and call gates
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: rrh.henry@gmail.com
 References: <20240710062920.73063-1-pbonzini@redhat.com>
- <20240710062920.73063-7-pbonzini@redhat.com>
+ <20240710062920.73063-8-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240710062920.73063-7-pbonzini@redhat.com>
+In-Reply-To: <20240710062920.73063-8-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,13 +100,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/9/24 23:29, Paolo Bonzini wrote:
-> Add the MMU index to the StackAccess struct, so that it can be cached
-> or (in the next patch) computed from information that is not in
-> CPUX86State.
+> This fixes a bug wherein i386/tcg assumed an interrupt return using
+> the CALL or JMP instructions were always going from kernel or user mode to
+> kernel mode, when using a call gate. This assumption is violated if
+> the call gate has a DPL that is greater than 0.
 > 
-> Co-developed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> In addition, the stack accesses should count as explicit, not implicit
+> ("kernel" in QEMU code), so that SMAP is not applied if DPL=3.
+> 
+> Analyzed-by: Robert R. Henry<rrh.henry@gmail.com>
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/249
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/seg_helper.c | 13 ++++++-------
+>   1 file changed, 6 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
