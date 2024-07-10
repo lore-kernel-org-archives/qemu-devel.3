@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD109C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 01:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87D7C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 01:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRMBZ-0000Pw-F7; Tue, 09 Jul 2024 21:31:57 -0400
+	id 1sRMCs-0005nD-88; Tue, 09 Jul 2024 21:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRMBX-0000J5-Qw; Tue, 09 Jul 2024 21:31:55 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1sRMCo-0005ki-Ax; Tue, 09 Jul 2024 21:33:14 -0400
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRMBS-0001NJ-VF; Tue, 09 Jul 2024 21:31:55 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4f2ec49e067so1977294e0c.1; 
- Tue, 09 Jul 2024 18:31:50 -0700 (PDT)
+ id 1sRMCk-0001UH-0l; Tue, 09 Jul 2024 21:33:12 -0400
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-4e7eadf3668so2286727e0c.0; 
+ Tue, 09 Jul 2024 18:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720575109; x=1721179909; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720575187; x=1721179987; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wV+TO4+b9lnpg/Wg9YRKPKI5Rqu4BqPFcIU5j9kK+BA=;
- b=iYuo8nIBngECM2WSVY3yDSYUMCQYiAt8yn0Nm+9tvXIaqOMP6argj/AmV140Ta88fU
- AILnimQkEoQMRkhYHTaAv8vCrkvkOveeEy/txxZLIAe8TVf6BWl7Qeh0buuB2CH0Wzul
- yF1jDSkQ+R1HHS/UW/kC4gD93nVTVmqYverQD7kw2xM6kr7Pc+0ov7RWVmSPl9fHyNp3
- ndQEIK90FvWUAPzRnB67RxveNAivXqvJMeehr1e7gjZOWYXCsSHEl/E0LuKsS06AYF8C
- XkvfI0Q9FC2D9hBHii/dJRz644Mutk+UiF9t9CS/xLpEG6uRWYGcRo5fE+InaXhzTGfu
- YADg==
+ bh=qkx8kStre13Ac+v7aPPQ9slogI60apbpl/3c2FMpLxA=;
+ b=TBp87x5nsgJiTVTbYO2UXltu2ynQOEONiodBWcv4UDrisauNKXrFbTlZeVfd2tmc4P
+ NNAa2e125YaG6DytSwfBYo5ttXN2VHE3C/Ve2GsSmUoHsdtk6XN2PLc8q6HzUxmsNFmI
+ 14Mu78dCadXggfd8xBqiPM5Opuo0iWlHNYq02oo+Os3aTE1Bmv1rzygjF8pLHzBle6D1
+ zNq9lEVEAp6Z2SiLq6ZP+uydd67P+Nk7/bMT6rbMY6X439tVpAIky17v5Hxr8sUy3yS7
+ fciAMOy2ibxi37BMTUE0T2+TJhbq1D6LvEm4TGBy7GwKlCapJFBO21/qL4F+uDzEwRsg
+ dK2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720575109; x=1721179909;
+ d=1e100.net; s=20230601; t=1720575187; x=1721179987;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wV+TO4+b9lnpg/Wg9YRKPKI5Rqu4BqPFcIU5j9kK+BA=;
- b=bIA1nFJGV89genzvtiBApHEYB+8tYI/TyjbKsGrxo++mXGWx6S0roL509B3EJ/9D4Y
- jytby3BjVozXbdQzPEz9cgrwPBJyyrYX85jPPEQ8isbkBhmK0jMnBJcgymfDSzr9wtsg
- JSfxS7ogFfjNrQc4Zmgth383an8hrOFfy6+raCLci9I5YpFOeAy9y1UYtkqWiE27LRsH
- g5emATf9ORFJPJC6uCqY/8N3xhS+3Ly4hDriQ2LwcgU0I/1NUp+AKgUwDpVUzwHA/5b1
- Gbu1hV2D0EYziyCqDjd7wE2s3/mHLfEhtN9Hnb5qUyHinMFlJ5GcGcTn+/3RyZDWQejA
- 4/oQ==
+ bh=qkx8kStre13Ac+v7aPPQ9slogI60apbpl/3c2FMpLxA=;
+ b=JvVG2vIQk3SO3U/Wo0tphyXPFRCWy4usjfJqth8NeFkNtwzEvzv/i2PJUgphV4u3tX
+ VAWPdIyJNPM7zOvVdbkKA7TGtot4+HYg+G8FHLgG9SvCgquStXDwpS0nFgXUDF/mAMlB
+ M5Nt0bK4bS13PYjezG13ozm9oFNA3DfLEwNIxtD0Ohvf+ejR1fTKZ7RCPqS2CfxMyJs7
+ Ci68P9Mh6lVKogrDonXuz6AmY1tJs338oDxHVkvuaQTK8fO5oVc48xPEQrPJb+XhkD4q
+ EsJvSdhmsQwPhbOD7R5RhqVaNwb8MknZaH6XMFZpKKX6HrZSNghMggIReotRgLLcHxaf
+ hJow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVU6kbYajcp0GMMSQKp6hY2rLUu3ddlQDEDcfyRyl8vlfMghQiiDG8UOnhd9K1Q9bdkyb2M9QJPjYJbKKHeUFSvg5hhEg=
-X-Gm-Message-State: AOJu0Yx76g4wjp1YszL7Z/QgHS0htdjJJwdPbuspqRWAJZ+UH/I5PAD2
- RcujOy+mAYLMzGeBpHPOhAXl1IpGVVlgD0PxhKChRbShw7DufnfhS4ziK0UkS1adc5CYTk6Kx6f
- JhrQeCNrov9yAUXnjoBN3G8j0dSE=
-X-Google-Smtp-Source: AGHT+IGe8XzIdP4+Dyj/MvWXqUi9aYBlOBYtNhVikG7rmduX0AR6/zD6ZMWUeCoKdwhVhxVNZCeaKnNkDpKlqVwCS7s=
-X-Received: by 2002:ac5:c3c6:0:b0:4ef:58d4:70f5 with SMTP id
- 71dfb90a1353d-4f33f15fea9mr3829328e0c.2.1720575108963; Tue, 09 Jul 2024
- 18:31:48 -0700 (PDT)
+ AJvYcCU1GH6HdBr1tw/+soMatBawyHUWkmlhG3xU2hL0rK1j2YwZdukQU0vntcvdu2uI2X7FtGjUn3rdCTWnLwZjDsatTc+M8Ok=
+X-Gm-Message-State: AOJu0YyeoCSFfr4jl8Eje/LfJ4klk3citzacdmnSTx+Lh18U/3n8xq7P
+ +2Zotn/ysLzdXOR5nFgFTDCgkwgunwtsS0j+cNMViPQDWqkzOJwGFx1rVMnwvYtLd6fsfZWZqe+
+ QVuLMqhMrqKpStW8IEPo36PB7Bsg=
+X-Google-Smtp-Source: AGHT+IElsuui7GpqoZopKMDfOpyvkIr/FEqKTeBrb+FX+NnYsAWAZp5xKjtfp+FAwroKjjyyI8mAY3d7165GhmMNb/g=
+X-Received: by 2002:a05:6102:1505:b0:48f:eb37:fd86 with SMTP id
+ ada2fe7eead31-4903220aeffmr5234339137.30.1720575187505; Tue, 09 Jul 2024
+ 18:33:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240708131645.1345-1-zhiwei_liu@linux.alibaba.com>
- <20240708131645.1345-8-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240708131645.1345-8-zhiwei_liu@linux.alibaba.com>
+ <20240708131645.1345-6-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240708131645.1345-6-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 10 Jul 2024 11:31:22 +1000
-Message-ID: <CAKmqyKNOE2J95o0CRxDnxV-G4gmogaF-MoDsU7v+TF1hZ49brg@mail.gmail.com>
-Subject: Re: [PATCH v4 7/7] tests/avocado: Add an avocado test for riscv64
+Date: Wed, 10 Jul 2024 11:32:41 +1000
+Message-ID: <CAKmqyKN3U_iwf+vqJsaWpibpn8OjMFrfwBWgXUvnPWgCmXhF3w@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] target/riscv: Correct mcause/scause bit width for
+ RV32 in RV64 QEMU
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
@@ -69,15 +70,16 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,22 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 8, 2024 at 11:22=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
+On Mon, Jul 8, 2024 at 11:21=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
 a.com> wrote:
 >
 > From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 >
-> To regularly test booting Linux with rv32 on QEMU RV64,
-> we have added a test to boot_linux_console.py to retrieve
-> cpuinfo and verify if it shows 'rv32' when using RV64 to
-> boot rv32 CPUs.
+> Ensure mcause high bit is correctly set by using 32-bit width for RV32
+> mode and 64-bit width for RV64 mode.
 >
 > Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 > Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Something is wrong here, it should only be an Ack
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  target/riscv/cpu_helper.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 4f0ab90ac7..3eedb26cd9 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1673,6 +1673,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>      target_ulong tinst =3D 0;
+>      target_ulong htval =3D 0;
+>      target_ulong mtval2 =3D 0;
+> +    int sxlen =3D 0;
+> +    int mxlen =3D 0;
+>
+>      if (!async) {
+>          /* set tval to badaddr for traps with address information */
+> @@ -1799,7 +1801,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>          s =3D set_field(s, MSTATUS_SPP, env->priv);
+>          s =3D set_field(s, MSTATUS_SIE, 0);
+>          env->mstatus =3D s;
+> -        env->scause =3D cause | ((target_ulong)async << (TARGET_LONG_BIT=
+S - 1));
+> +        sxlen =3D 16 << riscv_cpu_sxl(env);
+> +        env->scause =3D cause | ((target_ulong)async << (sxlen - 1));
+>          env->sepc =3D env->pc;
+>          env->stval =3D tval;
+>          env->htval =3D htval;
+> @@ -1830,7 +1833,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>          s =3D set_field(s, MSTATUS_MPP, env->priv);
+>          s =3D set_field(s, MSTATUS_MIE, 0);
+>          env->mstatus =3D s;
+> -        env->mcause =3D cause | ~(((target_ulong)-1) >> async);
+> +        mxlen =3D 16 << riscv_cpu_mxl(env);
+> +        env->mcause =3D cause | ((target_ulong)async << (mxlen - 1));
+>          env->mepc =3D env->pc;
+>          env->mtval =3D tval;
+>          env->mtval2 =3D mtval2;
+> --
+> 2.43.0
+>
+>
 
