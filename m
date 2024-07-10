@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA476C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 20:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDAF9C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 20:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRdfY-0006DL-6g; Wed, 10 Jul 2024 16:12:04 -0400
+	id 1sRdkI-0003ZA-FJ; Wed, 10 Jul 2024 16:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRdfW-0006CL-PU
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:12:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRdfT-00012z-Vc
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:12:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720642319;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sRdkA-0003Vm-BQ
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:16:51 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sRdk3-00021G-Ka
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 16:16:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E7DAD21252;
+ Wed, 10 Jul 2024 20:16:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720642600; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sne4O/7Zu/ntHPFhCDNtjAjzsvQZBtwZ9haqmTrg9V8=;
- b=OxUCUdYia8qFtV9kOxSxaYatHY0q4kUHpyX6FgjQg4n0UPyHvNs7Lon++Sypg8bq4CJPBd
- um+bLc4eRYjmLNuGmdweJIet0eoFl6pl671QmOkiTfDt+hhuR6HT9G5FPs02G+pQyRNTKG
- NyUEpm2DJexwcVIkGIC3UinOBrDgfhw=
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
- [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-EYUi-8dEOh2PSuiryxnh2g-1; Wed, 10 Jul 2024 16:11:57 -0400
-X-MC-Unique: EYUi-8dEOh2PSuiryxnh2g-1
-Received: by mail-oa1-f72.google.com with SMTP id
- 586e51a60fabf-25e8c18a7c8so46981fac.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 13:11:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720642316; x=1721247116;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sne4O/7Zu/ntHPFhCDNtjAjzsvQZBtwZ9haqmTrg9V8=;
- b=hk7WEvRxjc0OznlgX0lKpaWiFhg3EwWqZSxNfp/pNnLkM3XxsRh5pvtH3jpyfeuBDg
- 9yYdXYr6bMfV7OoDcdvidobEt41LPtqjMINnAQWXGZkVQFOiizmIzh1F3BT6EKXq0XRd
- dX5jZtQP33+OzsTpwjAph0m9LAaKGZdaHPXScF0ydDcBM6a4WttcGDz/fL44ueUYj1Ko
- PE37h8BliYl3pIM+NJyVmjHRK0zUu9lxafrJ2Oi1L6kL9SdscFz6ggICPnA1+b7WE151
- jo/cCw0DzATzzFhPG4kHBGXifZcuchiLj0XURGPoKsg1KNzcj4TrctTKOSNZZn9vYKfl
- /ytQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhx6wrrhzML/19tW84fGXHKOG2uc1A6pRk3dBtWV6FtS5phPJ96w31mnhP91DHUncVFORcmD+jSHEo6naKqCoICuGT4P8=
-X-Gm-Message-State: AOJu0YyuHjO+jDVEmGRvtRwjlIJPj0mHg/h+rP85zQGJmx5bLZDiD/8r
- kjVUjCFUoljXWLc2GdUVuYVUib25L5o978U/V1SZ/rirqMPBqzyDhzMCiBb+7i4QIkel1Lysz75
- yd039elvlJRxG6LwbMSXo/+6NpDvrfQPbMnLZyTOGg3lx88u6B3Iu
-X-Received: by 2002:a05:6359:5f8f:b0:1aa:c73d:5a97 with SMTP id
- e5c5f4694b2df-1ac447ca679mr47857955d.1.1720642316691; 
- Wed, 10 Jul 2024 13:11:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUnKZChFKjZyh6ftGN9YJwS1oqiyRTCDF+NgxsdZUInNhqAKQPPIZXasWK/LgqphZBvIjcGw==
-X-Received: by 2002:a05:6359:5f8f:b0:1aa:c73d:5a97 with SMTP id
- e5c5f4694b2df-1ac447ca679mr47855155d.1.1720642316321; 
- Wed, 10 Jul 2024 13:11:56 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f18ff67cdsm224705285a.18.2024.07.10.13.11.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 13:11:56 -0700 (PDT)
-Date: Wed, 10 Jul 2024 16:11:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Tyrone Ting <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>,
- Hao Wu <wuhaotsh@google.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, devel@lists.libvirt.org,
- Luc Michel <luc.michel@amd.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on block
- drive (CMD56)
-Message-ID: <Zo7rCXtap2lWd4IB@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de>
- <Zo6iZjc8YpI1_9dW@x1n> <874j8xfc9s.fsf@suse.de>
- <Zo7dcF8OKfH92RlR@x1n> <871q41f2pk.fsf@suse.de>
+ bh=eKLNjjkf2S2Phui6tX/XEV6ls+tIJFaIZWdVSv6g3tE=;
+ b=gzugzNFtR/r5mgPkejW3FdJgmSTdbLLZSRHw4utdgoPDpQtFMLEjIue11FS7geUBTKBgbz
+ GMCm3DKO2sFVIYF6XFaaicZvB7tyYaaHcKlaFwSyXsMnQ0NyDK7WkKAXxnO8k41W2EwRBz
+ T89UlIPL7HME54In77f2WW8aK2XjXMo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720642600;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eKLNjjkf2S2Phui6tX/XEV6ls+tIJFaIZWdVSv6g3tE=;
+ b=RJKnGLqJWjJcEQGiVicAfNFzj4VoCLHPFx0fvmu+CBdLj8ky/A64/ngHuXNQ2OsLTU6DyO
+ dRY4vQas7sWKdjAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rnwQ+6vX;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jwYVjAb1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720642599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eKLNjjkf2S2Phui6tX/XEV6ls+tIJFaIZWdVSv6g3tE=;
+ b=rnwQ+6vXs6PvyndDXnvYYR31v+gRecpvQoAw0dbNrQWytdTJmp6LwnBbIMaYQOlamoQ445
+ fbIRteZFS8nNQf+hgxEWzCI2IukUOEhoINx8LAoMnshbGRGavEcRmMDS63+ucdZXqpVkgr
+ KeOWZama1Xur3pzpeMVRHaePUvLG2vE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720642599;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eKLNjjkf2S2Phui6tX/XEV6ls+tIJFaIZWdVSv6g3tE=;
+ b=jwYVjAb1yFKQugUgTKTFZ8siELf2AMFXtxc4/ZHzqiD3HT1pI/JeMHu/ScN7xyA0XeCWg1
+ uY/mx6NfQLOITeCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6EF43137D2;
+ Wed, 10 Jul 2024 20:16:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ksiTDSfsjmbKIAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 10 Jul 2024 20:16:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org, "Maciej S .
+ Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
+ the channel parameters
+In-Reply-To: <Zo7cncqkxB89AUBe@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <20240620212111.29319-7-farosas@suse.de>
+ <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com> <Zn15y693g0AkDbYD@x1n>
+ <877cdtfcsi.fsf@suse.de> <Zo7cncqkxB89AUBe@x1n>
+Date: Wed, 10 Jul 2024 17:16:36 -0300
+Message-ID: <87y169dmu3.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <871q41f2pk.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: E7DAD21252
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,63 +125,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 04:48:23PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Wed, Jul 10, 2024 at 01:21:51PM -0300, Fabiano Rosas wrote:
-> >> It's not about trust, we simply don't support migrations other than
-> >> n->n+1 and (maybe) n->n-1. So QEMU from 2016 is certainly not included.
-> >
-> > Where does it come from?  I thought we suppport that..
-> 
-> I'm taking that from:
-> 
-> docs/devel/migration/main.rst:
->   "In general QEMU tries to maintain forward migration compatibility
->   (i.e. migrating from QEMU n->n+1) and there are users who benefit from
->   backward compatibility as well."
-> 
-> But of course it doesn't say whether that comes with a transitive rule
-> allowing n->n+2 migrations.
+Peter Xu <peterx@redhat.com> writes:
 
-I'd say that "i.e." implies n->n+1 is not the only forward migration we
-would support.
+> On Wed, Jul 10, 2024 at 01:10:37PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Thu, Jun 27, 2024 at 11:27:08AM +0800, Wang, Lei wrote:
+>> >> > Or graphically:
+>> >> > 
+>> >> > 1) client fills the active slot with data. Channels point to nothing
+>> >> >    at this point:
+>> >> >   [a]      <-- active slot
+>> >> >   [][][][] <-- free slots, one per-channel
+>> >> > 
+>> >> >   [][][][] <-- channels' p->data pointers
+>> >> > 
+>> >> > 2) multifd_send() swaps the pointers inside the client slot. Channels
+>> >> >    still point to nothing:
+>> >> >   []
+>> >> >   [a][][][]
+>> >> > 
+>> >> >   [][][][]
+>> >> > 
+>> >> > 3) multifd_send() finds an idle channel and updates its pointer:
+>> >> 
+>> >> It seems the action "finds an idle channel" is in step 2 rather than step 3,
+>> >> which means the free slot is selected based on the id of the channel found, am I
+>> >> understanding correctly?
+>> >
+>> > I think you're right.
+>> >
+>> > Actually I also feel like the desription here is ambiguous, even though I
+>> > think I get what Fabiano wanted to say.
+>> >
+>> > The free slot should be the first step of step 2+3, here what Fabiano
+>> > really wanted to suggest is we move the free buffer array from multifd
+>> > channels into the callers, then the caller can pass in whatever data to
+>> > send.
+>> >
+>> > So I think maybe it's cleaner to write it as this in code (note: I didn't
+>> > really change the code, just some ordering and comments):
+>> >
+>> > ===8<===
+>> > @@ -710,15 +710,11 @@ static bool multifd_send(MultiFDSlots *slots)
+>> >       */
+>> >      active_slot = slots->active;
+>> >      slots->active = slots->free[p->id];
+>> > -    p->data = active_slot;
+>> > -
+>> > -    /*
+>> > -     * By the next time we arrive here, the channel will certainly
+>> > -     * have consumed the active slot. Put it back on the free list
+>> > -     * now.
+>> > -     */
+>> >      slots->free[p->id] = active_slot;
+>> >  
+>> > +    /* Assign the current active slot to the chosen thread */
+>> > +    p->data = active_slot;
+>> > ===8<===
+>> >
+>> > The comment I removed is slightly misleading to me too, because right now 
+>> > active_slot contains the data hasn't yet been delivered to multifd, so
+>> > we're "putting it back to free list" not because of it's free, but because
+>> > we know it won't get used until the multifd send thread consumes it
+>> > (because before that the thread will be busy, and we won't use the buffer
+>> > if so in upcoming send()s).
+>> >
+>> > And then when I'm looking at this again, I think maybe it's a slight
+>> > overkill, and maybe we can still keep the "opaque data" managed by multifd.
+>> > One reason might be that I don't expect the "opaque data" payload keep
+>> > growing at all: it should really be either RAM or device state as I
+>> > commented elsewhere in a relevant thread, after all it's a thread model
+>> > only for migration purpose to move vmstates..
+>> 
+>> Some amount of flexibility needs to be baked in. For instance, what
+>> about the handshake procedure? Don't we want to use multifd threads to
+>> put some information on the wire for that as well?
+>
+> Is this an orthogonal question?
 
-I _think_ we should support all forward migration as long as the machine
-type matches.
+I don't think so. You say the payload data should be either RAM or
+device state. I'm asking what other types of data do we want the multifd
+channel to transmit and suggesting we need to allow room for the
+addition of that, whatever it is. One thing that comes to mind that is
+neither RAM or device state is some form of handshake or capabilities
+negotiation.
 
-> 
-> >
-> > The same question would be: are we requesting an OpenStack cluster to
-> > always upgrade QEMU with +1 versions, otherwise migration will fail?
-> 
-> Will an OpenStack cluster be using upstream QEMU? If not, then that's a
+>
+> What I meant above is it looks fine to me to keep "device state" in
+> multifd.c, as long as it is not only about VFIO.
+>
+> What you were saying seems to be about how to identify this is a device
+> state, then I just hope VFIO shares the same flag with any future device
+> that would also like to send its state via multifd, like:
+>
+> #define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
+>
+> Then set it in MultiFDPacket_t.flags.  The dest qemu should route that
+> packet to the device vmsd / save_entry for parsing.
 
-It's an example to show what I meant! :) Nothing else. Definitely not
-saying that everyone should use an upstream released QEMU (but in reality,
-it's not a problem, I think, and I do feel like people use them, perhaps
-more with the stable releases).
+Sure, that part I agree with, no issue here.
 
-> question for the distro. In a very practical sense, we're not requesting
-> anything. We barely test n->n+1/n->n-1, even if we had a strong support
-> statement I wouldn't be confident saying migration from QEMU 2.7 -> QEMU
-> 9.1 should succeed.
+>
+>> 
+>> > Putting it managed by multifd thread should involve less change than this
+>> > series, but it could look like this:
+>> >
+>> > typedef enum {
+>> >     MULTIFD_PAYLOAD_RAM = 0,
+>> >     MULTIFD_PAYLOAD_DEVICE_STATE = 1,
+>> > } MultifdPayloadType;
+>> >
+>> > typedef enum {
+>> >     MultiFDPages_t ram_payload;
+>> >     MultifdDeviceState_t device_payload;
+>> > } MultifdPayload;
+>> >
+>> > struct MultiFDSendData {
+>> >     MultifdPayloadType type;
+>> >     MultifdPayload data;
+>> > };
+>> 
+>> Is that an union up there? So you want to simply allocate in multifd the
+>
+> Yes.
+>
+>> max amount of memory between the two types of payload? But then we'll
+>
+> Yes.
+>
+>> need a memset(p->data, 0, ...) at every round of sending to avoid giving
+>> stale data from one client to another. That doesn't work with the
+>
+> I think as long as the one to enqueue will always setup the fields, we
+> don't need to do memset.  I am not sure if it's a major concern to always
+> set all the relevant fields in the multifd enqueue threads.  It sounds like
+> the thing we should always better do.
 
-No matter what we test in CI, I don't think we should break that for >1
-versions..  I hope 2.7->9.1 keeps working, otherwise I think it's legal to
-file a bug by anyone.
+Well, writing to a region of memory that was "owned" by another multifd
+client and already has a bunch of data there is somewhat prone to
+bugs. Just forget to set something and now things start to behave
+weirdly. I guess that's just the price of having an union. I'm not
+against that, but I would maybe prefer to have each client hold its own
+data and not have to think about anything else. Much of this feeling
+comes from how the RAM code currently works (more on that below).
 
-For example, I randomly fetched a bug report:
+>
+>> current ram migration because it wants p->pages to remain active across
+>> several calls of multifd_queue_page().
+>
+> I don't think I followed here.
+>
+> What I meant: QEMU maintains SendData[8], now a bunch of pages arrives, it
+> enqueues "pages" into a free slot index 2 (set type=pages), then before
+> thread 2 finished sending the bunch of pages, SendData[2] will always
+> represent those pages without being used by anything else. What did I miss?
+>
 
-https://gitlab.com/qemu-project/qemu/-/issues/1937
+You're missing multifd_send_state->pages and the fact that it holds
+unsent data on behalf of the client. At every call to
+multifd_queue_pages(), the RAM code expects the previously filled pages
+structure to be there. Since we intend to have more than one multifd
+client, now the other client (say device state) might run, it will take
+that slot and fill it with it's own stuff (or rather fill p->send_data
+and multifd_send_pages() switches the pointer). Next call to
+multifd_queue_pages(), it will take multifd_send_state->pages and
+there'll be garbage there.
 
-QEMU version:                6.2 and 7.2.5
+The code is not: take a free slot from the next idle channel and fill it
+with data.
 
-And I believe that's the common case even for upstream.  If we don't do
-that right for upstream, it can be impossible tasks for downstream and for
-all of us to maintain.
+It is: take from multifd_send_state the active slot which *might* have
+previously been consumed by the last channel and (continue to) fill it
+with data.
 
--- 
-Peter Xu
+"might", because successive calls to multifd_queue_page() don't need to
+call multifd_send_page() to flush to the channel.
 
+>> 
+>> >
+>> > Then the "enum" makes sure the payload only consumes only the max of both
+>> > types; a side benefit to save some memory.
+>> >
+>> > I think we need to make sure MultifdDeviceState_t is generic enough so that
+>> > it will work for mostly everything (especially normal VMSDs).  In this case
+>> > the VFIO series should be good as that was currently defined as:
+>> >
+>> > typedef struct {
+>> >     MultiFDPacketHdr_t hdr;
+>> >
+>> >     char idstr[256] QEMU_NONSTRING;
+>> >     uint32_t instance_id;
+>> >
+>> >     /* size of the next packet that contains the actual data */
+>> >     uint32_t next_packet_size;
+>> > } __attribute__((packed)) MultiFDPacketDeviceState_t;
+>> 
+>> This is the packet, a different thing. Not sure if your paragraph above
+>> means to talk about that or really MultifdDeviceState, which is what is
+>> exchanged between the multifd threads and the client code.
+>
+> I meant the wire protocol looks great from that POV.  We may need similar
+> thing for the type==device_state slots just to be generic.
+>
+>> 
+>> >
+>> > IIUC that was what we need exactly with idstr+instance_id, so as to nail
+>> > exactly at where should the "opaque device state" go to, then load it with
+>> > a buffer-based loader when it's ready (starting from VFIO, to get rid of
+>> > qemufile).  For VMSDs in the future if ever possible, that should be a
+>> > modified version of vmstate_load() where it may take buffers not qemufiles.
+>> >
+>> > To Maciej: please see whether above makes sense to you, and if you also
+>> > agree please consider that with your VFIO work.
+>> >
+>> > Thanks,
+>> >
+>> >> 
+>> >> >   []
+>> >> >   [a][][][]
+>> >> > 
+>> >> >   [a][][][]
+>> >> >   ^idle
+>> 
 
