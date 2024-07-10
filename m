@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F48BC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AF9C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRYpf-0000zV-JL; Wed, 10 Jul 2024 11:02:11 -0400
+	id 1sRZ5N-0007Wl-Tb; Wed, 10 Jul 2024 11:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRYpe-0000y8-8X
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:02:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRYpc-0004RK-J3
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:02:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720623725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RKQSs8FWr7Zn5l+H828xnzTIT8nIZAPC2TEWmBUKCkQ=;
- b=aUz3KWWR+qJw2EouE4DGmMR0VsU5v+IakFpIWaehdWQ5FaMxi9hFT3BPBfAQaECEgFqtnR
- AHH3NrZClcYr4K2CW5xzysnDTexnnuVwXfXcBTJGSSriJSoOp5JJZjC0IOty98WXrLecPy
- jXhSz3PIrU+O2dZGTWv2i/CZ5a2GUZ4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-HrJ6cgBlM42jLKRghP8DJA-1; Wed, 10 Jul 2024 11:02:03 -0400
-X-MC-Unique: HrJ6cgBlM42jLKRghP8DJA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-79f1b638b6bso4632485a.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:02:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRZ5M-0007Vc-5K
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:18:24 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRZ5K-0007cr-JF
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:18:23 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-70aec66c936so4638467b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:18:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720624701; x=1721229501; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zeehRk2zxOx+fW4LQEvVNvKsMPyKbvFR1hHWZSJ5RsE=;
+ b=B7rvNYNJLyiA6cywoKYrvK8pJS08KOn1dwuMGxqju4ZJpIYa+Dl5gGfZkRO8neShZ2
+ V0kFBKCyKrxL3ouLXY7WzDG4XiERVxBHxaQ78qPMo5zy40ZlVd8wfBtqRF9qfcxWenJN
+ TTpp5zd8MwV/pLVTMtmdMNmZCn+X5b6UgXhXD/1AGU3ko+nblqF4nUxnjN0fe8BqYfdW
+ j08FWiLiyOdxn34Tdm3emMSOqd1k/BW1hPBRhGIlMPryAGBWD6UfHDE3N7irEqW+eDMK
+ IqkSXbUY9HsUCFkWQktx9lQVQYt05ETuf0Z/yrATZmNUiatOgXYO+ri1Nrlr4FEF1Kn3
+ 1E5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720623723; x=1721228523;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RKQSs8FWr7Zn5l+H828xnzTIT8nIZAPC2TEWmBUKCkQ=;
- b=nteRyh+KHifIe12EzebyXOqU0H3h1mgtWybGwx2odqwFx+EP4V1FXYJgy2Nv3N2cLk
- 8ZbGFWxpYcHCnRtAk5EAucDrrwm2CqD3V2NqrHzERLJuT1CmzGF+fWW2zlz6dX+oPxjK
- hLjn89iCPMTOblMEH1ulmoptZQrteMV0C7oRb6UJCI1x7rYcgOT/LGkEd6WhUeST6Owr
- yl6A7Z87Q6srhCMxlJ0t9s+jQPNHHl7u16AkGEDCdWrVEbAyrwX7uoi2nlEskWMTdMwX
- 5y0cw+tTe4DNMzqwGMGKniy64QMa7r90+DmyQIqPDacmy3nF3nCOCx8MwURVZ4Cs2vmu
- oMFw==
+ d=1e100.net; s=20230601; t=1720624701; x=1721229501;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zeehRk2zxOx+fW4LQEvVNvKsMPyKbvFR1hHWZSJ5RsE=;
+ b=SlEwUKcX2bEb2RCrmhJCpr/j0dAkm4Hp3PkOCur0tjLx/17tdHGK5E3ejCoqMlboje
+ WMRcGV9FmY+WxAqTvFbzsFQvDNWXViVFLqpcxJ3AgOi3iS6oPwuaOEHSWO3r0Kq6Tun/
+ Let2214olfs55XAORS5mmTD1Wr6On+74502RZOLy3afVS/8xwpuFvnMtLxRqlP+aItA/
+ bNKVs8micU41RiYqneubkcsxOc0Te1hjvc5sESGXrlG+8oQn52A+86MNIpIzTyO4tutB
+ qbFSbD0V+SjppJsffonwBVfulI7j/6KKQrz+YuAi4Dkzzy36eP0pakMIvy4mGBkkvPZY
+ xKCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+KOtprLgLOAo7lfDFtvvRO1dBMCRlGwibiHXiDMU06yKD+nu+bIh3J9p3pRm2LXHGI3EpBrpl/0zlbZxMZJm9VvOqtJw=
-X-Gm-Message-State: AOJu0YzJZGLQFG/cKGjMjvrdJTsik5Yozr4aYiQwetKSjpC8J4K+QfIm
- zmC3v/ilbSU51giExAbEn3i9/sV4WIM8h+7yoWllGLByY8MR8z1kQIHk/KfBHRQBB1/lknYwM1M
- 42qASSmvh35E/GDOhpNkxHkHZCCRke2S9/G3wQD/8LCPbgY074C5j
-X-Received: by 2002:a05:620a:1a94:b0:79f:b3c:8fc3 with SMTP id
- af79cd13be357-79f19bee0d0mr649671285a.6.1720623723061; 
- Wed, 10 Jul 2024 08:02:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSzhl0Khbx3PFBWwojh+YkQYtRW+LPaY9KzNilVVBCoiCKCtaRDbKW3+kR1MyemMVyU08VDA==
-X-Received: by 2002:a05:620a:1a94:b0:79f:b3c:8fc3 with SMTP id
- af79cd13be357-79f19bee0d0mr649666885a.6.1720623722685; 
- Wed, 10 Jul 2024 08:02:02 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f190103e1sm202838085a.42.2024.07.10.08.02.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 08:02:01 -0700 (PDT)
-Date: Wed, 10 Jul 2024 11:01:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Tyrone Ting <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>,
- Hao Wu <wuhaotsh@google.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, devel@lists.libvirt.org,
- Luc Michel <luc.michel@amd.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on block
- drive (CMD56)
-Message-ID: <Zo6iZjc8YpI1_9dW@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de>
+ AJvYcCVqjkOJzMbTNmAjeihnNIaSOEsbf5j4VHF5O5W2rOjYDJdw8No2MbVHBbxQ89lyKeRmdqXw6J1Cnzdy/OoG+LDaFv2NlJE=
+X-Gm-Message-State: AOJu0YzG8AhFVUruChQs0Bj9jg9pEzKvwKjsM07B2FZF9JmfuUUo+J9/
+ seaAiLEwWNHXkbzCLcW+rgKumtIstiVTYnGIarD/UtJojKOsIuzhEULt0wNBngU=
+X-Google-Smtp-Source: AGHT+IF66ELYdWqrAMY2Zd+6vBZUtB8ho+LybVsQVr5aH8MMhBK2TDGH2U8EQkXqzIm3bS2YLwvNXA==
+X-Received: by 2002:a05:6a20:2583:b0:1c0:f23b:cad3 with SMTP id
+ adf61e73a8af0-1c29822de6dmr6082572637.22.1720624700868; 
+ Wed, 10 Jul 2024 08:18:20 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b4396779csm3912671b3a.106.2024.07.10.08.18.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jul 2024 08:18:20 -0700 (PDT)
+Message-ID: <04827c78-1757-4a7c-b0b4-7eefb1958499@linaro.org>
+Date: Wed, 10 Jul 2024 08:18:18 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87a5ipfigb.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386/tcg: fix POP to memory in long mode
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+References: <20240710141328.388955-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240710141328.388955-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,49 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 11:08:20AM -0300, Fabiano Rosas wrote:
-> >> I think it's ok:
-> >> 
-> >> {
-> >>   "field": "unused",
-> >>   "version_id": 1,
-> >>   "field_exists": false,
-> >>   "size": 512
-> >> },
-> >> 
-> >> vs.
-> >> 
-> >> {
-> >>   "field": "vendor_data",
-> >>   "version_id": 0,
-> >>   "field_exists": false,
-> >>   "num": 512,
-> >>   "size": 1
-> >> },
-> >> 
-> >> The unused field was introduced in 2016 so there's no chance of
-> >> migrating a QEMU that old to/from 9.1.
-> >
-> > What happens if an old qemu 9.0 sends rubbish here to a new QEMU, while the
-> > new QEMU would consider it meaningful data?
+On 7/10/24 07:13, Paolo Bonzini wrote:
+> In long mode, POP to memory will write a full 64-bit value.  However,
+> the call to gen_writeback() in gen_POP will use MO_32 because the
+> decoding table is incorrect.
 > 
-> It will send zeros, no? The code will have to cope with that. The
-> alternative is to put the vendor_data in a subsection and the code will
-> also have to cope with the lack of data when the old QEMU doesn't send
-> it.
+> The bug was latent until commit aea49fbb01a ("target/i386: use gen_writeback()
+> within gen_POP()", 2024-06-08), and then became visible because gen_op_st_v
+> now receives op->ot instead of the "ot" returned by gen_pop_T0.
+> 
+> Analyzed-by: Clément Chigot<chigot@adacore.com>
+> Fixes: 5e9e21bcc4d ("target/i386: move 60-BF opcodes to new decoder", 2024-05-07)
+> Tested-by: Clément Chigot<chigot@adacore.com>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/decode-new.c.inc | 2 +-
+>   target/i386/tcg/emit.c.inc       | 2 ++
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 
-Ah indeed, that "static const uint8_t buf[1024]" is there at least since
-2017.  So yes, probably always sending zeros.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Nothing I can think of otherwise indeed, if we want to trust that nothing
-will migrate before 2016.  It's just that we may want to know how that
-"2016" is justified to be safe if we would like to allow that in the
-future.
-
-One thing _could_ be that "rule of thumb" is we plan to obsolete machines
-with 6 years, so anything "UNUSED" older than 6 years can be over-written?
-
--- 
-Peter Xu
-
+r~
 
