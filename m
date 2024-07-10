@@ -4,89 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1F6C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968F5C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRa0Q-00071e-OG; Wed, 10 Jul 2024 12:17:22 -0400
+	id 1sRa4z-0004Kj-1r; Wed, 10 Jul 2024 12:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sRa0N-00070S-HL
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:17:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sRa0K-0001C0-Pz
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:17:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720628235;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sRa4w-0004FM-Sz; Wed, 10 Jul 2024 12:22:02 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sRa4t-00020q-Va; Wed, 10 Jul 2024 12:22:01 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F08811F83C;
+ Wed, 10 Jul 2024 16:21:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720628516; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RN+Cyaod45FRM4pbFQEXu+jCysRMbqUsAMGmsZni5WE=;
- b=TsFUsmmh/PzuoAQzgzEMFu1Ofh7L4890BhQudUSBSM8Jf4cJlIULLyMdY6yJJ7dm6HRYTR
- aZM7azAnqv32qsh4lszLyYcHw6hWu2mjlSaHBU0vkhl8bMu+NMXcufx+Kdy+6vvqLP52Hv
- IsXHPnS1Rls3S1nkY9bqgSSPimma6Xo=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-100-6r70zM12M3iYou9W90RORw-1; Wed, 10 Jul 2024 12:17:12 -0400
-X-MC-Unique: 6r70zM12M3iYou9W90RORw-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-653306993a8so95614757b3.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 09:17:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720628232; x=1721233032;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RN+Cyaod45FRM4pbFQEXu+jCysRMbqUsAMGmsZni5WE=;
- b=obrCW0SrT70H01UaxmzcrVU0jeWHIh/0b+Ej8pP6H6opw518e1Aa2N+zLwNoFnpVVi
- y67zt/6wQw+4s33Vwztei/EMedERiCMMsbNKD+ZqAvRevhIlZ24whlZBJxzlSUt5z0cc
- UfM0f9+Qxx5zE9hJ3XYG+NrcKEzVCmmQK8MJRyvVeci/8qdim7jsgkudXe6c4+hAcu1g
- lJxF0SBd2jdufG7IRx/WbjbttgLez0lr57PzvTyHMapsInbkYE2v77rjbFcN5M3CE0s9
- RoPuij41FwyWxL45qfqaNK5q8afgZAfVeRPmFux15eJ43Rp1w2PC6/a+ytJnDafxJn4I
- AtMA==
-X-Gm-Message-State: AOJu0YwAtn+cb7wcmt+L7ggz+73glCPYHBYxBynDD/lQeiWDvozJT5rx
- PWU1yYvOle9IAN3Rux0WNrwNU0uvnC0mVhMaUJPRgS1LyDRs/h8eArQi6RbDjjt20FKb9jSQRAA
- Ftku2KR0KUyHViBk22SV+/rOlo/Yn93QZkem6tJkOcYBUPu1q8gPRpldDxgrbDHgfkovp4caj5c
- xhm0LkLVJG1LryNB8yrwALxG9o3DA=
-X-Received: by 2002:a81:5b42:0:b0:64a:6eda:fc60 with SMTP id
- 00721157ae682-658ee69ac4cmr68719307b3.4.1720628232331; 
- Wed, 10 Jul 2024 09:17:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEx96Zdg0x9PwmiJz7fW1Yj/5iewtu0Rawq71SJ5g0w/ZxTyxwG3nC+/ch8ExvdfAmm4qFIsLa85dROMUHl0LI=
-X-Received: by 2002:a81:5b42:0:b0:64a:6eda:fc60 with SMTP id
- 00721157ae682-658ee69ac4cmr68718837b3.4.1720628231788; Wed, 10 Jul 2024
- 09:17:11 -0700 (PDT)
+ bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
+ b=ESkfFuhmuloMc2tLwFLU+zCpmE5LHNafa8erp+mpIXhpyy3Ex8uN72kx7i14Q5o/KSBSXa
+ sGu7GYwSGCOq+uJos0988eeqX1wKiDWfCkvsgYHxbI01rJ7WdfySqHHTyS6eHy+wpN57/P
+ CYTQawXlcO+IRbrEcVTtglzOxtpmXFQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720628516;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
+ b=9mSfjowY+5gfzAjsXNdFYOL8zUpNJp9AMrwWFD1FXfjopoRYxR1nLePPC4jJW19RRxoExI
+ JevCY5e8nFT54qDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720628515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
+ b=QWR5prXJFCrt39Tli2ITQeBIEeDcNOT+k1W/IlKheyAdo+2E8eUL0vj3WK9xKRJrfDH77i
+ S9AU8FEohz0ZdGos33lR7j+WN6JBSzeeug+cP79FWtr2klbhV/h3hlFXTGhghS+JUkSkau
+ 4th6EP+Gpl1m249smr5GG/5XKr0bjiI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720628515;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
+ b=ESzcnA5mozriFoqVpAqy2paogJzAXC2l9a4xT+t6B/WxKKdUswRphHYLDXkoCpvyq8EZTX
+ NIZ2l4fDtaDlQIAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 65E9F137D2;
+ Wed, 10 Jul 2024 16:21:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1a0xCyK1jmYzYAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 10 Jul 2024 16:21:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>, Tyrone Ting
+ <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>, Hao Wu
+ <wuhaotsh@google.com>, Francisco Iglesias <francisco.iglesias@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-arm@nongnu.org, Joel
+ Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ devel@lists.libvirt.org, Luc Michel <luc.michel@amd.com>, =?utf-8?Q?C?=
+ =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on
+ block drive (CMD56)
+In-Reply-To: <Zo6iZjc8YpI1_9dW@x1n>
+References: <20240627162232.80428-1-philmd@linaro.org>
+ <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
+ <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de> <Zo6iZjc8YpI1_9dW@x1n>
+Date: Wed, 10 Jul 2024 13:21:51 -0300
+Message-ID: <874j8xfc9s.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240710125522.4168043-1-jonah.palmer@oracle.com>
- <20240710125522.4168043-5-jonah.palmer@oracle.com>
-In-Reply-To: <20240710125522.4168043-5-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 10 Jul 2024 18:16:35 +0200
-Message-ID: <CAJaqyWfRCAif9ou9XMCbDaKWPqt9msB7QbdbSGVkqTJv8O_McQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] virtio: virtqueue_ordered_flush -
- VIRTIO_F_IN_ORDER support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[18];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[linaro.org,nongnu.org,redhat.com,nuvoton.com,gmail.com,google.com,amd.com,kaod.org,jms.id.au,lists.libvirt.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,148 +127,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 2:56=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
-> Add VIRTIO_F_IN_ORDER feature support for the virtqueue_flush operation.
->
-> The goal of the virtqueue_ordered_flush operation when the
-> VIRTIO_F_IN_ORDER feature has been negotiated is to write elements to
-> the used/descriptor ring in-order and then update used_idx.
->
-> The function iterates through the VirtQueueElement used_elems array
-> in-order starting at vq->used_idx. If the element is valid (filled), the
-> element is written to the used/descriptor ring. This process continues
-> until we find an invalid (not filled) element.
->
-> For packed VQs, the first entry (at vq->used_idx) is written to the
-> descriptor ring last so the guest doesn't see any invalid descriptors.
->
-> If any elements were written, the used_idx is updated.
->
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Peter Xu <peterx@redhat.com> writes:
 
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> On Wed, Jul 10, 2024 at 11:08:20AM -0300, Fabiano Rosas wrote:
+>> >> I think it's ok:
+>> >> 
+>> >> {
+>> >>   "field": "unused",
+>> >>   "version_id": 1,
+>> >>   "field_exists": false,
+>> >>   "size": 512
+>> >> },
+>> >> 
+>> >> vs.
+>> >> 
+>> >> {
+>> >>   "field": "vendor_data",
+>> >>   "version_id": 0,
+>> >>   "field_exists": false,
+>> >>   "num": 512,
+>> >>   "size": 1
+>> >> },
+>> >> 
+>> >> The unused field was introduced in 2016 so there's no chance of
+>> >> migrating a QEMU that old to/from 9.1.
+>> >
+>> > What happens if an old qemu 9.0 sends rubbish here to a new QEMU, while the
+>> > new QEMU would consider it meaningful data?
+>> 
+>> It will send zeros, no? The code will have to cope with that. The
+>> alternative is to put the vendor_data in a subsection and the code will
+>> also have to cope with the lack of data when the old QEMU doesn't send
+>> it.
+>
+> Ah indeed, that "static const uint8_t buf[1024]" is there at least since
+> 2017.  So yes, probably always sending zeros.
 
-> ---
-> Several fixes here for the split VQ case:
-> - Ensure all previous write operations to buffers are completed before
->   updating the used_idx (via smp_wmb()).
->
-> - used_elems index 'i' should be incremented by the number of descriptors
->   in the current element we just processed, not by the running total of
->   descriptors already seen. This would've caused batched operations to
->   miss ordered elements when looping through the used_elems array.
->
-> - Do not keep the VQ's used_idx bound between 0 and vring.num-1 when
->   setting it via vring_used_idx_set().
->
->   While the packed VQ case naturally keeps used_idx bound between 0 and
->   vring.num-1, the split VQ case cannot. This is because used_idx is
->   used to compare the current event index with the new and old used
->   indices to decide if a notification is necessary (see
->   virtio_split_should_notify()). This comparison expects used_idx to be
->   between 0 and 65535, not 0 and vring.num-1.
->
->  hw/virtio/virtio.c | 70 +++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 69 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 0000a7b41c..b419d8d6e7 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -1023,6 +1023,72 @@ static void virtqueue_packed_flush(VirtQueue *vq, =
-unsigned int count)
->      }
->  }
->
-> +static void virtqueue_ordered_flush(VirtQueue *vq)
-> +{
-> +    unsigned int i =3D vq->used_idx % vq->vring.num;
-> +    unsigned int ndescs =3D 0;
-> +    uint16_t old =3D vq->used_idx;
-> +    uint16_t new;
-> +    bool packed;
-> +    VRingUsedElem uelem;
-> +
-> +    packed =3D virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED);
-> +
-> +    if (packed) {
-> +        if (unlikely(!vq->vring.desc)) {
-> +            return;
-> +        }
-> +    } else if (unlikely(!vq->vring.used)) {
-> +        return;
-> +    }
-> +
-> +    /* First expected in-order element isn't ready, nothing to do */
-> +    if (!vq->used_elems[i].in_order_filled) {
-> +        return;
-> +    }
-> +
-> +    /* Search for filled elements in-order */
-> +    while (vq->used_elems[i].in_order_filled) {
-> +        /*
-> +         * First entry for packed VQs is written last so the guest
-> +         * doesn't see invalid descriptors.
-> +         */
-> +        if (packed && i !=3D vq->used_idx) {
-> +            virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, f=
-alse);
-> +        } else if (!packed) {
-> +            uelem.id =3D vq->used_elems[i].index;
-> +            uelem.len =3D vq->used_elems[i].len;
-> +            vring_used_write(vq, &uelem, i);
-> +        }
-> +
-> +        vq->used_elems[i].in_order_filled =3D false;
-> +        ndescs +=3D vq->used_elems[i].ndescs;
-> +        i +=3D vq->used_elems[i].ndescs;
-> +        if (i >=3D vq->vring.num) {
-> +            i -=3D vq->vring.num;
-> +        }
-> +    }
-> +
-> +    if (packed) {
-> +        virtqueue_packed_fill_desc(vq, &vq->used_elems[vq->used_idx], 0,=
- true);
-> +        vq->used_idx +=3D ndescs;
-> +        if (vq->used_idx >=3D vq->vring.num) {
-> +            vq->used_idx -=3D vq->vring.num;
-> +            vq->used_wrap_counter ^=3D 1;
-> +            vq->signalled_used_valid =3D false;
-> +        }
-> +    } else {
-> +        /* Make sure buffer is written before we update index. */
-> +        smp_wmb();
-> +        new =3D old + ndescs;
-> +        vring_used_idx_set(vq, new);
-> +        if (unlikely((int16_t)(new - vq->signalled_used) < (uint16_t)(ne=
-w - old))) {
-> +            vq->signalled_used_valid =3D false;
-> +        }
-> +    }
-> +    vq->inuse -=3D ndescs;
-> +}
-> +
->  void virtqueue_flush(VirtQueue *vq, unsigned int count)
->  {
->      if (virtio_device_disabled(vq->vdev)) {
-> @@ -1030,7 +1096,9 @@ void virtqueue_flush(VirtQueue *vq, unsigned int co=
-unt)
->          return;
->      }
->
-> -    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
-> +        virtqueue_ordered_flush(vq);
-> +    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) =
-{
->          virtqueue_packed_flush(vq, count);
->      } else {
->          virtqueue_split_flush(vq, count);
-> --
-> 2.43.5
->
+@Philippe, can vendor_data be 0 after migration? Otherwise 9.0 -> 9.1
+migration might crash.
 
+>
+> Nothing I can think of otherwise indeed, if we want to trust that nothing
+> will migrate before 2016.  It's just that we may want to know how that
+> "2016" is justified to be safe if we would like to allow that in the
+> future.
+
+It's not about trust, we simply don't support migrations other than
+n->n+1 and (maybe) n->n-1. So QEMU from 2016 is certainly not included.
+
+>
+> One thing _could_ be that "rule of thumb" is we plan to obsolete machines
+> with 6 years, so anything "UNUSED" older than 6 years can be over-written?
 
