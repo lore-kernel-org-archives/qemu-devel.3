@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B556AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 00:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E6CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 00:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRLYY-0001v6-2h; Tue, 09 Jul 2024 20:51:39 -0400
+	id 1sRLcC-0006k5-Ub; Tue, 09 Jul 2024 20:55:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRLYU-0001sC-59; Tue, 09 Jul 2024 20:51:34 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1sRLcB-0006j4-QJ; Tue, 09 Jul 2024 20:55:23 -0400
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sRLYS-0003Wd-Mh; Tue, 09 Jul 2024 20:51:33 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-81061d00c0eso809640241.1; 
- Tue, 09 Jul 2024 17:51:31 -0700 (PDT)
+ id 1sRLcA-00041Z-80; Tue, 09 Jul 2024 20:55:23 -0400
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-48ff70394fbso1689527137.3; 
+ Tue, 09 Jul 2024 17:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720572691; x=1721177491; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720572918; x=1721177718; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SLw0p7P7I1DdaCTXqHkXq9G0xh8MePX2A6hYxQuUri4=;
- b=SnkHhPbqZ4vvCC4LxK30il3posooTtVDB7uWtSeIW6dKBAmkwdb85/Wp1zGmszOfB1
- 12RpOe+59ExqoHf71wId122nPcTPadI5h+gN6CjLcocTchAT4Z/HonygMrwBoqGVN7zk
- kdH1/zJMHeYqY++dQ7pEOx0ZRUkSCxfX+klexe5/Y3mEguQaEunYySa3MaiULX0Ct/Gx
- 2BIlz0WhLySXpDfJqL3oA3iTbgZvEnuZeyKKTmxIfFyyWiqE9kzPl13oMZiVipvbQJ+3
- CrhcF4oDXVbF13raJibnz51xOH3jTGr0bk2JwTGM4JUDR6vOiZDl0/7maVi6Voak9wxU
- 2ShQ==
+ bh=viKJMXEkM22cJ1W0Ufy93kvLIqXEPSQExDKRUS6qGlM=;
+ b=GKbypbikKHvX3HP3bxchYWhaV1yMeVc8ZBkLXHF2ihhA/AVtTaJJ7MGIRZ/I/EONxe
+ CTEfqCEEzgbsjxO8r3Y6IQkvWSOv0eK7GjsaY7ZUKUf+AQ/L+NnBokeuRs9Oh4ANHqK+
+ lkTlm/m43A5HKGUUmaMYY9620Hx2bae8EzkkfKqynaUoxAOZd4jZpNXS71GyzxjMZeyI
+ ywBEjLYYY7fbgx4Rc+6ZGNrsFuE24J5ojQFvYRLyhrfTWYylUpiczqv73mAuSxYy/1jT
+ QukgXpxcQ11OYfznmv5KXXe0rpaYi163vrWeSCOpBrl7aEoVBD4T1xywMmjGqgvLMV0z
+ 7suQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720572691; x=1721177491;
+ d=1e100.net; s=20230601; t=1720572918; x=1721177718;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SLw0p7P7I1DdaCTXqHkXq9G0xh8MePX2A6hYxQuUri4=;
- b=TzwSmh9Lxn1hwHJLfD608sVsco6gra/rdBNcovwA8Q16F8IspY7LQZNcdZB1nj590c
- Kwak5NslYJXzfq9n9nW+WsGSjlAMij6VNrz+WxoAcoJRvPJ5/CFezoZ1yV9IBXFim3+h
- 7MZGWFdP3OKcJlSQjRykCm9ioLXPBxbewvC3M98x5wLkgkkjymRlRuMzXDDY4SGF73cw
- VF+KtytktOlOjQ3ESIRsG2/7PLznod0SsmfH7Noc0caqVywnBBBMPdb9efh17TuX5UGE
- v5YTm8SRgX5wN+4jLWy0mG7qBYSVdsNjc6y1Sx4JBbXBFgMnIOidUjjeuONseJLYXldo
- zC1w==
+ bh=viKJMXEkM22cJ1W0Ufy93kvLIqXEPSQExDKRUS6qGlM=;
+ b=DxlbVqqe6HEhyLk5rUCFCMJlicSR3axrnm8tS18Rbl/dmqG7JRL0i1r3DwIyijDlBb
+ DPCP0u52OAi6978/KfMZUXM0WSvDBJp34QHYBvdFKzV2iDzjWukHAYCU6lp2y2R1CPc+
+ Axxlt7+bjvW5Ud2ZQiZcyykjWv52XWa0iI4iUqTUXR2i5H6R+pBB1paJrkM94aPp74FR
+ 2IoU4sqIdqT2Z7m7p8y19qMTfNuiuLJMiHwHTMYWqkTqbLUYWKIOm1l5wLXE+78zbfX6
+ jAuQIUlOBAchJSqrnZui9uCiQ+05gF7BbiTAhtKuAO+HPcfjJnsSxv7R20WUh+m18Zkq
+ BdcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3ndy8aPv2UCpqk/imB9YxbOWWXaZP+4bgnJPdAZWlPv5p44VRejIpJzoiPoRutGU1HoB/7ecigO+p+a1NOuFpgfN3Sz8=
-X-Gm-Message-State: AOJu0Yw2EV3CGhr+h0xaJmQw68hthaBNu9UI9rtizdoRlMKybIseKASt
- UUNiMiI0gBi1GCQxgsXYZJyC4rcvcJqxKHfdu2NSjEQ1nlRkYkN669GiRvEmHm8/4SgvyMfSN0N
- j0rG4J22zPun5UmBaeNlOun/Y1Vw=
-X-Google-Smtp-Source: AGHT+IFtZEdAZMaRXlnHSvgK90R0PFIb7bPPkSio9B7H5b1GPK1AMPDgGXjashBGgWp0Bz+IjFBcyEo/A39n365zpJ4=
-X-Received: by 2002:a05:6102:3593:b0:48f:46db:7a11 with SMTP id
- ada2fe7eead31-4903214430fmr4616419137.6.1720572690933; Tue, 09 Jul 2024
- 17:51:30 -0700 (PDT)
+ AJvYcCWXax1pXejhmi0CT0KuPeUocAQqut0fMWajEw+CuprQO9QKl57RyQXsN+UEE4xnUesAhh2R10z+RsI+oXSaHeyjm9r57bo=
+X-Gm-Message-State: AOJu0YyMHAd73UlCC28c4RZbIJ7HWp7ED+Qj+zO/pqd4XRDGmS4aXMnm
+ KHeJjiIkeX4v233wOvRUeAHPgrVunIQo6kOze8d48IIr3Oa0gxpyft5RXO2S5CM0gvnWCtGu4Me
+ No4vC5PRA9xsJRSSd6A/g4wwiW8M=
+X-Google-Smtp-Source: AGHT+IHUE1/Lv/210tA9gG2gOWjb6MHHiSirxwjob4a8emn1lYbWaypTgc/39I8+lT66h+wgS6keW0h49w04d029PxI=
+X-Received: by 2002:a05:6102:38c8:b0:48f:eaf7:74e with SMTP id
+ ada2fe7eead31-4903213a490mr4779352137.20.1720572918165; Tue, 09 Jul 2024
+ 17:55:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240709085431.455541-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240709085431.455541-1-dbarboza@ventanamicro.com>
+References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
+ <20240708114741.3499585-7-sunilvl@ventanamicro.com>
+In-Reply-To: <20240708114741.3499585-7-sunilvl@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 10 Jul 2024 10:51:04 +1000
-Message-ID: <CAKmqyKNNs4q9gKp5Dd=3GoDHS9EBJxrVF_-NiZmg1g=Ozwq+iQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/kvm: update KVM regs to Linux 6.10-rc5
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
+Date: Wed, 10 Jul 2024 10:54:52 +1000
+Message-ID: <CAKmqyKPZZydEoDg37OLTNkqeBAHhsoo1-PeWaHjoXQRGvawsCw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/9] tests/qtest/bios-tables-test.c: Remove the fall
+ back path
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -92,47 +99,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 9, 2024 at 6:55=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Mon, Jul 8, 2024 at 9:50=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com>=
+ wrote:
 >
-> Two new regs added: ztso and zacas.
+> The expected ACPI AML files are moved now under ${arch}/{machine} path.
+> Hence, there is no need to search in old path which didn't have ${arch}.
+> Remove the code which searches for the expected AML files under old path
+> as well.
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/kvm/kvm-cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  tests/qtest/bios-tables-test.c | 14 --------------
+>  1 file changed, 14 deletions(-)
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 1047961fed..f6e3156b8d 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -281,6 +281,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
-,
->      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
-PAUSE),
->      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-> +    KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
->      KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
->      KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
->      KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
-> @@ -298,6 +299,7 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zksed", ext_zksed, KVM_RISCV_ISA_EXT_ZKSED),
->      KVM_EXT_CFG("zksh", ext_zksh, KVM_RISCV_ISA_EXT_ZKSH),
->      KVM_EXT_CFG("zkt", ext_zkt, KVM_RISCV_ISA_EXT_ZKT),
-> +    KVM_EXT_CFG("ztso", ext_ztso, KVM_RISCV_ISA_EXT_ZTSO),
->      KVM_EXT_CFG("zvbb", ext_zvbb, KVM_RISCV_ISA_EXT_ZVBB),
->      KVM_EXT_CFG("zvbc", ext_zvbc, KVM_RISCV_ISA_EXT_ZVBC),
->      KVM_EXT_CFG("zvfh", ext_zvfh, KVM_RISCV_ISA_EXT_ZVFH),
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
+t.c
+> index f4c4704bab..498e0e35d9 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -267,15 +267,6 @@ static void dump_aml_files(test_data *data, bool reb=
+uild)
+>                                         data->arch, data->machine,
+>                                         sdt->aml, ext);
+>
+> -            /*
+> -             * To keep test cases not failing before the DATA files are =
+moved to
+> -             * ${arch}/${machine} folder, add this check as well.
+> -             */
+> -            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
+> -                aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir,
+> -                                           data->machine, sdt->aml, ext)=
+;
+> -            }
+> -
+>              if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
+>                  sdt->aml_len =3D=3D exp_sdt->aml_len &&
+>                  !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
+> @@ -412,11 +403,6 @@ static GArray *load_expected_aml(test_data *data)
+>  try_again:
+>          aml_file =3D g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->=
+arch,
+>                                     data->machine, sdt->aml, ext);
+> -        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
+> -            aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data-=
+>machine,
+> -                                       sdt->aml, ext);
+> -        }
+> -
+>          if (verbosity_level >=3D 2) {
+>              fprintf(stderr, "Looking for expected file '%s'\n", aml_file=
+);
+>          }
 > --
-> 2.45.2
+> 2.43.0
 >
 >
 
