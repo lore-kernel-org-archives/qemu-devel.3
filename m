@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97D8C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3DACC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRaBu-0006K5-O9; Wed, 10 Jul 2024 12:29:14 -0400
+	id 1sRaRx-0004U1-BP; Wed, 10 Jul 2024 12:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sRaBs-0006It-Ah
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:29:12 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRaRr-0004TN-U0
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:45:47 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sRaBq-0003Jn-OH
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:29:12 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-703626a0704so2132832a34.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 09:29:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRaRq-0006MX-1B
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:45:43 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fb1ff21748so36342645ad.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 09:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720628949; x=1721233749; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vutYKBwUgKicDGnZakQ3TCvpokZVR+OPOniByF+dnMM=;
- b=QGresObtxk/ZIbnOeK/Ju8KY2rWQh1DrAF/WXI2B/PVRO1COUHenCvUwEvoTZHFMQW
- DdwFLXaHUdRHarVEAV7FdePSj5peSubNAjRmSNO6HqHpmyKthWTUYAeQ1LNj4WkN7MJO
- CVXuy1u2uhDY5PjbPQzsUAw5+7io2sPEutiHro92LPdNUDr8oAinzLdrY0ekNSSTUC+l
- CT+Fclp/fAn6VBC+6swKcqpktnUM1gkar7FBq5eqpXvT+8RTP2cJD0bNkcJb1JJXXZE+
- XADRWWwhCoO2OHwcsX+ZLG9R5zpyM1OdwE8GFQYSRuUKytB84xoSJzxgL+FIPgW1TguC
- Gi2w==
+ d=linaro.org; s=google; t=1720629940; x=1721234740; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/iUAUUeZIqPv04/0NaudV5uJmF8c1Eam0WiOC5XcZJE=;
+ b=Z6CJZ2lEc7uxASOyWsoXmqBmY7iB7vshROaV5d59AqeQRxWbsXgaX+FB0xppkGUSt5
+ 0rRiMs8+lrfZKfRa+2DnwJSaQTHJb1m0ZcK8t4iNaN4l4IKOHA9yLUpNbRSwxaXQ5vS4
+ IQrzGyhOEhhaBvOk/Az6UKbjNmqWOt+fqm1c8kOhn2JQ1kPcG4A8S5UKfTrjdJEhlh8X
+ 29nDkH1qN3voWwGe2h8zunbRbGOKW8UDgoZqU8FMrXXYpweNSfqxOvTINGIvDsPBZ2qi
+ n8gaovkVLYws75uC65kb9wase7y/bcFN6PTt4Jvq+RQUcGFOnqnsK8qbvRkICcYpjBk4
+ EpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720628949; x=1721233749;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vutYKBwUgKicDGnZakQ3TCvpokZVR+OPOniByF+dnMM=;
- b=NwwhsEJDzD1tXhEf1KGrRw82w0nCqTK8bg+NbkOBCClz4ELzP2I8g0fEASSDS+Odoj
- D2SSXYvLNOgIMPCXs7NzT0TN5/V85yNUbwI6JkSsAsWpbN2PUjPRv3ctX47sKeKhA30E
- gCHAZ5iCHw7r+hNKspQvQPJHeJngob3R2sKYYvCb6zKjmquMnEXsT5zWvicdZJDO0eLj
- 0E0XoHjUE7B9Dt/GaLU/gjmVDNkHvmucrNUVtTjqyN9UpLtsS9xTO/CWuMvg0Wv3dWb3
- nyvBUEiyI2UVxB9Gxp0nf7R1gRJxyUR7Tx95tFvUDVcsyx2u5yy1rYG5n5g1f4Kwngud
- 3iBg==
-X-Gm-Message-State: AOJu0YyUSGZtOjI9gyPy8eqm806hpI+of/TNysN5DNhMuzx0alD4Dj9G
- S1DfoxNOC3ltubgP6N8PCJWd8YHgUPR0eop5KlT8khGBnFk99tadFPxNoEv+/ab04LjVZGn8wqK
- SFZWCR1lBnZ6VW8QzM3gVO9+Q+C8=
-X-Google-Smtp-Source: AGHT+IGJZMtSYYe43ycQrOW3c0hCuJsu40izs7C8eH4SX0iF8U7AdgFzeEaj2lejGgXYkbNnTTIV+SHHWM80pJd+aWw=
-X-Received: by 2002:a05:6870:b14d:b0:25e:1816:7f4f with SMTP id
- 586e51a60fabf-25eae88cfc4mr5231125fac.31.1720628948824; Wed, 10 Jul 2024
- 09:29:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720629940; x=1721234740;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/iUAUUeZIqPv04/0NaudV5uJmF8c1Eam0WiOC5XcZJE=;
+ b=MeP3re4MNOJ7Yia3JXggQZecr3wyWcAUe+JSLAxYZRibXxSyubDB0f6gJDAB7dNclQ
+ yC+8+Rrf0KMdHHfnro8iT0JhvkPqM+GuXNgXWCwdH/P4Pj2Nod+lKEuHEy2w1ci5HHqA
+ vbrxaw2Ew9s842NPZ54Frwlnga9UUniKEyXYY70kotcbi+xtjBhUeTb9xoaMGhzroziv
+ j4UKP3Rl16NCvxm1C3Ogs7Cu/9+6Hw2B9tj396W3mHW9zLDZHKNgpqCwu6jZ2DGpK0DG
+ whtmQbjT2sr7lvfeoH0itYnxk38SBNkmkeucgKPg5ErfLcUTRjulPJz9eI2doG877Ojy
+ B7xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVceolSEjJ0Kjhax5vhYWe/Cnt3i3pJmxJ6b+19pIPzj5UyIvkNcN3lPhZBfcbCHzB+H/ypsXfmmrj73qQBmJdd7kLzIZI=
+X-Gm-Message-State: AOJu0YwyonT9FDP3yIbpZWmfNnEt4sYG3OGWXfkTU9OzPX1U2G0gynAl
+ uLct6Tsl0O5OGTZJOc64CpFjxclShsal6zqMJXc456ifAoAhpOrWmnIkfcCm/o8=
+X-Google-Smtp-Source: AGHT+IFslzpxa6k5BmiOliiQk0tPMIQyA0IJYUfJXxmxCkBB2MFWxcvN7hHZTnt+LqicjPv69+leww==
+X-Received: by 2002:a17:902:ea0d:b0:1fb:a077:a846 with SMTP id
+ d9443c01a7336-1fbb6d253b9mr40160635ad.3.1720629939727; 
+ Wed, 10 Jul 2024 09:45:39 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fbb6a1197asm35945145ad.31.2024.07.10.09.45.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jul 2024 09:45:39 -0700 (PDT)
+Message-ID: <293864db-8a3e-4585-abf1-da2b11990b43@linaro.org>
+Date: Wed, 10 Jul 2024 09:45:37 -0700
 MIME-Version: 1.0
-References: <20240710112310.316551-1-hreitz@redhat.com>
-In-Reply-To: <20240710112310.316551-1-hreitz@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 10 Jul 2024 18:28:56 +0200
-Message-ID: <CAJSP0QWMKZxQTKuhQ1dASm9xqfWiumLz7ciVZy2APjPhT4VuFw@mail.gmail.com>
-Subject: Re: [PATCH] virtio: Always reset vhost devices
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=stefanha@gmail.com; helo=mail-ot1-x334.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] target/i386/tcg: use X86Access for TSS access
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: rrh.henry@gmail.com
+References: <20240710062920.73063-1-pbonzini@redhat.com>
+ <20240710062920.73063-10-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240710062920.73063-10-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,66 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jul 2024 at 13:25, Hanna Czenczek <hreitz@redhat.com> wrote:
->
-> Requiring `vhost_started` to be true for resetting vhost devices in
-> `virtio_reset()` seems like the wrong condition: Most importantly, the
-> preceding `virtio_set_status(vdev, 0)` call will (for vhost devices) end
-> up in `vhost_dev_stop()` (through vhost devices' `.set_status`
-> implementations), setting `vdev->vhost_started = false`.  Therefore, the
-> gated `vhost_reset_device()` call is unreachable.
->
-> `vhost_started` is not documented, so it is hard to say what exactly it
-> is supposed to mean, but judging from the fact that `vhost_dev_start()`
-> sets it and `vhost_dev_stop()` clears it, it seems like it indicates
-> whether there is a vhost back-end, and whether that back-end is
-> currently running and processing virtio requests.
->
-> Making a reset conditional on whether the vhost back-end is processing
-> virtio requests seems wrong; in fact, it is probably better to reset it
-> only when it is not currently processing requests, which is exactly the
-> current order of operations in `virtio_reset()`: First, the back-end is
-> stopped through `virtio_set_status(vdev, 0)`, then we want to send a
-> reset.
->
-> Therefore, we should drop the `vhost_started` condition, but in its
-> stead we then have to verify that we can indeed send a reset to this
-> vhost device, by not just checking `k->get_vhost != NULL` (introduced by
-> commit 95e1019a4a9), but also that the vhost back-end is connected
-> (`hdev = k->get_vhost(); hdev != NULL && hdev->vhost_ops != NULL`).
->
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-
-I think an additional SET_STATUS 0 call is made to the vDPA vhost
-backend after this patch, but that seems fine.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
+On 7/9/24 23:29, Paolo Bonzini wrote:
+> This takes care of probing the vaddr range in advance, and is also faster
+> because it avoids repeated TLB lookups.  It also matches the Intel manual
+> better, as it says "Checks that the current (old) TSS, new TSS, and all
+> segment descriptors used in the task switch are paged into system memory";
+> note however that it's not clear how the processor checks for segment
+> descriptors, and this check is not included in the AMD manual.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/virtio/virtio.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 893a072c9d..4410d62126 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2146,8 +2146,12 @@ void virtio_reset(void *opaque)
->          vdev->device_endian = virtio_default_endian();
->      }
->
-> -    if (vdev->vhost_started && k->get_vhost) {
-> -        vhost_reset_device(k->get_vhost(vdev));
-> +    if (k->get_vhost) {
-> +        struct vhost_dev *hdev = k->get_vhost(vdev);
-> +        /* Only reset when vhost back-end is connected */
-> +        if (hdev && hdev->vhost_ops) {
-> +            vhost_reset_device(hdev);
-> +        }
->      }
->
->      if (k->reset) {
-> --
-> 2.45.2
->
->
+>   target/i386/tcg/seg_helper.c | 101 ++++++++++++++++++-----------------
+>   1 file changed, 51 insertions(+), 50 deletions(-)
+> 
+> diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+> index 25af9d4a4ec..77f2c65c3cf 100644
+> --- a/target/i386/tcg/seg_helper.c
+> +++ b/target/i386/tcg/seg_helper.c
+> @@ -27,6 +27,7 @@
+>   #include "exec/log.h"
+>   #include "helper-tcg.h"
+>   #include "seg_helper.h"
+> +#include "access.h"
+>   
+>   int get_pg_mode(CPUX86State *env)
+>   {
+> @@ -250,7 +251,7 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
+>                            uint32_t e1, uint32_t e2, int source,
+>                            uint32_t next_eip, uintptr_t retaddr)
+>   {
+> -    int tss_limit, tss_limit_max, type, old_tss_limit_max, old_type, v1, v2, i;
+> +    int tss_limit, tss_limit_max, type, old_tss_limit_max, old_type, i;
+>       target_ulong tss_base;
+>       uint32_t new_regs[8], new_segs[6];
+>       uint32_t new_eflags, new_eip, new_cr3, new_ldt, new_trap;
+> @@ -258,6 +259,7 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
+>       SegmentCache *dt;
+>       int index;
+>       target_ulong ptr;
+> +    X86Access old, new;
+>   
+>       type = (e2 >> DESC_TYPE_SHIFT) & 0xf;
+>       LOG_PCALL("switch_tss: sel=0x%04x type=%d src=%d\n", tss_selector, type,
+> @@ -311,35 +313,44 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
+>           raise_exception_err_ra(env, EXCP0A_TSS, tss_selector & 0xfffc, retaddr);
+>       }
+>   
+> +    /* X86Access avoids memory exceptions during the task switch */
+> +    access_prepare_mmu(&old, env, env->tr.base, old_tss_limit_max,
+> +		       MMU_DATA_STORE, cpu_mmu_index_kernel(env), retaddr);
+> +
+> +    if (source == SWITCH_TSS_CALL) {
+> +        /* Probe for future write of parent task */
+> +        probe_access(env, tss_base, 2, MMU_DATA_STORE,
+> +		     cpu_mmu_index_kernel(env), retaddr);
+> +    }
+> +    access_prepare_mmu(&new, env, tss_base, tss_limit,
+> +		       MMU_DATA_LOAD, cpu_mmu_index_kernel(env), retaddr);
+
+You're computing cpu_mmu_index_kernel 3 times.
+
+This appears to be conservative in that you're requiring only 2 bytes (a minimum) of 0x68 
+to be writable.  Is it legal to place the TSS at offset 0xffe of page 0, with the balance 
+on page 1, with page 0 writable and page 1 read-only?  Otherwise I would think you could 
+just check the entire TSS for writability.
+
+Anyway, after the MMU_DATA_STORE probe, you have proved that 'X86Access new' contains an 
+address range that may be stored.  So you can change the SWITCH_TSS_CALL store below to 
+access_stw() too.
+
+> @@ -349,16 +360,6 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
+>        chapters 12.2.5 and 13.2.4 on how to implement TSS Trap bit */
+>       (void)new_trap;
+>   
+> -    /* NOTE: we must avoid memory exceptions during the task switch,
+> -       so we make dummy accesses before */
+> -    /* XXX: it can still fail in some cases, so a bigger hack is
+> -       necessary to valid the TLB after having done the accesses */
+> -
+> -    v1 = cpu_ldub_kernel_ra(env, env->tr.base, retaddr);
+> -    v2 = cpu_ldub_kernel_ra(env, env->tr.base + old_tss_limit_max, retaddr);
+> -    cpu_stb_kernel_ra(env, env->tr.base, v1, retaddr);
+> -    cpu_stb_kernel_ra(env, env->tr.base + old_tss_limit_max, v2, retaddr);
+
+OMG.
+
+Looks like a fantastic cleanup overall.
+
+
+r~
 
