@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F02C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4FDC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRO0O-0008Vk-3g; Tue, 09 Jul 2024 23:28:32 -0400
+	id 1sRO0S-0000Q9-Bi; Tue, 09 Jul 2024 23:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0I-0008EA-CS
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:27 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1sRO0R-0000Jz-2q
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:35 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0C-0003it-W2
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:26 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-25e43dda1edso3116553fac.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:28:20 -0700 (PDT)
+ id 1sRO0G-0003lE-Tu
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:34 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-70448cae1e0so233437a34.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720582099; x=1721186899; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720582102; x=1721186902; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQDbI4dQxYEiVsf1Ot0F1qRfAVSgABx3q3P9I7cC36g=;
- b=DmIFafITphyLYyXsvtquB1jVCp5pxicObUhFIqTBofT1+CwuBxvWDCnPP6GDjFH7GN
- nY9IxStXU6vnBc2ihI7hRs226qPtcUT/gBXDjFJbIhV8OOlsr2VZQNzAC8XrXpriqwgI
- 9dEZ8JZkiHJ4EGoGJ58HbUWY86WUCMyMjB95Qk3YYDkuaZXu7OcYA/t283zqfGq8KET2
- Cdx+qdD+DTDid/Y84EQUqKvkayCGdYq69fLtr4C7knLB0e9SlOQVx11OUjfko9zS3aTc
- xCrPhBWw1+4C6KY4aHRiZmRqmRoQsLgQnYMftejbQUzWF6ZhHI/0QIjbJofo7aOLf/e2
- se0Q==
+ bh=/jbXp+ktkX7+TZy4xaNziEFN/kKK08frm4LETYQOrf8=;
+ b=KR2kA/WF5tqWitx/+XeXRxgxgehrHoLEAJzDmvnv0E1aLxFD9wVS/InXW7I5wiY128
+ UO2IuEYc1Bev3rBBgkMwhkofk/5LM429h1yikY9SJlQDibNgACyBGOof8dPWDRT4XOlH
+ C0zBelcGyHDZIQgRs9NeHon+WySszWgCFq/dA8gjkbFeMQiAGbw8c09dX+Nw4ox2C+ZB
+ x3gBRzTPlkUCnIM/ir9rrDrHhL8TAkLpHTEM0eqHU3jBYGXdvoYSI+9oRr9L1f6yRWuY
+ rWvpT/bYyw2fwud5EaH6IoqD12ZFASec6woJ/z4mvp1dwFUV0vi3SJGRS+NZVCKLVX9Y
+ XEXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720582099; x=1721186899;
+ d=1e100.net; s=20230601; t=1720582102; x=1721186902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UQDbI4dQxYEiVsf1Ot0F1qRfAVSgABx3q3P9I7cC36g=;
- b=EhGQZMH3jCtuRpFfVl5FCNDzRgZskb+ws9l5mK6eXmI2AnttIeKcdd3EtIh1l3D/RT
- Royn26otDA6uWUwixxDZ5zUuQ6AvJS3BYKQ9aIHBLM0h5vnxslkGJavlzLB0SN8qcRwI
- CijmLE5DnY85NY8QU4UV3S5fvGfw30418GEdLqcRMKRHIXolPCzD0u3GADuCe6VZhyzD
- 1tqNGuae+YfXVfF8NFqvzIPJ2L6Lmc3abQUF10Q2A3Pj6bfp5J7gXyID9z+R6KsF4UiO
- xS3jfM7aU+AIIkK2Ym9T+VhFge1uJp7xu4q/HkjY6vK10DUTm9h+S41TGUUDrafeGW9b
- gqZw==
-X-Gm-Message-State: AOJu0YwQiMopT0SCNJFZFD0qkqRyUG4KiOavxCiphsV+I1A+4NONvibO
- 2bFnlAuodYMl4UnQ+V5PdB7nvWowkGb5Db6hLl81k0LMW1CVn/J3YGRci+bBhh05/7RIGVslav9
- u/FY=
-X-Google-Smtp-Source: AGHT+IFhWSFuP17FBVNgne4GduySXUU/b2J+3ZRTV0xsyDjzJNnzbm6PzbM31m6mZXHK+xG03NNa6g==
-X-Received: by 2002:a05:6870:f71d:b0:25d:f28b:74b7 with SMTP id
- 586e51a60fabf-25eaec16f3cmr3749063fac.40.1720582099181; 
- Tue, 09 Jul 2024 20:28:19 -0700 (PDT)
+ bh=/jbXp+ktkX7+TZy4xaNziEFN/kKK08frm4LETYQOrf8=;
+ b=fbub/uSz6yRBe548mFTHYc6vQigL7tK5HXNkVxzbrJarZAP+w8v3zzY5tX3h4JY1Qd
+ TUKbiL2ZngXAuVlSmWhWqF96iYPU/yfTOVVgFENNtXY1bEJ7g+7lD/lp6Q93SSNvwILb
+ t5BdCJChwh1pPtAGBsYac9TQsIMZlAbD+4QUhGA+BgfQ4iWVHdpTxhr029rhriOVUGiL
+ xQjPuQNAIMPPMzkhmp4BRdBj6nBhj0gRzD9hoQmdUhttLWf+zhr5mR5UtMDzu3f3LPQ8
+ 3AanK219zTRtTn8JKWAKKnW/8Mu0/D5t+rY+3bLystzwURTbFIqzTQNerkxCZUkLNZ4d
+ P4fw==
+X-Gm-Message-State: AOJu0YxB/FElvBB/6dlFx5lmNAoplIw0zTwViMjF5/YjTtyY3M+Q7yg2
+ /Qj8FqWNFpijPxvBriFRy0zvhvQn/AFgo3o3jewqWpXJDB7gFWTW0+XSdl0CpBZnoYjIbMgfFgb
+ iAz4=
+X-Google-Smtp-Source: AGHT+IE8sHnOlG6QtYObUSh9HAYbGPwGfS2WbQEKlIH7MkmRPO41H7Ta2Mxo70aoMF7YCgU8bGPSKg==
+X-Received: by 2002:a05:6830:1e75:b0:703:7775:c0cb with SMTP id
+ 46e09a7af769-7037775c2c7mr4193125a34.31.1720582102257; 
+ Tue, 09 Jul 2024 20:28:22 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.18
+ d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 20:28:18 -0700 (PDT)
+ Tue, 09 Jul 2024 20:28:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongu.org, qemu-s390x@nongnu.org,
  qemu-riscv@nongnu.org, balaton@eik.bme.hu, max.chou@sifive.com
-Subject: [PATCH v2 03/13] target/arm: Use set/clear_helper_retaddr in
- helper-a64.c
-Date: Tue,  9 Jul 2024 20:28:04 -0700
-Message-ID: <20240710032814.104643-4-richard.henderson@linaro.org>
+Subject: [PATCH v2 06/13] target/ppc: Hoist dcbz_size out of dcbz_common
+Date: Tue,  9 Jul 2024 20:28:07 -0700
+Message-ID: <20240710032814.104643-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240710032814.104643-1-richard.henderson@linaro.org>
 References: <20240710032814.104643-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -96,86 +95,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use these in helper_dc_dva and the FEAT_MOPS routines to
-avoid a race condition with munmap in another thread.
+The 970 logic does not apply to dcbzep, which is an e500 insn.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ target/ppc/mem_helper.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 0ea8668ab4..c60d2a7ec9 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -928,6 +928,8 @@ uint32_t HELPER(sqrt_f16)(uint32_t a, void *fpstp)
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 361fd72226..5067919ff8 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -271,22 +271,12 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+ }
  
- void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+-                        uint32_t opcode, int mmu_idx, uintptr_t retaddr)
++                        int dcbz_size, int mmu_idx, uintptr_t retaddr)
  {
-+    uintptr_t ra = GETPC();
-+
-     /*
-      * Implement DC ZVA, which zeroes a fixed-length block of memory.
-      * Note that we do not implement the (architecturally mandated)
-@@ -948,8 +950,6 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+-    target_ulong mask, dcbz_size = env->dcache_line_size;
+-    uint32_t i;
++    target_ulong mask = ~(target_ulong)(dcbz_size - 1);
+     void *haddr;
  
- #ifndef CONFIG_USER_ONLY
-     if (unlikely(!mem)) {
--        uintptr_t ra = GETPC();
+-#if defined(TARGET_PPC64)
+-    /* Check for dcbz vs dcbzl on 970 */
+-    if (env->excp_model == POWERPC_EXCP_970 &&
+-        !(opcode & 0x00200000) && ((env->spr[SPR_970_HID5] >> 7) & 0x3) == 1) {
+-        dcbz_size = 32;
+-    }
+-#endif
 -
-         /*
-          * Trap if accessing an invalid page.  DC_ZVA requires that we supply
-          * the original pointer for an invalid page.  But watchpoints require
-@@ -971,7 +971,9 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+     /* Align address */
+-    mask = ~(dcbz_size - 1);
+     addr &= mask;
+ 
+     /* Check reservation */
+@@ -300,7 +290,7 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+         memset(haddr, 0, dcbz_size);
+     } else {
+         /* Slow path */
+-        for (i = 0; i < dcbz_size; i += 8) {
++        for (int i = 0; i < dcbz_size; i += 8) {
+             cpu_stq_mmuidx_ra(env, addr + i, 0, mmu_idx, retaddr);
+         }
      }
- #endif
+@@ -308,12 +298,22 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
  
-+    set_helper_retaddr(ra);
-     memset(mem, 0, blocklen);
-+    clear_helper_retaddr();
+ void helper_dcbz(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+ {
+-    dcbz_common(env, addr, opcode, ppc_env_mmu_index(env, false), GETPC());
++    int dcbz_size = env->dcache_line_size;
++
++#if defined(TARGET_PPC64)
++    /* Check for dcbz vs dcbzl on 970 */
++    if (env->excp_model == POWERPC_EXCP_970 &&
++        !(opcode & 0x00200000) && ((env->spr[SPR_970_HID5] >> 7) & 0x3) == 1) {
++        dcbz_size = 32;
++    }
++#endif
++
++    dcbz_common(env, addr, dcbz_size, ppc_env_mmu_index(env, false), GETPC());
  }
  
- void HELPER(unaligned_access)(CPUARMState *env, uint64_t addr,
-@@ -1120,7 +1122,9 @@ static uint64_t set_step(CPUARMState *env, uint64_t toaddr,
-     }
- #endif
-     /* Easy case: just memset the host memory */
-+    set_helper_retaddr(ra);
-     memset(mem, data, setsize);
-+    clear_helper_retaddr();
-     return setsize;
+ void helper_dcbzep(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+ {
+-    dcbz_common(env, addr, opcode, PPC_TLB_EPID_STORE, GETPC());
++    dcbz_common(env, addr, env->dcache_line_size, PPC_TLB_EPID_STORE, GETPC());
  }
  
-@@ -1163,7 +1167,9 @@ static uint64_t set_step_tags(CPUARMState *env, uint64_t toaddr,
-     }
- #endif
-     /* Easy case: just memset the host memory */
-+    set_helper_retaddr(ra);
-     memset(mem, data, setsize);
-+    clear_helper_retaddr();
-     mte_mops_set_tags(env, toaddr, setsize, *mtedesc);
-     return setsize;
- }
-@@ -1497,7 +1503,9 @@ static uint64_t copy_step(CPUARMState *env, uint64_t toaddr, uint64_t fromaddr,
-     }
- #endif
-     /* Easy case: just memmove the host memory */
-+    set_helper_retaddr(ra);
-     memmove(wmem, rmem, copysize);
-+    clear_helper_retaddr();
-     return copysize;
- }
- 
-@@ -1572,7 +1580,9 @@ static uint64_t copy_step_rev(CPUARMState *env, uint64_t toaddr,
-      * Easy case: just memmove the host memory. Note that wmem and
-      * rmem here point to the *last* byte to copy.
-      */
-+    set_helper_retaddr(ra);
-     memmove(wmem - (copysize - 1), rmem - (copysize - 1), copysize);
-+    clear_helper_retaddr();
-     return copysize;
- }
- 
+ void helper_icbi(CPUPPCState *env, target_ulong addr)
 -- 
 2.43.0
 
