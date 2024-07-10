@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F88C38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 07:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E5CC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 07:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRRth-0004rv-K6; Wed, 10 Jul 2024 03:37:53 -0400
+	id 1sRRui-00006j-AY; Wed, 10 Jul 2024 03:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sRRte-0004f2-9G; Wed, 10 Jul 2024 03:37:50 -0400
-Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sRRtV-0004vD-Qn; Wed, 10 Jul 2024 03:37:50 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id A0C241141CBC;
- Wed, 10 Jul 2024 03:37:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Wed, 10 Jul 2024 03:37:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1720597058; x=
- 1720683458; bh=S/6DE21zK2mwcnippoegGG9SNc9RYEYZ16BwtJN33A8=; b=I
- 5fAA9vYiH6wDvmllcz5CVmhvyaORxPH4HMKYW00/6S/59vlZ8RkbuuO41tDeO1Z2
- 1ATo4p2zFqYpGW9WxO3i1BKGZt5aoek528Qh7S7/aX9a34W8LwGtx72PqbWuXRvi
- LQoS9giOtnQQBrCvfIpC2+OFVYKNOuNbGX/y5W8iFcIGPxU3OWgLpQewNQauCzeX
- FylAJi3ktrRhcabaK2sojvdnAiNMO7ezwKsXI3BbVgtxt5OvwbfbeBVkJq3iD74v
- MIgxqmBXVSxeAR1SltQFzUTXqWFflLz2LKFTblP+7fsf/hq7h2vD4FXmtWWI9Rhz
- RAB27bytxrzf/eyEGqABA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1720597058; x=1720683458; bh=S/6DE21zK2mwcnippoegGG9SNc9R
- YEYZ16BwtJN33A8=; b=EUQtzQOU1d7SeZas5x8LT2HyCHus72lHPwduvHKR/+ug
- IM43S8kNh/Bl9fGFOjUmcQt2VoyUDKmjbpWP/4fhFxfwfTkWPR8uAI8Ex59zf6yX
- ITwgAn9mbNifBO0REEDXMq+O4Q8cVUN2GRa4jcKZDZq55zEoETG5n8SFyAZzwS1s
- pUeciNgTd8ktmP606i9E0ODW+te2TIsr7mc3AzNSxyvSOaE/A/7+jBsYHUegKGPK
- UovFdr67j6BsKky7dR+Rctuc45mnM9fivjnuloIxjL80woWANDpgaqInjcHkFoFj
- huS6aVITCFWJhReBrrN+1GtEaOeltHDWNqVGOIQ26w==
-X-ME-Sender: <xms:QDqOZqpA0fAv8Kf78rcal-YWazvtRrhqzw8BJce8Ets8tO6FQlGoBg>
- <xme:QDqOZopg39neO4f8bs6q2lw6_Kc0oDM_GgFvYHz-ps64ROjoH23Fp30MnExOdBMqr
- -jBhhBtCiW9boXJNMQ>
-X-ME-Received: <xmr:QDqOZvNucBdtDqUwns2spaM1gIVVYgbgSIFK-YVP8-bNn4ggS9Faklnp4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfedtgdduvdefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:QDqOZp77dEVqencB5Fr0O_bjXqcMcFq_mm6r4hDdLQu4lxh6o8CVYg>
- <xmx:QDqOZp7ayuLB_agrVcLDG4HRSlRlv2By-hj-TJd3JqN-sxy0Q_Bpgw>
- <xmx:QDqOZpilV9-VZ_UYJ0U7U9Y1NA1_8mjzBMk3F_8qylqAF2kydL3Ucg>
- <xmx:QDqOZj6j1cFPd34WjRyVWtQcfjpQNXuznW29ESsLdzEYLGUsWW7XiA>
- <xmx:QjqOZmskGICpT30ivbVTRIOqy6nnRWZBbjtsE2ptYM36srXa6w_n9oWD>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jul 2024 03:37:36 -0400 (EDT)
-Date: Wed, 10 Jul 2024 09:37:30 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/nvme: Fix memory leak in nvme_dsm
-Message-ID: <Zo46OsRWrnDiIPTC@cormorant.local>
-References: <20240702231303.3077584-1-zheyuma97@gmail.com>
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sRRuf-0008OR-RK
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 03:38:53 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sRRud-00057R-MP
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 03:38:53 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2ee90dc1dc1so58895431fa.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 00:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1720597130; x=1721201930;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CO9RPx9Z3ZLJM4KUGqDqf8R+/59JI9tn8zPrUEO5tbU=;
+ b=KUzesInyGJeEWHb5ywt5DpKZbW4gN0cAN1z3U8yzOtGriEw63ytIh2xJo4zwdJQ6Qi
+ 5m81J49CfZ79XqnV2Pz1nZ6+fVQixEVluXZt6JT2EZEB4zjTJ16j8ZvTa11Zgb+2snKY
+ XOpBNm58s0zKxJ+cjjAYrp9O0ZJ98cbLcGz2P/DwMYqhVf1q7JzwxgAeXluLGjjfaK4U
+ BUcrSbQS2WVfHKyDrd1aUdxfkFhSXWzx+RUDTvfILGa/dDscCyAfudQQvTSAirztMpi7
+ U+DyL+pV9MVDQSq+oEHp2cefJ6Zzj8mY4EkCVQFIfrKw/gU6wpAavQrWtGf2DBmNHVeX
+ sYXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720597130; x=1721201930;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CO9RPx9Z3ZLJM4KUGqDqf8R+/59JI9tn8zPrUEO5tbU=;
+ b=xHxdfHRc/+BfSngzQbe1fbhrx0OzTUUi1NajJxZ2iWSxJd57qMCyrK6rzOKv1sZyiW
+ OhjUJJpVvMNJcFQiCGD+J4TVFzohK4uz4Zg2Y25hq3+1ZzAB5wtLqYBy8/z9O82h8HL6
+ CxYrKxcqU8KEAKW4l1lJl6+7GfSOFKYRdqwG+BMtRFOAq8nr7DWBnHQsoJexGzsd2tf5
+ 8SPdrvcF9vvs65WUCIkQIaDhWJzT8MtVqyPBRy9PoxJLwjHSyvlRDwTD6ZeKirsniJ0J
+ h7SsdUUOQUNawf/5P/Kyn2YzvZrWi2aYWg4GslzywrCd/KmxQtvYhDasucSU0qyLqNZl
+ iGlQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/BFS3kzAH7Ts7kO1+qeP59UzEdnumEPC0+WEcahc5VPj+hsgwH/9e8YMUdywzPD9efYG6ZuqBvylF+hDaT+X5LGV9Y4s=
+X-Gm-Message-State: AOJu0YyMqz4t6N3tX+TpjtGzV3Oek7wVT02ZF7+emfMMqAPHaeWI7znG
+ AZYWOcaPz4hETPix9Arwh1xgFY0V4l9DIRmxH//n95ilmbICev7dZFNAwhXeeqbR/AqNiTPBTfr
+ DbpT/i+i8VvI3yGEOF1dKVIVFPEBvs7YGycMohw==
+X-Google-Smtp-Source: AGHT+IE745JjD2KJte2l+NhBxscaZvxl2osmMoFHX6XThXEzRLxLre16p9SHTxUzapdavhT1ZDYD2sBlw0V9Cq7dxLw=
+X-Received: by 2002:a05:6512:e93:b0:52e:95fc:3937 with SMTP id
+ 2adb3069b0e04-52eb9991451mr3277641e87.15.1720597129716; Wed, 10 Jul 2024
+ 00:38:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="gh+SomYrTJE6CA2t"
-Content-Disposition: inline
-In-Reply-To: <20240702231303.3077584-1-zheyuma97@gmail.com>
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=its@irrelevant.dk;
- helo=fhigh8-smtp.messagingengine.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+References: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
+ <20240626-smcntrpmf_v7-v7-5-bb0f10af7fa9@rivosinc.com>
+ <CAKmqyKN3V9-q+CE93y_+1r=yjr7U1YKa=mCpjZ7nOr-6JtN=ig@mail.gmail.com>
+In-Reply-To: <CAKmqyKN3V9-q+CE93y_+1r=yjr7U1YKa=mCpjZ7nOr-6JtN=ig@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Wed, 10 Jul 2024 00:38:38 -0700
+Message-ID: <CAHBxVyGSh5iNEv3m3E2um3Yu7S_WJnaKE15DHoDQmQYOqGC-nA@mail.gmail.com>
+Subject: Re: [PATCH v7 05/11] target/riscv: Add cycle & instret privilege mode
+ filtering support
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Rajnesh Kanwal <rkanwal@rivosinc.com>, palmer@dabbelt.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Kaiwen Xue <kaiwenx@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=atishp@rivosinc.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,75 +98,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Jul 2, 2024 at 6:19=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Thu, Jun 27, 2024 at 10:00=E2=80=AFAM Atish Patra <atishp@rivosinc.com=
+> wrote:
+> >
+> > From: Kaiwen Xue <kaiwenx@rivosinc.com>
+> >
+> > QEMU only calculates dummy cycles and instructions, so there is no
+> > actual means to stop the icount in QEMU. Hence this patch merely adds
+> > the functionality of accessing the cfg registers, and cause no actual
+> > effects on the counting of cycle and instret counters.
+> >
+> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+> > ---
+> >  target/riscv/csr.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+> >  1 file changed, 88 insertions(+)
+> >
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index 3ad851707e5c..665c534db1a0 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -236,6 +236,24 @@ static RISCVException sscofpmf_32(CPURISCVState *e=
+nv, int csrno)
+> >      return sscofpmf(env, csrno);
+> >  }
+> >
+> > +static RISCVException smcntrpmf(CPURISCVState *env, int csrno)
+> > +{
+> > +    if (!riscv_cpu_cfg(env)->ext_smcntrpmf) {
+> > +        return RISCV_EXCP_ILLEGAL_INST;
+> > +    }
+> > +
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException smcntrpmf_32(CPURISCVState *env, int csrno)
+> > +{
+> > +    if (riscv_cpu_mxl(env) !=3D MXL_RV32) {
+> > +        return RISCV_EXCP_ILLEGAL_INST;
+> > +    }
+> > +
+> > +    return smcntrpmf(env, csrno);
+> > +}
+> > +
+> >  static RISCVException any(CPURISCVState *env, int csrno)
+> >  {
+> >      return RISCV_EXCP_NONE;
+> > @@ -830,6 +848,62 @@ static RISCVException read_hpmcounterh(CPURISCVSta=
+te *env, int csrno,
+> >
+> >  #else /* CONFIG_USER_ONLY */
+> >
+> > +static RISCVException read_mcyclecfg(CPURISCVState *env, int csrno,
+> > +                                     target_ulong *val)
+> > +{
+> > +    *val =3D env->mcyclecfg;
+>
+> We don't do a good job of this in other places, but we should check
+> for RVU and RVS to determine if the bits can actually be set.
+>
+> This is especially important for Hypervisor support (VS/VU-modes), as
+> that is often not supported so we should report that here
+>
 
---gh+SomYrTJE6CA2t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Agreed. I have fixed that here and added a patch for checking that
+while updating
+the INH bits for mhpmevent as well.
 
-On Jul  3 01:13, Zheyu Ma wrote:
-> The allocated memory to hold LBA ranges leaks in the nvme_dsm function. T=
-his
-> happens because the allocated memory for iocb->range is not freed in all
-> error handling paths.
->=20
-> Fix this by adding a free to ensure that the allocated memory is properly=
- freed.
->=20
-> ASAN log:
-> =3D=3D3075137=3D=3DERROR: LeakSanitizer: detected memory leaks
->=20
-> Direct leak of 480 byte(s) in 6 object(s) allocated from:
->     #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_lin=
-ux.cpp:129:3
->     #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0=
-+0x5e738)
->     #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
->     #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
->     #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
->     #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
->=20
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->  hw/nvme/ctrl.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 127c3d2383..cf610eab21 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -2592,6 +2592,7 @@ next:
->  done:
->      iocb->aiocb =3D NULL;
->      iocb->common.cb(iocb->common.opaque, iocb->ret);
-> +    g_free(iocb->range);
->      qemu_aio_unref(iocb);
->  }
-> =20
-> --=20
-> 2.34.1
->=20
-
-Thanks! LGTM
-
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
-Cc: qemu-stable@nongnu.org
-
---gh+SomYrTJE6CA2t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmaOOjkACgkQTeGvMW1P
-DemrnwgAjl7LowgyIjLIKfb88yV3B2tuiWtbibzSXLEBSXfPKIKJOpv0TF9WwLCO
-nFZBHRMZF+2V2c06EMwa8JcGfamNLx4NW3Uw7ZsLz2/2wtBHToZlqgv4uB7aXe1J
-GY+iKEmlGhpDjU5U2pqpciZ3le428TuqMhfpY/aw4Up3EqPCw9/saEUQWLMX1keR
-uRY/wpxhBx53o7npz2WNDveQhbXwal1VLNjMJTrHEmTQ+aUzrLY8L/VkwDfOBtoQ
-SBUyy0aN83XRygUWIqiSx0it/jC/nzlGd9xPjies4bUbpxxAYp+HfHEeEmmwI68o
-H1it4Ob1sydouxok5PQVx2ngibbQGQ==
-=jA4j
------END PGP SIGNATURE-----
-
---gh+SomYrTJE6CA2t--
+> Alistair
+>
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
+> > +                                      target_ulong val)
+> > +{
+> > +    env->mcyclecfg =3D val;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException read_mcyclecfgh(CPURISCVState *env, int csrno,
+> > +                                      target_ulong *val)
+> > +{
+> > +    *val =3D env->mcyclecfgh;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
+> > +                                       target_ulong val)
+> > +{
+> > +    env->mcyclecfgh =3D val;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
+> > +                                       target_ulong *val)
+> > +{
+> > +    *val =3D env->minstretcfg;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
+> > +                                        target_ulong val)
+> > +{
+> > +    env->minstretcfg =3D val;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
+> > +                                        target_ulong *val)
+> > +{
+> > +    *val =3D env->minstretcfgh;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno=
+,
+> > +                                         target_ulong val)
+> > +{
+> > +    env->minstretcfgh =3D val;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> >  static RISCVException read_mhpmevent(CPURISCVState *env, int csrno,
+> >                                       target_ulong *val)
+> >  {
+> > @@ -5051,6 +5125,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D=
+ {
+> >                               write_mcountinhibit,
+> >                               .min_priv_ver =3D PRIV_VERSION_1_11_0    =
+   },
+> >
+> > +    [CSR_MCYCLECFG]      =3D { "mcyclecfg",   smcntrpmf, read_mcyclecf=
+g,
+> > +                             write_mcyclecfg,
+> > +                             .min_priv_ver =3D PRIV_VERSION_1_12_0    =
+   },
+> > +    [CSR_MINSTRETCFG]    =3D { "minstretcfg", smcntrpmf, read_minstret=
+cfg,
+> > +                             write_minstretcfg,
+> > +                             .min_priv_ver =3D PRIV_VERSION_1_12_0    =
+   },
+> > +
+> >      [CSR_MHPMEVENT3]     =3D { "mhpmevent3",     any,    read_mhpmeven=
+t,
+> >                               write_mhpmevent                          =
+ },
+> >      [CSR_MHPMEVENT4]     =3D { "mhpmevent4",     any,    read_mhpmeven=
+t,
+> > @@ -5110,6 +5191,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D=
+ {
+> >      [CSR_MHPMEVENT31]    =3D { "mhpmevent31",    any,    read_mhpmeven=
+t,
+> >                               write_mhpmevent                          =
+ },
+> >
+> > +    [CSR_MCYCLECFGH]     =3D { "mcyclecfgh",   smcntrpmf_32, read_mcyc=
+lecfgh,
+> > +                             write_mcyclecfgh,
+> > +                             .min_priv_ver =3D PRIV_VERSION_1_12_0    =
+    },
+> > +    [CSR_MINSTRETCFGH]   =3D { "minstretcfgh", smcntrpmf_32, read_mins=
+tretcfgh,
+> > +                             write_minstretcfgh,
+> > +                             .min_priv_ver =3D PRIV_VERSION_1_12_0    =
+    },
+> > +
+> >      [CSR_MHPMEVENT3H]    =3D { "mhpmevent3h",    sscofpmf_32,  read_mh=
+pmeventh,
+> >                               write_mhpmeventh,
+> >                               .min_priv_ver =3D PRIV_VERSION_1_12_0    =
+    },
+> >
+> > --
+> > 2.34.1
+> >
+> >
 
