@@ -4,89 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29722C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3265C38150
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 04:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sROFp-0002GV-Ml; Tue, 09 Jul 2024 23:44:29 -0400
+	id 1sROVh-0006j4-10; Wed, 10 Jul 2024 00:00:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sROFn-00028J-Lq
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:44:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sROVd-0006hq-DW
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 00:00:52 -0400
+Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sROFl-0006L0-DM
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:44:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720583062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N0W/xKhN58Mn3v6IWzL5b297/K85pcHkLfWVHqsxJtE=;
- b=e2xLnlsiTvhratb9gDWOUo1I35WV1TglTEAr8J58ap4HJRCWuF/82ka4ZWK+Kpkf1VDMA0
- RfqXYf45e/CtmIesRk0567oJsHNhcjM18JW1nhqjlSGKbjsIBpGt+47E0M4QETRyg7rlpE
- 5KHDrxBv0pOJFoXtiYhbhf/SsULYh3U=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-DjilQkPyOfuAge93RR-x3w-1; Tue, 09 Jul 2024 23:43:39 -0400
-X-MC-Unique: DjilQkPyOfuAge93RR-x3w-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-70360b8d160so3318642a34.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:43:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720583018; x=1721187818;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N0W/xKhN58Mn3v6IWzL5b297/K85pcHkLfWVHqsxJtE=;
- b=msOMawtzEZK81aVmCDFgX9K1I5WfofM0EmDev+23TpGKAbHS3ClbL/2vCKCLIeU1nr
- 0EXxvMFLFVL4s+OTLybOspOSRIjK7RYbxtfGWnWAqUyD7v6ii8QmyOiX1n0izLod7j9b
- +mfXQPrP7aCzizwY3Y4HEWd4HQBhaYYtjYnRNKa3xFMQAFCpgGNjpUQdKIC/GJerBLgJ
- /OS0ouJE6QAGiLo6Hy5BC5uqPND0v6qME4wK3tKpdmLspsB/3R08vn7ZdB82ZDApwzXu
- uMGQHGVU+Ie4AluBicu54D1jrsIrTVlegiwjvuFYb3icA8lHSaGnRoJOmtclFRMEb2e8
- +VnQ==
-X-Gm-Message-State: AOJu0Yyyw1cCcPpLEPObqA2ZX32y27onkK0W6ietcsJPOmV8s2kY7KZ7
- SM/eVfjcQhHC8IWv2W86LzPF1BP27iroBxfW3DIUecgqWswYAAmroRuyQaa8S8RtoMg4Og29h4Q
- 6xdx05OqRRDqtkq3asJuK9F+Yc9TnhyddKpCBKEuCrVhEkhhZDiCmUChjwxsuF6QQOngWE9Qdug
- JmE0fZbI6euBiUSG3m+TpABGW+y7xuh2TjiZ4=
-X-Received: by 2002:a05:6830:11c2:b0:703:79b1:75e2 with SMTP id
- 46e09a7af769-70379b17a43mr3692177a34.31.1720583018306; 
- Tue, 09 Jul 2024 20:43:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFD7Qcr1BR7hdnyUKi+Q3kAKzG5n/Q0KEf3QgCaUB+CHZEKS4DjcZyVygRlyRlMevDFtZm4eRynkDpMxpOVTO0=
-X-Received: by 2002:a05:6830:11c2:b0:703:79b1:75e2 with SMTP id
- 46e09a7af769-70379b17a43mr3692164a34.31.1720583017908; Tue, 09 Jul 2024
- 20:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sROVb-0000gt-NP
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 00:00:49 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 78AD21381496;
+ Wed, 10 Jul 2024 00:00:45 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Wed, 10 Jul 2024 00:00:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1720584045;
+ x=1720670445; bh=seMt1EsaCT5ubOudGEXUKj81NxX0kjEq8/hucl3DCBQ=; b=
+ FHGxSQ3Ealv04xv9nSk3js8AP3J6RLSMZmKU2+8IUtxdoczf8CsZg20Q6ufFlRdF
+ Mf3OIL6xQNrofdOeq7UTWOKcL/kUeowcTPdVHzOxOxTJe79WEIvisrcgxS/2aw47
+ SCrthvJQNAbWuma8HeS/yw+vYM0r2+Ejh89j31ZJ4ww0+PycNfbU85X4YbLwkR3T
+ lzLprk3tL8WIsbDyL+Z6tfReADD47rR1TOn3yuSgrRzTC/7Sp8nT+iZ9w3dOJxZ3
+ KAGdVCsV0XydUwuU8Y9au7afkHC2YVPmlrmsPt4y5tWHc7VQ3zTTwOxvqj0AzHcm
+ y5oRfOi6BKNtp91R1BjzrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1720584045; x=
+ 1720670445; bh=seMt1EsaCT5ubOudGEXUKj81NxX0kjEq8/hucl3DCBQ=; b=m
+ XaVBiqUmiqxyNBcePttvCkg9Y7ObHIgUZOSkRGCaDpfjgNRTilbJONvwnxj4sVsU
+ +X0yr23l1DHQ7hRkGcTyVJqZAlp1jQMgUp3T7SJbY/jvps1+VSY3pWWxzE6CNXt7
+ U8WHySdfF6G+N+In9n8f4bsJsyUoIIOawJw34wHuoopwRQOZ1/DLtZ1TkwaoSfan
+ /BbM+COq6wvVL+p/1AT6xnBmmA3+SZHgLtRrBvYHIOIDku9CJbz2mkw5LPfCJuuB
+ qSwanoRhamkxJnNqxhiQ2N4ttUXEqsyyHNXrrpuCiSon0ke16JhLelOjrW75mdvu
+ adXp1OcKFEt+DtLYutNXg==
+X-ME-Sender: <xms:bAeOZp2rtbY4KYgl-xRGuENqXrDAwMC78kdvavrTC_Ms-3DMb5-soA>
+ <xme:bAeOZgE8O6YtZaIblZ33FyOWDUdVgxOBvTOWC8--EzYtlOlOKP08MI1KG5W3K0GZ2
+ TQhnkpTMx3dmGFvxf8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfedtgdejkecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedflfhi
+ rgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+ eqnecuggftrfgrthhtvghrnhepudefgeeftedugeehffdtheefgfevffelfefghefhjeeu
+ geevtefhudduvdeihefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:bAeOZp7KbSUBTIcVRTflUWMQ3wiBBjVzsxXhNRE_ufzDzA53aBUlFQ>
+ <xmx:bAeOZm2lVKb7zQjEqHjhU5mHOhr0PT6uQ0q3HeqywRXPm222FyWXmw>
+ <xmx:bAeOZsEhaiEVNgFzLT4OARBvMxJUQ_aLqH3ckdf_WKLRlUKhEbWQZw>
+ <xmx:bAeOZn9hVpGovMfWMiwlrkJToI2tReST91x4DDvRZCz06GLuxMgodw>
+ <xmx:bQeOZoiXNhmJ1-efqvDjzwAF9bBU5htjgS8BNWEkSNUt-vgncwqy6mOl>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E79E736A0074; Wed, 10 Jul 2024 00:00:43 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-568-g843fbadbe-fm-20240701.003-g843fbadb
 MIME-Version: 1.0
-References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
- <CACGkMEuX+FxOtWD9YoMF-T_VsgMezCT5ff_5Wk5CwQ3kNu41Aw@mail.gmail.com>
- <CAK9dgmb0K_TfbUt-WsPubDVAA7tuJQkQtWaf95JOc0CYvgMQ8A@mail.gmail.com>
- <CACGkMEv23TZNexfKUJ8MMVeRz2+2g316UNAQvEK+91jo5PkpBw@mail.gmail.com>
- <CAK9dgmbqqD_LVWONdKm-Usj18cnxqbMo6VWpCAUqjS4VnTDxnw@mail.gmail.com>
-In-Reply-To: <CAK9dgmbqqD_LVWONdKm-Usj18cnxqbMo6VWpCAUqjS4VnTDxnw@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 10 Jul 2024 11:43:26 +0800
-Message-ID: <CACGkMEt5bmg1eh8Tiurfzxb5a1GXECu_PmTQC5a_+sve2A2NUw@mail.gmail.com>
-Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
- buffer is full
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <db13dadd-6a04-4da1-893e-e613ad39ab15@app.fastmail.com>
+In-Reply-To: <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
+References: <20240704033802.3838618-1-maobibo@loongson.cn>
+ <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
+Date: Wed, 10 Jul 2024 12:00:11 +0800
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Song Gao" <gaosong@loongson.cn>
+Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "QEMU devel" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,237 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 9, 2024 at 10:56=E2=80=AFAM Yong Huang <yong.huang@smartx.com> =
-wrote:
->
->
->
-> On Tue, Jul 9, 2024 at 10:41=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
-wrote:
->>
->> On Mon, Jul 8, 2024 at 1:17=E2=80=AFPM Yong Huang <yong.huang@smartx.com=
-> wrote:
->> >
->> >
->> >
->> > On Mon, Jul 8, 2024 at 11:21=E2=80=AFAM Jason Wang <jasowang@redhat.co=
-m> wrote:
->> >>
->> >> On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.huang@smartx=
-.com> wrote:
->> >> >
->> >> > Unexpected work by certain Windows guests equipped with the e1000
->> >> > interface can cause the network to go down and never come back up
->> >> > again unless the guest's interface is reset.
->> >> >
->> >> > To reproduce the failure:
->> >> > 1. Set up two guests with a Windows 2016 or 2019 server operating
->> >> >    system.
->> >>
->> >> I vaguely remember e1000 support for Windows has been deprecated for
->> >> several years...
->> >>
->> >> That's why e1000e or igb is implemented in Qemu.
->> >>
->> >> > 2. Set up the e1000 interface for the guests.
->> >> > 3. Pressurize the network slightly between two guests using the iPe=
-rf tool.
->> >> >
->> >> > The network goes down after a few days (2-5days), and the issue
->> >> > is the result of not adhering to the e1000 specification. Refer
->> >> > to the details of the specification at the following link:
->> >> > https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-c=
-ontrollers-software-dev-manual.pdf
->> >> >
->> >> > Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
->> >> > as following:
->> >> > This register holds a value that is an offset from the base, and
->> >> > identifies the location beyond the last descriptor hardware can
->> >> > process. Note that tail should still point to an area in the
->> >> > descriptor ring (somewhere between RDBA and RDBA + RDLEN).
->> >> > This is because tail points to the location where software writes
->> >> > the first new descriptor.
->> >> >
->> >> > This means that if the provider=E2=80=94in this case, QEMU=E2=80=94=
-has not yet
->> >> > loaded the packet,
->> >>
->> >> What do you mean by "load" here?
->> >
->> >
->> > Sorry for failing to describe the details.
->> >
->> > The guest driver retrieves the packet from the receive ring buffer
->> > after QEMU forwards it from the tun/tap interface in the e1000
->> > emulation.
->> >
->> > I used "load" to express "putting packets into the receive ring buffer=
-."
->> >
->> >>
->> >>
->> >> > RDT should never point to that place.
->> >>
->> >> And "that place"?
->> >
->> > If a descriptor in the receive ring buffer has not been filled with a
->> > packet address by QEMU, the descriptor therefore doesn't have any
->> > available packets. The location of the descriptor should not be referr=
-ed
->> > to by RDT because the location is in the range that "hardware" handles=
-.
->> >
->> > "that place" means the location of the descriptor in the ring buffer
->> > that QEMU hasn't set any available packets related to.
->> >
->> >>
->> >>
->> >> > When
->> >> > implementing the emulation of the e1000 interface, QEMU evaluates
->> >> > if the receive ring buffer is full once the RDT equals the RDH,
->> >> > based on the assumption that guest drivers adhere to this
->> >> > criterion strictly.
->> >> >
->> >> > We applied the following log patch to assist in analyzing the
->> >> > issue and eventually obtained the unexpected information.
->> >> >
->> >> > Log patch:
->> >> > -----------------------------------------------------------------
->> >> > |--- a/hw/net/e1000.c
->> >> > |+++ b/hw/net/e1000.c
->> >> > |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
->> >> > | static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
->> >> > | {
->> >> > |     int bufs;
->> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->m=
-ac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->=
-mac_reg[RDT]);
->> >> > |+
->> >> > |     /* Fast-path short packets */
->> >> > |     if (total_size <=3D s->rxbuf_size) {
->> >> > |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->last_ove=
-rrun)
->> >> > |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const =
-struct iovec *iov, int iovcnt)
->> >> > |         s->rxbuf_min_shift)
->> >> > |         n |=3D E1000_ICS_RXDMT0;
->> >> > |
->> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->m=
-ac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->=
-mac_reg[RDT]);
->> >> > |+
->> >> > -----------------------------------------------------------------
->> >> >
->> >> > The last few logs of information when the network is down:
->> >> >
->> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D=
- 16384, s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
->> >> > <- the receive ring buffer is checked for fullness in the
->> >> > e1000_has_rxbufs function, not full.
->> >> >
->> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> > <- RDT stays the same, RDH updates to 898, and 1 descriptor
->> >> > utilized after putting the packet to ring buffer.
->> >> >
->> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D=
- 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> > <- the receive ring buffer is checked for fullness in the
->> >> > e1000_has_rxbufs function, not full.
->> >> >
->> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> > <- RDT stays the same, RDH updates to 899, and 1 descriptor
->> >> > utilized after putting the packet to ring buffer.
->> >> >
->> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D=
- 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> > <- the receive ring buffer is checked for fullness in the
->> >> > e1000_has_rxbufs function, not full.
->> >> >
->> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
->> >> > <- RDT stays the same, RDH updates to 900 , and 1 descriptor
->> >> > utilized after putting the packet to ring buffer.
->> >> >
->> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D=
- 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
->> >> > <- The ring is full, according to e1000_has_rxbufs, because
->> >> > of the RDT update to 900 and equals RDH !
->> >>
->> >> Just to make sure I understand this, RDT=3D=3DRDH means the ring is e=
-mpty I think?
->> >>
->> >>
->> >> See commit:
->> >>
->> >> commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
->> >> Author: Dmitry Fleytman <dmitry@daynix.com>
->> >> Date:   Fri Oct 19 07:56:55 2012 +0200
->> >>
->> >>     e1000: drop check_rxov, always treat RX ring with RDH =3D=3D RDT =
-as empty
->> >>
->> >>     Real HW always treats RX ring with RDH =3D=3D RDT as empty.
->> >>     Emulation is supposed to behave the same.
->> >
->> >
->> > Indeed, I'm confused :(,  the description in the comment claims that R=
-X
->> > rings with RDH =3D=3D RDT as empty, but in implementation, it treats t=
-hat as
->> > overrun.
->> >
->> > See the following 2 contexts:
->> >
->> > 1. e1000_can_receive:
->> > static bool e1000_can_receive(NetClientState *nc)
->> > {
->> >     E1000State *s =3D qemu_get_nic_opaque(nc);
->> >     // e1000_has_rxbufs return true means ring buffer has
->> >     // available descriptors to use for QEMU.
->> >     // false means ring buffer overrun and QEMU should queue the packe=
-t
->> >     // and wait for the RDT update and available descriptors can be us=
-ed.
->> >
->> >     return e1000x_rx_ready(&s->parent_obj, s->mac_reg) &&
->> >         e1000_has_rxbufs(s, 1) && !timer_pending(s->flush_queue_timer)=
-;
->> > }
->>
->> Well we had in e1000_has_rx_bufs
->>
->>     if (total_size <=3D s->rxbuf_size) {
->>         return s->mac_reg[RDH] !=3D s->mac_reg[RDT];
->>     }
->>
->> RDT!=3DRDH means RX ring has available descriptors for hardware?
->
->
-> IMHO, Yes.
 
-Just to make sure we are on the same page, so
 
-RDT!=3DRDH, descriptors available for hardware
-RDT=3D=3DRDH, descriptor ring is empty for hardware
+=E5=9C=A82024=E5=B9=B47=E6=9C=889=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8B=E5=
+=8D=888:04=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
+> Hi Philippe/Jiaxun,
+>
+> Could you do me a favor giving a review about this patch?
 
-That is currently what the code did. Seems nothing wrong, or anything
-I missed here?
+Hi Bibo,
+
+I=E2=80=99m currently traveling, will test and review next week.
+
+I=E2=80=99m not really convinced to give a R-b but I=E2=80=99m fine with=
+ a T-b.
 
 Thanks
 
 >
->>
->> Adding more people.
->>
->> Thanks
->>
+> Regards
+> Bibo Mao
 >
->
-> --
-> Best regards
+> On 2024/7/4 =E4=B8=8A=E5=8D=8811:37, Bibo Mao wrote:
+>> Now loongson ipi and loongarch ipi share the same code with different
+>> macro, loongson ipi has its separate function such mmio region,
+>> loongarch ipi has other requirement such as irqchip in kernel.
+>>=20
+>> Interrupt irqchip has strong relationship with architecture, since
+>> it sends irq to vcpu and interfaces to get irqchip register is also
+>> architecture specific.
+>>=20
+>> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
+>> is added, it comes from loongson ipi mostly. And it defined four abst=
+ract
+>> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 mac=
+hine,
+>> also can be used for 3A5000 irqchip in kernel mode soon.
+>>=20
+>> Also Loongarch ipi and loongson ipi device are added here, it inherits
+>> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
+>> loongson ipi device only passes to compile and make check, it is not
+>> tested.
+>>=20
+>> Bibo Mao (4):
+>>    hw/intc/loongson_ipi_common: Add loongson ipi common class
+>>    hw/intc/loongarch_ipi: Add loongarch ipi support
+>>    hw/loongarch/virt: Replace loongson ipi with loongarch ipi
+>>    hw/intc/loongson_ipi: reconstruct driver inherit from common class
+>>=20
+>>   hw/intc/Kconfig                       |   3 +
+>>   hw/intc/loongarch_ipi.c               |  80 ++++++
+>>   hw/intc/loongson_ipi.c                | 330 ++-------------------
+>>   hw/intc/loongson_ipi_common.c         | 394 +++++++++++++++++++++++=
++++
+>>   hw/intc/meson.build                   |   3 +-
+>>   hw/loongarch/Kconfig                  |   2 +-
+>>   hw/loongarch/virt.c                   |   4 +-
+>>   include/hw/intc/loongarch_ipi.h       |  33 +++
+>>   include/hw/intc/loongson_ipi.h        |  54 ++--
+>>   include/hw/intc/loongson_ipi_common.h |  77 +++++
+>>   include/hw/loongarch/virt.h           |   1 -
+>>   11 files changed, 632 insertions(+), 349 deletions(-)
+>>   create mode 100644 hw/intc/loongarch_ipi.c
+>>   create mode 100644 hw/intc/loongson_ipi_common.c
+>>   create mode 100644 include/hw/intc/loongarch_ipi.h
+>>   create mode 100644 include/hw/intc/loongson_ipi_common.h
+>>=20
+>>=20
+>> base-commit: 6746482d12da3b6e4d3cdf06481a0027a797f719
+>>
 
+--=20
+- Jiaxun
 
