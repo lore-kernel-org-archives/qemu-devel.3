@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968F5C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C39BC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 16:26:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRa4z-0004Kj-1r; Wed, 10 Jul 2024 12:22:05 -0400
+	id 1sRa8Z-0001ZN-U0; Wed, 10 Jul 2024 12:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRa4w-0004FM-Sz; Wed, 10 Jul 2024 12:22:02 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRa8Y-0001YB-Di
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:25:46 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRa4t-00020q-Va; Wed, 10 Jul 2024 12:22:01 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id F08811F83C;
- Wed, 10 Jul 2024 16:21:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720628516; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
- b=ESkfFuhmuloMc2tLwFLU+zCpmE5LHNafa8erp+mpIXhpyy3Ex8uN72kx7i14Q5o/KSBSXa
- sGu7GYwSGCOq+uJos0988eeqX1wKiDWfCkvsgYHxbI01rJ7WdfySqHHTyS6eHy+wpN57/P
- CYTQawXlcO+IRbrEcVTtglzOxtpmXFQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720628516;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
- b=9mSfjowY+5gfzAjsXNdFYOL8zUpNJp9AMrwWFD1FXfjopoRYxR1nLePPC4jJW19RRxoExI
- JevCY5e8nFT54qDw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720628515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
- b=QWR5prXJFCrt39Tli2ITQeBIEeDcNOT+k1W/IlKheyAdo+2E8eUL0vj3WK9xKRJrfDH77i
- S9AU8FEohz0ZdGos33lR7j+WN6JBSzeeug+cP79FWtr2klbhV/h3hlFXTGhghS+JUkSkau
- 4th6EP+Gpl1m249smr5GG/5XKr0bjiI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720628515;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RIt9q3p6x1Kz3QuVNdguVQl8K7kOlu305zqd0XHCMtU=;
- b=ESzcnA5mozriFoqVpAqy2paogJzAXC2l9a4xT+t6B/WxKKdUswRphHYLDXkoCpvyq8EZTX
- NIZ2l4fDtaDlQIAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 65E9F137D2;
- Wed, 10 Jul 2024 16:21:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1a0xCyK1jmYzYAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 10 Jul 2024 16:21:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>, Tyrone Ting
- <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>, Hao Wu
- <wuhaotsh@google.com>, Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-arm@nongnu.org, Joel
- Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- devel@lists.libvirt.org, Luc Michel <luc.michel@amd.com>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on
- block drive (CMD56)
-In-Reply-To: <Zo6iZjc8YpI1_9dW@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de> <Zo6iZjc8YpI1_9dW@x1n>
-Date: Wed, 10 Jul 2024 13:21:51 -0300
-Message-ID: <874j8xfc9s.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRa8W-0002b4-Na
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 12:25:46 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-58bac81f3f9so8649889a12.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 09:25:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720628742; x=1721233542; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OGcqv05O478mzPpsMCzVdKfBk3WMnNju/1mDGKYhWSk=;
+ b=zg3LFFtIk7v1VrUKRLg0vMcw8EcvKYLkysWb1NISXbqnWmtHvHzj/7G04OTSRCXAnb
+ Sc/oI+wOgX8pTuK3VnUEbjEIoAGFjz5UYK36bLM0eFT/cM4Y4LCfhdpAwaHKLT+hs4Q7
+ v6XGkC+NVg8FmAkWgTGlZIHAyJlV883YFnnJP07YzjM48egLwKF8zDljoW6QE3yj/Wf1
+ iscAXscvqostMrJukGkI/zaL4ynIZjAWztkXBpqR7Ft+x7FhzjXZofnX1y8VvT9b33Vk
+ 9Zy8lzV47jpSm9VFRbLacHW+uY8IdN8XTmI2s0FByPXE3n0Ttl762GCCmU4yVOC86FF4
+ WNqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720628742; x=1721233542;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OGcqv05O478mzPpsMCzVdKfBk3WMnNju/1mDGKYhWSk=;
+ b=pl0ZnWMqXiKRaPWoqhnxymXywcZg+XyacXyPPcAUajFDyotYmRpgtbKNII7v6EFASW
+ ph/q++ndKeUi+1DsOJPtD14ID8Ssmgyv1g5VJ4J+PusPOQDvQ14WwTa+kRGsKsT8G9dz
+ GCS3K1PDBxH1mMml6FUYQCVy4QJHwfmMIphSffZ1W5ngwMlppDxJLtOuXZsMByS1LMOV
+ IyrKYc4Tg9mgXYrSHviQEIWOwqN6cW+R6ceR01WoF0DjQzoOs6A45Fveb0gC1EWhoslw
+ KgJiZg49V5LB/FpiU47lCY8zVZwzjKVNT3qOcHM4Sq1z+J3aBXb5f4/P68KI44ITNXG2
+ HdOQ==
+X-Gm-Message-State: AOJu0YwP2QV8ZfFMDbQ9t3/rRZiIKK0dpeHaWHpxvI445vczZBY7+Wkk
+ h0VUsgUBaI04RevI1cXznVyFsYkONrdbNS5sBCYTTTHvW3Dns0gk2gDaK9NZyfrQUHTzrsSQeaY
+ o7aLWOhQji6Upqvb0eaAJc2zEsvV/0WQfuSk3uA==
+X-Google-Smtp-Source: AGHT+IHhyltXPBsvqs2povtHA+eAvR+YE3WION54eYAmXCF/AKgqrzXsGkRSn7KGLJqRey720Smg3mPZeyrX+kgiqLk=
+X-Received: by 2002:a05:6402:40d5:b0:58d:318a:508a with SMTP id
+ 4fb4d7f45d1cf-594b9a1048amr4337055a12.2.1720628742153; Wed, 10 Jul 2024
+ 09:25:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[18];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[linaro.org,nongnu.org,redhat.com,nuvoton.com,gmail.com,google.com,amd.com,kaod.org,jms.id.au,lists.libvirt.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+References: <20240708112520.106127-1-junjiehua@tencent.com>
+ <CAFEAcA_pR6VLjKcOgcL+m8aONtey5Lm2ODkWAKv2ne_3ziqknw@mail.gmail.com>
+ <CA+TA2aVV8qSK9zEv+HHyp-ib00vqaCLW_s4Hc5pGa_UJskQvUQ@mail.gmail.com>
+In-Reply-To: <CA+TA2aVV8qSK9zEv+HHyp-ib00vqaCLW_s4Hc5pGa_UJskQvUQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 10 Jul 2024 17:25:30 +0100
+Message-ID: <CAFEAcA9oGivebEDmKK+rGitH_CDXt+r7kLhpw0vXP76cexN_GA@mail.gmail.com>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+To: hellord <halouworls@gmail.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,55 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Wed, Jul 10, 2024 at 11:08:20AM -0300, Fabiano Rosas wrote:
->> >> I think it's ok:
->> >> 
->> >> {
->> >>   "field": "unused",
->> >>   "version_id": 1,
->> >>   "field_exists": false,
->> >>   "size": 512
->> >> },
->> >> 
->> >> vs.
->> >> 
->> >> {
->> >>   "field": "vendor_data",
->> >>   "version_id": 0,
->> >>   "field_exists": false,
->> >>   "num": 512,
->> >>   "size": 1
->> >> },
->> >> 
->> >> The unused field was introduced in 2016 so there's no chance of
->> >> migrating a QEMU that old to/from 9.1.
->> >
->> > What happens if an old qemu 9.0 sends rubbish here to a new QEMU, while the
->> > new QEMU would consider it meaningful data?
->> 
->> It will send zeros, no? The code will have to cope with that. The
->> alternative is to put the vendor_data in a subsection and the code will
->> also have to cope with the lack of data when the old QEMU doesn't send
->> it.
+On Wed, 10 Jul 2024 at 09:02, hellord <halouworls@gmail.com> wrote:
 >
-> Ah indeed, that "static const uint8_t buf[1024]" is there at least since
-> 2017.  So yes, probably always sending zeros.
-
-@Philippe, can vendor_data be 0 after migration? Otherwise 9.0 -> 9.1
-migration might crash.
-
 >
-> Nothing I can think of otherwise indeed, if we want to trust that nothing
-> will migrate before 2016.  It's just that we may want to know how that
-> "2016" is justified to be safe if we would like to allow that in the
-> future.
-
-It's not about trust, we simply don't support migrations other than
-n->n+1 and (maybe) n->n-1. So QEMU from 2016 is certainly not included.
-
+>>
+>>
+>> On Tue, Jul 9, 2024 at 10:39=E2=80=AFPM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
+>> Is there a particular reason to use 128MB here? If the
+>> runtime only fails on 4GB or more, maybe we should use
+>> a larger MAX_CHUNK_SIZE, like 2GB ?
 >
-> One thing _could_ be that "rule of thumb" is we plan to obsolete machines
-> with 6 years, so anything "UNUSED" older than 6 years can be over-written?
+>
+> According to current analysis, size <=3D 4GB all are safe, however there =
+are many
+> versions of msvcrt, this bug exists on Server 2008/2019/2022 and Windows =
+11(all
+> with full latest updates), and it may also exist in other versions, but i=
+t is difficult to
+> check each version individually. I am not sure if all versions handle bou=
+ndary sizes
+> like 2GB/4GB correctly. So I prefer a relatively conservative value: 128M=
+B.
+>
+> Maybe we could use #ifdef _WIN32 to differentiate the handling between Li=
+nux and
+> Windows. For Linux, it remains unchanged, while for Windows, it processes=
+ by chunks
+> with max_chunk_sizeto 1GB.
+
+I don't think it's worth making this Windows-specific. I agree that
+it's OK to be a bit conservative, but 128MB seems to me extremely
+conservative. I think we could say, for instance, 512MB or 1GB, without
+being at much danger of running into broken implementations here.
+
+thanks
+-- PMM
 
