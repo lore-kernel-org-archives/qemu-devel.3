@@ -4,130 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E86BC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F5D4C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:14:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRXzi-0006qx-CL; Wed, 10 Jul 2024 10:08:30 -0400
+	id 1sRY4m-0004Ff-PQ; Wed, 10 Jul 2024 10:13:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRXzf-0006m0-V4; Wed, 10 Jul 2024 10:08:27 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRXzd-0002Yp-Mz; Wed, 10 Jul 2024 10:08:27 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 703DF21BD4;
- Wed, 10 Jul 2024 14:08:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720620503; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxBSaZMT0BEUWVwIq7OYkllCdR6/YSjPnnCo840jolM=;
- b=eSaS2UjISRAqdgslSA1Hh9oRwWLPxDx/0hrCnSnbbie5aP/Mzdf+xWFJBB0Cp50KlJ257K
- uzxSjnJ490MAiCP92oQbmZSd9o48xVhZCZYnae9LPKN6HZkC8IQ2yTqqscFhGK9EJHTRae
- 2UB9bggK0tRqJRXEmWd23mdWQWhyHqg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720620503;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxBSaZMT0BEUWVwIq7OYkllCdR6/YSjPnnCo840jolM=;
- b=a2tcPPtjL+ljN+4w1wknOlefGcDwB3XCeVU7DXLFy+ppoomUYTZbpcPBfUMUzzS6cvB9Ym
- OtmoLIPSE9VGbQCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=eSaS2UjI;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=a2tcPPtj
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720620503; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxBSaZMT0BEUWVwIq7OYkllCdR6/YSjPnnCo840jolM=;
- b=eSaS2UjISRAqdgslSA1Hh9oRwWLPxDx/0hrCnSnbbie5aP/Mzdf+xWFJBB0Cp50KlJ257K
- uzxSjnJ490MAiCP92oQbmZSd9o48xVhZCZYnae9LPKN6HZkC8IQ2yTqqscFhGK9EJHTRae
- 2UB9bggK0tRqJRXEmWd23mdWQWhyHqg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720620503;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxBSaZMT0BEUWVwIq7OYkllCdR6/YSjPnnCo840jolM=;
- b=a2tcPPtjL+ljN+4w1wknOlefGcDwB3XCeVU7DXLFy+ppoomUYTZbpcPBfUMUzzS6cvB9Ym
- OtmoLIPSE9VGbQCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E5495137D2;
- Wed, 10 Jul 2024 14:08:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sU+OKtaVjmaRNQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 10 Jul 2024 14:08:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>, Tyrone Ting
- <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>, Hao Wu
- <wuhaotsh@google.com>, Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-arm@nongnu.org, Joel
- Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- devel@lists.libvirt.org, Luc Michel <luc.michel@amd.com>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on
- block drive (CMD56)
-In-Reply-To: <Zo2lLLAwcZ8bBvO2@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n>
-Date: Wed, 10 Jul 2024 11:08:20 -0300
-Message-ID: <87a5ipfigb.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sRY4i-0004EY-Ud
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:13:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sRY4d-0003fc-Jh
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:13:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720620814;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=sOqN3xVOsEEQkK4Qkb2LFpu1wYXF9OWAkkvBOLYi0oM=;
+ b=RRYPd8if5dDH9x4WO+o/w7pDi8RH/N3IPbWKw36svsiE0bQwrTWlNVmysVVjjryRIkwlOi
+ wufs1e8tPpWmwfZpNraN8Vr6hLllewMk5P1Em8eXMSJPCZg6XQxn9LtMb0MOPJvb5hullr
+ eHNREuPd4r0DYdqdVwyO2ShCTqIlB/k=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-hMSbvUZuNV2vgfhHSRpJqA-1; Wed, 10 Jul 2024 10:13:32 -0400
+X-MC-Unique: hMSbvUZuNV2vgfhHSRpJqA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-367987cff30so4145364f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:13:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720620810; x=1721225610;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sOqN3xVOsEEQkK4Qkb2LFpu1wYXF9OWAkkvBOLYi0oM=;
+ b=drMrBkCiyVOJ4PMI+XPpD3TgP3KylwDZ/p2qNlyeAKN9+EFLM8iuPR5HTdhej+r2Db
+ UXumpwmDnWyZ+jTkepo4yD56xrwtNJpJOsHX8oMnVYHkkZeSC9SQqnvHbOudkALtzra8
+ rIIiOPZ8UrqVOZ8BtN4gK/9NJrHxgvsaESfEjIo9yC4Hk3B6q3k94qA+syq5vYOUm9GH
+ PXNWYpz3Es1PORO8LEfL7aN/Rb4CdcYFljKwISPi/i5n8udIFK5TQcG941UPoMxyhpSM
+ pODY5JWolAWVOloHpw322lQ7/9xHXj7gwIbGGJ3oafEug6ZnpSKm0vQPcfn1CgEHHk56
+ LbVw==
+X-Gm-Message-State: AOJu0YyhEg3x66AwnkvJJkVt4MQvionc5/fThlo9nsxkhDvcIAyn0ANi
+ UKgfwo/87NY24w7zTy2Nzus/4pH4tiaXHxEG+kLUHa5dJWkL3FYjVrPLTc2ElRUSiB650dI6KuY
+ fG3VAarQrqLaBa2uDP9tjkZpwX/XHXXQSC7wczYErtmZU7pv17UaOuT8TpIwyFrooHJkTFqqteH
+ TtgoMwp37/Gc13xR03HLJKY2npYnVSV5e51uZP
+X-Received: by 2002:adf:f383:0:b0:367:8e4d:5d49 with SMTP id
+ ffacd0b85a97d-367ceacb3a0mr3584989f8f.48.1720620810519; 
+ Wed, 10 Jul 2024 07:13:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyJbFK+TQf3iscWXWhgnZdDhEr3dB1MgFpf2LJp3vT/Swr+I5bd0CWGFaLkd6DrqnByTR31g==
+X-Received: by 2002:adf:f383:0:b0:367:8e4d:5d49 with SMTP id
+ ffacd0b85a97d-367ceacb3a0mr3584971f8f.48.1720620810063; 
+ Wed, 10 Jul 2024 07:13:30 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-367cdfb22aasm5442090f8f.117.2024.07.10.07.13.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jul 2024 07:13:29 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PATCH] target/i386/tcg: fix POP to memory in long mode
+Date: Wed, 10 Jul 2024 16:13:28 +0200
+Message-ID: <20240710141328.388955-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 703DF21BD4
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[18];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FREEMAIL_CC(0.00)[linaro.org,nongnu.org,redhat.com,nuvoton.com,gmail.com,google.com,amd.com,kaod.org,jms.id.au,lists.libvirt.org];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,66 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+In long mode, POP to memory will write a full 64-bit value.  However,
+the call to gen_writeback() in gen_POP will use MO_32 because the
+decoding table is incorrect.
 
-> On Tue, Jul 09, 2024 at 05:38:54PM -0300, Fabiano Rosas wrote:
->> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>=20
->> > "General command" (GEN_CMD, CMD56) is described as:
->> >
->> >   GEN_CMD is the same as the single block read or write
->> >   commands (CMD24 or CMD17). The difference is that [...]
->> >   the data block is not a memory payload data but has a
->> >   vendor specific format and meaning.
->> >
->> > Thus this block must not be stored overwriting data block
->> > on underlying storage drive. Keep it in a dedicated
->> > 'vendor_data[]' array.
->> >
->> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> > Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
->> > ---
->> > RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
->> > to be the same size)?
->>=20
->> Hi, sorry it took some time to get to this, I had just left for vacation
->> when you first posted.
->
-> And I totally overlooked there's the email.. until you replied.  Welcome
-> back.
+The bug was latent until commit aea49fbb01a ("target/i386: use gen_writeback()
+within gen_POP()", 2024-06-08), and then became visible because gen_op_st_v
+now receives op->ot instead of the "ot" returned by gen_pop_T0.
 
-Thanks!
+Analyzed-by: Clément Chigot <chigot@adacore.com>
+Fixes: 5e9e21bcc4d ("target/i386: move 60-BF opcodes to new decoder", 2024-05-07)
+Tested-by: Clément Chigot <chigot@adacore.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ target/i386/tcg/emit.c.inc       | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
->
->>=20
->> I think it's ok:
->>=20
->> {
->>   "field": "unused",
->>   "version_id": 1,
->>   "field_exists": false,
->>   "size": 512
->> },
->>=20
->> vs.
->>=20
->> {
->>   "field": "vendor_data",
->>   "version_id": 0,
->>   "field_exists": false,
->>   "num": 512,
->>   "size": 1
->> },
->>=20
->> The unused field was introduced in 2016 so there's no chance of
->> migrating a QEMU that old to/from 9.1.
->
-> What happens if an old qemu 9.0 sends rubbish here to a new QEMU, while t=
-he
-> new QEMU would consider it meaningful data?
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 0d846c32c22..d2da1d396d5 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1717,7 +1717,7 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x8C] = X86_OP_ENTRYwr(MOV, E,v, S,w, op0_Mw),
+     [0x8D] = X86_OP_ENTRYwr(LEA, G,v, M,v, nolea),
+     [0x8E] = X86_OP_ENTRYwr(MOV, S,w, E,w),
+-    [0x8F] = X86_OP_GROUPw(group1A, E,v),
++    [0x8F] = X86_OP_GROUPw(group1A, E,d64),
+ 
+     [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
+     [0x99] = X86_OP_ENTRYwr(CWD,   2,v, 0,v), /* rDX, rAX */
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index fc7477833bc..c6c2c7257b9 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -2788,6 +2788,8 @@ static void gen_POP(DisasContext *s, X86DecodedInsn *decode)
+     X86DecodedOp *op = &decode->op[0];
+     MemOp ot = gen_pop_T0(s);
+ 
++    /* Only 16/32-bit access in 32-bit mode, 16/64-bit access in long mode.  */
++    assert(ot == op->ot);
+     if (op->has_ea || op->unit == X86_OP_SEG) {
+         /* NOTE: order is important for MMU exceptions */
+         gen_writeback(s, decode, 0, s->T0);
+-- 
+2.45.2
 
-It will send zeros, no? The code will have to cope with that. The
-alternative is to put the vendor_data in a subsection and the code will
-also have to cope with the lack of data when the old QEMU doesn't send
-it.
 
