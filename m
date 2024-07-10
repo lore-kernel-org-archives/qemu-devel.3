@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28623C3DA45
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7ECAC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRSwY-0000wY-E4; Wed, 10 Jul 2024 04:44:54 -0400
+	id 1sRT6v-0007EO-Ds; Wed, 10 Jul 2024 04:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sRSwU-0000vr-Ec
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:44:50 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1sRT6r-00079Q-OF
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:55:34 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sRSwS-0000m1-2e
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:44:49 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-595856e2332so1739286a12.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 01:44:47 -0700 (PDT)
+ id 1sRT6q-0003HA-5Z
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:55:33 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2eaafda3b5cso59639911fa.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 01:55:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720601086; x=1721205886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720601728; x=1721206528; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ciYYet6i/Lxi78XNvS2JBGu6dGlfAYRobebzobGKNhQ=;
- b=pWcnlt9QG3Y9YoRNk2QTcC8H0vqOmnzcHP1N6S6o+SWu6V2y3J4K0meXK308W74tMF
- HzIZ3E7aN2CaPyxD/s5WbBQqY33jPhYoTPNUEMXdeiIIwRUtqpG72EKjw1E0XaTwa4Gl
- qCP0XIQUN5bF1LJGIg0hGKzl5dab5ce7pQqf78b+5w28sduvKhP7WWu8RTIUCKfzWQDW
- QW7BLUAt8e59yC55F6bwhgPV8E9gx2HAO6elvW0TITT6lpNEf0TQQOEiZtFY2WxtbYE3
- yJV9ujwdI86q8F8GVB50kPLH3wIzhS6Ab1SsPzbAPJ/K+OwveDZklr1pfaPlmUFSs2NX
- 5Aqw==
+ :reply-to; bh=DjdmeDF7aDD3ajIkpCajmXUDcfC4dgyxB0ZY77skzhk=;
+ b=RyOPBsS6EcbNtWZWFjeF735soCC49iT7z7NFJqJsQ4vdvDxNSB2ckuwpSxMqSzQ9G8
+ rUovpL4HtPoVT0Hh1KcA1yXu5uuMC+JybcggXBlGC78IVdE1tJCD+o3OzM2jhfPzh8eS
+ 7BFtQEISn4fyfkC1ig6UKsaS0I+bIDMIzCHm5/qNYMBJlRD/unB3AdBruZbkoNoLfYYZ
+ zThwvp4HyTxeGFg8RyrN/uugwn2u+e+aVBCuWpwQ0M7wCAk0s/+t7ScLD0GzsGF1dKdR
+ Yp1dtAuC4VDShDFw1GRIIb2NqKjm8/Mnq4uJyUoTCKJeFJMdbXz+gP1WLcYmkfUHj2Y9
+ i6vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720601086; x=1721205886;
+ d=1e100.net; s=20230601; t=1720601728; x=1721206528;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ciYYet6i/Lxi78XNvS2JBGu6dGlfAYRobebzobGKNhQ=;
- b=rvWUmBRZav0sPL1s74h8/tw534QpovLcnnbK9RvP2lAA3BMJys+46ID4yfVMn0vX1G
- F1qbFubXVsqKWMhr13P2V92CuhfeSDlbhuMz8ggHEaAFhXuMmHBxOj5FTfkgcUtP23vF
- 8MSw+RPpG2Nt6fqycEHNfaVSykfASuMPpLzGwK6mz2mXoP4Um9mg2LBCLfPX+e8eldTL
- cNF63oXRqjBPc+ajfXDBw0aLryEA1XwouBqAs/GzNnRz7DJJdNd8Ga5AZIqhDyBdZtHC
- hYaYZ0NtR+NvFSO2QXWb37DiJGNMX9+y/tRnizMeI0CxNnOgUa3gOHz7t2O4XQLGRtRf
- usog==
-X-Gm-Message-State: AOJu0Yx8dl0jiRPfrj2zdlXNvHVMyQFb49/qNoZaIyQXB7A+/stTM4Ih
- aWEBvzfM2H5dUXsdiuM7fNRL6aH3FPKZspWmPCgOGDrxcxb1Js1GPI5qOxAeTic=
-X-Google-Smtp-Source: AGHT+IH0lkp/7phvIPeww2zExW7g1o28b6z6QZ7cVubAfGkH196x2nGwKP6+hoJaoScUBgMjoPrlIg==
-X-Received: by 2002:a17:906:b4a:b0:a77:c7d8:fe18 with SMTP id
- a640c23a62f3a-a780b89cb9fmr335291566b.75.1720601086095; 
- Wed, 10 Jul 2024 01:44:46 -0700 (PDT)
+ bh=DjdmeDF7aDD3ajIkpCajmXUDcfC4dgyxB0ZY77skzhk=;
+ b=qDTaZtWNBfYciemlxhYSmsoHPndaA3c38sD+4RRdqJnTGUt9MliBR9cArgULzXV7io
+ tMItXjC5P6wCMm3y9zkLkWiLFri6sf91NfYoDOpg/rX12IZgSG6JFuZ/D9ys+C2+4PHu
+ 7U25qU19jwmOVUfRv3yD93Nn7QWi0VM2BvP2VF6vfaCq+P4zb0uj6g6lEV1FbSqzGAVW
+ fjvnkYOOdu4DURGcBhjRhn8u8dyzLZbtxMsoOKhHT/yOMRN6UqI7OcrlbWQvjQZFf2/e
+ OXLXuOtJAsIia8fedM/fb/Tsig6gxsAqWO6W1dVJuN5Y3z3UwIgz0cETyf8s+7nIh9IO
+ SHZg==
+X-Gm-Message-State: AOJu0YwA4ElEP3d5aw9dUw+68we3hL/lfwyXARiFLN6PoKXziwB6x35e
+ /YraYz5t0DrqMaHwPhkL6IRbt72406tbNyoVeBXupb9b7xvM8EKmxTWvb55lQbw=
+X-Google-Smtp-Source: AGHT+IH+dcb24zpu1bjBGcyWLXJ67D0R+IqTbxkZ47XaRSjkxgPqJDkdxnORrP5IVooB4MoifeE6fw==
+X-Received: by 2002:a2e:2ac3:0:b0:2ec:1708:4db2 with SMTP id
+ 38308e7fff4ca-2eeb3197a75mr29122731fa.47.1720601728339; 
+ Wed, 10 Jul 2024 01:55:28 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a780a7ff290sm140130966b.108.2024.07.10.01.44.45
+ 4fb4d7f45d1cf-594bd459de5sm1978506a12.70.2024.07.10.01.55.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 01:44:45 -0700 (PDT)
+ Wed, 10 Jul 2024 01:55:27 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF5485F881;
- Wed, 10 Jul 2024 09:44:44 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DAD795F881;
+ Wed, 10 Jul 2024 09:55:26 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
@@ -70,20 +70,20 @@ Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
  <philmd@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Gustavo Romero
  <gustavo.romero@linaro.org>,  Pierrick Bouvier
  <pierrick.bouvier@linaro.org>,  rowan.hart@intel.com,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH v4 5/7] .gitattributes: add Rust diff and merge
- attributes
-In-Reply-To: <b51249befbee4186a6c0fd6c6c0542f0413e0477.1720094395.git.manos.pitsidianakis@linaro.org>
- (Manos Pitsidianakis's message of "Thu, 4 Jul 2024 15:15:41 +0300")
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v4 2/7] rust: add bindgen step as a meson dependency
+In-Reply-To: <4ce5a7330f594c6c94c8cc3aabceb061095bb855.1720094395.git.manos.pitsidianakis@linaro.org>
+ (Manos Pitsidianakis's message of "Thu, 4 Jul 2024 15:15:38 +0300")
 References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
- <b51249befbee4186a6c0fd6c6c0542f0413e0477.1720094395.git.manos.pitsidianakis@linaro.org>
-Date: Wed, 10 Jul 2024 09:44:44 +0100
-Message-ID: <87y169r5z7.fsf@draig.linaro.org>
+ <4ce5a7330f594c6c94c8cc3aabceb061095bb855.1720094395.git.manos.pitsidianakis@linaro.org>
+Date: Wed, 10 Jul 2024 09:55:26 +0100
+Message-ID: <87ttgxr5hd.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,13 +108,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-> Set rust source code to diff=3Drust (built-in with new git versions)
-> and merge=3Dbinary for Cargo.lock files (they should not be merged but
-> auto-generated by cargo)
+> Add mechanism to generate rust hw targets that depend on a custom
+> bindgen target for rust bindings to C.
 >
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+<snip>
+> +      # We need one bindings_rs build target per arch target, so give th=
+em
+> +      # arch-specific names.
+> +      copy =3D fs.copyfile('rust/wrapper.h',
+> +                         target + '_wrapper.h')
+> +      bindings_rs =3D rust_bindgen.bindgen(
+> +        input: copy,
+> +        dependencies: arch_deps + lib_deps,
+> +        output: 'bindings-' + target + '.rs',
+> +        include_directories: include_directories('.', 'include'),
+> +        args: [
+> +          '--ctypes-prefix', 'core::ffi',
+> +          '--formatter', 'rustfmt',
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I guess we also need to detect rustfmt, although it seems to be
+non-fatal:
+
+  15:59:27 [alex@debian-arm64:~/l/q/b/rust] review/rust-pl011-v4 + ninja
+  [831/3041] Generating bindings for Rust rustmod-bindgen-aarch64-softmmu_w=
+rapper.h
+  Failed to run rustfmt: cannot find binary path (non-fatal, continuing)
+  [3041/3041] Linking target tests/qtest/qos-test
+
+<snip>
 
 --=20
 Alex Benn=C3=A9e
