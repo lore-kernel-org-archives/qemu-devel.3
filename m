@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAE5C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 06:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA052C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 06:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRQpl-0008NJ-SS; Wed, 10 Jul 2024 02:29:45 -0400
+	id 1sRQxQ-0001TF-Mn; Wed, 10 Jul 2024 02:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRQpi-0008D2-FW
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:29:43 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sRQxO-0001Lh-Ql
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:37:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRQpf-0000ua-9K
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:29:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sRQxM-0002i2-Qk
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 02:37:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720592978;
+ s=mimecast20190719; t=1720593454;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VWTL4VrbXgQj1vr1wUg5bw0Yrmv3ueLbi/7PMgwKSwc=;
- b=jLmN10JlyMhbEs8WTd9s/RA7TOPw5VuTYUbnVGoWHU3cyqBy6UHN+hHVhFi4GKS/TLV04w
- QwpSCIvmQZ30YkDo4qmL1al6ZJGEup2G5Xh1GDiBP75bTj0z+23j4RMx2JWqu8/zJxBpM8
- 3jnXuRfe68wH5ViuOFXok56eMuJ2dhg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=me+H+3sKdqg7KyCoSb0g25ntktYChAt5Iq6L7H32KLs=;
+ b=jIoE2VcVLdAh/KuXpFJXA5/u7FzKKPZHFr+WeXPBP2LR6BaywpkGNJerXiCRNb4o5dubGA
+ O/sFSCYK1o9dNmm77Pho6VNRiWo4xGm/voBCfSWeCVXxdOmU7TTNoD1qIkwzggjHVEwxJZ
+ d82RWr3b97ttpN0/UdLdDMkkpSXaD/w=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-YZ5es4LDPPanEf0pFZm9NA-1; Wed, 10 Jul 2024 02:29:36 -0400
-X-MC-Unique: YZ5es4LDPPanEf0pFZm9NA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42668699453so27364785e9.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 23:29:36 -0700 (PDT)
+ us-mta-251-kizu814WOGWJgJBR0MV_CQ-1; Wed, 10 Jul 2024 02:37:33 -0400
+X-MC-Unique: kizu814WOGWJgJBR0MV_CQ-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-65a14a9241bso14673277b3.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 23:37:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720592974; x=1721197774;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VWTL4VrbXgQj1vr1wUg5bw0Yrmv3ueLbi/7PMgwKSwc=;
- b=mwlWuO78YVCYgRYyIMBUs02VF1QdVIh6KRP4RiZDTkLHD+rPQ1Jv5ms9zlxTQL6mbH
- D4DDokg5HL2r5DLjzNNJ7H6pyRMu2aF8ry40sfjhc7WJrZHqWVWIvRyighcwhPnDJkfQ
- IVqRp0YUgnHQdD9OD5N/M5kh1TyqdBZOA5FyLFFBaVewGNxsjX9eaUPtwodrCu+oeJmi
- q+WSEeM69vm2JBLAw9GwioYMbqp3qWfihl4im30tPk+U5YbMwi8gYu/J/plMeQL7euTW
- Ok/TNscYaigeuWt2CGS43wLA6CUmzK74fPnwja2/32gyFQifsok1mK8TR13jkhT0r1C8
- LbwA==
-X-Gm-Message-State: AOJu0YwmEBkgybpvN8yloWEi8eI/GDTbrW4uIjwrMwKVwUUafnOqhaZ7
- G3nq7RnPk02vv6+WFa6Dx0IueuZmw+TeMWMblfYqPb/z0WhGPhDgsXFbML5KXW374Plk+YL4vSk
- NpXFDMCwRKeEmvt7yvYBoUQ5B1hFVfQfZtIiYAuBtCxw5MALedOCBI9yA3jeURlddIEY9u60SNC
- ApzvLhS98t/r5rA9ouKnikNSPtwbw2pU1iD5HQ
-X-Received: by 2002:a05:600c:2109:b0:426:58cb:8ca4 with SMTP id
- 5b1f17b1804b1-426708f1d36mr35077515e9.37.1720592973996; 
- Tue, 09 Jul 2024 23:29:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKyE8wWern4fIr7F0IWs/THSK8nmSng0k67+PpbTMDzHzmPssX5qnknnqSeczqOa3p1cdjcg==
-X-Received: by 2002:a05:600c:2109:b0:426:58cb:8ca4 with SMTP id
- 5b1f17b1804b1-426708f1d36mr35077305e9.37.1720592973298; 
- Tue, 09 Jul 2024 23:29:33 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
+ d=1e100.net; s=20230601; t=1720593452; x=1721198252;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=me+H+3sKdqg7KyCoSb0g25ntktYChAt5Iq6L7H32KLs=;
+ b=NAmYbOD3bZjzS7MkC34I7A/9luaIWyCeDQYZ8SywTs6MTo7tq8Zx5MfchdvSku5VG+
+ rdVWSZ2/xxhChBl8hiRMgl43SyazDB/2d9M1dDKqdk5CZl+d2Rr2WuHXAPTz8NEEJEsB
+ glOz4ESeSvqUnS18pV5MjJQ7fokXzywpo/KbLNasLKdRD7xbELF68moeEiksw/6xNb35
+ T/WWsTYxCaLyvxDsL5oiHCfMONL2qzDXp9xlwKwHKnRO6bwPBk6OXa6G270/0LvTnSZq
+ ge9khCkgm4UAefyPjie+Jg66kg4ryOxWRkJTozY8pzh/78heVIJwlIEUl521xM9uw6Ie
+ /5og==
+X-Gm-Message-State: AOJu0Yx9val04XYgSB/Yq2E5ZDy2T1apir66enKxFgIAftT2tjfUi0wE
+ FDJ5VU/VwZu3v24Lnu/Nsqhrv8Y96xWJEvO/DzHK64d4i6uqGUmBB0F2r6ZNhzKRu2c920xDyBT
+ wsxyKxWC+Jkjvuqy4cgOJS6QlEg7WJoT9qwzKEbQr0aKthv1t1FB8
+X-Received: by 2002:a81:92c1:0:b0:64a:8767:b069 with SMTP id
+ 00721157ae682-658ee790471mr51374227b3.3.1720593452198; 
+ Tue, 09 Jul 2024 23:37:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHqV7kPATxbILiSHlIrLHu2di0AudxWCBoRz5WZrLjiI4xTEnoV1uQr3fowQXpmJn2ye4vXlA==
+X-Received: by 2002:a81:92c1:0:b0:64a:8767:b069 with SMTP id
+ 00721157ae682-658ee790471mr51374117b3.3.1720593451789; 
+ Tue, 09 Jul 2024 23:37:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cdfab753sm4321191f8f.107.2024.07.09.23.29.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 23:29:31 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: rrh.henry@gmail.com,
-	richard.henderson@linaro.org
-Subject: [PATCH 04/10] target/i386/tcg: Reorg push/pop within seg_helper.c
-Date: Wed, 10 Jul 2024 08:29:14 +0200
-Message-ID: <20240710062920.73063-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240710062920.73063-1-pbonzini@redhat.com>
-References: <20240710062920.73063-1-pbonzini@redhat.com>
+ af79cd13be357-79f18f1a32bsm170535985a.0.2024.07.09.23.37.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jul 2024 23:37:31 -0700 (PDT)
+Message-ID: <75cbc7d9-b48e-4235-85cf-49dacf3c7483@redhat.com>
+Date: Wed, 10 Jul 2024 08:37:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 06/12] pcie_sriov: Reuse SR-IOV VF device instances
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
+ <20240627-reuse-v10-6-7ca0b8ed3d9f@daynix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240627-reuse-v10-6-7ca0b8ed3d9f@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,852 +112,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Hello,
 
-Interrupts and call gates should use accesses with the DPL as
-the privilege level.  While computing the applicable MMU index
-is easy, the harder thing is how to plumb it in the code.
+This change introduced a regression on s390x. I could have spotted it
+earlier. Sorry about that. Here is the scenario,
 
-One possibility could be to add a single argument to the PUSH* macros
-for the privilege level, but this is repetitive and risks confusion
-between the involved privilege levels.
+QEMU now creates automatically the PCI device objects representing the
+VFs when the PF device is realized in pcie_sriov_pf_init(). This is
+good to report errors early but it has an important drawback.
 
-Another possibility is to pass both CPL and DPL, and adjusting both
-PUSH* and POP* to use specific privilege levels (instead of using
-cpu_{ld,st}*_data). This makes the code more symmetric.
+On s390x, PCI devices have a dual S390PCIBusDevice object. This device
+model has 'uid' and 'fid' properties which can be either set by the VMM
+or, if not, auto-generated by the S390PCIBusDevice realize handler. In
+the VF case, these ids are auto-generated by QEMU and they can possibly
+conflict with the uid number space of libvirt. The conflict is detected
+when the machine is created and the start is aborted with a message :
 
-However, a more complicated but much nicer approach is to use a structure
-to contain the stack parameters, env, unwind return address, and rewrite
-the macros into functions.  The struct provides an easy home for the MMU
-index as well.
+   2024-07-08T12:51:42.876883Z qemu-system-s390x: -device {"driver":"zpci","uid":17,"fid":16,"target":"hostdev0","id":"zpci17"}: uid 17 already in use
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240617161210.4639-4-richard.henderson@linaro.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/seg_helper.c | 439 +++++++++++++++++++----------------
- 1 file changed, 238 insertions(+), 201 deletions(-)
+This problem can occur today with a s390x VM using an IGB device.
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 0653bc10936..6b3de7a2be4 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -579,35 +579,47 @@ int exception_has_error_code(int intno)
-     } while (0)
- #endif
- 
--/* XXX: add a is_user flag to have proper security support */
--#define PUSHW_RA(ssp, sp, sp_mask, val, ra)                      \
--    {                                                            \
--        sp -= 2;                                                 \
--        cpu_stw_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
--    }
-+/* XXX: use mmu_index to have proper DPL support */
-+typedef struct StackAccess
-+{
-+    CPUX86State *env;
-+    uintptr_t ra;
-+    target_ulong ss_base;
-+    target_ulong sp;
-+    target_ulong sp_mask;
-+} StackAccess;
- 
--#define PUSHL_RA(ssp, sp, sp_mask, val, ra)                             \
--    {                                                                   \
--        sp -= 4;                                                        \
--        cpu_stl_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
--    }
-+static void pushw(StackAccess *sa, uint16_t val)
-+{
-+    sa->sp -= 2;
-+    cpu_stw_kernel_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
-+                      val, sa->ra);
-+}
- 
--#define POPW_RA(ssp, sp, sp_mask, val, ra)                       \
--    {                                                            \
--        val = cpu_lduw_data_ra(env, (ssp) + (sp & (sp_mask)), ra); \
--        sp += 2;                                                 \
--    }
-+static void pushl(StackAccess *sa, uint32_t val)
-+{
-+    sa->sp -= 4;
-+    cpu_stl_kernel_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
-+                      val, sa->ra);
-+}
- 
--#define POPL_RA(ssp, sp, sp_mask, val, ra)                              \
--    {                                                                   \
--        val = (uint32_t)cpu_ldl_data_ra(env, (ssp) + (sp & (sp_mask)), ra); \
--        sp += 4;                                                        \
--    }
-+static uint16_t popw(StackAccess *sa)
-+{
-+    uint16_t ret = cpu_lduw_data_ra(sa->env,
-+                                    sa->ss_base + (sa->sp & sa->sp_mask),
-+                                    sa->ra);
-+    sa->sp += 2;
-+    return ret;
-+}
- 
--#define PUSHW(ssp, sp, sp_mask, val) PUSHW_RA(ssp, sp, sp_mask, val, 0)
--#define PUSHL(ssp, sp, sp_mask, val) PUSHL_RA(ssp, sp, sp_mask, val, 0)
--#define POPW(ssp, sp, sp_mask, val) POPW_RA(ssp, sp, sp_mask, val, 0)
--#define POPL(ssp, sp, sp_mask, val) POPL_RA(ssp, sp, sp_mask, val, 0)
-+static uint32_t popl(StackAccess *sa)
-+{
-+    uint32_t ret = cpu_ldl_data_ra(sa->env,
-+                                   sa->ss_base + (sa->sp & sa->sp_mask),
-+                                   sa->ra);
-+    sa->sp += 4;
-+    return ret;
-+}
- 
- /* protected mode interrupt */
- static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-@@ -615,12 +627,13 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-                                    int is_hw)
- {
-     SegmentCache *dt;
--    target_ulong ptr, ssp;
-+    target_ulong ptr;
-     int type, dpl, selector, ss_dpl, cpl;
-     int has_error_code, new_stack, shift;
--    uint32_t e1, e2, offset, ss = 0, esp, ss_e1 = 0, ss_e2 = 0;
--    uint32_t old_eip, sp_mask, eflags;
-+    uint32_t e1, e2, offset, ss = 0, ss_e1 = 0, ss_e2 = 0;
-+    uint32_t old_eip, eflags;
-     int vm86 = env->eflags & VM_MASK;
-+    StackAccess sa;
-     bool set_rf;
- 
-     has_error_code = 0;
-@@ -662,6 +675,9 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-         raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
-     }
- 
-+    sa.env = env;
-+    sa.ra = 0;
-+
-     if (type == 5) {
-         /* task gate */
-         /* must do that check here to return the correct error code */
-@@ -672,18 +688,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-         if (has_error_code) {
-             /* push the error code */
-             if (env->segs[R_SS].flags & DESC_B_MASK) {
--                sp_mask = 0xffffffff;
-+                sa.sp_mask = 0xffffffff;
-             } else {
--                sp_mask = 0xffff;
-+                sa.sp_mask = 0xffff;
-             }
--            esp = env->regs[R_ESP];
--            ssp = env->segs[R_SS].base;
-+            sa.sp = env->regs[R_ESP];
-+            sa.ss_base = env->segs[R_SS].base;
-             if (shift) {
--                PUSHL(ssp, esp, sp_mask, error_code);
-+                pushl(&sa, error_code);
-             } else {
--                PUSHW(ssp, esp, sp_mask, error_code);
-+                pushw(&sa, error_code);
-             }
--            SET_ESP(esp, sp_mask);
-+            SET_ESP(sa.sp, sa.sp_mask);
-         }
-         return;
-     }
-@@ -717,6 +733,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     }
-     if (dpl < cpl) {
-         /* to inner privilege */
-+        uint32_t esp;
-         get_ss_esp_from_tss(env, &ss, &esp, dpl, 0);
-         if ((ss & 0xfffc) == 0) {
-             raise_exception_err(env, EXCP0A_TSS, ss & 0xfffc);
-@@ -740,17 +757,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             raise_exception_err(env, EXCP0A_TSS, ss & 0xfffc);
-         }
-         new_stack = 1;
--        sp_mask = get_sp_mask(ss_e2);
--        ssp = get_seg_base(ss_e1, ss_e2);
-+        sa.sp = esp;
-+        sa.sp_mask = get_sp_mask(ss_e2);
-+        sa.ss_base = get_seg_base(ss_e1, ss_e2);
-     } else  {
-         /* to same privilege */
-         if (vm86) {
-             raise_exception_err(env, EXCP0D_GPF, selector & 0xfffc);
-         }
-         new_stack = 0;
--        sp_mask = get_sp_mask(env->segs[R_SS].flags);
--        ssp = env->segs[R_SS].base;
--        esp = env->regs[R_ESP];
-+        sa.sp = env->regs[R_ESP];
-+        sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-+        sa.ss_base = env->segs[R_SS].base;
-     }
- 
-     shift = type >> 3;
-@@ -775,36 +793,36 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     if (shift == 1) {
-         if (new_stack) {
-             if (vm86) {
--                PUSHL(ssp, esp, sp_mask, env->segs[R_GS].selector);
--                PUSHL(ssp, esp, sp_mask, env->segs[R_FS].selector);
--                PUSHL(ssp, esp, sp_mask, env->segs[R_DS].selector);
--                PUSHL(ssp, esp, sp_mask, env->segs[R_ES].selector);
-+                pushl(&sa, env->segs[R_GS].selector);
-+                pushl(&sa, env->segs[R_FS].selector);
-+                pushl(&sa, env->segs[R_DS].selector);
-+                pushl(&sa, env->segs[R_ES].selector);
-             }
--            PUSHL(ssp, esp, sp_mask, env->segs[R_SS].selector);
--            PUSHL(ssp, esp, sp_mask, env->regs[R_ESP]);
-+            pushl(&sa, env->segs[R_SS].selector);
-+            pushl(&sa, env->regs[R_ESP]);
-         }
--        PUSHL(ssp, esp, sp_mask, eflags);
--        PUSHL(ssp, esp, sp_mask, env->segs[R_CS].selector);
--        PUSHL(ssp, esp, sp_mask, old_eip);
-+        pushl(&sa, eflags);
-+        pushl(&sa, env->segs[R_CS].selector);
-+        pushl(&sa, old_eip);
-         if (has_error_code) {
--            PUSHL(ssp, esp, sp_mask, error_code);
-+            pushl(&sa, error_code);
-         }
-     } else {
-         if (new_stack) {
-             if (vm86) {
--                PUSHW(ssp, esp, sp_mask, env->segs[R_GS].selector);
--                PUSHW(ssp, esp, sp_mask, env->segs[R_FS].selector);
--                PUSHW(ssp, esp, sp_mask, env->segs[R_DS].selector);
--                PUSHW(ssp, esp, sp_mask, env->segs[R_ES].selector);
-+                pushw(&sa, env->segs[R_GS].selector);
-+                pushw(&sa, env->segs[R_FS].selector);
-+                pushw(&sa, env->segs[R_DS].selector);
-+                pushw(&sa, env->segs[R_ES].selector);
-             }
--            PUSHW(ssp, esp, sp_mask, env->segs[R_SS].selector);
--            PUSHW(ssp, esp, sp_mask, env->regs[R_ESP]);
-+            pushw(&sa, env->segs[R_SS].selector);
-+            pushw(&sa, env->regs[R_ESP]);
-         }
--        PUSHW(ssp, esp, sp_mask, eflags);
--        PUSHW(ssp, esp, sp_mask, env->segs[R_CS].selector);
--        PUSHW(ssp, esp, sp_mask, old_eip);
-+        pushw(&sa, eflags);
-+        pushw(&sa, env->segs[R_CS].selector);
-+        pushw(&sa, old_eip);
-         if (has_error_code) {
--            PUSHW(ssp, esp, sp_mask, error_code);
-+            pushw(&sa, error_code);
-         }
-     }
- 
-@@ -822,10 +840,10 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             cpu_x86_load_seg_cache(env, R_GS, 0, 0, 0, 0);
-         }
-         ss = (ss & ~3) | dpl;
--        cpu_x86_load_seg_cache(env, R_SS, ss,
--                               ssp, get_seg_limit(ss_e1, ss_e2), ss_e2);
-+        cpu_x86_load_seg_cache(env, R_SS, ss, sa.ss_base,
-+                               get_seg_limit(ss_e1, ss_e2), ss_e2);
-     }
--    SET_ESP(esp, sp_mask);
-+    SET_ESP(sa.sp, sa.sp_mask);
- 
-     selector = (selector & ~3) | dpl;
-     cpu_x86_load_seg_cache(env, R_CS, selector,
-@@ -837,20 +855,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
- 
- #ifdef TARGET_X86_64
- 
--#define PUSHQ_RA(sp, val, ra)                   \
--    {                                           \
--        sp -= 8;                                \
--        cpu_stq_kernel_ra(env, sp, (val), ra);  \
--    }
-+static void pushq(StackAccess *sa, uint64_t val)
-+{
-+    sa->sp -= 8;
-+    cpu_stq_kernel_ra(sa->env, sa->sp, val, sa->ra);
-+}
- 
--#define POPQ_RA(sp, val, ra)                    \
--    {                                           \
--        val = cpu_ldq_data_ra(env, sp, ra);   \
--        sp += 8;                                \
--    }
--
--#define PUSHQ(sp, val) PUSHQ_RA(sp, val, 0)
--#define POPQ(sp, val) POPQ_RA(sp, val, 0)
-+static uint64_t popq(StackAccess *sa)
-+{
-+    uint64_t ret = cpu_ldq_data_ra(sa->env, sa->sp, sa->ra);
-+    sa->sp += 8;
-+    return ret;
-+}
- 
- static inline target_ulong get_rsp_from_tss(CPUX86State *env, int level)
- {
-@@ -893,8 +909,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     int type, dpl, selector, cpl, ist;
-     int has_error_code, new_stack;
-     uint32_t e1, e2, e3, ss, eflags;
--    target_ulong old_eip, esp, offset;
-+    target_ulong old_eip, offset;
-     bool set_rf;
-+    StackAccess sa;
- 
-     has_error_code = 0;
-     if (!is_int && !is_hw) {
-@@ -962,10 +979,15 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     if (e2 & DESC_C_MASK) {
-         dpl = cpl;
-     }
-+
-+    sa.env = env;
-+    sa.ra = 0;
-+    sa.sp_mask = -1;
-+    sa.ss_base = 0;
-     if (dpl < cpl || ist != 0) {
-         /* to inner privilege */
-         new_stack = 1;
--        esp = get_rsp_from_tss(env, ist != 0 ? ist + 3 : dpl);
-+        sa.sp = get_rsp_from_tss(env, ist != 0 ? ist + 3 : dpl);
-         ss = 0;
-     } else {
-         /* to same privilege */
-@@ -973,9 +995,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-             raise_exception_err(env, EXCP0D_GPF, selector & 0xfffc);
-         }
-         new_stack = 0;
--        esp = env->regs[R_ESP];
-+        sa.sp = env->regs[R_ESP];
-     }
--    esp &= ~0xfLL; /* align stack */
-+    sa.sp &= ~0xfLL; /* align stack */
- 
-     /* See do_interrupt_protected.  */
-     eflags = cpu_compute_eflags(env);
-@@ -983,13 +1005,13 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-         eflags |= RF_MASK;
-     }
- 
--    PUSHQ(esp, env->segs[R_SS].selector);
--    PUSHQ(esp, env->regs[R_ESP]);
--    PUSHQ(esp, eflags);
--    PUSHQ(esp, env->segs[R_CS].selector);
--    PUSHQ(esp, old_eip);
-+    pushq(&sa, env->segs[R_SS].selector);
-+    pushq(&sa, env->regs[R_ESP]);
-+    pushq(&sa, eflags);
-+    pushq(&sa, env->segs[R_CS].selector);
-+    pushq(&sa, old_eip);
-     if (has_error_code) {
--        PUSHQ(esp, error_code);
-+        pushq(&sa, error_code);
-     }
- 
-     /* interrupt gate clear IF mask */
-@@ -1002,7 +1024,7 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-         ss = 0 | dpl;
-         cpu_x86_load_seg_cache(env, R_SS, ss, 0, 0, dpl << DESC_DPL_SHIFT);
-     }
--    env->regs[R_ESP] = esp;
-+    env->regs[R_ESP] = sa.sp;
- 
-     selector = (selector & ~3) | dpl;
-     cpu_x86_load_seg_cache(env, R_CS, selector,
-@@ -1074,10 +1096,11 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-                               int error_code, unsigned int next_eip)
- {
-     SegmentCache *dt;
--    target_ulong ptr, ssp;
-+    target_ulong ptr;
-     int selector;
--    uint32_t offset, esp;
-+    uint32_t offset;
-     uint32_t old_cs, old_eip;
-+    StackAccess sa;
- 
-     /* real mode (simpler!) */
-     dt = &env->idt;
-@@ -1087,8 +1110,13 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-     ptr = dt->base + intno * 4;
-     offset = cpu_lduw_kernel(env, ptr);
-     selector = cpu_lduw_kernel(env, ptr + 2);
--    esp = env->regs[R_ESP];
--    ssp = env->segs[R_SS].base;
-+
-+    sa.env = env;
-+    sa.ra = 0;
-+    sa.sp = env->regs[R_ESP];
-+    sa.sp_mask = 0xffff;
-+    sa.ss_base = env->segs[R_SS].base;
-+
-     if (is_int) {
-         old_eip = next_eip;
-     } else {
-@@ -1096,12 +1124,12 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-     }
-     old_cs = env->segs[R_CS].selector;
-     /* XXX: use SS segment size? */
--    PUSHW(ssp, esp, 0xffff, cpu_compute_eflags(env));
--    PUSHW(ssp, esp, 0xffff, old_cs);
--    PUSHW(ssp, esp, 0xffff, old_eip);
-+    pushw(&sa, cpu_compute_eflags(env));
-+    pushw(&sa, old_cs);
-+    pushw(&sa, old_eip);
- 
-     /* update processor state */
--    env->regs[R_ESP] = (env->regs[R_ESP] & ~0xffff) | (esp & 0xffff);
-+    SET_ESP(sa.sp, sa.sp_mask);
-     env->eip = offset;
-     env->segs[R_CS].selector = selector;
-     env->segs[R_CS].base = (selector << 4);
-@@ -1544,21 +1572,23 @@ void helper_ljmp_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- void helper_lcall_real(CPUX86State *env, uint32_t new_cs, uint32_t new_eip,
-                        int shift, uint32_t next_eip)
- {
--    uint32_t esp, esp_mask;
--    target_ulong ssp;
-+    StackAccess sa;
-+
-+    sa.env = env;
-+    sa.ra = GETPC();
-+    sa.sp = env->regs[R_ESP];
-+    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-+    sa.ss_base = env->segs[R_SS].base;
- 
--    esp = env->regs[R_ESP];
--    esp_mask = get_sp_mask(env->segs[R_SS].flags);
--    ssp = env->segs[R_SS].base;
-     if (shift) {
--        PUSHL_RA(ssp, esp, esp_mask, env->segs[R_CS].selector, GETPC());
--        PUSHL_RA(ssp, esp, esp_mask, next_eip, GETPC());
-+        pushl(&sa, env->segs[R_CS].selector);
-+        pushl(&sa, next_eip);
-     } else {
--        PUSHW_RA(ssp, esp, esp_mask, env->segs[R_CS].selector, GETPC());
--        PUSHW_RA(ssp, esp, esp_mask, next_eip, GETPC());
-+        pushw(&sa, env->segs[R_CS].selector);
-+        pushw(&sa, next_eip);
-     }
- 
--    SET_ESP(esp, esp_mask);
-+    SET_ESP(sa.sp, sa.sp_mask);
-     env->eip = new_eip;
-     env->segs[R_CS].selector = new_cs;
-     env->segs[R_CS].base = (new_cs << 4);
-@@ -1570,9 +1600,10 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- {
-     int new_stack, i;
-     uint32_t e1, e2, cpl, dpl, rpl, selector, param_count;
--    uint32_t ss = 0, ss_e1 = 0, ss_e2 = 0, type, ss_dpl, sp_mask;
-+    uint32_t ss = 0, ss_e1 = 0, ss_e2 = 0, type, ss_dpl;
-     uint32_t val, limit, old_sp_mask;
--    target_ulong ssp, old_ssp, offset, sp;
-+    target_ulong old_ssp, offset;
-+    StackAccess sa;
- 
-     LOG_PCALL("lcall %04x:" TARGET_FMT_lx " s=%d\n", new_cs, new_eip, shift);
-     LOG_PCALL_STATE(env_cpu(env));
-@@ -1584,6 +1615,10 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-     }
-     cpl = env->hflags & HF_CPL_MASK;
-     LOG_PCALL("desc=%08x:%08x\n", e1, e2);
-+
-+    sa.env = env;
-+    sa.ra = GETPC();
-+
-     if (e2 & DESC_S_MASK) {
-         if (!(e2 & DESC_CS_MASK)) {
-             raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
-@@ -1611,14 +1646,14 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- #ifdef TARGET_X86_64
-         /* XXX: check 16/32 bit cases in long mode */
-         if (shift == 2) {
--            target_ulong rsp;
--
-             /* 64 bit case */
--            rsp = env->regs[R_ESP];
--            PUSHQ_RA(rsp, env->segs[R_CS].selector, GETPC());
--            PUSHQ_RA(rsp, next_eip, GETPC());
-+            sa.sp = env->regs[R_ESP];
-+            sa.sp_mask = -1;
-+            sa.ss_base = 0;
-+            pushq(&sa, env->segs[R_CS].selector);
-+            pushq(&sa, next_eip);
-             /* from this point, not restartable */
--            env->regs[R_ESP] = rsp;
-+            env->regs[R_ESP] = sa.sp;
-             cpu_x86_load_seg_cache(env, R_CS, (new_cs & 0xfffc) | cpl,
-                                    get_seg_base(e1, e2),
-                                    get_seg_limit(e1, e2), e2);
-@@ -1626,15 +1661,15 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-         } else
- #endif
-         {
--            sp = env->regs[R_ESP];
--            sp_mask = get_sp_mask(env->segs[R_SS].flags);
--            ssp = env->segs[R_SS].base;
-+            sa.sp = env->regs[R_ESP];
-+            sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-+            sa.ss_base = env->segs[R_SS].base;
-             if (shift) {
--                PUSHL_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
--                PUSHL_RA(ssp, sp, sp_mask, next_eip, GETPC());
-+                pushl(&sa, env->segs[R_CS].selector);
-+                pushl(&sa, next_eip);
-             } else {
--                PUSHW_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
--                PUSHW_RA(ssp, sp, sp_mask, next_eip, GETPC());
-+                pushw(&sa, env->segs[R_CS].selector);
-+                pushw(&sa, next_eip);
-             }
- 
-             limit = get_seg_limit(e1, e2);
-@@ -1642,7 +1677,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-                 raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
-             }
-             /* from this point, not restartable */
--            SET_ESP(sp, sp_mask);
-+            SET_ESP(sa.sp, sa.sp_mask);
-             cpu_x86_load_seg_cache(env, R_CS, (new_cs & 0xfffc) | cpl,
-                                    get_seg_base(e1, e2), limit, e2);
-             env->eip = new_eip;
-@@ -1737,13 +1772,13 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-             /* to inner privilege */
- #ifdef TARGET_X86_64
-             if (shift == 2) {
--                sp = get_rsp_from_tss(env, dpl);
-                 ss = dpl;  /* SS = NULL selector with RPL = new CPL */
-                 new_stack = 1;
--                sp_mask = 0;
--                ssp = 0;  /* SS base is always zero in IA-32e mode */
-+                sa.sp = get_rsp_from_tss(env, dpl);
-+                sa.sp_mask = -1;
-+                sa.ss_base = 0;  /* SS base is always zero in IA-32e mode */
-                 LOG_PCALL("new ss:rsp=%04x:%016llx env->regs[R_ESP]="
--                          TARGET_FMT_lx "\n", ss, sp, env->regs[R_ESP]);
-+                          TARGET_FMT_lx "\n", ss, sa.sp, env->regs[R_ESP]);
-             } else
- #endif
-             {
-@@ -1752,7 +1787,6 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-                 LOG_PCALL("new ss:esp=%04x:%08x param_count=%d env->regs[R_ESP]="
-                           TARGET_FMT_lx "\n", ss, sp32, param_count,
-                           env->regs[R_ESP]);
--                sp = sp32;
-                 if ((ss & 0xfffc) == 0) {
-                     raise_exception_err_ra(env, EXCP0A_TSS, ss & 0xfffc, GETPC());
-                 }
-@@ -1775,63 +1809,64 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-                     raise_exception_err_ra(env, EXCP0A_TSS, ss & 0xfffc, GETPC());
-                 }
- 
--                sp_mask = get_sp_mask(ss_e2);
--                ssp = get_seg_base(ss_e1, ss_e2);
-+                sa.sp = sp32;
-+                sa.sp_mask = get_sp_mask(ss_e2);
-+                sa.ss_base = get_seg_base(ss_e1, ss_e2);
-             }
- 
-             /* push_size = ((param_count * 2) + 8) << shift; */
--
-             old_sp_mask = get_sp_mask(env->segs[R_SS].flags);
-             old_ssp = env->segs[R_SS].base;
-+
- #ifdef TARGET_X86_64
-             if (shift == 2) {
-                 /* XXX: verify if new stack address is canonical */
--                PUSHQ_RA(sp, env->segs[R_SS].selector, GETPC());
--                PUSHQ_RA(sp, env->regs[R_ESP], GETPC());
-+                pushq(&sa, env->segs[R_SS].selector);
-+                pushq(&sa, env->regs[R_ESP]);
-                 /* parameters aren't supported for 64-bit call gates */
-             } else
- #endif
-             if (shift == 1) {
--                PUSHL_RA(ssp, sp, sp_mask, env->segs[R_SS].selector, GETPC());
--                PUSHL_RA(ssp, sp, sp_mask, env->regs[R_ESP], GETPC());
-+                pushl(&sa, env->segs[R_SS].selector);
-+                pushl(&sa, env->regs[R_ESP]);
-                 for (i = param_count - 1; i >= 0; i--) {
-                     val = cpu_ldl_data_ra(env,
--					  old_ssp + ((env->regs[R_ESP] + i * 4) & old_sp_mask),
--					  GETPC());
--                    PUSHL_RA(ssp, sp, sp_mask, val, GETPC());
-+                                          old_ssp + ((env->regs[R_ESP] + i * 4) & old_sp_mask),
-+                                          GETPC());
-+                    pushl(&sa, val);
-                 }
-             } else {
--                PUSHW_RA(ssp, sp, sp_mask, env->segs[R_SS].selector, GETPC());
--                PUSHW_RA(ssp, sp, sp_mask, env->regs[R_ESP], GETPC());
-+                pushw(&sa, env->segs[R_SS].selector);
-+                pushw(&sa, env->regs[R_ESP]);
-                 for (i = param_count - 1; i >= 0; i--) {
-                     val = cpu_lduw_data_ra(env,
--					   old_ssp + ((env->regs[R_ESP] + i * 2) & old_sp_mask),
--					   GETPC());
--                    PUSHW_RA(ssp, sp, sp_mask, val, GETPC());
-+                                           old_ssp + ((env->regs[R_ESP] + i * 2) & old_sp_mask),
-+                                           GETPC());
-+                    pushw(&sa, val);
-                 }
-             }
-             new_stack = 1;
-         } else {
-             /* to same privilege */
--            sp = env->regs[R_ESP];
--            sp_mask = get_sp_mask(env->segs[R_SS].flags);
--            ssp = env->segs[R_SS].base;
-+            sa.sp = env->regs[R_ESP];
-+            sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-+            sa.ss_base = env->segs[R_SS].base;
-             /* push_size = (4 << shift); */
-             new_stack = 0;
-         }
- 
- #ifdef TARGET_X86_64
-         if (shift == 2) {
--            PUSHQ_RA(sp, env->segs[R_CS].selector, GETPC());
--            PUSHQ_RA(sp, next_eip, GETPC());
-+            pushq(&sa, env->segs[R_CS].selector);
-+            pushq(&sa, next_eip);
-         } else
- #endif
-         if (shift == 1) {
--            PUSHL_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
--            PUSHL_RA(ssp, sp, sp_mask, next_eip, GETPC());
-+            pushl(&sa, env->segs[R_CS].selector);
-+            pushl(&sa, next_eip);
-         } else {
--            PUSHW_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
--            PUSHW_RA(ssp, sp, sp_mask, next_eip, GETPC());
-+            pushw(&sa, env->segs[R_CS].selector);
-+            pushw(&sa, next_eip);
-         }
- 
-         /* from this point, not restartable */
-@@ -1845,7 +1880,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-             {
-                 ss = (ss & ~3) | dpl;
-                 cpu_x86_load_seg_cache(env, R_SS, ss,
--                                       ssp,
-+                                       sa.ss_base,
-                                        get_seg_limit(ss_e1, ss_e2),
-                                        ss_e2);
-             }
-@@ -1856,7 +1891,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
-                        get_seg_base(e1, e2),
-                        get_seg_limit(e1, e2),
-                        e2);
--        SET_ESP(sp, sp_mask);
-+        SET_ESP(sa.sp, sa.sp_mask);
-         env->eip = offset;
-     }
- }
-@@ -1864,26 +1899,28 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
- /* real and vm86 mode iret */
- void helper_iret_real(CPUX86State *env, int shift)
- {
--    uint32_t sp, new_cs, new_eip, new_eflags, sp_mask;
--    target_ulong ssp;
-+    uint32_t new_cs, new_eip, new_eflags;
-     int eflags_mask;
-+    StackAccess sa;
-+
-+    sa.env = env;
-+    sa.ra = GETPC();
-+    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
-+    sa.sp = env->regs[R_ESP];
-+    sa.ss_base = env->segs[R_SS].base;
- 
--    sp_mask = 0xffff; /* XXXX: use SS segment size? */
--    sp = env->regs[R_ESP];
--    ssp = env->segs[R_SS].base;
-     if (shift == 1) {
-         /* 32 bits */
--        POPL_RA(ssp, sp, sp_mask, new_eip, GETPC());
--        POPL_RA(ssp, sp, sp_mask, new_cs, GETPC());
--        new_cs &= 0xffff;
--        POPL_RA(ssp, sp, sp_mask, new_eflags, GETPC());
-+        new_eip = popl(&sa);
-+        new_cs = popl(&sa) & 0xffff;
-+        new_eflags = popl(&sa);
-     } else {
-         /* 16 bits */
--        POPW_RA(ssp, sp, sp_mask, new_eip, GETPC());
--        POPW_RA(ssp, sp, sp_mask, new_cs, GETPC());
--        POPW_RA(ssp, sp, sp_mask, new_eflags, GETPC());
-+        new_eip = popw(&sa);
-+        new_cs = popw(&sa);
-+        new_eflags = popw(&sa);
-     }
--    env->regs[R_ESP] = (env->regs[R_ESP] & ~sp_mask) | (sp & sp_mask);
-+    SET_ESP(sa.sp, sa.sp_mask);
-     env->segs[R_CS].selector = new_cs;
-     env->segs[R_CS].base = (new_cs << 4);
-     env->eip = new_eip;
-@@ -1936,47 +1973,49 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-     uint32_t new_es, new_ds, new_fs, new_gs;
-     uint32_t e1, e2, ss_e1, ss_e2;
-     int cpl, dpl, rpl, eflags_mask, iopl;
--    target_ulong ssp, sp, new_eip, new_esp, sp_mask;
-+    target_ulong new_eip, new_esp;
-+    StackAccess sa;
-+
-+    sa.env = env;
-+    sa.ra = retaddr;
- 
- #ifdef TARGET_X86_64
-     if (shift == 2) {
--        sp_mask = -1;
-+        sa.sp_mask = -1;
-     } else
- #endif
-     {
--        sp_mask = get_sp_mask(env->segs[R_SS].flags);
-+        sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     }
--    sp = env->regs[R_ESP];
--    ssp = env->segs[R_SS].base;
-+    sa.sp = env->regs[R_ESP];
-+    sa.ss_base = env->segs[R_SS].base;
-     new_eflags = 0; /* avoid warning */
- #ifdef TARGET_X86_64
-     if (shift == 2) {
--        POPQ_RA(sp, new_eip, retaddr);
--        POPQ_RA(sp, new_cs, retaddr);
--        new_cs &= 0xffff;
-+        new_eip = popq(&sa);
-+        new_cs = popq(&sa) & 0xffff;
-         if (is_iret) {
--            POPQ_RA(sp, new_eflags, retaddr);
-+            new_eflags = popq(&sa);
-         }
-     } else
- #endif
-     {
-         if (shift == 1) {
-             /* 32 bits */
--            POPL_RA(ssp, sp, sp_mask, new_eip, retaddr);
--            POPL_RA(ssp, sp, sp_mask, new_cs, retaddr);
--            new_cs &= 0xffff;
-+            new_eip = popl(&sa);
-+            new_cs = popl(&sa) & 0xffff;
-             if (is_iret) {
--                POPL_RA(ssp, sp, sp_mask, new_eflags, retaddr);
-+                new_eflags = popl(&sa);
-                 if (new_eflags & VM_MASK) {
-                     goto return_to_vm86;
-                 }
-             }
-         } else {
-             /* 16 bits */
--            POPW_RA(ssp, sp, sp_mask, new_eip, retaddr);
--            POPW_RA(ssp, sp, sp_mask, new_cs, retaddr);
-+            new_eip = popw(&sa);
-+            new_cs = popw(&sa);
-             if (is_iret) {
--                POPW_RA(ssp, sp, sp_mask, new_eflags, retaddr);
-+                new_eflags = popw(&sa);
-             }
-         }
-     }
-@@ -2012,7 +2051,7 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-         raise_exception_err_ra(env, EXCP0B_NOSEG, new_cs & 0xfffc, retaddr);
-     }
- 
--    sp += addend;
-+    sa.sp += addend;
-     if (rpl == cpl && (!(env->hflags & HF_CS64_MASK) ||
-                        ((env->hflags & HF_CS64_MASK) && !is_iret))) {
-         /* return to same privilege level */
-@@ -2024,21 +2063,19 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-         /* return to different privilege level */
- #ifdef TARGET_X86_64
-         if (shift == 2) {
--            POPQ_RA(sp, new_esp, retaddr);
--            POPQ_RA(sp, new_ss, retaddr);
--            new_ss &= 0xffff;
-+            new_esp = popq(&sa);
-+            new_ss = popq(&sa) & 0xffff;
-         } else
- #endif
-         {
-             if (shift == 1) {
-                 /* 32 bits */
--                POPL_RA(ssp, sp, sp_mask, new_esp, retaddr);
--                POPL_RA(ssp, sp, sp_mask, new_ss, retaddr);
--                new_ss &= 0xffff;
-+                new_esp = popl(&sa);
-+                new_ss = popl(&sa) & 0xffff;
-             } else {
-                 /* 16 bits */
--                POPW_RA(ssp, sp, sp_mask, new_esp, retaddr);
--                POPW_RA(ssp, sp, sp_mask, new_ss, retaddr);
-+                new_esp = popw(&sa);
-+                new_ss = popw(&sa);
-             }
-         }
-         LOG_PCALL("new ss:esp=%04x:" TARGET_FMT_lx "\n",
-@@ -2088,14 +2125,14 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-                        get_seg_base(e1, e2),
-                        get_seg_limit(e1, e2),
-                        e2);
--        sp = new_esp;
-+        sa.sp = new_esp;
- #ifdef TARGET_X86_64
-         if (env->hflags & HF_CS64_MASK) {
--            sp_mask = -1;
-+            sa.sp_mask = -1;
-         } else
- #endif
-         {
--            sp_mask = get_sp_mask(ss_e2);
-+            sa.sp_mask = get_sp_mask(ss_e2);
-         }
- 
-         /* validate data segments */
-@@ -2104,9 +2141,9 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-         validate_seg(env, R_FS, rpl);
-         validate_seg(env, R_GS, rpl);
- 
--        sp += addend;
-+        sa.sp += addend;
-     }
--    SET_ESP(sp, sp_mask);
-+    SET_ESP(sa.sp, sa.sp_mask);
-     env->eip = new_eip;
-     if (is_iret) {
-         /* NOTE: 'cpl' is the _old_ CPL */
-@@ -2126,12 +2163,12 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-     return;
- 
-  return_to_vm86:
--    POPL_RA(ssp, sp, sp_mask, new_esp, retaddr);
--    POPL_RA(ssp, sp, sp_mask, new_ss, retaddr);
--    POPL_RA(ssp, sp, sp_mask, new_es, retaddr);
--    POPL_RA(ssp, sp, sp_mask, new_ds, retaddr);
--    POPL_RA(ssp, sp, sp_mask, new_fs, retaddr);
--    POPL_RA(ssp, sp, sp_mask, new_gs, retaddr);
-+    new_esp = popl(&sa);
-+    new_ss = popl(&sa);
-+    new_es = popl(&sa);
-+    new_ds = popl(&sa);
-+    new_fs = popl(&sa);
-+    new_gs = popl(&sa);
- 
-     /* modify processor state */
-     cpu_load_eflags(env, new_eflags, TF_MASK | AC_MASK | ID_MASK |
--- 
-2.45.2
+It worked fine when the VFs were created at OS runtime because the initial
+topology of the machine was in place. Adding VFs was more or less like
+hotplug. AIUI, libvirt should have full control on the machine topology
+and so, creating VFs in QEMU at init time in the back of libvirt seems
+like a violation of this rule.
+
+That said, the s390x case is specific and could perhaps be handled in a
+special way.
+
+Thanks,
+
+C.
+
+
+
+On 6/27/24 8:07 AM, Akihiko Odaki wrote:
+> Disable SR-IOV VF devices by reusing code to power down PCI devices
+> instead of removing them when the guest requests to disable VFs. This
+> allows to realize devices and report VF realization errors at PF
+> realization time.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   include/hw/pci/pci.h        |  5 ---
+>   include/hw/pci/pci_device.h | 15 +++++++
+>   include/hw/pci/pcie_sriov.h |  1 -
+>   hw/pci/pci.c                |  2 +-
+>   hw/pci/pcie_sriov.c         | 95 +++++++++++++++++++--------------------------
+>   5 files changed, 56 insertions(+), 62 deletions(-)
+> 
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 6c92b2f70008..442017b4865d 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -644,9 +644,4 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
+>   MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+>   void pci_set_enabled(PCIDevice *pci_dev, bool state);
+>   
+> -static inline void pci_set_power(PCIDevice *pci_dev, bool state)
+> -{
+> -    pci_set_enabled(pci_dev, state);
+> -}
+> -
+>   #endif
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index d57f9ce83884..ca151325085d 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -205,6 +205,21 @@ static inline uint16_t pci_get_bdf(PCIDevice *dev)
+>       return PCI_BUILD_BDF(pci_bus_num(pci_get_bus(dev)), dev->devfn);
+>   }
+>   
+> +static inline void pci_set_power(PCIDevice *pci_dev, bool state)
+> +{
+> +    /*
+> +     * Don't change the enabled state of VFs when powering on/off the device.
+> +     *
+> +     * When powering on, VFs must not be enabled immediately but they must
+> +     * wait until the guest configures SR-IOV.
+> +     * When powering off, their corresponding PFs will be reset and disable
+> +     * VFs.
+> +     */
+> +    if (!pci_is_vf(pci_dev)) {
+> +        pci_set_enabled(pci_dev, state);
+> +    }
+> +}
+> +
+>   uint16_t pci_requester_id(PCIDevice *dev);
+>   
+>   /* DMA access functions */
+> diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+> index aa704e8f9d9f..70649236c18a 100644
+> --- a/include/hw/pci/pcie_sriov.h
+> +++ b/include/hw/pci/pcie_sriov.h
+> @@ -18,7 +18,6 @@
+>   typedef struct PCIESriovPF {
+>       uint16_t num_vfs;   /* Number of virtual functions created */
+>       uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+> -    const char *vfname; /* Reference to the device type used for the VFs */
+>       PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+>   } PCIESriovPF;
+>   
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 295a32714a4a..c682c3dcb68e 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2822,7 +2822,7 @@ void pci_set_enabled(PCIDevice *d, bool state)
+>       memory_region_set_enabled(&d->bus_master_enable_region,
+>                                 (pci_get_word(d->config + PCI_COMMAND)
+>                                  & PCI_COMMAND_MASTER) && d->enabled);
+> -    if (!d->enabled) {
+> +    if (d->qdev.realized) {
+>           pci_device_reset(d);
+>       }
+>   }
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index f0bde0d3fc79..faadb0d2ea85 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -20,9 +20,16 @@
+>   #include "qapi/error.h"
+>   #include "trace.h"
+>   
+> -static PCIDevice *register_vf(PCIDevice *pf, int devfn,
+> -                              const char *name, uint16_t vf_num);
+> -static void unregister_vfs(PCIDevice *dev);
+> +static void unparent_vfs(PCIDevice *dev, uint16_t total_vfs)
+> +{
+> +    for (uint16_t i = 0; i < total_vfs; i++) {
+> +        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+> +        object_unparent(OBJECT(vf));
+> +        object_unref(OBJECT(vf));
+> +    }
+> +    g_free(dev->exp.sriov_pf.vf);
+> +    dev->exp.sriov_pf.vf = NULL;
+> +}
+>   
+>   bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                           const char *vfname, uint16_t vf_dev_id,
+> @@ -30,6 +37,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                           uint16_t vf_offset, uint16_t vf_stride,
+>                           Error **errp)
+>   {
+> +    BusState *bus = qdev_get_parent_bus(&dev->qdev);
+> +    int32_t devfn = dev->devfn + vf_offset;
+>       uint8_t *cfg = dev->config + offset;
+>       uint8_t *wmask;
+>   
+> @@ -49,7 +58,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                           offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+>       dev->exp.sriov_cap = offset;
+>       dev->exp.sriov_pf.num_vfs = 0;
+> -    dev->exp.sriov_pf.vfname = g_strdup(vfname);
+>       dev->exp.sriov_pf.vf = NULL;
+>   
+>       pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
+> @@ -83,14 +91,34 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>   
+>       qdev_prop_set_bit(&dev->qdev, "multifunction", true);
+>   
+> +    dev->exp.sriov_pf.vf = g_new(PCIDevice *, total_vfs);
+> +
+> +    for (uint16_t i = 0; i < total_vfs; i++) {
+> +        PCIDevice *vf = pci_new(devfn, vfname);
+> +        vf->exp.sriov_vf.pf = dev;
+> +        vf->exp.sriov_vf.vf_number = i;
+> +
+> +        if (!qdev_realize(&vf->qdev, bus, errp)) {
+> +            unparent_vfs(dev, i);
+> +            return false;
+> +        }
+> +
+> +        /* set vid/did according to sr/iov spec - they are not used */
+> +        pci_config_set_vendor_id(vf->config, 0xffff);
+> +        pci_config_set_device_id(vf->config, 0xffff);
+> +
+> +        dev->exp.sriov_pf.vf[i] = vf;
+> +        devfn += vf_stride;
+> +    }
+> +
+>       return true;
+>   }
+>   
+>   void pcie_sriov_pf_exit(PCIDevice *dev)
+>   {
+> -    unregister_vfs(dev);
+> -    g_free((char *)dev->exp.sriov_pf.vfname);
+> -    dev->exp.sriov_pf.vfname = NULL;
+> +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+> +
+> +    unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+>   }
+>   
+>   void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
+> @@ -156,38 +184,11 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+>       }
+>   }
+>   
+> -static PCIDevice *register_vf(PCIDevice *pf, int devfn, const char *name,
+> -                              uint16_t vf_num)
+> -{
+> -    PCIDevice *dev = pci_new(devfn, name);
+> -    dev->exp.sriov_vf.pf = pf;
+> -    dev->exp.sriov_vf.vf_number = vf_num;
+> -    PCIBus *bus = pci_get_bus(pf);
+> -    Error *local_err = NULL;
+> -
+> -    qdev_realize(&dev->qdev, &bus->qbus, &local_err);
+> -    if (local_err) {
+> -        error_report_err(local_err);
+> -        return NULL;
+> -    }
+> -
+> -    /* set vid/did according to sr/iov spec - they are not used */
+> -    pci_config_set_vendor_id(dev->config, 0xffff);
+> -    pci_config_set_device_id(dev->config, 0xffff);
+> -
+> -    return dev;
+> -}
+> -
+>   static void register_vfs(PCIDevice *dev)
+>   {
+>       uint16_t num_vfs;
+>       uint16_t i;
+>       uint16_t sriov_cap = dev->exp.sriov_cap;
+> -    uint16_t vf_offset =
+> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_OFFSET);
+> -    uint16_t vf_stride =
+> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_STRIDE);
+> -    int32_t devfn = dev->devfn + vf_offset;
+>   
+>       assert(sriov_cap > 0);
+>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+> @@ -195,18 +196,10 @@ static void register_vfs(PCIDevice *dev)
+>           return;
+>       }
+>   
+> -    dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+> -
+>       trace_sriov_register_vfs(dev->name, PCI_SLOT(dev->devfn),
+>                                PCI_FUNC(dev->devfn), num_vfs);
+>       for (i = 0; i < num_vfs; i++) {
+> -        dev->exp.sriov_pf.vf[i] = register_vf(dev, devfn,
+> -                                              dev->exp.sriov_pf.vfname, i);
+> -        if (!dev->exp.sriov_pf.vf[i]) {
+> -            num_vfs = i;
+> -            break;
+> -        }
+> -        devfn += vf_stride;
+> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
+>       }
+>       dev->exp.sriov_pf.num_vfs = num_vfs;
+>   }
+> @@ -219,12 +212,8 @@ static void unregister_vfs(PCIDevice *dev)
+>       trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+>                                  PCI_FUNC(dev->devfn), num_vfs);
+>       for (i = 0; i < num_vfs; i++) {
+> -        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+> -        object_unparent(OBJECT(vf));
+> -        object_unref(OBJECT(vf));
+> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+>       }
+> -    g_free(dev->exp.sriov_pf.vf);
+> -    dev->exp.sriov_pf.vf = NULL;
+>       dev->exp.sriov_pf.num_vfs = 0;
+>   }
+>   
+> @@ -246,14 +235,10 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+>                                PCI_FUNC(dev->devfn), off, val, len);
+>   
+>       if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+> -        if (dev->exp.sriov_pf.num_vfs) {
+> -            if (!(val & PCI_SRIOV_CTRL_VFE)) {
+> -                unregister_vfs(dev);
+> -            }
+> +        if (val & PCI_SRIOV_CTRL_VFE) {
+> +            register_vfs(dev);
+>           } else {
+> -            if (val & PCI_SRIOV_CTRL_VFE) {
+> -                register_vfs(dev);
+> -            }
+> +            unregister_vfs(dev);
+>           }
+>       }
+>   }
+> 
 
 
