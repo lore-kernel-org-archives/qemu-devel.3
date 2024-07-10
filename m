@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7C7C38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 04:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1028AC3DA47
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 04:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRP49-0006jn-0S; Wed, 10 Jul 2024 00:36:29 -0400
+	id 1sRP3x-0005yM-5R; Wed, 10 Jul 2024 00:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sRP47-0006ff-VX; Wed, 10 Jul 2024 00:36:27 -0400
+ id 1sRP3v-0005tO-SL; Wed, 10 Jul 2024 00:36:15 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sRP45-0006xI-QK; Wed, 10 Jul 2024 00:36:27 -0400
+ id 1sRP3t-0006tm-RO; Wed, 10 Jul 2024 00:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1720586185; x=1752122185;
+ t=1720586173; x=1752122173;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6+OseQGpk2ndz6OpN+ZaTOVJXSOpCJ52+KKHCCTwnuA=;
- b=fEf07K3rDEjO3+QbK2QZRZU3+3TkCpoNz6384TLwVIKjgJGsfYW0z9y9
- 96YYHez1ye7ZjAWAq2QJE73K7ojD4lFxAGE3wkSo2wPoG76SDvAhG3kiJ
- kkITkx9OiDEtaF5nkHV7IPj8OfGN/ofpsKTWa9hdU9qJX4tzp7Gogwe7R
- u2/swzXb7of+Vpy03bE72p9PNBVtnbfJZXOZ2zrp2PUvxk5MzEVFMmuKJ
- KsFhaVA2XDaG2wPDToNHyDQrIG7avoVwXc7v9K+h5ZM/VJEXXcjYPSwF+
- UCvB3VUz8d1emTldxZDHrCqk/UibVhqdYqg3CLNZAlPE0zmwMz+jy33gA g==;
-X-CSE-ConnectionGUID: BsgYmSPJSmC0Ok+1o24E2A==
-X-CSE-MsgGUID: OFDDy1qjQB6QYdiTjms+0w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11128"; a="28473826"
-X-IronPort-AV: E=Sophos;i="6.09,197,1716274800"; d="scan'208";a="28473826"
+ bh=il1oqspy53sUEFgjjMRnGbdzD5ZqcNCxcsioWrvP064=;
+ b=FdMpW9MHN3qYnxMhQt+gB+uVo/Ca/iHDVfrvZ6F8+5fp6ew0v7aGt+Nb
+ gkI9pbfgBawrIpge355eao0P8o7LGg9NzzAqJYBMBUGQQfu4exTdj5HX3
+ o4AbuullQnix2As8Gsba+fgN2t1854ttl7ySWRP9+T4yHJtzm0/ePCWNH
+ kGzeEr5NFMPHyLuI2keePtqdyYe0ejObwtEygSsTueH9ABhRM7a3jtiLY
+ z6jyZ5Ccw9hRGgofOnNR78didkMxZClXdRcQF8ErIQ0UWwCxNsqGRr069
+ XwOyu1rBt3lR0wZcNBcBrHeBUoIKJzStyvgGCawlIJ+Aftai9KydblUZ7 A==;
+X-CSE-ConnectionGUID: YrjsECkISjGgqr5xWz8kVA==
+X-CSE-MsgGUID: pSY3Z0OGTqyyj/biRPQZJw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11128"; a="28473798"
+X-IronPort-AV: E=Sophos;i="6.09,197,1716274800"; d="scan'208";a="28473798"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Jul 2024 21:36:24 -0700
-X-CSE-ConnectionGUID: Po2f5o8xT3y+ievXVp6YYg==
-X-CSE-MsgGUID: LAxQ+A8ZQT+k+mRhg5v6ug==
+ 09 Jul 2024 21:36:12 -0700
+X-CSE-ConnectionGUID: XUATnMDHTsqI9za+FGvJzw==
+X-CSE-MsgGUID: FNhK2+48SASyPAGhC9c+wg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,197,1716274800"; d="scan'208";a="79238239"
+X-IronPort-AV: E=Sophos;i="6.09,197,1716274800"; d="scan'208";a="79238185"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 09 Jul 2024 21:36:18 -0700
+ by fmviesa001.fm.intel.com with ESMTP; 09 Jul 2024 21:36:08 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
@@ -57,9 +57,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Yuan Yao <yuan.yao@intel.com>, Xiong Zhang <xiong.y.zhang@intel.com>,
  Mingwei Zhang <mizhang@google.com>, Jim Mattson <jmattson@google.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 5/5] i386/kvm: Support fixed counter in KVM PMU filter
-Date: Wed, 10 Jul 2024 12:51:17 +0800
-Message-Id: <20240710045117.3164577-6-zhao1.liu@intel.com>
+Subject: [RFC 3/5] i386/kvm: Support event with select&umask format in KVM PMU
+ filter
+Date: Wed, 10 Jul 2024 12:51:15 +0800
+Message-Id: <20240710045117.3164577-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240710045117.3164577-1-zhao1.liu@intel.com>
 References: <20240710045117.3164577-1-zhao1.liu@intel.com>
@@ -89,301 +90,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM_SET_PMU_EVENT_FILTER of x86 KVM allows user to configure x86 fixed
-function counters by a bitmap.
-
-Add the support of x86-fixed-counter in kvm-pmu-filter object and handle
-this in i386 kvm codes.
+The select&umask is the common way for x86 to identify the PMU event,
+so support this way as the "x86-default" format in kvm-pmu-filter
+object.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- accel/kvm/kvm-pmu.c      | 71 ++++++++++++++++++++++++++++++++++++++++
- include/sysemu/kvm-pmu.h |  1 +
- qapi/kvm.json            | 36 +++++++++++++++++++-
- target/i386/kvm/kvm.c    | 69 +++++++++++++++++++++++++-------------
- 4 files changed, 153 insertions(+), 24 deletions(-)
+ accel/kvm/kvm-pmu.c      | 62 ++++++++++++++++++++++++++++++++++++++++
+ include/sysemu/kvm-pmu.h | 13 +++++++++
+ qapi/kvm.json            | 46 +++++++++++++++++++++++++++--
+ target/i386/kvm/kvm.c    |  5 ++++
+ 4 files changed, 123 insertions(+), 3 deletions(-)
 
 diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
-index 7a1720c68f8f..bad76482f426 100644
+index 483d1bdf4807..51d3fba5a72a 100644
 --- a/accel/kvm/kvm-pmu.c
 +++ b/accel/kvm/kvm-pmu.c
-@@ -256,6 +256,68 @@ fail:
-     qapi_free_KVMPMUFilterEventList(head);
- }
+@@ -17,6 +17,8 @@
+ #include "qom/object_interfaces.h"
+ #include "sysemu/kvm-pmu.h"
  
-+static void
-+kvm_pmu_filter_get_fixed_counter(Object *obj, Visitor *v, const char *name,
-+                                 void *opaque, Error **errp)
-+{
-+    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
-+    KVMPMUX86FixedCounterVariant *str_counter;
++#define UINT12_MAX (4095)
 +
-+    str_counter = g_new(KVMPMUX86FixedCounterVariant, 1);
-+    str_counter->action = filter->x86_fixed_counter->action;
-+    str_counter->bitmap = g_strdup_printf("0x%x",
-+                                          filter->x86_fixed_counter->bitmap);
-+
-+    visit_type_KVMPMUX86FixedCounterVariant(v, name, &str_counter, errp);
-+    qapi_free_KVMPMUX86FixedCounterVariant(str_counter);
-+}
-+
-+static void
-+kvm_pmu_filter_set_fixed_counter(Object *obj, Visitor *v, const char *name,
-+                                 void *opaque, Error **errp)
-+{
-+    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
-+    KVMPMUX86FixedCounterVariant *str_counter;
-+    KVMPMUX86FixedCounter *new_counter, *old_counter;
-+    uint64_t bitmap;
-+    int ret;
-+
-+    old_counter = filter->x86_fixed_counter;
-+    if (!visit_type_KVMPMUX86FixedCounterVariant(v, name,
-+                                                 &str_counter, errp)) {
-+        return;
-+    }
-+
-+    new_counter  = g_new(KVMPMUX86FixedCounter, 1);
-+    new_counter->action = str_counter->action;
-+
-+    ret = qemu_strtou64(str_counter->bitmap, NULL,
-+                        0, &bitmap);
-+    if (ret < 0) {
-+        error_setg(errp,
-+                   "Invalid x86 fixed counter (bitmap: %s): %s. "
-+                   "The bitmap must be a uint32 string.",
-+                   str_counter->bitmap, strerror(-ret));
-+        g_free(new_counter);
-+        goto fail;
-+    }
-+    if (bitmap > UINT32_MAX) {
-+        error_setg(errp,
-+                   "Invalid x86 fixed counter (bitmap: %s): "
-+                   "Numerical result out of range. "
-+                   "The bitmap must be a uint32 string.",
-+                   str_counter->bitmap);
-+        g_free(new_counter);
-+        goto fail;
-+    }
-+    new_counter->bitmap = bitmap;
-+    filter->x86_fixed_counter = new_counter;
-+    qapi_free_KVMPMUX86FixedCounter(old_counter);
-+
-+fail:
-+    qapi_free_KVMPMUX86FixedCounterVariant(str_counter);
-+}
-+
- static void
- kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
+ static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
+                                      void *opaque, Error **errp)
  {
-@@ -266,6 +328,15 @@ kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
-                               NULL, NULL);
-     object_class_property_set_description(oc, "events",
-                                           "KVM PMU event list");
+@@ -38,6 +40,12 @@ static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
+             str_event->u.raw.code = g_strdup_printf("0x%lx",
+                                                     event->u.raw.code);
+             break;
++        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
++            str_event->u.x86_default.select =
++                g_strdup_printf("0x%x", event->u.x86_default.select);
++            str_event->u.x86_default.umask =
++                g_strdup_printf("0x%x", event->u.x86_default.umask);
++            break;
+         default:
+             g_assert_not_reached();
+         }
+@@ -83,6 +91,60 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
+                 goto fail;
+             }
+             break;
++        case KVM_PMU_EVENT_FMT_X86_DEFAULT: {
++            uint64_t select, umask;
 +
-+    object_class_property_add(oc, "x86-fixed-counter",
-+                              "KVMPMUX86FixedCounter",
-+                              kvm_pmu_filter_get_fixed_counter,
-+                              kvm_pmu_filter_set_fixed_counter,
-+                              NULL, NULL);
-+    object_class_property_set_description(oc, "x86-fixed-counter",
-+                                          "Enablement bitmap of "
-+                                          "x86 PMU fixed counter");
- }
- 
- static void kvm_pmu_filter_instance_init(Object *obj)
++            ret = qemu_strtou64(str_event->u.x86_default.select, NULL,
++                                0, &select);
++            if (ret < 0) {
++                error_setg(errp,
++                           "Invalid %s PMU event (select: %s): %s. "
++                           "The select must be a "
++                           "12-bit unsigned number string.",
++                           KVMPMUEventEncodeFmt_str(str_event->format),
++                           str_event->u.x86_default.select,
++                           strerror(-ret));
++                g_free(event);
++                goto fail;
++            }
++            if (select > UINT12_MAX) {
++                error_setg(errp,
++                           "Invalid %s PMU event (select: %s): "
++                           "Numerical result out of range. "
++                           "The select must be a "
++                           "12-bit unsigned number string.",
++                           KVMPMUEventEncodeFmt_str(str_event->format),
++                           str_event->u.x86_default.select);
++                g_free(event);
++                goto fail;
++            }
++            event->u.x86_default.select = select;
++
++            ret = qemu_strtou64(str_event->u.x86_default.umask, NULL,
++                                0, &umask);
++            if (ret < 0) {
++                error_setg(errp,
++                           "Invalid %s PMU event (umask: %s): %s. "
++                           "The umask must be a uint8 string.",
++                           KVMPMUEventEncodeFmt_str(str_event->format),
++                           str_event->u.x86_default.umask,
++                           strerror(-ret));
++                g_free(event);
++                goto fail;
++            }
++            if (umask > UINT8_MAX) {
++                error_setg(errp,
++                           "Invalid %s PMU event (umask: %s): "
++                           "Numerical result out of range. "
++                           "The umask must be a uint8 string.",
++                           KVMPMUEventEncodeFmt_str(str_event->format),
++                           str_event->u.x86_default.umask);
++                g_free(event);
++                goto fail;
++            }
++            event->u.x86_default.umask = umask;
++            break;
++        }
+         default:
+             g_assert_not_reached();
+         }
 diff --git a/include/sysemu/kvm-pmu.h b/include/sysemu/kvm-pmu.h
-index 707f33d604fd..e74a6a665565 100644
+index 4707759761f1..707f33d604fd 100644
 --- a/include/sysemu/kvm-pmu.h
 +++ b/include/sysemu/kvm-pmu.h
-@@ -24,6 +24,7 @@ struct KVMPMUFilter {
- 
-     uint32_t nevents;
+@@ -26,4 +26,17 @@ struct KVMPMUFilter {
      KVMPMUFilterEventList *events;
-+    KVMPMUX86FixedCounter *x86_fixed_counter;
  };
  
- /*
++/*
++ * Stolen from Linux kernel (RAW_EVENT at tools/testing/selftests/kvm/include/
++ * x86_64/pmu.h).
++ *
++ * Encode an eventsel+umask pair into event-select MSR format.  Note, this is
++ * technically AMD's format, as Intel's format only supports 8 bits for the
++ * event selector, i.e. doesn't use bits 24:16 for the selector.  But, OR-ing
++ * in '0' is a nop and won't clobber the CMASK.
++ */
++#define X86_PMU_RAW_EVENT(eventsel, umask) (((eventsel & 0xf00UL) << 24) | \
++                                            ((eventsel) & 0xff) | \
++                                            ((umask) & 0xff) << 8)
++
+ #endif /* KVM_PMU_H */
 diff --git a/qapi/kvm.json b/qapi/kvm.json
-index f4e8854fa6c6..fe9a9ec940be 100644
+index 0619da83c123..0d759884c229 100644
 --- a/qapi/kvm.json
 +++ b/qapi/kvm.json
-@@ -123,6 +123,21 @@
-             'x86-default': 'KVMPMUX86DefalutEvent',
-             'x86-masked-entry': 'KVMPMUX86MaskedEntry' } }
- 
-+##
-+# @KVMPMUX86FixedCounter:
-+#
-+# x86 fixed counter that KVM PMU filter supports.
-+#
-+# @action: action that KVM PMU filter will take.
-+#
-+# @bitmap: x86 fixed counter bitmap.
-+#
-+# Since 9.1
-+##
-+{ 'struct': 'KVMPMUX86FixedCounter',
-+  'data': { 'action': 'KVMPMUFilterAction',
-+            'bitmap': 'uint32' } }
-+
- ##
- # @KVMPMUFilterProperty:
+@@ -27,11 +27,13 @@
  #
-@@ -208,6 +223,22 @@
-             'x86-default': 'KVMPMUX86DefalutEventVariant',
-             'x86-masked-entry': 'KVMPMUX86MaskedEntryVariant' } }
- 
-+##
-+# @KVMPMUX86FixedCounterVariant:
-+#
-+# The variant of KVMPMUX86FixedCounter with the string, rather than
-+# the numeric value.
-+#
-+# @action: action that KVM PMU filter will take.
-+#
-+# @bitmap: x86 fixed counter bitmap.  This field is a uint32 string.
-+#
-+# Since 9.1
-+##
-+{ 'struct': 'KVMPMUX86FixedCounterVariant',
-+  'data': { 'action': 'KVMPMUFilterAction',
-+            'bitmap': 'str' } }
-+
- ##
- # @KVMPMUFilterPropertyVariant:
+ # @raw: the encoded event code that KVM can directly consume.
  #
-@@ -215,7 +246,10 @@
- #
- # @events: the KVMPMUFilterEventVariant list.
- #
-+# @x86-fixed-counter: enablement bitmap of x86 fixed counters.
++# @x86-default: standard x86 encoding format with select and umask.
 +#
  # Since 9.1
  ##
- { 'struct': 'KVMPMUFilterPropertyVariant',
--  'data': { '*events': ['KVMPMUFilterEventVariant'] } }
-+  'data': { '*events': ['KVMPMUFilterEventVariant'],
-+            '*x86-fixed-counter': 'KVMPMUX86FixedCounterVariant' } }
+ { 'enum': 'KVMPMUEventEncodeFmt',
+   'prefix': 'KVM_PMU_EVENT_FMT',
+-  'data': ['raw'] }
++  'data': ['raw', 'x86-default'] }
+ 
+ ##
+ # @KVMPMURawEvent:
+@@ -46,6 +48,25 @@
+ { 'struct': 'KVMPMURawEvent',
+   'data': { 'code': 'uint64' } }
+ 
++##
++# @KVMPMUX86DefalutEvent:
++#
++# x86 PMU event encoding with select and umask.
++# raw_event = ((select & 0xf00UL) << 24) | \
++#              (select) & 0xff) | \
++#              ((umask) & 0xff) << 8)
++#
++# @select: x86 PMU event select field, which is a 12-bit unsigned
++#     number.
++#
++# @umask: x86 PMU event umask field.
++#
++# Since 9.1
++##
++{ 'struct': 'KVMPMUX86DefalutEvent',
++  'data': { 'select': 'uint16',
++            'umask': 'uint8' } }
++
+ ##
+ # @KVMPMUFilterEvent:
+ #
+@@ -61,7 +82,8 @@
+   'base': { 'action': 'KVMPMUFilterAction',
+             'format': 'KVMPMUEventEncodeFmt' },
+   'discriminator': 'format',
+-  'data': { 'raw': 'KVMPMURawEvent' } }
++  'data': { 'raw': 'KVMPMURawEvent',
++            'x86-default': 'KVMPMUX86DefalutEvent' } }
+ 
+ ##
+ # @KVMPMUFilterProperty:
+@@ -89,6 +111,23 @@
+ { 'struct': 'KVMPMURawEventVariant',
+   'data': { 'code': 'str' } }
+ 
++##
++# @KVMPMUX86DefalutEventVariant:
++#
++# The variant of KVMPMUX86DefalutEvent with the string, rather than
++# the numeric value.
++#
++# @select: x86 PMU event select field.  This field is a 12-bit
++#     unsigned number string.
++#
++# @umask: x86 PMU event umask field. This field is a uint8 string.
++#
++# Since 9.1
++##
++{ 'struct': 'KVMPMUX86DefalutEventVariant',
++  'data': { 'select': 'str',
++            'umask': 'str' } }
++
+ ##
+ # @KVMPMUFilterEventVariant:
+ #
+@@ -104,7 +143,8 @@
+   'base': { 'action': 'KVMPMUFilterAction',
+             'format': 'KVMPMUEventEncodeFmt' },
+   'discriminator': 'format',
+-  'data': { 'raw': 'KVMPMURawEventVariant' } }
++  'data': { 'raw': 'KVMPMURawEventVariant',
++            'x86-default': 'KVMPMUX86DefalutEventVariant' } }
+ 
+ ##
+ # @KVMPMUFilterPropertyVariant:
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 396a93efe745..b350c4123ea2 100644
+index e9bf79782316..391531c036a6 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -5419,6 +5419,7 @@ static bool kvm_install_pmu_event_filter(KVMState *s)
- {
-     struct kvm_pmu_event_filter *kvm_filter;
-     KVMPMUFilter *filter = s->pmu_filter;
-+    KVMPMUFilterAction action;
-     int ret;
- 
-     kvm_filter = g_malloc0(sizeof(struct kvm_pmu_event_filter) +
-@@ -5426,9 +5427,14 @@ static bool kvm_install_pmu_event_filter(KVMState *s)
- 
-     /*
-      * Currently, kvm-pmu-filter only supports configuring the same
--     * action for PMU events.
-+     * action for PMU fixed-counters/events.
-      */
--    switch (filter->events->value->action) {
-+    if (filter->x86_fixed_counter) {
-+        action = filter->x86_fixed_counter->action;
-+    } else {
-+        action = filter->events->value->action;
-+    }
-+    switch (action) {
-     case KVM_PMU_FILTER_ACTION_ALLOW:
-         kvm_filter->action = KVM_PMU_EVENT_ALLOW;
-         break;
-@@ -5439,23 +5445,29 @@ static bool kvm_install_pmu_event_filter(KVMState *s)
-         g_assert_not_reached();
-     }
- 
--    /*
--     * The check in kvm_arch_check_pmu_filter() ensures masked entry
--     * format won't be mixed with other formats.
--     */
--    kvm_filter->flags = filter->events->value->format ==
--                        KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY ?
--                        KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
--
--    if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
--        !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
--        error_report("Masked entry format of PMU event "
--                     "is not supported by Host.");
--        goto fail;
-+    if (filter->x86_fixed_counter) {
-+        kvm_filter->fixed_counter_bitmap = filter->x86_fixed_counter->bitmap;
-     }
- 
--    if (!kvm_config_pmu_event(filter, kvm_filter)) {
--        goto fail;
-+    if (filter->nevents) {
-+        /*
-+         * The check in kvm_arch_check_pmu_filter() ensures masked entry
-+         * format won't be mixed with other formats.
-+         */
-+        kvm_filter->flags = filter->events->value->format ==
-+                            KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY ?
-+                            KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-+
-+        if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
-+            !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
-+            error_report("Masked entry format of PMU event "
-+                         "is not supported by Host.");
-+            goto fail;
-+        }
-+
-+        if (!kvm_config_pmu_event(filter, kvm_filter)) {
-+            goto fail;
-+        }
-     }
- 
-     ret = kvm_vm_ioctl(s, KVM_SET_PMU_EVENT_FILTER, kvm_filter);
-@@ -6088,17 +6100,24 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-     KVMPMUFilterAction action;
-     uint32_t base_flag;
- 
--    if (!filter->nevents) {
-+    if (!filter->x86_fixed_counter && !filter->nevents) {
-         error_setg(errp,
-                    "Empty KVM PMU filter.");
-         return;
-     }
- 
-     /* Pick the first event's flag as the base one. */
--    base_flag = events->value->format ==
--                KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY ?
--                KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-+    base_flag = 0;
-+    if (filter->nevents &&
-+        events->value->format == KVM_PMU_EVENT_FMT_X86_MASKED_ENTRY) {
-+        base_flag = KVM_PMU_EVENT_FLAG_MASKED_EVENTS;
-+    }
-+
-     action = KVM_PMU_FILTER_ACTION__MAX;
-+    if (filter->x86_fixed_counter) {
-+        action = filter->x86_fixed_counter->action;
-+    }
-+
-     while (events) {
-         KVMPMUFilterEvent *event = events->value;
-         uint32_t flag;
-@@ -6128,9 +6147,13 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-         if (action == KVM_PMU_FILTER_ACTION__MAX) {
-             action = event->action;
-         } else if (action != event->action) {
--            /* TODO: Support events with different actions if necessary. */
-+            /*
-+             * TODO: Support fixed-counters/events with different actions
-+             * if necessary.
-+             */
-             error_setg(errp,
--                       "Only support PMU events with the same action");
-+                       "Only support PMU fixed-counters/events "
-+                       "with the same action");
-             return;
+@@ -5393,6 +5393,10 @@ kvm_config_pmu_event(KVMPMUFilter *filter,
+         case KVM_PMU_EVENT_FMT_RAW:
+             code = event->u.raw.code;
+             break;
++        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
++            code = X86_PMU_RAW_EVENT(event->u.x86_default.select,
++                                     event->u.x86_default.umask);
++            break;
+         default:
+             g_assert_not_reached();
          }
+@@ -6073,6 +6077,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
  
+         switch (event->format) {
+         case KVM_PMU_EVENT_FMT_RAW:
++        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
+             break;
+         default:
+             error_setg(errp,
 -- 
 2.34.1
 
