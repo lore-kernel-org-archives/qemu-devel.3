@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2664DC3DA47
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD57C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRY8D-0003ox-I0; Wed, 10 Jul 2024 10:17:17 -0400
+	id 1sRY6s-00035L-W7; Wed, 10 Jul 2024 10:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRY7z-0002rI-BE
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:17:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRY7v-0004UG-IE
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:17:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720621018;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pEwMH4aUe0S8Koyu1Ux31ZzcoB926u5SAT1zJIr7HA0=;
- b=gggRfFVAETdMf9rIn3ViGfCxcjFo4YlTDYkZTJ7d3vSuv3VH8RxLWsdjw1qRY28JvtASqr
- SxTG5ekaoVjY9GmW6vzMnFVGgGSFl+t7xMg4TVbfWUfuQgKMNOITdEKrn/Uk0e4sz7wX9r
- bTQgQcOT3+1Y0pr0rrVp0E/H3Vs+ut4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-tof68BT0PAikbi-RUeoATw-1; Wed,
- 10 Jul 2024 10:16:55 -0400
-X-MC-Unique: tof68BT0PAikbi-RUeoATw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E326E19560A3; Wed, 10 Jul 2024 14:16:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A69801955F40; Wed, 10 Jul 2024 14:16:48 +0000 (UTC)
-Date: Wed, 10 Jul 2024 15:16:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Andrew Melnychenko <andrew@daynix.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Remove fallback from ebpf-rss-fds
-Message-ID: <Zo6XzRyoXsp6FUWu@redhat.com>
-References: <20240708-auto-v2-0-f4908b953f05@daynix.com>
- <20240708-auto-v2-4-f4908b953f05@daynix.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6W-0001Au-Lq
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:38 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6J-0004CJ-74
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:30 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2eaa89464a3so67345151fa.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:15:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720620914; x=1721225714; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xkDhVRq7nOrp337t4BirLj66Emh0tyYky1+9xyZk6N0=;
+ b=mBEglw/vxaYJTQyGjFtmt4wRkJb33G63aDCZfvJbMRmvZHQ3OBWQ/FMzNV8zpgDsk0
+ rEws8b5OGmEOPs5K+15fq89DqSYZHr9B4VKAEd60tbuFs/dwrIuqUfwv8zTEm9EjLiur
+ H5kh2Ld+KHMip2fDmSCtVVkNPC9ckpWwqsZ/GXUNA4IiNQw9EwE/+mlJggFEVfTgP6to
+ w1W2ClnMN9hxecqEJewF3zu5IiJyoTo1YBAzI+qvdOZDzSez9LJ+1gZYR93DKvCU6+ZK
+ 1OrE1KwpEwPML/j4gOnZGihLUfLP96if31tw1x4hRP177OEY8iago/1LjH1CzysQ1Flc
+ bAcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720620914; x=1721225714;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xkDhVRq7nOrp337t4BirLj66Emh0tyYky1+9xyZk6N0=;
+ b=E+X/efofXzf0pDLyUQSS+eoB71L6uBnxLWJDiy0sCD6r+NdxHdOk2PbcA1dnxf6jMK
+ KIOORyQFXQ/8BhmQZnfHYb7Z5nhCBT5z+CTkg27H8+35r0ZDXXy5sm67UEl5vvSVjfSA
+ WZQgm5GhBcI78gpENA11T5oSi+DGsAOfC+jl4nSPw/tX1dPxDa1cb+4nfbBG9narUiA1
+ IsUaVYjep2IuQ5iOgvJYkY72IP0cid7JkncJNiSrkUA+9ofcwxAmmME5fO78AnsU88MV
+ TRPImvyRVdpnZmx2NGLk7pYcJxNdS82Mpw4S09T13WCafaiG5qeqnLU2Yq32wWLK3iWB
+ fLBQ==
+X-Gm-Message-State: AOJu0YzvcYporX1k/yirneWVmt8kxQ6pr5IXOH57I9VCrHSDTL47Gun4
+ dk0E0AgF9DEA611GEIDMqRtBT8aniI15cnOaCSygPXcGNX+61FBKMICekK+vUF5HHMQOsz/2MxU
+ k
+X-Google-Smtp-Source: AGHT+IHmW6W3R2Mlc6AHsVYFpU68k0NIZresqSdsEt9yGjslc6KJXVNCmJThUQZpSktbUx2C/H96sQ==
+X-Received: by 2002:a05:651c:2129:b0:2ee:87ef:825a with SMTP id
+ 38308e7fff4ca-2eeb3198757mr41817341fa.53.1720620914561; 
+ Wed, 10 Jul 2024 07:15:14 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.167.117])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42662315363sm163329185e9.26.2024.07.10.07.15.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 10 Jul 2024 07:15:14 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Luc Michel <luc.michel@amd.com>,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v48 10/12] hw/sd/sdcard: Implement eMMC 'boot-mode'
+Date: Wed, 10 Jul 2024 16:14:06 +0200
+Message-ID: <20240710141408.69275-11-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240710141408.69275-1-philmd@linaro.org>
+References: <20240710141408.69275-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240708-auto-v2-4-f4908b953f05@daynix.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,117 +99,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 08, 2024 at 04:38:09PM +0900, Akihiko Odaki wrote:
-> If ebpf-rss-fds is specified but we fail to use, we should not fall
-> back to loading eBPF programs by ourselves as such makes the situation
-> complicated.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/net/virtio-net.c | 12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index e779ba2df428..075c91f037d1 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1396,15 +1396,9 @@ exit:
->  
->  static bool virtio_net_load_ebpf(VirtIONet *n)
->  {
-> -    bool ret = false;
-> -
-> -    if (virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
-> -        if (!(n->ebpf_rss_fds && virtio_net_load_ebpf_fds(n))) {
-> -            ret = ebpf_rss_load(&n->ebpf_rss);
-> -        }
-> -    }
-> -
-> -    return ret;
-> +    return virtio_net_attach_ebpf_to_backend(n->nic, -1) &&
-> +           (n->ebpf_rss_fds ? virtio_net_load_ebpf_fds(n) :
-> +                              ebpf_rss_load(&n->ebpf_rss));
->  }
->  
->  static void virtio_net_unload_ebpf(VirtIONet *n)
+Spec v4.3 chapter 7.2.2 "Boot operation":
 
-The eventual caller has an Error object that needs to be filled with
-error details, not warn_report().
+  If the CMD line is held LOW for 74 clock cycles and more
+  after power-up before the first command is issued, the
+  slave recognizes that boot mode is being initiated and
+  starts preparing boot data internally.
 
-IMHO this patch needs to look like this:
+Track uptime since last reset, add the sd_uptime_ns() helper.
 
+When the first command is received, check at least 74 clocks
+are elapsed (during the identification phase, at a 10kHz rate)
+then enable BOOT_MODE in the Ext_CSD register.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..c7fd52bbe9 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1314,21 +1314,21 @@ static void virtio_net_disable_rss(VirtIONet *n)
-     virtio_net_commit_rss_config(n);
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sd/sd.c         | 38 ++++++++++++++++++++++++++++++++++++++
+ hw/sd/trace-events |  1 +
+ 2 files changed, 39 insertions(+)
+
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 57a9eb91d0..c2ea942389 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -163,6 +163,8 @@ struct SDState {
+      */
+     bool expecting_acmd;
+     uint32_t blk_written;
++    int64_t reset_time_ns;
++    uint32_t cmd_count;
+ 
+     uint64_t data_start;
+     uint32_t data_offset;
+@@ -352,6 +354,11 @@ static uint8_t sd_crc7(const void *message, size_t width)
+     return shift_reg;
  }
  
--static bool virtio_net_load_ebpf_fds(VirtIONet *n)
-+static bool virtio_net_load_ebpf_fds(VirtIONet *n, Error **errp)
- {
-     int fds[EBPF_RSS_MAX_FDS] = { [0 ... EBPF_RSS_MAX_FDS - 1] = -1};
-     int ret = true;
-     int i = 0;
++static int64_t sd_uptime_ns(SDState *sd)
++{
++    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - sd->reset_time_ns;
++}
++
+ /* Operation Conditions register */
  
-     if (n->nr_ebpf_rss_fds != EBPF_RSS_MAX_FDS) {
--        warn_report("Expected %d file descriptors but got %d",
--                    EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
--       return false;
--   }
-+        error_setg(errp, "Expected %d file descriptors but got %d",
-+                   EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
-+        return false;
+ #define OCR_POWER_DELAY_NS      500000 /* 0.5ms */
+@@ -479,6 +486,10 @@ static void emmc_set_cid(SDState *sd)
+ #define CMULT_SHIFT     9        /* 512 times HWBLOCK_SIZE */
+ #define WPGROUP_SIZE    (1 << (HWBLOCK_SHIFT + SECTOR_SHIFT + WPGROUP_SHIFT))
+ 
++#define OD_FREQ_MIN_HZ   10000
++#define OD_FREQ_MAX_HZ  400000
++#define BOOT_MODE_DELAY_CYCLES_MIN 74
++
+ static const uint8_t sd_csd_rw_mask[16] = {
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xfe,
+@@ -797,6 +808,8 @@ static void sd_reset(DeviceState *dev)
+ 
+     sect = sd_addr_to_wpnum(size) + 1;
+ 
++    sd->reset_time_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    sd->cmd_count = 0;
+     sd->state = sd_idle_state;
+ 
+     /* card registers */
+@@ -905,6 +918,18 @@ static const VMStateDescription emmc_extcsd_vmstate = {
+     },
+ };
+ 
++static const VMStateDescription sdmmc_uptime_cmdcnt_vmstate = {
++    .name = "sd-card/uptime-command_count-state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = vmstate_needed_for_emmc,
++    .fields = (const VMStateField[]) {
++        VMSTATE_INT64(reset_time_ns, SDState),
++        VMSTATE_UINT32(cmd_count, SDState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static int sd_vmstate_pre_load(void *opaque)
+ {
+     SDState *sd = opaque;
+@@ -953,6 +978,7 @@ static const VMStateDescription sd_vmstate = {
+     .subsections = (const VMStateDescription * const []) {
+         &sd_ocr_vmstate,
+         &emmc_extcsd_vmstate,
++        &sdmmc_uptime_cmdcnt_vmstate,
+         NULL
+     },
+ };
+@@ -1925,6 +1951,16 @@ static sd_rsp_type_t sd_cmd_SEND_OP_COND(SDState *sd, SDRequest req)
+         sd->state = sd_ready_state;
+     }
+ 
++    if (sd_is_emmc(sd) && sd->cmd_count == 1) {
++        int64_t clk_cycles = sd_uptime_ns(sd) / OD_FREQ_MIN_HZ;
++
++        trace_sdcard_ext_csd_bootmode(sd_uptime_ns(sd), clk_cycles,
++                                      clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN);
++        if (clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN) {
++            sd->ext_csd[EXT_CSD_PART_CONFIG] |= (1 << 3);
++        }
 +    }
- 
-     for (i = 0; i < n->nr_ebpf_rss_fds; i++) {
-         fds[i] = monitor_fd_param(monitor_cur(), n->ebpf_rss_fds[i],
--                                  &error_warn);
-+                                  errp);
-         if (fds[i] < 0) {
-             ret = false;
-             goto exit;
-@@ -1347,14 +1347,15 @@ exit:
-     return ret;
++
+     return sd_r3;
  }
  
--static bool virtio_net_load_ebpf(VirtIONet *n)
-+static bool virtio_net_load_ebpf(VirtIONet *n, Error **errp)
- {
-     bool ret = false;
- 
-     if (virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
--        if (!(n->ebpf_rss_fds && virtio_net_load_ebpf_fds(n))) {
-+        if (n->ebpf_rss_fds)
-+            ret = virtio_net_load_ebpf_fds(n, errp);
-+        else
-             ret = ebpf_rss_load(&n->ebpf_rss);
--        }
+@@ -2107,6 +2143,8 @@ int sd_do_command(SDState *sd, SDRequest *req,
+         return 0;
      }
  
-     return ret;
-@@ -3750,7 +3751,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     net_rx_pkt_init(&n->rx_pkt);
++    ++sd->cmd_count;
++
+     if (sd->state == sd_inactive_state) {
+         rtype = sd_illegal;
+         goto send_response;
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 5dfe6be7b7..7d0de368aa 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -57,6 +57,7 @@ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+ sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
+ sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
+ sdcard_set_voltage(uint16_t millivolts) "%u mV"
++sdcard_ext_csd_bootmode(int64_t uptime_ns, int64_t clk_cycles, unsigned enabled) "%"PRId64" ns, %"PRId64" cycles, boot mode: %u"
  
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
--        virtio_net_load_ebpf(n);
-+        virtio_net_load_ebpf(n, errp);
-     }
- }
- 
-
-With regards,
-Daniel
+ # pxa2xx_mmci.c
+ pxa2xx_mmci_read(uint8_t size, uint32_t addr, uint32_t value) "size %d addr 0x%02x value 0x%08x"
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.41.0
 
 
