@@ -4,94 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3265C38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 04:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 087FEC38150
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 04:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sROVh-0006j4-10; Wed, 10 Jul 2024 00:00:53 -0400
+	id 1sROe9-0003f0-NQ; Wed, 10 Jul 2024 00:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sROVd-0006hq-DW
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 00:00:52 -0400
-Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sROVb-0000gt-NP
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 00:00:49 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.nyi.internal (Postfix) with ESMTP id 78AD21381496;
- Wed, 10 Jul 2024 00:00:45 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute3.internal (MEProxy); Wed, 10 Jul 2024 00:00:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1720584045;
- x=1720670445; bh=seMt1EsaCT5ubOudGEXUKj81NxX0kjEq8/hucl3DCBQ=; b=
- FHGxSQ3Ealv04xv9nSk3js8AP3J6RLSMZmKU2+8IUtxdoczf8CsZg20Q6ufFlRdF
- Mf3OIL6xQNrofdOeq7UTWOKcL/kUeowcTPdVHzOxOxTJe79WEIvisrcgxS/2aw47
- SCrthvJQNAbWuma8HeS/yw+vYM0r2+Ejh89j31ZJ4ww0+PycNfbU85X4YbLwkR3T
- lzLprk3tL8WIsbDyL+Z6tfReADD47rR1TOn3yuSgrRzTC/7Sp8nT+iZ9w3dOJxZ3
- KAGdVCsV0XydUwuU8Y9au7afkHC2YVPmlrmsPt4y5tWHc7VQ3zTTwOxvqj0AzHcm
- y5oRfOi6BKNtp91R1BjzrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1720584045; x=
- 1720670445; bh=seMt1EsaCT5ubOudGEXUKj81NxX0kjEq8/hucl3DCBQ=; b=m
- XaVBiqUmiqxyNBcePttvCkg9Y7ObHIgUZOSkRGCaDpfjgNRTilbJONvwnxj4sVsU
- +X0yr23l1DHQ7hRkGcTyVJqZAlp1jQMgUp3T7SJbY/jvps1+VSY3pWWxzE6CNXt7
- U8WHySdfF6G+N+In9n8f4bsJsyUoIIOawJw34wHuoopwRQOZ1/DLtZ1TkwaoSfan
- /BbM+COq6wvVL+p/1AT6xnBmmA3+SZHgLtRrBvYHIOIDku9CJbz2mkw5LPfCJuuB
- qSwanoRhamkxJnNqxhiQ2N4ttUXEqsyyHNXrrpuCiSon0ke16JhLelOjrW75mdvu
- adXp1OcKFEt+DtLYutNXg==
-X-ME-Sender: <xms:bAeOZp2rtbY4KYgl-xRGuENqXrDAwMC78kdvavrTC_Ms-3DMb5-soA>
- <xme:bAeOZgE8O6YtZaIblZ33FyOWDUdVgxOBvTOWC8--EzYtlOlOKP08MI1KG5W3K0GZ2
- TQhnkpTMx3dmGFvxf8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfedtgdejkecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedflfhi
- rgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
- eqnecuggftrfgrthhtvghrnhepudefgeeftedugeehffdtheefgfevffelfefghefhjeeu
- geevtefhudduvdeihefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
-X-ME-Proxy: <xmx:bAeOZp7KbSUBTIcVRTflUWMQ3wiBBjVzsxXhNRE_ufzDzA53aBUlFQ>
- <xmx:bAeOZm2lVKb7zQjEqHjhU5mHOhr0PT6uQ0q3HeqywRXPm222FyWXmw>
- <xmx:bAeOZsEhaiEVNgFzLT4OARBvMxJUQ_aLqH3ckdf_WKLRlUKhEbWQZw>
- <xmx:bAeOZn9hVpGovMfWMiwlrkJToI2tReST91x4DDvRZCz06GLuxMgodw>
- <xmx:bQeOZoiXNhmJ1-efqvDjzwAF9bBU5htjgS8BNWEkSNUt-vgncwqy6mOl>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E79E736A0074; Wed, 10 Jul 2024 00:00:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-568-g843fbadbe-fm-20240701.003-g843fbadb
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sROe7-0003dy-2L; Wed, 10 Jul 2024 00:09:35 -0400
+Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sROe5-0001yQ-GX; Wed, 10 Jul 2024 00:09:34 -0400
+Received: by mail-vs1-xe33.google.com with SMTP id
+ ada2fe7eead31-48c2d353b01so2014552137.2; 
+ Tue, 09 Jul 2024 21:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720584571; x=1721189371; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f6Ck1eU6ncsjc03ndkznoCEqd3/vOvUdkUl2pQNwovw=;
+ b=eB7dZF0Ci8tUjgZthRV+v+G+gQJ01/FoLkDl0pKc/ycY1b7n2PQ6mRpjh5WlyDFaOO
+ LkaWb57Gy92YdJL5zcHDKor+MtpNp04sZUmW/A2aOkHO9W6tm0sSHDUKGGjFb7N7cPeY
+ tC7Jrv9Nx7gAnD3nZqJue5He+1/2dw9d/mT8qjeaXaR3ad6om91w4E1iF1KhTBrBDFU8
+ dNQbrcGT95+5t8sxXbwufN4v7na70fIyIrurYnwYcQxaY/xTAT4BHOL2iLMMdtpzfWih
+ TLeSDMhmR4xYgt/+3rdJxPxbcHVj+3EhysWRl6OlLSG2RQ2SNayac5RMzPES62DS7zcL
+ H8gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720584571; x=1721189371;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f6Ck1eU6ncsjc03ndkznoCEqd3/vOvUdkUl2pQNwovw=;
+ b=MOFk7UJpehQRuSaCfKdO4aPVa7NcvB5ApRDM6qvlLEog4zAtWWMMl/e4vCBnix2I45
+ poi4e5dyuoGduSRMUftFEa27z/oTOKO6l8S+9L7y237glXQ6dM9gJnrrfj9dJYfCKsOl
+ +dysMF+MSKv72g5inINpacdiUh16Z0dTuBec3ORTRgEazxFlrOpgYW0yL02pDrfqZGpJ
+ rBksa8dMZaSv6AiQa58TtZaJ7OCksA01j5wbZJJ58EFfQyDARw0F28DQaO3m3lXK0JVw
+ Zkry7jbJSLiYCp6n14G8NFjVjk/cKB5d/MBTrAbt+ZZ/6iyHcIXkzfanSUfgjZWmkcV8
+ A7eA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUjVWrGFe4mneFZIIQyLUBaz14lSRgtppigdqGEgJ48Ac6AggyAy21TI5WjW87S+l3WdYdgLKsb1CNFsMmu4Pgu5mphjhlFlpCoHl88GpyPhFA3d9sb/hFxSVZ1hLDEbF7uoDvnPWS5MHNRCZb/upBzg==
+X-Gm-Message-State: AOJu0Yyi63GQyyCx15N5l+2wYM46uz39G8J35l56VHSCBzQEd5FIfB7O
+ GiEc5g6tyd0gNrOHtrrljTO3VIKxnTe+eYmfWW+xXwri6ax/9IDchVTjgZmZmA8uCTKmMFlAi9k
+ uLmzZMxjEUc+6A/UQ2CGlz7v+ZEk=
+X-Google-Smtp-Source: AGHT+IGEV/SmVBT7AhyeTE5R/YEz09Ko3fM3FobVJA4n26D2Q/ceJB2jHg9+XdC3enfvUlugYM4vLBrcVeixsKl1YPg=
+X-Received: by 2002:a05:6102:b14:b0:48f:831d:cea6 with SMTP id
+ ada2fe7eead31-490321f7ffbmr5013693137.25.1720584571303; Tue, 09 Jul 2024
+ 21:09:31 -0700 (PDT)
 MIME-Version: 1.0
-Message-Id: <db13dadd-6a04-4da1-893e-e613ad39ab15@app.fastmail.com>
-In-Reply-To: <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
- <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
-Date: Wed, 10 Jul 2024 12:00:11 +0800
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Bibo Mao" <maobibo@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Song Gao" <gaosong@loongson.cn>
-Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "QEMU devel" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
-Content-Type: text/plain;charset=utf-8
+References: <20240710032814.104643-1-richard.henderson@linaro.org>
+ <20240710032814.104643-14-richard.henderson@linaro.org>
+In-Reply-To: <20240710032814.104643-14-richard.henderson@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 10 Jul 2024 14:09:04 +1000
+Message-ID: <CAKmqyKNWdDrfR+RA+SVtQVUafmsBWgq9srXpQQKhAE3tte6mhQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] target/riscv: Simplify probing in vext_ldff
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongu.org, 
+ qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, balaton@eik.bme.hu, 
+ max.chou@sifive.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.144;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,76 +93,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-=E5=9C=A82024=E5=B9=B47=E6=9C=889=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8B=E5=
-=8D=888:04=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
-> Hi Philippe/Jiaxun,
+On Wed, Jul 10, 2024 at 1:30=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Could you do me a favor giving a review about this patch?
-
-Hi Bibo,
-
-I=E2=80=99m currently traveling, will test and review next week.
-
-I=E2=80=99m not really convinced to give a R-b but I=E2=80=99m fine with=
- a T-b.
-
-Thanks
-
+> The current pairing of tlb_vaddr_to_host with extra is either
+> inefficient (user-only, with page_check_range) or incorrect
+> (system, with probe_pages).
 >
-> Regards
-> Bibo Mao
+> For proper non-fault behaviour, use probe_access_flags with
+> its nonfault parameter set to true.
 >
-> On 2024/7/4 =E4=B8=8A=E5=8D=8811:37, Bibo Mao wrote:
->> Now loongson ipi and loongarch ipi share the same code with different
->> macro, loongson ipi has its separate function such mmio region,
->> loongarch ipi has other requirement such as irqchip in kernel.
->>=20
->> Interrupt irqchip has strong relationship with architecture, since
->> it sends irq to vcpu and interfaces to get irqchip register is also
->> architecture specific.
->>=20
->> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
->> is added, it comes from loongson ipi mostly. And it defined four abst=
-ract
->> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 mac=
-hine,
->> also can be used for 3A5000 irqchip in kernel mode soon.
->>=20
->> Also Loongarch ipi and loongson ipi device are added here, it inherits
->> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
->> loongson ipi device only passes to compile and make check, it is not
->> tested.
->>=20
->> Bibo Mao (4):
->>    hw/intc/loongson_ipi_common: Add loongson ipi common class
->>    hw/intc/loongarch_ipi: Add loongarch ipi support
->>    hw/loongarch/virt: Replace loongson ipi with loongarch ipi
->>    hw/intc/loongson_ipi: reconstruct driver inherit from common class
->>=20
->>   hw/intc/Kconfig                       |   3 +
->>   hw/intc/loongarch_ipi.c               |  80 ++++++
->>   hw/intc/loongson_ipi.c                | 330 ++-------------------
->>   hw/intc/loongson_ipi_common.c         | 394 +++++++++++++++++++++++=
-+++
->>   hw/intc/meson.build                   |   3 +-
->>   hw/loongarch/Kconfig                  |   2 +-
->>   hw/loongarch/virt.c                   |   4 +-
->>   include/hw/intc/loongarch_ipi.h       |  33 +++
->>   include/hw/intc/loongson_ipi.h        |  54 ++--
->>   include/hw/intc/loongson_ipi_common.h |  77 +++++
->>   include/hw/loongarch/virt.h           |   1 -
->>   11 files changed, 632 insertions(+), 349 deletions(-)
->>   create mode 100644 hw/intc/loongarch_ipi.c
->>   create mode 100644 hw/intc/loongson_ipi_common.c
->>   create mode 100644 include/hw/intc/loongarch_ipi.h
->>   create mode 100644 include/hw/intc/loongson_ipi_common.h
->>=20
->>=20
->> base-commit: 6746482d12da3b6e4d3cdf06481a0027a797f719
->>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
---=20
-- Jiaxun
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+>  target/riscv/vector_helper.c | 34 ++++++++++++++++++----------------
+>  1 file changed, 18 insertions(+), 16 deletions(-)
+>
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 1b4d5a8e37..4d72eb74d3 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -474,7 +474,6 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>            vext_ldst_elem_fn *ldst_elem,
+>            uint32_t log2_esz, uintptr_t ra)
+>  {
+> -    void *host;
+>      uint32_t i, k, vl =3D 0;
+>      uint32_t nf =3D vext_nf(desc);
+>      uint32_t vm =3D vext_vm(desc);
+> @@ -493,27 +492,31 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>          }
+>          addr =3D adjust_addr(env, base + i * (nf << log2_esz));
+>          if (i =3D=3D 0) {
+> +            /* Allow fault on first element. */
+>              probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
+>          } else {
+> -            /* if it triggers an exception, no need to check watchpoint =
+*/
+>              remain =3D nf << log2_esz;
+>              while (remain > 0) {
+> +                void *host;
+> +                int flags;
+> +
+>                  offset =3D -(addr | TARGET_PAGE_MASK);
+> -                host =3D tlb_vaddr_to_host(env, addr, MMU_DATA_LOAD, mmu=
+_index);
+> -                if (host) {
+> -#ifdef CONFIG_USER_ONLY
+> -                    if (!page_check_range(addr, offset, PAGE_READ)) {
+> -                        vl =3D i;
+> -                        goto ProbeSuccess;
+> -                    }
+> -#else
+> -                    probe_pages(env, addr, offset, ra, MMU_DATA_LOAD);
+> -#endif
+> -                } else {
+> +
+> +                /* Probe nonfault on subsequent elements. */
+> +                flags =3D probe_access_flags(env, addr, offset, MMU_DATA=
+_LOAD,
+> +                                           mmu_index, true, &host, 0);
+> +                if (flags) {
+> +                    /*
+> +                     * Stop any flag bit set:
+> +                     *   invalid (unmapped)
+> +                     *   mmio (transaction failed)
+> +                     *   watchpoint (debug)
+> +                     * In all cases, handle as the first load next time.
+> +                     */
+>                      vl =3D i;
+> -                    goto ProbeSuccess;
+> +                    break;
+>                  }
+> -                if (remain <=3D  offset) {
+> +                if (remain <=3D offset) {
+>                      break;
+>                  }
+>                  remain -=3D offset;
+> @@ -521,7 +524,6 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>              }
+>          }
+>      }
+> -ProbeSuccess:
+>      /* load bytes from guest memory */
+>      if (vl !=3D 0) {
+>          env->vl =3D vl;
+> --
+> 2.43.0
+>
+>
 
