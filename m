@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D9AC38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 07:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F88C38150
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 07:38:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRRsI-0001Bl-8I; Wed, 10 Jul 2024 03:36:26 -0400
+	id 1sRRth-0004rv-K6; Wed, 10 Jul 2024 03:37:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sRRsD-0001AK-Ob
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 03:36:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sRRte-0004f2-9G; Wed, 10 Jul 2024 03:37:50 -0400
+Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sRRsB-0004az-Hd
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 03:36:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720596977;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=58QBbTQ3EU6uzbKPfX+96r34foVhkX5wMAAZK9d9sf0=;
- b=ET+u+CpRtvQzfreCkK+wZfYXS7CBMoNLvxZfbRcnkglOixyhTRWEIBsmU9OzlKDqo/SC7k
- dfGmUswROp0ai4vlCp8N9sf5VT/1UHnKbm3eittrWSW5NKuElGlSesbLmVKkQX05jh5j8S
- zTa+goIcbP1jpZLHiiRmfx+YRtQ0K2A=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-UgC-65GOOGOmuWKOaogwDw-1; Wed, 10 Jul 2024 03:36:15 -0400
-X-MC-Unique: UgC-65GOOGOmuWKOaogwDw-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2c97ff21741so4518221a91.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 00:36:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720596975; x=1721201775;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=58QBbTQ3EU6uzbKPfX+96r34foVhkX5wMAAZK9d9sf0=;
- b=k53jNZIeIaG+DdhC1nsITb6GPMvAuGDp46/QfL5SvQnOywA3VoOo3DD242w2AY/Kj9
- P+kLtB9AkCF846ZISOUDkUevwZbNprC1C4wqas53UJdqoflHua1TzVPBoSUYqtSI3wN3
- 5v3wCP2PFENyxpckKCLZcQJpkuEBxbF1QiDuJaM9+StaS4/0QK4CtJlEGj+8mpiN2ZG1
- 0Is1ebF/RRizYPntlf0TB4dOT/iiZ0twe26Kzmmieuzq8o3bQvGxCkOEMdkX6MoB2ON8
- XVAvbjsWGjYGLUz66W+mMBFtf3FmYwhngcaEFT6sPg2sEwNsuDw/i6UROTY1yu9DNbV+
- +1vA==
-X-Gm-Message-State: AOJu0YwP/rLbliQFD60sfh+Ukoac43Yvn+wRskNlmhNRxXOfCxO1Y4uG
- McIeKojUEZoRSOTzD7IPwtuA2JKK6J3kc88jYQbCm4GbNJxqBZ6bOG3nIMZaam0f82ZDDYx0ete
- zeD4P7PPv0CKpf+sX3PAQlx13nB5tbyxLhzSLjXAHPCa4gbRwJvJd+34EoSLUmPMpDQUPVoe+Es
- sudOHBmFsQBUcoF0VmjLsSkFoTyFw=
-X-Received: by 2002:a17:90a:c8f:b0:2c9:61f9:9de1 with SMTP id
- 98e67ed59e1d1-2ca35be1cc6mr3888101a91.4.1720596974526; 
- Wed, 10 Jul 2024 00:36:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2JPHLbX7WWqoL2bZTXMkNLvmyF4WLgXn9iy/SZWCGkg7elLKCHvieGBXdaZrLmaZ1c8dn5dTmrkD36wrkJ4w=
-X-Received: by 2002:a17:90a:c8f:b0:2c9:61f9:9de1 with SMTP id
- 98e67ed59e1d1-2ca35be1cc6mr3888086a91.4.1720596973918; Wed, 10 Jul 2024
- 00:36:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sRRtV-0004vD-Qn; Wed, 10 Jul 2024 03:37:50 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id A0C241141CBC;
+ Wed, 10 Jul 2024 03:37:38 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Wed, 10 Jul 2024 03:37:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1720597058; x=
+ 1720683458; bh=S/6DE21zK2mwcnippoegGG9SNc9RYEYZ16BwtJN33A8=; b=I
+ 5fAA9vYiH6wDvmllcz5CVmhvyaORxPH4HMKYW00/6S/59vlZ8RkbuuO41tDeO1Z2
+ 1ATo4p2zFqYpGW9WxO3i1BKGZt5aoek528Qh7S7/aX9a34W8LwGtx72PqbWuXRvi
+ LQoS9giOtnQQBrCvfIpC2+OFVYKNOuNbGX/y5W8iFcIGPxU3OWgLpQewNQauCzeX
+ FylAJi3ktrRhcabaK2sojvdnAiNMO7ezwKsXI3BbVgtxt5OvwbfbeBVkJq3iD74v
+ MIgxqmBXVSxeAR1SltQFzUTXqWFflLz2LKFTblP+7fsf/hq7h2vD4FXmtWWI9Rhz
+ RAB27bytxrzf/eyEGqABA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; t=1720597058; x=1720683458; bh=S/6DE21zK2mwcnippoegGG9SNc9R
+ YEYZ16BwtJN33A8=; b=EUQtzQOU1d7SeZas5x8LT2HyCHus72lHPwduvHKR/+ug
+ IM43S8kNh/Bl9fGFOjUmcQt2VoyUDKmjbpWP/4fhFxfwfTkWPR8uAI8Ex59zf6yX
+ ITwgAn9mbNifBO0REEDXMq+O4Q8cVUN2GRa4jcKZDZq55zEoETG5n8SFyAZzwS1s
+ pUeciNgTd8ktmP606i9E0ODW+te2TIsr7mc3AzNSxyvSOaE/A/7+jBsYHUegKGPK
+ UovFdr67j6BsKky7dR+Rctuc45mnM9fivjnuloIxjL80woWANDpgaqInjcHkFoFj
+ huS6aVITCFWJhReBrrN+1GtEaOeltHDWNqVGOIQ26w==
+X-ME-Sender: <xms:QDqOZqpA0fAv8Kf78rcal-YWazvtRrhqzw8BJce8Ets8tO6FQlGoBg>
+ <xme:QDqOZopg39neO4f8bs6q2lw6_Kc0oDM_GgFvYHz-ps64ROjoH23Fp30MnExOdBMqr
+ -jBhhBtCiW9boXJNMQ>
+X-ME-Received: <xmr:QDqOZvNucBdtDqUwns2spaM1gIVVYgbgSIFK-YVP8-bNn4ggS9Faklnp4w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfedtgdduvdefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
+ shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
+ htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
+ jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
+ htshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:QDqOZp77dEVqencB5Fr0O_bjXqcMcFq_mm6r4hDdLQu4lxh6o8CVYg>
+ <xmx:QDqOZp7ayuLB_agrVcLDG4HRSlRlv2By-hj-TJd3JqN-sxy0Q_Bpgw>
+ <xmx:QDqOZpilV9-VZ_UYJ0U7U9Y1NA1_8mjzBMk3F_8qylqAF2kydL3Ucg>
+ <xmx:QDqOZj6j1cFPd34WjRyVWtQcfjpQNXuznW29ESsLdzEYLGUsWW7XiA>
+ <xmx:QjqOZmskGICpT30ivbVTRIOqy6nnRWZBbjtsE2ptYM36srXa6w_n9oWD>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jul 2024 03:37:36 -0400 (EDT)
+Date: Wed, 10 Jul 2024 09:37:30 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Zheyu Ma <zheyuma97@gmail.com>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/nvme: Fix memory leak in nvme_dsm
+Message-ID: <Zo46OsRWrnDiIPTC@cormorant.local>
+References: <20240702231303.3077584-1-zheyuma97@gmail.com>
 MIME-Version: 1.0
-References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
- <CACGkMEuX+FxOtWD9YoMF-T_VsgMezCT5ff_5Wk5CwQ3kNu41Aw@mail.gmail.com>
- <CAK9dgmb0K_TfbUt-WsPubDVAA7tuJQkQtWaf95JOc0CYvgMQ8A@mail.gmail.com>
- <CACGkMEv23TZNexfKUJ8MMVeRz2+2g316UNAQvEK+91jo5PkpBw@mail.gmail.com>
- <CAK9dgmbqqD_LVWONdKm-Usj18cnxqbMo6VWpCAUqjS4VnTDxnw@mail.gmail.com>
- <CACGkMEt5bmg1eh8Tiurfzxb5a1GXECu_PmTQC5a_+sve2A2NUw@mail.gmail.com>
- <CAK9dgmaEs56fj4F_Bz+bBJNmoK4tXHd9WbmtHeeJj-Mu+kYtNQ@mail.gmail.com>
-In-Reply-To: <CAK9dgmaEs56fj4F_Bz+bBJNmoK4tXHd9WbmtHeeJj-Mu+kYtNQ@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 10 Jul 2024 15:36:02 +0800
-Message-ID: <CACGkMEuuxSehLH8+1_P_CERwVm_C33FQXVjHpvBmy+uakP7uVA@mail.gmail.com>
-Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
- buffer is full
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="gh+SomYrTJE6CA2t"
+Content-Disposition: inline
+In-Reply-To: <20240702231303.3077584-1-zheyuma97@gmail.com>
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=its@irrelevant.dk;
+ helo=fhigh8-smtp.messagingengine.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,289 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 2:26=E2=80=AFPM Yong Huang <yong.huang@smartx.com> =
-wrote:
->
->
->
-> On Wed, Jul 10, 2024 at 11:44=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
- wrote:
->>
->> On Tue, Jul 9, 2024 at 10:56=E2=80=AFAM Yong Huang <yong.huang@smartx.co=
-m> wrote:
->> >
->> >
->> >
->> > On Tue, Jul 9, 2024 at 10:41=E2=80=AFAM Jason Wang <jasowang@redhat.co=
-m> wrote:
->> >>
->> >> On Mon, Jul 8, 2024 at 1:17=E2=80=AFPM Yong Huang <yong.huang@smartx.=
-com> wrote:
->> >> >
->> >> >
->> >> >
->> >> > On Mon, Jul 8, 2024 at 11:21=E2=80=AFAM Jason Wang <jasowang@redhat=
-.com> wrote:
->> >> >>
->> >> >> On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.huang@sma=
-rtx.com> wrote:
->> >> >> >
->> >> >> > Unexpected work by certain Windows guests equipped with the e100=
-0
->> >> >> > interface can cause the network to go down and never come back u=
-p
->> >> >> > again unless the guest's interface is reset.
->> >> >> >
->> >> >> > To reproduce the failure:
->> >> >> > 1. Set up two guests with a Windows 2016 or 2019 server operatin=
-g
->> >> >> >    system.
->> >> >>
->> >> >> I vaguely remember e1000 support for Windows has been deprecated f=
-or
->> >> >> several years...
->> >> >>
->> >> >> That's why e1000e or igb is implemented in Qemu.
->> >> >>
->> >> >> > 2. Set up the e1000 interface for the guests.
->> >> >> > 3. Pressurize the network slightly between two guests using the =
-iPerf tool.
->> >> >> >
->> >> >> > The network goes down after a few days (2-5days), and the issue
->> >> >> > is the result of not adhering to the e1000 specification. Refer
->> >> >> > to the details of the specification at the following link:
->> >> >> > https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gb=
-e-controllers-software-dev-manual.pdf
->> >> >> >
->> >> >> > Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
->> >> >> > as following:
->> >> >> > This register holds a value that is an offset from the base, and
->> >> >> > identifies the location beyond the last descriptor hardware can
->> >> >> > process. Note that tail should still point to an area in the
->> >> >> > descriptor ring (somewhere between RDBA and RDBA + RDLEN).
->> >> >> > This is because tail points to the location where software write=
-s
->> >> >> > the first new descriptor.
->> >> >> >
->> >> >> > This means that if the provider=E2=80=94in this case, QEMU=E2=80=
-=94has not yet
->> >> >> > loaded the packet,
->> >> >>
->> >> >> What do you mean by "load" here?
->> >> >
->> >> >
->> >> > Sorry for failing to describe the details.
->> >> >
->> >> > The guest driver retrieves the packet from the receive ring buffer
->> >> > after QEMU forwards it from the tun/tap interface in the e1000
->> >> > emulation.
->> >> >
->> >> > I used "load" to express "putting packets into the receive ring buf=
-fer."
->> >> >
->> >> >>
->> >> >>
->> >> >> > RDT should never point to that place.
->> >> >>
->> >> >> And "that place"?
->> >> >
->> >> > If a descriptor in the receive ring buffer has not been filled with=
- a
->> >> > packet address by QEMU, the descriptor therefore doesn't have any
->> >> > available packets. The location of the descriptor should not be ref=
-erred
->> >> > to by RDT because the location is in the range that "hardware" hand=
-les.
->> >> >
->> >> > "that place" means the location of the descriptor in the ring buffe=
-r
->> >> > that QEMU hasn't set any available packets related to.
->> >> >
->> >> >>
->> >> >>
->> >> >> > When
->> >> >> > implementing the emulation of the e1000 interface, QEMU evaluate=
-s
->> >> >> > if the receive ring buffer is full once the RDT equals the RDH,
->> >> >> > based on the assumption that guest drivers adhere to this
->> >> >> > criterion strictly.
->> >> >> >
->> >> >> > We applied the following log patch to assist in analyzing the
->> >> >> > issue and eventually obtained the unexpected information.
->> >> >> >
->> >> >> > Log patch:
->> >> >> > ----------------------------------------------------------------=
--
->> >> >> > |--- a/hw/net/e1000.c
->> >> >> > |+++ b/hw/net/e1000.c
->> >> >> > |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
->> >> >> > | static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
->> >> >> > | {
->> >> >> > |     int bufs;
->> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s=
-->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], =
-s->mac_reg[RDT]);
->> >> >> > |+
->> >> >> > |     /* Fast-path short packets */
->> >> >> > |     if (total_size <=3D s->rxbuf_size) {
->> >> >> > |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->last_=
-overrun)
->> >> >> > |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, con=
-st struct iovec *iov, int iovcnt)
->> >> >> > |         s->rxbuf_min_shift)
->> >> >> > |         n |=3D E1000_ICS_RXDMT0;
->> >> >> > |
->> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s=
-->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], =
-s->mac_reg[RDT]);
->> >> >> > |+
->> >> >> > ----------------------------------------------------------------=
--
->> >> >> >
->> >> >> > The last few logs of information when the network is down:
->> >> >> >
->> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
->> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >
->> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN]=
- =3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> > <- RDT stays the same, RDH updates to 898, and 1 descriptor
->> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >
->> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >
->> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN]=
- =3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> > <- RDT stays the same, RDH updates to 899, and 1 descriptor
->> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >
->> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >
->> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN]=
- =3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
->> >> >> > <- RDT stays the same, RDH updates to 900 , and 1 descriptor
->> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >
->> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =
-=3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
->> >> >> > <- The ring is full, according to e1000_has_rxbufs, because
->> >> >> > of the RDT update to 900 and equals RDH !
->> >> >>
->> >> >> Just to make sure I understand this, RDT=3D=3DRDH means the ring i=
-s empty I think?
->> >> >>
->> >> >>
->> >> >> See commit:
->> >> >>
->> >> >> commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
->> >> >> Author: Dmitry Fleytman <dmitry@daynix.com>
->> >> >> Date:   Fri Oct 19 07:56:55 2012 +0200
->> >> >>
->> >> >>     e1000: drop check_rxov, always treat RX ring with RDH =3D=3D R=
-DT as empty
->> >> >>
->> >> >>     Real HW always treats RX ring with RDH =3D=3D RDT as empty.
->> >> >>     Emulation is supposed to behave the same.
->> >> >
->> >> >
->> >> > Indeed, I'm confused :(,  the description in the comment claims tha=
-t RX
->> >> > rings with RDH =3D=3D RDT as empty, but in implementation, it treat=
-s that as
->> >> > overrun.
->> >> >
->> >> > See the following 2 contexts:
->> >> >
->> >> > 1. e1000_can_receive:
->> >> > static bool e1000_can_receive(NetClientState *nc)
->> >> > {
->> >> >     E1000State *s =3D qemu_get_nic_opaque(nc);
->> >> >     // e1000_has_rxbufs return true means ring buffer has
->> >> >     // available descriptors to use for QEMU.
->> >> >     // false means ring buffer overrun and QEMU should queue the pa=
-cket
->> >> >     // and wait for the RDT update and available descriptors can be=
- used.
->> >> >
->> >> >     return e1000x_rx_ready(&s->parent_obj, s->mac_reg) &&
->> >> >         e1000_has_rxbufs(s, 1) && !timer_pending(s->flush_queue_tim=
-er);
->> >> > }
->> >>
->> >> Well we had in e1000_has_rx_bufs
->> >>
->> >>     if (total_size <=3D s->rxbuf_size) {
->> >>         return s->mac_reg[RDH] !=3D s->mac_reg[RDT];
->> >>     }
->> >>
->> >> RDT!=3DRDH means RX ring has available descriptors for hardware?
->> >
->> >
->> > IMHO, Yes.
->>
->> Just to make sure we are on the same page, so
->>
->> RDT!=3DRDH, descriptors available for hardware
->> RDT=3D=3DRDH, descriptor ring is empty for hardware
->>
->>
->> That is currently what the code did. Seems nothing wrong, or anything
->> I missed here?
->
->
-> There are two cases for RDT =3D=3D RDH.
->
-> 1. Hardware has filled all available descriptors and overrun.
->    In this case, hardware cannot add any new packets to the ring.
->
-> 2. Software has consumed all descriptors, and all the descriptors
->     on the ring can be used by hardware. (Let's name this case "empty.")
->    In this case, hardware should keep putting new packets to the ring
 
-Well this seems not what spec said. See Figure 3-2, when RDT=3D=3DRDH,
-nothing is owned by hardware. And this is what Dmitry said in the
-commit mentioned above.
+--gh+SomYrTJE6CA2t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Which version of the driver did you use in the guest? (Or have you
-tried to download the one from Intel website) I'm asking since e1000
-support has been deprecated by Microsoft for years.
+On Jul  3 01:13, Zheyu Ma wrote:
+> The allocated memory to hold LBA ranges leaks in the nvme_dsm function. T=
+his
+> happens because the allocated memory for iocb->range is not freed in all
+> error handling paths.
+>=20
+> Fix this by adding a free to ensure that the allocated memory is properly=
+ freed.
+>=20
+> ASAN log:
+> =3D=3D3075137=3D=3DERROR: LeakSanitizer: detected memory leaks
+>=20
+> Direct leak of 480 byte(s) in 6 object(s) allocated from:
+>     #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_lin=
+ux.cpp:129:3
+>     #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0=
++0x5e738)
+>     #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
+>     #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
+>     #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
+>     #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
+>=20
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>  hw/nvme/ctrl.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..cf610eab21 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -2592,6 +2592,7 @@ next:
+>  done:
+>      iocb->aiocb =3D NULL;
+>      iocb->common.cb(iocb->common.opaque, iocb->ret);
+> +    g_free(iocb->range);
+>      qemu_aio_unref(iocb);
+>  }
+> =20
+> --=20
+> 2.34.1
+>=20
 
-Thanks
+Thanks! LGTM
 
->
-> But at the moment, the logic of e1000_has_rx_bufs acts exactly like it wa=
-s
-> the first case, unable to differentiate between the two scenarios.
->
->>
->>
->> Thanks
->>
->> >
->> >>
->> >> Adding more people.
->> >>
->> >> Thanks
->> >>
->> >
->> >
->> > --
->> > Best regards
->>
->
-> Yong
->
-> --
-> Best regards
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
+Cc: qemu-stable@nongnu.org
 
+--gh+SomYrTJE6CA2t
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmaOOjkACgkQTeGvMW1P
+DemrnwgAjl7LowgyIjLIKfb88yV3B2tuiWtbibzSXLEBSXfPKIKJOpv0TF9WwLCO
+nFZBHRMZF+2V2c06EMwa8JcGfamNLx4NW3Uw7ZsLz2/2wtBHToZlqgv4uB7aXe1J
+GY+iKEmlGhpDjU5U2pqpciZ3le428TuqMhfpY/aw4Up3EqPCw9/saEUQWLMX1keR
+uRY/wpxhBx53o7npz2WNDveQhbXwal1VLNjMJTrHEmTQ+aUzrLY8L/VkwDfOBtoQ
+SBUyy0aN83XRygUWIqiSx0it/jC/nzlGd9xPjies4bUbpxxAYp+HfHEeEmmwI68o
+H1it4Ob1sydouxok5PQVx2ngibbQGQ==
+=jA4j
+-----END PGP SIGNATURE-----
+
+--gh+SomYrTJE6CA2t--
 
