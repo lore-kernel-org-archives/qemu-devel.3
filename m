@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AF9C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5839EC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 15:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRZ5N-0007Wl-Tb; Wed, 10 Jul 2024 11:18:25 -0400
+	id 1sRZ5y-0007lP-Gz; Wed, 10 Jul 2024 11:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRZ5M-0007Vc-5K
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:18:24 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRZ5K-0007cr-JF
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:18:23 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-70aec66c936so4638467b3a.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720624701; x=1721229501; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zeehRk2zxOx+fW4LQEvVNvKsMPyKbvFR1hHWZSJ5RsE=;
- b=B7rvNYNJLyiA6cywoKYrvK8pJS08KOn1dwuMGxqju4ZJpIYa+Dl5gGfZkRO8neShZ2
- V0kFBKCyKrxL3ouLXY7WzDG4XiERVxBHxaQ78qPMo5zy40ZlVd8wfBtqRF9qfcxWenJN
- TTpp5zd8MwV/pLVTMtmdMNmZCn+X5b6UgXhXD/1AGU3ko+nblqF4nUxnjN0fe8BqYfdW
- j08FWiLiyOdxn34Tdm3emMSOqd1k/BW1hPBRhGIlMPryAGBWD6UfHDE3N7irEqW+eDMK
- IqkSXbUY9HsUCFkWQktx9lQVQYt05ETuf0Z/yrATZmNUiatOgXYO+ri1Nrlr4FEF1Kn3
- 1E5A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRZ5x-0007kv-6z
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:19:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRZ5v-0007ka-ET
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 11:19:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720624737;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yYSm3+3l8zDGPUMdfoOmU6RHW39+rc4LRLrUStTBlGU=;
+ b=S30YmUosOoNbpuX2bpckqbDhS3RbBRlz0OLLNDvkrTbpSVu1nTTesa2wBkXzIKJnRZiIdp
+ FzOghmOqy5Mt9FVtySt9btCuafql6rEV3H/W74gbsLFZbnmUEm+CdVdciazEK72m5CxBiE
+ yCBIRfqxNRJhrV/0YHMdItWR+TB5NcU=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-673-5VxJtiPXNG6xrfkToDqBSA-1; Wed, 10 Jul 2024 11:18:56 -0400
+X-MC-Unique: 5VxJtiPXNG6xrfkToDqBSA-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3d62ad9f453so338696b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 08:18:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720624701; x=1721229501;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1720624735; x=1721229535;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zeehRk2zxOx+fW4LQEvVNvKsMPyKbvFR1hHWZSJ5RsE=;
- b=SlEwUKcX2bEb2RCrmhJCpr/j0dAkm4Hp3PkOCur0tjLx/17tdHGK5E3ejCoqMlboje
- WMRcGV9FmY+WxAqTvFbzsFQvDNWXViVFLqpcxJ3AgOi3iS6oPwuaOEHSWO3r0Kq6Tun/
- Let2214olfs55XAORS5mmTD1Wr6On+74502RZOLy3afVS/8xwpuFvnMtLxRqlP+aItA/
- bNKVs8micU41RiYqneubkcsxOc0Te1hjvc5sESGXrlG+8oQn52A+86MNIpIzTyO4tutB
- qbFSbD0V+SjppJsffonwBVfulI7j/6KKQrz+YuAi4Dkzzy36eP0pakMIvy4mGBkkvPZY
- xKCA==
+ bh=yYSm3+3l8zDGPUMdfoOmU6RHW39+rc4LRLrUStTBlGU=;
+ b=vnHBbXco9okpNSiJacEMnqpGVbTG/u9Y+7Cfi6tINoJDZs5d7I6/vB/8LiSpSl9J+l
+ 9CCFP5jeKwLuJtrK9jre/3PXxM6a2SgTTnbtKaOfEsVYPHG/b+X/lqIbeSo1tgq/hzeE
+ EWbzuo89jWsDfgMRXz6ZX4SCi9pMng/lYjwsk2YB2j+OWp/YsJ+PeQhrP2bT6oiHDpnK
+ pm6vEj3FFfmJwRRZYMdaeKTd8D0dpRLA85JZ8JDVIfR4BNvS0y3fzDC3e6jt8uHlB92O
+ fa+wRqrCakHE+Ny1+/lete2RsshwQPCjnxjsZXFIzdWpRHabAobSh72ZYgt+mQMCoBtp
+ orvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqjkOJzMbTNmAjeihnNIaSOEsbf5j4VHF5O5W2rOjYDJdw8No2MbVHBbxQ89lyKeRmdqXw6J1Cnzdy/OoG+LDaFv2NlJE=
-X-Gm-Message-State: AOJu0YzG8AhFVUruChQs0Bj9jg9pEzKvwKjsM07B2FZF9JmfuUUo+J9/
- seaAiLEwWNHXkbzCLcW+rgKumtIstiVTYnGIarD/UtJojKOsIuzhEULt0wNBngU=
-X-Google-Smtp-Source: AGHT+IF66ELYdWqrAMY2Zd+6vBZUtB8ho+LybVsQVr5aH8MMhBK2TDGH2U8EQkXqzIm3bS2YLwvNXA==
-X-Received: by 2002:a05:6a20:2583:b0:1c0:f23b:cad3 with SMTP id
- adf61e73a8af0-1c29822de6dmr6082572637.22.1720624700868; 
- Wed, 10 Jul 2024 08:18:20 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b4396779csm3912671b3a.106.2024.07.10.08.18.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jul 2024 08:18:20 -0700 (PDT)
-Message-ID: <04827c78-1757-4a7c-b0b4-7eefb1958499@linaro.org>
-Date: Wed, 10 Jul 2024 08:18:18 -0700
+ AJvYcCVyp8fucs5hpdzQrt4m6tW8PzkBGL8cT6RoKBByBFgITtI8EB9BUiXtt1uY5ogwXHp/we4obd0+HDMHUdL13QpWYVsPSEw=
+X-Gm-Message-State: AOJu0YwdQTHwVpDp2Aq451VzQ99T6jwep0cE1mWbYk91qW4Vit6dXtUf
+ vgnqTpw6drXSVOIgBVm4woVph7VcVgg0phA6nhjzT+OssDX1fFc/7B3YzazXF4oTws5Onv8Gn5V
+ yLsjZW3FSB1sifsI5UYK7y+562ioQjXkoK0qidUo2SlXzFwmBvkEw
+X-Received: by 2002:a05:6808:148b:b0:3d9:2e1d:2543 with SMTP id
+ 5614622812f47-3d93c0fe45amr6007766b6e.5.1720624735291; 
+ Wed, 10 Jul 2024 08:18:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOdJ2tomhbuI7BvjEC2ahwyrW70MgL3r5oM2oT5bZxcIN3AoXIxSherBSBQqKrh2Oc5/jvIA==
+X-Received: by 2002:a05:6808:148b:b0:3d9:2e1d:2543 with SMTP id
+ 5614622812f47-3d93c0fe45amr6007738b6e.5.1720624734901; 
+ Wed, 10 Jul 2024 08:18:54 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-79f190b0af1sm203401185a.122.2024.07.10.08.18.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jul 2024 08:18:54 -0700 (PDT)
+Date: Wed, 10 Jul 2024 11:18:51 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Liu, Yuan1" <yuan1.liu@intel.com>
+Cc: "Wang, Yichen" <yichen.wang@bytedance.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Hao Xiang <hao.xiang@linux.dev>, "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Subject: Re: [PATCH v4 0/4] Implement using Intel QAT to offload ZLIB
+Message-ID: <Zo6mWzuxFET1q81j@x1n>
+References: <20240705182901.48948-1-yichen.wang@bytedance.com>
+ <PH7PR11MB5941B008DD622227FB46E95EA3DB2@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <Zo2EsEqAY5KnkO1V@x1n>
+ <PH7PR11MB594133AD3E08A6E35D07DD97A3A42@PH7PR11MB5941.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: fix POP to memory in long mode
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-References: <20240710141328.388955-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240710141328.388955-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <PH7PR11MB594133AD3E08A6E35D07DD97A3A42@PH7PR11MB5941.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,25 +115,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/24 07:13, Paolo Bonzini wrote:
-> In long mode, POP to memory will write a full 64-bit value.  However,
-> the call to gen_writeback() in gen_POP will use MO_32 because the
-> decoding table is incorrect.
-> 
-> The bug was latent until commit aea49fbb01a ("target/i386: use gen_writeback()
-> within gen_POP()", 2024-06-08), and then became visible because gen_op_st_v
-> now receives op->ot instead of the "ot" returned by gen_pop_T0.
-> 
-> Analyzed-by: Clément Chigot<chigot@adacore.com>
-> Fixes: 5e9e21bcc4d ("target/i386: move 60-BF opcodes to new decoder", 2024-05-07)
-> Tested-by: Clément Chigot<chigot@adacore.com>
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.c.inc | 2 +-
->   target/i386/tcg/emit.c.inc       | 2 ++
->   2 files changed, 3 insertions(+), 1 deletion(-)
+On Wed, Jul 10, 2024 at 01:55:23PM +0000, Liu, Yuan1 wrote:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[...]
 
-r~
+> migrate_set_parameter max-bandwidth 1250M
+> |-----------|--------|---------|----------|----------|------|------|
+> |8 Channels |Total   |down     |throughput|pages per | send | recv |
+> |           |time(ms)|time(ms) |(mbps)    |second    | cpu %| cpu% |
+> |-----------|--------|---------|----------|----------|------|------|
+> |qatzip     |   16630|       28|     10467|   2940235|   160|   360|
+> |-----------|--------|---------|----------|----------|------|------|
+> |zstd       |   20165|       24|      8579|   2391465|   810|   340|
+> |-----------|--------|---------|----------|----------|------|------|
+> |none       |   46063|       40|     10848|    330240|    45|    85|
+> |-----------|--------|---------|----------|----------|------|------|
+> 
+> QATzip's dirty page processing throughput is much higher than that no compression. 
+> In this test, the vCPUs are in idle state, so the migration can be successful even 
+> without compression.
+
+Thanks!  Maybe good material to be put into the docs/ too, if Yichen's
+going to pick up your doc patch when repost.
+
+[...]
+
+> I don’t have much experience with postcopy, here are some of my thoughts
+> 1. For write-intensive VMs, this solution can improve the migration success, 
+>    because in a limited bandwidth network scenario, the dirty page processing
+>    throughput will be significantly reduced for no compression, the previous
+>    data includes this(pages_per_second), it means that in the no compression
+>    precopy, the dirty pages generated by the workload are greater than the
+>    migration processing, resulting in migration failure.
+
+Yes.
+
+> 
+> 2. If the VM is read-intensive or has low vCPU utilization (for example, my 
+>    current test scenario is that the vCPUs are all idle). I think no compression +
+>    precopy + postcopy also cannot improve the migration performance, and may also
+>    cause timeout failure due to long migration time, same with no compression precopy.
+
+I don't think postcopy will trigger timeout failures - postcopy should use
+constant time to complete a migration, that is guest memsize / bw.
+
+The challenge is normally on the delay of page requests higher than
+precopy, but in this case it might not be a big deal. And I wonder if on
+100G*2 cards it can also perform pretty well, as the delay might be minimal
+even if bandwidth is throttled.
+
+> 
+> 3. In my opinion, the postcopy is a good solution in this scenario(low network bandwidth,
+>    VM is not critical), because even if compression is turned on, the migration may still 
+>    fail(page_per_second may still less than the new dirty pages), and it is hard to predict
+>    whether VM memory is compression-friendly.
+
+Yes.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
