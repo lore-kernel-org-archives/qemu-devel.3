@@ -4,90 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB522C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFDFC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRt0Z-0005KM-N0; Thu, 11 Jul 2024 08:34:47 -0400
+	id 1sRtBJ-0002nn-3Z; Thu, 11 Jul 2024 08:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRt0Y-0005Hh-13
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:34:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRtBB-0002mz-9I
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:45:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRt0W-0004KG-4U
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:34:45 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRtB7-0000ET-7c
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:45:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720701282;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bxb/8w4DES5aJg9E5ei3A2woovHRbaf3PI/9QzkhEVE=;
- b=XBilCpysy8d6C+I3IccxcLYF25u6K2vHlwel/ER4DWC41f8fL7VTTUF3LfwOCuuQLRufkw
- CxRl0jECU07GKVH/Wdcx3Q776Cv7iXYDZ7L5oyr3OMQb2C9yWzFzXsG74zA7qSKhHGfa2f
- 3N00UEIohz2zb2+vr5iGbPf7fMfz4fI=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-260-d0NEcCUTNPWrFIpF7s42Dw-1; Thu, 11 Jul 2024 08:34:39 -0400
-X-MC-Unique: d0NEcCUTNPWrFIpF7s42Dw-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52e98693f43so840930e87.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 05:34:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720701278; x=1721306078;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bxb/8w4DES5aJg9E5ei3A2woovHRbaf3PI/9QzkhEVE=;
- b=EWw2ADb2n+uWxqmBdOOhxrAvWVhAcY7T9sXZL9P5TPEIbtbl4bohZjn0h04+aPSr7W
- ztCLory9E/m8Qh9qOSt4H8WQC7I+9Rv3lO1AxN6vWRKVZGWkzr4FlYEe6Xf9A6Mv7rFo
- 4sogwt5peFBlVHEUiLJxO/DHbc278yQHBFP6dEx2Ec/n31LD104F5qX3BmFqHBQE28Hf
- XLPYnzCOlPidGEVpX5+vq8fJN7YiKZaFZibrsUF7UtfKVIxXAAiEYrPcaCrVOEnssn+v
- dMZmH8U4wuS0pBghtr60u5FjPbrRZwUDxQVPtWv5dlaR78hWCCJMOr90Fxcp9xuHeTTV
- 4cgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjoUvjwbnTdokdlzCm03W5bav/gPDq3aHM+5St7cExOUq2F6xUDCZb/6rSPUX/X3/Vy+3397gpXcshY4bDUZd7UQM7/HY=
-X-Gm-Message-State: AOJu0YwZyKz3lwNdPPiy2A9DPWDppzsWf+2L/Gic6tuv2KWPK5GjHurb
- CfB9n7QN9j8sPKIPUxIOI/71HdPlR5EgivRgI8kI6saIk1lx7hxZPnG+Y73ODUr8VJst9wVxe7R
- 5puorpdHSLnkWE+9GflZEYZCqEgMjX860+5vlNR8PPMeYi0cD4ckA
-X-Received: by 2002:a05:6512:3e19:b0:52e:93d1:57a6 with SMTP id
- 2adb3069b0e04-52eb998e483mr6103954e87.6.1720701278333; 
- Thu, 11 Jul 2024 05:34:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGt5dnrspIs4beSaN9giDzz5Dhq9xTuLYc24NNSTl+lKF/RRpQXbzbbcNFjHF8swmRuzya+Ww==
-X-Received: by 2002:a05:6512:3e19:b0:52e:93d1:57a6 with SMTP id
- 2adb3069b0e04-52eb998e483mr6103936e87.6.1720701277823; 
- Thu, 11 Jul 2024 05:34:37 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f741624sm113560185e9.41.2024.07.11.05.34.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 05:34:37 -0700 (PDT)
-Date: Thu, 11 Jul 2024 14:34:35 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v4 08/13] hw/i386/acpi: Use TYPE_PXB_BUS property
- acpi_uid for DSDT
-Message-ID: <20240711143435.1e5f33b0@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240702131428.664859-9-Jonathan.Cameron@huawei.com>
-References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
- <20240702131428.664859-9-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ s=mimecast20190719; t=1720701939;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=tuU1/WvZGOHr844fjHnIAKSVx+ds6+k4Jg+CRbXbYJQ=;
+ b=bP/woK+d89rVWFKCriOzMANQOFkSGBX+7WYfrg07x6YG/9t01b9aOFOo1gxgEO2CCP8FB5
+ BWkXC9d9YsOAS1x9XPq7D2GDV4fN97mIx4v5kPv3JMbdV0SsVWJ+yA2kgbO9ycLkAw5F0/
+ apwM1u7B2VJqVZpoiUhGGJvhZH5sOqM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-M5y1lsMKMfuzG4Rd3coERQ-1; Thu,
+ 11 Jul 2024 08:45:38 -0400
+X-MC-Unique: M5y1lsMKMfuzG4Rd3coERQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAB3F19560B0; Thu, 11 Jul 2024 12:45:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5C8F19560AE; Thu, 11 Jul 2024 12:45:33 +0000 (UTC)
+Date: Thu, 11 Jul 2024 13:45:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 0/8] Convert avocado tests to normal Python unittests
+Message-ID: <Zo_T6uc_8IRa7obL@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240711115546.40859-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,63 +84,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jul 2024 14:14:13 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> Rather than relying on PCI internals, use the new acpi_property
-> to obtain the ACPI _UID values.  These are still the same
-> as the PCI Bus numbers so no functional change.
+On Thu, Jul 11, 2024 at 01:55:38PM +0200, Thomas Huth wrote:
+> The Avocado v88 that we use in QEMU is already on a life support
+> system: It is not supported by upstream anymore, and with the latest
+> versions of Python, it won't work anymore since it depends on the
+> "imp" module that has been removed in Python 3.12.
 > 
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-> v4: New patch.
-> ---
->  hw/i386/acpi-build.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+> There have been several attempts to update the test suite in QEMU
+> to a newer version of Avocado, but so far no attempt has successfully
+> been merged yet.
 > 
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index ee92783836..cc32f1e6d4 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -1550,6 +1550,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->          QLIST_FOREACH(bus, &bus->child, sibling) {
->              uint8_t bus_num = pci_bus_num(bus);
->              uint8_t numa_node = pci_bus_numa_node(bus);
-> +            uint8_t uid;
->  
->              /* look only for expander root buses */
->              if (!pci_bus_is_root(bus)) {
-> @@ -1560,14 +1561,16 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->                  root_bus_limit = bus_num - 1;
->              }
->  
-> +            uid = object_property_get_uint(OBJECT(bus), "acpi_uid",
-> +                                           &error_fatal);
+> Additionally, the whole "make check" test suite in QEMU is using the
+> meson test runner nowadays, so running the python-based tests via the
+> Avocodo test runner looks and feels quite like an oddball, requiring
+> the users to deal with the knowledge of multiple test runners in
+> parallel.
 
-theoretically acpi_uid is 32bit, so if we are expecting 
-only 256 buses here, then having and assert to catch truncation
-would be good.
-alternatively if this UID can't ever be more than 8bit, I'd use
- visit_type_uint8() in previous patch to make sure too large value
-won't be silently ignored.
+The fewer / simpler the layers we have in the execution path
+of tests the better our life will be in debugging IMHO.
 
->              scope = aml_scope("\\_SB");
->  
->              if (pci_bus_is_cxl(bus)) {
-> -                dev = aml_device("CL%.02X", bus_num);
-> +                dev = aml_device("CL%.02X", uid);
->              } else {
-> -                dev = aml_device("PC%.02X", bus_num);
-> +                dev = aml_device("PC%.02X", uid);
->              }
-> -            aml_append(dev, aml_name_decl("_UID", aml_int(bus_num)));
-> +            aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
->              aml_append(dev, aml_name_decl("_BBN", aml_int(bus_num)));
->              if (pci_bus_is_cxl(bus)) {
->                  struct Aml *aml_pkg = aml_package(2);
+Having each individual test registered with meson has the
+particularly strong advantage that we can make use of meson's
+timeout feature to force individual tests to abort if they
+hang/run too slowly, as we did when converting the iotests
+to individual meson tests.
+
+> 
+> So instead of trying to update the python-based test suite in QEMU
+> to a newer version of Avocado, we should maybe try to better integrate
+> it with the meson test runner instead. Indeed most tests work quite
+> nicely without the Avocado framework already, as you can see with
+> this patch series - it does not convert all tests, just a subset since
+> it is just an RFC so far, but as you can see, many tests only need
+> small modifications to work without Avocado.
+> 
+> If you want to try it: Apply the patches, make sure that you have the
+> "pytest" program installed, then recompile and then run:
+> 
+>  make check-pytest
+> 
+> Things that need further attention though:
+> 
+> - All tests that use the LinuxTest / LinuxDistro classes (e.g. based
+>   on cloud-init images) really depend on the Avocado framework,
+>   thus we'd need a solution for those if we want to continue with
+>   this approach
+
+Right, avocado is providing 2 distinct things, the test execution
+harness and the test framework APIs.
+
+It could be valid to remove use of the harness but keep using
+the framework APIs, especially if that's sufficient to unblock
+updating to new avocado versions too ? Over the longer term
+we can consider whether the framework APIs should remain or
+be replaced by something else.
+
+> - Same for all tests that require the LinuxSSHMixIn class - we'd
+>   need to provide a solution for ssh-based tests, too.
+> 
+> - We lose the way of running tests via the avocado tags this way...
+>   single targets can still be tested by running "make check-pytest-arm"
+>   for example, but running selected tests by other tags does not
+>   work anymore.
+
+The meson "suites" concept is the logical equivalent of tags.
+You've wired up a suite for each architecture. We could define
+more suites if there are other useful criteria for filtering
+tests to be run. Perhaps machine type ? "make check-pytest-arm-<machine>"
+
+> - I haven't looked into logging yet ... this still needs some work
+>   so that you could e.g. inspect the console output of the guests
+>   somewhere
+
+Yep, debuggability is probably the single biggest problem we face
+with our tests. Simplifying the test execution harness will help
+in this respect, but yeah, we must have a way to capture logs
+of stuff executed.
+
+> - I did not work on documentation updates yet (will do that if we
+>   agree to continue with this patch series)
+> 
+> What's your thoughts? Is it worth to continue with this approach?
+> Or shall I rather forget about it and wait for the Avocado version
+> update?
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
