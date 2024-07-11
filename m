@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C94C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 08:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA1EC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 08:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRooh-00089Z-EQ; Thu, 11 Jul 2024 04:06:15 -0400
+	id 1sRoof-00081a-69; Thu, 11 Jul 2024 04:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sRooT-0007wN-Nt
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:06:02 -0400
+ id 1sRooV-0007xL-44
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:06:04 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sRooQ-0001uc-Rp
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:06:01 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sRooR-0001uR-0K
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:06:02 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx_vBkko9mxy4DAA--.9689S3;
- Thu, 11 Jul 2024 16:05:56 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx7+tjko9mwC4DAA--.9430S3;
+ Thu, 11 Jul 2024 16:05:55 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxNMVfko9mXttDAA--.13828S9; 
- Thu, 11 Jul 2024 16:05:56 +0800 (CST)
+ AQAAf8DxNMVfko9mXttDAA--.13828S6; 
+ Thu, 11 Jul 2024 16:05:55 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
-	Feiyang Chen <chris.chenfeiyang@gmail.com>
-Subject: [PULL 7/9] target/loongarch: Remove avail_64 in trans_srai_w() and
- simplify it
-Date: Thu, 11 Jul 2024 15:48:27 +0800
-Message-Id: <20240711074829.3338879-8-gaosong@loongson.cn>
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 4/9] hw/loongarch/virt: Remove unused assignment
+Date: Thu, 11 Jul 2024 15:48:24 +0800
+Message-Id: <20240711074829.3338879-5-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240711074829.3338879-1-gaosong@loongson.cn>
 References: <20240711074829.3338879-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxNMVfko9mXttDAA--.13828S9
+X-CM-TRANSID: AQAAf8DxNMVfko9mXttDAA--.13828S6
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,54 +65,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Feiyang Chen <chris.chenfeiyang@gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-Since srai.w is a valid instruction on la32, remove the avail_64 check
-and simplify trans_srai_w().
+There is abuse usage about local variable gap. Remove
+duplicated assignment and solve Coverity reported error.
 
-Fixes: c0c0461e3a06 ("target/loongarch: Add avail_64 to check la64-only instructions")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Feiyang Chen <chris.chenfeiyang@gmail.com>
-Message-Id: <20240628033357.50027-1-chris.chenfeiyang@gmail.com>
+Resolves: Coverity CID 1546441
+Fixes: 3cc451cbce ("hw/loongarch: Refine fwcfg memory map")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240612033637.167787-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/tcg/insn_trans/trans_shift.c.inc | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ hw/loongarch/virt.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-index 2f4bd6ff28..377307785a 100644
---- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-@@ -67,19 +67,9 @@ static void gen_rotr_d(TCGv dest, TCGv src1, TCGv src2)
-     tcg_gen_rotr_tl(dest, src1, t0);
- }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 8be2d2ff6a..e592b1b6b7 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -1054,7 +1054,6 @@ static void fw_cfg_add_memory(MachineState *ms)
+         memmap_add_entry(base, gap, 1);
+         size -= gap;
+         base = VIRT_HIGHMEM_BASE;
+-        gap = ram_size - VIRT_LOWMEM_SIZE;
+     }
  
--static bool trans_srai_w(DisasContext *ctx, arg_srai_w *a)
-+static void gen_sari_w(TCGv dest, TCGv src1, target_long imm)
- {
--    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
--    TCGv src1 = gpr_src(ctx, a->rj, EXT_ZERO);
--
--    if (!avail_64(ctx)) {
--        return false;
--    }
--
--    tcg_gen_sextract_tl(dest, src1, a->imm, 32 - a->imm);
--    gen_set_gpr(a->rd, dest, EXT_NONE);
--
--    return true;
-+    tcg_gen_sextract_tl(dest, src1, imm, 32 - imm);
- }
+     if (size) {
+@@ -1067,17 +1066,17 @@ static void fw_cfg_add_memory(MachineState *ms)
+     }
  
- TRANS(sll_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_sll_w)
-@@ -94,6 +84,7 @@ TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
- TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
- TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, tcg_gen_shri_tl)
- TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
-+TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
- TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
- TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
- TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
+     /* add fw_cfg memory map of other nodes */
+-    size = ram_size - numa_info[0].node_mem;
+-    gap  = VIRT_LOWMEM_BASE + VIRT_LOWMEM_SIZE;
+-    if (base < gap && (base + size) > gap) {
++    if (numa_info[0].node_mem < gap && ram_size > gap) {
+         /*
+          * memory map for the maining nodes splited into two part
+-         *   lowram:  [base, +(gap - base))
+-         *   highram: [VIRT_HIGHMEM_BASE, +(size - (gap - base)))
++         * lowram:  [base, +(gap - numa_info[0].node_mem))
++         * highram: [VIRT_HIGHMEM_BASE, +(ram_size - gap))
+          */
+-        memmap_add_entry(base, gap - base, 1);
+-        size -= gap - base;
++        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
++        size = ram_size - gap;
+         base = VIRT_HIGHMEM_BASE;
++    } else {
++        size = ram_size - numa_info[0].node_mem;
+     }
+ 
+    if (size)
 -- 
 2.34.1
 
