@@ -4,51 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E59C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB3BC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRvsn-0003JQ-4o; Thu, 11 Jul 2024 11:38:57 -0400
+	id 1sRvtA-0003du-DU; Thu, 11 Jul 2024 11:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRvsl-0003I1-CD; Thu, 11 Jul 2024 11:38:55 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sRvt7-0003c9-Ri
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:39:18 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRvsZ-0004wQ-S5; Thu, 11 Jul 2024 11:38:55 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKf5T6GHJz4wc4;
- Fri, 12 Jul 2024 01:38:37 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKf5R684Hz4wbr;
- Fri, 12 Jul 2024 01:38:35 +1000 (AEST)
-Message-ID: <d82f7fe4-2bfb-454e-9bc6-6a1e30636e88@kaod.org>
-Date: Thu, 11 Jul 2024 17:38:31 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sRvsz-0004yp-D9
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:39:17 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WKf3M3f8Dz67y8R;
+ Thu, 11 Jul 2024 23:36:47 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0D2C91400D3;
+ Thu, 11 Jul 2024 23:38:53 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 11 Jul
+ 2024 16:38:52 +0100
+Date: Thu, 11 Jul 2024 16:38:51 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v4 06/13] acpi/pci: Move Generic Initiator object
+ handling into acpi/pci.*
+Message-ID: <20240711163851.00002f93@Huawei.com>
+In-Reply-To: <20240711141240.0ec77fd2@imammedo.users.ipa.redhat.com>
+References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
+ <20240702131428.664859-7-Jonathan.Cameron@huawei.com>
+ <20240711141240.0ec77fd2@imammedo.users.ipa.redhat.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/ppc: Fix msgsnd for POWER8
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20240711141851.406677-1-npiggin@gmail.com>
- <20240711141851.406677-2-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240711141851.406677-2-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,136 +73,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 16:18, Nicholas Piggin wrote:
-> POWER8 (ISA v2.07S) introduced the doorbell facility, the msgsnd
-> instruction behaved mostly like msgsndp, it was addressed by TIR
-> and could only send interrupts between threads on the core.
+
+> > diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+> > index 20b70dcd81..174b490e5f 100644
+> > --- a/hw/acpi/pci.c
+> > +++ b/hw/acpi/pci.c
+> > @@ -24,8 +24,12 @@
+> >   */
+> >  
+> >  #include "qemu/osdep.h"
+> > +#include "qemu/error-report.h"  
 > 
-> ISA v3.0 changed msgsnd to be addressed by PIR and can interrupt
-> any thread in the system.
+> > +#include "qapi/error.h"  
+> is this necessary? 
+> it seems to be compiling just fine without it.
+The error_fatal extern is in there.
+
+I guess there is a non obvious path via which that's getting included
+anyway. is in there and it's not obvious how it is included I'd rather
+keep it as an explicit include to reduce fragility if the chain of
+includes involved gets changed.
+
+
 > 
-> msgsnd only implements the v3.0 semantics, which can make
-> multi-threaded POWER8 hang when booting Linux (due to IPIs
-> failing). This change adds v2.07 semantics.
-
-S-o-b is missing.
-
-Thanks,
-
-C.
-
-
-
-> ---
->   target/ppc/excp_helper.c | 74 ++++++++++++++++++++++++----------------
->   1 file changed, 44 insertions(+), 30 deletions(-)
-> 
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 0cd542675f..c0120c8a88 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -2998,6 +2998,41 @@ static inline bool dbell_bcast_subproc(target_ulong rb)
->       return (rb & DBELL_BRDCAST_MASK) == DBELL_BRDCAST_SUBPROC;
->   }
->   
-> +/*
-> + * Send an interrupt to a thread in the same core as env).
-> + */
-> +static void msgsnd_core_tir(CPUPPCState *env, uint32_t target_tir, int irq)
-> +{
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    CPUState *cs = env_cpu(env);
-> +    uint32_t nr_threads = cs->nr_threads;
-> +
-> +    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-> +        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
-> +    }
-> +
-> +    if (target_tir >= nr_threads) {
-> +        return;
-> +    }
-> +
-> +    if (nr_threads == 1) {
-> +        ppc_set_irq(cpu, irq, 1);
-> +    } else {
-> +        CPUState *ccs;
-> +
-> +        /* Does iothread need to be locked for walking CPU list? */
-> +        bql_lock();
-> +        THREAD_SIBLING_FOREACH(cs, ccs) {
-> +            PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-> +            if (target_tir == ppc_cpu_tir(ccpu)) {
-> +                ppc_set_irq(ccpu, irq, 1);
-> +                break;
-> +            }
-> +        }
-> +        bql_unlock();
-> +    }
-> +}
-> +
->   void helper_book3s_msgclr(CPUPPCState *env, target_ulong rb)
->   {
->       if (!dbell_type_server(rb)) {
-> @@ -3018,6 +3053,13 @@ void helper_book3s_msgsnd(CPUPPCState *env, target_ulong rb)
->           return;
->       }
->   
-> +    /* POWER8 msgsnd is like msgsndp (targets a thread within core) */
-> +    if (!(env->insns_flags2 & PPC2_ISA300)) {
-> +        msgsnd_core_tir(env, rb & PPC_BITMASK(57, 63), PPC_INTERRUPT_HDOORBELL);
-> +        return;
-> +    }
-> +
-> +    /* POWER9 and later msgsnd is a global (targets any thread) */
->       cpu = ppc_get_vcpu_by_pir(pir);
->       if (!cpu) {
->           return;
-> @@ -3064,41 +3106,13 @@ void helper_book3s_msgclrp(CPUPPCState *env, target_ulong rb)
->    */
->   void helper_book3s_msgsndp(CPUPPCState *env, target_ulong rb)
->   {
-> -    CPUState *cs = env_cpu(env);
-> -    PowerPCCPU *cpu = env_archcpu(env);
-> -    CPUState *ccs;
-> -    uint32_t nr_threads = cs->nr_threads;
-> -    int ttir = rb & PPC_BITMASK(57, 63);
-> -
->       helper_hfscr_facility_check(env, HFSCR_MSGP, "msgsndp", HFSCR_IC_MSGP);
->   
-> -    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-> -        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
-> -    }
-> -
-> -    if (!dbell_type_server(rb) || ttir >= nr_threads) {
-> -        return;
-> -    }
-> -
-> -    if (nr_threads == 1) {
-> -        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, 1);
-> +    if (!dbell_type_server(rb)) {
->           return;
->       }
->   
-> -    /* Does iothread need to be locked for walking CPU list? */
-> -    bql_lock();
-> -    THREAD_SIBLING_FOREACH(cs, ccs) {
-> -        PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-> -        uint32_t thread_id = ppc_cpu_tir(ccpu);
-> -
-> -        if (ttir == thread_id) {
-> -            ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, 1);
-> -            bql_unlock();
-> -            return;
-> -        }
-> -    }
-> -
-> -    g_assert_not_reached();
-> +    msgsnd_core_tir(env, rb & PPC_BITMASK(57, 63), PPC_INTERRUPT_DOORBELL);
->   }
->   #endif /* TARGET_PPC64 */
->   
-
+> > +#include "hw/boards.h"
+> >  #include "hw/acpi/aml-build.h"
+> >  #include "hw/acpi/pci.h"
+> > +#include "hw/pci/pci_device.h"
+> >  #include "hw/pci/pcie_host.h"
+> >  
 
