@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F4DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F5BDC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRscF-0001gv-7k; Thu, 11 Jul 2024 08:09:39 -0400
+	id 1sRscB-0001ST-Gu; Thu, 11 Jul 2024 08:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sRsc9-0001Ol-7O; Thu, 11 Jul 2024 08:09:33 -0400
+ id 1sRsc9-0001Oi-40; Thu, 11 Jul 2024 08:09:33 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sRsbz-0002s0-91; Thu, 11 Jul 2024 08:09:32 -0400
+ id 1sRsbz-0002sP-AD; Thu, 11 Jul 2024 08:09:32 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0DCD747347;
- Thu, 11 Jul 2024 14:09:20 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id C4DD3409F2;
+ Thu, 11 Jul 2024 14:09:19 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
  hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
  jsnow@redhat.com
-Subject: [PATCH v3 1/2] copy-before-write: allow specifying minimum cluster
- size
-Date: Thu, 11 Jul 2024 14:09:14 +0200
-Message-Id: <20240711120915.310243-2-f.ebner@proxmox.com>
+Subject: [PATCH v3 2/2] backup: add minimum cluster size to performance options
+Date: Thu, 11 Jul 2024 14:09:15 +0200
+Message-Id: <20240711120915.310243-3-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240711120915.310243-1-f.ebner@proxmox.com>
 References: <20240711120915.310243-1-f.ebner@proxmox.com>
@@ -67,176 +66,111 @@ To make @discard-source work in such a scenario, allow specifying the
 minimum cluster size used for block-copy operations and thus in
 particular also the granularity for discard requests to the source.
 
-The type 'size' (corresponding to uint64_t in C) is used in QAPI to
-rule out negative inputs and for consistency with already existing
-@cluster-size parameters. Since block_copy_calculate_cluster_size()
-uses int64_t for its result, a check that the input is not too large
-is added in block_copy_state_new() before calling it. The calculation
-in block_copy_calculate_cluster_size() is done in the target int64_t
-type.
-
 Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Acked-by: Markus Armbruster <armbru@redhat.com> (QAPI schema)
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
 
 Changes in v3:
-* Pass min_cluster_size option directly without checking
-  has_min_cluster_size, because the default is 0 anyways.
-* Calculate maximum of passed-in argument and default once at the
-  beginning of block_copy_calculate_cluster_size()
-* Update warning message to reflect actual value used
 * Use PRI{i,u}64 macros
+* Do not leak qdict in error case
 
- block/block-copy.c         | 36 ++++++++++++++++++++++++++----------
- block/copy-before-write.c  |  5 ++++-
- include/block/block-copy.h |  1 +
- qapi/block-core.json       |  8 +++++++-
- 4 files changed, 38 insertions(+), 12 deletions(-)
+ block/backup.c            | 2 +-
+ block/copy-before-write.c | 9 +++++++++
+ block/copy-before-write.h | 1 +
+ blockdev.c                | 3 +++
+ qapi/block-core.json      | 9 +++++++--
+ 5 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/block/block-copy.c b/block/block-copy.c
-index 7e3b378528..59bee538eb 100644
---- a/block/block-copy.c
-+++ b/block/block-copy.c
-@@ -310,6 +310,7 @@ void block_copy_set_copy_opts(BlockCopyState *s, bool use_copy_range,
- }
- 
- static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
-+                                                 int64_t min_cluster_size,
-                                                  Error **errp)
- {
-     int ret;
-@@ -319,6 +320,9 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
-     GLOBAL_STATE_CODE();
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
-+    min_cluster_size = MAX(min_cluster_size,
-+                           (int64_t)BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
-+
-     target_does_cow = bdrv_backing_chain_next(target);
- 
-     /*
-@@ -329,13 +333,13 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
-     ret = bdrv_get_info(target, &bdi);
-     if (ret == -ENOTSUP && !target_does_cow) {
-         /* Cluster size is not defined */
--        warn_report("The target block device doesn't provide "
--                    "information about the block size and it doesn't have a "
--                    "backing file. The default block size of %u bytes is "
--                    "used. If the actual block size of the target exceeds "
--                    "this default, the backup may be unusable",
--                    BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
--        return BLOCK_COPY_CLUSTER_SIZE_DEFAULT;
-+        warn_report("The target block device doesn't provide information about "
-+                    "the block size and it doesn't have a backing file. The "
-+                    "(default) block size of %" PRIi64 " bytes is used. If the "
-+                    "actual block size of the target exceeds this value, the "
-+                    "backup may be unusable",
-+                    min_cluster_size);
-+        return min_cluster_size;
-     } else if (ret < 0 && !target_does_cow) {
-         error_setg_errno(errp, -ret,
-             "Couldn't determine the cluster size of the target image, "
-@@ -345,16 +349,17 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
-         return ret;
-     } else if (ret < 0 && target_does_cow) {
-         /* Not fatal; just trudge on ahead. */
--        return BLOCK_COPY_CLUSTER_SIZE_DEFAULT;
-+        return min_cluster_size;
+diff --git a/block/backup.c b/block/backup.c
+index 3dd2e229d2..a1292c01ec 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -458,7 +458,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
      }
  
--    return MAX(BLOCK_COPY_CLUSTER_SIZE_DEFAULT, bdi.cluster_size);
-+    return MAX(min_cluster_size, bdi.cluster_size);
- }
- 
- BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
-                                      BlockDriverState *copy_bitmap_bs,
-                                      const BdrvDirtyBitmap *bitmap,
-                                      bool discard_source,
-+                                     uint64_t min_cluster_size,
-                                      Error **errp)
+     cbw = bdrv_cbw_append(bs, target, filter_node_name, discard_source,
+-                          &bcs, errp);
++                          perf->min_cluster_size, &bcs, errp);
+     if (!cbw) {
+         goto error;
+     }
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index a919b1f41b..e835987e52 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -548,6 +548,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+                                   BlockDriverState *target,
+                                   const char *filter_node_name,
+                                   bool discard_source,
++                                  uint64_t min_cluster_size,
+                                   BlockCopyState **bcs,
+                                   Error **errp)
  {
-     ERRP_GUARD();
-@@ -365,7 +370,18 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
+@@ -567,6 +568,14 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+     qdict_put_str(opts, "file", bdrv_get_node_name(source));
+     qdict_put_str(opts, "target", bdrv_get_node_name(target));
  
-     GLOBAL_STATE_CODE();
- 
--    cluster_size = block_copy_calculate_cluster_size(target->bs, errp);
 +    if (min_cluster_size > INT64_MAX) {
 +        error_setg(errp, "min-cluster-size too large: %" PRIu64 " > %" PRIi64,
 +                   min_cluster_size, INT64_MAX);
-+        return NULL;
-+    } else if (min_cluster_size && !is_power_of_2(min_cluster_size)) {
-+        error_setg(errp, "min-cluster-size needs to be a power of 2");
++        qobject_unref(opts);
 +        return NULL;
 +    }
++    qdict_put_int(opts, "min-cluster-size", (int64_t)min_cluster_size);
 +
-+    cluster_size = block_copy_calculate_cluster_size(target->bs,
-+                                                     (int64_t)min_cluster_size,
-+                                                     errp);
-     if (cluster_size < 0) {
+     top = bdrv_insert_node(source, opts, flags, errp);
+     if (!top) {
          return NULL;
+diff --git a/block/copy-before-write.h b/block/copy-before-write.h
+index 01af0cd3c4..2a5d4ba693 100644
+--- a/block/copy-before-write.h
++++ b/block/copy-before-write.h
+@@ -40,6 +40,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+                                   BlockDriverState *target,
+                                   const char *filter_node_name,
+                                   bool discard_source,
++                                  uint64_t min_cluster_size,
+                                   BlockCopyState **bcs,
+                                   Error **errp);
+ void bdrv_cbw_drop(BlockDriverState *bs);
+diff --git a/blockdev.c b/blockdev.c
+index 835064ed03..6740663fda 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -2655,6 +2655,9 @@ static BlockJob *do_backup_common(BackupCommon *backup,
+         if (backup->x_perf->has_max_chunk) {
+             perf.max_chunk = backup->x_perf->max_chunk;
+         }
++        if (backup->x_perf->has_min_cluster_size) {
++            perf.min_cluster_size = backup->x_perf->min_cluster_size;
++        }
      }
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 853e01a1eb..a919b1f41b 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -417,6 +417,7 @@ static BlockdevOptions *cbw_parse_options(QDict *options, Error **errp)
-     qdict_extract_subqdict(options, NULL, "bitmap");
-     qdict_del(options, "on-cbw-error");
-     qdict_del(options, "cbw-timeout");
-+    qdict_del(options, "min-cluster-size");
  
- out:
-     visit_free(v);
-@@ -476,8 +477,10 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
-              bs->file->bs->supported_zero_flags);
- 
-     s->discard_source = flags & BDRV_O_CBW_DISCARD_SOURCE;
-+
-     s->bcs = block_copy_state_new(bs->file, s->target, bs, bitmap,
--                                  flags & BDRV_O_CBW_DISCARD_SOURCE, errp);
-+                                  flags & BDRV_O_CBW_DISCARD_SOURCE,
-+                                  opts->min_cluster_size, errp);
-     if (!s->bcs) {
-         error_prepend(errp, "Cannot create block-copy-state: ");
-         return -EINVAL;
-diff --git a/include/block/block-copy.h b/include/block/block-copy.h
-index bdc703bacd..dd5cc82f3b 100644
---- a/include/block/block-copy.h
-+++ b/include/block/block-copy.h
-@@ -28,6 +28,7 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
-                                      BlockDriverState *copy_bitmap_bs,
-                                      const BdrvDirtyBitmap *bitmap,
-                                      bool discard_source,
-+                                     uint64_t min_cluster_size,
-                                      Error **errp);
- 
- /* Function should be called prior any actual copy request */
+     if ((backup->sync == MIRROR_SYNC_MODE_BITMAP) ||
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 096bdbe0aa..80e32db8aa 100644
+index 80e32db8aa..9a54bfb15f 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -4638,12 +4638,18 @@
- #     @on-cbw-error parameter will decide how this failure is handled.
- #     Default 0.  (Since 7.1)
+@@ -1551,11 +1551,16 @@
+ #     it should not be less than job cluster size which is calculated
+ #     as maximum of target image cluster size and 64k.  Default 0.
  #
 +# @min-cluster-size: Minimum size of blocks used by copy-before-write
-+#     operations.  Has to be a power of 2.  No effect if smaller than
-+#     the maximum of the target's cluster size and 64 KiB.  Default 0.
-+#     (Since 9.1)
++#     and background copy operations.  Has to be a power of 2.  No
++#     effect if smaller than the maximum of the target's cluster size
++#     and 64 KiB.  Default 0.  (Since 9.1)
 +#
- # Since: 6.2
+ # Since: 6.0
  ##
- { 'struct': 'BlockdevOptionsCbw',
-   'base': 'BlockdevOptionsGenericFormat',
-   'data': { 'target': 'BlockdevRef', '*bitmap': 'BlockDirtyBitmap',
--            '*on-cbw-error': 'OnCbwError', '*cbw-timeout': 'uint32' } }
-+            '*on-cbw-error': 'OnCbwError', '*cbw-timeout': 'uint32',
-+            '*min-cluster-size': 'size' } }
+ { 'struct': 'BackupPerf',
+-  'data': { '*use-copy-range': 'bool',
+-            '*max-workers': 'int', '*max-chunk': 'int64' } }
++  'data': { '*use-copy-range': 'bool', '*max-workers': 'int',
++            '*max-chunk': 'int64', '*min-cluster-size': 'size' } }
  
  ##
- # @BlockdevOptions:
+ # @BackupCommon:
 -- 
 2.39.2
 
