@@ -4,87 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CE2C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E59C3DA49
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRvse-00038S-I9; Thu, 11 Jul 2024 11:38:48 -0400
+	id 1sRvsn-0003JQ-4o; Thu, 11 Jul 2024 11:38:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvsc-00037x-Qc
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:38:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
+ id 1sRvsl-0003I1-CD; Thu, 11 Jul 2024 11:38:55 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvsa-0004x7-U6
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:38:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720712323;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qoGaGfB2xUiHkUePcLBSQuhXjT1w3kY94K41qa+eHv0=;
- b=BJ0H05mqUuP5+hAeSGoLwjl4dtb9hVq4Oe7IwtREH9K6Ypnn/I3UMQCperBAiwk0j0dRwq
- xitoeuerM/RYsxwZACW8hkEkuj+Wifb3zhWMOJapF/Kt5N57mqpWC30M4/PTtCOb+2HFPe
- 3601rZnaIS88qMcoEI/8LONQd3O9tbk=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-307-opbbuesTM26ncmUF6EzoQQ-1; Thu, 11 Jul 2024 11:38:41 -0400
-X-MC-Unique: opbbuesTM26ncmUF6EzoQQ-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-44a731cb5baso2542481cf.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 08:38:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720712321; x=1721317121;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qoGaGfB2xUiHkUePcLBSQuhXjT1w3kY94K41qa+eHv0=;
- b=mwn0Nb7+MaVX846LgrE1M4nsOE5EyKvCVCtw4ytqBFyORrKnlvvTFZ+C8uQ0xH1FR+
- Bui5MV/fJJCRHhILM9PGoaddX6v8tsICg5IIzxQ/3PA3t/MX5AT5yxNb0Ub0VrHkZemx
- SsW2cev9Hpp2G4HNN4hc2Jo4ow8hlu7NFcgyzffBhjXViWqP2WmRwxAF6V2Tj4wfbiBz
- Dc7AAFCf/r4O3lR8sFZN9jo8i3VOaxJP9FOYteCdnOl14J+8A8hQYW9e7GQONd01VEO0
- B7naG6+bY735K63SE5bCdc+oK/tbpHEyeMu0fS91meQhJ1Hea+YzJKosQxJz/vSg8OWn
- 9L1w==
-X-Gm-Message-State: AOJu0Yz+TNCkjn9kuA40tuH35se33qvT9uVgbdcpTTRkMOeJYniypDH9
- X5ctQ8kpvqzpHVvxH9GBgNFWOYpQv1RTWpbxFX5iYdkMhIuT4sbdqh3kl7uDQg4DbAd+e+1Gd8J
- fSxe1qVXpy3NwnyXJ5bokoNIMB7mI7uMeIdAgqfpol7MO4QCWvxH8
-X-Received: by 2002:a0c:edd0:0:b0:6b5:600:acc8 with SMTP id
- 6a1803df08f44-6b74b1610c6mr29617216d6.1.1720712321173; 
- Thu, 11 Jul 2024 08:38:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuNXXs0VcfB3vRKVHv5xitnvMijsqQCPEy30yBAxlQLnoVEz9ewP3C+samVeNnC2F+49AyEg==
-X-Received: by 2002:a0c:edd0:0:b0:6b5:600:acc8 with SMTP id
- 6a1803df08f44-6b74b1610c6mr29617056d6.1.1720712320868; 
- Thu, 11 Jul 2024 08:38:40 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b61ba74bdcsm26565426d6.97.2024.07.11.08.38.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 08:38:40 -0700 (PDT)
-Date: Thu, 11 Jul 2024 11:38:38 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Jason Wang <jasowang@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, mcoqueli@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
-Message-ID: <Zo_8fpKH8oBA8WV1@x1n>
-References: <20240711131424.181615-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
+ id 1sRvsZ-0004wQ-S5; Thu, 11 Jul 2024 11:38:55 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKf5T6GHJz4wc4;
+ Fri, 12 Jul 2024 01:38:37 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKf5R684Hz4wbr;
+ Fri, 12 Jul 2024 01:38:35 +1000 (AEST)
+Message-ID: <d82f7fe4-2bfb-454e-9bc6-6a1e30636e88@kaod.org>
+Date: Thu, 11 Jul 2024 17:38:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240711131424.181615-1-ppandit@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/18] target/ppc: Fix msgsnd for POWER8
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+References: <20240711141851.406677-1-npiggin@gmail.com>
+ <20240711141851.406677-2-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240711141851.406677-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,91 +65,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 06:44:22PM +0530, Prasad Pandit wrote:
-> From: Prasad Pandit <pjp@fedoraproject.org>
+On 7/11/24 16:18, Nicholas Piggin wrote:
+> POWER8 (ISA v2.07S) introduced the doorbell facility, the msgsnd
+> instruction behaved mostly like msgsndp, it was addressed by TIR
+> and could only send interrupts between threads on the core.
 > 
-> Hello,
+> ISA v3.0 changed msgsnd to be addressed by PIR and can interrupt
+> any thread in the system.
 > 
-> * virsh(1) offers multiple options to initiate Postcopy migration:
-> 
->     1) virsh migrate --postcopy --postcopy-after-precopy
->     2) virsh migrate --postcopy + virsh migrate-postcopy
->     3) virsh migrate --postcopy --timeout <N> --timeout-postcopy
-> 
-> When Postcopy migration is invoked via method (2) or (3) above,
-> the guest on the destination host seems to hang or get stuck sometimes.
-> 
-> * During Postcopy migration, multiple threads are spawned on the destination
-> host to start the guest and setup devices. One such thread starts vhost
-> device via vhost_dev_start() function and another called fault_thread handles
+> msgsnd only implements the v3.0 semantics, which can make
+> multi-threaded POWER8 hang when booting Linux (due to IPIs
+> failing). This change adds v2.07 semantics.
 
-Hmm, I thought it was one of the vcpu threads that invoked
-vhost_dev_start(), rather than any migration thread?
-
-> page faults in user space using kernel's userfaultfd(2) system.
-> 
-> When fault_thread exits upon completion of Postcopy migration, it sends a
-> 'postcopy_end' message to the vhost-user device. But sometimes 'postcopy_end'
-> message is sent while vhost device is being setup via vhost_dev_start().
-> 
->      Thread-1                                  Thread-2
-> 
-> vhost_dev_start                        postcopy_ram_incoming_cleanup
->  vhost_device_iotlb_miss                postcopy_notify
->   vhost_backend_update_device_iotlb      vhost_user_postcopy_notifier
->    vhost_user_send_device_iotlb_msg       vhost_user_postcopy_end
->     process_message_reply                  process_message_reply
->      vhost_user_read                        vhost_user_read
->       vhost_user_read_header                 vhost_user_read_header
->        "Fail to update device iotlb"          "Failed to receive reply to postcopy_end"
-> 
-> This creates confusion when vhost device receives 'postcopy_end' message while
-> it is still trying to update IOTLB entries.
-> 
-> This seems to leave the guest in a stranded/hung state because fault_thread
-> has exited saying Postcopy migration has ended, but vhost-device is probably
-> still expecting updates. QEMU logs following errors on the destination host
-> ===
-> ...
-> qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-> qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-> qemu-kvm: vhost_user_postcopy_end: 700871,700900: Failed to receive reply to postcopy_end
-> qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-> qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-> qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x8 instead of 0x5.
-> qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-> qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x16 instead of 0x5.
-> qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-> qemu-kvm: vhost_user_read_header: 700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-> qemu-kvm: vhost_device_iotlb_miss: 700871,700871: Fail to update device iotlb
-> ===
-> 
-> * Couple of patches here help to fix/handle these errors.
-
-I remember after you added the rwlock, there's still a hang issue.
-
-Did you investigated that?  Or do you mean this series will fix all the
-problems?
+S-o-b is missing.
 
 Thanks,
 
-> 
-> Thank you.
-> ---
-> Prasad Pandit (2):
->   vhost-user: add a write-read lock
->   vhost: fail device start if iotlb update fails
-> 
->  hw/virtio/vhost-user.c         | 423 +++++++++++++++++++--------------
->  hw/virtio/vhost.c              |   6 +-
->  include/hw/virtio/vhost-user.h |   3 +
->  3 files changed, 259 insertions(+), 173 deletions(-)
-> 
-> --
-> 2.45.2
-> 
+C.
 
--- 
-Peter Xu
+
+
+> ---
+>   target/ppc/excp_helper.c | 74 ++++++++++++++++++++++++----------------
+>   1 file changed, 44 insertions(+), 30 deletions(-)
+> 
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 0cd542675f..c0120c8a88 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -2998,6 +2998,41 @@ static inline bool dbell_bcast_subproc(target_ulong rb)
+>       return (rb & DBELL_BRDCAST_MASK) == DBELL_BRDCAST_SUBPROC;
+>   }
+>   
+> +/*
+> + * Send an interrupt to a thread in the same core as env).
+> + */
+> +static void msgsnd_core_tir(CPUPPCState *env, uint32_t target_tir, int irq)
+> +{
+> +    PowerPCCPU *cpu = env_archcpu(env);
+> +    CPUState *cs = env_cpu(env);
+> +    uint32_t nr_threads = cs->nr_threads;
+> +
+> +    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
+> +        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
+> +    }
+> +
+> +    if (target_tir >= nr_threads) {
+> +        return;
+> +    }
+> +
+> +    if (nr_threads == 1) {
+> +        ppc_set_irq(cpu, irq, 1);
+> +    } else {
+> +        CPUState *ccs;
+> +
+> +        /* Does iothread need to be locked for walking CPU list? */
+> +        bql_lock();
+> +        THREAD_SIBLING_FOREACH(cs, ccs) {
+> +            PowerPCCPU *ccpu = POWERPC_CPU(ccs);
+> +            if (target_tir == ppc_cpu_tir(ccpu)) {
+> +                ppc_set_irq(ccpu, irq, 1);
+> +                break;
+> +            }
+> +        }
+> +        bql_unlock();
+> +    }
+> +}
+> +
+>   void helper_book3s_msgclr(CPUPPCState *env, target_ulong rb)
+>   {
+>       if (!dbell_type_server(rb)) {
+> @@ -3018,6 +3053,13 @@ void helper_book3s_msgsnd(CPUPPCState *env, target_ulong rb)
+>           return;
+>       }
+>   
+> +    /* POWER8 msgsnd is like msgsndp (targets a thread within core) */
+> +    if (!(env->insns_flags2 & PPC2_ISA300)) {
+> +        msgsnd_core_tir(env, rb & PPC_BITMASK(57, 63), PPC_INTERRUPT_HDOORBELL);
+> +        return;
+> +    }
+> +
+> +    /* POWER9 and later msgsnd is a global (targets any thread) */
+>       cpu = ppc_get_vcpu_by_pir(pir);
+>       if (!cpu) {
+>           return;
+> @@ -3064,41 +3106,13 @@ void helper_book3s_msgclrp(CPUPPCState *env, target_ulong rb)
+>    */
+>   void helper_book3s_msgsndp(CPUPPCState *env, target_ulong rb)
+>   {
+> -    CPUState *cs = env_cpu(env);
+> -    PowerPCCPU *cpu = env_archcpu(env);
+> -    CPUState *ccs;
+> -    uint32_t nr_threads = cs->nr_threads;
+> -    int ttir = rb & PPC_BITMASK(57, 63);
+> -
+>       helper_hfscr_facility_check(env, HFSCR_MSGP, "msgsndp", HFSCR_IC_MSGP);
+>   
+> -    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
+> -        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
+> -    }
+> -
+> -    if (!dbell_type_server(rb) || ttir >= nr_threads) {
+> -        return;
+> -    }
+> -
+> -    if (nr_threads == 1) {
+> -        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, 1);
+> +    if (!dbell_type_server(rb)) {
+>           return;
+>       }
+>   
+> -    /* Does iothread need to be locked for walking CPU list? */
+> -    bql_lock();
+> -    THREAD_SIBLING_FOREACH(cs, ccs) {
+> -        PowerPCCPU *ccpu = POWERPC_CPU(ccs);
+> -        uint32_t thread_id = ppc_cpu_tir(ccpu);
+> -
+> -        if (ttir == thread_id) {
+> -            ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, 1);
+> -            bql_unlock();
+> -            return;
+> -        }
+> -    }
+> -
+> -    g_assert_not_reached();
+> +    msgsnd_core_tir(env, rb & PPC_BITMASK(57, 63), PPC_INTERRUPT_DOORBELL);
+>   }
+>   #endif /* TARGET_PPC64 */
+>   
 
 
