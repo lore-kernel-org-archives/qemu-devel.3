@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7169FC3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 14:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74E6C3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 14:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRueA-00055u-4K; Thu, 11 Jul 2024 10:19:46 -0400
+	id 1sRudr-0003cE-BE; Thu, 11 Jul 2024 10:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sRue7-0004u5-Ip; Thu, 11 Jul 2024 10:19:43 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sRudo-0003Tl-VJ; Thu, 11 Jul 2024 10:19:24 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sRue5-0005Vn-QC; Thu, 11 Jul 2024 10:19:43 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-70b3c0a00f2so745397b3a.3; 
- Thu, 11 Jul 2024 07:19:41 -0700 (PDT)
+ id 1sRudm-0005Tt-Vh; Thu, 11 Jul 2024 10:19:24 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70b03ffbb3aso825297b3a.0; 
+ Thu, 11 Jul 2024 07:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720707580; x=1721312380; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720707561; x=1721312361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9IkyAC50oiavRu7uVzyi3eVaZuodeWTVQ2rjbZSzKT0=;
- b=YbzcKQvlaggZsRo5tRYCCeXpIPysPRHN4nB5ctiSOCW4fIoJRdjngmrATpcDwcsiHm
- IIki1GBSY/1476uzZJ7yHdKvCJbcg+wiPnoL7hBuY/7PNReGAm6LQFMXTyJosNvGw4Db
- hfeuDLzT8JyZ0CmM3IOYyfYo1a4KH9/8suKG/BZFub5Wc3aQusqjY6hh+JdlCg3xfX6a
- WaRYU3brMCRMMn7F83U3o038mQg9Nb7hw6x4gDBGe330UbmdJv/NwcROdRhhnqvsNTU4
- VkMyI00lpZ1OrLwBU5ilH9qnAsv84ivG3qzfjr4bVjALMgLdVe9yrmnh7VMxIiFiaAUc
- 2Rrw==
+ bh=Wf9tMV0G6CWSuDk9c0gqJneDtjrYGfaaQZm9hCAo2Ow=;
+ b=N6BbNuOaaJMBN/tBSKJhArwPw5959Q9vf/W117sCss1D4ORSUHRapFrehBa1DF5m13
+ LpPcMDcCPYllyQ9lQcmWcD1b+lH1i5W1YYrIjn73fqkLbua4vWBG8iX6oG3VqEXbzucG
+ mZRN3aYmI9hSFMuUNJlBoW85KkkcG2HRN7WZhv2VbAi80QYePv+ozwEN0PFy467MNp9W
+ e5VCnHi7Xr3lyMvQQSH8PNdpaLQFcXrYNY2ryr46Rp763QfhKRpUikCcYrAy6KPDhLae
+ Dr6TLJKG+OdJ2PEGuD7sJgQ+qRFOP+NMQWrFHkcpxl8WwCr4J1jKVcirdcLeUCDlJS33
+ GxLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720707580; x=1721312380;
+ d=1e100.net; s=20230601; t=1720707561; x=1721312361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9IkyAC50oiavRu7uVzyi3eVaZuodeWTVQ2rjbZSzKT0=;
- b=dEyMw0BVPtgN4k/FAc36E9E0VSk/j/IbwIY44ThUcuwJXzvS+ujokhQV/zfxG4z8aw
- Ew7aEnw42m2385fuuoedXCQQ+E1YJExqyciBT2Pcogx86fpHBsVX0Pi+VoQcz3Psra1W
- Dn0SdFQ7jsHZb5FWxF2vNwyAdn3s6swyjJD8L/S3R+IloZHmRyisOCdzYu7nuZpNPvcm
- qwgI1OR3Eku/25Wpl36y3dnNet00p5LtWW47dbwJvLV8UVHt7H2ShZpmA6IaqUovyv31
- /ajDrzhzSzZf84ElCUu6H632J5ofKqPjBU1MzYk64A6qb81t683Y4ghw/nhxwClUATN6
- P6Ig==
+ bh=Wf9tMV0G6CWSuDk9c0gqJneDtjrYGfaaQZm9hCAo2Ow=;
+ b=ExVDyT66Jw/uKjRHlEj3BG/IHtV2dSGn7T4GSL5+XvJCBY6M+rOdhj3TWY8iXEbOOc
+ QJAzMuoXQ/sogrTYKxjhinxFK9VYcs3PzDy+dOReIdKFhgwnMVud840ZVA8BQ0tmdP7n
+ Gra7UWggJUzwwGhdc9p0vEm8b7t/qMPw/siKb70uFRbEDitko7IXGdkDRzwjNIOpAn4F
+ SHKq2hVE6XZsDv59PhWxLDd7H7/7Tr6XKJcp0vEP9J46hkR8Vt/+kV8zMnYW/LgGYtFT
+ k3yLjF4lHvY7ay8vTDqq+krv3c2deMFNJTXd1KBhl/y5F74w/ypyP/vwPPCIAOs3kU8h
+ /16A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQ9OADekdjPHgwJ6q+VrtOfu3nYRUYJr3rCpKyosi5OKPIQAhHokojKozUkOEyYCRO7Mm0oSM4JzjpJFSahj9hODqohPg=
-X-Gm-Message-State: AOJu0Yxo2A4acUMimuxyhY4MNZFVEChPn31c7glp63pmxe3Icq6QS3g8
- t8ptTb7Fp91/fsrhM74LWQruw+8o72MMmPZCcoxF9XFqh5glKNY+fUyRnfsm
-X-Google-Smtp-Source: AGHT+IG2DenIyXPgdzjcTXqxLyfgnRvpcrLXgwaSweWn5Ud7CFs836wvu+62OSpzpiLwiuvH0Air2A==
-X-Received: by 2002:a05:6a20:918c:b0:1c2:8904:14c2 with SMTP id
- adf61e73a8af0-1c29824364dmr10989446637.37.1720707572137; 
- Thu, 11 Jul 2024 07:19:32 -0700 (PDT)
+ AJvYcCVAh1fOS/ettAzOsjPdO5oN89NXjwNL9aPz/Om1qXGFeeOqiTGSjzh+GylzjKbvOhU42I3VbsynaMPConYQEN1VFojNayU=
+X-Gm-Message-State: AOJu0YzdC8S19l87d0aHrkzXZysZWWAMXcCQvib+dsp+NLZlmV6EOZzn
+ 0yMMC/NqnLB9RhxazxpshyInwaTMTTuKqjhOMB0kZ4EvooOMCCpSJOH6pHZr
+X-Google-Smtp-Source: AGHT+IEb/vpSqZkffW9TshJaA3DjmH9tL5KN3em9vI0lMd3Ql1HXcm6HBotavbnC1RxkNMOaNrCr3A==
+X-Received: by 2002:a05:6a00:2e18:b0:706:750c:8dda with SMTP id
+ d2e1a72fcca58-70b54e8a832mr5228883b3a.6.1720707560534; 
+ Thu, 11 Jul 2024 07:19:20 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b54ec730fsm3308904b3a.173.2024.07.11.07.19.29
+ d2e1a72fcca58-70b54ec730fsm3308904b3a.173.2024.07.11.07.19.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 07:19:31 -0700 (PDT)
+ Thu, 11 Jul 2024 07:19:20 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH 08/18] ppc: Add a core_index to CPUPPCState for SMT vCPUs
-Date: Fri, 12 Jul 2024 00:18:40 +1000
-Message-ID: <20240711141851.406677-9-npiggin@gmail.com>
+Subject: [PATCH 05/18] target/ppc: Move SPR indirect registers into PnvCore
+Date: Fri, 12 Jul 2024 00:18:37 +1000
+Message-ID: <20240711141851.406677-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240711141851.406677-1-npiggin@gmail.com>
 References: <20240711141851.406677-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,80 +96,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The way SMT thread siblings are matched is clunky, using hard-coded
-logic that checks the PIR SPR.
+SPRC/SPRD were recently added to all BookS CPUs supported, but
+they are only tested on POWER9 and POWER10, so restrict them to
+those CPUs.
 
-Change that to use a new core_index variable in the CPUPPCState,
-where all siblings have the same core_index. CPU realize routines have
-flexibility in setting core/sibling topology.
+SPR indirect scratch registers presently replicated per-CPU like
+SMT SPRs, but the PnvCore is a better place for them since they
+are restricted to P9/P10.
+
+Also add SPR indirect read access to core thread state for POWER9
+since skiboot accesses that when booting to check for big-core
+mode.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h        | 5 ++++-
- hw/ppc/pnv_core.c       | 2 ++
- hw/ppc/spapr_cpu_core.c | 3 +++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ include/hw/ppc/pnv_core.h |  1 +
+ target/ppc/cpu.h          |  3 --
+ target/ppc/cpu_init.c     | 21 +++++++-------
+ target/ppc/misc_helper.c  | 60 ++++++++++++++++++---------------------
+ 4 files changed, 39 insertions(+), 46 deletions(-)
 
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index ffec8516ae..693acb189b 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -53,6 +53,7 @@ struct PnvCore {
+     uint32_t hwid;
+     uint64_t hrmor;
+ 
++    target_ulong scratch[8]; /* SPRC/SPRD indirect SCRATCH registers */
+     PnvCoreTODState tod_state;
+ 
+     PnvChip *chip;
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 95ba9e7590..c3a33d2965 100644
+index c78d6ca91a..95ba9e7590 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -1247,6 +1247,9 @@ struct CPUArchState {
-     /* when a memory exception occurs, the access type is stored here */
-     int access_type;
- 
-+    /* For SMT processors */
-+    int core_index;
-+
- #if !defined(CONFIG_USER_ONLY)
-     /* MMU context, only relevant for full system emulation */
- #if defined(TARGET_PPC64)
-@@ -1403,7 +1406,7 @@ struct CPUArchState {
- };
- 
- #define _CORE_ID(cs)                                            \
--    (POWERPC_CPU(cs)->env.spr_cb[SPR_PIR].default_value & ~(cs->nr_threads - 1))
-+    (POWERPC_CPU(cs)->env.core_index)
- 
- #define THREAD_SIBLING_FOREACH(cs, cs_sibling)                  \
-     CPU_FOREACH(cs_sibling)                                     \
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 28ca61926d..7bda29b9c7 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -249,6 +249,8 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
-     pir_spr->default_value = pir;
-     tir_spr->default_value = tir;
- 
-+    env->core_index = core_hwid;
-+
-     /* Set time-base frequency to 512 MHz */
-     cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
+@@ -1253,9 +1253,6 @@ struct CPUArchState {
+     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
+     struct CPUBreakpoint *ciabr_breakpoint;
+     struct CPUWatchpoint *dawr0_watchpoint;
+-
+-    /* POWER CPU regs/state */
+-    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
+ #endif
+     target_ulong sr[32];   /* segment registers */
+     uint32_t nb_BATs;      /* number of BATs */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 01e358a4a5..ae483e20c4 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5759,16 +5759,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_core_write_generic,
+                  0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_sprc,
+-                 0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_sprd, &spr_write_sprd,
+-                 0x00000000);
+ #endif
  }
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 21920ea054..d9116c8409 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -302,16 +302,19 @@ static PowerPCCPU *spapr_create_vcpu(SpaprCpuCore *sc, int i, Error **errp)
-     g_autofree char *id = NULL;
-     CPUState *cs;
-     PowerPCCPU *cpu;
-+    CPUPPCState *env;
  
-     obj = object_new(scc->cpu_type);
+@@ -5781,6 +5771,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_WORT, 0);
++    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
++    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_generic, &spr_write_sprc,
++                 0x00000000);
++    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_sprd, &spr_write_sprd,
++                 0x00000000);
+ #endif
+ }
  
-     cs = CPU(obj);
-     cpu = POWERPC_CPU(obj);
-+    env = &cpu->env;
-     /*
-      * All CPUs start halted. CPU0 is unhalted from the machine level reset code
-      * and the rest are explicitly started up by the guest using an RTAS call.
-      */
-     qdev_prop_set_bit(DEVICE(obj), "start-powered-off", true);
-+    env->core_index = cc->core_id;
-     cs->cpu_index = cc->core_id + i;
-     if (!spapr_set_vcpu_id(cpu, cs->cpu_index, errp)) {
-         return NULL;
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index fa47be2298..da7764c008 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -26,6 +26,7 @@
+ #include "qemu/main-loop.h"
+ #include "mmu-book3s-v3.h"
+ #include "hw/ppc/ppc.h"
++#include "hw/ppc/pnv_core.h"
+ 
+ #include "helper_regs.h"
+ 
+@@ -321,11 +322,18 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
+ 
+ target_ulong helper_load_sprd(CPUPPCState *env)
+ {
++    /*
++     * SPRD is a HV-only register for Power CPUs, so this will only be
++     * accessed by powernv machines.
++     */
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+ 
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        return env->scratch[(sprc >> 3) & 0x7];
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        return pc->scratch[(sprc >> 3) & 0x7];
+     default:
+         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+@@ -334,41 +342,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+     return 0;
+ }
+ 
+-static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
+-{
+-    CPUState *cs = env_cpu(env);
+-    CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+-
+-    /*
+-     * Log stores to SCRATCH, because some firmware uses these for debugging
+-     * and logging, but they would normally be read by the BMC, which is
+-     * not implemented in QEMU yet. This gives a way to get at the information.
+-     * Could also dump these upon checkstop.
+-     */
+-    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
+-
+-    if (nr_threads == 1) {
+-        env->scratch[nr] = val;
+-        return;
+-    }
+-
+-    THREAD_SIBLING_FOREACH(cs, ccs) {
+-        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
+-        cenv->scratch[nr] = val;
+-    }
+-}
+-
+ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+ {
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+-
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        do_store_scratch(env, (sprc >> 3) & 0x7, val);
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        /*
++         * Log stores to SCRATCH, because some firmware uses these for
++         * debugging and logging, but they would normally be read by the BMC,
++	 * which is not implemented in QEMU yet. This gives a way to get at the
++	 * information. Could also dump these upon checkstop.
++         */
++        int nr = (sprc >> 3) & 0x7;
++        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
++        pc->scratch[nr] = val;
+         break;
+     default:
+-        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
++        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+         break;
+     }
 -- 
 2.45.1
 
