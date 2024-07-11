@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74E6C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 14:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8563FC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 14:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRudr-0003cE-BE; Thu, 11 Jul 2024 10:19:27 -0400
+	id 1sRue0-0004GN-90; Thu, 11 Jul 2024 10:19:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sRudo-0003Tl-VJ; Thu, 11 Jul 2024 10:19:24 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1sRudw-0003yI-TM; Thu, 11 Jul 2024 10:19:33 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sRudm-0005Tt-Vh; Thu, 11 Jul 2024 10:19:24 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70b03ffbb3aso825297b3a.0; 
- Thu, 11 Jul 2024 07:19:22 -0700 (PDT)
+ id 1sRudu-0005VJ-In; Thu, 11 Jul 2024 10:19:32 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-75c3afd7a50so636908a12.2; 
+ Thu, 11 Jul 2024 07:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720707561; x=1721312361; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720707568; x=1721312368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wf9tMV0G6CWSuDk9c0gqJneDtjrYGfaaQZm9hCAo2Ow=;
- b=N6BbNuOaaJMBN/tBSKJhArwPw5959Q9vf/W117sCss1D4ORSUHRapFrehBa1DF5m13
- LpPcMDcCPYllyQ9lQcmWcD1b+lH1i5W1YYrIjn73fqkLbua4vWBG8iX6oG3VqEXbzucG
- mZRN3aYmI9hSFMuUNJlBoW85KkkcG2HRN7WZhv2VbAi80QYePv+ozwEN0PFy467MNp9W
- e5VCnHi7Xr3lyMvQQSH8PNdpaLQFcXrYNY2ryr46Rp763QfhKRpUikCcYrAy6KPDhLae
- Dr6TLJKG+OdJ2PEGuD7sJgQ+qRFOP+NMQWrFHkcpxl8WwCr4J1jKVcirdcLeUCDlJS33
- GxLA==
+ bh=/lWATjD8bdRE91V0riy/vL3qLlTh4LYdUV5TWY+PHGI=;
+ b=L5/ozZmuTfWJyIKUfGDA4jzwL68Km90P6gtv88Rb48ctHtMMApd+NGbOiz6TtIZDg0
+ qOtA+G/oTaMg2UzQ8QNhnIoVhoTLNbaz4CcUVOxLXennvXkBeEz5BEMM+YRiFsTchL8N
+ s86r27d88pSeK4lyYoQ36fC3tS16ZpZmGkaP3Xgrx1RTlVhjtWneynQiW+faue91nKUG
+ w3Zukz+2Vu1eUC3+D9GwezNxtHo7ppVzGm6Ac56SoEAXWu1ljUIys8jCR7bMIzQGLSe9
+ h68gWCxe+RC6Qv1hmIZ6Qnryh6vF9dv95yo36GzgoXG3RvUK8s5OCmpu7+SozauVpUfN
+ dyBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720707561; x=1721312361;
+ d=1e100.net; s=20230601; t=1720707568; x=1721312368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wf9tMV0G6CWSuDk9c0gqJneDtjrYGfaaQZm9hCAo2Ow=;
- b=ExVDyT66Jw/uKjRHlEj3BG/IHtV2dSGn7T4GSL5+XvJCBY6M+rOdhj3TWY8iXEbOOc
- QJAzMuoXQ/sogrTYKxjhinxFK9VYcs3PzDy+dOReIdKFhgwnMVud840ZVA8BQ0tmdP7n
- Gra7UWggJUzwwGhdc9p0vEm8b7t/qMPw/siKb70uFRbEDitko7IXGdkDRzwjNIOpAn4F
- SHKq2hVE6XZsDv59PhWxLDd7H7/7Tr6XKJcp0vEP9J46hkR8Vt/+kV8zMnYW/LgGYtFT
- k3yLjF4lHvY7ay8vTDqq+krv3c2deMFNJTXd1KBhl/y5F74w/ypyP/vwPPCIAOs3kU8h
- /16A==
+ bh=/lWATjD8bdRE91V0riy/vL3qLlTh4LYdUV5TWY+PHGI=;
+ b=NYQ9BGmip9rVyDMFOHO79/+e67zSkWvoFtBsVTMbnnzDwsPU0LcVxQQwGak0kCOkII
+ 4GZ4+a/LRWkzZ5AvoGfKio+tzDA8uzNPTtNUR8KCf8JP/eIrvjdNQYCnERe4aBb6KqAl
+ aMfsc92hwuuQugnaCNFCoSEcUCdn6PXtu7vcRt4hgBESOuwnpvKn77aZROOQqqaF/ELb
+ tSw68R3/MXJrRMs0rx5SZbrqMpLZedSvOPZISRDSwDAQGI6PQpSt8oBURSn/TLjfHefJ
+ a+J+C/Q9o5+An1Ciqpeo5RSAVt0uXWo1mdKdfikEoqByzwU7mehZuN76pozX+SfTDCSZ
+ 5gBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVAh1fOS/ettAzOsjPdO5oN89NXjwNL9aPz/Om1qXGFeeOqiTGSjzh+GylzjKbvOhU42I3VbsynaMPConYQEN1VFojNayU=
-X-Gm-Message-State: AOJu0YzdC8S19l87d0aHrkzXZysZWWAMXcCQvib+dsp+NLZlmV6EOZzn
- 0yMMC/NqnLB9RhxazxpshyInwaTMTTuKqjhOMB0kZ4EvooOMCCpSJOH6pHZr
-X-Google-Smtp-Source: AGHT+IEb/vpSqZkffW9TshJaA3DjmH9tL5KN3em9vI0lMd3Ql1HXcm6HBotavbnC1RxkNMOaNrCr3A==
-X-Received: by 2002:a05:6a00:2e18:b0:706:750c:8dda with SMTP id
- d2e1a72fcca58-70b54e8a832mr5228883b3a.6.1720707560534; 
- Thu, 11 Jul 2024 07:19:20 -0700 (PDT)
+ AJvYcCVDv8NM1bopF7quxfHZhMQ/yUrOFxF26Uhjd0RF5VB/bD3tDX9LOjEej43Wgkm3ZgMHDhVpSff64SI0PmadrCIwJqCqWl4=
+X-Gm-Message-State: AOJu0YwBeq9Axa/vCvgA2vhuoFb4eSA+8MI4hgt790H6WpMcaHr80LZb
+ C2xkgAqDLoSyHrTiI0iGhSi+p/DtyUIBnQFnrFZ1LtZU7pizPl2f1cPC/07k
+X-Google-Smtp-Source: AGHT+IF9aAvA5Ita8axGJ3++k96hQI/kNed3G0TBqVnAxHtF9C5dXaMVwPgO6J798zgxry6bAyn6tw==
+X-Received: by 2002:a05:6a20:9145:b0:1c2:8e96:3343 with SMTP id
+ adf61e73a8af0-1c29820394emr10671547637.10.1720707568512; 
+ Thu, 11 Jul 2024 07:19:28 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b54ec730fsm3308904b3a.173.2024.07.11.07.19.17
+ d2e1a72fcca58-70b54ec730fsm3308904b3a.173.2024.07.11.07.19.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 07:19:20 -0700 (PDT)
+ Thu, 11 Jul 2024 07:19:28 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH 05/18] target/ppc: Move SPR indirect registers into PnvCore
-Date: Fri, 12 Jul 2024 00:18:37 +1000
-Message-ID: <20240711141851.406677-6-npiggin@gmail.com>
+Subject: [PATCH 07/18] ppc/pnv: Extend chip_pir class method to TIR as well
+Date: Fri, 12 Jul 2024 00:18:39 +1000
+Message-ID: <20240711141851.406677-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240711141851.406677-1-npiggin@gmail.com>
 References: <20240711141851.406677-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,183 +96,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPRC/SPRD were recently added to all BookS CPUs supported, but
-they are only tested on POWER9 and POWER10, so restrict them to
-those CPUs.
-
-SPR indirect scratch registers presently replicated per-CPU like
-SMT SPRs, but the PnvCore is a better place for them since they
-are restricted to P9/P10.
-
-Also add SPR indirect read access to core thread state for POWER9
-since skiboot accesses that when booting to check for big-core
-mode.
+The chip_pir chip class method allows the platform to set the PIR
+processor identification register. Extend this to a more general
+ID function which also allows the TIR to be set. This is in
+preparation for "big core", which is a more complicated topology
+of cores and threads.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/ppc/pnv_core.h |  1 +
- target/ppc/cpu.h          |  3 --
- target/ppc/cpu_init.c     | 21 +++++++-------
- target/ppc/misc_helper.c  | 60 ++++++++++++++++++---------------------
- 4 files changed, 39 insertions(+), 46 deletions(-)
+ include/hw/ppc/pnv_chip.h |  4 +-
+ hw/ppc/pnv.c              | 85 +++++++++++++++++++++++++--------------
+ hw/ppc/pnv_core.c         | 10 +++--
+ 3 files changed, 64 insertions(+), 35 deletions(-)
 
-diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-index ffec8516ae..693acb189b 100644
---- a/include/hw/ppc/pnv_core.h
-+++ b/include/hw/ppc/pnv_core.h
-@@ -53,6 +53,7 @@ struct PnvCore {
-     uint32_t hwid;
-     uint64_t hrmor;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index decfbc0ff7..1fca540eb1 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -152,7 +152,9 @@ struct PnvChipClass {
  
-+    target_ulong scratch[8]; /* SPRC/SPRD indirect SCRATCH registers */
-     PnvCoreTODState tod_state;
+     DeviceRealize parent_realize;
  
-     PnvChip *chip;
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index c78d6ca91a..95ba9e7590 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1253,9 +1253,6 @@ struct CPUArchState {
-     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
-     struct CPUBreakpoint *ciabr_breakpoint;
-     struct CPUWatchpoint *dawr0_watchpoint;
--
--    /* POWER CPU regs/state */
--    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
- #endif
-     target_ulong sr[32];   /* segment registers */
-     uint32_t nb_BATs;      /* number of BATs */
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 01e358a4a5..ae483e20c4 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5759,16 +5759,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_core_write_generic,
-                  0x00000000);
--    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_sprc,
--                 0x00000000);
--    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_sprd, &spr_write_sprd,
--                 0x00000000);
- #endif
- }
+-    uint32_t (*chip_pir)(PnvChip *chip, uint32_t core_id, uint32_t thread_id);
++    /* Get PIR and TIR values for a CPU thread identified by core/thread id */
++    void (*get_pir_tir)(PnvChip *chip, uint32_t core_id, uint32_t thread_id,
++                         uint32_t *pir, uint32_t *tir);
+     void (*intc_create)(PnvChip *chip, PowerPCCPU *cpu, Error **errp);
+     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 4252bcd28d..b593a41f7c 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -154,7 +154,7 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
+     char *nodename;
+     int cpus_offset = get_cpus_node(fdt);
  
-@@ -5781,6 +5771,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
-                      SPR_NOACCESS, SPR_NOACCESS,
-                      &spr_read_generic, &spr_write_generic,
-                      KVM_REG_PPC_WORT, 0);
-+    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
-+    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_sprc,
-+                 0x00000000);
-+    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_sprd, &spr_write_sprd,
-+                 0x00000000);
- #endif
- }
+-    pir = pnv_cc->chip_pir(chip, pc->hwid, 0);
++    pnv_cc->get_pir_tir(chip, pc->hwid, 0, &pir, NULL);
  
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index fa47be2298..da7764c008 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -26,6 +26,7 @@
- #include "qemu/main-loop.h"
- #include "mmu-book3s-v3.h"
- #include "hw/ppc/ppc.h"
-+#include "hw/ppc/pnv_core.h"
+     nodename = g_strdup_printf("%s@%x", dc->fw_name, pir);
+     offset = fdt_add_subnode(fdt, cpus_offset, nodename);
+@@ -236,7 +236,8 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
  
- #include "helper_regs.h"
- 
-@@ -321,11 +322,18 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
- 
- target_ulong helper_load_sprd(CPUPPCState *env)
- {
-+    /*
-+     * SPRD is a HV-only register for Power CPUs, so this will only be
-+     * accessed by powernv machines.
-+     */
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-     target_ulong sprc = env->spr[SPR_POWER_SPRC];
- 
--    switch (sprc & 0x3c0) {
--    case 0: /* SCRATCH0-7 */
--        return env->scratch[(sprc >> 3) & 0x7];
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        return pc->scratch[(sprc >> 3) & 0x7];
-     default:
-         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-                                   TARGET_FMT_lx"\n", sprc);
-@@ -334,41 +342,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
-     return 0;
- }
- 
--static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
--{
--    CPUState *cs = env_cpu(env);
--    CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
--
--    /*
--     * Log stores to SCRATCH, because some firmware uses these for debugging
--     * and logging, but they would normally be read by the BMC, which is
--     * not implemented in QEMU yet. This gives a way to get at the information.
--     * Could also dump these upon checkstop.
--     */
--    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
--
--    if (nr_threads == 1) {
--        env->scratch[nr] = val;
--        return;
--    }
--
--    THREAD_SIBLING_FOREACH(cs, ccs) {
--        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
--        cenv->scratch[nr] = val;
--    }
--}
--
- void helper_store_sprd(CPUPPCState *env, target_ulong val)
- {
-     target_ulong sprc = env->spr[SPR_POWER_SPRC];
--
--    switch (sprc & 0x3c0) {
--    case 0: /* SCRATCH0-7 */
--        do_store_scratch(env, (sprc >> 3) & 0x7, val);
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-+
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        /*
-+         * Log stores to SCRATCH, because some firmware uses these for
-+         * debugging and logging, but they would normally be read by the BMC,
-+	 * which is not implemented in QEMU yet. This gives a way to get at the
-+	 * information. Could also dump these upon checkstop.
-+         */
-+        int nr = (sprc >> 3) & 0x7;
-+        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
-+        pc->scratch[nr] = val;
-         break;
-     default:
--        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-+        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
-                                   TARGET_FMT_lx"\n", sprc);
-         break;
+     /* Build interrupt servers properties */
+     for (i = 0; i < smt_threads; i++) {
+-        servers_prop[i] = cpu_to_be32(pnv_cc->chip_pir(chip, pc->hwid, i));
++        pnv_cc->get_pir_tir(chip, pc->hwid, i, &pir, NULL);
++        servers_prop[i] = cpu_to_be32(pir);
      }
+     _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
+                        servers_prop, sizeof(*servers_prop) * smt_threads)));
+@@ -248,14 +249,17 @@ static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t hwid,
+                        uint32_t nr_threads)
+ {
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+-    uint32_t pir = pcc->chip_pir(chip, hwid, 0);
+-    uint64_t addr = PNV_ICP_BASE(chip) | (pir << 12);
++    uint32_t pir;
++    uint64_t addr;
+     char *name;
+     const char compat[] = "IBM,power8-icp\0IBM,ppc-xicp";
+     uint32_t irange[2], i, rsize;
+     uint64_t *reg;
+     int offset;
+ 
++    pcc->get_pir_tir(chip, hwid, 0, &pir, NULL);
++    addr = PNV_ICP_BASE(chip) | (pir << 12);
++
+     irange[0] = cpu_to_be32(pir);
+     irange[1] = cpu_to_be32(nr_threads);
+ 
+@@ -1106,10 +1110,16 @@ static void pnv_init(MachineState *machine)
+  *   25:28  Core number
+  *   29:31  Thread ID
+  */
+-static uint32_t pnv_chip_pir_p8(PnvChip *chip, uint32_t core_id,
+-                                uint32_t thread_id)
++static void pnv_get_pir_tir_p8(PnvChip *chip,
++                                uint32_t core_id, uint32_t thread_id,
++                                uint32_t *pir, uint32_t *tir)
+ {
+-    return (chip->chip_id << 7) | (core_id << 3) | thread_id;
++    if (pir) {
++        *pir = (chip->chip_id << 7) | (core_id << 3) | thread_id;
++    }
++    if (tir) {
++        *tir = thread_id;
++    }
+ }
+ 
+ static void pnv_chip_power8_intc_create(PnvChip *chip, PowerPCCPU *cpu,
+@@ -1161,14 +1171,20 @@ static void pnv_chip_power8_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+  *
+  * We only care about the lower bits. uint32_t is fine for the moment.
+  */
+-static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
+-                                uint32_t thread_id)
+-{
+-    if (chip->nr_threads == 8) {
+-        return (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
+-               (thread_id >> 1);
+-    } else {
+-        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
++static void pnv_get_pir_tir_p9(PnvChip *chip,
++                                uint32_t core_id, uint32_t thread_id,
++                                uint32_t *pir, uint32_t *tir)
++{
++    if (pir) {
++        if (chip->nr_threads == 8) {
++            *pir = (chip->chip_id << 8) | ((thread_id & 1) << 2) |
++                   (core_id << 3) | (thread_id >> 1);
++        } else {
++            *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
++        }
++    }
++    if (tir) {
++        *tir = thread_id;
+     }
+ }
+ 
+@@ -1183,14 +1199,20 @@ static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
+  *
+  * We only care about the lower bits. uint32_t is fine for the moment.
+  */
+-static uint32_t pnv_chip_pir_p10(PnvChip *chip, uint32_t core_id,
+-                                 uint32_t thread_id)
+-{
+-    if (chip->nr_threads == 8) {
+-        return (chip->chip_id << 8) | ((core_id / 4) << 4) |
+-               ((core_id % 2) << 3) | thread_id;
+-    } else {
+-        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
++static void pnv_get_pir_tir_p10(PnvChip *chip,
++                                uint32_t core_id, uint32_t thread_id,
++                                uint32_t *pir, uint32_t *tir)
++{
++    if (pir) {
++        if (chip->nr_threads == 8) {
++            *pir = (chip->chip_id << 8) | ((core_id / 4) << 4) |
++                    ((core_id % 2) << 3) | thread_id;
++        } else {
++            *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
++        }
++    }
++    if (tir) {
++        *tir = thread_id;
+     }
+ }
+ 
+@@ -1370,8 +1392,11 @@ static void pnv_chip_icp_realize(Pnv8Chip *chip8, Error **errp)
+         int core_hwid = CPU_CORE(pnv_core)->core_id;
+ 
+         for (j = 0; j < CPU_CORE(pnv_core)->nr_threads; j++) {
+-            uint32_t pir = pcc->chip_pir(chip, core_hwid, j);
+-            PnvICPState *icp = PNV_ICP(xics_icp_get(chip8->xics, pir));
++            uint32_t pir;
++            PnvICPState *icp;
++
++            pcc->get_pir_tir(chip, core_hwid, j, &pir, NULL);
++            icp = PNV_ICP(xics_icp_get(chip8->xics, pir));
+ 
+             memory_region_add_subregion(&chip8->icp_mmio, pir << 12,
+                                         &icp->mmio);
+@@ -1483,7 +1508,7 @@ static void pnv_chip_power8e_class_init(ObjectClass *klass, void *data)
+     k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
+     k->cores_mask = POWER8E_CORE_MASK;
+     k->num_phbs = 3;
+-    k->chip_pir = pnv_chip_pir_p8;
++    k->get_pir_tir = pnv_get_pir_tir_p8;
+     k->intc_create = pnv_chip_power8_intc_create;
+     k->intc_reset = pnv_chip_power8_intc_reset;
+     k->intc_destroy = pnv_chip_power8_intc_destroy;
+@@ -1507,7 +1532,7 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, void *data)
+     k->chip_cfam_id = 0x220ea04980000000ull; /* P8 Venice DD2.0 */
+     k->cores_mask = POWER8_CORE_MASK;
+     k->num_phbs = 3;
+-    k->chip_pir = pnv_chip_pir_p8;
++    k->get_pir_tir = pnv_get_pir_tir_p8;
+     k->intc_create = pnv_chip_power8_intc_create;
+     k->intc_reset = pnv_chip_power8_intc_reset;
+     k->intc_destroy = pnv_chip_power8_intc_destroy;
+@@ -1531,7 +1556,7 @@ static void pnv_chip_power8nvl_class_init(ObjectClass *klass, void *data)
+     k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
+     k->cores_mask = POWER8_CORE_MASK;
+     k->num_phbs = 4;
+-    k->chip_pir = pnv_chip_pir_p8;
++    k->get_pir_tir = pnv_get_pir_tir_p8;
+     k->intc_create = pnv_chip_power8_intc_create;
+     k->intc_reset = pnv_chip_power8_intc_reset;
+     k->intc_destroy = pnv_chip_power8_intc_destroy;
+@@ -1814,7 +1839,7 @@ static void pnv_chip_power9_class_init(ObjectClass *klass, void *data)
+ 
+     k->chip_cfam_id = 0x220d104900008000ull; /* P9 Nimbus DD2.0 */
+     k->cores_mask = POWER9_CORE_MASK;
+-    k->chip_pir = pnv_chip_pir_p9;
++    k->get_pir_tir = pnv_get_pir_tir_p9;
+     k->intc_create = pnv_chip_power9_intc_create;
+     k->intc_reset = pnv_chip_power9_intc_reset;
+     k->intc_destroy = pnv_chip_power9_intc_destroy;
+@@ -2136,7 +2161,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+ 
+     k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
+     k->cores_mask = POWER10_CORE_MASK;
+-    k->chip_pir = pnv_chip_pir_p10;
++    k->get_pir_tir = pnv_get_pir_tir_p10;
+     k->intc_create = pnv_chip_power10_intc_create;
+     k->intc_reset = pnv_chip_power10_intc_reset;
+     k->intc_destroy = pnv_chip_power10_intc_destroy;
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 2da271ffb6..28ca61926d 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -227,8 +227,9 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+ {
+     CPUPPCState *env = &cpu->env;
+     int core_hwid;
+-    ppc_spr_t *pir = &env->spr_cb[SPR_PIR];
+-    ppc_spr_t *tir = &env->spr_cb[SPR_TIR];
++    ppc_spr_t *pir_spr = &env->spr_cb[SPR_PIR];
++    ppc_spr_t *tir_spr = &env->spr_cb[SPR_TIR];
++    uint32_t pir, tir;
+     Error *local_err = NULL;
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(pc->chip);
+ 
+@@ -244,8 +245,9 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+ 
+     core_hwid = object_property_get_uint(OBJECT(pc), "hwid", &error_abort);
+ 
+-    tir->default_value = thread_index;
+-    pir->default_value = pcc->chip_pir(pc->chip, core_hwid, thread_index);
++    pcc->get_pir_tir(pc->chip, core_hwid, thread_index, &pir, &tir);
++    pir_spr->default_value = pir;
++    tir_spr->default_value = tir;
+ 
+     /* Set time-base frequency to 512 MHz */
+     cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
 -- 
 2.45.1
 
