@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB53C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881F3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:42:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRvuo-00028X-92; Thu, 11 Jul 2024 11:41:02 -0400
+	id 1sRvvk-0006NW-2c; Thu, 11 Jul 2024 11:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRvuk-00021j-V7
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:40:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvvj-0006JX-1H
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:41:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRvuj-0006pB-CN
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:40:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvvg-0007eT-EA
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:41:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720712456;
+ s=mimecast20190719; t=1720712515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OsjfsTlsj/Ghe1NV6WpqPyLw4t3Xvvi5gxbEOGMofqU=;
- b=UO8EnvNjJLSvUQH7OG/Xmchud8pfoVm0OcnECZ+72CW009Y9NU6I+WRHxMWjxlX0jJhrhQ
- pbbFWcJyVVlkS1mc1ctZnRIZJ8vMNhr8nL4HrX2AHrCRaHvWxUZkMBZJe5NDaOPgKRSjf+
- jb9WJXXS6pvyhU7kdwE9FEy/ARBbElM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mWLSM8ZEXT80/iRiMyNxUDiDBunsEtenw83AUcvn6YQ=;
+ b=T9if7byBHXDwSm7KJW7BX6VtZkvSls31XJrNoonsPn9VKexmTa93WLusRw2LmUj+yc1zaV
+ Qlu5m5Ms8ad/pk1sENiJnC2gFBX0LhgggCJsUrpBj1VWNGiyL61mR5Bet7ZcZ+Snai0Yv1
+ d63y13ukpaHYrubMdCnj2TgjbwONh6Q=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-yAcY--pIOjOHQjgllE6bPQ-1; Thu, 11 Jul 2024 11:40:54 -0400
-X-MC-Unique: yAcY--pIOjOHQjgllE6bPQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42668796626so6575465e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 08:40:53 -0700 (PDT)
+ us-mta-460-LQ2BsAoRN_CozvRw9dq4Sw-1; Thu, 11 Jul 2024 11:41:49 -0400
+X-MC-Unique: LQ2BsAoRN_CozvRw9dq4Sw-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-448335bb53aso590311cf.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720712453; x=1721317253;
+ d=1e100.net; s=20230601; t=1720712508; x=1721317308;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OsjfsTlsj/Ghe1NV6WpqPyLw4t3Xvvi5gxbEOGMofqU=;
- b=rXtnlxSqtvE3EIf443KBylEZ6cq8u5dgxgkX9IATVHcfhSR2b08h900eoy+bRmSMAc
- 45IOKiULk/v4uo9aQe1k8yXWje7dqE8oFHzEzygKlbF7FWx7X2rkcktS8cuU4ZiqX5xF
- xEXu2DbdDrfMufzD0P0f1qjfzURG+n1WRXbwAbA0BtlKCiyhe1F+lxpAoJTBA/NwDlpM
- pryM6I81wYYrAkfTLTr+sDYJOopyTQvGdVQSocs6mLnf4zT+TIksYTQ7PCcsWXngtIgK
- oc1xSqPSJVNqMCRgev6B1kfrtnudrDSxdNIyrIcKtUip2ykhog57fy7FbNONZ2fCppmH
- vaFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPOZSdpDWuaUmPml7nKxFBOUBiUY6Vc5iPqpX31PLxWQjXxjEaOZnRmXTyXSw5HIlDcyLkn+9buG7aSIv1/b3lg/lkUrE=
-X-Gm-Message-State: AOJu0YxepWJo8hYHf9nAHtWYLNtuzoVusdF17A1P7MbvRwOtJxoDGfks
- J/0OZ8OJHL1EugZhR4TzBLLH/GNuOGZ9V2aT5GJqAkNEDyi6B4BOMWfrwUyd3YQHI/Z4V+yN/vZ
- s3LQ8FRItHzV1ozb7XBaZ8gM/Xi0ddf31RC9J3H7q50I84DAQGv3W
-X-Received: by 2002:a05:600c:17c7:b0:426:654e:16d0 with SMTP id
- 5b1f17b1804b1-4267018b105mr74065725e9.0.1720712453026; 
- Thu, 11 Jul 2024 08:40:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRjy+TOeaReztYTSjC/8SCGznQL2TkFSPfZoMqe2yvPzpSmQoBY88yy1Yd7PIYFZg0fPeDJQ==
-X-Received: by 2002:a05:600c:17c7:b0:426:654e:16d0 with SMTP id
- 5b1f17b1804b1-4267018b105mr74065465e9.0.1720712452473; 
- Thu, 11 Jul 2024 08:40:52 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:341:761e:f82:fc9a:623b:3fd1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42662315363sm201463505e9.26.2024.07.11.08.40.49
+ bh=mWLSM8ZEXT80/iRiMyNxUDiDBunsEtenw83AUcvn6YQ=;
+ b=FmDyESh9KKdgUdcpLZITk4E1FZFmSUUYOxyO/fiOrrWKR58LnChYE9E/+XDL12v3af
+ /ZfrDEqPUI8zqLJn8Wdu7JQJZD5fv5/BCbHjP5Cv/odUyfufaF2TaupiVbSrfRjc6EcC
+ q9eS+K84xYnC94KDOLgcAFINGlb0iBDjErLSHemNpbXJJ51r9ZJ10c/AP4fyEuJ/DJiE
+ HHFJB0yWYzi/Baawu3FhWriu7He0JBa6ffgbJ/Zv8eNC5czSsnyy5j0ok/cJ3sLHCuXy
+ OMwPOxTs+tBZWWNmG9M2nz4Q4CGGl+/8e16nF/kxpfjZQPTNcTKhVOk788/+je4UOI61
+ U0ng==
+X-Gm-Message-State: AOJu0YwpC07dE/iiqPedLNymGI8sqby/Fva8qFDocgGzvqa3U6IQKsuS
+ 6gfI/SgbdV2hFKCG84Id7hOJSMvnwJGy0pOEgoyPvIkoNdMzFazzT9Q/mmVttdElD7t6NlPihyF
+ eQRQp2qdGKHo41ugP6cF4UMlLeRLaFfVKNj/O92wo8bSZ9VdU7FKB
+X-Received: by 2002:a05:620a:20c9:b0:79e:fc14:c53 with SMTP id
+ af79cd13be357-7a1471f7a44mr253990285a.7.1720712508527; 
+ Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOeShMSuR9ZwJ13Ke5zcQdASk3stkJjl+yn+Z1Wu39H7iZkMpVyrTPxFr+WPo/82PT3xKxGA==
+X-Received: by 2002:a05:620a:20c9:b0:79e:fc14:c53 with SMTP id
+ af79cd13be357-7a1471f7a44mr253988685a.7.1720712508217; 
+ Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-79f18ff6756sm303291985a.2.2024.07.11.08.41.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 08:40:51 -0700 (PDT)
-Date: Thu, 11 Jul 2024 11:40:47 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- ankita@nvidia.com, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- Richard Henderson <richard.henderson@linaro.org>,
- linuxarm@huawei.com, Dave Jiang <dave.jiang@intel.com>,
- Huang Ying <ying.huang@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, eduardo@habkost.net,
- linux-cxl@vger.kernel.org, Michael Roth <michael.roth@amd.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v4 06/13] acpi/pci: Move Generic Initiator object
- handling into acpi/pci.*
-Message-ID: <20240711114034-mutt-send-email-mst@kernel.org>
-References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
- <20240702131428.664859-7-Jonathan.Cameron@huawei.com>
- <20240711141240.0ec77fd2@imammedo.users.ipa.redhat.com>
- <20240711163851.00002f93@Huawei.com>
+ Thu, 11 Jul 2024 08:41:47 -0700 (PDT)
+Date: Thu, 11 Jul 2024 11:41:46 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Jason Wang <jasowang@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, mcoqueli@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 1/2] vhost-user: add a write-read lock
+Message-ID: <Zo_9OlX0pV0paFj7@x1n>
+References: <20240711131424.181615-1-ppandit@redhat.com>
+ <20240711131424.181615-2-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240711163851.00002f93@Huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240711131424.181615-2-ppandit@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -111,37 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 04:38:51PM +0100, Jonathan Cameron wrote:
+On Thu, Jul 11, 2024 at 06:44:23PM +0530, Prasad Pandit wrote:
+> From: Prasad Pandit <pjp@fedoraproject.org>
 > 
-> > > diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-> > > index 20b70dcd81..174b490e5f 100644
-> > > --- a/hw/acpi/pci.c
-> > > +++ b/hw/acpi/pci.c
-> > > @@ -24,8 +24,12 @@
-> > >   */
-> > >  
-> > >  #include "qemu/osdep.h"
-> > > +#include "qemu/error-report.h"  
-> > 
-> > > +#include "qapi/error.h"  
-> > is this necessary? 
-> > it seems to be compiling just fine without it.
-> The error_fatal extern is in there.
+> QEMU threads use vhost_user_write/read calls to send
+> and receive messages from a vhost-user device. When multiple
+> threads communicate with the same vhost-user device, they can
+> receive each other's messages, resulting in an erroneous state.
 > 
-> I guess there is a non obvious path via which that's getting included
-> anyway. is in there and it's not obvious how it is included I'd rather
-> keep it as an explicit include to reduce fragility if the chain of
-> includes involved gets changed.
+>  vhost_user_read_header:
+>   700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
+>  vhost_device_iotlb_miss:
+>   700871,700871: Fail to update device iotlb
+>  vhost_user_postcopy_end:
+>   700871,700900: Failed to receive reply to postcopy_end
+>  vhost_user_read_header:
+>   700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
 > 
+> Here fault thread seems to end the postcopy migration while
+> another thread is starting the vhost-user device.
+> 
+> Add a rw lock to hold for one vhost_user_write/read cycle
+> and avoid such race conditions.
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> ---
+>  hw/virtio/vhost-user.c         | 423 +++++++++++++++++++--------------
+>  include/hw/virtio/vhost-user.h |   3 +
 
-+1
+I apologize if I suggested WITH_QEMU_LOCK_GUARD when we talked.. I don't
+remember which one I suggested, but in this case IIUC it'll be much easier
+to review if you use the other sister function QEMU_LOCK_GUARD()
+instead.. That should make the diff much, much less.
 
-> > 
-> > > +#include "hw/boards.h"
-> > >  #include "hw/acpi/aml-build.h"
-> > >  #include "hw/acpi/pci.h"
-> > > +#include "hw/pci/pci_device.h"
-> > >  #include "hw/pci/pcie_host.h"
-> > >  
+-- 
+Peter Xu
 
 
