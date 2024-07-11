@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5713EC3DA45
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D3AC41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 21:53:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS1in-0003wk-FQ; Thu, 11 Jul 2024 17:53:01 -0400
+	id 1sS1iv-0004Sk-Tn; Thu, 11 Jul 2024 17:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sS1il-0003up-Jv
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:52:59 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1sS1iu-0004MX-8q
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:53:08 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sS1if-0005Y0-BM
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:52:59 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-25982aa59efso596245fac.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 14:52:51 -0700 (PDT)
+ id 1sS1is-0005aB-Cq
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:53:08 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7036ab4a2acso695418a34.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 14:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720734771; x=1721339571; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1720734785; x=1721339585; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U8KIXwkZXyq8Ux81YoTSAxOBE0pbfYwmygweH+SbG/w=;
- b=gGUjl4+leOeBis/ziVySpUV/SMGw4kcamfs6ux3toT5fWmjby0bFs7rNoZv8UQ85cq
- XkTDgdjctGtLSERcQhbuSICh7anplyUtvyYwNMjoQGJCpFdDhgB23UdDY27aLq1lybWr
- bMsyZHQEyUi+qhP6n/s1qxxoX+kn2PoIK+YJmm+LEGjrpKfyqodZ60N/WftAQAS3q+VP
- 1XHMwBLZvwSALDL3w3FrdCnDOCEngZzsXxeumW1deCThzBr5b79Sg07Mcg+TTzz5dxy1
- tnJcDHivpZ+7lQcsgFafr2pJMnhy9BCcCU+sxqlzWnIKP5ve6vYNlGIJSIqQkj7oSafF
- 65kQ==
+ bh=9m458/uhhAXId9laqR5q13dVQY2eOCevIh5lPaBzFwg=;
+ b=ZJujagfH6RLfJsb/WC/5sO42CQKOE6uATjzbdgwn9kzbyWxoUM0gS7Lyt5PE5zMV/t
+ ik4A8Oq3pN7EyxOJSSvj37x2WmI4d9nP4N/xP4hWFzCiwzV4TrM7VXkQi13ajSmp5rXk
+ 92phYR0Fx3e3YKsf4GXblevlYeHIEHPv0qhwQMKPIXik45y+m4iTwkwp/JxOzoZ8tTL6
+ OzrMSe3bU9I3hZhBWXxy9e2l9RPR8Fx3Td0T2x+eesv7MqfsdriX+CG2a2Ua3CzoEZfu
+ 9gkHL/sr2Bb7Tr1IjbIr58EhoeNuVG+9DSm/6SELIA+gGAIzd5f4I8N+SoNXEiMLrO5f
+ blKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720734771; x=1721339571;
+ d=1e100.net; s=20230601; t=1720734785; x=1721339585;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U8KIXwkZXyq8Ux81YoTSAxOBE0pbfYwmygweH+SbG/w=;
- b=PpMDdqcvs6omsFrmSVCMeKaPtklf2gfJuws0101XnSsLQHPlPzS73thNGih3C/6fdb
- uhW7STHLAwAcgfPaxHTH8q3JBJEm57ktVrwOKTtD8XmutfsxcPSrPpKNuW6ZWRt6jYDN
- RUacqnQ0IJpkXT4AFcF9KOmGJ1YcU9lzhZd4iNx7c4q6P2Y3qThV/EGbnQImzt2qukuo
- +Zk+X3K4MaTzRMhonbdgDEGkWPEF1XgWVW2+yEmUTwmdu0lrijykK7Zf6tiX8Hg7Vpf+
- lkExkdy4T5A+SwY8p6/FqW3L3Iskene4rJ0sQhj9UMfWOLfEnwJDChmXrUmUyNSi96bv
- 1FCA==
+ bh=9m458/uhhAXId9laqR5q13dVQY2eOCevIh5lPaBzFwg=;
+ b=pFQHpPq3bRK9G8QPJsvJKx4yaEzm8GkK40ffmzpe5h3WV/o2uyr5/sIzvCGjc25VoN
+ gYSPWmkFJ0Hohfq8qGoKvEC+awDHB7qCb4Lyp2PGanQIqk7ogcXYkk/DSZFCbTxznIH6
+ YfSeLqPpCyQFpjdFU00L7sIobmveCjo3Az+rZD69Eau/Udt13lfaBQSnZ0WHfYEAngoN
+ BJ51wH58Ufia89hT0KxjGsCe1NPl34QhfqLi3H9NsVEHG3RbHiAlivJjl3wvC9SMOWr+
+ DmVuLEDFOEX1F2kJHlgXNwB4asBFlg8bKC5cU+PTkLA2iuYPu/XS6eMiYpJ4Y7aqSGsv
+ gB8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgH5HO5h92LhNWR1wfE8I5+VqUZkoPoxofUL2w79pgVImYdsy97Z1BSMnOjA4dr/mOCB3gPuogII6LqdzpkaKeUMOVzjg=
-X-Gm-Message-State: AOJu0Ywad6I7/7xX8MLvU/U+pM/DVKgYMbiF/ZBo44FZynsVoknsiP8m
- 1qKntnMdjtQ7CjX1nZr3jsqS0kuywke0eDH5vm3UuL6oo1hOH1IiPNFG6mBEC7k=
-X-Google-Smtp-Source: AGHT+IHXS4KqfD5dL20PDI1NMSzo5ZKEp2wXV7Vp30XmmPnRS57Fkyyq7shLr2biZJnSZliW0DjPiQ==
-X-Received: by 2002:a05:6871:88d:b0:25e:bdf7:7e08 with SMTP id
- 586e51a60fabf-25ebdf84150mr7104927fac.0.1720734771027; 
- Thu, 11 Jul 2024 14:52:51 -0700 (PDT)
+ AJvYcCUGMpEWsd4z/EiUSrx0fgMvzVw/KFhTNAXKAgxrzCNTtb/mYPsrD35cOrRsOJ2o+g195yx5g3YLlyhPLWIyGN2whwSQNmM=
+X-Gm-Message-State: AOJu0YzfcBOfCR9hjG+iOXoijg2V+3F7OHn2QFPPKicyTwxtQJF3Y+u6
+ AAL/hmYUzu2iddFEtcCAyHsi6o/Xm1dI1iOx/3sAqVZAu0z94KIZOukDdsOyDWgUP62wtDS7VZW
+ M
+X-Google-Smtp-Source: AGHT+IGfge220JKGhpa1aVvmXZTMP7C5bj467mbmfAjwUFGjU6QSaq8JXgcvTSLMtk2UF4LQgoDKsw==
+X-Received: by 2002:a05:6830:1389:b0:703:68ff:c078 with SMTP id
+ 46e09a7af769-70375b4d1b8mr10711216a34.30.1720734785219; 
+ Thu, 11 Jul 2024 14:53:05 -0700 (PDT)
 Received: from DY4X0N7X05.bytedance.net ([208.184.112.130])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7044ac2876dsm713125a34.2.2024.07.11.14.52.49
+ 46e09a7af769-7044ac2876dsm713125a34.2.2024.07.11.14.53.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Jul 2024 14:52:50 -0700 (PDT)
+ Thu, 11 Jul 2024 14:53:04 -0700 (PDT)
 From: Yichen Wang <yichen.wang@bytedance.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -73,25 +74,26 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
  "Shivam Kumar" <shivam.kumar1@nutanix.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>
-Subject: [PATCH v5 01/13] meson: Introduce new instruction set enqcmd to the
- build system.
-Date: Thu, 11 Jul 2024 14:52:36 -0700
-Message-Id: <20240711215244.19237-2-yichen.wang@bytedance.com>
+ "Yichen Wang" <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH v5 07/13] util/dsa: Implement DSA task asynchronous submission
+ and wait for completion.
+Date: Thu, 11 Jul 2024 14:52:42 -0700
+Message-Id: <20240711215244.19237-8-yichen.wang@bytedance.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20240711215244.19237-1-yichen.wang@bytedance.com>
 References: <20240711215244.19237-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=yichen.wang@bytedance.com; helo=mail-oa1-x33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,75 +111,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hao Xiang <hao.xiang@linux.dev>
 
-Enable instruction set enqcmd in build.
+* Add a DSA task completion callback.
+* DSA completion thread will call the tasks's completion callback
+on every task/batch task completion.
+* DSA submission path to wait for completion.
+* Implement CPU fallback if DSA is not able to complete the task.
 
 Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
 Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 ---
- meson.build                   | 14 ++++++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 3 files changed, 19 insertions(+)
+ include/qemu/dsa.h |  14 +++++
+ util/dsa.c         | 125 +++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 135 insertions(+), 4 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 6a93da48e1..af650cfabf 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2893,6 +2893,20 @@ config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
-     int main(int argc, char *argv[]) { return bar(argv[0]); }
-   '''), error_message: 'AVX512BW not available').allowed())
+diff --git a/include/qemu/dsa.h b/include/qemu/dsa.h
+index 1b4baf1c80..20bb88d48c 100644
+--- a/include/qemu/dsa.h
++++ b/include/qemu/dsa.h
+@@ -123,6 +123,20 @@ buffer_zero_batch_task_init(QemuDsaBatchTask *task,
+  */
+ void buffer_zero_batch_task_destroy(QemuDsaBatchTask *task);
  
-+config_host_data.set('CONFIG_DSA_OPT', get_option('enqcmd') \
-+  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable ENQCMD') \
-+  .require(cc.links('''
-+    #include <stdint.h>
-+    #include <cpuid.h>
-+    #include <immintrin.h>
-+    static int __attribute__((target("enqcmd"))) bar(void *a) {
-+      uint64_t dst[8] = { 0 };
-+      uint64_t src[8] = { 0 };
-+      return _enqcmd(dst, src);
-+    }
-+    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
-+  '''), error_message: 'ENQCMD not available').allowed())
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len);
 +
- # For both AArch64 and AArch32, detect if builtins are available.
- config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
-     #include <arm_neon.h>
-diff --git a/meson_options.txt b/meson_options.txt
-index 0269fa0f16..4ed820bb8d 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -121,6 +121,8 @@ option('avx2', type: 'feature', value: 'auto',
-        description: 'AVX2 optimizations')
- option('avx512bw', type: 'feature', value: 'auto',
-        description: 'AVX512BW optimizations')
-+option('enqcmd', type: 'feature', value: 'disabled',
-+       description: 'ENQCMD optimizations')
- option('keyring', type: 'feature', value: 'auto',
-        description: 'Linux keyring support')
- option('libkeyutils', type: 'feature', value: 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index cfadb5ea86..280e117687 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -95,6 +95,7 @@ meson_options_help() {
-   printf "%s\n" '  auth-pam        PAM access control'
-   printf "%s\n" '  avx2            AVX2 optimizations'
-   printf "%s\n" '  avx512bw        AVX512BW optimizations'
-+  printf "%s\n" '  enqcmd          ENQCMD optimizations'
-   printf "%s\n" '  blkio           libblkio block device driver'
-   printf "%s\n" '  bochs           bochs image format support'
-   printf "%s\n" '  bpf             eBPF support'
-@@ -239,6 +240,8 @@ _meson_option_parse() {
-     --disable-avx2) printf "%s" -Davx2=disabled ;;
-     --enable-avx512bw) printf "%s" -Davx512bw=enabled ;;
-     --disable-avx512bw) printf "%s" -Davx512bw=disabled ;;
-+    --enable-enqcmd) printf "%s" -Denqcmd=enabled ;;
-+    --disable-enqcmd) printf "%s" -Denqcmd=disabled ;;
-     --enable-gcov) printf "%s" -Db_coverage=true ;;
-     --disable-gcov) printf "%s" -Db_coverage=false ;;
-     --enable-lto) printf "%s" -Db_lto=true ;;
+ #else
+ 
+ static inline bool qemu_dsa_is_running(void)
+diff --git a/util/dsa.c b/util/dsa.c
+index f0d8cce210..74b9aa1331 100644
+--- a/util/dsa.c
++++ b/util/dsa.c
+@@ -439,6 +439,42 @@ poll_completion(struct dsa_completion_record *completion,
+     return 0;
+ }
+ 
++/**
++ * @brief Helper function to use CPU to complete a single
++ *        zero page checking task.
++ *
++ * @param completion A pointer to a DSA task completion record.
++ * @param descriptor A pointer to a DSA task descriptor.
++ * @param result A pointer to the result of a zero page checking.
++ */
++static void
++task_cpu_fallback_int(struct dsa_completion_record *completion,
++                      struct dsa_hw_desc *descriptor, bool *result)
++{
++    const uint8_t *buf;
++    size_t len;
++
++    if (completion->status == DSA_COMP_SUCCESS) {
++        return;
++    }
++
++    /*
++     * DSA was able to partially complete the operation. Check the
++     * result. If we already know this is not a zero page, we can
++     * return now.
++     */
++    if (completion->bytes_completed != 0 && completion->result != 0) {
++        *result = false;
++        return;
++    }
++
++    /* Let's fallback to use CPU to complete it. */
++    buf = (const uint8_t *)descriptor->src_addr;
++    len = descriptor->xfer_size;
++    *result = buffer_is_zero(buf + completion->bytes_completed,
++                             len - completion->bytes_completed);
++}
++
+ /**
+  * @brief Complete a single DSA task in the batch task.
+  *
+@@ -567,7 +603,7 @@ dsa_completion_loop(void *opaque)
+         (QemuDsaCompletionThread *)opaque;
+     QemuDsaBatchTask *batch_task;
+     QemuDsaDeviceGroup *group = thread_context->group;
+-    int ret;
++    int ret = 0;
+ 
+     rcu_register_thread();
+ 
+@@ -827,7 +863,6 @@ buffer_zero_batch_task_set(QemuDsaBatchTask *batch_task,
+  *
+  * @return int Zero if successful, otherwise an appropriate error code.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+                       const void *buf, size_t len)
+@@ -846,7 +881,6 @@ buffer_zero_dsa_async(QemuDsaBatchTask *task,
+  * @param count The number of buffers.
+  * @param len The buffer length.
+  */
+-__attribute__((unused))
+ static int
+ buffer_zero_dsa_batch_async(QemuDsaBatchTask *batch_task,
+                             const void **buf, size_t count, size_t len)
+@@ -877,13 +911,61 @@ buffer_zero_dsa_completion(void *context)
+  *
+  * @param batch_task A pointer to the buffer zero comparison batch task.
+  */
+-__attribute__((unused))
+ static void
+ buffer_zero_dsa_wait(QemuDsaBatchTask *batch_task)
+ {
+     qemu_sem_wait(&batch_task->sem_task_complete);
+ }
+ 
++/**
++ * @brief Use CPU to complete the zero page checking task if DSA
++ *        is not able to complete it.
++ *
++ * @param batch_task A pointer to the batch task.
++ */
++static void
++buffer_zero_cpu_fallback(QemuDsaBatchTask *batch_task)
++{
++    if (batch_task->task_type == QEMU_DSA_TASK) {
++        if (batch_task->completions[0].status == DSA_COMP_SUCCESS) {
++            return;
++        }
++        task_cpu_fallback_int(&batch_task->completions[0],
++                              &batch_task->descriptors[0],
++                              &batch_task->results[0]);
++    } else if (batch_task->task_type == QEMU_DSA_BATCH_TASK) {
++        struct dsa_completion_record *batch_completion =
++            &batch_task->batch_completion;
++        struct dsa_completion_record *completion;
++        uint8_t status;
++        bool *results = batch_task->results;
++        uint32_t count = batch_task->batch_descriptor.desc_count;
++
++        /* DSA is able to complete the entire batch task. */
++        if (batch_completion->status == DSA_COMP_SUCCESS) {
++            assert(count == batch_completion->bytes_completed);
++            return;
++        }
++
++        /*
++         * DSA encounters some error and is not able to complete
++         * the entire batch task. Use CPU fallback.
++         */
++        for (int i = 0; i < count; i++) {
++
++            completion = &batch_task->completions[i];
++            status = completion->status;
++
++            assert(status == DSA_COMP_SUCCESS ||
++                status == DSA_COMP_PAGE_FAULT_NOBOF);
++
++            task_cpu_fallback_int(completion,
++                                  &batch_task->descriptors[i],
++                                  &results[i]);
++        }
++    }
++}
++
+ /**
+  * @brief Check if DSA is running.
+  *
+@@ -956,3 +1038,38 @@ void qemu_dsa_cleanup(void)
+     dsa_device_group_cleanup(&dsa_group);
+ }
+ 
++/**
++ * @brief Performs buffer zero comparison on a DSA batch task synchronously.
++ *
++ * @param batch_task A pointer to the batch task.
++ * @param buf An array of memory buffers.
++ * @param count The number of buffers in the array.
++ * @param len The buffer length.
++ *
++ * @return Zero if successful, otherwise non-zero.
++ */
++int
++buffer_is_zero_dsa_batch_sync(QemuDsaBatchTask *batch_task,
++                              const void **buf, size_t count, size_t len)
++{
++    if (count <= 0 || count > batch_task->batch_size) {
++        return -1;
++    }
++
++    assert(batch_task != NULL);
++    assert(len != 0);
++    assert(buf != NULL);
++
++    if (count == 1) {
++        /* DSA doesn't take batch operation with only 1 task. */
++        buffer_zero_dsa_async(batch_task, buf[0], len);
++    } else {
++        buffer_zero_dsa_batch_async(batch_task, buf, count, len);
++    }
++
++    buffer_zero_dsa_wait(batch_task);
++    buffer_zero_cpu_fallback(batch_task);
++
++    return 0;
++}
++
 -- 
 Yichen Wang
 
