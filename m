@@ -4,52 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96502C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D518C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRx9o-0002ba-KL; Thu, 11 Jul 2024 13:00:40 -0400
+	id 1sRxCG-0001P0-O5; Thu, 11 Jul 2024 13:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRx9W-0002S6-Os; Thu, 11 Jul 2024 13:00:20 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRx9Q-0003J0-KD; Thu, 11 Jul 2024 13:00:17 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKgvT1lqwz4x12;
- Fri, 12 Jul 2024 03:00:05 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKgvR1kVGz4wbr;
- Fri, 12 Jul 2024 03:00:02 +1000 (AEST)
-Message-ID: <d98c2029-1505-4d2c-93e3-b27877dbdea7@kaod.org>
-Date: Thu, 11 Jul 2024 19:00:00 +0200
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sRxCD-0001OQ-St
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:03:06 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sRxC7-0005Xp-LN
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:03:05 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-58b0dddab63so1927266a12.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 10:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720717378; x=1721322178; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wETisyh9GyMnQN2K84a+9d56iko12Lbicq2jC+Tk7iE=;
+ b=K/blYv0BQrIiZCjU3ZVbVG7MJkJ8ZVM2sIQ2SsqtNE93B2RlI5hz+Dqf5t8CsmCxb6
+ ZKyp+pSL0GQRmYYnhFMNmh6I3t8iIrOgsqaOuOKvguMBX4WkPKy+x5KeP7Qa8A6UzC4F
+ /n00QTu/qX8/jiP+QLuI11ibcXGDx1uIXwQm/sxwes/lXaJSgtt0JlRu1rqD/CnOTMgV
+ 5nINdR8Z2JEpwg8ZskTx4rlI+2u4XS17cypF8nlAguHBEeupkAac8L4WCCvCIhpYBzBE
+ 9epS7n+YXCX945dttBkbv/9qVevn+Y8C1a6Jr78T29OOxiP2RWI+gGNVT2tUBvazfaG/
+ h+UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720717378; x=1721322178;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wETisyh9GyMnQN2K84a+9d56iko12Lbicq2jC+Tk7iE=;
+ b=NlPnWxgWnTVrNxhQCTf0bAl8Ne/UbZZK7oSAMnzXGshpftREvgMdZr/ycJJNiI2AAk
+ Y3po55JuERwWhzU4Wd08Vz0IfT/L0kYaKbVkys/b5hdRYSgt9qIPSSfTLkNeRmC5AhXt
+ ny7R3HMrbciKJEiknpfvNIHVDoGo0pHmeK1Iu9yDmUDvbpsofMLl7rnM5rtWlDQMiYPX
+ 79oSNaUN2R++XQpEQBDPWV4xjoepM5UbXbAQ4+RGKUmmlXvKqBm2SJfmwu3/sMHUcPmR
+ B99QgqKnSPCHqQZ2Q/6uhHVlrQJdgzza1xvmtabEzSeTjYEbI+RGtYLV531T4fPVYNAr
+ b8rw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHkzxZDqrhXQPK6KVkrUP8RXz0mrNXe+cg4OKWe3mHs5lAZgsU3aZqUqa+9C3Bor0pDaCWGTGZ6U8RLFI/KNHCErEtjGY=
+X-Gm-Message-State: AOJu0YwJeAKTSIcXZN8vIMZGHUc8e5P9D4eB/IKRDG93QJt3ruZvOtPw
+ 1/a1/gYPPNf9koXVKZYr31NXvD0Bcw4myxTojPkPk77C16qJwGGH9x4cZURhb8UJitazk4thher
+ joayvefLr0xcasmF5zspOq8phezI=
+X-Google-Smtp-Source: AGHT+IEsukcI36T6elG/LvNqbD0c2N7wco6+EuItCMh7tL6k4STu3i+3KSa+3NPKbB3XsuChEvHmNkQm3mWBLU5kihc=
+X-Received: by 2002:a05:6402:2787:b0:58b:fd23:7065 with SMTP id
+ 4fb4d7f45d1cf-594ba0cbe1amr6543946a12.16.1720717377450; Thu, 11 Jul 2024
+ 10:02:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/18] ppc/pnv: Add an LPAR per core machine option
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20240711141851.406677-1-npiggin@gmail.com>
- <20240711141851.406677-19-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240711141851.406677-19-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <alpine.DEB.2.22.394.2407101322290.3635@ubuntu-linux-20-04-desktop>
+ <87frsgqly9.fsf@draig.linaro.org>
+In-Reply-To: <87frsgqly9.fsf@draig.linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Thu, 11 Jul 2024 19:02:45 +0200
+Message-ID: <CAJy5ezrjciMzCbKGz64ofynTJwNxCousRLSgVT-g1Jbn7fYqyg@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: add Edgar as Xen maintainer
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org,
+ anthony@xenproject.org, 
+ paul@xen.org, peter.maydell@linaro.org, richard.henderson@linaro.org, 
+ stefanha@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000000ab810061cfbbc4c"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,176 +93,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 16:18, Nicholas Piggin wrote:
-> Recent POWER CPUs can operate in "LPAR per core" or "LPAR per thread"
-> modes. In per-core mode, some SPRs and IPI doorbells are shared between
-> threads in a core. In per-thread mode, supervisor and user state is
-> not shared between threads.
-> 
-> OpenPOWER systems after POWER8 use LPAR per thread mode, and it is
-> required for KVM. Enterprise systems use LPAR per core mode, as they
-> partition the machine by core.
-> 
-> Implement a lpar-per-core machine option for powernv machines. This
-> is fixed true for POWER8 machines, and defaults off for P9 and P10.
-> 
-> With this change, powernv8 SMT now works sufficiently to run Linux,
-> including KVM.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ppc/pnv.h      |  1 +
->   include/hw/ppc/pnv_core.h |  1 +
->   hw/ppc/pnv.c              | 29 +++++++++++++++++++++++++++++
->   hw/ppc/pnv_core.c         |  8 ++++++++
->   target/ppc/cpu_init.c     |  3 ++-
->   5 files changed, 41 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index b7858d310d..73f0d72f55 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -104,6 +104,7 @@ struct PnvMachineState {
->       hwaddr       fw_load_addr;
->   
->       bool         big_core;
-> +    bool         lpar_per_core;
->   };
->   
->   PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index 1de79a818e..d8afb4f95f 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -57,6 +57,7 @@ struct PnvCore {
->       /*< public >*/
->       PowerPCCPU **threads;
->       bool big_core;
-> +    bool lpar_per_core;
->       uint32_t pir;
->       uint32_t hwid;
->       uint64_t hrmor;
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 71b2b3806c..f9a05fa0ff 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -1026,6 +1026,11 @@ static void pnv_init(MachineState *machine)
->           exit(1);
->       }
->   
-> +    if (!object_property_find(OBJECT(pnv), "lpar-per-core")) {
-> +        /* POWER8 is always in lpar-per-core mode */
-> +        pnv->lpar_per_core = true;
-> +    }
+--0000000000000ab810061cfbbc4c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-yep.
+On Thu, Jul 11, 2024 at 12:09=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
 
-A better alternative would be to introduce a PnvChipClass::lpar_per_core
-attribute (set to true for POWER8) and OR PnvChipClass::lpar_per_core
-with pnv->lpar_per_core to set the "lpar-per-core" property of PnvCore
-in pnv_chip_core_realize().
+> Stefano Stabellini <sstabellini@kernel.org> writes:
+>
+> > Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU
+> > maintainer for years, and has already made key changes to one of the
+> > most difficult areas of the Xen subsystem (the mapcache).
+> >
+> > Edgar volunteered helping us maintain the Xen subsystem in QEMU and we
+> > are very happy to welcome him to the team. His knowledge and expertise
+> > with QEMU internals will be of great help.
+> >
+> > Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+>
+Thanks all!
 
+I'll put this together with the reviewed mapcache fixes into a pull-request=
+!
 
-Thanks,
+Best regards,
+Edgar
 
-C.
+--0000000000000ab810061cfbbc4c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Jul 11, 2024 at 12:09=E2=80=AFPM =
+Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@=
+linaro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">Stefano Stabellini &lt;<a href=3D"mail=
+to:sstabellini@kernel.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;=
+ writes:<br>
+<br>
+&gt; Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU<b=
+r>
+&gt; maintainer for years, and has already made key changes to one of the<b=
+r>
+&gt; most difficult areas of the Xen subsystem (the mapcache).<br>
+&gt;<br>
+&gt; Edgar volunteered helping us maintain the Xen subsystem in QEMU and we=
+<br>
+&gt; are very happy to welcome him to the team. His knowledge and expertise=
+<br>
+&gt; with QEMU internals will be of great help.<br>
+&gt;<br>
+&gt; Signed-off-by: Stefano Stabellini &lt;<a href=3D"mailto:stefano.stabel=
+lini@amd.com" target=3D"_blank">stefano.stabellini@amd.com</a>&gt;<br>
+<br>
+Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org"=
+ target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br><br></blockquote><div>=
+<br></div><div>Thanks all!</div><div><br></div><div>I&#39;ll put this toget=
+her with the reviewed mapcache fixes into a pull-request!</div><div><br></d=
+iv><div>Best regards,</div><div>Edgar=C2=A0</div></div></div>
 
-
->       pnv->num_chips =
->           machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
->   
-> @@ -2589,6 +2594,18 @@ static void pnv_machine_set_big_core(Object *obj, bool value, Error **errp)
->       pnv->big_core = value;
->   }
->   
-> +static bool pnv_machine_get_1lpar(Object *obj, Error **errp)
-> +{
-> +    PnvMachineState *pnv = PNV_MACHINE(obj);
-> +    return pnv->lpar_per_core;
-> +}
-> +
-> +static void pnv_machine_set_1lpar(Object *obj, bool value, Error **errp)
-> +{
-> +    PnvMachineState *pnv = PNV_MACHINE(obj);
-> +    pnv->lpar_per_core = value;
-> +}
-> +
->   static bool pnv_machine_get_hb(Object *obj, Error **errp)
->   {
->       PnvMachineState *pnv = PNV_MACHINE(obj);
-> @@ -2662,6 +2679,12 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
->                                      pnv_machine_set_big_core);
->       object_class_property_set_description(oc, "big-core",
->                                 "Use big-core (aka fused-core) mode");
-> +
-> +    object_class_property_add_bool(oc, "lpar-per-core",
-> +                                   pnv_machine_get_1lpar,
-> +                                   pnv_machine_set_1lpar);
-> +    object_class_property_set_description(oc, "lpar-per-core",
-> +                              "Use 1 LPAR per core mode");
->   }
->   
->   static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
-> @@ -2709,6 +2732,12 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
->                                      pnv_machine_set_big_core);
->       object_class_property_set_description(oc, "big-core",
->                                 "Use big-core (aka fused-core) mode");
-> +
-> +    object_class_property_add_bool(oc, "lpar-per-core",
-> +                                   pnv_machine_get_1lpar,
-> +                                   pnv_machine_set_1lpar);
-> +    object_class_property_set_description(oc, "lpar-per-core",
-> +                              "Use 1 LPAR per core mode");
->   }
->   
->   static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
-> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index a685a5dc1b..5a6fcb6edc 100644
-> --- a/hw/ppc/pnv_core.c
-> +++ b/hw/ppc/pnv_core.c
-> @@ -208,6 +208,9 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
->                   val |= PPC_BIT(56 + i);
->               }
->           }
-> +        if (pc->lpar_per_core) {
-> +            val |= PPC_BIT(62);
-> +        }
->           break;
->       case PNV10_XSCOM_EC_CORE_THREAD_INFO:
->           break;
-> @@ -320,6 +323,10 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
->           env->core_index = core_hwid;
->       }
->   
-> +    if (pc->lpar_per_core) {
-> +        cpu_ppc_set_1lpar(cpu);
-> +    }
-> +
->       /* Set time-base frequency to 512 MHz */
->       cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
->   }
-> @@ -352,6 +359,7 @@ static void pnv_core_realize(DeviceState *dev, Error **errp)
->   
->       pc->big_core = pnv->big_core;
->       pc->tod_state.big_core_quirk = pmc->quirk_tb_big_core;
-> +    pc->lpar_per_core = pc->chip->pnv_machine->lpar_per_core;
->   
->       pc->threads = g_new(PowerPCCPU *, cc->nr_threads);
->       for (i = 0; i < cc->nr_threads; i++) {
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 9349001b76..0fc83d5cc2 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6785,7 +6785,8 @@ void cpu_ppc_set_1lpar(PowerPCCPU *cpu)
->   
->       /*
->        * pseries SMT means "LPAR per core" mode, e.g., msgsndp is usable
-> -     * between threads.
-> +     * between threads. powernv be in either mode, and it mostly affects
-> +     * supervisor visible registers and instructions.
->        */
->       if (env->flags & POWERPC_FLAG_SMT) {
->           env->flags |= POWERPC_FLAG_SMT_1LPAR;
-
+--0000000000000ab810061cfbbc4c--
 
