@@ -4,129 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 835B8C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 11:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F0FC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 11:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRrtY-00037y-Bt; Thu, 11 Jul 2024 07:23:28 -0400
+	id 1sRru7-0005tj-6R; Thu, 11 Jul 2024 07:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRrtR-00036j-Ox
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:23:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+c45b4986abac73e3a3bc+7627+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sRru1-0005Xr-Tk
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:23:59 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sRrtP-0000Rz-Q0
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:23:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720696999;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0huqPjI6wAGLjUHTG50iB5AUUBEw7ZShfPaeHVBkOqw=;
- b=A0gFTDOyQjULGhN9HtLgiEMOzKwPNK5UBLMf1btqVWhTgENEcM9801xWs9isFcSoNzbQ6c
- sz+w8XicwHwTozR2qt128aFXGAh/+JbogGm/2C7I8ysH82bef5+RXaLnX0krGDj31NgMUK
- YESlAOGWOZ47Hvb+5VjBdrdHp/L6cMU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-iukWR7DNOPKGVTOAaBLIRw-1; Thu, 11 Jul 2024 07:23:17 -0400
-X-MC-Unique: iukWR7DNOPKGVTOAaBLIRw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3679aa0ee0aso391561f8f.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 04:23:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720696996; x=1721301796;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0huqPjI6wAGLjUHTG50iB5AUUBEw7ZShfPaeHVBkOqw=;
- b=BJ0m0VbTUio1KWbBA65NgiTtCKMExtqaocJNMf1F/ewNmt4EYCwNA4BllDP4AkKqC1
- 6iw6H3yhouUl9CG2xQQEbxejxDp5loW41+Ah+uxuBDidbdqGowIIzHM7o8JJeEnjY8NQ
- nmeDin+DuTHzaZqY5SU6Ecx12b+KcuvfYEIxr549ZgAfZY7wcj96WkuCKZrmbJWa/k/H
- jq435eA9lhW8x0JyJfA6OxwbZPpXXcTO+4XEMovm7DejvsoYrZl8423YiooKo4Ed03VW
- B/2pls77j99L4pMJ5Px5mR+rRINnYWF8MZ2tDHyA2DF56gRlWUT/XBFEnx3NxcBqff2H
- pfOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVr3Z1WqupESqwyJ0WL+Fm8h5wVsmuVmo+c+gDJzuN5g2SLUEtqsF+EptZvADC0bjnBwsI9YXPsdOPgW4j99esAGxxxTo0=
-X-Gm-Message-State: AOJu0YzfXb7clH6fDIilrZuroEB6L2CYiuWKbYC8napJkZ57QIFHJQ1w
- Ihy+SJiL/cGQvi9HlZHuQsnJMC/y098/AclzFNkzLqi4MSq4ECyHGWiZQkJIWh4Frcz3gKvcZEy
- EU3gwF2V0g6Rjn9dseL3i58OnHLUnqu139ZN6LEhWy87cKqMo4UY0
-X-Received: by 2002:a05:6000:1a42:b0:367:83e9:b4a5 with SMTP id
- ffacd0b85a97d-367ceac4899mr4280590f8f.49.1720696996486; 
- Thu, 11 Jul 2024 04:23:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/2U57UJyl6o8lZ3R5X3AlDTLeQeTkeFvv16+BZeTlwspH84WYppNjbx+73ACMYMzdthyADQ==
-X-Received: by 2002:a05:6000:1a42:b0:367:83e9:b4a5 with SMTP id
- ffacd0b85a97d-367ceac4899mr4280580f8f.49.1720696996013; 
- Thu, 11 Jul 2024 04:23:16 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.101.29])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-367cdfab111sm7443061f8f.97.2024.07.11.04.23.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 04:23:15 -0700 (PDT)
-Message-ID: <1cfb54b4-0b13-46ef-881c-5acb71fe56fc@redhat.com>
-Date: Thu, 11 Jul 2024 13:23:07 +0200
+ (Exim 4.90_1) (envelope-from
+ <BATV+c45b4986abac73e3a3bc+7627+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sRrtz-0000jz-5Y
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:23:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=99cVyyQ2odYxjlH9jbfYIPcuV91iXMWp6ae9KAJqHFk=; b=KPXccaRFCB1veqmZovPN/YJnpA
+ v0I8C2Dup+861TSjqCTGNb46/KYNnt9mtzkvGc5iOGFNRHMSXoW1eS2j4C+t3I+PQ+ve8HWnZYKO0
+ x7qqzYwmEb+KgPRC59wuzn50Xv6OGf8XSXfVrccofh1I2MoRwhIUBnupwuG78zWIsFSR6gM4V16A1
+ f0c1UASXtirGmhhHc0IPtpx3nXWmhxT8b7ZwUZCQS+9JIIsyUVbCGELBZM6sZP65Dsfc03xOEoJni
+ Osw8moctXDHKh9Rgc39Aq+f54McOZgEP/2p9QtkOks0O+wSSiDebRrSrkniHBKqHo2n0Vv0oQR6u/
+ zd9urnXw==;
+Received: from [2001:8b0:10b:5:bac6:9a6f:ee75:2e7b]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sRrtu-0000000Azei-31yU; Thu, 11 Jul 2024 11:23:50 +0000
+Message-ID: <2cffab2dc20f99ab0c0391bbf5076113cf74411b.camel@infradead.org>
+Subject: Re: More than 255 vcpus Windows VM setup without viommu ?
+From: David Woodhouse <dwmw2@infradead.org>
+To: Sandesh Patel <sandesh.patel@nutanix.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Rob Scheepens
+ <rob.scheepens@nutanix.com>, Prerna Saxena <confluence@nutanix.com>, Dexuan
+ Cui <decui@microsoft.com>, Alexander Graf <alex@csgraf.de>
+Date: Thu, 11 Jul 2024 12:23:50 +0100
+In-Reply-To: <b37283824ff4b7c6cc3a0c51199e6aa9b4b658a3.camel@infradead.org>
+References: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
+ <3bb7c269ab0a13fe4398d2c7920d2f6bf8e86d47.camel@infradead.org>
+ <7BBA47BD-AC3D-4F12-A860-AD3F2B509257@nutanix.com>
+ <39b92288418839e9cdba447705a44a8e216dedc3.camel@infradead.org>
+ <b37283824ff4b7c6cc3a0c51199e6aa9b4b658a3.camel@infradead.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-ci3BSmjT+aobvZCZC5um"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] chardev: add a mutex to protect IOWatchPoll::src
-To: Sergey Dyasli <sergey.dyasli@nutanix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240711095106.185377-1-sergey.dyasli@nutanix.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20240711095106.185377-1-sergey.dyasli@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+c45b4986abac73e3a3bc+7627+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,180 +82,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 11:51, Sergey Dyasli wrote:
-> After 038b4217884c ("Revert "chardev: use a child source for qio input
-> source"") we've been observing the "iwp->src == NULL" assertion
-> triggering periodically during the initial capabilities querying by
-> libvirtd. One of possible backtraces:
 
-Hi Sergey,
+--=-ci3BSmjT+aobvZCZC5um
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-thanks for the analysis!
+On Thu, 2024-07-11 at 08:26 +0100, David Woodhouse wrote:
+>=20
+> I used identical command lines on both, and on each host I got the same
+> result with all of '-cpu host', '-cpu EPYC' and -cpu Skylake-Server'.
+> It's the *host* that makes the difference, not the CPUID presented to
+> the guest.
 
-I noticed however that this comment is really old; it was added from 
-commit 2b316774f60 ("qemu-char: do not operate on sources from finalize 
-callbacks", 2013-04-22):
+Actually... it turns out QEMU isn't really advertising the CPUID we ask
+it to. Leaf zero still does say 'AuthenticAMD' vs. GenuineIntel'
+according to the *host* it's running on, regardless of the -cpu option.
 
-     /* Due to a glib bug, removing the last reference to a source
-      * inside a finalize callback causes recursive locking (and a
-      * deadlock).  This is not a problem inside other callbacks,
-      * including dispatch callbacks, so we call io_remove_watch_poll
-      * to remove this source.  At this point, iwp->src must
-      * be NULL, or we would leak it.
-      *
-      * This would be solved much more elegantly by child sources,
-      * but we support older glib versions that do not have them.
-      */
+And it is indeed *just* that which seems to trigger the Windows bug,
+setting IRQ2 to point somewhere bogus:
 
-and the original mailing list message points to a problem on RHEL6 and 
-Wheezy, which were both relatively old in 2013.  And in fact the issue 
-with finalize had been fixed in glib in 2010:
+vtd_ir_remap_msi_req addr 0xfee00004 data 0x0 sid 0xffff do_fault 0
+vtd_ir_remap_msi (addr 0xfee00004, data 0x0) -> (addr 0xfee00004, data 0x0)
+kvm_irqchip_update_msi_route Updating MSI route virq=3D2
 
-     commit b358202856682e5cdefb0b4b8aaed3a45d9a85fa
-     Author: Dan Winship <danw@gnome.org>
-     Date:   Sat Nov 6 09:35:25 2010 -0400
+While in the happy case it does use a remappable format MSI message.
+Not direct to vector 209 on CPU0 as I said before; I think that's IRTE
+entry #209 which maps to vector 209 on CPU1.
 
-     gmain: move finalization of GSource outside of context lock
+vtd_ir_remap_msi_req addr 0xfee00010 data 0xd1 sid 0xffff do_fault 0
+vtd_ir_irte_get index 0 low 0x0 high 0x100d10005
+vtd_ir_remap index 0 trigger 0 vector 209 deliver 0 dest 0x1 mode 1
+vtd_ir_remap_type IOAPIC
+vtd_ir_remap_msi (addr 0xfee00010, data 0xd1) -> (addr 0xfee01004, data 0x4=
+0d1)
 
-     This avoids ugly deadlock situations such as in
-     https://bugzilla.gnome.org/show_bug.cgi?id=586432
+So it looks like Windows doesn't actually cope with Intel IRQ remapping
+when it sees and AMD CPU, which is suboptimal.
 
-     https://bugzilla.gnome.org/show_bug.cgi?id=626702
+So to support >255 vCPUs on AMD without having to also do *DMA*
+translation, either we need to come up with a trick like the "no
+supported address widths" we use for dma-translation=3Doff on Intel, or
+we see if we can persuade Windows to use the 15-bit MSI support.
 
-     https://bugzilla.gnome.org/show_bug.cgi?id=634239
 
-diff --git a/glib/gmain.c b/glib/gmain.c
-index b182c6607..301adb0a7 100644
---- a/glib/gmain.c
-+++ b/glib/gmain.c
-@@ -1520,7 +1520,13 @@ g_source_unref_internal (GSource      *source,
-         g_source_list_remove (source, context);
+Looking at the Linux guest support, it seems to look just at the HyperV
+CPUID leaves 0x40000081 and 0x40000082. QEMU knows of those only for
+SYNDBG; Sandesh do you want to try setting the
+HYPERV_VS_PROPERTIES_EAX_EXTENDED_IOAPIC_RTE bit that Linux looks for,
+and see how that affects Windows guests (with no emulated IOMMU)?
 
-        if (source->source_funcs->finalize)
--       source->source_funcs->finalize (source);
-+       {
-+         if (context)
-+           UNLOCK_CONTEXT (context);
-+         source->source_funcs->finalize (source);
-+         if (context)
-+           LOCK_CONTEXT (context);
-+       }
 
-        g_free (source->name);
-        source->name = NULL;
+--=-ci3BSmjT+aobvZCZC5um
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-So I think we should just revert commit 2b316774f60, which is not hard 
-to do (if it works) even if the code has since moved from qemu-char.c to 
-chardev/char-io.c.
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzExMTEyMzUwWjAvBgkqhkiG9w0BCQQxIgQgDlZVRmXW
+bKAc80KziVPsorSOgIue4z5vayn8zdEnN/Iwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgCL5AouKCTKJBOYVF5OhSb+3rWuWfRfMLL5
+rV1BUew5T9r3ZQOmzCMFPnVBkZpWcjQgSeCozznKX6Yl84hyEvbLg+wsO9MpsQygbAgFNGgaEJdV
+Gqz1ydgaqVcmm0sNCA1ZhZ8r/XVlDQd3JcVAEqIZyODvnhs0RWZqYpNG3kVBgr9B8mHL4a69nnEB
+ebAbj29y/31g05EgboL601yLHEeIpwdt7mxXKOn7156hvAevWzZENcLQBoSVJgTxa+/JNgidRMWk
+urkAJ6DJS5hLYHqF/GLcJWYhwvm9q14CnsbN/Jff5MEQkaVLf3B9N8ILwQ8Y4AjXg4vFXd3xBsd8
+II6QWdbGf8exOurwMMr8X+mKIRW3yJGWbD/OvH3fnNmU+GUhpSk77DLQzRHwDgkZha11c6dAqZsR
+JDTq6eDfgK2q0G+zYiZnqVWC3RzJjrlm5Z2XxH/Jy4u70tcTRE9MTxgq+8YoiYxdSF3UnU/mHRUj
+F+zauhvEv3Ddt3s3qYxIUbp/52A2+ucbXG2Ku0qM4Pc8TseCl9HrgL6IHfpkHfgTRXtLDsPuRYhc
+SUc6PiztQIrZmhNR6zjLhNydQmQp9ayTXy3O0fTQ1ncj/1QERwTkWvJDqAr8K8drx0bNyYTXA0nh
+L2I4qTc9qXaAMNI/isWN/2pnLewSYE5hu1rbeRHfVAAAAAAAAA==
 
-Thanks,
 
-Paolo
-
-> Thread 1 (Thread 0x7f16cd4f0700 (LWP 43858)):
-> 0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
-> 1  0x00007f16c6c21e65 in __GI_abort () at abort.c:79
-> 2  0x00007f16c6c21d39 in __assert_fail_base  at assert.c:92
-> 3  0x00007f16c6c46e86 in __GI___assert_fail (assertion=assertion@entry=0x562e9bcdaadd "iwp->src == NULL", file=file@entry=0x562e9bcdaac8 "../chardev/char-io.c", line=line@entry=99, function=function@entry=0x562e9bcdab10 <__PRETTY_FUNCTION__.20549> "io_watch_poll_finalize") at assert.c:101
-> 4  0x0000562e9ba20c2c in io_watch_poll_finalize (source=<optimized out>) at ../chardev/char-io.c:99
-> 5  io_watch_poll_finalize (source=<optimized out>) at ../chardev/char-io.c:88
-> 6  0x00007f16c904aae0 in g_source_unref_internal () from /lib64/libglib-2.0.so.0
-> 7  0x00007f16c904baf9 in g_source_destroy_internal () from /lib64/libglib-2.0.so.0
-> 8  0x0000562e9ba20db0 in io_remove_watch_poll (source=0x562e9d6720b0) at ../chardev/char-io.c:147
-> 9  remove_fd_in_watch (chr=chr@entry=0x562e9d5f3800) at ../chardev/char-io.c:153
-> 10 0x0000562e9ba23ffb in update_ioc_handlers (s=0x562e9d5f3800) at ../chardev/char-socket.c:592
-> 11 0x0000562e9ba2072f in qemu_chr_fe_set_handlers_full at ../chardev/char-fe.c:279
-> 12 0x0000562e9ba207a9 in qemu_chr_fe_set_handlers at ../chardev/char-fe.c:304
-> 13 0x0000562e9ba2ca75 in monitor_qmp_setup_handlers_bh (opaque=0x562e9d4c2c60) at ../monitor/qmp.c:509
-> 14 0x0000562e9bb6222e in aio_bh_poll (ctx=ctx@entry=0x562e9d4c2f20) at ../util/async.c:216
-> 15 0x0000562e9bb4de0a in aio_poll (ctx=0x562e9d4c2f20, blocking=blocking@entry=true) at ../util/aio-posix.c:722
-> 16 0x0000562e9b99dfaa in iothread_run (opaque=0x562e9d4c26f0) at ../iothread.c:63
-> 17 0x0000562e9bb505a4 in qemu_thread_start (args=0x562e9d4c7ea0) at ../util/qemu-thread-posix.c:543
-> 18 0x00007f16c70081ca in start_thread (arg=<optimized out>) at pthread_create.c:479
-> 19 0x00007f16c6c398d3 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-> 
-> io_remove_watch_poll(), which makes sure that iwp->src is NULL, calls
-> g_source_destroy() which finds that iwp->src is not NULL in the finalize
-> callback. This can only happen if another thread has managed to trigger
-> io_watch_poll_prepare() callback in the meantime.
-> 
-> Introduce a mutex and a boolean variable to prevent other threads
-> creating a watch in io_watch_poll_prepare() in case that the IOWatchPoll
-> itself is about to get destroyed.
-> 
-> Signed-off-by: Sergey Dyasli <sergey.dyasli@nutanix.com>
-> ---
->   chardev/char-io.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
-> diff --git a/chardev/char-io.c b/chardev/char-io.c
-> index dab77b112e35..b1edccf0cc85 100644
-> --- a/chardev/char-io.c
-> +++ b/chardev/char-io.c
-> @@ -34,6 +34,9 @@ typedef struct IOWatchPoll {
->       GSourceFunc fd_read;
->       void *opaque;
->       GMainContext *context;
-> +
-> +    QemuMutex mut;
-> +    bool dead;
->   } IOWatchPoll;
->   
->   static IOWatchPoll *io_watch_poll_from_source(GSource *source)
-> @@ -62,10 +65,20 @@ static gboolean io_watch_poll_prepare(GSource *source,
->        * more data.
->        */
->       if (now_active) {
-> +        qemu_mutex_lock(&iwp->mut);
-> +
-> +        /* Don't create a watch if we are about to be destroyed. */
-> +        if (iwp->dead) {
-> +            qemu_mutex_unlock(&iwp->mut);
-> +            return FALSE;
-> +        }
-> +
->           iwp->src = qio_channel_create_watch(
->               iwp->ioc, G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL);
->           g_source_set_callback(iwp->src, iwp->fd_read, iwp->opaque, NULL);
->           g_source_attach(iwp->src, iwp->context);
-> +
-> +        qemu_mutex_unlock(&iwp->mut);
->       } else {
->           g_source_destroy(iwp->src);
->           g_source_unref(iwp->src);
-> @@ -97,6 +110,7 @@ static void io_watch_poll_finalize(GSource *source)
->        */
->       IOWatchPoll *iwp = io_watch_poll_from_source(source);
->       assert(iwp->src == NULL);
-> +    qemu_mutex_destroy(&iwp->mut);
->   }
->   
->   static GSourceFuncs io_watch_poll_funcs = {
-> @@ -124,6 +138,8 @@ GSource *io_add_watch_poll(Chardev *chr,
->       iwp->fd_read = (GSourceFunc) fd_read;
->       iwp->src = NULL;
->       iwp->context = context;
-> +    qemu_mutex_init(&iwp->mut);
-> +    iwp->dead = false;
->   
->       name = g_strdup_printf("chardev-iowatch-%s", chr->label);
->       g_source_set_name((GSource *)iwp, name);
-> @@ -139,11 +155,16 @@ static void io_remove_watch_poll(GSource *source)
->       IOWatchPoll *iwp;
->   
->       iwp = io_watch_poll_from_source(source);
-> +
-> +    qemu_mutex_lock(&iwp->mut);
-> +    iwp->dead = true;
->       if (iwp->src) {
->           g_source_destroy(iwp->src);
->           g_source_unref(iwp->src);
->           iwp->src = NULL;
->       }
-> +    qemu_mutex_unlock(&iwp->mut);
-> +
->       g_source_destroy(&iwp->parent);
->   }
->   
-
+--=-ci3BSmjT+aobvZCZC5um--
 
