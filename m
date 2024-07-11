@@ -4,138 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801EEC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 21:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6E1C3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 21:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS13g-0006MJ-3K; Thu, 11 Jul 2024 17:10:33 -0400
+	id 1sS15z-0003NS-5d; Thu, 11 Jul 2024 17:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sS13e-0006Jq-P9
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:10:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sS13c-0005bZ-7S
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:10:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720732223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BBjenzPFcBpGzGugkcuzzvbWd0Rr6jff4//ogrPloxg=;
- b=alcCwJ4EYRh03x3uw2J/YtKFPC8sfLU4bIbr2l/Y3ZegIK2sF0oWYT0rL5dcScFiPiD2vZ
- R0Ham1l62Zg4DcRbisqQXcpGT/8okk/dRM725GhxbbAe9Z8sM8OUuu09zpuXfzIhJcbPA7
- QpiB1C62PvcouF3UBmn+czi864I58mc=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-x9_tjGErPpyutKfSGTZbbg-1; Thu, 11 Jul 2024 17:10:22 -0400
-X-MC-Unique: x9_tjGErPpyutKfSGTZbbg-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-70b12d4d4f4so1077743b3a.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 14:10:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720732221; x=1721337021;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=BBjenzPFcBpGzGugkcuzzvbWd0Rr6jff4//ogrPloxg=;
- b=B87miFmKPb6FM1KQ6Cu5Pjl3qkRpZFkqAIRMDmBeu9LmMPI3ApBpM0a3PTJLn4i5s5
- 7q539Ew0GVK+kqwGP3tlCqiBDR6wL5xO+kBHJ6gt3zoVDYd7TQTXD5cFcfGJhb6YDVKJ
- kPXOR9JYuuSaJNEc0TLjPIXS+zge25EMjJwHpQ7Wf2EJPe5Lk72R/nTC9mv0z+leUOEo
- X1MUducj6ES0raHdLSGhtoyD1KTNmg9rl8e9/15F/PY8xUrej1lKJOZMIgPOAxXmrrjq
- aC9elu+TGeAq2fFRxgvmq1lVPJOm3xVjOVTWeUM1MsZmoE9aADs2MvTqk+ZqfpwtL4x2
- 0IKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzN8FzlpzuWj7KU2juyHEJGGj7QKXbSCi+5vccm0AeNPNmOx2Z60qCILM0leFIzyVnjEqTBa7HrT17FTZmAhal9rS0nWc=
-X-Gm-Message-State: AOJu0Yw1bAEYo8WFXQcwxOK1/k7HdkRQ8NUfTBLS/Xv3qw6w5rIjzn2L
- bItkEBZAHRRtAkVdN9Bo4KhzsBOZoGeXiH3knypGi0lJfwI8W0PC+r9FLEfadr0Jv8TnTm+zpxM
- kRg59q7Oay7j0Y5m7sqe8tiiMv63ErUCzmuJuEP6VEAnyU3Ev3P/S
-X-Received: by 2002:a05:6a00:3ccf:b0:70a:f22d:caeb with SMTP id
- d2e1a72fcca58-70b434f1eecmr12440820b3a.4.1720732221243; 
- Thu, 11 Jul 2024 14:10:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0RkwPrHT/X5wVzMoFZDwFNgchf60btsb48x3Xz8EyHZjx8mqJ62RvyQDD/B2/wlN9U42okQ==
-X-Received: by 2002:a05:6a00:3ccf:b0:70a:f22d:caeb with SMTP id
- d2e1a72fcca58-70b434f1eecmr12440573b3a.4.1720732215897; 
- Thu, 11 Jul 2024 14:10:15 -0700 (PDT)
-Received: from [172.20.2.228] ([4.28.11.157]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438c5ed4sm6156921b3a.65.2024.07.11.14.10.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 14:10:15 -0700 (PDT)
-Message-ID: <3d93bd6b-7ca2-44e0-839b-a504a76b79a0@redhat.com>
-Date: Thu, 11 Jul 2024 23:10:14 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sS15x-0003MV-D9
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:12:53 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sS15v-0006CT-Hk
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:12:53 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C23671FB4B;
+ Thu, 11 Jul 2024 21:12:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720732367; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdGbNHSyvbcr0DDdD+UzePB44/fqETZwIKfI6gS8b+4=;
+ b=X+PqddZghOIYRQFq6Ib4FRsicuxe3ULmR3LuZ4XRfcedt956yRX8mObSb9D0L8wMLrw/wA
+ JdbMswylcYZV7G+bq0avAxDckOo9wedSyL+tdlDQCMkEbC4kp5tYRhh46+3wBM1Vx/t6lL
+ Sciiy7xcEKoq8cREHn3TXt1vzoXB6pg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720732367;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdGbNHSyvbcr0DDdD+UzePB44/fqETZwIKfI6gS8b+4=;
+ b=wEWEDzcdmWzg/cZ796TQM64uuDlBw4rfZ+rt6tidUdjqwO9h4d73c2SVcTV8Pp4NnPdeXf
+ UjVtU//oqVkHNgDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=X+PqddZg;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wEWEDzcd
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1720732367; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdGbNHSyvbcr0DDdD+UzePB44/fqETZwIKfI6gS8b+4=;
+ b=X+PqddZghOIYRQFq6Ib4FRsicuxe3ULmR3LuZ4XRfcedt956yRX8mObSb9D0L8wMLrw/wA
+ JdbMswylcYZV7G+bq0avAxDckOo9wedSyL+tdlDQCMkEbC4kp5tYRhh46+3wBM1Vx/t6lL
+ Sciiy7xcEKoq8cREHn3TXt1vzoXB6pg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1720732367;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdGbNHSyvbcr0DDdD+UzePB44/fqETZwIKfI6gS8b+4=;
+ b=wEWEDzcdmWzg/cZ796TQM64uuDlBw4rfZ+rt6tidUdjqwO9h4d73c2SVcTV8Pp4NnPdeXf
+ UjVtU//oqVkHNgDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 476B3136AF;
+ Thu, 11 Jul 2024 21:12:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +aneAs9KkGY5fQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 11 Jul 2024 21:12:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org, "Maciej S .
+ Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
+ the channel parameters
+In-Reply-To: <ZpBAL3U6G46OBGEN@x1n>
+References: <20240620212111.29319-7-farosas@suse.de>
+ <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com> <Zn15y693g0AkDbYD@x1n>
+ <877cdtfcsi.fsf@suse.de> <Zo7cncqkxB89AUBe@x1n> <87y169dmu3.fsf@suse.de>
+ <Zo8DaHbWlrNe3RXL@x1n> <87msmodnly.fsf@suse.de> <ZpAEIvbNr-ANuASV@x1n>
+ <87bk33en41.fsf@suse.de> <ZpBAL3U6G46OBGEN@x1n>
+Date: Thu, 11 Jul 2024 18:12:44 -0300
+Message-ID: <878qy7eipf.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] target/s390x: filter deprecated features based on
- model expansion type
-To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com,
- Jiri Denemark <jdenemar@redhat.com>
-References: <20240711203254.49018-1-walling@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240711203254.49018-1-walling@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+X-Rspamd-Queue-Id: C23671FB4B
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-0.51 / 50.00];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Spamd-Bar: /
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,55 +130,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.07.24 22:32, Collin Walling wrote:
-> It is beneficial to provide an interface to retrieve *all* deprecated
-> features in one go. Management applications will need this information
-> to determine which features need to be disabled regardless of the
-> host-model's capabilities.
-> 
-> To remedy this, deprecated features are only filtered during a static
-> expansion. All deperecated features are reported on a full expansion.
-> 
-> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> ---
->   target/s390x/cpu_models_sysemu.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-> index 977fbc6522..76d15f2e4d 100644
-> --- a/target/s390x/cpu_models_sysemu.c
-> +++ b/target/s390x/cpu_models_sysemu.c
-> @@ -211,7 +211,15 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
->       bitmap_zero(bitmap, S390_FEAT_MAX);
->       s390_get_deprecated_features(bitmap);
->   
-> -    bitmap_and(bitmap, bitmap, model->def->full_feat, S390_FEAT_MAX);
-> +    /*
-> +     * For static model expansion, filter out deprecated features that are
-> +     * not a subset of the model's feature set. Otherwise, report the entire
-> +     * deprecated features list.
-> +     */
-> +    if (delta_changes) {
-> +        bitmap_and(bitmap, bitmap, model->def->full_feat, S390_FEAT_MAX);
-> +    }
-> +
+Peter Xu <peterx@redhat.com> writes:
 
-This would likely be the only interface where we expose "more" features 
-than a CPU model actually understands? I guess it wouldn't be that bad 
-because disabling unsupported features will just work, even if the CPU 
-model is not aware of them.
+> On Thu, Jul 11, 2024 at 04:37:34PM -0300, Fabiano Rosas wrote:
+>
+> [...]
+>
+>> We also don't flush the iov at once, so f->buf seems redundant to
+>> me. But of course, if we touch any of that we must ensure we're not
+>> dropping any major optimization.
+>
+> Yes some tests over that would be more persuasive when it comes.
+>
+> Per my limited experience in the past few years: memcpy on chips nowadays
+> is pretty cheap.  You'll see very soon one more example of that when you
+> start to look at the qatzip series: that series decided to do one more
+> memcpy for all guest pages, to make it a larger chunk of buffer instead of
+> submitting the compression tasks in 4k chunks (while I thought 4k wasn't
+> too small itself).
+>
+> That may be more involved so may not be a great example (e.g. the
+> compression algo can be special in this case where it just likes larger
+> buffers), but it's not uncommon that I see people trade things with memcpy,
+> especially small buffers.
+>
+> [...]
+>
+>> Any piece of code that fills an iov with data is prone to be able to
+>> send that data through multifd. From this perspective, multifd is just a
+>> way to give work to an iochannel. We don't *need* to use it, but it
+>> might be simple enough to the point that the benefit of ditching
+>> QEMUFile can be reached without too much rework.
+>> 
+>> Say we provision multifd threads early and leave them waiting for any
+>> part of the migration code to send some data. We could have n-1 threads
+>> idle waiting for the bulk of the data and use a single thread for any
+>> early traffic that does not need to be parallel.
+>> 
+>> I'm not suggesting we do any of this right away or even that this is the
+>> correct way to go, I'm just letting you know some of my ideas and why I
+>> think ram + device state might not be the only data we put through
+>> multifd.
+>
+> We can wait and see whether that can be of any use in the future, even if
+> so, we still have chance to add more types into the union, I think.  But
+> again, I don't expect.
+>
+> My gut feeling: we shouldn't bother putting any (1) non-huge-chunk, or (2)
+> non-IO, data onto multifd.  Again, I would ask "why not the main channel",
+> otherwise.
+>
+> [...]
+>
+>> Just to be clear, do you want a thread-pool to replace multifd? Or would
+>> that be only used for concurrency on the producer side?
+>
+> Not replace multifd.  It's just that I was imagining multifd threads only
+> manage IO stuff, nothing else.
+>
+> I was indeed thinking whether we can reuse multifd threads, but then I
+> found there's risk mangling these two concepts, as: when we do more than IO
+> in multifd threads (e.g., talking to VFIO kernel fetching data which can
+> block), we have risk of blocking IO even if we can push more so the NICs
+> can be idle again.  There's also the complexity where the job fetches data
+> from VFIO kernel and want to enqueue again, it means an multifd task can
+> enqueue to itself, and circular enqueue can be challenging: imagine 8
+> concurrent tasks (with a total of 8 multifd threads) trying to enqueue at
+> the same time; they hunger themselves to death.  Things like that.  Then I
+> figured the rest jobs are really fn(void*) type of things; they should
+> deserve their own pool of threads.
+>
+> So the VFIO threads (used to be per-device) becomes migration worker
+> threads, we need them for both src/dst: on dst there's still pending work
+> to apply the continuous VFIO data back to the kernel driver, and that can't
+> be done by multifd thread too due to similar same reason.  Then those dest
+> side worker threads can also do load() not only for VFIO but also other
+> device states if we can add more.
+>
+> So to summary, we'll have:
+>
+>   - 1 main thread (send / recv)
+>   - N multifd threads (IOs only)
+>   - M worker threads (jobs only)
+>
+> Of course, postcopy not involved..  How's that sound?
 
-So no strong opinion.
+Looks good. There's a better divide between producer and consumer this
+way. I think it will help when designing new features.
 
-Just noting that libvirt cannot really rely on that information because 
-the behavior would change between QEMU versions? Maybe not an issue.
+One observation is that we'll still have two different entities doing IO
+(multifd threads and the migration thread), which I would prefer were
+using a common code at a higher level than the iochannel.
 
-Acked-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
-
+One thing that I tried to look into for mapped-ram was whether we could
+set up iouring in the migration code, but got entirely discouraged by
+the migration thread doing IO at random points. And of course, you've
+seen what we had to do with direct-io. That was in part due to having
+the migration thread in parallel doing it's small writes at undetermined
+points in time.
 
