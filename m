@@ -4,94 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449E2C3DA42
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 02:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9482CC3DA42
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 03:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRjvO-0003vg-B5; Wed, 10 Jul 2024 22:52:50 -0400
+	id 1sRk4n-0001p2-Ei; Wed, 10 Jul 2024 23:02:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sRjvM-0003oe-Bt
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 22:52:48 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sRjvJ-0007sT-LK
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 22:52:48 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3c9cc681ee0so246072b6e.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 19:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720666364; x=1721271164; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cApDvkpHgcDvEBUZlaSazyrta9dSUlvo1AUuexPKHyE=;
- b=J/9Qb5utnTsJEzweD4GsJ7f9zxwDWSN+jExcspMXxmf2NRaZSA1R8g+yYHdSQ9d+LX
- ddrdCBcL+Bf0JtTzm47D7lWwlMMmoblF1hV6Sp/CVeSdQel2QYxEJo+ZmOZOr8KiotdT
- 5oswnmthMIf/02b26QquaaBdTb3e26VlHdp173VOMJsIm79aVksDLnNw/8UBp1delRNc
- l2V5aB+buWuqBK3SnyrQQ3SLxjgm0p7ceg3fuu9wJGwG3leACSVqfyoDu2FhM3jQkuXO
- QwPMYhFsyz0HFkI9k7u39IuVz3PDT49K1JhwcI8TgwAKYC4bXbeyl+plHkBB3CBmFFEP
- DAaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720666364; x=1721271164;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cApDvkpHgcDvEBUZlaSazyrta9dSUlvo1AUuexPKHyE=;
- b=pKN3/PApgpyI1zoIYwjJRDc+E4DzXbWB+gC4R+trzmn2Nke/MzyLiA1uBOel48jo5a
- vO3c86BZVBX+vQzqY4nUva9mtb6g6kHjkHK1ovEMy7aFFB2GOIWdmPbWlCsAOxkvs47y
- 4LfPzy354iCWOBoSEkIwxlhFJg65yneloQdYucotx2cb7VR+iGEq0b0YdLBI/lHJRF8E
- LHFWZuv9Kmn0WzMcLAvWWRvE6vQPbVBIOn2RQsW7+RAWITsmN1mPW+Icm180MzHQ0LX2
- st6cA4Yt2PK9G82iKM7XGVupRg2A2iS8JwVltL9H+6bvv4Ut1JvPl/iygfnHLo1X2dTT
- vrbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOe0weEbgL/BEMm8z2PEcbcKfr8sQf9hGf2OXZgyhN9FIFQIcVeVPmZx/tT32JR6gPZBc91l16inw0/LO4f3+gZaFARZg=
-X-Gm-Message-State: AOJu0YzmIEFWN4BdmwZJcrBLuakuIiOzCU76lXNyAzUk0BeyOjPCwfhV
- din4r5TnJo3R96okQ4rgfHX90TAQiwqGO0HNhy0Uq/qBh7CpQZqR+uNNCNjFa48=
-X-Google-Smtp-Source: AGHT+IE/h/MdfIYVRq4e/+LOOcGb11ueLZ7gK1IFWztEhXtnnM7ZF2ogj6FebcLruoTEDnFX+IwwdQ==
-X-Received: by 2002:a05:6808:8e4:b0:3da:a279:ac1 with SMTP id
- 5614622812f47-3daa2793766mr566510b6e.52.1720666364359; 
- Wed, 10 Jul 2024 19:52:44 -0700 (PDT)
-Received: from DY4X0N7X05.bytedance.net ([208.184.112.130])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3daa12f4f7csm117827b6e.41.2024.07.10.19.52.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 10 Jul 2024 19:52:44 -0700 (PDT)
-From: Yichen Wang <yichen.wang@bytedance.com>
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v5 5/5] tests/migration: Add integration test for 'qatzip'
- compression method
-Date: Wed, 10 Jul 2024 19:52:29 -0700
-Message-Id: <20240711025229.66260-6-yichen.wang@bytedance.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240711025229.66260-1-yichen.wang@bytedance.com>
-References: <20240711025229.66260-1-yichen.wang@bytedance.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sRk4i-0001ns-OK
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 23:02:30 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sRk4e-0003Zv-V1
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 23:02:28 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Cx_vA6S49mfhkDAA--.9535S3;
+ Thu, 11 Jul 2024 11:02:18 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxVcU4S49mz3lDAA--.12343S2; 
+ Thu, 11 Jul 2024 11:02:17 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, richard.henderson@linaro.org,
+ maobibo@loongson.cn
+Subject: [PATCH v2] target/loongarch/gdbstub: Add vector registers support
+Date: Thu, 11 Jul 2024 10:44:54 +0800
+Message-Id: <20240711024454.3075183-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=yichen.wang@bytedance.com; helo=mail-oi1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: AQAAf8BxVcU4S49mz3lDAA--.12343S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,87 +63,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bryan Zhang <bryan.zhang@bytedance.com>
+GDB already support LoongArch vector extension[1], QEMU gdb adds
+LoongArch vector registers support, so that users can use 'info all-registers'
+to get all vector registers values.
 
-Adds an integration test for 'qatzip'.
+[1]: https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=1e9569f383a3d5a88ee07d0c2401bd95613c222e
 
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- tests/qtest/migration-test.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+based-on: 
+ https://patchew.org/QEMU/20240607035016.2975799-1-maobibo@loongson.cn/
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b888..b796dd21cb 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -32,6 +32,10 @@
- # endif /* CONFIG_TASN1 */
- #endif /* CONFIG_GNUTLS */
- 
-+#ifdef CONFIG_QATZIP
-+#include <qatzip.h>
-+#endif /* CONFIG_QATZIP */
-+
- /* For dirty ring test; so far only x86_64 is supported */
- #if defined(__linux__) && defined(HOST_X86_64)
- #include "linux/kvm.h"
-@@ -2992,6 +2996,22 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
+v2:
+- fix tab line wrapper issue.
+- Link to v1: https://patchew.org/QEMU/20240621065406.864232-1-gaosong@loongson.cn/ 
+
+ configs/targets/loongarch64-linux-user.mak |  2 +-
+ configs/targets/loongarch64-softmmu.mak    |  2 +-
+ target/loongarch/gdbstub.c                 | 70 +++++++++++++++++++++-
+ gdb-xml/loongarch-lasx.xml                 | 60 +++++++++++++++++++
+ gdb-xml/loongarch-lsx.xml                  | 59 ++++++++++++++++++
+ 5 files changed, 189 insertions(+), 4 deletions(-)
+ create mode 100644 gdb-xml/loongarch-lasx.xml
+ create mode 100644 gdb-xml/loongarch-lsx.xml
+
+diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
+index d878e5a113..ea9b7e839a 100644
+--- a/configs/targets/loongarch64-linux-user.mak
++++ b/configs/targets/loongarch64-linux-user.mak
+@@ -1,4 +1,4 @@
+ # Default configuration for loongarch64-linux-user
+ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+-TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
++TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+index 65b65e0c34..ce19ab6a16 100644
+--- a/configs/targets/loongarch64-softmmu.mak
++++ b/configs/targets/loongarch64-softmmu.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_SUPPORTS_MTTCG=y
+-TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
++TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
+index a0e1439bd0..8ac327d286 100644
+--- a/target/loongarch/gdbstub.c
++++ b/target/loongarch/gdbstub.c
+@@ -116,8 +116,74 @@ static int loongarch_gdb_set_fpu(CPUState *cs, uint8_t *mem_buf, int n)
+     return length;
  }
- #endif /* CONFIG_ZSTD */
  
-+#ifdef CONFIG_QATZIP
-+static void *
-+test_migrate_precopy_tcp_multifd_qatzip_start(QTestState *from,
-+                                              QTestState *to)
++static int loongarch_gdb_get_vec(CPUState *cs, GByteArray *mem_buf, int n, int vl)
 +{
-+    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
-+    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++    int i, length = 0;
 +
-+    /* SW fallback is disabled by default, so enable it for testing. */
-+    migrate_set_parameter_bool(from, "multifd-qatzip-sw-fallback", true);
-+    migrate_set_parameter_bool(to, "multifd-qatzip-sw-fallback", true);
++    if (0 <= n && n < 32) {
++        for (i = 0; i < vl / 64; i++) {
++            length += gdb_get_reg64(mem_buf, env->fpr[n].vreg.D(i));
++        }
++    }
 +
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "qatzip");
++    return length;
 +}
-+#endif
 +
- #ifdef CONFIG_QPL
- static void *
- test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-@@ -3089,6 +3109,17 @@ static void test_multifd_tcp_zstd(void)
- }
- #endif
- 
-+#ifdef CONFIG_QATZIP
-+static void test_multifd_tcp_qatzip(void)
++static int loongarch_gdb_set_vec(CPUState *cs, uint8_t *mem_buf, int n, int vl)
 +{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_qatzip_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++    int i, length = 0;
 +
- #ifdef CONFIG_QPL
- static void test_multifd_tcp_qpl(void)
++    if (0 <= n && n < 32) {
++        for (i = 0; i < vl / 64; i++) {
++            env->fpr[n].vreg.D(i) = ldq_le_p(mem_buf + 8 * i);
++            length += 8;
++        }
++    }
++
++    return length;
++}
++
++static int loongarch_gdb_get_lsx(CPUState *cs, GByteArray *mem_buf, int n)
++{
++    return loongarch_gdb_get_vec(cs, mem_buf, n, LSX_LEN);
++}
++
++static int loongarch_gdb_set_lsx(CPUState *cs, uint8_t *mem_buf, int n)
++{
++    return loongarch_gdb_set_vec(cs, mem_buf, n, LSX_LEN);
++}
++
++static int loongarch_gdb_get_lasx(CPUState *cs, GByteArray *mem_buf, int n)
++{
++    return loongarch_gdb_get_vec(cs, mem_buf, n, LASX_LEN);
++}
++
++static int loongarch_gdb_set_lasx(CPUState *cs, uint8_t *mem_buf, int n)
++{
++    return loongarch_gdb_set_vec(cs, mem_buf, n, LASX_LEN);
++}
++
+ void loongarch_cpu_register_gdb_regs_for_features(CPUState *cs)
  {
-@@ -3992,6 +4023,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
- #endif
-+#ifdef CONFIG_QATZIP
-+    migration_test_add("/migration/multifd/tcp/plain/qatzip",
-+                test_multifd_tcp_qatzip);
-+#endif
- #ifdef CONFIG_QPL
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
+-    gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
+-                             gdb_find_static_feature("loongarch-fpu.xml"), 0);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
++                                 gdb_find_static_feature("loongarch-fpu.xml"), 0);
++    }
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LSX)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_lsx, loongarch_gdb_set_lsx,
++                                 gdb_find_static_feature("loongarch-lsx.xml"), 0);
++    }
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LASX)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_lasx, loongarch_gdb_set_lasx,
++                                 gdb_find_static_feature("loongarch-lasx.xml"), 0);
++    }
+ }
+diff --git a/gdb-xml/loongarch-lasx.xml b/gdb-xml/loongarch-lasx.xml
+new file mode 100644
+index 0000000000..753b982c65
+--- /dev/null
++++ b/gdb-xml/loongarch-lasx.xml
+@@ -0,0 +1,60 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.loongarch.lasx">
++  <vector id="v8f32" type="ieee_single" count="8"/>
++  <vector id="v4f64" type="ieee_double" count="4"/>
++  <vector id="v32i8" type="int8" count="32"/>
++  <vector id="v16i16" type="int16" count="16"/>
++  <vector id="v8i32" type="int32" count="8"/>
++  <vector id="v4i64" type="int64" count="4"/>
++  <vector id="v2ui128" type="uint128" count="2"/>
++
++  <union id="lasxv">
++    <field name="v8_float" type="v8f32"/>
++    <field name="v4_double" type="v4f64"/>
++    <field name="v32_int8" type="v32i8"/>
++    <field name="v16_int16" type="v16i16"/>
++    <field name="v8_int32" type="v8i32"/>
++    <field name="v4_int64" type="v4i64"/>
++    <field name="v2_uint128" type="v2ui128"/>
++  </union>
++
++  <reg name="xr0" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr1" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr2" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr3" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr4" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr5" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr6" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr7" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr8" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr9" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr10" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr11" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr12" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr13" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr14" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr15" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr16" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr17" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr18" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr19" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr20" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr21" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr22" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr23" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr24" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr25" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr26" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr27" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr28" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr29" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr30" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr31" bitsize="256" type="lasxv" group="lasx"/>
++</feature>
+diff --git a/gdb-xml/loongarch-lsx.xml b/gdb-xml/loongarch-lsx.xml
+new file mode 100644
+index 0000000000..51af1c6fd5
+--- /dev/null
++++ b/gdb-xml/loongarch-lsx.xml
+@@ -0,0 +1,59 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.loongarch.lsx">
++  <vector id="v4f32" type="ieee_single" count="4"/>
++  <vector id="v2f64" type="ieee_double" count="2"/>
++  <vector id="v16i8" type="int8" count="16"/>
++  <vector id="v8i16" type="int16" count="8"/>
++  <vector id="v4i32" type="int32" count="4"/>
++  <vector id="v2i64" type="int64" count="2"/>
++
++  <union id="lsxv">
++    <field name="v4_float" type="v4f32"/>
++    <field name="v2_double" type="v2f64"/>
++    <field name="v16_int8" type="v16i8"/>
++    <field name="v8_int16" type="v8i16"/>
++    <field name="v4_int32" type="v4i32"/>
++    <field name="v2_int64" type="v2i64"/>
++    <field name="uint128" type="uint128"/>
++  </union>
++
++  <reg name="vr0" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr1" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr2" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr3" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr4" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr5" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr6" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr7" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr8" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr9" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr10" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr11" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr12" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr13" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr14" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr15" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr16" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr17" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr18" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr19" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr20" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr21" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr22" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr23" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr25" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr27" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr28" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr29" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr30" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr31" bitsize="128" type="lsxv" group="lsx"/>
++</feature>
 -- 
-Yichen Wang
+2.34.1
 
 
