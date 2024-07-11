@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80BA1C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 18:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC211C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 18:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRyA6-000709-34; Thu, 11 Jul 2024 14:04:58 -0400
+	id 1sRy9z-0006fs-Eg; Thu, 11 Jul 2024 14:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sRyA0-0006ll-SJ; Thu, 11 Jul 2024 14:04:52 -0400
+ id 1sRy9x-0006bW-Hi; Thu, 11 Jul 2024 14:04:49 -0400
 Received: from fhigh5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sRy9y-0003tU-9m; Thu, 11 Jul 2024 14:04:52 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 238CE11400AD;
- Thu, 11 Jul 2024 14:04:49 -0400 (EDT)
+ id 1sRy9v-0003t4-N3; Thu, 11 Jul 2024 14:04:49 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id B69ED1140395;
+ Thu, 11 Jul 2024 14:04:45 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Thu, 11 Jul 2024 14:04:49 -0400
+ by compute2.internal (MEProxy); Thu, 11 Jul 2024 14:04:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1720721089; x=
- 1720807489; bh=WO+HZ2heOGTaV73IU7dquxv1Kny0hFhzSzZKp3QVADU=; b=B
- MXk5HldYxHtXn41xTTI4P82U39a+TeKLGtpZiT0AhmaiCizrTN5E7KYBMPtZAcJA
- /wz9GbYpzQXOx7AIstQqegz+dE9/O6KfhQ0pRx0HUZDsMJ0u/ZJgy2XVDXWwaK07
- KuzFU+kt2deQ5w5aW5fQv1711V7mhY6gQWmw8NkzpSkm/KZ8RJTWv6glDMPHVgUx
- lV55VO3aAAsoGRJq91MwbxH+y5Bf/nEyiWtCicpRM/Yc7R2KefE73ltx30rPCg1M
- gTjF+gedIioPRPv1PrVxwvstNvm5cVU1Grz36d+1O3InVHniWBpSPljIT/Vn7kKJ
- ymAQQ7w11hWSRRp77Mj7Q==
+ :reply-to:subject:subject:to:to; s=fm1; t=1720721085; x=
+ 1720807485; bh=patIyWlEXlTOaWV0nBfaOYUpTnvgQDVzdrKKr7JCxG8=; b=H
+ 4yQgNbL34vG+ySlW0NEJuI4XLp1o6GHhaKKizV4LXwaBKHiPS93/sYIqJEChyIKx
+ D/miV0BMbq7nYe/1du1J1GyJvSS25Srd4ioYtmGIYJZoMxGSvNVnXTaUCFpi81n2
+ +YnrEA5VCLM6DixRH9K/6ngdMzRP5sbwMGqliG67P5FJZqTty16EpNHv4+srrDEi
+ EObkDoX7QFGDWkaiWveO0Si6TBW8TJ1K0vzUyE2sehgssTNitMZ60H5VHqvDZnZQ
+ kaDicD3loPktcei3F7WVLjOVS/EOgITEellm0ix2ASBcHPuV+eHVWY1rB2/2Gv5b
+ eSDZ43s5BDqP77lEK/4pA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1720721089; x=
- 1720807489; bh=WO+HZ2heOGTaV73IU7dquxv1Kny0hFhzSzZKp3QVADU=; b=B
- VKBCi+6TuPp2arMGOTby29qvYG4TQr5OaThIK1Dp0ACbbVYrDEUxMgxMyvHRQG5H
- n/rCOWHPjnv9seSU0YpHTGr6VXfLFZ4FkCLhsxuK2a/KE4/Cd4aQPPy8EBcT5nZM
- YervkDZXNg1ZJoIM19nupQnUDGfNyIGgzFlIG4QMldPbycID8YmrCwVdpHr1JVcP
- e+ktFsGbJAKY8a+cfpVtKhzMl05T+lFKNJxsuWvStHSrsZlTCdbQHjDM8d/4i2Pu
- 0h6zoG7lyG0rlegka+WcuqjXoaES9fTEuDRZFss0UcPB0BAvtYGOHM64BgC2bFAg
- fWN/ALHWLtkop4RA/smuA==
-X-ME-Sender: <xms:vx6QZuaNSdAxbycP5jqiSXfdwNSPnLZURArbuOFHcq2eQxx5Kricow>
- <xme:vx6QZhYrzFCiYa86m-QrpsspNHWftVUKWcaDITboCIm4O6oFfaCw9GVWjjEfOEYl_
- kyPcZT_gqS0ksy6BcU>
-X-ME-Received: <xmr:vx6QZo90TJmP54W9sWSdENh0lbAOJidPvt2vhsyAxrpHeJ2relFubnZ7yzaFwLBzg74a4lgMGw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfeeggdduvdduucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1720721085; x=
+ 1720807485; bh=patIyWlEXlTOaWV0nBfaOYUpTnvgQDVzdrKKr7JCxG8=; b=m
+ 2sfdUvsdq7Nj7cs5QpE+N68qaD3vzktVC9K4DRnxiFONUhS8To1LXXjyIgupXaII
+ VvG/sWVtPqLXsS6vaNsOzn5VMbdhPbRRgcxoc31Z5XrSmt4NqaYhzaYK+MEOML1i
+ KdmK4Rsvzxf+nq3lk7npn5aL7CuG9B+N3e+JwB6J3eyyhHpIfVpMxourRjCylTwd
+ C1RixqqmYMr4DnPx/hc6S+YNVrAGt9cW9suNcuwWwaYPTkw9Lp1m09jOUljQEbI/
+ r+i19UJdghsoI3d0K2+pHva2xK78TGMRd1d5eV0NeMAuWhJqfwOB9V1q9iZHYDG4
+ 0bybp2f9Bn7OSY8StUJMQ==
+X-ME-Sender: <xms:vB6QZiKZvJI-mWyfwHu6QpqfkbqVmjFMnK2kOvJQKo3DXMsGgNyVNg>
+ <xme:vB6QZqLbL9vB8HSaP_PYJesA8RXFCnhmZYdAxlBkfih7rV2juSRSb-qy-v23WSbrt
+ u1TWj9TE4xmZNyhRqc>
+X-ME-Received: <xmr:vB6QZitobD_JTKKnD3qMozdInsJwe3xu_-m-3g9OQq_kvkWjN84UD3-8vrg2pfL8JLkQJX0EKw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfeeggdduvddtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghu
@@ -59,14 +59,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrfeeggdduvdduucetufdoteggod
  htvghrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudej
  udegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
  htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:wB6QZgqH_bCLGWmU3_l56DVmrjQq2z7ZRMf_steCRxV5nyli7mLIHw>
- <xmx:wB6QZpo_wYgd4IvO1LblQqdzTGUsdkVgjfDni9GlZtLtU-gVh_Plrg>
- <xmx:wB6QZuQMS4geBpivPMk4uY3SBalmhPJKsPXV-AqEv1KM18_46NdQPw>
- <xmx:wB6QZprmVoKpNbWnQfgcKNKG0aGsUISBK-d03PG452I-1X-qjE4jUA>
- <xmx:wR6QZhb7N5I-2GK9DFXETDRnbKdjxI1_J0c5jdr7gdoO4c3YYut-3OMB>
+X-ME-Proxy: <xmx:vB6QZnZoRv0F4cgaSask03P__SOTTnlMQGrNoLfn8IYUw0i3bs9yHQ>
+ <xmx:vB6QZpZC4PXhk6ZcsNkiD2UFHZqNlht6gdAm72dCRb8a8FQAoyz8Rw>
+ <xmx:vB6QZjC6fSP4raZ3TAZtdErTzcNBAuFY61meXne8MWgSbB4R19dvNg>
+ <xmx:vB6QZvb3rMhhiycvexgbRv6KHuq4VzSaALCortuCPLMH51mVdwXocg>
+ <xmx:vR6QZvzLQLFuYAw707LjIr6p05iJKXqOaj-0YAEB9YxfzfaTrY6R16mU>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jul 2024 14:04:45 -0400 (EDT)
+ 11 Jul 2024 14:04:42 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
@@ -75,24 +75,25 @@ Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
- Vincent Fu <vincentfu@gmail.com>, qemu-stable@nongnu.org,
- Vincent Fu <vincent.fu@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 2/7] hw/nvme: fix number of PIDs for FDP RUH update
-Date: Thu, 11 Jul 2024 20:04:39 +0200
-Message-ID: <20240711180436.8532-11-its@irrelevant.dk>
+ John Berg <jhnberg@amazon.com>, John Berg <jhnberg@amazon.co.uk>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 1/7] hw/nvme: Add support for setting the MQES for the NVMe
+ emulation
+Date: Thu, 11 Jul 2024 20:04:38 +0200
+Message-ID: <20240711180436.8532-10-its@irrelevant.dk>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240711180436.8532-9-its@irrelevant.dk>
 References: <20240711180436.8532-9-its@irrelevant.dk>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=985; i=k.jensen@samsung.com;
- h=from:subject; bh=NRnqEByl/824gnk6FtAb/MAqKkQ6e5hG9fzMuAHEpeg=;
- b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGaQHrRfMflBr6HDt+iTBaCrzZJ0Rz141UYsN
- HZhx4guplCI6YkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmkB60AAoJEE3hrzFt
- Tw3p/owIAJ5TjvHdhiS1eZlRodUkOd9Rh8l0KiTBUKxVAModT5n4RUvYMo33nBqqFmh4XnmosAO
- RWQrRPwCtW7LYrlKHwp+21wxJDpqA5PANonUXSxTWH9ffkhnDTJTB9e87tX9GBqudfjdUHiG+/M
- dEBTm90aS2UyoXt0jo1MhYLQ3QRsIM7y5lE+gktV+bmmSvKefl2dYIj8olROPEagkYevdiCAgvL
- qsxVlO9c4piNzRt1ncYx5hSwWFo9MW+rSXYGa0+evzRoZKEjLiyP3BgpDY0YBohXFrbSJcz+Zzo
- P/7ARs1mte6Xz1pinS4uyhjZB3VMA4O+6fmWLS3f4T4FAUZqASdQSaYd
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2892; i=k.jensen@samsung.com;
+ h=from:subject; bh=gQ/L+AStstwGmhQT28OfJbT+GPJlgZz8VyHUWxR47Hw=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGaQHrTOkoI+mD0j/4T6mQ4bel5XgDaZYBOOJ
+ czkV1C63pHTf4kBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmkB60AAoJEE3hrzFt
+ Tw3pKeAH+wd+WBLH39yfdSZ5pRBCqh4dfhSxabKKvKwu0t07oLdQLtlxB1kII2xKZ05fyoiQgyV
+ lyfpQ7H4NNcY+wzhG0knoKseCiYZ3rPCvGsu3BHH6/ytDap93LxpmCy41cY0q9aOgB+lAcTqjX2
+ /RGSMJvmfrxK+Nl5YAgH76mbQI1KrGToskawu95woD6hU/rCnGmgLDBvOEkPmyTN6alWVo04c7X
+ AkYwxqbX8d6Sye4SLhmIGqJWgmDp4rqJDgjabSl5aYDhgu95SlteIaPCkQhjoh3jKMQFSMrWc5O
+ TAR7D4OAww0G/HfRELuOJ5gZwNrrugAK8qjuduU2z5mGHNMC3AD5iaC1
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
 Content-Transfer-Encoding: 8bit
@@ -120,33 +121,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vincent Fu <vincentfu@gmail.com>
+From: John Berg <jhnberg@amazon.com>
 
-The number of PIDs is in the upper 16 bits of cdw10. So we need to
-right-shift by 16 bits instead of only a single bit.
+The MQES field in the CAP register describes the Maximum Queue Entries
+Supported for the IO queues of an NVMe controller. Adding a +1 to the
+value in this field results in the total queue size. A full queue is
+when a queue of size N contains N - 1 entries, and the minimum queue
+size is 2. Thus the lowest MQES value is 1.
 
-Fixes: 73064edfb864 ("hw/nvme: flexible data placement emulation")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Vincent Fu <vincent.fu@samsung.com>
+This patch adds the new mqes property to the NVMe emulation which allows
+a user to specify the maximum queue size by setting this property. This
+is useful as it enables testing of NVMe controller where the MQES is
+relatively small. The smallest NVMe queue size supported in NVMe is 2
+submission and completion entries, which means that the smallest legal
+mqes value is 1.
+
+The following example shows how the mqes can be set for a the NVMe
+emulation:
+
+-drive id=nvme0,if=none,file=nvme.img,format=raw
+-device nvme,drive=nvme0,serial=foo,mqes=1
+
+If the mqes property is not provided then the default mqes will still be
+0x7ff (the queue size is 2048 entries).
+
+Signed-off-by: John Berg <jhnberg@amazon.co.uk>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/nvme/ctrl.c | 8 +++++++-
+ hw/nvme/nvme.h | 1 +
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index fa7ec0e79490..231e1127cec8 100644
+index 066389e391b6..fa7ec0e79490 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -4352,7 +4352,7 @@ static uint16_t nvme_io_mgmt_send_ruh_update(NvmeCtrl *n, NvmeRequest *req)
-     NvmeNamespace *ns = req->ns;
-     uint32_t cdw10 = le32_to_cpu(cmd->cdw10);
-     uint16_t ret = NVME_SUCCESS;
--    uint32_t npid = (cdw10 >> 1) + 1;
-+    uint32_t npid = (cdw10 >> 16) + 1;
-     unsigned int i = 0;
-     g_autofree uint16_t *pids = NULL;
-     uint32_t maxnpid;
+@@ -7805,6 +7805,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         return false;
+     }
+ 
++    if (params->mqes < 1) {
++        error_setg(errp, "mqes property cannot be less than 1");
++        return false;
++    }
++
+     if (n->pmr.dev) {
+         if (params->msix_exclusive_bar) {
+             error_setg(errp, "not enough BARs available to enable PMR");
+@@ -8289,7 +8294,7 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+ 
+     id->ctratt = cpu_to_le32(ctratt);
+ 
+-    NVME_CAP_SET_MQES(cap, 0x7ff);
++    NVME_CAP_SET_MQES(cap, n->params.mqes);
+     NVME_CAP_SET_CQR(cap, 1);
+     NVME_CAP_SET_TO(cap, 0xf);
+     NVME_CAP_SET_CSS(cap, NVME_CAP_CSS_NVM);
+@@ -8459,6 +8464,7 @@ static Property nvme_props[] = {
+                       params.sriov_max_vq_per_vf, 0),
+     DEFINE_PROP_BOOL("msix-exclusive-bar", NvmeCtrl, params.msix_exclusive_bar,
+                      false),
++    DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index bed8191bd5fd..2e7d31c0ae6d 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -521,6 +521,7 @@ typedef struct NvmeParams {
+     uint32_t num_queues; /* deprecated since 5.1 */
+     uint32_t max_ioqpairs;
+     uint16_t msix_qsize;
++    uint16_t mqes;
+     uint32_t cmb_size_mb;
+     uint8_t  aerl;
+     uint32_t aer_max_queued;
 -- 
 2.44.0
 
