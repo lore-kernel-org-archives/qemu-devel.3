@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF389C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E1DC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRwOG-0007cv-FK; Thu, 11 Jul 2024 12:11:29 -0400
+	id 1sRwXT-0006Wp-TL; Thu, 11 Jul 2024 12:20:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRwOC-0007Sz-9H
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:11:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRwO8-0001U3-VM
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:11:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720714279;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ph6lIvdR1pvrTmUHKPdx7Gko7Qm/tr8mYN5mwtlf4NE=;
- b=KmOLRNVT2bQ8WiKR7s0tjABH/APGAnhjVnP9m+XqcILjtkCICcxz/O2fpFCkfjKyunHQXz
- CXwuuKniSmziCBI5NGKZcmQnfZ4dZcSq1WRmFvKX1SbtVhgqKPnU4SSRdLQ1j9Ce3YcX/A
- XiTwXygkbJneQi52qpIwPmE0m3avY+c=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-mcpTvmytOv6D-Od6Vio9cg-1; Thu, 11 Jul 2024 12:11:18 -0400
-X-MC-Unique: mcpTvmytOv6D-Od6Vio9cg-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-79f7b0e4f82so3447685a.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 09:11:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <halouworls@gmail.com>)
+ id 1sRwXS-0006VA-6S
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:20:58 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <halouworls@gmail.com>)
+ id 1sRwXQ-0004DI-JX
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:20:57 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a6fd513f18bso151359966b.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 09:20:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720714853; x=1721319653; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1j1Z+eskJXpdz5Nix4pqUFEEydMagJBIPKn2DTfRAG8=;
+ b=G0il7J5my1pdyi6xBY5gysYpWsdgh7mdb4Se3DfSzzLjkuoGtLrGg6t5kJDMg9OwC/
+ 3s6PIkD75n+mhyL6p9mwR7IHOc2Xn3CuIxtD08sgrYvWLz+a6tajX+xDe9WW37WBf3yD
+ XQk2x1teRjyStu5qUJdqduHo2y2PMSPdOhXasmuM3WG2LrWdqzJ9+IYCMZ76/m1JTw4m
+ hbgpxL3grWfAQkrvaAPC4QMGJfaw3ewbr7/X3IAQrV1/fF8DZAnkw7YDFJkCcoTyR1BV
+ Gsyw0EmX7LHlb46d+sI9t1uq8b075sAGkHi2ZDxarAuWEn3wiSooEYXHlZiTSMSMnT90
+ jawg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720714277; x=1721319077;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ph6lIvdR1pvrTmUHKPdx7Gko7Qm/tr8mYN5mwtlf4NE=;
- b=CbabVFD/FoIGwtqFm2Q6odkVQtSpgd378YWApwNiUDocpWw+fhUgWXXltFuKHDZQxR
- Uan6IDvgtjYqGltWhll5mHtrN1b/fyb87QdUN2BNKtHMs5Gw10VbD+ZTBretWmwXEcgC
- Lzsi98aqRGL/o4i+3JDQRDuSng/ef8SdSKrN2W+6/jkM6IFJlrMYh5BoNND5tN5zfn5n
- u4hsArFFqZUQ7fsQs47DbNOBKKFdJqjkrNILLIKy58QnN8B2wH1dOI7HbgDEhSaQwiFN
- bHFCW+oJuu5gBLMOi//NeYR/YIaUmlg43KkzNmd6jJIyoOcwfWOF9GzXgXeqj7wHt0ls
- lvpA==
+ d=1e100.net; s=20230601; t=1720714853; x=1721319653;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1j1Z+eskJXpdz5Nix4pqUFEEydMagJBIPKn2DTfRAG8=;
+ b=qEQioK6/LtOVOBARvok8EnG5wLNR3KdUJuptmLKHDZPpFe8ZMYVJktjuM+B5uScutq
+ DjS4ba2InWFxOf4J7JBlVZCExwrSqQ/x6dp7sQRn/1IyDha0u2O86T7sfgbG2bNEGlXd
+ Ch+oXGoN3TjXTtj1mu3Qw9rQhDuo7CsKkrR7ZGb4hLTPeL7txJN5N7GCd9B1I20+s8j8
+ 5lA5PLW6sQEQvYBtXEThUIczF/UowmdEd/g2vEySxq+eWa0ptWsovhhMUvFh/OPtbWKd
+ C7f6OdWsbChv/5HtirVazozJc7NT2M2qvHursBK4KLkNpOd22a8bwmUnm8Y0o0pdiqzu
+ C1VA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8uPfxHNVCo3GblHLXl1WsJfOuDBV8GGC+pnXscKTRvvmL5gM6ToHYiGmawNM53EQh8zw35gC6ONsv0/Si9IJGL8RjHTo=
-X-Gm-Message-State: AOJu0Ywq7ZWGzEj+m/7UUG387huy5hL4jfXhavE8jHixrW7mqfJTcye8
- jwqzpcuz8cx3TvCGVdI4bZhdTlvsn+omUwVOVGLda6dqx2VTWJlh5zJeiFS/69SU0duPNASfl4J
- SphVIT/HXcDv2JhL23CgHnSuQu4lwjOOMhqqHg/Ehp4LjNmn6ijiEXvyW+lZJ
-X-Received: by 2002:a05:620a:997:b0:79f:ff1:b765 with SMTP id
- af79cd13be357-7a1470e7237mr251672185a.0.1720714277018; 
- Thu, 11 Jul 2024 09:11:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHONkQzRqo/R9whPSvmKmftI45HdiPsHgTmch41B/JDFIUXJdCQfC9Dtef5KekF/UfaLz3rTA==
-X-Received: by 2002:a05:620a:997:b0:79f:ff1:b765 with SMTP id
- af79cd13be357-7a1470e7237mr251669185a.0.1720714276670; 
- Thu, 11 Jul 2024 09:11:16 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f1909a56dsm304670185a.101.2024.07.11.09.11.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 09:11:15 -0700 (PDT)
-Date: Thu, 11 Jul 2024 12:11:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
- the channel parameters
-Message-ID: <ZpAEIvbNr-ANuASV@x1n>
-References: <20240620212111.29319-1-farosas@suse.de>
- <20240620212111.29319-7-farosas@suse.de>
- <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com>
- <Zn15y693g0AkDbYD@x1n> <877cdtfcsi.fsf@suse.de>
- <Zo7cncqkxB89AUBe@x1n> <87y169dmu3.fsf@suse.de>
- <Zo8DaHbWlrNe3RXL@x1n> <87msmodnly.fsf@suse.de>
+ AJvYcCXWD6nIZT9RU4wosPoMLPLk9N1W5Z4eoa+tgYzGb5bOCre0ZM5R4fRFo4bxYimR/sx33/vfY4R+sBCS2KiDMOrp88B3t28=
+X-Gm-Message-State: AOJu0Yy32bJz4K32w5jbmbnJki4cGEYI61w9aDK4jdlPaQcXkLoxF6TE
+ cNC8LW9KhWDvhDbRTg/7d3i6X4TRcdhEkItOtT163QjA17j/VPipuhjxpeclIsrj2SA+yfsM5+Y
+ jyP5KFBUqmtyJQ6JynBG9O6nrYxA=
+X-Google-Smtp-Source: AGHT+IGOKFDDyX4ZJyKBzjgzo8MOK6q6l9nFcOKmA6305q5cVOnVKpqcShN0rL5q5p0JA07LRVpTQNrUkrcHtdU9jsA=
+X-Received: by 2002:a17:906:ac6:b0:a77:cca9:b21c with SMTP id
+ a640c23a62f3a-a780b6ff65cmr598216766b.34.1720714852944; Thu, 11 Jul 2024
+ 09:20:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87msmodnly.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240708112520.106127-1-junjiehua@tencent.com>
+ <CAFEAcA_pR6VLjKcOgcL+m8aONtey5Lm2ODkWAKv2ne_3ziqknw@mail.gmail.com>
+ <CA+TA2aVV8qSK9zEv+HHyp-ib00vqaCLW_s4Hc5pGa_UJskQvUQ@mail.gmail.com>
+ <399b661a-9bf4-4f97-be9b-f3d633b8b665@daynix.com>
+In-Reply-To: <399b661a-9bf4-4f97-be9b-f3d633b8b665@daynix.com>
+From: junjiehua <halouworls@gmail.com>
+Date: Fri, 12 Jul 2024 00:20:16 +0800
+Message-ID: <CA+TA2aUNecgCQ9Dz5gS4NUuHirGjYJQpE+Cu1K=x8ZY7G676cA@mail.gmail.com>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+Content-Type: multipart/alternative; boundary="00000000000091d290061cfb25d1"
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=halouworls@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,126 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 11:12:09AM -0300, Fabiano Rosas wrote:
-> What about the QEMUFile traffic? There's an iov in there. I have been
-> thinking of replacing some of qemu-file.c guts with calls to
-> multifd. Instead of several qemu_put_byte() we could construct an iov
-> and give it to multifd for transfering, call multifd_sync at the end and
-> get rid of the QEMUFile entirely. I don't have that completely laid out
-> at the moment, but I think it should be possible. I get concerned about
-> making assumptions on the types of data we're ever going to want to
-> transmit. I bet someone thought in the past that multifd would never be
-> used for anything other than ram.
+--00000000000091d290061cfb25d1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hold on a bit.. there're two things I want to clarity with you.
+>
+>
+> On Thu, Jul 11, 2024 at 3:53=E2=80=AFPM Akihiko Odaki <akihiko.odaki@dayn=
+ix.com>
+> wrote:
 
-Firstly, qemu_put_byte() has buffering on f->buf[].  Directly changing them
-to iochannels may regress performance.  I never checked, but I would assume
-some buffering will be needed for small chunk of data even with iochannels.
-
-Secondly, why multifd has things to do with this?  What you're talking
-about is more like the rework of qemufile->iochannel thing to me, and IIUC
-that doesn't yet involve multifd.  For many of such conversions, it'll
-still be operating on the main channel, which is not the multifd channels.
-What matters might be about what's in your mind to be put over multifd
-channels there.
-
-> 
+    On 2024/07/10 17:02, hellord wrote:
 > >
-> > I wonder why handshake needs to be done per-thread.  I was naturally
-> > thinking the handshake should happen sequentially, talking over everything
-> > including multifd.
-> 
-> Well, it would still be thread based. Just that it would be 1 thread and
-> it would not be managed by multifd. I don't see the point. We could make
-> everything be multifd-based. Any piece of data that needs to reach the
-> other side of the migration could be sent through multifd, no?
+> > note:
+> > 1. The path of buggy msvcrt.dll is c:\windows\system32\msvcrt.dll(
+> > mingw64 links to it );
+> > 2. fwrite implementation in another msvc library which is called
+> > ucrtbase.dll is correct(msvc links to it by default).
+>
+> I don't object to this change but you should use ucrt whenever possible.
+> I'm not confident that elf2dmp and other QEMU binaries would work well
+> with mvcrt.
+>
+> I even would like to force users to use ucrt and call setlocale(LC_ALL,
+> ".UTF8") to fix text encoding, but I haven't done that yet because
+> Fedora, which cross-compiles QEMU for CI, still uses msvcrt.
+>
 
-Hmm.... yes we can. But what do we gain from it, if we know it'll be a few
-MBs in total?  There ain't a lot of huge stuff to move, it seems to me.
 
-> 
-> Also, when you say "per-thread", that's the model we're trying to get
-> away from. There should be nothing "per-thread", the threads just
-> consume the data produced by the clients. Anything "per-thread" that is
-> not strictly related to the thread model should go away. For instance,
-> p->page_size, p->page_count, p->write_flags, p->flags, etc. None of
-> these should be in MultiFDSendParams. That thing should be (say)
-> MultifdChannelState and contain only the semaphores and control flags
-> for the threads.
-> 
-> It would be nice if we could once and for all have a model that can
-> dispatch data transfers without having to fiddle with threading all the
-> time. Any time someone wants to do something different in the migration
-> code, there it goes a random qemu_create_thread() flying around.
+Thanks.
 
-That's exactly what I want to avoid.  Not all things will need a thread,
-only performance relevant ones.
+Using ucrt by default (or mandatorily) is a good point, helps avoid other
+unknown bugs in msvcrt and is
+beneficial for the long-term development of QEMU on Windows.
 
-So now we have multifd threads, they're for IO throughputs: if we want to
-push a fast NIC, that's the only way to go.  Anything wants to push that
-NIC, should use multifd.
+--00000000000091d290061cfb25d1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Then it turns out we want more concurrency, it's about VFIO save()/load()
-of the kenrel drivers and it can block.  Same to other devices that can
-take time to save()/load() if it can happen concurrently in the future.  I
-think that's the reason why I suggested the VFIO solution to provide a
-generic concept of thread pool so it services a generic purpose, and can be
-reused in the future.
+<div dir=3D"ltr"><div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex"><br class=3D"gmail-Apple-interchange-newline">On Thu, Jul 11, 20=
+24 at 3:53=E2=80=AFPM Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@day=
+nix.com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt; wrote:</blockqu=
+ote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">=C2=A0 =C2=A0 On 2024=
+/07/10 17:02, hellord wrote:<br>&gt;<br>&gt; note:<br>&gt; 1. The path of b=
+uggy msvcrt.dll is c:\windows\system32\msvcrt.dll(<br>&gt; mingw64 links to=
+ it );<br>&gt; 2. fwrite implementation in another msvc library which is ca=
+lled<br>&gt; ucrtbase.dll is correct(msvc links to it by default).<br><br>I=
+ don&#39;t object to this change but you should use ucrt whenever possible.=
+<br>I&#39;m not confident that elf2dmp and other QEMU binaries would work w=
+ell<br>with mvcrt.<br><br>I even would like to force users to use ucrt and =
+call setlocale(LC_ALL,<br>&quot;.UTF8&quot;) to fix text encoding, but I ha=
+ven&#39;t done that yet because<br>Fedora, which cross-compiles QEMU for CI=
+, still uses msvcrt.<br></blockquote><div><br></div><div><br></div><div>Tha=
+nks.=C2=A0<br></div><div><br></div><div>Using ucrt by default (or mandatori=
+ly) is a good point, helps avoid other unknown bugs in msvcrt and is=C2=A0<=
+/div><div>beneficial for the long-term development of QEMU on Windows.<br><=
+br></div><div><br></div></div></div>
 
-I hope that'll stop anyone else on migration to create yet another thread
-randomly, and I definitely don't like that either.  I would _suspect_ the
-next one to come as such is TDX.. I remember at least in the very initial
-proposal years ago, TDX migration involves its own "channel" to migrate,
-migration.c may not even know where is that channel.  We'll see.
-
-[...]
-
-> > One thing to mention is that when with an union we may probably need to get
-> > rid of multifd_send_state->pages already.
-> 
-> Hehe, please don't do this like "oh, by the way...". This is a major
-> pain point. I've been complaining about that "holding of client data"
-> since the fist time I read that code. So if you're going to propose
-> something, it needs to account for that.
-
-The client puts something into a buffer (SendData), then it delivers it to
-multifd (who silently switches the buffer).  After enqueued, the client
-assumes the buffer is sent and reusable again.
-
-It looks pretty common to me, what is the concern within the procedure?
-What's the "holding of client data" issue?
-
-> 
-> > The object can't be a global
-> > cache (in which case so far it's N+1, N being n_multifd_channels, while "1"
-> > is the extra buffer as only RAM uses it).  In the union world we'll need to
-> > allocate M+N SendData, where N is still the n_multifd_channels, and M is
-> > the number of users, in VFIO's case, VFIO allocates the cached SendData and
-> > use that to enqueue, right after enqueue it'll get a free one by switching
-> > it with another one in the multifd's array[N].  Same to RAM.  Then there'll
-> > be N+2 SendData and VFIO/RAM needs to free their own SendData when cleanup
-> > (multifd owns the N per-thread only).
-> >
-> 
-> At first sight, that seems to work. It's similar to this series, but
-> you're moving the free slots back into the channels. Should I keep
-> SendData as an actual separate array instead of multiple p->data?
-
-I don't know.. they look similar to me yet so far, as long as multifd is
-managing the N buffers, while the clients will manage one for each.  There
-should have a helper to allocate/free the generic multifd buffers (SendData
-in this case) so everyone should be using that.
-
-> 
-> Let me know, I'll write some code and see what it looks like.
-
-I think Maciej is working on this too since your absence, as I saw he
-decided to base his work on top of yours and he's preparing the new
-version. I hope you two won't conflict or duplicates the work.  Might be
-good to ask / wait and see how far Maciej has been going.
-
--- 
-Peter Xu
-
+--00000000000091d290061cfb25d1--
 
