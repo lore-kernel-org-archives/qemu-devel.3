@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E51C3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 11:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A8DC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 11:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRsMo-0000LX-Ag; Thu, 11 Jul 2024 07:53:42 -0400
+	id 1sRsOK-0006sY-8D; Thu, 11 Jul 2024 07:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRsMm-0000A7-QM
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:53:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRsOI-0006lM-CE
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:55:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRsMl-0003en-10
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:53:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sRsO4-0003k4-BR
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 07:55:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720698817;
+ s=mimecast20190719; t=1720698898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OcoUcKqb44Xm9OFgCdxhrIPGvhgw6cygk4oO4wMZsgU=;
- b=Mu/ry1roZTsUxs920jli+SV/Gd0XLc5PyZyq+1zTdDL/zYIDPnID6CNnh9gS3PiiHt1vgc
- YeuXItDBguLxuqvS/Qfto09T9s7fZbnfxNV87mk5k5uWWdbtJRB4+YEXfyM4NdPJXbb5dg
- lXMtqqsAG+axGcqDdUaNVt3sYcYnrH8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GLUrFLCqikNAsPcbf03qUnXoJ46gCuQE0XBBtbkOSEc=;
+ b=JDrBWO0QFFhiJpC6lC0td8McrkpL1dz6KoNk5XDyBLdcLN615hcD+3q/nFtrGv6t5pHrG2
+ CM8RSNgNiiOm67wbK2FQs0VesDF2H8facNZajSEpfBUvauFl0XIQjG0PmrB+veNuMlaCdB
+ ztZuGFe1SeKusPkmO/aFkzma5glYNUw=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-KEdQ1roRPuGM-mKUunmcRA-1; Thu, 11 Jul 2024 07:53:35 -0400
-X-MC-Unique: KEdQ1roRPuGM-mKUunmcRA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-426620721c2so5574665e9.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 04:53:35 -0700 (PDT)
+ us-mta-46-nFwUfm6yMxi57f4WBjTXbA-1; Thu, 11 Jul 2024 07:54:55 -0400
+X-MC-Unique: nFwUfm6yMxi57f4WBjTXbA-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ee90339092so8380021fa.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 04:54:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720698814; x=1721303614;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OcoUcKqb44Xm9OFgCdxhrIPGvhgw6cygk4oO4wMZsgU=;
- b=c5MljMs+0nmXLkOmFEBLIkXLXA5NpWVsYvAlACWu9IQbhod1s0YprVBvklM1A7F+Mr
- Kn5gQU2I+rJ/X4DhN1dYu1ZdIA4crnvWUZJsrlS7b0ylixWFhgU7zynxqPhv4lGVW9aw
- NzIgIDm9Q8EF++xv2G9j6hEp9u2wFMtbAw+C7nsLWxeHM8dgJxDftNaKlYpMUoQ7P/7P
- AHrFqseEhgn6N2b51VnB4iW8Dgwb85MXGFAHRQxoMrxFckutBqJT71k+NC3putXo7c3h
- HQyUFFUyAtK0qX2jWX7pa6bBsp6ZUdtfaf2KKZKQBYLTtU13zda+aMQUjT3P+su7XM2D
- BgyA==
+ d=1e100.net; s=20230601; t=1720698893; x=1721303693;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GLUrFLCqikNAsPcbf03qUnXoJ46gCuQE0XBBtbkOSEc=;
+ b=WZ4yJ1hXfoswhYdZMRQ+dxVV2gPdfmEgNr67XJ58q5urubR+89K+F7Mi/nie8Tx4IV
+ HYZV8QkPNWndbtH2Lj0hYvSe39RbnnUMjTOuq+6Fn5ZJ3/1V+cd4ZpYv3efczrKvSwlc
+ xo+kFzB9Dc4IfEmQkAcg1zrriqo4+YFlI/Nw/h0dC8McrzkcqknMZW8WDYuoiuUPxz1o
+ HJVSg2HOPsfpB3KxmGVwq5eu335UUFWo+rVZsD/EXQiLdLK4LHQrR3FRAE5oJl0bHOZn
+ IGgPg4VI8irEe38yi+TQwl5QW+fhRs6m0a0ZDMJmV7jzGEdeHvJ9kLdylJNgwaJmV/uk
+ QMOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVksA5pXhr0BgDfv5QmpxnAvWQHUKUVoiQArT76fkddur/PjL0b2h/F2/faQGX8MWdHfAczTD7Hlh/O+2FV7A/4m1PvN4=
-X-Gm-Message-State: AOJu0Yw6P5ao50eDzM8kFkl2Hpm5kAZiMIcYeT+rnheXSZfiTlwKjF2y
- y2H1RFIM6yAFZrsSJWg1sqqRA346gwQw0WenVa4Lg1XlwRhJVMloRqDeUu7McuAyCNKAJKs7z2M
- jsQxbSfC8SvzR/avIqUmp8kkBpCtsEohgX9dbx7hq0ZOuEj0fTKPR
-X-Received: by 2002:a7b:cc97:0:b0:426:5d63:24c4 with SMTP id
- 5b1f17b1804b1-426708f1dcamr48196015e9.27.1720698814410; 
- Thu, 11 Jul 2024 04:53:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWzLvX4c7bSDw7L1OcwNfUEEyNHzMjOERqj1EaDSdjsW5EOZALOPplWmLwxAz1Wgq8i6QD9w==
-X-Received: by 2002:a7b:cc97:0:b0:426:5d63:24c4 with SMTP id
- 5b1f17b1804b1-426708f1dcamr48195905e9.27.1720698814044; 
- Thu, 11 Jul 2024 04:53:34 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42797100f55sm43738255e9.1.2024.07.11.04.53.32
+ AJvYcCXQhVL2/3o+RpT7nhrqvkaV0Yl8QXDNPA+8IJKLUlg2Xw8YE9NS1tfyQDr958x+r6jev8d9VhG59mORYyGy310oAvGebTc=
+X-Gm-Message-State: AOJu0Ywd88cdzC8yzsxEFRNTd2rsaImRe0njNIyTwoO9LvPHQTNt9/L1
+ /D4YNHV1nbis7oBRA2gXTqpwTJ1Gl12Em+ucKd2+PYOczD3JmL++mW+nOGZf8nU1dX6HWKKDYHB
+ AO7mT9JFoHLh4IbLxD5N3BjDqGVl64AuhO7ailv+XzGKa9O3Aovwd
+X-Received: by 2002:a2e:90cc:0:b0:2ee:7a7e:8ebb with SMTP id
+ 38308e7fff4ca-2eeb3198b20mr51410511fa.52.1720698893668; 
+ Thu, 11 Jul 2024 04:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdSlbHD+ZgkWTuRRwa17SNwKB4KIBO0IU5PmgF3bItPbAkUonL9qMh9qOg9B0O82tb2+tcog==
+X-Received: by 2002:a2e:90cc:0:b0:2ee:7a7e:8ebb with SMTP id
+ 38308e7fff4ca-2eeb3198b20mr51410401fa.52.1720698892904; 
+ Thu, 11 Jul 2024 04:54:52 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:341:761e:f82:fc9a:623b:3fd1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4279accecf4sm17799785e9.39.2024.07.11.04.54.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 04:53:33 -0700 (PDT)
-Date: Thu, 11 Jul 2024 13:53:31 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v4 05/13] hw/pci: Add a busnr property to pci_props and
- use for acpi/gi
-Message-ID: <20240711135331.6f0e4639@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240702131428.664859-6-Jonathan.Cameron@huawei.com>
-References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
- <20240702131428.664859-6-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ Thu, 11 Jul 2024 04:54:52 -0700 (PDT)
+Date: Thu, 11 Jul 2024 07:54:48 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, linux-edac@kernel.org,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/6] arm/virt: Wire up GPIO error source for ACPI / GHES
+Message-ID: <20240711075332-mutt-send-email-mst@kernel.org>
+References: <cover.1720690278.git.mchehab+huawei@kernel.org>
+ <b9cd4a65d3389102def662a8bc09ffaa622265f7.1720690278.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b9cd4a65d3389102def662a8bc09ffaa622265f7.1720690278.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,100 +107,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jul 2024 14:14:10 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> Using a property allows us to hide the internal details of the PCI device
-> from the code to build a SRAT Generic Initiator Affinity Structure with
-> PCI Device Handle.
+On Thu, Jul 11, 2024 at 11:52:03AM +0200, Mauro Carvalho Chehab wrote:
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Creates a GED - Generic Event Device and set a GPIO to
+> be used or error injection.
+> 
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
-> V4: Avoid confusion with device creation parameter bus but renaming to
->     busnr
-> ---
->  hw/acpi/acpi_generic_initiator.c | 11 ++++++-----
->  hw/pci/pci.c                     | 14 ++++++++++++++
->  2 files changed, 20 insertions(+), 5 deletions(-)
+>  hw/arm/virt-acpi-build.c | 29 +++++++++++++++++++++++++----
+>  hw/arm/virt.c            | 12 +++++++++++-
+>  include/hw/boards.h      |  1 +
+>  3 files changed, 37 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> index 73bafaaaea..f2711c91ef 100644
-> --- a/hw/acpi/acpi_generic_initiator.c
-> +++ b/hw/acpi/acpi_generic_initiator.c
-> @@ -9,6 +9,7 @@
->  #include "hw/boards.h"
->  #include "hw/pci/pci_device.h"
->  #include "qemu/error-report.h"
-> +#include "qapi/error.h"
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index e10cad86dd73..b6f2e55014a2 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -63,6 +63,7 @@
 >  
->  typedef struct AcpiGenericInitiatorClass {
->      ObjectClass parent_class;
-> @@ -79,7 +80,7 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
->      MachineState *ms = MACHINE(qdev_get_machine());
->      AcpiGenericInitiator *gi;
->      GArray *table_data = opaque;
-> -    PCIDevice *pci_dev;
-> +    uint8_t bus, devfn;
->      Object *o;
+>  #define ARM_SPI_BASE 32
 >  
->      if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
-> @@ -100,10 +101,10 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
->          exit(1);
->      }
+> +#define ACPI_GENERIC_EVENT_DEVICE "GEDD"
+>  #define ACPI_BUILD_TABLE_SIZE             0x20000
 >  
-> -    pci_dev = PCI_DEVICE(o);
-> -    build_srat_pci_generic_initiator(table_data, gi->node, 0,
-> -                                     pci_bus_num(pci_get_bus(pci_dev)),
-> -                                     pci_dev->devfn);
-> +    bus = object_property_get_uint(o, "busnr", &error_fatal);
-> +    devfn = object_property_get_uint(o, "addr", &error_fatal);
+>  static void acpi_dsdt_add_cpus(Aml *scope, VirtMachineState *vms)
+> @@ -155,9 +156,14 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+>  
+>      Aml *aei = aml_resource_template();
+>      /* Pin 3 for power button */
+> -    const uint32_t pin_list[1] = {3};
+> +    uint32_t pin = 3;
+>      aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+> -                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
+> +                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+> +                                 "GPO0", NULL, 0));
+> +    pin = 6;
+> +    /* Pin 8 for generic error */
 
-devfn in PCI code is 32bit, while here it's declared as unit8_t,
-which seems wrong.
-It likely would work in case of PCIe root ports/switches where slot is 0,
-but should quickly break elsewhere as soon as slot is more than 0.
+For real? Code says 6, comment says 8.
 
-If it's intentional, there should be fat comment here about why it this way
-and an assert to catch silent cropping of the value. 
+Comments must come before the code they comment, not after it,
+then this kind of thing won't happen.
 
+
+> +    aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+> +                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+>                                   "GPO0", NULL, 0));
+>      aml_append(dev, aml_name_decl("_AEI", aei));
+>  
+> @@ -166,6 +172,11 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+>      aml_append(method, aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+>                                    aml_int(0x80)));
+>      aml_append(dev, method);
+> +    method = aml_method("_E06", 0, AML_NOTSERIALIZED);
+> +    aml_append(method, aml_notify(aml_name(ACPI_GENERIC_EVENT_DEVICE),
+> +                                  aml_int(0x80)));
+> +    aml_append(dev, method);
 > +
-> +    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
->  
->      return 0;
+>      aml_append(scope, dev);
 >  }
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 50b86d5790..29d4852c21 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
->  static void pcibus_reset_hold(Object *obj, ResetType type);
->  static bool pcie_has_upstream_port(PCIDevice *dev);
 >  
-> +static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
-> +                             void *opaque, Error **errp)
+> @@ -800,6 +811,15 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
+>      build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
+>  }
+>  
+> +static void acpi_dsdt_add_generic_event_device(Aml *scope)
 > +{
-> +    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
-> +
-> +    visit_type_uint8(v, name, &busnr, errp);
+> +    Aml *dev = aml_device(ACPI_GENERIC_EVENT_DEVICE);
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +    aml_append(dev, aml_name_decl("_STA", aml_int(0xF)));
+> +    aml_append(scope, dev);
 > +}
 > +
-> +static const PropertyInfo prop_pci_busnr = {
-> +    .name = "busnr",
-> +    .get = prop_pci_busnr_get,
-> +};
+>  /* DSDT */
+>  static void
+>  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> @@ -842,9 +862,9 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>                        irqmap[VIRT_ACPI_GED] + ARM_SPI_BASE, AML_SYSTEM_MEMORY,
+>                        memmap[VIRT_ACPI_GED].base);
+>      } else {
+> -        acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
+> -                           (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
+>      }
+> +    acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
+> +                       (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
+>  
+>      if (vms->acpi_dev) {
+>          uint32_t event = object_property_get_uint(OBJECT(vms->acpi_dev),
+> @@ -858,6 +878,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      }
+>  
+>      acpi_dsdt_add_power_button(scope);
+> +    acpi_dsdt_add_generic_event_device(scope);
+>  #ifdef CONFIG_TPM
+>      acpi_dsdt_add_tpm(scope, vms);
+>  #endif
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index b0c68d66a345..874a8612ef2d 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -997,6 +997,13 @@ static void create_rtc(const VirtMachineState *vms)
+>  }
+>  
+>  static DeviceState *gpio_key_dev;
 > +
->  static Property pci_props[] = {
->      DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
->      DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-> @@ -85,6 +98,7 @@ static Property pci_props[] = {
->                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
->      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
->                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> +    { .name = "busnr", .info = &prop_pci_busnr },
->      DEFINE_PROP_END_OF_LIST()
+> +static DeviceState *gpio_error_dev;
+> +static void virt_set_error(void)
+> +{
+> +    qemu_set_irq(qdev_get_gpio_in(gpio_error_dev, 0), 1);
+> +}
+> +
+>  static void virt_powerdown_req(Notifier *n, void *opaque)
+>  {
+>      VirtMachineState *s = container_of(n, VirtMachineState, powerdown_notifier);
+> @@ -1014,6 +1021,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+>  {
+>      gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+>                                          qdev_get_gpio_in(pl061_dev, 3));
+> +    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
+> +                                          qdev_get_gpio_in(pl061_dev, 6));
+>  
+>      qemu_fdt_add_subnode(fdt, "/gpio-keys");
+>      qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
+> @@ -2385,8 +2394,8 @@ static void machvirt_init(MachineState *machine)
+>      if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+>          vms->acpi_dev = create_acpi_ged(vms);
+>      } else {
+> -        create_gpio_devices(vms, VIRT_GPIO, sysmem);
+>      }
+> +    create_gpio_devices(vms, VIRT_GPIO, sysmem);
+>  
+>      if (vms->secure && !vmc->no_secure_gpio) {
+>          create_gpio_devices(vms, VIRT_SECURE_GPIO, secure_sysmem);
+> @@ -3100,6 +3109,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+>      mc->default_ram_id = "mach-virt.ram";
+>      mc->default_nic = "virtio-net-pci";
+>  
+> +    mc->set_error = virt_set_error;
+>      object_class_property_add(oc, "acpi", "OnOffAuto",
+>          virt_get_acpi, virt_set_acpi,
+>          NULL, NULL);
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index ef6f18f2c1a7..6cf01f3934ae 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -304,6 +304,7 @@ struct MachineClass {
+>      const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
+>      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+>      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+> +    void (*set_error)(void);
 >  };
 >  
+>  /**
+> -- 
+> 2.45.2
 
 
