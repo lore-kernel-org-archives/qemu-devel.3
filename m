@@ -4,88 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881F3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A00C3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 15:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRvvk-0006NW-2c; Thu, 11 Jul 2024 11:42:00 -0400
+	id 1sRvxh-0006FJ-29; Thu, 11 Jul 2024 11:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvvj-0006JX-1H
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:41:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sRvxf-00068a-7U
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:43:59 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRvvg-0007eT-EA
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:41:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720712515;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mWLSM8ZEXT80/iRiMyNxUDiDBunsEtenw83AUcvn6YQ=;
- b=T9if7byBHXDwSm7KJW7BX6VtZkvSls31XJrNoonsPn9VKexmTa93WLusRw2LmUj+yc1zaV
- Qlu5m5Ms8ad/pk1sENiJnC2gFBX0LhgggCJsUrpBj1VWNGiyL61mR5Bet7ZcZ+Snai0Yv1
- d63y13ukpaHYrubMdCnj2TgjbwONh6Q=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-LQ2BsAoRN_CozvRw9dq4Sw-1; Thu, 11 Jul 2024 11:41:49 -0400
-X-MC-Unique: LQ2BsAoRN_CozvRw9dq4Sw-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-448335bb53aso590311cf.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720712508; x=1721317308;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mWLSM8ZEXT80/iRiMyNxUDiDBunsEtenw83AUcvn6YQ=;
- b=FmDyESh9KKdgUdcpLZITk4E1FZFmSUUYOxyO/fiOrrWKR58LnChYE9E/+XDL12v3af
- /ZfrDEqPUI8zqLJn8Wdu7JQJZD5fv5/BCbHjP5Cv/odUyfufaF2TaupiVbSrfRjc6EcC
- q9eS+K84xYnC94KDOLgcAFINGlb0iBDjErLSHemNpbXJJ51r9ZJ10c/AP4fyEuJ/DJiE
- HHFJB0yWYzi/Baawu3FhWriu7He0JBa6ffgbJ/Zv8eNC5czSsnyy5j0ok/cJ3sLHCuXy
- OMwPOxTs+tBZWWNmG9M2nz4Q4CGGl+/8e16nF/kxpfjZQPTNcTKhVOk788/+je4UOI61
- U0ng==
-X-Gm-Message-State: AOJu0YwpC07dE/iiqPedLNymGI8sqby/Fva8qFDocgGzvqa3U6IQKsuS
- 6gfI/SgbdV2hFKCG84Id7hOJSMvnwJGy0pOEgoyPvIkoNdMzFazzT9Q/mmVttdElD7t6NlPihyF
- eQRQp2qdGKHo41ugP6cF4UMlLeRLaFfVKNj/O92wo8bSZ9VdU7FKB
-X-Received: by 2002:a05:620a:20c9:b0:79e:fc14:c53 with SMTP id
- af79cd13be357-7a1471f7a44mr253990285a.7.1720712508527; 
- Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOeShMSuR9ZwJ13Ke5zcQdASk3stkJjl+yn+Z1Wu39H7iZkMpVyrTPxFr+WPo/82PT3xKxGA==
-X-Received: by 2002:a05:620a:20c9:b0:79e:fc14:c53 with SMTP id
- af79cd13be357-7a1471f7a44mr253988685a.7.1720712508217; 
- Thu, 11 Jul 2024 08:41:48 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f18ff6756sm303291985a.2.2024.07.11.08.41.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 08:41:47 -0700 (PDT)
-Date: Thu, 11 Jul 2024 11:41:46 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Jason Wang <jasowang@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, mcoqueli@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 1/2] vhost-user: add a write-read lock
-Message-ID: <Zo_9OlX0pV0paFj7@x1n>
-References: <20240711131424.181615-1-ppandit@redhat.com>
- <20240711131424.181615-2-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sRvxb-000816-Qr
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 11:43:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WKf912ZYfz6H7X0;
+ Thu, 11 Jul 2024 23:41:41 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id E49151406AC;
+ Thu, 11 Jul 2024 23:43:46 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 11 Jul
+ 2024 16:43:46 +0100
+Date: Thu, 11 Jul 2024 16:43:45 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v4 05/13] hw/pci: Add a busnr property to pci_props and
+ use for acpi/gi
+Message-ID: <20240711164345.00005952@Huawei.com>
+In-Reply-To: <20240711142316.1150870e@imammedo.users.ipa.redhat.com>
+References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
+ <20240702131428.664859-6-Jonathan.Cameron@huawei.com>
+ <20240711135331.6f0e4639@imammedo.users.ipa.redhat.com>
+ <20240711142316.1150870e@imammedo.users.ipa.redhat.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240711131424.181615-2-ppandit@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,44 +75,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 06:44:23PM +0530, Prasad Pandit wrote:
-> From: Prasad Pandit <pjp@fedoraproject.org>
-> 
-> QEMU threads use vhost_user_write/read calls to send
-> and receive messages from a vhost-user device. When multiple
-> threads communicate with the same vhost-user device, they can
-> receive each other's messages, resulting in an erroneous state.
-> 
->  vhost_user_read_header:
->   700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
->  vhost_device_iotlb_miss:
->   700871,700871: Fail to update device iotlb
->  vhost_user_postcopy_end:
->   700871,700900: Failed to receive reply to postcopy_end
->  vhost_user_read_header:
->   700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-> 
-> Here fault thread seems to end the postcopy migration while
-> another thread is starting the vhost-user device.
-> 
-> Add a rw lock to hold for one vhost_user_write/read cycle
-> and avoid such race conditions.
-> 
-> Suggested-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-> ---
->  hw/virtio/vhost-user.c         | 423 +++++++++++++++++++--------------
->  include/hw/virtio/vhost-user.h |   3 +
+On Thu, 11 Jul 2024 14:23:16 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-I apologize if I suggested WITH_QEMU_LOCK_GUARD when we talked.. I don't
-remember which one I suggested, but in this case IIUC it'll be much easier
-to review if you use the other sister function QEMU_LOCK_GUARD()
-instead.. That should make the diff much, much less.
+> On Thu, 11 Jul 2024 13:53:31 +0200
+> Igor Mammedov <imammedo@redhat.com> wrote:
+> 
+> > On Tue, 2 Jul 2024 14:14:10 +0100
+> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> >   
+> > > Using a property allows us to hide the internal details of the PCI device
+> > > from the code to build a SRAT Generic Initiator Affinity Structure with
+> > > PCI Device Handle.
+> > > 
+> > > Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > > 
+> > > ---
+> > > V4: Avoid confusion with device creation parameter bus but renaming to
+> > >     busnr
+> > > ---
+> > >  hw/acpi/acpi_generic_initiator.c | 11 ++++++-----
+> > >  hw/pci/pci.c                     | 14 ++++++++++++++
+> > >  2 files changed, 20 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+> > > index 73bafaaaea..f2711c91ef 100644
+> > > --- a/hw/acpi/acpi_generic_initiator.c
+> > > +++ b/hw/acpi/acpi_generic_initiator.c
+> > > @@ -9,6 +9,7 @@
+> > >  #include "hw/boards.h"
+> > >  #include "hw/pci/pci_device.h"
+> > >  #include "qemu/error-report.h"
+> > > +#include "qapi/error.h"
+> > >  
+> > >  typedef struct AcpiGenericInitiatorClass {
+> > >      ObjectClass parent_class;
+> > > @@ -79,7 +80,7 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+> > >      MachineState *ms = MACHINE(qdev_get_machine());
+> > >      AcpiGenericInitiator *gi;
+> > >      GArray *table_data = opaque;
+> > > -    PCIDevice *pci_dev;
+> > > +    uint8_t bus, devfn;
+> > >      Object *o;
+> > >  
+> > >      if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+> > > @@ -100,10 +101,10 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+> > >          exit(1);
+> > >      }
+> > >  
+> > > -    pci_dev = PCI_DEVICE(o);
+> > > -    build_srat_pci_generic_initiator(table_data, gi->node, 0,
+> > > -                                     pci_bus_num(pci_get_bus(pci_dev)),
+> > > -                                     pci_dev->devfn);
+> > > +    bus = object_property_get_uint(o, "busnr", &error_fatal);
+> > > +    devfn = object_property_get_uint(o, "addr", &error_fatal);    
+> > 
+> > devfn in PCI code is 32bit, while here it's declared as unit8_t,
+> > which seems wrong.
+> > It likely would work in case of PCIe root ports/switches where slot is 0,
+> > but should quickly break elsewhere as soon as slot is more than 0.
+> > 
+> > If it's intentional, there should be fat comment here about why it this way
+> > and an assert to catch silent cropping of the value.   
+> 
+> Ignore that, obviously the rest of the QEMU does not care about this downcast.
+It's indeed odd that the storage is 32 bits.
+> 
+> Maybe add assert anyways to catch too big devfn returned,
+> which unlikely to happen ever.
 
--- 
-Peter Xu
+Will do. 
+assert(devfn >= 0 && devfn < PCI_DEVFN_MAX);
+with devfn locally as an int32_t and object_property_get_int()
+to match with the type.
+
+> 
+> anyways:
+> 
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> 
+> >   
+> > > +
+> > > +    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
+> > >  
+> > >      return 0;
+> > >  }
+> > > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > > index 50b86d5790..29d4852c21 100644
+> > > --- a/hw/pci/pci.c
+> > > +++ b/hw/pci/pci.c
+> > > @@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
+> > >  static void pcibus_reset_hold(Object *obj, ResetType type);
+> > >  static bool pcie_has_upstream_port(PCIDevice *dev);
+> > >  
+> > > +static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
+> > > +                             void *opaque, Error **errp)
+> > > +{
+> > > +    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
+> > > +
+> > > +    visit_type_uint8(v, name, &busnr, errp);
+> > > +}
+> > > +
+> > > +static const PropertyInfo prop_pci_busnr = {
+> > > +    .name = "busnr",
+> > > +    .get = prop_pci_busnr_get,
+> > > +};
+> > > +
+> > >  static Property pci_props[] = {
+> > >      DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
+> > >      DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+> > > @@ -85,6 +98,7 @@ static Property pci_props[] = {
+> > >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+> > >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+> > >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> > > +    { .name = "busnr", .info = &prop_pci_busnr },
+> > >      DEFINE_PROP_END_OF_LIST()
+> > >  };
+> > >      
+> >   
+> 
+> 
 
 
