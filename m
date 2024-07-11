@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D867C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1E4C3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRtSR-0007bW-Dy; Thu, 11 Jul 2024 09:03:37 -0400
+	id 1sRtU0-0005qh-9x; Thu, 11 Jul 2024 09:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sRtSJ-0007H6-Lh
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:03:27 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sRtSH-0008Hz-Fc
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:03:27 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4266f796e67so53365e9.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1720703003; x=1721307803; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=T1tEsDBDWsovvb9XXtE9YS/ok36swrWeL71lNKwHwT0=;
- b=hPmvi/XTh1Rp6ArlX7yOY3s5tbpm6dLQ4ttqJ34uyhT+wWwPnsa9Fgwge6h41mCml9
- OT0c6xNl/TTLs0ed4zSDj0ZaLANBpl6w+YudwFiJBgKBXpKdI8gvtrwF7KOd0G6XWWnY
- jB6sZ6zypBNu3PYU9XafMQVyj5uTcqixt8y5peJGFbBUckw5ouIWsUZAWwOqPu5nGS/g
- L6EW5gPvOcok16uum/0UfCh7V5/g35ooz4WJM2EXrFlqbKj9y2W6tk/UxUDqHURJP86J
- nRcWEomnXxV+5zTjT6BDfxa3bcry26r2pz7z+EMuLe8b9f4UGBHkxtvrFy/MBkmvSjgo
- vGqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720703003; x=1721307803;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T1tEsDBDWsovvb9XXtE9YS/ok36swrWeL71lNKwHwT0=;
- b=WE7EElNUadwXKvzwZCf7hfht4zJeOnnQnlhw+gtHjIC8r4UjKsTS7UGGHK1sR14/k7
- svPDp41pFFgUi99Q1Xb16uOlADuW1o+qMMtpSaBlVQIpmkzu+fBvZphx520olT0fArsG
- ebXS3mivonkuCJAuPWbBzOpJQSkIW9GizXLw1Nn/LWB0839oPuAXYhdAO2eWbEPf7dAY
- zzqddTp6C4pbWq7j06bLdVGjrI1Pwx+38UK0j0f7aBKcbgc2QbV9CXIde7KiisIGQyuq
- BgOrUwRJrWtNXfJLfK1BHHDGrKtqSpZPzqVV8etr6NHuwgZtpgVi0nEEcimT+NHWsckF
- Gi5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSvbJkYHoJRrhz6C2CMPKpxvXIKfWu0VEXdWPL6d5X0TLl+6webikugXR7iV0Gc/xfQwWOZu/ECliUaiiEmr/Z57ZutD4=
-X-Gm-Message-State: AOJu0YzdtXYfDPi1ZUb6nPIxQLZ85hlr2f7rBUKX+PJeyAM4sZXab5JK
- VmhCXcJO0q7iggLCoXTAvlZLFDfvAnrvq0Ys+rarfTor1cwP1R/Kv7PbULeKTQ==
-X-Google-Smtp-Source: AGHT+IFTOGfXRoqpDnrKQAF8LEdAv9irjpAvHVwnuvazB1I19VdY8/QDaMO+oN5nIgRYT0fFU+XY2w==
-X-Received: by 2002:a7b:cd95:0:b0:426:6e95:6ea7 with SMTP id
- 5b1f17b1804b1-427986dc130mr1787535e9.0.1720703002903; 
- Thu, 11 Jul 2024 06:03:22 -0700 (PDT)
-Received: from google.com (205.215.190.35.bc.googleusercontent.com.
- [35.190.215.205]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427270238a6sm84986905e9.20.2024.07.11.06.03.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 06:03:22 -0700 (PDT)
-Date: Thu, 11 Jul 2024 13:03:18 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [PATCH v4 08/19] hw/arm/smmuv3: Translate CD and TT using
- stage-2 table
-Message-ID: <Zo_YFuoldgMzJ5Pj@google.com>
-References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-9-smostafa@google.com>
- <20240704180843.GE1693268@myrica> <Zozi-87pVHOdwJGN@google.com>
- <20240709130004.GB2189727@myrica>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sRtTz-0005nY-84
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:05:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sRtTw-0000jx-CM
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:05:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720703107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=g3qak4amCMfWwf4MaFQ8+ndjF9kxWf1auc7//xT2HqI=;
+ b=WYV516Tlon4A5PVB3ToKkWjvYuqr41qvf7hRK6cjt4ux1oZ+ucuUgupE20L7JPkUlRlh+z
+ araLYA3/bW84sBD4uFSnmH7jUa67md2y1B/qSYIddTExDqLM8GgDh5ll0jns9f5Mo1769K
+ 1yD3b+/X73f5EFAGUOwFqzPIIH19M6M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-F2qLf60tPSGunO0EstH1BQ-1; Thu,
+ 11 Jul 2024 09:05:01 -0400
+X-MC-Unique: F2qLf60tPSGunO0EstH1BQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AEC41955BCC; Thu, 11 Jul 2024 13:04:58 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.146])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4DB571955F40; Thu, 11 Jul 2024 13:04:57 +0000 (UTC)
+Date: Thu, 11 Jul 2024 15:04:55 +0200
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Changqi Lu <luchangqi.123@bytedance.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
+ pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
+ its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com
+Subject: Re: [PATCH v8 10/10] block/iscsi: add persistent reservation in/out
+ driver
+Message-ID: <20240711130455.GD16124@fedora.home>
+References: <20240709024706.4108-1-luchangqi.123@bytedance.com>
+ <20240709024706.4108-11-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="dmiwA0TnHqUym1rb"
 Content-Disposition: inline
-In-Reply-To: <20240709130004.GB2189727@myrica>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+In-Reply-To: <20240709024706.4108-11-luchangqi.123@bytedance.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,64 +88,549 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jean,
 
-On Tue, Jul 09, 2024 at 02:00:04PM +0100, Jean-Philippe Brucker wrote:
-> Hi Mostafa,
-> 
-> On Tue, Jul 09, 2024 at 07:12:59AM +0000, Mostafa Saleh wrote:
-> > > In this case I think we're reporting InputAddr as the CD address, but it
-> > > should be the IOVA
-> > 
-> > As Eric mentioned this would require some rework to propagate the iova,
-> > but what I am more worried about is the readability in that case, may be we
-> > can just fixup the event after smmuv3_get_config() in case of errors,
-> > something like:
-> > 
-> > /*
-> >  * smmuv3_get_config() Only return translation faults in case of
-> >  * nested translation, otherwise it can only return C_BAD_CD,
-> >  * C_BAD_STE, C_BAD_STREAMID or F_STE_FETCH.
-> >  * But in case of translation fault, we need to fixup the
-> >  * InputAddr to be the IOVA of the translation as the decode
-> >  * functions don't know about it.
-> >  */
-> > static void smmuv3_config_fixup_event(SMMUEventInfo *event, hwaddr iova)
-> > {
-> >    switch (event->type) {
-> >    case SMMU_EVT_F_WALK_EABT:
-> >    case SMMU_EVT_F_TRANSLATION:
-> >    case SMMU_EVT_F_ADDR_SIZE:
-> >    case SMMU_EVT_F_ACCESS:
-> >    case SMMU_EVT_F_PERMISSION:
-> >        event->u.f_walk_eabt.addr = iova;
-> >        break;
-> >    default:
-> >        break;
-> >    }
-> > }
-> > 
-> > What do you think?
-> 
-> Yes, I think that's also what I came up with. Maybe it would be simpler to
-> unconditionally do the fixup at the end of smmuv3_translate() and remove
-> .addr write from smmuv3_do_translate()?
+--dmiwA0TnHqUym1rb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I wanted to make it clear what case causes the IOVA to be missing, but I
-guess if we unify the setup for the InputAddr it would be easier to
-read and just add a comment instead.
+On Tue, Jul 09, 2024 at 10:47:06AM +0800, Changqi Lu wrote:
+> Add persistent reservation in/out operations for iscsi driver.
+> The following methods are implemented: bdrv_co_pr_read_keys,
+> bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
+> bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
+>=20
+> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
+> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+> ---
+>  block/iscsi.c | 425 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 425 insertions(+)
+>=20
+> diff --git a/block/iscsi.c b/block/iscsi.c
+> index 2ff14b7472..ba51f6d016 100644
+> --- a/block/iscsi.c
+> +++ b/block/iscsi.c
+> @@ -96,6 +96,7 @@ typedef struct IscsiLun {
+>      unsigned long *allocmap_valid;
+>      long allocmap_size;
+>      int cluster_size;
+> +    uint8_t pr_cap;
+>      bool use_16_for_rw;
+>      bool write_protected;
+>      bool lbpme;
+> @@ -280,6 +281,10 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int=
+ status,
+>                      iTask->err_code =3D -error;
+>                      iTask->err_str =3D g_strdup(iscsi_get_error(iscsi));
+>                  }
+> +            } else if (status =3D=3D SCSI_STATUS_RESERVATION_CONFLICT) {
+> +                iTask->err_code =3D -EBADE;
+> +                error_report("iSCSI Persistent Reservation Conflict: %s",
+> +                             iscsi_get_error(iscsi));
+>              }
+>          }
+>      }
+> @@ -1792,6 +1797,50 @@ static void iscsi_save_designator(IscsiLun *lun,
+>      }
+>  }
+> =20
+> +/*
+> + *  Ensure iscsi_open() must succeed, weather or not the target
+> + *  implement SCSI_PR_IN_REPORT_CAPABILITIES.
+> + */
+> +static void iscsi_get_pr_cap_sync(IscsiLun *iscsilun)
+> +{
+> +    struct scsi_task *task =3D NULL;
+> +    struct scsi_persistent_reserve_in_report_capabilities *rc =3D NULL;
+> +    int retries =3D ISCSI_CMD_RETRIES;
+> +    int xferlen =3D sizeof(struct scsi_persistent_reserve_in_report_capa=
+bilities);
+> +
+> +    do {
+> +        if (task !=3D NULL) {
+> +            scsi_free_scsi_task(task);
+> +            task =3D NULL;
+> +        }
+> +
+> +        task =3D iscsi_persistent_reserve_in_sync(iscsilun->iscsi,
+> +               iscsilun->lun, SCSI_PR_IN_REPORT_CAPABILITIES, xferlen);
+> +        if (task !=3D NULL && task->status =3D=3D SCSI_STATUS_GOOD) {
+> +                rc =3D scsi_datain_unmarshall(task);
+> +                if (rc =3D=3D NULL) {
+> +                    error_report("iSCSI: Failed to unmarshall "
+> +                                 "report capabilities data.");
+> +                } else {
+> +                    iscsilun->pr_cap =3D
+> +                    scsi_pr_cap_to_block(rc->persistent_reservation_type=
+_mask);
+> +                    iscsilun->pr_cap |=3D (rc->ptpl_a) ? BLK_PR_CAP_PTPL=
+ : 0;
+> +                }
+> +                break;
+> +        }
+> +    } while (task !=3D NULL && task->status =3D=3D SCSI_STATUS_CHECK_CON=
+DITION
+> +             && task->sense.key =3D=3D SCSI_SENSE_UNIT_ATTENTION
+> +             && retries-- > 0);
+> +
+> +    if (task =3D=3D NULL || task->status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI: failed to send report capabilities command.=
+");
+> +    }
+> +
+> +    if (task) {
+> +        scsi_free_scsi_task(task);
+> +    }
+> +}
+> +
+>  static int iscsi_open(BlockDriverState *bs, QDict *options, int flags,
+>                        Error **errp)
+>  {
+> @@ -2024,6 +2073,7 @@ static int iscsi_open(BlockDriverState *bs, QDict *=
+options, int flags,
+>          bs->supported_zero_flags =3D BDRV_REQ_MAY_UNMAP;
+>      }
+> =20
+> +    iscsi_get_pr_cap_sync(iscsilun);
+>  out:
+>      qemu_opts_del(opts);
+>      g_free(initiator_name);
+> @@ -2110,6 +2160,8 @@ static void iscsi_refresh_limits(BlockDriverState *=
+bs, Error **errp)
+>          bs->bl.opt_transfer =3D pow2floor(iscsilun->bl.opt_xfer_len *
+>                                          iscsilun->block_size);
+>      }
+> +
+> +    bs->bl.pr_cap =3D iscsilun->pr_cap;
+>  }
+> =20
+>  /* Note that this will not re-establish a connection with an iSCSI targe=
+t - it
+> @@ -2408,6 +2460,371 @@ out_unlock:
+>      return r;
+>  }
+> =20
+> +static int coroutine_fn
+> +iscsi_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
+> +                      uint32_t num_keys, uint64_t *keys)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    QEMUIOVector qiov;
+> +    struct IscsiTask iTask;
+> +    int xferlen =3D sizeof(struct scsi_persistent_reserve_in_read_keys) +
+> +                  sizeof(uint64_t) * num_keys;
+> +    g_autofree uint8_t *buf =3D g_malloc0(xferlen);
+> +    int32_t num_collect_keys =3D 0;
+> +    int r =3D 0;
+> +
+> +    qemu_iovec_init_buf(&qiov, buf, xferlen);
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_in_task(iscsilun->iscsi,
+> +                 iscsilun->lun, SCSI_PR_IN_READ_KEYS, xferlen,
+> +                 iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov=
+=2Eniov);
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err=
+_str);
+> +        r =3D iTask.err_code;
+> +        goto out;
+> +    }
+> +
+> +    memcpy(generation, &buf[0], 4);
+> +    *generation =3D be32_to_cpu(*generation);
+> +    memcpy(&num_collect_keys, &buf[4], 4);
+> +    num_collect_keys =3D be32_to_cpu(num_collect_keys) / sizeof(uint64_t=
+);
+> +    if (num_collect_keys > num_keys) {
+> +        r =3D -EINVAL;
+> +        goto out;
+> +    }
+> +
+> +    for (int i =3D 0; i < num_collect_keys; i++) {
+> +        memcpy(&keys[i], &buf[8 + i * 8], 8);
+> +        keys[i] =3D be64_to_cpu(keys[i]);
+> +    }
+> +    r =3D num_collect_keys;
+> +
+> +out:
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +    g_free(iTask.err_str);
+> +    g_free(buf);
 
-> 
-> A separate union field "f_common" rather than f_walk_eabt may be clearer.
-> 
+buf is declared g_autofree, so this explicit g_free() call causes a
+double-free. There is no need to call g_free().
 
-Makes sense, but I will not do it in this patch to avoid making it larger
-and harder to review, and this can be a separate cleanup as I see in other
-places we use eabt already (smmuv3_record_event and for s2 population).
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
+> +                             uint64_t *key, BlockPrType *type)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    QEMUIOVector qiov;
+> +    struct IscsiTask iTask;
+> +    int xferlen =3D sizeof(struct scsi_persistent_reserve_in_read_reserv=
+ation);
+> +    g_autofree uint8_t *buf =3D g_malloc0(xferlen);
+> +    uint8_t scope_type =3D 0;
+> +    int32_t num_collect_keys =3D 0;
+> +    int r =3D 0;
+> +
+> +    qemu_iovec_init_buf(&qiov, buf, xferlen);
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_in_task(iscsilun->iscsi,
+> +                 iscsilun->lun, SCSI_PR_IN_READ_RESERVATION,
+> +                 xferlen, iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov=
+=2Eniov);
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err=
+_str);
+> +        r =3D iTask.err_code;
+> +        goto out;
+> +    }
+> +
+> +    memcpy(generation, &buf[0], 4);
+> +    *generation =3D be32_to_cpu(*generation);
+> +    memcpy(key, &buf[8], 8);
+> +    *key =3D be64_to_cpu(*key);
+> +    memcpy(&scope_type, &buf[21], 1);
+> +    *type =3D scsi_pr_type_to_block(scope_type & 0xf);
+> +    memcpy(&num_collect_keys, &buf[4], 4);
+> +    r =3D be32_to_cpu(num_collect_keys) / sizeof(uint64_t);
+> +out:
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +    g_free(iTask.err_str);
+> +    g_free(buf);
 
-Thanks,
-Mostafa
+Double-free. This line can be removed.
 
-> Thanks,
-> Jean
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_register(BlockDriverState *bs, uint64_t old_key,
+> +                     uint64_t new_key, BlockPrType type,
+> +                     bool ptpl, bool ignore_key)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    struct IscsiTask iTask;
+> +    struct scsi_persistent_reserve_out_basic basic;
+> +    SCSIPrOutAction action =3D ignore_key ? SCSI_PR_OUT_REG_AND_IGNORE_K=
+EY :
+> +                                          SCSI_PR_OUT_REGISTER;
+> +    int r =3D 0;
+> +
+> +    basic.reservation_key =3D old_key;
+> +    basic.service_action_reservation_key =3D new_key;
+> +    basic.aptpl =3D ptpl ? 1 : 0;
+> +
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_out_task(iscsilun->iscsi,
+> +                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
+> +                 &basic, iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.er=
+r_str);
+> +        r =3D iTask.err_code;
+> +    }
+> +
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +
+> +    g_free(iTask.err_str);
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    struct IscsiTask iTask;
+> +    struct scsi_persistent_reserve_out_basic basic;
+> +    int r =3D 0;
+> +
+> +    basic.reservation_key =3D key;
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_out_task(iscsilun->iscsi,
+> +                 iscsilun->lun, SCSI_PR_OUT_RESERVE, 0,
+> +                 block_pr_type_to_scsi(type), &basic,
+> +                 iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.er=
+r_str);
+> +        r =3D iTask.err_code;
+> +    }
+> +
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +
+> +    g_free(iTask.err_str);
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    struct IscsiTask iTask;
+> +    struct scsi_persistent_reserve_out_basic basic;
+> +    int r =3D 0;
+> +
+> +    basic.reservation_key =3D key;
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_out_task(iscsilun->iscsi,
+> +                 iscsilun->lun, SCSI_PR_OUT_RELEASE, 0,
+> +                 block_pr_type_to_scsi(type), &basic,
+> +                 iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.er=
+r_str);
+> +        r =3D iTask.err_code;
+> +    }
+> +
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +
+> +    g_free(iTask.err_str);
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_clear(BlockDriverState *bs, uint64_t key)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    struct IscsiTask iTask;
+> +    struct scsi_persistent_reserve_out_basic basic;
+> +    int r =3D 0;
+> +
+> +    basic.reservation_key =3D key;
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_out_task(iscsilun->iscsi,
+> +                 iscsilun->lun, SCSI_PR_OUT_CLEAR, 0, 0, &basic,
+> +                 iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.er=
+r_str);
+> +        r =3D iTask.err_code;
+> +    }
+> +
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +
+> +    g_free(iTask.err_str);
+> +    return r;
+> +}
+> +
+> +static int coroutine_fn
+> +iscsi_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
+> +                    uint64_t new_key, BlockPrType type, bool abort)
+> +{
+> +    IscsiLun *iscsilun =3D bs->opaque;
+> +    struct IscsiTask iTask;
+> +    struct scsi_persistent_reserve_out_basic basic;
+> +    SCSIPrOutAction action =3D abort ? SCSI_PR_OUT_PREEMPT_AND_ABORT :
+> +                                     SCSI_PR_OUT_PREEMPT;
+> +    int r =3D 0;
+> +
+> +    basic.reservation_key =3D old_key;
+> +    basic.service_action_reservation_key =3D new_key;
+> +
+> +    iscsi_co_init_iscsitask(iscsilun, &iTask);
+> +    qemu_mutex_lock(&iscsilun->mutex);
+> +retry:
+> +    iTask.task =3D iscsi_persistent_reserve_out_task(iscsilun->iscsi,
+> +                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
+> +                 &basic, iscsi_co_generic_cb, &iTask);
+> +
+> +    if (iTask.task =3D=3D NULL) {
+> +        qemu_mutex_unlock(&iscsilun->mutex);
+> +        return -ENOMEM;
+> +    }
+> +
+> +
+> +    iscsi_co_wait_for_task(&iTask, iscsilun);
+> +
+> +    if (iTask.task !=3D NULL) {
+> +        scsi_free_scsi_task(iTask.task);
+> +        iTask.task =3D NULL;
+> +    }
+> +
+> +    if (iTask.do_retry) {
+> +        iTask.complete =3D 0;
+> +        goto retry;
+> +    }
+> +
+> +    if (iTask.status !=3D SCSI_STATUS_GOOD) {
+> +        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.er=
+r_str);
+> +        r =3D iTask.err_code;
+> +    }
+> +
+> +    qemu_mutex_unlock(&iscsilun->mutex);
+> +
+> +    g_free(iTask.err_str);
+> +    return r;
+> +}
+> +
+> =20
+>  static const char *const iscsi_strong_runtime_opts[] =3D {
+>      "transport",
+> @@ -2451,6 +2868,14 @@ static BlockDriver bdrv_iscsi =3D {
+>      .bdrv_co_writev        =3D iscsi_co_writev,
+>      .bdrv_co_flush_to_disk =3D iscsi_co_flush,
+> =20
+> +    .bdrv_co_pr_read_keys     =3D iscsi_co_pr_read_keys,
+> +    .bdrv_co_pr_read_reservation =3D iscsi_co_pr_read_reservation,
+> +    .bdrv_co_pr_register      =3D iscsi_co_pr_register,
+> +    .bdrv_co_pr_reserve       =3D iscsi_co_pr_reserve,
+> +    .bdrv_co_pr_release       =3D iscsi_co_pr_release,
+> +    .bdrv_co_pr_clear         =3D iscsi_co_pr_clear,
+> +    .bdrv_co_pr_preempt       =3D iscsi_co_pr_preempt,
+> +
+>  #ifdef __linux__
+>      .bdrv_aio_ioctl   =3D iscsi_aio_ioctl,
+>  #endif
+> --=20
+> 2.20.1
+>=20
+
+--dmiwA0TnHqUym1rb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmaP2HcACgkQnKSrs4Gr
+c8jxmQgAw0hWA3MTJ4L6YaGx0iHarURJJAYUMNSDEmplGt7uK+VQjBMUgxuyto7D
+FcKjB0E8l6T0jz1SDdgFssjcRvjvXo01kgsbPi2RxK+hygcCyYwQCMvg+yiBW8NV
+Ahl8QtQMD+fLSADyScCj7Ify90UWr6Q6oWRI+TC1kiq2IeeGesHIsgeX8auNvl96
+s/ZdTa3wcvR0PCeEGySNmKvdQAgakrSpu6SKzxVOixaEFhSRbOE2vAUo7HCzDv7q
+Dna+9fdkkumJ56HtJbleFmIFs48TCHNH5cHfTLZIUSmwD9/BezjZ71CueFRlCOvy
+aQF9a6WwcjvHt9XFZM50TIUkfBHuxQ==
+=i0Pq
+-----END PGP SIGNATURE-----
+
+--dmiwA0TnHqUym1rb--
+
 
