@@ -4,72 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5282BC3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD63BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRxEm-0005wv-GM; Thu, 11 Jul 2024 13:05:44 -0400
+	id 1sRxTo-0004S9-Vy; Thu, 11 Jul 2024 13:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRxEl-0005vX-7T
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:05:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
+ id 1sRxTm-0004Qw-DA; Thu, 11 Jul 2024 13:21:14 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRxEi-0007v4-GH
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:05:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720717538;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=/pIjUuvBEBj2Yo68/QpOZHICYA+8RrGS3qplIda5JbE=;
- b=N7rWPHIVh1FtyTNpBcIkJbcx5QWhJ1pjlVhd5EEF8mfu8toF+cC3TemvjaBR4Hr8PwXLFc
- f2BulL3p30ezmGFHpvRPbs0kODLQWWab/may8gsajt4/C6C829Q0HWGd3JrzGNL52jHrJY
- LVbOUHvvSE+PjQszFvviTHC19AhVrRc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-l1ygLPVlNSC8jux_Ft8E6w-1; Thu,
- 11 Jul 2024 13:05:32 -0400
-X-MC-Unique: l1ygLPVlNSC8jux_Ft8E6w-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
+ id 1sRxTj-0003Hx-Ni; Thu, 11 Jul 2024 13:21:14 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKhMg5rk9z4wxk;
+ Fri, 12 Jul 2024 03:21:03 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D15AB1944D30; Thu, 11 Jul 2024 17:05:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA43319560AE; Thu, 11 Jul 2024 17:05:26 +0000 (UTC)
-Date: Thu, 11 Jul 2024 18:05:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: junjiehua <halouworls@gmail.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- junjiehua <junjiehua@tencent.com>
-Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
- msvcrt.dll!fwrite
-Message-ID: <ZpAQ01k2JhOtSeRI@redhat.com>
-References: <20240708112520.106127-1-junjiehua@tencent.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKhMd3v46z4wnx;
+ Fri, 12 Jul 2024 03:21:01 +1000 (AEST)
+Message-ID: <bb348910-c1d8-48b7-a06d-c2f7621b0d58@kaod.org>
+Date: Thu, 11 Jul 2024 19:20:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240708112520.106127-1-junjiehua@tencent.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/18] ppc/pnv: Better big-core model, lpar-per-core, PC
+ unit
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+References: <20240711141851.406677-1-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240711141851.406677-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,73 +62,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 08, 2024 at 07:25:20PM +0800, junjiehua wrote:
-> when building elf2dump with x86_64-w64-mingw32-gcc, fwrite is imported from
-> msvcrt.dll. However, the implementation of msvcrt.dll!fwrite is buggy:
-> it enters an infinite loop when the size of a single write exceeds 4GB.
-> This patch addresses the issue by splitting large physical memory
-> blocks into smaller chunks.
+Hello Nick,
+
+On 7/11/24 16:18, Nicholas Piggin wrote:
+> Primary motivation for this series is to improve big-core support.
 > 
-> Signed-off-by: junjiehua <junjiehua@tencent.com>
-> ---
->  contrib/elf2dmp/main.c | 19 +++++++++++++++----
->  1 file changed, 15 insertions(+), 4 deletions(-)
+> This also fixes POWER8 SMT running Linux with the msgsnd fix and
+> setting lpar-per-core mode (which is always true on POWER8).
+
+It does. I gave a try to the powernv8 machine with :
+
+  -smp 8,sockets=1,cores=1,threads=8
+  -smp 8,sockets=1,cores=2,threads=4
+  -smp 8,sockets=1,cores=4,threads=2
+  -smp 8,sockets=1,cores=8,threads=1
+
+and
+
+  -smp 16,sockets=1,cores=2,threads=8
+  -smp 16,sockets=1,cores=4,threads=4
+  -smp 16,sockets=2,cores=8,threads=1
+
+So,
+
+Tested-by: Cédric Le Goater <clg@redhat.com>
+
+However there is an issue with smt on multisocket. CPU hang. I guess
+POWER8 is not a priority.
+
+It would be good to improve slightly the models with properties. slightly,
+because I don't think adding the "big-core" and "lpar-per-core" properties
+to the chip and the core are much work. I am (nearly) sure it will remove
+a few lines of code ! Anyhow, this is not a blocker and I hope we can merge
+these improvements for 9.1 [*]
+
+One thing we could do also is deprecate the POWER8NVL and POWER8E chips in
+the 9.1 cycle.
+
+Thanks,
+
+C.
+  
+[*] the SPI model and ADU, LPC PSI serirq also. I haven't seen any
+     updates for PHB and XIVE,
+
+
 > 
-> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-> index d046a72ae6..1994553d95 100644
-> --- a/contrib/elf2dmp/main.c
-> +++ b/contrib/elf2dmp/main.c
-> @@ -23,6 +23,8 @@
->  #define INITIAL_MXCSR   0x1f80
->  #define MAX_NUMBER_OF_RUNS  42
->  
-> +#define MAX_CHUNK_SIZE (128 * 1024 * 1024)
-> +
->  typedef struct idt_desc {
->      uint16_t offset1;   /* offset bits 0..15 */
->      uint16_t selector;
-> @@ -434,13 +436,22 @@ static bool write_dump(struct pa_space *ps,
->  
->      for (i = 0; i < ps->block_nr; i++) {
->          struct pa_block *b = &ps->block[i];
-> +        size_t offset = 0;
-> +        size_t chunk_size;
->  
->          printf("Writing block #%zu/%zu of %"PRIu64" bytes to file...\n", i,
->                  ps->block_nr, b->size);
-> -        if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
-> -            eprintf("Failed to write block\n");
-> -            fclose(dmp_file);
-> -            return false;
-> +
-> +        while (offset < b->size) {
-> +            chunk_size = (b->size - offset > MAX_CHUNK_SIZE)
-> +                         ? MAX_CHUNK_SIZE
-> +                         : (b->size - offset);
-> +            if (fwrite(b->addr + offset, chunk_size, 1, dmp_file) != 1) {
-> +                eprintf("Failed to write block\n");
-> +                fclose(dmp_file);
-> +                return false;
-> +            }
-> +            offset += chunk_size;
->          }
->      }
-
-When reading the original ELF file, we don't actually fread() it,
-instead we mmap it, using GMappedFile on Windows. Rather than
-working around fwrite() bugs, we could do the same for writing
-and create a mapped file and just memcpy the data across.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> I think I accounted for all feedback from Cedric and Harsh from the
+> last RFC (except a couple of style suggestions from Harsh).
+> 
+> Since rfc:
+> - Fixed POWER8 SMT so it doesn't have to be disabled.
+> - Fixed inadvertent spapr SMT bug.
+> - Renamed PnvCPUState.core pointer to pnv_core. (Harsh)
+> - Moved where it is initialised (clg)
+> - Avoided most qdev_get_machine() calls by adding a PnvMachineState
+>    pointer from PnvChip, new patch 3 (clg).
+> - Rename TB state to use camel case (Harsh and clg)
+> - Add comment to explain SPRC/SPRD is only accessed with powernv.
+> - Use mc->desc for error messages and avoid splitting machine init
+>    handlers (Harsh).
+> - Add max_smt_threads class attribute to avoid duplicating checks (clg)
+> - Rename processor_id() class method to get_pir_tir (Harsh and clg)
+> - Add a comment for get_pir_tir() (clg)
+> - Allow get_pir_tir() to be passed NULL pointers to avoid dummy
+>    pir/tir variables (Harsh)
+> - Move the PPC_CPU_HAS_CORE_SIBLINGS macros to inline functions (clg)
+> - Invert them (test for single-thread rather than for siblings)
+>    because the callers read a little better that way (Harsh).
+> - Propagate lpar and big-core options down to chip and core
+>    levels rather than having to test machine (clg)
+> - Significantly split the big-core patch (clg).
+> - Rework big-core device-tree handling to simplify it (clg).
+> - Make new has_smt_siblings property bool (Harsh)
+> - Make the big-core timebase tod quirk a machine class property
+>    rather than machine state (Harsh).
+> 
+> Thanks,
+> Nick
+> 
+> Nicholas Piggin (18):
+>    target/ppc: Fix msgsnd for POWER8
+>    ppc/pnv: Add pointer from PnvCPUState to PnvCore
+>    ppc/pnv: Add a pointer from PnvChip to PnvMachineState
+>    ppc/pnv: Move timebase state into PnvCore
+>    target/ppc: Move SPR indirect registers into PnvCore
+>    ppc/pnv: specialise init for powernv8/9/10 machines
+>    ppc/pnv: Extend chip_pir class method to TIR as well
+>    ppc: Add a core_index to CPUPPCState for SMT vCPUs
+>    target/ppc: Add helpers to check for SMT sibling threads
+>    ppc: Add has_smt_siblings property to CPUPPCState
+>    ppc/pnv: Add a big-core mode that joins two regular cores
+>    ppc/pnv: Add allow for big-core differences in DT generation
+>    ppc/pnv: Implement big-core PVR for Power9/10
+>    ppc/pnv: Implement Power9 CPU core thread state indirect register
+>    ppc/pnv: Add POWER10 ChipTOD quirk for big-core
+>    ppc/pnv: Add big-core machine property
+>    ppc/pnv: Implement POWER10 PC xscom registers for direct controls
+>    ppc/pnv: Add an LPAR per core machine option
+> 
+>   include/hw/core/cpu.h        |   8 +
+>   include/hw/ppc/pnv.h         |   7 +
+>   include/hw/ppc/pnv_chip.h    |   6 +-
+>   include/hw/ppc/pnv_core.h    |  31 ++++
+>   target/ppc/cpu.h             |  41 ++---
+>   hw/ppc/pnv.c                 | 298 ++++++++++++++++++++++++++++-------
+>   hw/ppc/pnv_chiptod.c         |   7 +-
+>   hw/ppc/pnv_core.c            | 130 +++++++++++++--
+>   hw/ppc/spapr_cpu_core.c      |  16 +-
+>   system/cpus.c                |  10 ++
+>   target/ppc/cpu_init.c        |  26 +--
+>   target/ppc/excp_helper.c     |  69 ++++----
+>   target/ppc/misc_helper.c     | 104 ++++++------
+>   target/ppc/timebase_helper.c |  82 +++++-----
+>   14 files changed, 601 insertions(+), 234 deletions(-)
+> 
 
 
