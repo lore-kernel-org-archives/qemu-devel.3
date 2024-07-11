@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D518C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5282BC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 17:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRxCG-0001P0-O5; Thu, 11 Jul 2024 13:03:08 -0400
+	id 1sRxEm-0005wv-GM; Thu, 11 Jul 2024 13:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sRxCD-0001OQ-St
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:03:06 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sRxC7-0005Xp-LN
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:03:05 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-58b0dddab63so1927266a12.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 10:02:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720717378; x=1721322178; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wETisyh9GyMnQN2K84a+9d56iko12Lbicq2jC+Tk7iE=;
- b=K/blYv0BQrIiZCjU3ZVbVG7MJkJ8ZVM2sIQ2SsqtNE93B2RlI5hz+Dqf5t8CsmCxb6
- ZKyp+pSL0GQRmYYnhFMNmh6I3t8iIrOgsqaOuOKvguMBX4WkPKy+x5KeP7Qa8A6UzC4F
- /n00QTu/qX8/jiP+QLuI11ibcXGDx1uIXwQm/sxwes/lXaJSgtt0JlRu1rqD/CnOTMgV
- 5nINdR8Z2JEpwg8ZskTx4rlI+2u4XS17cypF8nlAguHBEeupkAac8L4WCCvCIhpYBzBE
- 9epS7n+YXCX945dttBkbv/9qVevn+Y8C1a6Jr78T29OOxiP2RWI+gGNVT2tUBvazfaG/
- h+UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720717378; x=1721322178;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wETisyh9GyMnQN2K84a+9d56iko12Lbicq2jC+Tk7iE=;
- b=NlPnWxgWnTVrNxhQCTf0bAl8Ne/UbZZK7oSAMnzXGshpftREvgMdZr/ycJJNiI2AAk
- Y3po55JuERwWhzU4Wd08Vz0IfT/L0kYaKbVkys/b5hdRYSgt9qIPSSfTLkNeRmC5AhXt
- ny7R3HMrbciKJEiknpfvNIHVDoGo0pHmeK1Iu9yDmUDvbpsofMLl7rnM5rtWlDQMiYPX
- 79oSNaUN2R++XQpEQBDPWV4xjoepM5UbXbAQ4+RGKUmmlXvKqBm2SJfmwu3/sMHUcPmR
- B99QgqKnSPCHqQZ2Q/6uhHVlrQJdgzza1xvmtabEzSeTjYEbI+RGtYLV531T4fPVYNAr
- b8rw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHkzxZDqrhXQPK6KVkrUP8RXz0mrNXe+cg4OKWe3mHs5lAZgsU3aZqUqa+9C3Bor0pDaCWGTGZ6U8RLFI/KNHCErEtjGY=
-X-Gm-Message-State: AOJu0YwJeAKTSIcXZN8vIMZGHUc8e5P9D4eB/IKRDG93QJt3ruZvOtPw
- 1/a1/gYPPNf9koXVKZYr31NXvD0Bcw4myxTojPkPk77C16qJwGGH9x4cZURhb8UJitazk4thher
- joayvefLr0xcasmF5zspOq8phezI=
-X-Google-Smtp-Source: AGHT+IEsukcI36T6elG/LvNqbD0c2N7wco6+EuItCMh7tL6k4STu3i+3KSa+3NPKbB3XsuChEvHmNkQm3mWBLU5kihc=
-X-Received: by 2002:a05:6402:2787:b0:58b:fd23:7065 with SMTP id
- 4fb4d7f45d1cf-594ba0cbe1amr6543946a12.16.1720717377450; Thu, 11 Jul 2024
- 10:02:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRxEl-0005vX-7T
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:05:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRxEi-0007v4-GH
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 13:05:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720717538;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=/pIjUuvBEBj2Yo68/QpOZHICYA+8RrGS3qplIda5JbE=;
+ b=N7rWPHIVh1FtyTNpBcIkJbcx5QWhJ1pjlVhd5EEF8mfu8toF+cC3TemvjaBR4Hr8PwXLFc
+ f2BulL3p30ezmGFHpvRPbs0kODLQWWab/may8gsajt4/C6C829Q0HWGd3JrzGNL52jHrJY
+ LVbOUHvvSE+PjQszFvviTHC19AhVrRc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-l1ygLPVlNSC8jux_Ft8E6w-1; Thu,
+ 11 Jul 2024 13:05:32 -0400
+X-MC-Unique: l1ygLPVlNSC8jux_Ft8E6w-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D15AB1944D30; Thu, 11 Jul 2024 17:05:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA43319560AE; Thu, 11 Jul 2024 17:05:26 +0000 (UTC)
+Date: Thu, 11 Jul 2024 18:05:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: junjiehua <halouworls@gmail.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+Message-ID: <ZpAQ01k2JhOtSeRI@redhat.com>
+References: <20240708112520.106127-1-junjiehua@tencent.com>
 MIME-Version: 1.0
-References: <alpine.DEB.2.22.394.2407101322290.3635@ubuntu-linux-20-04-desktop>
- <87frsgqly9.fsf@draig.linaro.org>
-In-Reply-To: <87frsgqly9.fsf@draig.linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 11 Jul 2024 19:02:45 +0200
-Message-ID: <CAJy5ezrjciMzCbKGz64ofynTJwNxCousRLSgVT-g1Jbn7fYqyg@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: add Edgar as Xen maintainer
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org,
- anthony@xenproject.org, 
- paul@xen.org, peter.maydell@linaro.org, richard.henderson@linaro.org, 
- stefanha@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000000ab810061cfbbc4c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240708112520.106127-1-junjiehua@tencent.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,71 +82,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000ab810061cfbbc4c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jul 08, 2024 at 07:25:20PM +0800, junjiehua wrote:
+> when building elf2dump with x86_64-w64-mingw32-gcc, fwrite is imported from
+> msvcrt.dll. However, the implementation of msvcrt.dll!fwrite is buggy:
+> it enters an infinite loop when the size of a single write exceeds 4GB.
+> This patch addresses the issue by splitting large physical memory
+> blocks into smaller chunks.
+> 
+> Signed-off-by: junjiehua <junjiehua@tencent.com>
+> ---
+>  contrib/elf2dmp/main.c | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+> index d046a72ae6..1994553d95 100644
+> --- a/contrib/elf2dmp/main.c
+> +++ b/contrib/elf2dmp/main.c
+> @@ -23,6 +23,8 @@
+>  #define INITIAL_MXCSR   0x1f80
+>  #define MAX_NUMBER_OF_RUNS  42
+>  
+> +#define MAX_CHUNK_SIZE (128 * 1024 * 1024)
+> +
+>  typedef struct idt_desc {
+>      uint16_t offset1;   /* offset bits 0..15 */
+>      uint16_t selector;
+> @@ -434,13 +436,22 @@ static bool write_dump(struct pa_space *ps,
+>  
+>      for (i = 0; i < ps->block_nr; i++) {
+>          struct pa_block *b = &ps->block[i];
+> +        size_t offset = 0;
+> +        size_t chunk_size;
+>  
+>          printf("Writing block #%zu/%zu of %"PRIu64" bytes to file...\n", i,
+>                  ps->block_nr, b->size);
+> -        if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
+> -            eprintf("Failed to write block\n");
+> -            fclose(dmp_file);
+> -            return false;
+> +
+> +        while (offset < b->size) {
+> +            chunk_size = (b->size - offset > MAX_CHUNK_SIZE)
+> +                         ? MAX_CHUNK_SIZE
+> +                         : (b->size - offset);
+> +            if (fwrite(b->addr + offset, chunk_size, 1, dmp_file) != 1) {
+> +                eprintf("Failed to write block\n");
+> +                fclose(dmp_file);
+> +                return false;
+> +            }
+> +            offset += chunk_size;
+>          }
+>      }
 
-On Thu, Jul 11, 2024 at 12:09=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
-ro.org> wrote:
+When reading the original ELF file, we don't actually fread() it,
+instead we mmap it, using GMappedFile on Windows. Rather than
+working around fwrite() bugs, we could do the same for writing
+and create a mapped file and just memcpy the data across.
 
-> Stefano Stabellini <sstabellini@kernel.org> writes:
->
-> > Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU
-> > maintainer for years, and has already made key changes to one of the
-> > most difficult areas of the Xen subsystem (the mapcache).
-> >
-> > Edgar volunteered helping us maintain the Xen subsystem in QEMU and we
-> > are very happy to welcome him to the team. His knowledge and expertise
-> > with QEMU internals will be of great help.
-> >
-> > Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
->
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
->
-Thanks all!
 
-I'll put this together with the reviewed mapcache fixes into a pull-request=
-!
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Best regards,
-Edgar
-
---0000000000000ab810061cfbbc4c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Jul 11, 2024 at 12:09=E2=80=AFPM =
-Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@=
-linaro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">Stefano Stabellini &lt;<a href=3D"mail=
-to:sstabellini@kernel.org" target=3D"_blank">sstabellini@kernel.org</a>&gt;=
- writes:<br>
-<br>
-&gt; Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU<b=
-r>
-&gt; maintainer for years, and has already made key changes to one of the<b=
-r>
-&gt; most difficult areas of the Xen subsystem (the mapcache).<br>
-&gt;<br>
-&gt; Edgar volunteered helping us maintain the Xen subsystem in QEMU and we=
-<br>
-&gt; are very happy to welcome him to the team. His knowledge and expertise=
-<br>
-&gt; with QEMU internals will be of great help.<br>
-&gt;<br>
-&gt; Signed-off-by: Stefano Stabellini &lt;<a href=3D"mailto:stefano.stabel=
-lini@amd.com" target=3D"_blank">stefano.stabellini@amd.com</a>&gt;<br>
-<br>
-Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org"=
- target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br><br></blockquote><div>=
-<br></div><div>Thanks all!</div><div><br></div><div>I&#39;ll put this toget=
-her with the reviewed mapcache fixes into a pull-request!</div><div><br></d=
-iv><div>Best regards,</div><div>Edgar=C2=A0</div></div></div>
-
---0000000000000ab810061cfbbc4c--
 
