@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00525C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 22:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4BAC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 22:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS2KP-00011I-Bk; Thu, 11 Jul 2024 18:31:53 -0400
+	id 1sS2KA-00005E-R5; Thu, 11 Jul 2024 18:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sS2KO-0000xY-8N
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:31:52 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sS2K8-0008R8-T4
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:31:37 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sS2KL-0001eb-OV
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:31:51 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fbc0a1494dso9817805ad.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 15:31:48 -0700 (PDT)
+ id 1sS2K6-0001YB-56
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:31:36 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1fb70169c23so12917635ad.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 15:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1720737107; x=1721341907;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1720737091; x=1721341891;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kD00JMr9p5V5CiUPCOgTYfk1sFKx7ToS26FZRkZhj3g=;
- b=wmyxR22e6XT/QuNZ0DzJSC9dv1LAPlDaJnnqneMd5HPp/omPYYFWFasHNy+99GNNdu
- tuYg+qNg89e06v8QhLhmo/AjBZes5/unXBBzUZxYSPxNrD1VrYI830B/OQ2jWYgs1VJn
- S1poePa2eMF/B1Pa53xdT8sygJeF3VQtnJj6BRk39mY1nXTuCuSJxBhTWAQ5pvGfKhwd
- NbHht4fgl0aOeT35NYNs2YBagURb/ScBBwBGXZptob7hNNBEHS6tF0Kj5u9/XX3xKexO
- FFHzFhqPNuVcOkeg4cJvsExBJlErWXM2lj6Qu7UYRZrZeKk4o0/0vwzuHFZOhy0FEBnu
- IvGg==
+ :reply-to; bh=sq6ZPtLM8cZpjKl0EALHfFJyJDausZH14SH/XMvmzaY=;
+ b=i8GhUYZHr9HnomUP8iloRqDQMc/lAqv1RxmTJN3Qu4nNdvsyXzP0sqo5p4YLiqJ34S
+ gZ0n5rhvN2BFR0syGPnkAT0XWJcs57OeT56XLUgGYch+FN0BZEcKmICJnhuec1hY4UzH
+ wcr3Ym1H963JZGRTNmwrT9Zxb4wdg0e+3Uabg4lqFBsIHVlFaPWat/R9yO29k8fcaDOA
+ m9zdIXUeD0437jeBkrQDn40fH8rAl3+wyAXgdrJ++LcOcW0dCbj4s6DXCMLQ2wspPJUH
+ VMgeHD98ijqer0K53RpHwYTPqOafpDLyHs1fiavtd/kNwWdRHo5gFmRxr/W9hFwcatRq
+ gdhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720737107; x=1721341907;
+ d=1e100.net; s=20230601; t=1720737091; x=1721341891;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kD00JMr9p5V5CiUPCOgTYfk1sFKx7ToS26FZRkZhj3g=;
- b=S/Aml8L7afZIw2zohz7QxstZxEgsoHUjQjz8tS611EQiVF1hcQmLsFSguTW8JfT3UO
- HKjCAqkNABUPdxDjavkff2SmrjzxWUfwAhOwF2qMZDaErnSb50xIDWFk1OYSPyxbdy3w
- 5sQxXEClr3sGdqEK2q0MFbpw6wPrGsBhE1pO47v+JIlPplyZlHQIrHJUxmVLPans4TYn
- CbX5e+3JxCRLmOpVYLHhvcN+rbuuil6pyEnxh9EdBE5ZGSmpwoNaB+OYnKN9Kv63wwjs
- j3vveBMfV6hX4nzRXCM+2s3Vo3U94OqwolhXmOccd49AYlYZmLgoqmWa8M0+VDqlsImB
- NbHA==
+ bh=sq6ZPtLM8cZpjKl0EALHfFJyJDausZH14SH/XMvmzaY=;
+ b=m64ikvN/xGwLkVA7U0xaN/SL0JatBTuhLex+wc9uqMFKS38GcJYTxFFz7vE9rcWT1W
+ Yrw9kE97DKbY4G2I/d9xut/9cari2qRYvSjXEwZqaboqEBKb/zNUVkIDIICMzdV/qZWL
+ RT1eSPvEItLM0a7oNidDeqHY6V7h4xDQxyA9QSltriT8oxOIeRUbSf/qRpf4pEj9mD/6
+ p+6J+MLVzxlNtwn5fQ2Gtj5OxWqW/GQqvUubzg/sQw0nhT1skdvhnuL98LAc6IPL94ZG
+ MGQryrZvlRSMrj50Z88EErfo4n4FjtUMFS/muYZcWUAJHVbdOg5spsOj2PWHf4ln3KC6
+ 4tMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2FyxElYEZpQ43vtFfb6wI37wgcGJjjAXaL9u6jrlfB7cca+t0ssz/dHPshHoa1YEr1dofFCqN3tXthbovZ/cOTyXWF3Q=
-X-Gm-Message-State: AOJu0YzdeDSPgr+pvJ4Y5jLeJgL3OWB4pktAoFoVH2X0Fa/UAvKHIMJ4
- quLIfp/vmh9vq5vYajA/AY1ljD0dixhRRgkSAW38jEpjyGP2V8eHwR42vosCuVqLd6tmygZ6zod
- M
-X-Google-Smtp-Source: AGHT+IGU0Rd6P28qya8ELyK9SzT+ELBr3EtvicfzcIPj8vbHVO3yOZtILiQjynyVqePRn8hy2nUB/w==
-X-Received: by 2002:a17:902:c40e:b0:1fb:7c7f:6458 with SMTP id
- d9443c01a7336-1fbb6d2a41bmr73764325ad.32.1720737107266; 
- Thu, 11 Jul 2024 15:31:47 -0700 (PDT)
+ AJvYcCXpQLA2+B5T/8xVop5Oe7AwAsfTI1GO+dc1UFbTnflL5ZUMKFhxSdYd0uhKYWjBeQKFFMN+fNFlD+dL4CsiMs8LKhwxWJw=
+X-Gm-Message-State: AOJu0YzYdFc5itE4Jdgp/Cwqc8hRN1frSzTg98o9uYjpNaLYC5wKAcvQ
+ prynvpV9MIhs1WunwjfJXAvSW46lR4XE/gOzswgoCC/Uzksp+FjORtjm3cQMad8=
+X-Google-Smtp-Source: AGHT+IEtRllJw58z5xoeI0uAXNqfsZR17+zreonrSt2yP+iSgMMPrIVcYAX/uaxpldPIaUa4WHsMdQ==
+X-Received: by 2002:a17:902:dacb:b0:1fb:284b:b39a with SMTP id
+ d9443c01a7336-1fbb6d044a5mr91533685ad.21.1720737090565; 
+ Thu, 11 Jul 2024 15:31:30 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6b34ca2sm55161565ad.53.2024.07.11.15.31.46
+ d9443c01a7336-1fbb6b34ca2sm55161565ad.53.2024.07.11.15.31.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 15:31:46 -0700 (PDT)
+ Thu, 11 Jul 2024 15:31:30 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Thu, 11 Jul 2024 15:31:14 -0700
-Subject: [PATCH v8 11/13] target/riscv: More accurately model priv mode
- filtering.
+Date: Thu, 11 Jul 2024 15:31:04 -0700
+Subject: [PATCH v8 01/13] target/riscv: Combine set_mode and set_virt
+ functions.
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240711-smcntrpmf_v7-v8-11-b7c38ae7b263@rivosinc.com>
+Message-Id: <20240711-smcntrpmf_v7-v8-1-b7c38ae7b263@rivosinc.com>
 References: <20240711-smcntrpmf_v7-v8-0-b7c38ae7b263@rivosinc.com>
 In-Reply-To: <20240711-smcntrpmf_v7-v8-0-b7c38ae7b263@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=atishp@rivosinc.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,139 +99,203 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-In case of programmable counters configured to count inst/cycles
-we often end-up with counter not incrementing at all from kernel's
-perspective.
+Combining riscv_cpu_set_virt_enabled() and riscv_cpu_set_mode()
+functions. This is to make complete mode change information
+available through a single function.
 
-For example:
-- Kernel configures hpm3 to count instructions and sets hpmcounter
-  to -10000 and all modes except U mode are inhibited.
-- In QEMU we configure a timer to expire after ~10000 instructions.
-- Problem is, it's often the case that kernel might not even schedule
-  Umode task and we hit the timer callback in QEMU.
-- In the timer callback we inject the interrupt into kernel, kernel
-  runs the handler and reads hpmcounter3 value.
-- Given QEMU maintains individual counters to count for each privilege
-  mode, and given umode never ran, the umode counter didn't increment
-  and QEMU returns same value as was programmed by the kernel when
-  starting the counter.
-- Kernel checks for overflow using previous and current value of the
-  counter and reprograms the counter given there wasn't an overflow
-  as per the counter value. (Which itself is a problem. We have QEMU
-  telling kernel that counter3 overflowed but the counter value
-  returned by QEMU doesn't seem to reflect that.).
-
-This change makes sure that timer is reprogrammed from the handler
-if the counter didn't overflow based on the counter value.
-
-Second, this change makes sure that whenever the counter is read,
-it's value is updated to reflect the latest count.
+This allows to easily differentiate between HS->VS, VS->HS
+and VS->VS transitions when executing state update codes.
+For example: One use-case which inspired this change is
+to update mode-specific instruction and cycle counters
+which requires information of both prev mode and current
+mode.
 
 Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/csr.c |  5 ++++-
- target/riscv/pmu.c | 30 +++++++++++++++++++++++++++---
- target/riscv/pmu.h |  2 ++
- 3 files changed, 33 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h        |  2 +-
+ target/riscv/cpu_helper.c | 57 +++++++++++++++++++++++------------------------
+ target/riscv/op_helper.c  | 17 +++++---------
+ 3 files changed, 35 insertions(+), 41 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ff06276192dd..8690a7c4c472 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1039,6 +1039,9 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-         goto done;
-     }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 90b8f1b08f83..46faefd24e09 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -544,7 +544,7 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ #endif /* !CONFIG_USER_ONLY */
  
-+    /* Update counter before reading. */
-+    riscv_pmu_update_fixed_ctrs(env, env->priv, env->virt_enabled);
-+
-     if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
-         curr_val += counter_arr[PRV_M];
-     }
-@@ -1122,7 +1125,7 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv);
++void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
+ 
+ void riscv_translate_init(void);
+ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 6709622dd3ab..10d3fdaed376 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -619,30 +619,6 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
+     env->geilen = geilen;
  }
  
--static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-+RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                          bool upper_half, uint32_t ctr_idx)
+-/* This function can only be called to set virt when RVH is enabled */
+-void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable)
+-{
+-    /* Flush the TLB on all virt mode changes. */
+-    if (env->virt_enabled != enable) {
+-        tlb_flush(env_cpu(env));
+-    }
+-
+-    env->virt_enabled = enable;
+-
+-    if (enable) {
+-        /*
+-         * The guest external interrupts from an interrupt controller are
+-         * delivered only when the Guest/VM is running (i.e. V=1). This means
+-         * any guest external interrupt which is triggered while the Guest/VM
+-         * is not running (i.e. V=0) will be missed on QEMU resulting in guest
+-         * with sluggish response to serial console input and other I/O events.
+-         *
+-         * To solve this, we check and inject interrupt after setting V=1.
+-         */
+-        riscv_cpu_update_mip(env, 0, 0);
+-    }
+-}
+-
+ int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
  {
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 63420d9f3679..a4729f6c53bb 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -425,6 +425,8 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-     target_ulong *mhpmevent_val;
-     uint64_t of_bit_mask;
-     int64_t irq_trigger_at;
-+    uint64_t curr_ctr_val, curr_ctrh_val;
-+    uint64_t ctr_val;
- 
-     if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
-         evt_idx != RISCV_PMU_EVENT_HW_INSTRUCTIONS) {
-@@ -454,6 +456,26 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-         return;
+     CPURISCVState *env = &cpu->env;
+@@ -715,7 +691,7 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
      }
+ }
  
-+    riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctr_val, false, ctr_idx);
-+    ctr_val = counter->mhpmcounter_val;
-+    if (riscv_cpu_mxl(env) == MXL_RV32) {
-+        riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctrh_val, true, ctr_idx);
-+        curr_ctr_val = curr_ctr_val | (curr_ctrh_val << 32);
-+        ctr_val = ctr_val |
-+                ((uint64_t)counter->mhpmcounterh_val << 32);
-+    }
-+
-+    /*
-+     * We can not accommodate for inhibited modes when setting up timer. Check
-+     * if the counter has actually overflowed or not by comparing current
-+     * counter value (accommodated for inhibited modes) with software written
-+     * counter value.
-+     */
-+    if (curr_ctr_val >= ctr_val) {
-+        riscv_pmu_setup_timer(env, curr_ctr_val, ctr_idx);
-+        return;
-+    }
-+
-     if (cpu->pmu_avail_ctrs & BIT(ctr_idx)) {
-         /* Generate interrupt only if OF bit is clear */
-         if (!(*mhpmevent_val & of_bit_mask)) {
-@@ -475,7 +497,7 @@ void riscv_pmu_timer_cb(void *priv)
- 
- int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv)
++void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
  {
--    uint64_t overflow_delta, overflow_at;
-+    uint64_t overflow_delta, overflow_at, curr_ns;
-     int64_t overflow_ns, overflow_left = 0;
-     RISCVCPU *cpu = env_archcpu(env);
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-@@ -506,8 +528,10 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
+     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+ 
+@@ -736,6 +712,28 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv)
+      * preemptive context switch. As a result, do both.
+      */
+     env->load_res = -1;
++
++    if (riscv_has_ext(env, RVH)) {
++        /* Flush the TLB on all virt mode changes. */
++        if (env->virt_enabled != virt_en) {
++            tlb_flush(env_cpu(env));
++        }
++
++        env->virt_enabled = virt_en;
++        if (virt_en) {
++            /*
++             * The guest external interrupts from an interrupt controller are
++             * delivered only when the Guest/VM is running (i.e. V=1). This
++             * means any guest external interrupt which is triggered while the
++             * Guest/VM is not running (i.e. V=0) will be missed on QEMU
++             * resulting in guest with sluggish response to serial console
++             * input and other I/O events.
++             *
++             * To solve this, we check and inject interrupt after setting V=1.
++             */
++            riscv_cpu_update_mip(env, 0, 0);
++        }
++    }
+ }
+ 
+ /*
+@@ -1648,6 +1646,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++    bool virt = env->virt_enabled;
+     bool write_gva = false;
+     uint64_t s;
+ 
+@@ -1778,7 +1777,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ 
+                 htval = env->guest_phys_fault_addr;
+ 
+-                riscv_cpu_set_virt_enabled(env, 0);
++                virt = false;
+             } else {
+                 /* Trap into HS mode */
+                 env->hstatus = set_field(env->hstatus, HSTATUS_SPV, false);
+@@ -1799,7 +1798,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         env->htinst = tinst;
+         env->pc = (env->stvec >> 2 << 2) +
+                   ((async && (env->stvec & 3) == 1) ? cause * 4 : 0);
+-        riscv_cpu_set_mode(env, PRV_S);
++        riscv_cpu_set_mode(env, PRV_S, virt);
      } else {
-         return -1;
+         /* handle the trap in M-mode */
+         if (riscv_has_ext(env, RVH)) {
+@@ -1815,7 +1814,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             mtval2 = env->guest_phys_fault_addr;
+ 
+             /* Trapping to M mode, virt is disabled */
+-            riscv_cpu_set_virt_enabled(env, 0);
++            virt = false;
+         }
+ 
+         s = env->mstatus;
+@@ -1830,7 +1829,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         env->mtinst = tinst;
+         env->pc = (env->mtvec >> 2 << 2) +
+                   ((async && (env->mtvec & 3) == 1) ? cause * 4 : 0);
+-        riscv_cpu_set_mode(env, PRV_M);
++        riscv_cpu_set_mode(env, PRV_M, virt);
      }
--    overflow_at = (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--                  overflow_ns;
-+    curr_ns = (uint64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    overflow_at =  curr_ns + overflow_ns;
-+    if (overflow_at <= curr_ns)
-+        overflow_at = UINT64_MAX;
  
-     if (overflow_at > INT64_MAX) {
-         overflow_left += overflow_at - INT64_MAX;
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index ca40cfeed647..3853d0e2629e 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -36,5 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-                                  bool new_virt);
-+RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-+                                  bool upper_half, uint32_t ctr_idx);
+     /*
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 2baf5bc3ca19..ec1408ba0fb1 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -264,7 +264,7 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
+ target_ulong helper_sret(CPURISCVState *env)
+ {
+     uint64_t mstatus;
+-    target_ulong prev_priv, prev_virt;
++    target_ulong prev_priv, prev_virt = env->virt_enabled;
  
- #endif /* RISCV_PMU_H */
+     if (!(env->priv >= PRV_S)) {
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+@@ -307,11 +307,9 @@ target_ulong helper_sret(CPURISCVState *env)
+         if (prev_virt) {
+             riscv_cpu_swap_hypervisor_regs(env);
+         }
+-
+-        riscv_cpu_set_virt_enabled(env, prev_virt);
+     }
+ 
+-    riscv_cpu_set_mode(env, prev_priv);
++    riscv_cpu_set_mode(env, prev_priv, prev_virt);
+ 
+     return retpc;
+ }
+@@ -347,16 +345,13 @@ target_ulong helper_mret(CPURISCVState *env)
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
+     }
+     env->mstatus = mstatus;
+-    riscv_cpu_set_mode(env, prev_priv);
+-
+-    if (riscv_has_ext(env, RVH)) {
+-        if (prev_virt) {
+-            riscv_cpu_swap_hypervisor_regs(env);
+-        }
+ 
+-        riscv_cpu_set_virt_enabled(env, prev_virt);
++    if (riscv_has_ext(env, RVH) && prev_virt) {
++        riscv_cpu_swap_hypervisor_regs(env);
+     }
+ 
++    riscv_cpu_set_mode(env, prev_priv, prev_virt);
++
+     return retpc;
+ }
+ 
 
 -- 
 2.34.1
