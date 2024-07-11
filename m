@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2B9C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9768EC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRspb-0002RY-Lk; Thu, 11 Jul 2024 08:23:27 -0400
+	id 1sRsrL-0006id-ME; Thu, 11 Jul 2024 08:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRspa-0002R3-E7
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:23:26 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRsrJ-0006hu-DD
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:25:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRspY-0008JI-Bf
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:23:26 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRsrG-00034k-66
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:25:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720700602;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1720700708;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OnyCG9jLNSkK29ol0NSD8qGt7MpNaFgicQ9xROE6ndQ=;
- b=MXZ41JRSuc7A2pLEHJMu7nOY7tP6C+IKulUAsfTjGVh3xr+wiK/HZxOeV/sJ6CLFsmJfFW
- E74nhauY93d1GUInCH7Sdv/no5WEPb5qhylO7itscafVnlHoassfWFRA/bcAqNxERsIItg
- diBSq83y8Uk3HYijMEWLQKScm8InN+M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-fQ_QxDpVN0y-auGKrn0pbA-1; Thu, 11 Jul 2024 08:23:21 -0400
-X-MC-Unique: fQ_QxDpVN0y-auGKrn0pbA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42796140873so4951685e9.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 05:23:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720700600; x=1721305400;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OnyCG9jLNSkK29ol0NSD8qGt7MpNaFgicQ9xROE6ndQ=;
- b=Gqole1Wx8wpNT4CIXhTGU5H1vjqTj9L/j8bhG/lCuOgCTj68QdYSwHvmMKse/cCV4q
- wmtLS63lremA/4fOMDtxVEyJZTuA/+NkwU67e0P+lRuzeSpoP+r6Cu1ua80JgBaF7FBq
- isIe/a6yTiUM7ZWz0Qcr3ykPgKwRHxf2wz4KpWElZGEmjptmfELyhYOCDoFf0qf28pbX
- rkWsDm+Wu4Bu1vtl43pr9gla6LK9t2iJ6zQswarbpXf3gK087uORimRI/4nsCCEimoZR
- wGoyjHSTEeG1SgG2THYuMGCKBySs0w3g4QNyZHFQprzzzkbAPwLwZbIuuBg4eOlfuiIR
- RvHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2bJvPRxw7ATdP7E1s4X/Xy4GALn+miHp/YyW7OGUGYli9TyxwQPWiK+k/97dmOhsti7/0rAwoC1J75uW1+P8R2otC4cI=
-X-Gm-Message-State: AOJu0YyZCeabrkRYAB8uiOspVTVhFgm4HV1SHI8iHJo5JFONTzKGAC9N
- vD/EYCfoUOY+y+w36edHJWGeJ6DXrO4vR3VI3j4RqpADPvGNJfyuSZkAHJiKc1s5vniX/M4MdKo
- 2++UKGdkWUdtPKsofjLohfQNmK2hv1Q/EPBIEgs0kLrGL6eMfDIiz
-X-Received: by 2002:adf:e98d:0:b0:367:89d3:6581 with SMTP id
- ffacd0b85a97d-367cea67d70mr5897762f8f.17.1720700600375; 
- Thu, 11 Jul 2024 05:23:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVTReJvehVyFPqpX0/1+vB6rD4l1DZVJ3/3qhaXBXbIdOMd17ey8C0rWVb+SgIhIueZOW73Q==
-X-Received: by 2002:adf:e98d:0:b0:367:89d3:6581 with SMTP id
- ffacd0b85a97d-367cea67d70mr5897736f8f.17.1720700599994; 
- Thu, 11 Jul 2024 05:23:19 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cdfb2281sm7592520f8f.115.2024.07.11.05.23.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 05:23:19 -0700 (PDT)
-Date: Thu, 11 Jul 2024 14:23:16 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v4 05/13] hw/pci: Add a busnr property to pci_props and
- use for acpi/gi
-Message-ID: <20240711142316.1150870e@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240711135331.6f0e4639@imammedo.users.ipa.redhat.com>
-References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
- <20240702131428.664859-6-Jonathan.Cameron@huawei.com>
- <20240711135331.6f0e4639@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ bh=EZgsViSmjAgA5s1NKIOJXY6hRVBiDPzgsv7I1Ld09gw=;
+ b=goaKJo4GKY5chGqau+kpRc82mqp3CseK1DmFlTLV7HuYvkdKfYWIPJrELk+SVRG1A9/1kn
+ /0yvDscN6tTwc6o2C9Xy1bAZ/m40OlleR91ClnGhZ9ZBOGO8pGgeVyHZplQGsykdPYCIww
+ 3+9wuPRY69xKzx0r1HtrM4cTce7s6Bk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-rA-kO1SQNK6lrx36q8ysjQ-1; Thu,
+ 11 Jul 2024 08:25:05 -0400
+X-MC-Unique: rA-kO1SQNK6lrx36q8ysjQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EBB9196E0A0; Thu, 11 Jul 2024 12:25:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B954619560AA; Thu, 11 Jul 2024 12:25:00 +0000 (UTC)
+Date: Thu, 11 Jul 2024 13:24:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Wang, Wei W" <wei.w.wang@intel.com>
+Cc: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "mtosatti@redhat.com" <mtosatti@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Wang, Lei4" <lei4.wang@intel.com>
+Subject: Re: [PATCH v1] target/i386: kvm: Block migration when enfore_cpuid
+ is set to false
+Message-ID: <Zo_PGVjbRHMfe-Gf@redhat.com>
+References: <20240703144912.130988-1-wei.w.wang@intel.com>
+ <Zo_GZfR1sQH06TCp@redhat.com>
+ <DS0PR11MB6373A148EDE4EB3125B6C42DDCA52@DS0PR11MB6373.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DS0PR11MB6373A148EDE4EB3125B6C42DDCA52@DS0PR11MB6373.namprd11.prod.outlook.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,117 +90,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Jul 2024 13:53:31 +0200
-Igor Mammedov <imammedo@redhat.com> wrote:
-
-> On Tue, 2 Jul 2024 14:14:10 +0100
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> 
-> > Using a property allows us to hide the internal details of the PCI device
-> > from the code to build a SRAT Generic Initiator Affinity Structure with
-> > PCI Device Handle.
+On Thu, Jul 11, 2024 at 12:10:34PM +0000, Wang, Wei W wrote:
+> On Thursday, July 11, 2024 7:48 PM, Daniel P. Berrangé wrote:
+> > On Wed, Jul 03, 2024 at 10:49:12PM +0800, Wei Wang wrote:
+> > > When enforce_cpuid is set to false, the guest is launched with a
+> > > filtered set of features, meaning that unsupported features by the
+> > > host are removed from the guest's vCPU model. This could cause issues for
+> > live migration.
+> > > For example, a guest on the source is running with features A and B.
+> > > If the destination host does not support feature B, the stub guest can
+> > > still be launched on the destination with feature A only if enforce_cpuid=false.
+> > > Live migration can start in this case, though it may fail later when
+> > > the states of feature B are put to the destination side. This failure
+> > > occurs in the late stage (i.e., stop&copy phase) of the migration
+> > > flow, where the source guest has already been paused. Tests show that
+> > > in such cases the source guest does not recover, and the destination
+> > > is unable to resume to run.
+> > >
+> > > Make "enfore_cpuid=true" a hard requirement for a guest to be
+> > > migratable, and change the default value of "enforce_cpuid" to true,
+> > > making the guest vCPUs migratable by default. If the destination stub
+> > > guest has inconsistent CPUIDs (i.e., destination host cannot support
+> > > the features defined by the guest's vCPU model), it fails to boot
+> > > (with enfore_cpuid=true by default), thereby preventing migration from
+> > > occuring. If enfore_cpuid=false is explicitly added for the guest, the
+> > > guest is deemed as non-migratable (via the migration blocker), so the
+> > > above issue won't occur as the guest won't be migrated.
 > > 
-> > Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > 
-> > ---
-> > V4: Avoid confusion with device creation parameter bus but renaming to
-> >     busnr
-> > ---
-> >  hw/acpi/acpi_generic_initiator.c | 11 ++++++-----
-> >  hw/pci/pci.c                     | 14 ++++++++++++++
-> >  2 files changed, 20 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> > index 73bafaaaea..f2711c91ef 100644
-> > --- a/hw/acpi/acpi_generic_initiator.c
-> > +++ b/hw/acpi/acpi_generic_initiator.c
-> > @@ -9,6 +9,7 @@
-> >  #include "hw/boards.h"
-> >  #include "hw/pci/pci_device.h"
-> >  #include "qemu/error-report.h"
-> > +#include "qapi/error.h"
-> >  
-> >  typedef struct AcpiGenericInitiatorClass {
-> >      ObjectClass parent_class;
-> > @@ -79,7 +80,7 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
-> >      MachineState *ms = MACHINE(qdev_get_machine());
-> >      AcpiGenericInitiator *gi;
-> >      GArray *table_data = opaque;
-> > -    PCIDevice *pci_dev;
-> > +    uint8_t bus, devfn;
-> >      Object *o;
-> >  
-> >      if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
-> > @@ -100,10 +101,10 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
-> >          exit(1);
-> >      }
-> >  
-> > -    pci_dev = PCI_DEVICE(o);
-> > -    build_srat_pci_generic_initiator(table_data, gi->node, 0,
-> > -                                     pci_bus_num(pci_get_bus(pci_dev)),
-> > -                                     pci_dev->devfn);
-> > +    bus = object_property_get_uint(o, "busnr", &error_fatal);
-> > +    devfn = object_property_get_uint(o, "addr", &error_fatal);  
+> > Blocking migration when enforce=false is making an assumption that users of
+> > that setting are inherantly broken. This is NOT the case if the user/app has
+> > already validated compatibility in some manner outside QEMU. Blocking
+> > migration in this case will break valid working use cases.
 > 
-> devfn in PCI code is 32bit, while here it's declared as unit8_t,
-> which seems wrong.
-> It likely would work in case of PCIe root ports/switches where slot is 0,
-> but should quickly break elsewhere as soon as slot is more than 0.
+> It's just an enforcement to ensure a safe migration. Without this (i.e., the current
+> QEMU code) is making an assumption that users always have validated
+> compatibility in a good manner outside QEMU, which is risky to some degree?
+
+QEMU configurations must never be assumed to be migratable by default.
+There is a huge set of things that a user must do with QEMU configuration
+to guarantee migratability beyond CPU features. All aspects of guest HW
+device topology must be set explicitly.
+
+> Do you see how this would break valid working use cases (any examples)?
+> This is actually what we are looking for. Please be aware that "enforce" is
+> changed to be true by default to make the guest to be migratable by default
+> under the enforcement.
+
+Setting "enforce" will break existing use of QEMU. It is valid to launch
+QEMU with a CPU model that is not fully supported by the host, allowing
+QEMU to disable unsupported features automatically.
+
+> > IMHO this patch doesn't need to exist. If users of QEMU want strong protection
+> > they can already opt-in to that with enforce=true.
 > 
-> If it's intentional, there should be fat comment here about why it this way
-> and an assert to catch silent cropping of the value. 
+> AFAIK, many users are not aware of this, and also we couldn't assume everybody
+> knows it. That's why we want to add the enforcement.
 
-Ignore that, obviously the rest of the QEMU does not care about this downcast.
+Users who directly launch QEMU are expected to know about QEMU config
+details for migration. If they don't, then they ought to be using a
+higher level tool like libvirt, which ensures the configuration is
+migration compatible.
 
-Maybe add assert anyways to catch too big devfn returned,
-which unlikely to happen ever.
-
-anyways:
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> 
-> > +
-> > +    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
-> >  
-> >      return 0;
-> >  }
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index 50b86d5790..29d4852c21 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
-> >  static void pcibus_reset_hold(Object *obj, ResetType type);
-> >  static bool pcie_has_upstream_port(PCIDevice *dev);
-> >  
-> > +static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
-> > +                             void *opaque, Error **errp)
-> > +{
-> > +    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
-> > +
-> > +    visit_type_uint8(v, name, &busnr, errp);
-> > +}
-> > +
-> > +static const PropertyInfo prop_pci_busnr = {
-> > +    .name = "busnr",
-> > +    .get = prop_pci_busnr_get,
-> > +};
-> > +
-> >  static Property pci_props[] = {
-> >      DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-> >      DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-> > @@ -85,6 +98,7 @@ static Property pci_props[] = {
-> >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-> >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-> >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> > +    { .name = "busnr", .info = &prop_pci_busnr },
-> >      DEFINE_PROP_END_OF_LIST()
-> >  };
-> >    
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
