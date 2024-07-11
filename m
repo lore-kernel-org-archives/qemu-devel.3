@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C95DC3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4520C3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRuHf-00014d-IY; Thu, 11 Jul 2024 09:56:31 -0400
+	id 1sRuJl-0001ci-Oq; Thu, 11 Jul 2024 09:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRuHc-0000s7-CD
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:56:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRuHZ-00047L-As
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:56:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720706184;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bIGtNGGyLzZwCh5z+0L9QwmpaOsiaqrMJikfpZ9FyDs=;
- b=N8ddT9WQpJeCik2hQBFNmgrS9tsf0hUxkNuqXBNFi7ciLVh41TW58kq2UIyeOLLL6zaOit
- acccvBwFjVF/dyQ6ul5m7u7URm79W4RWBo4ffcV2GNQ/aEXjv8CQLeR4zYz+heHx71TB1i
- CHJu9YQOUpSXiQKG46WN94wUVVtP0F8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-_6pa6H8jPJmBDwbxbi45WQ-1; Thu,
- 11 Jul 2024 09:56:14 -0400
-X-MC-Unique: _6pa6H8jPJmBDwbxbi45WQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEA6C1958B1F; Thu, 11 Jul 2024 13:56:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B3421955F3B; Thu, 11 Jul 2024 13:56:09 +0000 (UTC)
-Date: Thu, 11 Jul 2024 14:56:06 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Wang, Wei W" <wei.w.wang@intel.com>
-Cc: "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "mtosatti@redhat.com" <mtosatti@redhat.com>,
- "farosas@suse.de" <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Wang, Lei4" <lei4.wang@intel.com>
-Subject: Re: [PATCH v1] target/i386: kvm: Block migration when enfore_cpuid
- is set to false
-Message-ID: <Zo_kdrWJti2IOWnd@redhat.com>
-References: <20240703144912.130988-1-wei.w.wang@intel.com>
- <Zo_GZfR1sQH06TCp@redhat.com>
- <DS0PR11MB6373A148EDE4EB3125B6C42DDCA52@DS0PR11MB6373.namprd11.prod.outlook.com>
- <Zo_PGVjbRHMfe-Gf@redhat.com>
- <DS0PR11MB637398C97A8B3AA1886CBD38DCA52@DS0PR11MB6373.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRuJi-0001Nz-9n
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:58:39 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRuJg-0004JS-1C
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:58:38 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673d8so12714291fa.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720706314; x=1721311114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=m5dOC5H/wMog01cJKZJXPxkW39qJjTtVw0zjotPI1gA=;
+ b=ddQgpATegcZFCcATTpqN3tzFTQyNWOnaCmirZdL18TteE4I8GdVvgUHMVzbIcEmDzL
+ 1tx+A3cIfgvt2HHp+mCCDW0b6in6hRfUeDtIVLytLEFTZkVUlviASOGLJ/p1/wuruIUP
+ 7kqPUSXzxSXxxbdxmKkp6OSlpM/ZmNSU2ypvUsTP7gSrzKfdDDvOfRKBv77lq2KJXyWx
+ sMAfGoA+f+i3Cdlmz4E8G7W0tDIv7KxapzlIJN6uFNMd88fWa5EM2XyHZem45kOCQSHj
+ kwgu7At5kUs8oN/js8OywTlg2PIw2KYWqG2ilHTdji4rLfWwNToUr0eMvnF3TTQ/KjTv
+ 0J5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720706314; x=1721311114;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m5dOC5H/wMog01cJKZJXPxkW39qJjTtVw0zjotPI1gA=;
+ b=UPVhYrW9ddXxZs65mxVHTBzo5bd0w7ZbFEkMCPg+vV02CdzLxKyJO6tbSswKyabVky
+ ahCTOWrEQUg9t9n/bQ12QYa/wYjQiWkGyNkqqlqB/s0Vel0cy2KgyARcMQBy/HVM5399
+ V+xNrzqdHISk9WiVBoQJx9e5DDsq3w+On9xcT0hHXteK8vhyQ8ewSNIHJI7GK6ngGo3f
+ MfsNvB+IDdHaywQYEhIMcvkQPrAngi2PhnQpEmz3ezOe/Gr/J73I+jlANawyD64+6nXj
+ RduHm5n4iuy379/giafWyHJ0Dfg2CThmOq2xWEhYpzSWRayyna0FPKlaK8pdRTF7UaYw
+ cdGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpahlDPDsCVlLuDlbzaSinHMfzvBWrSsvn1h2chV2LrQdThdnFxgMVAq5gnAU+jMaqQp9+BXMcGmCHLNmrtKLJpUwvBpY=
+X-Gm-Message-State: AOJu0YxsQeZC1su2icvF77yMWVz5QLNm6gNj3HFnZ6nXOx7/2c+Y4TQk
+ AhJEeyYUT6ZaiQSX5PM0k0hOFthO0i+7dWfV/pqAH6jRDjUcf+4FmgammL9Sn7o=
+X-Google-Smtp-Source: AGHT+IHqJjnSSHnFMbNChZug6emU/0XfOBg4Dtdj+yOCmyC9DKX0VL5tyh1tFdOJSyVLbHfzGmbJqg==
+X-Received: by 2002:a2e:b052:0:b0:2ee:8bc6:6817 with SMTP id
+ 38308e7fff4ca-2eeb30e511emr57348581fa.16.1720706313959; 
+ Thu, 11 Jul 2024 06:58:33 -0700 (PDT)
+Received: from [192.168.123.175] (212.red-88-29-184.dynamicip.rima-tde.net.
+ [88.29.184.212]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42725d2e132sm99047875e9.32.2024.07.11.06.58.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jul 2024 06:58:33 -0700 (PDT)
+Message-ID: <17142a76-0c05-49e7-8e8b-722eecf22ff0@linaro.org>
+Date: Thu, 11 Jul 2024 15:58:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] loader: remove load_image_gzipped function as its not
+ used anywhere
+To: Ani Sinha <anisinha@redhat.com>
+Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org
+References: <20240711072448.32673-1-anisinha@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240711072448.32673-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <DS0PR11MB637398C97A8B3AA1886CBD38DCA52@DS0PR11MB6373.namprd11.prod.outlook.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,88 +93,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 01:48:59PM +0000, Wang, Wei W wrote:
-> On Thursday, July 11, 2024 8:25 PM, Daniel P. Berrangé wrote:
-> > On Thu, Jul 11, 2024 at 12:10:34PM +0000, Wang, Wei W wrote:
-> > > On Thursday, July 11, 2024 7:48 PM, Daniel P. Berrangé wrote:
-> > > > On Wed, Jul 03, 2024 at 10:49:12PM +0800, Wei Wang wrote:
-> > > > > When enforce_cpuid is set to false, the guest is launched with a
-> > > > > filtered set of features, meaning that unsupported features by the
-> > > > > host are removed from the guest's vCPU model. This could cause
-> > > > > issues for
-> > > > live migration.
-> > > > > For example, a guest on the source is running with features A and B.
-> > > > > If the destination host does not support feature B, the stub guest
-> > > > > can still be launched on the destination with feature A only if
-> > enforce_cpuid=false.
-> > > > > Live migration can start in this case, though it may fail later
-> > > > > when the states of feature B are put to the destination side. This
-> > > > > failure occurs in the late stage (i.e., stop&copy phase) of the
-> > > > > migration flow, where the source guest has already been paused.
-> > > > > Tests show that in such cases the source guest does not recover,
-> > > > > and the destination is unable to resume to run.
-> > > > >
-> > > > > Make "enfore_cpuid=true" a hard requirement for a guest to be
-> > > > > migratable, and change the default value of "enforce_cpuid" to
-> > > > > true, making the guest vCPUs migratable by default. If the
-> > > > > destination stub guest has inconsistent CPUIDs (i.e., destination
-> > > > > host cannot support the features defined by the guest's vCPU
-> > > > > model), it fails to boot (with enfore_cpuid=true by default),
-> > > > > thereby preventing migration from occuring. If enfore_cpuid=false
-> > > > > is explicitly added for the guest, the guest is deemed as
-> > > > > non-migratable (via the migration blocker), so the above issue won't
-> > occur as the guest won't be migrated.
-> > > >
-> > > > Blocking migration when enforce=false is making an assumption that
-> > > > users of that setting are inherantly broken. This is NOT the case if
-> > > > the user/app has already validated compatibility in some manner
-> > > > outside QEMU. Blocking migration in this case will break valid working use
-> > cases.
-> > >
-> > > It's just an enforcement to ensure a safe migration. Without this
-> > > (i.e., the current QEMU code) is making an assumption that users
-> > > always have validated compatibility in a good manner outside QEMU, which
-> > is risky to some degree?
-> > 
-> > QEMU configurations must never be assumed to be migratable by default.
-> > There is a huge set of things that a user must do with QEMU configuration to
-> > guarantee migratability beyond CPU features. All aspects of guest HW device
-> > topology must be set explicitly.
+On 11/7/24 09:24, Ani Sinha wrote:
+> load_image_gzipped() does not seem to be used anywhere. Remove it.
 > 
-> What if the source and destination are required to use exactly the same QEMU
-> commands? Does this meet the feature and topology requirements as you
-> mentioned above?
-
-That is insufficient as it does not take account of device hotplug.
-
-> > > > IMHO this patch doesn't need to exist. If users of QEMU want strong
-> > > > protection they can already opt-in to that with enforce=true.
-> > >
-> > > AFAIK, many users are not aware of this, and also we couldn't assume
-> > > everybody knows it. That's why we want to add the enforcement.
-> > 
-> > Users who directly launch QEMU are expected to know about QEMU config
-> > details for migration. If they don't, then they ought to be using a higher level
-> > tool like libvirt, which ensures the configuration is migration compatible.
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>   hw/core/loader.c    | 13 -------------
+>   include/hw/loader.h |  4 +---
+>   2 files changed, 1 insertion(+), 16 deletions(-)
 > 
-> Could you explain how libvirt provides a more reliable assurance of migration
-> compatibility in its configuration compared to using raw QEMU commands?
-> Per my understanding, libvirt configs mostly map to the QEMU commands.
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index a3bea1e718..c04fae55c0 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -845,19 +845,6 @@ ssize_t load_image_gzipped_buffer(const char *filename, uint64_t max_sz,
+>       return ret;
+>   }
+>   
+> -/* Load a gzip-compressed kernel. */
+> -ssize_t load_image_gzipped(const char *filename, hwaddr addr, uint64_t max_sz)
+> -{
+> -    ssize_t bytes;
+> -    uint8_t *data;
+> -
+> -    bytes = load_image_gzipped_buffer(filename, max_sz, &data);
+> -    if (bytes != -1) {
+> -        rom_add_blob_fixed(filename, data, bytes, addr);
+> -        g_free(data);
+> -    }
+> -    return bytes;
+> -}
 
-Libvirt records the full details of the guest configuration required to
-reproduce the exact same guest ABI, even across device hotplug. This is
-why libvirt QEMU command lines are absolutely enourmous compared to
-minimalist command lines that users usuall run directly.
+Indeed last one removed in commit 68115ed5fc ("hw/arm/boot: take
+Linux/arm64 TEXT_OFFSET header field into account").
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
