@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FFEC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B94C3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRtkE-0001Gj-TP; Thu, 11 Jul 2024 09:22:00 -0400
+	id 1sRthK-0001vY-1O; Thu, 11 Jul 2024 09:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRtk4-0000gk-5R
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:21:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRtk2-0006j1-6F
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:21:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720704105;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mN0sRZ3bdsO54hnVlLYkoH6g7lrAo+ChghkMqg7jdgg=;
- b=R6tNkvBrlKWRzioAYzN62ankJGoznZQQN6JciX2Dvq7GBDE3MzAMj0Bns5h/vtPn1zIjzO
- cv7MZqR818N0UgYj2h36edITbt1FqdH/BorwvtO0+4mfKxEp0Co37YZaP/KB8+ZIRiLv6M
- piaV2uizCGS+DDZIXtiKhJGm+zAdQ+M=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-ijAxXFzZPGSMXzERhPvdpA-1; Thu, 11 Jul 2024 09:21:43 -0400
-X-MC-Unique: ijAxXFzZPGSMXzERhPvdpA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-367991a0a64so431918f8f.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:21:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720704102; x=1721308902;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRthD-0001VO-0r
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:51 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRth7-000640-At
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:50 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42795086628so5716135e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:18:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720703912; x=1721308712; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=/AMAtOWB0ZxCL+R8J/gNQR8gsTJMYguGEneUen0fd3I=;
+ b=Zym+GDJI7yfeUIBQgQmTSha6b3BTo9kV3IshCoSMLHGpqD1twLJx4S8Fz4veygtgGd
+ dQ6WDtKPYXeDJLrFrrW2+BcZZQ27ZogP3WFcShHFwp+4jc2Lqc3A7NHdwnBKICVKHBzm
+ jpm9eVmFN1Omb+QwgqZhmy1btrWxRHYsrtqkFief3Xi+TBswppzmgWGsgsp1fs5dt2+s
+ ID5Mq/O9C0NnlzkZHyjLzQ0oFSchp8vWghjv2aEsn+3RmW84vBzyzB+LD5EbvosPXgKW
+ Jhvw8xuKGKF4S2T6t0RDRkHxKWcRBn75jvKgKQWAc9860ZkeVcQMsdxuQy3jXyCRVk44
+ RJbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720703912; x=1721308712;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mN0sRZ3bdsO54hnVlLYkoH6g7lrAo+ChghkMqg7jdgg=;
- b=EuGQYChH4JzpjWUXg2lSRX2p8FxJNh+hxa7pQpoD3Dy+ooV+6KZxBjWYZqnwxdZCJt
- tGloL2HzFtLng9ahq3kAyBV/cJfvpNrQd0ALbs4mWbzbdAI6Hcbgu9drofZr/mFeaz0c
- gvll0UFQAa4vj0ldHOeb2ypbJjDY7EePkS+esoDO3Nvlt7A2gPsF/OWDzv/g06V1Kktz
- L/MtUy8fg2FvC+/Or+8SDp3hwiqzbadqRKqUGW2EWOfTlxIpz6TZdOV49Nq/6qehaNbg
- onQLM7vD5/LZe3kowZttg4gt1DpmaXoplyvVkOZWBQOVhBwLUMRmLDraR1Ut9ZtoT0xi
- 2X1Q==
-X-Gm-Message-State: AOJu0YwqaY7kJQojSuKUl/bSTlBAbNd+3YoAi+OtO1xLVCuvFfuJMXao
- U8dMapZLt6PPqAneQu5QkfAvSnLfiv6eMzKexZfYAPp/dKkyH8ANHdskx0CJtAvJcHGLx0fEEIj
- yEROZEr0I+b6d++AdLSOn0MVepPqMjZmoTlKBR2pwPoQbu+FPYIDc
-X-Received: by 2002:a05:6000:c6:b0:367:963b:ab81 with SMTP id
- ffacd0b85a97d-367ceacaa90mr5688410f8f.46.1720704102661; 
- Thu, 11 Jul 2024 06:21:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEM+q02fComieQSyE7QIb0XjvJJ4i3vmG8SrqxyvMG5hmF6IoBW7pWtouX48NWKFK/PIGPXBA==
-X-Received: by 2002:a05:6000:c6:b0:367:963b:ab81 with SMTP id
- ffacd0b85a97d-367ceacaa90mr5688387f8f.46.1720704102274; 
- Thu, 11 Jul 2024 06:21:42 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cde890bdsm7787326f8f.50.2024.07.11.06.21.41
+ bh=/AMAtOWB0ZxCL+R8J/gNQR8gsTJMYguGEneUen0fd3I=;
+ b=MQJvzRLtXxL+iaYR4zDsf/bE2FRHnEXBD8ryytjROryl8w/Gn/5iTQ0GlTglm3eFBV
+ mSSIFm8FtXAUG6Hz0xnuWCerfNWdnqEWSF2VQWMaEpeSqfDcZ7VXvHsK5khuTZ3KmwCs
+ TwXf7VLnHN1ag4AF8JFH4oKiKwOgoTI15+DWIWrHb18CFRwRGhDxoUQGKSBYBTUu4JZL
+ AaI75vdE1/VzvxQckjpfP0GLT7nQgsE/PxAL8ETiGlGcN8Ng+pSl+0W0QEsRrAcCu4rZ
+ hmOvnMXFN6B2FfyXVLc9piBmNvfHeoZpogaZpbLhLxmHPJfPsvynEaD7VHEdoYEYtDNn
+ Y07A==
+X-Gm-Message-State: AOJu0Yw99PFIZTSrjaFn03Z2ubeIwqcX/aUCEsyFfmTftmJpoxUCJhsX
+ TOcH0Tp2Z7scRaMtKv5E7GbY1CsNWgtBQ0VcaCg+SsAICptBBoNvUCqJz0ImpmTysdyKGM0zxb6
+ Ya18=
+X-Google-Smtp-Source: AGHT+IFClvo835ukzmEAx4gE2nIA4BKRCj9E+zcj/l3UwEtvoU3DqmFzwS1+IZ96CvAr4/4MLtNvFg==
+X-Received: by 2002:a05:600c:6d8:b0:426:6389:94c4 with SMTP id
+ 5b1f17b1804b1-426708f9d84mr54498885e9.37.1720703912647; 
+ Thu, 11 Jul 2024 06:18:32 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f736939sm119412025e9.37.2024.07.11.06.18.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 06:21:41 -0700 (PDT)
-Date: Thu, 11 Jul 2024 15:21:41 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin Meng
- <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Daniel Henrique
- Barboza <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, "Michael S . Tsirkin" <mst@redhat.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 1/9] hw/riscv/virt-acpi-build.c: Add namespace
- devices for PLIC and APLIC
-Message-ID: <20240711152141.741d5bc5@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240708114741.3499585-2-sunilvl@ventanamicro.com>
-References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
- <20240708114741.3499585-2-sunilvl@ventanamicro.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ Thu, 11 Jul 2024 06:18:32 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 16/24] hw/misc: In STM32L4x5 EXTI, consolidate 2 constants
+Date: Thu, 11 Jul 2024 14:18:14 +0100
+Message-Id: <20240711131822.3909903-17-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240711131822.3909903-1-peter.maydell@linaro.org>
+References: <20240711131822.3909903-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,91 +94,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  8 Jul 2024 17:17:33 +0530
-Sunil V L <sunilvl@ventanamicro.com> wrote:
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-> PLIC and APLIC should be in namespace as well. So, add them using the
-> defined HID.
-> 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  hw/riscv/virt-acpi-build.c | 47 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
-> 
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 0925528160..87fe882af0 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -141,6 +141,52 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
->      }
->  }
->  
-> +static void acpi_dsdt_add_plic_aplic(Aml *scope, RISCVVirtState *s)
-> +{
-> +    MachineState *ms = MACHINE(s);
-> +    uint64_t plic_aplic_addr;
-> +    uint32_t gsi_base;
-> +    uint8_t  socket;
-> +
-> +    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
-> +        /* PLICs */
-> +        for (socket = 0; socket < riscv_socket_count(ms); socket++) {
+Up until now, the EXTI implementation had 16 inbound GPIOs connected to
+the 16 outbound GPIOs of STM32L4x5 SYSCFG.
+The EXTI actually handles 40 lines (namely 5 from STM32L4x5 USART
+devices which are already implemented in QEMU).
+In order to connect USART devices to EXTI, this commit consolidates
+constants `EXTI_NUM_INTERRUPT_OUT_LINES` (40) and
+`EXTI_NUM_GPIO_EVENT_IN_LINES` (16) into `EXTI_NUM_LINES` (40).
 
-you have socket_count in caller already, pass it as argument and
-drop  MachineState *ms = MACHINE(s) above.
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240707085927.122867-2-ines.varhol@telecom-paris.fr
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/misc/stm32l4x5_exti.h | 4 ++--
+ hw/misc/stm32l4x5_exti.c         | 6 ++----
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-
-> +            plic_aplic_addr = s->memmap[VIRT_PLIC].base +
-> +                         s->memmap[VIRT_PLIC].size * socket;
-> +            gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-> +            Aml *dev = aml_device("IC%.02X", socket);
-> +            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0001")));
-> +            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-> +            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-> +
-> +            Aml *crs = aml_resource_template();
-> +            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-> +                                               s->memmap[VIRT_PLIC].size,
-> +                                               AML_READ_WRITE));
-> +            aml_append(dev, aml_name_decl("_CRS", crs));
-> +            aml_append(scope, dev);
-> +        }
-> +    } else {
-> +        /* APLICs */
-> +        for (socket = 0; socket < riscv_socket_count(ms); socket++) {
-> +            plic_aplic_addr = s->memmap[VIRT_APLIC_S].base +
-> +                             s->memmap[VIRT_APLIC_S].size * socket;
-> +            gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-> +            Aml *dev = aml_device("IC%.02X", socket);
-> +            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0002")));
-> +            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-> +            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-> +
-> +            Aml *crs = aml_resource_template();
-> +            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-> +                                               s->memmap[VIRT_APLIC_S].size,
-> +                                               AML_READ_WRITE));
-> +            aml_append(dev, aml_name_decl("_CRS", crs));
-> +            aml_append(scope, dev);
-> +        }
-> +    }
-> +}
-> +
->  static void
->  acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->                      uint32_t uart_irq)
-> @@ -411,6 +457,7 @@ static void build_dsdt(GArray *table_data,
->  
->      socket_count = riscv_socket_count(ms);
->  
-> +    acpi_dsdt_add_plic_aplic(scope, s);
-Perhaps do the same for memmap/RISCVVirtState vvvv
-
->      acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-
-
->  
->      if (socket_count == 1) {
+diff --git a/include/hw/misc/stm32l4x5_exti.h b/include/hw/misc/stm32l4x5_exti.h
+index 55f763fa376..62f79362f28 100644
+--- a/include/hw/misc/stm32l4x5_exti.h
++++ b/include/hw/misc/stm32l4x5_exti.h
+@@ -30,7 +30,7 @@
+ #define TYPE_STM32L4X5_EXTI "stm32l4x5-exti"
+ OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5ExtiState, STM32L4X5_EXTI)
+ 
+-#define EXTI_NUM_INTERRUPT_OUT_LINES 40
++#define EXTI_NUM_LINES 40
+ #define EXTI_NUM_REGISTER 2
+ 
+ struct Stm32l4x5ExtiState {
+@@ -47,7 +47,7 @@ struct Stm32l4x5ExtiState {
+ 
+     /* used for edge detection */
+     uint32_t irq_levels[EXTI_NUM_REGISTER];
+-    qemu_irq irq[EXTI_NUM_INTERRUPT_OUT_LINES];
++    qemu_irq irq[EXTI_NUM_LINES];
+ };
+ 
+ #endif
+diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
+index 6a2ec62d785..b9a69a69f60 100644
+--- a/hw/misc/stm32l4x5_exti.c
++++ b/hw/misc/stm32l4x5_exti.c
+@@ -42,7 +42,6 @@
+ #define EXTI_SWIER2 0x30
+ #define EXTI_PR2    0x34
+ 
+-#define EXTI_NUM_GPIO_EVENT_IN_LINES 16
+ #define EXTI_MAX_IRQ_PER_BANK 32
+ #define EXTI_IRQS_BANK0  32
+ #define EXTI_IRQS_BANK1  8
+@@ -238,7 +237,7 @@ static void stm32l4x5_exti_init(Object *obj)
+ {
+     Stm32l4x5ExtiState *s = STM32L4X5_EXTI(obj);
+ 
+-    for (size_t i = 0; i < EXTI_NUM_INTERRUPT_OUT_LINES; i++) {
++    for (size_t i = 0; i < EXTI_NUM_LINES; i++) {
+         sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[i]);
+     }
+ 
+@@ -246,8 +245,7 @@ static void stm32l4x5_exti_init(Object *obj)
+                           TYPE_STM32L4X5_EXTI, 0x400);
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+ 
+-    qdev_init_gpio_in(DEVICE(obj), stm32l4x5_exti_set_irq,
+-                      EXTI_NUM_GPIO_EVENT_IN_LINES);
++    qdev_init_gpio_in(DEVICE(obj), stm32l4x5_exti_set_irq, EXTI_NUM_LINES);
+ }
+ 
+ static const VMStateDescription vmstate_stm32l4x5_exti = {
+-- 
+2.34.1
 
 
