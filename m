@@ -4,73 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18FDC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB522C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:35:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRswa-0000CM-Du; Thu, 11 Jul 2024 08:30:40 -0400
+	id 1sRt0Z-0005KM-N0; Thu, 11 Jul 2024 08:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRswY-00008D-Dt
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:30:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sRt0Y-0005Hh-13
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:34:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRswW-0003rA-Aq
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:30:38 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sRt0W-0004KG-4U
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:34:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720701035;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1720701282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eXr/Ztmnwl9jHml53fjJqMZ7lyq+57Yn1QzEuYZjgrs=;
- b=aDsDGRWcjz/cQC13UUUCChF0B4akcxDU9iq/DGI+gCASlowHMeZnasRh9y1giCrnxQy9ZH
- n+IuFAcFKWAQpw4zDBkU6finK46dFUGXKyXhw64AIVnY/8IdS8v1ASZOC3EZcliC2SyQt+
- j+XODvV8DeW72+OVYIe63EjqdDtaRy8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-CPtrlcINOpKEfikTo6iZTg-1; Thu,
- 11 Jul 2024 08:30:34 -0400
-X-MC-Unique: CPtrlcINOpKEfikTo6iZTg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C6961955F29; Thu, 11 Jul 2024 12:30:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 836DC19560AE; Thu, 11 Jul 2024 12:30:29 +0000 (UTC)
-Date: Thu, 11 Jul 2024 13:30:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>
-Subject: Re: Avocado 88.1 vs Python 3.12
-Message-ID: <Zo_QYmbLBFsPv8Ia@redhat.com>
-References: <6d22c5c5-cab0-49d3-88a8-3dd34c8c4938@linaro.org>
- <56ef21cc-f2e3-42df-a114-b7368c77253b@linaro.org>
- <5aa7be9d-1ce1-4448-97c4-fb0d5c4c0985@linaro.org>
- <4aa7d5cd-259b-4b63-9ce2-b73c9027848f@redhat.com>
+ bh=Bxb/8w4DES5aJg9E5ei3A2woovHRbaf3PI/9QzkhEVE=;
+ b=XBilCpysy8d6C+I3IccxcLYF25u6K2vHlwel/ER4DWC41f8fL7VTTUF3LfwOCuuQLRufkw
+ CxRl0jECU07GKVH/Wdcx3Q776Cv7iXYDZ7L5oyr3OMQb2C9yWzFzXsG74zA7qSKhHGfa2f
+ 3N00UEIohz2zb2+vr5iGbPf7fMfz4fI=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-260-d0NEcCUTNPWrFIpF7s42Dw-1; Thu, 11 Jul 2024 08:34:39 -0400
+X-MC-Unique: d0NEcCUTNPWrFIpF7s42Dw-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52e98693f43so840930e87.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 05:34:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720701278; x=1721306078;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bxb/8w4DES5aJg9E5ei3A2woovHRbaf3PI/9QzkhEVE=;
+ b=EWw2ADb2n+uWxqmBdOOhxrAvWVhAcY7T9sXZL9P5TPEIbtbl4bohZjn0h04+aPSr7W
+ ztCLory9E/m8Qh9qOSt4H8WQC7I+9Rv3lO1AxN6vWRKVZGWkzr4FlYEe6Xf9A6Mv7rFo
+ 4sogwt5peFBlVHEUiLJxO/DHbc278yQHBFP6dEx2Ec/n31LD104F5qX3BmFqHBQE28Hf
+ XLPYnzCOlPidGEVpX5+vq8fJN7YiKZaFZibrsUF7UtfKVIxXAAiEYrPcaCrVOEnssn+v
+ dMZmH8U4wuS0pBghtr60u5FjPbrRZwUDxQVPtWv5dlaR78hWCCJMOr90Fxcp9xuHeTTV
+ 4cgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjoUvjwbnTdokdlzCm03W5bav/gPDq3aHM+5St7cExOUq2F6xUDCZb/6rSPUX/X3/Vy+3397gpXcshY4bDUZd7UQM7/HY=
+X-Gm-Message-State: AOJu0YwZyKz3lwNdPPiy2A9DPWDppzsWf+2L/Gic6tuv2KWPK5GjHurb
+ CfB9n7QN9j8sPKIPUxIOI/71HdPlR5EgivRgI8kI6saIk1lx7hxZPnG+Y73ODUr8VJst9wVxe7R
+ 5puorpdHSLnkWE+9GflZEYZCqEgMjX860+5vlNR8PPMeYi0cD4ckA
+X-Received: by 2002:a05:6512:3e19:b0:52e:93d1:57a6 with SMTP id
+ 2adb3069b0e04-52eb998e483mr6103954e87.6.1720701278333; 
+ Thu, 11 Jul 2024 05:34:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGt5dnrspIs4beSaN9giDzz5Dhq9xTuLYc24NNSTl+lKF/RRpQXbzbbcNFjHF8swmRuzya+Ww==
+X-Received: by 2002:a05:6512:3e19:b0:52e:93d1:57a6 with SMTP id
+ 2adb3069b0e04-52eb998e483mr6103936e87.6.1720701277823; 
+ Thu, 11 Jul 2024 05:34:37 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f741624sm113560185e9.41.2024.07.11.05.34.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jul 2024 05:34:37 -0700 (PDT)
+Date: Thu, 11 Jul 2024 14:34:35 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v4 08/13] hw/i386/acpi: Use TYPE_PXB_BUS property
+ acpi_uid for DSDT
+Message-ID: <20240711143435.1e5f33b0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240702131428.664859-9-Jonathan.Cameron@huawei.com>
+References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
+ <20240702131428.664859-9-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4aa7d5cd-259b-4b63-9ce2-b73c9027848f@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -91,54 +108,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 02:01:25PM +0200, Thomas Huth wrote:
-> On 10/07/2024 01.45, Richard Henderson wrote:
-> > On 7/9/24 09:26, Philippe Mathieu-Daudé wrote:
-> > > On 9/7/24 17:41, Richard Henderson wrote:
-> > > > Hi guys,
-> > > > 
-> > > > I have reinstalled my development box to ubuntu 24 (because the
-> > > > Rust support is better than my previous install; ho hum).  I
-> > > > thought I had tested everything in a VM before committing, but I
-> > > > missed out on Avocado:
-> > > > 
-> > > > >   AVOCADO Downloading avocado tests VM image for aarch64
-> > > > > Failed to load plugin from module "avocado.plugins.list":
-> > > > > ModuleNotFoundError("No module named 'imp'") :
-> > > 
-> > > 
-> > > > If I understand things correctly, the python "imp" package was
-> > > > deprecated, and has been removed before v3.12.  This is fixed in
-> > > > upstream avocado as of v93.  But we have a hard stop in
-> > > > pythondeps.toml at v92.
-> > > > 
-> > > > Remind me what the blocker is to upgrading?
-> > > 
-> > > IIRC we're waiting for v2 of:
-> > > https://lore.kernel.org/qemu-devel/20231208190911.102879-1-crosa@redhat.com/
-> > 
-> > Yes indeed.  There are two minor conflicts in rebasing this branch, but
-> > otherwise it works.  Cleber, do you have time to pick this up again?
-> 
-> As an alternative, if nobody has time to work on that Avocado update, we
-> could maybe also try to integrate the python-based tests directly with the
-> meson test runner. A prototype can be found here:
-> 
->  https://lore.kernel.org/qemu-devel/20240711115546.40859-1-thuth@redhat.com/
+On Tue, 2 Jul 2024 14:14:13 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-Ooh, that looks remarkably straightford. I'd love to see use using pytest as
-the test harness, even if we keep using avocado framework in some of the
-test case impls. 
+> Rather than relying on PCI internals, use the new acpi_property
+> to obtain the ACPI _UID values.  These are still the same
+> as the PCI Bus numbers so no functional change.
+> 
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+> v4: New patch.
+> ---
+>  hw/i386/acpi-build.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index ee92783836..cc32f1e6d4 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -1550,6 +1550,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>          QLIST_FOREACH(bus, &bus->child, sibling) {
+>              uint8_t bus_num = pci_bus_num(bus);
+>              uint8_t numa_node = pci_bus_numa_node(bus);
+> +            uint8_t uid;
+>  
+>              /* look only for expander root buses */
+>              if (!pci_bus_is_root(bus)) {
+> @@ -1560,14 +1561,16 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>                  root_bus_limit = bus_num - 1;
+>              }
+>  
+> +            uid = object_property_get_uint(OBJECT(bus), "acpi_uid",
+> +                                           &error_fatal);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+theoretically acpi_uid is 32bit, so if we are expecting 
+only 256 buses here, then having and assert to catch truncation
+would be good.
+alternatively if this UID can't ever be more than 8bit, I'd use
+ visit_type_uint8() in previous patch to make sure too large value
+won't be silently ignored.
+
+>              scope = aml_scope("\\_SB");
+>  
+>              if (pci_bus_is_cxl(bus)) {
+> -                dev = aml_device("CL%.02X", bus_num);
+> +                dev = aml_device("CL%.02X", uid);
+>              } else {
+> -                dev = aml_device("PC%.02X", bus_num);
+> +                dev = aml_device("PC%.02X", uid);
+>              }
+> -            aml_append(dev, aml_name_decl("_UID", aml_int(bus_num)));
+> +            aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
+>              aml_append(dev, aml_name_decl("_BBN", aml_int(bus_num)));
+>              if (pci_bus_is_cxl(bus)) {
+>                  struct Aml *aml_pkg = aml_package(2);
 
 
