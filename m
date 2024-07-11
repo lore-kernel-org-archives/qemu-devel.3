@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33446C3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC92DC3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRwvh-0008P4-NI; Thu, 11 Jul 2024 12:46:01 -0400
+	id 1sRwxw-0006aJ-Fs; Thu, 11 Jul 2024 12:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRwvf-0008OF-3m
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:45:59 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1sRwxs-0006Nx-97
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:48:16 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRwvc-0005YH-5v
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:45:58 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1fb0d88fd25so8735285ad.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 09:45:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1sRwxq-0006w0-Or
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:48:16 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-3d9c4887533so614960b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 09:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720716354; x=1721321154; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8TcJzyfcfWCfBK2S25EFYbu/vq/8j131Le+OQV29Mn4=;
- b=i9OEo5K5866yEGqu3h3Y82SrvRCgQsjpTysq5a7R5baQEK0R1W++7zASO/CKyT9T29
- XoWfJwvEFPLLTLm0lxm8f4sTSka89FNA6uHIzJwkIDKhgv0jMJ1M7yYVvHW2RkUWxNKn
- Ho9hV1nx0ZkxdOei3MMnP1ajORBEk5uclOEAsgufcCHZ1Re+/jlLCZIKfAhswMDp3u0i
- aGu4RLIlVjs5LrUyMlNgbgHWty5q/WiCwR8ek7Ko0DWdkpj45RbNuqrnTGHTm0n85WRy
- eueGGjHWukIto7nqmrrSFImHfLxu9WCO+UywARtwSvTqBNDF16JIgv9W1uLPzsU3kByq
- eqOg==
+ d=bytedance.com; s=google; t=1720716493; x=1721321293; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gWkqVfHh3zq67hOlTFxTvfMTxq2saTCDbMKvtgiqG/Q=;
+ b=bwXFW2ZHRomffV3n4xWhQirhC3if2TzOdhNmkucV+nVlQHPCZC0JWmDWr5JUojBwiZ
+ iK75O2/xlZ828XY6vOzovAjLWKz05LWNK2EF9qgOBS1BFyrx8l/5qg7pEcZY+gGujukl
+ b8rFL4klzcUwx6RdY6aWgjqzAYkNQQAScT2WUfKLSa4fNe+P/mBKZdl3rtESCrbbHOe5
+ nG9MDO5cFVU5/gfkvC/HOPbNkM1jY7XR1Bwmb7eZsBFlOVOXymBB0SSwHlbmWUkhXMrH
+ +droVypXM5dlNcf/S2FqCCzl2EgJRyhx1RxAnSVjE/FbV6jkR4SAqHtfPhUTzyRz+lmP
+ E+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720716354; x=1721321154;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8TcJzyfcfWCfBK2S25EFYbu/vq/8j131Le+OQV29Mn4=;
- b=Yx7QvIWFc8gmDKiECIrBe1WEo/s9jj6QOezp8VPIE3PyM9A4rWmnNWKhb0JhXGDRtR
- pSQ7ZEv9OnjaOwFd4t80ROUKZx7/SPTIU/zSULroEj7tDYA9mefN63n3sUF6IOda5YoH
- yZ+8WQB3edMMkMJJskECzqcug8o86FlcXzBpJ9U+673L80DhSQx6UYv+CkzhArm7KrI6
- V3eI1vzfVbUashikjkMEBzu2DFoKzDvd59S1ejRwvxrCHRH2ppAOk/lENeUhftrJm+Om
- Zh3TAvRSOwj0cm0+P15FemL6aT0P5RQCDQxXszbr9vbZej0jas/RaNhHAGUq90h0mkWp
- 2+Jw==
+ d=1e100.net; s=20230601; t=1720716493; x=1721321293;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gWkqVfHh3zq67hOlTFxTvfMTxq2saTCDbMKvtgiqG/Q=;
+ b=KYPyKiCp0HnDNlsh9syrGnXNjaJXiZd5rYktVIS4cVMmb8B6B4rYvp5VNNzyacbRrI
+ UuSKYJVW2GF/1r6fne5lcmXfVbb15QynY9UKFzCPJB8wtvWflg4T9oMZySi+FpgvJVqd
+ +q71lSs79xmviWw7d/xs8BRWd8lNFWoR52Za4HTckjH/jKN43N1EH4wQ1dt7XNqSrOVe
+ xK3JIzPUVzyi+HmficS4mGLhQp+qqDp0C7rutqYEaIcHfG8aNV6yqlDkRyMNZ6tcZGYZ
+ orLLYT9rsJhAPFoq16ME5M3wLSzjh2iVFqhMJeS3Mc89yn78Bn4gl7j4WAYDKkmHE9MU
+ 6u8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg2LZMqKPpL9FLSghhCC3dcpJ4dAm+J5lCFxVKjut0bG2tfolFZ+P25pp2PZvkCSVLFoqNPDOe/Vz8DtJuV2PNMS8tJFY=
-X-Gm-Message-State: AOJu0Ywu+1jfmyFcM9Mbck1AZ5jdx7MdnlGuf+ygJXanZ42zRV365o/H
- WIdUs4fMo+I/3HfGCv8yVTnWMC/hex+sJHaN7xQrNVBDFoIcxRSlsIZwOA3rYxc=
-X-Google-Smtp-Source: AGHT+IG2TMDN+jHoAyXEbrn9NZo+2EwVVvxPXAxL+2wa8eYwhuaJZJJfS3XuPon/+cGqnznxjl547Q==
-X-Received: by 2002:a17:902:fd4d:b0:1fa:fe30:fc16 with SMTP id
- d9443c01a7336-1fbf0c80848mr1565495ad.25.1720716354424; 
- Thu, 11 Jul 2024 09:45:54 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6ab6d25sm52659275ad.158.2024.07.11.09.45.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 09:45:54 -0700 (PDT)
-Message-ID: <081298cb-536c-4487-b90c-b184b0f93ce7@linaro.org>
-Date: Thu, 11 Jul 2024 09:45:52 -0700
+ AJvYcCUvzPMlOE2v/+J1BvUjWKvRuFje8kM8n7XzLbN3iDCNJ0elU6gqO7NIZinaCvp+kXEz2u/bd0tdgBftSIZABh8N79b9eO4=
+X-Gm-Message-State: AOJu0Ywob7i+tOwPdqo8+oE3ksb942H323Xtx0ueYqKbelu7YV3n3mMu
+ eCpbz8ReHS9ftdzlJz7XjkZgCKrvvWA1YE7iGA0F9XXgLq8Bakgxzp+xo/EJU86dLyWlFX/Bizx
+ im0+c+k+RMD4lDvUOceBA4ABUBwwHaJVp9m0P/Q==
+X-Google-Smtp-Source: AGHT+IFdMDmUEpG7ov5g9YJhrBVTH4JIVvC41gUmf1K/U48g4yYws1LpM+9c4k+epeBoZ4kC1wUK0ostWg8J+E/DK2k=
+X-Received: by 2002:a05:6808:18f:b0:3da:3207:edc3 with SMTP id
+ 5614622812f47-3da3207f50amr3869883b6e.2.1720716493540; Thu, 11 Jul 2024
+ 09:48:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/8] tests_pytest: Implement fetch_asset() method for
- downloading assets
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20240711115546.40859-1-thuth@redhat.com>
- <20240711115546.40859-6-thuth@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240711115546.40859-6-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+References: <20240711025229.66260-1-yichen.wang@bytedance.com>
+ <Zo_98z3zmbDM1H40@x1n>
+In-Reply-To: <Zo_98z3zmbDM1H40@x1n>
+From: Yichen Wang <yichen.wang@bytedance.com>
+Date: Thu, 11 Jul 2024 09:48:02 -0700
+Message-ID: <CAHObMVYkwyNHSsQuN_bQKSrM4SvwPW1NU_G0Xvs3GD_LTy=7=A@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v5 0/5] Implement QATzip compression method
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Hao Xiang <hao.xiang@linux.dev>, 
+ "Liu, Yuan1" <yuan1.liu@intel.com>, "Zou, Nanhai" <nanhai.zou@intel.com>, 
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-oi1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 04:55, Thomas Huth wrote:
-> +    def fetch_asset(self, url, asset_hash):
-> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
-> +        if not os.path.exists(cache_dir):
-> +            os.makedirs(cache_dir)
-> +        fname = os.path.join(cache_dir,
-> +                             hashlib.sha1(url.encode("utf-8")).hexdigest())
-> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
-> +            return fname
-> +        logging.debug("Downloading %s to %s...", url, fname)
-> +        subprocess.check_call(["wget", "-c", url, "-O", fname + ".download"])
-> +        os.rename(fname + ".download", fname)
-> +        return fname
-
-Download failure via exception?
-Check hash on downloaded asset?
-
-
-r~
+On Thu, Jul 11, 2024 at 8:45=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Wed, Jul 10, 2024 at 07:52:24PM -0700, Yichen Wang wrote:
+> > v5:
+> > - Rebase changes on top of 59084feb256c617063e0dbe7e64821ae8852d7cf
+> > - Add documentations about migration with qatzip accerlation
+> > - Remove multifd-qatzip-sw-fallback option
+>
+> I think Yuan provided quite a few meaningful comments, did you address al=
+l
+> of them?
+Yes. I do.
+>
+> You didn't reply in the previous version, and you didn't add anything in
+> the changelog.  I suggest you at least do one of them in the future so th=
+at
+> reviewers can understand what happen.
+They are all very good comments, and instead of replying I just fix
+them all and include it in my next patch. In my changelog I do include
+all the changes and comments we discussed in v4. Sorry I am new to the
+community, so I will reply "fixed" in the previous email before
+pushing the next version. Thanks a lot, and sorry for that.
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
