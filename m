@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC273C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 09:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5307AC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 09:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRpvY-0001vP-OK; Thu, 11 Jul 2024 05:17:24 -0400
+	id 1sRpva-00023l-MT; Thu, 11 Jul 2024 05:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sRpvU-0001kG-Qa
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 05:17:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sRpvX-0001pP-4O
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 05:17:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sRpvS-00007D-5J
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 05:17:20 -0400
+ id 1sRpvU-00007s-Tw
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 05:17:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720689435;
+ s=mimecast20190719; t=1720689440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=s2zxRF/aYx1RQXUlNlGXxJcBkRQ9+qJvAytRFpPPHCs=;
- b=OQunymKZeenjGmoNNHb2lWZPpTWktoQqCPZzhCLCT5HLCuQelESqFdria5PgLOZthzOkCX
- nlfeVu1BEZhYREmTNe95ogm9YAaiG0FCF0Pph/3qCR4AB/EbdZs7WYLnV4zTcEpQlfL4+t
- ftmfjFKtsD0w/bnqBlxtLzugaM0ZM1U=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9PJc6MgJNsPdSArmTrtYCHD6iBNMpM2WHe521vKzfns=;
+ b=PUh6ReJsPNvEG+wwRFyJZJygMc7UKak5r6zTw9DzmlMmKCc2upyDMCQz0Hwp1CKRxiX6GN
+ GNHRxEXqIQhF/y5zoZbrQ6/WKtZEiL7Ilkwz5gWMMzgcfvEb/qhp3+5/leewSi9LzWO2xN
+ mEwQ0dufdP8EytikIyN3+xKvxnfHtp8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-D5cILuRuNlaksujXzrcLEA-1; Thu,
- 11 Jul 2024 05:17:13 -0400
-X-MC-Unique: D5cILuRuNlaksujXzrcLEA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-WWDkIBDiOveZ3M09IdRpTA-1; Thu,
+ 11 Jul 2024 05:17:15 -0400
+X-MC-Unique: WWDkIBDiOveZ3M09IdRpTA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3E511955BCF; Thu, 11 Jul 2024 09:17:11 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2828196E099; Thu, 11 Jul 2024 09:17:14 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.113])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D71CB3000184; Thu, 11 Jul 2024 09:17:10 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DBA561955F40; Thu, 11 Jul 2024 09:17:13 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <rth@twiddle.net>, Hanna Reitz <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>
-Subject: [PULL 0/2] Block patches
-Date: Thu, 11 Jul 2024 11:17:07 +0200
-Message-ID: <20240711091709.584450-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ Nir Soffer <nsoffer@redhat.com>
+Subject: [PULL 1/2] qemu-iotest/245: Add missing discard=unmap
+Date: Thu, 11 Jul 2024 11:17:08 +0200
+Message-ID: <20240711091709.584450-2-stefanha@redhat.com>
+In-Reply-To: <20240711091709.584450-1-stefanha@redhat.com>
+References: <20240711091709.584450-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,37 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 59084feb256c617063e0dbe7e64821ae8852d7cf:
+From: Nir Soffer <nsoffer@redhat.com>
 
-  Merge tag 'pull-aspeed-20240709' of https://github.com/legoater/qemu into staging (2024-07-09 07:13:55 -0700)
+The test works since we punch holes by default even when opening the
+image without discard=on or discard=unmap. Fix the test to enable
+discard.
 
-are available in the Git repository at:
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ tests/qemu-iotests/245 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
-
-for you to fetch changes up to d05ae948cc887054495977855b0859d0d4ab2613:
-
-  Consider discard option when writing zeros (2024-07-11 11:06:36 +0200)
-
-----------------------------------------------------------------
-Pull request
-
-A discard fix from Nir Soffer.
-
-----------------------------------------------------------------
-
-Nir Soffer (2):
-  qemu-iotest/245: Add missing discard=unmap
-  Consider discard option when writing zeros
-
- block/io.c                                    |   9 +-
- tests/qemu-iotests/245                        |   2 +-
- tests/qemu-iotests/tests/write-zeroes-unmap   | 127 ++++++++++++++++++
- .../qemu-iotests/tests/write-zeroes-unmap.out |  81 +++++++++++
- 4 files changed, 214 insertions(+), 5 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/write-zeroes-unmap
- create mode 100644 tests/qemu-iotests/tests/write-zeroes-unmap.out
-
+diff --git a/tests/qemu-iotests/245 b/tests/qemu-iotests/245
+index a934c9d1e6..f96610f510 100755
+--- a/tests/qemu-iotests/245
++++ b/tests/qemu-iotests/245
+@@ -592,7 +592,7 @@ class TestBlockdevReopen(iotests.QMPTestCase):
+     @iotests.skip_if_unsupported(['compress'])
+     def test_insert_compress_filter(self):
+         # Add an image to the VM: hd (raw) -> hd0 (qcow2) -> hd0-file (file)
+-        opts = {'driver': 'raw', 'node-name': 'hd', 'file': hd_opts(0)}
++        opts = {'driver': 'raw', 'node-name': 'hd', 'file': hd_opts(0), 'discard': 'unmap'}
+         self.vm.cmd('blockdev-add', conv_keys = False, **opts)
+ 
+         # Add a 'compress' filter
 -- 
 2.45.2
 
