@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82564C3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 21:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 272B8C3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 21:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS1PB-0000Li-W6; Thu, 11 Jul 2024 17:32:46 -0400
+	id 1sS1S2-000518-2X; Thu, 11 Jul 2024 17:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sS1P9-0000L1-VC
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:32:44 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sS1S0-000501-8r
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:35:40 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sS1P4-0005er-5g
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:32:43 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fb53bfb6easo10275865ad.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 14:32:36 -0700 (PDT)
+ id 1sS1Rx-0006j0-MB
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 17:35:40 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-77d3f00778cso998381a12.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 14:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720733554; x=1721338354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720733736; x=1721338536; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=00ogbnRPoirmBDe4vWDZhDoh2C9/ODS/D5DUIy7wYQk=;
- b=OwIkEG6uZLDHzOCVgOmCLwOJ+i2wa/cxO/jOdWKjurNy1OzqficjtOPUaW0ceynDKL
- rgnjAf6fAfjd+zlpoyefDWzdSaNfmhgT9dJqAkpJZYJmkK/erQjFKe++GxVD7CIPvo7e
- 8YxWGEC7aoHdsVq1HS09SSclTvJdteejOAe4vC0gHM9J7Vs/HsINEY64sLzkqsU8p92M
- ctWoGTTyO4cAFDX+SkflSQFoqOzXRMUMJaYcG7awhb6JdZNEvAxc2tVaK6If7fsoZp0S
- HQsI5iJ9FXJ9RjjXqwJAzm/QANPi2b9m8zEmP3ZSBlYZs7ho6KY73qVx+VBFUGic0zQB
- hgXQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eUXqTH1nU0jpA5bal0cayFcqNPOwz52PYWTeLDhouIU=;
+ b=WgZ/0eWL5Cl5vM07ZYPKQqlze804VoxCoW6CyVQ3Z/s6xWkT+w3w3M7SR5FC2pKAkX
+ jnvG8ULLxnCTO/DSlNMPsHKIcuBfXB2mokWE1EQo0wQM40jbTmGHo+zlqAiW2lT4btUA
+ /jqtbSRwqUG/k80vKbScW4N5FKuZU5xViQ9bDj8qRr7LYVtafnZPRYHTYOc1TWg3Mogs
+ k5OfzcHj52ai6rVUb3lQTVVzxWWPiWTOc/GGG34M+oRtNkh5nVXDA1u+MXapgvXiGbCm
+ glkC1FFEG1VFksUCEbfI7YB9gAQDoiLzMe7S++wqXCTwHw3KM4n+jorCqL5dkrbyHkCF
+ /sAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720733554; x=1721338354;
+ d=1e100.net; s=20230601; t=1720733736; x=1721338536;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=00ogbnRPoirmBDe4vWDZhDoh2C9/ODS/D5DUIy7wYQk=;
- b=wQcEwbm0lx72tgKUFtIkBwocuM2SpWHXJriaSdWciCb2PyIxwNwdc7nZGEju5WrV7a
- Egc0YasOMf3eL+QZCNmSBH6iyBgIHs8ZZKhdMEqwpyIlPsjuHck2IzYKejJPzEI+vEK2
- Wi2LWOfCXjOel6LtFethfbRRfYRItn8R/hs256diPXP2VTy7ivkEh8VP79Lte1uXqvsU
- /6hhsp+tSsJzlgPOUxtxEAIQgVNs3Ik0YczTFGKO5oaKNtucdrqhgpcBgG6ecWT1L998
- mrOt3ldckkGWobK6QXpkyzMKhEMDDrEWpI2ivK/x4tBZ/bp/CQh1LQC5zFNxyduBm6BE
- ic5Q==
+ bh=eUXqTH1nU0jpA5bal0cayFcqNPOwz52PYWTeLDhouIU=;
+ b=JorbtjizhOIeC28DV2hQSQnBTaT0FokMSE+ZQ6SY0nM+6paj8OLkAnYTWnQSZQQDdU
+ UKAK6/sKUx/cyhG+3t+qurFtzA9lUAY9sKW1hhS33/DvfTETcJ928oCaMWIKakN8nSQ+
+ GaS49/riAGdNSv3NylM0GLtcZy7Nxfafnm/THS8KtG9PLd9QC0og0Jrv+HsXwY8+Jlpd
+ 4UMzS9YNXRg3fJdc54kOdAxnRfVo3wHW85P5B/9iJLm1pGd4VNDyA8mBU3LcY7s4QdFx
+ VyyXg5oqCdoUM6p8YWIKDuKHXZkFbhKoOPrTvLuUSaKyinvN/Pf1T77Hf5u7NY0r7Xtr
+ +lmg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWavXlgs8zs0TmG7QTQAZdy7NJp7s+CNG5jk4apTXwMaH81fIen8Dx0i5qW1R12fWgcjElpcDTTuacgkoUcrf8yS9IHZaw=
-X-Gm-Message-State: AOJu0YyJVEgxGvafm+/upsQmO6nDvyhPbE5VZfDgd+4EM5nBjlFwx1t+
- U2J/25Wvs6Dk44gebMjdk+ovKe62+6oT3H8AS2wikjeaIVamLu5WyOq0Qin3Bo0kgnUkBumT3ze
- LN4Q=
-X-Google-Smtp-Source: AGHT+IEpJzjyA+LhIuF3+bY7VdfuNI4TCQq0eT2PvpC5Ft/JS8s/+fXP8A1fE/fpZl0GyQwtXbv4VQ==
-X-Received: by 2002:a17:902:b202:b0:1f9:b9ed:e84e with SMTP id
- d9443c01a7336-1fbb6eb22a3mr62088455ad.58.1720733553678; 
- Thu, 11 Jul 2024 14:32:33 -0700 (PDT)
+ AJvYcCVcSKkqVA7vOCN3fc6jWclJ1SWwkS6WxdtbVhaFSHmMy0RGCyWcQj2fp9HXqfjqtI8nIdBtsd52p4RcRsfGadTG3FPIZjY=
+X-Gm-Message-State: AOJu0YzZA2lP+Oigyw6cnTzT1gBc7s9wSzWvTWqI/c+TdeIXp9Y3u0lM
+ 5K77SXNMov3fEUIIcoRfGEis4dPDdpOz+oR/KCBT64U4rifKm0/pWf5uOCIo/3U=
+X-Google-Smtp-Source: AGHT+IE/GWKCEwXTFUsOJdj/ezQhC65Op0pfoGNzkwSuNt9NHNBqaOswqEKXI0AQ3fKAyAztxZ3ilQ==
+X-Received: by 2002:a05:6a20:a10b:b0:1bf:df4:84db with SMTP id
+ adf61e73a8af0-1c2984ca2edmr12205213637.42.1720733735647; 
+ Thu, 11 Jul 2024 14:35:35 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6a0fc38sm55190425ad.17.2024.07.11.14.32.32
+ 41be03b00d2f7-77d5f1a7d16sm4774021a12.13.2024.07.11.14.35.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 14:32:33 -0700 (PDT)
-Message-ID: <48e00278-957b-4e02-9034-8f314736098e@linaro.org>
-Date: Thu, 11 Jul 2024 14:32:31 -0700
+ Thu, 11 Jul 2024 14:35:35 -0700 (PDT)
+Message-ID: <9e76ea42-e765-4f51-b9cb-cfcfd1421a00@linaro.org>
+Date: Thu, 11 Jul 2024 14:35:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/24] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240711131822.3909903-1-peter.maydell@linaro.org>
+Subject: Re: [RFC PATCH 5/8] tests_pytest: Implement fetch_asset() method for
+ downloading assets
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
+ <20240711115546.40859-6-thuth@redhat.com>
+ <081298cb-536c-4487-b90c-b184b0f93ce7@linaro.org>
+ <b07b165d-57be-4144-a3d3-19c4ae94c261@linaro.org>
+ <877cdrraw8.fsf@draig.linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240711131822.3909903-1-peter.maydell@linaro.org>
+In-Reply-To: <877cdrraw8.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,31 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 06:17, Peter Maydell wrote:
-> The following changes since commit 59084feb256c617063e0dbe7e64821ae8852d7cf:
+On 7/11/24 12:23, Alex Bennée wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
 > 
->    Merge tag 'pull-aspeed-20240709' ofhttps://github.com/legoater/qemu  into staging (2024-07-09 07:13:55 -0700)
+>> On 7/11/24 09:45, Richard Henderson wrote:
+>>> On 7/11/24 04:55, Thomas Huth wrote:
+>>>> +    def fetch_asset(self, url, asset_hash):
+>>>> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
+>>>> +        if not os.path.exists(cache_dir):
+>>>> +            os.makedirs(cache_dir)
+>>>> +        fname = os.path.join(cache_dir,
+>>>> +                             hashlib.sha1(url.encode("utf-8")).hexdigest())
+>>>> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
+>>>> +            return fname
+>>>> +        logging.debug("Downloading %s to %s...", url, fname)
+>>>> +        subprocess.check_call(["wget", "-c", url, "-O", fname + ".download"])
+>>>> +        os.rename(fname + ".download", fname)
+>>>> +        return fname
+>>> Download failure via exception?
+>>> Check hash on downloaded asset?
+>>
+>> I would prefer to see assets, particularly downloading, handled in a
+>> separate pass from tests.
 > 
-> are available in the Git repository at:
-> 
->    https://git.linaro.org/people/pmaydell/qemu-arm.git  tags/pull-target-arm-20240711
-> 
-> for you to fetch changes up to 7f49089158a4db644fcbadfa90cd3d30a4868735:
-> 
->    target/arm: Convert PMULL to decodetree (2024-07-11 11:41:34 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * Refactor FPCR/FPSR handling in preparation for FEAT_AFP
->   * More decodetree conversions
->   * target/arm: Use cpu_env in cpu_untagged_addr
->   * target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to arm_cpu_exec_halt()
->   * hw/char/pl011: Avoid division-by-zero in pl011_get_baudrate()
->   * hw/misc/bcm2835_thermal: Fix access size handling in bcm2835_thermal_ops
->   * accel/tcg: MakeTCGCPUOps::cpu_exec_halt  mandatory
->   * STM32L4x5: Handle USART interrupts correctly
+> And I assume cachable?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+The cache is already handled here.  But downloading after cache miss is non-optional, may 
+not fail, and is accounted against the meson test timeout.
+
 
 r~
 
