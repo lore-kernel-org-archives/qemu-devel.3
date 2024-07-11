@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF202C3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01205C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRwmV-0005rZ-Jl; Thu, 11 Jul 2024 12:36:31 -0400
+	id 1sRwt6-0003PQ-3b; Thu, 11 Jul 2024 12:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRwmP-0005pA-9U; Thu, 11 Jul 2024 12:36:26 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1sRwt4-0003OT-RS; Thu, 11 Jul 2024 12:43:18 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRwmM-00027A-GF; Thu, 11 Jul 2024 12:36:24 -0400
+ id 1sRwt2-0004P9-3v; Thu, 11 Jul 2024 12:43:18 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKgN22Bglz4wcl;
- Fri, 12 Jul 2024 02:36:18 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKgWx4Q6Rz4wxk;
+ Fri, 12 Jul 2024 02:43:09 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKgN00qFtz4x04;
- Fri, 12 Jul 2024 02:36:15 +1000 (AEST)
-Message-ID: <c957be4b-bc28-4f09-bc52-2277b019125a@kaod.org>
-Date: Thu, 11 Jul 2024 18:36:13 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKgWt0nyXz4wnx;
+ Fri, 12 Jul 2024 02:43:05 +1000 (AEST)
+Message-ID: <10c390dd-ff6f-414e-87aa-d17937d4cc71@kaod.org>
+Date: Thu, 11 Jul 2024 18:43:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/18] ppc/pnv: Add a big-core mode that joins two regular
- cores
+Subject: Re: [PATCH 17/18] ppc/pnv: Implement POWER10 PC xscom registers for
+ direct controls
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
 References: <20240711141851.406677-1-npiggin@gmail.com>
- <20240711141851.406677-12-npiggin@gmail.com>
+ <20240711141851.406677-18-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240711141851.406677-12-npiggin@gmail.com>
+In-Reply-To: <20240711141851.406677-18-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -67,214 +67,284 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/11/24 16:18, Nicholas Piggin wrote:
-> POWER9 and POWER10 machines come in two variants, big-core and
-> small-core. Big-core machines are SMT8 from software's point of view,
-> but the low level platform topology ("xscom registers and pervasive
-> addressing"), these look more like a pair of small cores ganged
-> together.
+> The PC unit in the processor core contains xscom registers that provide
+> low level status and control of the CPU.
 > 
-> Presently the way this is modelled is to create one SMT8 PnvCore and add
-> special cases to xscom and pervasive for big-core mode that tries to
-> split this into two small cores, but this is becoming too complicated to
-> manage.
+> This implements "direct controls" sufficient for OPAL (skiboot) firmware
+> use, which is to stop threads and send them non-maskable IPIs in the
+> form of SRESET interrupts.
 > 
-> A better approach is to create 2 core structures and ganging them
-> together to look like an SMT8 core in TCG. Then the xscom and pervasive
-> models mostly do not need to differentiate big and small core modes.
-> 
-> This change adds initial mode bits and QEMU topology handling to
-> split SMT8 cores into 2xSMT4 cores.
+> POWER10 is sufficiently different (particularly QME and special wakeup)
+> from POWER9 that it is not trivial to implement by reusing the code.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
+>   include/hw/core/cpu.h     |  8 ++++
 >   include/hw/ppc/pnv.h      |  2 +
->   include/hw/ppc/pnv_core.h |  1 +
->   hw/ppc/pnv.c              | 79 ++++++++++++++++++++++++++++++++-------
->   hw/ppc/pnv_core.c         |  7 +++-
->   4 files changed, 75 insertions(+), 14 deletions(-)
+>   include/hw/ppc/pnv_core.h |  3 ++
+>   hw/ppc/pnv.c              | 19 +++++++--
+>   hw/ppc/pnv_core.c         | 88 ++++++++++++++++++++++++++++++++++++---
+>   system/cpus.c             | 10 +++++
+>   6 files changed, 122 insertions(+), 8 deletions(-)
 > 
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index 1993dededf..283ddd50e7 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -101,6 +101,8 @@ struct PnvMachineState {
->       PnvPnor      *pnor;
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index a2c8536943..410e7d6f03 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -984,6 +984,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
+>    */
+>   void cpu_exit(CPUState *cpu);
 >   
->       hwaddr       fw_load_addr;
+> +/**
+> + * cpu_pause:
+> + * @cpu: The CPU to pause.
+> + *
+> + * Resumes CPU, i.e. puts CPU into stopped state.
+> + */
+> +void cpu_pause(CPUState *cpu);
 > +
-> +    bool         big_core;
->   };
->   
->   PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index 693acb189b..50164e9e1f 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -49,6 +49,7 @@ struct PnvCore {
->   
->       /*< public >*/
->       PowerPCCPU **threads;
-> +    bool big_core;
->       uint32_t pir;
->       uint32_t hwid;
->       uint64_t hrmor;
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index b593a41f7c..d2ddc49142 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -1002,14 +1002,39 @@ static void pnv_init(MachineState *machine)
->       pnv->num_chips =
->           machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
->   
-> +    if (pnv->big_core) {
-> +        if (machine->smp.threads % 2 == 1) {
-> +            error_report("Cannot support %d threads with big-core option "
-> +                         "because it must be an even number",
-> +                         machine->smp.threads);
-> +            exit(1);
-> +        }
-> +        max_smt_threads *= 2;
-> +    }
-> +
->       if (machine->smp.threads > max_smt_threads) {
->           error_report("Cannot support more than %d threads/core "
->                        "on %s machine", max_smt_threads, mc->desc);
-> +        if (pmc->max_smt_threads == 4) {
-> +            error_report("(use big-core=on for 8 threads per core)");
-> +        }
->           exit(1);
->       }
->   
-> +    if (pnv->big_core) {
-> +        /*
-> +         * powernv models PnvCore as a SMT4 core. Big-core requires 2xPnvCore
-> +         * per core, so adjust topology here. pnv_dt_core() processor
-> +         * device-tree and TCG SMT code make the 2 cores appear as one big core
-> +         * from software point of view. pnv pervasive models and xscoms tend to
-> +         * see the big core as 2 small core halves.
-> +         */
-> +        machine->smp.cores *= 2;
-> +        machine->smp.threads /= 2;
-> +    }
-> +
->       if (!is_power_of_2(machine->smp.threads)) {
-> -        error_report("Cannot support %d threads/core on a powernv"
-> +        error_report("Cannot support %d threads/core on a powernv "
->                        "machine because it must be a power of 2",
->                        machine->smp.threads);
->           exit(1);
-> @@ -1175,11 +1200,19 @@ static void pnv_get_pir_tir_p9(PnvChip *chip,
->                                   uint32_t core_id, uint32_t thread_id,
->                                   uint32_t *pir, uint32_t *tir)
->   {
-> -    if (pir) {
-> -        if (chip->nr_threads == 8) {
-> -            *pir = (chip->chip_id << 8) | ((thread_id & 1) << 2) |
-> -                   (core_id << 3) | (thread_id >> 1);
-> -        } else {
-> +    PnvMachineState *pnv = PNV_MACHINE(chip->pnv_machine);
 
-The chip also needs a "big-core" property IMO.
+I think cpu_pause() deserves to be in a separate patch.
+
 
 Thanks,
 
 C.
 
 
-
-> +    if (pnv->big_core) {
-> +        /* Big-core interleaves thread ID between small-cores */
-> +        thread_id <<= 1;
-> +        thread_id |= core_id & 1;
-> +        core_id >>= 1;
+  
+>   /**
+>    * cpu_resume:
+>    * @cpu: The CPU to resume.
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index c56d152889..b7858d310d 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -112,6 +112,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
+>   #define PNV_FDT_ADDR          0x01000000
+>   #define PNV_TIMEBASE_FREQ     512000000ULL
+>   
+> +void pnv_cpu_do_nmi_resume(CPUState *cs);
 > +
-> +        if (pir) {
-> +            *pir = (chip->chip_id << 8) | (core_id << 3) | thread_id;
-> +        }
-> +    } else {
-> +        if (pir) {
->               *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
->           }
+>   /*
+>    * BMC helpers
+>    */
+> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+> index c8784777a4..1de79a818e 100644
+> --- a/include/hw/ppc/pnv_core.h
+> +++ b/include/hw/ppc/pnv_core.h
+> @@ -109,6 +109,9 @@ OBJECT_DECLARE_TYPE(PnvQuad, PnvQuadClass, PNV_QUAD)
+>   struct PnvQuad {
+>       DeviceState parent_obj;
+>   
+> +    bool special_wakeup_done;
+> +    bool special_wakeup[4];
+> +
+>       uint32_t quad_id;
+>       MemoryRegion xscom_regs;
+>       MemoryRegion xscom_qme_regs;
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 575f18958d..71b2b3806c 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -2747,11 +2747,24 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
+>            */
+>           env->spr[SPR_SRR1] |= SRR1_WAKESCOM;
 >       }
-> @@ -1203,11 +1236,19 @@ static void pnv_get_pir_tir_p10(PnvChip *chip,
->                                   uint32_t core_id, uint32_t thread_id,
->                                   uint32_t *pir, uint32_t *tir)
->   {
-> -    if (pir) {
-> -        if (chip->nr_threads == 8) {
-> -            *pir = (chip->chip_id << 8) | ((core_id / 4) << 4) |
-> -                    ((core_id % 2) << 3) | thread_id;
-> -        } else {
-> +    PnvMachineState *pnv = PNV_MACHINE(chip->pnv_machine);
+> +    if (arg.host_int) {
+> +        cpu_resume(cs);
+> +    }
+> +}
 > +
-> +    if (pnv->big_core) {
-> +        /* Big-core interleaves thread ID between small-cores */
-> +        thread_id <<= 1;
-> +        thread_id |= core_id & 1;
-> +        core_id >>= 1;
+> +static void pnv_cpu_do_nmi(CPUState *cs, int resume)
+> +{
+> +    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(resume));
+> +}
 > +
-> +        if (pir) {
-> +            *pir = (chip->chip_id << 8) | (core_id << 3) | thread_id;
-> +        }
-> +    } else {
-> +        if (pir) {
->               *pir = (chip->chip_id << 8) | (core_id << 2) | thread_id;
->           }
->       }
-> @@ -2180,7 +2221,8 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
->                                       &k->parent_realize);
+> +void pnv_cpu_do_nmi_resume(CPUState *cs)
+> +{
+> +    pnv_cpu_do_nmi(cs, 1);
 >   }
 >   
-> -static void pnv_chip_core_sanitize(PnvChip *chip, Error **errp)
-> +static void pnv_chip_core_sanitize(PnvMachineState *pnv, PnvChip *chip,
-> +                                   Error **errp)
+> -static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
+> +static void do_pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
 >   {
->       PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
->       int cores_max;
-> @@ -2201,6 +2243,17 @@ static void pnv_chip_core_sanitize(PnvChip *chip, Error **errp)
->       }
->       chip->cores_mask &= pcc->cores_mask;
+> -    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
+> +    pnv_cpu_do_nmi(CPU(cpu), 0);
+>   }
 >   
-> +    /* Ensure small-cores a paired up in big-core mode */
-> +    if (pnv->big_core) {
-> +        uint64_t even_cores = chip->cores_mask & 0x5555555555555555ULL;
-> +        uint64_t odd_cores = chip->cores_mask & 0xaaaaaaaaaaaaaaaaULL;
-> +
-> +        if (even_cores ^ (odd_cores >> 1)) {
-> +            error_setg(errp, "warning: unpaired cores in big-core mode !");
-> +            return;
-> +        }
-> +    }
-> +
->       /* now that we have a sane layout, let check the number of cores */
->       cores_max = ctpop64(chip->cores_mask);
->       if (chip->nr_cores > cores_max) {
-> @@ -2224,7 +2277,7 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
->       }
+>   static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
+> @@ -2760,7 +2773,7 @@ static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
+>       int i;
 >   
->       /* Cores */
-> -    pnv_chip_core_sanitize(chip, &error);
-> +    pnv_chip_core_sanitize(pnv, chip, &error);
->       if (error) {
->           error_propagate(errp, error);
->           return;
+>       for (i = 0; i < pnv->num_chips; i++) {
+> -        pnv_chip_foreach_cpu(pnv->chips[i], pnv_cpu_do_nmi, NULL);
+> +        pnv_chip_foreach_cpu(pnv->chips[i], do_pnv_cpu_do_nmi, NULL);
+>       }
+>   }
+>   
 > diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index 8cfa94fbfa..16d40392db 100644
+> index e03ac5441e..a685a5dc1b 100644
 > --- a/hw/ppc/pnv_core.c
 > +++ b/hw/ppc/pnv_core.c
-> @@ -249,7 +249,12 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
->       pir_spr->default_value = pir;
->       tir_spr->default_value = tir;
+> @@ -185,16 +185,40 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
+>    */
 >   
-> -    env->core_index = core_hwid;
-> +    if (pc->big_core) {
-> +        /* 2 "small cores" get the same core index for SMT operations */
-> +        env->core_index = core_hwid >> 1;
+>   #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
+> +#define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
+> +#define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
+> +#define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
+>   
+>   static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+>                                              unsigned int width)
+>   {
+> +    PnvCore *pc = PNV_CORE(opaque);
+> +    int nr_threads = CPU_CORE(pc)->nr_threads;
+> +    int i;
+>       uint32_t offset = addr >> 3;
+>       uint64_t val = 0;
+>   
+>       switch (offset) {
+>       case PNV10_XSCOM_EC_CORE_THREAD_STATE:
+> -        val = 0;
+> +        for (i = 0; i < nr_threads; i++) {
+> +            PowerPCCPU *cpu = pc->threads[i];
+> +            CPUState *cs = CPU(cpu);
+> +
+> +            if (cs->halted) {
+> +                val |= PPC_BIT(56 + i);
+> +            }
+> +        }
+> +        break;
+> +    case PNV10_XSCOM_EC_CORE_THREAD_INFO:
+> +        break;
+> +    case PNV10_XSCOM_EC_CORE_RAS_STATUS:
+> +        for (i = 0; i < nr_threads; i++) {
+> +            PowerPCCPU *cpu = pc->threads[i];
+> +            CPUState *cs = CPU(cpu);
+> +            if (cs->stopped) {
+> +                val |= PPC_BIT(0 + 8*i) | PPC_BIT(1 + 8*i);
+> +            }
+> +        }
+>           break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+> @@ -207,9 +231,45 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+>   static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+>                                            uint64_t val, unsigned int width)
+>   {
+> +    PnvCore *pc = PNV_CORE(opaque);
+> +    int nr_threads = CPU_CORE(pc)->nr_threads;
+> +    int i;
+>       uint32_t offset = addr >> 3;
+>   
+>       switch (offset) {
+> +    case PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS:
+> +        for (i = 0; i < nr_threads; i++) {
+> +            PowerPCCPU *cpu = pc->threads[i];
+> +            CPUState *cs = CPU(cpu);
+> +
+> +            if (val & PPC_BIT(7 + 8*i)) { /* stop */
+> +                val &= ~PPC_BIT(7 + 8*i);
+> +                cpu_pause(cs);
+> +            }
+> +            if (val & PPC_BIT(6 + 8*i)) { /* start */
+> +                val &= ~PPC_BIT(6 + 8*i);
+> +                cpu_resume(cs);
+> +            }
+> +            if (val & PPC_BIT(4 + 8*i)) { /* sreset */
+> +                val &= ~PPC_BIT(4 + 8*i);
+> +                pnv_cpu_do_nmi_resume(cs);
+> +            }
+> +            if (val & PPC_BIT(3 + 8*i)) { /* clear maint */
+> +                /*
+> +                 * Hardware has very particular cases for where clear maint
+> +                 * must be used and where start must be used to resume a
+> +                 * thread. These are not modelled exactly, just treat
+> +                 * this and start the same.
+> +                 */
+> +                val &= ~PPC_BIT(3 + 8*i);
+> +                cpu_resume(cs);
+> +            }
+> +        }
+> +        if (val) {
+> +            qemu_log_mask(LOG_UNIMP, "%s: unimp bits in DIRECT_CONTROLS 0x%016lx\n", __func__, val);
+> +        }
+> +        break;
+> +
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+>                         offset);
+> @@ -528,6 +588,7 @@ static const MemoryRegionOps pnv_quad_power10_xscom_ops = {
+>   static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+>                                               unsigned int width)
+>   {
+> +    PnvQuad *eq = PNV_QUAD(opaque);
+>       uint32_t offset = addr >> 3;
+>       uint64_t val = -1;
+>   
+> @@ -535,10 +596,14 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+>        * Forth nibble selects the core within a quad, mask it to process read
+>        * for any core.
+>        */
+> -    switch (offset & ~0xf000) {
+> -    case P10_QME_SPWU_HYP:
+> +    switch (offset & ~PPC_BITMASK32(16, 19)) {
+>       case P10_QME_SSH_HYP:
+> -        return 0;
+> +        val = 0;
+> +        if (eq->special_wakeup_done) {
+> +            val |= PPC_BIT(1); /* SPWU DONE */
+> +            val |= PPC_BIT(4); /* SSH SPWU DONE */
+> +        }
+> +        break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+>                         offset);
+> @@ -550,9 +615,22 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+>   static void pnv_qme_power10_xscom_write(void *opaque, hwaddr addr,
+>                                            uint64_t val, unsigned int width)
+>   {
+> +    PnvQuad *eq = PNV_QUAD(opaque);
+>       uint32_t offset = addr >> 3;
+> +    bool set;
+> +    int i;
+>   
+> -    switch (offset) {
+> +    switch (offset & ~PPC_BITMASK32(16, 19)) {
+> +    case P10_QME_SPWU_HYP:
+> +        set = !!(val & PPC_BIT(0));
+> +        eq->special_wakeup_done = set;
+> +        for (i = 0; i < 4; i++) {
+> +            /* These bits select cores in the quad */
+> +            if (offset & PPC_BIT32(16 + i)) {
+> +                eq->special_wakeup[i] = set;
+> +            }
+> +        }
+> +        break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+>                         offset);
+> diff --git a/system/cpus.c b/system/cpus.c
+> index d3640c9503..083abbc393 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -613,6 +613,16 @@ void pause_all_vcpus(void)
+>       bql_lock();
+>   }
+>   
+> +void cpu_pause(CPUState *cpu)
+> +{
+> +    if (qemu_cpu_is_self(cpu)) {
+> +        qemu_cpu_stop(cpu, true);
 > +    } else {
-> +        env->core_index = core_hwid;
+> +        cpu->stop = true;
+> +        qemu_cpu_kick(cpu);
 > +    }
->   
->       /* Set time-base frequency to 512 MHz */
->       cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
+> +}
+> +
+>   void cpu_resume(CPUState *cpu)
+>   {
+>       cpu->stop = false;
 
 
