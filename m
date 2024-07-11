@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7196EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A32EC3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRthH-0001j9-41; Thu, 11 Jul 2024 09:18:55 -0400
+	id 1sRthe-0003Rn-F7; Thu, 11 Jul 2024 09:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sRthA-0001Lp-Cr
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:48 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1sRthD-0001Sb-5C
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:51 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sRth6-00064A-32
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:47 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4267300145eso6635315e9.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:18:35 -0700 (PDT)
+ id 1sRth7-00063q-8O
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:18:49 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4267345e746so5918595e9.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720703914; x=1721308714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720703912; x=1721308712; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KFWK1AlLkOyejopjdXOzwSTKdMbuEo/cg/jpEWotNd4=;
- b=S7fe58hnOwMhvpaVKuZVd52Yle7Kcr9qiiXazBPcFttSWeEYlxK62183abCs7LfStD
- 0OHvJ1HwSnqpraZv81HSYfYfvDOEonJIE5QUJ6ZUhy/IFy+JDuFpPhnlz8mbd0P8mhnr
- g4DW/yZYuMAgksvwdUXvpmoTv3X8yFMjeuRtanKDdUugQhko8S2IkuzQYS2jIRU/qDFW
- 3lxAGuN1jhGwGeW11FcFVRsRqu2G6Cpc0U/5M3pyx/q5yLsFFfE4zGwQoKYoX1DCdtKq
- BhXKObmPP6+mk4mq+ISaGUNj32mvYvSuzWr4qW9McF2AwxIfp7DmGuiYjcczFqP31FeA
- lRYA==
+ :reply-to; bh=mJJtvp5Y6I/6U2k54uJrUAVLkxGe0GJIV6EjU6SGiVU=;
+ b=Vcp4z2QXHTeE1pbcL7O1vCaR1jb970dbo6vN0M1EjSNgC2eiggW6NkkKrArSk0kSv/
+ LrglQhKNhwzrSW7jKrFmIjGZ6FKoG/7dhYbIFx+L129+1Wf9p/gJx4m1pCt/wMbudNzj
+ Y/lrgRC/brpAF3pF00GQxnGYxOWZgsixmF0e8OnYFQHO8OFj83pJ4J15pPIzxSATIuGI
+ k1Ya+ps5zCgjkgQQIgOlG81Kf0q7MGtnplKsFuG3GAFe/bkt1wesbw3rzkMHYuYHGfJm
+ l5yWIOwJdPqKh9UPS8JhYwehpxrnH8s9Y5SroPdpa43DN4TDmAJG7riUueJ7mhaLBXwM
+ FYUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720703914; x=1721308714;
+ d=1e100.net; s=20230601; t=1720703912; x=1721308712;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KFWK1AlLkOyejopjdXOzwSTKdMbuEo/cg/jpEWotNd4=;
- b=SP3CZCRAYZDeVrTuKKdtKechOXoba8hhpCE/sGmFYfqfgblkVwxn3KQToGWAX2kPKU
- 4T8kw6fcI9ZPvUZjfwu5ygeWLRLHG2qSoyuJ5+hSogVMSN1/ypFK+dhMTbFDTBBkgHWw
- 1kX8IsDt3rBsCMxlAmjq8+nGiYxuZd2BIPlTdMjK/gz7DalYCEPv/tgrXZbA2pKpPKDV
- aNrk8/DcCXZOeSd2hnAdNztZvaxYTpQody/eSWCKQQysjRhgk2kiVqbfHnkdpgaoFK9x
- UOQPKuVwTVKFkgZsHCnZJVHwq428I36TCRZ6QULRKAmwGyEn5MeenY1OypdLUtexHpsc
- 3QdQ==
-X-Gm-Message-State: AOJu0Yw2Q2VhCbqUetHX4cRSAL67QBzJ8SQDGtXLWr85lL3zYezkFazI
- rQFCvAjZ2Mc4vi0EdwmC8GPWrp9TGko27pa/2YojVqMb7m89LvVsn6xItzWlgvf47h+/h4ouz41
- NV8o=
-X-Google-Smtp-Source: AGHT+IH4ZdSyq7/cUlgo19rDUDBA3IAfT3wGUkj83T5TZeupUZM2jCmc6VO71qiNd+Y/i7weYeaGIQ==
-X-Received: by 2002:a05:600c:6a12:b0:426:6bf9:608d with SMTP id
- 5b1f17b1804b1-426707cf81cmr65512885e9.12.1720703914065; 
- Thu, 11 Jul 2024 06:18:34 -0700 (PDT)
+ bh=mJJtvp5Y6I/6U2k54uJrUAVLkxGe0GJIV6EjU6SGiVU=;
+ b=KMqgYKFxkDoG4TGxFZLoFwNGDbL/x968mefqMg/ZVxVk9xrHKGK3/QjxCOWcGFZtJ/
+ sY0leF2szMdDsgPdG5tWmI1y0jxWOYN8vFWVPcGR/wBvfsivvYulN+6QA9JhDXRSS521
+ QR1B5QJ9Lf2dQgIujtEMC48kxeMOHQlHfuuXeKOHdfgUfHZm8Z65+OiLpknJInIYvLXi
+ vtogSV3JfzxvnxdnhvTf3W1c3Y9VtChxFyEXua2mUgoFR8KxMLZoCWCm9RSAJXUi8gnF
+ WPlYkHh//NQUO+EKAk6GSJ/IPlRMM1OR9kSm8PnM/0oBcsLFF0uvs8/MHjfsKNLrBgcB
+ xMQg==
+X-Gm-Message-State: AOJu0Ywj2ISM5Rt/1LRvtBsLQoxznh/M/dQ44MwuXHywPgLgHEzIT6oA
+ ibUD/0agZQF758a6yU+ZM4NUqT7GJiJ4kDVeHg1w8KBgeLoPHlfHRS8ES9P7yrB8Oh9q+qgdA0J
+ yhTc=
+X-Google-Smtp-Source: AGHT+IGjVhcip1e0wCDm8R6tkniYlPkYUTWLPy7JFzV8IKgEq0p0nzdxQrGckvmatNuwRGXF3aBOIA==
+X-Received: by 2002:a05:600c:4927:b0:426:97e2:345d with SMTP id
+ 5b1f17b1804b1-42697e238c0mr45254005e9.40.1720703911786; 
+ Thu, 11 Jul 2024 06:18:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f736939sm119412025e9.37.2024.07.11.06.18.33
+ 5b1f17b1804b1-4266f736939sm119412025e9.37.2024.07.11.06.18.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 06:18:33 -0700 (PDT)
+ Thu, 11 Jul 2024 06:18:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/24] target/arm: Convert SMULL, UMULL, SMLAL, UMLAL, SMLSL,
- UMLSL to decodetree
-Date: Thu, 11 Jul 2024 14:18:17 +0100
-Message-Id: <20240711131822.3909903-20-peter.maydell@linaro.org>
+Subject: [PULL 14/24] target: Set TCGCPUOps::cpu_exec_halt to target's
+ has_work implementation
+Date: Thu, 11 Jul 2024 14:18:12 +0100
+Message-Id: <20240711131822.3909903-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240711131822.3909903-1-peter.maydell@linaro.org>
 References: <20240711131822.3909903-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,352 +95,293 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Currently the TCGCPUOps::cpu_exec_halt method is optional, and if it
+is not set then the default is to call the CPUClass::has_work
+method (which has an identical function signature).
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240709000610.382391-2-richard.henderson@linaro.org
+We would like to make the cpu_exec_halt method mandatory so we can
+remove the runtime check and fallback handling.  In preparation for
+that, make all the targets which don't need special handling in their
+cpu_exec_halt set it to their cpu_has_work implementation instead of
+leaving it unset.  (This is every target except for arm and i386.)
+
+In the riscv case this requires us to make the function not
+be local to the source file it's defined in.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  22 ++++
- target/arm/tcg/translate-a64.c | 184 ++++++++++++++++++++++++---------
- 2 files changed, 156 insertions(+), 50 deletions(-)
+ target/riscv/internals.h   | 3 +++
+ target/alpha/cpu.c         | 1 +
+ target/avr/cpu.c           | 1 +
+ target/cris/cpu.c          | 2 ++
+ target/hppa/cpu.c          | 1 +
+ target/loongarch/cpu.c     | 1 +
+ target/m68k/cpu.c          | 1 +
+ target/microblaze/cpu.c    | 1 +
+ target/mips/cpu.c          | 1 +
+ target/openrisc/cpu.c      | 1 +
+ target/ppc/cpu_init.c      | 2 ++
+ target/riscv/cpu.c         | 2 +-
+ target/riscv/tcg/tcg-cpu.c | 2 ++
+ target/rx/cpu.c            | 1 +
+ target/s390x/cpu.c         | 1 +
+ target/sh4/cpu.c           | 1 +
+ target/sparc/cpu.c         | 1 +
+ target/tricore/cpu.c       | 1 +
+ target/xtensa/cpu.c        | 1 +
+ 19 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 223eac3cac2..513d112787b 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -962,6 +962,13 @@ FCADD_270       0.10 1110 ..0 ..... 11110 1 ..... ..... @qrrr_e
- 
- FCMLA_v         0 q:1 10 1110 esz:2 0 rm:5 110 rot:2 1 rn:5 rd:5
- 
-+SMULL_v         0.00 1110 ..1 ..... 11000 0 ..... ..... @qrrr_e
-+UMULL_v         0.10 1110 ..1 ..... 11000 0 ..... ..... @qrrr_e
-+SMLAL_v         0.00 1110 ..1 ..... 10000 0 ..... ..... @qrrr_e
-+UMLAL_v         0.10 1110 ..1 ..... 10000 0 ..... ..... @qrrr_e
-+SMLSL_v         0.00 1110 ..1 ..... 10100 0 ..... ..... @qrrr_e
-+UMLSL_v         0.10 1110 ..1 ..... 10100 0 ..... ..... @qrrr_e
-+
- ### Advanced SIMD scalar x indexed element
- 
- FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
-@@ -1047,6 +1054,21 @@ FCMLA_vi        0 0 10 1111 01 idx:1 rm:5 0 rot:2 1 0 0 rn:5 rd:5 esz=1 q=0
- FCMLA_vi        0 1 10 1111 01 . rm:5 0 rot:2 1 . 0 rn:5 rd:5 esz=1 idx=%hl q=1
- FCMLA_vi        0 1 10 1111 10 0 rm:5 0 rot:2 1 idx:1 0 rn:5 rd:5 esz=2 q=1
- 
-+SMULL_vi        0.00 1111 01 .. .... 1010 . 0 ..... .....   @qrrx_h
-+SMULL_vi        0.00 1111 10 . ..... 1010 . 0 ..... .....   @qrrx_s
-+UMULL_vi        0.10 1111 01 .. .... 1010 . 0 ..... .....   @qrrx_h
-+UMULL_vi        0.10 1111 10 . ..... 1010 . 0 ..... .....   @qrrx_s
-+
-+SMLAL_vi        0.00 1111 01 .. .... 0010 . 0 ..... .....   @qrrx_h
-+SMLAL_vi        0.00 1111 10 . ..... 0010 . 0 ..... .....   @qrrx_s
-+UMLAL_vi        0.10 1111 01 .. .... 0010 . 0 ..... .....   @qrrx_h
-+UMLAL_vi        0.10 1111 10 . ..... 0010 . 0 ..... .....   @qrrx_s
-+
-+SMLSL_vi        0.00 1111 01 .. .... 0110 . 0 ..... .....   @qrrx_h
-+SMLSL_vi        0.00 1111 10 . ..... 0110 . 0 ..... .....   @qrrx_s
-+UMLSL_vi        0.10 1111 01 .. .... 0110 . 0 ..... .....   @qrrx_h
-+UMLSL_vi        0.10 1111 10 . ..... 0110 . 0 ..... .....   @qrrx_s
-+
- # Floating-point conditional select
- 
- FCSEL           0001 1110 .. 1 rm:5 cond:4 11 rn:5 rd:5     esz=%esz_hsd
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 6c07aeaf3bd..8f0781e1f7e 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -5664,6 +5664,121 @@ static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
-     return true;
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 8239ae83ccc..0ac17bc5adb 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -136,4 +136,7 @@ static inline float16 check_nanbox_h(CPURISCVState *env, uint64_t f)
+     }
  }
  
-+/*
-+ * Widening vector x vector/indexed.
-+ *
-+ * These read from the top or bottom half of a 128-bit vector.
-+ * After widening, optionally accumulate with a 128-bit vector.
-+ * Implement these inline, as the number of elements are limited
-+ * and the related SVE and SME operations on larger vectors use
-+ * even/odd elements instead of top/bottom half.
-+ *
-+ * If idx >= 0, operand 2 is indexed, otherwise vector.
-+ * If acc, operand 0 is loaded with rd.
-+ */
++/* Our implementation of CPUClass::has_work */
++bool riscv_cpu_has_work(CPUState *cs);
 +
-+/* For low half, iterating up. */
-+static bool do_3op_widening(DisasContext *s, MemOp memop, int top,
-+                            int rd, int rn, int rm, int idx,
-+                            NeonGenTwo64OpFn *fn, bool acc)
-+{
-+    TCGv_i64 tcg_op0 = tcg_temp_new_i64();
-+    TCGv_i64 tcg_op1 = tcg_temp_new_i64();
-+    TCGv_i64 tcg_op2 = tcg_temp_new_i64();
-+    MemOp esz = memop & MO_SIZE;
-+    int half = 8 >> esz;
-+    int top_swap, top_half;
-+
-+    /* There are no 64x64->128 bit operations. */
-+    if (esz >= MO_64) {
-+        return false;
-+    }
-+    if (!fp_access_check(s)) {
-+        return true;
-+    }
-+
-+    if (idx >= 0) {
-+        read_vec_element(s, tcg_op2, rm, idx, memop);
-+    }
-+
-+    /*
-+     * For top half inputs, iterate forward; backward for bottom half.
-+     * This means the store to the destination will not occur until
-+     * overlapping input inputs are consumed.
-+     * Use top_swap to conditionally invert the forward iteration index.
-+     */
-+    top_swap = top ? 0 : half - 1;
-+    top_half = top ? half : 0;
-+
-+    for (int elt_fwd = 0; elt_fwd < half; ++elt_fwd) {
-+        int elt = elt_fwd ^ top_swap;
-+
-+        read_vec_element(s, tcg_op1, rn, elt + top_half, memop);
-+        if (idx < 0) {
-+            read_vec_element(s, tcg_op2, rm, elt + top_half, memop);
-+        }
-+        if (acc) {
-+            read_vec_element(s, tcg_op0, rd, elt, memop + 1);
-+        }
-+        fn(tcg_op0, tcg_op1, tcg_op2);
-+        write_vec_element(s, tcg_op0, rd, elt, esz + 1);
-+    }
-+    clear_vec_high(s, 1, rd);
-+    return true;
-+}
-+
-+static void gen_muladd_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    TCGv_i64 t = tcg_temp_new_i64();
-+    tcg_gen_mul_i64(t, n, m);
-+    tcg_gen_add_i64(d, d, t);
-+}
-+
-+static void gen_mulsub_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    TCGv_i64 t = tcg_temp_new_i64();
-+    tcg_gen_mul_i64(t, n, m);
-+    tcg_gen_sub_i64(d, d, t);
-+}
-+
-+TRANS(SMULL_v, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, -1,
-+      tcg_gen_mul_i64, false)
-+TRANS(UMULL_v, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, -1,
-+      tcg_gen_mul_i64, false)
-+TRANS(SMLAL_v, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, -1,
-+      gen_muladd_i64, true)
-+TRANS(UMLAL_v, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, -1,
-+      gen_muladd_i64, true)
-+TRANS(SMLSL_v, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, -1,
-+      gen_mulsub_i64, true)
-+TRANS(UMLSL_v, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, -1,
-+      gen_mulsub_i64, true)
-+
-+TRANS(SMULL_vi, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, a->idx,
-+      tcg_gen_mul_i64, false)
-+TRANS(UMULL_vi, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, a->idx,
-+      tcg_gen_mul_i64, false)
-+TRANS(SMLAL_vi, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, a->idx,
-+      gen_muladd_i64, true)
-+TRANS(UMLAL_vi, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, a->idx,
-+      gen_muladd_i64, true)
-+TRANS(SMLSL_vi, do_3op_widening,
-+      a->esz | MO_SIGN, a->q, a->rd, a->rn, a->rm, a->idx,
-+      gen_mulsub_i64, true)
-+TRANS(UMLSL_vi, do_3op_widening,
-+      a->esz, a->q, a->rd, a->rn, a->rm, a->idx,
-+      gen_mulsub_i64, true)
+ #endif
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index 0e2fbcb397f..9db1dffc03e 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -219,6 +219,7 @@ static const TCGCPUOps alpha_tcg_ops = {
+ #else
+     .tlb_fill = alpha_cpu_tlb_fill,
+     .cpu_exec_interrupt = alpha_cpu_exec_interrupt,
++    .cpu_exec_halt = alpha_cpu_has_work,
+     .do_interrupt = alpha_cpu_do_interrupt,
+     .do_transaction_failed = alpha_cpu_do_transaction_failed,
+     .do_unaligned_access = alpha_cpu_do_unaligned_access,
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index f53e1192b15..3132842d565 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -210,6 +210,7 @@ static const TCGCPUOps avr_tcg_ops = {
+     .synchronize_from_tb = avr_cpu_synchronize_from_tb,
+     .restore_state_to_opc = avr_restore_state_to_opc,
+     .cpu_exec_interrupt = avr_cpu_exec_interrupt,
++    .cpu_exec_halt = avr_cpu_has_work,
+     .tlb_fill = avr_cpu_tlb_fill,
+     .do_interrupt = avr_cpu_do_interrupt,
+ };
+diff --git a/target/cris/cpu.c b/target/cris/cpu.c
+index 535ec39c730..ff31ca7fbc1 100644
+--- a/target/cris/cpu.c
++++ b/target/cris/cpu.c
+@@ -186,6 +186,7 @@ static const TCGCPUOps crisv10_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = cris_cpu_tlb_fill,
+     .cpu_exec_interrupt = cris_cpu_exec_interrupt,
++    .cpu_exec_halt = cris_cpu_has_work,
+     .do_interrupt = crisv10_cpu_do_interrupt,
+ #endif /* !CONFIG_USER_ONLY */
+ };
+@@ -197,6 +198,7 @@ static const TCGCPUOps crisv32_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = cris_cpu_tlb_fill,
+     .cpu_exec_interrupt = cris_cpu_exec_interrupt,
++    .cpu_exec_halt = cris_cpu_has_work,
+     .do_interrupt = cris_cpu_do_interrupt,
+ #endif /* !CONFIG_USER_ONLY */
+ };
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index f0507874ce6..7cf2e2f266d 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -228,6 +228,7 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = hppa_cpu_tlb_fill,
+     .cpu_exec_interrupt = hppa_cpu_exec_interrupt,
++    .cpu_exec_halt = hppa_cpu_has_work,
+     .do_interrupt = hppa_cpu_do_interrupt,
+     .do_unaligned_access = hppa_cpu_do_unaligned_access,
+     .do_transaction_failed = hppa_cpu_do_transaction_failed,
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 270f711f11a..69f9ad7711e 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -736,6 +736,7 @@ static const TCGCPUOps loongarch_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = loongarch_cpu_tlb_fill,
+     .cpu_exec_interrupt = loongarch_cpu_exec_interrupt,
++    .cpu_exec_halt = loongarch_cpu_has_work,
+     .do_interrupt = loongarch_cpu_do_interrupt,
+     .do_transaction_failed = loongarch_cpu_do_transaction_failed,
+ #endif
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index efd6bbded86..1d49f4cb238 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -536,6 +536,7 @@ static const TCGCPUOps m68k_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = m68k_cpu_tlb_fill,
+     .cpu_exec_interrupt = m68k_cpu_exec_interrupt,
++    .cpu_exec_halt = m68k_cpu_has_work,
+     .do_interrupt = m68k_cpu_do_interrupt,
+     .do_transaction_failed = m68k_cpu_transaction_failed,
+ #endif /* !CONFIG_USER_ONLY */
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 41ad47d04cb..135947ee800 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -413,6 +413,7 @@ static const TCGCPUOps mb_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = mb_cpu_tlb_fill,
+     .cpu_exec_interrupt = mb_cpu_exec_interrupt,
++    .cpu_exec_halt = mb_cpu_has_work,
+     .do_interrupt = mb_cpu_do_interrupt,
+     .do_transaction_failed = mb_cpu_transaction_failed,
+     .do_unaligned_access = mb_cpu_do_unaligned_access,
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index bbe01d07dd8..89655b1900f 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -555,6 +555,7 @@ static const TCGCPUOps mips_tcg_ops = {
+ #if !defined(CONFIG_USER_ONLY)
+     .tlb_fill = mips_cpu_tlb_fill,
+     .cpu_exec_interrupt = mips_cpu_exec_interrupt,
++    .cpu_exec_halt = mips_cpu_has_work,
+     .do_interrupt = mips_cpu_do_interrupt,
+     .do_transaction_failed = mips_cpu_do_transaction_failed,
+     .do_unaligned_access = mips_cpu_do_unaligned_access,
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index fdaaa09fc87..6ec54ad7a6c 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -233,6 +233,7 @@ static const TCGCPUOps openrisc_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = openrisc_cpu_tlb_fill,
+     .cpu_exec_interrupt = openrisc_cpu_exec_interrupt,
++    .cpu_exec_halt = openrisc_cpu_has_work,
+     .do_interrupt = openrisc_cpu_do_interrupt,
+ #endif /* !CONFIG_USER_ONLY */
+ };
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 01e358a4a5a..cdada7987d8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -1,3 +1,4 @@
 +
  /*
-  * Advanced SIMD scalar/vector x indexed element
-  */
-@@ -10684,11 +10799,6 @@ static void handle_3rd_widening(DisasContext *s, int is_q, int is_u, int size,
-                                     tcg_op1, tcg_op2, tcg_tmp1, tcg_tmp2);
-                 break;
-             }
--            case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
--            case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
--            case 12: /* UMULL, UMULL2, SMULL, SMULL2 */
--                tcg_gen_mul_i64(tcg_passres, tcg_op1, tcg_op2);
--                break;
-             case 9: /* SQDMLAL, SQDMLAL2 */
-             case 11: /* SQDMLSL, SQDMLSL2 */
-             case 13: /* SQDMULL, SQDMULL2 */
-@@ -10697,6 +10807,9 @@ static void handle_3rd_widening(DisasContext *s, int is_q, int is_u, int size,
-                                                   tcg_passres, tcg_passres);
-                 break;
-             default:
-+            case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
-+            case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
-+            case 12: /* UMULL, UMULL2, SMULL, SMULL2 */
-                 g_assert_not_reached();
-             }
+  *  PowerPC CPU initialization for qemu.
+  *
+@@ -7481,6 +7482,7 @@ static const TCGCPUOps ppc_tcg_ops = {
+ #else
+   .tlb_fill = ppc_cpu_tlb_fill,
+   .cpu_exec_interrupt = ppc_cpu_exec_interrupt,
++  .cpu_exec_halt = ppc_cpu_has_work,
+   .do_interrupt = ppc_cpu_do_interrupt,
+   .cpu_exec_enter = ppc_cpu_exec_enter,
+   .cpu_exec_exit = ppc_cpu_exec_exit,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a2640cf2594..c53b0d5b406 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -903,7 +903,7 @@ static vaddr riscv_cpu_get_pc(CPUState *cs)
+     return env->pc;
+ }
  
-@@ -10763,23 +10876,6 @@ static void handle_3rd_widening(DisasContext *s, int is_q, int is_u, int size,
-                     }
-                 }
-                 break;
--            case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
--            case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
--            case 12: /* UMULL, UMULL2, SMULL, SMULL2 */
--                if (size == 0) {
--                    if (is_u) {
--                        gen_helper_neon_mull_u8(tcg_passres, tcg_op1, tcg_op2);
--                    } else {
--                        gen_helper_neon_mull_s8(tcg_passres, tcg_op1, tcg_op2);
--                    }
--                } else {
--                    if (is_u) {
--                        gen_helper_neon_mull_u16(tcg_passres, tcg_op1, tcg_op2);
--                    } else {
--                        gen_helper_neon_mull_s16(tcg_passres, tcg_op1, tcg_op2);
--                    }
--                }
--                break;
-             case 9: /* SQDMLAL, SQDMLAL2 */
-             case 11: /* SQDMLSL, SQDMLSL2 */
-             case 13: /* SQDMULL, SQDMULL2 */
-@@ -10789,6 +10885,9 @@ static void handle_3rd_widening(DisasContext *s, int is_q, int is_u, int size,
-                                                   tcg_passres, tcg_passres);
-                 break;
-             default:
-+            case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
-+            case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
-+            case 12: /* UMULL, UMULL2, SMULL, SMULL2 */
-                 g_assert_not_reached();
-             }
+-static bool riscv_cpu_has_work(CPUState *cs)
++bool riscv_cpu_has_work(CPUState *cs)
+ {
+ #ifndef CONFIG_USER_ONLY
+     RISCVCPU *cpu = RISCV_CPU(cs);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index ae256868243..ecf366d6c75 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -21,6 +21,7 @@
+ #include "exec/exec-all.h"
+ #include "tcg-cpu.h"
+ #include "cpu.h"
++#include "internals.h"
+ #include "pmu.h"
+ #include "time_helper.h"
+ #include "qapi/error.h"
+@@ -138,6 +139,7 @@ static const TCGCPUOps riscv_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = riscv_cpu_tlb_fill,
+     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
++    .cpu_exec_halt = riscv_cpu_has_work,
+     .do_interrupt = riscv_cpu_do_interrupt,
+     .do_transaction_failed = riscv_cpu_do_transaction_failed,
+     .do_unaligned_access = riscv_cpu_do_unaligned_access,
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 8a584f0a111..36d2a6f1890 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -192,6 +192,7 @@ static const TCGCPUOps rx_tcg_ops = {
  
-@@ -10981,9 +11080,6 @@ static void disas_simd_three_reg_diff(DisasContext *s, uint32_t insn)
-     case 2: /* SSUBL, SSUBL2, USUBL, USUBL2 */
-     case 5: /* SABAL, SABAL2, UABAL, UABAL2 */
-     case 7: /* SABDL, SABDL2, UABDL, UABDL2 */
--    case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
--    case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
--    case 12: /* SMULL, SMULL2, UMULL, UMULL2 */
-         /* 64 x 64 -> 128 */
-         if (size == 3) {
-             unallocated_encoding(s);
-@@ -10996,6 +11092,9 @@ static void disas_simd_three_reg_diff(DisasContext *s, uint32_t insn)
-         handle_3rd_widening(s, is_q, is_u, size, opcode, rd, rn, rm);
-         break;
-     default:
-+    case 8: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
-+    case 10: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
-+    case 12: /* SMULL, SMULL2, UMULL, UMULL2 */
-         /* opcode 15 not allocated */
-         unallocated_encoding(s);
-         break;
-@@ -11979,17 +12078,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     int index;
+ #ifndef CONFIG_USER_ONLY
+     .cpu_exec_interrupt = rx_cpu_exec_interrupt,
++    .cpu_exec_halt = rx_cpu_has_work,
+     .do_interrupt = rx_cpu_do_interrupt,
+ #endif /* !CONFIG_USER_ONLY */
+ };
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 2bbeaca36e4..0fbfcd35d83 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -370,6 +370,7 @@ static const TCGCPUOps s390_tcg_ops = {
+ #else
+     .tlb_fill = s390_cpu_tlb_fill,
+     .cpu_exec_interrupt = s390_cpu_exec_interrupt,
++    .cpu_exec_halt = s390_cpu_has_work,
+     .do_interrupt = s390_cpu_do_interrupt,
+     .debug_excp_handler = s390x_cpu_debug_excp_handler,
+     .do_unaligned_access = s390x_cpu_do_unaligned_access,
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 618aa7154ed..8f07261dcfd 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -254,6 +254,7 @@ static const TCGCPUOps superh_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = superh_cpu_tlb_fill,
+     .cpu_exec_interrupt = superh_cpu_exec_interrupt,
++    .cpu_exec_halt = superh_cpu_has_work,
+     .do_interrupt = superh_cpu_do_interrupt,
+     .do_unaligned_access = superh_cpu_do_unaligned_access,
+     .io_recompile_replay_branch = superh_io_recompile_replay_branch,
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 9bacfb68cb2..54cb269e0af 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -926,6 +926,7 @@ static const TCGCPUOps sparc_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = sparc_cpu_tlb_fill,
+     .cpu_exec_interrupt = sparc_cpu_exec_interrupt,
++    .cpu_exec_halt = sparc_cpu_has_work,
+     .do_interrupt = sparc_cpu_do_interrupt,
+     .do_transaction_failed = sparc_cpu_do_transaction_failed,
+     .do_unaligned_access = sparc_cpu_do_unaligned_access,
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index bdefb845116..4d9c0368f2b 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -169,6 +169,7 @@ static const TCGCPUOps tricore_tcg_ops = {
+     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
+     .restore_state_to_opc = tricore_restore_state_to_opc,
+     .tlb_fill = tricore_cpu_tlb_fill,
++    .cpu_exec_halt = tricore_cpu_has_work,
+ };
  
-     switch (16 * u + opcode) {
--    case 0x02: /* SMLAL, SMLAL2 */
--    case 0x12: /* UMLAL, UMLAL2 */
--    case 0x06: /* SMLSL, SMLSL2 */
--    case 0x16: /* UMLSL, UMLSL2 */
--    case 0x0a: /* SMULL, SMULL2 */
--    case 0x1a: /* UMULL, UMULL2 */
--        if (is_scalar) {
--            unallocated_encoding(s);
--            return;
--        }
--        break;
-     case 0x03: /* SQDMLAL, SQDMLAL2 */
-     case 0x07: /* SQDMLSL, SQDMLSL2 */
-     case 0x0b: /* SQDMULL, SQDMULL2 */
-@@ -11997,22 +12085,28 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     default:
-     case 0x00: /* FMLAL */
-     case 0x01: /* FMLA */
-+    case 0x02: /* SMLAL, SMLAL2 */
-     case 0x04: /* FMLSL */
-     case 0x05: /* FMLS */
-+    case 0x06: /* SMLSL, SMLSL2 */
-     case 0x08: /* MUL */
-     case 0x09: /* FMUL */
-+    case 0x0a: /* SMULL, SMULL2 */
-     case 0x0c: /* SQDMULH */
-     case 0x0d: /* SQRDMULH */
-     case 0x0e: /* SDOT */
-     case 0x0f: /* SUDOT / BFDOT / USDOT / BFMLAL */
-     case 0x10: /* MLA */
-     case 0x11: /* FCMLA #0 */
-+    case 0x12: /* UMLAL, UMLAL2 */
-     case 0x13: /* FCMLA #90 */
-     case 0x14: /* MLS */
-     case 0x15: /* FCMLA #180 */
-+    case 0x16: /* UMLSL, UMLSL2 */
-     case 0x17: /* FCMLA #270 */
-     case 0x18: /* FMLAL2 */
-     case 0x19: /* FMULX */
-+    case 0x1a: /* UMULL, UMULL2 */
-     case 0x1c: /* FMLSL2 */
-     case 0x1d: /* SQRDMLAH */
-     case 0x1e: /* UDOT */
-@@ -12098,12 +12192,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-                 read_vec_element(s, tcg_res[pass], rd, pass, MO_64);
- 
-                 switch (opcode) {
--                case 0x2: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
--                    tcg_gen_add_i64(tcg_res[pass], tcg_res[pass], tcg_passres);
--                    break;
--                case 0x6: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
--                    tcg_gen_sub_i64(tcg_res[pass], tcg_res[pass], tcg_passres);
--                    break;
-                 case 0x7: /* SQDMLSL, SQDMLSL2 */
-                     tcg_gen_neg_i64(tcg_passres, tcg_passres);
-                     /* fall through */
-@@ -12113,6 +12201,8 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-                                                       tcg_passres);
-                     break;
-                 default:
-+                case 0x2: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
-+                case 0x6: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
-                     g_assert_not_reached();
-                 }
-             }
-@@ -12170,14 +12260,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-                 read_vec_element(s, tcg_res[pass], rd, pass, MO_64);
- 
-                 switch (opcode) {
--                case 0x2: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
--                    gen_helper_neon_addl_u32(tcg_res[pass], tcg_res[pass],
--                                             tcg_passres);
--                    break;
--                case 0x6: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
--                    gen_helper_neon_subl_u32(tcg_res[pass], tcg_res[pass],
--                                             tcg_passres);
--                    break;
-                 case 0x7: /* SQDMLSL, SQDMLSL2 */
-                     gen_helper_neon_negl_u32(tcg_passres, tcg_passres);
-                     /* fall through */
-@@ -12187,6 +12269,8 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-                                                       tcg_passres);
-                     break;
-                 default:
-+                case 0x2: /* SMLAL, SMLAL2, UMLAL, UMLAL2 */
-+                case 0x6: /* SMLSL, SMLSL2, UMLSL, UMLSL2 */
-                     g_assert_not_reached();
-                 }
-             }
+ static void tricore_cpu_class_init(ObjectClass *c, void *data)
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index de907cfeb1b..a08c7a0b1f2 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -234,6 +234,7 @@ static const TCGCPUOps xtensa_tcg_ops = {
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = xtensa_cpu_tlb_fill,
+     .cpu_exec_interrupt = xtensa_cpu_exec_interrupt,
++    .cpu_exec_halt = xtensa_cpu_has_work,
+     .do_interrupt = xtensa_cpu_do_interrupt,
+     .do_transaction_failed = xtensa_cpu_do_transaction_failed,
+     .do_unaligned_access = xtensa_cpu_do_unaligned_access,
 -- 
 2.34.1
 
