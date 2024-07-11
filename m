@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF96C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 03:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72E6C3271E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 04:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRkgv-0006nk-K4; Wed, 10 Jul 2024 23:41:57 -0400
+	id 1sRl3w-000527-LI; Thu, 11 Jul 2024 00:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sRkgu-0006mm-3u
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 23:41:56 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sRkgr-0000s9-H2
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 23:41:55 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Dxs+l1VI9mqR0DAA--.186S3;
- Thu, 11 Jul 2024 11:41:41 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxMMRyVI9mpIlDAA--.52686S3; 
- Thu, 11 Jul 2024 11:41:40 +0800 (CST)
-Subject: Re: [PATCH 2/2] MAINTAINERS: Add myself as a reviewer of LoongArch
- virt machine
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-References: <20240627-ipi-fixes-v1-0-9b061dc28a3a@flygoat.com>
- <20240627-ipi-fixes-v1-2-9b061dc28a3a@flygoat.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <635b4197-f9d9-75ba-1d63-181e8a3c779a@loongson.cn>
-Date: Thu, 11 Jul 2024 11:41:50 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sRl3u-000519-My
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 00:05:42 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sRl3s-0000TT-1D
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 00:05:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720670740; x=1752206740;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Wsi70F8liq6MA5rM/b7m9HQj9gTWlMscq8b+UVmfI8Y=;
+ b=W5zQ76NdKeh1fjg1okLkaNhLMk0pknBvNJ8zBRIfuDRZDfzgEd1JZ9hG
+ KWrKnWiul2HA6Cqn9Q1uEGxzYx2++5q1xU4I3bSWpPTEQ7kqrNBAii61u
+ ilHmajTocuiGWFxBxWLHmKMeSIi+LHC2jUhui/fStH0Ty6cquusoWzQnC
+ Pjw3Y0t4vQUNKlgPqWaziHTYrrG4A2RHZABhS4/zwXxzyagnwUrehU3kL
+ aptTYl3PjR12uiL+nJVncZE+OlL4IBP4txQnIJk8tOIva/UBBj4N0ctzL
+ 7d2i8ZiDGEfbQwlHonJkhhNJCURgEd8DxxCcEqyKy+x/9cRiRfJUAFZFF w==;
+X-CSE-ConnectionGUID: 2/hEEdcpQwS0fqOW/m7cbA==
+X-CSE-MsgGUID: vNPG5FH9Ti270SFf6HejAA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11129"; a="21901991"
+X-IronPort-AV: E=Sophos;i="6.09,199,1716274800"; d="scan'208";a="21901991"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2024 21:05:36 -0700
+X-CSE-ConnectionGUID: BtmQrcE5SVGTfm/NNb/l8A==
+X-CSE-MsgGUID: bfS+yvsGRjegY+E6l4849A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,199,1716274800"; d="scan'208";a="48509874"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa010.fm.intel.com with ESMTP; 10 Jul 2024 21:05:33 -0700
+Date: Thu, 11 Jul 2024 12:21:13 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <Zo9duWzshTd30EZd@intel.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20240627-ipi-fixes-v1-2-9b061dc28a3a@flygoat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxMMRyVI9mpIlDAA--.52686S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7GFWUGw13Ww17GF1Utw4rXrc_yoWfuFg_AF
- Waka9rWF4kGFy8Kw10qFZ5Jw13Xr4kJF43Zan3tw4xJ347Jr1Iqr1DtanrW34a9r4xWrs8
- Ja97XF13CwnxZosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbIxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vA
- pUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.148,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +91,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/6/27 下午12:13, Jiaxun Yang 写道:
-> I would like to be informed on changes made to the LoongArch virt machine.
->
-> I'm fairly familiar with Loongson-3 series platform hardware and doing
-> firmwre (U-Boot) development as hobbyist on LoongArch virt platform,
-> so I believe I can give positive review input to changes on that machine.
->
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Hi Manos and all,
 
-Thanks.
-Song Gao
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+On Tue, Jun 11, 2024 at 01:33:32PM +0300, Manos Pitsidianakis wrote:
+> diff --git a/rust/rustfmt.toml b/rust/rustfmt.toml
+> new file mode 100644
+> index 0000000000..ebecb99fe0
+> --- /dev/null
+> +++ b/rust/rustfmt.toml
+> @@ -0,0 +1,7 @@
+> +edition = "2021"
+> +format_generated_files = false
+> +format_code_in_doc_comments = true
+> +format_strings = true
+> +imports_granularity = "Crate"
+> +group_imports = "StdExternalCrate"
+> +wrap_comments = true
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 19f67dc5d215..9a646ea58483 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1239,6 +1239,7 @@ LoongArch Machines
->   ------------------
->   Virt
->   M: Song Gao <gaosong@loongson.cn>
-> +R: Jiaxun Yang <jiaxun.yang@flygoat.com>
->   S: Maintained
->   F: docs/system/loongarch/virt.rst
->   F: configs/targets/loongarch64-softmmu.mak
->
+
+I find it's stiil necessary to strictly limit the width of the lines by
+"error_on_line_overflow = true" [1].
+
+Currently rustfmt defaults the width limitation with "max_width = 100",
+but it has bugs and doesn't always work. For example, the line of
+rust/qemu-api/src/device_class.rs:108 comes to 157 characters and is
+ignored by rustfmt, which doesn't even fit in one line of my screen!
+
+Of course I think it's feasible to manually review and fix similar cases,
+but it's definitely better to have readily available tool that can help
+us rigorously formatted...
+
+[1]: https://github.com/rust-lang/rustfmt/blob/master/Configurations.md#error_on_line_overflow
+
+-Zhao
 
 
