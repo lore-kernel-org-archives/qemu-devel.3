@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90487C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18FDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 12:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRstt-0003s4-6S; Thu, 11 Jul 2024 08:27:53 -0400
+	id 1sRswa-0000CM-Du; Thu, 11 Jul 2024 08:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRsts-0003rb-3i
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:27:52 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRswY-00008D-Dt
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:30:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRstq-0003JF-H6
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:27:51 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRswW-0003rA-Aq
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 08:30:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720700868;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1720701035;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WHI/4wPP8R2+ilKy81OFpjP4p8f9UonN9Xj6JbRjkNk=;
- b=i46n51DmqWvzwiTYCfBs9QLvA9WOw91DbORvPKq53TiOG21kDVZgLgLJRVVrur4ckdea0n
- naheR403RvY8GMzM5NwkK0fJi3RsJn4+jPclgBIFwUIM4lGXKEaG88+en6KGjnN8DIzkSI
- Au2LKueB5YxkW+Ih833raQy/dnMKBrI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-WgLoO5zBOdi_SgWMWgtBfQ-1; Thu, 11 Jul 2024 08:27:47 -0400
-X-MC-Unique: WgLoO5zBOdi_SgWMWgtBfQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-426724679f0so9848005e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 05:27:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720700866; x=1721305666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WHI/4wPP8R2+ilKy81OFpjP4p8f9UonN9Xj6JbRjkNk=;
- b=JHp+PciYVN7ahz1O9/S0j3jLOKKtTdw5R00o9/mEGG47t6h4W8kryP22v40e54K1A0
- xoFjTFtKzSxmityBq4M9Flu4QPBoDZhGVx26XfL+gyb/pLVb1lwQbXUnZPUOTlOj0MRx
- n2wM7wonVSd6Fj4F4plqzPSrTz5Wrqn3dB6Ag8Lgt1cDThGa2o0vKrE3Haj/oOxaGIea
- naRt7HAi/LFR6THw+urogemWnuNosnXRXed2e5sFAnSkL63rFpL5NifQglu6ENh27Krg
- 0nZgbP8i1Vyx8FNdhfgzlovnDE6Y7GbTHokIL4zcaJbgsalLjgjCipyetFMLmWOTH671
- ST6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqHA8AxlWT/OUp12urExTElbdODfWYVokw/1PN+NA6PyTNMwGTKmqKU6ok9fAsranGXroPq/ZlaPisXJ3wXl6X9aohAAk=
-X-Gm-Message-State: AOJu0YxB6IVc04ingrRezvtAB28WLehoMdOBOtBB0GtGATnii4Eu6PKd
- nNMfEjhKwZTCXRoHV2yyG/34Bs7280nuPiKxnpXi0z7vTjCyRefLZWpZDvy1HWOaVOtRPwdVh2x
- BnWjdgUyE5I4YgSUfaUqa18vgGjYz3Ol48GbIx2me/iQzIkLWXKjE
-X-Received: by 2002:a05:600c:181c:b0:424:a7f1:ba2 with SMTP id
- 5b1f17b1804b1-427981f2dd6mr21542385e9.17.1720700866563; 
- Thu, 11 Jul 2024 05:27:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYXeTwwrqg0QrhxkyzXKVN89bw3IsN5quyO9A3wdmCPi1B8HD3wtsQt5kI60Q2uvLyiovT2Q==
-X-Received: by 2002:a05:600c:181c:b0:424:a7f1:ba2 with SMTP id
- 5b1f17b1804b1-427981f2dd6mr21542185e9.17.1720700866187; 
- Thu, 11 Jul 2024 05:27:46 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42793dc2bcesm66002165e9.29.2024.07.11.05.27.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 05:27:45 -0700 (PDT)
-Date: Thu, 11 Jul 2024 14:27:44 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v4 07/13] hw/pci-bridge: Add acpi_uid property to
- TYPE_PXB_BUS
-Message-ID: <20240711142744.1178daec@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240702131428.664859-8-Jonathan.Cameron@huawei.com>
-References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
- <20240702131428.664859-8-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ bh=eXr/Ztmnwl9jHml53fjJqMZ7lyq+57Yn1QzEuYZjgrs=;
+ b=aDsDGRWcjz/cQC13UUUCChF0B4akcxDU9iq/DGI+gCASlowHMeZnasRh9y1giCrnxQy9ZH
+ n+IuFAcFKWAQpw4zDBkU6finK46dFUGXKyXhw64AIVnY/8IdS8v1ASZOC3EZcliC2SyQt+
+ j+XODvV8DeW72+OVYIe63EjqdDtaRy8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-CPtrlcINOpKEfikTo6iZTg-1; Thu,
+ 11 Jul 2024 08:30:34 -0400
+X-MC-Unique: CPtrlcINOpKEfikTo6iZTg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C6961955F29; Thu, 11 Jul 2024 12:30:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 836DC19560AE; Thu, 11 Jul 2024 12:30:29 +0000 (UTC)
+Date: Thu, 11 Jul 2024 13:30:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>
+Subject: Re: Avocado 88.1 vs Python 3.12
+Message-ID: <Zo_QYmbLBFsPv8Ia@redhat.com>
+References: <6d22c5c5-cab0-49d3-88a8-3dd34c8c4938@linaro.org>
+ <56ef21cc-f2e3-42df-a114-b7368c77253b@linaro.org>
+ <5aa7be9d-1ce1-4448-97c4-fb0d5c4c0985@linaro.org>
+ <4aa7d5cd-259b-4b63-9ce2-b73c9027848f@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4aa7d5cd-259b-4b63-9ce2-b73c9027848f@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,57 +91,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jul 2024 14:14:12 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> Enable ACPI table creation for PCI Expander Bridges to be independent
-> of PCI internals.  Note that the UID is currently the PCI bus number.
-> This is motivated by the forthcoming ACPI Generic Port SRAT entries
-> which can be made completely independent of PCI internals.
+On Thu, Jul 11, 2024 at 02:01:25PM +0200, Thomas Huth wrote:
+> On 10/07/2024 01.45, Richard Henderson wrote:
+> > On 7/9/24 09:26, Philippe Mathieu-Daudé wrote:
+> > > On 9/7/24 17:41, Richard Henderson wrote:
+> > > > Hi guys,
+> > > > 
+> > > > I have reinstalled my development box to ubuntu 24 (because the
+> > > > Rust support is better than my previous install; ho hum).  I
+> > > > thought I had tested everything in a VM before committing, but I
+> > > > missed out on Avocado:
+> > > > 
+> > > > >   AVOCADO Downloading avocado tests VM image for aarch64
+> > > > > Failed to load plugin from module "avocado.plugins.list":
+> > > > > ModuleNotFoundError("No module named 'imp'") :
+> > > 
+> > > 
+> > > > If I understand things correctly, the python "imp" package was
+> > > > deprecated, and has been removed before v3.12.  This is fixed in
+> > > > upstream avocado as of v93.  But we have a hard stop in
+> > > > pythondeps.toml at v92.
+> > > > 
+> > > > Remind me what the blocker is to upgrading?
+> > > 
+> > > IIRC we're waiting for v2 of:
+> > > https://lore.kernel.org/qemu-devel/20231208190911.102879-1-crosa@redhat.com/
+> > 
+> > Yes indeed.  There are two minor conflicts in rebasing this branch, but
+> > otherwise it works.  Cleber, do you have time to pick this up again?
 > 
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> As an alternative, if nobody has time to work on that Avocado update, we
+> could maybe also try to integrate the python-based tests directly with the
+> meson test runner. A prototype can be found here:
 > 
-> ---
-> v4: Generalize to all TYPE_PXB_BUS.  The handling for primary root
->     bridges is separate and doesn't overlap with this change.
-> ---
->  hw/pci-bridge/pci_expander_bridge.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> index 0411ad31ea..d71eb4b175 100644
-> --- a/hw/pci-bridge/pci_expander_bridge.c
-> +++ b/hw/pci-bridge/pci_expander_bridge.c
-> @@ -85,12 +85,23 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
->      return pxb->numa_node;
->  }
->  
-> +static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
-> +                             void *opaque, Error **errp)
-> +{
-> +    uint32_t uid = pci_bus_num(PCI_BUS(obj));
-> +
-> +    visit_type_uint32(v, name, &uid, errp);
-> +}
-> +
->  static void pxb_bus_class_init(ObjectClass *class, void *data)
->  {
->      PCIBusClass *pbc = PCI_BUS_CLASS(class);
->  
->      pbc->bus_num = pxb_bus_num;
->      pbc->numa_node = pxb_bus_numa_node;
-> +
-> +    object_class_property_add(class, "acpi_uid", "uint32",
-> +                              prop_pxb_uid_get, NULL, NULL, NULL);
+>  https://lore.kernel.org/qemu-devel/20240711115546.40859-1-thuth@redhat.com/
 
-missing related object_class_property_set_description()
+Ooh, that looks remarkably straightford. I'd love to see use using pytest as
+the test harness, even if we keep using avocado framework in some of the
+test case impls. 
 
->  }
->  
->  static const TypeInfo pxb_bus_info = {
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
