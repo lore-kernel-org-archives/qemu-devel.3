@@ -4,95 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F37C3DA41
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F210C3DA45
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 13:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRtno-00016C-OX; Thu, 11 Jul 2024 09:25:40 -0400
+	id 1sRtuq-0004kp-Bt; Thu, 11 Jul 2024 09:32:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRtnZ-0008QB-6q
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:25:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1sRtuo-0004dy-Dy; Thu, 11 Jul 2024 09:32:54 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sRtnT-0000WD-6H
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 09:25:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720704316;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0mlNGZ4bfWgRjS9ILK0zXFJKte83IiOLCct3+UOnosw=;
- b=WhWGHz/WWbrHMjrLprSJFvup1y5KzJVaI1Fu0JH43bLUSYPbEohgr5MMypm+xbjCNChGG2
- QE4UfSdNgXoG7x88t5uN0exdPeQxupGu+5iqCj5iNcDB94blj709ZO2xck9l+d7wBCRwiq
- A5hlLWtdNnddy2gbX6VBWX2Jbqh0/G0=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-nX5ivUExP0Su33vQq4jJYg-1; Thu, 11 Jul 2024 09:25:15 -0400
-X-MC-Unique: nX5ivUExP0Su33vQq4jJYg-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2eebc944683so9446391fa.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 06:25:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720704314; x=1721309114;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0mlNGZ4bfWgRjS9ILK0zXFJKte83IiOLCct3+UOnosw=;
- b=qIzvQt1y1AiVb3l+mziKkBecVj+qVYtJ9Nc4YeslrQYqgLHfjWO+IE5U33PHG7/vsq
- Kw6bIu8AJA7xWPq8XwZ0KnRR9a74cFH+zEP1QP0aqc344jpIFA4sER4DdWiC74e93Mf2
- ZDVAhpIrQX8KbclLPUKlqPijUTIWRPcWo4QvouYSUBAPrPSPrFnXHaM75OoMMMKgZumr
- jmzEdZ8DcJTMnm/yD69qL/VGQyOPmOc8IrkqW6PIcKb0UYbPwqEcYq4/ezBELxvWtu0b
- l49pBv4PtrfNIod6FYmCNMSmw37OIOxyfhdbiE2kGnqfFbK4f/1Q+MKLr0u1atdyVqNu
- zF+Q==
-X-Gm-Message-State: AOJu0YxwZbXpaXMcG8L+HJ94DH5g1SIo/3V3EbNe5XRJGHKuSb+Ymhed
- aFs81IvFdn4XA7ZyZRnHcUGsQvTfHWknSTitcDWggkOCMALyxPpZZHCy9nwA9Zfpcf7z5hlelYX
- JUktUJfoDVK8MXrF/7JE+p3Opt+t2eP2m0mXBh7M+6yN2C5qgDxkV
-X-Received: by 2002:a2e:9b57:0:b0:2ec:4de9:7334 with SMTP id
- 38308e7fff4ca-2eeb30b9a2amr61918921fa.11.1720704314000; 
- Thu, 11 Jul 2024 06:25:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPatDhweWWk+d5kmgLL3/xo18zlu3AZi+X6KGXf7YsIGKCaHgbh0s7I9hRKQfskauRLqmxzw==
-X-Received: by 2002:a2e:9b57:0:b0:2ec:4de9:7334 with SMTP id
- 38308e7fff4ca-2eeb30b9a2amr61918681fa.11.1720704313623; 
- Thu, 11 Jul 2024 06:25:13 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cdfa07b9sm7721453f8f.74.2024.07.11.06.25.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 06:25:12 -0700 (PDT)
-Date: Thu, 11 Jul 2024 15:25:12 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin Meng
- <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Daniel Henrique
- Barboza <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, "Michael S . Tsirkin" <mst@redhat.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 2/9] hw/riscv/virt-acpi-build.c: Update the HID of
- RISC-V UART
-Message-ID: <20240711152512.5e2fac36@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240708114741.3499585-3-sunilvl@ventanamicro.com>
-References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
- <20240708114741.3499585-3-sunilvl@ventanamicro.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1sRtul-00034L-9F; Thu, 11 Jul 2024 09:32:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
+ Content-Type; bh=bUAAIaIwATSVVMEabqm9IcIMBFrz7eMWutd1t1Bw3uc=; b=aIoUQa6zZwOq
+ xJvvw+txVAaX+gUPQgGp2gjTCyEJIPEgKisdkIUC6ZPwlg95I4KVhu2KZLsm65lY/P4WXjlblIefM
+ l76InnrZTCtHmFv3OXlZpfmKhZqxPZ7djlg4xw2u9ux4lTRF8HCPST0MlUevIVsCHB8WLxVW9uqRu
+ jzJqGb58jE7dF755C6nJGcOwFqbWcC6UHyr5AfDz06FNnGu0vg1ckHiCKzr0ksBqwcVYSXAORDGuw
+ VlTmoZXRVTBvKwfsX19L82FmpgBrKlJUQqzrnhlMISORGJweMZXvSRO/fItDc68+JsJpuKmHrM6Wb
+ g134rzCowX7m+uaDP7Q32g==;
+Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sRtty-00CZ6M-0t;
+ Thu, 11 Jul 2024 15:32:42 +0200
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ vsementsov@yandex-team.ru, pbonzini@redhat.com, eesposit@redhat.com,
+ andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
+Subject: [PATCH 1/2] block: zero data data corruption using prealloc-filter
+Date: Thu, 11 Jul 2024 16:32:41 +0300
+Message-Id: <20240711133242.251061-2-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240711133242.251061-1-andrey.drobyshev@virtuozzo.com>
+References: <20240711133242.251061-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=130.117.225.111;
+ envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,38 +67,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  8 Jul 2024 17:17:34 +0530
-Sunil V L <sunilvl@ventanamicro.com> wrote:
+From: "Denis V. Lunev" <den@openvz.org>
 
-> The RISC-V BRS specification [1] requires NS16550 compatible UART to
-> have the HID RSCV0003. So, update the HID for the UART.
-> 
-> [1] - https://github.com/riscv-non-isa/riscv-brs
+We have observed that some clusters in the QCOW2 files are zeroed
+while preallocation filter is used.
 
-it point's repo with a bunch of files,
-please make it easier for reader to find
-aka point to concrete document + title (for when link goes stale)
-and chapter. (similar to what we do for when documenting ACPI code)
+We are able to trace down the following sequence when prealloc-filter
+is used:
+    co=0x55e7cbed7680 qcow2_co_pwritev_task()
+    co=0x55e7cbed7680 preallocate_co_pwritev_part()
+    co=0x55e7cbed7680 handle_write()
+    co=0x55e7cbed7680 bdrv_co_do_pwrite_zeroes()
+    co=0x55e7cbed7680 raw_do_pwrite_zeroes()
+    co=0x7f9edb7fe500 do_fallocate()
 
-> 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  hw/riscv/virt-acpi-build.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 87fe882af0..939f951e45 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -192,7 +192,7 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
->                      uint32_t uart_irq)
->  {
->      Aml *dev = aml_device("COM0");
-> -    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
-> +    aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
->      aml_append(dev, aml_name_decl("_UID", aml_int(0)));
->  
->      Aml *crs = aml_resource_template();
+Here coroutine 0x55e7cbed7680 is being blocked waiting while coroutine
+0x7f9edb7fe500 will finish with fallocate of the file area. OK. It is
+time to handle next coroutine, which
+    co=0x55e7cbee91b0 qcow2_co_pwritev_task()
+    co=0x55e7cbee91b0 preallocate_co_pwritev_part()
+    co=0x55e7cbee91b0 handle_write()
+    co=0x55e7cbee91b0 bdrv_co_do_pwrite_zeroes()
+    co=0x55e7cbee91b0 raw_do_pwrite_zeroes()
+    co=0x7f9edb7deb00 do_fallocate()
+
+The trouble comes here. Coroutine 0x55e7cbed7680 has not advanced
+file_end yet and coroutine 0x55e7cbee91b0 will start fallocate() for
+the same area. This means that if (once fallocate is started inside
+0x7f9edb7deb00) original fallocate could end and the real write will
+be executed. In that case write() request is handled at the same time
+as fallocate().
+
+Normally we should protect s->file_end while it is detected that
+preallocation is need. The patch introduces file_end_lock for it to be
+protected when run in the coroutine context.
+
+Note: the lock is taken only once it is detected that the preallocation
+is really required. This is not a frequent case due to the preallocation
+nature thus the patch should not have performance impact.
+
+Originally-by: Denis V. Lunev <den@openvz.org>
+Co-authored-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ block/preallocate.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/block/preallocate.c b/block/preallocate.c
+index d215bc5d6d..9cb2c97635 100644
+--- a/block/preallocate.c
++++ b/block/preallocate.c
+@@ -78,6 +78,8 @@ typedef struct BDRVPreallocateState {
+ 
+     /* Gives up the resize permission on children when parents don't need it */
+     QEMUBH *drop_resize_bh;
++
++    CoMutex file_end_lock;
+ } BDRVPreallocateState;
+ 
+ static int preallocate_drop_resize(BlockDriverState *bs, Error **errp);
+@@ -170,6 +172,8 @@ static int preallocate_open(BlockDriverState *bs, QDict *options, int flags,
+         ((BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK) &
+             bs->file->bs->supported_zero_flags);
+ 
++    qemu_co_mutex_init(&s->file_end_lock);
++
+     return 0;
+ }
+ 
+@@ -342,6 +346,7 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+             return false;
+         }
+ 
++        QEMU_LOCK_GUARD(&s->file_end_lock);
+         if (s->file_end < 0) {
+             s->file_end = s->data_end;
+         }
+@@ -353,6 +358,8 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+ 
+     /* We have valid s->data_end, and request writes beyond it. */
+ 
++    QEMU_LOCK_GUARD(&s->file_end_lock);
++
+     s->data_end = end;
+     if (s->zero_start < 0 || !want_merge_zero) {
+         s->zero_start = end;
+@@ -428,6 +435,8 @@ preallocate_co_truncate(BlockDriverState *bs, int64_t offset,
+     BDRVPreallocateState *s = bs->opaque;
+     int ret;
+ 
++    QEMU_LOCK_GUARD(&s->file_end_lock);
++
+     if (s->data_end >= 0 && offset > s->data_end) {
+         if (s->file_end < 0) {
+             s->file_end = bdrv_co_getlength(bs->file->bs);
+@@ -501,6 +510,8 @@ preallocate_co_getlength(BlockDriverState *bs)
+         return s->data_end;
+     }
+ 
++    QEMU_LOCK_GUARD(&s->file_end_lock);
++
+     ret = bdrv_co_getlength(bs->file->bs);
+ 
+     if (has_prealloc_perms(bs)) {
+-- 
+2.39.3
 
 
