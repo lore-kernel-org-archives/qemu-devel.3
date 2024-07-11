@@ -4,72 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BDDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 08:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15F8C3DA41
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 08:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRpYx-0005FV-0N; Thu, 11 Jul 2024 04:54:03 -0400
+	id 1sRpYc-0004pX-Bo; Thu, 11 Jul 2024 04:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sRpYu-0005DX-K3
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:54:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gankulkarni@os.amperecomputing.com>)
+ id 1sRpYb-0004km-3U; Thu, 11 Jul 2024 04:53:41 -0400
+Received: from mail-eastus2azlp170100000.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sRpYr-0004o6-VA
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 04:54:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720688035;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TqZUAbISU19mZIIsXuxAGlNygxC60AJkQyw6N3Me584=;
- b=Vzq9tu83ZdboqiScLn3CboXDfOKVdFLs9ezipWqsrkAZPmIX+lKKwWCPE8lX6V4lope3fv
- 3pfUiKMPWJUPLPXed7+qjRe05bCVO67dKZibqV1F+oAa366pEPzvryz7vJdbLtz03UeWZh
- O2jTetJRhBEYmfE4XI0Ky/PpoH0+OUU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-1yrLb9gdN_S8UgypuxZnwA-1; Thu,
- 11 Jul 2024 04:53:53 -0400
-X-MC-Unique: 1yrLb9gdN_S8UgypuxZnwA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4A2A1955F42; Thu, 11 Jul 2024 08:53:52 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.113])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 877553000181; Thu, 11 Jul 2024 08:53:51 +0000 (UTC)
-Date: Thu, 11 Jul 2024 10:53:50 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, david@redhat.com,
- slp@redhat.com, Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [RFC PATCH v2 4/5] vhost_user: Add MEM_READ/WRITE backend requests
-Message-ID: <20240711085350.GF563880@dynamic-pd01.res.v6.highway.a1.net>
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <20240628145710.1516121-5-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <gankulkarni@os.amperecomputing.com>)
+ id 1sRpYV-0004lt-GF; Thu, 11 Jul 2024 04:53:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W2H19JDl0DKTvkksaUFKCXCNS1MSihJOX8WOXMP+wJT+pUG2OFL2V+Jxkgn6gf1BznwREeiJuJbrdzrHheI6dWAgZdv03IGFPbF5+hxshmOWAO1/K1tNDXO6PFRq40EJg7yE3gcN9HB1wxG1swEMkp/2HbYqhOeyPfUR30sD+16z9Zb/Qyf2ccgErBBD2tSUljHpNWBiM9+dNT+W3R1nj5LQ55DT692bj8XgZzMgk4RPPu3qPnWRkxTXR7gHCpyuzAzBJSwcZSKdXwhZvjs88o2D/9ioysBpr2NeNvP6zDu9ExrZnsc5UUG3hQ/pqDcTRDTplgJSeY/GsvHH2FrQ4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SjMXH9CJuRlvchjDp+1egeDD+vex8DQ+5n17sq7g88Y=;
+ b=WjtvYHHB1XxiTxG4gQOlf+DWhJ/RoGysSB9DGm1/qNFKrO1I0QnoM93NuvIHWIBnrvFdPA0x6BlKE0O6fKD7s55/bw2sjIvJLVi0Oq0t13jZIago1+11H5ZawAw5L3B5Oxt6H+U8DAL3qzWvmtWs8NQ7SID/1i0HpnAPq9XNudWPNQZbZda39b9Ds4uH1vnaOa1aOrB9UjGVfkt02ZQIrEdoLW/2rJ+8hFmU4h5FjAygVNyh9P1/GDwvazhs3wxKjyhsiieJ4hU8W8J2g691m9cUKsfuRPwvktMJEmxdnAoDrvAEEcTwyQKm5ZGnx0kwV/V3W1ifqZ7DFiCFDBUsVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SjMXH9CJuRlvchjDp+1egeDD+vex8DQ+5n17sq7g88Y=;
+ b=N/PEYe5gXw9Bn+IlcOFvb6Sc8Aa+eqaVDHX4IwpHMfrB8Xg9sT5l0JlydQxhRWdM5y4qEt1ZqHkJ8MFxV1S3yuqUEftAZmq9llOMwpUhClaXZV/ngbs5Kvmqm6+xwWjEcZHQ/KgvtIUYnLmUAccnLBkn9i1SW0e+fZWg8uoisyI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ2PR01MB8101.prod.exchangelabs.com (2603:10b6:a03:4f6::10) by
+ CH3PR01MB8686.prod.exchangelabs.com (2603:10b6:610:20b::16) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7741.36; Thu, 11 Jul 2024 08:53:30 +0000
+Received: from SJ2PR01MB8101.prod.exchangelabs.com
+ ([fe80::292:6d9c:eb9a:95c9]) by SJ2PR01MB8101.prod.exchangelabs.com
+ ([fe80::292:6d9c:eb9a:95c9%3]) with mapi id 15.20.7741.033; Thu, 11 Jul 2024
+ 08:53:29 +0000
+Message-ID: <35a4749c-775b-40c2-b1e7-3bb554cf41d4@os.amperecomputing.com>
+Date: Thu, 11 Jul 2024 14:23:20 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm/kvm: add support for MTE
+To: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ darren@os.amperecomputing.com
+References: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+ <875xtdcky2.fsf@redhat.com>
+Content-Language: en-US
+From: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+In-Reply-To: <875xtdcky2.fsf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MAXPR01CA0117.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a00:5d::35) To SJ2PR01MB8101.prod.exchangelabs.com
+ (2603:10b6:a03:4f6::10)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="WZ+S2snuQvJFZd41"
-Content-Disposition: inline
-In-Reply-To: <20240628145710.1516121-5-aesteve@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR01MB8101:EE_|CH3PR01MB8686:EE_
+X-MS-Office365-Filtering-Correlation-Id: 85a6e7ea-b3d4-4736-aa2a-08dca186ef29
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NHExdUxoeDNLWTlOKy9QNW9aRXh1bXQyd29aTlJGbHZ1KzZPd0REbDY3MnU5?=
+ =?utf-8?B?SlBwcXNqY0JGdlc4MmNiUVMrQ2sxSmJTdFZ1YTJEZWs5N0VqSHBkQ0dsbjJD?=
+ =?utf-8?B?b2JiVVg1a1FiLzdXZk1EdDRjSjdYN1VOOGt4VjduQ04rWllJaWVCR3hNRUpy?=
+ =?utf-8?B?a2cwSnQwMnFYZnNvakl3ek9ESEVDQjRhbW5BMVV4akpuM1NEYkVEdnlJalRB?=
+ =?utf-8?B?SUEwZ2xGSUowS0MwMmRhTGUzNFFmb1M0Tm5WRlRmMzl3K28yUkVxcW5SdHZL?=
+ =?utf-8?B?dlpqSFMxd2hWSFpXQ01uRGNtdXJIWmhwTHcrdWJaSEdLckJKSURoK053QWdl?=
+ =?utf-8?B?RW1oOFBqYjhMVlV6VHhKSHQ1TEplTjhCSWhPSGxRVy9qbDcwNlVZTjVEb1hH?=
+ =?utf-8?B?b1B4TTdZQmxrNmc0OEFjM3NPaGlrcEN3ZWl4ZlJPQjJOVEptVWhrVHVNdjVu?=
+ =?utf-8?B?UTgvWk5Pam5lY0xTczgxbytKWURCWUdnaGs3b2ZzWmtCTG8xNHBXQithS2xp?=
+ =?utf-8?B?WFk3OWc1Nkt4ZlZ6bTdQZXpNYUQ2VXl6aFR3bmxsT3pKdXhGTWhlY0tPZ2dX?=
+ =?utf-8?B?bDBqbTh5WUlkaE9SbEtQTEI0bTBOWUI1TDY1UHhmUjFKVnpzMElnZmdWUnFv?=
+ =?utf-8?B?VmNTMllXQjdVOWsxVmNKS3g5cE9ZaDEyV3RKWXhjeWorbU96M1FHWGh6aWtY?=
+ =?utf-8?B?bGU5d0RSMXR5UDFFbEllbWk1R3hKb2ptbVBHV0Zwb2hhNmFYMVdNVTNMR3Jl?=
+ =?utf-8?B?SUZuMzJTemR3Z0dWbHpDOUx2S2tBNllXQUpqcWxOVUl1d2hGaXlqYU5HV0RP?=
+ =?utf-8?B?cEZySDFtdm50QklGZlp0OGNDdzRaTFMvaDdMOStXaDFUWDdsWElYRjlmK0FD?=
+ =?utf-8?B?NCs2b0dGOWhHb1k2M0p4Z0kxS2lkNFJBSis2U29lekkyVC9OMHBWRGlCcERn?=
+ =?utf-8?B?cHAyamoxb0Ftc3lDUm1LTUtsTXFkdklSa3F3djB0blBoNjhkYWIrSFpFYUlI?=
+ =?utf-8?B?eFd6dit3TlkwOUNXRi9IS0xnSms3TkpMVFJQY3FmWXg2cUxSU0d0YTNiSGlk?=
+ =?utf-8?B?NDNSNmcvSDNqQ1RxT1NvZWJNL2RpTk9hMUNYcHBkb1VLV0tQYm15VXY3d2NI?=
+ =?utf-8?B?WWpqNEFvM3JOWmVnZXlrUTBGeDU4OXZ6dm9DN2l0MWp1YXV2c3JDNW9LUEg4?=
+ =?utf-8?B?d1cxUGVnc2l3SmtFQURWbTZIUUlYQjRvaEtObFh3S3dERm1YbHRVOWxuYUZF?=
+ =?utf-8?B?aTBhblhIcmFBM0tpOUtQVUNLR0NERTFMQm9UVU8zNDVUUmNTWEpuOFR5NFMw?=
+ =?utf-8?B?T2F2ZzMxc2pRV3o5VC9oUjJNYTNMNlVPck9mZHV6Yy9VNVhLd0FqMkVSZ2ZP?=
+ =?utf-8?B?bk9nRUtNRzMzR2lPRndDK05Rem0yaGtrYnp4QVBOMjFDb0l6MmE4Wkp0RFA4?=
+ =?utf-8?B?SHkyeWVUY05WSm4rbjN5cm02dUZOTDVld0phQUs3eTRlcUtjUmkyWEdEMkVC?=
+ =?utf-8?B?ZGxWc3l2aGtmWVd2cy9MTjFzc2FBMUk5V25rYVdqVnYxYnlBMHhvekJ6Sjdr?=
+ =?utf-8?B?NjB3QUdpclRVVHBBa3g4bVQ2ZlVhdW1pazZuMUNiTFRDMEQ3MlJ5dzlTcVIr?=
+ =?utf-8?B?YWtqbjR0WUpPZmExKzFId0kyUnpKUW1ET0F5U0c2cHA0T3BEeXIzL1hPd3Y3?=
+ =?utf-8?B?TGM0SlNjTDRQQkJrU29DK0xpNmNKeTM0Z0JsaFlVeEdBeUoyS0dUd3BYSUZX?=
+ =?utf-8?B?bnFlcWZxdzVtSzVmRUh6VXZLSnhzY2tWclNUcFFvVkRsbFBiRWRsQWFtdWxV?=
+ =?utf-8?B?RFVaeldVVWlaSnJHa3pWUT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR01MB8101.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MXlIenZUR1Z2aU5LKzdaRUtLRk5RaG80Wk00L0dHV1FmVllBdzhpSllKYXRO?=
+ =?utf-8?B?QzNuWVE1aHpVVzNoSDY4dlVVUU1KaWYxTUFiUThXb1VGdDhWS0NSWGdxQzRK?=
+ =?utf-8?B?ZEZoRG9wcm9aYjZGTlNJVDVkVWJpVmZHdVdPRjY5N0tSNWRLYUtscnpvN20z?=
+ =?utf-8?B?aGxtOXNkWnhpQ0RmZzNxQmpWQ1BrYUdnRm9zNG9PTU43UkM5VDNtQndGZHZ3?=
+ =?utf-8?B?N3lPT2NWcFhWanBUQU5UQUk0a1pxYXRwL3BOZHlhZGRhZkprZTROM2w0eElL?=
+ =?utf-8?B?U0VHL25ha0ZvMUxBdmlMSDFGbno1TnU0WXR1a3hua1RySlVWcEFTaWU1T1Zi?=
+ =?utf-8?B?V1NIWjAyQmlQRHJKQ3NKdE1mQXZBOG5JS3dWVW1oWUVQYk1PZHRDSU5qVDlY?=
+ =?utf-8?B?R2dHcDlaVm84Y2xmWHp5SENEakgramY5a1hkOUQvTzNRNklaWDE2UlljclJB?=
+ =?utf-8?B?RHNjVGxOWThuZ1R2dG02N3R5eVA5Vkt3czEzcHBCL1BERjZ2UnhDQUF2Zjk4?=
+ =?utf-8?B?WGNDbnBpTjdYMHBNcXQvQ2hNVlhkNUhJVk9FdzRyK3ZEVjcvdjJPU3h6QzFs?=
+ =?utf-8?B?RnVORko3NUJYTTQxbndsc282ZUt4QVZtZ2M4ajh1aGpEVFVBVzkxT3dQVTFk?=
+ =?utf-8?B?U3BJQkowTFVCY2xUT0I4ek4yRVlqOUd4N1FOejcrMFdFRFMrMllGaUxOMmxw?=
+ =?utf-8?B?dTZkc3BMZEU2T0c1UURWTGdHTGEzc0RYQkNCVGYrR013RHFTWS9Xc3J2eWVI?=
+ =?utf-8?B?aUlxb2xoK0NvRGIwcmY4SThYNzh3ZHRjckpqY2xYQ251eHgwWnhlQ2dycUI1?=
+ =?utf-8?B?LzN4SGZ2Q2Q3bVNsYVVzaUdqWCtDZ3Q0SFVURWN4ME5tSk9FNFRsd2NETDVC?=
+ =?utf-8?B?Q2dHeDBPVDFqbFhDYng5VWRhTlhSNWFHc3FkTkhJWGhBS0tnaHgvT01GYkJv?=
+ =?utf-8?B?THFSWlMvbGJtZDFMdE1UQm50aEhTTklPSHpjeVpValVsNDI2dm1VU0NtZkt3?=
+ =?utf-8?B?UjJSQ2psTXJtS3h6aHVvY1kxRVRmcHRVcHpTZVhablNzbHZnaHUzNHprQmQ0?=
+ =?utf-8?B?bWRoZDdqMTRFWkxMQitEV0tvRzZaRDJvZExiUzJyMkIxT2Zua211R3BycU9B?=
+ =?utf-8?B?NVM2OC9yUnNQeVVGRDFvL2wyZk5QU1IrMkU5SWI1WXNweVc1alJnSzdNYTJz?=
+ =?utf-8?B?WE9nZVlnWUtjYjhvVG5mTDRmRlR1aDY1NkErQVhvTHhud3cwVDZ3bTJZWUtG?=
+ =?utf-8?B?QkNrUVRRRldyTEovVUN1OHNuQXVuVkRPODd1MUxZOWtrZUM4cFV3MStPQ2da?=
+ =?utf-8?B?R2JSSFpleS9zLzhFWk4yV0VUV1Y3eEJKRHB2MTNHQnpjNlI4ZUtRMDNlWVBz?=
+ =?utf-8?B?L2NRZjhoSWlJTnh5VUZsVkVIb1pORTlqcEdBMEN6UW1WZmRtSFlnYkN2cjZh?=
+ =?utf-8?B?WmV4c0ZJN0NTQWRQMWJoOXhqQWNVQWhKSHZpY3JQR21NUkphUDF1ejkvVGlL?=
+ =?utf-8?B?UUhRaHJ3NWtKVUhIR254MVpwWEIzbWxpVDBTOUw1OUE3R3oyVGpqSjlzZGNY?=
+ =?utf-8?B?SjJCRkN1MWhhaWVWQllESktYV3FtV1Y4bXR3ZTNPcDl4Z1FKRU1EeWUxZVJx?=
+ =?utf-8?B?bFNYYnN6YlU3akt5WFhjQ0JxUXJ1TXRzWlRhcUhxd2FDL1A5OWNCMDZ6V3VK?=
+ =?utf-8?B?YytqVTFwdTFzcVNncW1CMmliYmZhTktKNG9pMXVBSkxsenVqa01YUzhlcnZ3?=
+ =?utf-8?B?Um8vSUhKeVYrOWpxdlhyM1BaVkFSWWVsbEdJZGhjTVlHb1F1bkFISDNTcjNM?=
+ =?utf-8?B?SEd3a2ZjS3RmVFI0RDEwVnBXcFg4MUNLbGYyQm1wclUvQytOZmVTaXdqczNy?=
+ =?utf-8?B?elA0OTd3Yk9iTFFaVjdOamZ2WHRTdTF0cXAxN2xDTDRGdi9MNW1Md0dVS3lL?=
+ =?utf-8?B?ZFdHOGlGalU3eXkxSU5hdmYyR0JlNEZHdEZpOHpoTzdUc2x3WnBieFZqZ1RS?=
+ =?utf-8?B?OVJjU3lNYzhvdEIvRWxpT1gvYk10Z2ZuSHlCdW0wbHZ3MGNMR0thU2NBbHBZ?=
+ =?utf-8?B?VnpUQ1IwRCtFMlU1b1V4NlVGMGRBdDdFK3lyMEdYMXZSZWlaVHBaSVNPVEVD?=
+ =?utf-8?B?WnVweW1lbTVQVGV3YWR1KzJzVUphQWFhNWx2cGZDdFNrN1prQXV3KzFLYUcy?=
+ =?utf-8?Q?LV0oxBq+4nqBY5kU3CePE60=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 85a6e7ea-b3d4-4736-aa2a-08dca186ef29
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR01MB8101.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2024 08:53:29.3454 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 84xfkW22ENvavK7Kp53Cei7CErYVUhnJIWCBQ9evTMyXr+K0/WzUg6+QhhnnIPfAcyKbsXEaF6y8rAAvJYB6fd6PwAZYT94FwZKA0neo2YSfIcrBtRceNPjcO+DadRod
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR01MB8686
+Received-SPF: pass client-ip=2a01:111:f403:c110::;
+ envelope-from=gankulkarni@os.amperecomputing.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,318 +178,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---WZ+S2snuQvJFZd41
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 28, 2024 at 04:57:09PM +0200, Albert Esteve wrote:
-> With SHMEM_MAP messages, sharing descriptors between
-> devices will cause that these devices do not see the
-> mappings, and fail to access these memory regions.
->=20
-> To solve this, introduce MEM_READ/WRITE requests
-> that will get triggered as a fallback when
-> vhost-user memory translation fails.
->=20
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> ---
->  hw/virtio/vhost-user.c                    | 31 +++++++++
->  subprojects/libvhost-user/libvhost-user.c | 84 +++++++++++++++++++++++
->  subprojects/libvhost-user/libvhost-user.h | 38 ++++++++++
->  3 files changed, 153 insertions(+)
->=20
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 57406dc8b4..18cacb2d68 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -118,6 +118,8 @@ typedef enum VhostUserBackendRequest {
->      VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
->      VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
->      VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
-> +    VHOST_USER_BACKEND_MEM_READ =3D 11,
-> +    VHOST_USER_BACKEND_MEM_WRITE =3D 12,
->      VHOST_USER_BACKEND_MAX
->  }  VhostUserBackendRequest;
-> =20
-> @@ -145,6 +147,12 @@ typedef struct VhostUserShMemConfig {
->      uint64_t memory_sizes[VHOST_MEMORY_BASELINE_NREGIONS];
->  } VhostUserShMemConfig;
-> =20
-> +typedef struct VhostUserMemRWMsg {
-> +    uint64_t guest_address;
-> +    uint32_t size;
-> +    uint8_t data[];
+On 10-07-2024 09:12 pm, Cornelia Huck wrote:
+> On Mon, Jul 08 2024, Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com> wrote:
+> 
+>> Extend the 'mte' property for the virt machine to cover KVM as
+>> well. For KVM, we don't allocate tag memory, but instead enable
+>> the capability.
+>>
+>> If MTE has been enabled, we need to disable migration, as we do not
+>> yet have a way to migrate the tags as well. Therefore, MTE will stay
+>> off with KVM unless requested explicitly.
+>>
+>> This patch is rework of commit b320e21c48ce64853904bea6631c0158cc2ef227
+>> which broke TCG since it made the TCG -cpu max
+>> report the presence of MTE to the guest even if the board hadn't
+>> enabled MTE by wiring up the tag RAM. This meant that if the guest
+>> then tried to use MTE QEMU would segfault accessing the
+>> non-existent tag RAM.
+> 
+> So, the main difference to my original patch is that we don't end up
+> with MTE in the max model if we didn't configure tag memory, but the
+> rest of the behaviour stays the same?
 
-I don't think flexible array members work in VhostUserMsg payload
-structs in its current form. It would be necessary to move the
-VhostUserMsg.payload field to the end of the VhostUserMsg and then
-heap-allocate VhostUserMsg with the additional size required for
-VhostUserMemRWMsg.data[].
+Yes most of the patch is same. What I changed is to fix the code which 
+was advertising MTE feature through PFR1 register for TCG based boot, 
+irrespective of the tagged RAM allocated.
 
-Right now this patch is calling memcpy() on memory beyond
-VhostUserMsg.payload because the VhostUserMsg struct does not have size
-bytes of extra space and the payload field is in the middle of the
-struct where flexible array members cannot be used.
+> 
+>>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> Signed-off-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+> 
+> (...)
+> 
+>> +void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
+>> +{
+>> +    static bool tried_to_enable;
+>> +    static bool succeeded_to_enable;
+>> +    Error *mte_migration_blocker = NULL;
+>> +    int ret;
+>> +
+>> +    if (!tried_to_enable) {
+>> +        /*
+>> +         * MTE on KVM is enabled on a per-VM basis (and retrying doesn't make
+>> +         * sense), and we only want a single migration blocker as well.
+>> +         */
+>> +        tried_to_enable = true;
+>> +
+>> +        ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_MTE, 0);
+>> +        if (ret) {
+>> +            error_setg_errno(errp, -ret, "Failed to enable KVM_CAP_ARM_MTE");
+>> +            return;
+>> +        }
+>> +
+>> +        /* TODO: Migration is not supported with MTE enabled */
+> 
+> Do you have a plan for enabling migration in the future? From what I
+> remember, pre-copy support should be doable within QEMU (with a similar
+> approach to e.g. s390 skey), but post-copy would need a kernel API
+> extension to support getting additional data while faulting in a page.
+> 
 
-> +} VhostUserMemRWMsg;
-> +
->  typedef struct VhostUserLog {
->      uint64_t mmap_size;
->      uint64_t mmap_offset;
-> @@ -253,6 +261,7 @@ typedef union {
->          VhostUserTransferDeviceState transfer_state;
->          VhostUserMMap mmap;
->          VhostUserShMemConfig shmem;
-> +        VhostUserMemRWMsg mem_rw;
->  } VhostUserPayload;
-> =20
->  typedef struct VhostUserMsg {
-> @@ -1871,6 +1880,22 @@ vhost_user_backend_handle_shmem_unmap(struct vhost=
-_dev *dev,
->      return 0;
->  }
-> =20
-> +static int
-> +vhost_user_backend_handle_mem_read(struct vhost_dev *dev,
-> +                                   VhostUserMemRWMsg *mem_rw)
-> +{
-> +    /* TODO */
-> +    return -EPERM;
-> +}
-> +
-> +static int
-> +vhost_user_backend_handle_mem_write(struct vhost_dev *dev,
-> +                                   VhostUserMemRWMsg *mem_rw)
-> +{
-> +    /* TODO */
-> +    return -EPERM;
-> +}
+No plan at the moment.
 
-Reading/writing guest memory can be done via
-address_space_read/write(vdev->dma_as, ...).
+>> +        error_setg(&mte_migration_blocker,
+>> +                   "Live migration disabled due to MTE enabled");
+>> +        if (migrate_add_blocker(&mte_migration_blocker, errp)) {
+>> +            error_free(mte_migration_blocker);
+>> +            return;
+>> +        }
+>> +        succeeded_to_enable = true;
+>> +    }
+>> +    if (succeeded_to_enable) {
+>> +        object_property_set_bool(cpuobj, "has_mte", true, NULL);
+>> +    }
+>> +}
+> 
 
-> +
->  static void close_backend_channel(struct vhost_user *u)
->  {
->      g_source_destroy(u->backend_src);
-> @@ -1946,6 +1971,12 @@ static gboolean backend_read(QIOChannel *ioc, GIOC=
-ondition condition,
->      case VHOST_USER_BACKEND_SHMEM_UNMAP:
->          ret =3D vhost_user_backend_handle_shmem_unmap(dev, &payload.mmap=
-);
->          break;
-> +    case VHOST_USER_BACKEND_MEM_READ:
-> +        ret =3D vhost_user_backend_handle_mem_read(dev, &payload.mem_rw);
-> +        break;
-> +    case VHOST_USER_BACKEND_MEM_WRITE:
-> +        ret =3D vhost_user_backend_handle_mem_write(dev, &payload.mem_rw=
-);
-> +        break;
->      default:
->          error_report("Received unexpected msg type: %d.", hdr.request);
->          ret =3D -EINVAL;
-> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libv=
-host-user/libvhost-user.c
-> index 28556d183a..b5184064b5 100644
-> --- a/subprojects/libvhost-user/libvhost-user.c
-> +++ b/subprojects/libvhost-user/libvhost-user.c
-> @@ -1651,6 +1651,90 @@ vu_shmem_unmap(VuDev *dev, uint8_t shmid, uint64_t=
- fd_offset,
->      return vu_process_message_reply(dev, &vmsg);
->  }
-> =20
-> +bool
-> +vu_send_mem_read(VuDev *dev, uint64_t guest_addr, uint32_t size,
-> +                 uint8_t *data)
-> +{
-> +    VhostUserMsg msg_reply;
-> +    VhostUserMsg msg =3D {
-> +        .request =3D VHOST_USER_BACKEND_MEM_READ,
-> +        .size =3D sizeof(msg.payload.mem_rw),
-> +        .flags =3D VHOST_USER_VERSION | VHOST_USER_NEED_REPLY_MASK,
-> +        .payload =3D {
-> +            .mem_rw =3D {
-> +                .guest_address =3D guest_addr,
-> +                .size =3D size,
-> +            }
-> +        }
-> +    };
-> +
-> +    pthread_mutex_lock(&dev->backend_mutex);
-> +    if (!vu_message_write(dev, dev->backend_fd, &msg)) {
-> +        goto out_err;
-> +    }
-> +
-> +    if (!vu_message_read_default(dev, dev->backend_fd, &msg_reply)) {
-> +        goto out_err;
-> +    }
-> +
-> +    if (msg_reply.request !=3D msg.request) {
-> +        DPRINT("Received unexpected msg type. Expected %d, received %d",
-> +               msg.request, msg_reply.request);
-> +        goto out_err;
-> +    }
-> +
-> +    if (msg_reply.payload.mem_rw.size !=3D size) {
-> +        DPRINT("Received unexpected number of bytes in the response. "
-> +               "Expected %d, received %d",
-> +               size, msg_reply.payload.mem_rw.size);
-> +        goto out_err;
-> +    }
-> +
-> +    data =3D malloc(msg_reply.payload.mem_rw.size);
-
-The caller passed in size and data so the caller has provided the
-buffer. malloc() is not necessary here.
-
-> +    if (!data) {
-> +        DPRINT("Failed to malloc read memory data");
-> +        goto out_err;
-> +    }
-> +
-> +    memcpy(data, msg_reply.payload.mem_rw.data, size);
-
-It should be possible to avoid memcpy() here by receiving directly into
-the caller's buffer. If you don't want to look into this, please leave a
-TODO comment.
-
-> +    pthread_mutex_unlock(&dev->backend_mutex);
-> +    return true;
-> +
-> +out_err:
-> +    pthread_mutex_unlock(&dev->backend_mutex);
-> +    return false;
-> +}
-> +
-> +bool
-> +vu_send_mem_write(VuDev *dev, uint64_t guest_addr, uint32_t size,
-> +                  uint8_t *data)
-> +{
-> +    VhostUserMsg msg =3D {
-> +        .request =3D VHOST_USER_BACKEND_MEM_WRITE,
-> +        .size =3D sizeof(msg.payload.mem_rw),
-> +        .flags =3D VHOST_USER_VERSION,
-> +        .payload =3D {
-> +            .mem_rw =3D {
-> +                .guest_address =3D guest_addr,
-> +                .size =3D size,
-> +            }
-> +        }
-> +    };
-> +    memcpy(msg.payload.mem_rw.data, data, size);
-
-This memcpy() can be eliminated too. It's worth a code comment in case
-someone looks at optimizing this in the future.
-
-> +
-> +    if (vu_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK)) {
-> +        msg.flags |=3D VHOST_USER_NEED_REPLY_MASK;
-> +    }
-> +
-> +    if (!vu_message_write(dev, dev->backend_fd, &msg)) {
-> +        pthread_mutex_unlock(&dev->backend_mutex);
-> +        return false;
-> +    }
-> +
-> +    /* Also unlocks the backend_mutex */
-> +    return vu_process_message_reply(dev, &msg);
-> +}
-> +
->  static bool
->  vu_set_vring_call_exec(VuDev *dev, VhostUserMsg *vmsg)
->  {
-> diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libv=
-host-user/libvhost-user.h
-> index 7f6c22cc1a..8ef794870d 100644
-> --- a/subprojects/libvhost-user/libvhost-user.h
-> +++ b/subprojects/libvhost-user/libvhost-user.h
-> @@ -129,6 +129,8 @@ typedef enum VhostUserBackendRequest {
->      VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
->      VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
->      VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
-> +    VHOST_USER_BACKEND_MEM_READ =3D 11,
-> +    VHOST_USER_BACKEND_MEM_WRITE =3D 12,
->      VHOST_USER_BACKEND_MAX
->  }  VhostUserBackendRequest;
-> =20
-> @@ -152,6 +154,12 @@ typedef struct VhostUserMemRegMsg {
->      VhostUserMemoryRegion region;
->  } VhostUserMemRegMsg;
-> =20
-> +typedef struct VhostUserMemRWMsg {
-> +    uint64_t guest_address;
-> +    uint32_t size;
-> +    uint8_t data[];
-> +} VhostUserMemRWMsg;
-> +
->  typedef struct VhostUserLog {
->      uint64_t mmap_size;
->      uint64_t mmap_offset;
-> @@ -235,6 +243,7 @@ typedef struct VhostUserMsg {
->          VhostUserInflight inflight;
->          VhostUserShared object;
->          VhostUserMMap mmap;
-> +        VhostUserMemRWMsg mem_rw;
->      } payload;
-> =20
->      int fds[VHOST_MEMORY_BASELINE_NREGIONS];
-> @@ -650,6 +659,35 @@ bool vu_shmem_map(VuDev *dev, uint8_t shmid, uint64_=
-t fd_offset,
->  bool vu_shmem_unmap(VuDev *dev, uint8_t shmid, uint64_t fd_offset,
->                    uint64_t shm_offset, uint64_t len);
-> =20
-> +/**
-> + * vu_send_mem_read:
-> + * @dev: a VuDev context
-> + * @guest_addr: guest physical address to read
-> + * @size: number of bytes to read
-> + * @data: head of an unitialized bytes array
-> + *
-> + * Reads `size` bytes of `guest_addr` in the frontend and stores
-> + * them in `data`.
-> + *
-> + * Returns: TRUE on success, FALSE on failure.
-> + */
-> +bool vu_send_mem_read(VuDev *dev, uint64_t guest_addr, uint32_t size,
-> +                      uint8_t *data);
-> +
-> +/**
-> + * vu_send_mem_write:
-> + * @dev: a VuDev context
-> + * @guest_addr: guest physical address to write
-> + * @size: number of bytes to write
-> + * @data: head of an array with `size` bytes to write
-> + *
-> + * Writes `size` bytes from `data` into `guest_addr` in the frontend.
-> + *
-> + * Returns: TRUE on success, FALSE on failure.
-> + */
-> +bool vu_send_mem_write(VuDev *dev, uint64_t guest_addr, uint32_t size,
-> +                      uint8_t *data);
-> +
->  /**
->   * vu_queue_set_notification:
->   * @dev: a VuDev context
-> --=20
-> 2.45.2
->=20
-
---WZ+S2snuQvJFZd41
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmaPnZ0ACgkQnKSrs4Gr
-c8jxvggAtRGA3YS3xwNUBCKV+5zcrjIfLRyEP9IBW/8b6lfqB6pcS7HoqDlEwHml
-jL+fZPR887k+EQlhlwEHiWUILSlAirzhaj5k6WwDdK6P+E0wzmLKyoOyocXnGMUa
-cDni2Mre49nLXkLNi+06r7HreWGb/gdjav965mBjjNGu/wCcSBHRWpojBCh+McsY
-TTsqUSp5eVSb/jo/mJhU2hnrOTdqddw8CYtK5juZ45u55Wp58ERdLV2T7NlLT1Rc
-coc03Uhq4dMJR+oMn38gqsdOH+mvbjkfrTo9lAmMg0mlnRUpbFi3t5cPaGfrK2h1
-xuLwAGMk4xlm2S3AanUElAcVGpdyMg==
-=8OHk
------END PGP SIGNATURE-----
-
---WZ+S2snuQvJFZd41--
+Thanks,
+Ganapat
 
 
