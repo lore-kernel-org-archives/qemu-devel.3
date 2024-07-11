@@ -4,52 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A8FC3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53000C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 16:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRwba-0003fO-0j; Thu, 11 Jul 2024 12:25:14 -0400
+	id 1sRwhb-0004Ly-1K; Thu, 11 Jul 2024 12:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRwbR-0003Zy-9I; Thu, 11 Jul 2024 12:25:05 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRwhZ-0004L5-4S
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:31:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=SBUb=OL=kaod.org=clg@ozlabs.org>)
- id 1sRwbP-0005Vz-8z; Thu, 11 Jul 2024 12:25:05 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WKg6z1DYQz4x0t;
- Fri, 12 Jul 2024 02:24:59 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sRwhW-0000YP-RW
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 12:31:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720715480;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=9FsdEUep52etp3LyUY2efLdMkIbxV5QXAkVYTGh47xo=;
+ b=i2XLLCwnqPZx2urD+Sp7c3KD5cYhC72Gf7OwvBYqPHaEtnUDbBISqy/X/h+OvPG+WafPRu
+ d8i4pfZzbRY9ggf58xuLxxTmGJ4enQ7nfHi+kvu421tUU5CqM0V2RSKf7hF03TUsYnrGqM
+ pwhmUAJou+irfnpEoSYKdESfCAWTe0M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-lJTHDEu4MYeZJhnXuj-n7A-1; Thu,
+ 11 Jul 2024 12:31:12 -0400
+X-MC-Unique: lJTHDEu4MYeZJhnXuj-n7A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WKg6x166hz4x04;
- Fri, 12 Jul 2024 02:24:56 +1000 (AEST)
-Message-ID: <639bb117-38db-4717-863d-214e5a630673@kaod.org>
-Date: Thu, 11 Jul 2024 18:24:54 +0200
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3FFB1955F41; Thu, 11 Jul 2024 16:31:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F05281955E89; Thu, 11 Jul 2024 16:31:07 +0000 (UTC)
+Date: Thu, 11 Jul 2024 17:31:04 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: hellord <halouworls@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+Message-ID: <ZpAIyMW-ieaRjN34@redhat.com>
+References: <20240708112520.106127-1-junjiehua@tencent.com>
+ <CAFEAcA_pR6VLjKcOgcL+m8aONtey5Lm2ODkWAKv2ne_3ziqknw@mail.gmail.com>
+ <CA+TA2aVV8qSK9zEv+HHyp-ib00vqaCLW_s4Hc5pGa_UJskQvUQ@mail.gmail.com>
+ <399b661a-9bf4-4f97-be9b-f3d633b8b665@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/18] ppc: Add a core_index to CPUPPCState for SMT vCPUs
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20240711141851.406677-1-npiggin@gmail.com>
- <20240711141851.406677-9-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240711141851.406677-9-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=SBUb=OL=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <399b661a-9bf4-4f97-be9b-f3d633b8b665@daynix.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,97 +86,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 16:18, Nicholas Piggin wrote:
-> The way SMT thread siblings are matched is clunky, using hard-coded
-> logic that checks the PIR SPR.
+On Thu, Jul 11, 2024 at 04:53:50PM +0900, Akihiko Odaki wrote:
+> On 2024/07/10 17:02, hellord wrote:
+> > 
+> > note:
+> > 1. The path of buggy msvcrt.dll is c:\windows\system32\msvcrt.dll(
+> > mingw64 links to it );
+> > 2. fwrite implementation in another msvc library which is called
+> > ucrtbase.dll is correct(msvc links to it by default).
 > 
-> Change that to use a new core_index variable in the CPUPPCState,
-> where all siblings have the same core_index. CPU realize routines have
-> flexibility in setting core/sibling topology.
+> I don't object to this change but you should use ucrt whenever possible. I'm
+> not confident that elf2dmp and other QEMU binaries would work well with
+> mvcrt.
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   target/ppc/cpu.h        | 5 ++++-
->   hw/ppc/pnv_core.c       | 2 ++
->   hw/ppc/spapr_cpu_core.c | 3 +++
->   3 files changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 95ba9e7590..c3a33d2965 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1247,6 +1247,9 @@ struct CPUArchState {
->       /* when a memory exception occurs, the access type is stored here */
->       int access_type;
->   
-> +    /* For SMT processors */
-> +    int core_index;
-> +
->   #if !defined(CONFIG_USER_ONLY)
->       /* MMU context, only relevant for full system emulation */
->   #if defined(TARGET_PPC64)
-> @@ -1403,7 +1406,7 @@ struct CPUArchState {
->   };
->   
->   #define _CORE_ID(cs)                                            \
+> I even would like to force users to use ucrt and call setlocale(LC_ALL,
+> ".UTF8") to fix text encoding, but I haven't done that yet because Fedora,
+> which cross-compiles QEMU for CI, still uses msvcrt.
 
-That's a very short name for a macro in an header file. May be add a prefix.
+Our native Windows builds are also validating with msvcrt, and Stefan's
+Windows packages for QEMU are also msvcrt.
 
-Anyhow,
+Users getting QEMU packages from msys can choose whether to pull the
+msvcrt build or the ucrt build, but forcing ucrt is a non-starter IMHO.
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-
-> -    (POWERPC_CPU(cs)->env.spr_cb[SPR_PIR].default_value & ~(cs->nr_threads - 1))
-> +    (POWERPC_CPU(cs)->env.core_index)
->   
->   #define THREAD_SIBLING_FOREACH(cs, cs_sibling)                  \
->       CPU_FOREACH(cs_sibling)                                     \
-> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index 28ca61926d..7bda29b9c7 100644
-> --- a/hw/ppc/pnv_core.c
-> +++ b/hw/ppc/pnv_core.c
-> @@ -249,6 +249,8 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
->       pir_spr->default_value = pir;
->       tir_spr->default_value = tir;
->   
-> +    env->core_index = core_hwid;
-> +
->       /* Set time-base frequency to 512 MHz */
->       cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
->   }
-> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> index 21920ea054..d9116c8409 100644
-> --- a/hw/ppc/spapr_cpu_core.c
-> +++ b/hw/ppc/spapr_cpu_core.c
-> @@ -302,16 +302,19 @@ static PowerPCCPU *spapr_create_vcpu(SpaprCpuCore *sc, int i, Error **errp)
->       g_autofree char *id = NULL;
->       CPUState *cs;
->       PowerPCCPU *cpu;
-> +    CPUPPCState *env;
->   
->       obj = object_new(scc->cpu_type);
->   
->       cs = CPU(obj);
->       cpu = POWERPC_CPU(obj);
-> +    env = &cpu->env;
->       /*
->        * All CPUs start halted. CPU0 is unhalted from the machine level reset code
->        * and the rest are explicitly started up by the guest using an RTAS call.
->        */
->       qdev_prop_set_bit(DEVICE(obj), "start-powered-off", true);
-> +    env->core_index = cc->core_id;
->       cs->cpu_index = cc->core_id + i;
->       if (!spapr_set_vcpu_id(cpu, cs->cpu_index, errp)) {
->           return NULL;
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
