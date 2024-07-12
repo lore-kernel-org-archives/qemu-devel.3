@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8B4C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7FA5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSBxv-0002W1-P6; Fri, 12 Jul 2024 04:49:19 -0400
+	id 1sSBzO-00074z-Os; Fri, 12 Jul 2024 04:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sSBxt-0002Tk-MD
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:49:17 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSBzK-0006sm-AS
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:50:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sSBxr-0002rv-La
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:49:17 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSBzG-0003ak-CT
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:50:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720774154;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=10oCWm+fDZssdTuiRuhrhBIn9QJtFXrgNJCILTjYsbM=;
- b=BKoWqz/p75U5BiMRbRru+yW8QpPFQs591/fe9PNhHqx+uBj26EyL4IttnQ6NlDaI1ygWo0
- 74gK24jtn1r6uZXoDyxDzL0AvT7uh88Ny/OgwPvTe8jg6zHMEUon6nQsQ/P86au3gHX762
- KTln9PlvVuQmKDXgqxsIfjPbNq5EJb8=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-k2NOo030NcmJHo569NKC3Q-1; Fri, 12 Jul 2024 04:46:30 -0400
-X-MC-Unique: k2NOo030NcmJHo569NKC3Q-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-654d96c2bb5so30371447b3.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 01:46:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720773990; x=1721378790;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=10oCWm+fDZssdTuiRuhrhBIn9QJtFXrgNJCILTjYsbM=;
- b=X7J3f/y7PHcZ7+tB+i0SOkFrDaPonjMZCKna++6mJxKtrLr3y7EGmTylM8xWiBnMik
- Dukw26mjt4rMYWgsVcaM0hU4U1zUJ8GMmwLAl9umpOC1GGe57NA8o8kttzqWYGKiwYZy
- 081nnc63e++ssNj/FRz21im0LcZqESAXhsPaDXdnJHJminhFkNXB1lK7oxc6XTRq5gqU
- jQJJNREKqWAIMFlm+vuPHnuGoCMs5Wc8rNIJ3paHda3N1XNnEwooAovXbj0aDPS/Ruh1
- 0gkn2K5XV3yCMOFrN4ZV7F1tHtCwmvIxmjA7q/QksdIv3le+Jou5pGbVERTlKAaDyJS7
- 08Mg==
-X-Gm-Message-State: AOJu0YyIgC5Zx5auldvO167W/Q7WiNbU0jh61Tze9yiyLUlHci22pVWC
- ZW3XdNgwN9mDWG3XCmUzEEgp9Tja3tjz1UaBuvjKBVdzxlff9sFH/PlBHXXalLCYyv5PcZOve6R
- s0rC6du+pEsG0NQgCTSR5MG+urQL1ivvpfnt+F3AwO50WcTsE9TzkX1c9q39KimOGRhj643wjkc
- IfH5FBFwR5Hhjt8F3W3HW+jNC6LiM=
-X-Received: by 2002:a05:690c:6d12:b0:650:9c5e:f6ce with SMTP id
- 00721157ae682-658ebcad383mr133523227b3.0.1720773990284; 
- Fri, 12 Jul 2024 01:46:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkf9qTpyXbLMn/kW/XNLU9bFSgTxG64geh6pfDA+iAN6kq0so0A+naHVOVfaZc1GWvO35jW3u2tNOdS68wigI=
-X-Received: by 2002:a05:690c:6d12:b0:650:9c5e:f6ce with SMTP id
- 00721157ae682-658ebcad383mr133523047b3.0.1720773990022; Fri, 12 Jul 2024
- 01:46:30 -0700 (PDT)
+ s=mimecast20190719; t=1720774241;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=1tDg5IkDR4CDTuXEF0m9xDRLc+Mo/63MWyin0ruRum4=;
+ b=RyFgveNtB+v5nSYpYVHAEAZqyW9fn7qcf9S5TiOwfOKdCwGZQR13DIrWrHwcWm8vWHI1aV
+ vg92ofphsFsJ6rd46ruESEqCevMKYa289q+NvrjpA+OMvhEa6ceQcnkiOFnntBAVOpvvVv
+ UjYh7KUP8Py58T0EkyueGUrVE26Xs0k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-xIZe3yNcMkKM59bcuvmK-g-1; Fri,
+ 12 Jul 2024 04:50:38 -0400
+X-MC-Unique: xIZe3yNcMkKM59bcuvmK-g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39FBF196E096; Fri, 12 Jul 2024 08:50:37 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AFE51956066; Fri, 12 Jul 2024 08:50:33 +0000 (UTC)
+Date: Fri, 12 Jul 2024 09:50:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 1/8] tests/pytest: Add base classes for the upcoming
+ pytest-based tests
+Message-ID: <ZpDuVsAZKSQO2nwc@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
+ <20240711115546.40859-2-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240613150127.1361931-1-berrange@redhat.com>
- <20240613154406.1365469-1-berrange@redhat.com>
- <20240613154406.1365469-15-berrange@redhat.com>
-In-Reply-To: <20240613154406.1365469-15-berrange@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Fri, 12 Jul 2024 11:46:19 +0300
-Message-ID: <CAPMcbCq5z7CHRDuewRVP-APXYsMhNV80EYN4tPUQsdjcHcBRvw@mail.gmail.com>
-Subject: Re: [PATCH v2 20/22] qga: remove pointless 'blockrpcs_key' variable
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006a145d061d08ea3e"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240711115546.40859-2-thuth@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,160 +86,194 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006a145d061d08ea3e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-
-On Thu, Jun 13, 2024 at 6:45=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
-
-> This variable was used to support back compat for the old config
-> file key name, and became redundant after the following change:
->
->   commit a7a2d636ae4549ef0551134d4bf8e084a14431c4
->   Author: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->   Date:   Thu May 30 08:36:43 2024 +0200
->
->     qga: Remove deprecated 'blacklist' argument / config key
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+On Thu, Jul 11, 2024 at 01:55:39PM +0200, Thomas Huth wrote:
+> The file is a copy of the tests/avocado/avocado_qemu/__init__.py file
+> with some adjustments to get rid of the Avocado dependencies (i.e.
+> we also have to drop the LinuxSSHMixIn and LinuxTest for now).
+> 
+> The emulator binary, source and build directory are now passed via
+> environment variables that will be set via meson.build later.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  qga/main.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/qga/main.c b/qga/main.c
-> index 647d27037c..6ff022a85d 100644
-> --- a/qga/main.c
-> +++ b/qga/main.c
-> @@ -1023,7 +1023,6 @@ static void config_load(GAConfig *config)
->      GError *gerr =3D NULL;
->      GKeyFile *keyfile;
->      g_autofree char *conf =3D g_strdup(g_getenv("QGA_CONF")) ?:
-> get_relocated_path(QGA_CONF_DEFAULT);
-> -    const gchar *blockrpcs_key =3D "block-rpcs";
->
->      /* read system config */
->      keyfile =3D g_key_file_new();
-> @@ -1071,9 +1070,9 @@ static void config_load(GAConfig *config)
->              g_key_file_get_boolean(keyfile, "general", "retry-path",
-> &gerr);
->      }
->
-> -    if (g_key_file_has_key(keyfile, "general", blockrpcs_key, NULL)) {
-> +    if (g_key_file_has_key(keyfile, "general", "block-rpcs", NULL)) {
->          config->bliststr =3D
-> -            g_key_file_get_string(keyfile, "general", blockrpcs_key,
-> &gerr);
-> +            g_key_file_get_string(keyfile, "general", "block-rpcs",
-> &gerr);
->          config->blockedrpcs =3D g_list_concat(config->blockedrpcs,
->                                            split_list(config->bliststr,
-> ","));
->      }
-> @@ -1084,7 +1083,7 @@ static void config_load(GAConfig *config)
->                                            split_list(config->aliststr,
-> ","));
->      }
->
-> -    if (g_key_file_has_key(keyfile, "general", blockrpcs_key, NULL) &&
-> +    if (g_key_file_has_key(keyfile, "general", "block-rpcs", NULL) &&
->          g_key_file_has_key(keyfile, "general", "allow-rpcs", NULL)) {
->          g_critical("wrong config, using 'block-rpcs' and 'allow-rpcs'
-> keys at"
->                     " the same time is not allowed");
-> --
-> 2.45.1
->
->
+>  tests/pytest/qemu_pytest/__init__.py | 344 +++++++++++++++++++++++++++
+>  1 file changed, 344 insertions(+)
+>  create mode 100644 tests/pytest/qemu_pytest/__init__.py
+> 
+> diff --git a/tests/pytest/qemu_pytest/__init__.py b/tests/pytest/qemu_pytest/__init__.py
+> new file mode 100644
+> index 0000000000..e3ed32e3de
+> --- /dev/null
+> +++ b/tests/pytest/qemu_pytest/__init__.py
+> @@ -0,0 +1,344 @@
+> +# Test class and utilities for functional tests
+> +#
+> +# Copyright 2018, 2024 Red Hat, Inc.
+> +#
+> +# Original Author (Avocado-based tests):
+> +#  Cleber Rosa <crosa@redhat.com>
+> +#
+> +# Adaption for pytest based version:
+> +#  Thomas Huth <thuth@redhat.com>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +import logging
+> +import os
+> +import shutil
+> +import subprocess
+> +import sys
+> +import tempfile
+> +import time
+> +import uuid
+> +import unittest
+> +
+> +from qemu.machine import QEMUMachine
+> +from qemu.utils import (get_info_usernet_hostfwd_port, kvm_available,
+> +                        tcg_available)
+> +
+> +BUILD_DIR = os.getenv('PYTEST_BUILD_ROOT')
+> +SOURCE_DIR = os.getenv('PYTEST_SOURCE_ROOT')
 
---0000000000006a145d061d08ea3e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+We can make life slightly nicer for developers running tests directly
+without meson, by figuring this out automatically if the env vars are
+omitted. To enable devs to do
 
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 13, 2024 at 6:45=E2=
-=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com"=
->berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">This variable was used to support back compat for the o=
-ld config<br>
-file key name, and became redundant after the following change:<br>
-<br>
-=C2=A0 commit a7a2d636ae4549ef0551134d4bf8e084a14431c4<br>
-=C2=A0 Author: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-=C2=A0 Date:=C2=A0 =C2=A0Thu May 30 08:36:43 2024 +0200<br>
-<br>
-=C2=A0 =C2=A0 qga: Remove deprecated &#39;blacklist&#39; argument / config =
-key<br>
-<br>
-Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
-t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/main.c | 7 +++----<br>
-=C2=A01 file changed, 3 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/qga/main.c b/qga/main.c<br>
-index 647d27037c..6ff022a85d 100644<br>
---- a/qga/main.c<br>
-+++ b/qga/main.c<br>
-@@ -1023,7 +1023,6 @@ static void config_load(GAConfig *config)<br>
-=C2=A0 =C2=A0 =C2=A0GError *gerr =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0GKeyFile *keyfile;<br>
-=C2=A0 =C2=A0 =C2=A0g_autofree char *conf =3D g_strdup(g_getenv(&quot;QGA_C=
-ONF&quot;)) ?: get_relocated_path(QGA_CONF_DEFAULT);<br>
--=C2=A0 =C2=A0 const gchar *blockrpcs_key =3D &quot;block-rpcs&quot;;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* read system config */<br>
-=C2=A0 =C2=A0 =C2=A0keyfile =3D g_key_file_new();<br>
-@@ -1071,9 +1070,9 @@ static void config_load(GAConfig *config)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_key_file_get_boolean(keyf=
-ile, &quot;general&quot;, &quot;retry-path&quot;, &amp;gerr);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 if (g_key_file_has_key(keyfile, &quot;general&quot;, blockrp=
-cs_key, NULL)) {<br>
-+=C2=A0 =C2=A0 if (g_key_file_has_key(keyfile, &quot;general&quot;, &quot;b=
-lock-rpcs&quot;, NULL)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0config-&gt;bliststr =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_key_file_get_string(keyfile, &=
-quot;general&quot;, blockrpcs_key, &amp;gerr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_key_file_get_string(keyfile, &=
-quot;general&quot;, &quot;block-rpcs&quot;, &amp;gerr);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0config-&gt;blockedrpcs =3D g_list_concat(=
-config-&gt;blockedrpcs,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0split_list(config-&gt;bliststr, &quot;,&quot;));<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-@@ -1084,7 +1083,7 @@ static void config_load(GAConfig *config)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0split_list(config-&gt;aliststr, &quot;,&quot;));<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 if (g_key_file_has_key(keyfile, &quot;general&quot;, blockrp=
-cs_key, NULL) &amp;&amp;<br>
-+=C2=A0 =C2=A0 if (g_key_file_has_key(keyfile, &quot;general&quot;, &quot;b=
-lock-rpcs&quot;, NULL) &amp;&amp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_key_file_has_key(keyfile, &quot;general=
-&quot;, &quot;allow-rpcs&quot;, NULL)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_critical(&quot;wrong config, using &#39=
-;block-rpcs&#39; and &#39;allow-rpcs&#39; keys at&quot;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot=
-; the same time is not allowed&quot;);<br>
--- <br>
-2.45.1<br>
-<br>
-</blockquote></div>
+  PYTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
+  PYTHONPATH=./python \
+  pytest build/tests/pytest/test_info_usernet.py
 
---0000000000006a145d061d08ea3e--
+I propose the following additional logic on top of your patch:
+
+diff --git a/tests/pytest/qemu_pytest/__init__.py b/tests/pytest/qemu_pytest/__init__.py
+index 73d80b3828..711cb06012 100644
+--- a/tests/pytest/qemu_pytest/__init__.py
++++ b/tests/pytest/qemu_pytest/__init__.py
+@@ -21,13 +21,41 @@
+ import time
+ import uuid
+ import unittest
++from pathlib import Path
+ 
+ from qemu.machine import QEMUMachine
+ from qemu.utils import (get_info_usernet_hostfwd_port, kvm_available,
+                         tcg_available)
+ 
+-BUILD_DIR = os.getenv('PYTEST_BUILD_ROOT')
+-SOURCE_DIR = os.getenv('PYTEST_SOURCE_ROOT')
++def _pytest_dir():
++    if sys.argv[0].startswith("pytest") or "bin/pytest" in sys.argv[0]:
++        if sys.argv[1].endswith(".py"):
++            # Assume 'pytest ./build/tests/pytest/test_blah.py ....'
++            return Path(sys.argv[1]).absolute().parent
++        else:
++            # Assume 'pytest ./build/tests/pytest'
++            return Path(sys.argv[1]).absolute()
++
++    # Assume './build/tests/pytest/test_NAME.py'
++    if sys.argv[0].endswith(".py"):
++        return Path(sys.argv[0]).absolute().parent
++
++    raise Exception("Cannot identify pytest build dir, set PYTEST_BUILD_ROOT")
++
++def _build_dir():
++    root = os.getenv('PYTEST_BUILD_ROOT')
++    if root is not None:
++        return Path(root)
++    
++    return _pytest_dir().parent.parent
++
++def _source_dir():
++    root = os.getenv('PYTEST_SOURCE_ROOT')
++    if root is not None:
++        return Path(root)
++
++    # Assume build/tests/pytest is a symlink to the source root
++    return _pytest_dir().resolve().parent.parent
+ 
+ def has_cmd(name, args=None):
+     """
+@@ -189,8 +217,8 @@ class QemuBaseTest(unittest.TestCase):
+ 
+     qemu_bin = os.getenv('PYTEST_QEMU_BINARY')
+ 
+-    workdir = os.path.join(BUILD_DIR, 'tests/pytest')
+-    logdir = os.path.join(BUILD_DIR, 'tests/pytest')
++    workdir = str(Path(_build_dir(), 'tests', 'pytest'))
++    logdir = str(Path(_build_dir(), 'tests', 'pytest'))
+ 
+     cpu = None
+     machine = None
+@@ -198,8 +226,6 @@ class QemuBaseTest(unittest.TestCase):
+     log = logging.getLogger('qemu-pytest')
+ 
+     def setUp(self, bin_prefix):
+-        self.assertIsNotNone(BUILD_DIR, 'PYTEST_BUILD_ROOT must be set')
+-        self.assertIsNotNone(SOURCE_DIR,'PYTEST_SOURCE_ROOT must be set')
+         self.assertIsNotNone(self.qemu_bin, 'PYTEST_QEMU_BINARY must be set')
+ 
+     def check_hash(self, file_name, expected_hash):
+@@ -294,9 +320,11 @@ def get_qemu_img(self):
+ 
+         # If qemu-img has been built, use it, otherwise the system wide one
+         # will be used.
+-        qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
+-        if not os.path.exists(qemu_img):
+-            qemu_img = find_command('qemu-img', False)
++        qemu_img = Path(_build_dir(), 'qemu-img')
++        if qemu_img.exists():
++            return str(qemu_img)
++
++        qemu_img = find_command('qemu-img', False)
+         if qemu_img is False:
+             self.cancel('Could not find "qemu-img"')
+ 
+
+This also allows for executing the tests directly without even involving
+pytest if we make one slight further change to each individual tests:
+
+diff --git a/tests/pytest/test_info_usernet.py b/tests/pytest/test_info_usernet.py
+index 0cc3697c0b..aa7abb6a5e 100644
+--- a/tests/pytest/test_info_usernet.py
++++ b/tests/pytest/test_info_usernet.py
+@@ -8,6 +8,8 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
++import unittest
++
+ from qemu_pytest import QemuSystemTest
+ 
+ from qemu.utils import get_info_usernet_hostfwd_port
+@@ -29,3 +31,6 @@ def test_hostfwd(self):
+         self.assertGreater(port, 0,
+                            ('Found a redirected port that is not greater than'
+                             ' zero'))
++
++if __name__ == '__main__':
++    unittest.main()
+
+
+and chmod +x tests/pytest/*.py, then that lets us simply run
+
+  PYTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
+  PYTHONPATH=./python \
+  build/tests/pytest/test_info_usernet.py 
+
+being able to run with zero harness is nice for debugging problems,
+especially if you want to be strace'ing tests without the harness
+in the middle, which is something I've often wanted.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
