@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60C7C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16484C3DA45
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5bB-00081u-UV; Thu, 11 Jul 2024 22:01:25 -0400
+	id 1sS5cv-000709-1X; Thu, 11 Jul 2024 22:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sS5bA-0007uw-3f
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:01:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sS5b6-0001Gv-Vp
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:01:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720749675;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oL8NiGfIQB54gh6KW484MgAOkCZVAouLf3hqbBp12AU=;
- b=YEhYZkhn9RPOBTd8ZJC2wpve31fQMLNBUUZY/YGUyY1C7rWzU6wXtr/6Ot5R1IYmwLolDF
- zoB6/bEOnmIrbBEp0OlADPaph3p+fsn9Ma2LhZdcSvv80PpZAGEnQqqV+7tLT3i9HwHntL
- 0d0kPNdoEuurUh2dWNi7EqsIoEbt9Y8=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-_SUbiy_FN5KZvV3G4l37Vw-1; Thu, 11 Jul 2024 22:01:14 -0400
-X-MC-Unique: _SUbiy_FN5KZvV3G4l37Vw-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2c969c4a90cso1454617a91.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:01:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sS5cs-0006rn-Io; Thu, 11 Jul 2024 22:03:11 -0400
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sS5cq-0001h1-46; Thu, 11 Jul 2024 22:03:10 -0400
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-8102193c82bso426127241.3; 
+ Thu, 11 Jul 2024 19:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720749785; x=1721354585; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hJLJihW92UKZeEDqUylrm4161EB279feN4dEb1aY+A0=;
+ b=N+aASMGMkSxSvvK2xTxHmiipYHsj4jQmk32SYk17KKgegBILtiLUfMyBfSWaoXi/gO
+ m1cLE4eJ/rUZVI2XgyNX+8qTgzHkb5kGk0wg/1XSLoOOmglEj2QAEoP7QF/uxfZZN4a/
+ AqlIkg1w1OftTXWoVsQuOoO3nHjSVT3qwY8Tb0ib8vn6xbNa8adY+7LkyEaes+Aw46Lu
+ 1fWhc9SoL3uS/axrO2QTbMgc2aKqrGB5aEaigUsPxGXGy/cflMWq8za/G0ERvbg2lL1M
+ XUZwDrB9V8XKRgsm991vnIoKa+hrK30aR5QaDYvgDrjfsYuBMCSyTELMr4BOGzhwxZsU
+ e2/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720749673; x=1721354473;
+ d=1e100.net; s=20230601; t=1720749785; x=1721354585;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oL8NiGfIQB54gh6KW484MgAOkCZVAouLf3hqbBp12AU=;
- b=A6AAn8SxzYNetyZ1DVfdyaVCkjiUqWl2gqX0fqHSDnSeGGloQPoVuckVkNHhR8aBV5
- yJMfHWhOzqQ88B1jpn4Mpoj9JFRoCd63uD7LsvDpKatT/v9tFOJEGYgJ/qYzvS/wsPrH
- jpgNe+8X9PtRQp3bLHa3Y2m5sQAkxamAR+5p8x6dhi623o+LPtPAvic2Urh0IVbXUzw6
- nqMTdC/+oWbHZArWwCrUbWDWyFJlya2sSQNPPie1Tw4H6qA7NLhzGWfb59g7lh56Ee1/
- thBnQ6EaC/Ym4+IEOVaunpNAegL4pYyqTJiqvPyzUO7GcIS1WAB0ioVta71q3b8cNqYz
- VsXA==
-X-Gm-Message-State: AOJu0YwZDgTY+qwm2yrEIcRQjienox9VwdtxHvqwQjew9tjqEKJlNr3g
- JlOkLA3tUjevXHinOicaU6Hq7rmMI0x1iTKFg952h5lc7YJDWpjEKG58vTVP/NbgI8FNaLiTWz+
- 5Qf8hrJKhUhkT8TMZbHAosXHeocV/KBG5u/XYz1czahh9sqvBoGsS5qj7n9XZ8cBSydKNxDfS2B
- W1GuXdfYQpLP4t+u0tPEuWokYd19IysHxAO6o=
-X-Received: by 2002:a17:90a:e510:b0:2c9:88af:300c with SMTP id
- 98e67ed59e1d1-2ca35c28611mr9107108a91.18.1720749672660; 
- Thu, 11 Jul 2024 19:01:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxzDP20L1GhMNZrhy24aLh8KoKN5ul5FDrDVZn2jOzWL6MPoxYiIAUk7LXpt3/WJIaOG2mNUscxk+SKP7YXJY=
-X-Received: by 2002:a17:90a:e510:b0:2c9:88af:300c with SMTP id
- 98e67ed59e1d1-2ca35c28611mr9107080a91.18.1720749672020; Thu, 11 Jul 2024
- 19:01:12 -0700 (PDT)
+ bh=hJLJihW92UKZeEDqUylrm4161EB279feN4dEb1aY+A0=;
+ b=PfQD+VhTM1wSPXfNabeTDLFabcTyxJ5zNvlzud16n5DXMG1xVX4jI8q47GLpS6nQKh
+ 03wmnO4m708AEnsPIH91iHhysBqbUh2nJ/BoIWe1cdVlP1uosJas8TH3g/rY346tpm0N
+ lUal35UbxY1RMuhNV+oJANB7tjn9VcienxWjKkl5F5EwxF86W3QKI81M3oFIXrHW5dyx
+ jIBCSIV0hiNmrxwBeiPszu0J+QuIG/4yNY2Blx3oilgfXzGFBF86tEdvsgm97obyh0+T
+ 7LF5ssOubj6xr1qLbuADnvKyUv/KQCh06FIeUWXCKuSluAz7VjklSJ9FWeXLnt7s5RY5
+ 1w/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZCmioqpHrJoRGagh3BsQ4ll/8/xMLyivExHjennk69gdv/q0YNwE0XkAjw+IXXfGUsBs5U85h9qm+zNbxFRiBUSGNtn1HbpLQvBC4gjftQtvsak2K5lJac7FBqbgrszX0m2BUaPOsKmU46opG4yD9mAuMfbFsUZUaw+mhHm6SWtCqCA1fmw==
+X-Gm-Message-State: AOJu0YwNPpcGQo8348mbWO9ZMxwhy3+yc0UArV4JDR0voM0PEkDkAXsV
+ q/uhzyEF/U21v6Eatjaygq+vZCPTgA4oeDL+g5sCJEkFDaIwx0COmqcIic9T20xp2e1Mqpe9AtG
+ fvc0KqR2knd9l0NHPR5ACPli4Y4Y=
+X-Google-Smtp-Source: AGHT+IHgwax1mdkV0O0dyTVB27ZGNtHeX3SEHLI6D+Kg1oGEGtvdjrCV/monPLQLhAq6KhhPBHP+HPFN2EBJPM6+CaY=
+X-Received: by 2002:a05:6102:f10:b0:48f:9dea:bec6 with SMTP id
+ ada2fe7eead31-4903215451bmr12786910137.18.1720749785431; Thu, 11 Jul 2024
+ 19:03:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
- <CACGkMEuX+FxOtWD9YoMF-T_VsgMezCT5ff_5Wk5CwQ3kNu41Aw@mail.gmail.com>
- <CAK9dgmb0K_TfbUt-WsPubDVAA7tuJQkQtWaf95JOc0CYvgMQ8A@mail.gmail.com>
- <CACGkMEv23TZNexfKUJ8MMVeRz2+2g316UNAQvEK+91jo5PkpBw@mail.gmail.com>
- <CAK9dgmbqqD_LVWONdKm-Usj18cnxqbMo6VWpCAUqjS4VnTDxnw@mail.gmail.com>
- <CACGkMEt5bmg1eh8Tiurfzxb5a1GXECu_PmTQC5a_+sve2A2NUw@mail.gmail.com>
- <CAK9dgmaEs56fj4F_Bz+bBJNmoK4tXHd9WbmtHeeJj-Mu+kYtNQ@mail.gmail.com>
- <CACGkMEuuxSehLH8+1_P_CERwVm_C33FQXVjHpvBmy+uakP7uVA@mail.gmail.com>
- <CAK9dgmY2MVR8+LMG-skmdgiKGrzDMriDrEV_oYwY4kBqcp91kQ@mail.gmail.com>
-In-Reply-To: <CAK9dgmY2MVR8+LMG-skmdgiKGrzDMriDrEV_oYwY4kBqcp91kQ@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 12 Jul 2024 10:00:58 +0800
-Message-ID: <CACGkMEuWjh6Vw_Qp49QM+tB=hH0=g1+2-XiLO+mHOfV5JNTQqQ@mail.gmail.com>
-Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
- buffer is full
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240612081416.29704-1-jim.shu@sifive.com>
+ <20240612081416.29704-17-jim.shu@sifive.com>
+In-Reply-To: <20240612081416.29704-17-jim.shu@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 12 Jul 2024 12:02:39 +1000
+Message-ID: <CAKmqyKMXPttUZRVbUYM0pctTicAeqcFkHK3tyfvCS43eKw3twQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 16/16] hw/riscv: virt: Add WorldGuard support
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>, 
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,370 +117,413 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 5:05=E2=80=AFPM Yong Huang <yong.huang@smartx.com> =
-wrote:
+On Wed, Jun 12, 2024 at 6:18=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
 >
+> * Add 'wg=3Don' option to enable RISC-V WorldGuard
+> * Add wgChecker to protect several resources:
+>   DRAM, FLASH, UART.
 >
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> ---
+>  docs/system/riscv/virt.rst |  10 +++
+>  hw/riscv/Kconfig           |   1 +
+>  hw/riscv/virt.c            | 163 ++++++++++++++++++++++++++++++++++++-
+>  include/hw/riscv/virt.h    |  17 +++-
+>  4 files changed, 186 insertions(+), 5 deletions(-)
 >
-> On Wed, Jul 10, 2024 at 3:36=E2=80=AFPM Jason Wang <jasowang@redhat.com> =
-wrote:
->>
->> On Wed, Jul 10, 2024 at 2:26=E2=80=AFPM Yong Huang <yong.huang@smartx.co=
-m> wrote:
->> >
->> >
->> >
->> > On Wed, Jul 10, 2024 at 11:44=E2=80=AFAM Jason Wang <jasowang@redhat.c=
-om> wrote:
->> >>
->> >> On Tue, Jul 9, 2024 at 10:56=E2=80=AFAM Yong Huang <yong.huang@smartx=
-.com> wrote:
->> >> >
->> >> >
->> >> >
->> >> > On Tue, Jul 9, 2024 at 10:41=E2=80=AFAM Jason Wang <jasowang@redhat=
-.com> wrote:
->> >> >>
->> >> >> On Mon, Jul 8, 2024 at 1:17=E2=80=AFPM Yong Huang <yong.huang@smar=
-tx.com> wrote:
->> >> >> >
->> >> >> >
->> >> >> >
->> >> >> > On Mon, Jul 8, 2024 at 11:21=E2=80=AFAM Jason Wang <jasowang@red=
-hat.com> wrote:
->> >> >> >>
->> >> >> >> On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.huang@=
-smartx.com> wrote:
->> >> >> >> >
->> >> >> >> > Unexpected work by certain Windows guests equipped with the e=
-1000
->> >> >> >> > interface can cause the network to go down and never come bac=
-k up
->> >> >> >> > again unless the guest's interface is reset.
->> >> >> >> >
->> >> >> >> > To reproduce the failure:
->> >> >> >> > 1. Set up two guests with a Windows 2016 or 2019 server opera=
-ting
->> >> >> >> >    system.
->> >> >> >>
->> >> >> >> I vaguely remember e1000 support for Windows has been deprecate=
-d for
->> >> >> >> several years...
->> >> >> >>
->> >> >> >> That's why e1000e or igb is implemented in Qemu.
->> >> >> >>
->> >> >> >> > 2. Set up the e1000 interface for the guests.
->> >> >> >> > 3. Pressurize the network slightly between two guests using t=
-he iPerf tool.
->> >> >> >> >
->> >> >> >> > The network goes down after a few days (2-5days), and the iss=
-ue
->> >> >> >> > is the result of not adhering to the e1000 specification. Ref=
-er
->> >> >> >> > to the details of the specification at the following link:
->> >> >> >> > https://www.intel.com/content/dam/doc/manual/pci-pci-x-family=
--gbe-controllers-software-dev-manual.pdf
->> >> >> >> >
->> >> >> >> > Chapter 3.2.6 describe the Receive Descriptor Tail register(R=
-DT)
->> >> >> >> > as following:
->> >> >> >> > This register holds a value that is an offset from the base, =
-and
->> >> >> >> > identifies the location beyond the last descriptor hardware c=
-an
->> >> >> >> > process. Note that tail should still point to an area in the
->> >> >> >> > descriptor ring (somewhere between RDBA and RDBA + RDLEN).
->> >> >> >> > This is because tail points to the location where software wr=
-ites
->> >> >> >> > the first new descriptor.
->> >> >> >> >
->> >> >> >> > This means that if the provider=E2=80=94in this case, QEMU=E2=
-=80=94has not yet
->> >> >> >> > loaded the packet,
->> >> >> >>
->> >> >> >> What do you mean by "load" here?
->> >> >> >
->> >> >> >
->> >> >> > Sorry for failing to describe the details.
->> >> >> >
->> >> >> > The guest driver retrieves the packet from the receive ring buff=
-er
->> >> >> > after QEMU forwards it from the tun/tap interface in the e1000
->> >> >> > emulation.
->> >> >> >
->> >> >> > I used "load" to express "putting packets into the receive ring =
-buffer."
->> >> >> >
->> >> >> >>
->> >> >> >>
->> >> >> >> > RDT should never point to that place.
->> >> >> >>
->> >> >> >> And "that place"?
->> >> >> >
->> >> >> > If a descriptor in the receive ring buffer has not been filled w=
-ith a
->> >> >> > packet address by QEMU, the descriptor therefore doesn't have an=
-y
->> >> >> > available packets. The location of the descriptor should not be =
-referred
->> >> >> > to by RDT because the location is in the range that "hardware" h=
-andles.
->> >> >> >
->> >> >> > "that place" means the location of the descriptor in the ring bu=
-ffer
->> >> >> > that QEMU hasn't set any available packets related to.
->> >> >> >
->> >> >> >>
->> >> >> >>
->> >> >> >> > When
->> >> >> >> > implementing the emulation of the e1000 interface, QEMU evalu=
-ates
->> >> >> >> > if the receive ring buffer is full once the RDT equals the RD=
-H,
->> >> >> >> > based on the assumption that guest drivers adhere to this
->> >> >> >> > criterion strictly.
->> >> >> >> >
->> >> >> >> > We applied the following log patch to assist in analyzing the
->> >> >> >> > issue and eventually obtained the unexpected information.
->> >> >> >> >
->> >> >> >> > Log patch:
->> >> >> >> > -------------------------------------------------------------=
-----
->> >> >> >> > |--- a/hw/net/e1000.c
->> >> >> >> > |+++ b/hw/net/e1000.c
->> >> >> >> > |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc=
+> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+> index 9a06f95a34..2d2992dc34 100644
+> --- a/docs/system/riscv/virt.rst
+> +++ b/docs/system/riscv/virt.rst
+> @@ -116,6 +116,16 @@ The following machine-specific options are supported=
+:
+>    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not specifi=
+ed,
+>    the default number of per-HART VS-level AIA IMSIC pages is 0.
+>
+> +- wg=3D[on|off]
+> +
+> +  When this option is "on", RISC-V WorldGuard will be enabled in the sys=
+tem
+> +  to provide the isolation of multiple worlds. RISC-V HARTS will enable =
+WG
+> +  extensions to have WID in memory transaction. wgCheckers in front of R=
+AMs
+> +  and device MMIO will be enabled to provide the access control of resou=
+rces
+> +  if the transaction contains WID. When not specified, this option is as=
+sumed
+> +  to be "off".
+> +  This option is restricted to the TCG accelerator.
+
+We need a lot more documentation here.
+
+The WID of M-mode for example is set by an external environment. How
+are users going to set that in QEMU?
+
+Are the Smwg, Smwgd, and Sswg extensions enabled? Or is it hard coded
+one world per hart?
+
+We should make it clear to users how this is setup as the spec leaves
+a lot of this up to implementations. We also don't expect users to
+read the code or commit messages to figure it out.
+
+Alistair
+
+> +
+>  Running Linux kernel
+>  --------------------
+>
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index a2030e3a6f..7804fdbb7a 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -56,6 +56,7 @@ config RISCV_VIRT
+>      select PLATFORM_BUS
+>      select ACPI
+>      select ACPI_PCI
+> +    select RISCV_WORLDGUARD
+>
+>  config SHAKTI_C
+>      bool
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 4fdb660525..eed49ebd02 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -55,6 +55,7 @@
+>  #include "hw/acpi/aml-build.h"
+>  #include "qapi/qapi-visit-common.h"
+>  #include "hw/virtio/virtio-iommu.h"
+> +#include "hw/misc/riscv_worldguard.h"
+>
+>  /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QE=
+MU. */
+>  static bool virt_use_kvm_aia(RISCVVirtState *s)
+> @@ -76,6 +77,9 @@ static const MemMapEntry virt_memmap[] =3D {
+>      [VIRT_ACLINT_SSWI] =3D  {  0x2F00000,        0x4000 },
+>      [VIRT_PCIE_PIO] =3D     {  0x3000000,       0x10000 },
+>      [VIRT_PLATFORM_BUS] =3D {  0x4000000,     0x2000000 },
+> +    [VIRT_WGC_DRAM] =3D     {  0x6000000,        0x1000 },
+> +    [VIRT_WGC_FLASH] =3D    {  0x6001000,        0x1000 },
+> +    [VIRT_WGC_UART] =3D     {  0x6002000,        0x1000 },
+>      [VIRT_PLIC] =3D         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX *=
+ 2) },
+>      [VIRT_APLIC_M] =3D      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+>      [VIRT_APLIC_S] =3D      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+> @@ -101,6 +105,38 @@ static MemMapEntry virt_high_pcie_memmap;
+>
+>  #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
+>
+> +/* wgChecker helpers */
+> +typedef struct WGCInfo {
+> +    int memmap_idx;
+> +    uint32_t irq_num;
+> +    uint32_t slot_count;
+> +
+> +    int num_of_child;
+> +    MemoryRegion *c_region[WGC_NUM_REGIONS];
+> +    uint64_t c_offset[WGC_NUM_REGIONS];
+> +} WGCInfo;
+> +
+> +enum {
+> +    WGC_DRAM,
+> +    WGC_FLASH,
+> +    WGC_UART,
+> +    WGC_NUM,
+> +};
+> +
+> +static WGCInfo virt_wgcinfo[] =3D {
+> +    [WGC_DRAM]  =3D { VIRT_WGC_DRAM, WGC_DRAM_IRQ, 16 },
+> +    [WGC_FLASH] =3D { VIRT_WGC_FLASH, WGC_FLASH_IRQ, 16 },
+> +    [WGC_UART]  =3D { VIRT_WGC_UART, WGC_UART_IRQ, 1 },
+> +};
+> +
+> +static void wgc_append_child(WGCInfo *info, MemoryRegion *region,
+> +                             uint64_t offset)
+> +{
+> +    info->c_region[info->num_of_child] =3D region;
+> +    info->c_offset[info->num_of_child] =3D offset;
+> +    info->num_of_child +=3D 1;
+> +}
+> +
+>  static PFlashCFI01 *virt_flash_create1(RISCVVirtState *s,
+>                                         const char *name,
+>                                         const char *alias_prop_name)
+> @@ -151,7 +187,8 @@ static void virt_flash_map1(PFlashCFI01 *flash,
+>  }
+>
+>  static void virt_flash_map(RISCVVirtState *s,
+> -                           MemoryRegion *sysmem)
+> +                           MemoryRegion *sysmem,
+> +                           WGCInfo *info)
+>  {
+>      hwaddr flashsize =3D virt_memmap[VIRT_FLASH].size / 2;
+>      hwaddr flashbase =3D virt_memmap[VIRT_FLASH].base;
+> @@ -160,6 +197,15 @@ static void virt_flash_map(RISCVVirtState *s,
+>                      sysmem);
+>      virt_flash_map1(s->flash[1], flashbase + flashsize, flashsize,
+>                      sysmem);
+> +
+> +    if (info) {
+> +        wgc_append_child(info,
+> +                         sysbus_mmio_get_region(SYS_BUS_DEVICE(s->flash[=
+0]), 0),
+> +                         flashbase);
+> +        wgc_append_child(info,
+> +                         sysbus_mmio_get_region(SYS_BUS_DEVICE(s->flash[=
+1]), 0),
+> +                         flashbase + flashsize);
+> +    }
+>  }
+>
+>  static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *node=
+name,
+> @@ -1303,6 +1349,71 @@ static void virt_build_smbios(RISCVVirtState *s)
+>      }
+>  }
+>
+> +static DeviceState *create_wgc(WGCInfo *info, DeviceState *irqchip)
+> +{
+> +    MemoryRegion *system_memory =3D get_system_memory();
+> +    DeviceState *wgc;
+> +    MemoryRegion *upstream_mr, *downstream_mr;
+> +    qemu_irq irq =3D qdev_get_gpio_in(irqchip, info->irq_num);
+> +    hwaddr base, size;
+> +
+> +    /* Unmap downstream_mr from system_memory if it is already mapped. *=
+/
+> +    for (int i=3D0; i<info->num_of_child; i++) {
+> +        downstream_mr =3D info->c_region[i];
+> +
+> +        g_assert(downstream_mr);
+> +        if (downstream_mr->container =3D=3D system_memory) {
+> +            memory_region_del_subregion(system_memory, downstream_mr);
+> +        }
+> +
+> +        /*
+> +         * Clear the offset of downstream_mr, so we could correctly do
+> +         * address_space_init() to it in wgchecker.
+> +         */
+> +        memory_region_set_address(downstream_mr, 0);
+> +    }
+> +
+> +    base =3D virt_memmap[info->memmap_idx].base;
+> +    size =3D virt_memmap[info->memmap_idx].size;
+> +
+> +    wgc =3D riscv_wgchecker_create(
+> +        base, size, irq, info->slot_count, 0, 0,
+> +        info->num_of_child, info->c_region, info->c_offset, 0, NULL);
+> +
+> +    /* Map upstream_mr to system_memory */
+> +    for (int i=3D0; i<info->num_of_child; i++) {
+> +        upstream_mr =3D sysbus_mmio_get_region(SYS_BUS_DEVICE(wgc), i+1)=
+;
+> +        g_assert(upstream_mr);
+> +        memory_region_add_subregion(system_memory, info->c_offset[i], up=
+stream_mr);
+> +    }
+> +
+> +    return wgc;
+> +}
+> +
+> +static void virt_create_worldguard(WGCInfo *wgcinfo, int wgc_num,
+> +                                   DeviceState *irqchip)
+> +{
+> +    CPUState *cpu;
+> +
+> +    /* Global WG config */
+> +    riscv_worldguard_create(VIRT_WG_NWORLDS,
+> +                            VIRT_WG_TRUSTEDWID,
+> +                            VIRT_WG_HWBYPASS,
+> +                            VIRT_WG_TZCOMPAT);
+> +
+> +    /* Enable WG extension of each CPU */
+> +    CPU_FOREACH(cpu) {
+> +        CPURISCVState *env =3D cpu ? cpu_env(cpu) : NULL;
+> +
+> +        riscv_worldguard_apply_cpu(env->mhartid);
+> +    }
+> +
+> +    /* Create all wgChecker devices */
+> +    for (int i=3D0; i<wgc_num; i++) {
+> +        create_wgc(&wgcinfo[i], DEVICE(irqchip));
+> +    }
+> +}
+> +
+>  static void virt_machine_done(Notifier *notifier, void *data)
+>  {
+>      RISCVVirtState *s =3D container_of(notifier, RISCVVirtState,
+> @@ -1401,10 +1512,12 @@ static void virt_machine_done(Notifier *notifier,=
+ void *data)
+>  static void virt_machine_init(MachineState *machine)
+>  {
+>      const MemMapEntry *memmap =3D virt_memmap;
+> +    WGCInfo *wgcinfo =3D virt_wgcinfo;
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(machine);
+>      MemoryRegion *system_memory =3D get_system_memory();
+>      MemoryRegion *mask_rom =3D g_new(MemoryRegion, 1);
+>      DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+> +    SerialMM *uart;
+>      int i, base_hartid, hart_count;
+>      int socket_count =3D riscv_socket_count(machine);
+>
+> @@ -1420,6 +1533,11 @@ static void virt_machine_init(MachineState *machin=
+e)
+>          exit(1);
+>      }
+>
+> +    if (!tcg_enabled() && s->have_wg) {
+> +        error_report("'wg' is only available with TCG acceleration");
+> +        exit(1);
+> +    }
+> +
+>      /* Initialize sockets */
+>      mmio_irqchip =3D virtio_irqchip =3D pcie_irqchip =3D NULL;
+>      for (i =3D 0; i < socket_count; i++) {
+> @@ -1547,6 +1665,10 @@ static void virt_machine_init(MachineState *machin=
+e)
+>      memory_region_add_subregion(system_memory, memmap[VIRT_DRAM].base,
+>          machine->ram);
+>
+> +    if (tcg_enabled() && s->have_wg) {
+> +        wgc_append_child(&wgcinfo[WGC_DRAM], machine->ram, memmap[VIRT_D=
+RAM].base);
+> +    }
+> +
+>      /* boot rom */
+>      memory_region_init_rom(mask_rom, NULL, "riscv_virt_board.mrom",
+>                             memmap[VIRT_MROM].size, &error_fatal);
+> @@ -1574,10 +1696,16 @@ static void virt_machine_init(MachineState *machi=
+ne)
+>
+>      create_platform_bus(s, mmio_irqchip);
+>
+> -    serial_mm_init(system_memory, memmap[VIRT_UART0].base,
+> +    uart =3D serial_mm_init(system_memory, memmap[VIRT_UART0].base,
+>          0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+>          serial_hd(0), DEVICE_LITTLE_ENDIAN);
+>
+> +    if (tcg_enabled() && s->have_wg) {
+> +        wgc_append_child(&wgcinfo[WGC_UART],
+> +                         sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0)=
+,
+> +                         memmap[VIRT_UART0].base);
+> +    }
+> +
+>      sysbus_create_simple("goldfish_rtc", memmap[VIRT_RTC].base,
+>          qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
+>
+> @@ -1586,7 +1714,16 @@ static void virt_machine_init(MachineState *machin=
+e)
+>          pflash_cfi01_legacy_drive(s->flash[i],
+>                                    drive_get(IF_PFLASH, 0, i));
+>      }
+> -    virt_flash_map(s, system_memory);
+> +
+> +    if (tcg_enabled() && s->have_wg) {
+> +        virt_flash_map(s, system_memory, &wgcinfo[WGC_FLASH]);
+> +    } else {
+> +        virt_flash_map(s, system_memory, NULL);
+> +    }
+> +
+> +    if (tcg_enabled() && s->have_wg) {
+> +        virt_create_worldguard(wgcinfo, WGC_NUM, mmio_irqchip);
+> +    }
+>
+>      /* load/create device tree */
+>      if (machine->dtb) {
+> @@ -1614,6 +1751,20 @@ static void virt_machine_instance_init(Object *obj=
 )
->> >> >> >> > | static bool e1000_has_rxbufs(E1000State *s, size_t total_si=
-ze)
->> >> >> >> > | {
->> >> >> >> > |     int bufs;
->> >> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u=
-, s->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH=
-], s->mac_reg[RDT]);
->> >> >> >> > |+
->> >> >> >> > |     /* Fast-path short packets */
->> >> >> >> > |     if (total_size <=3D s->rxbuf_size) {
->> >> >> >> > |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->la=
-st_overrun)
->> >> >> >> > |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, =
-const struct iovec *iov, int iovcnt)
->> >> >> >> > |         s->rxbuf_min_shift)
->> >> >> >> > |         n |=3D E1000_ICS_RXDMT0;
->> >> >> >> > |
->> >> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u=
-, s->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH=
-], s->mac_reg[RDT]);
->> >> >> >> > |+
->> >> >> >> > -------------------------------------------------------------=
-----
->> >> >> >> >
->> >> >> >> > The last few logs of information when the network is down:
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLE=
-N] =3D 16384, s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDL=
-EN] =3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- RDT stays the same, RDH updates to 898, and 1 descriptor
->> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLE=
-N] =3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDL=
-EN] =3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- RDT stays the same, RDH updates to 899, and 1 descriptor
->> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLE=
-N] =3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDL=
-EN] =3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
->> >> >> >> > <- RDT stays the same, RDH updates to 900 , and 1 descriptor
->> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >
->> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLE=
-N] =3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
->> >> >> >> > <- The ring is full, according to e1000_has_rxbufs, because
->> >> >> >> > of the RDT update to 900 and equals RDH !
->> >> >> >>
->> >> >> >> Just to make sure I understand this, RDT=3D=3DRDH means the rin=
-g is empty I think?
->> >> >> >>
->> >> >> >>
->> >> >> >> See commit:
->> >> >> >>
->> >> >> >> commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
->> >> >> >> Author: Dmitry Fleytman <dmitry@daynix.com>
->> >> >> >> Date:   Fri Oct 19 07:56:55 2012 +0200
->> >> >> >>
->> >> >> >>     e1000: drop check_rxov, always treat RX ring with RDH =3D=
-=3D RDT as empty
->> >> >> >>
->> >> >> >>     Real HW always treats RX ring with RDH =3D=3D RDT as empty.
->> >> >> >>     Emulation is supposed to behave the same.
->> >> >> >
->> >> >> >
->> >> >> > Indeed, I'm confused :(,  the description in the comment claims =
-that RX
->> >> >> > rings with RDH =3D=3D RDT as empty, but in implementation, it tr=
-eats that as
->> >> >> > overrun.
->> >> >> >
->> >> >> > See the following 2 contexts:
->> >> >> >
->> >> >> > 1. e1000_can_receive:
->> >> >> > static bool e1000_can_receive(NetClientState *nc)
->> >> >> > {
->> >> >> >     E1000State *s =3D qemu_get_nic_opaque(nc);
->> >> >> >     // e1000_has_rxbufs return true means ring buffer has
->> >> >> >     // available descriptors to use for QEMU.
->> >> >> >     // false means ring buffer overrun and QEMU should queue the=
- packet
->> >> >> >     // and wait for the RDT update and available descriptors can=
- be used.
->> >> >> >
->> >> >> >     return e1000x_rx_ready(&s->parent_obj, s->mac_reg) &&
->> >> >> >         e1000_has_rxbufs(s, 1) && !timer_pending(s->flush_queue_=
-timer);
->> >> >> > }
->> >> >>
->> >> >> Well we had in e1000_has_rx_bufs
->> >> >>
->> >> >>     if (total_size <=3D s->rxbuf_size) {
->> >> >>         return s->mac_reg[RDH] !=3D s->mac_reg[RDT];
->> >> >>     }
->> >> >>
->> >> >> RDT!=3DRDH means RX ring has available descriptors for hardware?
->> >> >
->> >> >
->> >> > IMHO, Yes.
->> >>
->> >> Just to make sure we are on the same page, so
->> >>
->> >> RDT!=3DRDH, descriptors available for hardware
->> >> RDT=3D=3DRDH, descriptor ring is empty for hardware
->> >>
->> >>
->> >> That is currently what the code did. Seems nothing wrong, or anything
->> >> I missed here?
->> >
->> >
->> > There are two cases for RDT =3D=3D RDH.
->> >
->> > 1. Hardware has filled all available descriptors and overrun.
->> >    In this case, hardware cannot add any new packets to the ring.
->> >
->> > 2. Software has consumed all descriptors, and all the descriptors
->> >     on the ring can be used by hardware. (Let's name this case "empty.=
-")
->> >    In this case, hardware should keep putting new packets to the ring
->>
->> Well this seems not what spec said. See Figure 3-2, when RDT=3D=3DRDH,
->> nothing is owned by hardware. And this is what Dmitry said in the
->> commit mentioned above.
+>      s->acpi =3D ON_OFF_AUTO_AUTO;
+>  }
 >
+> +static bool virt_get_wg(Object *obj, Error **errp)
+> +{
+> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> +
+> +    return s->have_wg;
+> +}
+> +
+> +static void virt_set_wg(Object *obj, bool value, Error **errp)
+> +{
+> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> +
+> +    s->have_wg =3D value;
+> +}
+> +
+>  static char *virt_get_aia_guests(Object *obj, Error **errp)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> @@ -1794,6 +1945,12 @@ static void virt_machine_class_init(ObjectClass *o=
+c, void *data)
+>                                NULL, NULL);
+>      object_class_property_set_description(oc, "acpi",
+>                                            "Enable ACPI");
+> +
+> +    object_class_property_add_bool(oc, "wg", virt_get_wg,
+> +                                   virt_set_wg);
+> +    object_class_property_set_description(oc, "wg",
+> +                                              "Set on/off to enable/disa=
+ble the "
+> +                                              "RISC-V WorldGuard.");
+>  }
 >
-> Yes, this is the main cause of network interruptions. Hardware should
-> never touch the location of the descriptor that RDT points to. This is
-> what the specification declares. IMHO, it also implies that the descripto=
-r
-> referred to by the RDT has available packets.
+>  static const TypeInfo virt_machine_typeinfo =3D {
+> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> index 3db839160f..4d78702daf 100644
+> --- a/include/hw/riscv/virt.h
+> +++ b/include/hw/riscv/virt.h
+> @@ -57,6 +57,7 @@ struct RISCVVirtState {
+>      bool have_aclint;
+>      RISCVVirtAIAType aia_type;
+>      int aia_guests;
+> +    bool have_wg;
+>      char *oem_id;
+>      char *oem_table_id;
+>      OnOffAuto acpi;
+> @@ -84,12 +85,18 @@ enum {
+>      VIRT_PCIE_MMIO,
+>      VIRT_PCIE_PIO,
+>      VIRT_PLATFORM_BUS,
+> -    VIRT_PCIE_ECAM
+> +    VIRT_PCIE_ECAM,
+> +    VIRT_WGC_DRAM,
+> +    VIRT_WGC_FLASH,
+> +    VIRT_WGC_UART
+>  };
 >
-> In our case, hardware has not added any new packets to the descriptor,
-> and the expected behavior is that software never updates the RDT to
-> the location of that descriptor. But now, it does.
+>  enum {
+>      UART0_IRQ =3D 10,
+>      RTC_IRQ =3D 11,
+> +    WGC_DRAM_IRQ =3D 15,
+> +    WGC_FLASH_IRQ =3D 16,
+> +    WGC_UART_IRQ =3D 17,
+>      VIRTIO_IRQ =3D 1, /* 1 to 8 */
+>      VIRTIO_COUNT =3D 8,
+>      PCIE_IRQ =3D 0x20, /* 32 to 35 */
+> @@ -99,7 +106,7 @@ enum {
+>  #define VIRT_PLATFORM_BUS_NUM_IRQS 32
 >
-> If hardware and software both work as expected under the e1000
-> specification, the issue does not exist. I have no objection that the roo=
-t
-> cause is the Windows driver bug in e1000, and I'm not insisting that
-> QEMU should take the responsibility for fixing that.
+>  #define VIRT_IRQCHIP_NUM_MSIS 255
+> -#define VIRT_IRQCHIP_NUM_SOURCES 96
+> +#define VIRT_IRQCHIP_NUM_SOURCES 128
+>  #define VIRT_IRQCHIP_NUM_PRIO_BITS 3
+>  #define VIRT_IRQCHIP_MAX_GUESTS_BITS 3
+>  #define VIRT_IRQCHIP_MAX_GUESTS ((1U << VIRT_IRQCHIP_MAX_GUESTS_BITS) - =
+1U)
+> @@ -153,4 +160,10 @@ uint32_t imsic_num_bits(uint32_t count);
+>  #error "Can't accommodate all IMSIC groups in address space"
+>  #endif
 >
->>
->>
->> Which version of the driver did you use in the guest? (Or have you
->> tried to download the one from Intel website) I'm asking since e1000
->> support has been deprecated by Microsoft for years.
->
->
-> I use Windows Server 2019 and the driver version is 8.4.13.0.
-
-Is this the one you download from the Intel website?
-
->
-> Since Microsoft no longer supports e1000, as you already mentioned,
-> this patch merely offers a workaround.
-
-Is there a chance to switch to use e1000e, it has been actively
-maintained and supported.
-
-> Since some users still use
-> e1000 in production environments, it doesn't seem to have any side
-> effects.
-
-We need to make sure it matches the hardware behaviour. Otherwise it
-might break other operating systems. Looking at the history, we used
-to break e1000 on various operating systems: windows, BSD, minix,
-windriver ....
-
->
-> It would be really appreciated if the patch was given some thought.
-
-We would try to evaluate each patch carefully. Qemu is a function
-emulator so we need to make sure the function matches hardware
-behaviour before it can be merged.
-
-One way is to test via real hardware or involve Intel Engineers.
-
-Thanks
-
->
-> Thanks,
-> Yong
->
->>
->>
->> Thanks
->>
->> >
->> > But at the moment, the logic of e1000_has_rx_bufs acts exactly like it=
- was
->> > the first case, unable to differentiate between the two scenarios.
->> >
->> >>
->> >>
->> >> Thanks
->> >>
->> >> >
->> >> >>
->> >> >> Adding more people.
->> >> >>
->> >> >> Thanks
->> >> >>
->> >> >
->> >> >
->> >> > --
->> >> > Best regards
->> >>
->> >
->> > Yong
->> >
->> > --
->> > Best regards
->>
->
->
+> +/* WorldGuard */
+> +#define VIRT_WG_NWORLDS         4
+> +#define VIRT_WG_TRUSTEDWID      3
+> +#define VIRT_WG_HWBYPASS        true
+> +#define VIRT_WG_TZCOMPAT        false
+> +
+>  #endif
 > --
-> Best regards
-
+> 2.17.1
+>
+>
 
