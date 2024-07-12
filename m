@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A30C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E231EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSBJt-0007dn-VF; Fri, 12 Jul 2024 04:07:57 -0400
+	id 1sSBP4-0007z9-RK; Fri, 12 Jul 2024 04:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <simon.hamelin@grenoble-inp.org>)
- id 1sSBJe-0007cd-4D
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:07:47 -0400
-Received: from smtpout02-ext4.partage.renater.fr ([194.254.241.31])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSBP2-0007yb-L5
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <simon.hamelin@grenoble-inp.org>)
- id 1sSBJZ-0008D3-Dr
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:07:41 -0400
-Received: from zmtaauth06.partage.renater.fr (zmtaauth06.partage.renater.fr
- [194.254.241.27])
- by smtpout20.partage.renater.fr (Postfix) with ESMTP id CB783BFA41;
- Fri, 12 Jul 2024 10:07:24 +0200 (CEST)
-Received: from zmtaauth06.partage.renater.fr (localhost [127.0.0.1])
- by zmtaauth06.partage.renater.fr (Postfix) with ESMTPS id 3DD631000C5;
- Fri, 12 Jul 2024 10:06:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zmtaauth06.partage.renater.fr (Postfix) with ESMTP id 2B171100133;
- Fri, 12 Jul 2024 10:06:56 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth06.partage.renater.fr 2B171100133
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grenoble-inp.org;
- s=F42A61D9-9621-4693-8E8E-830FB5F1ED6E; t=1720771616;
- bh=tg4ElJI4rbg5W6KTWlk83y1/vYb3X91+xOnkQDd+KlA=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=f5mYmO+YMYpKUGR21LVY+ZuVjndqNXmJMbdP5fcly9IiT5uNQsfLxzUEVvwhs76vp
- ZGVxC3FL6q6PuuFlUplNr59yT6wih+VPldYcxMhYotgKs9CmFG4U4YtNMR84p4kj8F
- qY1Dx4o9hAsH2v4PS3Bvb321MlZ+wRnM9lsc8/Yfs5NHczlVBD4MgAle7gqTJeLift
- PvJS1/NR748F/qtkjCM9Sm8q/6XRHP5aoVhCBqx7gVkXgWVHSYJYyQU/HGTftQgiMH
- 15B+V6YkPr0V1IML19SI9r8ED+BWnDiOis5VVFqek4mwXJp3hAFIcTDIzY3YyljeZw
- EJ+i5VAKNRE0g==
-Received: from zmtaauth06.partage.renater.fr ([127.0.0.1])
- by localhost (zmtaauth06.partage.renater.fr [127.0.0.1]) (amavis, port 10026)
- with ESMTP id HdzQDiwiShER; Fri, 12 Jul 2024 10:06:56 +0200 (CEST)
-Received: from 188.231.11.184 (unknown [194.254.241.249])
- by zmtaauth06.partage.renater.fr (Postfix) with ESMTPA id B51E81000C5;
- Fri, 12 Jul 2024 10:06:55 +0200 (CEST)
-From: Simon Hamelin <simon.hamelin@grenoble-inp.org>
-To: qemu-devel@nongnu.org
-Cc: Simon Hamelin <simon.hamelin@grenoble-inp.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3] plugins/stoptrigger: TCG plugin to stop execution under
- conditions
-Date: Fri, 12 Jul 2024 10:03:55 +0200
-Message-ID: <20240712080354.11386-2-simon.hamelin@grenoble-inp.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSBP0-0001uq-Jc
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720771991;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KdY4rHnNa3Gybb1KTxgIrMl6Q9u1JfXmSlKRyPb9kbc=;
+ b=A3BFgYKtR8scdlewvJ3rJOfcxrbvVLpJwLVlCB0pWWdgIFzNAz0TdN8inf/INSEGRbk4kH
+ Dnq9HLPe1W8HoRSZzZiyxeflKouA21n1oB/M9d8d6q6dk68vPBK6lVu8Tu6tJiimylHVPm
+ iN9GIrwGR8mVk71xetioS+e8Ipvlmeg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-363-bBxfKlPNMAOz3F6kXgSk5Q-1; Fri,
+ 12 Jul 2024 04:13:06 -0400
+X-MC-Unique: bBxfKlPNMAOz3F6kXgSk5Q-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 990401955F44; Fri, 12 Jul 2024 08:13:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 194C01956066; Fri, 12 Jul 2024 08:13:02 +0000 (UTC)
+Date: Fri, 12 Jul 2024 09:12:59 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH 04/14] qapi: add a 'command-features' pragma
+Message-ID: <ZpDlizzbaXk4pa0U@redhat.com>
+References: <20240604153242.251334-1-berrange@redhat.com>
+ <20240604153242.251334-5-berrange@redhat.com>
+ <87r0bzuj7d.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-Virus-Scanned: clamav-milter 0.103.8 at clamav01
-X-Virus-Status: Clean
-X-Renater-Ptge-SpamState: clean
-X-Renater-Ptge-SpamScore: -100
-X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgeeftddrfeehgdduvdelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecutffgpfetvffgtfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepufhimhhonhcujfgrmhgvlhhinhcuoehsihhmohhnrdhhrghmvghlihhnsehgrhgvnhhosghlvgdqihhnphdrohhrgheqnecuggftrfgrthhtvghrnheptddtudeigfdtleefheeutddvuedukefhhfffkedukefhtdduleffvdegteelteefnecukfhppeduleegrddvheegrddvgedurddvgeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepudelgedrvdehgedrvdeguddrvdegledphhgvlhhopedukeekrddvfedurdduuddrudekgedpmhgrihhlfhhrohhmpehsihhmohhnrdhhrghmvghlihhnsehgrhgvnhhosghlvgdqihhnphdrohhrghdpnhgspghrtghpthhtohepkedprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepshhimhhonhdrhhgrmhgvlhhinhesghhrvghnohgslhgvqdhinhhprdhorhhgpdhrtghpthhtohepvghrughnrgigvgestghrrghnshdrohhrghdprhgtphhtthhopegrlhgvgidrsggvnhhnvggvsehlihhnrghrohdrohhrghdprhgtphhtthhopehmrgdrmhgrnhguohhurhhrsehg
- mhgrihhlrdgtohhmpdhrtghpthhtohepphhivghrrhhitghkrdgsohhuvhhivghrsehlihhnrghrohdrohhrgh
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=194.254.241.31;
- envelope-from=simon.hamelin@grenoble-inp.org;
- helo=smtpout02-ext4.partage.renater.fr
-X-Spam_score_int: 3
-X-Spam_score: 0.3
-X-Spam_bar: /
-X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_HELO_IP_MISMATCH=2.368,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87r0bzuj7d.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,268 +85,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This new plugin allows to stop emulation using conditions on the
-emulation state. By setting this plugin arguments, it is possible
-to set an instruction count limit and/or trigger address(es) to stop at.
-The code returned at emulation exit can be customized.
+On Fri, Jul 12, 2024 at 10:07:34AM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > The 'command-features' pragma allows for defining additional
+> > special features that are unique to a particular QAPI schema
+> > instance and its implementation.
+> 
+> So far, we have special features (predefined, known to the generator and
+> treated specially), and normal features (user-defined, not known to the
+> generator).  You create a new kind in between: user-defined, not known
+> to the generator, yet treated specially (I guess?).  Hmm.
+> 
+> Could you at least hint at indented use here?  What special treatment do
+> you have in mind?
 
-This plugin demonstrates how someone could stop QEMU execution.
-It could be used for research purposes to launch some code and
-deterministically stop it and understand where its execution flow went.
+Essentially, these features are a way to attach metadata to commands that
+the server side impl can later query. This eliminates the need to hardcode
+lists of commands, such as in QGA which hardcodes a list of commands which
+are safe to use when filesystems are frozen. This is illustrated later in
+this series.
 
-Co-authored-by: Alexandre Iooss <erdnaxe@crans.org>
-Signed-off-by: Simon Hamelin <simon.hamelin@grenoble-inp.org>
-Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
----
-v2:
-  - use a scoreboard for counting instructions
-  - no longer hook each instruction to exit at given address
-  - add `exit_emulation` function for future use case such as stopping th=
-e VM or triggering a gdbstub exception
+> 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  scripts/qapi/parser.py | 2 ++
+> >  scripts/qapi/source.py | 2 ++
+> >  2 files changed, 4 insertions(+)
+> >
+> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> > index 7b13a583ac..36a9046243 100644
+> > --- a/scripts/qapi/parser.py
+> > +++ b/scripts/qapi/parser.py
+> > @@ -243,6 +243,8 @@ def check_list_str(name: str, value: object) -> List[str]:
+> >              pragma.documentation_exceptions = check_list_str(name, value)
+> >          elif name == 'member-name-exceptions':
+> >              pragma.member_name_exceptions = check_list_str(name, value)
+> > +        elif name == 'command-features':
+> > +            pragma.command_features = check_list_str(name, value)
+> >          else:
+> >              raise QAPISemError(info, "unknown pragma '%s'" % name)
+> >  
+> > diff --git a/scripts/qapi/source.py b/scripts/qapi/source.py
+> > index 7b379fdc92..07c2958ac4 100644
+> > --- a/scripts/qapi/source.py
+> > +++ b/scripts/qapi/source.py
+> > @@ -28,6 +28,8 @@ def __init__(self) -> None:
+> >          self.documentation_exceptions: List[str] = []
+> >          # Types whose member names may violate case conventions
+> >          self.member_name_exceptions: List[str] = []
+> > +        # Arbitrary extra features recorded against commands
+> > +        self.command_features: List[str] = []
+> >  
+> >  
+> >  class QAPISourceInfo:
+> 
 
-v3:
-  - add missing glib include
-  - refactor code to print exit address when icount is reached
-
- contrib/plugins/Makefile      |   1 +
- contrib/plugins/stoptrigger.c | 158 ++++++++++++++++++++++++++++++++++
- docs/devel/tcg-plugins.rst    |  22 +++++
- 3 files changed, 181 insertions(+)
- create mode 100644 contrib/plugins/stoptrigger.c
-
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-index 449ead1130..98a89d5c40 100644
---- a/contrib/plugins/Makefile
-+++ b/contrib/plugins/Makefile
-@@ -28,6 +28,7 @@ NAMES +=3D hwprofile
- NAMES +=3D cache
- NAMES +=3D drcov
- NAMES +=3D ips
-+NAMES +=3D stoptrigger
-=20
- ifeq ($(CONFIG_WIN32),y)
- SO_SUFFIX :=3D .dll
-diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.=
-c
-new file mode 100644
-index 0000000000..490afbcbaf
---- /dev/null
-+++ b/contrib/plugins/stoptrigger.c
-@@ -0,0 +1,158 @@
-+/*
-+ * Copyright (C) 2024, Simon Hamelin <simon.hamelin@grenoble-inp.org>
-+ *
-+ * Stop execution once a given address is reached or if the
-+ * count of executed instructions reached a specified limit
-+ *
-+ * License: GNU GPL, version 2 or later.
-+ *   See the COPYING file in the top-level directory.
-+ */
-+
-+#include <assert.h>
-+#include <glib.h>
-+#include <inttypes.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
-+
-+/* Scoreboard to track executed instructions count */
-+typedef struct {
-+    uint64_t insn_count;
-+} InstructionsCount;
-+static struct qemu_plugin_scoreboard *insn_count_sb;
-+static qemu_plugin_u64 insn_count;
-+
-+static uint64_t icount;
-+static int icount_exit_code;
-+
-+static bool exit_on_icount;
-+static bool exit_on_address;
-+
-+/* Map trigger addresses to exit code */
-+static GHashTable *addrs_ht;
-+static GMutex addrs_ht_lock;
-+
-+static void exit_emulation(int return_code, char *message)
-+{
-+    qemu_plugin_outs(message);
-+    g_free(message);
-+    exit(return_code);
-+}
-+
-+static void exit_icount_reached(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t insn_vaddr =3D GPOINTER_TO_UINT(udata);
-+    char *msg =3D g_strdup_printf("icount reached at 0x%" PRIx64 ", exit=
-ing\n",
-+                                insn_vaddr);
-+
-+    exit_emulation(icount_exit_code, msg);
-+}
-+
-+static void exit_address_reached(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t insn_vaddr =3D GPOINTER_TO_UINT(udata);
-+    char *msg =3D g_strdup_printf("0x%" PRIx64 " reached, exiting\n", in=
-sn_vaddr);
-+    int exit_code;
-+
-+    g_mutex_lock(&addrs_ht_lock);
-+    exit_code =3D GPOINTER_TO_INT(
-+        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
-+    g_mutex_unlock(&addrs_ht_lock);
-+
-+    exit_emulation(exit_code, msg);
-+}
-+
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb=
-)
-+{
-+    size_t tb_n =3D qemu_plugin_tb_n_insns(tb);
-+    for (size_t i =3D 0; i < tb_n; i++) {
-+        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i)=
-;
-+        gpointer insn_vaddr =3D GUINT_TO_POINTER(qemu_plugin_insn_vaddr(=
-insn));
-+
-+        if (exit_on_icount) {
-+            /* Increment and check scoreboard for each instruction */
-+            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+            qemu_plugin_register_vcpu_insn_exec_cond_cb(
-+                insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
-+                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr)=
-;
-+        }
-+
-+        if (exit_on_address) {
-+            g_mutex_lock(&addrs_ht_lock);
-+            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
-+                /* Exit triggered by address */
-+                qemu_plugin_register_vcpu_insn_exec_cb(
-+                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
-+                    insn_vaddr);
-+            }
-+            g_mutex_unlock(&addrs_ht_lock);
-+        }
-+    }
-+}
-+
-+static void plugin_exit(qemu_plugin_id_t id, void *p)
-+{
-+    g_hash_table_destroy(addrs_ht);
-+    qemu_plugin_scoreboard_free(insn_count_sb);
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info, int =
-argc,
-+                                           char **argv)
-+{
-+    addrs_ht =3D g_hash_table_new(NULL, g_direct_equal);
-+
-+    insn_count_sb =3D qemu_plugin_scoreboard_new(sizeof(InstructionsCoun=
-t));
-+    insn_count =3D qemu_plugin_scoreboard_u64_in_struct(
-+        insn_count_sb, InstructionsCount, insn_count);
-+
-+    for (int i =3D 0; i < argc; i++) {
-+        char *opt =3D argv[i];
-+        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
-+        if (g_strcmp0(tokens[0], "icount") =3D=3D 0) {
-+            g_auto(GStrv) icount_tokens =3D g_strsplit(tokens[1], ":", 2=
-);
-+            icount =3D g_ascii_strtoull(icount_tokens[0], NULL, 0);
-+            if (icount < 1 || g_strrstr(icount_tokens[0], "-") !=3D NULL=
-) {
-+                fprintf(stderr,
-+                        "icount parsing failed: '%s' must be a positive =
-"
-+                        "integer\n",
-+                        icount_tokens[0]);
-+                return -1;
-+            }
-+            if (icount_tokens[1]) {
-+                icount_exit_code =3D g_ascii_strtoull(icount_tokens[1], =
-NULL, 0);
-+            }
-+            exit_on_icount =3D true;
-+        } else if (g_strcmp0(tokens[0], "addr") =3D=3D 0) {
-+            g_auto(GStrv) addr_tokens =3D g_strsplit(tokens[1], ":", 2);
-+            uint64_t exit_addr =3D g_ascii_strtoull(addr_tokens[0], NULL=
-, 0);
-+            int exit_code =3D 0;
-+            if (addr_tokens[1]) {
-+                exit_code =3D g_ascii_strtoull(addr_tokens[1], NULL, 0);
-+            }
-+            g_mutex_lock(&addrs_ht_lock);
-+            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
-+                                GINT_TO_POINTER(exit_code));
-+            g_mutex_unlock(&addrs_ht_lock);
-+            exit_on_address =3D true;
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    if (!exit_on_icount && !exit_on_address) {
-+        fprintf(stderr, "'icount' or 'addr' argument missing\n");
-+        return -1;
-+    }
-+
-+    /* Register translation block and exit callbacks */
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-+
-+    return 0;
-+}
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index f7d7b9e3a4..954623f9bf 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -642,6 +642,28 @@ The plugin has a number of arguments, all of them ar=
-e optional:
-   configuration arguments implies ``l2=3Don``.
-   (default: N =3D 2097152 (2MB), B =3D 64, A =3D 16)
-=20
-+- contrib/plugins/stoptrigger.c
-+
-+The stoptrigger plugin allows to setup triggers to stop emulation.
-+It can be used for research purposes to launch some code and precisely s=
-top it
-+and understand where its execution flow went.
-+
-+Two types of triggers can be configured: a count of instructions to stop=
- at,
-+or an address to stop at. Multiple triggers can be set at once.
-+
-+By default, QEMU will exit with return code 0. A custom return code can =
-be
-+configured for each trigger using ``:CODE`` syntax.
-+
-+For example, to stop at the 20-th instruction with return code 41, at ad=
-dress
-+0xd4 with return code 0 or at address 0xd8 with return code 42::
-+
-+  $ qemu-system-aarch64 $(QEMU_ARGS) \
-+    -plugin ./contrib/plugins/libstoptrigger.so,icount=3D20:41,addr=3D0x=
-d4,addr=3D0xd8:42 -d plugin
-+
-+The plugin will log the reason of exit, for example::
-+
-+  0xd4 reached, exiting
-+
- Plugin API
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=20
---=20
-2.43.0
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
