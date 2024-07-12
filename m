@@ -4,75 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D4CC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F525C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGUy-0001Gd-MS; Fri, 12 Jul 2024 09:39:44 -0400
+	id 1sSGVk-0004Tv-06; Fri, 12 Jul 2024 09:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGUw-00017V-Ei
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:39:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
+ id 1sSGVj-0004QP-01; Fri, 12 Jul 2024 09:40:31 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGUt-0000SQ-75
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720791576;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qhiafc0n/aHKsK3+/E4evBoBO1Ro70y/lQUVyFjpcws=;
- b=RJUFPvJS9JUacqWneUMm9nvAnU0ryJ24wBnFuCxTy2sfm2ZIp8VjueHgMt2fmF+P7N1yH4
- N0iMTOqED0iZBcmLOhyroAn+k7vcezzD5SyKHBv7PAmY+D5oPkIUHQOOOf/hf70FZQogXe
- R0lS62TKgz8OmC4b8vYMsBScZsZr2Qc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-Pf5zDevFO7ihs-HPMDdubw-1; Fri,
- 12 Jul 2024 09:39:34 -0400
-X-MC-Unique: Pf5zDevFO7ihs-HPMDdubw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
+ id 1sSGVg-0000hW-4P; Fri, 12 Jul 2024 09:40:30 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WLCQY5wGSz4wc4;
+ Fri, 12 Jul 2024 23:40:21 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BA97196E08E; Fri, 12 Jul 2024 13:39:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.56])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 752953000181; Fri, 12 Jul 2024 13:39:29 +0000 (UTC)
-Date: Fri, 12 Jul 2024 14:39:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Hyman Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] docs/devel: Add introduction to LUKS volume with
- detached header
-Message-ID: <ZpEyDiffBIcWoGZU@redhat.com>
-References: <c2049499aa05758b4cf18dcec942694ed454a980.1708358310.git.yong.huang@smartx.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WLCQW5bJMz4wc1;
+ Fri, 12 Jul 2024 23:40:19 +1000 (AEST)
+Message-ID: <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
+Date: Fri, 12 Jul 2024 15:40:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c2049499aa05758b4cf18dcec942694ed454a980.1708358310.git.yong.huang@smartx.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/19] ppc/pnv: Move timebase state into PnvCore
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+References: <20240712120247.477133-1-npiggin@gmail.com>
+ <20240712120247.477133-4-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240712120247.477133-4-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=Ecin=OM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,187 +62,278 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 12:04:42AM +0800, Hyman Huang wrote:
-> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> ---
->  MAINTAINERS                         |   1 +
->  docs/devel/luks-detached-header.rst | 182 ++++++++++++++++++++++++++++
->  2 files changed, 183 insertions(+)
->  create mode 100644 docs/devel/luks-detached-header.rst
+On 7/12/24 14:02, Nicholas Piggin wrote:
+> The timebase state machine is per per-core state and can be driven
+> by any thread in the core. It is currently implemented as a hack
+> where the state is in a CPU structure and only thread 0's state is
+> accessed by the chiptod, which limits programming the timebase
+> side of the state machine to thread 0 of a core.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a24c2b51b6..e8b03032ab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3422,6 +3422,7 @@ Detached LUKS header
->  M: Hyman Huang <yong.huang@smartx.com>
->  S: Maintained
->  F: tests/qemu-iotests/tests/luks-detached-header
-> +F: docs/devel/luks-detached-header.rst
->  
->  D-Bus
->  M: Marc-André Lureau <marcandre.lureau@redhat.com>
-> diff --git a/docs/devel/luks-detached-header.rst b/docs/devel/luks-detached-header.rst
-> new file mode 100644
-> index 0000000000..15e9ccde1d
-> --- /dev/null
-> +++ b/docs/devel/luks-detached-header.rst
+> Move the state out into PnvCore and share it among all threads.
+> 
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   include/hw/ppc/pnv_core.h    | 17 ++++++++++++
+>   target/ppc/cpu.h             | 21 --------------
+>   hw/ppc/pnv_chiptod.c         |  7 ++---
+>   target/ppc/timebase_helper.c | 53 ++++++++++++++++++++----------------
+>   4 files changed, 49 insertions(+), 49 deletions(-)
+> 
+> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+> index 29cab9dfd9..ffec8516ae 100644
+> --- a/include/hw/ppc/pnv_core.h
+> +++ b/include/hw/ppc/pnv_core.h
+> @@ -25,6 +25,20 @@
+>   #include "hw/ppc/pnv.h"
+>   #include "qom/object.h"
+>   
+> +/* Per-core ChipTOD / TimeBase state */
+> +typedef struct PnvCoreTODState {
+> +    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
+> +    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+> +
+> +    /*
+> +     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
+> +     * is polled for such events. These are just used to ensure firmware
+> +     * performs the polling at least a few times.
+> +     */
+> +    int tb_state_timer;
+> +    int tb_sync_pulse_timer;
+> +} PnvCoreTODState;
+> +
+>   #define TYPE_PNV_CORE "powernv-cpu-core"
+>   OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
+>                       PNV_CORE)
+> @@ -38,6 +52,9 @@ struct PnvCore {
+>       uint32_t pir;
+>       uint32_t hwid;
+>       uint64_t hrmor;
+> +
+> +    PnvCoreTODState tod_state;
+> +
+>       PnvChip *chip;
+>   
+>       MemoryRegion xscom_regs;
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index 2015e603d4..c78d6ca91a 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1196,21 +1196,6 @@ DEXCR_ASPECT(SRAPD, 4)
+>   DEXCR_ASPECT(NPHIE, 5)
+>   DEXCR_ASPECT(PHIE, 6)
+>   
+> -/*****************************************************************************/
+> -/* PowerNV ChipTOD and TimeBase State Machine */
+> -struct pnv_tod_tbst {
+> -    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
+> -    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+> -
+> -    /*
+> -     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
+> -     * is polled for such events. These are just used to ensure firmware
+> -     * performs the polling at least a few times.
+> -     */
+> -    int tb_state_timer;
+> -    int tb_sync_pulse_timer;
+> -};
+> -
+>   /*****************************************************************************/
+>   /* The whole PowerPC CPU context */
+>   
+> @@ -1291,12 +1276,6 @@ struct CPUArchState {
+>       uint32_t tlb_need_flush; /* Delayed flush needed */
+>   #define TLB_NEED_LOCAL_FLUSH   0x1
+>   #define TLB_NEED_GLOBAL_FLUSH  0x2
+> -
+> -#if defined(TARGET_PPC64)
+> -    /* PowerNV chiptod / timebase facility state. */
+> -    /* Would be nice to put these into PnvCore */
+> -    struct pnv_tod_tbst pnv_tod_tbst;
+> -#endif
+>   #endif
+>   
+>       /* Other registers */
+> diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+> index 3831a72101..1e41fe557a 100644
+> --- a/hw/ppc/pnv_chiptod.c
+> +++ b/hw/ppc/pnv_chiptod.c
+> @@ -364,8 +364,7 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+>               qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
+>                             " TOD_MOVE_TOD_TO_TB_REG with no slave target\n");
+>           } else {
+> -            PowerPCCPU *cpu = chiptod->slave_pc_target->threads[0];
+> -            CPUPPCState *env = &cpu->env;
+> +            PnvCore *pc = chiptod->slave_pc_target;
+>   
+>               /*
+>                * Moving TOD to TB will set the TB of all threads in a
+> @@ -377,8 +376,8 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+>                * thread 0.
+>                */
+>   
+> -            if (env->pnv_tod_tbst.tb_ready_for_tod) {
+> -                env->pnv_tod_tbst.tod_sent_to_tb = 1;
+> +            if (pc->tod_state.tb_ready_for_tod) {
+> +                pc->tod_state.tod_sent_to_tb = 1;
+>               } else {
+>                   qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
+>                                 " TOD_MOVE_TOD_TO_TB_REG with TB not ready to"
+> diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
+> index 39d397416e..52f9e6669c 100644
+> --- a/target/ppc/timebase_helper.c
+> +++ b/target/ppc/timebase_helper.c
+> @@ -19,6 +19,7 @@
+>   #include "qemu/osdep.h"
+>   #include "cpu.h"
+>   #include "hw/ppc/ppc.h"
+> +#include "hw/ppc/pnv_core.h"
 
-The new file neeeds adding to an index. We don't have anywhere for crypto
-yet, so I'm starting a crypto section thus:
+I am afraid this header file is pulling too much definitions for
+qemu-user. It breaks compile.
 
-    diff --git a/docs/devel/crypto.rst b/docs/devel/crypto.rst
-    new file mode 100644
-    index 0000000000..39b1c910e7
-    --- /dev/null
-    +++ b/docs/devel/crypto.rst
-    @@ -0,0 +1,10 @@
-    +.. _crypto-ref:
-    +
-    +====================
-    +Cryptography in QEMU
-    +====================
-    +
-    +.. toctree::
-    +   :maxdepth: 2
-    +
-    +   luks-detached-header
-    diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-    index 5636e9cf1d..4ac7725d72 100644
-    --- a/docs/devel/index-internals.rst
-    +++ b/docs/devel/index-internals.rst
-    @@ -20,3 +20,4 @@ Details about QEMU's various subsystems including how to add features to them.
-        vfio-iommufd
-        writing-monitor-commands
-        virtio-backends
-    +   crypto
+Thanks,
 
+C.
 
-> @@ -0,0 +1,182 @@
-> +================================
-> +LUKS volume with detached header
-> +================================
+>   #include "exec/helper-proto.h"
+>   #include "exec/exec-all.h"
+>   #include "qemu/log.h"
+> @@ -298,8 +299,17 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
+>       }
+>   }
+>   
+> +static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
+> +{
+> +    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
 > +
-> +Introduction
-> +============
+> +    return &pc->tod_state;
+> +}
 > +
-> +This document gives an overview of the design of LUKS volume with detached
-> +header and how to use it.
-> +
-> +Background
-> +==========
-> +
-> +The LUKS format has ability to store the header in a separate volume from
-> +the payload. We could extend the LUKS driver in QEMU to support this use
-> +case.
-> +
-> +Normally a LUKS volume has a layout:
-> +
-> +::
-> +
-> +         +-----------------------------------------------+
-> +         |         |                |                    |
-> + disk    | header  |  key material  |  disk payload data |
-> +         |         |                |                    |
-> +         +-----------------------------------------------+
-> +
-> +With a detached LUKS header, you need 2 disks so getting:
-> +
-> +::
-> +
-> +         +--------------------------+
-> + disk1   |   header  | key material |
-> +         +--------------------------+
-> +         +---------------------+
-> + disk2   |  disk payload data  |
-> +         +---------------------+
-> +
-> +There are a variety of benefits to doing this:
-> +
-> + * Secrecy - the disk2 cannot be identified as containing LUKS
-> +             volume since there's no header
-> + * Control - if access to the disk1 is restricted, then even
-> +             if someone has access to disk2 they can't unlock
-> +             it. Might be useful if you have disks on NFS but
-> +             want to restrict which host can launch a VM
-> +             instance from it, by dynamically providing access
-> +             to the header to a designated host
-> + * Flexibility - your application data volume may be a given
-> +                 size and it is inconvenient to resize it to
-> +                 add encryption.You can store the LUKS header
-> +                 separately and use the existing storage
-> +                 volume for payload
-> + * Recovery - corruption of a bit in the header may make the
-> +              entire payload inaccessible. It might be
-> +              convenient to take backups of the header. If
-> +              your primary disk header becomes corrupt, you
-> +              can unlock the data still by pointing to the
-> +              backup detached header
-> +
-> +Architecture
-> +============
-> +
-> +Take the qcow2 encryption, for example. The architecture of the
-> +LUKS volume with detached header is shown in the diagram below.
-> +
-> +There are two children of the root node: a file and a header.
-> +Data from the disk payload is stored in the file node. The
-> +LUKS header and key material are located in the header node,
-> +as previously mentioned.
-> +
-> +::
-> +
-> +                       +-----------------------------+
-> +  Root node            |          foo[luks]          |
-> +                       +-----------------------------+
-> +                          |                       |
-> +                     file |                header |
-> +                          |                       |
-> +               +---------------------+    +------------------+
-> +  Child node   |payload-format[qcow2]|    |header-format[raw]|
-> +               +---------------------+    +------------------+
-> +                          |                       |
-> +                     file |                 file  |
-> +                          |                       |
-> +               +----------------------+  +---------------------+
-> +  Child node   |payload-protocol[file]|  |header-protocol[file]|
-> +               +----------------------+  +---------------------+
-> +                          |                       |
-> +                          |                       |
-> +                          |                       |
-> +                     Host storage            Host storage
-> +
-> +Usage
-> +=====
-> +
-> +Create a LUKS disk with a detached header using qemu-img
-> +--------------------------------------------------------
-> +
-> +Shell commandline::
-> +
-> +# qemu-img create --object secret,id=sec0,data=abc123 -f luks \
-> +> -o cipher-alg=aes-256,cipher-mode=xts -o key-secret=sec0 \
-> +> -o detached-header=true test-header.img
-> +# qemu-img create -f qcow2 test-payload.qcow2 200G
-> +# qemu-img info 'json:{"driver":"luks","file":{"filename": \
-> +> "test-payload.img"},"header":{"filename":"test-header.img"}}'
-
-This needs indentation by 2 spaces, and the ">" can be dropped.
-The same for all examples that follow.
-
-I'm going to make those changes and queue this patch, since
-they're trivial.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   static void tb_state_machine_step(CPUPPCState *env)
+>   {
+> +    PowerPCCPU *cpu = env_archcpu(env);
+> +    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
+>       uint64_t tfmr = env->spr[SPR_TFMR];
+>       unsigned int tbst = tfmr_get_tb_state(tfmr);
+>   
+> @@ -307,15 +317,15 @@ static void tb_state_machine_step(CPUPPCState *env)
+>           return;
+>       }
+>   
+> -    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
+> -        env->pnv_tod_tbst.tb_sync_pulse_timer--;
+> +    if (tod_state->tb_sync_pulse_timer) {
+> +        tod_state->tb_sync_pulse_timer--;
+>       } else {
+>           tfmr |= TFMR_TB_SYNC_OCCURED;
+>           write_tfmr(env, tfmr);
+>       }
+>   
+> -    if (env->pnv_tod_tbst.tb_state_timer) {
+> -        env->pnv_tod_tbst.tb_state_timer--;
+> +    if (tod_state->tb_state_timer) {
+> +        tod_state->tb_state_timer--;
+>           return;
+>       }
+>   
+> @@ -332,20 +342,20 @@ static void tb_state_machine_step(CPUPPCState *env)
+>       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
+>           if (tbst == TBST_SYNC_WAIT) {
+>               tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
+> -            env->pnv_tod_tbst.tb_state_timer = 3;
+> +            tod_state->tb_state_timer = 3;
+>           } else if (tbst == TBST_GET_TOD) {
+> -            if (env->pnv_tod_tbst.tod_sent_to_tb) {
+> +            if (tod_state->tod_sent_to_tb) {
+>                   tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
+>                   tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
+> -                env->pnv_tod_tbst.tb_ready_for_tod = 0;
+> -                env->pnv_tod_tbst.tod_sent_to_tb = 0;
+> +                tod_state->tb_ready_for_tod = 0;
+> +                tod_state->tod_sent_to_tb = 0;
+>               }
+>           } else {
+>               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
+>                             "state machine in invalid state 0x%x\n", tbst);
+>               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+>               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
+> +            tod_state->tb_ready_for_tod = 0;
+>           }
+>       }
+>   
+> @@ -361,6 +371,8 @@ target_ulong helper_load_tfmr(CPUPPCState *env)
+>   
+>   void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+>   {
+> +    PowerPCCPU *cpu = env_archcpu(env);
+> +    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
+>       uint64_t tfmr = env->spr[SPR_TFMR];
+>       uint64_t clear_on_write;
+>       unsigned int tbst = tfmr_get_tb_state(tfmr);
+> @@ -384,14 +396,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+>        * after the second mfspr.
+>        */
+>       tfmr &= ~TFMR_TB_SYNC_OCCURED;
+> -    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
+> -
+> -    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
+> -        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
+> -        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
+> -                                 "driven by thread 0\n");
+> -        goto out;
+> -    }
+> +    tod_state->tb_sync_pulse_timer = 1;
+>   
+>       if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
+>                           (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
+> @@ -399,7 +404,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+>                                          "MOVE_CHIP_TOD_TO_TB both set\n");
+>           tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+>           tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
+> +        tod_state->tb_ready_for_tod = 0;
+>           goto out;
+>       }
+>   
+> @@ -413,8 +418,8 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+>           tfmr &= ~TFMR_LOAD_TOD_MOD;
+>           tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
+>           tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
+> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
+> -        env->pnv_tod_tbst.tod_sent_to_tb = 0;
+> +        tod_state->tb_ready_for_tod = 0;
+> +        tod_state->tod_sent_to_tb = 0;
+>           goto out;
+>       }
+>   
+> @@ -427,19 +432,19 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+>   
+>       if (tfmr & TFMR_LOAD_TOD_MOD) {
+>           /* Wait for an arbitrary 3 mfspr until the next state transition. */
+> -        env->pnv_tod_tbst.tb_state_timer = 3;
+> +        tod_state->tb_state_timer = 3;
+>       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
+>           if (tbst == TBST_NOT_SET) {
+>               tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
+> -            env->pnv_tod_tbst.tb_ready_for_tod = 1;
+> -            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
+> +            tod_state->tb_ready_for_tod = 1;
+> +            tod_state->tb_state_timer = 3; /* arbitrary */
+>           } else {
+>               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
+>                                              "not in TB not set state 0x%x\n",
+>                                              tbst);
+>               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+>               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
+> +            tod_state->tb_ready_for_tod = 0;
+>           }
+>       }
+>   
 
 
