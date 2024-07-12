@@ -4,62 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E25C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5529AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFTE-00061p-KR; Fri, 12 Jul 2024 08:33:52 -0400
+	id 1sSF0A-0005nn-0L; Fri, 12 Jul 2024 08:03:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSFT7-0005dR-Bt; Fri, 12 Jul 2024 08:33:46 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSFSz-0005L2-AS; Fri, 12 Jul 2024 08:33:42 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:a52d:0:640:f75d:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D234361252;
- Fri, 12 Jul 2024 15:33:29 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:0:419:5fb9:9623:463f:792c] (unknown
- [2a02:6b8:0:419:5fb9:9623:463f:792c])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id SXf9xZ0Vo8c0-OJ68x16W; Fri, 12 Jul 2024 15:33:29 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1720787609;
- bh=Dg1XIYi12rYLAeHhglWpQVXh9MGLESu19zeLSS3dBHs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=FP/O92hMJnmXPKh/L2gXESHiXaRzhXEPF9zG2Zp4K8phIZR2AFU1f3KkSyKpZXwNz
- IAcoFtcgEXIfhhHHrixedQ4jFfbk/saDMDvDrg44GnpoCerieo5lecOk+tR3JjPXzY
- bZ9RHiaFaCCYP3B05ouuaUo+Gg5HuiYn8q+s37kE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c41a8353-229b-4dd6-b268-cb9713faaed1@yandex-team.ru>
-Date: Fri, 12 Jul 2024 15:33:28 +0300
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSEzZ-00046Q-Tu; Fri, 12 Jul 2024 08:03:19 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSEzX-0005Y9-2V; Fri, 12 Jul 2024 08:03:13 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70b4a8a5587so1574051b3a.2; 
+ Fri, 12 Jul 2024 05:03:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720785789; x=1721390589; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JXcN7rc21Iq6Bcn9S0KBwtXpswBbDILgo+A0ACNS488=;
+ b=W5O25JqMU1IU+TZ2Khh1Wp1cnNIETLV3WMbPbr7g6aFeCsatAfZ5CuvhwS+olhwKIo
+ s/tRtQsCQYYC8nlxf7eHLbTZRCARnxn7Hpu1ex7+KuCRlFdOZLNVdZxxJjWDpvMkahu5
+ QhSbsv189GMU7lIUbgpXdkgSMjjA9vi97sENVv4EadyGN5FLT4bPk0zB9Bdr2kkfe6N5
+ uve1Ke8bGzqdHRoa7gZ1QBbESYob7liUtCuc08+G0lHgNLWpWB2flcejhGdRDhNU1+IK
+ Es6+Lq3u4VncVSRhipJw5/P8MFPWbNHKmoUp6Kfq0hRnmSiQ2HYQ5A+bYpl8sN4e8aaJ
+ NTEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720785789; x=1721390589;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JXcN7rc21Iq6Bcn9S0KBwtXpswBbDILgo+A0ACNS488=;
+ b=XQaEmNZVq85jSM7OxiwYycOzqGS2uPpT5enPtrr6ORphPaik0tx9PjzI6AtxpynNOI
+ SAtzVW/VQ1uNNE/ahee2jOys4zIgU7qyPyBoJPJy/dpuAfwiH6e8Ez5/NnAXZWyz1PmW
+ tRBtLawVbx5LVTThuIsjZuSi35MgmsGau9R1Yx27rY9DR9gNA7vpkPipQYW6UjWIB4+D
+ wVH+1gKzmaq1cSXjwL8N7tnWnUlbSCMYDJi7M173fFcmTmRBcoyXhypt1E3RvEc7sT2/
+ fE16+KUyAGE3kvh3NdAY3S97JCuKdZ12qOA3VoeDhUxpkm0cBVWLnTmzjbVrPEY4pwdL
+ ErTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcxGLUTc6Rr0rqi1oMQRxqXLdMNpsbQcRMsEFunmnFI9CXOc9s71OhRfBVx5BeomjkeLw9oFUnblJmX7iniUedC8KZzII=
+X-Gm-Message-State: AOJu0YxYQO4Li57o+ynulR98dtogpdDgotxNPbale0n8KVDs/vmbmhto
+ SloAqPH5JpwTNWtj752Tn2Aw3tUkOF/ELu6y0HOsUJsUMD1br/vnI8YK+w==
+X-Google-Smtp-Source: AGHT+IGWehJXEtadVuDd7H2un85E7DLRu/dplEyRJUV/v42b5pfOfGdXZOo0Ks6mdDti/2d1boXTow==
+X-Received: by 2002:a05:6a20:d493:b0:1bf:13f6:7220 with SMTP id
+ adf61e73a8af0-1c2984e1289mr11664591637.56.1720785788821; 
+ Fri, 12 Jul 2024 05:03:08 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 05:03:08 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 03/19] ppc/pnv: Move timebase state into PnvCore
+Date: Fri, 12 Jul 2024 22:02:30 +1000
+Message-ID: <20240712120247.477133-4-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
+References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/copy-before-write: wait for conflicts when read
- locking to avoid assertion failure
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com
-References: <20240711133652.589770-1-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240711133652.589770-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -77,87 +96,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.07.24 16:36, Fiona Ebner wrote:
-> There is no protection against two callers of cbw_snapshot_read_lock()
-> calling reqlist_init_req() with overlapping ranges, and
-> reqlist_init_req() asserts that there are no conflicting requests.
-> 
-> In particular, two cbw_co_snapshot_block_status() callers can race,
-> with the second calling reqlist_init_req() before the first one
-> finishes and removes its conflicting request, leading to an assertion
-> failure.
-> 
-> Reproducer script [0] and backtrace [1] are attached below.
+The timebase state machine is per per-core state and can be driven
+by any thread in the core. It is currently implemented as a hack
+where the state is in a CPU structure and only thread 0's state is
+accessed by the chiptod, which limits programming the timebase
+side of the state machine to thread 0 of a core.
 
+Move the state out into PnvCore and share it among all threads.
 
-Understand. But seems in case of CBW read-lock, nothing bad in intersecting read requests?
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ include/hw/ppc/pnv_core.h    | 17 ++++++++++++
+ target/ppc/cpu.h             | 21 --------------
+ hw/ppc/pnv_chiptod.c         |  7 ++---
+ target/ppc/timebase_helper.c | 53 ++++++++++++++++++++----------------
+ 4 files changed, 49 insertions(+), 49 deletions(-)
 
-reqlist is shared with backup, where we care to avoid intersecting requests in the list. What about just move the assertion to block_copy_task_create() ? And add comment somewhere that we support intersecting reads in frozen_read_reqs.
-
-
-> 
-> [0]:
-> 
->> #!/bin/bash -e
->> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
->> ./qemu-img create /tmp/fleecing.raw -f raw 1G
->> (
->> ./qemu-system-x86_64 --qmp stdio \
->> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
->> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
->> <<EOF
->> {"execute": "qmp_capabilities"}
->> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
->> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
->> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
->> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
->> EOF
->> ) &
->> sleep 5
->> while true; do
->> ./qemu-nbd -d /dev/nbd0
->> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
->> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
->> done
-> 
-> [1]:
-> 
->> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
->> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
->> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
->> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
->> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
->> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
->> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
->> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
->> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
->> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
->> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
->> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
->> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
->> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
->> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
-> 
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->   block/copy-before-write.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-> index 853e01a1eb..376ff3f3e1 100644
-> --- a/block/copy-before-write.c
-> +++ b/block/copy-before-write.c
-> @@ -234,6 +234,7 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
->           *req = (BlockReq) {.offset = -1, .bytes = -1};
->           *file = s->target;
->       } else {
-> +        reqlist_wait_all(&s->frozen_read_reqs, offset, bytes, &s->lock);
->           reqlist_init_req(&s->frozen_read_reqs, req, offset, bytes);
->           *file = bs->file;
->       }
-
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index 29cab9dfd9..ffec8516ae 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -25,6 +25,20 @@
+ #include "hw/ppc/pnv.h"
+ #include "qom/object.h"
+ 
++/* Per-core ChipTOD / TimeBase state */
++typedef struct PnvCoreTODState {
++    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
++    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
++
++    /*
++     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
++     * is polled for such events. These are just used to ensure firmware
++     * performs the polling at least a few times.
++     */
++    int tb_state_timer;
++    int tb_sync_pulse_timer;
++} PnvCoreTODState;
++
+ #define TYPE_PNV_CORE "powernv-cpu-core"
+ OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
+                     PNV_CORE)
+@@ -38,6 +52,9 @@ struct PnvCore {
+     uint32_t pir;
+     uint32_t hwid;
+     uint64_t hrmor;
++
++    PnvCoreTODState tod_state;
++
+     PnvChip *chip;
+ 
+     MemoryRegion xscom_regs;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 2015e603d4..c78d6ca91a 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1196,21 +1196,6 @@ DEXCR_ASPECT(SRAPD, 4)
+ DEXCR_ASPECT(NPHIE, 5)
+ DEXCR_ASPECT(PHIE, 6)
+ 
+-/*****************************************************************************/
+-/* PowerNV ChipTOD and TimeBase State Machine */
+-struct pnv_tod_tbst {
+-    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
+-    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+-
+-    /*
+-     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
+-     * is polled for such events. These are just used to ensure firmware
+-     * performs the polling at least a few times.
+-     */
+-    int tb_state_timer;
+-    int tb_sync_pulse_timer;
+-};
+-
+ /*****************************************************************************/
+ /* The whole PowerPC CPU context */
+ 
+@@ -1291,12 +1276,6 @@ struct CPUArchState {
+     uint32_t tlb_need_flush; /* Delayed flush needed */
+ #define TLB_NEED_LOCAL_FLUSH   0x1
+ #define TLB_NEED_GLOBAL_FLUSH  0x2
+-
+-#if defined(TARGET_PPC64)
+-    /* PowerNV chiptod / timebase facility state. */
+-    /* Would be nice to put these into PnvCore */
+-    struct pnv_tod_tbst pnv_tod_tbst;
+-#endif
+ #endif
+ 
+     /* Other registers */
+diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
+index 3831a72101..1e41fe557a 100644
+--- a/hw/ppc/pnv_chiptod.c
++++ b/hw/ppc/pnv_chiptod.c
+@@ -364,8 +364,7 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+             qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
+                           " TOD_MOVE_TOD_TO_TB_REG with no slave target\n");
+         } else {
+-            PowerPCCPU *cpu = chiptod->slave_pc_target->threads[0];
+-            CPUPPCState *env = &cpu->env;
++            PnvCore *pc = chiptod->slave_pc_target;
+ 
+             /*
+              * Moving TOD to TB will set the TB of all threads in a
+@@ -377,8 +376,8 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
+              * thread 0.
+              */
+ 
+-            if (env->pnv_tod_tbst.tb_ready_for_tod) {
+-                env->pnv_tod_tbst.tod_sent_to_tb = 1;
++            if (pc->tod_state.tb_ready_for_tod) {
++                pc->tod_state.tod_sent_to_tb = 1;
+             } else {
+                 qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
+                               " TOD_MOVE_TOD_TO_TB_REG with TB not ready to"
+diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
+index 39d397416e..52f9e6669c 100644
+--- a/target/ppc/timebase_helper.c
++++ b/target/ppc/timebase_helper.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "hw/ppc/ppc.h"
++#include "hw/ppc/pnv_core.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
+ #include "qemu/log.h"
+@@ -298,8 +299,17 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
+     }
+ }
+ 
++static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
++{
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++
++    return &pc->tod_state;
++}
++
+ static void tb_state_machine_step(CPUPPCState *env)
+ {
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
+     uint64_t tfmr = env->spr[SPR_TFMR];
+     unsigned int tbst = tfmr_get_tb_state(tfmr);
+ 
+@@ -307,15 +317,15 @@ static void tb_state_machine_step(CPUPPCState *env)
+         return;
+     }
+ 
+-    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
+-        env->pnv_tod_tbst.tb_sync_pulse_timer--;
++    if (tod_state->tb_sync_pulse_timer) {
++        tod_state->tb_sync_pulse_timer--;
+     } else {
+         tfmr |= TFMR_TB_SYNC_OCCURED;
+         write_tfmr(env, tfmr);
+     }
+ 
+-    if (env->pnv_tod_tbst.tb_state_timer) {
+-        env->pnv_tod_tbst.tb_state_timer--;
++    if (tod_state->tb_state_timer) {
++        tod_state->tb_state_timer--;
+         return;
+     }
+ 
+@@ -332,20 +342,20 @@ static void tb_state_machine_step(CPUPPCState *env)
+     } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
+         if (tbst == TBST_SYNC_WAIT) {
+             tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
+-            env->pnv_tod_tbst.tb_state_timer = 3;
++            tod_state->tb_state_timer = 3;
+         } else if (tbst == TBST_GET_TOD) {
+-            if (env->pnv_tod_tbst.tod_sent_to_tb) {
++            if (tod_state->tod_sent_to_tb) {
+                 tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
+                 tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
+-                env->pnv_tod_tbst.tb_ready_for_tod = 0;
+-                env->pnv_tod_tbst.tod_sent_to_tb = 0;
++                tod_state->tb_ready_for_tod = 0;
++                tod_state->tod_sent_to_tb = 0;
+             }
+         } else {
+             qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
+                           "state machine in invalid state 0x%x\n", tbst);
+             tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+             tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+-            env->pnv_tod_tbst.tb_ready_for_tod = 0;
++            tod_state->tb_ready_for_tod = 0;
+         }
+     }
+ 
+@@ -361,6 +371,8 @@ target_ulong helper_load_tfmr(CPUPPCState *env)
+ 
+ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+ {
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
+     uint64_t tfmr = env->spr[SPR_TFMR];
+     uint64_t clear_on_write;
+     unsigned int tbst = tfmr_get_tb_state(tfmr);
+@@ -384,14 +396,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+      * after the second mfspr.
+      */
+     tfmr &= ~TFMR_TB_SYNC_OCCURED;
+-    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
+-
+-    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
+-        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
+-        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
+-                                 "driven by thread 0\n");
+-        goto out;
+-    }
++    tod_state->tb_sync_pulse_timer = 1;
+ 
+     if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
+                         (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
+@@ -399,7 +404,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+                                        "MOVE_CHIP_TOD_TO_TB both set\n");
+         tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+         tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+-        env->pnv_tod_tbst.tb_ready_for_tod = 0;
++        tod_state->tb_ready_for_tod = 0;
+         goto out;
+     }
+ 
+@@ -413,8 +418,8 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+         tfmr &= ~TFMR_LOAD_TOD_MOD;
+         tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
+         tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
+-        env->pnv_tod_tbst.tb_ready_for_tod = 0;
+-        env->pnv_tod_tbst.tod_sent_to_tb = 0;
++        tod_state->tb_ready_for_tod = 0;
++        tod_state->tod_sent_to_tb = 0;
+         goto out;
+     }
+ 
+@@ -427,19 +432,19 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
+ 
+     if (tfmr & TFMR_LOAD_TOD_MOD) {
+         /* Wait for an arbitrary 3 mfspr until the next state transition. */
+-        env->pnv_tod_tbst.tb_state_timer = 3;
++        tod_state->tb_state_timer = 3;
+     } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
+         if (tbst == TBST_NOT_SET) {
+             tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
+-            env->pnv_tod_tbst.tb_ready_for_tod = 1;
+-            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
++            tod_state->tb_ready_for_tod = 1;
++            tod_state->tb_state_timer = 3; /* arbitrary */
+         } else {
+             qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
+                                            "not in TB not set state 0x%x\n",
+                                            tbst);
+             tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
+             tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
+-            env->pnv_tod_tbst.tb_ready_for_tod = 0;
++            tod_state->tb_ready_for_tod = 0;
+         }
+     }
+ 
 -- 
-Best regards,
-Vladimir
+2.45.1
 
 
