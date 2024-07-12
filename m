@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A373C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCCCC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGIO-0000I9-Jd; Fri, 12 Jul 2024 09:26:44 -0400
+	id 1sSGIB-0007KN-IH; Fri, 12 Jul 2024 09:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGIA-0007DF-FQ
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:30 -0400
+ id 1sSGHj-0004fm-12
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGI8-0004Ap-FE
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:30 -0400
+ id 1sSGHa-00040Z-SI
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720790786;
+ s=mimecast20190719; t=1720790750;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4goqqyBZ3QazmnV7R1nhqGzsByXJk6xmXK1TsVjDDE0=;
- b=hQbmuWzkvEy8ewey0P0bakWhKOUoaWiPNWgWMFAfCTIMWyCQCz2RkA7PuH9eV5QaJz8H7B
- zTmBzqN7bJdS7xVTYc+Q7fuesmT1Hn7WCnC7fb8wuCvaWWR6B7Vkn+AaVNH/j0sfCGmLxC
- XkscK8Viuhe7S1Unz46tvlqlL52DBtA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9hjSTgqO3TPO5hRUa5ZpFZcoNmez3TFLbRU8bn+RmeQ=;
+ b=VzkLHz1cITWmG2/oXM8kNYqc7KgMWw1KkmaC6IWQZ2tSPlcddnNli3CezRYx7TVxmsZxA2
+ CzqewUB0LeXbA6hysQFf1ZwmIy8cPJ9+PWA9WtyzUyKHrXTaZUbkLDsVF7xKhrCWPdeF+P
+ cfcqCaKdgUPOSv2Om49APJtVpfTVnRA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-Ge8CcbuONn2zU6VD3aFvwg-1; Fri,
- 12 Jul 2024 09:26:22 -0400
-X-MC-Unique: Ge8CcbuONn2zU6VD3aFvwg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-zfWAQiupMWacgrz3Anxraw-1; Fri,
+ 12 Jul 2024 09:25:47 -0400
+X-MC-Unique: zfWAQiupMWacgrz3Anxraw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 715FD19560B1; Fri, 12 Jul 2024 13:26:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2DCC196CDEF; Fri, 12 Jul 2024 13:25:46 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.56])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 14C331955E70; Fri, 12 Jul 2024 13:26:17 +0000 (UTC)
+ id EFD6D1955E70; Fri, 12 Jul 2024 13:25:43 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -55,9 +55,10 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH v3 21/22] qga: allow configuration file path via the cli
-Date: Fri, 12 Jul 2024 14:24:58 +0100
-Message-ID: <20240712132459.3974109-22-berrange@redhat.com>
+Subject: [PATCH v3 12/22] qga: conditionalize schema for commands only
+ supported on Windows
+Date: Fri, 12 Jul 2024 14:24:49 +0100
+Message-ID: <20240712132459.3974109-13-berrange@redhat.com>
 In-Reply-To: <20240712132459.3974109-1-berrange@redhat.com>
 References: <20240712132459.3974109-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,151 +89,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allowing the user to set the QGA_CONF environment variable to change
-the default configuration file path is very unusual practice, made
-more obscure since this ability is not documented.
+Rather than creating stubs for every command that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the commands on non-Windows.
 
-This introduces the more normal '-c PATH'  / '--config=PATH' command
-line argument approach. This requires that we parse the comamnd line
-twice, since we want the command line arguments to take priority over
-the configuration file settings in general.
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+This changes the error message for affected commands from
 
+    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+
+to
+
+    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/interop/qemu-ga.rst |  5 +++++
- qga/main.c               | 43 ++++++++++++++++++++++++++++++----------
- 2 files changed, 38 insertions(+), 10 deletions(-)
+ qga/commands-posix.c |  9 ---------
+ qga/qapi-schema.json | 15 ++++++++++-----
+ 2 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
-index 72fb75a6f5..e42b370319 100644
---- a/docs/interop/qemu-ga.rst
-+++ b/docs/interop/qemu-ga.rst
-@@ -33,6 +33,11 @@ Options
- 
- .. program:: qemu-ga
- 
-+.. option:: -c, --config=PATH
-+
-+  Configuration file path (the default is |CONFDIR|\ ``/qemu-ga.conf``,
-+  unless overriden by the QGA_CONF environment variable)
-+
- .. option:: -m, --method=METHOD
- 
-   Transport method: one of ``unix-listen``, ``virtio-serial``, or
-diff --git a/qga/main.c b/qga/main.c
-index 6ff022a85d..6ae911eb15 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -248,12 +248,16 @@ static void usage(const char *cmd)
- #ifdef CONFIG_FSFREEZE
-     g_autofree char *fsfreeze_hook = get_relocated_path(QGA_FSFREEZE_HOOK_DEFAULT);
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 838dc3cf98..b7f96aa005 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1207,8 +1207,6 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+     blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-fstrim"));
  #endif
-+    g_autofree char *conf_path = get_relocated_path(QGA_CONF_DEFAULT);
  
-     printf(
- "Usage: %s [-m <method> -p <path>] [<options>]\n"
- "QEMU Guest Agent " QEMU_FULL_VERSION "\n"
- QEMU_COPYRIGHT "\n"
- "\n"
-+"  -c, --config=PATH configuration file path (default is\n"
-+"                    %s/qemu-ga.conf\n"
-+"                    unless overriden by the QGA_CONF environment variable)\n"
- "  -m, --method      transport method: one of unix-listen, virtio-serial,\n"
- "                    isa-serial, or vsock-listen (virtio-serial is the default)\n"
- "  -p, --path        device/socket path (the default for virtio-serial is:\n"
-@@ -294,8 +298,8 @@ QEMU_COPYRIGHT "\n"
- "                    plug/unplug, etc.)\n"
- "  -h, --help        display this help and exit\n"
- "\n"
--QEMU_HELP_BOTTOM "\n"
--    , cmd, QGA_VIRTIO_PATH_DEFAULT, QGA_SERIAL_PATH_DEFAULT,
-+QEMU_HELP_BOTTOM "\n",
-+    cmd, conf_path, QGA_VIRTIO_PATH_DEFAULT, QGA_SERIAL_PATH_DEFAULT,
-     dfl_pathnames.pidfile,
- #ifdef CONFIG_FSFREEZE
-     fsfreeze_hook,
-@@ -1018,15 +1022,14 @@ static GList *split_list(const gchar *str, const gchar *delim)
-     return list;
+-    blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-get-devices"));
+-
+     return blockedrpcs;
  }
  
--static void config_load(GAConfig *config)
-+static void config_load(GAConfig *config, const char *confpath, bool required)
- {
-     GError *gerr = NULL;
-     GKeyFile *keyfile;
--    g_autofree char *conf = g_strdup(g_getenv("QGA_CONF")) ?: get_relocated_path(QGA_CONF_DEFAULT);
+@@ -1419,13 +1417,6 @@ GuestOSInfo *qmp_guest_get_osinfo(Error **errp)
+     return info;
+ }
  
-     /* read system config */
-     keyfile = g_key_file_new();
--    if (!g_key_file_load_from_file(keyfile, conf, 0, &gerr)) {
-+    if (!g_key_file_load_from_file(keyfile, confpath, 0, &gerr)) {
-         goto end;
-     }
-     if (g_key_file_has_key(keyfile, "general", "daemon", NULL)) {
-@@ -1092,10 +1095,10 @@ static void config_load(GAConfig *config)
+-GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-
+-    return NULL;
+-}
+-
+ #ifndef HOST_NAME_MAX
+ # ifdef _POSIX_HOST_NAME_MAX
+ #  define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 9bd5aa53bc..de3fc46d2e 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -1527,7 +1527,8 @@
+ # @pci: PCI device
+ ##
+ { 'enum': 'GuestDeviceType',
+-  'data': [ 'pci' ] }
++  'data': [ 'pci' ],
++  'if': 'CONFIG_WIN32' }
  
- end:
-     g_key_file_free(keyfile);
--    if (gerr &&
--        !(gerr->domain == G_FILE_ERROR && gerr->code == G_FILE_ERROR_NOENT)) {
-+    if (gerr && (required ||
-+                 !(gerr->domain == G_FILE_ERROR && gerr->code == G_FILE_ERROR_NOENT))) {
-         g_critical("error loading configuration from path: %s, %s",
--                   conf, gerr->message);
-+                   confpath, gerr->message);
-         exit(EXIT_FAILURE);
-     }
-     g_clear_error(&gerr);
-@@ -1167,12 +1170,13 @@ static void config_dump(GAConfig *config)
+ ##
+ # @GuestDeviceIdPCI:
+@@ -1539,7 +1540,8 @@
+ # Since: 5.2
+ ##
+ { 'struct': 'GuestDeviceIdPCI',
+-  'data': { 'vendor-id': 'uint16', 'device-id': 'uint16' } }
++  'data': { 'vendor-id': 'uint16', 'device-id': 'uint16' },
++  'if': 'CONFIG_WIN32' }
  
- static void config_parse(GAConfig *config, int argc, char **argv)
- {
--    const char *sopt = "hVvdm:p:l:f:F::b:a:s:t:Dr";
-+    const char *sopt = "hVvdc:m:p:l:f:F::b:a:s:t:Dr";
-     int opt_ind = 0, ch;
-     bool block_rpcs = false, allow_rpcs = false;
-     const struct option lopt[] = {
-         { "help", 0, NULL, 'h' },
-         { "version", 0, NULL, 'V' },
-+        { "config", 1, NULL, 'c' },
-         { "dump-conf", 0, NULL, 'D' },
-         { "logfile", 1, NULL, 'l' },
-         { "pidfile", 1, NULL, 'f' },
-@@ -1192,6 +1196,26 @@ static void config_parse(GAConfig *config, int argc, char **argv)
-         { "retry-path", 0, NULL, 'r' },
-         { NULL, 0, NULL, 0 }
-     };
-+    g_autofree char *confpath = g_strdup(g_getenv("QGA_CONF")) ?:
-+        get_relocated_path(QGA_CONF_DEFAULT);
-+    bool confrequired = false;
-+
-+    while ((ch = getopt_long(argc, argv, sopt, lopt, NULL)) != -1) {
-+        switch (ch) {
-+        case 'c':
-+            g_free(confpath);
-+            confpath = g_strdup(optarg);
-+            confrequired = true;
-+            break;
-+        default:
-+            break;
-+        }
-+    }
-+
-+    config_load(config, confpath, confrequired);
-+
-+    /* Reset for second pass */
-+    optind = 1;
+ ##
+ # @GuestDeviceId:
+@@ -1553,7 +1555,8 @@
+ { 'union': 'GuestDeviceId',
+   'base': { 'type': 'GuestDeviceType' },
+   'discriminator': 'type',
+-  'data': { 'pci': 'GuestDeviceIdPCI' } }
++  'data': { 'pci': 'GuestDeviceIdPCI' },
++  'if': 'CONFIG_WIN32' }
  
-     while ((ch = getopt_long(argc, argv, sopt, lopt, &opt_ind)) != -1) {
-         switch (ch) {
-@@ -1582,7 +1606,6 @@ int main(int argc, char **argv)
-     qga_qmp_init_marshal(&ga_commands);
+ ##
+ # @GuestDeviceInfo:
+@@ -1574,7 +1577,8 @@
+       '*driver-date': 'int',
+       '*driver-version': 'str',
+       '*id': 'GuestDeviceId'
+-  } }
++  },
++  'if': 'CONFIG_WIN32' }
  
-     init_dfl_pathnames();
--    config_load(config);
-     config_parse(config, argc, argv);
+ ##
+ # @guest-get-devices:
+@@ -1586,7 +1590,8 @@
+ # Since: 5.2
+ ##
+ { 'command': 'guest-get-devices',
+-  'returns': ['GuestDeviceInfo'] }
++  'returns': ['GuestDeviceInfo'],
++  'if': 'CONFIG_WIN32' }
  
-     if (config->pid_filepath == NULL) {
+ ##
+ # @GuestAuthorizedKeys:
 -- 
 2.45.1
 
