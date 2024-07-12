@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144EEC2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3ACC3DA4B
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSF0G-0006V5-47; Fri, 12 Jul 2024 08:03:56 -0400
+	id 1sSF0C-00068Q-J0; Fri, 12 Jul 2024 08:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzh-0004gQ-7L; Fri, 12 Jul 2024 08:03:29 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sSEzf-0004Vt-DI; Fri, 12 Jul 2024 08:03:29 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzf-0005Zr-9d; Fri, 12 Jul 2024 08:03:20 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-70b703eda27so334304b3a.3; 
- Fri, 12 Jul 2024 05:03:18 -0700 (PDT)
+ id 1sSEzc-0005Yx-8j; Fri, 12 Jul 2024 08:03:19 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-70af5fbf0d5so1282350b3a.1; 
+ Fri, 12 Jul 2024 05:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720785797; x=1721390597; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720785793; x=1721390593; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7AyDGj3ZDezl1UlUVAm1qZ38iB6LaQ9Gbtb/xnqxjfY=;
- b=nNiBz7sQZ09eO3Y8RWn/e7qOJ+j8bFXxRq4JDw3as1hz4Qc7j+CeII9otVz9izknpv
- A1cG1E/uvSG13xGRxx15ieXUv3HhG/nvM7SWIGw8ROLf/vdRrNX9UHpwm6n71AZdtkOY
- B3RRONP9za3aVVxluHSm95wMFxWhnwjSf+0oEqKW+q/tjpiK05yCCKWQd4wR9kQooZ4A
- dVoviluDaGPy5C50YrQ25vYn+OljtGP3nIzt7sqJVSjVi21JKErVi3rnZLl5bdZkfNHU
- un5fXzzhAADNAIcUDqUAx/UyI+X94VFJjO6dP1jcy0H+HWPx9cR1Ajz+erv10hk3K6fp
- BCig==
+ bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
+ b=BbhhmjpLVHbGGYwI54due3T5iM8wdU1fJJ+hBwoIABKcPOwfxOuNL+w43BPfFMdcKC
+ U3PCE+XXnix2vcAZGo5D/VMCy/cilRGODiT/WAx64mjyB+IHog5g4dD/H9+9zfgSbDSO
+ zto8FJLkO7eXfr+5V70wQ9KrCBgsMtKx92G2Iug0LldWe6f17NodbvCdN2m8y1ySxj2B
+ iQRbGutxE8aYz5SO8Q02aZX3qcydyhpBlHfhlvvlWQoXWcwUJinZdl5jC5PuRb57FtAu
+ olNujwiCSMj9mK3abZdxhcxy0uACdd8HwwaJOfdCR2P4t+7a69eIc/JRyljv68Gby1PF
+ JwRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720785797; x=1721390597;
+ d=1e100.net; s=20230601; t=1720785793; x=1721390593;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7AyDGj3ZDezl1UlUVAm1qZ38iB6LaQ9Gbtb/xnqxjfY=;
- b=KOaYSTPNdWmNHRwtf5BecPjOCw9975mG45P+5JT9c/SCOU3F3PngheFL/GXwlQJU8j
- L8iHasypXCpKQZseCahVxB/dfMFCJbM3mYFpHNKfwC4qfOG3XX2F9XAXruqizyi3kogH
- uLvYZ+XlVCa+X18xvLlQ/ctRpXqO8M7r0mK8rqg7Bcqs8UvfoDOtECUXcA+t13NrVniP
- eWzLQtV/nQou/d4Pt57wBXyDULii8d4gUACvDnh+fp2YTM5gumo94AtxeuHUWAyqdD8X
- iv68pi+rtdV55OBzbmZwBiK04WFlKQkHOCg/tBfZDPgfwJFLzgs1oZC4LX1Ssa3WSc+H
- rc3A==
+ bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
+ b=Gi3yBKNzdD+3uUojVa1Fq7vpjxiIKfeJV7LdGWDZbR4HHJj/Vfl/3uGcSqS6bsyOap
+ 5Ety1YbQBOlSVeXwR0mK61FcxWnkN7erXH2+56eOvK5p1FFX5hR/xDD1EMU+5CN9sE+Y
+ I1xqX9k8oXOKBf0rvWda1fHwjYitSlfFBhSi3FlHOE1iX0Ym5OtwZxBpsg3I6byeAZr7
+ igkR6EVrS8X4TIE1lHy4O767sYUvKpygRj4YYEr4fgN1XDQdgW25C39x7H0t7/dM7ukA
+ ploqMtMthrR5PPme2GENT2+5JovDPzR1ez6sSxgjo83UADi+T7bAVqvCQsXkoVkMHwsE
+ ANMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtydlhrlwaff4zST2e2XCZx/gNaAcxmpJWjjAQPcfJo+jOthYGacr7Ot2zFBwNRccH+q+JqElcIhCRPW12fxbDJmGgUuA=
-X-Gm-Message-State: AOJu0YzFlPGoiPQj8W9QKOeCMjNxgBow/8+RHQvuvS259pvfIx1qiFR6
- voDsqQpF5U38qduFb18LeFUYeVmckFlqePDqy5HVojkd4mnBbgS0UxnTCQ==
-X-Google-Smtp-Source: AGHT+IGZrPUFOKKc6wttAOrLtWfTaPuLwbqZC+9f+1OSLdaIdSe8kWLK9GYge6NeVJXJboS957na8Q==
-X-Received: by 2002:a05:6a21:6d9e:b0:1c0:e629:3926 with SMTP id
- adf61e73a8af0-1c298221bf3mr13184752637.16.1720785796762; 
- Fri, 12 Jul 2024 05:03:16 -0700 (PDT)
+ AJvYcCXdyb5n6hMBkTZLThorAwWFlygK+NXdqmzQ6N7/qx8W9Om4QDIQl3sQFLYEoycoYx6tvAMpJSD080rxIFoS5iFUcslIrqI=
+X-Gm-Message-State: AOJu0YxQsfw9CEWLp4zKnB9tdwmsgELwfa3ZLnw6C0KLuux4SJ5UmrCA
+ J1PkqmuaOgdqlCkbIuvrLsjASFpsWTfLy5gOfdD7XBmGRPr9Uxa2xt98ng==
+X-Google-Smtp-Source: AGHT+IFt0keplQq8fKyimjQ51VejtKdYHtoj2QgxBTmKVKeBpzRIYOLhGWMqnQFsiAseuOBkeq5iww==
+X-Received: by 2002:a05:6a00:188b:b0:706:5daf:efa5 with SMTP id
+ d2e1a72fcca58-70b6c8b4bdemr5295821b3a.9.1720785792704; 
+ Fri, 12 Jul 2024 05:03:12 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.13
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 05:03:16 -0700 (PDT)
+ Fri, 12 Jul 2024 05:03:12 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 05/19] ppc/pnv: use class attribute to limit SMT threads
- for different machines
-Date: Fri, 12 Jul 2024 22:02:32 +1000
-Message-ID: <20240712120247.477133-6-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 04/19] target/ppc: Move SPR indirect registers into PnvCore
+Date: Fri, 12 Jul 2024 22:02:31 +1000
+Message-ID: <20240712120247.477133-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
 References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,88 +96,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a class attribute to specify the number of SMT threads per core
-permitted for different machines, 8 for powernv8 and 4 for powernv9/10.
+SPRC/SPRD were recently added to all BookS CPUs supported, but
+they are only tested on POWER9 and POWER10, so restrict them to
+those CPUs.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+SPR indirect scratch registers presently replicated per-CPU like
+SMT SPRs, but the PnvCore is a better place for them since they
+are restricted to P9/P10.
+
+Also add SPR indirect read access to core thread state for POWER9
+since skiboot accesses that when booting to check for big-core
+mode.
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/ppc/pnv.h |  1 +
- hw/ppc/pnv.c         | 12 +++++++++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ include/hw/ppc/pnv_core.h |  1 +
+ target/ppc/cpu.h          |  3 --
+ target/ppc/cpu_init.c     | 21 +++++++-------
+ target/ppc/misc_helper.c  | 60 ++++++++++++++++++---------------------
+ 4 files changed, 39 insertions(+), 46 deletions(-)
 
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 476b136146..1993dededf 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -76,6 +76,7 @@ struct PnvMachineClass {
-     /*< public >*/
-     const char *compat;
-     int compat_size;
-+    int max_smt_threads;
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index ffec8516ae..693acb189b 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -53,6 +53,7 @@ struct PnvCore {
+     uint32_t hwid;
+     uint64_t hrmor;
  
-     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
-     void (*i2c_init)(PnvMachineState *pnv);
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 7878fed43c..fde51ca946 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -899,6 +899,7 @@ static void pnv_init(MachineState *machine)
-     PnvMachineState *pnv = PNV_MACHINE(machine);
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
-+    int max_smt_threads = pmc->max_smt_threads;
-     char *fw_filename;
-     long fw_size;
-     uint64_t chip_ram_start = 0;
-@@ -997,17 +998,19 @@ static void pnv_init(MachineState *machine)
-     pnv->num_chips =
-         machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
++    target_ulong scratch[8]; /* SPRC/SPRD indirect SCRATCH registers */
+     PnvCoreTODState tod_state;
  
--    if (machine->smp.threads > 8) {
--        error_report("Cannot support more than 8 threads/core "
--                     "on a powernv machine");
-+    if (machine->smp.threads > max_smt_threads) {
-+        error_report("Cannot support more than %d threads/core "
-+                     "on %s machine", max_smt_threads, mc->desc);
-         exit(1);
-     }
-+
-     if (!is_power_of_2(machine->smp.threads)) {
-         error_report("Cannot support %d threads/core on a powernv"
-                      "machine because it must be a power of 2",
-                      machine->smp.threads);
-         exit(1);
-     }
-+
-     /*
-      * TODO: should we decide on how many chips we can create based
-      * on #cores and Venice vs. Murano vs. Naples chip type etc...,
-@@ -2490,6 +2493,7 @@ static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
- 
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 8;
- 
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+     PnvChip *chip;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index c78d6ca91a..95ba9e7590 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1253,9 +1253,6 @@ struct CPUArchState {
+     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
+     struct CPUBreakpoint *ciabr_breakpoint;
+     struct CPUWatchpoint *dawr0_watchpoint;
+-
+-    /* POWER CPU regs/state */
+-    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
+ #endif
+     target_ulong sr[32];   /* segment registers */
+     uint32_t nb_BATs;      /* number of BATs */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index e38f62b08d..164bb62e63 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5777,16 +5777,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_core_write_generic,
+                  0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_sprc,
+-                 0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_sprd, &spr_write_sprd,
+-                 0x00000000);
+ #endif
  }
-@@ -2514,6 +2518,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
  
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 4;
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
+@@ -5799,6 +5789,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_WORT, 0);
++    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
++    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_generic, &spr_write_sprc,
++                 0x00000000);
++    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_sprd, &spr_write_sprd,
++                 0x00000000);
+ #endif
+ }
  
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
-@@ -2538,6 +2543,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index fa47be2298..4d3c1bddd9 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -26,6 +26,7 @@
+ #include "qemu/main-loop.h"
+ #include "mmu-book3s-v3.h"
+ #include "hw/ppc/ppc.h"
++#include "hw/ppc/pnv_core.h"
  
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 4;
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ #include "helper_regs.h"
  
-     xfc->match_nvt = pnv10_xive_match_nvt;
+@@ -321,11 +322,18 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
+ 
+ target_ulong helper_load_sprd(CPUPPCState *env)
+ {
++    /*
++     * SPRD is a HV-only register for Power CPUs, so this will only be
++     * accessed by powernv machines.
++     */
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+ 
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        return env->scratch[(sprc >> 3) & 0x7];
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        return pc->scratch[(sprc >> 3) & 0x7];
+     default:
+         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+@@ -334,41 +342,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+     return 0;
+ }
+ 
+-static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
+-{
+-    CPUState *cs = env_cpu(env);
+-    CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+-
+-    /*
+-     * Log stores to SCRATCH, because some firmware uses these for debugging
+-     * and logging, but they would normally be read by the BMC, which is
+-     * not implemented in QEMU yet. This gives a way to get at the information.
+-     * Could also dump these upon checkstop.
+-     */
+-    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
+-
+-    if (nr_threads == 1) {
+-        env->scratch[nr] = val;
+-        return;
+-    }
+-
+-    THREAD_SIBLING_FOREACH(cs, ccs) {
+-        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
+-        cenv->scratch[nr] = val;
+-    }
+-}
+-
+ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+ {
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+-
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        do_store_scratch(env, (sprc >> 3) & 0x7, val);
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        /*
++         * Log stores to SCRATCH, because some firmware uses these for
++         * debugging and logging, but they would normally be read by the BMC,
++         * which is not implemented in QEMU yet. This gives a way to get at the
++         * information. Could also dump these upon checkstop.
++         */
++        int nr = (sprc >> 3) & 0x7;
++        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
++        pc->scratch[nr] = val;
+         break;
+     default:
+-        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
++        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+         break;
+     }
 -- 
 2.45.1
 
