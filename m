@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE1EC3DA45
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 04:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCF2C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 04:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS7md-0005ya-QJ; Fri, 12 Jul 2024 00:21:23 -0400
+	id 1sS7pn-0001ru-1P; Fri, 12 Jul 2024 00:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7mb-0005y4-Pt
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:21:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7pj-0001rJ-LS
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:24:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7ma-00052b-0Y
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:21:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7ph-0006aI-Cg
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:24:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720758078;
+ s=mimecast20190719; t=1720758271;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dmWYrXOzVfgf7Xg7eXpPMkHRMJcggBCibv8+wtcL4Gw=;
- b=WnV7pnziV24KStRaXkF22SDba3BI09sI2K55aOpHGsoaQTmnFQJUxopwr5N+H+A1VqRUfN
- cSQi5pqErCBe8aUnPLVVLES5n/8zvDvJFUz+swdsDkyFn/IhVaVG1+SuxErt410k9+fNIe
- O3v2Ekw1/cyu44t9KPbWg870VPbj2nQ=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eq1wrgLlKaPUZmxtFFnnqulewn/VzCPb6AFgJX2G/zs=;
+ b=CthE1kyd3cFo1WgrLtkwc4NE0DtmWWAAahdgIwb7DOVYgd47g2FqCaQ9ScwCPNzkD1wWRZ
+ A6NXyHlbYxPPMhilWFsquT1ET3ZReN22D/gDfe8BpCIalNJPTA2zpKb7ZE7F2WSR+e+uQD
+ AIbO8vKAUipuB684kgbC7Gwv/HO/wiw=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-k_B_VQdPPgOVKY0DxOLsxA-1; Fri, 12 Jul 2024 00:21:12 -0400
-X-MC-Unique: k_B_VQdPPgOVKY0DxOLsxA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a797c5b4f47so98159366b.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 21:21:11 -0700 (PDT)
+ us-mta-336-pA-CMZn7OLeEsvpu0h92yw-1; Fri, 12 Jul 2024 00:24:27 -0400
+X-MC-Unique: pA-CMZn7OLeEsvpu0h92yw-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52ea249d1c9so1428860e87.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 21:24:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720758071; x=1721362871;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dmWYrXOzVfgf7Xg7eXpPMkHRMJcggBCibv8+wtcL4Gw=;
- b=YHBWgAQxV/QKZf1AN4YACgLKe1XELfAR/DiprGXYfTG3x4Tjou0zm3eLnZCB/o+kSi
- bzKnn/WyArFAKygyUdFMUyAYya2SqWjnEv3Jvisfep86mG4mv9nbtYs0bAqaeCsi7XHx
- w/69a2ALQYLvhhLMrgL6XbpCC+fu0vTZ3eozu42B72WTVbkgn0vSh0DF2ehyB8G9D7zI
- ggbwMGBMobfSsY9chis+IqUhU0Eq3DoPAiJ4nPLnVVxgi0NS55sziGTFyfLL6tBUv8vF
- /U3rCLXzccQ1sfoCVRFb7Wjm5QMCuq16U40MP16OBpo6mjhUC7EI3v/D/QNSMYkiZqVQ
- Ob9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeUfJ+OHxWNzSN0XVTGa4qtYCK07VHQrZAkg+44+jTiB4ItevnuW6XKT1MQzppmS556b5N4onjpOaE3WZKZrWTY4XMuS0=
-X-Gm-Message-State: AOJu0YzrLJq7oFjWSluAEThLAsZmSoyV31s+CyHmshF3byMpfLUADw91
- cjVS14vDKNcULu0MSqSf3qGWvPCg/1u/MOt4mmApDVVGv8ZL1PCwZ6LcZJnZaBesoQ9s5MwSTRk
- yeklQ7xO7iPmOrN+pDlx6TKk5Nz9VSm4W7ucRX4+bsul4cXX3PeyS
-X-Received: by 2002:a17:906:32cc:b0:a77:da14:8401 with SMTP id
- a640c23a62f3a-a780b688941mr727477366b.10.1720758070947; 
- Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEu4gUqxH31pXDIOZIWxSvy2Hu5wTFdQj5k2i1bvH0nID15r2zUxdQi1YIeHzfHkFhchR8gjQ==
-X-Received: by 2002:a17:906:32cc:b0:a77:da14:8401 with SMTP id
- a640c23a62f3a-a780b688941mr727476266b.10.1720758070550; 
- Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720758266; x=1721363066;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eq1wrgLlKaPUZmxtFFnnqulewn/VzCPb6AFgJX2G/zs=;
+ b=ideS067s37nwuW+MSYKR4nLofOp/Kb509yicCN4iMvRqb8q+HOQXYzDS/Tn6FTCAV5
+ 33XPLgMX6H06TkbuNKl7PpU3mFtNHgHQYrGl6zaPqsvgKiGiM7pUI5225i4ZougJZ2no
+ ACRDTJQjIWXsw7gkPVFhoTipgLlFF8zch7jBU0ENHyhVasUZS69LVTSN19ko/UliVgKp
+ KHx7HAqy65kE71LoZoRNVFsRGU8fT8+eFWI4UZEcN4hE/NpGnqTvjwqSN+w8Tg0z60lu
+ a65bUXcm4MAyOQ8Q+DM9TQasXCdq+7EoyoObldBo/WRirI3w+7x9a9NnA8s1SCpwWQJH
+ 1n/A==
+X-Gm-Message-State: AOJu0YzZ94DflbhsEdyZ+42b8VzttW8qLhDeP+vu283/soX0WfAG1L2a
+ J2mXZmA0wBe091OsXFWxz6n/kt8E6gYxRmLd96tbqkH5RlF4xTmoJkuDDTFTVolkRaWEOF37gyk
+ xT3pT8OHgLpJkC6Wme2wS/ITaLaXOx7HhmFuQOPzgHvfJPxT1JzIr
+X-Received: by 2002:ac2:544e:0:b0:52c:c032:538d with SMTP id
+ 2adb3069b0e04-52eb999a765mr5349649e87.27.1720758266268; 
+ Thu, 11 Jul 2024 21:24:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIkK8vcokVXfzS95eQ+qClanM/JCwesU66EldcRIHB22iLu+HqgwgJlrGUVZ6QTD94b5usjQ==
+X-Received: by 2002:ac2:544e:0:b0:52c:c032:538d with SMTP id
+ 2adb3069b0e04-52eb999a765mr5349640e87.27.1720758265857; 
+ Thu, 11 Jul 2024 21:24:25 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-50-229.web.vodafone.de.
  [109.43.50.229]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a780a856214sm310610166b.178.2024.07.11.21.21.09
+ 4fb4d7f45d1cf-594bd459df2sm4088007a12.61.2024.07.11.21.24.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
-Message-ID: <d678a0ea-794e-44a4-b144-70cb9e7ce352@redhat.com>
-Date: Fri, 12 Jul 2024 06:21:08 +0200
+ Thu, 11 Jul 2024 21:24:25 -0700 (PDT)
+Message-ID: <7b4f8ddf-5618-496a-90c0-c4af0df965ea@redhat.com>
+Date: Fri, 12 Jul 2024 06:24:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 5/8] tests_pytest: Implement fetch_asset() method for
  downloading assets
 To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>
 References: <20240711115546.40859-1-thuth@redhat.com>
  <20240711115546.40859-6-thuth@redhat.com>
  <081298cb-536c-4487-b90c-b184b0f93ce7@linaro.org>
  <b07b165d-57be-4144-a3d3-19c4ae94c261@linaro.org>
-Content-Language: en-US
+ <877cdrraw8.fsf@draig.linaro.org>
+ <9e76ea42-e765-4f51-b9cb-cfcfd1421a00@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <b07b165d-57be-4144-a3d3-19c4ae94c261@linaro.org>
+In-Reply-To: <9e76ea42-e765-4f51-b9cb-cfcfd1421a00@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -153,35 +153,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/07/2024 20.49, Richard Henderson wrote:
-> On 7/11/24 09:45, Richard Henderson wrote:
->> On 7/11/24 04:55, Thomas Huth wrote:
->>> +    def fetch_asset(self, url, asset_hash):
->>> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
->>> +        if not os.path.exists(cache_dir):
->>> +            os.makedirs(cache_dir)
->>> +        fname = os.path.join(cache_dir,
->>> +                             hashlib.sha1(url.encode("utf-8")).hexdigest())
->>> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
->>> +            return fname
->>> +        logging.debug("Downloading %s to %s...", url, fname)
->>> +        subprocess.check_call(["wget", "-c", url, "-O", fname + 
->>> ".download"])
->>> +        os.rename(fname + ".download", fname)
->>> +        return fname
+On 11/07/2024 23.35, Richard Henderson wrote:
+> On 7/11/24 12:23, Alex Bennée wrote:
+>> Richard Henderson <richard.henderson@linaro.org> writes:
 >>
->> Download failure via exception?
->> Check hash on downloaded asset?
+>>> On 7/11/24 09:45, Richard Henderson wrote:
+>>>> On 7/11/24 04:55, Thomas Huth wrote:
+>>>>> +    def fetch_asset(self, url, asset_hash):
+>>>>> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
+>>>>> +        if not os.path.exists(cache_dir):
+>>>>> +            os.makedirs(cache_dir)
+>>>>> +        fname = os.path.join(cache_dir,
+>>>>> +                             
+>>>>> hashlib.sha1(url.encode("utf-8")).hexdigest())
+>>>>> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
+>>>>> +            return fname
+>>>>> +        logging.debug("Downloading %s to %s...", url, fname)
+>>>>> +        subprocess.check_call(["wget", "-c", url, "-O", fname + 
+>>>>> ".download"])
+>>>>> +        os.rename(fname + ".download", fname)
+>>>>> +        return fname
+>>>> Download failure via exception?
+>>>> Check hash on downloaded asset?
+>>>
+>>> I would prefer to see assets, particularly downloading, handled in a
+>>> separate pass from tests.
+>>
+>> And I assume cachable?
 > 
-> I would prefer to see assets, particularly downloading, handled in a 
-> separate pass from tests.
-> 
-> (1) Asset download should not count against test timeout.
-> (2) Running tests while disconnected should skip unavailable assets.
+> The cache is already handled here.  But downloading after cache miss is 
+> non-optional, may not fail, and is accounted against the meson test timeout.
 
-Sounds good, but honestly, that's above my primitive python-fu. I guess that 
-would need some kind of introspection of the tests to retrieve the 
-information what they want to download?
+Unless someone has a really good idea how to implement that download before 
+running the tests, I think we can start by simply giving enough headroom in 
+the initial timeout settings. We can then hopefully easily fine-tune later - 
+since this time the framework is under our control, so we don't have to sync 
+in a cumbersome way with the avocado test runner any more.
 
   Thomas
 
