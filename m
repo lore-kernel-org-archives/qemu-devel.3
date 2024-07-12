@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A447C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C7BC3DA4D
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:27:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFMy-0006Ee-Q8; Fri, 12 Jul 2024 08:27:24 -0400
+	id 1sSF0a-0007lg-2w; Fri, 12 Jul 2024 08:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sSFMw-000664-Os
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:27:22 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sSFMv-0003Mk-5M
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:27:22 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WL9mV6L1lz6K6RV;
- Fri, 12 Jul 2024 20:25:46 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id C7A1C1400D9;
- Fri, 12 Jul 2024 20:27:18 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
- lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 12 Jul 2024 13:27:18 +0100
-To: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>
-CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
- <marcel.apfelbaum@gmail.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Michael Roth <michael.roth@amd.com>,
- <fan.ni@samsung.com>
-Subject: [RFC qemu 6/6] hw/pci-bridge/cxl-upstream: Add properties to control
- link speed and width
-Date: Fri, 12 Jul 2024 13:24:14 +0100
-Message-ID: <20240712122414.1448284-7-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240712122414.1448284-1-Jonathan.Cameron@huawei.com>
-References: <20240712122414.1448284-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0P-0007Ek-8j; Fri, 12 Jul 2024 08:04:05 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0I-0005lC-VX; Fri, 12 Jul 2024 08:04:04 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-706524adf91so1638025b3a.2; 
+ Fri, 12 Jul 2024 05:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720785834; x=1721390634; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sqrzDK8wkTq/L5krI5RVW4u/qudiQvRHJA8S9u6V2LU=;
+ b=A4P72KGkuf/O7SggZeWWCzf7wQT3KtjZJ7sc027E+kz39zbjCmdBsakTok6eY9LMmj
+ e0IaB5rBGq6gNWDRrhdzVukwO0AlHmNJgl+4RDgLftZlH+RkCXL8YLURtIJ881RXVmxk
+ OBLd8lVcBiFY6+K+VQJuMDdkEHlEqpj20E57LOAKTDEdAMTeMmBGTRuheT+HPfsS1A8N
+ Wf1eYKmRcUFayIVWILrndzpnuF8oHhQv+cz8XjfEsPdhiWrPV8T/Af+7ZF2I2zKLq2Dj
+ Vh0t1IxENuSElsUroisvLRQQEToA/Qq39q+8yQLw8k0Tga5IVEo10W7vc8psrKEThlMu
+ EYBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720785834; x=1721390634;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sqrzDK8wkTq/L5krI5RVW4u/qudiQvRHJA8S9u6V2LU=;
+ b=nN+sXaPa4smd6C2qKxFrHzHr5/Cuh84kZ9Sd1eLcQCh1cihL+vfPYOcdlDEfNMv4UB
+ Hm3DRvWKGOeNRE1EWnBl+tKbrZzIGULj/QEUySTt9hH/xXbhp5ser1cuO/DResdcoF9C
+ nO7aYyPyVV1GWVqMTyBzZd6Nf1YqwoMXqy1UFhAa/21vGXHs9TEA9NA5ytawfmc0Cz3d
+ ZX6pgsjEvAyfVikj+22hoNwDb1DZ4asJ1wxJBVgsppwLopDMeX0fT5wWP3WbZE2Wyu21
+ NvFmJK+D8zlWDsjdc9JPg53fQxoz9xDSH5T4ZHPIwqrQxI+KgUO7yUmY0Ydm3nzYKKT4
+ uxDQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU43tl+6xDI2ERPndOGLEHODg1+pz8SAKs5EF+gv5H8sEGGvimowRmQCz7JdqHdtTkAog/BrPFd1zmc8vFaNnmuA9QStYQ=
+X-Gm-Message-State: AOJu0Yy89wu1S28wcFUOYQ4dIYvzYdcbZIOexyewMFGaIVHnW7WxUv/C
+ 1g9Z4V2TKc7i0yFr2VePLYQ2N9lk7OeeyfgEM3q8kfL1jtV/x39N3RJogA==
+X-Google-Smtp-Source: AGHT+IGUb3+4YNWxw8JvuNUFHAX23Ml9NK3YwZYylQ9KoDvfRJ8OinGvAtGKWafxS8lJkG8PBmYrDQ==
+X-Received: by 2002:a05:6a21:3393:b0:1be:c2af:5626 with SMTP id
+ adf61e73a8af0-1c298209096mr13417390637.4.1720785834472; 
+ Fri, 12 Jul 2024 05:03:54 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 05:03:54 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 07/19] ppc: Add a core_index to CPUPPCState for SMT vCPUs
+Date: Fri, 12 Jul 2024 22:02:34 +1000
+Message-ID: <20240712120247.477133-8-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
+References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,69 +94,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To establish performance characteristics of a CXL device when used via a
-particular CXL topology (root ports, switches, end points) it is necessary
-to set the appropriate link speed and width in the PCI Express capability
-structure.  Provide x-speed and x-link properties for this.
+The way SMT thread siblings are matched is clunky, using hard-coded
+logic that checks the PIR SPR.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Change that to use a new core_index variable in the CPUPPCState,
+where all siblings have the same core_index. CPU realize routines have
+flexibility in setting core/sibling topology.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/pci-bridge/cxl_upstream_port.h | 4 ++++
- hw/pci-bridge/cxl_upstream.c              | 6 ++++++
- 2 files changed, 10 insertions(+)
+ target/ppc/cpu.h        | 9 +++++----
+ hw/ppc/pnv_core.c       | 2 ++
+ hw/ppc/spapr_cpu_core.c | 4 ++++
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
-index 12635139f6..f208397ffe 100644
---- a/include/hw/pci-bridge/cxl_upstream_port.h
-+++ b/include/hw/pci-bridge/cxl_upstream_port.h
-@@ -12,6 +12,10 @@ typedef struct CXLUpstreamPort {
-     /*< public >*/
-     CXLComponentState cxl_cstate;
-     CXLCCI swcci;
-+
-+    PCIExpLinkSpeed speed;
-+    PCIExpLinkWidth width;
-+
-     DOECap doe_cdat;
-     uint64_t sn;
- } CXLUpstreamPort;
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index e51221a5f3..e673d69220 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
- #include "hw/pci/msi.h"
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
-@@ -100,6 +101,7 @@ static void cxl_usp_reset(DeviceState *qdev)
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 95ba9e7590..7b52a9bb18 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1247,6 +1247,9 @@ struct CPUArchState {
+     /* when a memory exception occurs, the access type is stored here */
+     int access_type;
  
-     pci_bridge_reset(qdev);
-     pcie_cap_deverr_reset(d);
-+    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed);
-     latch_registers(usp);
- }
- 
-@@ -363,6 +365,10 @@ static void cxl_usp_exitfn(PCIDevice *d)
- static Property cxl_upstream_props[] = {
-     DEFINE_PROP_UINT64("sn", CXLUpstreamPort, sn, UI64_NULL),
-     DEFINE_PROP_STRING("cdat", CXLUpstreamPort, cxl_cstate.cdat.filename),
-+    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", CXLUpstreamPort,
-+                                speed, PCIE_LINK_SPEED_32),
-+    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
-+                                width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_END_OF_LIST()
++    /* For SMT processors */
++    int core_index;
++
+ #if !defined(CONFIG_USER_ONLY)
+     /* MMU context, only relevant for full system emulation */
+ #if defined(TARGET_PPC64)
+@@ -1402,12 +1405,10 @@ struct CPUArchState {
+     uint64_t pmu_base_time;
  };
  
+-#define _CORE_ID(cs)                                            \
+-    (POWERPC_CPU(cs)->env.spr_cb[SPR_PIR].default_value & ~(cs->nr_threads - 1))
+-
+ #define THREAD_SIBLING_FOREACH(cs, cs_sibling)                  \
+     CPU_FOREACH(cs_sibling)                                     \
+-        if (_CORE_ID(cs) == _CORE_ID(cs_sibling))
++        if (POWERPC_CPU(cs)->env.core_index ==                  \
++            POWERPC_CPU(cs_sibling)->env.core_index)
+ 
+ #define SET_FIT_PERIOD(a_, b_, c_, d_)          \
+ do {                                            \
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 28ca61926d..7bda29b9c7 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -249,6 +249,8 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+     pir_spr->default_value = pir;
+     tir_spr->default_value = tir;
+ 
++    env->core_index = core_hwid;
++
+     /* Set time-base frequency to 512 MHz */
+     cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
+ }
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 21920ea054..4e13e6993a 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -302,11 +302,13 @@ static PowerPCCPU *spapr_create_vcpu(SpaprCpuCore *sc, int i, Error **errp)
+     g_autofree char *id = NULL;
+     CPUState *cs;
+     PowerPCCPU *cpu;
++    CPUPPCState *env;
+ 
+     obj = object_new(scc->cpu_type);
+ 
+     cs = CPU(obj);
+     cpu = POWERPC_CPU(obj);
++    env = &cpu->env;
+     /*
+      * All CPUs start halted. CPU0 is unhalted from the machine level reset code
+      * and the rest are explicitly started up by the guest using an RTAS call.
+@@ -317,6 +319,8 @@ static PowerPCCPU *spapr_create_vcpu(SpaprCpuCore *sc, int i, Error **errp)
+         return NULL;
+     }
+ 
++    env->core_index = cc->core_id;
++
+     cpu->node_id = sc->node_id;
+ 
+     id = g_strdup_printf("thread[%d]", i);
 -- 
-2.43.0
+2.45.1
 
 
