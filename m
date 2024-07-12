@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46FAC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC065C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSEzP-0003LI-Iu; Fri, 12 Jul 2024 08:03:03 -0400
+	id 1sSEtJ-0004kW-7D; Fri, 12 Jul 2024 07:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzN-0003Ce-9G; Fri, 12 Jul 2024 08:03:01 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzL-0005Iu-6s; Fri, 12 Jul 2024 08:03:00 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70b703eda27so334134b3a.3; 
- Fri, 12 Jul 2024 05:02:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720785777; x=1721390577; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WB7MLAdG0ItGWTgR3PSauNpTsxPnaD06YYrEKfLw9v4=;
- b=RaD4bJJFx/N63H5OV3VmB64y4ZO5IA0IwrZYEF5FN5SuoF3bJX6tTY9jV6C+Spg8t0
- 75ijmrpRryi6peRxn9VrdGuC5h4Ijm3t/r0DU5dff7i4qgeV6eGwTMGn2Gp0H/0kp53o
- P0miGIyIl+mAV0aOPwLZsx9Tz29+qqQ72WquRVsv/OPF9fGlPuYFMAabASSDmstU30bS
- ZIqTXeiL80vHmOwZFQxCGfC0zN05JWabvrJmu4/+MRlrTcUvodakNb6mC4YaMQ7gFO2w
- 4GR9dw/9aXS+u9tjXsu8wNKYbvXSOwNrGYKlmrWvE/uPyD4ROXmK9j8LY4OkmiJ+gUCy
- UtAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720785777; x=1721390577;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WB7MLAdG0ItGWTgR3PSauNpTsxPnaD06YYrEKfLw9v4=;
- b=HCL87y/HKLEWhZE8Tw0WxPCO/aVqZbAyZGTjaVKEDwjdWZ5LNAuW9b+vdB3fBZ5PED
- Y6eCxJxZP9D1MKlbHZCYTOwstJk8lIhbwrtCUpXHru4NQAruMCqlg83hewxaMRVfAvqe
- p6GcG3wU+fTnOKHYwss7AP1EG9ezHA+7P+imVonRfBdOtqBRqR+MDcbyb3VCQY0HqdlK
- IAlEb4QaswmPEmN5yH0QHHoEsleul5vZ65UC6EGPR4tryLHQfcLiMQ0clUTGMSTpixvc
- jhfkt7aecQd3mOp2GM0mCfYfy8wxJkQ0G2tcjO1V1qs68gY2xvGjo6XYoW5bXLrkQpNM
- cAEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOtW4mDVMwEJnu2YsqlCb8wWVoEc42Xg8BHgW5SyRlGrSbzcjqmo+LIChcg/Os4O8xVKiqn0Dcrbq1v1ycZnmesUMAk2Q=
-X-Gm-Message-State: AOJu0YyjHBv9qOScFvI05h/LnG3+1K82KRUmYm9C934byvpS8QB7tskP
- XtwEmK/iyGqaq26lN83hKG3mAknMn35PKWSa6Ug64r85PUXUxCPzGHNFTA==
-X-Google-Smtp-Source: AGHT+IGFdxg1bNuJGlwhS+4wbHc+D4/ihdJahGzGmmuBcgS4a9ch1b/ejGwNutK3nWH9YH1bHfJ0GA==
-X-Received: by 2002:a05:6a20:734b:b0:1c0:f675:ed08 with SMTP id
- adf61e73a8af0-1c29820b27bmr14047019637.6.1720785776569; 
- Fri, 12 Jul 2024 05:02:56 -0700 (PDT)
-Received: from wheely.local0.net ([203.220.44.216])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.02.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 05:02:55 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 00/19] ppc/pnv: Better big-core model, lpar-per-core,
- PC unit
-Date: Fri, 12 Jul 2024 22:02:27 +1000
-Message-ID: <20240712120247.477133-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSEtG-0004bI-Rh
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSEt3-0003Dz-1r
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:56:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720785386;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zm2eoXjdMzAETE+Sfr+S4b8bWSHVxT/ELinVk5X6AsE=;
+ b=OXI8kG//U+BA1799AMfAHcrw3iD6WTjyq32X2b2mx7AJHksWjTMAHlZvIzoVTZ9lFOzDDc
+ DNyZPc1cmm7Gs/j0R0i6cT4FIE3L74lB5h7L6hNemIfARgaGwj9Ee/hGyyui6pRCW6PoKc
+ z+KQO0kAYidsOSeLsbaR5ykL5zRLczI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-B2IruQZuOtCihirZN_cWLQ-1; Fri,
+ 12 Jul 2024 07:56:25 -0400
+X-MC-Unique: B2IruQZuOtCihirZN_cWLQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68D2F196CDF4; Fri, 12 Jul 2024 11:56:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B37E1955F40; Fri, 12 Jul 2024 11:56:20 +0000 (UTC)
+Date: Fri, 12 Jul 2024 12:56:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 7/8] tests/pytest: Add a function for extracting
+ files from an archive
+Message-ID: <ZpEZ4XMJuapDBENs@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
+ <20240711115546.40859-8-thuth@redhat.com>
+ <ZpDz20mo-OWVOjI3@redhat.com>
+ <04471abc-34c3-4e49-89ea-1a61f828c535@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <04471abc-34c3-4e49-89ea-1a61f828c535@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,91 +90,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Primary motivation for this series is to improve big-core support.
+On Fri, Jul 12, 2024 at 01:52:03PM +0200, Thomas Huth wrote:
+> On 12/07/2024 11.14, Daniel P. Berrangé wrote:
+> > On Thu, Jul 11, 2024 at 01:55:45PM +0200, Thomas Huth wrote:
+> > > Some Avocado-based tests use the "archive" module from avocado.utils
+> > > to extract files from an archive. To be able to use these tests
+> > > without Avocado, we have to provide our own function for extracting
+> > > files. Fortunately, there is already the tarfile module that will
+> > > provide us with this functionality, so let's just add a nice wrapper
+> > > function around that.
+> > > 
+> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > ---
+> > >   tests/pytest/qemu_pytest/utils.py | 21 +++++++++++++++++++++
+> > >   1 file changed, 21 insertions(+)
+> > >   create mode 100644 tests/pytest/qemu_pytest/utils.py
+> > > 
+> > > diff --git a/tests/pytest/qemu_pytest/utils.py b/tests/pytest/qemu_pytest/utils.py
+> > > new file mode 100644
+> > > index 0000000000..4eb5e5d5e5
+> > > --- /dev/null
+> > > +++ b/tests/pytest/qemu_pytest/utils.py
+> > > @@ -0,0 +1,21 @@
+> > > +# Utilities for python-based QEMU tests
+> > > +#
+> > > +# Copyright 2024 Red Hat, Inc.
+> > > +#
+> > > +# Authors:
+> > > +#  Thomas Huth <thuth@redhat.com>
+> > > +#
+> > > +# This work is licensed under the terms of the GNU GPL, version 2 or
+> > > +# later.  See the COPYING file in the top-level directory.
+> > > +
+> > > +import tarfile
+> > > +
+> > > +def archive_extract(archive, dest_dir, member=None):
+> > > +    with tarfile.open(archive) as tf:
+> > > +        if hasattr(tarfile, 'data_filter'):
+> > 
+> > Not convinced this is still needed. The python docs don't say anything
+> > about 'data_filter' being introduced after 3.0, so can likely
+> > assume it always exists.
+> 
+> According to https://docs.python.org/3/library/tarfile.html :
+> 
+> "Extraction filters were added to Python 3.12, but may be backported to
+> older versions as security updates. To check whether the feature is
+> available, use e.g. hasattr(tarfile, 'data_filter') rather than checking the
+> Python version."
+> 
+> And it seems to be missing in Python 3.7, indeed:
+> 
+>  https://docs.python.org/3.7/library/tarfile.html
+> 
+> So as long as we still support this old version, I think I've got to keep
+> this check.
 
-This also fixes POWER8 SMT running Linux with the msgsnd fix and
-setting lpar-per-core mode (which is always true on POWER8).
+Opps, yes, I missed the docs. The version info is against the top heading,
+not repeated against each method.
 
-Since v1:
-- Remove chip->pnv_machine pointer addition.
-- Split cpu_pause() function into its own patch.
-- Remove the _CORE_ID macro.
-- Add has_lpar_per_thread machine class attribute to
-  initialize the lpar mode to per-core on POWER8 machines
-  instead of testing presence of machine state property.
 
-Since rfc:
-- Fixed POWER8 SMT so it doesn't have to be disabled.
-- Fixed inadvertent spapr SMT bug.
-- Renamed PnvCPUState.core pointer to pnv_core. (Harsh)
-- Moved where it is initialised (clg)
-- Avoided most qdev_get_machine() calls by adding a PnvMachineState
-  pointer from PnvChip, new patch 3 (clg).
-- Rename TB state to use camel case (Harsh and clg)
-- Add comment to explain SPRC/SPRD is only accessed with powernv.
-- Use mc->desc for error messages and avoid splitting machine init
-  handlers (Harsh).
-- Add max_smt_threads class attribute to avoid duplicating checks (clg)
-- Rename processor_id() class method to get_pir_tir (Harsh and clg)
-- Add a comment for get_pir_tir() (clg)
-- Allow get_pir_tir() to be passed NULL pointers to avoid dummy
-  pir/tir variables (Harsh)
-- Move the PPC_CPU_HAS_CORE_SIBLINGS macros to inline functions (clg)
-- Invert them (test for single-thread rather than for siblings)
-  because the callers read a little better that way (Harsh).
-- Propagate lpar and big-core options down to chip and core
-  levels rather than having to test machine (clg)
-- Significantly split the big-core patch (clg).
-- Rework big-core device-tree handling to simplify it (clg).
-- Make new has_smt_siblings property bool (Harsh)
-- Make the big-core timebase tod quirk a machine class property
-  rather than machine state (Harsh).
-
-Thanks,
-Nick
-
-Nicholas Piggin (19):
-  target/ppc: Fix msgsnd for POWER8
-  ppc/pnv: Add pointer from PnvCPUState to PnvCore
-  ppc/pnv: Move timebase state into PnvCore
-  target/ppc: Move SPR indirect registers into PnvCore
-  ppc/pnv: use class attribute to limit SMT threads for different
-    machines
-  ppc/pnv: Extend chip_pir class method to TIR as well
-  ppc: Add a core_index to CPUPPCState for SMT vCPUs
-  target/ppc: Add helpers to check for SMT sibling threads
-  ppc: Add has_smt_siblings property to CPUPPCState
-  ppc/pnv: Add a big-core mode that joins two regular cores
-  ppc/pnv: Add allow for big-core differences in DT generation
-  ppc/pnv: Implement big-core PVR for Power9/10
-  ppc/pnv: Implement Power9 CPU core thread state indirect register
-  ppc/pnv: Add POWER10 ChipTOD quirk for big-core
-  ppc/pnv: Add big-core machine property
-  system/cpus: Add cpu_pause() function
-  ppc/pnv: Add a CPU nmi and resume function
-  ppc/pnv: Implement POWER10 PC xscom registers for direct controls
-  ppc/pnv: Add an LPAR per core machine option
-
- include/hw/core/cpu.h        |   8 +
- include/hw/ppc/pnv.h         |   8 +
- include/hw/ppc/pnv_chip.h    |   6 +-
- include/hw/ppc/pnv_core.h    |  31 ++++
- target/ppc/cpu.h             |  45 ++----
- hw/ppc/pnv.c                 | 305 ++++++++++++++++++++++++++++-------
- hw/ppc/pnv_chiptod.c         |   7 +-
- hw/ppc/pnv_core.c            | 125 ++++++++++++--
- hw/ppc/spapr_cpu_core.c      |  16 +-
- system/cpus.c                |  30 ++--
- target/ppc/cpu_init.c        |  26 +--
- target/ppc/excp_helper.c     |  69 ++++----
- target/ppc/misc_helper.c     | 104 ++++++------
- target/ppc/timebase_helper.c |  82 +++++-----
- 14 files changed, 612 insertions(+), 250 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.45.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
