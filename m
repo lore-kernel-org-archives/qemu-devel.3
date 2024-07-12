@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C42C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBB1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSBjf-0004kn-Dt; Fri, 12 Jul 2024 04:34:35 -0400
+	id 1sSBkM-0007a7-9V; Fri, 12 Jul 2024 04:35:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sSBjc-0004dA-Iq
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:34:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sSBkK-0007UW-Of
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:35:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sSBjY-00070g-Is
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:34:32 -0400
+ id 1sSBkD-0007Df-D1
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:35:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720773267;
+ s=mimecast20190719; t=1720773308;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nA6Aip4SfsneSOoIz9HibVnd49Xkgude/rp1vu1Uywc=;
- b=R1V5Iaok7KES1ocLvD0isT2+IXLyNqStmsG/lby8eHJLTSUBv2kgV53GvOzOLAhxhD+FaK
- lEn6flUC+8kJEYV9DJVgPJLMxrf4baoSIPSlRT1GbQd2cm/H8PY1FPOOkO3Js6D5SOrwob
- 5MZGuNmAR5A3R9Iqd1bwujWnYk6OUkw=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hN08qGJJQ7WGa3kb6ZxWSejdWnYE4cMEuMOBawEWW3Q=;
+ b=PoVmw+2E8Wo7PfGulqG2zlNDxpqg140+5TZWKjZf4fEEPICoZCu3tXwhdLFLfjEJH5+VCL
+ mtC+kGlpbNYuPcWwEoRlv/ZgtgrA9ZNyyxHypEaExOji5yS1Mv0mcNmOJPIl2Sct5C5S6S
+ nN1+1gAk1yNoSd/OSG4Ixtw1cMCotNE=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-uQ91ImtJPZCs1BH1CyBOIw-1; Fri, 12 Jul 2024 04:34:25 -0400
-X-MC-Unique: uQ91ImtJPZCs1BH1CyBOIw-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6590a57788aso28766337b3.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 01:34:25 -0700 (PDT)
+ us-mta-21-CVvnQXmNPNmKbzviWJJBTQ-1; Fri, 12 Jul 2024 04:35:05 -0400
+X-MC-Unique: CVvnQXmNPNmKbzviWJJBTQ-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-6511c587946so32556327b3.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 01:35:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720773265; x=1721378065;
+ d=1e100.net; s=20230601; t=1720773305; x=1721378105;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nA6Aip4SfsneSOoIz9HibVnd49Xkgude/rp1vu1Uywc=;
- b=gO0kEPv5DKuW7Snv8pKoc+pJLRYowGVwsKFuKAu0t0PupMBJQhG0FR9EfhO6f10tE7
- 2xCc9NDmAokIYSgAdUNSJFsrWc+Lm/qnm+jyOLnTCTK3bl27IycuQlDhzpGnqWwDMVU+
- FpqmFoCtl4KRzpfoyU52yfiH3RZPC79uqRpa+NJ009IaQyMRAWVaYeDGfVye3AqR0FSA
- mkF1vZDgKKcstzCMke71hPsZjlB4QdpyyIcEEgFlOMdrFpVp635HxNB70TWZndUpGjQq
- ORJj8tcdoN+C6IQp26mpnGbPcX605ci/kUHiAxhMqkjMC4RMv7SXQ6xoJyuA0Gvj1fpE
- VPDQ==
-X-Gm-Message-State: AOJu0YxdxhTEvIw/MZB5TazhG7k2i4CyslHwS01lNGcTTNLSICCKnZrO
- VJBvIzwzJZPe7begGcHpg1MzQyQsUHjDkxzdgQ3DyqqeA1sErnfbeM/RpIR8vItXq39mjQQJzmz
- UFSbTvEBRaFl5NgZzLozzyYj1Xdo1sVH6kG6JwORYQchB59wyuXMcUUwBnVvMi/r+NdubT+GBt/
- JMNG6qpQQv1cLDmKRC0Li0PUOriJA=
-X-Received: by 2002:a81:5b42:0:b0:650:8f3a:2ac6 with SMTP id
- 00721157ae682-658ee790066mr122555317b3.1.1720773264670; 
- Fri, 12 Jul 2024 01:34:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGImDBtS/CQO2eyh5QN438xDGNy/aJXF5fWwqQe6MzvoNgJMmcnCnO4rccNRXMDHjPSlpcYX6cQiUejqaO4zbc=
-X-Received: by 2002:a81:5b42:0:b0:650:8f3a:2ac6 with SMTP id
- 00721157ae682-658ee790066mr122555127b3.1.1720773264240; Fri, 12 Jul 2024
- 01:34:24 -0700 (PDT)
+ bh=hN08qGJJQ7WGa3kb6ZxWSejdWnYE4cMEuMOBawEWW3Q=;
+ b=Ud6eb2fAxD/Qa10Xw8Z41pZTxinKbqdqC6yVcW/SKr8zpk4n7mTzhcmdGiyje7xupm
+ rW4xh1gx4JzyM61bDn5pcZl4EnckzM6LKkOp780ESdivQ4tusE7aa+lTLlqm89UOLdYB
+ Ib07TnrZ3F1CdYStUyLaYBYQ/8iGwiBWru978fTGs+LjKO9wx2YkRRSylmG6WMrImenu
+ Lu8sLm5aqR7OPh8VZUKr7HxbCJEe8fiYEzuNEa0Ns6U/XhqNoJm3Ae8sw0M1Hf7YdS9a
+ 7qOdqdhHhe2CYp+JuRVtnTZaB62CXhdba0LTtBv+4sZgNfEgUszG63/6aYmEt6zYSaXW
+ sWEQ==
+X-Gm-Message-State: AOJu0YxPFMuwmS63FhZ603tf5akkWI1yiFAxugwxdBA4kYVh9cB/fqTz
+ msXT3Zw+SsF48782pMGomrjQoYODnSYGR+Y6W4VPYoiblSPMhhivy0zfVJHQf7ATdbEWJwDoceT
+ hFleP3bHdEsCMwZlPsz98cICUIu10/9msOXQ6Pzdwbdy1pxsYuIj3vF1z4ArarzrRA2s5HgJJpj
+ 2sMMBMMnTQn0K1LsE4uwOKMcDyWb8=
+X-Received: by 2002:a05:690c:620c:b0:650:9d94:799f with SMTP id
+ 00721157ae682-658ef153907mr153050567b3.26.1720773305340; 
+ Fri, 12 Jul 2024 01:35:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI6rmbN5tzGJE4osdpjOgjY5n/gd1CvKNwUbxLormKlxev6emn4vzT3DdeRGlZYpKav5VEW5jEo+HpHoffZgk=
+X-Received: by 2002:a05:690c:620c:b0:650:9d94:799f with SMTP id
+ 00721157ae682-658ef153907mr153050497b3.26.1720773305059; Fri, 12 Jul 2024
+ 01:35:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240613150127.1361931-1-berrange@redhat.com>
  <20240613154406.1365469-1-berrange@redhat.com>
-In-Reply-To: <20240613154406.1365469-1-berrange@redhat.com>
+ <20240613154406.1365469-3-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-3-berrange@redhat.com>
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Fri, 12 Jul 2024 11:34:13 +0300
-Message-ID: <CAPMcbCoD1-TiB-3chq7ZqPFcTeKe33U_TyGK-_5Hgm4Vb=Ws7w@mail.gmail.com>
-Subject: Re: [PATCH v2 06/22] qga: move linux memory block command impls to
- commands-linux.c
+Date: Fri, 12 Jul 2024 11:34:54 +0300
+Message-ID: <CAPMcbCps0VDcT+-BhTrTTDUBRSi4r=H+h-FtpBGQadD+JLOFnQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/22] qga: conditionalize schema for commands
+ unsupported on Windows
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000002785c9061d08bf13"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: multipart/alternative; boundary="000000000000966aaf061d08c1f0"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,7 +101,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002785c9061d08bf13
+--000000000000966aaf061d08c1f0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -111,640 +111,96 @@ On Thu, Jun 13, 2024 at 6:44=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
 edhat.com>
 wrote:
 
-> The qmp_guest_{set,get}_{memory_blocks,block_info} command impls in
-> commands-posix.c are surrounded by '#ifdef __linux__' so should
-> instead live in commands-linux.c
+> Rather than creating stubs for every command that just return
+> QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+> fully exclude generation of the commands on Windows.
 >
-> This also removes a "#ifdef CONFIG_LINUX" that was nested inside
-> a "#ifdef __linux__".
+> The command will be rejected at QMP dispatch time instead,
+> avoiding reimplementing rejection by blocking the stub commands.
+> This changes the error message for affected commands from
+>
+>     {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+>
+> to
+>
+>     {"class": "CommandNotFound", "desc": "The command FOO has not been
+> found"}
+>
+> This also fixes an accidental inconsistency where some commands
+> (guest-get-diskstats & guest-get-cpustats) are implemented as
+> stubs, yet not added to the blockedrpc list. Those change their
+> error message from
+>
+>     {"class": "GenericError, "desc": "this feature or command is not
+> currently supported"}
+>
+> to
+>
+>     {"class": "CommandNotFound", "desc": "The command FOO has not been
+> found"}
+>
+> The final additional benefit is that the QGA protocol reference
+> now documents what conditions enable use of the command.
 >
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  qga/commands-linux.c | 308 ++++++++++++++++++++++++++++++++++++++++++
->  qga/commands-posix.c | 311 +------------------------------------------
->  2 files changed, 309 insertions(+), 310 deletions(-)
+>  qga/commands-posix.c |  2 +-
+>  qga/commands-win32.c | 56 +-------------------------------------------
+>  qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
+>  3 files changed, 32 insertions(+), 71 deletions(-)
 >
-> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> index c0e8bd4062..73b13fbaf6 100644
-> --- a/qga/commands-linux.c
-> +++ b/qga/commands-linux.c
-> @@ -1595,6 +1595,314 @@ int64_t
-> qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
->      return processed;
->  }
->
-> +
-> +static void ga_read_sysfs_file(int dirfd, const char *pathname, char *bu=
-f,
-> +                               int size, Error **errp)
-> +{
-> +    int fd;
-> +    int res;
-> +
-> +    errno =3D 0;
-> +    fd =3D openat(dirfd, pathname, O_RDONLY);
-> +    if (fd =3D=3D -1) {
-> +        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname=
-);
-> +        return;
-> +    }
-> +
-> +    res =3D pread(fd, buf, size, 0);
-> +    if (res =3D=3D -1) {
-> +        error_setg_errno(errp, errno, "pread sysfs file \"%s\"",
-> pathname);
-> +    } else if (res =3D=3D 0) {
-> +        error_setg(errp, "pread sysfs file \"%s\": unexpected EOF",
-> pathname);
-> +    }
-> +    close(fd);
-> +}
-> +
-> +static void ga_write_sysfs_file(int dirfd, const char *pathname,
-> +                                const char *buf, int size, Error **errp)
-> +{
-> +    int fd;
-> +
-> +    errno =3D 0;
-> +    fd =3D openat(dirfd, pathname, O_WRONLY);
-> +    if (fd =3D=3D -1) {
-> +        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname=
-);
-> +        return;
-> +    }
-> +
-> +    if (pwrite(fd, buf, size, 0) =3D=3D -1) {
-> +        error_setg_errno(errp, errno, "pwrite sysfs file \"%s\"",
-> pathname);
-> +    }
-> +
-> +    close(fd);
-> +}
-> +
-> +/* Transfer online/offline status between @mem_blk and the guest system.
-> + *
-> + * On input either @errp or *@errp must be NULL.
-> + *
-> + * In system-to-@mem_blk direction, the following @mem_blk fields are
-> accessed:
-> + * - R: mem_blk->phys_index
-> + * - W: mem_blk->online
-> + * - W: mem_blk->can_offline
-> + *
-> + * In @mem_blk-to-system direction, the following @mem_blk fields are
-> accessed:
-> + * - R: mem_blk->phys_index
-> + * - R: mem_blk->online
-> + *-  R: mem_blk->can_offline
-> + * Written members remain unmodified on error.
-> + */
-> +static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool
-> sys2memblk,
-> +                                  GuestMemoryBlockResponse *result,
-> +                                  Error **errp)
-> +{
-> +    char *dirpath;
-> +    int dirfd;
-> +    char *status;
-> +    Error *local_err =3D NULL;
-> +
-> +    if (!sys2memblk) {
-> +        DIR *dp;
-> +
-> +        if (!result) {
-> +            error_setg(errp, "Internal error, 'result' should not be
-> NULL");
-> +            return;
-> +        }
-> +        errno =3D 0;
-> +        dp =3D opendir("/sys/devices/system/memory/");
-> +         /* if there is no 'memory' directory in sysfs,
-> +         * we think this VM does not support online/offline memory block=
-,
-> +         * any other solution?
-> +         */
-> +        if (!dp) {
-> +            if (errno =3D=3D ENOENT) {
-> +                result->response =3D
-> +
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-> +            }
-> +            goto out1;
-> +        }
-> +        closedir(dp);
-> +    }
-> +
-> +    dirpath =3D g_strdup_printf("/sys/devices/system/memory/memory%" PRI=
-d64
-> "/",
-> +                              mem_blk->phys_index);
-> +    dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);
-> +    if (dirfd =3D=3D -1) {
-> +        if (sys2memblk) {
-> +            error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-> +        } else {
-> +            if (errno =3D=3D ENOENT) {
-> +                result->response =3D
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;
-> +            } else {
-> +                result->response =3D
-> +                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> +            }
-> +        }
-> +        g_free(dirpath);
-> +        goto out1;
-> +    }
-> +    g_free(dirpath);
-> +
-> +    status =3D g_malloc0(10);
-> +    ga_read_sysfs_file(dirfd, "state", status, 10, &local_err);
-> +    if (local_err) {
-> +        /* treat with sysfs file that not exist in old kernel */
-> +        if (errno =3D=3D ENOENT) {
-> +            error_free(local_err);
-> +            if (sys2memblk) {
-> +                mem_blk->online =3D true;
-> +                mem_blk->can_offline =3D false;
-> +            } else if (!mem_blk->online) {
-> +                result->response =3D
-> +
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-> +            }
-> +        } else {
-> +            if (sys2memblk) {
-> +                error_propagate(errp, local_err);
-> +            } else {
-> +                error_free(local_err);
-> +                result->response =3D
-> +                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> +            }
-> +        }
-> +        goto out2;
-> +    }
-> +
-> +    if (sys2memblk) {
-> +        char removable =3D '0';
-> +
-> +        mem_blk->online =3D (strncmp(status, "online", 6) =3D=3D 0);
-> +
-> +        ga_read_sysfs_file(dirfd, "removable", &removable, 1, &local_err=
-);
-> +        if (local_err) {
-> +            /* if no 'removable' file, it doesn't support offline mem bl=
-k
-> */
-> +            if (errno =3D=3D ENOENT) {
-> +                error_free(local_err);
-> +                mem_blk->can_offline =3D false;
-> +            } else {
-> +                error_propagate(errp, local_err);
-> +            }
-> +        } else {
-> +            mem_blk->can_offline =3D (removable !=3D '0');
-> +        }
-> +    } else {
-> +        if (mem_blk->online !=3D (strncmp(status, "online", 6) =3D=3D 0)=
-) {
-> +            const char *new_state =3D mem_blk->online ? "online" :
-> "offline";
-> +
-> +            ga_write_sysfs_file(dirfd, "state", new_state,
-> strlen(new_state),
-> +                                &local_err);
-> +            if (local_err) {
-> +                error_free(local_err);
-> +                result->response =3D
-> +                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> +                goto out2;
-> +            }
-> +
-> +            result->response =3D GUEST_MEMORY_BLOCK_RESPONSE_TYPE_SUCCES=
-S;
-> +            result->has_error_code =3D false;
-> +        } /* otherwise pretend successful re-(on|off)-lining */
-> +    }
-> +    g_free(status);
-> +    close(dirfd);
-> +    return;
-> +
-> +out2:
-> +    g_free(status);
-> +    close(dirfd);
-> +out1:
-> +    if (!sys2memblk) {
-> +        result->has_error_code =3D true;
-> +        result->error_code =3D errno;
-> +    }
-> +}
-> +
-> +GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
-> +{
-> +    GuestMemoryBlockList *head, **tail;
-> +    Error *local_err =3D NULL;
-> +    struct dirent *de;
-> +    DIR *dp;
-> +
-> +    head =3D NULL;
-> +    tail =3D &head;
-> +
-> +    dp =3D opendir("/sys/devices/system/memory/");
-> +    if (!dp) {
-> +        /* it's ok if this happens to be a system that doesn't expose
-> +         * memory blocks via sysfs, but otherwise we should report
-> +         * an error
-> +         */
-> +        if (errno !=3D ENOENT) {
-> +            error_setg_errno(errp, errno, "Can't open directory"
-> +                             "\"/sys/devices/system/memory/\"");
-> +        }
-> +        return NULL;
-> +    }
-> +
-> +    /* Note: the phys_index of memory block may be discontinuous,
-> +     * this is because a memblk is the unit of the Sparse Memory design,
-> which
-> +     * allows discontinuous memory ranges (ex. NUMA), so here we should
-> +     * traverse the memory block directory.
-> +     */
-> +    while ((de =3D readdir(dp)) !=3D NULL) {
-> +        GuestMemoryBlock *mem_blk;
-> +
-> +        if ((strncmp(de->d_name, "memory", 6) !=3D 0) ||
-> +            !(de->d_type & DT_DIR)) {
-> +            continue;
-> +        }
-> +
-> +        mem_blk =3D g_malloc0(sizeof *mem_blk);
-> +        /* The d_name is "memoryXXX",  phys_index is block id, same as
-> XXX */
-> +        mem_blk->phys_index =3D strtoul(&de->d_name[6], NULL, 10);
-> +        mem_blk->has_can_offline =3D true; /* lolspeak ftw */
-> +        transfer_memory_block(mem_blk, true, NULL, &local_err);
-> +        if (local_err) {
-> +            break;
-> +        }
-> +
-> +        QAPI_LIST_APPEND(tail, mem_blk);
-> +    }
-> +
-> +    closedir(dp);
-> +    if (local_err =3D=3D NULL) {
-> +        /* there's no guest with zero memory blocks */
-> +        if (head =3D=3D NULL) {
-> +            error_setg(errp, "guest reported zero memory blocks!");
-> +        }
-> +        return head;
-> +    }
-> +
-> +    qapi_free_GuestMemoryBlockList(head);
-> +    error_propagate(errp, local_err);
-> +    return NULL;
-> +}
-> +
-> +GuestMemoryBlockResponseList *
-> +qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp=
-)
-> +{
-> +    GuestMemoryBlockResponseList *head, **tail;
-> +    Error *local_err =3D NULL;
-> +
-> +    head =3D NULL;
-> +    tail =3D &head;
-> +
-> +    while (mem_blks !=3D NULL) {
-> +        GuestMemoryBlockResponse *result;
-> +        GuestMemoryBlock *current_mem_blk =3D mem_blks->value;
-> +
-> +        result =3D g_malloc0(sizeof(*result));
-> +        result->phys_index =3D current_mem_blk->phys_index;
-> +        transfer_memory_block(current_mem_blk, false, result, &local_err=
-);
-> +        if (local_err) { /* should never happen */
-> +            goto err;
-> +        }
-> +
-> +        QAPI_LIST_APPEND(tail, result);
-> +        mem_blks =3D mem_blks->next;
-> +    }
-> +
-> +    return head;
-> +err:
-> +    qapi_free_GuestMemoryBlockResponseList(head);
-> +    error_propagate(errp, local_err);
-> +    return NULL;
-> +}
-> +
-> +GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    char *dirpath;
-> +    int dirfd;
-> +    char *buf;
-> +    GuestMemoryBlockInfo *info;
-> +
-> +    dirpath =3D g_strdup_printf("/sys/devices/system/memory/");
-> +    dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);
-> +    if (dirfd =3D=3D -1) {
-> +        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-> +        g_free(dirpath);
-> +        return NULL;
-> +    }
-> +    g_free(dirpath);
-> +
-> +    buf =3D g_malloc0(20);
-> +    ga_read_sysfs_file(dirfd, "block_size_bytes", buf, 20, &local_err);
-> +    close(dirfd);
-> +    if (local_err) {
-> +        g_free(buf);
-> +        error_propagate(errp, local_err);
-> +        return NULL;
-> +    }
-> +
-> +    info =3D g_new0(GuestMemoryBlockInfo, 1);
-> +    info->size =3D strtol(buf, NULL, 16); /* the unit is bytes */
-> +
-> +    g_free(buf);
-> +
-> +    return info;
-> +}
-> +
->  #define MAX_NAME_LEN 128
->  static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
->  {
 > diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 5da60e65ab..2a3bef7445 100644
+> index 2a3bef7445..0dd8555867 100644
 > --- a/qga/commands-posix.c
 > +++ b/qga/commands-posix.c
-> @@ -887,316 +887,7 @@ void qmp_guest_set_user_password(const char
-> *username,
->  }
->  #endif /* __linux__ || __FreeBSD__ */
+> @@ -1280,7 +1280,7 @@ GList *ga_command_init_blockedrpcs(GList
+> *blockedrpcs)
+>              "guest-get-memory-blocks", "guest-set-memory-blocks",
+>              "guest-get-memory-block-info",
+>              NULL};
+> -        char **p =3D (char **)list;
+> +        const char **p =3D list;
 >
-> -#ifdef __linux__
-> -static void ga_read_sysfs_file(int dirfd, const char *pathname, char *bu=
-f,
-> -                               int size, Error **errp)
+>          while (*p) {
+>              blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
+> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+> index 9fe670d5b4..2533e4c748 100644
+> --- a/qga/commands-win32.c
+> +++ b/qga/commands-win32.c
+> @@ -1494,11 +1494,6 @@ out:
+>      }
+>  }
+>
+> -void qmp_guest_suspend_hybrid(Error **errp)
 > -{
-> -    int fd;
-> -    int res;
-> -
-> -    errno =3D 0;
-> -    fd =3D openat(dirfd, pathname, O_RDONLY);
-> -    if (fd =3D=3D -1) {
-> -        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname=
-);
-> -        return;
-> -    }
-> -
-> -    res =3D pread(fd, buf, size, 0);
-> -    if (res =3D=3D -1) {
-> -        error_setg_errno(errp, errno, "pread sysfs file \"%s\"",
-> pathname);
-> -    } else if (res =3D=3D 0) {
-> -        error_setg(errp, "pread sysfs file \"%s\": unexpected EOF",
-> pathname);
-> -    }
-> -    close(fd);
+> -    error_setg(errp, QERR_UNSUPPORTED);
 > -}
 > -
-> -static void ga_write_sysfs_file(int dirfd, const char *pathname,
-> -                                const char *buf, int size, Error **errp)
+>  static IP_ADAPTER_ADDRESSES *guest_get_adapters_addresses(Error **errp)
+>  {
+>      IP_ADAPTER_ADDRESSES *adptr_addrs =3D NULL;
+> @@ -1862,12 +1857,6 @@ GuestLogicalProcessorList
+> *qmp_guest_get_vcpus(Error **errp)
+>      return NULL;
+>  }
+>
+> -int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error
+> **errp)
 > -{
-> -    int fd;
-> -
-> -    errno =3D 0;
-> -    fd =3D openat(dirfd, pathname, O_WRONLY);
-> -    if (fd =3D=3D -1) {
-> -        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname=
-);
-> -        return;
-> -    }
-> -
-> -    if (pwrite(fd, buf, size, 0) =3D=3D -1) {
-> -        error_setg_errno(errp, errno, "pwrite sysfs file \"%s\"",
-> pathname);
-> -    }
-> -
-> -    close(fd);
+> -    error_setg(errp, QERR_UNSUPPORTED);
+> -    return -1;
 > -}
 > -
-> -/* Transfer online/offline status between @mem_blk and the guest system.
-> - *
-> - * On input either @errp or *@errp must be NULL.
-> - *
-> - * In system-to-@mem_blk direction, the following @mem_blk fields are
-> accessed:
-> - * - R: mem_blk->phys_index
-> - * - W: mem_blk->online
-> - * - W: mem_blk->can_offline
-> - *
-> - * In @mem_blk-to-system direction, the following @mem_blk fields are
-> accessed:
-> - * - R: mem_blk->phys_index
-> - * - R: mem_blk->online
-> - *-  R: mem_blk->can_offline
-> - * Written members remain unmodified on error.
-> - */
-> -static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool
-> sys2memblk,
-> -                                  GuestMemoryBlockResponse *result,
-> -                                  Error **errp)
-> -{
-> -    char *dirpath;
-> -    int dirfd;
-> -    char *status;
-> -    Error *local_err =3D NULL;
-> -
-> -    if (!sys2memblk) {
-> -        DIR *dp;
-> -
-> -        if (!result) {
-> -            error_setg(errp, "Internal error, 'result' should not be
-> NULL");
-> -            return;
-> -        }
-> -        errno =3D 0;
-> -        dp =3D opendir("/sys/devices/system/memory/");
-> -         /* if there is no 'memory' directory in sysfs,
-> -         * we think this VM does not support online/offline memory block=
-,
-> -         * any other solution?
-> -         */
-> -        if (!dp) {
-> -            if (errno =3D=3D ENOENT) {
-> -                result->response =3D
-> -
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-> -            }
-> -            goto out1;
-> -        }
-> -        closedir(dp);
-> -    }
-> -
-> -    dirpath =3D g_strdup_printf("/sys/devices/system/memory/memory%" PRI=
-d64
-> "/",
-> -                              mem_blk->phys_index);
-> -    dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);
-> -    if (dirfd =3D=3D -1) {
-> -        if (sys2memblk) {
-> -            error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-> -        } else {
-> -            if (errno =3D=3D ENOENT) {
-> -                result->response =3D
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;
-> -            } else {
-> -                result->response =3D
-> -                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> -            }
-> -        }
-> -        g_free(dirpath);
-> -        goto out1;
-> -    }
-> -    g_free(dirpath);
-> -
-> -    status =3D g_malloc0(10);
-> -    ga_read_sysfs_file(dirfd, "state", status, 10, &local_err);
-> -    if (local_err) {
-> -        /* treat with sysfs file that not exist in old kernel */
-> -        if (errno =3D=3D ENOENT) {
-> -            error_free(local_err);
-> -            if (sys2memblk) {
-> -                mem_blk->online =3D true;
-> -                mem_blk->can_offline =3D false;
-> -            } else if (!mem_blk->online) {
-> -                result->response =3D
-> -
-> GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-> -            }
-> -        } else {
-> -            if (sys2memblk) {
-> -                error_propagate(errp, local_err);
-> -            } else {
-> -                error_free(local_err);
-> -                result->response =3D
-> -                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> -            }
-> -        }
-> -        goto out2;
-> -    }
-> -
-> -    if (sys2memblk) {
-> -        char removable =3D '0';
-> -
-> -        mem_blk->online =3D (strncmp(status, "online", 6) =3D=3D 0);
-> -
-> -        ga_read_sysfs_file(dirfd, "removable", &removable, 1, &local_err=
-);
-> -        if (local_err) {
-> -            /* if no 'removable' file, it doesn't support offline mem bl=
-k
-> */
-> -            if (errno =3D=3D ENOENT) {
-> -                error_free(local_err);
-> -                mem_blk->can_offline =3D false;
-> -            } else {
-> -                error_propagate(errp, local_err);
-> -            }
-> -        } else {
-> -            mem_blk->can_offline =3D (removable !=3D '0');
-> -        }
-> -    } else {
-> -        if (mem_blk->online !=3D (strncmp(status, "online", 6) =3D=3D 0)=
-) {
-> -            const char *new_state =3D mem_blk->online ? "online" :
-> "offline";
-> -
-> -            ga_write_sysfs_file(dirfd, "state", new_state,
-> strlen(new_state),
-> -                                &local_err);
-> -            if (local_err) {
-> -                error_free(local_err);
-> -                result->response =3D
-> -                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-> -                goto out2;
-> -            }
-> -
-> -            result->response =3D GUEST_MEMORY_BLOCK_RESPONSE_TYPE_SUCCES=
-S;
-> -            result->has_error_code =3D false;
-> -        } /* otherwise pretend successful re-(on|off)-lining */
-> -    }
-> -    g_free(status);
-> -    close(dirfd);
-> -    return;
-> -
-> -out2:
-> -    g_free(status);
-> -    close(dirfd);
-> -out1:
-> -    if (!sys2memblk) {
-> -        result->has_error_code =3D true;
-> -        result->error_code =3D errno;
-> -    }
-> -}
-> -
+>  static gchar *
+>  get_net_error_message(gint error)
+>  {
+> @@ -1969,46 +1958,15 @@ done:
+>      g_free(rawpasswddata);
+>  }
+>
 > -GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
 > -{
-> -    GuestMemoryBlockList *head, **tail;
-> -    Error *local_err =3D NULL;
-> -    struct dirent *de;
-> -    DIR *dp;
-> -
-> -    head =3D NULL;
-> -    tail =3D &head;
-> -
-> -    dp =3D opendir("/sys/devices/system/memory/");
-> -    if (!dp) {
-> -        /* it's ok if this happens to be a system that doesn't expose
-> -         * memory blocks via sysfs, but otherwise we should report
-> -         * an error
-> -         */
-> -        if (errno !=3D ENOENT) {
-> -            error_setg_errno(errp, errno, "Can't open directory"
-> -                             "\"/sys/devices/system/memory/\"");
-> -        }
-> -        return NULL;
-> -    }
-> -
-> -    /* Note: the phys_index of memory block may be discontinuous,
-> -     * this is because a memblk is the unit of the Sparse Memory design,
-> which
-> -     * allows discontinuous memory ranges (ex. NUMA), so here we should
-> -     * traverse the memory block directory.
-> -     */
-> -    while ((de =3D readdir(dp)) !=3D NULL) {
-> -        GuestMemoryBlock *mem_blk;
-> -
-> -        if ((strncmp(de->d_name, "memory", 6) !=3D 0) ||
-> -            !(de->d_type & DT_DIR)) {
-> -            continue;
-> -        }
-> -
-> -        mem_blk =3D g_malloc0(sizeof *mem_blk);
-> -        /* The d_name is "memoryXXX",  phys_index is block id, same as
-> XXX */
-> -        mem_blk->phys_index =3D strtoul(&de->d_name[6], NULL, 10);
-> -        mem_blk->has_can_offline =3D true; /* lolspeak ftw */
-> -        transfer_memory_block(mem_blk, true, NULL, &local_err);
-> -        if (local_err) {
-> -            break;
-> -        }
-> -
-> -        QAPI_LIST_APPEND(tail, mem_blk);
-> -    }
-> -
-> -    closedir(dp);
-> -    if (local_err =3D=3D NULL) {
-> -        /* there's no guest with zero memory blocks */
-> -        if (head =3D=3D NULL) {
-> -            error_setg(errp, "guest reported zero memory blocks!");
-> -        }
-> -        return head;
-> -    }
-> -
-> -    qapi_free_GuestMemoryBlockList(head);
-> -    error_propagate(errp, local_err);
+> -    error_setg(errp, QERR_UNSUPPORTED);
 > -    return NULL;
 > -}
 > -
@@ -752,81 +208,216 @@ S;
 > -qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp=
 )
 > -{
-> -    GuestMemoryBlockResponseList *head, **tail;
-> -    Error *local_err =3D NULL;
-> -
-> -    head =3D NULL;
-> -    tail =3D &head;
-> -
-> -    while (mem_blks !=3D NULL) {
-> -        GuestMemoryBlockResponse *result;
-> -        GuestMemoryBlock *current_mem_blk =3D mem_blks->value;
-> -
-> -        result =3D g_malloc0(sizeof(*result));
-> -        result->phys_index =3D current_mem_blk->phys_index;
-> -        transfer_memory_block(current_mem_blk, false, result, &local_err=
-);
-> -        if (local_err) { /* should never happen */
-> -            goto err;
-> -        }
-> -
-> -        QAPI_LIST_APPEND(tail, result);
-> -        mem_blks =3D mem_blks->next;
-> -    }
-> -
-> -    return head;
-> -err:
-> -    qapi_free_GuestMemoryBlockResponseList(head);
-> -    error_propagate(errp, local_err);
+> -    error_setg(errp, QERR_UNSUPPORTED);
 > -    return NULL;
 > -}
 > -
 > -GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
 > -{
-> -    Error *local_err =3D NULL;
-> -    char *dirpath;
-> -    int dirfd;
-> -    char *buf;
-> -    GuestMemoryBlockInfo *info;
-> -
-> -    dirpath =3D g_strdup_printf("/sys/devices/system/memory/");
-> -    dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);
-> -    if (dirfd =3D=3D -1) {
-> -        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-> -        g_free(dirpath);
-> -        return NULL;
-> -    }
-> -    g_free(dirpath);
-> -
-> -    buf =3D g_malloc0(20);
-> -    ga_read_sysfs_file(dirfd, "block_size_bytes", buf, 20, &local_err);
-> -    close(dirfd);
-> -    if (local_err) {
-> -        g_free(buf);
-> -        error_propagate(errp, local_err);
-> -        return NULL;
-> -    }
-> -
-> -    info =3D g_new0(GuestMemoryBlockInfo, 1);
-> -    info->size =3D strtol(buf, NULL, 16); /* the unit is bytes */
-> -
-> -    g_free(buf);
-> -
-> -    return info;
+> -    error_setg(errp, QERR_UNSUPPORTED);
+> -    return NULL;
 > -}
 > -
-> -
-> -#else /* defined(__linux__) */
-> +#ifndef __linux__
->
->  void qmp_guest_suspend_disk(Error **errp)
+>  /* add unsupported commands to the list of blocked RPCs */
+>  GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
 >  {
+> -    const char *list_unsupported[] =3D {
+> -        "guest-suspend-hybrid",
+> -        "guest-set-vcpus",
+> -        "guest-get-memory-blocks", "guest-set-memory-blocks",
+> -        "guest-get-memory-block-info",
+> -        NULL};
+> -    char **p =3D (char **)list_unsupported;
+> -
+> -    while (*p) {
+> -        blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
+> -    }
+> -
+>      if (!vss_init(true)) {
+>          g_debug("vss_init failed, vss commands are going to be disabled"=
+);
+>          const char *list[] =3D {
+>              "guest-get-fsinfo", "guest-fsfreeze-status",
+>              "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
+> -        p =3D (char **)list;
+> +        char **p =3D (char **)list;
+>
+>          while (*p) {
+>              blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
+> @@ -2505,15 +2463,3 @@ char *qga_get_host_name(Error **errp)
+>
+>      return g_utf16_to_utf8(tmp, size, NULL, NULL, NULL);
+>  }
+> -
+> -GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+> -{
+> -    error_setg(errp, QERR_UNSUPPORTED);
+> -    return NULL;
+> -}
+> -
+> -GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+> -{
+> -    error_setg(errp, QERR_UNSUPPORTED);
+> -    return NULL;
+> -}
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index b3de1fb6b3..b91456e9ad 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -636,7 +636,8 @@
+>  #
+>  # Since: 1.1
+>  ##
+> -{ 'command': 'guest-suspend-hybrid', 'success-response': false }
+> +{ 'command': 'guest-suspend-hybrid', 'success-response': false,
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestIpAddressType:
+> @@ -806,7 +807,8 @@
+>  ##
+>  { 'command': 'guest-set-vcpus',
+>    'data':    {'vcpus': ['GuestLogicalProcessor'] },
+> -  'returns': 'int' }
+> +  'returns': 'int',
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestDiskBusType:
+> @@ -1099,7 +1101,8 @@
+>  { 'struct': 'GuestMemoryBlock',
+>    'data': {'phys-index': 'uint64',
+>             'online': 'bool',
+> -           '*can-offline': 'bool'} }
+> +           '*can-offline': 'bool'},
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @guest-get-memory-blocks:
+> @@ -1115,7 +1118,8 @@
+>  # Since: 2.3
+>  ##
+>  { 'command': 'guest-get-memory-blocks',
+> -  'returns': ['GuestMemoryBlock'] }
+> +  'returns': ['GuestMemoryBlock'],
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestMemoryBlockResponseType:
+> @@ -1138,7 +1142,8 @@
+>  ##
+>  { 'enum': 'GuestMemoryBlockResponseType',
+>    'data': ['success', 'not-found', 'operation-not-supported',
+> -           'operation-failed'] }
+> +           'operation-failed'],
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestMemoryBlockResponse:
+> @@ -1156,7 +1161,8 @@
+>  { 'struct': 'GuestMemoryBlockResponse',
+>    'data': { 'phys-index': 'uint64',
+>              'response': 'GuestMemoryBlockResponseType',
+> -            '*error-code': 'int' }}
+> +            '*error-code': 'int' },
+> +  'if': 'CONFIG_POSIX'}
+>
+>  ##
+>  # @guest-set-memory-blocks:
+> @@ -1187,7 +1193,8 @@
+>  ##
+>  { 'command': 'guest-set-memory-blocks',
+>    'data':    {'mem-blks': ['GuestMemoryBlock'] },
+> -  'returns': ['GuestMemoryBlockResponse'] }
+> +  'returns': ['GuestMemoryBlockResponse'],
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestMemoryBlockInfo:
+> @@ -1199,7 +1206,8 @@
+>  # Since: 2.3
+>  ##
+>  { 'struct': 'GuestMemoryBlockInfo',
+> -  'data': {'size': 'uint64'} }
+> +  'data': {'size': 'uint64'},
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @guest-get-memory-block-info:
+> @@ -1211,7 +1219,8 @@
+>  # Since: 2.3
+>  ##
+>  { 'command': 'guest-get-memory-block-info',
+> -  'returns': 'GuestMemoryBlockInfo' }
+> +  'returns': 'GuestMemoryBlockInfo',
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestExecStatus:
+> @@ -1702,7 +1711,8 @@
+>    'data': {'name': 'str',
+>             'major': 'uint64',
+>             'minor': 'uint64',
+> -           'stats': 'GuestDiskStats' } }
+> +           'stats': 'GuestDiskStats' },
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @guest-get-diskstats:
+> @@ -1714,7 +1724,8 @@
+>  # Since: 7.1
+>  ##
+>  { 'command': 'guest-get-diskstats',
+> -  'returns': ['GuestDiskStatsInfo']
+> +  'returns': ['GuestDiskStatsInfo'],
+> +  'if': 'CONFIG_POSIX'
+>  }
+>
+>  ##
+> @@ -1727,7 +1738,8 @@
+>  # Since: 7.1
+>  ##
+>  { 'enum': 'GuestCpuStatsType',
+> -  'data': [ 'linux' ] }
+> +  'data': [ 'linux' ],
+> +  'if': 'CONFIG_POSIX' }
+>
+>
+>  ##
+> @@ -1772,7 +1784,8 @@
+>             '*steal': 'uint64',
+>             '*guest': 'uint64',
+>             '*guestnice': 'uint64'
+> -           } }
+> +           },
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @GuestCpuStats:
+> @@ -1786,7 +1799,8 @@
+>  { 'union': 'GuestCpuStats',
+>    'base': { 'type': 'GuestCpuStatsType' },
+>    'discriminator': 'type',
+> -  'data': { 'linux': 'GuestLinuxCpuStats' } }
+> +  'data': { 'linux': 'GuestLinuxCpuStats' },
+> +  'if': 'CONFIG_POSIX' }
+>
+>  ##
+>  # @guest-get-cpustats:
+> @@ -1798,5 +1812,6 @@
+>  # Since: 7.1
+>  ##
+>  { 'command': 'guest-get-cpustats',
+> -  'returns': ['GuestCpuStats']
+> +  'returns': ['GuestCpuStats'],
+> +  'if': 'CONFIG_POSIX'
+>  }
 > --
 > 2.45.1
 >
 >
 
---0000000000002785c9061d08bf13
+--000000000000966aaf061d08c1f0
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -836,745 +427,104 @@ uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 13, 2024 at 6:44=E2=
 =80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com"=
 >berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
 te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">The qmp_guest_{set,get}_{memory_blocks,block_info} comm=
-and impls in<br>
-commands-posix.c are surrounded by &#39;#ifdef __linux__&#39; so should<br>
-instead live in commands-linux.c<br>
+);padding-left:1ex">Rather than creating stubs for every command that just =
+return<br>
+QERR_UNSUPPORTED, use &#39;if&#39; conditions in the QAPI schema to<br>
+fully exclude generation of the commands on Windows.<br>
 <br>
-This also removes a &quot;#ifdef CONFIG_LINUX&quot; that was nested inside<=
-br>
-a &quot;#ifdef __linux__&quot;.<br>
+The command will be rejected at QMP dispatch time instead,<br>
+avoiding reimplementing rejection by blocking the stub commands.<br>
+This changes the error message for affected commands from<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;CommandNotFound&quot;, &quot;desc&q=
+uot;: &quot;Command FOO has been disabled&quot;}<br>
+<br>
+to<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;CommandNotFound&quot;, &quot;desc&q=
+uot;: &quot;The command FOO has not been found&quot;}<br>
+<br>
+This also fixes an accidental inconsistency where some commands<br>
+(guest-get-diskstats &amp; guest-get-cpustats) are implemented as<br>
+stubs, yet not added to the blockedrpc list. Those change their<br>
+error message from<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;GenericError, &quot;desc&quot;: &qu=
+ot;this feature or command is not currently supported&quot;}<br>
+<br>
+to<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;CommandNotFound&quot;, &quot;desc&q=
+uot;: &quot;The command FOO has not been found&quot;}<br>
+<br>
+The final additional benefit is that the QGA protocol reference<br>
+now documents what conditions enable use of the command.<br>
 <br>
 Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
 t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0qga/commands-linux.c | 308 ++++++++++++++++++++++++++++++++++++++++++=
-<br>
-=C2=A0qga/commands-posix.c | 311 +-----------------------------------------=
+=C2=A0qga/commands-posix.c |=C2=A0 2 +-<br>
+=C2=A0qga/commands-win32.c | 56 +------------------------------------------=
 -<br>
-=C2=A02 files changed, 309 insertions(+), 310 deletions(-)<br>
+=C2=A0qga/qapi-schema.json | 45 +++++++++++++++++++++++------------<br>
+=C2=A03 files changed, 32 insertions(+), 71 deletions(-)<br>
 <br>
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-index c0e8bd4062..73b13fbaf6 100644<br>
---- a/qga/commands-linux.c<br>
-+++ b/qga/commands-linux.c<br>
-@@ -1595,6 +1595,314 @@ int64_t qmp_guest_set_vcpus(GuestLogicalProcessorLi=
-st *vcpus, Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0return processed;<br>
-=C2=A0}<br>
-<br>
-+<br>
-+static void ga_read_sysfs_file(int dirfd, const char *pathname, char *buf,=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int size, Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 int fd;<br>
-+=C2=A0 =C2=A0 int res;<br>
-+<br>
-+=C2=A0 =C2=A0 errno =3D 0;<br>
-+=C2=A0 =C2=A0 fd =3D openat(dirfd, pathname, O_RDONLY);<br>
-+=C2=A0 =C2=A0 if (fd =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open sysfs=
- file \&quot;%s\&quot;&quot;, pathname);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 res =3D pread(fd, buf, size, 0);<br>
-+=C2=A0 =C2=A0 if (res =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;pread sysf=
-s file \&quot;%s\&quot;&quot;, pathname);<br>
-+=C2=A0 =C2=A0 } else if (res =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;pread sysfs file \&quot=
-;%s\&quot;: unexpected EOF&quot;, pathname);<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 close(fd);<br>
-+}<br>
-+<br>
-+static void ga_write_sysfs_file(int dirfd, const char *pathname,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *buf, int size, Error **e=
-rrp)<br>
-+{<br>
-+=C2=A0 =C2=A0 int fd;<br>
-+<br>
-+=C2=A0 =C2=A0 errno =3D 0;<br>
-+=C2=A0 =C2=A0 fd =3D openat(dirfd, pathname, O_WRONLY);<br>
-+=C2=A0 =C2=A0 if (fd =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open sysfs=
- file \&quot;%s\&quot;&quot;, pathname);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (pwrite(fd, buf, size, 0) =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;pwrite sys=
-fs file \&quot;%s\&quot;&quot;, pathname);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 close(fd);<br>
-+}<br>
-+<br>
-+/* Transfer online/offline status between @mem_blk and the guest system.<b=
-r>
-+ *<br>
-+ * On input either @errp or *@errp must be NULL.<br>
-+ *<br>
-+ * In system-to-@mem_blk direction, the following @mem_blk fields are acce=
-ssed:<br>
-+ * - R: mem_blk-&gt;phys_index<br>
-+ * - W: mem_blk-&gt;online<br>
-+ * - W: mem_blk-&gt;can_offline<br>
-+ *<br>
-+ * In @mem_blk-to-system direction, the following @mem_blk fields are acce=
-ssed:<br>
-+ * - R: mem_blk-&gt;phys_index<br>
-+ * - R: mem_blk-&gt;online<br>
-+ *-=C2=A0 R: mem_blk-&gt;can_offline<br>
-+ * Written members remain unmodified on error.<br>
-+ */<br>
-+static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool sys2memb=
-lk,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlockResponse *res=
-ult,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 char *dirpath;<br>
-+=C2=A0 =C2=A0 int dirfd;<br>
-+=C2=A0 =C2=A0 char *status;<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 if (!sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 DIR *dp;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!result) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Internal =
-error, &#39;result&#39; should not be NULL&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 errno =3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 dp =3D opendir(&quot;/sys/devices/system/memor=
-y/&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* if there is no &#39;memory&#39; direc=
-tory in sysfs,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* we think this VM does not support onli=
-ne/offline memory block,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* any other solution?<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!dp) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 closedir(dp);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 dirpath =3D g_strdup_printf(&quot;/sys/devices/system/memory=
-/memory%&quot; PRId64 &quot;/&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;phys_index);<br>
-+=C2=A0 =C2=A0 dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);<br>
-+=C2=A0 =C2=A0 if (dirfd =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &q=
-uot;open(\&quot;%s\&quot;)&quot;, dirpath);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(dirpath);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out1;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 g_free(dirpath);<br>
-+<br>
-+=C2=A0 =C2=A0 status =3D g_malloc0(10);<br>
-+=C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;state&quot;, status, 10, &am=
-p;local_err);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* treat with sysfs file that not exist in old=
- kernel */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;online=
- =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_of=
-fline =3D false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!mem_blk-&gt;online) =
-{<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(er=
-rp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out2;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 char removable =3D &#39;0&#39;;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;online =3D (strncmp(status, &quot;=
-online&quot;, 6) =3D=3D 0);<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;removable&quot=
-;, &amp;removable, 1, &amp;local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* if no &#39;removable&#39; fil=
-e, it doesn&#39;t support offline mem blk */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_of=
-fline =3D false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(er=
-rp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_offline =3D (rem=
-ovable !=3D &#39;0&#39;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mem_blk-&gt;online !=3D (strncmp(status, &=
-quot;online&quot;, 6) =3D=3D 0)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *new_state =3D mem_bl=
-k-&gt;online ? &quot;online&quot; : &quot;offline&quot;;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_write_sysfs_file(dirfd, &quot=
-;state&quot;, new_state, strlen(new_state),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out2;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;response =3D GUEST_ME=
-MORY_BLOCK_RESPONSE_TYPE_SUCCESS;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;has_error_code =3D fa=
-lse;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } /* otherwise pretend successful re-(on|off)-=
-lining */<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 g_free(status);<br>
-+=C2=A0 =C2=A0 close(dirfd);<br>
-+=C2=A0 =C2=A0 return;<br>
-+<br>
-+out2:<br>
-+=C2=A0 =C2=A0 g_free(status);<br>
-+=C2=A0 =C2=A0 close(dirfd);<br>
-+out1:<br>
-+=C2=A0 =C2=A0 if (!sys2memblk) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;has_error_code =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;error_code =3D errno;<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-+GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 GuestMemoryBlockList *head, **tail;<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 struct dirent *de;<br>
-+=C2=A0 =C2=A0 DIR *dp;<br>
-+<br>
-+=C2=A0 =C2=A0 head =3D NULL;<br>
-+=C2=A0 =C2=A0 tail =3D &amp;head;<br>
-+<br>
-+=C2=A0 =C2=A0 dp =3D opendir(&quot;/sys/devices/system/memory/&quot;);<br>
-+=C2=A0 =C2=A0 if (!dp) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* it&#39;s ok if this happens to be a system =
-that doesn&#39;t expose<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* memory blocks via sysfs, but otherwise=
- we should report<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* an error<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno !=3D ENOENT) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &q=
-uot;Can&#39;t open directory&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;\&quot;/sys/devices/system/memory/\&qu=
-ot;&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 /* Note: the phys_index of memory block may be discontinuous=
-,<br>
-+=C2=A0 =C2=A0 =C2=A0* this is because a memblk is the unit of the Sparse M=
-emory design, which<br>
-+=C2=A0 =C2=A0 =C2=A0* allows discontinuous memory ranges (ex. NUMA), so he=
-re we should<br>
-+=C2=A0 =C2=A0 =C2=A0* traverse the memory block directory.<br>
-+=C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 while ((de =3D readdir(dp)) !=3D NULL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlock *mem_blk;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((strncmp(de-&gt;d_name, &quot;memory&quot;=
-, 6) !=3D 0) ||<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !(de-&gt;d_type &amp; DT_DIR)) {=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk =3D g_malloc0(sizeof *mem_blk);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* The d_name is &quot;memoryXXX&quot;,=C2=A0 =
-phys_index is block id, same as XXX */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;phys_index =3D strtoul(&amp;de-&gt=
-;d_name[6], NULL, 10);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;has_can_offline =3D true; /* lolsp=
-eak ftw */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 transfer_memory_block(mem_blk, true, NULL, &am=
-p;local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, mem_blk);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 closedir(dp);<br>
-+=C2=A0 =C2=A0 if (local_err =3D=3D NULL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* there&#39;s no guest with zero memory block=
-s */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (head =3D=3D NULL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;guest rep=
-orted zero memory blocks!&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return head;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 qapi_free_GuestMemoryBlockList(head);<br>
-+=C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 return NULL;<br>
-+}<br>
-+<br>
-+GuestMemoryBlockResponseList *<br>
-+qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)<=
-br>
-+{<br>
-+=C2=A0 =C2=A0 GuestMemoryBlockResponseList *head, **tail;<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 head =3D NULL;<br>
-+=C2=A0 =C2=A0 tail =3D &amp;head;<br>
-+<br>
-+=C2=A0 =C2=A0 while (mem_blks !=3D NULL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlockResponse *result;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlock *current_mem_blk =3D mem_blks=
--&gt;value;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D g_malloc0(sizeof(*result));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;phys_index =3D current_mem_blk-&gt;=
-phys_index;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 transfer_memory_block(current_mem_blk, false, =
-result, &amp;local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) { /* should never happen */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, result);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blks =3D mem_blks-&gt;next;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return head;<br>
-+err:<br>
-+=C2=A0 =C2=A0 qapi_free_GuestMemoryBlockResponseList(head);<br>
-+=C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 return NULL;<br>
-+}<br>
-+<br>
-+GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 char *dirpath;<br>
-+=C2=A0 =C2=A0 int dirfd;<br>
-+=C2=A0 =C2=A0 char *buf;<br>
-+=C2=A0 =C2=A0 GuestMemoryBlockInfo *info;<br>
-+<br>
-+=C2=A0 =C2=A0 dirpath =3D g_strdup_printf(&quot;/sys/devices/system/memory=
-/&quot;);<br>
-+=C2=A0 =C2=A0 dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);<br>
-+=C2=A0 =C2=A0 if (dirfd =3D=3D -1) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open(\&quo=
-t;%s\&quot;)&quot;, dirpath);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(dirpath);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 g_free(dirpath);<br>
-+<br>
-+=C2=A0 =C2=A0 buf =3D g_malloc0(20);<br>
-+=C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;block_size_bytes&quot;, buf,=
- 20, &amp;local_err);<br>
-+=C2=A0 =C2=A0 close(dirfd);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(buf);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 info =3D g_new0(GuestMemoryBlockInfo, 1);<br>
-+=C2=A0 =C2=A0 info-&gt;size =3D strtol(buf, NULL, 16); /* the unit is byte=
-s */<br>
-+<br>
-+=C2=A0 =C2=A0 g_free(buf);<br>
-+<br>
-+=C2=A0 =C2=A0 return info;<br>
-+}<br>
-+<br>
-=C2=A0#define MAX_NAME_LEN 128<br>
-=C2=A0static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)<br>
-=C2=A0{<br>
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-index 5da60e65ab..2a3bef7445 100644<br>
+index 2a3bef7445..0dd8555867 100644<br>
 --- a/qga/commands-posix.c<br>
 +++ b/qga/commands-posix.c<br>
-@@ -887,316 +887,7 @@ void qmp_guest_set_user_password(const char *username=
-,<br>
+@@ -1280,7 +1280,7 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs=
+)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;guest-get-memory-bloc=
+ks&quot;, &quot;guest-set-memory-blocks&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;guest-get-memory-bloc=
+k-info&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL};<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 char **p =3D (char **)list;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 const char **p =3D list;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0while (*p) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0blockedrpcs =3D g_list_appe=
+nd(blockedrpcs, g_strdup(*p++));<br>
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
+index 9fe670d5b4..2533e4c748 100644<br>
+--- a/qga/commands-win32.c<br>
++++ b/qga/commands-win32.c<br>
+@@ -1494,11 +1494,6 @@ out:<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
 =C2=A0}<br>
-=C2=A0#endif /* __linux__ || __FreeBSD__ */<br>
 <br>
--#ifdef __linux__<br>
--static void ga_read_sysfs_file(int dirfd, const char *pathname, char *buf,=
+-void qmp_guest_suspend_hybrid(Error **errp)<br>
+-{<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-}<br>
+-<br>
+=C2=A0static IP_ADAPTER_ADDRESSES *guest_get_adapters_addresses(Error **err=
+p)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0IP_ADAPTER_ADDRESSES *adptr_addrs =3D NULL;<br>
+@@ -1862,12 +1857,6 @@ GuestLogicalProcessorList *qmp_guest_get_vcpus(Error=
+ **errp)<br>
+=C2=A0 =C2=A0 =C2=A0return NULL;<br>
+=C2=A0}<br>
 <br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int size, Error **errp)<br>
+-int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp=
+)<br>
 -{<br>
--=C2=A0 =C2=A0 int fd;<br>
--=C2=A0 =C2=A0 int res;<br>
--<br>
--=C2=A0 =C2=A0 errno =3D 0;<br>
--=C2=A0 =C2=A0 fd =3D openat(dirfd, pathname, O_RDONLY);<br>
--=C2=A0 =C2=A0 if (fd =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open sysfs=
- file \&quot;%s\&quot;&quot;, pathname);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 res =3D pread(fd, buf, size, 0);<br>
--=C2=A0 =C2=A0 if (res =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;pread sysf=
-s file \&quot;%s\&quot;&quot;, pathname);<br>
--=C2=A0 =C2=A0 } else if (res =3D=3D 0) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;pread sysfs file \&quot=
-;%s\&quot;: unexpected EOF&quot;, pathname);<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 close(fd);<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-=C2=A0 =C2=A0 return -1;<br>
 -}<br>
 -<br>
--static void ga_write_sysfs_file(int dirfd, const char *pathname,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *buf, int size, Error **e=
-rrp)<br>
--{<br>
--=C2=A0 =C2=A0 int fd;<br>
--<br>
--=C2=A0 =C2=A0 errno =3D 0;<br>
--=C2=A0 =C2=A0 fd =3D openat(dirfd, pathname, O_WRONLY);<br>
--=C2=A0 =C2=A0 if (fd =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open sysfs=
- file \&quot;%s\&quot;&quot;, pathname);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 if (pwrite(fd, buf, size, 0) =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;pwrite sys=
-fs file \&quot;%s\&quot;&quot;, pathname);<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 close(fd);<br>
--}<br>
--<br>
--/* Transfer online/offline status between @mem_blk and the guest system.<b=
-r>
-- *<br>
-- * On input either @errp or *@errp must be NULL.<br>
-- *<br>
-- * In system-to-@mem_blk direction, the following @mem_blk fields are acce=
-ssed:<br>
-- * - R: mem_blk-&gt;phys_index<br>
-- * - W: mem_blk-&gt;online<br>
-- * - W: mem_blk-&gt;can_offline<br>
-- *<br>
-- * In @mem_blk-to-system direction, the following @mem_blk fields are acce=
-ssed:<br>
-- * - R: mem_blk-&gt;phys_index<br>
-- * - R: mem_blk-&gt;online<br>
-- *-=C2=A0 R: mem_blk-&gt;can_offline<br>
-- * Written members remain unmodified on error.<br>
-- */<br>
--static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool sys2memb=
-lk,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlockResponse *res=
-ult,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
--{<br>
--=C2=A0 =C2=A0 char *dirpath;<br>
--=C2=A0 =C2=A0 int dirfd;<br>
--=C2=A0 =C2=A0 char *status;<br>
--=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
--<br>
--=C2=A0 =C2=A0 if (!sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 DIR *dp;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!result) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Internal =
-error, &#39;result&#39; should not be NULL&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 errno =3D 0;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 dp =3D opendir(&quot;/sys/devices/system/memor=
-y/&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* if there is no &#39;memory&#39; direc=
-tory in sysfs,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* we think this VM does not support onli=
-ne/offline memory block,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* any other solution?<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!dp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out1;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 closedir(dp);<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 dirpath =3D g_strdup_printf(&quot;/sys/devices/system/memory=
-/memory%&quot; PRId64 &quot;/&quot;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;phys_index);<br>
--=C2=A0 =C2=A0 dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);<br>
--=C2=A0 =C2=A0 if (dirfd =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &q=
-uot;open(\&quot;%s\&quot;)&quot;, dirpath);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(dirpath);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out1;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 g_free(dirpath);<br>
--<br>
--=C2=A0 =C2=A0 status =3D g_malloc0(10);<br>
--=C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;state&quot;, status, 10, &am=
-p;local_err);<br>
--=C2=A0 =C2=A0 if (local_err) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* treat with sysfs file that not exist in old=
- kernel */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;online=
- =3D true;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_of=
-fline =3D false;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!mem_blk-&gt;online) =
-{<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(er=
-rp, local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out2;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 if (sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 char removable =3D &#39;0&#39;;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;online =3D (strncmp(status, &quot;=
-online&quot;, 6) =3D=3D 0);<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;removable&quot=
-;, &amp;removable, 1, &amp;local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* if no &#39;removable&#39; fil=
-e, it doesn&#39;t support offline mem blk */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno =3D=3D ENOENT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_of=
-fline =3D false;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(er=
-rp, local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;can_offline =3D (rem=
-ovable !=3D &#39;0&#39;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 } else {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mem_blk-&gt;online !=3D (strncmp(status, &=
-quot;online&quot;, 6) =3D=3D 0)) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *new_state =3D mem_bl=
-k-&gt;online ? &quot;online&quot; : &quot;offline&quot;;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_write_sysfs_file(dirfd, &quot=
-;state&quot;, new_state, strlen(new_state),<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_e=
-rr);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;respons=
-e =3D<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GUES=
-T_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out2;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;response =3D GUEST_ME=
-MORY_BLOCK_RESPONSE_TYPE_SUCCESS;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;has_error_code =3D fa=
-lse;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 } /* otherwise pretend successful re-(on|off)-=
-lining */<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 g_free(status);<br>
--=C2=A0 =C2=A0 close(dirfd);<br>
--=C2=A0 =C2=A0 return;<br>
--<br>
--out2:<br>
--=C2=A0 =C2=A0 g_free(status);<br>
--=C2=A0 =C2=A0 close(dirfd);<br>
--out1:<br>
--=C2=A0 =C2=A0 if (!sys2memblk) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;has_error_code =3D true;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;error_code =3D errno;<br>
--=C2=A0 =C2=A0 }<br>
--}<br>
--<br>
+=C2=A0static gchar *<br>
+=C2=A0get_net_error_message(gint error)<br>
+=C2=A0{<br>
+@@ -1969,46 +1958,15 @@ done:<br>
+=C2=A0 =C2=A0 =C2=A0g_free(rawpasswddata);<br>
+=C2=A0}<br>
+<br>
 -GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)<br>
 -{<br>
--=C2=A0 =C2=A0 GuestMemoryBlockList *head, **tail;<br>
--=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
--=C2=A0 =C2=A0 struct dirent *de;<br>
--=C2=A0 =C2=A0 DIR *dp;<br>
--<br>
--=C2=A0 =C2=A0 head =3D NULL;<br>
--=C2=A0 =C2=A0 tail =3D &amp;head;<br>
--<br>
--=C2=A0 =C2=A0 dp =3D opendir(&quot;/sys/devices/system/memory/&quot;);<br>
--=C2=A0 =C2=A0 if (!dp) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* it&#39;s ok if this happens to be a system =
-that doesn&#39;t expose<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* memory blocks via sysfs, but otherwise=
- we should report<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* an error<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno !=3D ENOENT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &q=
-uot;Can&#39;t open directory&quot;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;\&quot;/sys/devices/system/memory/\&qu=
-ot;&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 /* Note: the phys_index of memory block may be discontinuous=
-,<br>
--=C2=A0 =C2=A0 =C2=A0* this is because a memblk is the unit of the Sparse M=
-emory design, which<br>
--=C2=A0 =C2=A0 =C2=A0* allows discontinuous memory ranges (ex. NUMA), so he=
-re we should<br>
--=C2=A0 =C2=A0 =C2=A0* traverse the memory block directory.<br>
--=C2=A0 =C2=A0 =C2=A0*/<br>
--=C2=A0 =C2=A0 while ((de =3D readdir(dp)) !=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlock *mem_blk;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((strncmp(de-&gt;d_name, &quot;memory&quot;=
-, 6) !=3D 0) ||<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !(de-&gt;d_type &amp; DT_DIR)) {=
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk =3D g_malloc0(sizeof *mem_blk);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* The d_name is &quot;memoryXXX&quot;,=C2=A0 =
-phys_index is block id, same as XXX */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;phys_index =3D strtoul(&amp;de-&gt=
-;d_name[6], NULL, 10);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blk-&gt;has_can_offline =3D true; /* lolsp=
-eak ftw */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 transfer_memory_block(mem_blk, true, NULL, &am=
-p;local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, mem_blk);<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 closedir(dp);<br>
--=C2=A0 =C2=A0 if (local_err =3D=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* there&#39;s no guest with zero memory block=
-s */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (head =3D=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;guest rep=
-orted zero memory blocks!&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return head;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 qapi_free_GuestMemoryBlockList(head);<br>
--=C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
 -=C2=A0 =C2=A0 return NULL;<br>
 -}<br>
 -<br>
@@ -1582,86 +532,242 @@ orted zero memory blocks!&quot;);<br>
 -qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)<=
 br>
 -{<br>
--=C2=A0 =C2=A0 GuestMemoryBlockResponseList *head, **tail;<br>
--=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
--<br>
--=C2=A0 =C2=A0 head =3D NULL;<br>
--=C2=A0 =C2=A0 tail =3D &amp;head;<br>
--<br>
--=C2=A0 =C2=A0 while (mem_blks !=3D NULL) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlockResponse *result;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 GuestMemoryBlock *current_mem_blk =3D mem_blks=
--&gt;value;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D g_malloc0(sizeof(*result));<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 result-&gt;phys_index =3D current_mem_blk-&gt;=
-phys_index;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 transfer_memory_block(current_mem_blk, false, =
-result, &amp;local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (local_err) { /* should never happen */<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, result);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_blks =3D mem_blks-&gt;next;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 return head;<br>
--err:<br>
--=C2=A0 =C2=A0 qapi_free_GuestMemoryBlockResponseList(head);<br>
--=C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
 -=C2=A0 =C2=A0 return NULL;<br>
 -}<br>
 -<br>
 -GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)<br>
 -{<br>
--=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
--=C2=A0 =C2=A0 char *dirpath;<br>
--=C2=A0 =C2=A0 int dirfd;<br>
--=C2=A0 =C2=A0 char *buf;<br>
--=C2=A0 =C2=A0 GuestMemoryBlockInfo *info;<br>
--<br>
--=C2=A0 =C2=A0 dirpath =3D g_strdup_printf(&quot;/sys/devices/system/memory=
-/&quot;);<br>
--=C2=A0 =C2=A0 dirfd =3D open(dirpath, O_RDONLY | O_DIRECTORY);<br>
--=C2=A0 =C2=A0 if (dirfd =3D=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &quot;open(\&quo=
-t;%s\&quot;)&quot;, dirpath);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(dirpath);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 g_free(dirpath);<br>
--<br>
--=C2=A0 =C2=A0 buf =3D g_malloc0(20);<br>
--=C2=A0 =C2=A0 ga_read_sysfs_file(dirfd, &quot;block_size_bytes&quot;, buf,=
- 20, &amp;local_err);<br>
--=C2=A0 =C2=A0 close(dirfd);<br>
--=C2=A0 =C2=A0 if (local_err) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(buf);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
--=C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 info =3D g_new0(GuestMemoryBlockInfo, 1);<br>
--=C2=A0 =C2=A0 info-&gt;size =3D strtol(buf, NULL, 16); /* the unit is byte=
-s */<br>
--<br>
--=C2=A0 =C2=A0 g_free(buf);<br>
--<br>
--=C2=A0 =C2=A0 return info;<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-=C2=A0 =C2=A0 return NULL;<br>
 -}<br>
 -<br>
--<br>
--#else /* defined(__linux__) */<br>
-+#ifndef __linux__<br>
-<br>
-=C2=A0void qmp_guest_suspend_disk(Error **errp)<br>
+=C2=A0/* add unsupported commands to the list of blocked RPCs */<br>
+=C2=A0GList *ga_command_init_blockedrpcs(GList *blockedrpcs)<br>
 =C2=A0{<br>
+-=C2=A0 =C2=A0 const char *list_unsupported[] =3D {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;guest-suspend-hybrid&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;guest-set-vcpus&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;guest-get-memory-blocks&quot;, &quot;gue=
+st-set-memory-blocks&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;guest-get-memory-block-info&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 NULL};<br>
+-=C2=A0 =C2=A0 char **p =3D (char **)list_unsupported;<br>
+-<br>
+-=C2=A0 =C2=A0 while (*p) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 blockedrpcs =3D g_list_append(blockedrpcs, g_s=
+trdup(*p++));<br>
+-=C2=A0 =C2=A0 }<br>
+-<br>
+=C2=A0 =C2=A0 =C2=A0if (!vss_init(true)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_debug(&quot;vss_init failed, vss comman=
+ds are going to be disabled&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *list[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;guest-get-fsinfo&quot=
+;, &quot;guest-fsfreeze-status&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;guest-fsfreeze-freeze=
+&quot;, &quot;guest-fsfreeze-thaw&quot;, NULL};<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 p =3D (char **)list;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 char **p =3D (char **)list;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0while (*p) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0blockedrpcs =3D g_list_appe=
+nd(blockedrpcs, g_strdup(*p++));<br>
+@@ -2505,15 +2463,3 @@ char *qga_get_host_name(Error **errp)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0return g_utf16_to_utf8(tmp, size, NULL, NULL, NULL);<br=
+>
+=C2=A0}<br>
+-<br>
+-GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)<br>
+-{<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-=C2=A0 =C2=A0 return NULL;<br>
+-}<br>
+-<br>
+-GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)<br>
+-{<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-=C2=A0 =C2=A0 return NULL;<br>
+-}<br>
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
+index b3de1fb6b3..b91456e9ad 100644<br>
+--- a/qga/qapi-schema.json<br>
++++ b/qga/qapi-schema.json<br>
+@@ -636,7 +636,8 @@<br>
+=C2=A0#<br>
+=C2=A0# Since: 1.1<br>
+=C2=A0##<br>
+-{ &#39;command&#39;: &#39;guest-suspend-hybrid&#39;, &#39;success-response=
+&#39;: false }<br>
++{ &#39;command&#39;: &#39;guest-suspend-hybrid&#39;, &#39;success-response=
+&#39;: false,<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestIpAddressType:<br>
+@@ -806,7 +807,8 @@<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-set-vcpus&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;:=C2=A0 =C2=A0 {&#39;vcpus&#39;: [&#39;GuestLogi=
+calProcessor&#39;] },<br>
+-=C2=A0 &#39;returns&#39;: &#39;int&#39; }<br>
++=C2=A0 &#39;returns&#39;: &#39;int&#39;,<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestDiskBusType:<br>
+@@ -1099,7 +1101,8 @@<br>
+=C2=A0{ &#39;struct&#39;: &#39;GuestMemoryBlock&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;: {&#39;phys-index&#39;: &#39;uint64&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;online&#39;: &#39;bool&#39;,=
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*can-offline&#39;: &#39;bool=
+&#39;} }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;*can-offline&#39;: &#39;bool=
+&#39;},<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-memory-blocks:<br>
+@@ -1115,7 +1118,8 @@<br>
+=C2=A0# Since: 2.3<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-memory-blocks&#39;,<br>
+-=C2=A0 &#39;returns&#39;: [&#39;GuestMemoryBlock&#39;] }<br>
++=C2=A0 &#39;returns&#39;: [&#39;GuestMemoryBlock&#39;],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestMemoryBlockResponseType:<br>
+@@ -1138,7 +1142,8 @@<br>
+=C2=A0##<br>
+=C2=A0{ &#39;enum&#39;: &#39;GuestMemoryBlockResponseType&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;: [&#39;success&#39;, &#39;not-found&#39;, &#39;=
+operation-not-supported&#39;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;operation-failed&#39;] }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;operation-failed&#39;],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestMemoryBlockResponse:<br>
+@@ -1156,7 +1161,8 @@<br>
+=C2=A0{ &#39;struct&#39;: &#39;GuestMemoryBlockResponse&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;: { &#39;phys-index&#39;: &#39;uint64&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;response&#39;: &#39;Gu=
+estMemoryBlockResponseType&#39;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*error-code&#39;: &#39;int&=
+#39; }}<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*error-code&#39;: &#39;int&=
+#39; },<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39;}<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-set-memory-blocks:<br>
+@@ -1187,7 +1193,8 @@<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-set-memory-blocks&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;:=C2=A0 =C2=A0 {&#39;mem-blks&#39;: [&#39;GuestM=
+emoryBlock&#39;] },<br>
+-=C2=A0 &#39;returns&#39;: [&#39;GuestMemoryBlockResponse&#39;] }<br>
++=C2=A0 &#39;returns&#39;: [&#39;GuestMemoryBlockResponse&#39;],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestMemoryBlockInfo:<br>
+@@ -1199,7 +1206,8 @@<br>
+=C2=A0# Since: 2.3<br>
+=C2=A0##<br>
+=C2=A0{ &#39;struct&#39;: &#39;GuestMemoryBlockInfo&#39;,<br>
+-=C2=A0 &#39;data&#39;: {&#39;size&#39;: &#39;uint64&#39;} }<br>
++=C2=A0 &#39;data&#39;: {&#39;size&#39;: &#39;uint64&#39;},<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-memory-block-info:<br>
+@@ -1211,7 +1219,8 @@<br>
+=C2=A0# Since: 2.3<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-memory-block-info&#39;,<br>
+-=C2=A0 &#39;returns&#39;: &#39;GuestMemoryBlockInfo&#39; }<br>
++=C2=A0 &#39;returns&#39;: &#39;GuestMemoryBlockInfo&#39;,<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestExecStatus:<br>
+@@ -1702,7 +1711,8 @@<br>
+=C2=A0 =C2=A0&#39;data&#39;: {&#39;name&#39;: &#39;str&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;major&#39;: &#39;uint64&#39;=
+,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;minor&#39;: &#39;uint64&#39;=
+,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;stats&#39;: &#39;GuestDiskSt=
+ats&#39; } }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;stats&#39;: &#39;GuestDiskSt=
+ats&#39; },<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-diskstats:<br>
+@@ -1714,7 +1724,8 @@<br>
+=C2=A0# Since: 7.1<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-diskstats&#39;,<br>
+-=C2=A0 &#39;returns&#39;: [&#39;GuestDiskStatsInfo&#39;]<br>
++=C2=A0 &#39;returns&#39;: [&#39;GuestDiskStatsInfo&#39;],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39;<br>
+=C2=A0}<br>
+<br>
+=C2=A0##<br>
+@@ -1727,7 +1738,8 @@<br>
+=C2=A0# Since: 7.1<br>
+=C2=A0##<br>
+=C2=A0{ &#39;enum&#39;: &#39;GuestCpuStatsType&#39;,<br>
+-=C2=A0 &#39;data&#39;: [ &#39;linux&#39; ] }<br>
++=C2=A0 &#39;data&#39;: [ &#39;linux&#39; ],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+<br>
+=C2=A0##<br>
+@@ -1772,7 +1784,8 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*steal&#39;: &#39;uint64&#39=
+;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*guest&#39;: &#39;uint64&#39=
+;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*guestnice&#39;: &#39;uint64=
+&#39;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0},<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestCpuStats:<br>
+@@ -1786,7 +1799,8 @@<br>
+=C2=A0{ &#39;union&#39;: &#39;GuestCpuStats&#39;,<br>
+=C2=A0 =C2=A0&#39;base&#39;: { &#39;type&#39;: &#39;GuestCpuStatsType&#39; =
+},<br>
+=C2=A0 =C2=A0&#39;discriminator&#39;: &#39;type&#39;,<br>
+-=C2=A0 &#39;data&#39;: { &#39;linux&#39;: &#39;GuestLinuxCpuStats&#39; } }=
+<br>
++=C2=A0 &#39;data&#39;: { &#39;linux&#39;: &#39;GuestLinuxCpuStats&#39; },<=
+br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39; }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-cpustats:<br>
+@@ -1798,5 +1812,6 @@<br>
+=C2=A0# Since: 7.1<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-cpustats&#39;,<br>
+-=C2=A0 &#39;returns&#39;: [&#39;GuestCpuStats&#39;]<br>
++=C2=A0 &#39;returns&#39;: [&#39;GuestCpuStats&#39;],<br>
++=C2=A0 &#39;if&#39;: &#39;CONFIG_POSIX&#39;<br>
+=C2=A0}<br>
 -- <br>
 2.45.1<br>
 <br>
 </blockquote></div>
 
---0000000000002785c9061d08bf13--
+--000000000000966aaf061d08c1f0--
 
 
