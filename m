@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60860C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA4C8C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5UE-00031U-Iz; Thu, 11 Jul 2024 21:54:14 -0400
+	id 1sS5UD-0002uO-1V; Thu, 11 Jul 2024 21:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sS5UC-0002tb-M0
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:12 -0400
+ id 1sS5UA-0002kb-Ib
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:10 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sS5U4-0007ET-6u
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:12 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sS5U6-0007FC-EF
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:10 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxDvG2jJBmi4QDAA--.10373S3;
- Fri, 12 Jul 2024 09:53:58 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx_vC8jJBmnoQDAA--.10416S3;
+ Fri, 12 Jul 2024 09:54:04 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxnsezjJBmVSdFAA--.27574S2; 
- Fri, 12 Jul 2024 09:53:55 +0800 (CST)
+ AQAAf8BxnsezjJBmVSdFAA--.27574S10; 
+ Fri, 12 Jul 2024 09:54:03 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-Subject: [PULL v2 0/8] loongarch-to-apply queue
-Date: Fri, 12 Jul 2024 09:36:24 +0800
-Message-Id: <20240712013632.3464731-1-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL v2 8/8] target/loongarch: Fix cpu_reset set wrong CSR_CRMD
+Date: Fri, 12 Jul 2024 09:36:32 +0800
+Message-Id: <20240712013632.3464731-9-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240712013632.3464731-1-gaosong@loongson.cn>
+References: <20240712013632.3464731-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxnsezjJBmVSdFAA--.27574S2
+X-CM-TRANSID: AQAAf8BxnsezjJBmVSdFAA--.27574S10
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -62,53 +65,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
+After cpu_reset, DATF in CSR_CRMD is 0, DATM is 0.
+See the manual[1] 6.4.
 
-  Merge tag 'pull-target-arm-20240711' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-11 12:00:00 -0700)
+  [1]: https://github.com/loongson/LoongArch-Documentation/releases/download/2023.04.20/LoongArch-Vol1-v1.10-EN.pdf
 
-are available in the Git repository at:
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20240705021839.1004374-2-gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240712
-
-for you to fetch changes up to 3ef4b21a5c767ff0b15047e709762abef490ad07:
-
-  target/loongarch: Fix cpu_reset set wrong CSR_CRMD (2024-07-12 09:41:18 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20240712
-
-v2: drop patch 'hw/loongarch: Modify flash block size to 256K'.
-
-----------------------------------------------------------------
-Bibo Mao (2):
-      hw/loongarch/virt: Remove unused assignment
-      target/loongarch/kvm: Add software breakpoint support
-
-Dmitry Frolov (1):
-      hw/loongarch/boot.c: fix out-of-bound reading
-
-Feiyang Chen (1):
-      target/loongarch: Remove avail_64 in trans_srai_w() and simplify it
-
-Jiaxun Yang (1):
-      MAINTAINERS: Add myself as a reviewer of LoongArch virt machine
-
-Song Gao (2):
-      target/loongarch: Set CSR_PRCFG1 and CSR_PRCFG2 values
-      target/loongarch: Fix cpu_reset set wrong CSR_CRMD
-
-Xianglai Li (1):
-      hw/loongarch: Change the tpm support by default
-
- MAINTAINERS                                       |  1 +
- configs/targets/loongarch64-softmmu.mak           |  1 +
- hw/loongarch/Kconfig                              |  1 +
- hw/loongarch/acpi-build.c                         |  3 +
- hw/loongarch/boot.c                               |  2 +-
- hw/loongarch/virt.c                               | 15 +++--
- target/loongarch/cpu.c                            | 23 ++++---
- target/loongarch/kvm/kvm.c                        | 76 +++++++++++++++++++++++
- target/loongarch/tcg/insn_trans/trans_shift.c.inc | 15 +----
- 9 files changed, 108 insertions(+), 29 deletions(-)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 61af018eec..5e85b9dbef 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -523,13 +523,13 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+     env->fcsr0 = 0x0;
+ 
+     int n;
+-    /* Set csr registers value after reset */
++    /* Set csr registers value after reset, see the manual 6.4. */
+     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
+     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
+     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 1);
+     env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 1);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 1);
++    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
++    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
+ 
+     env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
+     env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
+-- 
+2.34.1
 
 
