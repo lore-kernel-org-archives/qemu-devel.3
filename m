@@ -4,70 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 752B0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4C0C3DA45
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5CS-0003WV-UB; Thu, 11 Jul 2024 21:35:52 -0400
+	id 1sS5FW-0003cF-EQ; Thu, 11 Jul 2024 21:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sS5CF-0003BD-VD
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:35:44 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sS5CC-0008Cf-1d
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:35:39 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Cx5OliiJBmF4MDAA--.979S3;
- Fri, 12 Jul 2024 09:35:30 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxjsdfiJBmACJFAA--.26699S3; 
- Fri, 12 Jul 2024 09:35:29 +0800 (CST)
-Subject: Re: [PULL 0/9] loongarch-to-apply queue
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20240711074829.3338879-1-gaosong@loongson.cn>
- <78d9f6d3-9257-40a8-b9e1-6690b80e122b@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <629d1223-087b-0ae6-81c7-cec885d11d77@loongson.cn>
-Date: Fri, 12 Jul 2024 09:35:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sS5FR-0003ZT-Cf; Thu, 11 Jul 2024 21:38:57 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sS5FP-0001bq-Ap; Thu, 11 Jul 2024 21:38:56 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-4f2fcaa2a3aso510892e0c.0; 
+ Thu, 11 Jul 2024 18:38:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720748333; x=1721353133; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lWtxJ0dcTgnG25YpwN2DroWk2hpH9Qntg9pW1RZauHU=;
+ b=P+kTuUrPl77SBjOPZ4I0G64M1V2o7K3vwTnm4y7vPU1xLj54YIFQSQ34n9CKmAnCso
+ UWJlAF6wMvCLCFWA2k+yfEnvksrLWATT6ynwV7WJWtYnX4MXoDUspA+Om5kLxuf+deuS
+ aVBKjlAfCgIY6dj2fd6avyxPuG6xMbdk/T0Og0pOsOuRvmyvrXG6NPaLzXR51jP8kFck
+ ra0woz2w9S3wtCjZMJaQICzM1jza0T8TF8MISXVpPkq1F2rW3L518TTRWOTiDdHIMxiV
+ PgUcarZCAha9LZKohyKAcXprupTcDTBt2vlhqSLe6AT3nDKTn0HdqNq7vYyHvzUgifMf
+ qi5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720748333; x=1721353133;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lWtxJ0dcTgnG25YpwN2DroWk2hpH9Qntg9pW1RZauHU=;
+ b=R9ccPXdaFUTT8G0Dd/v43xnPEEplv0Gk5CNjLP0Rap4KwCliF/9B0aha9/IjslJzk1
+ KhGUboVjYeWQAY3XgT9Vb3SWLgO73knEG81OxEONPcPRXE9853xPxk77YBNNt07stVZ9
+ TCLtSaNXteHnzlPVTlcIjPeX3IYmyQv9TtkylmP1JS5FyLiZluMs2Nv1QdqhgRewcd3e
+ RoZsqUQNWPZmt98HOREOncFgOlspls+IzhyZZ8HTtlAHEJbGyLpLMb2JEd3Ae/g/woJb
+ oNxQxf7HIDbZtkQYOR3Pj5E5Ta5W0/8M7gLjhE29AjSTk3AibSzdkPAhnc43815TCag+
+ 5OBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT0LOY5ECt4JwBTTeq4ZjduiGH61ikkxZELnd5MyHFvGpzP4ijFM+hL2avRbTThd65qMmKQh6e/fWZBlt/9XYZepUSXaGGoZFpzfAUHXmqBdQfMF7msgR+dUaMaNsXUawnVMJCUuOZPrrKjUHrnt12UXZO4NnZ+p6J79SpXEjS9R866yRt4g==
+X-Gm-Message-State: AOJu0Yx5xQ7VvOTSAOG2NhU5OoQ650KqH4NgIRWvwEd5Cggd4qmCOGfg
+ QhQkzHqFVLepDVQX2t65oY1tEVbCksXfHbMyeUPn3MjWadKXNRAYF/LgQsOYYhFRBmAZ6uDxeuH
+ SFXUCe8nKZYrkTqCTdCjBMUCmkkY=
+X-Google-Smtp-Source: AGHT+IGsBZE4Y6iKi5jn8R3lkIQwuZkeHw0y510BoRYvbZLE7/F296R3x7pG/ocTDgBfQydXr2aeLdLQhSRlvWJIn1U=
+X-Received: by 2002:a05:6122:910:b0:4f2:ebd9:8e12 with SMTP id
+ 71dfb90a1353d-4f33f24fa48mr12860662e0c.5.1720748332575; Thu, 11 Jul 2024
+ 18:38:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <78d9f6d3-9257-40a8-b9e1-6690b80e122b@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8AxjsdfiJBmACJFAA--.26699S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7urW3trW7Wr17Xry3tFyxZwc_yoW8CrWrpr
- ZavF17JrWrGws7Jr1ktwn8XryUtw17Jw47X3WUXFy8AF4UAr1Yqrn5XryvgFy7J3y8Jr15
- XF18Aw1UZF47XrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.862,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240612081416.29704-1-jim.shu@sifive.com>
+ <20240612081416.29704-4-jim.shu@sifive.com>
+In-Reply-To: <20240612081416.29704-4-jim.shu@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 12 Jul 2024 11:38:26 +1000
+Message-ID: <CAKmqyKM0mua8sGP46aRYucHaiqcSL2e-urK6pC7X_H7fJ2YFSA@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/16] exec: Add RISC-V WorldGuard WID to MemTxAttrs
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>, 
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,62 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/7/11 下午5:57, Philippe Mathieu-Daudé 写道:
-> Hi Richard,
+On Wed, Jun 12, 2024 at 6:15=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
 >
-> On 11/7/24 09:48, Song Gao wrote:
->> The following changes since commit 
->> 59084feb256c617063e0dbe7e64821ae8852d7cf:
->>
->>    Merge tag 'pull-aspeed-20240709' of 
->> https://github.com/legoater/qemu into staging (2024-07-09 07:13:55 
->> -0700)
->>
->> are available in the Git repository at:
->>
->>    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240711
->>
->> for you to fetch changes up to 78341408e705e1b8dc92eaae2071ae0023d586b0:
->>
->>    target/loongarch: Fix cpu_reset set wrong CSR_CRMD (2024-07-11 
->> 15:56:50 +0800)
->>
->> ----------------------------------------------------------------
->> pull-loongarch-20240711
->>
->> ----------------------------------------------------------------
->> Bibo Mao (2):
->>        hw/loongarch/virt: Remove unused assignment
->>        target/loongarch/kvm: Add software breakpoint support
->>
->> Dmitry Frolov (1):
->>        hw/loongarch/boot.c: fix out-of-bound reading
->>
->> Feiyang Chen (1):
->>        target/loongarch: Remove avail_64 in trans_srai_w() and 
->> simplify it
->>
->> Jiaxun Yang (1):
->>        MAINTAINERS: Add myself as a reviewer of LoongArch virt machine
->>
->> Song Gao (2):
->>        target/loongarch: Set CSR_PRCFG1 and CSR_PRCFG2 values
->>        target/loongarch: Fix cpu_reset set wrong CSR_CRMD
->>
->> Xianglai Li (2):
->>        hw/loongarch: Change the tpm support by default
->>        hw/loongarch: Modify flash block size to 256K
+> RISC-V WorldGuard will add 5-bit world_id (WID) to the each memory
+> transaction on the bus. The wgChecker in front of RAM or peripherals
+> MMIO could do the access control based on the WID. It is similar to ARM
+> TrustZone NS bit, but the WID is 5-bit.
 >
-> Please hold on before merging, I'd like to check with
-> the author for migration issue regarding the flash block size
-> change.
+> The common implementation of WID is AXI4 AxUSER signal.
 >
-I'll drop this patch on v2, and push it next time.
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> ---
+>  include/exec/memattrs.h | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+> index 14cdd8d582..d00f3c5500 100644
+> --- a/include/exec/memattrs.h
+> +++ b/include/exec/memattrs.h
+> @@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
+>      unsigned int memory:1;
+>      /* Requester ID (for MSI for example) */
+>      unsigned int requester_id:16;
+> +
+> +    /*
+> +     * RISC-V WorldGuard: the 5-bit WID of memory access.
+> +     */
+> +    uint8_t world_id;
 
-Thanks
-Song Gao
-> Thanks,
->
-> Phil.
+Everything else is using `unsigned int` so I think we should as well
 
+Alistair
+
+>  } MemTxAttrs;
+>
+>  /* Bus masters which don't specify any attributes will get this,
+> --
+> 2.17.1
+>
+>
 
