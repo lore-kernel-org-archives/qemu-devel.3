@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30489C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C04C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFeT-00071y-VW; Fri, 12 Jul 2024 08:45:30 -0400
+	id 1sSF0c-0008Lc-Pe; Fri, 12 Jul 2024 08:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSFeR-0006uv-UO
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:45:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSFeQ-0000ul-0J
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:45:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720788325;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=46s7AkIhFW3EDXbPBYpvcFSbgP7f/ZUlIpyg0O5yFSk=;
- b=VzjzvqdB+ZOC2fVbYc6pb0/VEJk6BRdAzxXYbeLW/UHsE2nexwYBKc72vlbybZQWeYrSvS
- 39a3w2eaDBa0PULxI43UL/jsmNOmcN0x850pabfbhuG2yZlZrwanB9uPp486V8GQ0JPWhJ
- FcMmMjF2sLpk/ZmKG6JSGJ+aJvqbMYA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-BBdzFbWuNV2xb9atv_PyFg-1; Fri,
- 12 Jul 2024 08:45:21 -0400
-X-MC-Unique: BBdzFbWuNV2xb9atv_PyFg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89AAD19772C9; Fri, 12 Jul 2024 12:45:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.56])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77DCD195606C; Fri, 12 Jul 2024 12:45:17 +0000 (UTC)
-Date: Fri, 12 Jul 2024 13:45:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 18/22] qga: don't disable fsfreeze commands if
- vss_init fails
-Message-ID: <ZpElWmudo4Rx91NA@redhat.com>
-References: <20240613150127.1361931-1-berrange@redhat.com>
- <20240613154406.1365469-1-berrange@redhat.com>
- <20240613154406.1365469-13-berrange@redhat.com>
- <g1m7d.30xyxwwcb8l4@linaro.org>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0P-0007G4-DH; Fri, 12 Jul 2024 08:04:05 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0L-0005lc-Bb; Fri, 12 Jul 2024 08:04:05 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70b1207bc22so1630405b3a.3; 
+ Fri, 12 Jul 2024 05:04:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720785838; x=1721390638; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P/jaJY+EjT/k2aXL1glM+yk4w079Fmr/WkbzC5YoxgU=;
+ b=QDgylEeoL96pMEdGZhTgbakEOZCnO2Cryj/Aeo9CeYDkhjVDV6e52WpYxJGV0XBLky
+ N78n0xCC6W0TEDl9JFQZEEY7Pp0eP2foaurVKSNcuPUrVco0TfgBhvVQOFNTKNqIXzGg
+ K6VvGn3ACKi7CcpXgxxIdW+2QLG1is+1XpOZPXfaXITkMgNGmXNng+IpSKHUGNan3poS
+ eQofK7jwTdjxVtzLFivqwyErPWzPyBj3vaOt6nwSTmDQ6alWAV/VMza6n46ZH7e3g0dn
+ cK9+/OOR8fnt74zEATo6aB5o6MrqAjLoCUT0fsnQTnkLZrItNRnWv2Y0mDln2xaPDCxn
+ 70fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720785838; x=1721390638;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P/jaJY+EjT/k2aXL1glM+yk4w079Fmr/WkbzC5YoxgU=;
+ b=ZaC0xJWyrKlWuCACxouf/jV6bQ1l6GmBZnxrKRgEDDbkbJdHU9knZz8iS97XojwJBO
+ Q5ben7uqToS4a12Cm7sTM/kEAfhIhfXASm/6QZjxnijKak/VlUWfYhoWhe7sXJPw8sm7
+ M7QAG6shzA3Fi/A6FggIE+RqT3n06L33Oo+VU5iBII1hWi2MXmuNl3BEocB8beRtrDmT
+ BOEjLwGKu+E/11dffi5YKRiTEkB6hErbpwEAa28xGMI55L6VpZuQgZ17Vnso4vtAlVF6
+ 25I7714dvArkveHJpf0M52/REP0MyxozQG28AenlgO6w5vIz8YPTIDph+Fhg0IpVaUhK
+ c2jA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUK3I/QxuX71aH2FshVFwjzEUojLTyS7wwkLvfo8RuxQ+h8zYNVHLffqrBlthATCeZ5Fsa1VVbBWAuljMphiYnCnFZgNts=
+X-Gm-Message-State: AOJu0YzwErl3uyEnmOd4EC6PvvrPGbX7ReOmp3vSj2v0iNpjQ9wH06AJ
+ tEFUEd9QncKOeGQqA9CkUI1W9rkhzG0pJKgW9/4Uu5z3pH1donvwqcu9QA==
+X-Google-Smtp-Source: AGHT+IGQjSu3XRfk4XkJff6pUJcl1gtHELi53tVS1flhrOij5QtviBjuI9zKdiRglOje2IrxTIU9qw==
+X-Received: by 2002:a05:6a20:748d:b0:1c0:f267:11ad with SMTP id
+ adf61e73a8af0-1c29821d031mr15918382637.19.1720785838056; 
+ Fri, 12 Jul 2024 05:03:58 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 05:03:57 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 08/19] target/ppc: Add helpers to check for SMT sibling
+ threads
+Date: Fri, 12 Jul 2024 22:02:35 +1000
+Message-ID: <20240712120247.477133-9-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
+References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <g1m7d.30xyxwwcb8l4@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,51 +94,242 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 01:21:29PM +0300, Manos Pitsidianakis wrote:
-> On Thu, 13 Jun 2024 18:44, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
-> > The fsfreeze commands are already written to report an error if
-> > vss_init() fails. Reporting a more specific error message is more
-> > helpful than a generic "command is disabled" message, which cannot
-> > beteween an admin config decision and lack of platform support.
-> 
-> s/beteween/between
-> 
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> > qga/commands-win32.c | 18 +++---------------
-> > qga/main.c           |  4 ++++
-> > 2 files changed, 7 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> > index 2533e4c748..5866cc2e3c 100644
-> > --- a/qga/commands-win32.c
-> > +++ b/qga/commands-win32.c
-> > @@ -1203,7 +1203,7 @@ GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-> > GuestFsfreezeStatus qmp_guest_fsfreeze_status(Error **errp)
-> > {
-> >     if (!vss_initialized()) {
-> > -        error_setg(errp, QERR_UNSUPPORTED);
-> > +        error_setg(errp, "fsfreeze not possible as VSS failed to initialize");
-> >         return 0;
-> 
-> Should this be return -1 by the way?
+Add helpers for TCG code to determine if there are SMT siblings
+sharing per-core and per-lpar registers. This simplifies the
+callers and makes SMT register topology simpler to modify with
+later changes.
 
-This method has to return GuestFsfreezeStatus and
--1 isn't valid. Not a problem though, as the
-QAPI code will check for *errp != NULL and not
-consider the return value for error detection.
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/cpu.h             | 11 +++++++++++
+ target/ppc/cpu_init.c        |  2 +-
+ target/ppc/excp_helper.c     | 17 +++++------------
+ target/ppc/misc_helper.c     | 27 ++++++---------------------
+ target/ppc/timebase_helper.c | 20 +++++++-------------
+ 5 files changed, 30 insertions(+), 47 deletions(-)
 
-
-With regards,
-Daniel
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 7b52a9bb18..417b284318 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1512,6 +1512,17 @@ struct PowerPCCPUClass {
+     int  (*check_attn)(CPUPPCState *env);
+ };
+ 
++static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
++{
++    return cs->nr_threads == 1;
++}
++
++static inline bool ppc_cpu_lpar_single_threaded(CPUState *cs)
++{
++    return !(POWERPC_CPU(cs)->env.flags & POWERPC_FLAG_SMT_1LPAR) ||
++           ppc_cpu_core_single_threaded(cs);
++}
++
+ ObjectClass *ppc_cpu_class_by_name(const char *name);
+ PowerPCCPUClass *ppc_cpu_class_by_pvr(uint32_t pvr);
+ PowerPCCPUClass *ppc_cpu_class_by_pvr_mask(uint32_t pvr);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 164bb62e63..81dd4e1a7a 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6993,7 +6993,7 @@ static void ppc_cpu_realize(DeviceState *dev, Error **errp)
+ 
+     pcc->parent_realize(dev, errp);
+ 
+-    if (env_cpu(env)->nr_threads > 1) {
++    if (!ppc_cpu_core_single_threaded(cs)) {
+         env->flags |= POWERPC_FLAG_SMT;
+     }
+ 
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 5368bf2ff3..5ecd662f9e 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -3014,18 +3014,11 @@ static void msgsnd_core_tir(CPUPPCState *env, uint32_t target_tir, int irq)
+ {
+     PowerPCCPU *cpu = env_archcpu(env);
+     CPUState *cs = env_cpu(env);
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
+-        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
+-    }
+-
+-    if (target_tir >= nr_threads) {
+-        return;
+-    }
+-
+-    if (nr_threads == 1) {
+-        ppc_set_irq(cpu, irq, 1);
++    if (ppc_cpu_lpar_single_threaded(cs)) {
++        if (target_tir == 0) {
++            ppc_set_irq(cpu, irq, 1);
++        }
+     } else {
+         CPUState *ccs;
+ 
+@@ -3080,7 +3073,7 @@ void helper_book3s_msgsnd(CPUPPCState *env, target_ulong rb)
+         brdcast = true;
+     }
+ 
+-    if (cs->nr_threads == 1 || !brdcast) {
++    if (ppc_cpu_core_single_threaded(cs) || !brdcast) {
+         ppc_set_irq(cpu, PPC_INTERRUPT_HDOORBELL, 1);
+         return;
+     }
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 4d3c1bddd9..692e48e6bc 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -49,9 +49,8 @@ void helper_spr_core_write_generic(CPUPPCState *env, uint32_t sprn,
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1) {
++    if (ppc_cpu_core_single_threaded(cs)) {
+         env->spr[sprn] = val;
+         return;
+     }
+@@ -196,7 +195,7 @@ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
+             return;
+         }
+ 
+-        if (cs->nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++        if (ppc_cpu_lpar_single_threaded(cs)) {
+             env->spr[SPR_PTCR] = val;
+             tlb_flush(cs);
+         } else {
+@@ -243,16 +242,12 @@ target_ulong helper_load_dpdes(CPUPPCState *env)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+     target_ulong dpdes = 0;
+ 
+     helper_hfscr_facility_check(env, HFSCR_MSGP, "load DPDES", HFSCR_IC_MSGP);
+ 
+-    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
+-        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
+-    }
+-
+-    if (nr_threads == 1) {
++    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
+             dpdes = 1;
+         }
+@@ -279,21 +274,11 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
+     PowerPCCPU *cpu = env_archcpu(env);
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+     helper_hfscr_facility_check(env, HFSCR_MSGP, "store DPDES", HFSCR_IC_MSGP);
+ 
+-    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
+-        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
+-    }
+-
+-    if (val & ~(nr_threads - 1)) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "Invalid DPDES register value "
+-                      TARGET_FMT_lx"\n", val);
+-        val &= (nr_threads - 1); /* Ignore the invalid bits */
+-    }
+-
+-    if (nr_threads == 1) {
++    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & 0x1);
+         return;
+     }
+diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
+index 52f9e6669c..44cacf065e 100644
+--- a/target/ppc/timebase_helper.c
++++ b/target/ppc/timebase_helper.c
+@@ -63,9 +63,8 @@ void helper_store_purr(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_purr(env, val);
+         return;
+     }
+@@ -82,9 +81,8 @@ void helper_store_tbl(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_tbl(env, val);
+         return;
+     }
+@@ -99,9 +97,8 @@ void helper_store_tbu(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_tbu(env, val);
+         return;
+     }
+@@ -141,9 +138,8 @@ void helper_store_hdecr(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_hdecr(env, val);
+         return;
+     }
+@@ -158,9 +154,8 @@ void helper_store_vtb(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_vtb(env, val);
+         return;
+     }
+@@ -175,9 +170,8 @@ void helper_store_tbu40(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+     CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+ 
+-    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
++    if (ppc_cpu_lpar_single_threaded(cs)) {
+         cpu_ppc_store_tbu40(env, val);
+         return;
+     }
+@@ -288,7 +282,7 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
+ {
+     CPUState *cs = env_cpu(env);
+ 
+-    if (cs->nr_threads == 1) {
++    if (ppc_cpu_core_single_threaded(cs)) {
+         env->spr[SPR_TFMR] = val;
+     } else {
+         CPUState *ccs;
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.1
 
 
