@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2925C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CBCC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSEke-0005aS-6z; Fri, 12 Jul 2024 07:47:48 -0400
+	id 1sSEko-0006Gv-Mo; Fri, 12 Jul 2024 07:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sSEkI-0005T3-RR
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:29 -0400
+ id 1sSEkl-00066X-SM
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:55 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sSEkH-0007cN-7n
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:26 -0400
+ id 1sSEkk-0007zd-6z
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:55 -0400
 Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C1BZ7I020939;
- Fri, 12 Jul 2024 11:47:23 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C1BY8U020921;
+ Fri, 12 Jul 2024 11:47:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=0
- nau4lpgSQgPGvf1jMzHDGQRzh3s7fsu4Hvn+m67NL0=; b=fZ/g00bVoaeJaU4SS
- mgja4EOh1Gc/Ajac+3FHc74wkR9UsQoMD2iiD45DTA6V9VsdkncvcqgcSIbD2YYw
- wVEh2bxO7MnmviZ3buPHyftNpuy6Hd556TTx3ErQYCCLzqkkE5jHWOCpknOOquyX
- B5Lbhy0PqLQbYVJ9QtysErNdzdP0uzmBrmFrjqQGi159YMX/6lLujn32VgXkBzbi
- cPxz0sILAgA13SdhAXBrF9X8UHOJczyIQPH/UNp46l1J9oA0ENN01GMlbn2J3t8c
- hOF7y24ngaa32tb+AYzPHXp31pcTW2k1YmUsGT/ikLBn9LIuxspFz7bEfvxg5alE
- ZyrFA==
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=W
+ RoDhdlVzy9B2opOIDS3AcTB0O/W51Ruwc1+9204k1M=; b=bedHL7TLMhYHl/wzi
+ MQ8gIlrllxOctpKS8bnT2wRyOKUZXKm5Z8QOEI0hJsXU1fbBE1x45G1RJiBYMSYU
+ ywKo8dVgZVJ95/Sy0+pUOCSN4Q4D4DYmiNB9Atia6zwKFMv9XxfgKz0SWmpKZpZh
+ P53ElPZMwxvY11LUVUN+tPv7C7qGwHKezXTionoPLpqidIMm8FX026AfyiKKHNNf
+ +DcpymGZSC1Wyc45+CupA1a6Ea6QxM23XIB9LdXULZ7en0sfK0Fp8XZpcRPt+keB
+ wdLN8J3vcp7YUHhUROC2fYWpi/GM8mG7H+FZ2OJV9o+wOO1b03YR64ukqYZCfPXH
+ /0WMw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emt30ab-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emt30b2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 11:47:22 +0000 (GMT)
+ Fri, 12 Jul 2024 11:47:47 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46CBRkux022734; Fri, 12 Jul 2024 11:47:21 GMT
+ with ESMTP id 46CBMAQh022638; Fri, 12 Jul 2024 11:47:46 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 409vv3pq24-1
+ 409vv3pqc9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 11:47:21 +0000
+ Fri, 12 Jul 2024 11:47:46 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CBlCCY008041;
- Fri, 12 Jul 2024 11:47:20 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CBlCCq008041;
+ Fri, 12 Jul 2024 11:47:45 GMT
 Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-0-59.vpn.oracle.com
  [10.175.0.59])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 409vv3ppxv-4; Fri, 12 Jul 2024 11:47:20 +0000
+ 409vv3ppxv-13; Fri, 12 Jul 2024 11:47:45 +0000
 From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -62,10 +62,10 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v4 03/12] backends/iommufd: Extend
- iommufd_backend_get_device_info() to fetch HW capabilities
-Date: Fri, 12 Jul 2024 12:46:55 +0100
-Message-Id: <20240712114704.8708-4-joao.m.martins@oracle.com>
+Subject: [PATCH v4 12/12] vfio/common: Allow disabling device dirty page
+ tracking
+Date: Fri, 12 Jul 2024 12:47:04 +0100
+Message-Id: <20240712114704.8708-13-joao.m.martins@oracle.com>
 In-Reply-To: <20240712114704.8708-1-joao.m.martins@oracle.com>
 References: <20240712114704.8708-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
@@ -75,11 +75,11 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2024-07-12_08,2024-07-11_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 mlxscore=0
- mlxlogscore=749 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=989 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
  definitions=main-2407120080
-X-Proofpoint-GUID: am_zYRWOPwJZa7X09zcF3jspd6z-Fgy_
-X-Proofpoint-ORIG-GUID: am_zYRWOPwJZa7X09zcF3jspd6z-Fgy_
+X-Proofpoint-GUID: ukL3BwipKXXPxQVkJv7RQAkgrGmj0Gqv
+X-Proofpoint-ORIG-GUID: ukL3BwipKXXPxQVkJv7RQAkgrGmj0Gqv
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,72 +104,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The helper will be able to fetch vendor agnostic IOMMU capabilities
-supported both by hardware and software. Right now it is only iommu dirty
-tracking.
+The property 'x-pre-copy-dirty-page-tracking' allows disabling the whole
+tracking of VF pre-copy phase of dirty page tracking, though it means
+that it will only be used at the start of the switchover phase.
+
+Add an option that disables the VF dirty page tracking, and fall
+back into container-based dirty page tracking. This also allows to
+use IOMMU dirty tracking even on VFs with their own dirty
+tracker scheme.
 
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/sysemu/iommufd.h | 2 +-
- backends/iommufd.c       | 4 +++-
- hw/vfio/iommufd.c        | 4 +++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ include/hw/vfio/vfio-common.h | 1 +
+ hw/vfio/common.c              | 3 +++
+ hw/vfio/migration.c           | 3 ++-
+ hw/vfio/pci.c                 | 3 +++
+ 4 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-index 9edfec604595..57d502a1c79a 100644
---- a/include/sysemu/iommufd.h
-+++ b/include/sysemu/iommufd.h
-@@ -49,7 +49,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
-                               hwaddr iova, ram_addr_t size);
- bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
-                                      uint32_t *type, void *data, uint32_t len,
--                                     Error **errp);
-+                                     uint64_t *caps, Error **errp);
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 760f31d84ac8..0ed4ebfb4696 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -138,6 +138,7 @@ typedef struct VFIODevice {
+     VFIOMigration *migration;
+     Error *migration_blocker;
+     OnOffAuto pre_copy_dirty_page_tracking;
++    OnOffAuto device_dirty_page_tracking;
+     bool dirty_pages_supported;
+     bool dirty_tracking;
+     HostIOMMUDevice *hiod;
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index cc14f0e3fe24..070a4a2df020 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -199,6 +199,9 @@ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
+     VFIODevice *vbasedev;
  
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
- #endif
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 84fefbc9ee7a..2b3d51af26d2 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -210,7 +210,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
- 
- bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
-                                      uint32_t *type, void *data, uint32_t len,
--                                     Error **errp)
-+                                     uint64_t *caps, Error **errp)
- {
-     struct iommu_hw_info info = {
-         .size = sizeof(info),
-@@ -226,6 +226,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
- 
-     g_assert(type);
-     *type = info.out_data_type;
-+    g_assert(caps);
-+    *caps = info.out_capabilities;
- 
-     return true;
- }
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index c2f158e60386..604eaa4d9a5d 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -628,11 +628,13 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-     union {
-         struct iommu_hw_info_vtd vtd;
-     } data;
-+    uint64_t hw_caps;
- 
-     hiod->agent = opaque;
- 
-     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
--                                         &type, &data, sizeof(data), errp)) {
-+                                         &type, &data, sizeof(data),
-+                                         &hw_caps, errp)) {
-         return false;
+     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
++        if (vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) {
++            return false;
++        }
+         if (!vbasedev->dirty_pages_supported) {
+             return false;
+         }
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index ce3d1b6e9a25..9b41db367629 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -1036,7 +1036,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
+         return !vfio_block_migration(vbasedev, err, errp);
      }
  
+-    if (!vbasedev->dirty_pages_supported &&
++    if ((!vbasedev->dirty_pages_supported ||
++         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
+         !vbasedev->bcontainer->dirty_pages_supported) {
+         if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
+             error_setg(&err,
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 3fc72e898a25..5794d72bd3ab 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3361,6 +3361,9 @@ static Property vfio_pci_dev_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("x-pre-copy-dirty-page-tracking", VFIOPCIDevice,
+                             vbasedev.pre_copy_dirty_page_tracking,
+                             ON_OFF_AUTO_ON),
++    DEFINE_PROP_ON_OFF_AUTO("x-device-dirty-page-tracking", VFIOPCIDevice,
++                            vbasedev.device_dirty_page_tracking,
++                            ON_OFF_AUTO_ON),
+     DEFINE_PROP_ON_OFF_AUTO("display", VFIOPCIDevice,
+                             display, ON_OFF_AUTO_OFF),
+     DEFINE_PROP_UINT32("xres", VFIOPCIDevice, display_xres, 0),
 -- 
 2.17.2
 
