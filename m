@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C91C3DA45
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CB6C41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5gh-0002iK-RZ; Thu, 11 Jul 2024 22:07:07 -0400
+	id 1sS69u-00046U-C6; Thu, 11 Jul 2024 22:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stevensd@chromium.org>)
- id 1sS5gf-0002ha-SU
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:07:05 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sS69s-00043Y-LW
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:16 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stevensd@chromium.org>)
- id 1sS5gd-0002OL-MO
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:07:05 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52ea16b429dso2073515e87.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:07:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sS69q-0003OW-Tk
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:16 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fbc09ef46aso13253725ad.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1720750021; x=1721354821; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=bytedance.com; s=google; t=1720751833; x=1721356633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L1wiotKe7HCDQB9FsVX+8qxtS4dfQhX4k1w4EolP20I=;
- b=H8zVlSnE3eLxv8BnU4hD+K9diLdeGeXK4lzs2G8hyKn7SEuJzJMy5WXCwDveXwSJEJ
- /hSNX8Joy71d3EE4vBPP8nGKHNzP52KcCU1qXegdEAoAE12I3fHbuvvZHbLeZTWNMQWA
- QansCrinEe/78yeR4kwJbAV161XS/63IhMGmg=
+ bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
+ b=MjsvfW3yaHoVHI1+CtpKl+I32/yrpBbwoBAbDP7s1XBsozgkUsvdyUOQaetfj0gBwa
+ XuAoEBV1VEyf3eorJjSxpm35MPeYvbV6rvWhB2v3jL1hSKTlhTMIca5oyqZUePCq5wi5
+ rOIohhfggjYBRhc+FTnz9sskMkV+aQN6Y2pH+0SrSy6sK9RiNinF6V0Gef1WaYbFJSCS
+ IdwvU5hS0FKtLMMJHm//rZ/M8DcJh2iTwUuUqNwmPJDySOG/PGE4dyYhZzMBCP7tfbu6
+ NDH9YIWbCaHEV/3+fFfDReDCmgo9ZKHtgo63O9FIWIsilFnEahWzNaW44aZSInuhrXOs
+ e60Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720750021; x=1721354821;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1720751833; x=1721356633;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L1wiotKe7HCDQB9FsVX+8qxtS4dfQhX4k1w4EolP20I=;
- b=BWv4AhjH/TbTdR5dvGxLElMEN/I1CgyAGlzwzq/HNie29Oy4QZ5Qg+JLpyutxm8iYA
- hUlZOoeoB7bSJs1U9h6SsP5ksL1L4e78+LDFHWVQxlbgOTnaTxCpArDDCECin5ip8IaA
- iHbLiToc4H1aJWJOO+918e8qDbnXrzz/ZdRQjczvm3ROrPZp8ZCFBMbrw5bFKphCpN8m
- LSwTl7kIMNxeTB1sdottEnnNq/1kgIe/HswV8KQm0AFfZywL2vjSqSz3CDNah/7IYGEI
- X54LRBPVXXT5cdBArvndo6szWBUM0rt+Lp6CGCAcFTPmCcLRnegki0pY9vxT7xgmBdlP
- js5g==
+ bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
+ b=JrYrRzmwXt2qi16q/Di7O5MjVgc9fqPT+FkjpvbYZmeCsBhfmTYi3X4XxjWSjhBHjq
+ ZdGGQHj+Tcjbhw7SGno1y5UFkH3eGiKm2OPiiXYUgweTQLRKzXhUTtxac9DAJ30kLTCc
+ AREcdLhdqYclqgK7pB7fXL+++hYUqVlW5KQPUfqaOHz/HKkQjmETBIrZNhujPB7z7+za
+ rNvfOtus8tmhu2Ftys/YfDnNXXY9RRVR783n/4AwSKITwPQItoMK0QSdIj7vxbyfC/7M
+ QOtLI9XXGkQrG2Ic82Vawr7FYAu8y28XuweaXE+68d4w5tuqU5A/sEJAAsmbxp2UiZqI
+ 1Qzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaZ3Sv/JfLg1NnaXVKRX6QBhCIKsF5qFmf6Spw6YIvh5e6jtjyuCt3Hizt8Ii4gcMlzs3DV2RQ/2e4BW0BjWG8vYvpgog=
-X-Gm-Message-State: AOJu0YxBr/j/R4m05hH7QViLt+yrcXDOqdGkpDb976NIj+LgJBVApoum
- WHrV0G9S6MgPpf9vOXpCRIQiBjSW5s2tAmco8RRAQqYGT/UMzjzUoR9XS0C9aDi4osxzretrV3V
- ewUEJYatuGVFKEdfc5KOvOd7yGn3Vk9Rgh5JT
-X-Google-Smtp-Source: AGHT+IEHDn4GguTvYL3PXSIMYmiwFuysznehbkhMSAxmzPnjZIcKxeXWsdGcgDXJuvcYeUVXtTS6i3ueAEAgpglD/+A=
-X-Received: by 2002:a05:6512:1246:b0:52e:9376:83aa with SMTP id
- 2adb3069b0e04-52ecb6359c3mr328399e87.19.1720750020974; Thu, 11 Jul 2024
- 19:07:00 -0700 (PDT)
+ AJvYcCWi3B/onhR5HRKlefmCaGwlCDIQB3GMDpqiNLLM5zVhomasLaNh1TXS5uO4Wh4Dx80xlzrHX+rP7eH5330Rvb47a+4e/ow=
+X-Gm-Message-State: AOJu0Yy/3L8QBZo//5MrHWf8mW0RCDA07zJ+jQZRaL+2D9a8L7IIIzKs
+ FsVmAS9KFMpFqbTYL6fIXz6tCZkWhmhX6Y924G9DMDknapn3anjzr4xQNZynuXw=
+X-Google-Smtp-Source: AGHT+IHxHuUViDMGEQimEkkj73o5/9owiypH5ZSkeOxV5sTxIR0GyoOO78u0buq7iqnqUKeMZj3GYA==
+X-Received: by 2002:a17:90a:3047:b0:2c9:8380:e97b with SMTP id
+ 98e67ed59e1d1-2ca35be1113mr8183536a91.4.1720751833387; 
+ Thu, 11 Jul 2024 19:37:13 -0700 (PDT)
+Received: from TF4D9JK212.bytedance.net ([61.213.176.12])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2cacd65fc43sm297453a91.39.2024.07.11.19.37.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 11 Jul 2024 19:37:13 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v9 02/10] block/raw: add persistent reservation in/out driver
+Date: Fri, 12 Jul 2024 10:36:42 +0800
+Message-Id: <20240712023650.45626-3-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+In-Reply-To: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <87bk34i4dy.fsf@alyssa.is>
-In-Reply-To: <87bk34i4dy.fsf@alyssa.is>
-From: David Stevens <stevensd@chromium.org>
-Date: Fri, 12 Jul 2024 11:06:49 +0900
-Message-ID: <CAD=HUj7av_8Epkd0Fe0eWR7Z4bZMTuvTNgqzYoQcOzFQ82wvOg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/5] vhost-user: Add SHMEM_MAP/UNMAP requests
-To: Alyssa Ross <hi@alyssa.is>
-Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, david@redhat.com, slp@redhat.com,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- stefanha@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=stevensd@chromium.org; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,52 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 7:56=E2=80=AFPM Alyssa Ross <hi@alyssa.is> wrote:
->
-> Adding David Stevens, who implemented SHMEM_MAP and SHMEM_UNMAP in
-> crosvm a couple of years ago.
->
-> David, I'd be particularly interested for your thoughts on the MEM_READ
-> and MEM_WRITE commands, since as far as I know crosvm doesn't implement
-> anything like that.  The discussion leading to those being added starts
-> here:
->
-> https://lore.kernel.org/qemu-devel/20240604185416.GB90471@fedora.redhat.c=
-om/
->
-> It would be great if this could be standardised between QEMU and crosvm
-> (and therefore have a clearer path toward being implemented in other VMMs=
-)!
+Add persistent reservation in/out operations for raw driver.
+The following methods are implemented: bdrv_co_pr_read_keys,
+bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
+bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
 
-Setting aside vhost-user for a moment, the DAX example given by Stefan
-won't work in crosvm today.
+Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/raw-format.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-Is universal access to virtio shared memory regions actually mandated
-by the virtio spec? Copying from virtiofs DAX to virtiofs sharing
-seems reasonable enough, but what about virtio-pmem to virtio-blk?
-What about screenshotting a framebuffer in virtio-gpu shared memory to
-virtio-scsi? I guess with some plumbing in the VMM, it's solvable in a
-virtualized environment. But what about when you have real hardware
-that speaks virtio involved? That's outside my wheelhouse, but it
-doesn't seem like that would be easy to solve.
+diff --git a/block/raw-format.c b/block/raw-format.c
+index ac7e8495f6..3746bc1bd3 100644
+--- a/block/raw-format.c
++++ b/block/raw-format.c
+@@ -454,6 +454,55 @@ raw_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
+     return bdrv_co_ioctl(bs->file->bs, req, buf);
+ }
+ 
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
++                    uint32_t num_keys, uint64_t *keys)
++{
++
++    return bdrv_co_pr_read_keys(bs->file->bs, generation, num_keys, keys);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
++                           uint64_t *key, BlockPrType *type)
++{
++    return bdrv_co_pr_read_reservation(bs->file->bs, generation, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_register(BlockDriverState *bs, uint64_t old_key,
++                   uint64_t new_key, BlockPrType type,
++                   bool ptpl, bool ignore_key)
++{
++    return bdrv_co_pr_register(bs->file->bs, old_key, new_key,
++                               type, ptpl, ignore_key);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    return bdrv_co_pr_reserve(bs->file->bs, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
++{
++    return bdrv_co_pr_release(bs->file->bs, key, type);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_clear(BlockDriverState *bs, uint64_t key)
++{
++    return bdrv_co_pr_clear(bs->file->bs, key);
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
++                  uint64_t new_key, BlockPrType type, bool abort)
++{
++    return bdrv_co_pr_preempt(bs->file->bs, old_key, new_key, type, abort);
++}
++
+ static int GRAPH_RDLOCK raw_has_zero_init(BlockDriverState *bs)
+ {
+     return bdrv_has_zero_init(bs->file->bs);
+@@ -672,6 +721,13 @@ BlockDriver bdrv_raw = {
+     .strong_runtime_opts  = raw_strong_runtime_opts,
+     .mutable_opts         = mutable_opts,
+     .bdrv_cancel_in_flight = raw_cancel_in_flight,
++    .bdrv_co_pr_read_keys    = raw_co_pr_read_keys,
++    .bdrv_co_pr_read_reservation = raw_co_pr_read_reservation,
++    .bdrv_co_pr_register     = raw_co_pr_register,
++    .bdrv_co_pr_reserve      = raw_co_pr_reserve,
++    .bdrv_co_pr_release      = raw_co_pr_release,
++    .bdrv_co_pr_clear        = raw_co_pr_clear,
++    .bdrv_co_pr_preempt      = raw_co_pr_preempt,
+ };
+ 
+ static void bdrv_raw_init(void)
+-- 
+2.20.1
 
-For what it's worth, my interpretation of the target scenario:
-
-> Other backends don't see these mappings. If the guest submits a vring
-> descriptor referencing a mapping to another backend, then that backend
-> won't be able to access this memory
-
-is that it's omitting how the implementation is reconciled with
-section 2.10.1 of v1.3 of the virtio spec, which states that:
-
-> References into shared memory regions are represented as offsets from
-> the beginning of the region instead of absolute memory addresses. Offsets
-> are used both for references between structures stored within shared
-> memory and for requests placed in virtqueues that refer to shared memory.
-
-My interpretation of that statement is that putting raw guest physical
-addresses corresponding to virtio shared memory regions into a vring
-is a driver spec violation.
-
--David
 
