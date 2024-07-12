@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60594C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250D9C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSEd7-0007nf-0X; Fri, 12 Jul 2024 07:40:01 -0400
+	id 1sSEkF-0005M4-F1; Fri, 12 Jul 2024 07:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSEd3-0007mP-Rw
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:39:58 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSEd1-0005DR-TY
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:39:57 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42679f33fefso12693085e9.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:39:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720784392; x=1721389192; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Qzrqy4xZtYfOCZcOV4JdoM5syuVE4DAO9tvUdp9cVHA=;
- b=w0slXDEpXU6/yHnnFD9Ae34I7kRZ9rUcNlwLder9gokw2NwnJoMzYg2JjtLNrxI3qW
- elQnAqDr5ct/OiG96Z7sW0PkSRWhssqGo7w/S2Tb6D4IlXSgxF+bX44nIQqdDK8UF72H
- ROHo8V+us08uyKaPO0+gyhFPh3I4UMXRdbp4Jy5RY4rhgS2FoNHuO57bhkq0DpjStHnQ
- jsJhg5nBhWJLdZKdHhWPTh1NkZMO+q3b67nrZCZqPT7sgsGxCqW9MLwj0bhfGieQZIRL
- LhiXFzxDIFTXreRarSuhl448DJQa3hygzqkgmHdoRYu9mI7s6WUxjo70TpaHdKNvJHrQ
- QFPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720784392; x=1721389192;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Qzrqy4xZtYfOCZcOV4JdoM5syuVE4DAO9tvUdp9cVHA=;
- b=iz3qKw/0w8PnYJ2zBpLQwTZ5A02yaXMaWJAeB61Us9Rm5icQsxPRgxdp7fLyQExpEc
- O3Se/7MfcWsVE3/v8a9hIknnz+720IiDmrPs3lZXvRhz6hpWEGJFDSstcdQVnxiqAWgb
- Asqovr8g4pchm6Ps9rFg4u8Dc4SY0W2QjPiOMWcwl5rSe38YvFa0sv/9l2h4XKfx/per
- KckL3McoWNH7aTRjiZoBmdTmdK4ZH7SvW2zBrSdY6VTP37xLEnf4jdNDgztCftkdOn+r
- 6VEgGrDLhPPSj6dtV9tayuNqWHhKSS1TBEQTjBWTW/83rMP2qFB6O52SgC79Moqslirc
- /jAA==
-X-Gm-Message-State: AOJu0YzZowLVa+dJ+0vMbhjdzC/Vg0hYV16fU3qJiLBvXN4lg6qrhVLW
- t/RQp5DWmeiyt0Q/LJ8Lhjrqa06TgqpoawACCSJ1quTy5x7cmMgfUU2hsd+SNtyInItijrqUw8b
- LlGo=
-X-Google-Smtp-Source: AGHT+IGpqoYbfIXqjJNI9xo7Z/buUB7yPUmn8JVqr0vMBp5ioTwY6+MJMn59oTngs6NUpYz19jsGfw==
-X-Received: by 2002:a05:600c:5748:b0:426:597c:7d58 with SMTP id
- 5b1f17b1804b1-426708fabf5mr70773865e9.39.1720784392160; 
- Fri, 12 Jul 2024 04:39:52 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f23999csm21271065e9.8.2024.07.12.04.39.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 04:39:51 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1sSEkD-0005LB-4i
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:21 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1sSEkA-0007bm-Ga
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:20 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CAWYBn003651;
+ Fri, 12 Jul 2024 11:47:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id:mime-version:content-type
+ :content-transfer-encoding; s=corp-2023-11-20; bh=RTKdAXV9HtWVdw
+ POqIxTTzfO0jvhX6Aqs+QNLA6grKc=; b=cLSZInuVCG8ZzQRaL5sUYvOMZ578M/
+ F3KXcHbofmUax8yyr3r47SV6qa589QagadVTcuNqj+3XQC/a/HdtodyxD/Dk5yI1
+ DhfmLDG8pwIv/VmXLMCfWa1kP25MDkYtm9md/PngoubNRMo3/HB/lT6aUVXtlW6q
+ IKKdpZB7s9Zkz5UDZ0ZekooYi3nDwzxfn/I8bgc64sf7H8zZtzVih51FhKxSGDFv
+ d7au4YVIsBJnS/r6qvOegCvff9nx39IQ4IMhHDP4CZO3yt/FWyTJL9dZQ08Ikrym
+ 7PJ889dxduMU1QM0pglhfb2dCfPhlKyKQBQwkgPOkMvkez1GGOOGn/PA==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 406xfsut6y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jul 2024 11:47:14 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 46CB9sch022104; Fri, 12 Jul 2024 11:47:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 409vv3ppyh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jul 2024 11:47:13 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CBlCCS008041;
+ Fri, 12 Jul 2024 11:47:12 GMT
+Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-0-59.vpn.oracle.com
+ [10.175.0.59])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 409vv3ppxv-1; Fri, 12 Jul 2024 11:47:12 +0000
+From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-Subject: [PATCH] accel/tcg: Make cpu_exec_interrupt hook mandatory
-Date: Fri, 12 Jul 2024 12:39:49 +0100
-Message-Id: <20240712113949.4146855-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
+Subject: [PATCH v4 00/12] hw/iommufd: IOMMUFD Dirty Tracking
+Date: Fri, 12 Jul 2024 12:46:52 +0100
+Message-Id: <20240712114704.8708-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-12_08,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0 mlxscore=0
+ mlxlogscore=999 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
+ definitions=main-2407120080
+X-Proofpoint-ORIG-GUID: uqBYEiYif_ZggWmQbp8th86L8q8i0XDn
+X-Proofpoint-GUID: uqBYEiYif_ZggWmQbp8th86L8q8i0XDn
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,70 +101,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TCGCPUOps::cpu_exec_interrupt hook is currently not mandatory; if
-it is left NULL then we treat it as if it had returned false. However
-since pretty much every architecture needs to handle interrupts,
-almost every target we have provides the hook. The one exception is
-Tricore, which doesn't currently implement the architectural
-interrupt handling.
+This small series adds support for IOMMU dirty tracking support via the
+IOMMUFD backend. The hardware capability is available on most recent x86
+hardware. The series is divided organized as follows:
 
-Add a "do nothing" implementation of cpu_exec_hook for Tricore,
-assert on startup that the CPU does provide the hook, and remove
-the runtime NULL check before calling it.
+* Patch 1-2: Fixes a regression into mdev support with IOMMUFD. This
+             one is independent of the series but happened to cross it
+             while testing mdev with this series
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- accel/tcg/cpu-exec.c | 4 ++--
- target/tricore/cpu.c | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+* Patch 3: Adds a support to iommufd_get_device_info() for capabilities
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 245fd6327da..9010dad0738 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -857,8 +857,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-         else {
-             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
- 
--            if (tcg_ops->cpu_exec_interrupt &&
--                tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
-+            if (tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
-                 if (!tcg_ops->need_replay_interrupt ||
-                     tcg_ops->need_replay_interrupt(interrupt_request)) {
-                     replay_interrupt();
-@@ -1080,6 +1079,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-         /* Check mandatory TCGCPUOps handlers */
- #ifndef CONFIG_USER_ONLY
-         assert(cpu->cc->tcg_ops->cpu_exec_halt);
-+        assert(cpu->cc->tcg_ops->cpu_exec_interrupt);
- #endif /* !CONFIG_USER_ONLY */
-         cpu->cc->tcg_ops->initialize();
-         tcg_target_initialized = true;
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 4d9c0368f2b..1a261715907 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -155,6 +155,11 @@ static void tc37x_initfn(Object *obj)
-     set_feature(&cpu->env, TRICORE_FEATURE_162);
- }
- 
-+static bool tricore_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-+{
-+    /* Interrupts are not implemented */
-+    return false;
-+}
- 
- #include "hw/core/sysemu-cpu-ops.h"
- 
-@@ -169,6 +174,7 @@ static const TCGCPUOps tricore_tcg_ops = {
-     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
-     .restore_state_to_opc = tricore_restore_state_to_opc,
-     .tlb_fill = tricore_cpu_tlb_fill,
-+    .cpu_exec_interrupt = tricore_cpu_exec_interrupt,
-     .cpu_exec_halt = tricore_cpu_has_work,
- };
- 
+* Patches 4 - 10: IOMMUFD backend support for dirty tracking;
+
+Introduce auto domains -- Patch 5 goes into more detail, but the gist is that
+we will find and attach a device to a compatible IOMMU domain, or allocate a new
+hardware pagetable *or* rely on kernel IOAS attach (for mdevs). Afterwards the
+workflow is relatively simple:
+
+1) Probe device and allow dirty tracking in the HWPT
+2) Toggling dirty tracking on/off
+3) Read-and-clear of Dirty IOVAs
+
+The heuristics selected for (1) were to always request the HWPT for
+dirty tracking if supported, or rely on device dirty page tracking. This
+is a little simplistic and we aren't necessarily utilizing IOMMU dirty
+tracking even if we ask during hwpt allocation.
+
+The unmap case is deferred until further vIOMMU support with migration
+is added[3] which will then introduce the usage of
+IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR in GET_DIRTY_BITMAP ioctl in the
+dma unmap bitmap flow.
+
+* Patches 11-12: Don't block live migration where there's no VF dirty
+tracker, considering that we have IOMMU dirty tracking.
+
+Comments and feedback appreciated. Thanks for all the review thus far!
+
+Cheers,
+    Joao
+
+P.S. Suggest linux-next (or future v6.11) as hypervisor kernel as there's
+some bugs fixed there with regards to IOMMU hugepage dirty tracking.
+
+Changes since v3[5]:
+* Skip HostIOMMUDevice::realize for mdev, and introduce a helper to check if the VFIO
+  device is mdev. (Zhenzhong)
+* Skip setting IOMMU device for mdev (Zhenzhong)
+* Add Zhenzhong review tag in patch 3
+* Utilize vbasedev::bcontainer::dirty_pages_supported instead of introducing
+  a new HostIOMMUDevice capability and thus remove the cap patch from the series (Zhenzhong)
+* Move the HostIOMMUDevice::realize() to be part of VFIODevice initialization in attach_device()
+while skipping it all together for mdev. (Cedric)
+* Due to the previous item, had to remove aw_bits because it depends on device attach being
+finished, instead defer it to when get_cap() gets called.
+* Skip auto domains for mdev instead of purposedly erroring out (Zhenzhong)
+* Pass errp in all cases, and instead just free the error in case of -EINVAL
+  in most of all patches, and also pass Error* in iommufd_backend_alloc_hwpt() amd
+  set/query dirty. This is made better thanks in part to skipping auto domains for mdev (Cedric)
+
+Changes since RFCv2[4]:
+* Always allocate hwpt with IOMMU_HWPT_ALLOC_DIRTY_TRACKING even if
+we end up not actually toggling dirty tracking. (Avihai)
+* Fix error handling widely in auto domains logic and all patches (Avihai)
+* Reuse iommufd_backend_get_device_info() for capabilities (Zhenzhong)
+* New patches 1 and 2 taking into consideration previous comments.
+* Store hwpt::flags to know if we have dirty tracking (Avihai)
+* New patch 8, that allows to query dirty tracking support after
+provisioning. This is a cleaner way to check IOMMU dirty tracking support
+when vfio::migration is iniitalized, as opposed to RFCv2 via device caps.
+device caps way is still used because at vfio attach we aren't yet with
+a fully initialized migration state.
+* Adopt error propagation in query,set dirty tracking
+* Misc improvements overall broadly and Avihai
+* Drop hugepages as it's a bit unrelated; I can pursue that patch
+* separately. The main motivation is to provide a way to test
+without hugepages similar to what vfio_type1_iommu.disable_hugepages=1
+does.
+
+Changes since RFCv1[2]:
+* Remove intel/amd dirty tracking emulation enabling
+* Remove the dirtyrate improvement for VF/IOMMU dirty tracking
+[Will pursue these two in separate series]
+* Introduce auto domains support
+* Enforce dirty tracking following the IOMMUFD UAPI for this
+* Add support for toggling hugepages in IOMMUFD
+* Auto enable support when VF supports migration to use IOMMU
+when it doesn't have VF dirty tracking
+* Add a parameter to toggle VF dirty tracking
+
+[0] https://lore.kernel.org/qemu-devel/20240201072818.327930-1-zhenzhong.duan@intel.com/
+[1] https://lore.kernel.org/qemu-devel/20240201072818.327930-10-zhenzhong.duan@intel.com/
+[2] https://lore.kernel.org/qemu-devel/20220428211351.3897-1-joao.m.martins@oracle.com/
+[3] https://lore.kernel.org/qemu-devel/20230622214845.3980-1-joao.m.martins@oracle.com/
+[4] https://lore.kernel.org/qemu-devel/20240212135643.5858-1-joao.m.martins@oracle.com/
+[5] https://lore.kernel.org/qemu-devel/20240708143420.16953-1-joao.m.martins@oracle.com/
+
+Joao Martins (12):
+  vfio/pci: Extract mdev check into an helper
+  vfio/iommufd: Don't initialize nor set a HOST_IOMMU_DEVICE with mdev
+  backends/iommufd: Extend iommufd_backend_get_device_info() to fetch HW
+    capabilities
+  vfio/iommufd: Return errno in iommufd_cdev_attach_ioas_hwpt()
+  vfio/iommufd: Introduce auto domain creation
+  vfio/{iommufd,container}: Remove caps::aw_bits
+  vfio/{iommufd,container}: Initialize HostIOMMUDeviceCaps during
+    attach_device()
+  vfio/iommufd: Probe and request hwpt dirty tracking capability
+  vfio/iommufd: Implement VFIOIOMMUClass::set_dirty_tracking support
+  vfio/iommufd: Implement VFIOIOMMUClass::query_dirty_bitmap support
+  vfio/migration: Don't block migration device dirty tracking is
+    unsupported
+  vfio/common: Allow disabling device dirty page tracking
+
+ include/hw/vfio/vfio-common.h      |  13 +++
+ include/sysemu/host_iommu_device.h |   2 +-
+ include/sysemu/iommufd.h           |  14 ++-
+ backends/iommufd.c                 |  89 ++++++++++++++-
+ hw/vfio/common.c                   |  17 +--
+ hw/vfio/container.c                |  11 +-
+ hw/vfio/helpers.c                  |  18 +++
+ hw/vfio/iommufd.c                  | 178 ++++++++++++++++++++++++++++-
+ hw/vfio/migration.c                |   4 +-
+ hw/vfio/pci.c                      |  22 ++--
+ backends/trace-events              |   3 +
+ 11 files changed, 339 insertions(+), 32 deletions(-)
+
 -- 
-2.34.1
+2.17.2
 
 
