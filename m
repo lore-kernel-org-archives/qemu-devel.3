@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C22C3DA45
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4FBC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSHx0-0004MX-8T; Fri, 12 Jul 2024 11:12:46 -0400
+	id 1sSHy7-0005Xf-Kc; Fri, 12 Jul 2024 11:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSHwy-0004H7-Gd
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:12:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sSHxg-000580-PN; Fri, 12 Jul 2024 11:13:33 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSHwu-0002TP-4j
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:12:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720797158;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s0aOKVAoYy8kjDiARTBIq5mEyQmP9bjRtjmF9kr+1Aw=;
- b=cBCsPdiv2DJcVIEMx5SncIgQ9/pIx3uMOj2BA6NK5w8lw2QmnidefBVFU3adgrrKPr+9MV
- pqKzmvbyGw90omp6jcuvNuIdGCZC/ToYT+eTMmIy5OWTRGsfU6may3nQvoZWrw7Xhx9Tnz
- q7+pj+rtkIoHucWS594uZ3fm2fqJmCM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-qvQqgkQQPhKlmc9_jEyWHw-1; Fri,
- 12 Jul 2024 11:12:36 -0400
-X-MC-Unique: qvQqgkQQPhKlmc9_jEyWHw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05381196E096; Fri, 12 Jul 2024 15:12:34 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.13])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC83E3000181; Fri, 12 Jul 2024 15:12:31 +0000 (UTC)
-Date: Fri, 12 Jul 2024 16:12:28 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v2] osdep: add a qemu_close_all_open_fd() helper
-Message-ID: <ZpFH3E78ly_CP2fF@redhat.com>
-References: <20240618111704.63092-1-cleger@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sSHxZ-0002Xf-VC; Fri, 12 Jul 2024 11:13:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5E8A661A52;
+ Fri, 12 Jul 2024 18:13:15 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:0:419:481f:bf60:5a5:c3b] (unknown
+ [2a02:6b8:0:419:481f:bf60:5a5:c3b])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id EDiE0A1IeCg0-v2yAhwmQ; Fri, 12 Jul 2024 18:13:14 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1720797194;
+ bh=cMHzELJUwqNMOS5nMphSTeRIP+BR1Y6NXPPuuJHxckY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=GPM59C1ziLkmwPitpw0bTD9rtHyyYBbgwmyIdPR71xjTg5eMSx83JJPi5cSBdbV7Q
+ EXQ+IGGlv29Ylz8bPeCOdBBpGfNii1aYK/CxC6zhO65DWGHG7OALvQ4//ZA4ukuWUT
+ dRnwURYEN+pPZcqvxmP60dn5BL27e3au1gFRrCAE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <2e14674b-a26e-4fac-bbc6-6406e4786deb@yandex-team.ru>
+Date: Fri, 12 Jul 2024 18:13:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240618111704.63092-1-cleger@rivosinc.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] block/reqlist: allow adding overlapping requests
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, jsnow@redhat.com
+References: <20240712140716.517911-1-f.ebner@proxmox.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240712140716.517911-1-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,148 +71,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 18, 2024 at 01:17:03PM +0200, Clément Léger wrote:
-> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
-> POSIX"), the maximum number of file descriptors that can be opened are
-> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
-> of 1073741816 file descriptors. Now, when forking to start
-> qemu-bridge-helper, this actually calls close() on the full possible file
-> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
-> takes a considerable amount of time. In order to reduce that time,
-> factorize existing code to close all open files descriptors in a new
-> qemu_close_all_open_fd() function. This function uses various methods
-> to close all the open file descriptors ranging from the most efficient
-> one to the least one. It also accepts an ordered array of file
-> descriptors that should not be closed since this is required by the
-> callers that calls it after forking.
+On 12.07.24 17:07, Fiona Ebner wrote:
+> Allow overlapping request by removing the assert that made it
+> impossible. There are only two callers:
 > 
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> 1. block_copy_task_create()
 > 
-> ----
+> It already asserts the very same condition before calling
+> reqlist_init_req().
 > 
-> v2:
->  - Factorize async_teardown.c close_fds implementation as well as tap.c ones
->  - Apply checkpatch
->  - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
+> 2. cbw_snapshot_read_lock()
 > 
+> There is no need to have read requests be non-overlapping in
+> copy-before-write when used for snapshot-access. In fact, there was no
+> protection against two callers of cbw_snapshot_read_lock() calling
+> reqlist_init_req() with overlapping ranges and this could lead to an
+> assertion failure [1].
+> 
+> In particular, with the reproducer script below [0], two
+> cbw_co_snapshot_block_status() callers could race, with the second
+> calling reqlist_init_req() before the first one finishes and removes
+> its conflicting request.
+> 
+> [0]:
+> 
+>> #!/bin/bash -e
+>> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+>> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+>> (
+>> ./qemu-system-x86_64 --qmp stdio \
+>> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+>> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+>> <<EOF
+>> {"execute": "qmp_capabilities"}
+>> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+>> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+>> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+>> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+>> EOF
+>> ) &
+>> sleep 5
+>> while true; do
+>> ./qemu-nbd -d /dev/nbd0
+>> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+>> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+>> done
+> 
+> [1]:
+> 
+>> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+>> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+>> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+>> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+>> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+>> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+>> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+>> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+>> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+>> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+>> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+>> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+>> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+>> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+>> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
+> 
+> Cc: qemu-stable@nongnu.org
+> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  include/qemu/osdep.h    |   8 +++
->  net/tap.c               |  31 ++++++-----
->  system/async-teardown.c |  37 +------------
->  util/osdep.c            | 115 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 141 insertions(+), 50 deletions(-)
 > 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index f61edcfdc2..9369a97d3d 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -755,6 +755,14 @@ static inline void qemu_reset_optind(void)
->  
->  int qemu_fdatasync(int fd);
->  
-> +/**
-> + * Close all open file descriptors except the ones supplied in the @skip array
-> + *
-> + * @skip: ordered array of distinct file descriptors that should not be closed
-> + * @nskip: number of entries in the @skip array.
-> + */
-> +void qemu_close_all_open_fd(const int *skip, unsigned int nskip);
-> +
->  /**
->   * Sync changes made to the memory mapped file back to the backing
->   * storage. For POSIX compliant systems this will fallback
-> diff --git a/net/tap.c b/net/tap.c
-> index 51f7aec39d..6fc3939078 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -385,6 +385,21 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
->      return s;
->  }
->  
-> +static void close_all_fds_after_fork(int excluded_fd)
-> +{
-> +        const int skip_fd[] = {0, 1, 2, 3, excluded_fd};
-> +        unsigned int nskip = ARRAY_SIZE(skip_fd);
-> +
-> +        /*
-> +         * skip_fd must be an ordered array of distinct fds, exclude
-> +         * excluded_fd if already included in the [0 - 3] range
-> +         */
-> +        if (excluded_fd <= 3) {
-> +            nskip--;
-> +        }
-> +        qemu_close_all_open_fd(skip_fd, nskip);
-> +}
+> Changes in v2:
+> * different approach, allowing overlapping requests for
+>    copy-before-write rather than waiting for them. block-copy already
+>    asserts there are no conflicts before adding a request.
+> 
+>   block/copy-before-write.c | 3 ++-
+>   block/reqlist.c           | 2 --
+>   2 files changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+> index 853e01a1eb..28f6a096cd 100644
+> --- a/block/copy-before-write.c
+> +++ b/block/copy-before-write.c
+> @@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
+>   
+>       /*
+>        * @frozen_read_reqs: current read requests for fleecing user in bs->file
+> -     * node. These areas must not be rewritten by guest.
+> +     * node. These areas must not be rewritten by guest. There can be multiple
+> +     * overlapping read requests.
+>        */
+>       BlockReqList frozen_read_reqs;
+>   
+> diff --git a/block/reqlist.c b/block/reqlist.c
+> index 08cb57cfa4..098e807378 100644
+> --- a/block/reqlist.c
+> +++ b/block/reqlist.c
+> @@ -20,8 +20,6 @@
+>   void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+>                         int64_t bytes)
+>   {
+> -    assert(!reqlist_find_conflict(reqs, offset, bytes));
+> -
+>       *req = (BlockReq) {
+>           .offset = offset,
+>           .bytes = bytes,
 
-This is slightly over-indented - 4 space is QEMU normal style.
 
-> diff --git a/util/osdep.c b/util/osdep.c
-> index 5d23bbfbec..f3710710e3 100644
-> --- a/util/osdep.c
-> +++ b/util/osdep.c
-> @@ -625,3 +625,118 @@ int qemu_fdatasync(int fd)
->      return fsync(fd);
->  #endif
->  }
-> +
-> +#ifdef CONFIG_LINUX
-> +static bool qemu_close_all_open_fd_proc(const int *skip, unsigned int nskip)
-> +{
-> +    struct dirent *de;
-> +    int fd, dfd;
-> +    bool close_fd;
-> +    DIR *dir;
-> +    int i;
-> +
-> +    dir = opendir("/proc/self/fd");
-> +    if (!dir) {
-> +        /* If /proc is not mounted, there is nothing that can be done. */
-> +        return false;
-> +    }
-> +    /* Avoid closing the directory. */
-> +    dfd = dirfd(dir);
-> +
-> +    for (de = readdir(dir); de; de = readdir(dir)) {
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Don't we need
+Thanks, applied to my block branch
 
-   if (de->d_name[0] == '.') {
-       continue;
-   }
-
-otherwise atoi will fail and we'll try to close(0) multiple
-times.
-
-> +        fd = atoi(de->d_name);
-> +        close_fd = true;
-> +        if (fd == dfd) {
-> +            close_fd = false;
-> +        } else {
-> +            for (i = 0; i < nskip; i++) {
-> +                if (fd == skip[i]) {
-> +                    close_fd = false;
-> +                    break;
-> +                }
-> +            }
-> +        }
-> +        if (close_fd) {
-> +            close(fd);
-> +        }
-> +    }
-> +    closedir(dir);
-> +
-> +    return true;
-> +}
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Best regards,
+Vladimir
 
 
