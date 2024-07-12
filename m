@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67251C3DA45
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jul 2024 22:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920E2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 00:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS2bh-00019N-CF; Thu, 11 Jul 2024 18:49:45 -0400
+	id 1sS45V-0001Gf-VS; Thu, 11 Jul 2024 20:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sS2bf-00018s-PO
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:49:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sS2bd-000631-Nf
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 18:49:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720738179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y738lNqBcRkfsnLk3tFCnr8supLZRBSaBLCvUGVRgaw=;
- b=bk1QqbVPDbcxxNxBpQwnRZ/EfwRWSgFnzGLJuvzn5x7Te6/aUxoZIv1lxi38g8bENquBwu
- TBVtuJTHfS4yMFznIX3SqDn9j7NT9/9cOtX+yT8pjzh0L/XhLp7MdhmSwlBrRkeC01MW0b
- yZwnh23LW9N+fgj9x1wqoHEg76rC35k=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-ql5mrTrBOe-HEFx1jxrPDA-1; Thu, 11 Jul 2024 18:49:37 -0400
-X-MC-Unique: ql5mrTrBOe-HEFx1jxrPDA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-426724679f0so12389835e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 15:49:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sS45O-0001Fg-R2
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 20:24:30 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sS45M-0000RF-VH
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 20:24:30 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-706524adf91so1276430b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 17:24:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720743867; x=1721348667; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XQ3Gk3vXsdLMr929+ifcTOFfkudWYD1Yd0jG8T/YOnE=;
+ b=EVmrPD8Snc47KdnEAtboHwghMwNzEHB/xpWyjVeVHLvnMCc6NlaM3vWoU9K+VubALa
+ ckwjW7uNVfDkaQOg33alk70uC5CkFL3+TGUj70UeuTAzlIiWyR1zuozrOc0/kc1jwzEM
+ 3esuSz+eteHV5jFdGyq+575kAHSQuwSu6a3eNncJ94V7xSdV9XOoOJTeYWDgVp3e1oo/
+ IOzuXfmmVEIxsEJnL9nTk+c9rXyzh5ELxjwN0SM9vheBBKe6s+++O+9iE7AlWQESHMhw
+ ZNNOEU4oiOTuHvM3qu4+uo/Mm4zgFQ+f6FvtvZlP5C7NNp8efSWl4djmYojuQoskGbsN
+ BpzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720738176; x=1721342976;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y738lNqBcRkfsnLk3tFCnr8supLZRBSaBLCvUGVRgaw=;
- b=xESDz1D0Z9f7wVOmRB1W3vw7uKYn97tWAXNFKi0IzwsA2aBwlvCRUG0EYtbMrRmivV
- uKtEBr9jNvmaHgYt5y4Sok2PzxJJOXsQWf/pfv4RcqBLzOZ87O07OF4YjoGq+mnEl+T8
- YXKBl9ZySYZ7bX7KRsWNjGHg0oTrAWMdppFEWxSvkYM+Pd5vpbWf3ciuEt+oqN1xcvfK
- JSuUYbQSdv11mko+t+JMGgkrNCRT4iRuKkcho/SHM7eTwL0F9Lq3x51Rhh3UgGZ0S/gR
- fUXzbg8GhuSF/pj/1GfiZFkgxXi7P4DgpuwOC1PrUosSK6QBrxEPa9W7nemFI8zVvXyY
- Shdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWw8VlMCDZzGorXFYl0EnrHpjSKSSmbOELRQ8/jPY88Ftyl6VoD+PgO/QwkiVE1j6OgsBtnvWH7DNLJMgquER+WZa1Edno=
-X-Gm-Message-State: AOJu0Yz+tpd4juf1k+5mDAv3ezF7nqPRBuwgpmsg1uAKb6KPppwiP4Z9
- jH9/RPGsSGARqsOUgX5ORWcsI/FePBVicpeWwW51I80QNZzeCY3wIQNYk6whD22WM4uYFeX9tro
- 9KY4uI/xA5NmCsSo7+Yta3ebSEmMLflW7x6TviFzKQ5JFd3u5OdDY
-X-Received: by 2002:a05:600c:4f49:b0:424:aa83:ef27 with SMTP id
- 5b1f17b1804b1-4279d9f289emr8630845e9.1.1720738176114; 
- Thu, 11 Jul 2024 15:49:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESwKR3fcxTB8hhovkxnpTwz7Rfyh3EJ5CWJBSYmhLGxng/DlHyc4RJdV1a+a/3oZmVxXGkYQ==
-X-Received: by 2002:a05:600c:4f49:b0:424:aa83:ef27 with SMTP id
- 5b1f17b1804b1-4279d9f289emr8630605e9.1.1720738175593; 
- Thu, 11 Jul 2024 15:49:35 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:173:2166:83a4:d566:a055:a5a3])
+ d=1e100.net; s=20230601; t=1720743867; x=1721348667;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XQ3Gk3vXsdLMr929+ifcTOFfkudWYD1Yd0jG8T/YOnE=;
+ b=OYKXW4nhSqmyDB9IQojCIxB3UPGJQowNvd4/he9opu6AkuHl3l4rTEtnxPOFWce0Xj
+ 6NG1f31Bi9xTkynwUj70iKWx2MJ2pHc4srwTYrqPbIJmRSIzMraOPkypVDN+YLKkpzAb
+ GcbtrGUoYwP1n3vFUA8SlrsKAU7iN3U6qkL3b763xRzqEeq4do+3klKQnpbjlMXeF1fq
+ 5Up7tlRCu2uX0TCc5WLtUif4i8z1AHHGlAP9dVDM1+BQwO12gW+BYpqEzIeMhrQrnueV
+ 7ViyOdDvagdW0aRHXfZ0I1V89nkleUQBEDcb4PWPZWeGPqrxmYIr+ZPccGDPzW9XcIg6
+ s2gw==
+X-Gm-Message-State: AOJu0YxBBxQoMG7XpVhDYEWo3GQNbxunmormALLZWq44XeQkGVl7amBy
+ t00HoLhyCpSSC1NIdaHu4hg78yQE9DPQClE18FTKQvj1zVQYOVfspGq3ldME7aQ=
+X-Google-Smtp-Source: AGHT+IHWUOjumdTmqfZ+a7S0QI61nbi23ann3t2eeDLM7tau0K5WwxFEvrJo4uVUaRV0tFXgkLLOog==
+X-Received: by 2002:a05:6a00:6c89:b0:705:be21:f2be with SMTP id
+ d2e1a72fcca58-70b4356dc65mr11695790b3a.18.1720743867016; 
+ Thu, 11 Jul 2024 17:24:27 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::bfd3? ([2604:3d08:9384:1d00::bfd3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f2679b1sm2894615e9.15.2024.07.11.15.49.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 15:49:35 -0700 (PDT)
-Date: Thu, 11 Jul 2024 18:49:27 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to offload zero
- page checking in multifd live migration.
-Message-ID: <20240711184131-mutt-send-email-mst@kernel.org>
-References: <20240711215244.19237-1-yichen.wang@bytedance.com>
+ d2e1a72fcca58-70b4397e4fesm6251523b3a.152.2024.07.11.17.24.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jul 2024 17:24:26 -0700 (PDT)
+Message-ID: <0d790d77-062d-4cb6-866e-4ee965d47944@linaro.org>
+Date: Thu, 11 Jul 2024 17:24:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240711215244.19237-1-yichen.wang@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 4/7] tests/tcg: add mechanism to run specific tests
+ with plugins
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>, Xingtao Yao <yaoxt.fnst@fujitsu.com>
+References: <20240706191335.878142-1-pierrick.bouvier@linaro.org>
+ <20240706191335.878142-5-pierrick.bouvier@linaro.org>
+ <87ikxgtagz.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87ikxgtagz.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,86 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 02:52:35PM -0700, Yichen Wang wrote:
-> * Performance:
-> 
-> We use two Intel 4th generation Xeon servers for testing.
-> 
-> Architecture:        x86_64
-> CPU(s):              192
-> Thread(s) per core:  2
-> Core(s) per socket:  48
-> Socket(s):           2
-> NUMA node(s):        2
-> Vendor ID:           GenuineIntel
-> CPU family:          6
-> Model:               143
-> Model name:          Intel(R) Xeon(R) Platinum 8457C
-> Stepping:            8
-> CPU MHz:             2538.624
-> CPU max MHz:         3800.0000
-> CPU min MHz:         800.0000
-> 
-> We perform multifd live migration with below setup:
-> 1. VM has 100GB memory. 
-> 2. Use the new migration option multifd-set-normal-page-ratio to control the total
-> size of the payload sent over the network.
-> 3. Use 8 multifd channels.
-> 4. Use tcp for live migration.
-> 4. Use CPU to perform zero page checking as the baseline.
-> 5. Use one DSA device to offload zero page checking to compare with the baseline.
-> 6. Use "perf sched record" and "perf sched timehist" to analyze CPU usage.
-> 
-> A) Scenario 1: 50% (50GB) normal pages on an 100GB vm.
-> 
-> 	CPU usage
-> 
-> 	|---------------|---------------|---------------|---------------|
-> 	|		|comm		|runtime(msec)	|totaltime(msec)|
-> 	|---------------|---------------|---------------|---------------|
-> 	|Baseline	|live_migration	|5657.58	|		|
-> 	|		|multifdsend_0	|3931.563	|		|
-> 	|		|multifdsend_1	|4405.273	|		|
-> 	|		|multifdsend_2	|3941.968	|		|
-> 	|		|multifdsend_3	|5032.975	|		|
-> 	|		|multifdsend_4	|4533.865	|		|
-> 	|		|multifdsend_5	|4530.461	|		|
-> 	|		|multifdsend_6	|5171.916	|		|
-> 	|		|multifdsend_7	|4722.769	|41922		|
-> 	|---------------|---------------|---------------|---------------|
-> 	|DSA		|live_migration	|6129.168	|		|
-> 	|		|multifdsend_0	|2954.717	|		|
-> 	|		|multifdsend_1	|2766.359	|		|
-> 	|		|multifdsend_2	|2853.519	|		|
-> 	|		|multifdsend_3	|2740.717	|		|
-> 	|		|multifdsend_4	|2824.169	|		|
-> 	|		|multifdsend_5	|2966.908	|		|
-> 	|		|multifdsend_6	|2611.137	|		|
-> 	|		|multifdsend_7	|3114.732	|		|
-> 	|		|dsa_completion	|3612.564	|32568		|
-> 	|---------------|---------------|---------------|---------------|
-> 
-> Baseline total runtime is calculated by adding up all multifdsend_X
-> and live_migration threads runtime. DSA offloading total runtime is
-> calculated by adding up all multifdsend_X, live_migration and
-> dsa_completion threads runtime. 41922 msec VS 32568 msec runtime and
-> that is 23% total CPU usage savings.
-
-
-Here the DSA was mostly idle.
-
-Sounds good but a question: what if several qemu instances are
-migrated in parallel?
-
-Some accelerators tend to basically stall if several tasks
-are trying to use them at the same time.
-
-Where is the boundary here?
-
-
-
-
--- 
-MST
-
+T24gNy84LzI0IDA0OjAwLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFBpZXJyaWNrIEJvdXZp
+ZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IE9ubHkg
+bXVsdGlhcmNoIHRlc3RzIGFyZSBydW4gd2l0aCBwbHVnaW5zLCBhbmQgd2Ugd2FudCB0byBi
+ZSBhYmxlIHRvIHJ1bg0KPj4gcGVyLWFyY2ggdGVzdCB3aXRoIHBsdWdpbnMgdG9vLg0KPj4N
+Cj4+IFRlc3RlZC1ieTogWGluZ3RhbyBZYW8gPHlhb3h0LmZuc3RAZnVqaXRzdS5jb20+DQo+
+PiBSZXZpZXdlZC1ieTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxp
+bmFyby5vcmc+DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmlj
+ay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+PiAtLS0NCj4+ICAgdGVzdHMvdGNnL01ha2VmaWxl
+LnRhcmdldCB8IDMgKystDQo+PiAgIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyks
+IDEgZGVsZXRpb24oLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvdGVzdHMvdGNnL01ha2VmaWxl
+LnRhcmdldCBiL3Rlc3RzL3RjZy9NYWtlZmlsZS50YXJnZXQNCj4+IGluZGV4IGNiOGNmZWI2
+ZGFjLi41MjYxNjU0NGQ1MiAxMDA2NDQNCj4+IC0tLSBhL3Rlc3RzL3RjZy9NYWtlZmlsZS50
+YXJnZXQNCj4+ICsrKyBiL3Rlc3RzL3RjZy9NYWtlZmlsZS50YXJnZXQNCj4+IEBAIC0xNTIs
+MTAgKzE1MiwxMSBAQCBQTFVHSU5TPSQocGF0c3Vic3QgJS5jLCBsaWIlLnNvLCAkKG5vdGRp
+ciAkKHdpbGRjYXJkICQoUExVR0lOX1NSQykvKi5jKSkpDQo+PiAgICMgb25seSBleHBhbmQg
+TVVMVElBUkNIX1RFU1RTIHdoaWNoIGFyZSBjb21tb24gb24gbW9zdCBvZiBvdXIgdGFyZ2V0
+cw0KPj4gICAjIHRvIGF2b2lkIGFuIGV4cG9uZW50aWFsIGV4cGxvc2lvbiBhcyBuZXcgdGVz
+dHMgYXJlIGFkZGVkLiBXZSBhbHNvDQo+PiAgICMgYWRkIHNvbWUgc3BlY2lhbCBoZWxwZXJz
+IHRoZSBydW4tcGx1Z2luLSBydWxlcyBjYW4gdXNlIGJlbG93Lg0KPj4gKyMgSW4gbW9yZSwg
+ZXh0cmEgdGVzdHMgY2FuIGJlIGFkZGVkIHVzaW5nIFBMVUdJTlNfVEVTVFMgdmFyaWFibGUu
+DQo+PiAgIA0KPj4gICBpZm5lcSAoJChNVUxUSUFSQ0hfVEVTVFMpLCkNCj4+ICAgJChmb3Jl
+YWNoIHAsJChQTFVHSU5TKSwgXA0KPj4gLQkkKGZvcmVhY2ggdCwkKE1VTFRJQVJDSF9URVNU
+UyksXA0KPj4gKwkkKGZvcmVhY2ggdCwkKE1VTFRJQVJDSF9URVNUUykgJChQTFVHSU5TX1RF
+U1RTKSxcDQo+PiAgIAkJJChldmFsIHJ1bi1wbHVnaW4tJCh0KS13aXRoLSQocCk6ICR0ICRw
+KSBcDQo+PiAgIAkJJChldmFsIFJVTl9URVNUUys9cnVuLXBsdWdpbi0kKHQpLXdpdGgtJChw
+KSkpKQ0KPj4gICBlbmRpZiAjIE1VTFRJQVJDSF9URVNUUw0KPiANCj4gSSBoYXZlIG5vIHBh
+cnRpY3VsYXIgb2JqZWN0aW9uIHRvIGFkZGluZyB0aGlzIChleGNlcHQgYSBtaW5vciBuaXQg
+b2YNCj4gbWF5YmUgdGhlIG5hbWUgc2hvdWxkIGJlIEFERElUSU9OQUxfUExVR0lOX1RFU1RT
+KS4gSG93ZXZlciB0aGUgdXNlIG9mDQo+IHRoaXMgbGF0ZXIgaXMgZm9yIHRoZSB0ZXN0Og0K
+PiANCg0KSSdsbCByZW5hbWUgaXQgdG8gQURESVRJT05BTF9QTFVHSU5fVEVTVFMuDQoNCj4g
+ICAgdGVzdHMvdGNnL3g4Nl82NC90ZXN0LXBsdWdpbi1tZW0tYWNjZXNzLmMNCj4gDQo+IGFu
+ZCBhc2lkZSBmcm9tIHRoZSBpbmxpbmUgYXNtIEkgZG9uJ3Qgc2VlIHdoeSB0aGlzIGNvdWxk
+bid0IGJlIGENCj4gbXVsdGktYXJjaCB0ZXN0LiBDb3VsZCB3ZSBub3QgdXNlIHRoZSBhdG9t
+aWMgcHJpbWl0aXZlcyB0byBtYWtlIGl0IG11bHRpYXJjaD8NCj4gDQoNCldpbGwgYW5zd2Vy
+IG9uIHJlbGF0ZWQgcGF0Y2guDQo=
 
