@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E45C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2925C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSEke-0005c2-88; Fri, 12 Jul 2024 07:47:48 -0400
+	id 1sSEke-0005aS-6z; Fri, 12 Jul 2024 07:47:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sSEkH-0005R1-ED
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:27 -0400
+ id 1sSEkI-0005T3-RR
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:29 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sSEkF-0007cG-HH
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:25 -0400
+ id 1sSEkH-0007cN-7n
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:47:26 -0400
 Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C1CCf3021960;
- Fri, 12 Jul 2024 11:47:17 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C1BZ7I020939;
+ Fri, 12 Jul 2024 11:47:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=Y
- jjFfcqjRtgmHhj9Eg+zpRZFG+1Mm3L/QLMYuy0OMY4=; b=kmyYSYNoIKAyUADh6
- gKwhlx0E5rb25ttTrqvWkGrDD8C2S+w+xXfXfXT16Us6RZ2bepXxCU2m0qXhxrd0
- 8OqduqAuquhGyCTzF9HazKJJQ6pn5qXwHbs9K9IgPcWiYQrX98eOLQu3UIi8GBtw
- 8dBUwssJtKtMS4z/u3vVxEqjJCJAXOAdkuw9hw4zNkqpcwskofgK3fhFobdjxum1
- RR1y9jUGrWwGVXpSAuxbALqUuHG4Ulkix/YAujUcUoVFT9xLbwnhMlJnFAoVzK4w
- UilGHYNWceDnyMm6x5oB5EOzyGU2Kp+rVeOWHqumnj6Ul9lVROmIQ+A4HSQyP8ZP
- yTHzw==
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=0
+ nau4lpgSQgPGvf1jMzHDGQRzh3s7fsu4Hvn+m67NL0=; b=fZ/g00bVoaeJaU4SS
+ mgja4EOh1Gc/Ajac+3FHc74wkR9UsQoMD2iiD45DTA6V9VsdkncvcqgcSIbD2YYw
+ wVEh2bxO7MnmviZ3buPHyftNpuy6Hd556TTx3ErQYCCLzqkkE5jHWOCpknOOquyX
+ B5Lbhy0PqLQbYVJ9QtysErNdzdP0uzmBrmFrjqQGi159YMX/6lLujn32VgXkBzbi
+ cPxz0sILAgA13SdhAXBrF9X8UHOJczyIQPH/UNp46l1J9oA0ENN01GMlbn2J3t8c
+ hOF7y24ngaa32tb+AYzPHXp31pcTW2k1YmUsGT/ikLBn9LIuxspFz7bEfvxg5alE
+ ZyrFA==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emt30a1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emt30ab-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 11:47:17 +0000 (GMT)
+ Fri, 12 Jul 2024 11:47:22 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46CBMAQP022638; Fri, 12 Jul 2024 11:47:16 GMT
+ with ESMTP id 46CBRkux022734; Fri, 12 Jul 2024 11:47:21 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 409vv3pq09-1
+ 409vv3pq24-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 11:47:16 +0000
+ Fri, 12 Jul 2024 11:47:21 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CBlCCU008041;
- Fri, 12 Jul 2024 11:47:15 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CBlCCY008041;
+ Fri, 12 Jul 2024 11:47:20 GMT
 Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-0-59.vpn.oracle.com
  [10.175.0.59])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 409vv3ppxv-2; Fri, 12 Jul 2024 11:47:15 +0000
+ 409vv3ppxv-4; Fri, 12 Jul 2024 11:47:20 +0000
 From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -62,9 +62,10 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v4 01/12] vfio/pci: Extract mdev check into an helper
-Date: Fri, 12 Jul 2024 12:46:53 +0100
-Message-Id: <20240712114704.8708-2-joao.m.martins@oracle.com>
+Subject: [PATCH v4 03/12] backends/iommufd: Extend
+ iommufd_backend_get_device_info() to fetch HW capabilities
+Date: Fri, 12 Jul 2024 12:46:55 +0100
+Message-Id: <20240712114704.8708-4-joao.m.martins@oracle.com>
 In-Reply-To: <20240712114704.8708-1-joao.m.martins@oracle.com>
 References: <20240712114704.8708-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
@@ -74,11 +75,11 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2024-07-12_08,2024-07-11_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  phishscore=0 mlxscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=749 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
  definitions=main-2407120080
-X-Proofpoint-GUID: WJRmkkI9-9sxudRMDafjwItU4aH9cr8-
-X-Proofpoint-ORIG-GUID: WJRmkkI9-9sxudRMDafjwItU4aH9cr8-
+X-Proofpoint-GUID: am_zYRWOPwJZa7X09zcF3jspd6z-Fgy_
+X-Proofpoint-ORIG-GUID: am_zYRWOPwJZa7X09zcF3jspd6z-Fgy_
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -103,96 +104,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation to skip initialization of the HostIOMMUDevice for mdev,
-extract the checks that validate if a device is an mdev into helpers.
-
-A vfio_set_mdev() is created, and subsystems consult VFIODevice::mdev
-to check if it's mdev or not.
+The helper will be able to fetch vendor agnostic IOMMU capabilities
+supported both by hardware and software. Right now it is only iommu dirty
+tracking.
 
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/vfio/vfio-common.h |  2 ++
- hw/vfio/helpers.c             | 18 ++++++++++++++++++
- hw/vfio/pci.c                 |  9 ++-------
- 3 files changed, 22 insertions(+), 7 deletions(-)
+ include/sysemu/iommufd.h | 2 +-
+ backends/iommufd.c       | 4 +++-
+ hw/vfio/iommufd.c        | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index e8ddf92bb185..7419466bca92 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -116,6 +116,7 @@ typedef struct VFIODevice {
-     DeviceState *dev;
-     int fd;
-     int type;
-+    bool mdev;
-     bool reset_works;
-     bool needs_reset;
-     bool no_mmap;
-@@ -231,6 +232,7 @@ void vfio_region_exit(VFIORegion *region);
- void vfio_region_finalize(VFIORegion *region);
- void vfio_reset_handler(void *opaque);
- struct vfio_device_info *vfio_get_device_info(int fd);
-+void vfio_set_mdev(VFIODevice *vbasedev);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index b14edd46edc9..bace0e788a09 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -675,3 +675,21 @@ int vfio_device_get_aw_bits(VFIODevice *vdev)
+diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+index 9edfec604595..57d502a1c79a 100644
+--- a/include/sysemu/iommufd.h
++++ b/include/sysemu/iommufd.h
+@@ -49,7 +49,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+                               hwaddr iova, ram_addr_t size);
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+-                                     Error **errp);
++                                     uint64_t *caps, Error **errp);
  
-     return HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX;
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 84fefbc9ee7a..2b3d51af26d2 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -210,7 +210,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ 
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+-                                     Error **errp)
++                                     uint64_t *caps, Error **errp)
+ {
+     struct iommu_hw_info info = {
+         .size = sizeof(info),
+@@ -226,6 +226,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+ 
+     g_assert(type);
+     *type = info.out_data_type;
++    g_assert(caps);
++    *caps = info.out_capabilities;
+ 
+     return true;
  }
-+
-+void vfio_set_mdev(VFIODevice *vbasedev)
-+{
-+    g_autofree char *tmp = NULL;
-+    char *subsys;
-+    bool is_mdev;
-+
-+    if (!vbasedev->sysfsdev) {
-+        return;
-+    }
-+
-+    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
-+    subsys = realpath(tmp, NULL);
-+    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
-+    free(subsys);
-+
-+    vbasedev->mdev = is_mdev;
-+}
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e03d9f3ba546..585f23a18406 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2963,12 +2963,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-     ERRP_GUARD();
-     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    char *subsys;
-     int i, ret;
-     bool is_mdev;
-     char uuid[UUID_STR_LEN];
-     g_autofree char *name = NULL;
--    g_autofree char *tmp = NULL;
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index c2f158e60386..604eaa4d9a5d 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -628,11 +628,13 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     union {
+         struct iommu_hw_info_vtd vtd;
+     } data;
++    uint64_t hw_caps;
  
-     if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
-         if (!(~vdev->host.domain || ~vdev->host.bus ||
-@@ -2997,11 +2995,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-      * stays in sync with the active working set of the guest driver.  Prevent
-      * the x-balloon-allowed option unless this is minimally an mdev device.
-      */
--    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
--    subsys = realpath(tmp, NULL);
--    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
--    free(subsys);
--
-+    vfio_set_mdev(vbasedev);
-+    is_mdev = vbasedev->mdev;
-     trace_vfio_mdev(vbasedev->name, is_mdev);
+     hiod->agent = opaque;
  
-     if (vbasedev->ram_block_discard_allowed && !is_mdev) {
+     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+-                                         &type, &data, sizeof(data), errp)) {
++                                         &type, &data, sizeof(data),
++                                         &hw_caps, errp)) {
+         return false;
+     }
+ 
 -- 
 2.17.2
 
