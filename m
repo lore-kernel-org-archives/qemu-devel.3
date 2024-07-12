@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3772CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B01C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSHCV-0007f7-3H; Fri, 12 Jul 2024 10:24:43 -0400
+	id 1sSHDJ-0000PP-J6; Fri, 12 Jul 2024 10:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sSHCQ-0007eQ-Sb
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:24:39 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1sSHDE-00006F-Lv
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:25:28 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sSHCP-0005Uq-B1
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:24:38 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a77c1658c68so255160166b.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:24:36 -0700 (PDT)
+ id 1sSHDC-00065g-Ve
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:25:28 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2eea7e2b073so26280101fa.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720794275; x=1721399075; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720794325; x=1721399125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=U4/RCF17e3pFk8h8tUIJ1pGGBygiPYPdrkwAJWIIVfY=;
- b=BQtBJp6iCQQSHQkYhOtWsuBDHl/iUy9YQcoKxig4BZzUwFwm6qB5Grr6Vty1L26wXy
- gTUrMvYLC0yJH+bGCZ49zUExt/nqjx80t0drGYkSqtL2LfFABDGj7zlzvIVwMetDJGtD
- hVev5AAXJ94VVUL0qVPE/cUXgaxAmuVbeAyE862Fd9o/LIjlKPKTMRqIzd5zNaYKnQgg
- mEf9y3fpCrlsOuZygISjhgVTqhxw5f1sR3tQ7shsNATfOsVgPelDGqKY5xvyhVs8OPbT
- l1DPi7TmDt3Ou5PKmmz3zWOpP82r1vmMW4vbFnAeVLGQye806bLkCYWlay0wFcNoJubf
- DNVw==
+ :reply-to; bh=iRIOD4928MYtQ0KgIudiYcrWuwr8gipml48UbyiWBTs=;
+ b=G0Z1JQUW+rRoNCL1ZB4GR6/LkGyE7cxGiEdV8y4qjcyyim4kJACv7v+g/tmvMUZ9Hx
+ ykjngYSSMtWbjofVsd2qZmgBjiUCtrhhjid915KxycFkb/SFAmq06NYgiAJpl7wRxnlk
+ IXttz5eyCy4OtwynHNKAdKvGMBevZHdf4gYZgDPBjqJ4ZwXfyVwNXUxXmGed6nz62L8x
+ 4c/THlXW056/u5TvE8jwCpoGC5WFxzK3nP2FZ/x7Ll/qv/VdqywLAHPysT7JjH3sMqwP
+ hQ+4gcNGcnO7F0IyCntXgGPzitYjYHklBgsT2cZKkNv6fyB4+O8DJbLCl2umg3GrW9yc
+ GTTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720794275; x=1721399075;
+ d=1e100.net; s=20230601; t=1720794325; x=1721399125;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U4/RCF17e3pFk8h8tUIJ1pGGBygiPYPdrkwAJWIIVfY=;
- b=Rp7hwA5npVI5nBFtXeoMsmxHRuRx4waSTBAcz4o/9FPXtR2B1MpIWFQpXdVrM0meeO
- GSVRdn6aPL3ea6fb3qKAT+rNMRugSWtxF6FSYTBCh2z5t1rCOP/pRCrjpX1ghR9bCr0i
- x8FbPilhu3yEoL96ntSvSZK7HcyCpr3nsPdhZyWRl+Bu394zkg9OrLPRN4IRxge7Ov6m
- ctx7k/xhtpXUgtO834LRhO3LULdYNMDm501rO4yYTGrFRTeD0yrNQwfMwdOxSj6WJpND
- f7uX69TNuyax9pVh86mpRENvRncf1ttWIITfjDM9BdTm0VjbfJpgMwiOqgjDMmgFJCqx
- 7MjA==
+ bh=iRIOD4928MYtQ0KgIudiYcrWuwr8gipml48UbyiWBTs=;
+ b=Kqa9H5Wa5tHvn62+JLi4Eqcl+APfaT7yJ/XvA5wQdhLRqiuYdLMiUUL6m8ELU4iZ6f
+ d8DN+o437BfQfcn+3oXkxs/4Q5iDNs1y//JU8Jg5TidBTleXxASdt4zV2CCKENQn0YnS
+ YxyTmiU1EONJubIDAT9lyQFpwhN5UWRhYMG786QjTRNeC14RrE7Fhdn2uuUFznEo41vo
+ iqhmHSju1CPzAH18HKvkiN6criAQE+g3y3YTfvwkE2XsZM9NxaVJhqdn8m1xWgN6DI5H
+ cX9c/t2IR2F80pIKBu/sonKblI2Gs8LXvQTH+K0+W0SlgWWV1pFWQfX63yvtFqyfE92O
+ 8NDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWr8h9ZHymLukd+W/E3Bfn2P+/kgYnwOfaYaX1X2LSDX9RckTcQe9e++7cVLI6SQLUKkLadF0IHEccW1hYXeiOfUPks6vE=
-X-Gm-Message-State: AOJu0Yyr9vxBsUasHjRpSo5gZ9TnSxuVto/W3fxS92pQPkXml8I03Ioy
- O+WNcwN+ZcJawda2asNe9RaBBE8AuFJUdmnNQwLVJeEIwteNwmMoZBQENJ2En7g=
-X-Google-Smtp-Source: AGHT+IG9u3VlFwAOvNvr8+8H70sNfEBccmq6LkaHntA+8F5vN/TyQw8dyuDebU5QpQDXkE9IHWpn3Q==
-X-Received: by 2002:a17:906:395b:b0:a74:84e8:9994 with SMTP id
- a640c23a62f3a-a780b7053e5mr849710066b.45.1720794275071; 
- Fri, 12 Jul 2024 07:24:35 -0700 (PDT)
+ AJvYcCX0bGQDBwSiVhfxrXYyap7isNG1sMuEUpuRpYv+4MBDUATCh+wAEru6SfcmWQ9C5YINy1TxLH/qqlCJrhWFnfTg/xmPfxg=
+X-Gm-Message-State: AOJu0YxfqToMweefATSIzJWUFC57TaaBCLeYgDtIL5uUUuUEP1GLtlYX
+ 4RzTFnKYcg/yw84KCEG5o+/Z1hST0uOCLOU26NT57Off+hUZyXZPhUN13wgmRPk=
+X-Google-Smtp-Source: AGHT+IH83CoWZlluY6N1czNsmhDDT7Hhy20yFFs+VZSd4vRQLuN/p+W6YNiFzX7OnQpTiPPBpNS3UA==
+X-Received: by 2002:a05:6512:1284:b0:52c:e192:5f5f with SMTP id
+ 2adb3069b0e04-52eb9995397mr8202030e87.19.1720794324324; 
+ Fri, 12 Jul 2024 07:25:24 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a780a7ff00bsm349152566b.118.2024.07.12.07.24.34
+ a640c23a62f3a-a780a6e0633sm345512466b.81.2024.07.12.07.25.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 07:24:34 -0700 (PDT)
+ Fri, 12 Jul 2024 07:25:23 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 739B75F713;
- Fri, 12 Jul 2024 15:24:33 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1BFBB5F713;
+ Fri, 12 Jul 2024 15:25:23 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,  Ed
- Maste <emaste@freebsd.org>,  Li-Wen Hsu <lwhsu@freebsd.org>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>
-Subject: Re: [RFC PATCH] build deps: update lcitool to include rust bits
-In-Reply-To: <CAAjaMXbNMnq5QuqfX=AZubMdL3npFGjqBRk1jYFFtgtteyaqUw@mail.gmail.com>
- (Manos Pitsidianakis's message of "Fri, 12 Jul 2024 16:21:34 +0300")
-References: <20240710154335.2510260-1-alex.bennee@linaro.org>
- <ZpEBds6AUnPsVCY4@redhat.com>
- <CAAjaMXbNMnq5QuqfX=AZubMdL3npFGjqBRk1jYFFtgtteyaqUw@mail.gmail.com>
-Date: Fri, 12 Jul 2024 15:24:33 +0100
-Message-ID: <8734oer8m6.fsf@draig.linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 0/8] Convert avocado tests to normal Python unittests
+In-Reply-To: <ZpDV-ghgrxb0hvUd@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 12 Jul 2024 08:07:01 +0100")
+References: <20240711115546.40859-1-thuth@redhat.com> <87jzhsdmd7.fsf@suse.de>
+ <68c45f7b-4503-41b5-a858-e93f9dd9f99e@redhat.com>
+ <ZpDV-ghgrxb0hvUd@redhat.com>
+Date: Fri, 12 Jul 2024 15:25:23 +0100
+Message-ID: <87y166pu0c.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Hi Daniel, Alex,
+> On Thu, Jul 11, 2024 at 07:44:39PM +0200, Thomas Huth wrote:
+>> On 11/07/2024 16.39, Fabiano Rosas wrote:
+>> > Thomas Huth <thuth@redhat.com> writes:
+>> ...
+>> > > Things that need further attention though:
+>> > >=20
+>> > > - All tests that use the LinuxTest / LinuxDistro classes (e.g. based
+>> > >    on cloud-init images) really depend on the Avocado framework,
+>> > >    thus we'd need a solution for those if we want to continue with
+>> > >    this approach
+>> > >=20
+>> > > - Same for all tests that require the LinuxSSHMixIn class - we'd
+>> > >    need to provide a solution for ssh-based tests, too.
+>> >=20
+>> > These two seem to be dependent mostly avocado/utils only. Those could
+>> > still be used without the whole framework, no? Say we keep importing
+>> > avocado.utils, but run everything from meson, would that make sense?
+>>=20
+>> Yes ... maybe ... I can give it a try to see whether that works.
 >
-> I will pick this patch up with all the reviewed-by trailers for my
-> next Rust RFC series if that's alright with you,
+> We only import about 8 modules from avocado.utils. There are probably a
+> few more indirectly used, but worst case we just clone the bits we need
+> into the QEMU tree.
 
-Absolutely - I made it for you ;-)
+Is Avocado still actively developed? I thought you guys used it quite
+widely within RedHat?
+
+
+>
+> With regards,
+> Daniel
 
 --=20
 Alex Benn=C3=A9e
