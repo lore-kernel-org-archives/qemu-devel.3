@@ -4,57 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D429C3DA50
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD961C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSG9u-0005MV-JH; Fri, 12 Jul 2024 09:17:59 -0400
+	id 1sSGDn-0006Bx-JW; Fri, 12 Jul 2024 09:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sSG9l-0004nY-Jd
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:17:52 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sSG9g-0001wy-Hb
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:17:49 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WLBtc2zChz67ClN;
- Fri, 12 Jul 2024 21:16:08 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 89A59140C72;
- Fri, 12 Jul 2024 21:17:40 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 12 Jul
- 2024 14:17:38 +0100
-Date: Fri, 12 Jul 2024 14:17:36 +0100
-To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
- <linuxarm@huawei.com>
-CC: <shiju.jose@huawei.com>, Gregory Price <gregory.price@memverge.com>
-Subject: Re: [PATCH v6 4/4] hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS
- control feature
-Message-ID: <20240712141723.000067d8@huawei.com>
-In-Reply-To: <20240705123039.963781-5-Jonathan.Cameron@huawei.com>
-References: <20240705123039.963781-1-Jonathan.Cameron@huawei.com>
- <20240705123039.963781-5-Jonathan.Cameron@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sSGDm-00067N-3r
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:21:58 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sSGDi-0003IH-3n
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:21:56 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52ea5765e75so2342889e87.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 06:21:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720790511; x=1721395311; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+Q1YiXlRBwYtEqhlZxsYFrLPRnyTRtB2wNYNghujJvg=;
+ b=ufjAAPJpzFrUd+RivNpgcv1JB5r4Hq6wtZ5SuTgO4TcqBgau8i2A8HkCf2To7oDbPN
+ 8SR13J1x6yAU6UkaEIaRuoBOGUb34SAsj/9dRuIW7l3FQ4tqN2cu8gf4A7ykweXCDiIa
+ 3d4diiy2+M3gbN/6xeNqKS4SZJll5/94PaJEXQLoz89OFY8es5LgfR99GpX8x4QTTXD+
+ XTVeDUqbd/Z45KNnliEx5vNffiU7TDb3n4LwQMY/d2zlXy7rhUi6OrbpPDygIpBiPgdU
+ QkK8HkrCl9DnVlenFd6ybYwI5Zi4i3PJsRjuuo6aDIK7Bq3kkgFGnaPKPEyxE8D3cE61
+ QMsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720790511; x=1721395311;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+Q1YiXlRBwYtEqhlZxsYFrLPRnyTRtB2wNYNghujJvg=;
+ b=IRqo3uIQIgck70LPM9JzkitVC6PHz24o7mEJmT/rImYIwM5e8LiCAfWbvNx4cOGGL/
+ 5tCwycVZGZZ8A5kjCDZnhA373z6fHSeowNMTZS3XZk2eZwlorc+FZw84NC4dbfpw2413
+ 2zOIEmjxerFhltH3IsS7z9cT8kwBLfbqj/7BQhGFYlGKjTe3Zv42RkQB2LYPPEINI/zc
+ BEi1CHQdtXr+tkpqa+X94YjBM4zpcgF30KuLETJLvJIk4l2hDoV6APGmXSmJUnkpuNQC
+ zDnr20ardaouK8xI8IMPFsA6g4ksSIkzBgXjnwTWIP9xMsJ8PPf7XHKNxxzfK9fmtpaI
+ BCJw==
+X-Gm-Message-State: AOJu0Yy/Vjqo1UwuZR29Oe0ajtuGhwj2MhO9fi/EZHUAvrvegVPbT/bU
+ PJa0d+O+agiK1gf3RrhDYdiaWAZZ1Z1RioBiHTT8uOoufs/BFN6Da+HMUxRsZMKQiMX00ec7I2v
+ SnsFjJ3KEGuEOnFWQMwQb0r3CxEM/z0C2TEhsKw==
+X-Google-Smtp-Source: AGHT+IHs1hxrW9nbvPPikD5lNpgHouTB3PIlcgVPU6vqjimZ+mz9BCELf59roMu4Y9B1Ar3SLzCUdyo36Cvmz/ph+fo=
+X-Received: by 2002:a05:6512:3e02:b0:52c:e180:4eac with SMTP id
+ 2adb3069b0e04-52eb99912c5mr7818300e87.9.1720790511046; Fri, 12 Jul 2024
+ 06:21:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20240710154335.2510260-1-alex.bennee@linaro.org>
+ <ZpEBds6AUnPsVCY4@redhat.com>
+In-Reply-To: <ZpEBds6AUnPsVCY4@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 12 Jul 2024 16:21:34 +0300
+Message-ID: <CAAjaMXbNMnq5QuqfX=AZubMdL3npFGjqBRk1jYFFtgtteyaqUw@mail.gmail.com>
+Subject: Re: [RFC PATCH] build deps: update lcitool to include rust bits
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Ed Maste <emaste@freebsd.org>, 
+ Li-Wen Hsu <lwhsu@freebsd.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,58 +93,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 13:30:38 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Hi Daniel, Alex,
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
-> control feature.
+I will pick this patch up with all the reviewed-by trailers for my
+next Rust RFC series if that's alright with you,
 
-Hi Michael / all,
+Manos
 
-Silly stray white space issue inline that checkpatch will catch.
-
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index dda35f2528..222db7032d 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -829,6 +829,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->      uint8_t *pci_conf = pci_dev->config;
->      unsigned short msix_num = 6;
->      int i, rc;
-> +    uint16_t count;
->  
->      QTAILQ_INIT(&ct3d->error_list);
->  
-> @@ -901,6 +902,19 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->                             CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
->                             (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
->      ct3d->patrol_scrub_attrs.scrub_flags = CXL_MEMDEV_PS_ENABLE_DEFAULT;
-> +    
-
-Sorry - stray whitespace here.  I'll not send a new version for just this though.
-
-
-> +    /* Set default value for DDR5 ECS read attributes */
-> +    for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
-> +        ct3d->ecs_attrs[count].ecs_log_cap =
-> +                            CXL_ECS_LOG_ENTRY_TYPE_DEFAULT;
-> +        ct3d->ecs_attrs[count].ecs_cap =
-> +                            CXL_ECS_REALTIME_REPORT_CAP_DEFAULT;
-> +        ct3d->ecs_attrs[count].ecs_config =
-> +                            CXL_ECS_THRESHOLD_COUNT_DEFAULT |
-> +                            (CXL_ECS_MODE_DEFAULT << 3);
-> +        /* Reserved */
-> +        ct3d->ecs_attrs[count].ecs_flags = 0;
-> +    }
->  
->      return;
->  
-
+On Fri, 12 Jul 2024 at 13:12, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Wed, Jul 10, 2024 at 04:43:35PM +0100, Alex Benn=C3=A9e wrote:
+> > For rust development we need cargo, rustc and bindgen in our various
+> > development environments. Update the libvirt-ci project to (!495) and
+> > regenerate the containers and other dependency lists.
+> >
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >
+> > ---
+> > NB:
+> >   - this is currently waiting on the upstream MR, but if you manually
+> >   add the remote
+> >   https://gitlab.com/stsquad/libvirt-ci/-/tree/more-rust-mappings the
+> >   submodule update will work.
+> > ---
+> >  .gitlab-ci.d/cirrus/freebsd-13.vars                   | 2 +-
+> >  .gitlab-ci.d/cirrus/macos-13.vars                     | 2 +-
+> >  .gitlab-ci.d/cirrus/macos-14.vars                     | 2 +-
+> >  scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 3 +++
+> >  scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 3 +++
+> >  tests/docker/dockerfiles/alpine.docker                | 3 +++
+> >  tests/docker/dockerfiles/centos9.docker               | 3 +++
+> >  tests/docker/dockerfiles/debian-amd64-cross.docker    | 4 ++++
+> >  tests/docker/dockerfiles/debian-arm64-cross.docker    | 4 ++++
+> >  tests/docker/dockerfiles/debian-armel-cross.docker    | 4 ++++
+> >  tests/docker/dockerfiles/debian-armhf-cross.docker    | 4 ++++
+> >  tests/docker/dockerfiles/debian-i686-cross.docker     | 4 ++++
+> >  tests/docker/dockerfiles/debian-mips64el-cross.docker | 4 ++++
+> >  tests/docker/dockerfiles/debian-mipsel-cross.docker   | 4 ++++
+> >  tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 4 ++++
+> >  tests/docker/dockerfiles/debian-s390x-cross.docker    | 4 ++++
+> >  tests/docker/dockerfiles/debian.docker                | 3 +++
+> >  tests/docker/dockerfiles/fedora-win64-cross.docker    | 3 +++
+> >  tests/docker/dockerfiles/fedora.docker                | 3 +++
+> >  tests/docker/dockerfiles/opensuse-leap.docker         | 2 ++
+> >  tests/docker/dockerfiles/ubuntu2204.docker            | 3 +++
+> >  tests/lcitool/libvirt-ci                              | 2 +-
+> >  tests/lcitool/projects/qemu.yml                       | 3 +++
+> >  tests/vm/generated/freebsd.json                       | 2 ++
+> >  24 files changed, 71 insertions(+), 4 deletions(-)
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
