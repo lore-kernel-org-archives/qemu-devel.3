@@ -4,67 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129ABC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D429C3DA50
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSG8O-0006Lk-QE; Fri, 12 Jul 2024 09:16:24 -0400
+	id 1sSG9u-0005MV-JH; Fri, 12 Jul 2024 09:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sSG7e-000528-Lj; Fri, 12 Jul 2024 09:15:40 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sSG9l-0004nY-Jd
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:17:52 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
- id 1sSG7a-0001Ev-CL; Fri, 12 Jul 2024 09:15:38 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 14732CE1AF8;
- Fri, 12 Jul 2024 13:15:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F6BC4AF07;
- Fri, 12 Jul 2024 13:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1720790122;
- bh=MGMlBnivAvmjZ0C8RVAOZqYx3QkANOHh0kWOJlIWGmM=;
- h=From:To:Cc:Subject:Date:From;
- b=RfEltek49bqcCYjB6mTEJE+4oW/aOoJlCfZwYPa1iqDdV57ET2ZxgNcM84A4n7JpU
- LAF5vSaz15AuKTdTkfgulC2j1TwrnpgLOEdsZr2MexZNZ/5rMnfW0FlCdGcWXPcQYk
- PhIpvhF6XYTbJ0QSTvjDRj+c9PdyRs02z6Zv08TM8DYObq+HQuJK4oq2eDCwxLI8d2
- gJ6Zzz8rJt9OS0fGp0rhvo02MFTgv+xJXiOyF3/99uVmRhDvetFHb86tZgpoY+SqID
- i3P4RXGpsP+FCjPCW8E6aBIi86HBiJ8lJy7qYW6uMARPtjpMBoE/i4eWdFQPEMd0T1
- AP4tA/GVDSDmg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
- (envelope-from <mchehab@kernel.org>) id 1sSG7K-00000003iDu-0vb5;
- Fri, 12 Jul 2024 15:15:18 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: 
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-edac@vger.kernel.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 0/7] Add ACPI CPER firmware first error injection for Arm
- Processor
-Date: Fri, 12 Jul 2024 15:15:07 +0200
-Message-ID: <cover.1720789921.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sSG9g-0001wy-Hb
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:17:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WLBtc2zChz67ClN;
+ Fri, 12 Jul 2024 21:16:08 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 89A59140C72;
+ Fri, 12 Jul 2024 21:17:40 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 12 Jul
+ 2024 14:17:38 +0100
+Date: Fri, 12 Jul 2024 14:17:36 +0100
+To: <linux-cxl@vger.kernel.org>, <mst@redhat.com>, <qemu-devel@nongnu.org>,
+ <linuxarm@huawei.com>
+CC: <shiju.jose@huawei.com>, Gregory Price <gregory.price@memverge.com>
+Subject: Re: [PATCH v6 4/4] hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS
+ control feature
+Message-ID: <20240712141723.000067d8@huawei.com>
+In-Reply-To: <20240705123039.963781-5-Jonathan.Cameron@huawei.com>
+References: <20240705123039.963781-1-Jonathan.Cameron@huawei.com>
+ <20240705123039.963781-5-Jonathan.Cameron@huawei.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,208 +68,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Testing OS kernel ACPI APEI CPER support is tricky, as one depends on
-having hardware with special-purpose BIOS and/or hardware.
+On Fri, 5 Jul 2024 13:30:38 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-With QEMU, it becomes a lot easier, as it can be done via QMP.
+> From: Shiju Jose <shiju.jose@huawei.com>
+> 
+> CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
+> control feature.
 
-This series add support for ARM Processor CPER error injection,
-according with ACPI 6.x and UEFI 2.9A/2.10 specs.
+Hi Michael / all,
 
-This series consists of:
+Silly stray white space issue inline that checkpatch will catch.
 
-- one patch using a define for ARM virt GPIO power pin
-  (requested during last review);
-- three patches from Jonathan (one coauthored with Shiju) with basic
-  EINJ features, already submitted as RFC (but not merged yet) at:
-    https://lore.kernel.org/qemu-devel/20240628090605.529-1-shiju.jose@huawei.com/
-- three patches from me extending it to optionally allow to
-  generate all sorts of possible valid combinations for
-  ARM Processor CPER record.
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index dda35f2528..222db7032d 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -829,6 +829,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>      uint8_t *pci_conf = pci_dev->config;
+>      unsigned short msix_num = 6;
+>      int i, rc;
+> +    uint16_t count;
+>  
+>      QTAILQ_INIT(&ct3d->error_list);
+>  
+> @@ -901,6 +902,19 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+>                             CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
+>                             (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
+>      ct3d->patrol_scrub_attrs.scrub_flags = CXL_MEMDEV_PS_ENABLE_DEFAULT;
+> +    
 
-I've been using it to test a Linux Kernel patch series fixing
-UEFI 2.9A errata and ARM processor trace event:
-   https://lore.kernel.org/linux-edac/3853853f820a666253ca8ed6c7c724dc3d50044a.1720679234.git.mchehab+huawei@kernel.org/T/#t
+Sorry - stray whitespace here.  I'll not send a new version for just this though.
 
-I also wrote some Wiki pages for rasdaemon (a Linux daemon
-widely used to monitor and react to RAS events):
-   https://github.com/mchehab/rasdaemon/wiki/error-injection
 
-Being really helpful to test the Linux Kernel behavior when
-firmware-first RAS events for ARM processor arrives there,
-helping to validate how CPER and GHES driver handles them
-(and further testing userspace apps like rasdaemon):
-
-Sending this command to QMP:
-    { "execute": "qmp_capabilities" } 
-    { "execute": "arm-inject-error", "arguments": {"error": [{"type": ["cache-error"]}]} }
-
-Produces a simple CPER register, properly handled by the Linux
-Kernel:
-
-[  839.952678] {4}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-[  839.953145] {4}[Hardware Error]: event severity: recoverable
-[  839.953451] {4}[Hardware Error]:  Error 0, type: recoverable
-[  839.953763] {4}[Hardware Error]:   section_type: ARM processor error
-[  839.954094] {4}[Hardware Error]:   MIDR: 0x0000000000000000
-[  839.954383] {4}[Hardware Error]:   Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
-[  839.954802] {4}[Hardware Error]:   running state: 0x0
-[  839.955066] {4}[Hardware Error]:   Power State Coordination Interface state: 0
-[  839.955424] {4}[Hardware Error]:   Error info structure 0:
-[  839.955712] {4}[Hardware Error]:   num errors: 1
-[  839.955983] {4}[Hardware Error]:    first error captured
-[  839.956260] {4}[Hardware Error]:    propagated error captured
-[  839.956561] {4}[Hardware Error]:    error_type: 0x02: cache error
-[  839.956882] {4}[Hardware Error]:    error_info: 0x000000000054007f
-[  839.957192] {4}[Hardware Error]:     transaction type: Instruction
-[  839.957495] {4}[Hardware Error]:     cache error, operation type: Instruction fetch
-[  839.957888] {4}[Hardware Error]:     cache level: 1
-[  839.958166] {4}[Hardware Error]:     processor context not corrupted
-[  839.958459] {4}[Hardware Error]:     the error has not been corrected
-[  839.958771] {4}[Hardware Error]:     PC is imprecise
-[  839.959074] [Firmware Warn]: GHES: Unhandled processor error type 0x02: cache error
-
-rasdaemon output (rasdaemon still needs to be patched for
-UEFI 2.9A errata):
-
-           <...>-211   [002] d..1.     0.000129 arm_event 2024-07-11 09:50:45 +0000 affinity: -1 MPIDR: 0x80000000 MIDR: 0x0 running_state: 0 psci_state: 0 ARM Processor Err Info data len: 32
-<CANT FIND FIELD buf>cpu: 0; error: 2; affinity level: 255; MPIDR: 0000000080000000; MIDR: 0000000000000000; running state: 0; PSCI state: 0; ARM Processor Err Info data len: 32; ARM Processor Err Info raw data: 00 20 06 00 02 00 00 05 7f 00 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00; ARM Processor Err Context Info data len: 0; ARM Processor Err Context Info raw data: ; Vendor Specific Err Info data len: 0; Vendor Specific Err Info raw data: 
-
-More complex events with multiple Processor Error Information structures
-can be produced like:
-
-    { "execute": "arm-inject-error", "arguments":  {
-        "validation": ["mpidr-valid", "affinity-valid", "running-state-valid", "vendor-specific-valid"],
-        "running-state": [], "psci-state": 1229279264, 
-        "error": [{
-            "validation": ["multiple-error-valid", "flags-valid"], 
-	"type": ["tlb-error", "bus-error", "micro-arch-error"], 
-                               "multiple-error": 3, "phy-addr": 57005, "virt-addr": 48879},
-                 {"type": ["micro-arch-error"]}, 
-                 {"type": ["tlb-error"]}, 
-                 {"type": ["bus-error"]},
-                 {"type": ["cache-error"]}],
-                 "context": [{"register": [57005, 48879, 43962, 47787]}],
-                 "vendor-specific": [12, 23, 53, 52, 3, 123, 243, 255]} }
-
-[  925.340284] {5}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-[  925.340662] {5}[Hardware Error]: event severity: recoverable
-[  925.340924] {5}[Hardware Error]:  Error 0, type: recoverable
-[  925.341280] {5}[Hardware Error]:   section_type: ARM processor error
-[  925.341631] {5}[Hardware Error]:   MIDR: 0x0000000000000000
-[  925.341893] {5}[Hardware Error]:   Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
-[  925.342278] {5}[Hardware Error]:   error affinity level: 0
-[  925.342571] {5}[Hardware Error]:   running state: 0x0
-[  925.342835] {5}[Hardware Error]:   Power State Coordination Interface state: 1229279264
-[  925.343157] {5}[Hardware Error]:   Error info structure 0:
-[  925.343388] {5}[Hardware Error]:   num errors: 4
-[  925.343602] {5}[Hardware Error]:    error_type: 0x1c: TLB error|bus error|micro-architectural error
-[  925.343960] {5}[Hardware Error]:    virtual fault address: 0x000000000000beef
-[  925.344241] {5}[Hardware Error]:    physical fault address: 0x000000000000dead
-[  925.344526] {5}[Hardware Error]:   Error info structure 1:
-[  925.344757] {5}[Hardware Error]:   num errors: 1
-[  925.344965] {5}[Hardware Error]:    first error captured
-[  925.345183] {5}[Hardware Error]:    propagated error captured
-[  925.345416] {5}[Hardware Error]:    error_type: 0x10: micro-architectural error
-[  925.345714] {5}[Hardware Error]:   Error info structure 2:
-[  925.345946] {5}[Hardware Error]:   num errors: 1
-[  925.346148] {5}[Hardware Error]:    first error captured
-[  925.346413] {5}[Hardware Error]:    propagated error captured
-[  925.346719] {5}[Hardware Error]:    error_type: 0x04: TLB error
-[  925.346988] {5}[Hardware Error]:    error_info: 0x00000080d6460fff
-[  925.347248] {5}[Hardware Error]:     transaction type: Generic
-[  925.347492] {5}[Hardware Error]:     TLB error, operation type: Generic read (type of instruction or data request cannot be determined)
-[  925.347945] {5}[Hardware Error]:     TLB level: 1
-[  925.348153] {5}[Hardware Error]:     processor context corrupted
-[  925.348392] {5}[Hardware Error]:     the error has been corrected
-[  925.348635] {5}[Hardware Error]:     PC is imprecise
-[  925.348848] {5}[Hardware Error]:     Program execution can be restarted reliably at the PC associated with the error.
-[  925.349232] {5}[Hardware Error]:   Error info structure 3:
-[  925.349459] {5}[Hardware Error]:   num errors: 1
-[  925.349662] {5}[Hardware Error]:    first error captured
-[  925.349884] {5}[Hardware Error]:    propagated error captured
-[  925.350115] {5}[Hardware Error]:    error_type: 0x08: bus error
-[  925.350371] {5}[Hardware Error]:    error_info: 0x0000000078da03ff
-[  925.350629] {5}[Hardware Error]:     transaction type: Generic
-[  925.350878] {5}[Hardware Error]:     bus error, operation type: Prefetch
-[  925.351144] {5}[Hardware Error]:     affinity level at which the bus error occurred: 3
-[  925.351451] {5}[Hardware Error]:     processor context not corrupted
-[  925.351702] {5}[Hardware Error]:     the error has not been corrected
-[  925.351960] {5}[Hardware Error]:     PC is precise
-[  925.352164] {5}[Hardware Error]:     Program execution can be restarted reliably at the PC associated with the error.
-[  925.352546] {5}[Hardware Error]:     participation type: Generic
-[  925.352801] {5}[Hardware Error]:     address space: External Memory Access
-[  925.353071] {5}[Hardware Error]:   Error info structure 4:
-[  925.353299] {5}[Hardware Error]:   num errors: 1
-[  925.353502] {5}[Hardware Error]:    first error captured
-[  925.353720] {5}[Hardware Error]:    propagated error captured
-[  925.353963] {5}[Hardware Error]:    error_type: 0x02: cache error
-[  925.354222] {5}[Hardware Error]:    error_info: 0x000000000054007f
-[  925.354478] {5}[Hardware Error]:     transaction type: Instruction
-[  925.354782] {5}[Hardware Error]:     cache error, operation type: Instruction fetch
-[  925.355203] {5}[Hardware Error]:     cache level: 1
-[  925.355495] {5}[Hardware Error]:     processor context not corrupted
-[  925.355848] {5}[Hardware Error]:     the error has not been corrected
-[  925.356206] {5}[Hardware Error]:     PC is imprecise
-[  925.356493] {5}[Hardware Error]:   Context info structure 0:
-[  925.356809] {5}[Hardware Error]:    register context type: AArch64 EL1 context registers
-[  925.357282] {5}[Hardware Error]:    00000000: 0000dead 00000000 0000beef 00000000
-[  925.357800] {5}[Hardware Error]:    00000010: 0000abba 00000000 0000baab 00000000
-[  925.358267] {5}[Hardware Error]:    00000020: 00000000 00000000
-[  925.358523] {5}[Hardware Error]:   Vendor specific error info has 8 bytes:
-[  925.358822] {5}[Hardware Error]:    00000000: 3435170c fff37b03                    ..54.{..
-[  925.359192] [Firmware Warn]: GHES: Unhandled processor error type 0x1c: TLB error|bus error|micro-architectural error
-[  925.359590] [Firmware Warn]: GHES: Unhandled processor error type 0x10: micro-architectural error
-[  925.359935] [Firmware Warn]: GHES: Unhandled processor error type 0x04: TLB error
-[  925.360235] [Firmware Warn]: GHES: Unhandled processor error type 0x08: bus error
-[  925.360534] [Firmware Warn]: GHES: Unhandled processor error type 0x02: cache error
-
----
-
-Changes since v1:
-- added a new patch using a define for GPIO power pin;
-- patch 2 changed to also use a define for generic error GPIO pin;
-- a couple cleanups at patch 2 removing uneeded else clauses.
-
-Jonathan Cameron (3):
-  arm/virt: Wire up GPIO error source for ACPI / GHES
-  acpi/ghes: Support GPIO error source.
-  acpi/ghes: Add a logic to handle block addresses and FW first ARM
-    processor error injection
-
-Mauro Carvalho Chehab (4):
-  arm/virt: place power button pin number on a define
-  target/arm: preserve mpidr value
-  acpi/ghes: update comments to point to newer ACPI specs
-  acpi/ghes: extend arm error injection logic
-
- configs/targets/aarch64-softmmu.mak |   1 +
- hw/acpi/ghes.c                      | 324 ++++++++++++++++++---
- hw/arm/Kconfig                      |   4 +
- hw/arm/arm_error_inject.c           | 420 ++++++++++++++++++++++++++++
- hw/arm/arm_error_inject_stubs.c     |  34 +++
- hw/arm/meson.build                  |   3 +
- hw/arm/virt-acpi-build.c            |  34 ++-
- hw/arm/virt.c                       |  17 +-
- include/hw/acpi/ghes.h              |  41 +++
- include/hw/arm/virt.h               |   4 +
- include/hw/boards.h                 |   1 +
- qapi/arm-error-inject.json          | 277 ++++++++++++++++++
- qapi/meson.build                    |   1 +
- qapi/qapi-schema.json               |   1 +
- target/arm/cpu.h                    |   1 +
- target/arm/helper.c                 |  10 +-
- tests/lcitool/libvirt-ci            |   2 +-
- 17 files changed, 1130 insertions(+), 45 deletions(-)
- create mode 100644 hw/arm/arm_error_inject.c
- create mode 100644 hw/arm/arm_error_inject_stubs.c
- create mode 100644 qapi/arm-error-inject.json
-
--- 
-2.45.2
-
+> +    /* Set default value for DDR5 ECS read attributes */
+> +    for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
+> +        ct3d->ecs_attrs[count].ecs_log_cap =
+> +                            CXL_ECS_LOG_ENTRY_TYPE_DEFAULT;
+> +        ct3d->ecs_attrs[count].ecs_cap =
+> +                            CXL_ECS_REALTIME_REPORT_CAP_DEFAULT;
+> +        ct3d->ecs_attrs[count].ecs_config =
+> +                            CXL_ECS_THRESHOLD_COUNT_DEFAULT |
+> +                            (CXL_ECS_MODE_DEFAULT << 3);
+> +        /* Reserved */
+> +        ct3d->ecs_attrs[count].ecs_flags = 0;
+> +    }
+>  
+>      return;
+>  
 
 
