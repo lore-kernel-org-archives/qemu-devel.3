@@ -4,184 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5E8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2452AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSBoP-0000Ty-SF; Fri, 12 Jul 2024 04:39:30 -0400
+	id 1sSBpl-0006AQ-Bd; Fri, 12 Jul 2024 04:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sergey.dyasli@nutanix.com>)
- id 1sSBoL-00009E-AA; Fri, 12 Jul 2024 04:39:25 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sSBpi-00061e-UC
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:40:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sergey.dyasli@nutanix.com>)
- id 1sSBoI-0000Fa-Fs; Fri, 12 Jul 2024 04:39:24 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C5UuDY009796;
- Fri, 12 Jul 2024 01:39:20 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=0t0daPBVLXNj0c+5wf/XTsgw3+WLJ9Zldm1yOpw2+
- ME=; b=N/rpoK735lEKp+ZrqqOcq9Z7Fjf6higMlCTEAwhcZ4OVb9yt3Iei5qPQU
- JDvlVd4YpIAIGeyHKKc/T848DDAFv/FvPpfyo6Bf0TWuZtpxtrRvpJs1C9bZX76x
- 7X8jm43YAlR5DF8h2s8M+31B4LPE3iiaHkHe9I3C278/5C2f7zbHRk0IfKmOrR6g
- yBgdkC/wvGEYPOSjp3LrpeCdwTjUQ+G8OfCXhV6Ye5Ekul2zqbtKRBKmAnvb2abB
- rIur6K9batpHtbStqEmSjGLtvZQDzeQRUo0hTkZxf8eesINJW2bIS/xXP6iegLqe
- 57ck4P0nkvLP2WPIzZ4Ir4Y8kjjmA==
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2175.outbound.protection.outlook.com [104.47.55.175])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4075exx14c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Jul 2024 01:39:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nm4lSDoq9OHhur+V2fH4KhnBxSxIJInX4RiYAEazix5wGjJMclNCMaaS1feTg5/G0AfFNQI8/biLwMmqNN7ZvqRxx/2aZK1B9t6hWIUu/mBMwYlmfPTxG3jE/NchI9+voKWfe4Chge4SdE2GoFwpsCha21/Uh4kGbolcGbseU5J5XBo/m+Gyq9HOHlH4BeVOA9abwLHa/JNUqUJgw0sZKjTtRHFmmTIzDLCP9j+oWU/N2tDQ1w0bSUkENvyY96z7vukSz5prFTU7COUqjputrLaemSeDfFtjJJd64A8zPS+JerXjMImY2CswnnFOCHQDQ/NLiIM4QD8BcNRybrxfvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0t0daPBVLXNj0c+5wf/XTsgw3+WLJ9Zldm1yOpw2+ME=;
- b=CnsoFdXbMWnTGm2+N30Lv4XPYtbebwU5nAXx3B/Vheq+N+zYrPSY87b7ihBpGEEaI8AUt4GK1LN41ZeV2lcuPWXlqW92VRNqnQW3oho5QKdGNGm5AAt66G2U0Xa/bKuS1kdST9udea65qZYa3H7qSRKSx9wir23pPwvOVHkwQcNap0GcRjzv+4TpFfat6H6F2APPP67WZ8fpFp2zmCkLTY3bdgBpy9EWcnrPeyekW7tkFgmROvTTLIdEuF1rKAFHUuLTYmYArVdPJMdlibcWu5j93ule1GizdDEiLtXSZLSvIjQlM53bRIPpfgocS9IFX6M48pYr0uPmR+g/wa8PUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0t0daPBVLXNj0c+5wf/XTsgw3+WLJ9Zldm1yOpw2+ME=;
- b=VTI8ZCZTgBeub+wejghcFMPi4LfykEwaYV3ayt4GGc5pWykmvpgJ9AXFktCEXv/go7+Pn37bQxMDviBw/cCmqbPTz8WRUMvfao0nelVQkx0hg61a1fd2g4mxDN9OWJZ7Zcks1RJmg3EvpUR0lvYZJOznrWskz+mU6zmP+GLf5MUezdyyrtKMkjBMJKmFxXKVETAGQ3mfiRYnpDaGWdzz+7iY9TGhSSrM56MQ1z35agCiHKraFBKVzKyf6B7FwrX2N9ez7VnJqPvG/M4sxb8crpxkc773zlcUlTwmL52alk0HJuLkHiuwnTNlDfQgoyjzMAZ6LxgfZtbUltuxgdHV5w==
-Received: from DS0PR02MB9101.namprd02.prod.outlook.com (2603:10b6:8:137::22)
- by SJ0PR02MB7182.namprd02.prod.outlook.com (2603:10b6:a03:297::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.35; Fri, 12 Jul
- 2024 08:39:18 +0000
-Received: from DS0PR02MB9101.namprd02.prod.outlook.com
- ([fe80::ca92:757d:a9c6:6ca3]) by DS0PR02MB9101.namprd02.prod.outlook.com
- ([fe80::ca92:757d:a9c6:6ca3%7]) with mapi id 15.20.7762.020; Fri, 12 Jul 2024
- 08:39:17 +0000
-Message-ID: <41b5188b-5cb3-4c4f-ab26-55e21b0b60c0@nutanix.com>
-Date: Fri, 12 Jul 2024 09:39:11 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] chardev: add a mutex to protect IOWatchPoll::src
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-stable@nongnu.org
-References: <20240711095106.185377-1-sergey.dyasli@nutanix.com>
- <1cfb54b4-0b13-46ef-881c-5acb71fe56fc@redhat.com>
-Content-Language: en-US
-From: Sergey Dyasli <sergey.dyasli@nutanix.com>
-In-Reply-To: <1cfb54b4-0b13-46ef-881c-5acb71fe56fc@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P191CA0027.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d9::10) To DS0PR02MB9101.namprd02.prod.outlook.com
- (2603:10b6:8:137::22)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sSBpg-0000u7-Hn
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:40:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720773647;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cU7xMbmdUMnoZT03AIvzlpmQXz9nAWjhP19BzjLF5ZE=;
+ b=Tj9wVwGjF+lbHmq8s9SBmbOKMx9a1jKN9GXjJzvf4e04pXBVofNUMCFzJgJSEWvbhB2258
+ 99DM/DYCjA31wGN4J8YjrcJP79a2qDiu7+Rge3DIWkaLBsHXVDO8uNZkjkfEvJ3OSQj0YM
+ uZq195MXTylXvXSF+u2jztCwx69LpSk=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-643-6oFnm5ikPh6DUBISCSUrUg-1; Fri, 12 Jul 2024 04:40:45 -0400
+X-MC-Unique: 6oFnm5ikPh6DUBISCSUrUg-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e0360f8d773so3013637276.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 01:40:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720773644; x=1721378444;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cU7xMbmdUMnoZT03AIvzlpmQXz9nAWjhP19BzjLF5ZE=;
+ b=Qp9ZWHczwZfFGHvXxSWq7aC2/SVF0YZBWMFn+i+7uIixgJYIrEjJoUBpuESJWOaUkO
+ QXblSIT/beaVH18YTQ45tiwY4zET/9YjN2PaR6YaMHBr6MN4Z12ju9xLBqcm4s7URaQu
+ AIRXM3Vj3WdDnTcvjIbfrOSVuur/2qH1B8IiV+FYKdOvFmZck2+vAfcE6wwreY9Fo2OC
+ ApOzdHhgOJBgXgNAqCHFv6p86qfs0GKojLXs9U0j/kkuu3PDkpehhY6C1POjYdMsi1JP
+ M/QkA+cKPy3CQMdIRfFLg2kSrrdG5X/dwZg5u4zdMsAyLGtwrIqnlVh43qPMa/lfWsAq
+ ub2g==
+X-Gm-Message-State: AOJu0YwYvi0IyHAi8KL+sxC8QW62fJsu0qqyPtoejDQwZDgY2NDnNiNi
+ 7KUyFNHvdGOKxF+K+F8U29wH43AprxxpGYBp4t1Bbs2wZJF97oHxTol/t5KZ4D2aCCtirHTziPq
+ xtGv36SaND3PMri36ZqFZg/3Fdp0MRHeCN/u1coiG0pZj4Z9YvdZFPpgfB/SFgrJNuOJ8aw6pt8
+ GaZEdAZKhgRraAESUvgJFkghfOSLZiVdlJAKAs6Q==
+X-Received: by 2002:a25:ac8d:0:b0:e03:33cf:6fc9 with SMTP id
+ 3f1490d57ef6-e041b059873mr12188848276.20.1720773644619; 
+ Fri, 12 Jul 2024 01:40:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDcRssanza1IVkCoAkbWQPOie2eljZ4h9mIHrOt+KE8FL3g6YW5Z4WwvwfLyzbUr+NJt3lqO62Sz38VQQbzbg=
+X-Received: by 2002:a25:ac8d:0:b0:e03:33cf:6fc9 with SMTP id
+ 3f1490d57ef6-e041b059873mr12188835276.20.1720773644355; Fri, 12 Jul 2024
+ 01:40:44 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR02MB9101:EE_|SJ0PR02MB7182:EE_
-X-MS-Office365-Filtering-Correlation-Id: 724a1b89-cdd5-48c0-283b-08dca24e1e1f
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Ymh5cDBRN29OWVFCRFhYSS81TmlSckhNbEpxbjNsM3gxN0lOT0k0MTg3c2Vl?=
- =?utf-8?B?dmVRQ0NCZE93RGFXa2VSWVRlTWw4NWZTK242elQwWFB5a203YVl5Wmtvalhz?=
- =?utf-8?B?ZHJ6eDZxY2k5U2ExS2ZFeGhEdnlVWG9pdCtaNXBhY3BPdmdxazJKMS9jQUw0?=
- =?utf-8?B?bGNzUFAvVFlpb0MzaTdVMW95QVg4SmhFRlFtY1hQb2dhQlYvclM0YVBwM3g5?=
- =?utf-8?B?Tk9tcVRmWlR0dnE5QkhwRkVpLzBzNWJTMHluOHE3ZjRhUVIvaE10ZVp2UW15?=
- =?utf-8?B?c1ZjdlZCWjFhSVdOOS9WcVZ2VGxGQk1QMXlKVC9WZFhCWThqYkErM0NUQnlp?=
- =?utf-8?B?RDZBa2daOFE1Z0IxdG50UEVhelI2dnpWR3cvbDdsZ1VDVmF5SUptYktTeGh3?=
- =?utf-8?B?MmxGOTM0ekx6RXA2SENsRmRndUlLNHRBV0JCM3J2NHppV3dGbmFVM0hlV2tr?=
- =?utf-8?B?ZzVNclJLS216SHBDZ2xOdjZpNkpveTVJN0JSL0RWM3htY1k3WnNETTg2YktC?=
- =?utf-8?B?QjBtVXgyYnRZRHJQZDl4OHN2T1ByWUJWdnFpd0xXVjNQWWh4bkdIVXh0d01R?=
- =?utf-8?B?UVM2R0ZhMUtKcmJRem4xeDJOdlhFMDZMMllkb0VMcXZEN25ndlRmM3Z6Vjdz?=
- =?utf-8?B?Wk9UeElEbXQ3SEdmRTBGZy9QcDYwZ05sYjdYSlNRQnZpTGgvR0VlMnRxdE5l?=
- =?utf-8?B?VytOZlgyUUxpN2t0Z2tPeFFYNGNNS1JUZ3JTZ1ljNnNKd2t5cUFPT0ZGazQr?=
- =?utf-8?B?Nmk2cWdoN0t0Y0s2a0l1RlQ1UlVnRVc0T2NZNnJOYTdxRU92UGQrSFZwYU53?=
- =?utf-8?B?U3E5R2RCY1VmVEVIRjVRWlJ0NHBic0d2M0RBdkpLWVRNYU5JZjA2d3k4T0Fp?=
- =?utf-8?B?SHlyRXRIY1VpZjRORUV0dVBHSzE1V1p5clpWNW5nbU54S1MvdHNOL3doS3hH?=
- =?utf-8?B?SlBhdjV4Z1UydHhUcS91bEJCOHNkbndJRHVZQVFEck9icUs3dWYvL3JMczZX?=
- =?utf-8?B?WmkzUmUwcG00djFJQ09lMEdaSUJJMTVDWWptdXA2MnloMEdjT1NMRTBaaTJn?=
- =?utf-8?B?cmlScE1zN1l3Mk8vMFBncmNUVEZWV1dYai9FZW1DaElUVlRHallQMXVyd24r?=
- =?utf-8?B?Qk9lZEh4dGNJMW9LM3Q0cksxcWF5REFMK3ZxTCs2L0JKaytTR0M1eHAraFdC?=
- =?utf-8?B?VnphZUd6Zm1IY0JtcWQvb2NZS2NDTWJrRmlrVmk4Q2pjeGgwc2E1elRxQmJn?=
- =?utf-8?B?Q2FKVUtaQXo3b2FVSHIwV3J5VmRmZVQrTmxGV010M2wrR0lRaEdkTTJhbGlF?=
- =?utf-8?B?dWlaYXl3MWZpVXFWcFJ1b1Bpa0VpY1BobHZ0dXRSMGNHNlVWRU4yUlc2NHU3?=
- =?utf-8?B?aXdmRUs5RWhXZjNGczltZ2swcGtzNFhYUEpYZ1pabDNRbm40ekxScHh1d2FN?=
- =?utf-8?B?VEVGVWdPSnVWRHd2cGVERXJHVUlmVk5UMGVKZ2l4bW1IRFk3YjE5aldLOU1n?=
- =?utf-8?B?bUREMXlWcjhOSXRvc2FObWpMNFNMeHptdHhYaHdsbndNb01FcWtBL1h6VXk5?=
- =?utf-8?B?VU1HY2hhbE5XNTVzSU9CU3ZseloreDlvaFVZazFWSk0rYy90aWJ3eVFYazdP?=
- =?utf-8?B?TGc2a0tUcVZEcFU1bHg3bVJ1cS9IZEIzeGpCTStrN3c3eDlFbEozc1VkRWI4?=
- =?utf-8?B?Z3lRSVJ4dFNsREw1d2pYYnYxWTY0ZUJWSDZVVFpJL3B4RVBjMzdKMmFnMW9C?=
- =?utf-8?B?eGhqVy8rRTlmRERBMjdLVnVoQ1IzdHN1L0M0TWFUN0ZBZ3RzajRsYXFIamJN?=
- =?utf-8?B?b3VpbnBWSmNEQWRxWmIrdz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR02MB9101.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SXFWTmpISFlic3ZzVTJzOFVMUnlXam1RTGVyMFNsTks3aFpzN1RFTzA1b0Vn?=
- =?utf-8?B?cHZ2eWF1YWlGY0Jib0x1TXBYdVpGbjFvQnZLMGRZMDM5MytFSlQwUUNzRkJh?=
- =?utf-8?B?VnUvd2hNZGQzZEZDa1NWak8rV2k2RjhuZjQ1aWJTWjM4MTVWSU52eFUvRHZo?=
- =?utf-8?B?a3RGQ3pySER6dGFTS2dySU5wWFAvM2UxaSsycnU3b2VYWXI1T1RKdnVzVjc3?=
- =?utf-8?B?ZklqMU1tVFpjWlV6ekcvZG9hY3pmTVE2N1l5bnVrUlFLemlLU1pqblI1RU9X?=
- =?utf-8?B?VnhURkZIWGY1dU11YkRSUnlwY2JJMG44S2lVL3YxY0l5WTZUTzdwT01laGov?=
- =?utf-8?B?WUsxUnF0UmZMbjNsNU9LempOdytiU25IN1pzRjlVVCs2VlRHd0w2ZDVqUHk5?=
- =?utf-8?B?Ym5RSTdTQXNCdzNVKzJZNkVIRVVUNmhrUWI3Rk9saVY0YW5Qa25sWUtERzEr?=
- =?utf-8?B?SFpTSlZ0ejgzYi9JSmhOSFlUQjFhNW5qdGVWb2tvUFg2UHcvNkRDbll6MzJv?=
- =?utf-8?B?dmluQVRLcTlqL1dmMlZaeVNrb2RhSzBCSkpEQWZFUVJCK2Zkc0FhQTJTT2ZQ?=
- =?utf-8?B?TjVGRFBmODhGQjcrWE1ueWNwbGoxTldHUjlVY2MyQ0dOMVNXaE5TZFZKaTA3?=
- =?utf-8?B?cHVWMkhrbzdoM1phd25JNzZmemlsTXA2WTQ2NzlhSXE2OC8yaEJ5KzFuNjlH?=
- =?utf-8?B?K0R3NVdQT2hiam9qWXNTRFo4QWo5OU1sTHJoeGQ3Q0JzWmYzY1JkT0NvTklt?=
- =?utf-8?B?elh0MTR6N3RGVmxzeHJsZm50OEtCcGJzSGVrQ3BFN0E0K254eHhrVHl0aXl6?=
- =?utf-8?B?djloNlg3U3A1V3IwUWovemJYNDNtd2FaR0YrbnJ3ZVEvem5pdGx3bzJFK3pi?=
- =?utf-8?B?bkxiNlg1QU5YalZyLzRzRmJJaHBxTURuRXZpU0daWXY3TkVOUGxpSXFYNFZW?=
- =?utf-8?B?T2RPblJ4aEdJZDhsVUszWmY5Uk9EZFZ3bTZjNkJNeVpwQnFTc1djaGdqaWx1?=
- =?utf-8?B?K3laRjI1aXA1akxQd2lEMXMzdFJ0MlgrVzJxWWQzZ2hoQkFIQ3V3bHozWXBs?=
- =?utf-8?B?eE40WVpQa2xhSytTQUFDUWs0L3ZxbGFSZ3I1eVlseG9TYlpqakN5TmdYQlpq?=
- =?utf-8?B?blRTcmxYQXV5NUF0eW5LMTU2NlVwK1ZoUHB6aS9DakNGVStERXg2Vk04UFdr?=
- =?utf-8?B?a0s1Q01PTFEveDVuZ2RPZmh3cTVNZHRtT3FZVEpuaTlOZWI2eGYvUlVhazBx?=
- =?utf-8?B?UFNCK2M4aTZWNG0xUDBiR2FWbDNzeDE1cGNubXg2WkxabzAzR0ZXNW5hRW1T?=
- =?utf-8?B?Z1pzNnNVUFJLWGkrZTV5U0hGR1N2MTkzWWh5UmduNHhYL1JIYmtZbDhLNFpx?=
- =?utf-8?B?WVh0VjBKMm5pUitsOXpFMWJJMm9PNVhUOUxEOTJwTldLNjZJK3JZaHF6RFNL?=
- =?utf-8?B?aDlYNHJFNDVjQUpJMlNwNjE2RmlXK3NJTkpvTjA5KythVTFGMVlTV09hUTdE?=
- =?utf-8?B?K3pua3BFQkJ0RmJVdGNHNGcxQ0E1enNrSCtZbWtsNGdXb05zbGJDeDdIaklX?=
- =?utf-8?B?cHJwbWNQMlpqQ1hMdDFpZ21jam5Fb0VhUUV1RVM3aXBXU0U3WXVCcmU5MDdk?=
- =?utf-8?B?U05mZWZzVS9ld3RlOTlnQUhxQ1JRUHZpbFhJS2R1Y0toNDU1TUZxK2FxelVv?=
- =?utf-8?B?Q1FuWmEzNU9wME9udEM1Uzc2U3dFZUZNQXZnV3NkZG1xdWYwY29iNnJ1TS81?=
- =?utf-8?B?Y0gxVmYxS1h6TTYwNWxiZU9FM2IxaTdvL1gxUi9CSTJkKzRjTnIxR3QrT3lG?=
- =?utf-8?B?YlhKVis1OTJIcUtSZFZyNXE2bjZJRnBYUXNabHllbS81NTFFejc4UlEyNHFt?=
- =?utf-8?B?NlFvWXRTdWZ3RDI2VWpVS3UrNUdGaGJhYWxDcXhhUHJmdlNRZTdxZVM3UVor?=
- =?utf-8?B?aE1MdGQxaUJFK21NelVyc2FUWWNWMDg4bFVCNUI3bmhKSkVQNFQrNXFXS09H?=
- =?utf-8?B?NHpJQXd0SXg5Lzh6ekhvcytSNFN2R1FpdUFITVhpRDI5R1Q0NFd6SzhzR2NT?=
- =?utf-8?B?R0VEMXpjbVJYRnR2VUt6Zi9xTnZDUXo5cjUvblp6K2RoT2paeDEwTmFKZWgy?=
- =?utf-8?B?TXovTmhzU2hLQjNvZEY3MmdmaFpkUXloa2hpZ2t5ak0xdTErM20zQjdnNWxk?=
- =?utf-8?B?Q0E9PQ==?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 724a1b89-cdd5-48c0-283b-08dca24e1e1f
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR02MB9101.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jul 2024 08:39:17.8883 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MobZA30k6FRlyAkLfDve98EniJ1LfExBV6cZHQf8AO2/QWxO0TOeQAboAtAJ0R+FMqTeDLv9K0PyPpVT202Sk96QC4TwzYEkdoYKTaddnJU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7182
-X-Proofpoint-GUID: sRn1SRv32xgtkJ0ySf-XgD5AYc06k-Wg
-X-Proofpoint-ORIG-GUID: sRn1SRv32xgtkJ0ySf-XgD5AYc06k-Wg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-12_05,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=sergey.dyasli@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+References: <20240613150127.1361931-1-berrange@redhat.com>
+ <20240613154406.1365469-1-berrange@redhat.com>
+ <20240613154406.1365469-10-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-10-berrange@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Fri, 12 Jul 2024 11:40:33 +0300
+Message-ID: <CAPMcbCpUFQdnpT=_LR2u6FzLnfW3VnX9hE2kMUFf8ww6gKEFbA@mail.gmail.com>
+Subject: Re: [PATCH v2 15/22] qga: conditionalize schema for commands
+ requiring libudev
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000cf9c2d061d08d5fd"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -197,16 +102,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/07/2024 12:23, Paolo Bonzini wrote:
-> So I think we should just revert commit 2b316774f60, which is not hard 
-> to do (if it works) even if the code has since moved from qemu-char.c to 
-> chardev/char-io.c.
+--000000000000cf9c2d061d08d5fd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Paolo,
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-Thanks for the suggestion - I've tried it and it seems to work. I'll 
-send out a new version of the patch shortly.
+On Thu, Jun 13, 2024 at 6:44=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com>
+wrote:
 
-Thanks,
-Sergey
+> Rather than creating stubs for every command that just return
+> QERR_UNSUPPORTED, use 'if' conditions in the schema to fully
+> exclude generation of the filesystem trimming commands on POSIX
+> platforms lacking required APIs.
+>
+> The command will be rejected at QMP dispatch time instead,
+> avoiding reimplementing rejection by blocking the stub commands.
+> This changes the error message for affected commands from
+>
+>     {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+>
+> to
+>
+>     {"class": "CommandNotFound", "desc": "The command FOO has not been
+> found"}
+>
+> This has the additional benefit that the QGA protocol reference
+> now documents what conditions enable use of the command.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  qga/commands-linux.c | 8 --------
+>  qga/qapi-schema.json | 8 ++++----
+>  2 files changed, 4 insertions(+), 12 deletions(-)
+>
+> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+> index 73b13fbaf6..89bdcded01 100644
+> --- a/qga/commands-linux.c
+> +++ b/qga/commands-linux.c
+> @@ -1049,14 +1049,6 @@ GuestDiskInfoList *qmp_guest_get_disks(Error **err=
+p)
+>      return ret;
+>  }
+>
+> -#else
+> -
+> -GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
+> -{
+> -    error_setg(errp, QERR_UNSUPPORTED);
+> -    return NULL;
+> -}
+> -
+>  #endif
+>
+>  /* Return a list of the disk device(s)' info which @mount lies on */
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 0f27375ea0..0b7f911ca5 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -985,7 +985,7 @@
+>             'media-errors-hi': 'uint64',
+>             'number-of-error-log-entries-lo': 'uint64',
+>             'number-of-error-log-entries-hi': 'uint64' },
+> -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+> +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+>
+>  ##
+>  # @GuestDiskSmart:
+> @@ -1000,7 +1000,7 @@
+>    'base': { 'type': 'GuestDiskBusType' },
+>    'discriminator': 'type',
+>    'data': { 'nvme': 'GuestNVMeSmart' },
+> -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+> +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+>
+>  ##
+>  # @GuestDiskInfo:
+> @@ -1026,7 +1026,7 @@
+>    'data': {'name': 'str', 'partition': 'bool', '*dependencies': ['str'],
+>             '*address': 'GuestDiskAddress', '*alias': 'str',
+>             '*smart': 'GuestDiskSmart'},
+> -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+> +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+>
+>  ##
+>  # @guest-get-disks:
+> @@ -1040,7 +1040,7 @@
+>  ##
+>  { 'command': 'guest-get-disks',
+>    'returns': ['GuestDiskInfo'],
+> -  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+> +  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+>
+>  ##
+>  # @GuestFilesystemInfo:
+> --
+> 2.45.1
+>
+>
+
+--000000000000cf9c2d061d08d5fd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
+uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 13, 2024 at 6:44=E2=
+=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com"=
+>berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">Rather than creating stubs for every command that just =
+return<br>
+QERR_UNSUPPORTED, use &#39;if&#39; conditions in the schema to fully<br>
+exclude generation of the filesystem trimming commands on POSIX<br>
+platforms lacking required APIs.<br>
+<br>
+The command will be rejected at QMP dispatch time instead,<br>
+avoiding reimplementing rejection by blocking the stub commands.<br>
+This changes the error message for affected commands from<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;CommandNotFound&quot;, &quot;desc&q=
+uot;: &quot;Command FOO has been disabled&quot;}<br>
+<br>
+to<br>
+<br>
+=C2=A0 =C2=A0 {&quot;class&quot;: &quot;CommandNotFound&quot;, &quot;desc&q=
+uot;: &quot;The command FOO has not been found&quot;}<br>
+<br>
+This has the additional benefit that the QGA protocol reference<br>
+now documents what conditions enable use of the command.<br>
+<br>
+Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
+t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0qga/commands-linux.c | 8 --------<br>
+=C2=A0qga/qapi-schema.json | 8 ++++----<br>
+=C2=A02 files changed, 4 insertions(+), 12 deletions(-)<br>
+<br>
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
+index 73b13fbaf6..89bdcded01 100644<br>
+--- a/qga/commands-linux.c<br>
++++ b/qga/commands-linux.c<br>
+@@ -1049,14 +1049,6 @@ GuestDiskInfoList *qmp_guest_get_disks(Error **errp)=
+<br>
+=C2=A0 =C2=A0 =C2=A0return ret;<br>
+=C2=A0}<br>
+<br>
+-#else<br>
+-<br>
+-GuestDiskInfoList *qmp_guest_get_disks(Error **errp)<br>
+-{<br>
+-=C2=A0 =C2=A0 error_setg(errp, QERR_UNSUPPORTED);<br>
+-=C2=A0 =C2=A0 return NULL;<br>
+-}<br>
+-<br>
+=C2=A0#endif<br>
+<br>
+=C2=A0/* Return a list of the disk device(s)&#39; info which @mount lies on=
+ */<br>
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
+index 0f27375ea0..0b7f911ca5 100644<br>
+--- a/qga/qapi-schema.json<br>
++++ b/qga/qapi-schema.json<br>
+@@ -985,7 +985,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;media-errors-hi&#39;: &#39;u=
+int64&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;number-of-error-log-entries-=
+lo&#39;: &#39;uint64&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;number-of-error-log-entries-=
+hi&#39;: &#39;uint64&#39; },<br>
+-=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LINUX&#39; ] } }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LIBUDEV&#39; ] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestDiskSmart:<br>
+@@ -1000,7 +1000,7 @@<br>
+=C2=A0 =C2=A0&#39;base&#39;: { &#39;type&#39;: &#39;GuestDiskBusType&#39; }=
+,<br>
+=C2=A0 =C2=A0&#39;discriminator&#39;: &#39;type&#39;,<br>
+=C2=A0 =C2=A0&#39;data&#39;: { &#39;nvme&#39;: &#39;GuestNVMeSmart&#39; },<=
+br>
+-=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LINUX&#39; ] } }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LIBUDEV&#39; ] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestDiskInfo:<br>
+@@ -1026,7 +1026,7 @@<br>
+=C2=A0 =C2=A0&#39;data&#39;: {&#39;name&#39;: &#39;str&#39;, &#39;partition=
+&#39;: &#39;bool&#39;, &#39;*dependencies&#39;: [&#39;str&#39;],<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*address&#39;: &#39;GuestDis=
+kAddress&#39;, &#39;*alias&#39;: &#39;str&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*smart&#39;: &#39;GuestDiskS=
+mart&#39;},<br>
+-=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LINUX&#39; ] } }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LIBUDEV&#39; ] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @guest-get-disks:<br>
+@@ -1040,7 +1040,7 @@<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-get-disks&#39;,<br>
+=C2=A0 =C2=A0&#39;returns&#39;: [&#39;GuestDiskInfo&#39;],<br>
+-=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LINUX&#39; ] } }<br>
++=C2=A0 &#39;if&#39;: { &#39;any&#39;: [ &#39;CONFIG_WIN32&#39;, &#39;CONFI=
+G_LIBUDEV&#39; ] } }<br>
+<br>
+=C2=A0##<br>
+=C2=A0# @GuestFilesystemInfo:<br>
+-- <br>
+2.45.1<br>
+<br>
+</blockquote></div>
+
+--000000000000cf9c2d061d08d5fd--
+
 
