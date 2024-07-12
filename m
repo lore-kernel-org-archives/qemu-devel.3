@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC954C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6945DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSE30-0008VL-VO; Fri, 12 Jul 2024 07:02:42 -0400
+	id 1sSE32-00008n-97; Fri, 12 Jul 2024 07:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE2y-0008UJ-4D
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:40 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ id 1sSE2z-0008Uq-SF
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:41 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE2w-0003af-3I
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:39 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52e976208f8so2135772e87.2
+ id 1sSE2w-0003ah-6U
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:40 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2eeb1ba040aso23297561fa.1
  for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720782155; x=1721386955; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YDi3aHOISc4g4l2QB4EUVCHplHZ5EmTx9pOA9H0LoG0=;
- b=Zs1S5BlpWxKrPHCIFTdestU3W8zaY10OnqrLsBb/RpMNKVSKGJ3VO/5zb6EjkL0paC
- 6TXYrv5Y4VwHAuI36/Ww/ZxWz/FQWpXVQyk1WBpOMdReTsLIgvn1Ccr82Opey7IT2u8F
- 0BFjpeXSwHTJ+4qZA4MhCq4VA3zdQy1shZSWkHkz41um9f6ZnZ5KcLafHUqBO+dgNWgu
- JIggQGZ8GDHlZxgPREKTd7DefV4ZPHtkWBM8hXZvkHSRbp38q56aycSSPuHF+OUoaYOe
- t5WM18Hak3pA8ULoRHN76VNFKIXZEKdpYt7uQ/f4DGLYDjeMX2A7d/wF6eWoUzGlR3uR
- T8rg==
+ d=gmail.com; s=20230601; t=1720782156; x=1721386956; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Dc1eTWi5iZyva3MfQYId5KFBzpR8Jnw4CwD+XxknsHI=;
+ b=igiPwKgHm56hZOm/Flx3nfEonZhq9fA5MXEE3xQdG7OGLhbFVAQF+sejwGFionmptF
+ MD4KnYyyitr0XF0xb+JKs51KOT7q8kywNJBe2Q1HCP1yGn1pK1j9MCBRtdfDwGZtYBvK
+ o6u3GYZjP0QOJ4hCRZ+6zqgWi0vfMWTU/u6gFCPkiDP01Z6jhKnp8Ot61B1k4Iwl3Lgd
+ kLCjV1qahIbAw/TZKFhMSpzVSlyTME/DRT3DeKuYdGdwkMtoZ0aGUg6pcxCPgrqydUUA
+ 1I//g3I/xx80vbrtjunsWyF034cwii4xR9LlmjRHiGAxoQKymTzLFrTpQXbwcvIczw1L
+ 2lkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720782155; x=1721386955;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YDi3aHOISc4g4l2QB4EUVCHplHZ5EmTx9pOA9H0LoG0=;
- b=gKDQIybZecYiVahdhxXNNw0G4p7Zci9h6RP9P5uXRCS21Q65slw7iunHGyoiYLtY+a
- XtGZWZUhf9/rSjDMkcVTJpk8XZGdOLec1m5fO72dhzZDW7Mj7rIztSwvLBOqmzooHwA3
- TbP9ZePUFbMEgX8+VaJ8+oSkanuYlgD2Syi5h8T7FSenWV5VsGwdChQUJnoliKXL3RPe
- x7qrW9ayu/csgHc4OIIiMEsjWF/rEgZDT7IMq/BpA59PMdHzTntlCBtScu+5ykXzWoXo
- c0VxExyFRgfei8Yx65E3b6lGIH1MXekD6LwemUL1R8gc5WYlA3V7w/7jBoFrEH3NdQdg
- JSLg==
-X-Gm-Message-State: AOJu0YwirBoEFxjb9UgVPs+GhZOY7G46u/UceSlgFYR2Gozu952B55Jm
- F1YnnrUszbof3WVjYN15RiulnkHHMGRS91aQbf9OFkVJSIgdwAoAZm/pXPYm
-X-Google-Smtp-Source: AGHT+IFvDyDG2RtxgI1dCSwH630RGKfaukmen1TDL6ZzE345JhyvC7Zls1reJUSyqRCErs4kTkwxrw==
-X-Received: by 2002:a05:6512:2249:b0:52c:dea5:7c8c with SMTP id
- 2adb3069b0e04-52eb9994b30mr9508302e87.22.1720782154239; 
- Fri, 12 Jul 2024 04:02:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720782156; x=1721386956;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Dc1eTWi5iZyva3MfQYId5KFBzpR8Jnw4CwD+XxknsHI=;
+ b=tGXUqE2Ncz91z4Iz7wB4yf6OC9yZpv1ZL7qhP+6FGlSKdt3uWzMC1KTvSbuwt6VfHG
+ tUASpa5UI4nwtk7oii5Od5Gq88yT1YTKAR73hL8RklniKAWiGZyix2flqPk81+8X0J7S
+ wvIGLNfkgaoLnreA/aY0Hm3WcQsY3tNyfuuD92SPDzUPyRMIvgWm9o81dBmPNg5fQAor
+ wR/ixvFE8OplEQ1SfFXO3IqcVkqZHb4nRqeXndmtun+45S/+IkRJvAW8a9VXSiAjCakp
+ v+FdB0wLdt1fD0K+9OIA4ZXJW5IVSz1YqCWg+St5I7tfHkiqg1wJ4qXGLe7PfUpZTfzy
+ l6kA==
+X-Gm-Message-State: AOJu0YylMXb3d1L9ilCnCW+Sou1U7JbP2X1FkW/9Ok3hxsv4iQ0F4MB5
+ /+cFwCHiqtWxHNfT1reCM3K/dChsl0aKzyb3QJhLRyhwIEk7nrthEa3AANN8
+X-Google-Smtp-Source: AGHT+IHkWR3puHuo2XOZ/nDlGjWAHbnO9jGh1wexmZx11eY1lI0DYagRvxEN2CVXAlXL/la0QDxqUA==
+X-Received: by 2002:a2e:6a05:0:b0:2ec:2d75:509c with SMTP id
+ 38308e7fff4ca-2eeb31977c3mr71565311fa.46.1720782155218; 
+ Fri, 12 Jul 2024 04:02:35 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-52eb9061a8asm1224978e87.147.2024.07.12.04.02.33
+ 38308e7fff4ca-2eeb3489029sm10741871fa.104.2024.07.12.04.02.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 04:02:33 -0700 (PDT)
+ Fri, 12 Jul 2024 04:02:34 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  alex.bennee@linaro.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, edgar.iglesias@amd.com
-Subject: [PULL v1 0/3] Xen queue
-Date: Fri, 12 Jul 2024 13:02:27 +0200
-Message-ID: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
+ richard.henderson@linaro.org, edgar.iglesias@amd.com,
+ Stefano Stabellini <stefano.stabellini@amd.com>
+Subject: [PULL v1 1/3] MAINTAINERS: add Edgar as Xen maintainer
+Date: Fri, 12 Jul 2024 13:02:28 +0200
+Message-ID: <20240712110230.4098056-2-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
+References: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,36 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: Stefano Stabellini <sstabellini@kernel.org>
 
-The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
+Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU
+maintainer for years, and has already made key changes to one of the
+most difficult areas of the Xen subsystem (the mapcache).
 
-  Merge tag 'pull-target-arm-20240711' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-11 12:00:00 -0700)
+Edgar volunteered helping us maintain the Xen subsystem in QEMU and we
+are very happy to welcome him to the team. His knowledge and expertise
+with QEMU internals will be of great help.
 
-are available in the Git repository at:
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Acked-by: Anthony PERARD <anthony@xenproject.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-  https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xen-queue-2024-07-12.for-upstream
-
-for you to fetch changes up to 872cb9cced796e75d4f719c31d70ed5fd629efca:
-
-  xen: mapcache: Fix unmapping of first entries in buckets (2024-07-12 00:17:36 +0200)
-
-----------------------------------------------------------------
-Edgars Xen queue.
-
-----------------------------------------------------------------
-Edgar E. Iglesias (2):
-      physmem: Bail out qemu_ram_block_from_host() for invalid ram addrs
-      xen: mapcache: Fix unmapping of first entries in buckets
-
-Stefano Stabellini (1):
-      MAINTAINERS: add Edgar as Xen maintainer
-
- MAINTAINERS           |  1 +
- hw/xen/xen-mapcache.c | 12 +++++++++++-
- system/physmem.c      |  4 ++++
- 3 files changed, 16 insertions(+), 1 deletion(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6725913c8b..63e11095a2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -536,6 +536,7 @@ X86 Xen CPUs
+ M: Stefano Stabellini <sstabellini@kernel.org>
+ M: Anthony PERARD <anthony@xenproject.org>
+ M: Paul Durrant <paul@xen.org>
++M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+ L: xen-devel@lists.xenproject.org
+ S: Supported
+ F: */xen*
 -- 
 2.43.0
 
