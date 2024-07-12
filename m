@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3ACC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F8FC41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSF0C-00068Q-J0; Fri, 12 Jul 2024 08:03:54 -0400
+	id 1sSF1G-0004QV-9d; Fri, 12 Jul 2024 08:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzf-0004Vt-DI; Fri, 12 Jul 2024 08:03:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1sSF18-0003Vq-TC; Fri, 12 Jul 2024 08:04:51 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sSEzc-0005Yx-8j; Fri, 12 Jul 2024 08:03:19 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-70af5fbf0d5so1282350b3a.1; 
- Fri, 12 Jul 2024 05:03:14 -0700 (PDT)
+ id 1sSF16-0005ud-ME; Fri, 12 Jul 2024 08:04:50 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-70b48dfd6a2so1621319b3a.1; 
+ Fri, 12 Jul 2024 05:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720785793; x=1721390593; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720785885; x=1721390685; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
- b=BbhhmjpLVHbGGYwI54due3T5iM8wdU1fJJ+hBwoIABKcPOwfxOuNL+w43BPfFMdcKC
- U3PCE+XXnix2vcAZGo5D/VMCy/cilRGODiT/WAx64mjyB+IHog5g4dD/H9+9zfgSbDSO
- zto8FJLkO7eXfr+5V70wQ9KrCBgsMtKx92G2Iug0LldWe6f17NodbvCdN2m8y1ySxj2B
- iQRbGutxE8aYz5SO8Q02aZX3qcydyhpBlHfhlvvlWQoXWcwUJinZdl5jC5PuRb57FtAu
- olNujwiCSMj9mK3abZdxhcxy0uACdd8HwwaJOfdCR2P4t+7a69eIc/JRyljv68Gby1PF
- JwRQ==
+ bh=SXdn44hAbdq5BulP9IKwZ6DBrTC0S7IcN1mxi7E3K6g=;
+ b=AlyhGtOmhgtWNYwj/fvMQO4v0S+JRwTCTmyoyApAxGAE2/FRkDIGuN4HdwwspI1IeX
+ 6folbOlKHX7BdgFnaJE08OAdkmEKmlBv++XF6qQuTXPdm/uFLczgV7+5iX0ZTU1QE3us
+ mNNT+vXyhYGz9SWnfrabcpCVp6KFpYKdNOJ55L8tHM9eLfSb8xf87X2FCpSQHWLXH6tI
+ pKNXuwNRAhQZG6c58h6/Uuk/V864R28+aBtShJHMH1R3TsEiSlyt12Vgp5AXeglbdgSZ
+ QLq1wDWErpFoV0Ez5YfeXveuHrQJxeYuffNmiWO+cecZ7KaeFn4l4LHJMrjK5+i6cVd6
+ KEJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720785793; x=1721390593;
+ d=1e100.net; s=20230601; t=1720785885; x=1721390685;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
- b=Gi3yBKNzdD+3uUojVa1Fq7vpjxiIKfeJV7LdGWDZbR4HHJj/Vfl/3uGcSqS6bsyOap
- 5Ety1YbQBOlSVeXwR0mK61FcxWnkN7erXH2+56eOvK5p1FFX5hR/xDD1EMU+5CN9sE+Y
- I1xqX9k8oXOKBf0rvWda1fHwjYitSlfFBhSi3FlHOE1iX0Ym5OtwZxBpsg3I6byeAZr7
- igkR6EVrS8X4TIE1lHy4O767sYUvKpygRj4YYEr4fgN1XDQdgW25C39x7H0t7/dM7ukA
- ploqMtMthrR5PPme2GENT2+5JovDPzR1ez6sSxgjo83UADi+T7bAVqvCQsXkoVkMHwsE
- ANMA==
+ bh=SXdn44hAbdq5BulP9IKwZ6DBrTC0S7IcN1mxi7E3K6g=;
+ b=K4FZ+LXth4zCpd0ybMVbUzKm99rfnLKAwLdBQjiDo78DvR7FksY6FTZ/qz89DFI6Pm
+ SmIDSQc3mZcdE0pQbu5P6ym9Yt2BFM1tUzqLpR0VKY7njVuxLGqUGGzDNOBPMb7Zld9S
+ R7evdgM7myEfgYXFQAtEOzW+iyXn3c55oUKOiuLUnCB6vXxyFTeBcWyaFpTAyhASTYSy
+ n3u200025SDXgJc+isKkeXLa0JEvzzciNnAy2SS3t/Cxc3O/ZsqpjesmAk65a/f80K90
+ 7tLdx7LaawSuN90j8A9lBoTHXtU9Xjmd8JZNPLTJVYoJ+WJP8NqIbYmW4G7ul4y4bGtH
+ 8lNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdyb5n6hMBkTZLThorAwWFlygK+NXdqmzQ6N7/qx8W9Om4QDIQl3sQFLYEoycoYx6tvAMpJSD080rxIFoS5iFUcslIrqI=
-X-Gm-Message-State: AOJu0YxQsfw9CEWLp4zKnB9tdwmsgELwfa3ZLnw6C0KLuux4SJ5UmrCA
- J1PkqmuaOgdqlCkbIuvrLsjASFpsWTfLy5gOfdD7XBmGRPr9Uxa2xt98ng==
-X-Google-Smtp-Source: AGHT+IFt0keplQq8fKyimjQ51VejtKdYHtoj2QgxBTmKVKeBpzRIYOLhGWMqnQFsiAseuOBkeq5iww==
-X-Received: by 2002:a05:6a00:188b:b0:706:5daf:efa5 with SMTP id
- d2e1a72fcca58-70b6c8b4bdemr5295821b3a.9.1720785792704; 
- Fri, 12 Jul 2024 05:03:12 -0700 (PDT)
+ AJvYcCWwaxETHT1Za0XyOl44ZO4xvzw+d1CAtsWukr4BTpXZgRk1V+4TAnlnm8YGOuIUqVj7v4sCdsZkIsDyCiD41iVbLjgcb4I=
+X-Gm-Message-State: AOJu0Yy/5UhU/FCPOm5WKal0QxzqQL3ItadBA1AaTcC5q5Qrt1ijn4Fv
+ lQggrgDB8lUWJMF5v5Z2GPTLz6tfBSgc5nAJWS2oUv1wWLEKOgt7O+CWkg==
+X-Google-Smtp-Source: AGHT+IHdnfp8DpkdxhiX1YTZJQ488E3ZtEerYClUb/ad4IYNbUzBpYjEDUy280v+XSkXkQh/23HIMg==
+X-Received: by 2002:a05:6a20:918d:b0:1be:c5ab:7388 with SMTP id
+ adf61e73a8af0-1c298220a18mr13139010637.25.1720785885280; 
+ Fri, 12 Jul 2024 05:04:45 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.03.09
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.04.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 05:03:12 -0700 (PDT)
+ Fri, 12 Jul 2024 05:04:44 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 04/19] target/ppc: Move SPR indirect registers into PnvCore
-Date: Fri, 12 Jul 2024 22:02:31 +1000
-Message-ID: <20240712120247.477133-5-npiggin@gmail.com>
+Subject: [PATCH v2 19/19] ppc/pnv: Add an LPAR per core machine option
+Date: Fri, 12 Jul 2024 22:02:46 +1000
+Message-ID: <20240712120247.477133-20-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
 References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,183 +96,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPRC/SPRD were recently added to all BookS CPUs supported, but
-they are only tested on POWER9 and POWER10, so restrict them to
-those CPUs.
+Recent POWER CPUs can operate in "LPAR per core" or "LPAR per thread"
+modes. In per-core mode, some SPRs and IPI doorbells are shared between
+threads in a core. In per-thread mode, supervisor and user state is
+not shared between threads.
 
-SPR indirect scratch registers presently replicated per-CPU like
-SMT SPRs, but the PnvCore is a better place for them since they
-are restricted to P9/P10.
+OpenPOWER systems after POWER8 use LPAR per thread mode, and it is
+required for KVM. Enterprise systems use LPAR per core mode, as they
+partition the machine by core.
 
-Also add SPR indirect read access to core thread state for POWER9
-since skiboot accesses that when booting to check for big-core
-mode.
+Implement a lpar-per-core machine option for powernv machines. This
+is fixed true for POWER8 machines, and defaults off for P9 and P10.
+
+With this change, powernv8 SMT now works sufficiently to run Linux,
+with a single socket. Multi-threaded KVM guests still have problems,
+as does multi-socket Linux boot.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
+ include/hw/ppc/pnv.h      |  2 ++
+ include/hw/ppc/pnv_chip.h |  1 +
  include/hw/ppc/pnv_core.h |  1 +
- target/ppc/cpu.h          |  3 --
- target/ppc/cpu_init.c     | 21 +++++++-------
- target/ppc/misc_helper.c  | 60 ++++++++++++++++++---------------------
- 4 files changed, 39 insertions(+), 46 deletions(-)
+ hw/ppc/pnv.c              | 35 +++++++++++++++++++++++++++++++++++
+ hw/ppc/pnv_core.c         |  7 +++++++
+ target/ppc/cpu_init.c     |  3 ++-
+ 6 files changed, 48 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index b7858d310d..fcb6699150 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -77,6 +77,7 @@ struct PnvMachineClass {
+     const char *compat;
+     int compat_size;
+     int max_smt_threads;
++    bool has_lpar_per_thread;
+     bool quirk_tb_big_core;
+ 
+     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
+@@ -104,6 +105,7 @@ struct PnvMachineState {
+     hwaddr       fw_load_addr;
+ 
+     bool         big_core;
++    bool         lpar_per_core;
+ };
+ 
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 69d8273efe..ee1649babc 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -28,6 +28,7 @@ struct PnvChip {
+     uint64_t     ram_size;
+ 
+     bool         big_core;
++    bool         lpar_per_core;
+     uint32_t     nr_cores;
+     uint32_t     nr_threads;
+     uint64_t     cores_mask;
 diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-index ffec8516ae..693acb189b 100644
+index 1de79a818e..d8afb4f95f 100644
 --- a/include/hw/ppc/pnv_core.h
 +++ b/include/hw/ppc/pnv_core.h
-@@ -53,6 +53,7 @@ struct PnvCore {
+@@ -57,6 +57,7 @@ struct PnvCore {
+     /*< public >*/
+     PowerPCCPU **threads;
+     bool big_core;
++    bool lpar_per_core;
+     uint32_t pir;
      uint32_t hwid;
      uint64_t hrmor;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index cd96cde6c9..be1a48d2cb 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1026,6 +1026,11 @@ static void pnv_init(MachineState *machine)
+         exit(1);
+     }
  
-+    target_ulong scratch[8]; /* SPRC/SPRD indirect SCRATCH registers */
-     PnvCoreTODState tod_state;
++    /* Set lpar-per-core mode if lpar-per-thread is not supported */
++    if (!pmc->has_lpar_per_thread) {
++        pnv->lpar_per_core = true;
++    }
++
+     pnv->num_chips =
+         machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
  
-     PnvChip *chip;
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index c78d6ca91a..95ba9e7590 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1253,9 +1253,6 @@ struct CPUArchState {
-     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
-     struct CPUBreakpoint *ciabr_breakpoint;
-     struct CPUWatchpoint *dawr0_watchpoint;
--
--    /* POWER CPU regs/state */
--    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
- #endif
-     target_ulong sr[32];   /* segment registers */
-     uint32_t nb_BATs;      /* number of BATs */
+@@ -2308,6 +2313,7 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+     }
+ 
+     chip->big_core = pnv->big_core;
++    chip->lpar_per_core = pnv->lpar_per_core;
+ 
+     chip->cores = g_new0(PnvCore *, chip->nr_cores);
+ 
+@@ -2339,6 +2345,7 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+ 
+         pnv_core->tod_state.big_core_quirk = pmc->quirk_tb_big_core;
+         pnv_core->big_core = chip->big_core;
++        pnv_core->lpar_per_core = chip->lpar_per_core;
+ 
+         qdev_realize(DEVICE(pnv_core), NULL, &error_fatal);
+ 
+@@ -2591,6 +2598,18 @@ static void pnv_machine_set_big_core(Object *obj, bool value, Error **errp)
+     pnv->big_core = value;
+ }
+ 
++static bool pnv_machine_get_lpar_per_core(Object *obj, Error **errp)
++{
++    PnvMachineState *pnv = PNV_MACHINE(obj);
++    return pnv->lpar_per_core;
++}
++
++static void pnv_machine_set_lpar_per_core(Object *obj, bool value, Error **errp)
++{
++    PnvMachineState *pnv = PNV_MACHINE(obj);
++    pnv->lpar_per_core = value;
++}
++
+ static bool pnv_machine_get_hb(Object *obj, Error **errp)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(obj);
+@@ -2630,6 +2649,8 @@ static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 8;
++    /* POWER8 is always lpar-per-core mode */
++    pmc->has_lpar_per_thread = false;
+ 
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+ }
+@@ -2655,6 +2676,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 4;
++    pmc->has_lpar_per_thread = true;
+     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ 
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
+@@ -2664,6 +2686,12 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
+                                    pnv_machine_set_big_core);
+     object_class_property_set_description(oc, "big-core",
+                               "Use big-core (aka fused-core) mode");
++
++    object_class_property_add_bool(oc, "lpar-per-core",
++                                   pnv_machine_get_lpar_per_core,
++                                   pnv_machine_set_lpar_per_core);
++    object_class_property_set_description(oc, "lpar-per-core",
++                              "Use 1 LPAR per core mode");
+ }
+ 
+ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+@@ -2686,6 +2714,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 4;
++    pmc->has_lpar_per_thread = true;
+     pmc->quirk_tb_big_core = true;
+     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ 
+@@ -2711,6 +2740,12 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
+                                    pnv_machine_set_big_core);
+     object_class_property_set_description(oc, "big-core",
+                               "Use big-core (aka fused-core) mode");
++
++    object_class_property_add_bool(oc, "lpar-per-core",
++                                   pnv_machine_get_lpar_per_core,
++                                   pnv_machine_set_lpar_per_core);
++    object_class_property_set_description(oc, "lpar-per-core",
++                              "Use 1 LPAR per core mode");
+ }
+ 
+ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index b32bdb79ff..d59da16ce4 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -208,6 +208,9 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+                 val |= PPC_BIT(56 + i);
+             }
+         }
++        if (pc->lpar_per_core) {
++            val |= PPC_BIT(62);
++        }
+         break;
+     case PNV10_XSCOM_EC_CORE_THREAD_INFO:
+         break;
+@@ -321,6 +324,10 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
+         env->core_index = core_hwid;
+     }
+ 
++    if (pc->lpar_per_core) {
++        cpu_ppc_set_1lpar(cpu);
++    }
++
+     /* Set time-base frequency to 512 MHz */
+     cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
+ }
 diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index e38f62b08d..164bb62e63 100644
+index 81dd4e1a7a..4ba7f54510 100644
 --- a/target/ppc/cpu_init.c
 +++ b/target/ppc/cpu_init.c
-@@ -5777,16 +5777,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_core_write_generic,
-                  0x00000000);
--    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_generic, &spr_write_sprc,
--                 0x00000000);
--    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 SPR_NOACCESS, SPR_NOACCESS,
--                 &spr_read_sprd, &spr_write_sprd,
--                 0x00000000);
- #endif
- }
+@@ -6803,7 +6803,8 @@ void cpu_ppc_set_1lpar(PowerPCCPU *cpu)
  
-@@ -5799,6 +5789,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
-                      SPR_NOACCESS, SPR_NOACCESS,
-                      &spr_read_generic, &spr_write_generic,
-                      KVM_REG_PPC_WORT, 0);
-+    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
-+    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_sprc,
-+                 0x00000000);
-+    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 SPR_NOACCESS, SPR_NOACCESS,
-+                 &spr_read_sprd, &spr_write_sprd,
-+                 0x00000000);
- #endif
- }
- 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index fa47be2298..4d3c1bddd9 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -26,6 +26,7 @@
- #include "qemu/main-loop.h"
- #include "mmu-book3s-v3.h"
- #include "hw/ppc/ppc.h"
-+#include "hw/ppc/pnv_core.h"
- 
- #include "helper_regs.h"
- 
-@@ -321,11 +322,18 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
- 
- target_ulong helper_load_sprd(CPUPPCState *env)
- {
-+    /*
-+     * SPRD is a HV-only register for Power CPUs, so this will only be
-+     * accessed by powernv machines.
-+     */
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-     target_ulong sprc = env->spr[SPR_POWER_SPRC];
- 
--    switch (sprc & 0x3c0) {
--    case 0: /* SCRATCH0-7 */
--        return env->scratch[(sprc >> 3) & 0x7];
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        return pc->scratch[(sprc >> 3) & 0x7];
-     default:
-         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-                                   TARGET_FMT_lx"\n", sprc);
-@@ -334,41 +342,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
-     return 0;
- }
- 
--static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
--{
--    CPUState *cs = env_cpu(env);
--    CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
--
--    /*
--     * Log stores to SCRATCH, because some firmware uses these for debugging
--     * and logging, but they would normally be read by the BMC, which is
--     * not implemented in QEMU yet. This gives a way to get at the information.
--     * Could also dump these upon checkstop.
--     */
--    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
--
--    if (nr_threads == 1) {
--        env->scratch[nr] = val;
--        return;
--    }
--
--    THREAD_SIBLING_FOREACH(cs, ccs) {
--        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
--        cenv->scratch[nr] = val;
--    }
--}
--
- void helper_store_sprd(CPUPPCState *env, target_ulong val)
- {
-     target_ulong sprc = env->spr[SPR_POWER_SPRC];
--
--    switch (sprc & 0x3c0) {
--    case 0: /* SCRATCH0-7 */
--        do_store_scratch(env, (sprc >> 3) & 0x7, val);
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-+
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        /*
-+         * Log stores to SCRATCH, because some firmware uses these for
-+         * debugging and logging, but they would normally be read by the BMC,
-+         * which is not implemented in QEMU yet. This gives a way to get at the
-+         * information. Could also dump these upon checkstop.
-+         */
-+        int nr = (sprc >> 3) & 0x7;
-+        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
-+        pc->scratch[nr] = val;
-         break;
-     default:
--        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-+        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
-                                   TARGET_FMT_lx"\n", sprc);
-         break;
-     }
+     /*
+      * pseries SMT means "LPAR per core" mode, e.g., msgsndp is usable
+-     * between threads.
++     * between threads. powernv be in either mode, and it mostly affects
++     * supervisor visible registers and instructions.
+      */
+     if (env->flags & POWERPC_FLAG_SMT) {
+         env->flags |= POWERPC_FLAG_SMT_1LPAR;
 -- 
 2.45.1
 
