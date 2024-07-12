@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25503C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 04:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE1EC3DA45
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 04:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS7kZ-0001eg-TQ; Fri, 12 Jul 2024 00:19:15 -0400
+	id 1sS7md-0005ya-QJ; Fri, 12 Jul 2024 00:21:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7kZ-0001eC-5u
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:19:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7mb-0005y4-Pt
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:21:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7kW-0004U1-0m
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:19:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sS7ma-00052b-0Y
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 00:21:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720757950;
+ s=mimecast20190719; t=1720758078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LJHYudXpNcQRRAIkpKUFjehG5G0Eqz2CUtbbpyR93Dc=;
- b=fam008bcCp9ncahlZOzFyOl/cDLOUpg3Xa8JyN5kvv7EFOsqfC4pgxC4a2AL53Iz1LyAyn
- Xdg33VwGCQqDjoj8fchVjRY6JpXQHwrpiJ/bWCvgxjkiCQowHFJUrBVN1enYQgSuD7tMeg
- fi10RKmb/UbhzkYkYJy88rgj/kP+yjw=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dmWYrXOzVfgf7Xg7eXpPMkHRMJcggBCibv8+wtcL4Gw=;
+ b=WnV7pnziV24KStRaXkF22SDba3BI09sI2K55aOpHGsoaQTmnFQJUxopwr5N+H+A1VqRUfN
+ cSQi5pqErCBe8aUnPLVVLES5n/8zvDvJFUz+swdsDkyFn/IhVaVG1+SuxErt410k9+fNIe
+ O3v2Ekw1/cyu44t9KPbWg870VPbj2nQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-zChiZItYOba7UziWKuw00w-1; Fri, 12 Jul 2024 00:19:03 -0400
-X-MC-Unique: zChiZItYOba7UziWKuw00w-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ee8d83db53so15892861fa.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 21:19:02 -0700 (PDT)
+ us-mta-460-k_B_VQdPPgOVKY0DxOLsxA-1; Fri, 12 Jul 2024 00:21:12 -0400
+X-MC-Unique: k_B_VQdPPgOVKY0DxOLsxA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a797c5b4f47so98159366b.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 21:21:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720757941; x=1721362741;
+ d=1e100.net; s=20230601; t=1720758071; x=1721362871;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LJHYudXpNcQRRAIkpKUFjehG5G0Eqz2CUtbbpyR93Dc=;
- b=CGUrJAiwRmnNdSKhI731EHT42xj3igLUbpNexqeZDWq6ql/LfUGVEh1bIco7eZ0c1y
- Pw1uHRk+fzaxn+mE6LW2S/ZGBqhFu9gm2O24I5VQa0Mj1se0YyMarKV97MJt/KBAhb4g
- OGRbz803Ze0cn4MltRTyXuRG5y+qYCDDCsBO3El0puKSVuESSp/3z10BNB+xPkATJ+3T
- Bwg+Xp04PvMBzcd0EaBUfoAHJLWvFZCaJq9ei7WPgNfwOXJ6d60Wk0ePWrho4dhnc0i7
- fMaVPuEb8frjoO7wjMoOZub874Rn46X9GjLaraoFak2EB60NUsnivp6kfKz2X737gs/C
- FDGg==
+ bh=dmWYrXOzVfgf7Xg7eXpPMkHRMJcggBCibv8+wtcL4Gw=;
+ b=YHBWgAQxV/QKZf1AN4YACgLKe1XELfAR/DiprGXYfTG3x4Tjou0zm3eLnZCB/o+kSi
+ bzKnn/WyArFAKygyUdFMUyAYya2SqWjnEv3Jvisfep86mG4mv9nbtYs0bAqaeCsi7XHx
+ w/69a2ALQYLvhhLMrgL6XbpCC+fu0vTZ3eozu42B72WTVbkgn0vSh0DF2ehyB8G9D7zI
+ ggbwMGBMobfSsY9chis+IqUhU0Eq3DoPAiJ4nPLnVVxgi0NS55sziGTFyfLL6tBUv8vF
+ /U3rCLXzccQ1sfoCVRFb7Wjm5QMCuq16U40MP16OBpo6mjhUC7EI3v/D/QNSMYkiZqVQ
+ Ob9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/NPapVAzRbO62LoMZpxjaJ2pS9JnNEJkRzWc8/e9a1nzii+6zNX8sEv11+4cqyRYPa7T97Mhf1vex3XaPf1ghPwUlWQ4=
-X-Gm-Message-State: AOJu0Yx+Y3nBN1iJpN4z4x96BZMTQvg+a7cCYv2m/ec6agTwmZc92oFc
- wNfftNsDT3kK1v8VlRQPBjHWS0AifgLwka/SNPGYj3jPW11EfSMRPuupzVh93dhzNSz2R4fg3hM
- nLlPmSDXMsNw4BiRHdYd/4CF2/kAVYcjmXLEPmjvmemofWXPFkf8V
-X-Received: by 2002:a2e:a792:0:b0:2ec:4f0c:36f9 with SMTP id
- 38308e7fff4ca-2eeb3169f11mr107949561fa.36.1720757941390; 
- Thu, 11 Jul 2024 21:19:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+Gbd4k/omF2q1LYj0mvdyPi5Z09miSM1CrA+k3Pm7accWixKi/n4APu0PiHiPI4qqKGl9vg==
-X-Received: by 2002:a2e:a792:0:b0:2ec:4f0c:36f9 with SMTP id
- 38308e7fff4ca-2eeb3169f11mr107949371fa.36.1720757940915; 
- Thu, 11 Jul 2024 21:19:00 -0700 (PDT)
+ AJvYcCXeUfJ+OHxWNzSN0XVTGa4qtYCK07VHQrZAkg+44+jTiB4ItevnuW6XKT1MQzppmS556b5N4onjpOaE3WZKZrWTY4XMuS0=
+X-Gm-Message-State: AOJu0YzrLJq7oFjWSluAEThLAsZmSoyV31s+CyHmshF3byMpfLUADw91
+ cjVS14vDKNcULu0MSqSf3qGWvPCg/1u/MOt4mmApDVVGv8ZL1PCwZ6LcZJnZaBesoQ9s5MwSTRk
+ yeklQ7xO7iPmOrN+pDlx6TKk5Nz9VSm4W7ucRX4+bsul4cXX3PeyS
+X-Received: by 2002:a17:906:32cc:b0:a77:da14:8401 with SMTP id
+ a640c23a62f3a-a780b688941mr727477366b.10.1720758070947; 
+ Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEu4gUqxH31pXDIOZIWxSvy2Hu5wTFdQj5k2i1bvH0nID15r2zUxdQi1YIeHzfHkFhchR8gjQ==
+X-Received: by 2002:a17:906:32cc:b0:a77:da14:8401 with SMTP id
+ a640c23a62f3a-a780b688941mr727476266b.10.1720758070550; 
+ Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-50-229.web.vodafone.de.
  [109.43.50.229]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a780a86ed1bsm303901866b.196.2024.07.11.21.18.59
+ a640c23a62f3a-a780a856214sm310610166b.178.2024.07.11.21.21.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jul 2024 21:19:00 -0700 (PDT)
-Message-ID: <d0ed7143-6398-4d30-a752-19be3b983a61@redhat.com>
-Date: Fri, 12 Jul 2024 06:18:58 +0200
+ Thu, 11 Jul 2024 21:21:10 -0700 (PDT)
+Message-ID: <d678a0ea-794e-44a4-b144-70cb9e7ce352@redhat.com>
+Date: Fri, 12 Jul 2024 06:21:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 5/8] tests_pytest: Implement fetch_asset() method for
@@ -81,6 +81,7 @@ Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
 References: <20240711115546.40859-1-thuth@redhat.com>
  <20240711115546.40859-6-thuth@redhat.com>
  <081298cb-536c-4487-b90c-b184b0f93ce7@linaro.org>
+ <b07b165d-57be-4144-a3d3-19c4ae94c261@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -125,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <081298cb-536c-4487-b90c-b184b0f93ce7@linaro.org>
+In-Reply-To: <b07b165d-57be-4144-a3d3-19c4ae94c261@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -152,28 +153,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/07/2024 18.45, Richard Henderson wrote:
-> On 7/11/24 04:55, Thomas Huth wrote:
->> +    def fetch_asset(self, url, asset_hash):
->> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
->> +        if not os.path.exists(cache_dir):
->> +            os.makedirs(cache_dir)
->> +        fname = os.path.join(cache_dir,
->> +                             hashlib.sha1(url.encode("utf-8")).hexdigest())
->> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
->> +            return fname
->> +        logging.debug("Downloading %s to %s...", url, fname)
->> +        subprocess.check_call(["wget", "-c", url, "-O", fname + 
->> ".download"])
->> +        os.rename(fname + ".download", fname)
->> +        return fname
+On 11/07/2024 20.49, Richard Henderson wrote:
+> On 7/11/24 09:45, Richard Henderson wrote:
+>> On 7/11/24 04:55, Thomas Huth wrote:
+>>> +    def fetch_asset(self, url, asset_hash):
+>>> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
+>>> +        if not os.path.exists(cache_dir):
+>>> +            os.makedirs(cache_dir)
+>>> +        fname = os.path.join(cache_dir,
+>>> +                             hashlib.sha1(url.encode("utf-8")).hexdigest())
+>>> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
+>>> +            return fname
+>>> +        logging.debug("Downloading %s to %s...", url, fname)
+>>> +        subprocess.check_call(["wget", "-c", url, "-O", fname + 
+>>> ".download"])
+>>> +        os.rename(fname + ".download", fname)
+>>> +        return fname
+>>
+>> Download failure via exception?
+>> Check hash on downloaded asset?
 > 
-> Download failure via exception?
-> Check hash on downloaded asset?
+> I would prefer to see assets, particularly downloading, handled in a 
+> separate pass from tests.
+> 
+> (1) Asset download should not count against test timeout.
+> (2) Running tests while disconnected should skip unavailable assets.
 
-Yes, you're right, I'll add that. But that means it's also missing from 
-_download_with_cache in tests/vm/basevm.py so far...
+Sounds good, but honestly, that's above my primitive python-fu. I guess that 
+would need some kind of introspection of the tests to retrieve the 
+information what they want to download?
 
   Thomas
+
 
 
