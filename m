@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9F1C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 590A9C3DA45
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS6Ao-0006aP-QH; Thu, 11 Jul 2024 22:38:15 -0400
+	id 1sS69o-0003pa-Sa; Thu, 11 Jul 2024 22:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sS6Ae-0005rl-FY
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:38:05 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sS69m-0003lZ-V7
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:10 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sS6AY-0003Ti-Vy
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:38:03 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2c97ff39453so1174879a91.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:37:56 -0700 (PDT)
+ id 1sS69j-0003Nc-NF
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:10 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2c980b08b4bso1233575a91.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720751874; x=1721356674; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1720751826; x=1721356626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m/uXG+PQkx4WNFskRcvPpD+pmqBERaieKAm+Y5iCWI4=;
- b=OEHQNTC79zu6olYrHH0lsVc4DdIszyUvtCxzGO/NOsRS+rFMfAWBfgnvxH6nCfX1+X
- ws+898cwP0BzVOKLu8xLjTHsSn1TkJslspeMFQxjKJiZURmOrbNp7R0uOKbncoFPefyD
- di4Fux2ujpVs/9Ye+b3lllIVjybOA+01DpRzokREVUshZ2kykSUMg+H8aHsABhysa8J0
- 3Np464rATa6kMPiVi2/3eDtUkg4+ZkWxTRjwk2Qth8ve0fHKFLShqGoQW61HhC7SFzTD
- BswFFg4M5aoKFr/juW2Aho2apo7xBhwHJIVvyEfzMyctlBfLwh43iSe5hglgS84uuESi
- qy4A==
+ bh=kjAdu6ZTaJ2H/T12j7/Y4iOTA7PHN1pPSyvKcs9msGY=;
+ b=UqsVW32YyTE43e0T5xXaQ6/yBmCgaUDJeEE00zj5GoI6c3ImVYCUIUV6NxVf+LelFg
+ IzCFdjUF7Hq5R3rctnJwqTTJIFgumYuYMqMfXI+EQS7lMbgRIp8keO7GW+TQG+PjXeut
+ KrI4yLVfhb3iDVAfLDUYUFnY99IP+R+dKRs/iw6fla+VfprTIoMaZumaFF3bAnHIZ2Hb
+ z7YHRiADvZbEiAMIsLI59QtE7Vhg1RNzNg2YcSpO6fuJ3DSlHO7sTQL1aOQWGByfnoXS
+ KElyDxniOjBDNX114jEXQzf6gpvI99ZXft3NYOl8yRc4XdFdV7IDc4b/hOkhZ9/saqfb
+ bnYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720751874; x=1721356674;
+ d=1e100.net; s=20230601; t=1720751826; x=1721356626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m/uXG+PQkx4WNFskRcvPpD+pmqBERaieKAm+Y5iCWI4=;
- b=BdXsbawr3RCwhNLPuHV5TGYTN1rXUb62U/TRkzK16UhAyGrJmIFTwftv8eHeJGf4p8
- HnisOUYM9Qal2L0w6XpSasc4Syp/8WMiXO8VSbmWEioPUbfRrqIzbwznW27GH3jYHup3
- /+gaAixJ97uafruvhyZA+noEJc3bpKqNu0krqij2pNPRibXr8FGCnI2WyXs3TlPgM3IA
- 4cDAVdaK/a9kT8pwvAAeL8fXaHeIFYZ3dHA7RxQJVpzuaX+niHSKPPCLVpUNHFSz7W/8
- Go3ZHrLPp9m3RT/fyUpyNHhzSzfohyB5CaD3HB1qUP3EQy2a/dCwdod6euIRt1sfK7L9
- JLeg==
+ bh=kjAdu6ZTaJ2H/T12j7/Y4iOTA7PHN1pPSyvKcs9msGY=;
+ b=b1kaI0kATt2P0+ZCqIDNR1PHVJTod7OCcTtXTmnQ2rkKVfmom3ZCDjWOZhjILYwooV
+ gzjXURyFgEgohPBVYuAq/OX39NaTb8jFHlSVsq1VE7dagEcRJTil63dD/0+EQuTa/NtX
+ aRb5GGQEo8vBfEgesysA1qSyuqCPwsOMlx2TWVLSEvY87lzNbIkjC54rnAuEH4YN7225
+ HGYqhqZ8x11Xma1qgngbMHU17R1e7iSALfbrKHv4tWNuEtCByG83xhUyXhjY9BcbGpqW
+ B2Pt6EmoTQOtqjG4CvTnQ1EUv5Iy+Vcyj8p4VtvSICmRGa3MLSy0Db7WcdiPVtqaWkgw
+ AWqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/lOv21jGPy21asBCloUHjYQNoIGY8GrzRvD6AITcdKJBWHP3CMriDCtTvo98yGQH2ZOh7dQM0CIz4oytuOAaZh+EuIXU=
-X-Gm-Message-State: AOJu0YxESEwymqimkyAlblHErSdsN85EDT2YQQfCa9FiHT/9Oq1DJSAr
- zDmPwMHU4i4DXWhQlISDWWSsaPdWXClsu2rCbttG8PWHX/XpR8eJxuNyqoKdfzg=
-X-Google-Smtp-Source: AGHT+IF1fRMaUwEhXjKHvYFYEzeNNl4uz1kgMcZ4yYZYesgRoldP2x/ocd5TOkl0+/ZO4apRj9quGA==
-X-Received: by 2002:a17:90b:1049:b0:2c9:649c:5e10 with SMTP id
- 98e67ed59e1d1-2ca35bca181mr8719782a91.10.1720751874260; 
- Thu, 11 Jul 2024 19:37:54 -0700 (PDT)
+ AJvYcCW/nSg4STl8vLefHrQheDoPOY/zqCIpUL4RUO4xMj02TbKuSxbCAPYuGhRKyGVGMSkSWKOMJtYm7BUO1tNc5G9h81Jfm8A=
+X-Gm-Message-State: AOJu0YydJb4n0SPvG1sDYB8C9krtIDuQdAlnty3WndBu6W8r0y9cG7WU
+ C02edkClsV5BR4mfVymM1lM4Hj4ZQ7fQR/NKOF51S/3V1isQ7UEs6OCnVwUwYyk=
+X-Google-Smtp-Source: AGHT+IEadyz9Awhhh7IkWrEtZ3FBL0NGW6FOM8pp6KWmFNYhfzLywecI8MmapAhHvQld0YriZdH9oQ==
+X-Received: by 2002:a17:90b:3786:b0:2c9:79d3:a15d with SMTP id
+ 98e67ed59e1d1-2ca35c7bfb0mr8666116a91.29.1720751825601; 
+ Thu, 11 Jul 2024 19:37:05 -0700 (PDT)
 Received: from TF4D9JK212.bytedance.net ([61.213.176.12])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cacd65fc43sm297453a91.39.2024.07.11.19.37.49
+ 98e67ed59e1d1-2cacd65fc43sm297453a91.39.2024.07.11.19.37.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Jul 2024 19:37:53 -0700 (PDT)
+ Thu, 11 Jul 2024 19:37:05 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v9 09/10] hw/nvme: add reservation protocal command
-Date: Fri, 12 Jul 2024 10:36:49 +0800
-Message-Id: <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v9 01/10] block: add persistent reservation in/out api
+Date: Fri, 12 Jul 2024 10:36:41 +0800
+Message-Id: <20240712023650.45626-2-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 In-Reply-To: <20240712023650.45626-1-luchangqi.123@bytedance.com>
 References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,455 +99,845 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add reservation acquire, reservation register,
-reservation release and reservation report commands
-in the nvme device layer.
+Add persistent reservation in/out operations
+at the block level. The following operations
+are included:
 
-By introducing these commands, this enables the nvme
-device to perform reservation-related tasks, including
-querying keys, querying reservation status, registering
-reservation keys, initiating and releasing reservations,
-as well as clearing and preempting reservations held by
-other keys.
+- read_keys:        retrieves the list of registered keys.
+- read_reservation: retrieves the current reservation status.
+- register:         registers a new reservation key.
+- reserve:          initiates a reservation for a specific key.
+- release:          releases a reservation for a specific key.
+- clear:            clears all existing reservations.
+- preempt:          preempts a reservation held by another key.
 
-These commands are crucial for management and control of
-shared storage resources in a persistent manner.
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Acked-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/nvme/ctrl.c       | 318 +++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |   4 +
- include/block/nvme.h |  37 +++++
- 3 files changed, 359 insertions(+)
+ block/block-backend.c             | 403 ++++++++++++++++++++++++++++++
+ block/io.c                        | 164 ++++++++++++
+ include/block/block-common.h      |  40 +++
+ include/block/block-io.h          |  20 ++
+ include/block/block_int-common.h  |  84 +++++++
+ include/sysemu/block-backend-io.h |  24 ++
+ 6 files changed, 735 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index ad212de723..b6e8deb40d 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -294,6 +294,10 @@ static const uint32_t nvme_cse_iocs_nvm[256] = {
-     [NVME_CMD_COMPARE]              = NVME_CMD_EFF_CSUPP,
-     [NVME_CMD_IO_MGMT_RECV]         = NVME_CMD_EFF_CSUPP,
-     [NVME_CMD_IO_MGMT_SEND]         = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-+    [NVME_CMD_RESV_REGISTER]        = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REPORT]          = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_ACQUIRE]         = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_RELEASE]         = NVME_CMD_EFF_CSUPP,
- };
- 
- static const uint32_t nvme_cse_iocs_zoned[256] = {
-@@ -308,6 +312,10 @@ static const uint32_t nvme_cse_iocs_zoned[256] = {
-     [NVME_CMD_ZONE_APPEND]          = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_CMD_ZONE_MGMT_SEND]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_CMD_ZONE_MGMT_RECV]       = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REGISTER]        = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_REPORT]          = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_ACQUIRE]         = NVME_CMD_EFF_CSUPP,
-+    [NVME_CMD_RESV_RELEASE]         = NVME_CMD_EFF_CSUPP,
- };
- 
- static void nvme_process_sq(void *opaque);
-@@ -1745,6 +1753,7 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
- 
-     switch (req->cmd.opcode) {
-     case NVME_CMD_READ:
-+    case NVME_CMD_RESV_REPORT:
-         status = NVME_UNRECOVERED_READ;
-         break;
-     case NVME_CMD_FLUSH:
-@@ -1752,6 +1761,9 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
-     case NVME_CMD_WRITE_ZEROES:
-     case NVME_CMD_ZONE_APPEND:
-     case NVME_CMD_COPY:
-+    case NVME_CMD_RESV_REGISTER:
-+    case NVME_CMD_RESV_ACQUIRE:
-+    case NVME_CMD_RESV_RELEASE:
-         status = NVME_WRITE_FAULT;
-         break;
-     default:
-@@ -2692,6 +2704,304 @@ static uint16_t nvme_verify(NvmeCtrl *n, NvmeRequest *req)
-     return NVME_NO_COMPLETE;
+diff --git a/block/block-backend.c b/block/block-backend.c
+index db6f9b92a3..b74aaba23f 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -1770,6 +1770,409 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+     return blk_aio_prwv(blk, req, 0, buf, blk_aio_ioctl_entry, 0, cb, opaque);
  }
  
-+typedef struct NvmeKeyInfo {
-+    uint64_t cr_key;
-+    uint64_t nr_key;
-+} NvmeKeyInfo;
-+
-+static uint16_t nvme_resv_register(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    NvmeKeyInfo key_info;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    bool ignore_key = cdw10 >> 3 & 0x1;
-+    uint8_t action = cdw10 & 0x7;
-+    uint8_t ptpl = cdw10 >> 30 & 0x3;
-+    bool aptpl;
-+
-+    switch (ptpl) {
-+    case NVME_RESV_PTPL_NO_CHANGE:
-+        aptpl = (ns->id_ns.rescap & NVME_PR_CAP_PTPL) ? true : false;
-+        break;
-+    case NVME_RESV_PTPL_DISABLE:
-+        aptpl = false;
-+        break;
-+    case NVME_RESV_PTPL_ENABLE:
-+        aptpl = true;
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    ret = nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_REGISTER_ACTION_REGISTER:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, 0,
-+                                         key_info.nr_key, 0, aptpl,
-+                                         ignore_key, nvme_misc_cb,
-+                                         req);
-+        break;
-+    case NVME_RESV_REGISTER_ACTION_UNREGISTER:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, key_info.cr_key, 0,
-+                                         0, aptpl, ignore_key,
-+                                         nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_REGISTER_ACTION_REPLACE:
-+        req->aiocb = blk_aio_pr_register(ns->blkconf.blk, key_info.cr_key,
-+                                         key_info.nr_key, 0, aptpl, ignore_key,
-+                                         nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+static uint16_t nvme_resv_release(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    uint64_t cr_key;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint8_t action = cdw10 & 0x7;
-+    NvmeResvType type = cdw10 >> 8 & 0xff;
-+
-+    ret = nvme_h2c(n, (uint8_t *)&cr_key, sizeof(cr_key), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_RELEASE_ACTION_RELEASE:
-+        req->aiocb = blk_aio_pr_release(ns->blkconf.blk, cr_key,
-+                                        nvme_pr_type_to_block(type),
-+                                        nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_RELEASE_ACTION_CLEAR:
-+        req->aiocb = blk_aio_pr_clear(ns->blkconf.blk, cr_key,
-+                                      nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+static uint16_t nvme_resv_acquire(NvmeCtrl *n, NvmeRequest *req)
-+{
-+    int ret;
-+    NvmeKeyInfo key_info;
-+    NvmeNamespace *ns = req->ns;
-+    uint32_t cdw10 = le32_to_cpu(req->cmd.cdw10);
-+    uint8_t action = cdw10 & 0x7;
-+    NvmeResvType type = cdw10 >> 8 & 0xff;
-+
-+    ret = nvme_h2c(n, (uint8_t *)&key_info, sizeof(NvmeKeyInfo), req);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    switch (action) {
-+    case NVME_RESV_ACQUIRE_ACTION_ACQUIRE:
-+        req->aiocb = blk_aio_pr_reserve(ns->blkconf.blk, key_info.cr_key,
-+                                        nvme_pr_type_to_block(type),
-+                                        nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_ACQUIRE_ACTION_PREEMPT:
-+        req->aiocb = blk_aio_pr_preempt(ns->blkconf.blk,
-+                     key_info.cr_key, key_info.nr_key,
-+                     nvme_pr_type_to_block(type),
-+                     false, nvme_misc_cb, req);
-+        break;
-+    case NVME_RESV_ACQUIRE_ACTION_PREEMPT_AND_ABORT:
-+        req->aiocb = blk_aio_pr_preempt(ns->blkconf.blk, key_info.cr_key,
-+                                        key_info.nr_key, type, true,
-+                                        nvme_misc_cb, req);
-+        break;
-+    default:
-+        return NVME_INVALID_FIELD;
-+    }
-+
-+    return NVME_NO_COMPLETE;
-+}
-+
-+typedef struct NvmeResvKeys {
-+    uint32_t generation;
++typedef struct BlkPrInCo {
++    BlockBackend *blk;
++    uint32_t *generation;
 +    uint32_t num_keys;
++    BlockPrType *type;
 +    uint64_t *keys;
-+    NvmeRequest *req;
-+} NvmeResvKeys;
++    int ret;
++} BlkPrInCo;
 +
-+typedef struct NvmeReadReservation {
-+    uint32_t generation;
-+    uint64_t key;
++typedef struct BlkPrInCB {
++    BlockAIOCB common;
++    BlkPrInCo prco;
++    bool has_returned;
++} BlkPrInCB;
++
++static const AIOCBInfo blk_pr_in_aiocb_info = {
++    .aiocb_size         = sizeof(BlkPrInCB),
++};
++
++static void blk_pr_in_complete(BlkPrInCB *acb)
++{
++    if (acb->has_returned) {
++        acb->common.cb(acb->common.opaque, acb->prco.ret);
++
++        /* This is paired with blk_inc_in_flight() in blk_aio_pr_in(). */
++        blk_dec_in_flight(acb->prco.blk);
++        qemu_aio_unref(acb);
++    }
++}
++
++static void blk_pr_in_complete_bh(void *opaque)
++{
++    BlkPrInCB *acb = opaque;
++    assert(acb->has_returned);
++    blk_pr_in_complete(acb);
++}
++
++static BlockAIOCB *blk_aio_pr_in(BlockBackend *blk, uint32_t *generation,
++                                 uint32_t num_keys, BlockPrType *type,
++                                 uint64_t *keys, CoroutineEntry co_entry,
++                                 BlockCompletionFunc *cb, void *opaque)
++{
++    BlkPrInCB *acb;
++    Coroutine *co;
++
++    /* This is paired with blk_dec_in_flight() in blk_pr_in_complete(). */
++    blk_inc_in_flight(blk);
++    acb = blk_aio_get(&blk_pr_in_aiocb_info, blk, cb, opaque);
++    acb->prco = (BlkPrInCo) {
++        .blk        = blk,
++        .generation = generation,
++        .num_keys   = num_keys,
++        .type       = type,
++        .ret        = NOT_DONE,
++        .keys       = keys,
++    };
++    acb->has_returned = false;
++
++    co = qemu_coroutine_create(co_entry, acb);
++    aio_co_enter(qemu_get_current_aio_context(), co);
++
++    acb->has_returned = true;
++    if (acb->prco.ret != NOT_DONE) {
++        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
++                                         blk_pr_in_complete_bh, acb);
++    }
++
++    return &acb->common;
++}
++
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_read_keys(BlockBackend *blk, uint32_t *generation,
++                        uint32_t num_keys, uint64_t *keys)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_read_keys(blk_bs(blk), generation, num_keys, keys);
++}
++
++static void coroutine_fn blk_aio_pr_read_keys_entry(void *opaque)
++{
++    BlkPrInCB *acb = opaque;
++    BlkPrInCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_read_keys(prco->blk, prco->generation,
++                                        prco->num_keys, prco->keys);
++    blk_pr_in_complete(acb);
++}
++
++BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
++                                 uint32_t num_keys, uint64_t *keys,
++                                 BlockCompletionFunc *cb, void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_in(blk, generation, num_keys, NULL, keys,
++                         blk_aio_pr_read_keys_entry, cb, opaque);
++}
++
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_read_reservation(BlockBackend *blk, uint32_t *generation,
++                               uint64_t *key, BlockPrType *type)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_read_reservation(blk_bs(blk), generation, key, type);
++}
++
++static void coroutine_fn blk_aio_pr_read_reservation_entry(void *opaque)
++{
++    BlkPrInCB *acb = opaque;
++    BlkPrInCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_read_reservation(prco->blk, prco->generation,
++                                               prco->keys, prco->type);
++    blk_pr_in_complete(acb);
++}
++
++BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *generation,
++                                        uint64_t *key, BlockPrType *type,
++                                        BlockCompletionFunc *cb, void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_in(blk, generation, 0, type, key,
++                         blk_aio_pr_read_reservation_entry, cb, opaque);
++}
++
++typedef struct BlkPrOutCo {
++    BlockBackend *blk;
++    uint64_t old_key;
++    uint64_t new_key;
++    bool ptpl;
 +    BlockPrType type;
-+    NvmeRequest *req;
-+    NvmeResvKeys *keys_info;
-+} NvmeReadReservation;
++    bool ignore_key;
++    bool abort;
++    int ret;
++} BlkPrOutCo;
 +
-+static int nvme_read_reservation_cb(NvmeReadReservation *reservation)
++typedef struct BlkPrOutCB {
++    BlockAIOCB common;
++    BlkPrOutCo prco;
++    bool has_returned;
++} BlkPrOutCB;
++
++static const AIOCBInfo blk_pr_out_aiocb_info = {
++    .aiocb_size         = sizeof(BlkPrOutCB),
++};
++
++static void blk_pr_out_complete(BlkPrOutCB *acb)
 +{
-+    int rc;
-+    NvmeReservationStatus *nvme_status;
-+    NvmeRequest *req = reservation->req;
-+    NvmeCtrl *n = req->sq->ctrl;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
-+    int len = sizeof(NvmeReservationStatusHeader) +
-+              sizeof(NvmeRegisteredCtrl) * keys_info->num_keys;
++    if (acb->has_returned) {
++        acb->common.cb(acb->common.opaque, acb->prco.ret);
 +
-+    nvme_status = g_malloc(len);
-+    nvme_status->header.gen = reservation->generation;
-+    nvme_status->header.rtype = block_pr_type_to_nvme(reservation->type);
-+    nvme_status->header.regctl = keys_info->num_keys;
-+    for (int i = 0; i < keys_info->num_keys; i++) {
-+        nvme_status->regctl_ds[i].cntlid = nvme_ctrl(req)->cntlid;
-+        nvme_status->regctl_ds[i].rkey = keys_info->keys[i];
-+        nvme_status->regctl_ds[i].rcsts = keys_info->keys[i] ==
-+                                          reservation->key ? 1 : 0;
-+        /* hostid is not supported currently */
-+        memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
++        /* This is paired with blk_inc_in_flight() in blk_aio_pr_out(). */
++        blk_dec_in_flight(acb->prco.blk);
++        qemu_aio_unref(acb);
 +    }
-+
-+    rc = nvme_c2h(n, (uint8_t *)nvme_status, len, req);
-+    g_free(nvme_status);
-+    return rc;
 +}
 +
-+static int nvme_read_reservation_ext_cb(NvmeReadReservation *reservation)
++static void blk_pr_out_complete_bh(void *opaque)
 +{
-+    int rc;
-+    NvmeReservationStatusExt *nvme_status_ext;
-+    NvmeRequest *req = reservation->req;
-+    NvmeCtrl *n = req->sq->ctrl;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
-+    int len = sizeof(NvmeReservationStatusHeader) +
-+              sizeof(uint8_t) * 40 +
-+              sizeof(NvmeRegisteredCtrlExt) * keys_info->num_keys;
-+
-+    nvme_status_ext = g_malloc(len);
-+    nvme_status_ext->header.gen = cpu_to_be32(reservation->generation);
-+    nvme_status_ext->header.rtype = block_pr_type_to_nvme(reservation->type);
-+    nvme_status_ext->header.regctl = cpu_to_be16(keys_info->num_keys);
-+
-+    for (int i = 0; i < keys_info->num_keys; i++) {
-+        uint16_t ctnlid = nvme_ctrl(req)->cntlid;
-+        nvme_status_ext->regctl_eds[i].cntlid = cpu_to_be16(ctnlid);
-+        nvme_status_ext->regctl_eds[i].rkey = cpu_to_be64(keys_info->keys[i]);
-+        nvme_status_ext->regctl_eds[i].rcsts = keys_info->keys[i] ==
-+                                               reservation->key ? 1 : 0;
-+        /* hostid is not supported currently */
-+        memset(&nvme_status_ext->regctl_eds[i].hostid, 0, 16);
-+    }
-+
-+    rc = nvme_c2h(n, (uint8_t *)nvme_status_ext, len, req);
-+    g_free(nvme_status_ext);
-+    return rc;
++    BlkPrOutCB *acb = opaque;
++    assert(acb->has_returned);
++    blk_pr_out_complete(acb);
 +}
 +
-+static void nvme_resv_read_reservation_cb(void *opaque, int ret)
++static BlockAIOCB *blk_aio_pr_out(BlockBackend *blk, uint64_t old_key,
++                                  uint64_t new_key, bool ptpl,
++                                  BlockPrType type, bool ignore_key,
++                                  bool abort, CoroutineEntry co_entry,
++                                  BlockCompletionFunc *cb, void *opaque)
 +{
-+    NvmeReadReservation *reservation = opaque;
-+    NvmeRequest *req = reservation->req;
-+    bool eds = req->cmd.cdw11 & 0x1;
-+    NvmeResvKeys *keys_info = reservation->keys_info;
++    BlkPrOutCB *acb;
++    Coroutine *co;
 +
-+    if (ret < 0) {
-+        goto out;
++    /* This is paired with blk_dec_in_flight() in blk_pr_out_complete(). */
++    blk_inc_in_flight(blk);
++    acb = blk_aio_get(&blk_pr_out_aiocb_info, blk, cb, opaque);
++    acb->prco = (BlkPrOutCo) {
++        .blk        = blk,
++        .old_key    = old_key,
++        .new_key    = new_key,
++        .ptpl       = ptpl,
++        .type       = type,
++        .ignore_key = ignore_key,
++        .abort      = abort,
++        .ret        = NOT_DONE,
++    };
++    acb->has_returned = false;
++
++    co = qemu_coroutine_create(co_entry, acb);
++    aio_co_enter(qemu_get_current_aio_context(), co);
++
++    acb->has_returned = true;
++    if (acb->prco.ret != NOT_DONE) {
++        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
++                                         blk_pr_out_complete_bh, acb);
 +    }
 +
-+    if (eds) {
-+        ret = nvme_read_reservation_ext_cb(reservation);
-+    } else {
-+        ret = nvme_read_reservation_cb(reservation);
-+    }
-+
-+out:
-+    g_free(keys_info->keys);
-+    g_free(keys_info);
-+    g_free(reservation);
-+    nvme_misc_cb(req, ret);
++    return &acb->common;
 +}
 +
-+static void nvme_resv_read_keys_cb(void *opaque, int ret)
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_register(BlockBackend *blk, uint64_t old_key,
++                       uint64_t new_key, BlockPrType type,
++                       bool ptpl, bool ignore_key)
 +{
-+    NvmeResvKeys *keys_info = opaque;
-+    NvmeRequest *req = keys_info->req;
-+    NvmeNamespace *ns = req->ns;
-+    NvmeReadReservation *reservation;
++    IO_CODE();
 +
-+    if (ret < 0) {
-+        goto out;
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
 +    }
 +
-+    keys_info->num_keys = MIN(ret, keys_info->num_keys);
-+    reservation = g_new0(NvmeReadReservation, 1);
-+    memset(reservation, 0, sizeof(*reservation));
-+    reservation->req = req;
-+    reservation->keys_info = keys_info;
++    return bdrv_co_pr_register(blk_bs(blk), old_key, new_key, type,
++                               ptpl, ignore_key);
++}
 +
-+    req->aiocb = blk_aio_pr_read_reservation(ns->blkconf.blk,
-+                 &reservation->generation, &reservation->key,
-+                 &reservation->type, nvme_resv_read_reservation_cb,
-+                 reservation);
-+    return;
++static void coroutine_fn blk_aio_pr_register_entry(void *opaque)
++{
++    BlkPrOutCB *acb = opaque;
++    BlkPrOutCo *prco = &acb->prco;
 +
-+out:
-+    g_free(keys_info->keys);
-+    g_free(keys_info);
-+    nvme_misc_cb(req, ret);
++    prco->ret = blk_aio_pr_do_register(prco->blk, prco->old_key, prco->new_key,
++                                       prco->type, prco->ptpl,
++                                       prco->ignore_key);
++    blk_pr_out_complete(acb);
++}
++
++BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
++                                uint64_t new_key, BlockPrType type,
++                                bool ptpl, bool ignore_key,
++                                BlockCompletionFunc *cb,
++                                void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_out(blk, old_key, new_key, ptpl, type, ignore_key, false,
++                          blk_aio_pr_register_entry, cb, opaque);
++}
++
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_reserve(BlockBackend *blk, uint64_t key, BlockPrType type)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_reserve(blk_bs(blk), key, type);
++}
++
++static void coroutine_fn blk_aio_pr_reserve_entry(void *opaque)
++{
++    BlkPrOutCB *acb = opaque;
++    BlkPrOutCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_reserve(prco->blk, prco->old_key,
++                                      prco->type);
++    blk_pr_out_complete(acb);
 +}
 +
 +
-+static uint16_t nvme_resv_report(NvmeCtrl *n, NvmeRequest *req)
++BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
++                               BlockPrType type,
++                               BlockCompletionFunc *cb,
++                               void *opaque)
 +{
-+    int num_keys;
-+    uint32_t cdw10 = req->cmd.cdw10;
-+    uint32_t cdw11 = req->cmd.cdw11;
-+    int buflen = (cdw10 + 1) * sizeof(uint32_t);
-+    bool eds = cdw11 & 0x1;
-+    NvmeNamespace *ns = req->ns;
-+    NvmeResvKeys *keys_info;
-+
-+    if (eds) {
-+        if (buflen < sizeof(NvmeReservationStatusHeader) +
-+           sizeof(uint8_t) * 40) {
-+            return NVME_INVALID_FIELD;
-+        }
-+
-+        num_keys = (buflen - sizeof(NvmeReservationStatusHeader) -
-+                   sizeof(uint8_t) * 40) /
-+                   sizeof(struct NvmeRegisteredCtrlExt);
-+    } else {
-+        if (buflen < sizeof(NvmeReservationStatusHeader)) {
-+            return NVME_INVALID_FIELD;
-+        }
-+
-+        num_keys = (buflen - sizeof(NvmeReservationStatusHeader)) /
-+                   sizeof(struct NvmeRegisteredCtrl);
-+    }
-+
-+    keys_info = g_new0(NvmeResvKeys, 1);
-+    keys_info->generation = 0;
-+    /* num_keys is the maximum number of keys that can be transmitted */
-+    keys_info->num_keys = num_keys;
-+    keys_info->keys = g_malloc(sizeof(uint64_t) * num_keys);
-+    keys_info->req = req;
-+
-+    req->aiocb = blk_aio_pr_read_keys(ns->blkconf.blk, &keys_info->generation,
-+                                      keys_info->num_keys, keys_info->keys,
-+                                      nvme_resv_read_keys_cb, keys_info);
-+
-+    return NVME_NO_COMPLETE;
++    IO_CODE();
++    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
++                          blk_aio_pr_reserve_entry, cb, opaque);
 +}
 +
- typedef struct NvmeCopyAIOCB {
-     BlockAIOCB common;
-     BlockAIOCB *aiocb;
-@@ -4469,6 +4779,14 @@ static uint16_t nvme_io_cmd(NvmeCtrl *n, NvmeRequest *req)
-         return nvme_dsm(n, req);
-     case NVME_CMD_VERIFY:
-         return nvme_verify(n, req);
-+    case NVME_CMD_RESV_REGISTER:
-+        return nvme_resv_register(n, req);
-+    case NVME_CMD_RESV_REPORT:
-+        return nvme_resv_report(n, req);
-+    case NVME_CMD_RESV_ACQUIRE:
-+        return nvme_resv_acquire(n, req);
-+    case NVME_CMD_RESV_RELEASE:
-+        return nvme_resv_release(n, req);
-     case NVME_CMD_COPY:
-         return nvme_copy(n, req);
-     case NVME_CMD_ZONE_MGMT_SEND:
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 6d0e456348..fdd919c2b1 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -470,6 +470,10 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
-     case NVME_CMD_ZONE_MGMT_SEND:   return "NVME_ZONED_CMD_MGMT_SEND";
-     case NVME_CMD_ZONE_MGMT_RECV:   return "NVME_ZONED_CMD_MGMT_RECV";
-     case NVME_CMD_ZONE_APPEND:      return "NVME_ZONED_CMD_ZONE_APPEND";
-+    case NVME_CMD_RESV_REGISTER:    return "NVME_CMD_RESV_REGISTER";
-+    case NVME_CMD_RESV_REPORT:      return "NVME_CMD_RESV_REPORT";
-+    case NVME_CMD_RESV_ACQUIRE:     return "NVME_CMD_RESV_ACQUIRE";
-+    case NVME_CMD_RESV_RELEASE:     return "NVME_CMD_RESV_RELEASE";
-     default:                        return "NVME_NVM_CMD_UNKNOWN";
-     }
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_release(BlockBackend *blk, uint64_t key, BlockPrType type)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_release(blk_bs(blk), key, type);
++}
++
++static void coroutine_fn blk_aio_pr_release_entry(void *opaque)
++{
++    BlkPrOutCB *acb = opaque;
++    BlkPrOutCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_release(prco->blk, prco->old_key, prco->type);
++    blk_pr_out_complete(acb);
++}
++
++
++BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
++                               BlockPrType type, BlockCompletionFunc *cb,
++                               void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
++                          blk_aio_pr_release_entry, cb, opaque);
++}
++
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_clear(BlockBackend *blk, uint64_t key)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_clear(blk_bs(blk), key);
++}
++
++static void coroutine_fn blk_aio_pr_clear_entry(void *opaque)
++{
++    BlkPrOutCB *acb = opaque;
++    BlkPrOutCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_clear(prco->blk, prco->old_key);
++    blk_pr_out_complete(acb);
++}
++
++
++BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
++                             BlockCompletionFunc *cb, void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_out(blk, key, 0, false, 0, false, false,
++                          blk_aio_pr_clear_entry, cb, opaque);
++}
++
++/* To be called between exactly one pair of blk_inc/dec_in_flight() */
++static int coroutine_fn
++blk_aio_pr_do_preempt(BlockBackend *blk, uint64_t cr_key,
++                      uint64_t pr_key, BlockPrType type, bool abort)
++{
++    IO_CODE();
++
++    blk_wait_while_drained(blk);
++    GRAPH_RDLOCK_GUARD();
++
++    if (!blk_co_is_available(blk)) {
++        return -ENOMEDIUM;
++    }
++
++    return bdrv_co_pr_preempt(blk_bs(blk), cr_key, pr_key, type, abort);
++}
++
++static void coroutine_fn blk_aio_pr_preempt_entry(void *opaque)
++{
++    BlkPrOutCB *acb = opaque;
++    BlkPrOutCo *prco = &acb->prco;
++
++    prco->ret = blk_aio_pr_do_preempt(prco->blk, prco->old_key,
++                                      prco->new_key, prco->type,
++                                      prco->abort);
++    blk_pr_out_complete(acb);
++}
++
++
++BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
++                               uint64_t pr_key, BlockPrType type,
++                               bool abort, BlockCompletionFunc *cb,
++                               void *opaque)
++{
++    IO_CODE();
++    return blk_aio_pr_out(blk, cr_key, pr_key, false, type, false, abort,
++                          blk_aio_pr_preempt_entry, cb, opaque);
++}
++
+ /* To be called between exactly one pair of blk_inc/dec_in_flight() */
+ static int coroutine_fn
+ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+diff --git a/block/io.c b/block/io.c
+index 7217cf811b..105161930e 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -146,6 +146,7 @@ static void bdrv_merge_limits(BlockLimits *dst, const BlockLimits *src)
+                                  src->min_mem_alignment);
+     dst->max_iov = MIN_NON_ZERO(dst->max_iov, src->max_iov);
+     dst->max_hw_iov = MIN_NON_ZERO(dst->max_hw_iov, src->max_hw_iov);
++    dst->pr_cap |= src->pr_cap;
  }
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 9b9eaeb3a7..2f24570d4a 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -702,6 +702,43 @@ typedef enum NVMEPrCap {
-                       NVME_PR_CAP_EX_AC_AR),
- } NvmePrCap;
  
-+typedef struct QEMU_PACKED NvmeRegisteredCtrl {
-+    uint16_t    cntlid;
-+    uint8_t     rcsts;
-+    uint8_t     rsvd3[5];
-+    uint8_t     hostid[8];
-+    uint64_t    rkey;
-+} NvmeRegisteredCtrl;
+ typedef struct BdrvRefreshLimitsState {
+@@ -3220,6 +3221,169 @@ out:
+     return co.ret;
+ }
+ 
++int coroutine_fn bdrv_co_pr_read_keys(BlockDriverState *bs,
++                 uint32_t *generation, uint32_t num_keys,
++                 uint64_t *keys)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
 +
-+typedef struct QEMU_PACKED NvmeRegisteredCtrlExt {
-+    uint16_t  cntlid;
-+    uint8_t   rcsts;
-+    uint8_t   rsvd3[5];
-+    uint64_t  rkey;
-+    uint8_t   hostid[16];
-+    uint8_t   rsvd32[32];
-+} NvmeRegisteredCtrlExt;
++    IO_CODE();
++    assert_bdrv_graph_readable();
 +
-+typedef struct QEMU_PACKED NvmeReservationStatusHeader {
-+    uint32_t  gen;
-+    uint8_t   rtype;
-+    uint16_t  regctl;
-+    uint16_t  resv5;
-+    uint8_t   ptpls;
-+    uint8_t   resv10[14];
-+} NvmeReservationStatusHeader;
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_read_keys) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
 +
-+typedef struct QEMU_PACKED NvmeReservationStatus {
-+    struct NvmeReservationStatusHeader header;
-+    struct NvmeRegisteredCtrl regctl_ds[];
-+} NvmeReservationStatus;
++    co.ret = drv->bdrv_co_pr_read_keys(bs, generation, num_keys, keys);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
 +
-+typedef struct QEMU_PACKED NvmeReservationStatusExt {
-+    struct NvmeReservationStatusHeader header;
-+    uint8_t   rsvd24[40];
-+    struct NvmeRegisteredCtrlExt regctl_eds[];
-+} NvmeReservationStatusExt;
++int coroutine_fn bdrv_co_pr_read_reservation(BlockDriverState *bs,
++                 uint32_t *generation, uint64_t *key, BlockPrType *type)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
 +
- typedef struct QEMU_PACKED NvmeDeleteQ {
-     uint8_t     opcode;
-     uint8_t     flags;
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_read_reservation) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_read_reservation(bs, generation, key, type);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
++int coroutine_fn bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_key,
++                 uint64_t new_key, BlockPrType type, bool ptpl,
++                 bool ignore_key)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
++
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_register) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_register(bs, old_key, new_key, type,
++    ptpl, ignore_key);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
++int coroutine_fn bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key,
++                                    BlockPrType type)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
++
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_reserve) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_reserve(bs, key, type);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
++int coroutine_fn bdrv_co_pr_release(BlockDriverState *bs, uint64_t key,
++                                    BlockPrType type)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
++
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_release) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_release(bs, key, type);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
++int coroutine_fn bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
++
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_clear) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_clear(bs, key);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
++int coroutine_fn bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_key,
++                 uint64_t pr_key, BlockPrType type, bool abort)
++{
++    BlockDriver *drv = bs->drv;
++    CoroutineIOCompletion co = {
++        .coroutine = qemu_coroutine_self(),
++    };
++
++    IO_CODE();
++    assert_bdrv_graph_readable();
++
++    bdrv_inc_in_flight(bs);
++    if (!drv || !drv->bdrv_co_pr_preempt) {
++        co.ret = -ENOTSUP;
++        goto out;
++    }
++
++    co.ret = drv->bdrv_co_pr_preempt(bs, cr_key, pr_key, type, abort);
++out:
++    bdrv_dec_in_flight(bs);
++    return co.ret;
++}
++
+ int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offset,
+                         unsigned int *nr_zones,
+                         BlockZoneDescriptor *zones)
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index a846023a09..7ca4e2328f 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -524,6 +524,46 @@ typedef enum {
+     BDRV_FIX_ERRORS   = 2,
+ } BdrvCheckMode;
+ 
++/**
++ *  According SCSI protocol(chapter 5.9 of SCSI Primary Commands - 4)
++ *  and NVMe protocol(chapter 7.2 of NVMe Base Specification 2.0),
++ *  the persistent reservation types and persistent capabilities of
++ *  the public layer block are abstracted.
++ */
++typedef enum {
++    BLK_PR_WRITE_EXCLUSIVE              = 0x1,
++    BLK_PR_EXCLUSIVE_ACCESS             = 0x2,
++    BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY    = 0x3,
++    BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY   = 0x4,
++    BLK_PR_WRITE_EXCLUSIVE_ALL_REGS     = 0x5,
++    BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS    = 0x6,
++} BlockPrType;
++
++typedef enum BLKPrCap {
++    /* Persist Through Power Loss */
++    BLK_PR_CAP_PTPL = 1 << 0,
++    /* Write Exclusive reservation type */
++    BLK_PR_CAP_WR_EX = 1 << 1,
++    /* Exclusive Access reservation type */
++    BLK_PR_CAP_EX_AC = 1 << 2,
++    /* Write Exclusive Registrants Only reservation type */
++    BLK_PR_CAP_WR_EX_RO = 1 << 3,
++    /* Exclusive Access Registrants Only reservation type */
++    BLK_PR_CAP_EX_AC_RO = 1 << 4,
++    /* Write Exclusive All Registrants reservation type */
++    BLK_PR_CAP_WR_EX_AR = 1 << 5,
++    /* Exclusive Access All Registrants reservation type */
++    BLK_PR_CAP_EX_AC_AR = 1 << 6,
++
++    BLK_PR_CAP_ALL = (BLK_PR_CAP_PTPL |
++                     BLK_PR_CAP_WR_EX |
++                     BLK_PR_CAP_EX_AC |
++                     BLK_PR_CAP_WR_EX_RO |
++                     BLK_PR_CAP_EX_AC_RO |
++                     BLK_PR_CAP_WR_EX_AR |
++                     BLK_PR_CAP_EX_AC_AR),
++} BLKPrCap;
++
+ typedef struct BlockSizes {
+     uint32_t phys;
+     uint32_t log;
+diff --git a/include/block/block-io.h b/include/block/block-io.h
+index b49e0537dd..908361862b 100644
+--- a/include/block/block-io.h
++++ b/include/block/block-io.h
+@@ -106,6 +106,26 @@ void bdrv_aio_cancel_async(BlockAIOCB *acb);
+ int coroutine_fn GRAPH_RDLOCK
+ bdrv_co_ioctl(BlockDriverState *bs, int req, void *buf);
+ 
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
++                     uint32_t num_keys, uint64_t *keys);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
++                            uint64_t *key, BlockPrType *type);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_key,
++                    uint64_t new_key, BlockPrType type,
++                    bool ptpl, bool ignore_key);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key);
++int coroutine_fn GRAPH_RDLOCK
++bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_key, uint64_t pr_key,
++                   BlockPrType type, bool abort);
++
+ /* Ensure contents are flushed to disk.  */
+ int coroutine_fn GRAPH_RDLOCK bdrv_co_flush(BlockDriverState *bs);
+ 
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 761276127e..6e628069e9 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -766,6 +766,87 @@ struct BlockDriver {
+     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_ioctl)(
+         BlockDriverState *bs, unsigned long int req, void *buf);
+ 
++    /*
++     * Persistent reservation series api.
++     * Please refer to chapter 5.9 of SCSI Primary Commands - 4 or
++     * chapter 7 of NVMe Base Specification 2.0.
++     *
++     * The block layer driver should implement all the following APIs
++     * or none at all, including: bdrv_co_pr_read_keys,
++     * bdrv_co_pr_read_reservation, bdrv_co_pr_register,
++     * bdrv_co_pr_reserve, bdrv_co_pr_release,
++     * bdrv_co_pr_clear and bdrv_co_pr_preempt.
++     *
++     * Read the registered keys and return them in the @keys.
++     * @generation: The generation of the reservation key.
++     * @num_keys:   The maximum number of keys that can be transmitted.
++     * @keys:       Registered keys array.
++     *
++     * On success, store generation in @generation and store keys @keys
++     * and return the number of @keys.
++     * On failure return -errno.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_keys)(
++        BlockDriverState *bs, uint32_t *generation,
++        uint32_t num_keys, uint64_t *keys);
++    /*
++     * Read the reservation key and store it in the @key.
++     * @generation: The generation of the reservation key.
++     * @key:        The reservation key.
++     * @type:       Type of the reservation key.
++     *
++     * On success, store generation in @generation, store the
++     * reservation key in @key and return the number of @key
++     * which used to determine whether the reservation key exists.
++     * On failure return -errno.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_reservation)(
++        BlockDriverState *bs, uint32_t *generation,
++        uint64_t *key, BlockPrType *type);
++    /*
++     * Register, unregister, or replace a reservation key.
++     * @old_key:    The current reservation key associated with the host.
++     * @new_key:    The new reservation Key.
++     * @type:       Type of the reservation key.
++     * @ignore_key: Ignore or not @old_key.
++     * @ptpl:       Whether to support Persist Through Power Loss(PTPL).
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_register)(
++        BlockDriverState *bs, uint64_t old_key,
++        uint64_t new_key, BlockPrType type,
++        bool ptpl, bool ignore_key);
++    /*
++     * Acquire a reservation on a host.
++     * @key:  The current reservation key associated with the host.
++     * @type: Type of the reservation key.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_reserve)(
++        BlockDriverState *bs, uint64_t key, BlockPrType type);
++    /*
++     * Release a reservation on a host.
++     * @key:  The current reservation key associated with the host.
++     * @type: Type of the reservation key.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_release)(
++        BlockDriverState *bs, uint64_t key, BlockPrType type);
++    /**
++     * Clear reservations on a host.
++     * @key: The current reservation key associated with the host.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_clear)(
++        BlockDriverState *bs, uint64_t key);
++    /*
++     * Preempt a reservation held on a host.
++     * @cr_key: The current reservation key associated with the host.
++     * @pr_key: The preempt reservation Key which to be
++     *          unregistered from the namespace.
++     * @type:   Type of the reservation key.
++     * @abort:  Whether to abort a reservation held on a host.
++     */
++    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_preempt)(
++        BlockDriverState *bs, uint64_t cr_key,
++        uint64_t pr_key, BlockPrType type, bool abort);
++
+     /*
+      * Returns 0 for completed check, -errno for internal errors.
+      * The check results are stored in result.
+@@ -899,6 +980,9 @@ typedef struct BlockLimits {
+     uint32_t max_active_zones;
+ 
+     uint32_t write_granularity;
++
++   /* Persistent reservation capacities. */
++    uint8_t pr_cap;
+ } BlockLimits;
+ 
+ typedef struct BdrvOpBlocker BdrvOpBlocker;
+diff --git a/include/sysemu/block-backend-io.h b/include/sysemu/block-backend-io.h
+index d174275a5c..b3d49a3c6f 100644
+--- a/include/sysemu/block-backend-io.h
++++ b/include/sysemu/block-backend-io.h
+@@ -62,6 +62,30 @@ void blk_aio_cancel_async(BlockAIOCB *acb);
+ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+                           BlockCompletionFunc *cb, void *opaque);
+ 
++BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
++                                 uint32_t num_keys, uint64_t *keys,
++                                 BlockCompletionFunc *cb, void *opaque);
++BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *generation,
++                                        uint64_t *key, BlockPrType *type,
++                                        BlockCompletionFunc *cb, void *opaque);
++BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
++                                uint64_t new_key, BlockPrType type,
++                                bool ptpl, bool ignore_key,
++                                BlockCompletionFunc *cb,
++                                void *opaque);
++BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
++                               BlockPrType type,
++                               BlockCompletionFunc *cb,
++                               void *opaque);
++BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
++                               BlockPrType type, BlockCompletionFunc *cb,
++                               void *opaque);
++BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
++                             BlockCompletionFunc *cb, void *opaque);
++BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
++                               uint64_t pr_key, BlockPrType type, bool abort,
++                               BlockCompletionFunc *cb, void *opaque);
++
+ void blk_inc_in_flight(BlockBackend *blk);
+ void blk_dec_in_flight(BlockBackend *blk);
+ 
 -- 
 2.20.1
 
