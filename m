@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E1AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA366C3DA45
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5IL-0001Bq-Bx; Thu, 11 Jul 2024 21:41:57 -0400
+	id 1sS5Jk-0006Js-Vh; Thu, 11 Jul 2024 21:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sS5IK-0001A1-70; Thu, 11 Jul 2024 21:41:56 -0400
-Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ id 1sS5Jj-0006EC-Io; Thu, 11 Jul 2024 21:43:23 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sS5II-0002aa-3u; Thu, 11 Jul 2024 21:41:55 -0400
-Received: by mail-ua1-x934.google.com with SMTP id
- a1e0cc1a2514c-81177442f46so402921241.3; 
- Thu, 11 Jul 2024 18:41:52 -0700 (PDT)
+ id 1sS5Jh-0002tW-TV; Thu, 11 Jul 2024 21:43:23 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-80fe89eaa4dso1164441241.1; 
+ Thu, 11 Jul 2024 18:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720748512; x=1721353312; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720748598; x=1721353398; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nQfqs/W7mE61tsRR5tJN3PuMWsND00BUuiY1spOzn7A=;
- b=B0furNenCDSNmKAMngllJ8IWhSvZtMlHDQU3h++st2/8q6YkS93ep+KEig/V2CVTs9
- lv7BT6tI0kclLeYrrYU0RqwXoDDSrP4CLiKt4k8md3o44a8ax25tzgBkuEXRY+b7LFbg
- 9XTkR1gJL6D3P4K8WX/SQteNNErM3AC9COe27xyu2z0JTrk143UAEMHu5ZMxJv9pkciv
- kkd/sdX7YOFRrJM3yD+uDZQZjB9K68rxsTDKwTq7HyTRW1LErA+aymDAtRDovXV4KjtW
- TaKBDAldaZp7viNtIMsJwz7vJdms9NblDNppKApFRvqAZaEwpUl28EIGhiGD5I7tdzCq
- kWnw==
+ bh=mpRrwkAnk8cN+bLZuLnPeMf5sAnCIyoO32O0ueibdJM=;
+ b=RFR29MBv+hu8BgrT829k1OWdijwMOh4wGeRdmh2ZB6DwnR1+gmTXEq6wOUiOL2nUV2
+ 5eVGnKWeMdfbzZIxapK7Q7h9Rm4fFbaD6WxwyPCLbNu3ogIxgwMoUlZcabWbfxyueZOH
+ ila8v2dm+ZNqDsF7YiJkHogrMWSMEwyhAkw0pAKLlblIkSClmczv1awxro/Ff9GCsmpS
+ /X9zQUgBK+0bnxpJ1H7Dj7BMOejWtGc07LcmPY3FH6K3Jw0UgYpN7nGaJq6CyIZhOc5H
+ 9xyE3ik7PAe+VdQmDDtBi69kpgtBLREOoW/r3ddgNXO+l/NCbt3tYPt4kvAc+YQfg1wx
+ WGmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720748512; x=1721353312;
+ d=1e100.net; s=20230601; t=1720748598; x=1721353398;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nQfqs/W7mE61tsRR5tJN3PuMWsND00BUuiY1spOzn7A=;
- b=YTxb2+TIzP2AT0LMTm7Chtv73nKJJ+9eTgl2HtBUmU8LGOVDlF4KyKgHiBxgKBROHw
- egZn9whw3k+KOtQC2FzYzMWLwoqeZT9EONULuAN4/03kbxCvUsJP3xcs+0a8QChzFoFN
- p1ztIwZ4eGVx1zIK5LS7bZLohH8MSm8W4Wyy8jdj2ldXzG3jqmbH2tzMTGa2A9m7kA7h
- HMmOlnObomDrg8UY4YvIiUvO9oSG9JnOjDI6pCGl1rz3YBz1T3JqHTo7QeAGOVkUMN7h
- Oqdee/h+nEnjlwqgu08D6Jiv8c6U4rhicS+EuztEw59xjflnz1fEw8WFtbWL4nzOdkfN
- ZtTg==
+ bh=mpRrwkAnk8cN+bLZuLnPeMf5sAnCIyoO32O0ueibdJM=;
+ b=OWwP6lDplLCBtgks2tA6xvuP6vt5i+l16iE9fKbLaCjuuq361eP2m4cXdKPS+yLRUS
+ 44E8+R8SRYw5LnPeormjXTijJnjbYfZ2/85y3dglmcBUgCXGuXn0DQjSOqoYMZGVcqxd
+ QmBJDdBSLAhtzFInhyOIhMMvctH8PoQlhWWGri70lU2N04MKhPrp2eenjRrL+Vd5F8mp
+ W20n9RLCBswvF2vjNVXIo3h0qZuw5cIhGoE9coPIxormN1fzBx8XbKvaE5MlvKxQ3pJV
+ eiShd0WmxUvl1SiXDaRLcCRyo6VV9UpjxZQ6yBiUwvTfAxnO75+ALNEy5v21We6okPnH
+ 2MJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEHw9jQGBhfB6IwpdajdcKUTHKBp8OvUIw2GfX+wjv/s29U7WojfDHUrpvsHHrK+VsSuiD6zjhcnPe2Sjr20UGcVjRfm4hsNDGvYXVgKPZ+wL6zdJE3HWiuSdru3bN8SibhoqTREbgwxfkDli7vkHfAXJB14RIZr/YzY2IMhmxD3fVg6lcTQ==
-X-Gm-Message-State: AOJu0YwE0ThbwyVkHcEqO+pN5XKBfs+9frgfMDxCuRZB5Uy8ZtAL2qPf
- kck5a57yMeGtJ7MHqreiv4miRWKn+qwZGUgXkTjmXoy0beRgnJf6hmywRHnQciDn6+cVjzZCisC
- 25/Jyo86xoU1/gVgQQ650dldTyos=
-X-Google-Smtp-Source: AGHT+IEqW4C6791kz5lmRum5CV+vQ/yFOoBH0VIxihpxLbedgEaAXHzhtjmQBrV2zG45QnHw5ZKna4l1KTYUlrSjojA=
-X-Received: by 2002:a05:6102:38c8:b0:48f:385f:efc with SMTP id
- ada2fe7eead31-490321b9b4bmr12232885137.18.1720748511628; Thu, 11 Jul 2024
- 18:41:51 -0700 (PDT)
+ AJvYcCUMIR92ic3sVn2wlBJcDKhYx294nULNtUqGgUqzk1+iW8Q14NY3rHVBZ7al62tjrJDv4yKZYWn1zQuuoY1eH8a7ZcuTGMCCGZgI65wVk3rkgNsLu8AdwTIJSXmxIaiLs0gNf5wMADbbsG9ax3xVWkkfUb8zvM0sUlLdn7NvRKoFsQYg49gZhA==
+X-Gm-Message-State: AOJu0Yy38OfkvAuvfbPct2nMnY6VwVhTnGrgrmRfa6Pm+oX3746EhwkS
+ NVRYbB0Zm8tmXHTemXZfXP75ZVZxrYyzUtRF9doePX5cYMtKK114iKvq2tGeTyHZdjDj1sSWqjC
+ dGWRVuxdA8fvEub1/fq2z53xmHv4H0dwC
+X-Google-Smtp-Source: AGHT+IGWi9qkgJ4qVCHVQVD245e+aV0K3MPuGuqBmO0MXqphtj9L3juc6TtHXNuxds/SazQ02FbCsXmt+pMl1PQv3bI=
+X-Received: by 2002:a05:6102:b0a:b0:48f:62bb:357c with SMTP id
+ ada2fe7eead31-4911f4d8d47mr24241137.3.1720748597993; Thu, 11 Jul 2024
+ 18:43:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240612081416.29704-1-jim.shu@sifive.com>
- <20240612081416.29704-5-jim.shu@sifive.com>
-In-Reply-To: <20240612081416.29704-5-jim.shu@sifive.com>
+ <20240612081416.29704-6-jim.shu@sifive.com>
+In-Reply-To: <20240612081416.29704-6-jim.shu@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 12 Jul 2024 11:41:25 +1000
-Message-ID: <CAKmqyKNjBj8y5RZ8X1U-q=cZLPYcc-x6L2VAY2spfPNxjWMpmg@mail.gmail.com>
-Subject: Re: [RFC PATCH 04/16] hw/misc: riscv_worldguard: Add RISC-V
- WorldGuard global config
+Date: Fri, 12 Jul 2024 11:42:52 +1000
+Message-ID: <CAKmqyKMPp6kq1dnzDHOx-BhJxy6K2KpFysif1DCDCBKCCEKy5A@mail.gmail.com>
+Subject: Re: [RFC PATCH 05/16] target/riscv: Add CPU options of WorldGuard CPU
+ extension
 To: Jim Shu <jim.shu@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Richard Henderson <richard.henderson@linaro.org>,
@@ -93,8 +93,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,334 +118,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 6:18=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
+On Wed, Jun 12, 2024 at 6:17=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
 >
-> Add a device for RISCV WG global config, which contains the number of
-> worlds, reset value, and trusted WID ... etc.
->
-> This global config is used by both CPU WG extension and wgChecker devices=
-.
+> We define CPU options for WG CSR support in RISC-V CPUs which
+> can be set by machine/device emulation. The RISC-V CSR emulation
+> will also check this feature for emulating WG CSRs.
 >
 > Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
->  hw/misc/Kconfig                    |   3 +
->  hw/misc/meson.build                |   1 +
->  hw/misc/riscv_worldguard.c         | 183 +++++++++++++++++++++++++++++
->  include/hw/misc/riscv_worldguard.h |  55 +++++++++
->  4 files changed, 242 insertions(+)
->  create mode 100644 hw/misc/riscv_worldguard.c
->  create mode 100644 include/hw/misc/riscv_worldguard.h
+>  target/riscv/cpu.c         |  8 ++++++++
+>  target/riscv/cpu_cfg.h     |  3 +++
+>  target/riscv/tcg/tcg-cpu.c | 11 +++++++++++
+>  3 files changed, 22 insertions(+)
 >
-> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-> index 1e08785b83..08fc0f2b8c 100644
-> --- a/hw/misc/Kconfig
-> +++ b/hw/misc/Kconfig
-> @@ -213,4 +213,7 @@ config IOSB
->  config XLNX_VERSAL_TRNG
->      bool
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 69a08e8c2c..d70eedf957 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -204,6 +204,9 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xtheadmem=
+pair),
+>      ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
+>      ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentan=
+aCondOps),
+> +    ISA_EXT_DATA_ENTRY(smwg, PRIV_VERSION_1_12_0, ext_smwg),
+> +    ISA_EXT_DATA_ENTRY(smwgd, PRIV_VERSION_1_12_0, ext_smwgd),
+> +    ISA_EXT_DATA_ENTRY(sswg, PRIV_VERSION_1_12_0, ext_sswg),
 >
-> +config RISCV_WORLDGUARD
-> +    bool
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> @@ -1595,6 +1598,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimenta=
+l_exts[] =3D {
+>  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] =3D {
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>
+> +    /* RISC-V WorldGuard v0.4 */
+> +    MULTI_EXT_CFG_BOOL("x-smwg", ext_smwg, false),
+> +    MULTI_EXT_CFG_BOOL("x-smwgd", ext_smwgd, false),
+> +    MULTI_EXT_CFG_BOOL("x-sswg", ext_sswg, false),
 
-We should ensure this is enabled as well so that it is built by default
+We want to add the functionality then expose the properties, as this
+is user accessible and we want to maintain bistability.
+
+I understand this doesn't break the build, but it's a bit strange to
+allow users to enable something when at this point it doesn't yet work
 
 Alistair
 
 > +
->  source macio/Kconfig
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index 86596a3888..a75668ff86 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -34,6 +34,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: fi=
-les('sifive_e_prci.c'))
->  system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.=
-c'))
->  system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.=
-c'))
->  system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prc=
-i.c'))
-> +specific_ss.add(when: 'CONFIG_RISCV_WORLDGUARD', if_true: files('riscv_w=
-orldguard.c'))
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
 >
->  subdir('macio')
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index e1e4f32698..23e779ae08 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -120,6 +120,9 @@ struct RISCVCPUConfig {
+>      bool ext_ssaia;
+>      bool ext_sscofpmf;
+>      bool ext_smepmp;
+> +    bool ext_smwg;
+> +    bool ext_smwgd;
+> +    bool ext_sswg;
+>      bool rvv_ta_all_1s;
+>      bool rvv_ma_all_1s;
 >
-> diff --git a/hw/misc/riscv_worldguard.c b/hw/misc/riscv_worldguard.c
-> new file mode 100644
-> index 0000000000..c839cc4e87
-> --- /dev/null
-> +++ b/hw/misc/riscv_worldguard.c
-> @@ -0,0 +1,183 @@
-> +/*
-> + * RISC-V WorldGuard Device
-> + *
-> + * Copyright (c) 2022 SiFive, Inc.
-> + *
-> + * This provides WorldGuard global config.
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOU=
-T
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
- for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License alo=
-ng with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/log.h"
-> +#include "exec/hwaddr.h"
-> +#include "hw/registerfields.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/hw.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/misc/riscv_worldguard.h"
-> +#include "hw/core/cpu.h"
-> +#include "target/riscv/cpu.h"
-> +#include "trace.h"
-> +
-> +/*
-> + * WorldGuard global config:
-> + * List the global setting of WG, like num-of-worlds. It is unique in th=
-e machine.
-> + * All CPUs with WG extension and wgChecker devices will use it.
-> + */
-> +struct RISCVWorldGuardState *worldguard_config =3D NULL;
-> +
-> +static Property riscv_worldguard_properties[] =3D {
-> +    DEFINE_PROP_UINT32("nworlds", RISCVWorldGuardState, nworlds, 0),
-> +
-> +    /* Only Trusted WID could access wgCheckers if it is enabled. */
-> +    DEFINE_PROP_UINT32("trustedwid", RISCVWorldGuardState, trustedwid, N=
-O_TRUSTEDWID),
-> +
-> +    /*
-> +     * WG reset value is bypass mode in HW. All WG permission checkings =
-are
-> +     * pass by default, so SW could correctly run on the machine w/o any=
- WG
-> +     * programming.
-> +     */
-> +    DEFINE_PROP_BOOL("hw-bypass", RISCVWorldGuardState, hw_bypass, false=
-),
-> +
-> +    /*
-> +     * TrustZone compatible mode:
-> +     * This mode is only supported in 2 worlds system. It converts World=
-Guard
-> +     * WID to TZ NS signal on the bus so WG could be cooperated with
-> +     * TZ components. In QEMU, it converts WID to 'MemTxAttrs.secure' bi=
-t used
-> +     * by TZ.
-> +     */
-> +    DEFINE_PROP_BOOL("tz-compat", RISCVWorldGuardState, tz_compat, false=
-),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +/* WID to MemTxAttrs converter */
-> +static void wid_to_mem_attrs(MemTxAttrs *attrs, uint32_t wid)
-> +{
-> +    g_assert(wid < worldguard_config->nworlds);
-> +
-> +    attrs->unspecified =3D 0;
-> +    if (worldguard_config->tz_compat) {
-> +        attrs->secure =3D wid;
-> +    } else {
-> +        attrs->world_id =3D wid;
-> +    }
-> +}
-> +
-> +/* MemTxAttrs to WID converter */
-> +uint32_t mem_attrs_to_wid(MemTxAttrs attrs)
-> +{
-> +    if (attrs.unspecified) {
-> +        if (worldguard_config->trustedwid !=3D NO_TRUSTEDWID) {
-> +            return worldguard_config->trustedwid;
-> +        } else {
-> +            return worldguard_config->nworlds - 1;
-> +        }
-> +    }
-> +
-> +    if (worldguard_config->tz_compat) {
-> +        return attrs.secure;
-> +    } else {
-> +        return attrs.world_id;
-> +    }
-> +}
-> +
-> +bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock)
-> +{
-> +    uint32_t wid =3D mem_attrs_to_wid(attrs);
-> +    uint32_t trustedwid =3D worldguard_config->trustedwid;
-> +
-> +    if ((trustedwid =3D=3D NO_TRUSTEDWID) || (wid =3D=3D trustedwid)) {
-> +        return true;
-> +    } else {
-> +        /*
-> +         * Only Trusted WID could access WG blocks if having it.
-> +         * Access them from other WIDs will get failed.
-> +         */
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Invalid access to %s from non-trusted WID %d\=
-n",
-> +                      __func__, wgblock, wid);
-> +
-> +        return false;
-> +    }
-> +}
-> +
-> +static void riscv_worldguard_realize(DeviceState *dev, Error **errp)
-> +{
-> +    RISCVWorldGuardState *s =3D RISCV_WORLDGUARD(dev);
-> +
-> +    if (worldguard_config !=3D NULL) {
-> +        error_setg(errp, "Couldn't realize multiple global WorldGuard co=
-nfigs.");
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 683f604d9f..dc86e6e1d5 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -726,6 +726,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
+, Error **errp)
+>          cpu->pmu_avail_ctrs =3D 0;
+>      }
+>
+> +    /* RISC-V WorldGuard */
+> +    if (cpu->cfg.ext_sswg && !cpu->cfg.ext_smwg) {
+> +        error_setg(errp, "Sswg extension requires Smwg extension");
 > +        return;
 > +    }
 > +
-> +    if ((s->nworlds) & (s->nworlds - 1)) {
-> +        error_setg(errp, "Current implementation only support power-of-2=
- NWorld.");
+> +    if (cpu->cfg.ext_smwgd !=3D cpu->cfg.ext_sswg) {
+> +        error_setg(errp, "Smwgd/Sswg extensions should be enabled togeth=
+er");
 > +        return;
 > +    }
 > +
-> +    if ((s->trustedwid !=3D NO_TRUSTEDWID) && (s->trustedwid >=3D s->nwo=
-rlds)) {
-> +        error_setg(errp, "Trusted WID must be less than the number of wo=
-rld.");
-> +        return;
-> +    }
-> +
-> +    if ((s->nworlds !=3D 2) && (s->tz_compat)) {
-> +        error_setg(errp, "Only 2 worlds system could use TrustZone compa=
-tible mode.");
-> +        return;
-> +    }
-> +
-> +    /* Register WG global config */
-> +    worldguard_config =3D s;
-> +
-> +    /* Initialize global data for wgChecker */
-> +    wgc_slot_perm_mask =3D MAKE_64BIT_MASK(0, 2 * worldguard_config->nwo=
-rlds);
-> +}
-> +
-> +static void riscv_worldguard_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +
-> +    device_class_set_props(dc, riscv_worldguard_properties);
-> +    dc->user_creatable =3D true;
-> +    dc->realize =3D riscv_worldguard_realize;
-> +}
-> +
-> +static const TypeInfo riscv_worldguard_info =3D {
-> +    .name          =3D TYPE_RISCV_WORLDGUARD,
-> +    .parent        =3D TYPE_DEVICE,
-> +    .instance_size =3D sizeof(RISCVWorldGuardState),
-> +    .class_init    =3D riscv_worldguard_class_init,
-> +};
-> +
-> +/*
-> + * Create WorldGuard global config
-> + */
-> +DeviceState *riscv_worldguard_create(uint32_t nworlds, uint32_t trustedw=
-id,
-> +                                     bool hw_bypass, bool tz_compat)
-> +{
-> +    DeviceState *dev =3D qdev_new(TYPE_RISCV_WORLDGUARD);
-> +    qdev_prop_set_uint32(dev, "nworlds", nworlds);
-> +    qdev_prop_set_uint32(dev, "trustedwid", trustedwid);
-> +    qdev_prop_set_bit(dev, "hw-bypass", hw_bypass);
-> +    qdev_prop_set_bit(dev, "tz-compat", tz_compat);
-> +    qdev_realize(DEVICE(dev), NULL, &error_fatal);
-> +    return dev;
-> +}
-> +
-> +static void riscv_worldguard_register_types(void)
-> +{
-> +    type_register_static(&riscv_worldguard_info);
-> +}
-> +
-> +type_init(riscv_worldguard_register_types)
-> diff --git a/include/hw/misc/riscv_worldguard.h b/include/hw/misc/riscv_w=
-orldguard.h
-> new file mode 100644
-> index 0000000000..8a533a0517
-> --- /dev/null
-> +++ b/include/hw/misc/riscv_worldguard.h
-> @@ -0,0 +1,55 @@
-> +/*
-> + * RISC-V WorldGuard Devices
-> + *
-> + * Copyright (c) 2022 RISCV, Inc.
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOU=
-T
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
- for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License alo=
-ng with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef HW_RISCV_WORLDGUARD_H
-> +#define HW_RISCV_WORLDGUARD_H
-> +
-> +#include "qom/object.h"
-> +#include "hw/sysbus.h"
-> +#include "exec/hwaddr.h"
-> +
-> +#define TYPE_RISCV_WORLDGUARD "riscv.worldguard"
-> +
-> +#define NO_TRUSTEDWID           UINT32_MAX
-> +
-> +typedef struct RISCVWorldGuardState RISCVWorldGuardState;
-> +DECLARE_INSTANCE_CHECKER(RISCVWorldGuardState, RISCV_WORLDGUARD,
-> +                         TYPE_RISCV_WORLDGUARD)
-> +
-> +struct RISCVWorldGuardState {
-> +    /*< private >*/
-> +    DeviceState parent_obj;
-> +
-> +    /*< public >*/
-> +
-> +    /* Property */
-> +    uint32_t nworlds;
-> +    uint32_t trustedwid;
-> +    bool hw_bypass;
-> +    bool tz_compat;
-> +};
-> +
-> +extern struct RISCVWorldGuardState *worldguard_config;
-> +
-> +DeviceState *riscv_worldguard_create(uint32_t nworlds, uint32_t trustedw=
-id,
-> +                                     bool hw_bypass, bool tz_compat);
-> +
-> +uint32_t mem_attrs_to_wid(MemTxAttrs attrs);
-> +bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock);
-> +
-> +#endif
+>      /*
+>       * Disable isa extensions based on priv spec after we
+>       * validated and set everything we need.
 > --
 > 2.17.1
 >
