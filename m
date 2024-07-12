@@ -4,67 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9238C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C62C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 08:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSBze-0007kY-EK; Fri, 12 Jul 2024 04:51:06 -0400
+	id 1sSC0V-0003W6-Cq; Fri, 12 Jul 2024 04:51:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sSBzc-0007cZ-FC
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:51:04 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSC0S-0003JG-3E
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:51:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sSBza-0003cJ-NZ
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:51:04 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sSC0Q-0003gm-6V
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 04:51:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720774260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1720774313;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L5kyceAxXyZqcIxRAamUJLp8BO2co/1kbuTBzG3Kvuo=;
- b=TikFQ5giENEjwnouSx0eJ/YSIvLOecoItmlHzx0xRSn1B/2c8PEhVs4vwp6rKW4KlsnbOx
- 0p+GbbwGEAXM/uU1mCpNTQisZAqxzvYw/+3AKRLK9LVpiiD/1kr1OOpYHzx++CPWWQIcbX
- /2xZCpDmg9dDyhMWcfQ5jbn4WeT65NY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LApJBlvn0rPCmpk8/Q8YINFGlr/LoqSPBKHF7y7oNj0=;
+ b=Lehv5BahQIe6kusUXVlQs47hZEjav1q+VpyPisjWuS4KA3Iv+POnXj7bLMBna5cA8n07f8
+ ibAh7qGMZZAWcFH1MBMvNbUQpuUJrV5UvpaXXbXnS8cOuz3gDQB8mv7eXVCpuNRRyStjVv
+ ZO3XxHUkKGaNlcUMWQLV68xuHUSXrK8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-QjA-Ru4aOGO0Hr8oawhGkQ-1; Fri,
- 12 Jul 2024 04:50:58 -0400
-X-MC-Unique: QjA-Ru4aOGO0Hr8oawhGkQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-UP8UnPHSMuiBw6pLK2ZHOA-1; Fri,
+ 12 Jul 2024 04:51:49 -0400
+X-MC-Unique: UP8UnPHSMuiBw6pLK2ZHOA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FB43195419C; Fri, 12 Jul 2024 08:50:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F97319560AE; Fri, 12 Jul 2024 08:50:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 66F7921E668C; Fri, 12 Jul 2024 10:50:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Konstantin
- Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH 04/14] qapi: add a 'command-features' pragma
-In-Reply-To: <ZpDlizzbaXk4pa0U@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 12 Jul 2024 09:12:59 +0100")
-References: <20240604153242.251334-1-berrange@redhat.com>
- <20240604153242.251334-5-berrange@redhat.com>
- <87r0bzuj7d.fsf@pond.sub.org> <ZpDlizzbaXk4pa0U@redhat.com>
-Date: Fri, 12 Jul 2024 10:50:54 +0200
-Message-ID: <87a5inuh75.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE4EA19560A3; Fri, 12 Jul 2024 08:51:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.56])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57F5B1955E85; Fri, 12 Jul 2024 08:51:45 +0000 (UTC)
+Date: Fri, 12 Jul 2024 09:51:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 2/8] tests/pytest: Convert some simple avocado tests
+ into pytests
+Message-ID: <ZpDunfVt_QcmUXCu@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
+ <20240711115546.40859-3-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240711115546.40859-3-thuth@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,37 +89,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Thu, Jul 11, 2024 at 01:55:40PM +0200, Thomas Huth wrote:
+> These test are rather simple and don't need any modifications apart
+> from adjusting the "from avocado_qemu" line. These tests can now
+> be run directly via "pytest" by setting the PYTHONPATH environment
+> variable to the python folder of QEMU and by providing the QEMU
+> binary via the PYTEST_QEMU_BINARY environment variable, and the source
+> and build directories via the PYTEST_SOURCE_ROOTand PYTEST_BUILD_ROOT
+> environment variables.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/{avocado/cpu_queries.py => pytest/test_cpu_queries.py}   | 2 +-
+>  .../empty_cpu_model.py => pytest/test_empty_cpu_model.py}      | 2 +-
+>  .../mem-addr-space-check.py => pytest/test_mem_addr_space.py}  | 3 +--
+>  .../virtio_version.py => pytest/test_virtio_version.py}        | 2 +-
+>  4 files changed, 4 insertions(+), 5 deletions(-)
+>  rename tests/{avocado/cpu_queries.py => pytest/test_cpu_queries.py} (96%)
+>  rename tests/{avocado/empty_cpu_model.py => pytest/test_empty_cpu_model.py} (94%)
+>  rename tests/{avocado/mem-addr-space-check.py => pytest/test_mem_addr_space.py} (99%)
+>  rename tests/{avocado/virtio_version.py => pytest/test_virtio_version.py} (99%)
 
-> On Fri, Jul 12, 2024 at 10:07:34AM +0200, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > The 'command-features' pragma allows for defining additional
->> > special features that are unique to a particular QAPI schema
->> > instance and its implementation.
->>=20
->> So far, we have special features (predefined, known to the generator and
->> treated specially), and normal features (user-defined, not known to the
->> generator).  You create a new kind in between: user-defined, not known
->> to the generator, yet treated specially (I guess?).  Hmm.
->>=20
->> Could you at least hint at indented use here?  What special treatment do
->> you have in mind?
->
-> Essentially, these features are a way to attach metadata to commands that
-> the server side impl can later query. This eliminates the need to hardcode
-> lists of commands, such as in QGA which hardcodes a list of commands which
-> are safe to use when filesystems are frozen. This is illustrated later in
-> this series.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Please update docs/devel/qapi-code-gen.rst section "Pragma directives",
-and maybe section "Features".
+though if you take my suggestion in the previous patch, then this
+patch should 'chmod +x' all the test files, and add the __main__
+magic to call 'unittest.main().
 
-I'm not sure conflating the new kind of feature with existing special
-features is a good idea.  I need to review more of the series before I
-can make up my mind.
+> 
+> diff --git a/tests/avocado/cpu_queries.py b/tests/pytest/test_cpu_queries.py
+> similarity index 96%
+> rename from tests/avocado/cpu_queries.py
+> rename to tests/pytest/test_cpu_queries.py
+> index d3faa14720..b300447121 100644
+> --- a/tests/avocado/cpu_queries.py
+> +++ b/tests/pytest/test_cpu_queries.py
+> @@ -8,7 +8,7 @@
+>  # This work is licensed under the terms of the GNU GPL, version 2 or
+>  # later.  See the COPYING file in the top-level directory.
+>  
+> -from avocado_qemu import QemuSystemTest
+> +from qemu_pytest import QemuSystemTest
+>  
+>  class QueryCPUModelExpansion(QemuSystemTest):
+>      """
+> diff --git a/tests/avocado/empty_cpu_model.py b/tests/pytest/test_empty_cpu_model.py
+> similarity index 94%
+> rename from tests/avocado/empty_cpu_model.py
+> rename to tests/pytest/test_empty_cpu_model.py
+> index d906ef3d3c..113740bc82 100644
+> --- a/tests/avocado/empty_cpu_model.py
+> +++ b/tests/pytest/test_empty_cpu_model.py
+> @@ -7,7 +7,7 @@
+>  #
+>  # This work is licensed under the terms of the GNU GPL, version 2 or
+>  # later.  See the COPYING file in the top-level directory.
+> -from avocado_qemu import QemuSystemTest
+> +from qemu_pytest import QemuSystemTest
+>  
+>  class EmptyCPUModel(QemuSystemTest):
+>      def test(self):
+> diff --git a/tests/avocado/mem-addr-space-check.py b/tests/pytest/test_mem_addr_space.py
+> similarity index 99%
+> rename from tests/avocado/mem-addr-space-check.py
+> rename to tests/pytest/test_mem_addr_space.py
+> index 85541ea051..6ae7ba5e6b 100644
+> --- a/tests/avocado/mem-addr-space-check.py
+> +++ b/tests/pytest/test_mem_addr_space.py
+> @@ -8,8 +8,7 @@
+>  #
+>  # SPDX-License-Identifier: GPL-2.0-or-later
+>  
+> -from avocado_qemu import QemuSystemTest
+> -import signal
+> +from qemu_pytest import QemuSystemTest
+>  import time
+>  
+>  class MemAddrCheck(QemuSystemTest):
+> diff --git a/tests/avocado/virtio_version.py b/tests/pytest/test_virtio_version.py
+> similarity index 99%
+> rename from tests/avocado/virtio_version.py
+> rename to tests/pytest/test_virtio_version.py
+> index afe5e828b5..ca3aa806df 100644
+> --- a/tests/avocado/virtio_version.py
+> +++ b/tests/pytest/test_virtio_version.py
+> @@ -12,7 +12,7 @@
+>  import os
+>  
+>  from qemu.machine import QEMUMachine
+> -from avocado_qemu import QemuSystemTest
+> +from qemu_pytest import QemuSystemTest
+>  
+>  # Virtio Device IDs:
+>  VIRTIO_NET = 1
+> -- 
+> 2.45.2
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
