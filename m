@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB151C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C15DC41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGIC-0007OK-Bi; Fri, 12 Jul 2024 09:26:32 -0400
+	id 1sSGI3-0006Ia-9j; Fri, 12 Jul 2024 09:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGHo-00052x-9F
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:12 -0400
+ id 1sSGHn-0004yl-D6
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGHi-00043q-PX
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:04 -0400
+ id 1sSGHi-00045a-Uf
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:26:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720790759;
+ s=mimecast20190719; t=1720790762;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=drcvdI3Sgud7lXkxoulsFG0PxIzW9TIqU8jDisNYR3M=;
- b=RpWFrXkAylqAeDz1JQ5PXKn3qvijEvw2gVAQI+mpn/Mwh0FcfX3tiAreiW6XGtoK7spNWj
- 6i60flkTmEfRWw7EQxOlqSgn2TJUOlNhg98htvy2veNKtboVs7w4CrOy6LKCHVMdOe7WZv
- /n4vwdXn5ZwJiPMqfQaRACDpPjiVD7o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Ux4jQEssSgP1WjWj6X1MvmPAw8nL5wwCnlHZ9HHlwYE=;
+ b=DwfEfH5feifiSvaLurgPSspNSBn1FHPV2YtoZsq7VH3DD0Twub60ESe86h/zkpV/SOUe9L
+ fSSMa+yLA7UFle9bczhE317W1P4rGyQ8tbWiSq/3eIz3QifpvYSgIkTp6n6ZdeXBzLZKSk
+ zHfrd2vgMuy2ObLCAp01De8WuBWAXEs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-26ZOWBT-Ny-U1IPWun5KxA-1; Fri,
- 12 Jul 2024 09:25:54 -0400
-X-MC-Unique: 26ZOWBT-Ny-U1IPWun5KxA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-c3m_t392PQ-FkGeBtx1kzA-1; Fri,
+ 12 Jul 2024 09:25:58 -0400
+X-MC-Unique: c3m_t392PQ-FkGeBtx1kzA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C04D5196E094; Fri, 12 Jul 2024 13:25:53 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5780D1956046; Fri, 12 Jul 2024 13:25:57 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.56])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9C4281955F40; Fri, 12 Jul 2024 13:25:50 +0000 (UTC)
+ id 4FBCE1955F40; Fri, 12 Jul 2024 13:25:54 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -55,10 +55,10 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH v3 14/22] qga: conditionalize schema for commands requiring
- fstrim
-Date: Fri, 12 Jul 2024 14:24:51 +0100
-Message-ID: <20240712132459.3974109-15-berrange@redhat.com>
+Subject: [PATCH v3 15/22] qga: conditionalize schema for commands requiring
+ libudev
+Date: Fri, 12 Jul 2024 14:24:52 +0100
+Message-ID: <20240712132459.3974109-16-berrange@redhat.com>
 In-Reply-To: <20240712132459.3974109-1-berrange@redhat.com>
 References: <20240712132459.3974109-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,9 +90,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Rather than creating stubs for every command that just return
-QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-fully exclude generation of the filesystem trimming commands
-on POSIX platforms lacking required APIs.
+QERR_UNSUPPORTED, use 'if' conditions in the schema to fully
+exclude generation of the filesystem trimming commands on POSIX
+platforms lacking required APIs.
 
 The command will be rejected at QMP dispatch time instead,
 avoiding reimplementing rejection by blocking the stub commands.
@@ -111,71 +111,69 @@ Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/commands-posix.c | 13 -------------
- qga/qapi-schema.json |  9 ++++++---
- 2 files changed, 6 insertions(+), 16 deletions(-)
+ qga/commands-linux.c | 8 --------
+ qga/qapi-schema.json | 8 ++++----
+ 2 files changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 9207cb7a8f..d92fa0ec87 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -1144,22 +1144,9 @@ error:
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 73b13fbaf6..89bdcded01 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -1049,14 +1049,6 @@ GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
+     return ret;
+ }
  
- #endif /* HAVE_GETIFADDRS */
- 
--#if !defined(CONFIG_FSTRIM)
--GuestFilesystemTrimResponse *
--qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+-#else
+-
+-GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
 -{
 -    error_setg(errp, QERR_UNSUPPORTED);
 -    return NULL;
 -}
--#endif
 -
- /* add unsupported commands to the list of blocked RPCs */
- GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
- {
--#if !defined(CONFIG_FSTRIM)
--    blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-fstrim"));
--#endif
--
-     return blockedrpcs;
- }
+ #endif
  
+ /* Return a list of the disk device(s)' info which @mount lies on */
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 62462f092c..21c65d1806 100644
+index 21c65d1806..cf1ad42519 100644
 --- a/qga/qapi-schema.json
 +++ b/qga/qapi-schema.json
-@@ -510,7 +510,8 @@
- ##
- { 'struct': 'GuestFilesystemTrimResult',
-   'data': {'path': 'str',
--           '*trimmed': 'int', '*minimum': 'int', '*error': 'str'} }
-+           '*trimmed': 'int', '*minimum': 'int', '*error': 'str'},
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+@@ -986,7 +986,7 @@
+            'media-errors-hi': 'uint64',
+            'number-of-error-log-entries-lo': 'uint64',
+            'number-of-error-log-entries-hi': 'uint64' },
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
  
  ##
- # @GuestFilesystemTrimResponse:
-@@ -520,7 +521,8 @@
- # Since: 2.4
- ##
- { 'struct': 'GuestFilesystemTrimResponse',
--  'data': {'paths': ['GuestFilesystemTrimResult']} }
-+  'data': {'paths': ['GuestFilesystemTrimResult']},
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+ # @GuestDiskSmart:
+@@ -1001,7 +1001,7 @@
+   'base': { 'type': 'GuestDiskBusType' },
+   'discriminator': 'type',
+   'data': { 'nvme': 'GuestNVMeSmart' },
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
  
  ##
- # @guest-fstrim:
-@@ -542,7 +544,8 @@
- ##
- { 'command': 'guest-fstrim',
-   'data': { '*minimum': 'int' },
--  'returns': 'GuestFilesystemTrimResponse' }
-+  'returns': 'GuestFilesystemTrimResponse',
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+ # @GuestDiskInfo:
+@@ -1027,7 +1027,7 @@
+   'data': {'name': 'str', 'partition': 'bool', '*dependencies': ['str'],
+            '*address': 'GuestDiskAddress', '*alias': 'str',
+            '*smart': 'GuestDiskSmart'},
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
  
  ##
- # @guest-suspend-disk:
+ # @guest-get-disks:
+@@ -1041,7 +1041,7 @@
+ ##
+ { 'command': 'guest-get-disks',
+   'returns': ['GuestDiskInfo'],
+-  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LIBUDEV' ] } }
+ 
+ ##
+ # @GuestFilesystemInfo:
 -- 
 2.45.1
 
