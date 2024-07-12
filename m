@@ -4,52 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F525C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0ECC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGVk-0004Tv-06; Fri, 12 Jul 2024 09:40:32 -0400
+	id 1sSGYD-00071v-Pr; Fri, 12 Jul 2024 09:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
- id 1sSGVj-0004QP-01; Fri, 12 Jul 2024 09:40:31 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sSGYB-0006qm-6x; Fri, 12 Jul 2024 09:43:03 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
- id 1sSGVg-0000hW-4P; Fri, 12 Jul 2024 09:40:30 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WLCQY5wGSz4wc4;
- Fri, 12 Jul 2024 23:40:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WLCQW5bJMz4wc1;
- Fri, 12 Jul 2024 23:40:19 +1000 (AEST)
-Message-ID: <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
-Date: Fri, 12 Jul 2024 15:40:15 +0200
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sSGY6-0001W1-KC; Fri, 12 Jul 2024 09:43:02 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WLCRV1sSTz6H7rP;
+ Fri, 12 Jul 2024 21:41:10 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
+ by mail.maildlp.com (Postfix) with ESMTPS id 60DE41400D9;
+ Fri, 12 Jul 2024 21:42:42 +0800 (CST)
+Received: from 00293818-MRGF.huawei.com (10.195.244.27) by
+ lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 12 Jul 2024 14:42:21 +0100
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
+ <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
+ <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
+ <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
+ <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
+ <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
+ <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
+ <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
+ <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
+ <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
+ <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
+ <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
+ <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
+ <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
+Subject: [PATCH V14 0/7] Add architecture agnostic code to support vCPU Hotplug
+Date: Fri, 12 Jul 2024 14:41:54 +0100
+Message-ID: <20240712134201.214699-1-salil.mehta@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/19] ppc/pnv: Move timebase state into PnvCore
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20240712120247.477133-1-npiggin@gmail.com>
- <20240712120247.477133-4-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240712120247.477133-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Ecin=OM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.195.244.27]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ lhrpeml500001.china.huawei.com (7.191.163.213)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,278 +73,193 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 14:02, Nicholas Piggin wrote:
-> The timebase state machine is per per-core state and can be driven
-> by any thread in the core. It is currently implemented as a hack
-> where the state is in a CPU structure and only thread 0's state is
-> accessed by the chiptod, which limits programming the timebase
-> side of the state machine to thread 0 of a core.
-> 
-> Move the state out into PnvCore and share it among all threads.
-> 
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ppc/pnv_core.h    | 17 ++++++++++++
->   target/ppc/cpu.h             | 21 --------------
->   hw/ppc/pnv_chiptod.c         |  7 ++---
->   target/ppc/timebase_helper.c | 53 ++++++++++++++++++++----------------
->   4 files changed, 49 insertions(+), 49 deletions(-)
-> 
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index 29cab9dfd9..ffec8516ae 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -25,6 +25,20 @@
->   #include "hw/ppc/pnv.h"
->   #include "qom/object.h"
->   
-> +/* Per-core ChipTOD / TimeBase state */
-> +typedef struct PnvCoreTODState {
-> +    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-> +    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-> +
-> +    /*
-> +     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-> +     * is polled for such events. These are just used to ensure firmware
-> +     * performs the polling at least a few times.
-> +     */
-> +    int tb_state_timer;
-> +    int tb_sync_pulse_timer;
-> +} PnvCoreTODState;
-> +
->   #define TYPE_PNV_CORE "powernv-cpu-core"
->   OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
->                       PNV_CORE)
-> @@ -38,6 +52,9 @@ struct PnvCore {
->       uint32_t pir;
->       uint32_t hwid;
->       uint64_t hrmor;
-> +
-> +    PnvCoreTODState tod_state;
-> +
->       PnvChip *chip;
->   
->       MemoryRegion xscom_regs;
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 2015e603d4..c78d6ca91a 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1196,21 +1196,6 @@ DEXCR_ASPECT(SRAPD, 4)
->   DEXCR_ASPECT(NPHIE, 5)
->   DEXCR_ASPECT(PHIE, 6)
->   
-> -/*****************************************************************************/
-> -/* PowerNV ChipTOD and TimeBase State Machine */
-> -struct pnv_tod_tbst {
-> -    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-> -    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-> -
-> -    /*
-> -     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-> -     * is polled for such events. These are just used to ensure firmware
-> -     * performs the polling at least a few times.
-> -     */
-> -    int tb_state_timer;
-> -    int tb_sync_pulse_timer;
-> -};
-> -
->   /*****************************************************************************/
->   /* The whole PowerPC CPU context */
->   
-> @@ -1291,12 +1276,6 @@ struct CPUArchState {
->       uint32_t tlb_need_flush; /* Delayed flush needed */
->   #define TLB_NEED_LOCAL_FLUSH   0x1
->   #define TLB_NEED_GLOBAL_FLUSH  0x2
-> -
-> -#if defined(TARGET_PPC64)
-> -    /* PowerNV chiptod / timebase facility state. */
-> -    /* Would be nice to put these into PnvCore */
-> -    struct pnv_tod_tbst pnv_tod_tbst;
-> -#endif
->   #endif
->   
->       /* Other registers */
-> diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
-> index 3831a72101..1e41fe557a 100644
-> --- a/hw/ppc/pnv_chiptod.c
-> +++ b/hw/ppc/pnv_chiptod.c
-> @@ -364,8 +364,7 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
->               qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
->                             " TOD_MOVE_TOD_TO_TB_REG with no slave target\n");
->           } else {
-> -            PowerPCCPU *cpu = chiptod->slave_pc_target->threads[0];
-> -            CPUPPCState *env = &cpu->env;
-> +            PnvCore *pc = chiptod->slave_pc_target;
->   
->               /*
->                * Moving TOD to TB will set the TB of all threads in a
-> @@ -377,8 +376,8 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
->                * thread 0.
->                */
->   
-> -            if (env->pnv_tod_tbst.tb_ready_for_tod) {
-> -                env->pnv_tod_tbst.tod_sent_to_tb = 1;
-> +            if (pc->tod_state.tb_ready_for_tod) {
-> +                pc->tod_state.tod_sent_to_tb = 1;
->               } else {
->                   qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
->                                 " TOD_MOVE_TOD_TO_TB_REG with TB not ready to"
-> diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-> index 39d397416e..52f9e6669c 100644
-> --- a/target/ppc/timebase_helper.c
-> +++ b/target/ppc/timebase_helper.c
-> @@ -19,6 +19,7 @@
->   #include "qemu/osdep.h"
->   #include "cpu.h"
->   #include "hw/ppc/ppc.h"
-> +#include "hw/ppc/pnv_core.h"
+[Note: References are present at the last after the revision history]
 
-I am afraid this header file is pulling too much definitions for
-qemu-user. It breaks compile.
+Virtual CPU hotplug support is being added across various architectures [1][3].
+This series adds various code bits common across all architectures:
 
-Thanks,
+1. vCPU creation and Parking code refactor [Patch 1]
+2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
+3. ACPI CPUs AML code change [Patch 4,5]
+4. Helper functions to support unrealization of CPU objects [Patch 6,7]
 
-C.
+Repository:
 
->   #include "exec/helper-proto.h"
->   #include "exec/exec-all.h"
->   #include "qemu/log.h"
-> @@ -298,8 +299,17 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
->       }
->   }
->   
-> +static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
-> +{
-> +    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-> +
-> +    return &pc->tod_state;
-> +}
-> +
->   static void tb_state_machine_step(CPUPPCState *env)
->   {
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
->       uint64_t tfmr = env->spr[SPR_TFMR];
->       unsigned int tbst = tfmr_get_tb_state(tfmr);
->   
-> @@ -307,15 +317,15 @@ static void tb_state_machine_step(CPUPPCState *env)
->           return;
->       }
->   
-> -    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
-> -        env->pnv_tod_tbst.tb_sync_pulse_timer--;
-> +    if (tod_state->tb_sync_pulse_timer) {
-> +        tod_state->tb_sync_pulse_timer--;
->       } else {
->           tfmr |= TFMR_TB_SYNC_OCCURED;
->           write_tfmr(env, tfmr);
->       }
->   
-> -    if (env->pnv_tod_tbst.tb_state_timer) {
-> -        env->pnv_tod_tbst.tb_state_timer--;
-> +    if (tod_state->tb_state_timer) {
-> +        tod_state->tb_state_timer--;
->           return;
->       }
->   
-> @@ -332,20 +342,20 @@ static void tb_state_machine_step(CPUPPCState *env)
->       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
->           if (tbst == TBST_SYNC_WAIT) {
->               tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
-> -            env->pnv_tod_tbst.tb_state_timer = 3;
-> +            tod_state->tb_state_timer = 3;
->           } else if (tbst == TBST_GET_TOD) {
-> -            if (env->pnv_tod_tbst.tod_sent_to_tb) {
-> +            if (tod_state->tod_sent_to_tb) {
->                   tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
->                   tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
-> -                env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> -                env->pnv_tod_tbst.tod_sent_to_tb = 0;
-> +                tod_state->tb_ready_for_tod = 0;
-> +                tod_state->tod_sent_to_tb = 0;
->               }
->           } else {
->               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
->                             "state machine in invalid state 0x%x\n", tbst);
->               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +            tod_state->tb_ready_for_tod = 0;
->           }
->       }
->   
-> @@ -361,6 +371,8 @@ target_ulong helper_load_tfmr(CPUPPCState *env)
->   
->   void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->   {
-> +    PowerPCCPU *cpu = env_archcpu(env);
-> +    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
->       uint64_t tfmr = env->spr[SPR_TFMR];
->       uint64_t clear_on_write;
->       unsigned int tbst = tfmr_get_tb_state(tfmr);
-> @@ -384,14 +396,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->        * after the second mfspr.
->        */
->       tfmr &= ~TFMR_TB_SYNC_OCCURED;
-> -    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
-> -
-> -    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
-> -        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
-> -        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
-> -                                 "driven by thread 0\n");
-> -        goto out;
-> -    }
-> +    tod_state->tb_sync_pulse_timer = 1;
->   
->       if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
->                           (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
-> @@ -399,7 +404,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->                                          "MOVE_CHIP_TOD_TO_TB both set\n");
->           tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->           tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +        tod_state->tb_ready_for_tod = 0;
->           goto out;
->       }
->   
-> @@ -413,8 +418,8 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->           tfmr &= ~TFMR_LOAD_TOD_MOD;
->           tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
->           tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
-> -        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> -        env->pnv_tod_tbst.tod_sent_to_tb = 0;
-> +        tod_state->tb_ready_for_tod = 0;
-> +        tod_state->tod_sent_to_tb = 0;
->           goto out;
->       }
->   
-> @@ -427,19 +432,19 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
->   
->       if (tfmr & TFMR_LOAD_TOD_MOD) {
->           /* Wait for an arbitrary 3 mfspr until the next state transition. */
-> -        env->pnv_tod_tbst.tb_state_timer = 3;
-> +        tod_state->tb_state_timer = 3;
->       } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
->           if (tbst == TBST_NOT_SET) {
->               tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 1;
-> -            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
-> +            tod_state->tb_ready_for_tod = 1;
-> +            tod_state->tb_state_timer = 3; /* arbitrary */
->           } else {
->               qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
->                                              "not in TB not set state 0x%x\n",
->                                              tbst);
->               tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
->               tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-> -            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-> +            tod_state->tb_ready_for_tod = 0;
->           }
->       }
->   
+[*] Architecture *Agnostic* Patch-set (This series)
+   V14: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3.arch.agnostic.v14
+
+   NOTE: This series is meant to work in conjunction with the architecture-specific
+   patch-set. For ARM, a combined patch-set (architecture agnostic + specific) was
+   earlier pushed as RFC V2 [1]. Later, RFC V2 was split into the ARM Architecture
+   specific patch-set RFC V3 [4] (a subset of RFC V2) and the architecture agnostic
+   patch-set. Patch-set V14 is the latest version in that series. This series
+   works in conjunction with RFC V4-rc1, present at the following link.
+
+[*] ARM Architecture *Specific* Patch-set
+   RFC V3 [4]: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3
+   RFC V4-rc1: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v4-rc1 (combined)
+
+
+Revision History:
+
+Patch-set V13 -> V14
+1. Addresses Igor Mammedov's following review comments
+  - Mentioned abput new external APIs in the header note of [PATCH 1/7]
+  - Merged Doc [PATCH V13 8/8] with [PATCH V14 3/7]
+  - Introduced GED realize function for various CPU Hotplug regions initializations
+  - Added back event handler method to indirectly expose \\_SB.CPUS.CSCN to GED
+    _EVT. Like for ARM, it would be through \\_SB.GED.CSCN event handler method
+  - Collected the Ack given for [Patch V13 6/8]
+  - Added back the gfree'ing of GDB regs in common finalize and made it conditional
+  - Updated the header notes of [PATCH V13 3/8,4/8,5/8] to reflect the changes
+Link: https://lore.kernel.org/qemu-devel/20240607115649.214622-1-salil.mehta@huawei.com/T/#rd0887eb07976bc76606a8204614ccc7d9a01c1f7
+
+Patch-set  V12 -> V13
+1. Added Reviewed-by Tag of Harsh Prateek Bora's (IBM) [PATCH V12 1/8]
+2. Moved the kvm_{create,park,unpark}_vcpu prototypes from accel/kvm/kvm-cpus.h
+   to include/sysemu/kvm.h. These can later be exported through AccelOps.
+Link: https://lore.kernel.org/qemu-devel/62f55169-1796-4d8e-a35d-7f003a172750@linux.ibm.com/
+
+Patch-set  V11 -> V12
+1. Addressed Harsh Prateek Bora's (IBM) comment
+   - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu protoype header/
+2. Added Zhao Liu's (Intel) Tested-by for whole series
+   - Qtest does not breaks on Intel platforms now.
+3. Added Zhao Liu's (Intel) Reviewed-by for [PATCH V11 {1/8 - 3/8}]
+Link: https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/
+Link: https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com/
+
+Patch-set  V10 -> V11
+1. Addressed Nicholas Piggin's (IBM) comment
+   - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the end
+   - Added the Reviewed-by Tag for [PATCH V10 1/8]
+2.  Addressed Alex Bennée's (Linaro) comments
+   - Added a note explaining dependency of the [PATCH V10 7/8] on Arch specific patch-set
+Link: https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/ 
+Link: https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
+
+Patch-set  V9 -> V10
+1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daudé (Linaro) comments
+   - carved out kvm_unpark_vcpu and added its trace
+   - Widened the scope of the kvm_unpark_vcpu so that it can be used by generic framework
+     being thought out
+Link: https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei.com/
+Link: https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@linaro.org/
+
+Patch-set  V8 -> V9
+1. Addressed Vishnu Pajjuri's (Ampere) comments
+   - Added kvm_fd to trace in kvm_create_vcpu
+   - Some clean ups: arch vcpu-id and sbd variable
+   - Added the missed initialization of cpu->gdb_num_regs
+2. Addressed the commnet from Zhao Liu (Intel)
+   - Make initialization of CPU Hotplug state conditional (possible_cpu_arch_ids!=NULL)
+Link: https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.com/
+
+Patch-set V7 -> V8
+1. Rebased and Fixed the conflicts
+
+Patch-set  V6 -> V7
+1. Addressed Alex Bennée's comments
+   - Updated the docs
+2. Addressed Igor Mammedov's comments
+   - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
+   - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
+3. Added Shaoqin Huang's Reviewed-by tags for whole series.
+Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
+
+Patch-set  V5 -> V6
+1. Addressed Gavin Shan's comments
+   - Fixed the assert() ranges of address spaces
+   - Rebased the patch-set to latest changes in the qemu.git
+   - Added Reviewed-by tags for patches {8,9}
+2. Addressed Jonathan Cameron's comments
+   - Updated commit-log for [Patch V5 1/9] with mention of trace events
+   - Added Reviewed-by tags for patches {1,5}
+3. Added Tested-by tags from Xianglai Li
+4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
+Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
+
+Patch-set  V4 -> V5
+1. Addressed Gavin Shan's comments
+   - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
+   - Added Reviewed-by tag for patch {1}
+2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
+3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
+4. Dropped the ARM specific [Patch V4 10/10]
+Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
+
+Patch-set  V3 -> V4
+1. Addressed David Hilderbrand's comments
+   - Fixed the wrong doc comment of kvm_park_vcpu API prototype
+   - Added Reviewed-by tags for patches {2,4}
+Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
+
+Patch-set  V2 -> V3
+1. Addressed Jonathan Cameron's comments
+   - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
+   - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
+   - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
+   - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
+   - Added Reviewed-by tags for patches {2,3,4,6,7}
+2. Addressed Gavin Shan's comments
+   - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
+   - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
+   - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
+   - Fixed the kvm_{create,park}_vcpu prototypes docs
+   - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
+3. Addressed one earlier missed comment by Alex Bennée in RFC V1
+   - Added traces instead of DPRINTF in the newly added and some existing functions
+Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
+
+Patch-set V1 -> V2
+1. Addressed Alex Bennée's comments
+   - Refactored the kvm_create_vcpu logic to get rid of goto
+   - Added the docs for kvm_{create,park}_vcpu prototypes
+   - Splitted the gdbstub and AddressSpace destruction change into separate patches
+   - Added Reviewed-by tags for patches {2,10}
+Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
+
+References:
+
+[1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
+[2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
+[3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
+[4] https://lore.kernel.org/qemu-devel/20240613233639.202896-2-salil.mehta@huawei.com/
+
+Salil Mehta (7):
+  accel/kvm: Extract common KVM vCPU {creation,parking} code
+  hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
+  hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+  hw/acpi: Update GED _EVT method AML with CPU scan
+  hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
+  physmem: Add helper function to destroy CPU AddressSpace
+  gdbstub: Add helper function to unregister GDB register space
+
+ accel/kvm/kvm-all.c                    | 95 +++++++++++++++++---------
+ accel/kvm/kvm-cpus.h                   |  1 -
+ accel/kvm/trace-events                 |  5 +-
+ docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
+ gdbstub/gdbstub.c                      | 13 ++++
+ hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
+ hw/acpi/cpu.c                          | 23 +++++--
+ hw/acpi/generic_event_device.c         | 29 ++++++++
+ hw/core/cpu-common.c                   |  4 +-
+ hw/i386/acpi-build.c                   |  3 +-
+ include/exec/cpu-common.h              |  8 +++
+ include/exec/gdbstub.h                 |  6 ++
+ include/hw/acpi/cpu.h                  |  8 ++-
+ include/hw/acpi/generic_event_device.h |  4 ++
+ include/hw/core/cpu.h                  |  1 +
+ include/sysemu/kvm.h                   | 25 +++++++
+ system/physmem.c                       | 29 ++++++++
+ 17 files changed, 217 insertions(+), 46 deletions(-)
+
+-- 
+2.34.1
 
 
