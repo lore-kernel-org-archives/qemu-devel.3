@@ -4,87 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63AEC3DA4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1014C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGrA-0001kW-Bp; Fri, 12 Jul 2024 10:02:40 -0400
+	id 1sSGwC-0006xy-Gm; Fri, 12 Jul 2024 10:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sSGr0-0001G6-PW
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:02:30 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sSGvv-0006M1-Tl; Fri, 12 Jul 2024 10:07:37 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sSGqx-0005wV-Q7
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:02:30 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CDIfXZ023475;
- Fri, 12 Jul 2024 14:02:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references; s=
- corp-2023-11-20; bh=EU/zcw9pA4bSEmPOvY/bmmNwuOR1JofunRmYAaSvopg=; b=
- JKcBlsmdxvDhr2WoA0IYtiPTaVBycNF6W72guM+IxuzLsneU4ndO1C4/tLLP3X2a
- k0uSvQW1kZGiABDmKN50/7JJc2eP17jRPIpfujUR9r4bLlgccivVANBA2XkbMfib
- gKYlzJMOCW4c9uULZInTZNNQIX8ID0GMl+ZA7Ndi8dhQ7/9uaDD2cWYw40q6en96
- vrQRrQEi2vKGq2CWk2E6M4TvQOE66Z6GxS5Dy/DzPI09nHtW933gRd3QwPR9jdZN
- egUVR3iWf4o7mPv2/MdZT85NSW81BjZvZ4FzSWKHovD1OgslGig05cTPABUkNtHL
- JOgjEDWB/gLBIjUVxOnLNw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 406wgq41v9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 14:02:24 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46CDci7r010950; Fri, 12 Jul 2024 14:02:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 409vv74k0h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2024 14:02:22 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46CE2DQ2020438;
- Fri, 12 Jul 2024 14:02:22 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 409vv74jq7-8; Fri, 12 Jul 2024 14:02:22 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sSGvs-0008Tk-V4; Fri, 12 Jul 2024 10:07:35 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 55CBB473F7;
+ Fri, 12 Jul 2024 16:07:23 +0200 (CEST)
+From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Eugenio Perez Martin <eperezma@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Si-Wei Liu <si-wei.liu@oracle.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 7/7] vdpa/cpr: preserve dma mappings
-Date: Fri, 12 Jul 2024 07:02:11 -0700
-Message-Id: <1720792931-456433-8-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1720792931-456433-1-git-send-email-steven.sistare@oracle.com>
-References: <1720792931-456433-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-12_10,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
- definitions=main-2407120094
-X-Proofpoint-ORIG-GUID: 7XVnE1vpO3qVh9XibFAKGwKVYDS_vpQL
-X-Proofpoint-GUID: 7XVnE1vpO3qVh9XibFAKGwKVYDS_vpQL
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com
+Subject: [PATCH v2] block/reqlist: allow adding overlapping requests
+Date: Fri, 12 Jul 2024 16:07:16 +0200
+Message-Id: <20240712140716.517911-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,128 +53,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Preserve dma mappings during CPR restart by suppressing dma_map and
-dma_unmap calls.  For devices with capability VHOST_BACKEND_F_IOTLB_REMAP,
-convert dma_map calls to VHOST_IOTLB_REMAP to set the new userland VA for
-the existing mapping.
+Allow overlapping request by removing the assert that made it
+impossible. There are only two callers:
 
-However, map and unmap shadow vq buffers normally.  Their pages are not
-locked in memory, and they are re-created after CPR.
+1. block_copy_task_create()
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+It already asserts the very same condition before calling
+reqlist_init_req().
+
+2. cbw_snapshot_read_lock()
+
+There is no need to have read requests be non-overlapping in
+copy-before-write when used for snapshot-access. In fact, there was no
+protection against two callers of cbw_snapshot_read_lock() calling
+reqlist_init_req() with overlapping ranges and this could lead to an
+assertion failure [1].
+
+In particular, with the reproducer script below [0], two
+cbw_co_snapshot_block_status() callers could race, with the second
+calling reqlist_init_req() before the first one finishes and removes
+its conflicting request.
+
+[0]:
+
+> #!/bin/bash -e
+> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+> (
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+> EOF
+> ) &
+> sleep 5
+> while true; do
+> ./qemu-nbd -d /dev/nbd0
+> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+> done
+
+[1]:
+
+> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
+
+Cc: qemu-stable@nongnu.org
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
- hw/virtio/trace-events        |  4 ++--
- hw/virtio/vhost-vdpa.c        | 30 +++++++++++++++++++++++++-----
- scripts/tracetool/__init__.py |  2 +-
- 3 files changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 990c61be79..30d7f5ec69 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -31,8 +31,8 @@ vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
+Changes in v2:
+* different approach, allowing overlapping requests for
+  copy-before-write rather than waiting for them. block-copy already
+  asserts there are no conflicts before adding a request.
+
+ block/copy-before-write.c | 3 ++-
+ block/reqlist.c           | 2 --
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 853e01a1eb..28f6a096cd 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
  
- # vhost-vdpa.c
- vhost_vdpa_skipped_memory_section(int is_ram, int is_iommu, int is_protected, int is_ram_device, uint64_t first, uint64_t last, int page_mask) "is_ram=%d, is_iommu=%d, is_protected=%d, is_ram_device=%d iova_min=0x%"PRIx64" iova_last=0x%"PRIx64" page_mask=0x%x"
--vhost_vdpa_dma_map(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint64_t uaddr, uint8_t perm, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" uaddr: 0x%"PRIx64" perm: 0x%"PRIx8" type: %"PRIu8
--vhost_vdpa_dma_unmap(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" type: %"PRIu8
-+vhost_vdpa_dma_map(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint64_t uaddr, uint8_t perm, uint8_t type, bool shadow, const char *override) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" uaddr: 0x%"PRIx64" perm: 0x%"PRIx8" type: %"PRIu8" shadow: %d %s"
-+vhost_vdpa_dma_unmap(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint8_t type, bool shadow, const char *override) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" type: %"PRIu8" shadow: %d %s"
- vhost_vdpa_listener_begin_batch(void *v, int fd, uint32_t msg_type, uint8_t type)  "vdpa_shared:%p fd: %d msg_type: %"PRIu32" type: %"PRIu8
- vhost_vdpa_listener_commit(void *v, int fd, uint32_t msg_type, uint8_t type)  "vdpa_shared:%p fd: %d msg_type: %"PRIu32" type: %"PRIu8
- vhost_vdpa_listener_region_add_unaligned(void *v, const char *name, uint64_t offset_as, uint64_t offset_page) "vdpa_shared: %p region %s offset_within_address_space %"PRIu64" offset_within_region %"PRIu64
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index d9ebc396b7..3ee809abfe 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -22,6 +22,8 @@
- #include "hw/virtio/vhost-vdpa.h"
- #include "exec/address-spaces.h"
- #include "migration/blocker.h"
-+#include "migration/cpr.h"
-+#include "migration/options.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
- #include "trace.h"
-@@ -97,18 +99,29 @@ int vhost_vdpa_dma_map(VhostVDPAShared *s, uint32_t asid, hwaddr iova,
-     struct vhost_msg_v2 msg = {};
-     int fd = s->device_fd;
-     int ret = 0;
-+    bool remap = false, suppress = false;
-+
-+    if (migrate_mode() == MIG_MODE_CPR_EXEC && !shadow) {
-+        remap = !!(s->backend_cap & BIT_ULL(VHOST_BACKEND_F_IOTLB_REMAP));
-+        suppress = !remap;
-+    }
+     /*
+      * @frozen_read_reqs: current read requests for fleecing user in bs->file
+-     * node. These areas must not be rewritten by guest.
++     * node. These areas must not be rewritten by guest. There can be multiple
++     * overlapping read requests.
+      */
+     BlockReqList frozen_read_reqs;
  
-     msg.type = VHOST_IOTLB_MSG_V2;
-     msg.asid = asid;
-     msg.iotlb.iova = iova;
-     msg.iotlb.size = size;
-     msg.iotlb.uaddr = (uint64_t)(uintptr_t)vaddr;
--    msg.iotlb.perm = readonly ? VHOST_ACCESS_RO : VHOST_ACCESS_RW;
--    msg.iotlb.type = VHOST_IOTLB_UPDATE;
-+    msg.iotlb.perm = remap ? 0 : readonly ? VHOST_ACCESS_RO : VHOST_ACCESS_RW;
-+    msg.iotlb.type = remap ? VHOST_IOTLB_REMAP : VHOST_IOTLB_UPDATE;
- 
-     trace_vhost_vdpa_dma_map(s, fd, msg.type, msg.asid, msg.iotlb.iova,
-                              msg.iotlb.size, msg.iotlb.uaddr, msg.iotlb.perm,
--                             msg.iotlb.type);
-+                             msg.iotlb.type, shadow,
-+                             remap ? "(remap)" : suppress ? "(suppress)" : "");
-+
-+    if (suppress) {
-+        return 0;
-+    }
- 
-     if (write(fd, &msg, sizeof(msg)) != sizeof(msg)) {
-         error_report("failed to write, fd=%d, errno=%d (%s)",
-@@ -129,6 +142,7 @@ int vhost_vdpa_dma_unmap(VhostVDPAShared *s, uint32_t asid, hwaddr iova,
-     struct vhost_msg_v2 msg = {};
-     int fd = s->device_fd;
-     int ret = 0;
-+    bool suppress = migrate_mode() == MIG_MODE_CPR_EXEC && !shadow;
- 
-     msg.type = VHOST_IOTLB_MSG_V2;
-     msg.asid = asid;
-@@ -137,7 +151,12 @@ int vhost_vdpa_dma_unmap(VhostVDPAShared *s, uint32_t asid, hwaddr iova,
-     msg.iotlb.type = VHOST_IOTLB_INVALIDATE;
- 
-     trace_vhost_vdpa_dma_unmap(s, fd, msg.type, msg.asid, msg.iotlb.iova,
--                               msg.iotlb.size, msg.iotlb.type);
-+                               msg.iotlb.size, msg.iotlb.type, shadow,
-+                               suppress ? "(suppressed)" : "");
-+
-+    if (suppress) {
-+        return 0;
-+    }
- 
-     if (write(fd, &msg, sizeof(msg)) != sizeof(msg)) {
-         error_report("failed to write, fd=%d, errno=%d (%s)",
-@@ -851,7 +870,8 @@ static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
-         0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
-         0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
-         0x1ULL << VHOST_BACKEND_F_SUSPEND |
--        0x1ULL << VHOST_BACKEND_F_NEW_OWNER;
-+        0x1ULL << VHOST_BACKEND_F_NEW_OWNER |
-+        0x1ULL << VHOST_BACKEND_F_IOTLB_REMAP;
-     int r;
- 
-     if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index bc03238c0f..bfb181cb81 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -253,7 +253,7 @@ def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
-         self.event_trans = event_trans
-         self.event_exec = event_exec
- 
--        if len(args) > 10:
-+        if len(args) > 11:
-             raise ValueError("Event '%s' has more than maximum permitted "
-                              "argument count" % name)
- 
+diff --git a/block/reqlist.c b/block/reqlist.c
+index 08cb57cfa4..098e807378 100644
+--- a/block/reqlist.c
++++ b/block/reqlist.c
+@@ -20,8 +20,6 @@
+ void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+                       int64_t bytes)
+ {
+-    assert(!reqlist_find_conflict(reqs, offset, bytes));
+-
+     *req = (BlockReq) {
+         .offset = offset,
+         .bytes = bytes,
 -- 
-2.39.3
+2.39.2
+
 
 
