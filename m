@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB28C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3772CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSH7E-000053-15; Fri, 12 Jul 2024 10:19:16 -0400
+	id 1sSHCV-0007f7-3H; Fri, 12 Jul 2024 10:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSH7C-0008Qk-Eo
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:19:14 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sSHCQ-0007eQ-Sb
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:24:39 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSH78-0003up-OE
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:19:14 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e38027so2307739a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:19:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sSHCP-0005Uq-B1
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:24:38 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a77c1658c68so255160166b.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720793948; x=1721398748; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t37aUeW9ye6rJBOVxrPwek6tZu/fTtWILNdTicrDpNI=;
- b=r3tC4h6MZOsS4EL4ZwRu1mdzpWj37t+CVgzLeUsJx8YlBM3iaLMhOEwywhqWyzIL9D
- tI5/htdeR9JicJ/dkLismdMeqBIjIerZRH7KM59i11XRqAe+n1qsk7AV00nF7inTloid
- a8QmaqE1Yeh1tJSpi9Gj9uzgyOP9JS6j2vOi7wQtSVOopMwje2keP2sJot0EbPuNAb33
- bk8Cm/4Vo+p8MipwdjAgLVNsDJA5F/BOEM3yAIASeDN84U3i2JZ2bGCMNT71rCJMWNI0
- mSFTyUfwhCBiZGxd0EWbMDNW7WQwjqc9MtdrG0x5EK0NsHsu07TsdrdRbOAlIQyRwttQ
- v7yg==
+ d=linaro.org; s=google; t=1720794275; x=1721399075; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=U4/RCF17e3pFk8h8tUIJ1pGGBygiPYPdrkwAJWIIVfY=;
+ b=BQtBJp6iCQQSHQkYhOtWsuBDHl/iUy9YQcoKxig4BZzUwFwm6qB5Grr6Vty1L26wXy
+ gTUrMvYLC0yJH+bGCZ49zUExt/nqjx80t0drGYkSqtL2LfFABDGj7zlzvIVwMetDJGtD
+ hVev5AAXJ94VVUL0qVPE/cUXgaxAmuVbeAyE862Fd9o/LIjlKPKTMRqIzd5zNaYKnQgg
+ mEf9y3fpCrlsOuZygISjhgVTqhxw5f1sR3tQ7shsNATfOsVgPelDGqKY5xvyhVs8OPbT
+ l1DPi7TmDt3Ou5PKmmz3zWOpP82r1vmMW4vbFnAeVLGQye806bLkCYWlay0wFcNoJubf
+ DNVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720793948; x=1721398748;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1720794275; x=1721399075;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=t37aUeW9ye6rJBOVxrPwek6tZu/fTtWILNdTicrDpNI=;
- b=P/4sxSHZxC8TVuqQguyOdULXEKYbWDVwFRYcGCd2607eZDNFDmo9G6t+Tafu6T0bxJ
- 6JMjUGmKW6z0pBqMlANKeq9Nn4gwixh57RfCRs9Hin5Q2LO7Xewrz9I1xqLPs2eyWeaS
- ieFLkXPC/lBOVkEKo0fCrnMUxWy7wEa2CTzheQAGDXdKVmxSHHALUNngH8Kcqg1X8iZl
- ITds6n4qO5VrCWO8yg4QeV/YB8pEfeP93e0NU25uqydKDG6AwtwHR2I5ca5AGg46GlqB
- bgTSJvtk5Z6zeqaygjzp5pbXjfjT9YhIuUcvLbsYrirG41ewoepVQEducXsYe5TCnGaG
- j2Kw==
-X-Gm-Message-State: AOJu0Ywz5Jr9Qk0S5P0aj1RBTYg8dZN2BfUfq2XnfDXlKYfzr9aNXKyT
- c4rwpD5Tts5hE7nFi4xK4PHI0jjZocUwkDQNI90zZVz/7lxC+UcLN7/rNAQrRJf0kAlH5OACbik
- TiYHEM50t/TcCVAmi/aUh5iJ6zPwofLvsjnwqpw==
-X-Google-Smtp-Source: AGHT+IH69WrN2p+J8+7S0k91o0wclcuFL3lq9JqExLi/w2oAItOrMlgwmjFuZJ+3bD5qS02Qh0V5Vv21RRBEKMyVQmg=
-X-Received: by 2002:aa7:c548:0:b0:57a:33a5:9b71 with SMTP id
- 4fb4d7f45d1cf-594bc7c9d69mr7336462a12.33.1720793948468; Fri, 12 Jul 2024
- 07:19:08 -0700 (PDT)
+ bh=U4/RCF17e3pFk8h8tUIJ1pGGBygiPYPdrkwAJWIIVfY=;
+ b=Rp7hwA5npVI5nBFtXeoMsmxHRuRx4waSTBAcz4o/9FPXtR2B1MpIWFQpXdVrM0meeO
+ GSVRdn6aPL3ea6fb3qKAT+rNMRugSWtxF6FSYTBCh2z5t1rCOP/pRCrjpX1ghR9bCr0i
+ x8FbPilhu3yEoL96ntSvSZK7HcyCpr3nsPdhZyWRl+Bu394zkg9OrLPRN4IRxge7Ov6m
+ ctx7k/xhtpXUgtO834LRhO3LULdYNMDm501rO4yYTGrFRTeD0yrNQwfMwdOxSj6WJpND
+ f7uX69TNuyax9pVh86mpRENvRncf1ttWIITfjDM9BdTm0VjbfJpgMwiOqgjDMmgFJCqx
+ 7MjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWr8h9ZHymLukd+W/E3Bfn2P+/kgYnwOfaYaX1X2LSDX9RckTcQe9e++7cVLI6SQLUKkLadF0IHEccW1hYXeiOfUPks6vE=
+X-Gm-Message-State: AOJu0Yyr9vxBsUasHjRpSo5gZ9TnSxuVto/W3fxS92pQPkXml8I03Ioy
+ O+WNcwN+ZcJawda2asNe9RaBBE8AuFJUdmnNQwLVJeEIwteNwmMoZBQENJ2En7g=
+X-Google-Smtp-Source: AGHT+IG9u3VlFwAOvNvr8+8H70sNfEBccmq6LkaHntA+8F5vN/TyQw8dyuDebU5QpQDXkE9IHWpn3Q==
+X-Received: by 2002:a17:906:395b:b0:a74:84e8:9994 with SMTP id
+ a640c23a62f3a-a780b7053e5mr849710066b.45.1720794275071; 
+ Fri, 12 Jul 2024 07:24:35 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a780a7ff00bsm349152566b.118.2024.07.12.07.24.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 07:24:34 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 739B75F713;
+ Fri, 12 Jul 2024 15:24:33 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,  Ed
+ Maste <emaste@freebsd.org>,  Li-Wen Hsu <lwhsu@freebsd.org>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
+ <bleal@redhat.com>
+Subject: Re: [RFC PATCH] build deps: update lcitool to include rust bits
+In-Reply-To: <CAAjaMXbNMnq5QuqfX=AZubMdL3npFGjqBRk1jYFFtgtteyaqUw@mail.gmail.com>
+ (Manos Pitsidianakis's message of "Fri, 12 Jul 2024 16:21:34 +0300")
+References: <20240710154335.2510260-1-alex.bennee@linaro.org>
+ <ZpEBds6AUnPsVCY4@redhat.com>
+ <CAAjaMXbNMnq5QuqfX=AZubMdL3npFGjqBRk1jYFFtgtteyaqUw@mail.gmail.com>
+Date: Fri, 12 Jul 2024 15:24:33 +0100
+Message-ID: <8734oer8m6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240705153052.1219696-1-alex.bennee@linaro.org>
- <20240705153052.1219696-40-alex.bennee@linaro.org>
-In-Reply-To: <20240705153052.1219696-40-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jul 2024 15:18:57 +0100
-Message-ID: <CAFEAcA8YJwWtQxdOe2wmH7i0jvjU=UV92oeB6vUzT1GrQhRsTQ@mail.gmail.com>
-Subject: Re: [PULL 39/40] gdbstub: Add support for MTE in user mode
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,92 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 at 16:37, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+
+> Hi Daniel, Alex,
 >
-> From: Gustavo Romero <gustavo.romero@linaro.org>
->
-> This commit implements the stubs to handle the qIsAddressTagged,
-> qMemTag, and QMemTag GDB packets, allowing all GDB 'memory-tag'
-> subcommands to work with QEMU gdbstub on aarch64 user mode. It also
-> implements the get/set functions for the special GDB MTE register
-> 'tag_ctl', used to control the MTE fault type at runtime.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Message-Id: <20240628050850.536447-11-gustavo.romero@linaro.org>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Message-Id: <20240705084047.857176-40-alex.bennee@linaro.org>
+> I will pick this patch up with all the reviewed-by trailers for my
+> next Rust RFC series if that's alright with you,
 
-Hi; Coverity thinks there's a memory leak in this function
-(CID 1549757):
+Absolutely - I made it for you ;-)
 
-> +void arm_cpu_register_gdb_commands(ARMCPU *cpu)
-> +{
-> +    GArray *query_table =3D
-> +        g_array_new(FALSE, FALSE, sizeof(GdbCmdParseEntry));
-> +    GArray *set_table =3D
-> +        g_array_new(FALSE, FALSE, sizeof(GdbCmdParseEntry));
-> +    GString *qsupported_features =3D g_string_new(NULL);
-
-We allocate memory for the qsupported_features GString here, but
-it looks like nowhere in the function either passes it to
-some other function that takes ownership of it, and we don't
-free it either.
-
-> +    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-> +    #ifdef TARGET_AARCH64
-> +        aarch64_cpu_register_gdb_commands(cpu, qsupported_features, quer=
-y_table,
-> +                                          set_table);
-> +    #endif
-
-(PS: this ifdef/endif ought to be on the left margin, not indented.)
-
-> +    }
-> +
-> +    /* Set arch-specific handlers for 'q' commands. */
-> +    if (query_table->len) {
-> +        gdb_extend_query_table(&g_array_index(query_table,
-> +                                              GdbCmdParseEntry, 0),
-> +                                              query_table->len);
-> +    }
-> +
-> +    /* Set arch-specific handlers for 'Q' commands. */
-> +    if (set_table->len) {
-> +        gdb_extend_set_table(&g_array_index(set_table,
-> +                             GdbCmdParseEntry, 0),
-> +                             set_table->len);
-> +    }
-> +
-> +    /* Set arch-specific qSupported feature. */
-> +    if (qsupported_features->len) {
-> +        gdb_extend_qsupported_features(qsupported_features->str);
-> +    }
-> +}
-
-Something odd also seems to be happening with the query_table
-and set_table -- we allocate them in this function, and we
-rely on the memory not going away because we pass pointers
-into the actual array data into gdb_extend_query_table()
-and gdb_extend_set_table() which those functions retain copies
-of, but we don't keep hold of the pointer to the struct GArray
-itself.
-
-The functions gdb_extend_set_table() and gdb_extend_query_table()
-both seem to not quite do what their documentation says they
-do. The docs say they extend the set table and the query table,
-but the implementation appears to be setting an extended set
-table/query table (e.g. you can't extend the table twice).
-
-Perhaps a more natural API would be for these functions to
-either:
- * be passed in the entire GArray, and take ownership of
-   it and be responsible for disposing of it
- * take a copy of the entries they're passed in, so that
-   the calling function can free the GArray and its
-   contents after the call
-?
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
