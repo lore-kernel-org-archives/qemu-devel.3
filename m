@@ -4,76 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220C1C3DA45
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 07:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D48C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 07:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSANF-0007wZ-JN; Fri, 12 Jul 2024 03:07:21 -0400
+	id 1sSAZL-0005b9-Ql; Fri, 12 Jul 2024 03:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSANB-0007vO-La
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 03:07:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
+ id 1sSAZF-0005XL-LD; Fri, 12 Jul 2024 03:19:46 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSANA-0003nf-4e
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 03:07:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720768035;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=f48Mbx639jkHwIM/Clxy+ohpQnKYS7wxcR0eZs7LsEg=;
- b=TOh9MM1hVd02zCgOH8R9DOo3IjEjU53BneVz+399AWMQEp7FuLPLBme4y7/SK8guizCi9q
- BS7n+kLUpgD4xN75CQ3jChCieBM6kj2O8bMl1xeMnpTbic8K1ntFcL3InL5F1n2Bzs7cgi
- MBf0caWH4iLk40hNFZqCjOlmPgdIq24=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-QpVypLXNMNSIYp6mofMLAA-1; Fri,
- 12 Jul 2024 03:07:09 -0400
-X-MC-Unique: QpVypLXNMNSIYp6mofMLAA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8F1A19560B5; Fri, 12 Jul 2024 07:07:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.56])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E11741955F40; Fri, 12 Jul 2024 07:07:04 +0000 (UTC)
-Date: Fri, 12 Jul 2024 08:07:01 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [RFC PATCH 0/8] Convert avocado tests to normal Python unittests
-Message-ID: <ZpDV-ghgrxb0hvUd@redhat.com>
-References: <20240711115546.40859-1-thuth@redhat.com> <87jzhsdmd7.fsf@suse.de>
- <68c45f7b-4503-41b5-a858-e93f9dd9f99e@redhat.com>
+ (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
+ id 1sSAZB-0008Cs-PF; Fri, 12 Jul 2024 03:19:45 -0400
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 46C7JFs8094463
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jul 2024 15:19:15 +0800 (+08)
+ (envelope-from yumin686@andestech.com)
+Received: from atcsi01.andestech.com (10.0.15.167) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0; Fri, 12 Jul 2024
+ 15:19:15 +0800
+To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <yumin686@andestech.com>, Alvin Chang
+ <alvinga@andestech.com>
+Subject: [PATCH v4] target/riscv: raise an exception when CSRRS/CSRRC writes a
+ read-only CSR
+Date: Fri, 12 Jul 2024 15:12:12 +0800
+Message-ID: <20240712071716.3122204-3-yumin686@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <68c45f7b-4503-41b5-a858-e93f9dd9f99e@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.0.15.167]
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 46C7JFs8094463
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=yumin686@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,39 +63,188 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Yu-Ming Chang <yumin686@andestech.com>
+From:  Yu-Ming Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 11, 2024 at 07:44:39PM +0200, Thomas Huth wrote:
-> On 11/07/2024 16.39, Fabiano Rosas wrote:
-> > Thomas Huth <thuth@redhat.com> writes:
-> ...
-> > > Things that need further attention though:
-> > > 
-> > > - All tests that use the LinuxTest / LinuxDistro classes (e.g. based
-> > >    on cloud-init images) really depend on the Avocado framework,
-> > >    thus we'd need a solution for those if we want to continue with
-> > >    this approach
-> > > 
-> > > - Same for all tests that require the LinuxSSHMixIn class - we'd
-> > >    need to provide a solution for ssh-based tests, too.
-> > 
-> > These two seem to be dependent mostly avocado/utils only. Those could
-> > still be used without the whole framework, no? Say we keep importing
-> > avocado.utils, but run everything from meson, would that make sense?
-> 
-> Yes ... maybe ... I can give it a try to see whether that works.
+Both CSRRS and CSRRC always read the addressed CSR and cause any read side
+effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
+holding a zero value other than x0, the instruction will still attempt to write
+the unmodified value back to the CSR and will cause any attendant side effects.
 
-We only import about 8 modules from avocado.utils. There are probably a
-few more indirectly used, but worst case we just clone the bits we need
-into the QEMU tree.
+So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
+a register holding a zero value, an illegal instruction exception should be
+raised.
 
-With regards,
-Daniel
+Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+Signed-off-by: Alvin Chang <alvinga@andestech.com>
+---
+Hi Alistair,
+    This fixed the issue of riscv_csrrw_debug().
+    And the issue of `From` email address.
+
+Best regards,
+Yuming
+
+ target/riscv/cpu.h       |  4 +++
+ target/riscv/csr.c       | 57 ++++++++++++++++++++++++++++++++++++----
+ target/riscv/op_helper.c |  6 ++---
+ 3 files changed, 58 insertions(+), 9 deletions(-)
+
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 87742047ce..6db92e0c58 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -735,6 +735,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+ void riscv_cpu_update_mask(CPURISCVState *env);
+ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+ 
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                          target_ulong *ret_value);
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask);
+@@ -767,6 +769,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+                                           target_ulong new_value,
+                                           target_ulong write_mask);
+ 
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value);
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 432c59dc66..e6939f62bb 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -4368,7 +4368,7 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+ 
+ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+                                                int csrno,
+-                                               bool write_mask)
++                                               bool write)
+ {
+     /* check privileges and return RISCV_EXCP_ILLEGAL_INST if check fails */
+     bool read_only = get_field(csrno, 0xC00) == 3;
+@@ -4390,7 +4390,7 @@ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+     }
+ 
+     /* read / write check */
+-    if (write_mask && read_only) {
++    if (write && read_only) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
+@@ -4477,11 +4477,22 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                           target_ulong *ret_value)
++{
++    RISCVException ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    return riscv_csrrw_do64(env, csrno, ret_value, 0, 0);
++}
++
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask)
+ {
+-    RISCVException ret = riscv_csrrw_check(env, csrno, write_mask);
++    RISCVException ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+@@ -4529,13 +4540,45 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value)
++{
++    RISCVException ret;
++
++    ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    if (csr_ops[csrno].read128) {
++        return riscv_csrrw_do128(env, csrno, ret_value,
++                                 int128_zero(), int128_zero());
++    }
++
++    /*
++     * Fall back to 64-bit version for now, if the 128-bit alternative isn't
++     * at all defined.
++     * Note, some CSRs don't need to extend to MXLEN (64 upper bits non
++     * significant), for those, this fallback is correctly handling the
++     * accesses
++     */
++    target_ulong old_value;
++    ret = riscv_csrrw_do64(env, csrno, &old_value,
++                           (target_ulong)0,
++                           (target_ulong)0);
++    if (ret == RISCV_EXCP_NONE && ret_value) {
++        *ret_value = int128_make64(old_value);
++    }
++    return ret;
++}
++
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask)
+ {
+     RISCVException ret;
+ 
+-    ret = riscv_csrrw_check(env, csrno, int128_nz(write_mask));
++    ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+@@ -4574,7 +4617,11 @@ RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->debugger = true;
+ #endif
+-    ret = riscv_csrrw(env, csrno, ret_value, new_value, write_mask);
++    if (!write_mask) {
++        ret = riscv_csrr(env, csrno, ret_value);
++    } else {
++        ret = riscv_csrrw(env, csrno, ret_value, new_value, write_mask);
++    }
+ #if !defined(CONFIG_USER_ONLY)
+     env->debugger = false;
+ #endif
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 2baf5bc3ca..84fb2a35e5 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -51,7 +51,7 @@ target_ulong helper_csrr(CPURISCVState *env, int csr)
+     }
+ 
+     target_ulong val = 0;
+-    RISCVException ret = riscv_csrrw(env, csr, &val, 0, 0);
++    RISCVException ret = riscv_csrr(env, csr, &val);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
+@@ -84,9 +84,7 @@ target_ulong helper_csrrw(CPURISCVState *env, int csr,
+ target_ulong helper_csrr_i128(CPURISCVState *env, int csr)
+ {
+     Int128 rv = int128_zero();
+-    RISCVException ret = riscv_csrrw_i128(env, csr, &rv,
+-                                          int128_zero(),
+-                                          int128_zero());
++    RISCVException ret = riscv_csrr_i128(env, csr, &rv);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.42.0.345.gaab89be2eb.dirty
 
 
