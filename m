@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B930C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861DDC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFkW-0000ZI-Oo; Fri, 12 Jul 2024 08:51:49 -0400
+	id 1sSF0y-0002WT-GA; Fri, 12 Jul 2024 08:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSFkE-0008TE-3F
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:51:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSFk8-0002IG-7c
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 08:51:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720788678;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+fMXABX8IQTooeTgWrg+I2pCs1k0fwLsAX5r4YC1le4=;
- b=Q/u7FmGMHbIYLR4vj+4vUEJNcaWOGjPD9CbBB5M6CDf6Wzq/aYvgl04PCLGZdhwmz69yvq
- N9vNb7Ibd3iEELbkjl9FM/piERL1Z9z4WiS6SfjIm1d4bXlgPVWoxDf9GqTT3GMZ1IML4Z
- 03uKlItcZDpryzc+z8hFv25j1NJWvNc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-vuD0kHE1PV2CtE0wUGFyxw-1; Fri,
- 12 Jul 2024 08:51:15 -0400
-X-MC-Unique: vuD0kHE1PV2CtE0wUGFyxw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8983319560B5; Fri, 12 Jul 2024 12:51:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.56])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8063A195606C; Fri, 12 Jul 2024 12:51:08 +0000 (UTC)
-Date: Fri, 12 Jul 2024 13:51:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 0/9] RISC-V: ACPI: Namespace updates
-Message-ID: <ZpEmuB6xyh2K77Ic@redhat.com>
-References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
- <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0v-0002CT-QY; Fri, 12 Jul 2024 08:04:38 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0t-0005sR-TW; Fri, 12 Jul 2024 08:04:37 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70b2a0542c2so1833513b3a.3; 
+ Fri, 12 Jul 2024 05:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720785874; x=1721390674; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Glz2DqADEJDP1/FMyA12+YvM7zVFWvLEyd5Ky5OeaTQ=;
+ b=dIe2irl4t2XEzUx7hF9y6rRu7a8SZTU4Lv8apQNPbmWa4LCDVJBwBUg4DmbJelpvuV
+ rhJ3tmS/KxbA1a1QBPE+pyiUxurt6pUHPDUtW+Cc0ArHw6nL3Pj97usGUmq/mf8crv8m
+ EyiEkaXN3KVnQye7KXVez63xVSCJYLt3chPZzblH+fEwXBxcynad6kBj+ydrtwPfZinV
+ ccPFvXBtMPT/2Mjg+ie+OoNE4mkGXQzZog2KqMcNReKYCn7vhaa2IU/m3Ic20gkMoMUR
+ Ut7VmX1PfPcHQGEjFIdgo193PeExVkoo50D+YeoEATTwspmUjBnd8OrkZr8xAcFlxeGe
+ iYgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720785874; x=1721390674;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Glz2DqADEJDP1/FMyA12+YvM7zVFWvLEyd5Ky5OeaTQ=;
+ b=d15WvGsI+QQGcgovQSL9He1VLcG8r9UgQXfEGFG4Fv21GbwNTul8CKgCli2PUi6bgD
+ L71bqXm6hw/ViJojXIcQ99EaJo7FdFm9cl4yJYBWeVYPW3nQtyES76JRBItuyMnwzYV0
+ 8Mu66Q9rV7W6uohMj+TO/dCXoFE0SgN15/+XPDFn+v8GqrJC/e+gXBvCUWhS5BbVdY6j
+ 1A1tvJaKPUO6vgjsnWvssgac0OlkTRqXlmlu6hWH0kMsKTUPN5FGzONqzfau5PlE74tl
+ 1736zgsf5WHatLKfGzkOC0DkXqV3Ou1mTRvZe6enGP1OxYTb7DCkxoKMN+qxZ5eiQrvN
+ xAuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXp9v6L4hrYDWCJr9OrNQG31pngo3CCZ4ro3Qfh2cpdOY701MPbobrRtEM2Ni/QzCELpaCAME6WjsoK79lgGNO+6OsJJgI=
+X-Gm-Message-State: AOJu0Yx8aMO/oktgKZ74T+P5nEs3yWfXb/D6qDOg7+3r0TNaQU7g07ty
+ osTY4ERi+kK8cHx51eSy/kCCU/oGTyu33n4e5iZ082H5a5u+Xu3+7OIkHQ==
+X-Google-Smtp-Source: AGHT+IFcZxsBteEgx8S80szg3xNi5sqQy87RBLSLz1JW9U94SK+iPPzdTJ/8Q6jzx2V3bZA7CZ+2FA==
+X-Received: by 2002:a05:6a00:4f90:b0:70a:ffc7:f921 with SMTP id
+ d2e1a72fcca58-70b435f6296mr14695383b3a.22.1720785873657; 
+ Fri, 12 Jul 2024 05:04:33 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.04.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 05:04:33 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 16/19] system/cpus: Add cpu_pause() function
+Date: Fri, 12 Jul 2024 22:02:43 +1000
+Message-ID: <20240712120247.477133-17-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
+References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,55 +97,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 12, 2024 at 02:43:19PM +0200, Igor Mammedov wrote:
-> On Mon,  8 Jul 2024 17:17:32 +0530
-> Sunil V L <sunilvl@ventanamicro.com> wrote:
-> 
-> > This series adds few updates to RISC-V ACPI namespace for virt platform.
-> > Additionally, it has patches to enable ACPI table testing for RISC-V.
-> > 
-> > 1) PCI Link devices need to be created outside the scope of the PCI root
-> > complex to ensure correct probe ordering by the OS. This matches the
-> > example given in ACPI spec as well.
-> > 
-> > 2) Add PLIC and APLIC as platform devices as well to ensure probing
-> > order as per BRS spec [1] requirement.
-> > 
-> > 3) BRS spec requires RISC-V to use new ACPI ID for the generic UART. So,
-> > update the HID of the UART.
-> > 
-> > 4) Enabled ACPI tables tests for RISC-V which were originally part of
-> > [2] but couldn't get merged due to updates required in the expected AML
-> > files. I think combining those patches with this series makes it easier
-> > to merge since expected AML files are updated.
-> > 
-> > [1] - https://github.com/riscv-non-isa/riscv-brs
-> > [2] - https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg04734.html
-> 
-> btw: CI is not happy about series, see:
->  https://gitlab.com/imammedo/qemu/-/pipelines/1371119552
-> also 'cross-i686-tci' job routinely timeouts on bios-tables-test
-> but we still keep adding more tests to it.
-> We should either bump timeout to account for slowness or
-> disable bios-tables-test for that job.
+This factors the CPU pause function from pause_all_vcpus() into a
+new cpu_pause() function, similarly to cpu_resume(). cpu_resume()
+is moved to keep it next to cpu_pause().
 
-Asumming the test is functionally correct, and not hanging, then bumping
-the timeout is the right answer. You can do this in the meson.build
-file
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ include/hw/core/cpu.h |  8 ++++++++
+ system/cpus.c         | 30 +++++++++++++++++-------------
+ 2 files changed, 25 insertions(+), 13 deletions(-)
 
-We should never disable tests only in CI, because non-CI users
-are just as likely to hit timeouts.
-
-
-With regards,
-Daniel
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index a2c8536943..e6acfcb59a 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -984,6 +984,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
+  */
+ void cpu_exit(CPUState *cpu);
+ 
++/**
++ * cpu_pause:
++ * @cpu: The CPU to pause.
++ *
++ * Pauses CPU, i.e. puts CPU into stopped state.
++ */
++void cpu_pause(CPUState *cpu);
++
+ /**
+  * cpu_resume:
+  * @cpu: The CPU to resume.
+diff --git a/system/cpus.c b/system/cpus.c
+index d3640c9503..5e3a988a0a 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -568,6 +568,22 @@ void cpu_thread_signal_destroyed(CPUState *cpu)
+     qemu_cond_signal(&qemu_cpu_cond);
+ }
+ 
++void cpu_pause(CPUState *cpu)
++{
++    if (qemu_cpu_is_self(cpu)) {
++        qemu_cpu_stop(cpu, true);
++    } else {
++        cpu->stop = true;
++        qemu_cpu_kick(cpu);
++    }
++}
++
++void cpu_resume(CPUState *cpu)
++{
++    cpu->stop = false;
++    cpu->stopped = false;
++    qemu_cpu_kick(cpu);
++}
+ 
+ static bool all_vcpus_paused(void)
+ {
+@@ -588,12 +604,7 @@ void pause_all_vcpus(void)
+ 
+     qemu_clock_enable(QEMU_CLOCK_VIRTUAL, false);
+     CPU_FOREACH(cpu) {
+-        if (qemu_cpu_is_self(cpu)) {
+-            qemu_cpu_stop(cpu, true);
+-        } else {
+-            cpu->stop = true;
+-            qemu_cpu_kick(cpu);
+-        }
++        cpu_pause(cpu);
+     }
+ 
+     /* We need to drop the replay_lock so any vCPU threads woken up
+@@ -613,13 +624,6 @@ void pause_all_vcpus(void)
+     bql_lock();
+ }
+ 
+-void cpu_resume(CPUState *cpu)
+-{
+-    cpu->stop = false;
+-    cpu->stopped = false;
+-    qemu_cpu_kick(cpu);
+-}
+-
+ void resume_all_vcpus(void)
+ {
+     CPUState *cpu;
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.1
 
 
