@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C2EC2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC954C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSE36-0000NK-FB; Fri, 12 Jul 2024 07:02:48 -0400
+	id 1sSE30-0008VL-VO; Fri, 12 Jul 2024 07:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE31-00007v-Vm
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:44 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1sSE2y-0008UJ-4D
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:40 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE2z-0003b2-AB
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:43 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-52e99060b41so1982023e87.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:02:40 -0700 (PDT)
+ id 1sSE2w-0003af-3I
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:39 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52e976208f8so2135772e87.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720782159; x=1721386959; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=87DPAAbyBmLAKm4ynt726DGnnWSE+Fbpy4sTffFQKUw=;
- b=HqEhfnTAquJF3CqI5KBIEdJRWEv7wLgZI2pP2jfoIoef9AcQTyTxNExmzjjBYCFExM
- JyJbovX09wdxbtlswPaWm8ulSqh3Q2LsahaJs0AzS3WvLlId+7cbLY0xoG6eL+u1uQxw
- B5k9gvjLDP+s1bW8vgbdBTtOEkuPqPpGKAtMwtwJ6ozqpUmHhjAwt+ntXeI5lfzk3FQz
- ALO5ALH18FnqDMouWUgXO0kaWM6ORN0WszgeAF6Mxnx8ZaQMB+dS1evEoRjYXtBBsX6Y
- wjI/DLB4ypSuo1E0h+6GzNmFqyfPwPsNAxFHI13sD7hC0ZmgUaYXJgnE1BqkTPPHMiYA
- OdqQ==
+ d=gmail.com; s=20230601; t=1720782155; x=1721386955; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YDi3aHOISc4g4l2QB4EUVCHplHZ5EmTx9pOA9H0LoG0=;
+ b=Zs1S5BlpWxKrPHCIFTdestU3W8zaY10OnqrLsBb/RpMNKVSKGJ3VO/5zb6EjkL0paC
+ 6TXYrv5Y4VwHAuI36/Ww/ZxWz/FQWpXVQyk1WBpOMdReTsLIgvn1Ccr82Opey7IT2u8F
+ 0BFjpeXSwHTJ+4qZA4MhCq4VA3zdQy1shZSWkHkz41um9f6ZnZ5KcLafHUqBO+dgNWgu
+ JIggQGZ8GDHlZxgPREKTd7DefV4ZPHtkWBM8hXZvkHSRbp38q56aycSSPuHF+OUoaYOe
+ t5WM18Hak3pA8ULoRHN76VNFKIXZEKdpYt7uQ/f4DGLYDjeMX2A7d/wF6eWoUzGlR3uR
+ T8rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720782159; x=1721386959;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=87DPAAbyBmLAKm4ynt726DGnnWSE+Fbpy4sTffFQKUw=;
- b=vJuK7y9kZgjVQrTBaLq19BRj+7M9U/vISMTHbGGHkJctlyPR54AwIW/Ba6p+lTMCKf
- wajkQgZNbqQ/RRy/F6mStVEo96Ec7t28YC0cw0Q5kjYgPm3pzLz6YoqpXIw9SXYDyZcV
- 909aXlGOFw5h01lGBXOXegtQCWAw50oS6P6n5uZRyUBMd0G2qvRh+sN+9C63EIRu1e0W
- 470rG7aASRI45IJpd3TRqMEBnU972qmKssqua63vOjufpJtkP7bpMoNI+wA0iAR5uwmM
- Ub9ZZ0tB7vvOtk+INHHcJua8VQNsVz9aVutT0BvDPvq1HFOdbMwZMQ2SphYDIIuedMNE
- EIkQ==
-X-Gm-Message-State: AOJu0Yybw6MIWYMy/ZwQ8uiDeYlzPQSNHSwpL95aCMvhnFpcVnF5M5SP
- ytgrFFG9fs9a3PggOxIyZQEs3lzZ6oXna2eEkrS3g2HfG0gyepmn08kqfCm4
-X-Google-Smtp-Source: AGHT+IHoNb9jo3zc5r2b5ZN1+E6PEQXJq2jaR175xDg5jGcIkz9qmG3zee/NjIb1VzoUbFJp/vxmXw==
-X-Received: by 2002:ac2:5f99:0:b0:52c:86de:cb61 with SMTP id
- 2adb3069b0e04-52eb9990fedmr6120031e87.10.1720782158364; 
- Fri, 12 Jul 2024 04:02:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720782155; x=1721386955;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YDi3aHOISc4g4l2QB4EUVCHplHZ5EmTx9pOA9H0LoG0=;
+ b=gKDQIybZecYiVahdhxXNNw0G4p7Zci9h6RP9P5uXRCS21Q65slw7iunHGyoiYLtY+a
+ XtGZWZUhf9/rSjDMkcVTJpk8XZGdOLec1m5fO72dhzZDW7Mj7rIztSwvLBOqmzooHwA3
+ TbP9ZePUFbMEgX8+VaJ8+oSkanuYlgD2Syi5h8T7FSenWV5VsGwdChQUJnoliKXL3RPe
+ x7qrW9ayu/csgHc4OIIiMEsjWF/rEgZDT7IMq/BpA59PMdHzTntlCBtScu+5ykXzWoXo
+ c0VxExyFRgfei8Yx65E3b6lGIH1MXekD6LwemUL1R8gc5WYlA3V7w/7jBoFrEH3NdQdg
+ JSLg==
+X-Gm-Message-State: AOJu0YwirBoEFxjb9UgVPs+GhZOY7G46u/UceSlgFYR2Gozu952B55Jm
+ F1YnnrUszbof3WVjYN15RiulnkHHMGRS91aQbf9OFkVJSIgdwAoAZm/pXPYm
+X-Google-Smtp-Source: AGHT+IFvDyDG2RtxgI1dCSwH630RGKfaukmen1TDL6ZzE345JhyvC7Zls1reJUSyqRCErs4kTkwxrw==
+X-Received: by 2002:a05:6512:2249:b0:52c:dea5:7c8c with SMTP id
+ 2adb3069b0e04-52eb9994b30mr9508302e87.22.1720782154239; 
+ Fri, 12 Jul 2024 04:02:34 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-52eb9077a9asm1235370e87.297.2024.07.12.04.02.37
+ 2adb3069b0e04-52eb9061a8asm1224978e87.147.2024.07.12.04.02.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 04:02:37 -0700 (PDT)
+ Fri, 12 Jul 2024 04:02:33 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  alex.bennee@linaro.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, edgar.iglesias@amd.com,
- Anthony PERARD <anthony.perard@vates.tech>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: [PULL v1 3/3] xen: mapcache: Fix unmapping of first entries in buckets
-Date: Fri, 12 Jul 2024 13:02:30 +0200
-Message-ID: <20240712110230.4098056-4-edgar.iglesias@gmail.com>
+ richard.henderson@linaro.org, edgar.iglesias@amd.com
+Subject: [PULL v1 0/3] Xen queue
+Date: Fri, 12 Jul 2024 13:02:27 +0200
+Message-ID: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
-References: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,41 +94,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-This fixes the clobbering of the entry->next pointer when
-unmapping the first entry in a bucket of a mapcache.
+The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
 
-Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
-Reported-by: Anthony PERARD <anthony.perard@vates.tech>
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
----
+  Merge tag 'pull-target-arm-20240711' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-11 12:00:00 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.com/edgar.iglesias/qemu.git tags/edgar/xen-queue-2024-07-12.for-upstream
+
+for you to fetch changes up to 872cb9cced796e75d4f719c31d70ed5fd629efca:
+
+  xen: mapcache: Fix unmapping of first entries in buckets (2024-07-12 00:17:36 +0200)
+
+----------------------------------------------------------------
+Edgars Xen queue.
+
+----------------------------------------------------------------
+Edgar E. Iglesias (2):
+      physmem: Bail out qemu_ram_block_from_host() for invalid ram addrs
+      xen: mapcache: Fix unmapping of first entries in buckets
+
+Stefano Stabellini (1):
+      MAINTAINERS: add Edgar as Xen maintainer
+
+ MAINTAINERS           |  1 +
  hw/xen/xen-mapcache.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ system/physmem.c      |  4 ++++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 5f23b0adbe..18ba7b1d8f 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-         pentry->next = entry->next;
-         g_free(entry);
-     } else {
--        memset(entry, 0, sizeof *entry);
-+        /*
-+         * Invalidate mapping but keep entry->next pointing to the rest
-+         * of the list.
-+         *
-+         * Note that lock is already zero here, otherwise we don't unmap.
-+         */
-+        entry->paddr_index = 0;
-+        entry->vaddr_base = NULL;
-+        entry->valid_mapping = NULL;
-+        entry->flags = 0;
-+        entry->size = 0;
-     }
- }
- 
 -- 
 2.43.0
 
