@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6945DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC03C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 11:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSE32-00008n-97; Fri, 12 Jul 2024 07:02:44 -0400
+	id 1sSE33-0000Co-8l; Fri, 12 Jul 2024 07:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE2z-0008Uq-SF
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:41 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1sSE30-0008VM-NZ
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:42 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sSE2w-0003ah-6U
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:40 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba040aso23297561fa.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:02:37 -0700 (PDT)
+ id 1sSE2y-0003ax-Sq
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 07:02:42 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52e9b9fb3dcso2270514e87.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 04:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720782156; x=1721386956; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720782158; x=1721386958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dc1eTWi5iZyva3MfQYId5KFBzpR8Jnw4CwD+XxknsHI=;
- b=igiPwKgHm56hZOm/Flx3nfEonZhq9fA5MXEE3xQdG7OGLhbFVAQF+sejwGFionmptF
- MD4KnYyyitr0XF0xb+JKs51KOT7q8kywNJBe2Q1HCP1yGn1pK1j9MCBRtdfDwGZtYBvK
- o6u3GYZjP0QOJ4hCRZ+6zqgWi0vfMWTU/u6gFCPkiDP01Z6jhKnp8Ot61B1k4Iwl3Lgd
- kLCjV1qahIbAw/TZKFhMSpzVSlyTME/DRT3DeKuYdGdwkMtoZ0aGUg6pcxCPgrqydUUA
- 1I//g3I/xx80vbrtjunsWyF034cwii4xR9LlmjRHiGAxoQKymTzLFrTpQXbwcvIczw1L
- 2lkg==
+ bh=fKWnt4ssz7MnpyKuRbBIUzzN45FF59afh9GBgWcO174=;
+ b=aldrw8BfOlQXmbgluuBysNfZOXFTG39l5DJ0IK+pm2drXUdDH1PAEcUuJLTSnZkDnr
+ +nJZH2PXocX2kBWHnE3S0wqEzXhI6OXOoNp/YJdSSVil3gomuykrj3vSXAioL1wCgbuF
+ y7+DWJES1ajUM8ylE2E8rvb5AE/Z0mY/9JWwKcSxwq/RR6DQXRWLJtkNHnsK8OeMnJXf
+ zAvARoFMdsam23JCGds/PkBI2zm+TXywRIss0/LS+IeMKnZdx3stDcSmGVZ5JkhtD3na
+ W9zxqvBfg6NpkH8tmksyKi6ygDQaDZrlD5jPhzyjREtfNSquIK2VxBy85K0AnIreqkgu
+ XPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720782156; x=1721386956;
+ d=1e100.net; s=20230601; t=1720782158; x=1721386958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dc1eTWi5iZyva3MfQYId5KFBzpR8Jnw4CwD+XxknsHI=;
- b=tGXUqE2Ncz91z4Iz7wB4yf6OC9yZpv1ZL7qhP+6FGlSKdt3uWzMC1KTvSbuwt6VfHG
- tUASpa5UI4nwtk7oii5Od5Gq88yT1YTKAR73hL8RklniKAWiGZyix2flqPk81+8X0J7S
- wvIGLNfkgaoLnreA/aY0Hm3WcQsY3tNyfuuD92SPDzUPyRMIvgWm9o81dBmPNg5fQAor
- wR/ixvFE8OplEQ1SfFXO3IqcVkqZHb4nRqeXndmtun+45S/+IkRJvAW8a9VXSiAjCakp
- v+FdB0wLdt1fD0K+9OIA4ZXJW5IVSz1YqCWg+St5I7tfHkiqg1wJ4qXGLe7PfUpZTfzy
- l6kA==
-X-Gm-Message-State: AOJu0YylMXb3d1L9ilCnCW+Sou1U7JbP2X1FkW/9Ok3hxsv4iQ0F4MB5
- /+cFwCHiqtWxHNfT1reCM3K/dChsl0aKzyb3QJhLRyhwIEk7nrthEa3AANN8
-X-Google-Smtp-Source: AGHT+IHkWR3puHuo2XOZ/nDlGjWAHbnO9jGh1wexmZx11eY1lI0DYagRvxEN2CVXAlXL/la0QDxqUA==
-X-Received: by 2002:a2e:6a05:0:b0:2ec:2d75:509c with SMTP id
- 38308e7fff4ca-2eeb31977c3mr71565311fa.46.1720782155218; 
- Fri, 12 Jul 2024 04:02:35 -0700 (PDT)
+ bh=fKWnt4ssz7MnpyKuRbBIUzzN45FF59afh9GBgWcO174=;
+ b=dIMNpw7jrf5TpeUYiJQQ0HaDptq7TNga+hh0/+Cm7hb/Tb26o/L01l9cfJsTJswhYt
+ lXjjuVrTwCELMIJqymoSM8nc82lUIctd7rD3T8wYPs4ClASn1caSQVfYsFKvbQeyvQ0x
+ X/3FQWps+hbl0E+pnV8rBXGpP4rV5LsvRphw2PXSv8S4jBniS7NePvBHZAQ2UM1gimnD
+ 4Rv8Z15mD+3fzk4wSchxBcHn5jIqqINM93ScfLlRq9H2/13odm325gkn9eRJfEBcTntR
+ oE7H737yTlMKua1natq/8VG52+p+PdaVvLdp5MfWUgNRNKBA9YQlycV0rdwqnYb6okvD
+ K/aw==
+X-Gm-Message-State: AOJu0Yy0a8rUIPL9wKP+cNlyGJw6iC2kwTBNbW4KmtUmazx5wUjBOVzl
+ +nZQkeCgwAu1fK0wtslYFJG+2ElQy+Az86rWJW8SPPQk8YeWSVg8SCCve8v+
+X-Google-Smtp-Source: AGHT+IGOZ+IbhxesDx8p6m1dAos6T8JaI42mOJvjxpfDN/gOvfWbf+1UhmiRI32EsKvzgaPEKTNk0A==
+X-Received: by 2002:a05:6512:2107:b0:52e:9d6c:4462 with SMTP id
+ 2adb3069b0e04-52eb99978d9mr5526109e87.23.1720782157305; 
+ Fri, 12 Jul 2024 04:02:37 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2eeb3489029sm10741871fa.104.2024.07.12.04.02.34
+ 2adb3069b0e04-52eb9079cbasm1233898e87.309.2024.07.12.04.02.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jul 2024 04:02:34 -0700 (PDT)
+ Fri, 12 Jul 2024 04:02:35 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  alex.bennee@linaro.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, edgar.iglesias@amd.com,
- Stefano Stabellini <stefano.stabellini@amd.com>
-Subject: [PULL v1 1/3] MAINTAINERS: add Edgar as Xen maintainer
-Date: Fri, 12 Jul 2024 13:02:28 +0200
-Message-ID: <20240712110230.4098056-2-edgar.iglesias@gmail.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v1 2/3] physmem: Bail out qemu_ram_block_from_host() for
+ invalid ram addrs
+Date: Fri, 12 Jul 2024 13:02:29 +0200
+Message-ID: <20240712110230.4098056-3-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 References: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,37 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Stabellini <sstabellini@kernel.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Add Edgar as Xen subsystem maintainer in QEMU. Edgar has been a QEMU
-maintainer for years, and has already made key changes to one of the
-most difficult areas of the Xen subsystem (the mapcache).
+Bail out in qemu_ram_block_from_host() when
+xen_ram_addr_from_mapcache() does not find an existing
+mapping.
 
-Edgar volunteered helping us maintain the Xen subsystem in QEMU and we
-are very happy to welcome him to the team. His knowledge and expertise
-with QEMU internals will be of great help.
-
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Acked-by: Anthony PERARD <anthony@xenproject.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ system/physmem.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6725913c8b..63e11095a2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -536,6 +536,7 @@ X86 Xen CPUs
- M: Stefano Stabellini <sstabellini@kernel.org>
- M: Anthony PERARD <anthony@xenproject.org>
- M: Paul Durrant <paul@xen.org>
-+M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
- L: xen-devel@lists.xenproject.org
- S: Supported
- F: */xen*
+diff --git a/system/physmem.c b/system/physmem.c
+index 14aa025d41..2154432cb6 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2277,6 +2277,10 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
+         ram_addr_t ram_addr;
+         RCU_READ_LOCK_GUARD();
+         ram_addr = xen_ram_addr_from_mapcache(ptr);
++        if (ram_addr == RAM_ADDR_INVALID) {
++            return NULL;
++        }
++
+         block = qemu_get_ram_block(ram_addr);
+         if (block) {
+             *offset = ram_addr - block->offset;
 -- 
 2.43.0
 
