@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C71C2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF72C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 22:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSOUD-0007i6-1k; Fri, 12 Jul 2024 18:11:29 -0400
+	id 1sSOUg-0007zK-3t; Fri, 12 Jul 2024 18:11:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sSOUB-0007hR-Nu
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 18:11:27 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sSOUd-0007xJ-AI
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 18:11:56 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sSOU8-0000nU-Qp
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 18:11:27 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-656d8b346d2so1639912a12.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 15:11:24 -0700 (PDT)
+ id 1sSOUW-0001ML-FX
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 18:11:52 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fb4fa1bb34so16711585ad.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 15:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720822283; x=1721427083; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720822301; x=1721427101; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uwz70OfERMB86TaCsI8Lqz7/+ybmADhdvPUXJiuwYMQ=;
- b=uQ1+HNjYlphfleMqFWq66byMuK/EJojZfK3cGjoqXOa3SAt7VUXtSldeCr62dtwFBw
- i/sutDS9kpU+Pb+vTLVNL7FvQTxeU3UE/rn9v5kQ10QiPPdI5BDEdEWvoAhIcA9GzFK7
- 9kNMAmEKdWwq2XOppHMKWxOdieN+/1RXftlzwsyHEVOgYZ6iB9/K7c5Ecc+aFWTJpvOs
- JggGOxVmpfU2WrrRBjib2p8IChFVEntkXVuzSSThKBQb8VLLLpZWANDj6k5o7pzDsiFM
- ycrRdrx70aI3e9mAPK3uEFUOXqtQBRXEcrhraN8Jqj9iuo9wMc80UqWRdK2XQQ/C9Lnt
- ICYQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XeEkxSw7ekJebub3o4nSVsaiAChiBDF7Bg3PQOOSspU=;
+ b=Mr8YH2y1LF5WGLQch+io9y/eoVfZH+exKtaZGRiVqtbAEbApOSw/2Ev5nd3fsywf7v
+ 9y5UJ/gHRyyoZSX88PVKqHzLNcxg4IiLn4wmJM7XWqvXf2zV2blUIfopPsUrjGOW5zIK
+ u7IJnbE9p7POIHP1WS+GZ0ByZyQBB6XiBuk4KJgtgKpM1I6Cz/m/YvFgS9qqvvYvBQZO
+ YQS0WPD8HsOQRDc+VXYjpnf4V1id1jthy6CBDx4+8AF/oZY3FHexmfrPdeMIATHUpBdu
+ zR392L20vFEdmQyfxJVCqWyNCBJ9028yr7quXjv7opYnwIHQJHn0AE7tjhgTXX+U1tS/
+ lAvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720822283; x=1721427083;
+ d=1e100.net; s=20230601; t=1720822301; x=1721427101;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uwz70OfERMB86TaCsI8Lqz7/+ybmADhdvPUXJiuwYMQ=;
- b=qQ2ZlnDJUN5lUTeUrClI44AuO5Bh58UzB6rC2W7XDhNUzLvjjFWat3kc5Od2WjF+Yt
- SCN0vF+I2VaIwy+I0ymUDP99Rji6szz9ju6ldv5Y6clX8p97jzp9lrK3QVvBytwNPrMh
- Vjw0IMq5uhyJOKYGuWBZAfsMgf/1FLJeeGZeigIMEyMrsfUZeXW3bC+p4VqH5jFDJv/h
- aCIr2gk219cmdiB9UvZM6L43CoB/MjljBWlH8keby1HO/nT9w8JpJuezsIraK0y45Dyr
- qWPnpYq2m48ZQkpsANgbaZ5zzLl9xBUGYLSbb70TghD8egrsuNWRaMyv9RMnfC3iC0q2
- kXxw==
+ bh=XeEkxSw7ekJebub3o4nSVsaiAChiBDF7Bg3PQOOSspU=;
+ b=dI/eCh3f+5VQLsJ0QKDIs2IsaPkzPbWQY3IlBYc6WqO13aiGzWrSgVSv6Dpv48xjuu
+ /Sh3UQxMCjKz/NnZ/63R85tD0w7SSKOL9Iqoy06yUpnzB/sJ2l+Vcr0w0tMjPvJF1JTE
+ XPbv8Fiqj+FT3zORClTMF1aAI8IGH/ODvQborrCNi3vySZcjWe2O/mb8vofQ55u34dIJ
+ NK2Obr8+ThtmuYAGaUn91mG2GTaK/8ARrjV9rswvnaNP0hFFHfBx+oABEJSzD4lPRKg9
+ pDGYN5pmCrKoNLDqdPhnnlGIWFjmvuJ5uN4EtqtXsMlwXkAv3OTYx8wmO8qfiETjDt07
+ zisA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQM8wSNqeoXlgdMQeF/cemLqZma5Pnf7ZFZ8e/CeuqcbsSKICZ/fpO8XEsCUzgwtbtfTKKWxs0HIWGQQn8BVP6Ow5b3V8=
-X-Gm-Message-State: AOJu0YyL7tJa3KdMcgH75+SsCXg76Eveoy1T3ghueydOt8iFt9UulWLX
- b7ElXAUjrX0ypiNE/Kc7A0mGW05gYKf3AiWPg+9etXuvReY+bIQLGgTW520PTcEAtCr8zZcExqF
- 8
-X-Google-Smtp-Source: AGHT+IEmQiUXXSKC8cdaXQVkqedVtV8FYanAzG5ryBPrv//bMGQKfLuqBe00oOu+WqkyR7DySi3hnw==
-X-Received: by 2002:a05:6a20:7487:b0:1c2:8af6:31c2 with SMTP id
- adf61e73a8af0-1c2983ba4f0mr15856758637.44.1720822282540; 
- Fri, 12 Jul 2024 15:11:22 -0700 (PDT)
+ AJvYcCVvNC28zCk2K5/cFcvbGcC1IbSpQpMi16F2zQtnCN6x1xkYJ3cpdg08nncXHZ7pltbqQ5+tS5kYT1Cs7nY1WZfErI4W/00=
+X-Gm-Message-State: AOJu0Yw54iObRr3/D9VD9TPJD1EnjaVAbuiCLHq58r3Bw4ZO9TcM+o82
+ SPcH+2ZcSY3r8VO2sz1Gq8AE9L2OA3ttsrMpHpYaJ2ikB0QbizAdKLGA7LXxRmk=
+X-Google-Smtp-Source: AGHT+IF65JIyljFa6dNnXpeALoY3fOmMOXvE+J0JyWLbW38BZcdy2bCd0+OfKsYd19vPKhODLbR8CA==
+X-Received: by 2002:a17:902:e5ce:b0:1f9:f3c6:ed37 with SMTP id
+ d9443c01a7336-1fbb6cd19a0mr107945355ad.14.1720822300826; 
+ Fri, 12 Jul 2024 15:11:40 -0700 (PDT)
 Received: from ?IPV6:2607:fb90:c960:83bf:3dce:b9f2:e454:16c6?
  ([2607:fb90:c960:83bf:3dce:b9f2:e454:16c6])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eb9c92esm16374b3a.13.2024.07.12.15.11.21
+ d9443c01a7336-1fbb6a290e2sm72072945ad.70.2024.07.12.15.11.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jul 2024 15:11:22 -0700 (PDT)
-Message-ID: <a3809a21-4f2f-4a2c-89a7-84d69076e3da@linaro.org>
-Date: Fri, 12 Jul 2024 15:11:19 -0700
+ Fri, 12 Jul 2024 15:11:40 -0700 (PDT)
+Message-ID: <9b6aa7c2-cffa-4277-b5e9-f310fba93ef1@linaro.org>
+Date: Fri, 12 Jul 2024 15:11:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/8] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-References: <20240712013632.3464731-1-gaosong@loongson.cn>
+Subject: Re: [PULL v1 0/3] Xen queue
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ alex.bennee@linaro.org, peter.maydell@linaro.org, edgar.iglesias@amd.com
+References: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240712013632.3464731-1-gaosong@loongson.cn>
+In-Reply-To: <20240712110230.4098056-1-edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,23 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/24 18:36, Song Gao wrote:
+On 7/12/24 04:02, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias"<edgar.iglesias@amd.com>
+> 
 > The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
 > 
 >    Merge tag 'pull-target-arm-20240711' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-07-11 12:00:00 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/gaosong/qemu.git  tags/pull-loongarch-20240712
+>    https://gitlab.com/edgar.iglesias/qemu.git  tags/edgar/xen-queue-2024-07-12.for-upstream
 > 
-> for you to fetch changes up to 3ef4b21a5c767ff0b15047e709762abef490ad07:
+> for you to fetch changes up to 872cb9cced796e75d4f719c31d70ed5fd629efca:
 > 
->    target/loongarch: Fix cpu_reset set wrong CSR_CRMD (2024-07-12 09:41:18 +0800)
+>    xen: mapcache: Fix unmapping of first entries in buckets (2024-07-12 00:17:36 +0200)
 > 
 > ----------------------------------------------------------------
-> pull-loongarch-20240712
-> 
-> v2: drop patch 'hw/loongarch: Modify flash block size to 256K'.
+> Edgars Xen queue.
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
