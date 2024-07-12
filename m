@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04414C3DA4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13B88C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 14:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSHFx-0003SC-OG; Fri, 12 Jul 2024 10:28:17 -0400
+	id 1sSHN7-0005FJ-9f; Fri, 12 Jul 2024 10:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSHFv-0003KL-J6
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:28:15 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSHN0-0005Bh-BJ
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:35:35 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSHFt-0006on-Ue
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:28:15 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52ea33671ffso2140704e87.3
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:28:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSHMv-0008PO-5r
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 10:35:33 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4266eda81c5so16699985e9.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 07:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720794491; x=1721399291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720794926; x=1721399726; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uptgfBZcZWMJEpLHJsJs8o8WU95f1Z6i8DsAB0xKZ38=;
- b=TpaRGWYRra5lBdZbiR9Su/Gcd1fmoMRQnKhrNOuysia5CavAGlPYHI1yxVG54532r2
- RcVMc1JFJQ4rb0MLETdjh+zKOeU9DAMA2SnKLIU64WUbgP4veeD6QoCxqusxAXk6495T
- /nMMJ3FbWYXSn65s4fXXtUj+b75Vb02BUqkSJtpffTcQLSipFKOvXfti2YroNULCanDt
- UeNK7DEOAKoUafySQwtMqL32F/Dj9EBU3XWw1S8azYvHMkA2I+jHQfLYuNnRUZ5Aatdo
- tLzITQm/1c8uS4lB9RwVcRoZWC5v7jUgzWZGgBB5fDTwTF2hUVkMOEBHZAIOdHvp8ug5
- lnWA==
+ bh=nXTW8Y7xDGTJbltVsZgOeBPaLF5vHVmmMPg9Uy7rRPE=;
+ b=L20aIAtxWNEelW8592NsUVVnTh/4kT/HzLuOb9Iikmpm7/5ZFOpOh3sgv8Tv0Q/xLi
+ uFCAlpdhmUT1u0ffqfWWuGr/axNujHyHptgcMFz5uIjYeiExAHXkJz7p709I8Iu9xidB
+ wzqSbTYDsGmCUQlJG5KX+akm7gUGLaMmtpI5iOzB08NhyejOdwHzk6bMivfqUY8JqnQB
+ dj0gd+G1nwON25vGyzuPX6MCtJWmGHoGHGuyM3TLeVU5/HrZDBO0XOfp4Xrbc/xgxn0P
+ DwxEFRA0EN98rgy5C1PIN+fkmosRC+0ly9yzMhAPlIfM6tCtz6ISkynzQ8kr3Z5NcAOI
+ mGcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720794491; x=1721399291;
+ d=1e100.net; s=20230601; t=1720794926; x=1721399726;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uptgfBZcZWMJEpLHJsJs8o8WU95f1Z6i8DsAB0xKZ38=;
- b=C3obS5SIX/KlKZbDIes0Ni6OG2zQ7b+q2HYwMBBNXr5kM/fquo2mgT6mrbOnnNInNT
- PK7njvqVDH43FL9GEPahfoRwdVMaGZSuJBH+MDmRuW3Ib3iROXujfiDVQdAOKtiv1EvR
- +nQmOVsrDtljF71VmaX27gVG7o2ivGoeR/ImD1+jdKjVf/eR2UP4Y/9mQIouLNNCDdbC
- DS8l9HSXh5ufvcfSnCiPn12JmCs9Y+/7/ba/EZWYn11/BgidBwyFoqrZRrSQN3H/5Jgl
- CxZA5rh/PTlStDxZr+Q8FTOdPKV0BWVrEEYzunlqETSavAEnRrctRn92ATd49WC7ktwV
- nvug==
+ bh=nXTW8Y7xDGTJbltVsZgOeBPaLF5vHVmmMPg9Uy7rRPE=;
+ b=ZPsdIEkLA9Lo432q9rTRsfoMu6KkFx7HgxyEMuXSRrTExhdvZFQNWCZAukrC1R1y97
+ sjTQXunhFZumx4YxUeBE3XzZO+XOFmZUVTDaG43j69R1ZkRFOZG/LXM+5l1oebh2kmZ3
+ c82AVPV0e6UBuu2NjSnPIfsaTKUNkqfz5//J4S7wF41w7UcEP4zuBF3mkc6ORT0pP5sZ
+ o/aneZ1MKGjx4+XOTKomlYEwzuJXSCcIZUvYajzTp7dY8WzHLq9VuH5bQhFQOpWTcGL1
+ W+3rHkP58m0yefWqs+nA/91WaSuQobuupCDjsCRdbg8GIQZ444OlpTTX3lwH8Uden6aT
+ vfoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwD9cnsPkAmmi6APbwMmHwqoLiKSEdH5VL4pA5tA0RjTUb11sbADgn8zeiDbIaOK38q+VFpHltoZIyH6Lugsz+sZAHHKM=
-X-Gm-Message-State: AOJu0YyDH5QxgTaBOra9Fd9nBJiduyqLQTUl7NS/CdOCbfI0ItLgahEb
- 91aoyZI6LMka7L6753jy4pC7ozVF+aEfn9lRcQJzRlt1LLEotsuQjB8dJNsQ/go=
-X-Google-Smtp-Source: AGHT+IHomasCssWIgh8LTQwWkrI0fkC17hYb/xC034CERzKFtm4oUET9r0SwdmQ4KqCcNnaDQwsg3Q==
-X-Received: by 2002:a05:6512:3ba4:b0:52e:9f17:8418 with SMTP id
- 2adb3069b0e04-52eb9991963mr9232440e87.12.1720794491402; 
- Fri, 12 Jul 2024 07:28:11 -0700 (PDT)
+ AJvYcCVYPuM8R0Y5eMJN3CXTUr+OyaTaECoKjZQmkOWtINeHvIH8dyxiw0oI4Hz+4SsLvWT99ksKH8Q3GcjcxlqvCU5Xkh+Wy64=
+X-Gm-Message-State: AOJu0YzFLbebOAUSqYN0K+oMTF5CNz/D/nQ9G8eSi+qMKueExOpWAWD4
+ D8EO0SrGB2J+7Lt34V+uw57q9zoUcxs6qt9aNryiUxp90ZGqHMVyR3cI0aihNP0=
+X-Google-Smtp-Source: AGHT+IGme2LdP8pchxf+Iq1C31H0YvA4kgw7N1rnjXKJkEl8MwLR/QeQXiYmRnXJ/05OBacjyF3GYQ==
+X-Received: by 2002:a5d:67ce:0:b0:367:9020:51ef with SMTP id
+ ffacd0b85a97d-367ceadd5e9mr8968676f8f.64.1720794925994; 
+ Fri, 12 Jul 2024 07:35:25 -0700 (PDT)
 Received: from [192.168.69.100] (nsg93-h02-176-184-54-152.dsl.sta.abo.bbox.fr.
  [176.184.54.152]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cde7e17csm10437094f8f.7.2024.07.12.07.28.10
+ ffacd0b85a97d-367cde89198sm10250898f8f.60.2024.07.12.07.35.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jul 2024 07:28:10 -0700 (PDT)
-Message-ID: <0b368705-7848-4b9a-88c2-986a8809c0ff@linaro.org>
-Date: Fri, 12 Jul 2024 16:28:08 +0200
+ Fri, 12 Jul 2024 07:35:25 -0700 (PDT)
+Message-ID: <cfe56e1e-a9c3-4ab3-a857-7c0d08d5c9cc@linaro.org>
+Date: Fri, 12 Jul 2024 16:35:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Make cpu_exec_interrupt hook mandatory
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-References: <20240712113949.4146855-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 16/19] system/cpus: Add cpu_pause() function
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240712120247.477133-1-npiggin@gmail.com>
+ <20240712120247.477133-17-npiggin@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240712113949.4146855-1-peter.maydell@linaro.org>
+In-Reply-To: <20240712120247.477133-17-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,23 +100,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/7/24 13:39, Peter Maydell wrote:
-> The TCGCPUOps::cpu_exec_interrupt hook is currently not mandatory; if
-> it is left NULL then we treat it as if it had returned false. However
-> since pretty much every architecture needs to handle interrupts,
-> almost every target we have provides the hook. The one exception is
-> Tricore, which doesn't currently implement the architectural
-> interrupt handling.
+On 12/7/24 14:02, Nicholas Piggin wrote:
+> This factors the CPU pause function from pause_all_vcpus() into a
+> new cpu_pause() function, similarly to cpu_resume(). cpu_resume()
+> is moved to keep it next to cpu_pause().
 > 
-> Add a "do nothing" implementation of cpu_exec_hook for Tricore,
-> assert on startup that the CPU does provide the hook, and remove
-> the runtime NULL check before calling it.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   accel/tcg/cpu-exec.c | 4 ++--
->   target/tricore/cpu.c | 6 ++++++
->   2 files changed, 8 insertions(+), 2 deletions(-)
+>   include/hw/core/cpu.h |  8 ++++++++
+>   system/cpus.c         | 30 +++++++++++++++++-------------
+>   2 files changed, 25 insertions(+), 13 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
