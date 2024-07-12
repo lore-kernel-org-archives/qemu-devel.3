@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C414C3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F384C3DA45
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 01:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS5UB-0002pk-Rw; Thu, 11 Jul 2024 21:54:11 -0400
+	id 1sS5UL-0003Uz-NU; Thu, 11 Jul 2024 21:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sS5U9-0002ho-Ly
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:09 -0400
+ id 1sS5UK-0003Oo-5f
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:20 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sS5U6-0007El-9J
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:09 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sS5U5-0007F1-DI
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 21:54:19 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxL_G6jJBmj4QDAA--.10798S3;
- Fri, 12 Jul 2024 09:54:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Axz+u7jJBmm4QDAA--.10129S3;
+ Fri, 12 Jul 2024 09:54:03 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxnsezjJBmVSdFAA--.27574S4; 
- Fri, 12 Jul 2024 09:54:01 +0800 (CST)
+ AQAAf8BxnsezjJBmVSdFAA--.27574S8; 
+ Fri, 12 Jul 2024 09:54:03 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
-	Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL v2 2/8] hw/loongarch: Change the tpm support by default
-Date: Fri, 12 Jul 2024 09:36:26 +0800
-Message-Id: <20240712013632.3464731-3-gaosong@loongson.cn>
+	Feiyang Chen <chris.chenfeiyang@gmail.com>
+Subject: [PULL v2 6/8] target/loongarch: Remove avail_64 in trans_srai_w() and
+ simplify it
+Date: Fri, 12 Jul 2024 09:36:30 +0800
+Message-Id: <20240712013632.3464731-7-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240712013632.3464731-1-gaosong@loongson.cn>
 References: <20240712013632.3464731-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxnsezjJBmVSdFAA--.27574S4
+X-CM-TRANSID: AQAAf8BxnsezjJBmVSdFAA--.27574S8
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,46 +66,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xianglai Li <lixianglai@loongson.cn>
+From: Feiyang Chen <chris.chenfeiyang@gmail.com>
 
-Add devices that support tpm by default,
-Fixed incomplete tpm acpi table information.
+Since srai.w is a valid instruction on la32, remove the avail_64 check
+and simplify trans_srai_w().
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240624032300.999157-1-lixianglai@loongson.cn>
+Fixes: c0c0461e3a06 ("target/loongarch: Add avail_64 to check la64-only instructions")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Feiyang Chen <chris.chenfeiyang@gmail.com>
+Message-Id: <20240628033357.50027-1-chris.chenfeiyang@gmail.com>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/Kconfig      | 1 +
- hw/loongarch/acpi-build.c | 3 +++
- 2 files changed, 4 insertions(+)
+ target/loongarch/tcg/insn_trans/trans_shift.c.inc | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index 90a0dba9d5..89be737726 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -8,6 +8,7 @@ config LOONGARCH_VIRT
-     imply VIRTIO_VGA
-     imply PCI_DEVICES
-     imply NVDIMM
-+    imply TPM_TIS_SYSBUS
-     select SERIAL
-     select VIRTIO_PCI
-     select PLATFORM_BUS
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index af45ce526d..72bfc35ae6 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -646,6 +646,9 @@ void loongarch_acpi_setup(LoongArchVirtMachineState *lvms)
-                                              build_state, tables.rsdp,
-                                              ACPI_BUILD_RSDP_FILE);
+diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+index 2f4bd6ff28..377307785a 100644
+--- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+@@ -67,19 +67,9 @@ static void gen_rotr_d(TCGv dest, TCGv src1, TCGv src2)
+     tcg_gen_rotr_tl(dest, src1, t0);
+ }
  
-+    fw_cfg_add_file(lvms->fw_cfg, ACPI_BUILD_TPMLOG_FILE, tables.tcpalog->data,
-+                    acpi_data_len(tables.tcpalog));
-+
-     qemu_register_reset(acpi_build_reset, build_state);
-     acpi_build_reset(build_state);
-     vmstate_register(NULL, 0, &vmstate_acpi_build, build_state);
+-static bool trans_srai_w(DisasContext *ctx, arg_srai_w *a)
++static void gen_sari_w(TCGv dest, TCGv src1, target_long imm)
+ {
+-    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
+-    TCGv src1 = gpr_src(ctx, a->rj, EXT_ZERO);
+-
+-    if (!avail_64(ctx)) {
+-        return false;
+-    }
+-
+-    tcg_gen_sextract_tl(dest, src1, a->imm, 32 - a->imm);
+-    gen_set_gpr(a->rd, dest, EXT_NONE);
+-
+-    return true;
++    tcg_gen_sextract_tl(dest, src1, imm, 32 - imm);
+ }
+ 
+ TRANS(sll_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_sll_w)
+@@ -94,6 +84,7 @@ TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
+ TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
+ TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, tcg_gen_shri_tl)
+ TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
++TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
+ TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
+ TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
+ TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
 -- 
 2.34.1
 
