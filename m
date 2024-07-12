@@ -4,61 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4FBC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DAAC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSHy7-0005Xf-Kc; Fri, 12 Jul 2024 11:13:55 -0400
+	id 1sSI2W-0006rO-Oh; Fri, 12 Jul 2024 11:18:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSHxg-000580-PN; Fri, 12 Jul 2024 11:13:33 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sSI2Q-0006nN-JH
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:18:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSHxZ-0002Xf-VC; Fri, 12 Jul 2024 11:13:27 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5E8A661A52;
- Fri, 12 Jul 2024 18:13:15 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:0:419:481f:bf60:5a5:c3b] (unknown
- [2a02:6b8:0:419:481f:bf60:5a5:c3b])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id EDiE0A1IeCg0-v2yAhwmQ; Fri, 12 Jul 2024 18:13:14 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1720797194;
- bh=cMHzELJUwqNMOS5nMphSTeRIP+BR1Y6NXPPuuJHxckY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=GPM59C1ziLkmwPitpw0bTD9rtHyyYBbgwmyIdPR71xjTg5eMSx83JJPi5cSBdbV7Q
- EXQ+IGGlv29Ylz8bPeCOdBBpGfNii1aYK/CxC6zhO65DWGHG7OALvQ4//ZA4ukuWUT
- dRnwURYEN+pPZcqvxmP60dn5BL27e3au1gFRrCAE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2e14674b-a26e-4fac-bbc6-6406e4786deb@yandex-team.ru>
-Date: Fri, 12 Jul 2024 18:13:14 +0300
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sSI2O-0004FY-FY
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:18:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720797497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LDTo+7XnOi5POrNHv29ckpOlzi6zHfZvXjToRYHkBHM=;
+ b=WGIaqIptzZ7f1ZyMhZUeikC34fYOtk4b64dEGSUCupOg2q1zI4HRLbOuzMLp8QU01hYoIx
+ G/s0weAodWzEex3BYSFrvELjZz2f/X66YkzYlV800FnItP681St+9OPllp21OesVXjarRi
+ 6U3cGYaEZSMlousqy4EWz/urbUN51XQ=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-OM8RH8TlNbO6QHb3B5Qn9g-1; Fri, 12 Jul 2024 11:18:15 -0400
+X-MC-Unique: OM8RH8TlNbO6QHb3B5Qn9g-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ee91e5be95so24739031fa.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 08:18:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720797494; x=1721402294;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LDTo+7XnOi5POrNHv29ckpOlzi6zHfZvXjToRYHkBHM=;
+ b=YslMA41qDBVjt2rWek9Ys9kE+fLUPCcSAol13MC7lCxIhakYjjmOdPTfn+F9GEzfZq
+ WC36iqW6DjO/6yQ3fkU9DyP2mJ8fgjx5H0VGdz/8vveK8WmDAVcztVE3/WhutSS/YoMG
+ Ksyko7MKyiJUXAlXX18sr0MNb/xnyQmjP1DYSK8//JuvQR460t1MEVYwtzHbI22Ejus9
+ Smks3Mt7z0EjCUyJgG4n+hEUY1cAF+7dY+PkW2NTnsKpQQMEDCZFm/iwLx+EAXhEg60m
+ 0lw47FIlU2oJnTNaTRY9U68YbNI1dXeDJy2nEu7nZZDsy4ubS5pzbjT6IEE0gMYvFXkQ
+ O44Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhw7U93vwRnM5bpCy3QfHi0ajFtAJdtVwSBvDAbybajn0SPUyz8eor2cubGbIB2caJyz18Ldahf+APX1Yo7ssNkivPyzA=
+X-Gm-Message-State: AOJu0Yy7nM2aqa/yxdueGLmn7otSaqNptBTZ5x0sw4rDE+yOhyY53AO8
+ wf+iLMOdbkhYGH8OgjmmcEm6wmo8NzZDLMGjkWZtUKwLYeaiN98FztgrpQa3pY0Yz8Q26vlA647
+ HWqrVR/KiXn14ZGi04hDYNIr8DxXZ/htHLpYBICkTbYmKTRljRFyo
+X-Received: by 2002:a2e:99c8:0:b0:2ec:a022:880c with SMTP id
+ 38308e7fff4ca-2eeb30e4669mr101016821fa.22.1720797494039; 
+ Fri, 12 Jul 2024 08:18:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcr0BP6AlUPMEKqAnOgRsYYQY0rIZ+f3qMpyCQ6bu0jlDNTIj20PApd6vs0lfUSZkQloOAog==
+X-Received: by 2002:a2e:99c8:0:b0:2ec:a022:880c with SMTP id
+ 38308e7fff4ca-2eeb30e4669mr101016481fa.22.1720797493350; 
+ Fri, 12 Jul 2024 08:18:13 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-57-51-153.retail.telecomitalia.it.
+ [82.57.51.153]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a780a7ffa13sm353374266b.129.2024.07.12.08.18.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 08:18:12 -0700 (PDT)
+Date: Fri, 12 Jul 2024 17:18:09 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>, 
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PULL v3 52/85] contrib/vhost-user-*: use QEMU bswap helper
+ functions
+Message-ID: <7xvllk2k3n4egbor4u32e6hmtgna6iedjpb3oxxpfk4qzpdcux@dwgysmq3ghx3>
+References: <cover.1720046570.git.mst@redhat.com>
+ <5ab04420c3de11ae4a573b08b53584a2a0c5dd00.1720046570.git.mst@redhat.com>
+ <CAFEAcA9Qvbz=S_-mEeeqgRdBXgxW+d3zrQxNZrcxg9S9G_UZQA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] block/reqlist: allow adding overlapping requests
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com
-References: <20240712140716.517911-1-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240712140716.517911-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9Qvbz=S_-mEeeqgRdBXgxW+d3zrQxNZrcxg9S9G_UZQA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,119 +110,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.07.24 17:07, Fiona Ebner wrote:
-> Allow overlapping request by removing the assert that made it
-> impossible. There are only two callers:
-> 
-> 1. block_copy_task_create()
-> 
-> It already asserts the very same condition before calling
-> reqlist_init_req().
-> 
-> 2. cbw_snapshot_read_lock()
-> 
-> There is no need to have read requests be non-overlapping in
-> copy-before-write when used for snapshot-access. In fact, there was no
-> protection against two callers of cbw_snapshot_read_lock() calling
-> reqlist_init_req() with overlapping ranges and this could lead to an
-> assertion failure [1].
-> 
-> In particular, with the reproducer script below [0], two
-> cbw_co_snapshot_block_status() callers could race, with the second
-> calling reqlist_init_req() before the first one finishes and removes
-> its conflicting request.
-> 
-> [0]:
-> 
->> #!/bin/bash -e
->> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
->> ./qemu-img create /tmp/fleecing.raw -f raw 1G
->> (
->> ./qemu-system-x86_64 --qmp stdio \
->> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
->> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
->> <<EOF
->> {"execute": "qmp_capabilities"}
->> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
->> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
->> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
->> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
->> EOF
->> ) &
->> sleep 5
->> while true; do
->> ./qemu-nbd -d /dev/nbd0
->> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
->> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
->> done
-> 
-> [1]:
-> 
->> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
->> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
->> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
->> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
->> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
->> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
->> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
->> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
->> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
->> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
->> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
->> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
->> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
->> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
->> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
-> 
-> Cc: qemu-stable@nongnu.org
-> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
-> 
-> Changes in v2:
-> * different approach, allowing overlapping requests for
->    copy-before-write rather than waiting for them. block-copy already
->    asserts there are no conflicts before adding a request.
-> 
->   block/copy-before-write.c | 3 ++-
->   block/reqlist.c           | 2 --
->   2 files changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-> index 853e01a1eb..28f6a096cd 100644
-> --- a/block/copy-before-write.c
-> +++ b/block/copy-before-write.c
-> @@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
->   
->       /*
->        * @frozen_read_reqs: current read requests for fleecing user in bs->file
-> -     * node. These areas must not be rewritten by guest.
-> +     * node. These areas must not be rewritten by guest. There can be multiple
-> +     * overlapping read requests.
->        */
->       BlockReqList frozen_read_reqs;
->   
-> diff --git a/block/reqlist.c b/block/reqlist.c
-> index 08cb57cfa4..098e807378 100644
-> --- a/block/reqlist.c
-> +++ b/block/reqlist.c
-> @@ -20,8 +20,6 @@
->   void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
->                         int64_t bytes)
->   {
-> -    assert(!reqlist_find_conflict(reqs, offset, bytes));
-> -
->       *req = (BlockReq) {
->           .offset = offset,
->           .bytes = bytes,
+On Fri, Jul 12, 2024 at 03:24:47PM GMT, Peter Maydell wrote:
+>On Wed, 3 Jul 2024 at 23:48, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>
+>> From: Stefano Garzarella <sgarzare@redhat.com>
+>>
+>> Let's replace the calls to le*toh() and htole*() with qemu/bswap.h
+>> helpers to make the code more portable.
+>>
+>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> Reviewed-by: David Hildenbrand <david@redhat.com>
+>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>> Message-Id: <20240618100447.145697-1-sgarzare@redhat.com>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>> ---
+>>  contrib/vhost-user-blk/vhost-user-blk.c |  9 +++++----
+>>  contrib/vhost-user-input/main.c         | 16 ++++++++--------
+>>  2 files changed, 13 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
+>> index a8ab9269a2..9492146855 100644
+>> --- a/contrib/vhost-user-blk/vhost-user-blk.c
+>> +++ b/contrib/vhost-user-blk/vhost-user-blk.c
+>> @@ -16,6 +16,7 @@
+>>   */
+>>
+>>  #include "qemu/osdep.h"
+>> +#include "qemu/bswap.h"
+>>  #include "standard-headers/linux/virtio_blk.h"
+>>  #include "libvhost-user-glib.h"
+>>
+>> @@ -194,8 +195,8 @@ vub_discard_write_zeroes(VubReq *req, struct iovec *iov, uint32_t iovcnt,
+>>      #if defined(__linux__) && defined(BLKDISCARD) && defined(BLKZEROOUT)
+>>      VubDev *vdev_blk = req->vdev_blk;
+>>      desc = buf;
+>> -    uint64_t range[2] = { le64toh(desc->sector) << 9,
+>> -                          le32toh(desc->num_sectors) << 9 };
+>> +    uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
+>> +                          le32_to_cpu(desc->num_sectors) << 9 };
+>
+>Hi; Coverity points out that this does a 32-bit shift, not a
+>64-bit one, so it could unintentionally chop the high bits off
+>if desc->num_sectors is big enough (CID 1549454).
+>We could fix this by making it
+>    (uint64_t)le32_to_cpu(desc->num_sectors) << 9
+>I think.
 
+Yep, I think so! I'll send a patch.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>
+>(It looks like the issue was already there before, so
 
-Thanks, applied to my block branch
+Yes, it is pre-existing to this patch, introduced from the beginning 
+with commit caa1ee4313 ("vhost-user-blk: add discard/write zeroes 
+features support")
 
--- 
-Best regards,
-Vladimir
+>Coverity has just noticed it because of the code change here.)
+
+Ah, I thought it ran on all the code, not just the changes.
+
+Thanks,
+Stefano
 
 
