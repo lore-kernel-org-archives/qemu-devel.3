@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1790EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D43AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSI81-000490-Eu; Fri, 12 Jul 2024 11:24:09 -0400
+	id 1sSI9v-0008S9-Ea; Fri, 12 Jul 2024 11:26:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSI80-00048T-4R
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:24:08 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSI7y-0005w5-EL
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:24:07 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-595850e7e11so2683093a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 08:24:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720797844; x=1721402644; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vrsslXj3svCm3f3n6wzrsgoaLYrkL1il+caAw2x9IMc=;
- b=muGMde8593TbX8Q+xiipgtp1768AMSbNvhmAhBKQW5eUlIOyP7G+uriEko3HQq0skC
- AjTex7EgjQIPfjDTy4b4n3wkmTvFS1qsKPagwSnTqvDvGHxG/rxTGuCdF74kNe442H5Z
- nxENBiwQO0LRGpAplMaDk10rmXP/6zRJjHhbRQS/954NUzsFw2fEbTQcwBRz31a2kJfr
- /50BL/XxfH9TNyJzRp/XnAvn6J36M6KDvC8m57OWgrmQf5cc3g36wR8qBtO/9A1IS11/
- NdwI8XHA1kNRaBc5zBooes0NEsMyxqLYQLo8+x5FQdktQk6CGAdpU8KdNYPYOAfmvE4C
- ahsQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sSI9j-000811-DP
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:25:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sSI9f-0007A5-Ji
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:25:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720797949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x/02T7iSjsGxGmW8roHjHoIG0N9jZYbulw8XgJ0wbJg=;
+ b=JkZyTsR9jo7m23j/hMfulVyc7KoQSCU3dj5P3j0a0Fmj79nEPkkPhsfbezThKtcK5ddNBP
+ +WjC5MMS1fp1/XaCqwOdAvKGCy4FabH1qDbsf/DLkKe8qDiTfLtgHE+w07MgnVUtCaNB/f
+ RWxOIVHV2CzYamrZpIAqZn5mefnRBfA=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-259-_X_O6qhHMrCPrW_p3mcQXw-1; Fri, 12 Jul 2024 11:25:46 -0400
+X-MC-Unique: _X_O6qhHMrCPrW_p3mcQXw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b5d34efdf9so2606756d6.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 08:25:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720797844; x=1721402644;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vrsslXj3svCm3f3n6wzrsgoaLYrkL1il+caAw2x9IMc=;
- b=rC3Wi3eF/hTiW+v0pwT6r3UQwpNvpykFdYQC6jkLKUAqiIazeA6UPeq50HkWkFq0tY
- zB4AinXN+ZS++4F0a0ya6yrs1acGDM8/6MY2IM0bbo48vy8OYkMMbEBhwz1MWhCNjWyN
- emKhxTCI1W+m51enxUJp+K706FCcSibWaD6z83m65nASDk8QtaDw3vGCE+xmNSFS/yEJ
- vNovNhijr6fSWiG+TnIqM6uYE23vsylN2cjJExkmRJ+XOUwxxvqz6R64JYEme7wEhsj3
- f2vJDomotn1kp2b5sjswDI7noK8RGsa/gcBXu8Sci9fk111qhfenKsF6Xvv5JnH3cl93
- zTHw==
+ d=1e100.net; s=20230601; t=1720797946; x=1721402746;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x/02T7iSjsGxGmW8roHjHoIG0N9jZYbulw8XgJ0wbJg=;
+ b=LrGm37DbT4boP8uwN+iLnicLs1bRL1g0aE84i1Ms3gvCbre9di4U8eSIHiRiyb37Hg
+ lmFIPC69/VXchNIv/ypGIwNo4iHQaiT8HJ5iMPFvKABFEIonT/za8Q317xvHjJ+cnEII
+ JATH4qbMdMg8r9n847kElOiosWnTvCwuBAteWKNsqHw/+BWPQxQgfCvE7WfLDALr0KGP
+ BQnFWXrwe1vECQwu7x3/ei1bEFH3n46abJs0pRojnC2kolz/kLONdukajqKO2EHyqePl
+ DT8jEROF4NwyGNAGRKJ6TcGZbqEYN3ZXCtaz1Rkipjo0/oD/wKu4r2U+aF/7lUnxx7bw
+ vjaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSJ8yfMPRnjNL/LlE41q3JTwC6Io6ov83DZ2+K5aslK4PmnN+CR+ooOt+Lb64pBX6jvKMD/pIchCU+Nh66kZOpMsNwOq0=
-X-Gm-Message-State: AOJu0Yx6NqpWvKDoGkjXKcaDDL++q0bkSjODPRfQ/oZ9ZUc2SKyihSFb
- DONm9CqciFgT3BUYbtlOr7w90BuvOrZA+wgOElX9DhDBpURdt0p4Crw9AaY8eq/YoibM5LKpMVO
- pZiRct6bkshNDqhZvc3N9tCCyTOn/eBW//1/xow==
-X-Google-Smtp-Source: AGHT+IF+RbpEXHx9enMlZxZQk0NVo+G4a5LZg6BVBYkWi62nJ/ML6IrOhnJzlvTHjOtUstmy4lxymashXdBWh02v7Tg=
-X-Received: by 2002:aa7:d1cd:0:b0:58f:4420:8126 with SMTP id
- 4fb4d7f45d1cf-594ba59f937mr6998201a12.20.1720797844134; Fri, 12 Jul 2024
- 08:24:04 -0700 (PDT)
+ AJvYcCXm0kc0y1TbNXi6ZxRQzl0CEsZxQFVyK8i+00ecROA8WoKNqmRR6Fob2YMMu+T7PfC21jnwT+IsVuJoKnJ8JZsFrL/zBZM=
+X-Gm-Message-State: AOJu0Yx3PaFwjt2ZH+CODAf4b3+n+EVOnoakwcMAoMhHZcaL/l1uLY9x
+ W+b60f412l6RZx/J2a6d2Ka9N/xHuW1MTWI+8GQTsnbCwc4Gajbb7wVxuD+ec/xjPqjvzpC0PwV
+ YT4svuDxgtSfyfICdCcV9F/oyHJLQVCt1bZGGl0LCHJ5345hTMkQQ
+X-Received: by 2002:ad4:5590:0:b0:6b0:8202:5c4e with SMTP id
+ 6a1803df08f44-6b74b217c95mr54037686d6.5.1720797946257; 
+ Fri, 12 Jul 2024 08:25:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1NENvl1hg/GCEbTwFOhFG/3lPDHGK5Q/GMUkO2acEp25RVptGWD44ja93bcgxMd+juNd5Xw==
+X-Received: by 2002:ad4:5590:0:b0:6b0:8202:5c4e with SMTP id
+ 6a1803df08f44-6b74b217c95mr54037546d6.5.1720797945961; 
+ Fri, 12 Jul 2024 08:25:45 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b7544607f8sm10172446d6.63.2024.07.12.08.25.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 08:25:45 -0700 (PDT)
+Date: Fri, 12 Jul 2024 11:25:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-ppc@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 16/19] system/cpus: Add cpu_pause() function
+Message-ID: <ZpFK8KZcOddY2NYx@x1n>
+References: <20240712120247.477133-1-npiggin@gmail.com>
+ <20240712120247.477133-17-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <cover.1720046570.git.mst@redhat.com>
- <5ab04420c3de11ae4a573b08b53584a2a0c5dd00.1720046570.git.mst@redhat.com>
- <CAFEAcA9Qvbz=S_-mEeeqgRdBXgxW+d3zrQxNZrcxg9S9G_UZQA@mail.gmail.com>
- <7xvllk2k3n4egbor4u32e6hmtgna6iedjpb3oxxpfk4qzpdcux@dwgysmq3ghx3>
-In-Reply-To: <7xvllk2k3n4egbor4u32e6hmtgna6iedjpb3oxxpfk4qzpdcux@dwgysmq3ghx3>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jul 2024 16:23:52 +0100
-Message-ID: <CAFEAcA8OH=OsV4Qtf15mH5bXDaBAMZw2xCYz5hKMEVJsyUo9iQ@mail.gmail.com>
-Subject: Re: [PULL v3 52/85] contrib/vhost-user-*: use QEMU bswap helper
- functions
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Raphael Norwitz <raphael@enfabrica.net>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240712120247.477133-17-npiggin@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jul 2024 at 16:18, Stefano Garzarella <sgarzare@redhat.com> wrote:
->
-> On Fri, Jul 12, 2024 at 03:24:47PM GMT, Peter Maydell wrote:
-> >On Wed, 3 Jul 2024 at 23:48, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >>      #if defined(__linux__) && defined(BLKDISCARD) && defined(BLKZEROOUT)
-> >>      VubDev *vdev_blk = req->vdev_blk;
-> >>      desc = buf;
-> >> -    uint64_t range[2] = { le64toh(desc->sector) << 9,
-> >> -                          le32toh(desc->num_sectors) << 9 };
-> >> +    uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
-> >> +                          le32_to_cpu(desc->num_sectors) << 9 };
-> >
-> >Hi; Coverity points out that this does a 32-bit shift, not a
-> >64-bit one, so it could unintentionally chop the high bits off
-> >if desc->num_sectors is big enough (CID 1549454).
-> >We could fix this by making it
-> >    (uint64_t)le32_to_cpu(desc->num_sectors) << 9
-> >I think.
->
-> Yep, I think so! I'll send a patch.
->
-> >
-> >(It looks like the issue was already there before, so
->
-> Yes, it is pre-existing to this patch, introduced from the beginning
-> with commit caa1ee4313 ("vhost-user-blk: add discard/write zeroes
-> features support")
->
-> >Coverity has just noticed it because of the code change here.)
->
-> Ah, I thought it ran on all the code, not just the changes.
+On Fri, Jul 12, 2024 at 10:02:43PM +1000, Nicholas Piggin wrote:
+> This factors the CPU pause function from pause_all_vcpus() into a
+> new cpu_pause() function, similarly to cpu_resume(). cpu_resume()
+> is moved to keep it next to cpu_pause().
+> 
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-It does run on all the code, but if the code changes enough
-that can cause it to close out the old issue on the old code
-and create a new issue in the system for the new code (which I
-then notice because I look at newly-found things to triage them).
-So things like refactorings and moving code around can cause
-issues to show up.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-The other reason this might have shown up now is that they seem
-to have added a new check type which flags up a lot of "possible
-overflow" errors, so there's a huge pile of new issues for old
-code that I'm gradually going through to see which are false
-positives and which we should look at.
+-- 
+Peter Xu
 
--- PMM
 
