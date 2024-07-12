@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CF9C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8B9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 02:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS6AV-0005GA-RJ; Thu, 11 Jul 2024 22:37:55 -0400
+	id 1sS6AQ-0004wy-QN; Thu, 11 Jul 2024 22:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sS6AS-00052O-4N
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:52 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sS6AN-0004eA-JP
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:47 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sS6AQ-0003TO-1J
- for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:51 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2c98db7a10cso1185127a91.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:37:49 -0700 (PDT)
+ id 1sS6AJ-0003RY-Vs
+ for qemu-devel@nongnu.org; Thu, 11 Jul 2024 22:37:45 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-75c3afd7a50so1111323a12.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 19:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720751868; x=1721356668; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1720751862; x=1721356662; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FpXCvHD2Qslc03OqNFilh7DiBfbBLmsoxBWva+ViCzE=;
- b=Oj2IMflTTQ9DAHyIzQGZyWspe4fs8o+QGMPpah4xOBBBaK3RdwF2DhtKvcMedktwWQ
- QzlRXD8Dcc12L1+uBYR6bMiMEPrHi4bNyxVgAQQXkRoIh0wAhworVK8clfdyValOuQbh
- uJUxe4ktPU081UPvAC7792cRMCYaeXYoq/H/8QVyJPQPFmSB8dqYZpWPWBdAVo4nL3fV
- UqYtmzSvFyOYHfx/NrGGUKpIX3L7crn19B23HFpuXFZRFyX0JG7pGnitGUNxo/Pv+mrD
- 1aPFkpE8kYboQ50hDzqimE8SLYKkPyM5YSilWufC/aTK+ZDpLZg7yK02JwXHoORVNeqN
- SsMQ==
+ bh=Tjqh17JUE1WkBpchsBFPlHMHCUXRZeQxBDgeEciSrXM=;
+ b=Jlm9kJ+mHoaueUIwD4D2hJQ7voTsHbLXo7tdiVh9OIEBuofwp1UUb4DgDt8hvjJgpj
+ C/xqLdJSi/yLSCSQFAN6hww1nO+vbaYCTSb1cg/3FbJhe0gfGZy7FycC7lerjzNjTNqN
+ R3KoEBdZ2bC7erKo5FKlIO0igIgeQx5gUq+zTv9rxe9kBQLLTeoOGasRFHNey6/ckg98
+ V1pI+YDamRSEHikNcMuJmwx/V51OqEk85VqjOOPE3vA+Nj2avFyFcxzU6hSySAbc9TqK
+ 3C/U18eLw7vWUvNdPqCWOkhkUGk0j+kVLCMOaaWp7koFOa+HJzoWpRj5M2akK62QM8L1
+ NSpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720751868; x=1721356668;
+ d=1e100.net; s=20230601; t=1720751862; x=1721356662;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FpXCvHD2Qslc03OqNFilh7DiBfbBLmsoxBWva+ViCzE=;
- b=SChi3wblsc4WRo9UvnYdbtWm96nmDXhc/JVcW+W03hsh65K/tSwcHztxzLoYWQdRSY
- NCd96R5DjAVkIqDoGfCkc+kMzu7UR5RSXOj32r8BeqvrAXxNSAu+cEHEleNYna0d3Q2U
- FR8Xn6Ag4bKalZxKyUjLF7nQQubvJCnTX6a30oFOg/Hc1q51yIY2AHxCe0JI5xbon8sC
- odg+Hzy5GofuUNnCQGoLa0J8yZG44Ey/nw12UePk7qV0++T5OrVJNwmciepBeWvIiugs
- FeV611AlRlzilRuiIWIZvy14i8cBTx4I+imCxizCqIfb9UyoWs2A+zrCj9AolIPu2fOG
- Gd2Q==
+ bh=Tjqh17JUE1WkBpchsBFPlHMHCUXRZeQxBDgeEciSrXM=;
+ b=R075fBbq/0i3W/pvNf646+JmSBwfgfggzetrunBSj32+td1MYKREMcQs5SpZf8HLiQ
+ 7ku9HfIyjeCZJ1kW8ep3uUgi5xu68i1iH+JJfzwehMSspEroXYl2ufhB2GKBCBQhK/30
+ E/Zh7NhS5JND8Q+9UTouY+ICRUJbixc9tSkBcrL4URwZyqRm5lCPECN3KFwB0+TdNBVd
+ IR5tZJtO0lCQH8apFRhuZOO0En/To6ZuyjKDZge4vg/UxgAiRYfHs4MZQAHZd5a5hq7F
+ 15+pZaOxVpD4S4ZgphGfU2CBnJViMa9vix0vdIqEsC9RXC6JxrkVK0GWjtaqtBTKOWzH
+ tqQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5SZp5mh6tO2tUUNd1TetB9ZmWS/gveb4itTAp8ZMRzOg31uNI84WaHOyEnJ9efV7LloclI3CS7uJRT/cffhZRQx2FO+E=
-X-Gm-Message-State: AOJu0YytWRhU4aKOWMU3gSDT8zS7k6VvgsNyHzW7EkyynrtUwe4DVyYA
- +Vn5KiFqvaG4F8Zduy/hwyAK//3rcE81p7i7URr1mZO+sA9ssQoQx4sJTfCyD94=
-X-Google-Smtp-Source: AGHT+IE6ZxQLSUDvvUk03xZkY6BM5VuNNhIRzTdmbyBZOvEJ8hF1MF5utYwnDrYqK+6b1JOMQwY+Xw==
-X-Received: by 2002:a17:90a:c590:b0:2c7:ab29:a751 with SMTP id
- 98e67ed59e1d1-2ca35c78f02mr8361840a91.29.1720751868410; 
- Thu, 11 Jul 2024 19:37:48 -0700 (PDT)
+ AJvYcCVaguGB67LmwbembVI+ceiwIXFP4/t5xy6B0No3UsWdhgtNVghqxQqz8E/Kmhv8IsDo81xrbn8tc1QdO2jXEywYDshPJnY=
+X-Gm-Message-State: AOJu0Yx+pcw8q3n9Zk20H4DGEykrmgWYOoKM7P3h7mi1jx1aFxjy6r3Q
+ MkVUFgTko1ltVUr2M43N0SKYYfZ9/Xv1OytSYBJ3QyTMFilYFQhkMOKl5XQUBf8=
+X-Google-Smtp-Source: AGHT+IEjVL9cZy3eRqqX9+54rtDPWqDggxRVctbZoAALnTWfcVZQ4MmTJZB5FkKX1H0+uUIDpA2B6g==
+X-Received: by 2002:a05:6a20:8404:b0:1bc:e978:8bf2 with SMTP id
+ adf61e73a8af0-1c29821fb4fmr10642717637.23.1720751862540; 
+ Thu, 11 Jul 2024 19:37:42 -0700 (PDT)
 Received: from TF4D9JK212.bytedance.net ([61.213.176.12])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cacd65fc43sm297453a91.39.2024.07.11.19.37.43
+ 98e67ed59e1d1-2cacd65fc43sm297453a91.39.2024.07.11.19.37.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Jul 2024 19:37:48 -0700 (PDT)
+ Thu, 11 Jul 2024 19:37:42 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -68,16 +68,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
  pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>,
  Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v9 08/10] hw/nvme: enable ONCS and rescap function
-Date: Fri, 12 Jul 2024 10:36:48 +0800
-Message-Id: <20240712023650.45626-9-luchangqi.123@bytedance.com>
+Subject: [PATCH v9 07/10] hw/nvme: add helper functions for converting
+ reservation types
+Date: Fri, 12 Jul 2024 10:36:47 +0800
+Message-Id: <20240712023650.45626-8-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 In-Reply-To: <20240712023650.45626-1-luchangqi.123@bytedance.com>
 References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,78 +101,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit enables ONCS to support the reservation
-function at the controller level. Also enables rescap
-function in the namespace by detecting the supported reservation
-function in the backend driver.
+This commit introduces two helper functions
+that facilitate the conversion between the
+reservation types used in the NVME protocol
+and those used in the block layer.
 
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/nvme/ctrl.c       | 3 ++-
- hw/nvme/ns.c         | 5 +++++
- include/block/nvme.h | 2 +-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ hw/nvme/nvme.h | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..ad212de723 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8248,7 +8248,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->nn = cpu_to_le32(NVME_MAX_NAMESPACES);
-     id->oncs = cpu_to_le16(NVME_ONCS_WRITE_ZEROES | NVME_ONCS_TIMESTAMP |
-                            NVME_ONCS_FEATURES | NVME_ONCS_DSM |
--                           NVME_ONCS_COMPARE | NVME_ONCS_COPY);
-+                           NVME_ONCS_COMPARE | NVME_ONCS_COPY |
-+                           NVME_ONCS_RESERVATIONS);
- 
-     /*
-      * NOTE: If this device ever supports a command set that does NOT use 0x0
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index ea8db175db..a5c903d727 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -20,6 +20,7 @@
- #include "qemu/bitops.h"
- #include "sysemu/sysemu.h"
- #include "sysemu/block-backend.h"
-+#include "block/block_int.h"
- 
- #include "nvme.h"
- #include "trace.h"
-@@ -33,6 +34,7 @@ void nvme_ns_init_format(NvmeNamespace *ns)
-     BlockDriverInfo bdi;
-     int npdg, ret;
-     int64_t nlbas;
-+    uint8_t blk_pr_cap;
- 
-     ns->lbaf = id_ns->lbaf[NVME_ID_NS_FLBAS_INDEX(id_ns->flbas)];
-     ns->lbasz = 1 << ns->lbaf.ds;
-@@ -55,6 +57,9 @@ void nvme_ns_init_format(NvmeNamespace *ns)
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index bed8191bd5..6d0e456348 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -474,6 +474,90 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
      }
- 
-     id_ns->npda = id_ns->npdg = npdg - 1;
-+
-+    blk_pr_cap = blk_bs(ns->blkconf.blk)->bl.pr_cap;
-+    id_ns->rescap = block_pr_cap_to_nvme(blk_pr_cap);
  }
  
- static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 8b125f7769..9b9eaeb3a7 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -1251,7 +1251,7 @@ enum NvmeIdCtrlOncs {
-     NVME_ONCS_DSM           = 1 << 2,
-     NVME_ONCS_WRITE_ZEROES  = 1 << 3,
-     NVME_ONCS_FEATURES      = 1 << 4,
--    NVME_ONCS_RESRVATIONS   = 1 << 5,
-+    NVME_ONCS_RESERVATIONS  = 1 << 5,
-     NVME_ONCS_TIMESTAMP     = 1 << 6,
-     NVME_ONCS_VERIFY        = 1 << 7,
-     NVME_ONCS_COPY          = 1 << 8,
++static inline NvmeResvType block_pr_type_to_nvme(BlockPrType type)
++{
++    switch (type) {
++    case BLK_PR_WRITE_EXCLUSIVE:
++        return NVME_RESV_WRITE_EXCLUSIVE;
++    case BLK_PR_EXCLUSIVE_ACCESS:
++        return NVME_RESV_EXCLUSIVE_ACCESS;
++    case BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY:
++        return NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY;
++    case BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case BLK_PR_WRITE_EXCLUSIVE_ALL_REGS:
++        return NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS;
++    case BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS:
++        return NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
++
++    return 0;
++}
++
++static inline BlockPrType nvme_pr_type_to_block(NvmeResvType type)
++{
++    switch (type) {
++    case NVME_RESV_WRITE_EXCLUSIVE:
++        return BLK_PR_WRITE_EXCLUSIVE;
++    case NVME_RESV_EXCLUSIVE_ACCESS:
++        return BLK_PR_EXCLUSIVE_ACCESS;
++    case NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY:
++        return BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY;
++    case NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS:
++        return BLK_PR_WRITE_EXCLUSIVE_ALL_REGS;
++    case NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS:
++        return BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
++
++    return 0;
++}
++
++static inline uint8_t nvme_pr_cap_to_block(uint16_t nvme_pr_cap)
++{
++    uint8_t res = 0;
++
++    res |= (nvme_pr_cap & NVME_PR_CAP_PTPL) ?
++           NVME_PR_CAP_PTPL : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX) ?
++           BLK_PR_CAP_WR_EX : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC) ?
++           BLK_PR_CAP_EX_AC : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_RO) ?
++           BLK_PR_CAP_WR_EX_RO : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_RO) ?
++           BLK_PR_CAP_EX_AC_RO : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_AR) ?
++           BLK_PR_CAP_WR_EX_AR : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_AR) ?
++           BLK_PR_CAP_EX_AC_AR : 0;
++
++    return res;
++}
++
++static inline uint8_t block_pr_cap_to_nvme(uint8_t block_pr_cap)
++{
++    uint16_t res = 0;
++
++    res |= (block_pr_cap & BLK_PR_CAP_PTPL) ?
++              NVME_PR_CAP_PTPL : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX) ?
++              NVME_PR_CAP_WR_EX : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC) ?
++              NVME_PR_CAP_EX_AC : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_RO) ?
++              NVME_PR_CAP_WR_EX_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_RO) ?
++              NVME_PR_CAP_EX_AC_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_AR) ?
++              NVME_PR_CAP_WR_EX_AR : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_AR) ?
++              NVME_PR_CAP_EX_AC_AR : 0;
++
++    return res;
++}
++
+ typedef struct NvmeSQueue {
+     struct NvmeCtrl *ctrl;
+     uint16_t    sqid;
 -- 
 2.20.1
 
