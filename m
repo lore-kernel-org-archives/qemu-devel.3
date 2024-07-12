@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A23A7C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8752C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSGHE-0002QT-VM; Fri, 12 Jul 2024 09:25:34 -0400
+	id 1sSGI7-0006sX-El; Fri, 12 Jul 2024 09:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGH3-0001jz-IT
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:25:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sSGHV-0003i7-FU
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:25:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sSGH0-0003jv-Ap
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:25:21 -0400
+ id 1sSGHM-0003yi-EC
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:25:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720790716;
+ s=mimecast20190719; t=1720790739;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bm+4Y0UqiYKTV3dL0JZau+MxMlAJOiinhP/mxPTRVDI=;
- b=RRdPNJOslZWu/Ie7UeZURjO0yoD/x8xaFLVntvaposdfQABgLZZiq48YUzwM2UKADwHskt
- Fq43apzx50sK73shH0SoWcVU323j/oS2q9ptSVtZ9ZUB0POBZQ5hFT4nvl4AZ2tmr22wHK
- P2ro5Pu8uYDw9gitzu5NGhLip3VrZNI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LMocrPKBkxb4IefkH5Yl3RE8g5kN91WIxpEaSC2Az4Y=;
+ b=efenYCqHNneW/2mudhZ8yanKZcxPkGEQlsrMht3TqUlzdZAFOJ6cEZ/0PoBe0Zg3dr3a4a
+ R6u4E9KNl38vp2/dfuSdhgj/ry2kGrAvAyW+64za8NIhbBNzkZgQT6eNDJK27IJhWljWnN
+ l9+wfLToowVnfXX3SVPCenlgtsRiyYE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-UFa_Ks7QPSO92Sz0HM25rQ-1; Fri,
- 12 Jul 2024 09:25:13 -0400
-X-MC-Unique: UFa_Ks7QPSO92Sz0HM25rQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-8dazIf9SPLqK05bTj3UlEg-1; Fri,
+ 12 Jul 2024 09:25:37 -0400
+X-MC-Unique: 8dazIf9SPLqK05bTj3UlEg-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6725B1958B15; Fri, 12 Jul 2024 13:25:12 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD25E1955F44; Fri, 12 Jul 2024 13:25:36 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.56])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 28BA61955F40; Fri, 12 Jul 2024 13:25:08 +0000 (UTC)
+ id CE8BE1955E76; Fri, 12 Jul 2024 13:25:33 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -54,19 +54,18 @@ Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v3 02/22] qga: move linux vcpu command impls to
- commands-linux.c
-Date: Fri, 12 Jul 2024 14:24:39 +0100
-Message-ID: <20240712132459.3974109-3-berrange@redhat.com>
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH v3 09/22] qga: conditionalize schema for commands unsupported
+ on non-Linux POSIX
+Date: Fri, 12 Jul 2024 14:24:46 +0100
+Message-ID: <20240712132459.3974109-10-berrange@redhat.com>
 In-Reply-To: <20240712132459.3974109-1-berrange@redhat.com>
 References: <20240712132459.3974109-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -90,325 +89,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qmp_guest_set_vcpus and qmp_guest_get_vcpus command impls in
-commands-posix.c are surrounded by '#ifdef __linux__' so should
-instead live in commands-linux.c
+Rather than creating stubs for every command that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the commands on non-Linux POSIX
+platforms
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+This changes the error message for affected commands from
+
+    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+
+to
+
+    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/commands-linux.c | 141 +++++++++++++++++++++++++++++++++++++++++++
- qga/commands-posix.c | 139 ------------------------------------------
- 2 files changed, 141 insertions(+), 139 deletions(-)
+ qga/commands-posix.c | 66 --------------------------------------------
+ qga/qapi-schema.json | 30 +++++++++++---------
+ 2 files changed, 17 insertions(+), 79 deletions(-)
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 214e408fcd..78580ac39d 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qga-qapi-commands.h"
- #include "commands-common.h"
- #include "cutils.h"
- #include <mntent.h>
-@@ -284,3 +285,143 @@ int qmp_guest_fsfreeze_do_thaw(Error **errp)
-     return i;
- }
- #endif /* CONFIG_FSFREEZE */
-+
-+/* Transfer online/offline status between @vcpu and the guest system.
-+ *
-+ * On input either @errp or *@errp must be NULL.
-+ *
-+ * In system-to-@vcpu direction, the following @vcpu fields are accessed:
-+ * - R: vcpu->logical_id
-+ * - W: vcpu->online
-+ * - W: vcpu->can_offline
-+ *
-+ * In @vcpu-to-system direction, the following @vcpu fields are accessed:
-+ * - R: vcpu->logical_id
-+ * - R: vcpu->online
-+ *
-+ * Written members remain unmodified on error.
-+ */
-+static void transfer_vcpu(GuestLogicalProcessor *vcpu, bool sys2vcpu,
-+                          char *dirpath, Error **errp)
-+{
-+    int fd;
-+    int res;
-+    int dirfd;
-+    static const char fn[] = "online";
-+
-+    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
-+    if (dirfd == -1) {
-+        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-+        return;
-+    }
-+
-+    fd = openat(dirfd, fn, sys2vcpu ? O_RDONLY : O_RDWR);
-+    if (fd == -1) {
-+        if (errno != ENOENT) {
-+            error_setg_errno(errp, errno, "open(\"%s/%s\")", dirpath, fn);
-+        } else if (sys2vcpu) {
-+            vcpu->online = true;
-+            vcpu->can_offline = false;
-+        } else if (!vcpu->online) {
-+            error_setg(errp, "logical processor #%" PRId64 " can't be "
-+                       "offlined", vcpu->logical_id);
-+        } /* otherwise pretend successful re-onlining */
-+    } else {
-+        unsigned char status;
-+
-+        res = pread(fd, &status, 1, 0);
-+        if (res == -1) {
-+            error_setg_errno(errp, errno, "pread(\"%s/%s\")", dirpath, fn);
-+        } else if (res == 0) {
-+            error_setg(errp, "pread(\"%s/%s\"): unexpected EOF", dirpath,
-+                       fn);
-+        } else if (sys2vcpu) {
-+            vcpu->online = (status != '0');
-+            vcpu->can_offline = true;
-+        } else if (vcpu->online != (status != '0')) {
-+            status = '0' + vcpu->online;
-+            if (pwrite(fd, &status, 1, 0) == -1) {
-+                error_setg_errno(errp, errno, "pwrite(\"%s/%s\")", dirpath,
-+                                 fn);
-+            }
-+        } /* otherwise pretend successful re-(on|off)-lining */
-+
-+        res = close(fd);
-+        g_assert(res == 0);
-+    }
-+
-+    res = close(dirfd);
-+    g_assert(res == 0);
-+}
-+
-+GuestLogicalProcessorList *qmp_guest_get_vcpus(Error **errp)
-+{
-+    GuestLogicalProcessorList *head, **tail;
-+    const char *cpu_dir = "/sys/devices/system/cpu";
-+    const gchar *line;
-+    g_autoptr(GDir) cpu_gdir = NULL;
-+    Error *local_err = NULL;
-+
-+    head = NULL;
-+    tail = &head;
-+    cpu_gdir = g_dir_open(cpu_dir, 0, NULL);
-+
-+    if (cpu_gdir == NULL) {
-+        error_setg_errno(errp, errno, "failed to list entries: %s", cpu_dir);
-+        return NULL;
-+    }
-+
-+    while (local_err == NULL && (line = g_dir_read_name(cpu_gdir)) != NULL) {
-+        GuestLogicalProcessor *vcpu;
-+        int64_t id;
-+        if (sscanf(line, "cpu%" PRId64, &id)) {
-+            g_autofree char *path = g_strdup_printf("/sys/devices/system/cpu/"
-+                                                    "cpu%" PRId64 "/", id);
-+            vcpu = g_malloc0(sizeof *vcpu);
-+            vcpu->logical_id = id;
-+            vcpu->has_can_offline = true; /* lolspeak ftw */
-+            transfer_vcpu(vcpu, true, path, &local_err);
-+            QAPI_LIST_APPEND(tail, vcpu);
-+        }
-+    }
-+
-+    if (local_err == NULL) {
-+        /* there's no guest with zero VCPUs */
-+        g_assert(head != NULL);
-+        return head;
-+    }
-+
-+    qapi_free_GuestLogicalProcessorList(head);
-+    error_propagate(errp, local_err);
-+    return NULL;
-+}
-+
-+int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
-+{
-+    int64_t processed;
-+    Error *local_err = NULL;
-+
-+    processed = 0;
-+    while (vcpus != NULL) {
-+        char *path = g_strdup_printf("/sys/devices/system/cpu/cpu%" PRId64 "/",
-+                                     vcpus->value->logical_id);
-+
-+        transfer_vcpu(vcpus->value, false, path, &local_err);
-+        g_free(path);
-+        if (local_err != NULL) {
-+            break;
-+        }
-+        ++processed;
-+        vcpus = vcpus->next;
-+    }
-+
-+    if (local_err != NULL) {
-+        if (processed == 0) {
-+            error_propagate(errp, local_err);
-+        } else {
-+            error_free(local_err);
-+        }
-+    }
-+
-+    return processed;
-+}
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 76af98ba32..a8ef41f175 100644
+index 0dd8555867..559d71ffae 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -2003,145 +2003,6 @@ void qmp_guest_suspend_hybrid(Error **errp)
-     guest_suspend(SUSPEND_MODE_HYBRID, errp);
+@@ -887,56 +887,6 @@ void qmp_guest_set_user_password(const char *username,
  }
+ #endif /* __linux__ || __FreeBSD__ */
  
--/* Transfer online/offline status between @vcpu and the guest system.
-- *
-- * On input either @errp or *@errp must be NULL.
-- *
-- * In system-to-@vcpu direction, the following @vcpu fields are accessed:
-- * - R: vcpu->logical_id
-- * - W: vcpu->online
-- * - W: vcpu->can_offline
-- *
-- * In @vcpu-to-system direction, the following @vcpu fields are accessed:
-- * - R: vcpu->logical_id
-- * - R: vcpu->online
-- *
-- * Written members remain unmodified on error.
-- */
--static void transfer_vcpu(GuestLogicalProcessor *vcpu, bool sys2vcpu,
--                          char *dirpath, Error **errp)
+-#ifndef __linux__
+-
+-void qmp_guest_suspend_disk(Error **errp)
 -{
--    int fd;
--    int res;
--    int dirfd;
--    static const char fn[] = "online";
+-    error_setg(errp, QERR_UNSUPPORTED);
+-}
 -
--    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
--    if (dirfd == -1) {
--        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
--        return;
--    }
+-void qmp_guest_suspend_ram(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-}
 -
--    fd = openat(dirfd, fn, sys2vcpu ? O_RDONLY : O_RDWR);
--    if (fd == -1) {
--        if (errno != ENOENT) {
--            error_setg_errno(errp, errno, "open(\"%s/%s\")", dirpath, fn);
--        } else if (sys2vcpu) {
--            vcpu->online = true;
--            vcpu->can_offline = false;
--        } else if (!vcpu->online) {
--            error_setg(errp, "logical processor #%" PRId64 " can't be "
--                       "offlined", vcpu->logical_id);
--        } /* otherwise pretend successful re-onlining */
--    } else {
--        unsigned char status;
--
--        res = pread(fd, &status, 1, 0);
--        if (res == -1) {
--            error_setg_errno(errp, errno, "pread(\"%s/%s\")", dirpath, fn);
--        } else if (res == 0) {
--            error_setg(errp, "pread(\"%s/%s\"): unexpected EOF", dirpath,
--                       fn);
--        } else if (sys2vcpu) {
--            vcpu->online = (status != '0');
--            vcpu->can_offline = true;
--        } else if (vcpu->online != (status != '0')) {
--            status = '0' + vcpu->online;
--            if (pwrite(fd, &status, 1, 0) == -1) {
--                error_setg_errno(errp, errno, "pwrite(\"%s/%s\")", dirpath,
--                                 fn);
--            }
--        } /* otherwise pretend successful re-(on|off)-lining */
--
--        res = close(fd);
--        g_assert(res == 0);
--    }
--
--    res = close(dirfd);
--    g_assert(res == 0);
+-void qmp_guest_suspend_hybrid(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
 -}
 -
 -GuestLogicalProcessorList *qmp_guest_get_vcpus(Error **errp)
 -{
--    GuestLogicalProcessorList *head, **tail;
--    const char *cpu_dir = "/sys/devices/system/cpu";
--    const gchar *line;
--    g_autoptr(GDir) cpu_gdir = NULL;
--    Error *local_err = NULL;
--
--    head = NULL;
--    tail = &head;
--    cpu_gdir = g_dir_open(cpu_dir, 0, NULL);
--
--    if (cpu_gdir == NULL) {
--        error_setg_errno(errp, errno, "failed to list entries: %s", cpu_dir);
--        return NULL;
--    }
--
--    while (local_err == NULL && (line = g_dir_read_name(cpu_gdir)) != NULL) {
--        GuestLogicalProcessor *vcpu;
--        int64_t id;
--        if (sscanf(line, "cpu%" PRId64, &id)) {
--            g_autofree char *path = g_strdup_printf("/sys/devices/system/cpu/"
--                                                    "cpu%" PRId64 "/", id);
--            vcpu = g_malloc0(sizeof *vcpu);
--            vcpu->logical_id = id;
--            vcpu->has_can_offline = true; /* lolspeak ftw */
--            transfer_vcpu(vcpu, true, path, &local_err);
--            QAPI_LIST_APPEND(tail, vcpu);
--        }
--    }
--
--    if (local_err == NULL) {
--        /* there's no guest with zero VCPUs */
--        g_assert(head != NULL);
--        return head;
--    }
--
--    qapi_free_GuestLogicalProcessorList(head);
--    error_propagate(errp, local_err);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -    return NULL;
 -}
 -
 -int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
 -{
--    int64_t processed;
--    Error *local_err = NULL;
--
--    processed = 0;
--    while (vcpus != NULL) {
--        char *path = g_strdup_printf("/sys/devices/system/cpu/cpu%" PRId64 "/",
--                                     vcpus->value->logical_id);
--
--        transfer_vcpu(vcpus->value, false, path, &local_err);
--        g_free(path);
--        if (local_err != NULL) {
--            break;
--        }
--        ++processed;
--        vcpus = vcpus->next;
--    }
--
--    if (local_err != NULL) {
--        if (processed == 0) {
--            error_propagate(errp, local_err);
--        } else {
--            error_free(local_err);
--        }
--    }
--
--    return processed;
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return -1;
 -}
- #endif /* __linux__ */
+-
+-GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestMemoryBlockResponseList *
+-qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-#endif
+-
+ #ifdef HAVE_GETIFADDRS
+ static GuestNetworkInterface *
+ guest_find_interface(GuestNetworkInterfaceList *head,
+@@ -1272,22 +1222,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+ /* add unsupported commands to the list of blocked RPCs */
+ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+ {
+-#if !defined(__linux__)
+-    {
+-        const char *list[] = {
+-            "guest-suspend-disk", "guest-suspend-ram",
+-            "guest-suspend-hybrid", "guest-get-vcpus", "guest-set-vcpus",
+-            "guest-get-memory-blocks", "guest-set-memory-blocks",
+-            "guest-get-memory-block-info",
+-            NULL};
+-        const char **p = list;
+-
+-        while (*p) {
+-            blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
+-        }
+-    }
+-#endif
+-
+ #if !defined(HAVE_GETIFADDRS)
+     blockedrpcs = g_list_append(blockedrpcs,
+                               g_strdup("guest-network-get-interfaces"));
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 2f0215afc7..38483652ac 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -566,7 +566,8 @@
+ #
+ # Since: 1.1
+ ##
+-{ 'command': 'guest-suspend-disk', 'success-response': false }
++{ 'command': 'guest-suspend-disk', 'success-response': false,
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
  
- #if defined(__linux__) || defined(__FreeBSD__)
+ ##
+ # @guest-suspend-ram:
+@@ -602,7 +603,8 @@
+ #
+ # Since: 1.1
+ ##
+-{ 'command': 'guest-suspend-ram', 'success-response': false }
++{ 'command': 'guest-suspend-ram', 'success-response': false,
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-suspend-hybrid:
+@@ -638,7 +640,7 @@
+ # Since: 1.1
+ ##
+ { 'command': 'guest-suspend-hybrid', 'success-response': false,
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestIpAddressType:
+@@ -751,7 +753,8 @@
+ { 'struct': 'GuestLogicalProcessor',
+   'data': {'logical-id': 'int',
+            'online': 'bool',
+-           '*can-offline': 'bool'} }
++           '*can-offline': 'bool'},
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-get-vcpus:
+@@ -766,7 +769,8 @@
+ # Since: 1.5
+ ##
+ { 'command': 'guest-get-vcpus',
+-  'returns': ['GuestLogicalProcessor'] }
++  'returns': ['GuestLogicalProcessor'],
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-set-vcpus:
+@@ -809,7 +813,7 @@
+ { 'command': 'guest-set-vcpus',
+   'data':    {'vcpus': ['GuestLogicalProcessor'] },
+   'returns': 'int',
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestDiskBusType:
+@@ -1103,7 +1107,7 @@
+   'data': {'phys-index': 'uint64',
+            'online': 'bool',
+            '*can-offline': 'bool'},
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-memory-blocks:
+@@ -1120,7 +1124,7 @@
+ ##
+ { 'command': 'guest-get-memory-blocks',
+   'returns': ['GuestMemoryBlock'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockResponseType:
+@@ -1144,7 +1148,7 @@
+ { 'enum': 'GuestMemoryBlockResponseType',
+   'data': ['success', 'not-found', 'operation-not-supported',
+            'operation-failed'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockResponse:
+@@ -1163,7 +1167,7 @@
+   'data': { 'phys-index': 'uint64',
+             'response': 'GuestMemoryBlockResponseType',
+             '*error-code': 'int' },
+-  'if': 'CONFIG_POSIX'}
++  'if': 'CONFIG_LINUX'}
+ 
+ ##
+ # @guest-set-memory-blocks:
+@@ -1195,7 +1199,7 @@
+ { 'command': 'guest-set-memory-blocks',
+   'data':    {'mem-blks': ['GuestMemoryBlock'] },
+   'returns': ['GuestMemoryBlockResponse'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockInfo:
+@@ -1208,7 +1212,7 @@
+ ##
+ { 'struct': 'GuestMemoryBlockInfo',
+   'data': {'size': 'uint64'},
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-memory-block-info:
+@@ -1221,7 +1225,7 @@
+ ##
+ { 'command': 'guest-get-memory-block-info',
+   'returns': 'GuestMemoryBlockInfo',
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestExecStatus:
 -- 
 2.45.1
 
