@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3F7C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3576C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 15:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSIRx-0002aL-Ag; Fri, 12 Jul 2024 11:44:45 -0400
+	id 1sSIfA-0000mO-VV; Fri, 12 Jul 2024 11:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSIRv-0002Zd-FI
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:44:43 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSIRt-00040c-Mr
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:44:43 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-58e76294858so5722165a12.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 08:44:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720799080; x=1721403880; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Z7UffHzQjmPyx7rxKTTvVwSEtjIHN+mL2q34pvIefb0=;
- b=ieVwYxCpvjlDxCYfHgDkheD6qTX8nhy0rEWqjuH5gilwV9JbulKsHCCr//wQSw+32q
- NPvA/nrdhNTq2ACxFMuI93kNm1lMQ8oNMk91oOmhiJUhuV28GfRljqbjjODTjH+4LnaP
- D0nEw1Jk5AbidRJBzOb+u4oM1AV0yethkaQ941EpsXFbwDGT4kIjzB6s+LzFpIBde63B
- snuesdQIk78Nkfk1prh7Es5Iq7KNwRyOpirgpbMYG/4P8Mi1UhdIfn+tQBMGu2idYzTY
- 2TOsZcfDS9FzMtytyVs8Sn+3dAonRYd9cqe4/vUSvXCRZYpQ6EE4VoBCmD2yHe240HIk
- yHNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720799080; x=1721403880;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Z7UffHzQjmPyx7rxKTTvVwSEtjIHN+mL2q34pvIefb0=;
- b=O1AMywLjgUakCLonyDhdTHF0x38anAAywVTdM1Ydv+EviiGKhPOKHict4M0P872Dfc
- 4OfmVHWHM44HGBGBZP+t+tLo2WO/4AT/PtwIpVsiL9LVLqtdQEsSth13hn0MSBRkQTDy
- A0x2a5txWi18RaNr2v19xjc1D1NIela8yOPJ+i9nc3a7d4Xc3lrRmOGLEHKf/jNUsJAU
- /UZUMsLJtWwiExjL3MGkg/AQA4Eb45vlzGLGzvVEkvuh7YkqlKpv0sHrLpEy0jqdUW5C
- vWsFc94tgoNzhP06S6Gyk44kp8r9YetGIjb90MzBxNofwZ5EzW2XVw2N9SsVsc+BkbyF
- sRPQ==
-X-Gm-Message-State: AOJu0YyvfA9xUuVqEjVBDDmuppOOGwvm+y3M3PJDKjmaG8kKIWPzex35
- sdpdmUbWGehJ5xkk+uLfrJCGYqRn+cXP2NoWI//ZpaGPjhujYUXmTkUa+lleV++tosCqeawX9s0
- zvQnh61oSJ8XMje09Tke24LffdtEya01ZhP67Iw==
-X-Google-Smtp-Source: AGHT+IE040j2o9MWhsEig2caw8f7e/XhZ3IgxnAtIjnz0uoKqke/zm4dBH9bIPGg4+iw3yBnMGOk3wPDU+UQDmOBKok=
-X-Received: by 2002:a05:6402:2107:b0:58c:36e:51bf with SMTP id
- 4fb4d7f45d1cf-59963bf43a4mr2845480a12.3.1720799080041; Fri, 12 Jul 2024
- 08:44:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
+ id 1sSIf8-0000lu-6T
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:58:22 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Ecin=OM=kaod.org=clg@ozlabs.org>)
+ id 1sSIf5-00005r-PA
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 11:58:21 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WLGTf0JRjz4x0t;
+ Sat, 13 Jul 2024 01:58:14 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WLGTc5jtbz4wc1;
+ Sat, 13 Jul 2024 01:58:12 +1000 (AEST)
+Message-ID: <42c0b904-c0f4-40eb-8c5d-3f1011509964@kaod.org>
+Date: Fri, 12 Jul 2024 17:58:10 +0200
 MIME-Version: 1.0
-References: <20240712153857.207440-1-sgarzare@redhat.com>
-In-Reply-To: <20240712153857.207440-1-sgarzare@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jul 2024 16:44:29 +0100
-Message-ID: <CAFEAcA_vtekZr7aEuH_=HQMPSw2L4mD32f3+rUCr8mUHWjwYKw@mail.gmail.com>
-Subject: Re: [PATCH] contrib/vhost-user-blk: fix overflowing expression
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Raphael Norwitz <raphael@enfabrica.net>, changpeng.liu@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 06/12] aspeed/smc: Add DMA calibration settings
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20190913154952.27724-1-peter.maydell@linaro.org>
+ <20190913154952.27724-7-peter.maydell@linaro.org>
+ <CAFEAcA9Bj5k_1kaqtmR4KfshGeDXomo5udFdWLW1cwySG4S=fQ@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAFEAcA9Bj5k_1kaqtmR4KfshGeDXomo5udFdWLW1cwySG4S=fQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Ecin=OM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,52 +66,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jul 2024 at 16:39, Stefano Garzarella <sgarzare@redhat.com> wrote:
->
-> Coverity reported:
->
->   >>>     CID 1549454:  Integer handling issues  (OVERFLOW_BEFORE_WIDEN)
->   >>>     Potentially overflowing expression
->           "le32_to_cpu(desc->num_sectors) << 9" with type "uint32_t"
->           (32 bits, unsigned) is evaluated using 32-bit arithmetic, and
->           then used in a context that expects an expression of type
->           "uint64_t" (64 bits, unsigned).
->   199                               le32_to_cpu(desc->num_sectors) << 9 };
->
-> Coverity noticed this issue after commit ab04420c3 ("contrib/vhost-user-*:
-> use QEMU bswap helper functions"), but it was pre-existing and introduced
-> from the beginning by commit caa1ee4313 ("vhost-user-blk: add
-> discard/write zeroes features support").
->
-> Explicitly cast the 32-bit value before the shift to fix this issue.
->
-> Fixes: Coverity CID 1549454
-> Fixes: 5ab04420c3 ("contrib/vhost-user-*: use QEMU bswap helper functions")
-> Fixes: caa1ee4313 ("vhost-user-blk: add discard/write zeroes features support")
-> Cc: changpeng.liu@intel.com
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->  contrib/vhost-user-blk/vhost-user-blk.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
-> index 9492146855..6cc18a1c04 100644
-> --- a/contrib/vhost-user-blk/vhost-user-blk.c
-> +++ b/contrib/vhost-user-blk/vhost-user-blk.c
-> @@ -196,7 +196,7 @@ vub_discard_write_zeroes(VubReq *req, struct iovec *iov, uint32_t iovcnt,
->      VubDev *vdev_blk = req->vdev_blk;
->      desc = buf;
->      uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
-> -                          le32_to_cpu(desc->num_sectors) << 9 };
-> +                          (uint64_t)le32_to_cpu(desc->num_sectors) << 9 };
->      if (type == VIRTIO_BLK_T_DISCARD) {
->          if (ioctl(vdev_blk->blk_fd, BLKDISCARD, range) == 0) {
->              g_free(buf);
-> --
+On 7/12/24 16:39, Peter Maydell wrote:
+> On Fri, 13 Sept 2019 at 16:50, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> From: Cédric Le Goater <clg@kaod.org>
+>>
+>> When doing calibration, the SPI clock rate in the CE0 Control Register
+>> and the read delay cycles in the Read Timing Compensation Register are
+>> set using bit[11:4] of the DMA Control Register.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+>> Acked-by: Joel Stanley <joel@jms.id.au>
+>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>> Message-id: 20190904070506.1052-7-clg@kaod.org
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> Hi; this is an old patch, but Coverity has suddenly decided
+> it doesn't like it (CID 1547822):
+> 
+>> +static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
+>> +{
+>> +    /* HCLK/1 .. HCLK/16 */
+>> +    const uint8_t hclk_divisors[] = {
+>> +        15, 7, 14, 6, 13, 5, 12, 4, 11, 3, 10, 2, 9, 1, 8, 0
+>> +    };
+>> +    int i;
+>> +
+>> +    for (i = 0; i < ARRAY_SIZE(hclk_divisors); i++) {
+>> +        if (hclk_mask == hclk_divisors[i]) {
+>> +            return i + 1;
+>> +        }
+>> +    }
+>> +
+>> +    qemu_log_mask(LOG_GUEST_ERROR, "invalid HCLK mask %x", hclk_mask);
+>> +    return 0;
+>> +}
+>> +
+>> +/*
+>> + * When doing calibration, the SPI clock rate in the CE0 Control
+>> + * Register and the read delay cycles in the Read Timing Compensation
+>> + * Register are set using bit[11:4] of the DMA Control Register.
+>> + */
+>> +static void aspeed_smc_dma_calibration(AspeedSMCState *s)
+>> +{
+>> +    uint8_t delay =
+>> +        (s->regs[R_DMA_CTRL] >> DMA_CTRL_DELAY_SHIFT) & DMA_CTRL_DELAY_MASK;
+>> +    uint8_t hclk_mask =
+>> +        (s->regs[R_DMA_CTRL] >> DMA_CTRL_FREQ_SHIFT) & DMA_CTRL_FREQ_MASK;
+>> +    uint8_t hclk_div = aspeed_smc_hclk_divisor(hclk_mask);
+>> +    uint32_t hclk_shift = (hclk_div - 1) << 2;
+> 
+> The code of aspeeed_smc_hclk_divisor() has a codepath where it
+> can return 0, and this callsite doesn't check for 0, and so
+> Coverity thinks that we might end up shifting -1 by 2 to get
+> the hclk_shift here, which means we overflow the value, which
+> it thinks is probably not what we meant to do.
+> 
+> In fact this can't happen, because we always pass aspeed_smc_hclk_divisor()
+> a value between 0 and 15, and if we do that then we always get back
+> a value between 1 and 16. So I think the right fix would be
+> to change the qemu_log_mask()/return 0 to be g_assert_not_reached().
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+I was wondering how to fix it. Thanks for the suggestion. Will do in
+the 9.1 cycle.
 
-thanks
--- PMM
+C.
+
+> 
+> thanks
+> -- PMM
+
 
