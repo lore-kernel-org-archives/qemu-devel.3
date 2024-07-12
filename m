@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D0AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 05:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B669C3DA45
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 06:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sS98Z-0005SA-H1; Fri, 12 Jul 2024 01:48:07 -0400
+	id 1sS9aD-00060m-Qk; Fri, 12 Jul 2024 02:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sS98X-0005QK-Dw
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 01:48:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sS98V-00008q-2I
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 01:48:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720763278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EE/qpmFlX3864AUq8KMxBZyyAbo0y4gLdd2ye1Gp2g8=;
- b=VgnOp5OVwT43zIP6uB2TU+cx+bS5hbLQrxFRvoWbtRK4OV540FfBcCfsHX+1KEZ8JSdrjr
- Q2P1RH3G99VFTzfNBj77LtpLar54+jrk+N0c1Y2GK84vJMPniABxEDm4mgbnWf2X/H1Yz2
- BxZy66Ds6sgfEIN0aCsCb7bGuxzOUPY=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-jzXFz63BNiuKqvgD_9Tn4w-1; Fri, 12 Jul 2024 01:47:57 -0400
-X-MC-Unique: jzXFz63BNiuKqvgD_9Tn4w-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-58b0dce2704so1588133a12.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 22:47:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sS9aC-0005zR-J3
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 02:16:40 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sS9aA-0000OL-Q5
+ for qemu-devel@nongnu.org; Fri, 12 Jul 2024 02:16:40 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-426717a2d12so9859615e9.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jul 2024 23:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720764996; x=1721369796; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Rg5lylgW8QIhWu0jFbscaGBfdTExw2kzZu6jdb/6Nl4=;
+ b=u1tQxPyeUUIpuJKTFpDtoCk60L9N0m5g0d/vQqKAV4jRET0CGwEnZ6/jA4J8nZbmVT
+ 44XGGDyQ0wK02GKCfcb+lr899taWsjXWoRe6bQazeyMyOLZwSo3xMEQUIgGUs04QJJO6
+ QrW/D6mIC7Dvn/53BLQPcF3SKsRm2pm9RgPgnlitLUHcVdFw+o/OtS90EV+jn25WnYJo
+ Lfj51Hj2/NT/E/Oim5C8nw8lU2Z7U6LyvxmOtEnv64O+PFjmbBs4UhpE/W7Cx4Sy8/Im
+ nsG8OtFY+btyIAFOMGYFiskrJKLRyI3eGrbEdFSN9NPQN8Ww4tylNoSMQeZdtMDNqB3A
+ 8C5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720763276; x=1721368076;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EE/qpmFlX3864AUq8KMxBZyyAbo0y4gLdd2ye1Gp2g8=;
- b=nzXUNqmu5CKcgJvzduO7TUgD/sA3QbM/VdRN4ejDnDoH4nBsucFzUY/b8WXGNs99ta
- eQBjcYO4+oXtjp5SCBwJIFf6Zs+OegFUn3y+QjziKWoN9soeWrDy2uvh8i+Ek8OEggPk
- DEXGys070fIhPHrFZM0yhLajtEH0wuc5BrjZZwstSjeNHnP+9gE1Pgxn/nXaLJqDf3gm
- ptVUHUdo73I81GsLK+ocNH7kzgQ/4x9UeAByA9LCpgCAmraq5P1WmA3GYIhaWqMkb/TI
- ObOT7bFXLemlHURiG1yXLi4FnydyzHhhABNSLhHG/N2VtSEz3uhH2K8dWmqlsnVcJ9mV
- YWog==
+ d=1e100.net; s=20230601; t=1720764996; x=1721369796;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Rg5lylgW8QIhWu0jFbscaGBfdTExw2kzZu6jdb/6Nl4=;
+ b=v+ccgaBE6Ux+PDJfB4OZIlX6PfkK71o3CQXzpEwIghlS3MJR2VGK1lvXQpJDpmoncX
+ ZQUNDlUpDyQ+hRID8dIEFpENP09kilNs9ro0FUga7ZsY4gg/UpnDJE0WBOTddPs1VqMq
+ XkGQWNgT/RcP7ewZsoCvDkLu/U/SG0o1liMNn08mdTNOWCbi264J5/vEgyRDCufCHSep
+ W+TvoXedcmK8dQFlXLULPPbE660IEnhvLw4P1Fw5Q33n9aBqMCgAUskquMmB7ZeyY18L
+ WSrcm6KusvpCHyQr9s/4a7X+gsFHpkBu/blkItnCLSoC4LpwfxKnhW2DGTSl3EExJZtG
+ SKJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPudMN8uzcCQMAlcHSe4dgYUGZ25eWvPv7JCMVAc/XN36J9Ke6uQm/KkAgwV38kQIwXauNWEVLaQWzLlGBjxAGW6XuMss=
-X-Gm-Message-State: AOJu0YzkW5f6qwcO+7vXUYCjh5PLKMKG+OgwAktddU8or9xI38X8IdDV
- wwe0AhNpj6qp3NUbPr4iGnQ6EYNWCY0Kf6nFpjYHHKlVyzSoUKxloT4qafI3fAAVbIO9hWQdxSJ
- P4oAL4RbfnHATzbWuhppb6LLWmYiVxDz3o0NCcVdy/bVN2TcL5461
-X-Received: by 2002:a05:6402:518d:b0:58c:6edf:d5cb with SMTP id
- 4fb4d7f45d1cf-594b9b04a3emr7539924a12.4.1720763275827; 
- Thu, 11 Jul 2024 22:47:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2EwYqr7OlNp8splDgpOnOwNs7NeaUNGDerShYw98vyNfoCCw8m+Z8FMhByS0Z28ahnJGIOQ==
-X-Received: by 2002:a05:6402:518d:b0:58c:6edf:d5cb with SMTP id
- 4fb4d7f45d1cf-594b9b04a3emr7539905a12.4.1720763275195; 
- Thu, 11 Jul 2024 22:47:55 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:341:761e:f82:fc9a:623b:3fd1])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5998f23bac8sm436050a12.37.2024.07.11.22.47.52
+ AJvYcCVjVKecJISKxyziWci+z42c1gJjwGxeTRsPYTNueOZdfX+fx47t/N7blJoP4jQvyhPDCEkswWA/RrtJN5W8yeHRnLrKPN8=
+X-Gm-Message-State: AOJu0Yzmnazcb28FdO0S7PdL4NMGBLj7sm8srwwxf5trNYYMjKI53x8r
+ jwXbXmQlf128KjV4hmXbiPSj9Id3apVaobF3kLFmEnIvhB0UYd9dvjKltXYGml4=
+X-Google-Smtp-Source: AGHT+IHoRX74k6rMq6XYIuFgJSmEUmvPQO180s/2F4bicGdIMFl23pFxAJmBLlSC2uxv3+pjJhhHcQ==
+X-Received: by 2002:a05:600c:19cc:b0:426:706c:a55a with SMTP id
+ 5b1f17b1804b1-4279d9f287amr15252215e9.2.1720764996084; 
+ Thu, 11 Jul 2024 23:16:36 -0700 (PDT)
+Received: from meli-email.org (adsl-255.109.242.224.tellas.gr.
+ [109.242.224.255]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-367cde7e1dcsm9298158f8f.12.2024.07.11.23.16.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jul 2024 22:47:54 -0700 (PDT)
-Date: Fri, 12 Jul 2024 01:47:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Stevens <stevensd@chromium.org>
-Cc: Alyssa Ross <hi@alyssa.is>, Albert Esteve <aesteve@redhat.com>,
- qemu-devel@nongnu.org, jasowang@redhat.com, david@redhat.com,
- slp@redhat.com, Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- stefanha@redhat.com
-Subject: Re: [RFC PATCH v2 0/5] vhost-user: Add SHMEM_MAP/UNMAP requests
-Message-ID: <20240712014407-mutt-send-email-mst@kernel.org>
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <87bk34i4dy.fsf@alyssa.is>
- <CAD=HUj7av_8Epkd0Fe0eWR7Z4bZMTuvTNgqzYoQcOzFQ82wvOg@mail.gmail.com>
+ Thu, 11 Jul 2024 23:16:35 -0700 (PDT)
+Date: Fri, 12 Jul 2024 09:14:29 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ rowan.hart@intel.com, Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v4 2/7] rust: add bindgen step as a meson dependency
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <4ce5a7330f594c6c94c8cc3aabceb061095bb855.1720094395.git.manos.pitsidianakis@linaro.org>
+ <87msmqsunu.fsf@draig.linaro.org>
+ <CAFEAcA9X0564R7V=EsN2qxj51FNNkot3Pfev6mMgUbr35WYFZw@mail.gmail.com>
+ <CABgObfbBqHoy4M78NR8EAQ-PV+X86qEK6_ra=tS0_bgqpAt1dw@mail.gmail.com>
+ <Zo00iKKtRRDTTslY@redhat.com>
+ <641f264e-81ff-40fa-880d-bda18339ac57@linaro.org>
+In-Reply-To: <641f264e-81ff-40fa-880d-bda18339ac57@linaro.org>
+Message-ID: <ghyrm.h5hupsa1jwz@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=HUj7av_8Epkd0Fe0eWR7Z4bZMTuvTNgqzYoQcOzFQ82wvOg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,60 +113,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 12, 2024 at 11:06:49AM +0900, David Stevens wrote:
-> On Thu, Jul 11, 2024 at 7:56 PM Alyssa Ross <hi@alyssa.is> wrote:
-> >
-> > Adding David Stevens, who implemented SHMEM_MAP and SHMEM_UNMAP in
-> > crosvm a couple of years ago.
-> >
-> > David, I'd be particularly interested for your thoughts on the MEM_READ
-> > and MEM_WRITE commands, since as far as I know crosvm doesn't implement
-> > anything like that.  The discussion leading to those being added starts
-> > here:
-> >
-> > https://lore.kernel.org/qemu-devel/20240604185416.GB90471@fedora.redhat.com/
-> >
-> > It would be great if this could be standardised between QEMU and crosvm
-> > (and therefore have a clearer path toward being implemented in other VMMs)!
-> 
-> Setting aside vhost-user for a moment, the DAX example given by Stefan
-> won't work in crosvm today.
-> 
-> Is universal access to virtio shared memory regions actually mandated
-> by the virtio spec? Copying from virtiofs DAX to virtiofs sharing
-> seems reasonable enough, but what about virtio-pmem to virtio-blk?
-> What about screenshotting a framebuffer in virtio-gpu shared memory to
-> virtio-scsi? I guess with some plumbing in the VMM, it's solvable in a
-> virtualized environment. But what about when you have real hardware
-> that speaks virtio involved? That's outside my wheelhouse, but it
-> doesn't seem like that would be easy to solve.
+On Fri, 12 Jul 2024 00:23, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>On 7/9/24 06:00, Daniel P. Berrangé wrote:
+>> On Tue, Jul 09, 2024 at 02:28:38PM +0200, Paolo Bonzini wrote:
+>>> On Tue, Jul 9, 2024 at 2:09 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>   * what is the actual baseline requirement? We definitely want
+>>>>     to support "using rustup on an older system" (should be no
+>>>>     problem) and "current distro building QEMU using the distro's
+>>>>     rust", I assume. It would certainly be nice to have "building
+>>>>     QEMU on the older-but-still-in-our-support-list distro releases
+>>>>     with that distro's rust", but this probably implies not just
+>>>>     a minimum rust version but also a limited set of crates.
+>>>
+>>> I don't think limiting ourselves to the set of crates in the distro is
+>>> feasible. It's not the way the language works, for example I tried
+>>> checking if the "cstr" crate exists and I didn't find it in Debian.
+>> 
+>> Yep, Rust is new enough that it is highly likely that crates will be
+>> missing in multiple distros.
+>> 
+>> For ordinary users, cargo will happily download the missing pieces
+>> so its not an issue.
+>> 
+>> For distro packagers, they'll just have to either package up the crates,
+>> or bundle them in their QEMU build. Cargo makes the latter easy at
+>> least. If distros don't want bundling, they'll need to go the more
+>> involved route of packaging deps.
+>> 
+>> IOW, from a distro POV, IMHO, we should focus on the Rust toolchain
+>> versions we need as the minimum bar.
+>> 
+>> With regards,
+>> Daniel
+>
+>I would like to add that, contrary to pip packages for python, it can be 
+>*trusted* that Rust crates.io will keep packages and their different 
+>versions, as it was designed to be an immutable registry.
+>
+>Indeed, users can't remove their package, except for strong security 
+>issues, to the opposite of pip.
+>
+>Besides offline compilation scenario, are there any other reason for 
+>wanting to use distro packages instead of letting cargo do the work?
 
-Yes, it can work for physical devices if allowed by host configuration.
-E.g. VFIO supports that I think. Don't think VDPA does.
-
-> For what it's worth, my interpretation of the target scenario:
-> 
-> > Other backends don't see these mappings. If the guest submits a vring
-> > descriptor referencing a mapping to another backend, then that backend
-> > won't be able to access this memory
-> 
-> is that it's omitting how the implementation is reconciled with
-> section 2.10.1 of v1.3 of the virtio spec, which states that:
-> 
-> > References into shared memory regions are represented as offsets from
-> > the beginning of the region instead of absolute memory addresses. Offsets
-> > are used both for references between structures stored within shared
-> > memory and for requests placed in virtqueues that refer to shared memory.
-> 
-> My interpretation of that statement is that putting raw guest physical
-> addresses corresponding to virtio shared memory regions into a vring
-> is a driver spec violation.
-> 
-> -David
-
-This really applies within device I think. Should be clarified ...
-
--- 
-MST
-
+Only distribution packaging is the concern here, where packaged build 
+dependencies may be required.
 
