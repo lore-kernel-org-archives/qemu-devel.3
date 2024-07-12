@@ -4,63 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A44C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B3DC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 12:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFm9-0007lt-So; Fri, 12 Jul 2024 08:53:26 -0400
+	id 1sSF0n-00011u-5s; Fri, 12 Jul 2024 08:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSFm5-0007SG-06; Fri, 12 Jul 2024 08:53:22 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sSFm1-0002gh-38; Fri, 12 Jul 2024 08:53:20 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:25b4:0:640:ef96:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D73E860CF5;
- Fri, 12 Jul 2024 15:53:11 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:0:419:5fb9:9623:463f:792c] (unknown
- [2a02:6b8:0:419:5fb9:9623:463f:792c])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ArffLC1RlCg0-UihECcsy; Fri, 12 Jul 2024 15:53:11 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1720788791;
- bh=YEBENZokF5uCti3jFa0VbVdu45pM53gBYaDy3qCIIbE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=aAeDSSZ4YlXPAvFAFhVyTl2OY8vTXJPVP/O0ZNS+rBROY82DlNLtnYq202OE8n9mk
- UxbxaTPs4WxobgiSYfjNtGePNciV8nYMiw++n9JpNwz3vdSzkTx0mRhgECuNgcY1pq
- aRsrAp9n1Xl25Ncfet+9R16TR62CL8m/wz47BWVA=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1487dfc8-8313-45de-a867-9ca29e63e9bc@yandex-team.ru>
-Date: Fri, 12 Jul 2024 15:53:10 +0300
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0k-0000o1-Jo; Fri, 12 Jul 2024 08:04:26 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sSF0h-0005oO-TT; Fri, 12 Jul 2024 08:04:26 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-75c5bdab7faso1153190a12.1; 
+ Fri, 12 Jul 2024 05:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720785862; x=1721390662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tyPOIb2VK3dD8F4THz9rJokTRHuUTmaR6trLMdHrvl0=;
+ b=BDAx4z2Yf36JqfhyQxQTjXjmmB0F8t/tzd3sQKWRKZYvtA5Xx+T1ZMIz2mTtMzXDZz
+ buMU7UjM2jSCXX+HrjHvnIovGzay2BgbK1gWVsrYvMQxInbqlsz6Mr+4ZFRRhv2Ny4ns
+ ANdnglIptw8hPsMdEagZdVkPraEla1mvolhAjfLBITkIWWYXjG0fwX79gyl+gmoZy72D
+ F6Ps2BF8K3nUXziZd6pLTd74GbakXKd1HxLQT4oPRJWf8k6fJn6Ep9vGRV1nrWQ590qG
+ TlwhFbL20JtA/1O/lJpA4tpZ+m8Oqf6pSihNbG8hPMWE7nH23YAQE8vpx+lRRIjjdL5N
+ rVyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720785862; x=1721390662;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tyPOIb2VK3dD8F4THz9rJokTRHuUTmaR6trLMdHrvl0=;
+ b=YxJTrY4an2g1BbaS67E00sAyCt3jIrvt+pMY8t5I0CqWL3ag2ZC4dE2UWpeZj5dP1z
+ ujZzrt42GLRrEbCgs8FjR6rpI+7OJkPD7DNaDZxueEpX7qpzIGkD4brRI7etzQb0ScXr
+ MjV2H3IPMLI2kq9CgPvCShfh6gZ313ewHdEiRuw1Xf7g4WwxxTG01sjDLD0o5AcMNqtB
+ nKmLv3zokpfzZ6A4m+E3jIY6RvDNzlCuzR6su9pBJIaAMobtBltMSr52HxJiroJJwBIE
+ oCa9JFz9JVoUsASPNO8sO8PHSMl8vlvUrRSmRsya5ZJlmFPCXr/hn9US0Y5raeknM06y
+ 35fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSDX1aApRIXSHF6ZbWhZbA56a0TIok40X/NA9lh1V0/TV4JFjt9Q7unLgjPqKQECstDCRUw+FnArOYiy2UHPWDQjGGCps=
+X-Gm-Message-State: AOJu0YyHwL6NLPWIIQm69Ap8c60C+ZP7lu60ly+cEDkdWqNBTU+ixPmu
+ yOj2WmPo4uwxrO1G0DBNM7XC3isQVJbkoK1cE+aKL1UN/rNrTLhlyFg0cg==
+X-Google-Smtp-Source: AGHT+IH3rZqRp5M/Bb5J5vdgaHZDCtshUfFeNET2SCkD/JW+Ex4B1E7UG1cwRdoc34GFdvc7xuhnoQ==
+X-Received: by 2002:a05:6a20:8422:b0:1c2:a696:6a48 with SMTP id
+ adf61e73a8af0-1c2a6966b9bmr10057010637.48.1720785861766; 
+ Fri, 12 Jul 2024 05:04:21 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b438c0a1csm7308967b3a.63.2024.07.12.05.04.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jul 2024 05:04:21 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 13/19] ppc/pnv: Implement Power9 CPU core thread state
+ indirect register
+Date: Fri, 12 Jul 2024 22:02:40 +1000
+Message-ID: <20240712120247.477133-14-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240712120247.477133-1-npiggin@gmail.com>
+References: <20240712120247.477133-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] copy-before-write: allow specifying minimum
- cluster size
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com
-References: <20240711120915.310243-1-f.ebner@proxmox.com>
- <20240711120915.310243-2-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240711120915.310243-2-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,33 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.07.24 15:09, Fiona Ebner wrote:
-> In the context of backup fleecing, discarding the source will not work
-> when the fleecing image has a larger granularity than the one used for
-> block-copy operations (can happen if the backup target has smaller
-> cluster size), because cbw_co_pdiscard_snapshot() will align down the
-> discard requests and thus effectively ignore then.
-> 
-> To make @discard-source work in such a scenario, allow specifying the
-> minimum cluster size used for block-copy operations and thus in
-> particular also the granularity for discard requests to the source.
-> 
-> The type 'size' (corresponding to uint64_t in C) is used in QAPI to
-> rule out negative inputs and for consistency with already existing
-> @cluster-size parameters. Since block_copy_calculate_cluster_size()
-> uses int64_t for its result, a check that the input is not too large
-> is added in block_copy_state_new() before calling it. The calculation
-> in block_copy_calculate_cluster_size() is done in the target int64_t
-> type.
-> 
-> Suggested-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
-> Acked-by: Markus Armbruster<armbru@redhat.com>  (QAPI schema)
-> Signed-off-by: Fiona Ebner<f.ebner@proxmox.com>
+Power9 CPUs have a core thread state register accessible via SPRC/SPRD
+indirect registers. This register includes a bit for big-core mode,
+which skiboot requires.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/misc_helper.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 692e48e6bc..e69236d2de 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -319,6 +319,23 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+     case 0: /* SCRATCH0-3 */
+     case 1: /* SCRATCH4-7 */
+         return pc->scratch[(sprc >> 3) & 0x7];
++
++    case 0x1e0: /* core thread state */
++        if (env->excp_model == POWERPC_EXCP_POWER9) {
++            /*
++             * Only implement for POWER9 because skiboot uses it to check
++             * big-core mode. Other bits are unimplemented so we would
++             * prefer to get unimplemented message on POWER10 if it were
++             * used anywhere.
++             */
++            if (pc->big_core) {
++                return PPC_BIT(63);
++            } else {
++                return 0;
++            }
++        }
++        /* fallthru */
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
 -- 
-Best regards,
-Vladimir
+2.45.1
 
 
