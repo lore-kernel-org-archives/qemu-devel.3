@@ -4,77 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53518C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00293C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jul 2024 13:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSFvN-000412-RW; Fri, 12 Jul 2024 09:02:57 -0400
+	id 1sSG85-0005IS-Iu; Fri, 12 Jul 2024 09:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSFvG-0003Xo-Ri
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:02:55 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sSFvD-0005zh-Q1
- for qemu-devel@nongnu.org; Fri, 12 Jul 2024 09:02:50 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57d05e0017aso2672233a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jul 2024 06:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720789366; x=1721394166; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vCFtf2iNIwx1IjbaReYl7YdD1FU8YkHtI7PLgSEDdsY=;
- b=ZjnyPUBd8QN4RpsNNH4u2apbW5o895NKQ75vzGo+64EWcYEkgF8iyFshr9ze4Vbtqj
- ul+Ws0K1EO6PjGWc38eLQ4ubkJu/PR0KBW0lOZVOqtW5oWIzNk2rIrpyeONRTJ64MxgZ
- biT3yqZl77pe1vJs8Aeb1PTTJXXELOpsK05ffG33dc0BCI5D/LvkrZRUIf7WAnJDKZ0n
- AhAvDjLZdgJFFG29nKQS+k4H8NJ17IJYHipLNOFYJmiAO8rfSs+lAmp5U24PWKZZLrg+
- RWRd9cS8SqzBdk+6Ogs+mNKrAVniR/nsYj9Yy5D0O/fV2kA9e2SzOOoLo/NQWYPzQ+Cx
- hMNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720789366; x=1721394166;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vCFtf2iNIwx1IjbaReYl7YdD1FU8YkHtI7PLgSEDdsY=;
- b=mUXSVNxyagBVag9yrU/D5SuQ4ldsvmMl11PJqS/xV4qoFik6S9+Wfcmbb8Av3/KbkG
- wJDQRU2frZwBcfF9TrjgP8xQCgvfcxWvmmZGr33KIIche3Sr5zYOVO9bJlHNG1ieP4XH
- 7lfbLHGKhB88MgAA2LMdYw7s8GzmNSp2eJabsWWRrBG39gGg9kLhnWTA1KyvY57C3J0m
- ofufIViqwnLTPswu1YwwkZPY/j/M3Uv+u3EJNtaz9zzlPvXrBXP03oetrpqPeGVfEyPZ
- 0VJlX6lQV3ZHQ6YFPjbboQSijmrFYkJOomX6Z61ire0swjouIUHxoKyWktYTW9vvzGfv
- prcw==
-X-Gm-Message-State: AOJu0Yx+vfYEvlrLEI64TOW/5cXb3iyF6bHb0FAvARgedFQcC/R3/g1+
- Xocc+vqWVFnfmFpEufAopLZUAkaHl670Na7CnpsbWIA5ykm0ytzJTfA+HZ4aUdCDFLadRgwWwtM
- A38bdK/ONtJ42NV9QE+szMYB9Nvu2aYOfATP4Xw==
-X-Google-Smtp-Source: AGHT+IHwECMS0FU7KFn0nd3zulANuUA5a+LSbh6K/GFQZiHhrr8kIsik3feXMXPjEltauh3sU7HKWsePlHlVquyRtHc=
-X-Received: by 2002:a05:6402:1911:b0:57c:5b7a:87e7 with SMTP id
- 4fb4d7f45d1cf-594ba0cbecemr9114374a12.14.1720789366145; Fri, 12 Jul 2024
- 06:02:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
+ id 1sSG7b-0004xZ-33; Fri, 12 Jul 2024 09:15:35 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab@kernel.org>)
+ id 1sSG7Z-0001EB-2N; Fri, 12 Jul 2024 09:15:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 6D0B061F06;
+ Fri, 12 Jul 2024 13:15:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD06C32786;
+ Fri, 12 Jul 2024 13:15:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1720790122;
+ bh=3+tNSaQ8a39Ggzkv/WVrggnD0uGXWcuNnDojR+LSc44=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=r9FDkA/VxWgd+FqGoKZiXw2m/ArYZ12lDH/lIUDB/KCWYuNLRY0kpWd3QOvCz6pUA
+ miCHeYbCTJR8UVK13P0GtbacHKqcayNGDWk/T2Pzkm5Wt8PkUSt+VpNPGwl78mz+C8
+ 9B07lEUFKvoZRAAz9KiVmZ4nYxb9or+qJ5TelcZc19UCPQFvL8FLJOFr//JuBIdgnH
+ biqRjcHDmIWmZiNprlYZ030Io69ctXQkJ7f9agimzMInFPu78UxVTFfVR+UhnKsr7a
+ YfYcYB7Idf3Wz9jrQf89dmP280e1Quk4SJAdMHY+P6xulsHQF+QIN2uOYLDZnAyL8q
+ i5yZJB9EEpBRQ==
+Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
+ (envelope-from <mchehab@kernel.org>) id 1sSG7K-00000003iE3-1GoG;
+ Fri, 12 Jul 2024 15:15:18 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: 
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Shiju Jose" <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v2 3/7] acpi/ghes: Support GPIO error source.
+Date: Fri, 12 Jul 2024 15:15:10 +0200
+Message-ID: <90ee117d9950262a9efee1429ae2ecea5fd8a6a4.1720789922.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <cover.1720789921.git.mchehab+huawei@kernel.org>
+References: <cover.1720789921.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-References: <20240710032814.104643-1-richard.henderson@linaro.org>
- <20240710032814.104643-11-richard.henderson@linaro.org>
-In-Reply-To: <20240710032814.104643-11-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jul 2024 14:02:35 +0100
-Message-ID: <CAFEAcA9O+3W=2EewSUDoFOF322G5UUAW5xD+wWasW19F5pO6NQ@mail.gmail.com>
-Subject: Re: [PATCH v2 10/13] target/s390x: Use user_or_likely in
- do_access_memset
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org, 
- qemu-riscv@nongnu.org, balaton@eik.bme.hu, max.chou@sifive.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=mchehab@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.138,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,41 +77,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jul 2024 at 04:28, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Eliminate the ifdef by using a predicate that is
-> always true with CONFIG_USER_ONLY.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/s390x/tcg/mem_helper.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
->
-> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-> index 6cdbc34178..5311a15a09 100644
-> --- a/target/s390x/tcg/mem_helper.c
-> +++ b/target/s390x/tcg/mem_helper.c
-> @@ -225,10 +225,7 @@ static void do_access_memset(CPUS390XState *env, vaddr vaddr, char *haddr,
->                               uint8_t byte, uint16_t size, int mmu_idx,
->                               uintptr_t ra)
->  {
-> -#ifdef CONFIG_USER_ONLY
-> -    memset(haddr, byte, size);
-> -#else
-> -    if (likely(haddr)) {
-> +    if (user_or_likely(haddr)) {
->          memset(haddr, byte, size);
->      } else {
->          MemOpIdx oi = make_memop_idx(MO_UB, mmu_idx);
-> @@ -236,7 +233,6 @@ static void do_access_memset(CPUS390XState *env, vaddr vaddr, char *haddr,
->              cpu_stb_mmu(env, vaddr + i, byte, oi, ra);
->          }
->      }
-> -#endif
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Add error notification to GHES v2 using the GPIO source.
 
-thanks
--- PMM
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ hw/acpi/ghes.c         | 8 ++++++--
+ include/hw/acpi/ghes.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index e9511d9b8f71..5b8bc6eeb437 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -34,8 +34,8 @@
+ /* The max size in bytes for one error block */
+ #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+ 
+-/* Now only support ARMv8 SEA notification type error source */
+-#define ACPI_GHES_ERROR_SOURCE_COUNT        1
++/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
++#define ACPI_GHES_ERROR_SOURCE_COUNT        2
+ 
+ /* Generic Hardware Error Source version 2 */
+ #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+@@ -327,6 +327,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+          */
+         build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
+         break;
++    case ACPI_HEST_SRC_ID_GPIO:
++        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
++        break;
+     default:
+         error_report("Not support this error source");
+         abort();
+@@ -370,6 +373,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+     /* Error Source Count */
+     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
+     build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
++    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GPIO, linker);
+ 
+     acpi_table_end(linker, &table);
+ }
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 674f6958e905..4f1ab1a73a06 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -58,6 +58,7 @@ enum AcpiGhesNotifyType {
+ 
+ enum {
+     ACPI_HEST_SRC_ID_SEA = 0,
++    ACPI_HEST_SRC_ID_GPIO = 1,
+     /* future ids go here */
+     ACPI_HEST_SRC_ID_RESERVED,
+ };
+-- 
+2.45.2
+
 
