@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0023DC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 12:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C49C3DA45
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 12:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSc88-0004HJ-TK; Sat, 13 Jul 2024 08:45:36 -0400
+	id 1sScIo-0002Dj-Mr; Sat, 13 Jul 2024 08:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sSc86-0004E0-2m
- for qemu-devel@nongnu.org; Sat, 13 Jul 2024 08:45:35 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1sScIk-0002Cu-MB
+ for qemu-devel@nongnu.org; Sat, 13 Jul 2024 08:56:35 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sSc7l-0000cm-KB
- for qemu-devel@nongnu.org; Sat, 13 Jul 2024 08:45:20 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-25cba5eea69so1389936fac.2
- for <qemu-devel@nongnu.org>; Sat, 13 Jul 2024 05:45:12 -0700 (PDT)
+ id 1sScIi-0005Y3-4y
+ for qemu-devel@nongnu.org; Sat, 13 Jul 2024 08:56:33 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1fb4fa1bb34so18036605ad.0
+ for <qemu-devel@nongnu.org>; Sat, 13 Jul 2024 05:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720874711; x=1721479511;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720875390; x=1721480190;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=v7Q5afzs4OT0PezKZGPKvJtrMk+Z1yfOj2LoOgmN83k=;
- b=ZyflH9mp74kKWT7WCYtQrBxeIu0qlK3BfXA0OV5P3yRQ430FAN3Q+iuoK9ixzQRMJS
- jmZ+tpUHk6Scf1s9rPTmS2PQAXeOUEZiBV1eAPlwEOPMYXjDDgwq62FTtiEMR3hJGke3
- ztUuQtxWUoSVsz1LaEINnt6rVoowRxMn0NE3d90aKZnVEIDHCTP4ue0e3Vavn6eoz65j
- ie6LqPEcn8dDRvdD+bn+nT1ofRk2M/TUjPfc4FshsD7KRW5wPaWz9rO65CBmpQrHSitX
- ucdeYRwvOHQc5OQwmjgmXfTMFPTlM27Uf/flk4ldEMusLo+nZES0SZOSIpdE5PV+w0+L
- UT7Q==
+ bh=rhOFHdH2tff67j+PQ2H/Da3Ax2hSybZT1/cn+EHKRUI=;
+ b=TCE20HVN+/IAJvVtnB9p94XjllIdbNHhlYDzoPtwUOKRkwBVZkb9LDU/lTTOA7n5Wl
+ IRBEE++pSZQXphjB4e+EzuSXDGpRQDsJwzUu08Bxb9w0meIl4MHPELEQ5eKo9rrUP2PV
+ BdaqudJt6074WjCIlwVXKyIlTQkCdrnAy/Fa2INmeCdV6dpCB7Nx+vw/2RzcAMabvxwz
+ kZw1yCkI7HG4iNR2DlzME9Ikufa2e3bfip8GQSjza5TsL/seFfUy5giZLmY8Tp9gftNI
+ V89Q7mZkT6ft45k3oe39GVew/A4jwiygtF/FQPZHbeKNcmCrsSbxZPuRXvxSyJwptUaP
+ XCOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720874711; x=1721479511;
+ d=1e100.net; s=20230601; t=1720875390; x=1721480190;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v7Q5afzs4OT0PezKZGPKvJtrMk+Z1yfOj2LoOgmN83k=;
- b=c+3xQC5A7zS2X1Cf7TSH83Sdwqb1dzxLC24aj0h1m1iLChMQAeT82XIedJfEkgjDb3
- XiL35h+UIqITZPx/T+ivV7RSg9xuAvSgzDHcN0+v+hTWWPMUtk5lw3Nv9jF+YfVFp3zS
- UDH8JkUsUjrBpPKfkzsCdK2gumvS0xHpfYAXnjeR5ZmnHHFDkWsd6y0uuNa2T5x7gdFb
- tOr1Exjucpk6QpcObvKVauCvUlHQCipkatDRrYJiikNVD8QuX4lTh0yWIk8jjpUR/qE0
- a10SiwPtCSx5bh+ngTWmqTQ+2jVx0rEnYSoroqKm83tMzKYvp6jASzsYs//KwrrsEgPA
- lT7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXIIncF757e2xiUk0uPA7EMOYvU+8u4WsHe2lP39Uzz/zc3c5ufEjMKPYDF9/edRxJR7FaNw4U2VHZ31wxU6Tajx9F9s9A=
-X-Gm-Message-State: AOJu0YxpmjgApY235FEjF/eTQloxf1ojQhSlX99FfMeKaMXFjcIx7+BX
- qZaTguVa+fCOEgujB6nkHB7Tg+1ENjkMsHsZa/giglebQ73VBmOEC25TzCuHBaU=
-X-Google-Smtp-Source: AGHT+IFMnJ9RlD9fKtzySc0mRVL2R9EuFVprwn+fhrSRxAljwtjJOA/7gtA9I7PS0pnKFix6LuqSHw==
-X-Received: by 2002:a05:6870:3482:b0:24c:ac7e:8a5c with SMTP id
- 586e51a60fabf-25eae7f1f0dmr11695143fac.21.1720874711635; 
- Sat, 13 Jul 2024 05:45:11 -0700 (PDT)
+ bh=rhOFHdH2tff67j+PQ2H/Da3Ax2hSybZT1/cn+EHKRUI=;
+ b=jb/xdPyqc/IZr+Z/QbIMkaohxvJWZnMvvWl5cGocDgm7G/WQn4yqvncLT1SqWqYWyl
+ DYN1Ryp4AslcBQ+lEY+MY2hOVWE0FGTsbQzKP46Oiuf8pYOlXQeryP20saGC9DyHJIs7
+ X58qZsZSMcEZwYZmjEZ/uG538nW2D722LCvw+V3+/Byfbomp5dxfKvukE/VkcE92B/R3
+ IJcxGrsTirkoKtT8ZovXtT9gn33i14LG9V8emL7X67zAZvNdKrHRDG0+PhEINeqK2zA+
+ A5iILNYC6bJcnx4I0dyDtVSh0s8JnW1P+N1E6gyAxvno42Lkx8ISTHlMd9TWAqPxWlZE
+ l0UQ==
+X-Gm-Message-State: AOJu0YwdY1QwM3KWyufgj5FhmPSTRZW9oRdTdJ9EF8h0f2bDG3ZnbdIe
+ niABBdoU9liz0C4DuRViwVrw37Vjq1h5s6okLUDB6g/CCSRZTFVR0qLFKtbCTIw=
+X-Google-Smtp-Source: AGHT+IHunMQ7DGY0kmwK6bUzdt0qoFNr1sfkeVTBE2A9+oTuNpL/9QJwqQ9vCHbN0Ww/AZcZAh1TCA==
+X-Received: by 2002:a17:903:11ce:b0:1f9:c1f0:7150 with SMTP id
+ d9443c01a7336-1fbb6cd18acmr106950285ad.8.1720875390047; 
+ Sat, 13 Jul 2024 05:56:30 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eca6c40sm1189890b3a.145.2024.07.13.05.45.08
+ d9443c01a7336-1fc0bbbf9c4sm9850955ad.98.2024.07.13.05.56.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 13 Jul 2024 05:45:11 -0700 (PDT)
-Message-ID: <97c6ac3e-d099-4cc5-9672-1c1658f0cbc6@daynix.com>
-Date: Sat, 13 Jul 2024 21:45:07 +0900
+ Sat, 13 Jul 2024 05:56:29 -0700 (PDT)
+Message-ID: <6294e1ee-ccf6-46ad-98b1-2279c74ec2a9@daynix.com>
+Date: Sat, 13 Jul 2024 21:56:27 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 06/12] pcie_sriov: Reuse SR-IOV VF device instances
-To: "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>
-References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
- <20240627-reuse-v10-6-7ca0b8ed3d9f@daynix.com>
- <75cbc7d9-b48e-4235-85cf-49dacf3c7483@redhat.com>
- <20240710065145-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ junjiehua <halouworls@gmail.com>
+Cc: qemu-devel@nongnu.org, Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+References: <20240708112520.106127-1-junjiehua@tencent.com>
+ <ZpAQ01k2JhOtSeRI@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240710065145-mutt-send-email-mst@kernel.org>
+In-Reply-To: <ZpAQ01k2JhOtSeRI@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2001:4860:4864:20::33;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x33.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -109,53 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/10 19:52, Michael S. Tsirkin wrote:
-> On Wed, Jul 10, 2024 at 08:37:27AM +0200, Cédric Le Goater wrote:
->> Hello,
+On 2024/07/12 2:05, Daniel P. Berrangé wrote:
+> On Mon, Jul 08, 2024 at 07:25:20PM +0800, junjiehua wrote:
+>> when building elf2dump with x86_64-w64-mingw32-gcc, fwrite is imported from
+>> msvcrt.dll. However, the implementation of msvcrt.dll!fwrite is buggy:
+>> it enters an infinite loop when the size of a single write exceeds 4GB.
+>> This patch addresses the issue by splitting large physical memory
+>> blocks into smaller chunks.
 >>
->> This change introduced a regression on s390x. I could have spotted it
->> earlier. Sorry about that. Here is the scenario,
+>> Signed-off-by: junjiehua <junjiehua@tencent.com>
+>> ---
+>>   contrib/elf2dmp/main.c | 19 +++++++++++++++----
+>>   1 file changed, 15 insertions(+), 4 deletions(-)
 >>
->> QEMU now creates automatically the PCI device objects representing the
->> VFs when the PF device is realized in pcie_sriov_pf_init(). This is
->> good to report errors early but it has an important drawback.
->>
->> On s390x, PCI devices have a dual S390PCIBusDevice object. This device
->> model has 'uid' and 'fid' properties which can be either set by the VMM
->> or, if not, auto-generated by the S390PCIBusDevice realize handler. In
->> the VF case, these ids are auto-generated by QEMU and they can possibly
->> conflict with the uid number space of libvirt. The conflict is detected
->> when the machine is created and the start is aborted with a message :
->>
->>    2024-07-08T12:51:42.876883Z qemu-system-s390x: -device {"driver":"zpci","uid":17,"fid":16,"target":"hostdev0","id":"zpci17"}: uid 17 already in use
->>
->> This problem can occur today with a s390x VM using an IGB device.
->>
->> It worked fine when the VFs were created at OS runtime because the initial
->> topology of the machine was in place. Adding VFs was more or less like
->> hotplug. AIUI, libvirt should have full control on the machine topology
->> and so, creating VFs in QEMU at init time in the back of libvirt seems
->> like a violation of this rule.
->>
->> That said, the s390x case is specific and could perhaps be handled in a
->> special way.
->>
->> Thanks,
->>
->> C.
+>> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+>> index d046a72ae6..1994553d95 100644
+>> --- a/contrib/elf2dmp/main.c
+>> +++ b/contrib/elf2dmp/main.c
+>> @@ -23,6 +23,8 @@
+>>   #define INITIAL_MXCSR   0x1f80
+>>   #define MAX_NUMBER_OF_RUNS  42
+>>   
+>> +#define MAX_CHUNK_SIZE (128 * 1024 * 1024)
+>> +
+>>   typedef struct idt_desc {
+>>       uint16_t offset1;   /* offset bits 0..15 */
+>>       uint16_t selector;
+>> @@ -434,13 +436,22 @@ static bool write_dump(struct pa_space *ps,
+>>   
+>>       for (i = 0; i < ps->block_nr; i++) {
+>>           struct pa_block *b = &ps->block[i];
+>> +        size_t offset = 0;
+>> +        size_t chunk_size;
+>>   
+>>           printf("Writing block #%zu/%zu of %"PRIu64" bytes to file...\n", i,
+>>                   ps->block_nr, b->size);
+>> -        if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
+>> -            eprintf("Failed to write block\n");
+>> -            fclose(dmp_file);
+>> -            return false;
+>> +
+>> +        while (offset < b->size) {
+>> +            chunk_size = (b->size - offset > MAX_CHUNK_SIZE)
+>> +                         ? MAX_CHUNK_SIZE
+>> +                         : (b->size - offset);
+>> +            if (fwrite(b->addr + offset, chunk_size, 1, dmp_file) != 1) {
+>> +                eprintf("Failed to write block\n");
+>> +                fclose(dmp_file);
+>> +                return false;
+>> +            }
+>> +            offset += chunk_size;
+>>           }
+>>       }
 > 
-> 
-> Thanks for reporting this Cédric. Akihiko what's your
-> plan to handle this? Do you have the time to address this issue?
+> When reading the original ELF file, we don't actually fread() it,
+> instead we mmap it, using GMappedFile on Windows. Rather than
+> working around fwrite() bugs, we could do the same for writing
+> and create a mapped file and just memcpy the data across.
 
-Creating VFs at initialization time only makes problems apparent early. 
-Even without this change, hot-plugging another PCI device after 
-realizing a VF results in a similar situation.
-
-A proper way to handle this is to add new properties to igb and nvme to 
-let libvirt specify the VF ids. However I wonder if it is a worthwhile 
-addition (i.e., if igb and nvme's SR-IOV emulation will be used with 
-s390x and libvirt).
+It is a bit more complicated to map a file for writing as we need to 
+allocate the file size beforehand. We will also need to extract the 
+logic in QEMU_Elf_map(), which also adds another complexity.
 
 Regards,
 Akihiko Odaki
