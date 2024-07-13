@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B5CC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 07:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BFEC3DA42
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 07:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSXAm-0001DR-QH; Sat, 13 Jul 2024 03:28:00 -0400
+	id 1sSXBB-0003Bf-Rb; Sat, 13 Jul 2024 03:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qwf7=ON=kaod.org=clg@ozlabs.org>)
- id 1sSXAk-00017U-Rd; Sat, 13 Jul 2024 03:27:58 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1sSXB9-0002vd-MN; Sat, 13 Jul 2024 03:28:23 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qwf7=ON=kaod.org=clg@ozlabs.org>)
- id 1sSXAj-00089a-3c; Sat, 13 Jul 2024 03:27:58 -0400
+ id 1sSXB7-0008Cl-Vb; Sat, 13 Jul 2024 03:28:23 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WLg6K5plLz4w2K;
- Sat, 13 Jul 2024 17:27:53 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WLg6q4Vfmz4x04;
+ Sat, 13 Jul 2024 17:28:19 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WLg6H5pJWz4w2J;
- Sat, 13 Jul 2024 17:27:51 +1000 (AEST)
-Message-ID: <fc47a6ef-0407-4333-8610-b74f1fdfc8d8@kaod.org>
-Date: Sat, 13 Jul 2024 09:27:49 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WLg6n4Mj9z4wxs;
+ Sat, 13 Jul 2024 17:28:17 +1000 (AEST)
+Message-ID: <243e1953-8faf-48c7-9a9a-6d17dd15b7a6@kaod.org>
+Date: Sat, 13 Jul 2024 09:28:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/19] ppc/pnv: Add a CPU nmi and resume function
+Subject: Re: [PATCH v2 12/19] ppc/pnv: Implement big-core PVR for Power9/10
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
 References: <20240712120247.477133-1-npiggin@gmail.com>
- <20240712120247.477133-18-npiggin@gmail.com>
+ <20240712120247.477133-13-npiggin@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240712120247.477133-18-npiggin@gmail.com>
+In-Reply-To: <20240712120247.477133-13-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=Qwf7=ON=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -66,10 +66,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/12/24 14:02, Nicholas Piggin wrote:
-> Power CPUs have an execution control facility that can pause, resume,
-> and cause NMIs, among other things. Add a function that will nmi a CPU
-> and resume it if it was paused, in preparation for implementing the
-> control facility.
+> Power9/10 CPUs have PVR[51] set in small-core mode and clear in big-core
+> mode. This is used by skiboot firmware.
+> 
+> PVR is not hypervisor-privileged but it is not so important that spapr
+> to implement this because it's generally masked out of PVR matching code
+> in kernels, and only used by firmware.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
@@ -82,51 +84,23 @@ C.
 
 
 > ---
->   include/hw/ppc/pnv.h |  2 ++
->   hw/ppc/pnv.c         | 14 +++++++++++++-
->   2 files changed, 15 insertions(+), 1 deletion(-)
+>   hw/ppc/pnv_core.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 > 
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index c56d152889..b7858d310d 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -112,6 +112,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
->   #define PNV_FDT_ADDR          0x01000000
->   #define PNV_TIMEBASE_FREQ     512000000ULL
->   
-> +void pnv_cpu_do_nmi_resume(CPUState *cs);
-> +
->   /*
->    * BMC helpers
->    */
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index e405d416ff..cd96cde6c9 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -2749,11 +2749,23 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
->            */
->           env->spr[SPR_SRR1] |= SRR1_WAKESCOM;
->       }
-> +    if (arg.host_int == 1) {
-> +        cpu_resume(cs);
+> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+> index 16d40392db..a96ec4e2b9 100644
+> --- a/hw/ppc/pnv_core.c
+> +++ b/hw/ppc/pnv_core.c
+> @@ -58,6 +58,10 @@ static void pnv_core_cpu_reset(PnvCore *pc, PowerPCCPU *cpu)
+>       env->nip = 0x10;
+>       env->msr |= MSR_HVB; /* Hypervisor mode */
+>       env->spr[SPR_HRMOR] = pc->hrmor;
+> +    if (pc->big_core) {
+> +        /* Clear "small core" bit on Power9/10 (this is set in default PVR) */
+> +        env->spr[SPR_PVR] &= ~PPC_BIT(51);
 > +    }
-> +}
-> +
-> +/*
-> + * Send a SRESET (NMI) interrupt to the CPU, and resume execution if it was
-> + * paused.
-> + */
-> +void pnv_cpu_do_nmi_resume(CPUState *cs)
-> +{
-> +    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(1));
->   }
+>       hreg_compute_hflags(env);
+>       ppc_maybe_interrupt(env);
 >   
->   static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
->   {
-> -    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
-> +    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(0));
->   }
->   
->   static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
 
 
