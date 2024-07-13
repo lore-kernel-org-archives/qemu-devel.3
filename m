@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92346C3DA45
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 22:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE05C3DA42
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 22:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSkmi-0002xv-T0; Sat, 13 Jul 2024 18:00:05 -0400
+	id 1sSkmi-0002wk-IY; Sat, 13 Jul 2024 18:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1sSkma-0002n9-N2; Sat, 13 Jul 2024 17:59:56 -0400
-Received: from icts-p-cavuit-2.kulnet.kuleuven.be ([2a02:2c40:0:c0::25:131])
+ id 1sSkma-0002nB-NY; Sat, 13 Jul 2024 17:59:56 -0400
+Received: from icts-p-cavuit-3.kulnet.kuleuven.be ([134.58.240.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
- id 1sSkmV-00077V-09; Sat, 13 Jul 2024 17:59:56 -0400
+ id 1sSkmU-000793-Ve; Sat, 13 Jul 2024 17:59:54 -0400
 X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
 X-KULeuven-Scanned: Found to be clean
-X-KULeuven-ID: 206022006D.AC52C
+X-KULeuven-ID: 3506220067.A0C08
 X-KULeuven-Information: Katholieke Universiteit Leuven
 Received: from icts-p-ceifnet-smtps-1.kuleuven.be
  (icts-p-ceifnet-smtps.service.icts.svcd
  [IPv6:2a02:2c40:0:51:131:242:ac11:48])
- by icts-p-cavuit-2.kulnet.kuleuven.be (Postfix) with ESMTP id 206022006D;
+ by icts-p-cavuit-3.kulnet.kuleuven.be (Postfix) with ESMTP id 3506220067;
  Sat, 13 Jul 2024 23:59:39 +0200 (CEST)
 BCmilterd-Mark-Subject: no
 BCmilterd-Errors: 
 BCmilterd-Report: 
 X-CAV-Cluster: smtps
-Received: from flutterbat.volkihar.be (unknown
- [IPv6:2a02:a03f:8ada:7900:82c7:e67a:7d31:6a56])
+Received: from flutterbat.volkihar.be (236.58-240-81.adsl-dyn.isp.belgacom.be
+ [81.240.58.236])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by icts-p-ceifnet-smtps-1.kuleuven.be (Postfix) with ESMTPSA id F326CD4EDEA16; 
- Sat, 13 Jul 2024 23:59:38 +0200 (CEST)
+ by icts-p-ceifnet-smtps-1.kuleuven.be (Postfix) with ESMTPSA id 1BB8CD4EDC7F4; 
+ Sat, 13 Jul 2024 23:59:39 +0200 (CEST)
 Received: by flutterbat.volkihar.be (Postfix, from userid 1000)
- id B018671CCB8; Sat, 13 Jul 2024 23:59:38 +0200 (CEST)
+ id D521B71CBC2; Sat, 13 Jul 2024 23:59:38 +0200 (CEST)
 X-Kuleuven: This mail passed the K.U.Leuven mailcluster
 From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 To: qemu-devel@nongnu.org
@@ -48,15 +48,17 @@ Cc: John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Hanna Reitz <hreitz@redhat.com>,
  Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-Subject: [PATCH v2 0/4] block: allow commit to unmap zero blocks
-Date: Sat, 13 Jul 2024 23:56:40 +0200
-Message-ID: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
+Subject: [PATCH v2 2/4] block: refactor commit_run for multiple write types
+Date: Sat, 13 Jul 2024 23:56:42 +0200
+Message-ID: <20240713215644.742244-3-libvirt-e6954efa@volkihar.be>
 X-Mailer: git-send-email 2.44.1
+In-Reply-To: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
+References: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:2c40:0:c0::25:131;
+Received-SPF: pass client-ip=134.58.240.133;
  envelope-from=libvirt-e6954efa@volkihar.be;
- helo=icts-p-cavuit-2.kulnet.kuleuven.be
+ helo=icts-p-cavuit-3.kulnet.kuleuven.be
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -77,29 +79,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series adds support for zero blocks in non-active commits.
-The first three patches in the series contains the actual changes to the
-commit code, the last patch adds a test for the new functionality.
-
+Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 ---
+ block/commit.c | 39 ++++++++++++++++++++++++++++-----------
+ 1 file changed, 28 insertions(+), 11 deletions(-)
 
-Changes since v1:
-- split up the implementation in three separate commits
-- removed accidentally left over includes from testing
-
-Vincent Vanlaer (4):
-  block: get type of block allocation in commit_run
-  block: refactor commit_run for multiple write types
-  block: allow commit to unmap zero blocks
-  block: add test non-active commit with zeroed data
-
- block/commit.c             | 68 +++++++++++++++++++++------
- tests/qemu-iotests/315     | 95 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/315.out | 54 ++++++++++++++++++++++
- 3 files changed, 204 insertions(+), 13 deletions(-)
- create mode 100755 tests/qemu-iotests/315
- create mode 100644 tests/qemu-iotests/315.out
-
+diff --git a/block/commit.c b/block/commit.c
+index 8dee25b313..fb54fc9560 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -128,6 +128,11 @@ static void commit_clean(Job *job)
+     blk_unref(s->top);
+ }
+ 
++typedef enum CommitMethod {
++    COMMIT_METHOD_COPY,
++    COMMIT_METHOD_IGNORE,
++} CommitMethod;
++
+ static int coroutine_fn commit_run(Job *job, Error **errp)
+ {
+     CommitBlockJob *s = container_of(job, CommitBlockJob, common.job);
+@@ -158,8 +163,8 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
+ 
+     for (offset = 0; offset < len; offset += n) {
+-        bool copy;
+         bool error_in_source = true;
++        CommitMethod commit_method = COMMIT_METHOD_COPY;
+ 
+         /* Note that even when no rate limit is applied we need to yield
+          * with no pending I/O here so that bdrv_drain_all() returns.
+@@ -175,19 +180,31 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+                 &n, NULL, NULL, NULL);
+         }
+ 
+-        copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
+         trace_commit_one_iteration(s, offset, n, ret);
+-        if (copy) {
+-            assert(n < SIZE_MAX);
+-
+-            ret = blk_co_pread(s->top, offset, n, buf, 0);
+-            if (ret >= 0) {
+-                ret = blk_co_pwrite(s->base, offset, n, buf, 0);
+-                if (ret < 0) {
+-                    error_in_source = false;
++
++        if (ret >= 0) {
++            if (!(ret & BDRV_BLOCK_ALLOCATED)) {
++                commit_method = COMMIT_METHOD_IGNORE;
++            }
++
++            switch (commit_method) {
++            case COMMIT_METHOD_COPY:
++                assert(n < SIZE_MAX);
++                ret = blk_co_pread(s->top, offset, n, buf, 0);
++                if (ret >= 0) {
++                    ret = blk_co_pwrite(s->base, offset, n, buf, 0);
++                    if (ret < 0) {
++                        error_in_source = false;
++                    }
+                 }
++                break;
++            case COMMIT_METHOD_IGNORE:
++                break;
++            default:
++                abort();
+             }
+         }
++
+         if (ret < 0) {
+             BlockErrorAction action =
+                 block_job_error_action(&s->common, s->on_error,
+@@ -202,7 +219,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+         /* Publish progress */
+         job_progress_update(&s->common.job, n);
+ 
+-        if (copy) {
++        if (commit_method == COMMIT_METHOD_COPY) {
+             block_job_ratelimit_processed_bytes(&s->common, n);
+         }
+     }
 -- 
 2.44.1
 
