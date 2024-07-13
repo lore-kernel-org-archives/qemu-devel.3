@@ -4,83 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3573FC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 21:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BC3C3DA45
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 22:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSjzD-0008UV-9L; Sat, 13 Jul 2024 17:08:55 -0400
+	id 1sSkmf-0002ru-96; Sat, 13 Jul 2024 18:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSjzB-0008TE-6l
- for qemu-devel@nongnu.org; Sat, 13 Jul 2024 17:08:53 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sSjz9-0004ab-Gr
- for qemu-devel@nongnu.org; Sat, 13 Jul 2024 17:08:52 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fb3b7d0d3aso19416065ad.2
- for <qemu-devel@nongnu.org>; Sat, 13 Jul 2024 14:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720904930; x=1721509730; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Xn496lNfN+tjORBu0zJyIt7OHIqjOOBmYg4cfigffiY=;
- b=KXqDa/zyrMfqW6lQF6SVduSrPYyorubkcLcvL0VltdmGU5GaG+8/Bv4HZunV07IRV5
- mwrklMRO7g6D0jOruTEqzJvSsvFP99Yixu3CzKfDIs3BvDRaAibotamDM53jfS7kDfPj
- aW/+BeRnIiojObjwvnmZGzBC2tprInQXSN/6ymVsDq0sLKGl47Zs7+PZYbVaOtHGsz9S
- QvBlRHR54rqcAJPGQK+G7feodzEB+9w1w0e5tJT9q+w+JLMGKcLHGduiwK0+ujyUy3RZ
- PBKvuwePMBOw0Dou2qxPf80tTLf86P5BSWK3nTZ2I25dTXZo5rp+ksulFPLw4nFXqySr
- szBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720904930; x=1721509730;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xn496lNfN+tjORBu0zJyIt7OHIqjOOBmYg4cfigffiY=;
- b=tJSwaQewB9V8PryiBZFoVwW8TLxiG5EzsQ02uPGdPYvFJII8UcT/TwQq1UaSs/ZY/S
- fOIsUjxkiR0HQ56So6ymrNbG8+qsFoDsoIctypLpUz4TE/P8iAl//hhI8UQl+wIMVzqP
- efb/qKVhDPyf7V1DhQd0HrICkGk5Er90ePqQmdC01BnNyF3gf0R0G8pV9jU9wAnEGCZO
- dBFzoZFKQUfo+Ll6Ntl1rk6gMRtFr6SgxYSCD/irbdlDNYkAkizGmzcW3hUIyh1n9vCg
- Nbrd9jtkkRrT/9f0cLBeZsh9qJfPSsflqt0/GvxM7u/hss062TYk86FrAvjINKkFc80l
- 4o9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXR4ThlJ4mDhNdZyg0xEJtk0sViqGjY8ne0yGZasdjUHzZ5ULswCFY3wGQ4Qpj9hbMjUNrpftF12ob/OWxbJkGKdW+hI6s=
-X-Gm-Message-State: AOJu0YxWD7GRx5S+BySXjnHSIS73VJnFabbEskHo/59OpQEzqUARU+Mz
- qtIxAsMtV7+u1lASEU0a+4Ldg2P3fVB7YvuGSHxXmDBVeJslQprzl4bPURJCeJ0=
-X-Google-Smtp-Source: AGHT+IF4PN1YN7TVV73R1E/KQ23keuh/o7oYVoBgdMsRREfaGcyHrGIoZuH2mNiO/644HhskMNdGJw==
-X-Received: by 2002:a17:902:d490:b0:1fb:4f91:6728 with SMTP id
- d9443c01a7336-1fbb6d5fee1mr139785165ad.42.1720904929989; 
- Sat, 13 Jul 2024 14:08:49 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.169.129])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bc509e8sm14109325ad.284.2024.07.13.14.08.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 13 Jul 2024 14:08:49 -0700 (PDT)
-Message-ID: <bf42c103-2328-4278-98a0-0df732515aa3@linaro.org>
-Date: Sat, 13 Jul 2024 23:08:45 +0200
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1sSkma-0002n8-MT; Sat, 13 Jul 2024 17:59:56 -0400
+Received: from icts-p-cavuit-1.kulnet.kuleuven.be ([134.58.240.132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <libvirt-e6954efa@volkihar.be>)
+ id 1sSkmU-0007Fz-VJ; Sat, 13 Jul 2024 17:59:54 -0400
+X-KULeuven-Envelope-From: libvirt-e6954efa@volkihar.be
+X-KULeuven-Scanned: Found to be clean
+X-KULeuven-ID: 4234C2005B.AF519
+X-KULeuven-Information: Katholieke Universiteit Leuven
+Received: from icts-p-ceifnet-smtps-0.kuleuven.be
+ (icts-p-ceifnet-smtps.service.icts.svcd
+ [IPv6:2a02:2c40:0:51:140:242:ac11:55])
+ by icts-p-cavuit-1.kulnet.kuleuven.be (Postfix) with ESMTP id 4234C2005B;
+ Sat, 13 Jul 2024 23:59:39 +0200 (CEST)
+BCmilterd-Mark-Subject: no
+BCmilterd-Errors: 
+BCmilterd-Report: 
+X-CAV-Cluster: smtps
+Received: from flutterbat.volkihar.be (236.58-240-81.adsl-dyn.isp.belgacom.be
+ [81.240.58.236])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by icts-p-ceifnet-smtps-0.kuleuven.be (Postfix) with ESMTPSA id 2B13CD4EDEA16; 
+ Sat, 13 Jul 2024 23:59:39 +0200 (CEST)
+Received: by flutterbat.volkihar.be (Postfix, from userid 1000)
+ id E8FEE71CB72; Sat, 13 Jul 2024 23:59:38 +0200 (CEST)
+X-Kuleuven: This mail passed the K.U.Leuven mailcluster
+From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>,
+ Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+Subject: [PATCH v2 3/4] block: allow commit to unmap zero blocks
+Date: Sat, 13 Jul 2024 23:56:43 +0200
+Message-ID: <20240713215644.742244-4-libvirt-e6954efa@volkihar.be>
+X-Mailer: git-send-email 2.44.1
+In-Reply-To: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
+References: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/bcm2835_fb: fix fb_use_offsets condition
-To: SamJakob <me@samjakob.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "open list:Raspberry Pi" <qemu-arm@nongnu.org>
-References: <20240713155656.59431-1-me@samjakob.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240713155656.59431-1-me@samjakob.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=134.58.240.132;
+ envelope-from=libvirt-e6954efa@volkihar.be;
+ helo=icts-p-cavuit-1.kulnet.kuleuven.be
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,43 +79,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/7/24 17:56, SamJakob wrote:
-> 	It is common practice when implementing double-buffering
-> 	on VideoCore to do so by multiplying the height of the
-> 	virtual buffer by the number of virtual screens desired
-> 	(i.e., two - in the case of double-bufferring).
-> 
-> 	At present, this won't work in QEMU because the logic in
-> 	fb_use_offsets require that both the virtual width and
-> 	height exceed their physical counterparts.
-> 
-> 	This appears to be unintentional/a typo and indeed the
-> 	comment states; "Experimentally, the hardware seems to
-> 	do this only if the viewport size is larger than the
-> 	physical screen". The viewport/virtual size would be
-> 	larger than the physical size if either virtual dimension
-> 	were larger than their physical counterparts and not
-> 	necessarily both.
-> 
-> Signed-off-by: SamJakob <me@samjakob.com>
-> ---
->   hw/display/bcm2835_fb.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/display/bcm2835_fb.c b/hw/display/bcm2835_fb.c
-> index e40ed2d2e1..650db3da82 100644
-> --- a/hw/display/bcm2835_fb.c
-> +++ b/hw/display/bcm2835_fb.c
-> @@ -145,7 +145,7 @@ static bool fb_use_offsets(BCM2835FBConfig *config)
->        * viewport size is larger than the physical screen. (It doesn't
->        * prevent the guest setting this silly viewport setting, though...)
->        */
-> -    return config->xres_virtual > config->xres &&
-> +    return config->xres_virtual > config->xres ||
->           config->yres_virtual > config->yres;
->   }
->   
+Non-active block commits do not discard blocks only containing zeros,
+causing images to lose sparseness after the commit. This commit fixes
+that by writing zero blocks using blk_co_pwrite_zeroes rather than
+writing them out as any other arbitrary data.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+---
+ block/commit.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/block/commit.c b/block/commit.c
+index fb54fc9560..6ce30927ac 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -130,6 +130,7 @@ static void commit_clean(Job *job)
+ 
+ typedef enum CommitMethod {
+     COMMIT_METHOD_COPY,
++    COMMIT_METHOD_ZERO,
+     COMMIT_METHOD_IGNORE,
+ } CommitMethod;
+ 
+@@ -185,6 +186,18 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+         if (ret >= 0) {
+             if (!(ret & BDRV_BLOCK_ALLOCATED)) {
+                 commit_method = COMMIT_METHOD_IGNORE;
++            } else if (ret & BDRV_BLOCK_ZERO) {
++                int64_t target_offset;
++                int64_t target_bytes;
++                WITH_GRAPH_RDLOCK_GUARD() {
++                    bdrv_round_to_subclusters(s->base_bs, offset, n,
++                                           &target_offset, &target_bytes);
++                }
++
++                if (target_offset == offset &&
++                    target_bytes == n) {
++                    commit_method = COMMIT_METHOD_ZERO;
++                }
+             }
+ 
+             switch (commit_method) {
+@@ -198,6 +211,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+                     }
+                 }
+                 break;
++            case COMMIT_METHOD_ZERO:
++                ret = blk_co_pwrite_zeroes(s->base, offset, n,
++                    BDRV_REQ_MAY_UNMAP);
++                error_in_source = false;
++                break;
+             case COMMIT_METHOD_IGNORE:
+                 break;
+             default:
+@@ -216,6 +234,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+                 continue;
+             }
+         }
++
+         /* Publish progress */
+         job_progress_update(&s->common.job, n);
+ 
+-- 
+2.44.1
 
 
