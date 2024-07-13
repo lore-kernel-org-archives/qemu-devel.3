@@ -4,66 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFBEC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 18:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53F8C3DA42
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jul 2024 18:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sShU4-0006xa-Tl; Sat, 13 Jul 2024 14:28:37 -0400
+	id 1sShwB-0004bp-AY; Sat, 13 Jul 2024 14:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sShTp-0005sP-QP; Sat, 13 Jul 2024 14:28:24 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1sShwA-0004at-Em; Sat, 13 Jul 2024 14:57:38 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sShTn-0007GI-TS; Sat, 13 Jul 2024 14:28:21 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WLxjr61vLz67kr9;
- Sun, 14 Jul 2024 02:26:08 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 8C138140A78;
- Sun, 14 Jul 2024 02:28:17 +0800 (CST)
-Received: from 00293818-MRGF.huawei.com (10.126.172.138) by
- lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sat, 13 Jul 2024 19:27:59 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
- <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
- <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
- <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
- <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
- <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
- <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
- <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
- <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Shaoqin
- Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH V15 7/7] gdbstub: Add helper function to unregister GDB
- register space
-Date: Sat, 13 Jul 2024 19:25:16 +0100
-Message-ID: <20240713182516.1457-8-salil.mehta@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240713182516.1457-1-salil.mehta@huawei.com>
-References: <20240713182516.1457-1-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1sShw8-0001cd-Qo; Sat, 13 Jul 2024 14:57:38 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 41E6F60AC9;
+ Sat, 13 Jul 2024 18:57:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA41DC32781;
+ Sat, 13 Jul 2024 18:57:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1720897044;
+ bh=sxkTQKhKJZkxaA9+SahGtwPnweSHl9Wseh7YPQtVl+0=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=s/WZOjlddIQmxmf29lyn08qGeSZeYqwRRGj/0T3JCmQFnhYySVXYL86Qj/hW0UsIh
+ Of6BB514koTIH3RLVxJTNAkMINn/U5qmsaBwpDPn6YRKhMgkADFD61HIv4TQWzU8Mv
+ ZnqJqoi5oqtNZscYDB4vQPd/m4DF1S4ywEDZBoxdoR7WynU2+i22B88XpxWK01+L9s
+ HpIXlmqgYY6N86WoXSQAlb7LADfHgnfv46efTI8S0yi/1gI0FNLvAuzmiicuDmDprS
+ Hr8wX6/AOfNZfGJILeRb9GwaOj47lB/ygLlb4SEOVEobHxLWl/OYkkmGHq5N1MdBHg
+ i9HqUSsB5Hvfw==
+Date: Sat, 13 Jul 2024 19:57:20 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Anup Patel <apatel@ventanamicro.com>
+Subject: Re: [PATCH] hw/riscv/virt.c: re-insert and deprecate 'riscv, delegate'
+Message-ID: <20240713-wreckage-humid-79c9acd37542@spud>
+References: <20240713174325.107685-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.172.138]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- lhrpeml500001.china.huawei.com (7.191.163.213)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="vPxhV5sTL/Svjn3I"
+Content-Disposition: inline
+In-Reply-To: <20240713174325.107685-1-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=conor@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,90 +69,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add common function to help unregister the GDB register space. This shall be
-done in context to the CPU unrealization.
 
-Note: These are common functions exported to arch specific code. For example,
-for ARM this code is being referred in associated arch specific patch-set:
+--vPxhV5sTL/Svjn3I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Link: https://lore.kernel.org/qemu-devel/20230926103654.34424-1-salil.mehta@huawei.com/
+On Sat, Jul 13, 2024 at 02:43:25PM -0300, Daniel Henrique Barboza wrote:
+> Commit b1f1e9dcfa renamed 'riscv,delegate' to 'riscv,delegation' since
+> it is the correct name as per dt-bindings, and the absence of the
+> correct name will result in validation fails when dumping the dtb and
+> using dt-validate.
+>=20
+> But this change has a side-effect: every other firmware available that
+> is AIA capable is using 'riscv,delegate', and it will fault/misbehave if
+> this property isn't present. The property was added back in QEMU 7.0,
+> meaning we have 2 years of firmware development using the wrong
+> property.
+>=20
+> Re-introducing 'riscv,delegate' while keeping 'riscv,delegation' will
+> make current firmwares to keep booting with the 'virt' machine and
+> dt-validate won't complain about it since we're still using the expected
+> property 'riscv,delegation'. 'riscv,delegate' is then marked for future
+> deprecation and its use is being discouraged.
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Tested-by: Zhao Liu <zhao1.liu@intel.com>
----
- gdbstub/gdbstub.c      | 13 +++++++++++++
- hw/core/cpu-common.c   |  4 +++-
- include/exec/gdbstub.h |  6 ++++++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+dt-validate /should/ complain about it - does yours not? It's probably a
+bug if it doesn't. Whether dt-validate complains or not here I don't
+think is relevant though, only the impact on firmware of removing it.
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b9ad0a063e..5da17d6530 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -618,6 +618,19 @@ void gdb_register_coprocessor(CPUState *cpu,
-     }
- }
- 
-+void gdb_unregister_coprocessor_all(CPUState *cpu)
-+{
-+    /*
-+     * Safe to nuke everything. GDBRegisterState::xml is static const char so
-+     * it won't be freed
-+     */
-+    g_array_free(cpu->gdb_regs, true);
-+
-+    cpu->gdb_regs = NULL;
-+    cpu->gdb_num_regs = 0;
-+    cpu->gdb_num_g_regs = 0;
-+}
-+
- static void gdb_process_breakpoint_remove_all(GDBProcess *p)
- {
-     CPUState *cpu = gdb_get_first_cpu_in_process(p);
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index b19e1fdacf..fe5383b4f9 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -281,7 +281,9 @@ static void cpu_common_finalize(Object *obj)
-         g_free(cpu->plugin_state);
-     }
- #endif
--    g_array_free(cpu->gdb_regs, TRUE);
-+    /* If cleanup didn't happen in context to gdb_unregister_coprocessor_all */
-+    if (cpu->gdb_regs)
-+        g_array_free(cpu->gdb_regs, TRUE);
-     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
-     qemu_mutex_destroy(&cpu->work_mutex);
-     qemu_cond_destroy(cpu->halt_cond);
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index 1bd2c4ec2a..d73f424f56 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -40,6 +40,12 @@ void gdb_register_coprocessor(CPUState *cpu,
-                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-                               const GDBFeature *feature, int g_pos);
- 
-+/**
-+ * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
-+ * @cpu - the CPU associated with registers
-+ */
-+void gdb_unregister_coprocessor_all(CPUState *cpu);
-+
- /**
-  * gdbserver_start: start the gdb server
-  * @port_or_device: connection spec for gdb
--- 
-2.34.1
 
+--vPxhV5sTL/Svjn3I
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZpLOEAAKCRB4tDGHoIJi
+0iPUAQCaQSKdKXmHJBVuukCRlxy7xTGbdMorMWTjSqTOAuvqvQEAzzCBlRSvxqFY
+pQads1ldLWix/eVQ1vprDzknufVS4g4=
+=jeVf
+-----END PGP SIGNATURE-----
+
+--vPxhV5sTL/Svjn3I--
 
