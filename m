@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A86C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 07:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 558A9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 07:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sStwa-0008H0-FT; Sun, 14 Jul 2024 03:46:52 -0400
+	id 1sStyv-0005LI-Jj; Sun, 14 Jul 2024 03:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sStwZ-0008Fz-Dp
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:46:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sStwX-0005me-C5
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:46:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720943207;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/WHD3oTajkUFk9t4DLQ9JCWDvoQfv3i/z/ncx3CwhAk=;
- b=Wes56DD58v/Z5nBmE0rtAxvwMONyQc6EYdbMPFk28pcvPUQZRZN8xCX1Hidc2XVeFHwabp
- Zj5adImwj1Uzvtk/XQ9KARw1HnumvW3p4rUHJGfPnS1h+/R2n64NVzypoabkszYoRAc0vy
- aGJE5UJWp7y91k2NmS1k2JrfW82EggY=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-aWS-jzthOYuD8pTFhkswyg-1; Sun, 14 Jul 2024 03:46:45 -0400
-X-MC-Unique: aWS-jzthOYuD8pTFhkswyg-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2ee8ceb0852so31026841fa.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 00:46:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sStyr-0005Hw-IR
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:14 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sStyp-0007fJ-5i
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:13 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-810418672f9so1213498241.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 00:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720943350; x=1721548150;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=98E8dJlFqRnilc3EcOnsbhM2ggIX+Do5H9shCOBykdE=;
+ b=Mql1bZ8HFmW4bYLuO7u80idpwaOoPIs8+ptKDHVfDjrMXklcWQZ85dwi+2sDN+lFLu
+ pnM/SwnVkgmLmeRJWtN+i1RUujbJWXFMK1DGCCd7ry7EsTSt8nsDyTn4EE1g1BXz2r7p
+ ilQXgQG7NO5DsrYRK23wdzP6/+R9Pn9gMOz3BnXlgaYuUQpdKt9W/G2O3XeGGrOS2MHv
+ u9xsmTjI2Muyk6FGYUzH0zMAdr+GEtPZYXvKrIL+j4/RUgqfuCNXySkGlQsecSdut/7c
+ 2bWQfdL6igjNVkFQZm836M4GtFyga5UoQWvqJUtWV8adBFnfWQMCz5iPZGB6w6v6s/Jo
+ 4lfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720943204; x=1721548004;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/WHD3oTajkUFk9t4DLQ9JCWDvoQfv3i/z/ncx3CwhAk=;
- b=ZkwOwaKjCUh97jjbRZizHsQzlp5DY0i44EY/h3BBNzX1LEFghrnllNiXTfI8BlSiYJ
- YRE7uLxZenH3+4fqMoFIwjUAgCcntAHx336kcCPZF4EhQeCVKIv8ckSq30Nof2D6XbD2
- 5SiwOAXoKM4BxU4qeYCldqz+i3jUqDuvYEOFfppn2UFPUaRgPVu3x/fFkrtDGxHtdoA8
- BkGml1VFSLPiNlwoz9zi23dchvorP+XyBsXbXr20dM3eHoF+sBsXzI0o7Phk2wra1cBf
- sG7IFmGjL/QxVq4/zmKnCO5AbaXrDo/3X8jlwHKbA+TWUoFyy7TnPCB6Ugc3NdBitm/4
- sQfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXZz+6XinzWkuwLUZqwTZXIYXR8H29gnMUyHNIO12J/V9AqwdJdXRDzM2iHqk6uBIszbIquQ5Xmrre8D3UJTqKxJs3NOQ=
-X-Gm-Message-State: AOJu0YyQU5A690EITRieeGT8HFhcCcFfr82GX/iImdT7RhHMTAL0Fndw
- OyZVcM9FxGnLqIHZnFhkP07UejArHVFsNKAVZ7kR0vA82havK6P1UCbFwyi1qf0KFfT+IrD2NnJ
- ixC1b6L0UMm5i8mdDALPWbqw53SMZygDASacavbnSmGsrZBdVnrS/
-X-Received: by 2002:a05:6512:3ca4:b0:52c:859c:91dd with SMTP id
- 2adb3069b0e04-52eb998e6aemr12911364e87.5.1720943204239; 
- Sun, 14 Jul 2024 00:46:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEF9Zjyqo7KkW28tMLk2o5m/EjC3XgCNWJhOzoE1SXdZTSA0ib155F8cHkIO3U/hyZIJbPmiQ==
-X-Received: by 2002:a05:6512:3ca4:b0:52c:859c:91dd with SMTP id
- 2adb3069b0e04-52eb998e6aemr12911308e87.5.1720943202492; 
- Sun, 14 Jul 2024 00:46:42 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:240:5146:27c:20a3:47d4:904])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f276c52sm78255915e9.22.2024.07.14.00.46.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 00:46:41 -0700 (PDT)
-Date: Sun, 14 Jul 2024 03:46:36 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 0/9] RISC-V: ACPI: Namespace updates
-Message-ID: <20240714034105-mutt-send-email-mst@kernel.org>
-References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
- <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
- <ZpEmuB6xyh2K77Ic@redhat.com>
- <20240712155010.3756bb82@imammedo.users.ipa.redhat.com>
+ d=1e100.net; s=20230601; t=1720943350; x=1721548150;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=98E8dJlFqRnilc3EcOnsbhM2ggIX+Do5H9shCOBykdE=;
+ b=q1OfeSH9fvHs51tubafnFQvmZaQOBXeZcsgH2zGondD/waDRjccdTNJCj/ZsZcoyyM
+ J1jnlA73x5m9MU+uiPjhKKo4Ya/K09ubaholPsNVksuPEdyUQwpxodeq4YYha7maVYK0
+ 9spIaibB6YsyXn6bFBVjz1zjxVWwCi29E6mgSlZcA8NjjwXwOB/zesTmGaBTevvj/RvT
+ TksRLQ1NAMYCljTNAo+F10pcAUAmI5o8TjBnsorEhQ3W/2LmANwskIJDnrbCyLsWUhO+
+ 6JRAC0XdLzHsEbPMfdXjrNE6+rPsHVMlHTeg6iUZQx9bH5VH3in+METt0NrwQPQQft7m
+ Li7w==
+X-Gm-Message-State: AOJu0YziUkD6CurjQSHPSD/mfIFJ5udSbEBBoYkoTbpxkkcHYUCW1v+S
+ 4KVIeQwA8ysnBlwQ1SxmoQu16QEsPmK34asDGZ/tCEN7eBh2O+ZX/P58UPfBeaI=
+X-Google-Smtp-Source: AGHT+IFHRqceqA90G09KSQ0EhV+eyEA9xYfaE5iTpHjEDPo2TmkBZcHB6d7yj1i3X1jb4IrN3nknXQ==
+X-Received: by 2002:a05:6102:3e84:b0:491:110e:cb03 with SMTP id
+ ada2fe7eead31-491110ece05mr11502911137.32.1720943349951; 
+ Sun, 14 Jul 2024 00:49:09 -0700 (PDT)
+Received: from localhost ([157.82.204.135])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-70b7eb9c856sm2211238b3a.4.2024.07.14.00.49.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 14 Jul 2024 00:49:09 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sun, 14 Jul 2024 16:48:33 +0900
+Subject: [PATCH v2 3/4] hw/pci: Convert rom_bar into OnOffAuto
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240712155010.3756bb82@imammedo.users.ipa.redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240714-rombar-v2-3-af1504ef55de@daynix.com>
+References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+In-Reply-To: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::933;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,67 +104,377 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 12, 2024 at 03:50:10PM +0200, Igor Mammedov wrote:
-> On Fri, 12 Jul 2024 13:51:04 +0100
-> Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > On Fri, Jul 12, 2024 at 02:43:19PM +0200, Igor Mammedov wrote:
-> > > On Mon,  8 Jul 2024 17:17:32 +0530
-> > > Sunil V L <sunilvl@ventanamicro.com> wrote:
-> > >   
-> > > > This series adds few updates to RISC-V ACPI namespace for virt platform.
-> > > > Additionally, it has patches to enable ACPI table testing for RISC-V.
-> > > > 
-> > > > 1) PCI Link devices need to be created outside the scope of the PCI root
-> > > > complex to ensure correct probe ordering by the OS. This matches the
-> > > > example given in ACPI spec as well.
-> > > > 
-> > > > 2) Add PLIC and APLIC as platform devices as well to ensure probing
-> > > > order as per BRS spec [1] requirement.
-> > > > 
-> > > > 3) BRS spec requires RISC-V to use new ACPI ID for the generic UART. So,
-> > > > update the HID of the UART.
-> > > > 
-> > > > 4) Enabled ACPI tables tests for RISC-V which were originally part of
-> > > > [2] but couldn't get merged due to updates required in the expected AML
-> > > > files. I think combining those patches with this series makes it easier
-> > > > to merge since expected AML files are updated.
-> > > > 
-> > > > [1] - https://github.com/riscv-non-isa/riscv-brs
-> > > > [2] - https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg04734.html  
-> > > 
-> > > btw: CI is not happy about series, see:
-> > >  https://gitlab.com/imammedo/qemu/-/pipelines/1371119552
-> > > also 'cross-i686-tci' job routinely timeouts on bios-tables-test
-> > > but we still keep adding more tests to it.
-> > > We should either bump timeout to account for slowness or
-> > > disable bios-tables-test for that job.  
-> > 
-> > Asumming the test is functionally correct, and not hanging, then bumping
-> > the timeout is the right answer. You can do this in the meson.build
-> > file
-> 
-> I think test is fine, since once in a while it passes (I guess it depends on runner host/load)
-> 
-> Overal job timeout is 1h, but that's not what fails.
-> What I see is, the test aborts after 10min timeout.
-> it's likely we hit boot_sector_test()/acpi_find_rsdp_address_uefi() timeout.
-> That's what we should try to bump.
-> 
-> PS:
-> I've just started the job with 5min bump, lets see if it is enough.
+rom_bar is tristate but was defined as uint32_t so convert it into
+OnOffAuto to clarify that. For compatibility, a uint32 value set via
+QOM will be converted into OnOffAuto.
 
-Because we should wait for 5min CPU time, not wall time.
-Why don't we do that?
-Something like getrusage should work I think.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ docs/about/deprecated.rst         |  7 +++++
+ docs/igd-assign.txt               |  2 +-
+ include/hw/pci/pci_device.h       |  2 +-
+ hw/pci/pci.c                      | 57 +++++++++++++++++++++++++++++++++++++--
+ hw/vfio/pci-quirks.c              |  2 +-
+ hw/vfio/pci.c                     | 11 ++++----
+ hw/xen/xen_pt_load_rom.c          |  4 +--
+ tests/qtest/virtio-net-failover.c | 32 +++++++++++-----------
+ 8 files changed, 88 insertions(+), 29 deletions(-)
 
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 20b7a17cf07e..ac8d40fd0e84 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -389,6 +389,13 @@ recommending to switch to their stable counterparts:
+ SD physical layer specification v2.00 supersedes the v1.10 one.
+ v2.00 is the default since QEMU 3.0.0.
+ 
++Integer specification of PCI device's ``rombar`` property (since 9.1)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++Specifying an integer for the ``rombar`` property of a PCI device is being
++deprecated starting in 9.1 due to obscurity of such an specification. Replace
++zero with ``off`` and a non-zero value with ``on``, respectively.
++
+ Block device options
+ ''''''''''''''''''''
+ 
+diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
+index e17bb50789ad..35c6c8e28493 100644
+--- a/docs/igd-assign.txt
++++ b/docs/igd-assign.txt
+@@ -35,7 +35,7 @@ IGD has two different modes for assignment using vfio-pci:
+       ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
+       PCI address 1f.0.
+     * The IGD device must have a VGA ROM, either provided via the romfile
+-      option or loaded automatically through vfio (standard).  rombar=0
++      option or loaded automatically through vfio (standard).  rombar=off
+       will disable legacy mode support.
+     * Hotplug of the IGD device is not supported.
+     * The IGD device must be a SandyBridge or newer model device.
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index ca151325085d..49b341ce2e27 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -147,7 +147,7 @@ struct PCIDevice {
+     uint32_t romsize;
+     bool has_rom;
+     MemoryRegion rom;
+-    uint32_t rom_bar;
++    OnOffAuto rom_bar;
+ 
+     /* INTx routing notifier */
+     PCIINTxRoutingNotifier intx_routing_notifier;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 4c7be5295110..ca8fb5383765 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -67,11 +67,64 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
+ static void pcibus_reset_hold(Object *obj, ResetType type);
+ static bool pcie_has_upstream_port(PCIDevice *dev);
+ 
++static void rom_bar_get(Object *obj, Visitor *v, const char *name, void *opaque,
++                        Error **errp)
++{
++    Property *prop = opaque;
++    int *ptr = object_field_prop_ptr(obj, prop);
++
++    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
++}
++
++static void rom_bar_set(Object *obj, Visitor *v, const char *name, void *opaque,
++                        Error **errp)
++{
++    Property *prop = opaque;
++    Error *local_err = NULL;
++    int *ptr = object_field_prop_ptr(obj, prop);
++    uint32_t value;
++
++    visit_type_enum(v, name, ptr, prop->info->enum_table, &local_err);
++    if (!local_err) {
++        return;
++    }
++
++    if (visit_type_uint32(v, name, &value, NULL)) {
++        if (value) {
++            *ptr = ON_OFF_AUTO_ON;
++            warn_report("Specifying a number for rombar is deprecated; replace a non-zero value with 'on'");
++        } else {
++            *ptr = ON_OFF_AUTO_OFF;
++            warn_report("Specifying a number for rombar is deprecated; replace 0 with 'off'");
++        }
++
++        return;
++    }
++
++    error_propagate(errp, local_err);
++}
++
++static void rom_bar_set_default_value(ObjectProperty *op, const Property *prop)
++{
++    object_property_set_default_str(op,
++        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
++}
++
++static const PropertyInfo qdev_prop_rom_bar = {
++    .name = "OnOffAuto",
++    .description = "on/off/auto",
++    .enum_table = &OnOffAuto_lookup,
++    .get = rom_bar_get,
++    .set = rom_bar_set,
++    .set_default_value = rom_bar_set_default_value,
++};
++
+ static Property pci_props[] = {
+     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
+     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
+-    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
++    DEFINE_PROP_SIGNED("rombar",  PCIDevice, rom_bar, ON_OFF_AUTO_AUTO,
++                       qdev_prop_rom_bar, OnOffAuto),
+     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
+                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
+     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
+@@ -2334,7 +2387,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+         return;
+     }
+ 
+-    if (!pdev->rom_bar) {
++    if (pdev->rom_bar == ON_OFF_AUTO_OFF) {
+         /*
+          * Load rom via fw_cfg instead of creating a rom bar,
+          * for 0.11 compatibility.
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 39dae72497e0..0e920ed0691a 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -33,7 +33,7 @@
+  * execution as noticed with the BCM 57810 card for lack of a
+  * more better way to handle such issues.
+  * The  user can still override by specifying a romfile or
+- * rombar=1.
++ * rombar=on.
+  * Please see https://bugs.launchpad.net/qemu/+bug/1284874
+  * for an analysis of the 57810 card hang. When adding
+  * a new vendor id/device id combination below, please also add
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index e03d9f3ba546..502ee2ed0489 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -902,7 +902,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+         error_report("vfio-pci: Cannot read device rom at "
+                     "%s", vdev->vbasedev.name);
+         error_printf("Device option ROM contents are probably invalid "
+-                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
++                    "(check dmesg).\nSkip option ROM probe with rombar=off, "
+                     "or load from file with romfile=\n");
+         return;
+     }
+@@ -1012,11 +1012,10 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+ {
+     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
+     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
+-    DeviceState *dev = DEVICE(vdev);
+     char *name;
+     int fd = vdev->vbasedev.fd;
+ 
+-    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
++    if (vdev->pdev.romfile || vdev->pdev.rom_bar == ON_OFF_AUTO_OFF) {
+         /* Since pci handles romfile, just print a message and return */
+         if (vfio_opt_rom_in_denylist(vdev) && vdev->pdev.romfile) {
+             warn_report("Device at %s is known to cause system instability"
+@@ -1046,17 +1045,17 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+     }
+ 
+     if (vfio_opt_rom_in_denylist(vdev)) {
+-        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
++        if (vdev->pdev.rom_bar == ON_OFF_AUTO_ON) {
+             warn_report("Device at %s is known to cause system instability"
+                         " issues during option rom execution",
+                         vdev->vbasedev.name);
+             error_printf("Proceeding anyway since user specified"
+-                         " non zero value for rombar\n");
++                         " on for rombar\n");
+         } else {
+             warn_report("Rom loading for device at %s has been disabled"
+                         " due to system instability issues",
+                         vdev->vbasedev.name);
+-            error_printf("Specify rombar=1 or romfile to force\n");
++            error_printf("Specify rombar=on or romfile to force\n");
+             return;
+         }
+     }
+diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
+index 6bc64acd3352..025a6b25a916 100644
+--- a/hw/xen/xen_pt_load_rom.c
++++ b/hw/xen/xen_pt_load_rom.c
+@@ -26,7 +26,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
+     Object *owner = OBJECT(dev);
+ 
+     /* If loading ROM from file, pci handles it */
+-    if (dev->romfile || !dev->rom_bar) {
++    if (dev->romfile || dev->rom_bar == ON_OFF_AUTO_OFF) {
+         return NULL;
+     }
+ 
+@@ -71,7 +71,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
+     if (!fread(ptr, 1, st.st_size, fp)) {
+         error_report("pci-assign: Cannot read from host %s", rom_file);
+         error_printf("Device option ROM contents are probably invalid "
+-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
++                     "(check dmesg).\nSkip option ROM probe with rombar=off, "
+                      "or load from file with romfile=\n");
+         goto close_rom;
+     }
+diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
+index 73dfabc2728b..f65b97683fb6 100644
+--- a/tests/qtest/virtio-net-failover.c
++++ b/tests/qtest/virtio-net-failover.c
+@@ -568,7 +568,7 @@ static void test_hotplug_2_reverse(void)
+                          "{'bus': 'root0',"
+                          "'failover': true,"
+                          "'netdev': 'hs0',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_STANDBY0"'}");
+ 
+@@ -655,7 +655,7 @@ static void test_migrate_out(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -765,7 +765,7 @@ static void test_migrate_in(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -819,7 +819,7 @@ static void test_off_migrate_out(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -887,7 +887,7 @@ static void test_off_migrate_in(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -938,7 +938,7 @@ static void test_guest_off_migrate_out(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1014,7 +1014,7 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1065,7 +1065,7 @@ static void test_migrate_guest_off_abort(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1170,7 +1170,7 @@ static void test_migrate_abort_wait_unplug(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1259,7 +1259,7 @@ static void test_migrate_abort_active(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1358,7 +1358,7 @@ static void test_migrate_off_abort(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1450,7 +1450,7 @@ static void test_migrate_abort_timeout(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1543,7 +1543,7 @@ static void test_multi_out(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1574,7 +1574,7 @@ static void test_multi_out(gconstpointer opaque)
+                          "{'bus': 'root3',"
+                          "'failover_pair_id': 'standby1',"
+                          "'netdev': 'hs3',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY1"'}");
+ 
+@@ -1713,7 +1713,7 @@ static void test_multi_in(gconstpointer opaque)
+                          "{'bus': 'root1',"
+                          "'failover_pair_id': 'standby0',"
+                          "'netdev': 'hs1',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY0"'}");
+ 
+@@ -1737,7 +1737,7 @@ static void test_multi_in(gconstpointer opaque)
+                          "{'bus': 'root3',"
+                          "'failover_pair_id': 'standby1',"
+                          "'netdev': 'hs3',"
+-                         "'rombar': 0,"
++                         "'rombar': 'off',"
+                          "'romfile': '',"
+                          "'mac': '"MAC_PRIMARY1"'}");
+ 
 
-
-> > We should never disable tests only in CI, because non-CI users
-> > are just as likely to hit timeouts.
-> > 
-> > 
-> > With regards,
-> > Daniel
+-- 
+2.45.2
 
 
