@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F453C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 07:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93FF1C3DA42
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 07:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sStyp-00056I-22; Sun, 14 Jul 2024 03:49:11 -0400
+	id 1sStz5-0005ce-17; Sun, 14 Jul 2024 03:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sStyl-00050P-Vr
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:09 -0400
-Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
+ id 1sStyz-0005Sz-8z
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:21 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sStyk-0007ep-EL
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:07 -0400
-Received: by mail-io1-xd35.google.com with SMTP id
- ca18e2360f4ac-7f684af6af1so182689539f.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 00:49:06 -0700 (PDT)
+ id 1sStyu-0007fm-9B
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:21 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70af8128081so2392155b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 00:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720943345; x=1721548145;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720943355; x=1721548155;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jiaYdGJdtPWsnfbPGe8XqhPOhb333O5wAJMSGqRo6p4=;
- b=T5UKe5fBpg9TLgDv9On6XoxnDE7/2W1YlEugvrnrI0/+5XklS5flkLkIzzhwayrqDT
- cXMpzQFboC9IFq+IDA+qJw3uN7rjNsKMsSnOXo7IRDjGlcJQ8TTcSNvRivvE25gssQV9
- vXaRbQEPAi//ZwHzyNh37wjnMS18bxQv/Aqt9Xq+badvtZDA+HAihz5dLNwhlCOaQI2X
- 3aJaRCcAjxpZ+HDslk7GohSdP2kf9yj5Q6MqLzEyPKNcpuVPqDITp34Cgy1GtalYwj42
- iYqiZ13sgDKRd9O8IhSjuT0OwIc8YYYkyF+NU1x4hpumMw2DtVLG/gKEWgifsXbPgv1o
- BpPg==
+ :reply-to; bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
+ b=Z3//t0lAuC5c7cDHMdP9RW2/oezUGCg+MCAu1rz3xUNCfkrrcLp4XyNMnNxCeVpwOG
+ kjh2lldXxZPb3xgF0runKoTglda0wNl11AJVUIbb3fOuqkk31OrCDPiKqbw/uGOe8Crt
+ hx+rUEfohN680dV8BA2fNCGf16Ez5y5no5TbUZy7PdZBjHMGsakbH93lsTsrsouJRWvY
+ 1Lw/3yX3pXZWRfb3Jf12R9pCnt7ETUfyFJl04VjabJSLvqt87TvREfpJ8UvSCrwucWl0
+ BIuQffczt0R9geZ9pOf/QegNye++sGZPp+GRQPr3Vmn99UxByGeF6oV7SMVDYZS9aT/H
+ n4NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720943345; x=1721548145;
+ d=1e100.net; s=20230601; t=1720943355; x=1721548155;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jiaYdGJdtPWsnfbPGe8XqhPOhb333O5wAJMSGqRo6p4=;
- b=PF7zwmwDysFcyjUUwVYwy0SybkVPTy4UTkmJ1SKjYAm5hs1t8PNnXiyw9aVcWndnua
- 59XFJv0AN85aaG2XMQQJOqQXy2yJzOgbWz53CQBlh37TaGZvFbPi5lSKaaiKp+APgGbh
- R9/skShB3nPfU6jIwERYNKaJNwGPgLHZanuyDWz5DfKuV+r34109xWqO+RNaxAte3p57
- f2BDucF1QxQ5gBkrlp4wL10pW9dwcXWrjzZY4oMEDYxpSoG10e+jK9k9bGXCgh4JhrBr
- 5WedaYAFkboMHJR6apTwmnCHETq/xzFnYXyNy9PnsGUkAyOMXrfZw1a8yc/1EaoDCKCR
- vjeA==
-X-Gm-Message-State: AOJu0YxMT5QgV1NYtViF5KUrKHoZkfwbBP1E2R9HQupY49dGGb3Yi+6t
- Iy7y/YMSu+6zsfMmS86xH6mwVckNQGP3ms1kBF6X4tFW3+0N7col+CvBNEG1BQY=
-X-Google-Smtp-Source: AGHT+IGeyT9Io5WCPCLinwvALS4/z429E0AdR3OuBJQgaQ8pTSd42NePCPmMkJmKNnJowZIOUw0IaQ==
-X-Received: by 2002:a05:6e02:b49:b0:383:284:113 with SMTP id
- e9e14a558f8ab-38a57214449mr215364005ab.4.1720943345127; 
- Sun, 14 Jul 2024 00:49:05 -0700 (PDT)
+ bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
+ b=meC6IRPTpz01GHaiI3jjIKOQEChqHpFa5L8JOhIFN0I9/4RaFK+8eRSNumRokIcD8H
+ 0YvK4TeE9oW1nofWeZcBfR3Mwof3qZj5lW4+g7KYIjo6iYbDgKi4KO6Bz0Oh4ZTYl5ro
+ AJb/TwSMi3Bwo5lsNei/Jbpso+6Nb1rJYKjPvL/S1HzyUMSdZD3uF37ip+kWJ1CWa4xq
+ meWoXmbA1Fd5znanBhJpnplo9NItmfk1KnI46lDF7oYxceivXoo6IOeeZbR+fYIi8etE
+ QFQy88yWYHmqqa5uBmniPcjM+++Suia6I/urLWbNPZ81EwsVu39h+zsNmk8RG4D6grmr
+ GoTA==
+X-Gm-Message-State: AOJu0Ywh9sWtX0iaOFn2JDeeFVX2CzVgFzZ5Knagn5v7fTz1L6MQCHba
+ fQX8ARjzTGUm90EKtEWYgpEhRVJqeAD28om7/VJbmiNwvR2HeFm5Jjo00GaJO/M=
+X-Google-Smtp-Source: AGHT+IHjl9twXCA9eQvJfVQb1xfkFskT71A2789HR/NoA4zrPc2snsuB9tNAMTOGNzwgCUIxtqa6Ig==
+X-Received: by 2002:a05:6a00:c86:b0:70b:23d9:98ae with SMTP id
+ d2e1a72fcca58-70b43668370mr16055569b3a.28.1720943354825; 
+ Sun, 14 Jul 2024 00:49:14 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fc0bb73f45sm19877665ad.13.2024.07.14.00.49.01
+ d2e1a72fcca58-70b7eb9b3aasm2213754b3a.6.2024.07.14.00.49.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 00:49:04 -0700 (PDT)
+ Sun, 14 Jul 2024 00:49:14 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 14 Jul 2024 16:48:32 +0900
-Subject: [PATCH v2 2/4] qapi: Do not consume a value when visit_type_enum()
- fails
+Date: Sun, 14 Jul 2024 16:48:34 +0900
+Subject: [PATCH v2 4/4] hw/qdev: Remove opts member
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240714-rombar-v2-2-af1504ef55de@daynix.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240714-rombar-v2-4-af1504ef55de@daynix.com>
 References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
 In-Reply-To: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -82,14 +81,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::d35;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-io1-xd35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: none client-ip=2607:f8b0:4864:20::429;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,70 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consuming a value when visit_type_enum() fails makes it impossible to
-reinterpret the value with a different type.
+It is no longer used.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qapi/visitor.h | 5 -----
- qapi/opts-visitor.c    | 5 -----
- qapi/qapi-visit-core.c | 4 +++-
- 3 files changed, 3 insertions(+), 11 deletions(-)
+ include/hw/qdev-core.h |  4 ----
+ hw/core/qdev.c         |  1 -
+ system/qdev-monitor.c  | 12 +++++++-----
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/include/qapi/visitor.h b/include/qapi/visitor.h
-index b3ae3188edfb..8e841b26428b 100644
---- a/include/qapi/visitor.h
-+++ b/include/qapi/visitor.h
-@@ -513,11 +513,6 @@ void visit_set_policy(Visitor *v, CompatPolicy *policy);
-  * is an input visitor.
-  *
-  * Return true on success, false on failure.
-- *
-- * May call visit_type_str() under the hood, and the enum visit may
-- * fail even if the corresponding string visit succeeded; this implies
-- * that an input visitor's visit_type_str() must have no unwelcome
-- * side effects.
-  */
- bool visit_type_enum(Visitor *v, const char *name, int *obj,
-                      const QEnumLookup *lookup, Error **errp);
-diff --git a/qapi/opts-visitor.c b/qapi/opts-visitor.c
-index e9fad756e189..d83434b95a56 100644
---- a/qapi/opts-visitor.c
-+++ b/qapi/opts-visitor.c
-@@ -359,11 +359,6 @@ opts_type_str(Visitor *v, const char *name, char **obj, bool consume,
-         return false;
-     }
-     *obj = g_strdup(opt->str ? opt->str : "");
--    /* Note that we consume a string even if this is called as part of
--     * an enum visit that later fails because the string is not a
--     * valid enum value; this is harmless because tracking what gets
--     * consumed only matters to visit_end_struct() as the final error
--     * check if there were no other failures during the visit.  */
-     if (consume) {
-         processed(ov, name);
-     }
-diff --git a/qapi/qapi-visit-core.c b/qapi/qapi-visit-core.c
-index 89b52fc99202..1137d472290b 100644
---- a/qapi/qapi-visit-core.c
-+++ b/qapi/qapi-visit-core.c
-@@ -411,7 +411,7 @@ static bool input_type_enum(Visitor *v, const char *name, int *obj,
-     int64_t value;
-     g_autofree char *enum_str = NULL;
- 
--    if (!visit_type_str(v, name, &enum_str, errp)) {
-+    if (!visit_type_str_preserving(v, name, &enum_str, errp)) {
-         return false;
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 5336728a23f6..40f2d185f17c 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -237,10 +237,6 @@ struct DeviceState {
+      * @pending_deleted_expires_ms: optional timeout for deletion events
+      */
+     int64_t pending_deleted_expires_ms;
+-    /**
+-     * @opts: QDict of options for the device
+-     */
+-    QDict *opts;
+     /**
+      * @hotplugged: was device added after PHASE_MACHINE_READY?
+      */
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index f3a996f57dee..2fc84699d432 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
+         dev->canonical_path = NULL;
      }
  
-@@ -430,6 +430,8 @@ static bool input_type_enum(Visitor *v, const char *name, int *obj,
-         return false;
-     }
- 
-+    enum_str = NULL;
-+    visit_type_str(v, name, &enum_str, &error_abort);
-     *obj = value;
-     return true;
+-    qobject_unref(dev->opts);
+     g_free(dev->id);
  }
+ 
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 6af6ef7d667f..3551989d5153 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     char *id;
+     DeviceState *dev = NULL;
+     BusState *bus = NULL;
++    QDict *properties;
+ 
+     driver = qdict_get_try_str(opts, "driver");
+     if (!driver) {
+@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     }
+ 
+     /* set properties */
+-    dev->opts = qdict_clone_shallow(opts);
+-    qdict_del(dev->opts, "driver");
+-    qdict_del(dev->opts, "bus");
+-    qdict_del(dev->opts, "id");
++    properties = qdict_clone_shallow(opts);
++    qdict_del(properties, "driver");
++    qdict_del(properties, "bus");
++    qdict_del(properties, "id");
+ 
+-    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
++    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
+                                       errp);
++    qobject_unref(properties);
+     if (*errp) {
+         goto err_del_dev;
+     }
 
 -- 
 2.45.2
