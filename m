@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA6EC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E78EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSx8B-0004ZW-TK; Sun, 14 Jul 2024 07:11:04 -0400
+	id 1sSx8J-000572-SI; Sun, 14 Jul 2024 07:11:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx88-0004Vp-QH
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:01 -0400
+ id 1sSx8G-0004te-60
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx85-00022M-0D
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:00 -0400
+ id 1sSx8C-000253-Ph
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720955450;
+ s=mimecast20190719; t=1720955464;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5JX5ELR1NtHHCLybeAN9sOd7BdgMYgtwGtyVuWSLGQ0=;
- b=S15ZZX6l7Zv+vKnFBkDhVYUB6QoSXZ5T31skZRCc4xrteh+PmA3QjbP9AB8G/zRIg2NK+w
- VFiNe3fI0VikJkxiIssSPDtriDm6UHtOZI6Ifh18hXFwCUlWTo0nRUD3Acvwe53DXHvneg
- DV8x54Gg7iCpACxn1nfMZtkAmMrB1eQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=riytJjgbE6x/tv0Qu82lUf7rTP82b0wZOff0TXFI5UI=;
+ b=MfOirAAThmcN3N38plGzDDxzpXe7KBQ6WGbjhyNGf7y8n+YEzg/PLVtSsUhQ9GuMAiBE6X
+ 7Aq0keoRIB7pyKo7gGZiFPTBc90C/UpeaCyhuQMd8j0LSzGdNx83sNUD9/sUWAV337Kigy
+ kXGU1+2gVVVSRkWR22TP2bxntGPQ5a8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-ZLcm6ijQN8ibVreJLgSUtw-1; Sun, 14 Jul 2024 07:10:48 -0400
-X-MC-Unique: ZLcm6ijQN8ibVreJLgSUtw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-426724679f0so23471835e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:10:48 -0700 (PDT)
+ us-mta-446-XluMdoppNb-aSRaaizP2Aw-1; Sun, 14 Jul 2024 07:11:02 -0400
+X-MC-Unique: XluMdoppNb-aSRaaizP2Aw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4264dc624a5so21838305e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720955446; x=1721560246;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5JX5ELR1NtHHCLybeAN9sOd7BdgMYgtwGtyVuWSLGQ0=;
- b=v1h533G0gyyPm8zMciT3jCRlSP4ZJL0graEPtfrgo8mUIY0LoSg7qUFLxMmF/uaOMF
- xPKS6NKcDXWDuzjiEwAJaW08j4L/myiHRxugBoKKDxY8E1BoCIGehry2Pc3RUxcZg5cq
- bfJGIEIjCyOxCTLX0HXFbgCbpQb7LBu6ihRcBqksTRiIq80eZx7FdI1hjA1DcTB/zcL7
- nkE3xHLPGtM7eVxUUHZvC3sWmpG5YGX12o72E3XCFU1gtnxUZuVvfLHoOMNJlz2LyQoT
- egZn5vCuaR+wwlmWBnZm9QUg/CsMdnFGAkKfcXrAGI5Q+STC166T0je1YisewibsYFLW
- yUoA==
-X-Gm-Message-State: AOJu0YzB3yJolDYtGxipWsZxIJ5HIAb8fh0qOxTFRAYCbBN9b7g3oN7q
- pv/ZaCkPbX+qHYOvoOt8SlfUDxufWHu9hbKqxEg9/0yJJQ5ugtHifeH9D6cGw//vTf0UqZJaAhv
- L1vkVHWGI5nV7HTjMHCP7N8WmXV1AHaJW8Lqe3CMTfGevMQb4y0FzHnU1MQ8sHxxmmStNag0oyu
- Ca6iU5+JZrdctRocWq5aIgt/VQ9KcUmdZ5RhFk
-X-Received: by 2002:a05:600c:4883:b0:424:8743:86b4 with SMTP id
- 5b1f17b1804b1-4279da0240dmr62950795e9.6.1720955446595; 
- Sun, 14 Jul 2024 04:10:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcM3QOrpdfxv+Z22nj5P2uV7FXiAOngELHtJlca4a0hIFg55bw12haLBsPcriCp9BWOlMRrQ==
-X-Received: by 2002:a05:600c:4883:b0:424:8743:86b4 with SMTP id
- 5b1f17b1804b1-4279da0240dmr62950685e9.6.1720955446094; 
- Sun, 14 Jul 2024 04:10:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720955460; x=1721560260;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=riytJjgbE6x/tv0Qu82lUf7rTP82b0wZOff0TXFI5UI=;
+ b=i6RbprMgvZaA+swqNzWVFngFx65UGqSNawV6vE/3fHT/+hx+GmT2XN1QOhdHnW1DJH
+ UQqcP7+Jnsarm0kqSr28oipLkdVcsyUTXIit1r4WzaWZ5Y+pz3NtmjW9yC+i/gsorRh+
+ Jzcp9qZc3vxQ/NpdPbC950nFjJxMNHsNM6U3Fwv8r3OZJuLVX7OZykJXal0SKHFC8dNk
+ PoAyDbM/VIXFBQ2uFtqYm2byvpov6LKh2pS1CDAHDEYMp4JFkfTtG3hatkSks5a6bdLz
+ wCVDZzCyuv3z42RxM/PfCUu+zoh9Nww2eRnPHrKsv/bQiP6mGummnK2x034s1xk43ndx
+ Bmyg==
+X-Gm-Message-State: AOJu0YwSLXIUsFB9U74CH1gDu19r5ZZLeKS0caoeyY9QVks9bakycU3N
+ KiGT+EdaEO5lO//OSfYyN5FgiBvr8kKHEBDRpZBpvURmuLZxfZVE6+6N0T09cyZwGvNaf0LoUVN
+ 6751F5iHIaDQIqFwotz8+FthSFAqoLPqy04HR21Zgu3/W4LZ5Yqdry0Z19riQgh5zRexGm48CfT
+ cJ5KPoUOORkq/3J2Wqaw1Rc0YkReAlqaJJgEH7
+X-Received: by 2002:a7b:c452:0:b0:426:623f:34ae with SMTP id
+ 5b1f17b1804b1-426707d8bd5mr113442915e9.16.1720955459642; 
+ Sun, 14 Jul 2024 04:10:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzcbM9v8ihGbzaBKLS8/gUFwzLEa0mRG01LaD78ViePgLvMybEQYuhPHRGnJZ1x3mkTBZS9A==
+X-Received: by 2002:a7b:c452:0:b0:426:623f:34ae with SMTP id
+ 5b1f17b1804b1-426707d8bd5mr113442785e9.16.1720955458961; 
+ Sun, 14 Jul 2024 04:10:58 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f2397easm83771595e9.6.2024.07.14.04.10.44
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-427a5edb4a3sm48259965e9.31.2024.07.14.04.10.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 04:10:45 -0700 (PDT)
+ Sun, 14 Jul 2024 04:10:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/13] target/i386 changes for 2024-07-12
-Date: Sun, 14 Jul 2024 13:10:30 +0200
-Message-ID: <20240714111043.14132-1-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/13] target/i386/tcg: Reorg push/pop within seg_helper.c
+Date: Sun, 14 Jul 2024 13:10:35 +0200
+Message-ID: <20240714111043.14132-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240714111043.14132-1-pbonzini@redhat.com>
+References: <20240714111043.14132-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -99,51 +102,899 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-  Merge tag 'pull-target-arm-20240711' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-11 12:00:00 -0700)
+Interrupts and call gates should use accesses with the DPL as
+the privilege level.  While computing the applicable MMU index
+is easy, the harder thing is how to plumb it in the code.
 
-are available in the Git repository at:
+One possibility could be to add a single argument to the PUSH* macros
+for the privilege level, but this is repetitive and risks confusion
+between the involved privilege levels.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream-i386
+Another possibility is to pass both CPL and DPL, and adjusting both
+PUSH* and POP* to use specific privilege levels (instead of using
+cpu_{ld,st}*_data). This makes the code more symmetric.
 
-for you to fetch changes up to cdcadf9ee9efef96323e0b88fccff589f06fc0ee:
+However, a more complicated but much nicer approach is to use a structure
+to contain the stack parameters, env, unwind return address, and rewrite
+the macros into functions.  The struct provides an easy home for the MMU
+index as well.
 
-  i386/sev: Don't allow automatic fallback to legacy KVM_SEV*_INIT (2024-07-12 15:35:54 +0200)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240617161210.4639-4-richard.henderson@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/seg_helper.c | 481 +++++++++++++++++++----------------
+ 1 file changed, 259 insertions(+), 222 deletions(-)
 
-----------------------------------------------------------------
-* target/i386/tcg: fixes for seg_helper.c
-* SEV: Don't allow automatic fallback to legacy KVM_SEV_INIT,
-  but also don't use it by default
-
-----------------------------------------------------------------
-Michael Roth (1):
-      i386/sev: Don't allow automatic fallback to legacy KVM_SEV*_INIT
-
-Paolo Bonzini (8):
-      target/i386/tcg: fix POP to memory in long mode
-      target/i386/tcg: Allow IRET from user mode to user mode with SMAP
-      target/i386/tcg: use PUSHL/PUSHW for error code
-      target/i386/tcg: Compute MMU index once
-      target/i386/tcg: Use DPL-level accesses for interrupts and call gates
-      target/i386/tcg: check for correct busy state before switching to a new task
-      target/i386/tcg: use X86Access for TSS access
-      target/i386/tcg: save current task state before loading new one
-
-Richard Henderson (3):
-      target/i386/tcg: Remove SEG_ADDL
-      target/i386/tcg: Reorg push/pop within seg_helper.c
-      target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
-
- qapi/qom.json                    |  18 +-
- target/i386/cpu.h                |  11 +-
- hw/i386/pc.c                     |   2 +-
- target/i386/cpu.c                |  27 +-
- target/i386/sev.c                |  87 ++++-
- target/i386/tcg/seg_helper.c     | 665 +++++++++++++++++++++------------------
- target/i386/tcg/decode-new.c.inc |   2 +-
- target/i386/tcg/emit.c.inc       |   1 +
- 8 files changed, 472 insertions(+), 341 deletions(-)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index b985382d704..b6902ca3fba 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -28,6 +28,68 @@
+ #include "helper-tcg.h"
+ #include "seg_helper.h"
+ 
++#ifdef TARGET_X86_64
++#define SET_ESP(val, sp_mask)                                   \
++    do {                                                        \
++        if ((sp_mask) == 0xffff) {                              \
++            env->regs[R_ESP] = (env->regs[R_ESP] & ~0xffff) |   \
++                ((val) & 0xffff);                               \
++        } else if ((sp_mask) == 0xffffffffLL) {                 \
++            env->regs[R_ESP] = (uint32_t)(val);                 \
++        } else {                                                \
++            env->regs[R_ESP] = (val);                           \
++        }                                                       \
++    } while (0)
++#else
++#define SET_ESP(val, sp_mask)                                   \
++    do {                                                        \
++        env->regs[R_ESP] = (env->regs[R_ESP] & ~(sp_mask)) |    \
++            ((val) & (sp_mask));                                \
++    } while (0)
++#endif
++
++/* XXX: use mmu_index to have proper DPL support */
++typedef struct StackAccess
++{
++    CPUX86State *env;
++    uintptr_t ra;
++    target_ulong ss_base;
++    target_ulong sp;
++    target_ulong sp_mask;
++} StackAccess;
++
++static void pushw(StackAccess *sa, uint16_t val)
++{
++    sa->sp -= 2;
++    cpu_stw_kernel_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++                      val, sa->ra);
++}
++
++static void pushl(StackAccess *sa, uint32_t val)
++{
++    sa->sp -= 4;
++    cpu_stl_kernel_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++                      val, sa->ra);
++}
++
++static uint16_t popw(StackAccess *sa)
++{
++    uint16_t ret = cpu_lduw_data_ra(sa->env,
++                                    sa->ss_base + (sa->sp & sa->sp_mask),
++                                    sa->ra);
++    sa->sp += 2;
++    return ret;
++}
++
++static uint32_t popl(StackAccess *sa)
++{
++    uint32_t ret = cpu_ldl_data_ra(sa->env,
++                                   sa->ss_base + (sa->sp & sa->sp_mask),
++                                   sa->ra);
++    sa->sp += 4;
++    return ret;
++}
++
+ int get_pg_mode(CPUX86State *env)
+ {
+     int pg_mode = 0;
+@@ -559,68 +621,19 @@ int exception_has_error_code(int intno)
+     return 0;
+ }
+ 
+-#ifdef TARGET_X86_64
+-#define SET_ESP(val, sp_mask)                                   \
+-    do {                                                        \
+-        if ((sp_mask) == 0xffff) {                              \
+-            env->regs[R_ESP] = (env->regs[R_ESP] & ~0xffff) |   \
+-                ((val) & 0xffff);                               \
+-        } else if ((sp_mask) == 0xffffffffLL) {                 \
+-            env->regs[R_ESP] = (uint32_t)(val);                 \
+-        } else {                                                \
+-            env->regs[R_ESP] = (val);                           \
+-        }                                                       \
+-    } while (0)
+-#else
+-#define SET_ESP(val, sp_mask)                                   \
+-    do {                                                        \
+-        env->regs[R_ESP] = (env->regs[R_ESP] & ~(sp_mask)) |    \
+-            ((val) & (sp_mask));                                \
+-    } while (0)
+-#endif
+-
+-/* XXX: add a is_user flag to have proper security support */
+-#define PUSHW_RA(ssp, sp, sp_mask, val, ra)                      \
+-    {                                                            \
+-        sp -= 2;                                                 \
+-        cpu_stw_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
+-    }
+-
+-#define PUSHL_RA(ssp, sp, sp_mask, val, ra)                             \
+-    {                                                                   \
+-        sp -= 4;                                                        \
+-        cpu_stl_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
+-    }
+-
+-#define POPW_RA(ssp, sp, sp_mask, val, ra)                       \
+-    {                                                            \
+-        val = cpu_lduw_data_ra(env, (ssp) + (sp & (sp_mask)), ra); \
+-        sp += 2;                                                 \
+-    }
+-
+-#define POPL_RA(ssp, sp, sp_mask, val, ra)                              \
+-    {                                                                   \
+-        val = (uint32_t)cpu_ldl_data_ra(env, (ssp) + (sp & (sp_mask)), ra); \
+-        sp += 4;                                                        \
+-    }
+-
+-#define PUSHW(ssp, sp, sp_mask, val) PUSHW_RA(ssp, sp, sp_mask, val, 0)
+-#define PUSHL(ssp, sp, sp_mask, val) PUSHL_RA(ssp, sp, sp_mask, val, 0)
+-#define POPW(ssp, sp, sp_mask, val) POPW_RA(ssp, sp, sp_mask, val, 0)
+-#define POPL(ssp, sp, sp_mask, val) POPL_RA(ssp, sp, sp_mask, val, 0)
+-
+ /* protected mode interrupt */
+ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+                                    int error_code, unsigned int next_eip,
+                                    int is_hw)
+ {
+     SegmentCache *dt;
+-    target_ulong ptr, ssp;
++    target_ulong ptr;
+     int type, dpl, selector, ss_dpl, cpl;
+     int has_error_code, new_stack, shift;
+-    uint32_t e1, e2, offset, ss = 0, esp, ss_e1 = 0, ss_e2 = 0;
+-    uint32_t old_eip, sp_mask, eflags;
++    uint32_t e1, e2, offset, ss = 0, ss_e1 = 0, ss_e2 = 0;
++    uint32_t old_eip, eflags;
+     int vm86 = env->eflags & VM_MASK;
++    StackAccess sa;
+     bool set_rf;
+ 
+     has_error_code = 0;
+@@ -662,6 +675,9 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+         raise_exception_err(env, EXCP0D_GPF, intno * 8 + 2);
+     }
+ 
++    sa.env = env;
++    sa.ra = 0;
++
+     if (type == 5) {
+         /* task gate */
+         /* must do that check here to return the correct error code */
+@@ -672,18 +688,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+         if (has_error_code) {
+             /* push the error code */
+             if (env->segs[R_SS].flags & DESC_B_MASK) {
+-                sp_mask = 0xffffffff;
++                sa.sp_mask = 0xffffffff;
+             } else {
+-                sp_mask = 0xffff;
++                sa.sp_mask = 0xffff;
+             }
+-            esp = env->regs[R_ESP];
+-            ssp = env->segs[R_SS].base;
++            sa.sp = env->regs[R_ESP];
++            sa.ss_base = env->segs[R_SS].base;
+             if (shift) {
+-                PUSHL(ssp, esp, sp_mask, error_code);
++                pushl(&sa, error_code);
+             } else {
+-                PUSHW(ssp, esp, sp_mask, error_code);
++                pushw(&sa, error_code);
+             }
+-            SET_ESP(esp, sp_mask);
++            SET_ESP(sa.sp, sa.sp_mask);
+         }
+         return;
+     }
+@@ -717,6 +733,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+     }
+     if (dpl < cpl) {
+         /* to inner privilege */
++        uint32_t esp;
+         get_ss_esp_from_tss(env, &ss, &esp, dpl, 0);
+         if ((ss & 0xfffc) == 0) {
+             raise_exception_err(env, EXCP0A_TSS, ss & 0xfffc);
+@@ -740,17 +757,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+             raise_exception_err(env, EXCP0A_TSS, ss & 0xfffc);
+         }
+         new_stack = 1;
+-        sp_mask = get_sp_mask(ss_e2);
+-        ssp = get_seg_base(ss_e1, ss_e2);
++        sa.sp = esp;
++        sa.sp_mask = get_sp_mask(ss_e2);
++        sa.ss_base = get_seg_base(ss_e1, ss_e2);
+     } else  {
+         /* to same privilege */
+         if (vm86) {
+             raise_exception_err(env, EXCP0D_GPF, selector & 0xfffc);
+         }
+         new_stack = 0;
+-        sp_mask = get_sp_mask(env->segs[R_SS].flags);
+-        ssp = env->segs[R_SS].base;
+-        esp = env->regs[R_ESP];
++        sa.sp = env->regs[R_ESP];
++        sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
++        sa.ss_base = env->segs[R_SS].base;
+     }
+ 
+     shift = type >> 3;
+@@ -775,36 +793,36 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+     if (shift == 1) {
+         if (new_stack) {
+             if (vm86) {
+-                PUSHL(ssp, esp, sp_mask, env->segs[R_GS].selector);
+-                PUSHL(ssp, esp, sp_mask, env->segs[R_FS].selector);
+-                PUSHL(ssp, esp, sp_mask, env->segs[R_DS].selector);
+-                PUSHL(ssp, esp, sp_mask, env->segs[R_ES].selector);
++                pushl(&sa, env->segs[R_GS].selector);
++                pushl(&sa, env->segs[R_FS].selector);
++                pushl(&sa, env->segs[R_DS].selector);
++                pushl(&sa, env->segs[R_ES].selector);
+             }
+-            PUSHL(ssp, esp, sp_mask, env->segs[R_SS].selector);
+-            PUSHL(ssp, esp, sp_mask, env->regs[R_ESP]);
++            pushl(&sa, env->segs[R_SS].selector);
++            pushl(&sa, env->regs[R_ESP]);
+         }
+-        PUSHL(ssp, esp, sp_mask, eflags);
+-        PUSHL(ssp, esp, sp_mask, env->segs[R_CS].selector);
+-        PUSHL(ssp, esp, sp_mask, old_eip);
++        pushl(&sa, eflags);
++        pushl(&sa, env->segs[R_CS].selector);
++        pushl(&sa, old_eip);
+         if (has_error_code) {
+-            PUSHL(ssp, esp, sp_mask, error_code);
++            pushl(&sa, error_code);
+         }
+     } else {
+         if (new_stack) {
+             if (vm86) {
+-                PUSHW(ssp, esp, sp_mask, env->segs[R_GS].selector);
+-                PUSHW(ssp, esp, sp_mask, env->segs[R_FS].selector);
+-                PUSHW(ssp, esp, sp_mask, env->segs[R_DS].selector);
+-                PUSHW(ssp, esp, sp_mask, env->segs[R_ES].selector);
++                pushw(&sa, env->segs[R_GS].selector);
++                pushw(&sa, env->segs[R_FS].selector);
++                pushw(&sa, env->segs[R_DS].selector);
++                pushw(&sa, env->segs[R_ES].selector);
+             }
+-            PUSHW(ssp, esp, sp_mask, env->segs[R_SS].selector);
+-            PUSHW(ssp, esp, sp_mask, env->regs[R_ESP]);
++            pushw(&sa, env->segs[R_SS].selector);
++            pushw(&sa, env->regs[R_ESP]);
+         }
+-        PUSHW(ssp, esp, sp_mask, eflags);
+-        PUSHW(ssp, esp, sp_mask, env->segs[R_CS].selector);
+-        PUSHW(ssp, esp, sp_mask, old_eip);
++        pushw(&sa, eflags);
++        pushw(&sa, env->segs[R_CS].selector);
++        pushw(&sa, old_eip);
+         if (has_error_code) {
+-            PUSHW(ssp, esp, sp_mask, error_code);
++            pushw(&sa, error_code);
+         }
+     }
+ 
+@@ -822,10 +840,10 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+             cpu_x86_load_seg_cache(env, R_GS, 0, 0, 0, 0);
+         }
+         ss = (ss & ~3) | dpl;
+-        cpu_x86_load_seg_cache(env, R_SS, ss,
+-                               ssp, get_seg_limit(ss_e1, ss_e2), ss_e2);
++        cpu_x86_load_seg_cache(env, R_SS, ss, sa.ss_base,
++                               get_seg_limit(ss_e1, ss_e2), ss_e2);
+     }
+-    SET_ESP(esp, sp_mask);
++    SET_ESP(sa.sp, sa.sp_mask);
+ 
+     selector = (selector & ~3) | dpl;
+     cpu_x86_load_seg_cache(env, R_CS, selector,
+@@ -837,20 +855,18 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+ 
+ #ifdef TARGET_X86_64
+ 
+-#define PUSHQ_RA(sp, val, ra)                   \
+-    {                                           \
+-        sp -= 8;                                \
+-        cpu_stq_kernel_ra(env, sp, (val), ra);  \
+-    }
++static void pushq(StackAccess *sa, uint64_t val)
++{
++    sa->sp -= 8;
++    cpu_stq_kernel_ra(sa->env, sa->sp, val, sa->ra);
++}
+ 
+-#define POPQ_RA(sp, val, ra)                    \
+-    {                                           \
+-        val = cpu_ldq_data_ra(env, sp, ra);   \
+-        sp += 8;                                \
+-    }
+-
+-#define PUSHQ(sp, val) PUSHQ_RA(sp, val, 0)
+-#define POPQ(sp, val) POPQ_RA(sp, val, 0)
++static uint64_t popq(StackAccess *sa)
++{
++    uint64_t ret = cpu_ldq_data_ra(sa->env, sa->sp, sa->ra);
++    sa->sp += 8;
++    return ret;
++}
+ 
+ static inline target_ulong get_rsp_from_tss(CPUX86State *env, int level)
+ {
+@@ -893,8 +909,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+     int type, dpl, selector, cpl, ist;
+     int has_error_code, new_stack;
+     uint32_t e1, e2, e3, ss, eflags;
+-    target_ulong old_eip, esp, offset;
++    target_ulong old_eip, offset;
+     bool set_rf;
++    StackAccess sa;
+ 
+     has_error_code = 0;
+     if (!is_int && !is_hw) {
+@@ -962,10 +979,15 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+     if (e2 & DESC_C_MASK) {
+         dpl = cpl;
+     }
++
++    sa.env = env;
++    sa.ra = 0;
++    sa.sp_mask = -1;
++    sa.ss_base = 0;
+     if (dpl < cpl || ist != 0) {
+         /* to inner privilege */
+         new_stack = 1;
+-        esp = get_rsp_from_tss(env, ist != 0 ? ist + 3 : dpl);
++        sa.sp = get_rsp_from_tss(env, ist != 0 ? ist + 3 : dpl);
+         ss = 0;
+     } else {
+         /* to same privilege */
+@@ -973,9 +995,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+             raise_exception_err(env, EXCP0D_GPF, selector & 0xfffc);
+         }
+         new_stack = 0;
+-        esp = env->regs[R_ESP];
++        sa.sp = env->regs[R_ESP];
+     }
+-    esp &= ~0xfLL; /* align stack */
++    sa.sp &= ~0xfLL; /* align stack */
+ 
+     /* See do_interrupt_protected.  */
+     eflags = cpu_compute_eflags(env);
+@@ -983,13 +1005,13 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+         eflags |= RF_MASK;
+     }
+ 
+-    PUSHQ(esp, env->segs[R_SS].selector);
+-    PUSHQ(esp, env->regs[R_ESP]);
+-    PUSHQ(esp, eflags);
+-    PUSHQ(esp, env->segs[R_CS].selector);
+-    PUSHQ(esp, old_eip);
++    pushq(&sa, env->segs[R_SS].selector);
++    pushq(&sa, env->regs[R_ESP]);
++    pushq(&sa, eflags);
++    pushq(&sa, env->segs[R_CS].selector);
++    pushq(&sa, old_eip);
+     if (has_error_code) {
+-        PUSHQ(esp, error_code);
++        pushq(&sa, error_code);
+     }
+ 
+     /* interrupt gate clear IF mask */
+@@ -1002,7 +1024,7 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+         ss = 0 | dpl;
+         cpu_x86_load_seg_cache(env, R_SS, ss, 0, 0, dpl << DESC_DPL_SHIFT);
+     }
+-    env->regs[R_ESP] = esp;
++    env->regs[R_ESP] = sa.sp;
+ 
+     selector = (selector & ~3) | dpl;
+     cpu_x86_load_seg_cache(env, R_CS, selector,
+@@ -1074,10 +1096,11 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
+                               int error_code, unsigned int next_eip)
+ {
+     SegmentCache *dt;
+-    target_ulong ptr, ssp;
++    target_ulong ptr;
+     int selector;
+-    uint32_t offset, esp;
++    uint32_t offset;
+     uint32_t old_cs, old_eip;
++    StackAccess sa;
+ 
+     /* real mode (simpler!) */
+     dt = &env->idt;
+@@ -1087,8 +1110,13 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
+     ptr = dt->base + intno * 4;
+     offset = cpu_lduw_kernel(env, ptr);
+     selector = cpu_lduw_kernel(env, ptr + 2);
+-    esp = env->regs[R_ESP];
+-    ssp = env->segs[R_SS].base;
++
++    sa.env = env;
++    sa.ra = 0;
++    sa.sp = env->regs[R_ESP];
++    sa.sp_mask = 0xffff;
++    sa.ss_base = env->segs[R_SS].base;
++
+     if (is_int) {
+         old_eip = next_eip;
+     } else {
+@@ -1096,12 +1124,12 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
+     }
+     old_cs = env->segs[R_CS].selector;
+     /* XXX: use SS segment size? */
+-    PUSHW(ssp, esp, 0xffff, cpu_compute_eflags(env));
+-    PUSHW(ssp, esp, 0xffff, old_cs);
+-    PUSHW(ssp, esp, 0xffff, old_eip);
++    pushw(&sa, cpu_compute_eflags(env));
++    pushw(&sa, old_cs);
++    pushw(&sa, old_eip);
+ 
+     /* update processor state */
+-    env->regs[R_ESP] = (env->regs[R_ESP] & ~0xffff) | (esp & 0xffff);
++    SET_ESP(sa.sp, sa.sp_mask);
+     env->eip = offset;
+     env->segs[R_CS].selector = selector;
+     env->segs[R_CS].base = (selector << 4);
+@@ -1544,21 +1572,23 @@ void helper_ljmp_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ void helper_lcall_real(CPUX86State *env, uint32_t new_cs, uint32_t new_eip,
+                        int shift, uint32_t next_eip)
+ {
+-    uint32_t esp, esp_mask;
+-    target_ulong ssp;
++    StackAccess sa;
++
++    sa.env = env;
++    sa.ra = GETPC();
++    sa.sp = env->regs[R_ESP];
++    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
++    sa.ss_base = env->segs[R_SS].base;
+ 
+-    esp = env->regs[R_ESP];
+-    esp_mask = get_sp_mask(env->segs[R_SS].flags);
+-    ssp = env->segs[R_SS].base;
+     if (shift) {
+-        PUSHL_RA(ssp, esp, esp_mask, env->segs[R_CS].selector, GETPC());
+-        PUSHL_RA(ssp, esp, esp_mask, next_eip, GETPC());
++        pushl(&sa, env->segs[R_CS].selector);
++        pushl(&sa, next_eip);
+     } else {
+-        PUSHW_RA(ssp, esp, esp_mask, env->segs[R_CS].selector, GETPC());
+-        PUSHW_RA(ssp, esp, esp_mask, next_eip, GETPC());
++        pushw(&sa, env->segs[R_CS].selector);
++        pushw(&sa, next_eip);
+     }
+ 
+-    SET_ESP(esp, esp_mask);
++    SET_ESP(sa.sp, sa.sp_mask);
+     env->eip = new_eip;
+     env->segs[R_CS].selector = new_cs;
+     env->segs[R_CS].base = (new_cs << 4);
+@@ -1570,9 +1600,10 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ {
+     int new_stack, i;
+     uint32_t e1, e2, cpl, dpl, rpl, selector, param_count;
+-    uint32_t ss = 0, ss_e1 = 0, ss_e2 = 0, type, ss_dpl, sp_mask;
++    uint32_t ss = 0, ss_e1 = 0, ss_e2 = 0, type, ss_dpl;
+     uint32_t val, limit, old_sp_mask;
+-    target_ulong ssp, old_ssp, offset, sp;
++    target_ulong old_ssp, offset;
++    StackAccess sa;
+ 
+     LOG_PCALL("lcall %04x:" TARGET_FMT_lx " s=%d\n", new_cs, new_eip, shift);
+     LOG_PCALL_STATE(env_cpu(env));
+@@ -1584,6 +1615,10 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+     }
+     cpl = env->hflags & HF_CPL_MASK;
+     LOG_PCALL("desc=%08x:%08x\n", e1, e2);
++
++    sa.env = env;
++    sa.ra = GETPC();
++
+     if (e2 & DESC_S_MASK) {
+         if (!(e2 & DESC_CS_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
+@@ -1611,14 +1646,14 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ #ifdef TARGET_X86_64
+         /* XXX: check 16/32 bit cases in long mode */
+         if (shift == 2) {
+-            target_ulong rsp;
+-
+             /* 64 bit case */
+-            rsp = env->regs[R_ESP];
+-            PUSHQ_RA(rsp, env->segs[R_CS].selector, GETPC());
+-            PUSHQ_RA(rsp, next_eip, GETPC());
++            sa.sp = env->regs[R_ESP];
++            sa.sp_mask = -1;
++            sa.ss_base = 0;
++            pushq(&sa, env->segs[R_CS].selector);
++            pushq(&sa, next_eip);
+             /* from this point, not restartable */
+-            env->regs[R_ESP] = rsp;
++            env->regs[R_ESP] = sa.sp;
+             cpu_x86_load_seg_cache(env, R_CS, (new_cs & 0xfffc) | cpl,
+                                    get_seg_base(e1, e2),
+                                    get_seg_limit(e1, e2), e2);
+@@ -1626,15 +1661,15 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+         } else
+ #endif
+         {
+-            sp = env->regs[R_ESP];
+-            sp_mask = get_sp_mask(env->segs[R_SS].flags);
+-            ssp = env->segs[R_SS].base;
++            sa.sp = env->regs[R_ESP];
++            sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
++            sa.ss_base = env->segs[R_SS].base;
+             if (shift) {
+-                PUSHL_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
+-                PUSHL_RA(ssp, sp, sp_mask, next_eip, GETPC());
++                pushl(&sa, env->segs[R_CS].selector);
++                pushl(&sa, next_eip);
+             } else {
+-                PUSHW_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
+-                PUSHW_RA(ssp, sp, sp_mask, next_eip, GETPC());
++                pushw(&sa, env->segs[R_CS].selector);
++                pushw(&sa, next_eip);
+             }
+ 
+             limit = get_seg_limit(e1, e2);
+@@ -1642,7 +1677,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
+             }
+             /* from this point, not restartable */
+-            SET_ESP(sp, sp_mask);
++            SET_ESP(sa.sp, sa.sp_mask);
+             cpu_x86_load_seg_cache(env, R_CS, (new_cs & 0xfffc) | cpl,
+                                    get_seg_base(e1, e2), limit, e2);
+             env->eip = new_eip;
+@@ -1737,13 +1772,13 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+             /* to inner privilege */
+ #ifdef TARGET_X86_64
+             if (shift == 2) {
+-                sp = get_rsp_from_tss(env, dpl);
+                 ss = dpl;  /* SS = NULL selector with RPL = new CPL */
+                 new_stack = 1;
+-                sp_mask = 0;
+-                ssp = 0;  /* SS base is always zero in IA-32e mode */
++                sa.sp = get_rsp_from_tss(env, dpl);
++                sa.sp_mask = -1;
++                sa.ss_base = 0;  /* SS base is always zero in IA-32e mode */
+                 LOG_PCALL("new ss:rsp=%04x:%016llx env->regs[R_ESP]="
+-                          TARGET_FMT_lx "\n", ss, sp, env->regs[R_ESP]);
++                          TARGET_FMT_lx "\n", ss, sa.sp, env->regs[R_ESP]);
+             } else
+ #endif
+             {
+@@ -1752,7 +1787,6 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 LOG_PCALL("new ss:esp=%04x:%08x param_count=%d env->regs[R_ESP]="
+                           TARGET_FMT_lx "\n", ss, sp32, param_count,
+                           env->regs[R_ESP]);
+-                sp = sp32;
+                 if ((ss & 0xfffc) == 0) {
+                     raise_exception_err_ra(env, EXCP0A_TSS, ss & 0xfffc, GETPC());
+                 }
+@@ -1775,63 +1809,64 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                     raise_exception_err_ra(env, EXCP0A_TSS, ss & 0xfffc, GETPC());
+                 }
+ 
+-                sp_mask = get_sp_mask(ss_e2);
+-                ssp = get_seg_base(ss_e1, ss_e2);
++                sa.sp = sp32;
++                sa.sp_mask = get_sp_mask(ss_e2);
++                sa.ss_base = get_seg_base(ss_e1, ss_e2);
+             }
+ 
+             /* push_size = ((param_count * 2) + 8) << shift; */
+-
+             old_sp_mask = get_sp_mask(env->segs[R_SS].flags);
+             old_ssp = env->segs[R_SS].base;
++
+ #ifdef TARGET_X86_64
+             if (shift == 2) {
+                 /* XXX: verify if new stack address is canonical */
+-                PUSHQ_RA(sp, env->segs[R_SS].selector, GETPC());
+-                PUSHQ_RA(sp, env->regs[R_ESP], GETPC());
++                pushq(&sa, env->segs[R_SS].selector);
++                pushq(&sa, env->regs[R_ESP]);
+                 /* parameters aren't supported for 64-bit call gates */
+             } else
+ #endif
+             if (shift == 1) {
+-                PUSHL_RA(ssp, sp, sp_mask, env->segs[R_SS].selector, GETPC());
+-                PUSHL_RA(ssp, sp, sp_mask, env->regs[R_ESP], GETPC());
++                pushl(&sa, env->segs[R_SS].selector);
++                pushl(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+                     val = cpu_ldl_data_ra(env,
+                                           old_ssp + ((env->regs[R_ESP] + i * 4) & old_sp_mask),
+                                           GETPC());
+-                    PUSHL_RA(ssp, sp, sp_mask, val, GETPC());
++                    pushl(&sa, val);
+                 }
+             } else {
+-                PUSHW_RA(ssp, sp, sp_mask, env->segs[R_SS].selector, GETPC());
+-                PUSHW_RA(ssp, sp, sp_mask, env->regs[R_ESP], GETPC());
++                pushw(&sa, env->segs[R_SS].selector);
++                pushw(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+                     val = cpu_lduw_data_ra(env,
+                                            old_ssp + ((env->regs[R_ESP] + i * 2) & old_sp_mask),
+                                            GETPC());
+-                    PUSHW_RA(ssp, sp, sp_mask, val, GETPC());
++                    pushw(&sa, val);
+                 }
+             }
+             new_stack = 1;
+         } else {
+             /* to same privilege */
+-            sp = env->regs[R_ESP];
+-            sp_mask = get_sp_mask(env->segs[R_SS].flags);
+-            ssp = env->segs[R_SS].base;
++            sa.sp = env->regs[R_ESP];
++            sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
++            sa.ss_base = env->segs[R_SS].base;
+             /* push_size = (4 << shift); */
+             new_stack = 0;
+         }
+ 
+ #ifdef TARGET_X86_64
+         if (shift == 2) {
+-            PUSHQ_RA(sp, env->segs[R_CS].selector, GETPC());
+-            PUSHQ_RA(sp, next_eip, GETPC());
++            pushq(&sa, env->segs[R_CS].selector);
++            pushq(&sa, next_eip);
+         } else
+ #endif
+         if (shift == 1) {
+-            PUSHL_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
+-            PUSHL_RA(ssp, sp, sp_mask, next_eip, GETPC());
++            pushl(&sa, env->segs[R_CS].selector);
++            pushl(&sa, next_eip);
+         } else {
+-            PUSHW_RA(ssp, sp, sp_mask, env->segs[R_CS].selector, GETPC());
+-            PUSHW_RA(ssp, sp, sp_mask, next_eip, GETPC());
++            pushw(&sa, env->segs[R_CS].selector);
++            pushw(&sa, next_eip);
+         }
+ 
+         /* from this point, not restartable */
+@@ -1845,7 +1880,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+             {
+                 ss = (ss & ~3) | dpl;
+                 cpu_x86_load_seg_cache(env, R_SS, ss,
+-                                       ssp,
++                                       sa.ss_base,
+                                        get_seg_limit(ss_e1, ss_e2),
+                                        ss_e2);
+             }
+@@ -1856,7 +1891,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                        get_seg_base(e1, e2),
+                        get_seg_limit(e1, e2),
+                        e2);
+-        SET_ESP(sp, sp_mask);
++        SET_ESP(sa.sp, sa.sp_mask);
+         env->eip = offset;
+     }
+ }
+@@ -1864,26 +1899,28 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ /* real and vm86 mode iret */
+ void helper_iret_real(CPUX86State *env, int shift)
+ {
+-    uint32_t sp, new_cs, new_eip, new_eflags, sp_mask;
+-    target_ulong ssp;
++    uint32_t new_cs, new_eip, new_eflags;
+     int eflags_mask;
++    StackAccess sa;
++
++    sa.env = env;
++    sa.ra = GETPC();
++    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
++    sa.sp = env->regs[R_ESP];
++    sa.ss_base = env->segs[R_SS].base;
+ 
+-    sp_mask = 0xffff; /* XXXX: use SS segment size? */
+-    sp = env->regs[R_ESP];
+-    ssp = env->segs[R_SS].base;
+     if (shift == 1) {
+         /* 32 bits */
+-        POPL_RA(ssp, sp, sp_mask, new_eip, GETPC());
+-        POPL_RA(ssp, sp, sp_mask, new_cs, GETPC());
+-        new_cs &= 0xffff;
+-        POPL_RA(ssp, sp, sp_mask, new_eflags, GETPC());
++        new_eip = popl(&sa);
++        new_cs = popl(&sa) & 0xffff;
++        new_eflags = popl(&sa);
+     } else {
+         /* 16 bits */
+-        POPW_RA(ssp, sp, sp_mask, new_eip, GETPC());
+-        POPW_RA(ssp, sp, sp_mask, new_cs, GETPC());
+-        POPW_RA(ssp, sp, sp_mask, new_eflags, GETPC());
++        new_eip = popw(&sa);
++        new_cs = popw(&sa);
++        new_eflags = popw(&sa);
+     }
+-    env->regs[R_ESP] = (env->regs[R_ESP] & ~sp_mask) | (sp & sp_mask);
++    SET_ESP(sa.sp, sa.sp_mask);
+     env->segs[R_CS].selector = new_cs;
+     env->segs[R_CS].base = (new_cs << 4);
+     env->eip = new_eip;
+@@ -1936,47 +1973,49 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+     uint32_t new_es, new_ds, new_fs, new_gs;
+     uint32_t e1, e2, ss_e1, ss_e2;
+     int cpl, dpl, rpl, eflags_mask, iopl;
+-    target_ulong ssp, sp, new_eip, new_esp, sp_mask;
++    target_ulong new_eip, new_esp;
++    StackAccess sa;
++
++    sa.env = env;
++    sa.ra = retaddr;
+ 
+ #ifdef TARGET_X86_64
+     if (shift == 2) {
+-        sp_mask = -1;
++        sa.sp_mask = -1;
+     } else
+ #endif
+     {
+-        sp_mask = get_sp_mask(env->segs[R_SS].flags);
++        sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
+     }
+-    sp = env->regs[R_ESP];
+-    ssp = env->segs[R_SS].base;
++    sa.sp = env->regs[R_ESP];
++    sa.ss_base = env->segs[R_SS].base;
+     new_eflags = 0; /* avoid warning */
+ #ifdef TARGET_X86_64
+     if (shift == 2) {
+-        POPQ_RA(sp, new_eip, retaddr);
+-        POPQ_RA(sp, new_cs, retaddr);
+-        new_cs &= 0xffff;
++        new_eip = popq(&sa);
++        new_cs = popq(&sa) & 0xffff;
+         if (is_iret) {
+-            POPQ_RA(sp, new_eflags, retaddr);
++            new_eflags = popq(&sa);
+         }
+     } else
+ #endif
+     {
+         if (shift == 1) {
+             /* 32 bits */
+-            POPL_RA(ssp, sp, sp_mask, new_eip, retaddr);
+-            POPL_RA(ssp, sp, sp_mask, new_cs, retaddr);
+-            new_cs &= 0xffff;
++            new_eip = popl(&sa);
++            new_cs = popl(&sa) & 0xffff;
+             if (is_iret) {
+-                POPL_RA(ssp, sp, sp_mask, new_eflags, retaddr);
++                new_eflags = popl(&sa);
+                 if (new_eflags & VM_MASK) {
+                     goto return_to_vm86;
+                 }
+             }
+         } else {
+             /* 16 bits */
+-            POPW_RA(ssp, sp, sp_mask, new_eip, retaddr);
+-            POPW_RA(ssp, sp, sp_mask, new_cs, retaddr);
++            new_eip = popw(&sa);
++            new_cs = popw(&sa);
+             if (is_iret) {
+-                POPW_RA(ssp, sp, sp_mask, new_eflags, retaddr);
++                new_eflags = popw(&sa);
+             }
+         }
+     }
+@@ -2012,7 +2051,7 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+         raise_exception_err_ra(env, EXCP0B_NOSEG, new_cs & 0xfffc, retaddr);
+     }
+ 
+-    sp += addend;
++    sa.sp += addend;
+     if (rpl == cpl && (!(env->hflags & HF_CS64_MASK) ||
+                        ((env->hflags & HF_CS64_MASK) && !is_iret))) {
+         /* return to same privilege level */
+@@ -2024,21 +2063,19 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+         /* return to different privilege level */
+ #ifdef TARGET_X86_64
+         if (shift == 2) {
+-            POPQ_RA(sp, new_esp, retaddr);
+-            POPQ_RA(sp, new_ss, retaddr);
+-            new_ss &= 0xffff;
++            new_esp = popq(&sa);
++            new_ss = popq(&sa) & 0xffff;
+         } else
+ #endif
+         {
+             if (shift == 1) {
+                 /* 32 bits */
+-                POPL_RA(ssp, sp, sp_mask, new_esp, retaddr);
+-                POPL_RA(ssp, sp, sp_mask, new_ss, retaddr);
+-                new_ss &= 0xffff;
++                new_esp = popl(&sa);
++                new_ss = popl(&sa) & 0xffff;
+             } else {
+                 /* 16 bits */
+-                POPW_RA(ssp, sp, sp_mask, new_esp, retaddr);
+-                POPW_RA(ssp, sp, sp_mask, new_ss, retaddr);
++                new_esp = popw(&sa);
++                new_ss = popw(&sa);
+             }
+         }
+         LOG_PCALL("new ss:esp=%04x:" TARGET_FMT_lx "\n",
+@@ -2088,14 +2125,14 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+                        get_seg_base(e1, e2),
+                        get_seg_limit(e1, e2),
+                        e2);
+-        sp = new_esp;
++        sa.sp = new_esp;
+ #ifdef TARGET_X86_64
+         if (env->hflags & HF_CS64_MASK) {
+-            sp_mask = -1;
++            sa.sp_mask = -1;
+         } else
+ #endif
+         {
+-            sp_mask = get_sp_mask(ss_e2);
++            sa.sp_mask = get_sp_mask(ss_e2);
+         }
+ 
+         /* validate data segments */
+@@ -2104,9 +2141,9 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+         validate_seg(env, R_FS, rpl);
+         validate_seg(env, R_GS, rpl);
+ 
+-        sp += addend;
++        sa.sp += addend;
+     }
+-    SET_ESP(sp, sp_mask);
++    SET_ESP(sa.sp, sa.sp_mask);
+     env->eip = new_eip;
+     if (is_iret) {
+         /* NOTE: 'cpl' is the _old_ CPL */
+@@ -2126,12 +2163,12 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+     return;
+ 
+  return_to_vm86:
+-    POPL_RA(ssp, sp, sp_mask, new_esp, retaddr);
+-    POPL_RA(ssp, sp, sp_mask, new_ss, retaddr);
+-    POPL_RA(ssp, sp, sp_mask, new_es, retaddr);
+-    POPL_RA(ssp, sp, sp_mask, new_ds, retaddr);
+-    POPL_RA(ssp, sp, sp_mask, new_fs, retaddr);
+-    POPL_RA(ssp, sp, sp_mask, new_gs, retaddr);
++    new_esp = popl(&sa);
++    new_ss = popl(&sa);
++    new_es = popl(&sa);
++    new_ds = popl(&sa);
++    new_fs = popl(&sa);
++    new_gs = popl(&sa);
+ 
+     /* modify processor state */
+     cpu_load_eflags(env, new_eflags, TF_MASK | AC_MASK | ID_MASK |
 -- 
 2.45.2
 
