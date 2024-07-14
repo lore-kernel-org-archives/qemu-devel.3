@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B10C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC5CC3DA42
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSx8c-0006Gy-9q; Sun, 14 Jul 2024 07:11:30 -0400
+	id 1sSx8d-0006KD-4U; Sun, 14 Jul 2024 07:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8a-0006Bi-JY
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:28 -0400
+ id 1sSx8b-0006EN-9F
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8Y-00029r-N6
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:28 -0400
+ id 1sSx8Z-0002A2-7j
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1720955486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JU35dLNvZmB9zyjiP8aa02bKtvhRGQs0KzD05llqlsY=;
- b=Z85J1LpcUWcw9UggaGs2iCcSqO2BH1KbveEThQZYhlkapZFZTBwCi6zknuZU6ePB2nnQBT
- zZbLkwDVzLJmh5COUzbyFuTqzacT9TB8RLtRwIgMP+z531dpWT4h+WXj4Et4zMuLRF5R3G
- QqS4OfcSzgxSn9W54z3X6goCLS7fGHM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xvBboM0gBLgPXgc0OfI2YETwpo6vg79+rDTOsfSo04k=;
+ b=W0KfOT9eDPOPXjFuAB8eL1nhABd9CPArMHTYA15c62KAYGI7uUh3X2e4AHcVjOxsb3iP1G
+ gPA8VkHAaZmqm2jlODDBmc7rsGIOb146JJr8XVBjQ+qmixMSoGBdkStTMv75k0XqBQqvMS
+ cR9ucV+rWua7Qp5k9HiUo7toGo04Q0M=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-bNqOqEAbNwO5DfzIb9wahg-1; Sun, 14 Jul 2024 07:11:24 -0400
-X-MC-Unique: bNqOqEAbNwO5DfzIb9wahg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36796a0687bso2350221f8f.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:24 -0700 (PDT)
+ us-mta-56-HXoZi1q-NxSTNbAlLmTySA-1; Sun, 14 Jul 2024 07:11:22 -0400
+X-MC-Unique: HXoZi1q-NxSTNbAlLmTySA-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52e9b943e6dso3254431e87.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720955482; x=1721560282;
+ d=1e100.net; s=20230601; t=1720955480; x=1721560280;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JU35dLNvZmB9zyjiP8aa02bKtvhRGQs0KzD05llqlsY=;
- b=UQgfdsRMZ2H2BtcbWI8RkFICf5rn7W035CtCJjFIgxZhWZRGCw/jnddG8CB2OT7h6s
- 5VPBMNWlL+aFvtxAOn/2W+kt0zML9z99Ql8OLgZXD4JhIUBqV/7aFQ5f+U3LbH/jpQk8
- 8kk4DOvow+B/mhLZKvKdBoS8PdlJtGcQkZ+3GHumzmDoYYt3PbuD6Fg2xuFd/sQLScxo
- 8bNbsdJEBbCP11AG29hTg9SM7LxYRV2b1UaBOsx2N+kk/M82WLsOr1KoTyZYHMDYgxie
- Y3eutHn5ssXOFtMbe7J7Tw3RcXU2lCK9nS8eDToOakzRGP46clMwp6t5c5PNB6WqVLO4
- ZGog==
-X-Gm-Message-State: AOJu0YzwF5Nfb+Y1EbpNyz86nnjdXGU6HXD4BvPO2mgwe7KIRSiUULm6
- bzYLTe21nddNWy/38EJiBva+x8vvaFgrn/mqdGf2QVMpvhEU7kYOlC4loOArYr4LmRHosGH1a6q
- Q3deopcz6w0CZlfwraaEvXdPlvoEWjLw6dQRVwR+lr2lnsuUgjWHllSResaDfS6cxng2fKJbJtY
- eGQo31ZagJDcFck0vrQ7T9sZsbFd46yUst806l
-X-Received: by 2002:adf:e64d:0:b0:35f:11c5:5c74 with SMTP id
- ffacd0b85a97d-367cea963bemr10548515f8f.36.1720955482275; 
- Sun, 14 Jul 2024 04:11:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7g0f7Fku3eAKR837iku5Lba+W1UVvXNJWrubmY1MU038o/gCBn+q+kwEqHn971g0f4+vcSw==
-X-Received: by 2002:adf:e64d:0:b0:35f:11c5:5c74 with SMTP id
- ffacd0b85a97d-367cea963bemr10548505f8f.36.1720955481908; 
- Sun, 14 Jul 2024 04:11:21 -0700 (PDT)
+ bh=xvBboM0gBLgPXgc0OfI2YETwpo6vg79+rDTOsfSo04k=;
+ b=YpBVcL3tBhAwHK2szy4EtXpC8tyJamlQsaRcTh7jtI0X6xWgADiqI17Z06f+XVs8iG
+ 0c6xBDA+QGcew4KRxuLpLG3Q0Jec5hjqioenqbZGV1saY6wSddIcaGw3x4sp88JeSlod
+ dkdnw1I+fE+oEu6etdwVH9+Gh1Y8u34ok7LpDqg0nGzYnFgHI65MwVlW29Y8IegD5aiJ
+ q2NcEBwnyUM7nEo3o9p8dlPFiPckth97i2ngK8vzuJN0OCz1eW0X3E39xc9rv/d9ZDLT
+ DP5cHzuNUPPWCsdbKsxNC1s7BUP5U01Zy0xsF4HErRsINABM+6zGpXwfrf2oocrV7JmV
+ rdfg==
+X-Gm-Message-State: AOJu0YzaYRj++jc0HAwsZS2PdvgQsFth9yxI7x8oqeIZNKf1TGKOmyfA
+ WJX5sTozpXar0NpBp7/5GZ7u/CFw//PmUacwjqDSDv1HJIEpKjEvsGvbp4x81uUw/ZrWF1M6myz
+ bPfv0u0ckJ0jRmUcCyjJCwSBsvjE0J4XhjdoGjlffFnb7PJpyvVp5LPHfjoA/7x3EtFQcGgpyRH
+ XMCX4WqNKLbj/rhdkmHk0cKfUgzNeBCQVDqpM7
+X-Received: by 2002:a05:6512:ad2:b0:52e:bdfc:1d05 with SMTP id
+ 2adb3069b0e04-52ebdfc1ffcmr10321440e87.44.1720955479722; 
+ Sun, 14 Jul 2024 04:11:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/0YOQVR0yqj4226D+TkFKAQsMIz1Xsv7xLq/slMcsDTBh/wvGCUrcxMJjoWM5RzGPbNJLsQ==
+X-Received: by 2002:a05:6512:ad2:b0:52e:bdfc:1d05 with SMTP id
+ 2adb3069b0e04-52ebdfc1ffcmr10321421e87.44.1720955479295; 
+ Sun, 14 Jul 2024 04:11:19 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dab3c2dsm3613844f8f.1.2024.07.14.04.11.21
+ 5b1f17b1804b1-427a5edb41asm47985225e9.36.2024.07.14.04.11.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 04:11:21 -0700 (PDT)
+ Sun, 14 Jul 2024 04:11:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Sergey Dyasli <sergey.dyasli@nutanix.com>
-Subject: [PULL 13/13] Revert "qemu-char: do not operate on sources from
- finalize callbacks"
-Date: Sun, 14 Jul 2024 13:10:43 +0200
-Message-ID: <20240714111043.14132-14-pbonzini@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ kvm@vger.kernel.org
+Subject: [PULL 12/13] i386/sev: Don't allow automatic fallback to legacy
+ KVM_SEV*_INIT
+Date: Sun, 14 Jul 2024 13:10:42 +0200
+Message-ID: <20240714111043.14132-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240714111043.14132-1-pbonzini@redhat.com>
 References: <20240714111043.14132-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -103,93 +106,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Dyasli <sergey.dyasli@nutanix.com>
+From: Michael Roth <michael.roth@amd.com>
 
-This reverts commit 2b316774f60291f57ca9ecb6a9f0712c532cae34.
+Currently if the 'legacy-vm-type' property of the sev-guest object is
+'on', QEMU will attempt to use the newer KVM_SEV_INIT2 kernel
+interface in conjunction with the newer KVM_X86_SEV_VM and
+KVM_X86_SEV_ES_VM KVM VM types.
 
-After 038b4217884c ("Revert "chardev: use a child source for qio input
-source"") we've been observing the "iwp->src == NULL" assertion
-triggering periodically during the initial capabilities querying by
-libvirtd. One of possible backtraces:
+This can lead to measurement changes if, for instance, an SEV guest was
+created on a host that originally had an older kernel that didn't
+support KVM_SEV_INIT2, but is booted on the same host later on after the
+host kernel was upgraded.
 
-Thread 1 (Thread 0x7f16cd4f0700 (LWP 43858)):
-0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
-1  0x00007f16c6c21e65 in __GI_abort () at abort.c:79
-2  0x00007f16c6c21d39 in __assert_fail_base  at assert.c:92
-3  0x00007f16c6c46e86 in __GI___assert_fail (assertion=assertion@entry=0x562e9bcdaadd "iwp->src == NULL", file=file@entry=0x562e9bcdaac8 "../chardev/char-io.c", line=line@entry=99, function=function@entry=0x562e9bcdab10 <__PRETTY_FUNCTION__.20549> "io_watch_poll_finalize") at assert.c:101
-4  0x0000562e9ba20c2c in io_watch_poll_finalize (source=<optimized out>) at ../chardev/char-io.c:99
-5  io_watch_poll_finalize (source=<optimized out>) at ../chardev/char-io.c:88
-6  0x00007f16c904aae0 in g_source_unref_internal () from /lib64/libglib-2.0.so.0
-7  0x00007f16c904baf9 in g_source_destroy_internal () from /lib64/libglib-2.0.so.0
-8  0x0000562e9ba20db0 in io_remove_watch_poll (source=0x562e9d6720b0) at ../chardev/char-io.c:147
-9  remove_fd_in_watch (chr=chr@entry=0x562e9d5f3800) at ../chardev/char-io.c:153
-10 0x0000562e9ba23ffb in update_ioc_handlers (s=0x562e9d5f3800) at ../chardev/char-socket.c:592
-11 0x0000562e9ba2072f in qemu_chr_fe_set_handlers_full at ../chardev/char-fe.c:279
-12 0x0000562e9ba207a9 in qemu_chr_fe_set_handlers at ../chardev/char-fe.c:304
-13 0x0000562e9ba2ca75 in monitor_qmp_setup_handlers_bh (opaque=0x562e9d4c2c60) at ../monitor/qmp.c:509
-14 0x0000562e9bb6222e in aio_bh_poll (ctx=ctx@entry=0x562e9d4c2f20) at ../util/async.c:216
-15 0x0000562e9bb4de0a in aio_poll (ctx=0x562e9d4c2f20, blocking=blocking@entry=true) at ../util/aio-posix.c:722
-16 0x0000562e9b99dfaa in iothread_run (opaque=0x562e9d4c26f0) at ../iothread.c:63
-17 0x0000562e9bb505a4 in qemu_thread_start (args=0x562e9d4c7ea0) at ../util/qemu-thread-posix.c:543
-18 0x00007f16c70081ca in start_thread (arg=<optimized out>) at pthread_create.c:479
-19 0x00007f16c6c398d3 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+Instead, if legacy-vm-type is 'off', QEMU should fail if the
+KVM_SEV_INIT2 interface is not provided by the current host kernel.
+Modify the fallback handling accordingly.
 
-io_remove_watch_poll(), which makes sure that iwp->src is NULL, calls
-g_source_destroy() which finds that iwp->src is not NULL in the finalize
-callback. This can only happen if another thread has managed to trigger
-io_watch_poll_prepare() callback in the meantime.
+In the future, VMSA features and other flags might be added to QEMU
+which will require legacy-vm-type to be 'off' because they will rely
+on the newer KVM_SEV_INIT2 interface. It may be difficult to convey to
+users what values of legacy-vm-type are compatible with which
+features/options, so as part of this rework, switch legacy-vm-type to a
+tri-state OnOffAuto option. 'auto' in this case will automatically
+switch to using the newer KVM_SEV_INIT2, but only if it is required to
+make use of new VMSA features or other options only available via
+KVM_SEV_INIT2.
 
-Move iwp->src destruction back to the finalize callback to prevent the
-described race, and also remove the stale comment. The deadlock glib bug
-was fixed back in 2010 by b35820285668 ("gmain: move finalization of
-GSource outside of context lock").
+Defining 'auto' in this way would avoid inadvertantly breaking
+compatibility with older kernels since it would only be used in cases
+where users opt into newer features that are only available via
+KVM_SEV_INIT2 and newer kernels, and provide better default behavior
+than the legacy-vm-type=off behavior that was previously in place, so
+make it the default for 9.1+ machine types.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sergey Dyasli <sergey.dyasli@nutanix.com>
-Link: https://lore.kernel.org/r/20240712092659.216206-1-sergey.dyasli@nutanix.com
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+cc: kvm@vger.kernel.org
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/20240710041005.83720-1-michael.roth@amd.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- chardev/char-io.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ qapi/qom.json     | 18 ++++++----
+ hw/i386/pc.c      |  2 +-
+ target/i386/sev.c | 87 +++++++++++++++++++++++++++++++++++++++--------
+ 3 files changed, 84 insertions(+), 23 deletions(-)
 
-diff --git a/chardev/char-io.c b/chardev/char-io.c
-index dab77b112e3..3be17b51ca5 100644
---- a/chardev/char-io.c
-+++ b/chardev/char-io.c
-@@ -87,16 +87,12 @@ static gboolean io_watch_poll_dispatch(GSource *source, GSourceFunc callback,
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8e75a419c30..7eccd2e14e2 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -924,12 +924,16 @@
+ # @handle: SEV firmware handle (default: 0)
+ #
+ # @legacy-vm-type: Use legacy KVM_SEV_INIT KVM interface for creating the VM.
+-#                  The newer KVM_SEV_INIT2 interface syncs additional vCPU
+-#                  state when initializing the VMSA structures, which will
+-#                  result in a different guest measurement. Set this to
+-#                  maintain compatibility with older QEMU or kernel versions
+-#                  that rely on legacy KVM_SEV_INIT behavior.
+-#                  (default: false) (since 9.1)
++#                  The newer KVM_SEV_INIT2 interface, from Linux >= 6.10, syncs
++#                  additional vCPU state when initializing the VMSA structures,
++#                  which will result in a different guest measurement. Set
++#                  this to 'on' to force compatibility with older QEMU or kernel
++#                  versions that rely on legacy KVM_SEV_INIT behavior. 'auto'
++#                  will behave identically to 'on', but will automatically
++#                  switch to using KVM_SEV_INIT2 if the user specifies any
++#                  additional options that require it. If set to 'off', QEMU
++#                  will require KVM_SEV_INIT2 unconditionally.
++#                  (default: off) (since 9.1)
+ #
+ # Since: 2.12
+ ##
+@@ -939,7 +943,7 @@
+             '*session-file': 'str',
+             '*policy': 'uint32',
+             '*handle': 'uint32',
+-            '*legacy-vm-type': 'bool' } }
++            '*legacy-vm-type': 'OnOffAuto' } }
  
- static void io_watch_poll_finalize(GSource *source)
+ ##
+ # @SevSnpGuestProperties:
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4fbc5774708..c74931d577a 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -83,7 +83,7 @@ GlobalProperty pc_compat_9_0[] = {
+     { TYPE_X86_CPU, "x-amd-topoext-features-only", "false" },
+     { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
+     { TYPE_X86_CPU, "guest-phys-bits", "0" },
+-    { "sev-guest", "legacy-vm-type", "true" },
++    { "sev-guest", "legacy-vm-type", "on" },
+     { TYPE_X86_CPU, "legacy-multi-node", "on" },
+ };
+ const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 2ba5f517228..a1157c0ede6 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -144,7 +144,7 @@ struct SevGuestState {
+     uint32_t policy;
+     char *dh_cert_file;
+     char *session_file;
+-    bool legacy_vm_type;
++    OnOffAuto legacy_vm_type;
+ };
+ 
+ struct SevSnpGuestState {
+@@ -1369,6 +1369,17 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
+     }
+ }
+ 
++/*
++ * This helper is to examine sev-guest properties and determine if any options
++ * have been set which rely on the newer KVM_SEV_INIT2 interface and associated
++ * KVM VM types.
++ */
++static bool sev_init2_required(SevGuestState *sev_guest)
++{
++    /* Currently no KVM_SEV_INIT2-specific options are exposed via QEMU */
++    return false;
++}
++
+ static int sev_kvm_type(X86ConfidentialGuest *cg)
  {
--    /*
--     * Due to a glib bug, removing the last reference to a source
--     * inside a finalize callback causes recursive locking (and a
--     * deadlock).  This is not a problem inside other callbacks,
--     * including dispatch callbacks, so we call io_remove_watch_poll
--     * to remove this source.  At this point, iwp->src must
--     * be NULL, or we would leak it.
--     */
-     IOWatchPoll *iwp = io_watch_poll_from_source(source);
--    assert(iwp->src == NULL);
-+    if (iwp->src) {
-+        g_source_destroy(iwp->src);
-+        g_source_unref(iwp->src);
-+        iwp->src = NULL;
+     SevCommonState *sev_common = SEV_COMMON(cg);
+@@ -1379,14 +1390,39 @@ static int sev_kvm_type(X86ConfidentialGuest *cg)
+         goto out;
+     }
+ 
+-    kvm_type = (sev_guest->policy & SEV_POLICY_ES) ?
+-                KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
+-    if (kvm_is_vm_type_supported(kvm_type) && !sev_guest->legacy_vm_type) {
+-        sev_common->kvm_type = kvm_type;
+-    } else {
++    /* These are the only cases where legacy VM types can be used. */
++    if (sev_guest->legacy_vm_type == ON_OFF_AUTO_ON ||
++        (sev_guest->legacy_vm_type == ON_OFF_AUTO_AUTO &&
++         !sev_init2_required(sev_guest))) {
+         sev_common->kvm_type = KVM_X86_DEFAULT_VM;
++        goto out;
+     }
+ 
++    /*
++     * Newer VM types are required, either explicitly via legacy-vm-type=on, or
++     * implicitly via legacy-vm-type=auto along with additional sev-guest
++     * properties that require the newer VM types.
++     */
++    kvm_type = (sev_guest->policy & SEV_POLICY_ES) ?
++                KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
++    if (!kvm_is_vm_type_supported(kvm_type)) {
++        if (sev_guest->legacy_vm_type == ON_OFF_AUTO_AUTO) {
++            error_report("SEV: host kernel does not support requested %s VM type, which is required "
++                         "for the set of options specified. To allow use of the legacy "
++                         "KVM_X86_DEFAULT_VM VM type, please disable any options that are not "
++                         "compatible with the legacy VM type, or upgrade your kernel.",
++                         kvm_type == KVM_X86_SEV_VM ? "KVM_X86_SEV_VM" : "KVM_X86_SEV_ES_VM");
++        } else {
++            error_report("SEV: host kernel does not support requested %s VM type. To allow use of "
++                         "the legacy KVM_X86_DEFAULT_VM VM type, the 'legacy-vm-type' argument "
++                         "must be set to 'on' or 'auto' for the sev-guest object.",
++                         kvm_type == KVM_X86_SEV_VM ? "KVM_X86_SEV_VM" : "KVM_X86_SEV_ES_VM");
++        }
++
++        return -1;
 +    }
++
++    sev_common->kvm_type = kvm_type;
+ out:
+     return sev_common->kvm_type;
+ }
+@@ -1477,14 +1513,24 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     }
+ 
+     trace_kvm_sev_init();
+-    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) == KVM_X86_DEFAULT_VM) {
++    switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
++    case KVM_X86_DEFAULT_VM:
+         cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
+ 
+         ret = sev_ioctl(sev_common->sev_fd, cmd, NULL, &fw_error);
+-    } else {
++        break;
++    case KVM_X86_SEV_VM:
++    case KVM_X86_SEV_ES_VM:
++    case KVM_X86_SNP_VM: {
+         struct kvm_sev_init args = { 0 };
+ 
+         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
++        break;
++    }
++    default:
++        error_setg(errp, "%s: host kernel does not support the requested SEV configuration.",
++                   __func__);
++        return -1;
+     }
+ 
+     if (ret) {
+@@ -2074,14 +2120,23 @@ sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
+     SEV_GUEST(obj)->session_file = g_strdup(value);
  }
  
- static GSourceFuncs io_watch_poll_funcs = {
-@@ -139,11 +135,6 @@ static void io_remove_watch_poll(GSource *source)
-     IOWatchPoll *iwp;
- 
-     iwp = io_watch_poll_from_source(source);
--    if (iwp->src) {
--        g_source_destroy(iwp->src);
--        g_source_unref(iwp->src);
--        iwp->src = NULL;
--    }
-     g_source_destroy(&iwp->parent);
+-static bool sev_guest_get_legacy_vm_type(Object *obj, Error **errp)
++static void sev_guest_get_legacy_vm_type(Object *obj, Visitor *v,
++                                         const char *name, void *opaque,
++                                         Error **errp)
+ {
+-    return SEV_GUEST(obj)->legacy_vm_type;
++    SevGuestState *sev_guest = SEV_GUEST(obj);
++    OnOffAuto legacy_vm_type = sev_guest->legacy_vm_type;
++
++    visit_type_OnOffAuto(v, name, &legacy_vm_type, errp);
  }
  
+-static void sev_guest_set_legacy_vm_type(Object *obj, bool value, Error **errp)
++static void sev_guest_set_legacy_vm_type(Object *obj, Visitor *v,
++                                         const char *name, void *opaque,
++                                         Error **errp)
+ {
+-    SEV_GUEST(obj)->legacy_vm_type = value;
++    SevGuestState *sev_guest = SEV_GUEST(obj);
++
++    visit_type_OnOffAuto(v, name, &sev_guest->legacy_vm_type, errp);
+ }
+ 
+ static void
+@@ -2107,9 +2162,9 @@ sev_guest_class_init(ObjectClass *oc, void *data)
+                                   sev_guest_set_session_file);
+     object_class_property_set_description(oc, "session-file",
+             "guest owners session parameters (encoded with base64)");
+-    object_class_property_add_bool(oc, "legacy-vm-type",
+-                                   sev_guest_get_legacy_vm_type,
+-                                   sev_guest_set_legacy_vm_type);
++    object_class_property_add(oc, "legacy-vm-type", "OnOffAuto",
++                              sev_guest_get_legacy_vm_type,
++                              sev_guest_set_legacy_vm_type, NULL, NULL);
+     object_class_property_set_description(oc, "legacy-vm-type",
+             "use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.");
+ }
+@@ -2125,6 +2180,8 @@ sev_guest_instance_init(Object *obj)
+     object_property_add_uint32_ptr(obj, "policy", &sev_guest->policy,
+                                    OBJ_PROP_FLAG_READWRITE);
+     object_apply_compat_props(obj);
++
++    sev_guest->legacy_vm_type = ON_OFF_AUTO_AUTO;
+ }
+ 
+ /* guest info specific sev/sev-es */
 -- 
 2.45.2
 
