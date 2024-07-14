@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB28AC3DA42
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640C6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSx8M-0005Gm-7Y; Sun, 14 Jul 2024 07:11:14 -0400
+	id 1sSx8C-0004dR-5u; Sun, 14 Jul 2024 07:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8G-0004vz-OP
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:08 -0400
+ id 1sSx89-0004Vr-Hd
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8F-000267-2u
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:08 -0400
+ id 1sSx86-00022k-OL
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720955466;
+ s=mimecast20190719; t=1720955452;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yKHaLhM9UAuURgVWP4GssGjRnYIMl9btSsv/NKhFweE=;
- b=EJhyAf9BESePSVimDoTLSq++zGYaoeUznQ/pgKIWxa3mMDaoD9C5fSiSKKaVJGT7LcBL9W
- unDv3Sgz1/4gz5OHLiXa3JDiIDPV0F0SMPuC3S46y5Kxbea5XqDiaiwNeZ/gqPrykr6Ckk
- tQPC/V3gM6xJXEDNrD+ArH4dDp/4w78=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=z7mvDdgjDew4bcumhdVippQPV/asFmWc10+8vble7j0=;
+ b=OszduRC5QRm8851s9dIm1KRHsmLLtzT/K9D5gh5MCsWqWl34Gnyg19FD6WbnF3+LLS+muq
+ R68U92HcSIXFePp8Ffrw/DjORw0wi4u8RjbB/nk5jsgHPXV7j/zMPl37Yb6Lw1USQ6fnB0
+ tp9y+76TBf5o7iZyN6Cpit8GtMPsfzg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-BndHyV1NO-O52A9cIjjzig-1; Sun, 14 Jul 2024 07:11:04 -0400
-X-MC-Unique: BndHyV1NO-O52A9cIjjzig-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42725ec6d8dso32402465e9.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:04 -0700 (PDT)
+ us-mta-269-3ENQxU8HPKiI0D4b6nRLPQ-1; Sun, 14 Jul 2024 07:10:50 -0400
+X-MC-Unique: 3ENQxU8HPKiI0D4b6nRLPQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-426703ac88dso22622485e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:10:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720955462; x=1721560262;
+ d=1e100.net; s=20230601; t=1720955449; x=1721560249;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yKHaLhM9UAuURgVWP4GssGjRnYIMl9btSsv/NKhFweE=;
- b=wVNpe42fPe80nLzqbR8V9ussptBuE05eTF5JpX659Nr85QLs3AjKtGb+gOBaErAj81
- nxb/XJoCLpztjSKQsM+u4z6oKWWFq3O6ELyfJA8WsCCHVh8NRUJpax0lQaH/0vwJLfP0
- 9/kMTc5MIo2ym1X2zzWLPvNZSRoNVRFE2Qgsvy1Q3NHVzCqLjm5W6KE1mb5hqKlIfjgs
- F6xPz84MT4tRwAS7j0Um9Tz1l3yytLnfUfVMIjmgaKGb8c//ArDZitY7rm4w2A4KLnIM
- csKlDx1vyh7mrnjYvCGxXjkX3rQtyvSxODsdtHcOcI7aHg2/DA/U9kKEGu1dydDbvskE
- ZBAg==
-X-Gm-Message-State: AOJu0Yzu1xpH9ok8pnn5x9w41c8hvw5NEHHMn17htmbTHhhIWsLe+7it
- HjnTDIUKoLdj1xsVJOIm6zx8E4qAm35S2UDq0QqhJ8mn54AYaY9W3AquOjFv1Pk+SqkHRhIjcGZ
- x49ozRb2yDp1VNa/69h3lof1a6uLDsNPhIEv/+xYEmCW7B/VylamD7sj8TtKbgl66THsmeKiCP3
- 0lztoeqRSyUAGmx9YPEzJNNWDThC6vjKJTyhsf
-X-Received: by 2002:a05:600c:3013:b0:426:63f1:9a1b with SMTP id
- 5b1f17b1804b1-426708f1c97mr124836835e9.33.1720955462575; 
- Sun, 14 Jul 2024 04:11:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEuPa39c4EJJD5ZK6UOrT5ikByoKhQFw7f4dyQfg1x4TLynriXEpI4aWGeeO69Mpt2rUawZsA==
-X-Received: by 2002:a05:600c:3013:b0:426:63f1:9a1b with SMTP id
- 5b1f17b1804b1-426708f1c97mr124836735e9.33.1720955462222; 
- Sun, 14 Jul 2024 04:11:02 -0700 (PDT)
+ bh=z7mvDdgjDew4bcumhdVippQPV/asFmWc10+8vble7j0=;
+ b=MnKDvKzMmbnUNqVTGMHcUVUATwnEBLiFL0cC/45Y44d5QCDRIG4Tacse2mzDkv0K+D
+ Q7Jcd9V/WkpLOYJei31besRnfqJ9ms3/il9YOnOjgObigL+OaEuguJhViqNtrsWAFdOE
+ 21vcqvomsuevukIwiJMB+j1gbxN79HeBH4nYzyLZiUiGr3loQxR6eulHUWnKmBgnus2z
+ EFAcEdhChYZ9UYPjrdBfCFJ+KQeEd8zl5xCt1+MiGLVQsR7U8T9mb8pvASkS36yQ0Bne
+ /+EbdAo5GOAD4nzPdL8uJXhXBIOZHJSqzr5KGcK4HoKB6JrnD1DX7+aXDoQ5uyfsE7eY
+ Y+ow==
+X-Gm-Message-State: AOJu0Yzfmbwrkwrbb9ywao4LD3Ok1CheZOakucXvT9cMlr8zpqqrp5Th
+ hEBsUKaTE7BGteSCy+jXqJzDGxaOfUrB83mOfBZOa11MFCIAf5e02Tfht3KW4B8/ap0a0g1DWE/
+ WUvrj5j3wWT3UrygP6UOXP+bmc5oYwUGIRMNWq8Z1E4d4vSLodDgL2p44R6A6kidCDsyqYjLJX7
+ uH8Hh3DnkNomFxi31YHJiMZJPUYfSG7HeNEaiG
+X-Received: by 2002:a7b:ca4b:0:b0:426:6c7a:3a61 with SMTP id
+ 5b1f17b1804b1-426707cf194mr96992905e9.3.1720955448888; 
+ Sun, 14 Jul 2024 04:10:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGe5iVwXKpRvKcJ7T9DuyuCXUydmRnooNKkTnnRnJW/F3s6RBVCUkos0oVG9z1eAdTz8bVwBA==
+X-Received: by 2002:a7b:ca4b:0:b0:426:6c7a:3a61 with SMTP id
+ 5b1f17b1804b1-426707cf194mr96992805e9.3.1720955448502; 
+ Sun, 14 Jul 2024 04:10:48 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f25ac47sm83415875e9.18.2024.07.14.04.11.00
+ 5b1f17b1804b1-427a5e9a809sm48665495e9.28.2024.07.14.04.10.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 04:11:00 -0700 (PDT)
+ Sun, 14 Jul 2024 04:10:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/13] target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
-Date: Sun, 14 Jul 2024 13:10:36 +0200
-Message-ID: <20240714111043.14132-7-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 01/13] target/i386/tcg: fix POP to memory in long mode
+Date: Sun, 14 Jul 2024 13:10:31 +0200
+Message-ID: <20240714111043.14132-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240714111043.14132-1-pbonzini@redhat.com>
 References: <20240714111043.14132-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -102,88 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+In long mode, POP to memory will write a full 64-bit value.  However,
+the call to gen_writeback() in gen_POP will use MO_32 because the
+decoding table is incorrect.
 
-Disconnect mmu index computation from the current pl
-as stored in env->hflags.
+The bug was latent until commit aea49fbb01a ("target/i386: use gen_writeback()
+within gen_POP()", 2024-06-08), and then became visible because gen_op_st_v
+now receives op->ot instead of the "ot" returned by gen_pop_T0.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240617161210.4639-2-richard.henderson@linaro.org
+Analyzed-by: Clément Chigot <chigot@adacore.com>
+Fixes: 5e9e21bcc4d ("target/i386: move 60-BF opcodes to new decoder", 2024-05-07)
+Tested-by: Clément Chigot <chigot@adacore.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h | 11 ++---------
- target/i386/cpu.c | 27 ++++++++++++++++++++++++---
- 2 files changed, 26 insertions(+), 12 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ target/i386/tcg/emit.c.inc       | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c43ac01c794..1e121acef54 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2445,15 +2445,8 @@ static inline bool is_mmu_index_32(int mmu_index)
-     return mmu_index & 1;
- }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 0d846c32c22..d2da1d396d5 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1717,7 +1717,7 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x8C] = X86_OP_ENTRYwr(MOV, E,v, S,w, op0_Mw),
+     [0x8D] = X86_OP_ENTRYwr(LEA, G,v, M,v, nolea),
+     [0x8E] = X86_OP_ENTRYwr(MOV, S,w, E,w),
+-    [0x8F] = X86_OP_GROUPw(group1A, E,v),
++    [0x8F] = X86_OP_GROUPw(group1A, E,d64),
  
--static inline int cpu_mmu_index_kernel(CPUX86State *env)
--{
--    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
--    int mmu_index_base =
--        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
--        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
--
--    return mmu_index_base + mmu_index_32;
--}
-+int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
-+int cpu_mmu_index_kernel(CPUX86State *env);
+     [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
+     [0x99] = X86_OP_ENTRYwr(CWD,   2,v, 0,v), /* rDX, rAX */
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index fc7477833bc..016dce81464 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -2788,6 +2788,7 @@ static void gen_POP(DisasContext *s, X86DecodedInsn *decode)
+     X86DecodedOp *op = &decode->op[0];
+     MemOp ot = gen_pop_T0(s);
  
- #define CC_DST  (env->cc_dst)
- #define CC_SRC  (env->cc_src)
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c05765eeafc..4688d140c2d 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8122,18 +8122,39 @@ static bool x86_cpu_has_work(CPUState *cs)
-     return x86_cpu_pending_interrupt(cs, cs->interrupt_request) != 0;
- }
- 
--static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-+int x86_mmu_index_pl(CPUX86State *env, unsigned pl)
- {
--    CPUX86State *env = cpu_env(cs);
-     int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
-     int mmu_index_base =
--        (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
-+        pl == 3 ? MMU_USER64_IDX :
-         !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-         (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
- 
-     return mmu_index_base + mmu_index_32;
- }
- 
-+static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    CPUX86State *env = cpu_env(cs);
-+    return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
-+}
-+
-+static int x86_mmu_index_kernel_pl(CPUX86State *env, unsigned pl)
-+{
-+    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
-+    int mmu_index_base =
-+        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-+        (pl < 3 && (env->eflags & AC_MASK)
-+         ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX);
-+
-+    return mmu_index_base + mmu_index_32;
-+}
-+
-+int cpu_mmu_index_kernel(CPUX86State *env)
-+{
-+    return x86_mmu_index_kernel_pl(env, env->hflags & HF_CPL_MASK);
-+}
-+
- static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
- {
-     X86CPU *cpu = X86_CPU(cs);
++    assert(ot >= op->ot);
+     if (op->has_ea || op->unit == X86_OP_SEG) {
+         /* NOTE: order is important for MMU exceptions */
+         gen_writeback(s, decode, 0, s->T0);
 -- 
 2.45.2
 
