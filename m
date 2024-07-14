@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE45C3DA42
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 08:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55329C3DA42
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 10:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSuX3-0000B6-Jv; Sun, 14 Jul 2024 04:24:33 -0400
+	id 1sSwgg-0004cv-6S; Sun, 14 Jul 2024 06:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sSuX2-0008WM-1J; Sun, 14 Jul 2024 04:24:32 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sSwgX-0004bJ-Vz
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 06:42:30 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sSuX0-00038p-G1; Sun, 14 Jul 2024 04:24:31 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-75ee39f1ffbso2293048a12.2; 
- Sun, 14 Jul 2024 01:24:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sSwgR-0001Nq-VB
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 06:42:27 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70b03ffbb3aso2725094b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 03:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720945467; x=1721550267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+mlhbqk20RxK7AHwT9MoUCKqjXkQEO9E9xZQNy9TdV0=;
- b=QNwRCmW3j+FboK30Lk8jBzhhU9I2Wd6INbMSCV+/vXv8MavBnpabcva2irF8+ujxTH
- KZ/dyD3jOHlP6FXBAsIr6aExpBvx7dE1WOt53wNsK6I4agCdhgjf+/SBGLcQijlB+nMA
- mlbBSJULCt+UuTYHptHJfCnL9vw0r2ofskonVc3EDLK4/1LXKq7d6rV2UcXw3/xnwmUE
- NEnQLknZUIzJZRaC8ehBuxqhpAy4cYn/4PTj33TSYZe4Z5Hrt0Eyae4vj3VOomS84vVs
- lC7PGm89jrwneCbBChaDFrnhPCTZwBy9uq49ChQCPMbKpkGjHWgNGByQ8waSXYIFEeFt
- 0W8g==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720953741; x=1721558541;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LGfW6nvB9YgOleIlZQRPqE1bMiV35KTgKrp779sah0I=;
+ b=MPtgT9BCMyWhORR4D+450YLFOJ1ZJoUWk1s3ms7YHJZbC8CjiTFQglUZ+9vcitIQO8
+ 7cIzv0uOWf33PaqYGq92ESn1OALNW0DjHKDDlgXzjLR6jPf9vwCAU3ktq3CG+XfnakEg
+ rrwiliLZWaQRBpCHmEZfmxlzP3KxighhbgMRqO18DaUS8SHw8i3BSWxSb7sfONq0INlQ
+ 7KGmuZfkN363ZPddhNU0PRpORPWKPJL+vit9jgnb3oB92tO/mode19uTv2YpnN8nROO0
+ CwHU4t7VRL5p2+Uq6wBU6GB4CGKXPEIYOcCQp3pICFoVIv5lLh5OssMrpmncs2k8V4+f
+ HAmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720945467; x=1721550267;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+mlhbqk20RxK7AHwT9MoUCKqjXkQEO9E9xZQNy9TdV0=;
- b=o/Ic/IekRqiplLjqhSsuzM7JtoC0t46mxljIK9ANJQpmTIAppXnuF2EK6dVnXKj9mh
- r7eZM7QUtIa4+/X+LewHviG3JLjn5274jVAru2yj7Y/nnRisJtDFvF++SkSWVhl5JPR6
- PTGmNBStEedaEWPnKFB1O1FloLXOQQMLdZF2YnjxfF16P1Ah6hEVj53lHdqWhtFYsp+B
- KHci4UvMFJGgv5xoqUvpKDuXoKrbYywKbklPZupLgGBUg/miKhkYChbwxKrXPjhxpFLr
- WGvY/6oGhGjYua/kSY1Zg6qnEMZYazTplc5ED//snI+Pna9tKAxewFp5EjBkSfA2e/Du
- fm+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUV9l8hB9GN2wElvbh/sJc+4Le72R2M75P7WAq4NP3qwEtekvpfPcdi/kXsEJYu86BDqFmhFmCeso5rXwjXpOlm5gmOwuo=
-X-Gm-Message-State: AOJu0YwUzRMCF3lyMXsvS6DEj3K0WFrqpfZTPXlwSDBmuwcQvGab1fOi
- IqeksmCZCSDFA+1IA80o7Ot/UsFh41FIzaKJgFzW9kGSZN7hd4QVO2qXTf9J
-X-Google-Smtp-Source: AGHT+IGz9XY8b1S3QGf17OfftQZfXlPGZWFqkU1F/xq13lbLuQPUIWdqaqvD6GZ7ZIQw04qrxLjuUQ==
-X-Received: by 2002:a05:6a21:78a9:b0:1bd:a048:7fcc with SMTP id
- adf61e73a8af0-1c2984c9eb4mr21040508637.46.1720945467129; 
- Sun, 14 Jul 2024 01:24:27 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eca7886sm2301390b3a.170.2024.07.14.01.24.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 01:24:26 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
-Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com, thuth@redhat.com,
- Zheyu Ma <zheyuma97@gmail.com>, Minwoo Im <minwoo.im@samsung.com>
-Subject: [PULL v2 1/1] hw/ufs: Fix mcq register range check logic
-Date: Sun, 14 Jul 2024 17:24:16 +0900
-Message-Id: <50475f1511964775ff73c2b07239c3ff571f75cd.1720944812.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1720944812.git.jeuk20.kim@samsung.com>
-References: <cover.1720944812.git.jeuk20.kim@samsung.com>
+ d=1e100.net; s=20230601; t=1720953741; x=1721558541;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LGfW6nvB9YgOleIlZQRPqE1bMiV35KTgKrp779sah0I=;
+ b=baIHCNAUZNdj+qHasRIH4ZPAfQHQ4gIOF0Z+gEeWv3+udf1zxv5zk1Hzz0r1uMYkCs
+ ZOLmB5U04vU+BT9wckIkIFSIiZdPLz+NXPVa/vyRX5iB7IqxaaOcQALjcwvFPIvrqEVI
+ MOWvhDEdNXAULIZf/ES8KX7vcbBjEfAJ5XAWJvAyhGNOlFik/SiRJMxJN2hxh3I12Ico
+ WnCEtjiPuGmH1yMqJbasTxc3VoC/D9kLrmtIiQZwPRaaa7sXympVBUnygcTLWaIsDmma
+ 6xzvCoPowDxZiMa6GnQ7Tm+MrIMz+YR7beC+ygo/u2SzfeDiPu5+ueu2OOp2dtVth6Eb
+ Ez9w==
+X-Gm-Message-State: AOJu0Yz8XUA7M3/xw/RBz8HhXQtCiLwoDRb25x4fCByZcOQqas//6Q/J
+ kmdKGy4GMMZksN3ksG2jxT8QqrRDq6iKACKQvMo4Qm0E+Bf2ANalbGtE6KIljGg=
+X-Google-Smtp-Source: AGHT+IE/nN2WCyxhuJOBBr3kdpASYhRxXpwwoIld/AUhAnv2Wtct/47GT/OwuNC9v9btoc+I/78Niw==
+X-Received: by 2002:a05:6a20:a106:b0:1c0:f220:ed2 with SMTP id
+ adf61e73a8af0-1c2981ff899mr23851830637.1.1720953741011; 
+ Sun, 14 Jul 2024 03:42:21 -0700 (PDT)
+Received: from localhost ([157.82.204.135])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-70b7ebd1205sm2470481b3a.93.2024.07.14.03.42.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 14 Jul 2024 03:42:20 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sun, 14 Jul 2024 19:42:13 +0900
+Subject: [PATCH] meson: Use -fno-sanitize=function when available
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240714-function-v1-1-cc2acb4171ba@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAISrk2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDc0MT3bTSvOQSoCJd8xRjo2RzI+PEpKRkJaDygqLUtMwKsFHRsbW1AAC
+ h6k5aAAAA
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,59 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
+-fno-sanitize=function in the clang-system job") adds
+-fno-sanitize=function for the CI but doesn't add the flag in the
+other context. Move it to meson.build.
 
-The function ufs_is_mcq_reg() and ufs_is_mcq_op_reg() only evaluated
-the range of the mcq_reg and mcq_op_reg offset, which is defined as
-a constant. Therefore, it was possible for them to return true
-even though the ufs device is configured to not support the mcq.
-This could cause ufs_mmio_read()/ufs_mmio_write() to result in
-Null-pointer-dereference.
-So fix it.
-
-Resolves: #2428
-Fixes: 5c079578d2e4 ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/ufs/ufs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ meson.build                | 1 +
+ .gitlab-ci.d/buildtest.yml | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 683fff5840..945a0ea127 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -57,14 +57,26 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
+diff --git a/meson.build b/meson.build
+index 6a93da48e1b5..80447833f07a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -609,6 +609,7 @@ if host_os != 'openbsd' and \
+ endif
  
- static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
- {
--    uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
-+    uint64_t mcq_reg_addr;
-+
-+    if (!u->params.mcq) {
-+        return false;
-+    }
-+
-+    mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
-     return (addr >= mcq_reg_addr &&
-             addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
- }
+ qemu_common_flags += cc.get_supported_arguments(hardening_flags)
++qemu_common_flags += cc.get_supported_arguments('-fno-sanitize=function')
  
- static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr, unsigned size)
- {
--    uint64_t mcq_op_reg_addr = ufs_mcq_op_reg_addr(u, 0);
-+    uint64_t mcq_op_reg_addr;
-+
-+    if (!u->params.mcq) {
-+        return false;
-+    }
-+
-+    mcq_op_reg_addr = ufs_mcq_op_reg_addr(u, 0);
-     return (addr >= mcq_op_reg_addr &&
-             addr + size <= mcq_op_reg_addr + sizeof(u->mcq_op_reg));
- }
+ add_global_arguments(qemu_common_flags, native: false, language: all_languages)
+ add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index e3a0758bd9e5..a57822d65182 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -430,7 +430,6 @@ clang-system:
+     IMAGE: fedora
+     CONFIGURE_ARGS: --cc=clang --cxx=clang++
+       --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
+-      --extra-cflags=-fno-sanitize=function
+     TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
+     MAKE_CHECK_ARGS: check-qtest check-tcg
+ 
+
+---
+base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
+change-id: 20240714-function-7d32c723abbc
+
+Best regards,
 -- 
-2.34.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
