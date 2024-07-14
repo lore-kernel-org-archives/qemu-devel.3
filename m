@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F89C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA6EC3DA42
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSx8S-0005dk-4q; Sun, 14 Jul 2024 07:11:20 -0400
+	id 1sSx8B-0004ZW-TK; Sun, 14 Jul 2024 07:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8P-0005Rl-15
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:17 -0400
+ id 1sSx88-0004Vp-QH
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8N-00028l-Jw
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:16 -0400
+ id 1sSx85-00022M-0D
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720955475;
+ s=mimecast20190719; t=1720955450;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h1MZ+bkr2S4w1UHUKLxqB+jeJD0WXRw8G5s2UmrXHqY=;
- b=bnFXzFFgYPNQAESV8YVyUKjHaGNUPhagIDTjFUikcV0wPp1KqhUh8727ubMgPgI2bYQVX+
- 9hb2zmfRMOiwIec4hXsXwJ9yubqFI1RsVcGDFPyVdmLftCJfNc12qGWiaa6WZNeLkLCbCY
- B3FAQuHtUbUprBCakbtGpOusdQZELcU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5JX5ELR1NtHHCLybeAN9sOd7BdgMYgtwGtyVuWSLGQ0=;
+ b=S15ZZX6l7Zv+vKnFBkDhVYUB6QoSXZ5T31skZRCc4xrteh+PmA3QjbP9AB8G/zRIg2NK+w
+ VFiNe3fI0VikJkxiIssSPDtriDm6UHtOZI6Ifh18hXFwCUlWTo0nRUD3Acvwe53DXHvneg
+ DV8x54Gg7iCpACxn1nfMZtkAmMrB1eQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-206-2Am5PLzNOCmKVLzTFKRlFQ-1; Sun, 14 Jul 2024 07:11:12 -0400
-X-MC-Unique: 2Am5PLzNOCmKVLzTFKRlFQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3678e549a1eso1778246f8f.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:12 -0700 (PDT)
+ us-mta-114-ZLcm6ijQN8ibVreJLgSUtw-1; Sun, 14 Jul 2024 07:10:48 -0400
+X-MC-Unique: ZLcm6ijQN8ibVreJLgSUtw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-426724679f0so23471835e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:10:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720955470; x=1721560270;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h1MZ+bkr2S4w1UHUKLxqB+jeJD0WXRw8G5s2UmrXHqY=;
- b=S0NXfe2lafNDIrxd64X0NecYOaOxIzcDsjq2E0c/Iyn629FTNj1eolAHWrB4uIJOW0
- vsNwA/atRY3QJ3I8zYDFc9PphmYLC3p9iJ4fh7KhKj9d8aNK1jr7LXw1HRRq4Yc/MfSd
- BBxrDo1BvjquGiZBaMb+dt0NqRnlb8+86J9rHbmW5pvT/57Opp/Q/srdaCVqXRRhUHda
- vbeHmNDhtEh2MZ0NfyDqribvObYzc10mCr7twEjMn3SHNOru86GcGl/WilgwSzWL6iah
- xhmZHYcxmAGHpE1QAsfbs0aLmw9PMg11hTUmneqqsIrcswFyAB8Zqs7p+/Vk2XmOrZNu
- XDCg==
-X-Gm-Message-State: AOJu0Yy4kspljz1cKTQTxsW/lumaC4Ee7G87k9lL9FAt2uczZ5nA0mzS
- 1L/8Yq6T5ayClPWuksc7kmj4Suu3C8JlOEKl/L2T7FMLH0YixlO44/hY/HD687ik9WJ5P6nG3pi
- 60ngwFo/8myze6Bu+BKhvjU8cBRmBwEUoajpevnfNb3uPxh0NjCOe0b9Lz5IOFVBgevdejWbqZ+
- 8S4WuFTe5rHWXjvWqx+DkVGVysEsBznMmOMmIZ
-X-Received: by 2002:a5d:61cb:0:b0:368:4c5:1697 with SMTP id
- ffacd0b85a97d-36804fec68amr4152891f8f.36.1720955470192; 
- Sun, 14 Jul 2024 04:11:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWfJpnWBr9IiXDeAClNnjM7WB+R+NZ6Au0q0kiBiLn8Sa9ntWWTzUVyiCuJWwDccZCjKS7LA==
-X-Received: by 2002:a5d:61cb:0:b0:368:4c5:1697 with SMTP id
- ffacd0b85a97d-36804fec68amr4152884f8f.36.1720955469892; 
- Sun, 14 Jul 2024 04:11:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720955446; x=1721560246;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5JX5ELR1NtHHCLybeAN9sOd7BdgMYgtwGtyVuWSLGQ0=;
+ b=v1h533G0gyyPm8zMciT3jCRlSP4ZJL0graEPtfrgo8mUIY0LoSg7qUFLxMmF/uaOMF
+ xPKS6NKcDXWDuzjiEwAJaW08j4L/myiHRxugBoKKDxY8E1BoCIGehry2Pc3RUxcZg5cq
+ bfJGIEIjCyOxCTLX0HXFbgCbpQb7LBu6ihRcBqksTRiIq80eZx7FdI1hjA1DcTB/zcL7
+ nkE3xHLPGtM7eVxUUHZvC3sWmpG5YGX12o72E3XCFU1gtnxUZuVvfLHoOMNJlz2LyQoT
+ egZn5vCuaR+wwlmWBnZm9QUg/CsMdnFGAkKfcXrAGI5Q+STC166T0je1YisewibsYFLW
+ yUoA==
+X-Gm-Message-State: AOJu0YzB3yJolDYtGxipWsZxIJ5HIAb8fh0qOxTFRAYCbBN9b7g3oN7q
+ pv/ZaCkPbX+qHYOvoOt8SlfUDxufWHu9hbKqxEg9/0yJJQ5ugtHifeH9D6cGw//vTf0UqZJaAhv
+ L1vkVHWGI5nV7HTjMHCP7N8WmXV1AHaJW8Lqe3CMTfGevMQb4y0FzHnU1MQ8sHxxmmStNag0oyu
+ Ca6iU5+JZrdctRocWq5aIgt/VQ9KcUmdZ5RhFk
+X-Received: by 2002:a05:600c:4883:b0:424:8743:86b4 with SMTP id
+ 5b1f17b1804b1-4279da0240dmr62950795e9.6.1720955446595; 
+ Sun, 14 Jul 2024 04:10:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEcM3QOrpdfxv+Z22nj5P2uV7FXiAOngELHtJlca4a0hIFg55bw12haLBsPcriCp9BWOlMRrQ==
+X-Received: by 2002:a05:600c:4883:b0:424:8743:86b4 with SMTP id
+ 5b1f17b1804b1-4279da0240dmr62950685e9.6.1720955446094; 
+ Sun, 14 Jul 2024 04:10:46 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafb991sm3629295f8f.79.2024.07.14.04.11.09
+ 5b1f17b1804b1-4279f2397easm83771595e9.6.2024.07.14.04.10.44
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 04:11:09 -0700 (PDT)
+ Sun, 14 Jul 2024 04:10:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/13] target/i386/tcg: check for correct busy state before
- switching to a new task
-Date: Sun, 14 Jul 2024 13:10:39 +0200
-Message-ID: <20240714111043.14132-10-pbonzini@redhat.com>
+Subject: [PULL 00/13] target/i386 changes for 2024-07-12
+Date: Sun, 14 Jul 2024 13:10:30 +0200
+Message-ID: <20240714111043.14132-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240714111043.14132-1-pbonzini@redhat.com>
-References: <20240714111043.14132-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -103,35 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This step is listed in the Intel manual: "Checks that the new task is available
-(call, jump, exception, or interrupt) or busy (IRET return)".
+The following changes since commit 23901b2b721c0576007ab7580da8aa855d6042a9:
 
-The AMD manual lists the same operation under the "Preventing recursion"
-paragraph of "12.3.4 Nesting Tasks", though it is not clear if the processor
-checks the busy bit in the IRET case.
+  Merge tag 'pull-target-arm-20240711' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-11 12:00:00 -0700)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/seg_helper.c | 5 +++++
- 1 file changed, 5 insertions(+)
+are available in the Git repository at:
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 809ee3d9833..0242f9d8b58 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -369,6 +369,11 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-         old_tss_limit_max = 43;
-     }
- 
-+    /* new TSS must be busy iff the source is an IRET instruction  */
-+    if (!!(e2 & DESC_TSS_BUSY_MASK) != (source == SWITCH_TSS_IRET)) {
-+        raise_exception_err_ra(env, EXCP0A_TSS, tss_selector & 0xfffc, retaddr);
-+    }
-+
-     /* read all the registers from the new TSS */
-     if (type & 8) {
-         /* 32 bit */
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream-i386
+
+for you to fetch changes up to cdcadf9ee9efef96323e0b88fccff589f06fc0ee:
+
+  i386/sev: Don't allow automatic fallback to legacy KVM_SEV*_INIT (2024-07-12 15:35:54 +0200)
+
+----------------------------------------------------------------
+* target/i386/tcg: fixes for seg_helper.c
+* SEV: Don't allow automatic fallback to legacy KVM_SEV_INIT,
+  but also don't use it by default
+
+----------------------------------------------------------------
+Michael Roth (1):
+      i386/sev: Don't allow automatic fallback to legacy KVM_SEV*_INIT
+
+Paolo Bonzini (8):
+      target/i386/tcg: fix POP to memory in long mode
+      target/i386/tcg: Allow IRET from user mode to user mode with SMAP
+      target/i386/tcg: use PUSHL/PUSHW for error code
+      target/i386/tcg: Compute MMU index once
+      target/i386/tcg: Use DPL-level accesses for interrupts and call gates
+      target/i386/tcg: check for correct busy state before switching to a new task
+      target/i386/tcg: use X86Access for TSS access
+      target/i386/tcg: save current task state before loading new one
+
+Richard Henderson (3):
+      target/i386/tcg: Remove SEG_ADDL
+      target/i386/tcg: Reorg push/pop within seg_helper.c
+      target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
+
+ qapi/qom.json                    |  18 +-
+ target/i386/cpu.h                |  11 +-
+ hw/i386/pc.c                     |   2 +-
+ target/i386/cpu.c                |  27 +-
+ target/i386/sev.c                |  87 ++++-
+ target/i386/tcg/seg_helper.c     | 665 +++++++++++++++++++++------------------
+ target/i386/tcg/decode-new.c.inc |   2 +-
+ target/i386/tcg/emit.c.inc       |   1 +
+ 8 files changed, 472 insertions(+), 341 deletions(-)
 -- 
 2.45.2
 
