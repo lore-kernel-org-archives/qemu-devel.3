@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D05C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB2EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 11:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sSx8T-0005jo-I9; Sun, 14 Jul 2024 07:11:21 -0400
+	id 1sSx8R-0005Wh-2X; Sun, 14 Jul 2024 07:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8Q-0005Z7-Tr
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:18 -0400
+ id 1sSx8N-0005Mf-ME
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sSx8O-00028w-UH
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:18 -0400
+ id 1sSx8K-00028J-PA
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 07:11:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720955476;
+ s=mimecast20190719; t=1720955472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OUMYHZ6i4EA7K7uyAc3TiRc4wdBbB5/oRUtyZ3vopSw=;
- b=Na84S/NfG1oqdOMwiqZss+OU0dtmX1KnwQSbLost+fwA8oNz1N/UNbVig0BFadmSydBD4a
- clgnK/mCgF2EpyIdPXVO+dBgsrDN653TS7u9g346Ft9UYfASssu3ZYdvm6IeUJG7MPLDlG
- sc7tyM5W1Pu3MJ12IAH/Wjc+latva88=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JRUePkyI4BlsyZF8K6wIcJjT0NtE/ENQZ85bsJ3I+qY=;
+ b=QeNpA6tPdSYv6n9MG/wMmm7PLy/8+CD7Jk52CYbqNgYByrcSVEi6e6TlNDdu12Xb4UHA4m
+ WnyZJsNSCK5mJGSkS7qlBOw6uHJc0owVULyNNmNzdXvo90eP3SM7g08FdQ2l1RhjqBCoLl
+ pbNbUL9JZgCJ2NFGxZsvoiyQ1pXi7y8=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-Tg4Jw9N5NEWgGkEW6-6gsQ-1; Sun, 14 Jul 2024 07:11:14 -0400
-X-MC-Unique: Tg4Jw9N5NEWgGkEW6-6gsQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-367a14a6664so2365241f8f.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:14 -0700 (PDT)
+ us-mta-219-vj7s4lZiN3yvuWqRjbk2eg-1; Sun, 14 Jul 2024 07:11:10 -0400
+X-MC-Unique: vj7s4lZiN3yvuWqRjbk2eg-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ee9b383ffbso35145641fa.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 04:11:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720955473; x=1721560273;
+ d=1e100.net; s=20230601; t=1720955468; x=1721560268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OUMYHZ6i4EA7K7uyAc3TiRc4wdBbB5/oRUtyZ3vopSw=;
- b=Pe+oGh3N15Ckd0jQuZrWy+FZ5bbdnbKQFd/QnomA4Nyi565uktR62Bp0hstM2zVFZa
- 9zsps3/TtaEdv5gS6VwOZb1CSTNNQ1pcKQF2G+FqTehvj5arB+n+HShcFPfA4ds5Y4yT
- rQFsIRA57XIMFysJ/Z6zNMuMDPjrLvEF6z+phN6Vn56VprIuPX+ljAF1BUKfDcmzIlnL
- FbVyCsIEniq7ZPqGmnVDZi8ASu+Zo4GSpFbINORk9bfsDHCbl4coufdA2k6tMyS+d2hq
- kWfc3yGtXVBf/XXsGfSj0IaFyMsvBkbTGxZ6lWDTAMrzdretwnTeO8+ET7Rsm+z0nOgs
- R5Gw==
-X-Gm-Message-State: AOJu0Yx51fLxnoVHPVhhqekO9wFWYuYDbNfco3epZK7cxKxwa8UKR70N
- A3qRqJD2bmgDLA0FgRCpB7G3hhxHQehU1jHu7hHZnkBHgrjXE3jhoaECJl/f+5j/U+uOFsEUG1E
- LpKNVruKNS9CPsnQFbmT2b307CbhVbROAyHVNNBDqagVR5zxm1vN+N/4d1l3hr/QJbmxuiMKvub
- q3A+vNpwH1TwaL5ybEKTFBj1VjO5Co+72vonCw
-X-Received: by 2002:a05:6000:184b:b0:367:94f7:88f3 with SMTP id
- ffacd0b85a97d-367ceadd2b3mr13504172f8f.57.1720955472754; 
- Sun, 14 Jul 2024 04:11:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfbuRJpIvgZC60bLNe0h7iePXPBe+I8EhIFNJ4Ak5K9CZIPuGpUzv7QKDOHXP+3T332rjRtw==
-X-Received: by 2002:a05:6000:184b:b0:367:94f7:88f3 with SMTP id
- ffacd0b85a97d-367ceadd2b3mr13504160f8f.57.1720955472362; 
- Sun, 14 Jul 2024 04:11:12 -0700 (PDT)
+ bh=JRUePkyI4BlsyZF8K6wIcJjT0NtE/ENQZ85bsJ3I+qY=;
+ b=Otj5rN4/tbH1Eo+hH9gb7126MfqgrqpU4goYuqv7gBUlMgVzIsNe16reC4gx5tzl8I
+ PgQ7Zm9A002ULDOENi66bwZ7jR3DDNArRADpuIIR7N/to5oEcRFhxrNLcoYBeGf3wIcJ
+ Iv01cz9NGnjh0ashwuEqwGDxW0FEKADlY/dCHagLb9vYrEWAccXoavzLb5/Cx8xzUBiw
+ AM7AjDWLf8FnrpF5u8DJjeneCr0ZXnUrNueb1KKf6T4djy9kPkeIxwP0pBMTZ5FLWqpm
+ 56fwhlnLC0z5nH4Ur67jtecYGF7l0opfdP5C9zgMZwnuDzvcXHKCUtLTiXqgBKKB0iBZ
+ S9Ew==
+X-Gm-Message-State: AOJu0YxkrzdfVlqPanpHp9v6mUUA12z5dW+vrnmfxKP4hOpzAp+7bxjc
+ Z9ItiLh+bEMJu4Sh5+grstpIWSOtSymzo9L+v6YI/A5b7dsCSSE6KomPqBCZa9qzdHSTIG+I47i
+ 8vd9h7cOeOxY2HTcn22bl9GKsyA0TS8pVaaJDdyXQr4Xer5Q04pL+/yknw+gcbq4GRafsIpjvKR
+ absjoyPk6+iiy5Nlp8ZZxJ/UwmiPzYIp9Dw6s6
+X-Received: by 2002:a2e:9cda:0:b0:2ee:bc9a:9d7d with SMTP id
+ 38308e7fff4ca-2eebc9a9f96mr89874011fa.37.1720955468103; 
+ Sun, 14 Jul 2024 04:11:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXESsiL/VEFgleDlYMWMRSQvwN02yq7M4Wjq6WuD357p31QnRtj22MfEVs2NEzbONELQI9Vw==
+X-Received: by 2002:a2e:9cda:0:b0:2ee:bc9a:9d7d with SMTP id
+ 38308e7fff4ca-2eebc9a9f96mr89873851fa.37.1720955467677; 
+ Sun, 14 Jul 2024 04:11:07 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dab3be3sm3585565f8f.24.2024.07.14.04.11.11
+ ffacd0b85a97d-3680dabef75sm3612351f8f.36.2024.07.14.04.11.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 04:11:11 -0700 (PDT)
+ Sun, 14 Jul 2024 04:11:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/13] target/i386/tcg: use X86Access for TSS access
-Date: Sun, 14 Jul 2024 13:10:40 +0200
-Message-ID: <20240714111043.14132-11-pbonzini@redhat.com>
+Cc: "Robert R . Henry" <rrh.henry@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 08/13] target/i386/tcg: Use DPL-level accesses for interrupts
+ and call gates
+Date: Sun, 14 Jul 2024 13:10:38 +0200
+Message-ID: <20240714111043.14132-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240714111043.14132-1-pbonzini@redhat.com>
 References: <20240714111043.14132-1-pbonzini@redhat.com>
@@ -102,200 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This takes care of probing the vaddr range in advance, and is also faster
-because it avoids repeated TLB lookups.  It also matches the Intel manual
-better, as it says "Checks that the current (old) TSS, new TSS, and all
-segment descriptors used in the task switch are paged into system memory";
-note however that it's not clear how the processor checks for segment
-descriptors, and this check is not included in the AMD manual.
+This fixes a bug wherein i386/tcg assumed an interrupt return using
+the CALL or JMP instructions were always going from kernel or user mode to
+kernel mode, when using a call gate. This assumption is violated if
+the call gate has a DPL that is greater than 0.
 
+In addition, the stack accesses should count as explicit, not implicit
+("kernel" in QEMU code), so that SMAP is not applied if DPL=3.
+
+Analyzed-by: Robert R. Henry <rrh.henry@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/249
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/seg_helper.c | 110 ++++++++++++++++++-----------------
- 1 file changed, 58 insertions(+), 52 deletions(-)
+ target/i386/tcg/seg_helper.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 0242f9d8b58..fea08a2ba0f 100644
+index 8a6d92b3583..809ee3d9833 100644
 --- a/target/i386/tcg/seg_helper.c
 +++ b/target/i386/tcg/seg_helper.c
-@@ -27,6 +27,7 @@
- #include "exec/log.h"
- #include "helper-tcg.h"
- #include "seg_helper.h"
-+#include "access.h"
+@@ -678,7 +678,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+ 
+     sa.env = env;
+     sa.ra = 0;
+-    sa.mmu_index = cpu_mmu_index_kernel(env);
++    sa.mmu_index = x86_mmu_index_pl(env, dpl);
+ 
+     if (type == 5) {
+         /* task gate */
+@@ -984,7 +984,7 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+ 
+     sa.env = env;
+     sa.ra = 0;
+-    sa.mmu_index = cpu_mmu_index_kernel(env);
++    sa.mmu_index = x86_mmu_index_pl(env, dpl);
+     sa.sp_mask = -1;
+     sa.ss_base = 0;
+     if (dpl < cpl || ist != 0) {
+@@ -1119,7 +1119,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
+     sa.sp = env->regs[R_ESP];
+     sa.sp_mask = 0xffff;
+     sa.ss_base = env->segs[R_SS].base;
+-    sa.mmu_index = cpu_mmu_index_kernel(env);
++    sa.mmu_index = x86_mmu_index_pl(env, 0);
+ 
+     if (is_int) {
+         old_eip = next_eip;
+@@ -1583,7 +1583,7 @@ void helper_lcall_real(CPUX86State *env, uint32_t new_cs, uint32_t new_eip,
+     sa.sp = env->regs[R_ESP];
+     sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
+     sa.ss_base = env->segs[R_SS].base;
+-    sa.mmu_index = cpu_mmu_index_kernel(env);
++    sa.mmu_index = x86_mmu_index_pl(env, 0);
+ 
+     if (shift) {
+         pushl(&sa, env->segs[R_CS].selector);
+@@ -1619,17 +1619,17 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+         raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
+     }
+     cpl = env->hflags & HF_CPL_MASK;
++    dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+     LOG_PCALL("desc=%08x:%08x\n", e1, e2);
+ 
+     sa.env = env;
+     sa.ra = GETPC();
+-    sa.mmu_index = cpu_mmu_index_kernel(env);
++    sa.mmu_index = x86_mmu_index_pl(env, dpl);
+ 
+     if (e2 & DESC_S_MASK) {
+         if (!(e2 & DESC_CS_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, GETPC());
+         }
+-        dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         if (e2 & DESC_C_MASK) {
+             /* conforming code segment */
+             if (dpl > cpl) {
+@@ -1691,7 +1691,6 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+     } else {
+         /* check gate type */
+         type = (e2 >> DESC_TYPE_SHIFT) & 0x1f;
+-        dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         rpl = new_cs & 3;
  
  #ifdef TARGET_X86_64
- #define SET_ESP(val, sp_mask)                                   \
-@@ -313,14 +314,15 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-                          uint32_t e1, uint32_t e2, int source,
-                          uint32_t next_eip, uintptr_t retaddr)
- {
--    int tss_limit, tss_limit_max, type, old_tss_limit_max, old_type, v1, v2, i;
-+    int tss_limit, tss_limit_max, type, old_tss_limit_max, old_type, i;
-     target_ulong tss_base;
-     uint32_t new_regs[8], new_segs[6];
-     uint32_t new_eflags, new_eip, new_cr3, new_ldt, new_trap;
-     uint32_t old_eflags, eflags_mask;
-     SegmentCache *dt;
--    int index;
-+    int mmu_index, index;
-     target_ulong ptr;
-+    X86Access old, new;
- 
-     type = (e2 >> DESC_TYPE_SHIFT) & 0xf;
-     LOG_PCALL("switch_tss: sel=0x%04x type=%d src=%d\n", tss_selector, type,
-@@ -374,35 +376,45 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-         raise_exception_err_ra(env, EXCP0A_TSS, tss_selector & 0xfffc, retaddr);
-     }
- 
-+    /* X86Access avoids memory exceptions during the task switch */
-+    mmu_index = cpu_mmu_index_kernel(env);
-+    access_prepare_mmu(&old, env, env->tr.base, old_tss_limit_max,
-+                       MMU_DATA_STORE, mmu_index, retaddr);
-+
-+    if (source == SWITCH_TSS_CALL) {
-+        /* Probe for future write of parent task */
-+        probe_access(env, tss_base, 2, MMU_DATA_STORE,
-+                     mmu_index, retaddr);
-+    }
-+    access_prepare_mmu(&new, env, tss_base, tss_limit,
-+                       MMU_DATA_LOAD, mmu_index, retaddr);
-+
-     /* read all the registers from the new TSS */
-     if (type & 8) {
-         /* 32 bit */
--        new_cr3 = cpu_ldl_kernel_ra(env, tss_base + 0x1c, retaddr);
--        new_eip = cpu_ldl_kernel_ra(env, tss_base + 0x20, retaddr);
--        new_eflags = cpu_ldl_kernel_ra(env, tss_base + 0x24, retaddr);
-+        new_cr3 = access_ldl(&new, tss_base + 0x1c);
-+        new_eip = access_ldl(&new, tss_base + 0x20);
-+        new_eflags = access_ldl(&new, tss_base + 0x24);
-         for (i = 0; i < 8; i++) {
--            new_regs[i] = cpu_ldl_kernel_ra(env, tss_base + (0x28 + i * 4),
--                                            retaddr);
-+            new_regs[i] = access_ldl(&new, tss_base + (0x28 + i * 4));
-         }
-         for (i = 0; i < 6; i++) {
--            new_segs[i] = cpu_lduw_kernel_ra(env, tss_base + (0x48 + i * 4),
--                                             retaddr);
-+            new_segs[i] = access_ldw(&new, tss_base + (0x48 + i * 4));
-         }
--        new_ldt = cpu_lduw_kernel_ra(env, tss_base + 0x60, retaddr);
--        new_trap = cpu_ldl_kernel_ra(env, tss_base + 0x64, retaddr);
-+        new_ldt = access_ldw(&new, tss_base + 0x60);
-+        new_trap = access_ldl(&new, tss_base + 0x64);
-     } else {
-         /* 16 bit */
-         new_cr3 = 0;
--        new_eip = cpu_lduw_kernel_ra(env, tss_base + 0x0e, retaddr);
--        new_eflags = cpu_lduw_kernel_ra(env, tss_base + 0x10, retaddr);
-+        new_eip = access_ldw(&new, tss_base + 0x0e);
-+        new_eflags = access_ldw(&new, tss_base + 0x10);
-         for (i = 0; i < 8; i++) {
--            new_regs[i] = cpu_lduw_kernel_ra(env, tss_base + (0x12 + i * 2), retaddr);
-+            new_regs[i] = access_ldw(&new, tss_base + (0x12 + i * 2));
-         }
-         for (i = 0; i < 4; i++) {
--            new_segs[i] = cpu_lduw_kernel_ra(env, tss_base + (0x22 + i * 2),
--                                             retaddr);
-+            new_segs[i] = access_ldw(&new, tss_base + (0x22 + i * 2));
-         }
--        new_ldt = cpu_lduw_kernel_ra(env, tss_base + 0x2a, retaddr);
-+        new_ldt = access_ldw(&new, tss_base + 0x2a);
-         new_segs[R_FS] = 0;
-         new_segs[R_GS] = 0;
-         new_trap = 0;
-@@ -412,16 +424,6 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-      chapters 12.2.5 and 13.2.4 on how to implement TSS Trap bit */
-     (void)new_trap;
- 
--    /* NOTE: we must avoid memory exceptions during the task switch,
--       so we make dummy accesses before */
--    /* XXX: it can still fail in some cases, so a bigger hack is
--       necessary to valid the TLB after having done the accesses */
--
--    v1 = cpu_ldub_kernel_ra(env, env->tr.base, retaddr);
--    v2 = cpu_ldub_kernel_ra(env, env->tr.base + old_tss_limit_max, retaddr);
--    cpu_stb_kernel_ra(env, env->tr.base, v1, retaddr);
--    cpu_stb_kernel_ra(env, env->tr.base + old_tss_limit_max, v2, retaddr);
--
-     /* clear busy bit (it is restartable) */
-     if (source == SWITCH_TSS_JMP || source == SWITCH_TSS_IRET) {
-         tss_set_busy(env, env->tr.selector, 0, retaddr);
-@@ -434,35 +436,35 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-     /* save the current state in the old TSS */
-     if (old_type & 8) {
-         /* 32 bit */
--        cpu_stl_kernel_ra(env, env->tr.base + 0x20, next_eip, retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + 0x24, old_eflags, retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 0 * 4), env->regs[R_EAX], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 1 * 4), env->regs[R_ECX], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 2 * 4), env->regs[R_EDX], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 3 * 4), env->regs[R_EBX], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 4 * 4), env->regs[R_ESP], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 5 * 4), env->regs[R_EBP], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 6 * 4), env->regs[R_ESI], retaddr);
--        cpu_stl_kernel_ra(env, env->tr.base + (0x28 + 7 * 4), env->regs[R_EDI], retaddr);
-+        access_stl(&old, env->tr.base + 0x20, next_eip);
-+        access_stl(&old, env->tr.base + 0x24, old_eflags);
-+        access_stl(&old, env->tr.base + (0x28 + 0 * 4), env->regs[R_EAX]);
-+        access_stl(&old, env->tr.base + (0x28 + 1 * 4), env->regs[R_ECX]);
-+        access_stl(&old, env->tr.base + (0x28 + 2 * 4), env->regs[R_EDX]);
-+        access_stl(&old, env->tr.base + (0x28 + 3 * 4), env->regs[R_EBX]);
-+        access_stl(&old, env->tr.base + (0x28 + 4 * 4), env->regs[R_ESP]);
-+        access_stl(&old, env->tr.base + (0x28 + 5 * 4), env->regs[R_EBP]);
-+        access_stl(&old, env->tr.base + (0x28 + 6 * 4), env->regs[R_ESI]);
-+        access_stl(&old, env->tr.base + (0x28 + 7 * 4), env->regs[R_EDI]);
-         for (i = 0; i < 6; i++) {
--            cpu_stw_kernel_ra(env, env->tr.base + (0x48 + i * 4),
--                              env->segs[i].selector, retaddr);
-+            access_stw(&old, env->tr.base + (0x48 + i * 4),
-+                       env->segs[i].selector);
-         }
-     } else {
-         /* 16 bit */
--        cpu_stw_kernel_ra(env, env->tr.base + 0x0e, next_eip, retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + 0x10, old_eflags, retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 0 * 2), env->regs[R_EAX], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 1 * 2), env->regs[R_ECX], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 2 * 2), env->regs[R_EDX], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 3 * 2), env->regs[R_EBX], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 4 * 2), env->regs[R_ESP], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 5 * 2), env->regs[R_EBP], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 6 * 2), env->regs[R_ESI], retaddr);
--        cpu_stw_kernel_ra(env, env->tr.base + (0x12 + 7 * 2), env->regs[R_EDI], retaddr);
-+        access_stw(&old, env->tr.base + 0x0e, next_eip);
-+        access_stw(&old, env->tr.base + 0x10, old_eflags);
-+        access_stw(&old, env->tr.base + (0x12 + 0 * 2), env->regs[R_EAX]);
-+        access_stw(&old, env->tr.base + (0x12 + 1 * 2), env->regs[R_ECX]);
-+        access_stw(&old, env->tr.base + (0x12 + 2 * 2), env->regs[R_EDX]);
-+        access_stw(&old, env->tr.base + (0x12 + 3 * 2), env->regs[R_EBX]);
-+        access_stw(&old, env->tr.base + (0x12 + 4 * 2), env->regs[R_ESP]);
-+        access_stw(&old, env->tr.base + (0x12 + 5 * 2), env->regs[R_EBP]);
-+        access_stw(&old, env->tr.base + (0x12 + 6 * 2), env->regs[R_ESI]);
-+        access_stw(&old, env->tr.base + (0x12 + 7 * 2), env->regs[R_EDI]);
-         for (i = 0; i < 4; i++) {
--            cpu_stw_kernel_ra(env, env->tr.base + (0x22 + i * 2),
--                              env->segs[i].selector, retaddr);
-+            access_stw(&old, env->tr.base + (0x22 + i * 2),
-+                       env->segs[i].selector);
-         }
-     }
- 
-@@ -470,7 +472,11 @@ static int switch_tss_ra(CPUX86State *env, int tss_selector,
-        context */
- 
-     if (source == SWITCH_TSS_CALL) {
--        cpu_stw_kernel_ra(env, tss_base, env->tr.selector, retaddr);
-+        /*
-+         * Thanks to the probe_access above, we know the first two
-+         * bytes addressed by &new are writable too.
-+         */
-+        access_stw(&new, tss_base, env->tr.selector);
-         new_eflags |= NT_MASK;
-     }
- 
 -- 
 2.45.2
 
