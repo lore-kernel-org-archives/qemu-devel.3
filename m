@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93FF1C3DA42
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 07:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4487AC3DA42
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jul 2024 08:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sStz5-0005ce-17; Sun, 14 Jul 2024 03:49:27 -0400
+	id 1sSuX1-0008VU-UY; Sun, 14 Jul 2024 04:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sStyz-0005Sz-8z
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:21 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sSuWz-0008SA-H0; Sun, 14 Jul 2024 04:24:29 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sStyu-0007fm-9B
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 03:49:21 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70af8128081so2392155b3a.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 00:49:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sSuWx-0002xS-IY; Sun, 14 Jul 2024 04:24:29 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70af22a9c19so2579230b3a.2; 
+ Sun, 14 Jul 2024 01:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720943355; x=1721548155;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
- b=Z3//t0lAuC5c7cDHMdP9RW2/oezUGCg+MCAu1rz3xUNCfkrrcLp4XyNMnNxCeVpwOG
- kjh2lldXxZPb3xgF0runKoTglda0wNl11AJVUIbb3fOuqkk31OrCDPiKqbw/uGOe8Crt
- hx+rUEfohN680dV8BA2fNCGf16Ez5y5no5TbUZy7PdZBjHMGsakbH93lsTsrsouJRWvY
- 1Lw/3yX3pXZWRfb3Jf12R9pCnt7ETUfyFJl04VjabJSLvqt87TvREfpJ8UvSCrwucWl0
- BIuQffczt0R9geZ9pOf/QegNye++sGZPp+GRQPr3Vmn99UxByGeF6oV7SMVDYZS9aT/H
- n4NQ==
+ d=gmail.com; s=20230601; t=1720945464; x=1721550264; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=X0MbEPIDs+GV0MWbUmAvR7h5WHSBahAxROZWzN9rqvc=;
+ b=Ea6TigV349Zyac6ulXM6N0xSqlbCWow6gnB9izylSdaNh4ulsWE2XNtcOxsn7zbk7I
+ 1E4/F0aFxvWiAFYULwB4VNDqX2fFWgYkcBCHWv3+MdrR1NHIyfxQtzYm3pG4eFqAZRe8
+ q398bv/c5ewugNU6y21l2nMOkgcIvjA/zvrrVltLUWg7j/FsRrQIG1O3ZTV6r+CwxKJ3
+ eeUhTpW/AlZF5NjzYFg/L+vBlgdPPAw5f+xXdYmzkyY96gR3XrumSVIaXIUt0i1MKHcB
+ EhoI6XODdy59ieOCh5e5ZsK0E81VExj1QnMApyqW/q+ErdxzIny2QauYA2AohV+8NHLl
+ Z2Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720943355; x=1721548155;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
- b=meC6IRPTpz01GHaiI3jjIKOQEChqHpFa5L8JOhIFN0I9/4RaFK+8eRSNumRokIcD8H
- 0YvK4TeE9oW1nofWeZcBfR3Mwof3qZj5lW4+g7KYIjo6iYbDgKi4KO6Bz0Oh4ZTYl5ro
- AJb/TwSMi3Bwo5lsNei/Jbpso+6Nb1rJYKjPvL/S1HzyUMSdZD3uF37ip+kWJ1CWa4xq
- meWoXmbA1Fd5znanBhJpnplo9NItmfk1KnI46lDF7oYxceivXoo6IOeeZbR+fYIi8etE
- QFQy88yWYHmqqa5uBmniPcjM+++Suia6I/urLWbNPZ81EwsVu39h+zsNmk8RG4D6grmr
- GoTA==
-X-Gm-Message-State: AOJu0Ywh9sWtX0iaOFn2JDeeFVX2CzVgFzZ5Knagn5v7fTz1L6MQCHba
- fQX8ARjzTGUm90EKtEWYgpEhRVJqeAD28om7/VJbmiNwvR2HeFm5Jjo00GaJO/M=
-X-Google-Smtp-Source: AGHT+IHjl9twXCA9eQvJfVQb1xfkFskT71A2789HR/NoA4zrPc2snsuB9tNAMTOGNzwgCUIxtqa6Ig==
-X-Received: by 2002:a05:6a00:c86:b0:70b:23d9:98ae with SMTP id
- d2e1a72fcca58-70b43668370mr16055569b3a.28.1720943354825; 
- Sun, 14 Jul 2024 00:49:14 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-70b7eb9b3aasm2213754b3a.6.2024.07.14.00.49.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 00:49:14 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 14 Jul 2024 16:48:34 +0900
-Subject: [PATCH v2 4/4] hw/qdev: Remove opts member
+ d=1e100.net; s=20230601; t=1720945464; x=1721550264;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=X0MbEPIDs+GV0MWbUmAvR7h5WHSBahAxROZWzN9rqvc=;
+ b=FB8YQP4C6WcLOkwi1soECopNdg2DIBfGTugY5i9Q0jiEjJFMZrc9uPs2dPfuLnOf5d
+ EJVy7vN9dTRa7nbI05OVAEs1+NFSt9drXSzzI8CFFCdXMCxzMHzApB0EfGjucyWrocpO
+ I5+fnYUOJSBhsLF9aOSc2JML4MiEJhUxsaV1db6e2YjZktb/zR9sA/qJqN7osK8waJkW
+ Zjg9pKhb7Kd2DEwYmoj3GhSFfhkrXZj5N1nSa3kcHfT1O5trkkY/EmyVcHjWbCPiUkNj
+ quwo3kWRzUmaPGvrVepbLiz5WLCQjA9ywt+2RAtAkLQQAAFkmTKSR87+tONUSdUCCfKX
+ g/3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhG0KKh2HBPn428Hm1HsuywClHmNwpQkyDZ2zXRs9N4QsPQEi7aEBKCBtZvtBNV3uC4am5Wz/zUxanucoIkgDp9/5i/dY=
+X-Gm-Message-State: AOJu0YwoFxyr6Ann6fowOcN/CH5F3DUHge/wiKwbGfE+lMzbmIlzfZlf
+ vKKUovogtlHgn7iMylu1Knm6aITF7AxD890nrW7guSvcNfQCpAZY9ohfELPv
+X-Google-Smtp-Source: AGHT+IHcCPjQUy3m4z7eV0L8OFdf2+yMeazLAmbTb4iwAI1+nm/yqnOkFiPK10TxeBGILjWuGnt5vw==
+X-Received: by 2002:a05:6a00:3d08:b0:706:8e4:56a1 with SMTP id
+ d2e1a72fcca58-70b4356c646mr19885447b3a.18.1720945464053; 
+ Sun, 14 Jul 2024 01:24:24 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7eca7886sm2301390b3a.170.2024.07.14.01.24.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 14 Jul 2024 01:24:23 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, thuth@redhat.com
+Subject: [PULL v2 0/1] ufs queue
+Date: Sun, 14 Jul 2024 17:24:15 +0900
+Message-Id: <cover.1720944812.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240714-rombar-v2-4-af1504ef55de@daynix.com>
-References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
-In-Reply-To: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,78 +92,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
----
- include/hw/qdev-core.h |  4 ----
- hw/core/qdev.c         |  1 -
- system/qdev-monitor.c  | 12 +++++++-----
- 3 files changed, 7 insertions(+), 10 deletions(-)
+The following changes since commit 37fbfda8f4145ba1700f63f0cb7be4c108d545de:
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 5336728a23f6..40f2d185f17c 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -237,10 +237,6 @@ struct DeviceState {
-      * @pending_deleted_expires_ms: optional timeout for deletion events
-      */
-     int64_t pending_deleted_expires_ms;
--    /**
--     * @opts: QDict of options for the device
--     */
--    QDict *opts;
-     /**
-      * @hotplugged: was device added after PHASE_MACHINE_READY?
-      */
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f3a996f57dee..2fc84699d432 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
-         dev->canonical_path = NULL;
-     }
- 
--    qobject_unref(dev->opts);
-     g_free(dev->id);
- }
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d667f..3551989d5153 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     char *id;
-     DeviceState *dev = NULL;
-     BusState *bus = NULL;
-+    QDict *properties;
- 
-     driver = qdict_get_try_str(opts, "driver");
-     if (!driver) {
-@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     }
- 
-     /* set properties */
--    dev->opts = qdict_clone_shallow(opts);
--    qdict_del(dev->opts, "driver");
--    qdict_del(dev->opts, "bus");
--    qdict_del(dev->opts, "id");
-+    properties = qdict_clone_shallow(opts);
-+    qdict_del(properties, "driver");
-+    qdict_del(properties, "bus");
-+    qdict_del(properties, "id");
- 
--    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
-+    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
-                                       errp);
-+    qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
-     }
+  Merge tag 'edgar/xen-queue-2024-07-12.for-upstream' of https://gitlab.com/edgar.iglesias/qemu into staging (2024-07-12 09:53:22 -0700)
 
--- 
-2.45.2
+are available in the Git repository at:
 
+  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240714
+
+for you to fetch changes up to 50475f1511964775ff73c2b07239c3ff571f75cd:
+
+  hw/ufs: Fix mcq register range check logic (2024-07-14 17:11:21 +0900)
+
+----------------------------------------------------------------
+hw/ufs:
+ - Fix invalid address access in mcq register check
+
+I didn't cc qemu-stable@, as 5c079578d2e4 ("hw/ufs: Add support MCQ of
+UFSHCI 4.0") is not yet included in any release tag. If I'm wrong,
+please let me know. Thanks.
+
+----------------------------------------------------------------
+Jeuk Kim (1):
+      hw/ufs: Fix mcq register range check logic
+
+ hw/ufs/ufs.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
