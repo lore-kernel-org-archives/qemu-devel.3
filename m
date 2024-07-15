@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C089C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D41C3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2Xm-0005f5-6o; Wed, 17 Jul 2024 07:09:58 -0400
+	id 1sU2TL-00051V-NB; Wed, 17 Jul 2024 07:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Va-0003Sz-Fj; Wed, 17 Jul 2024 07:07:47 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2VY-0007Xs-RK; Wed, 17 Jul 2024 07:07:42 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B02727B380;
- Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 20FBD10B295;
- Wed, 17 Jul 2024 14:06:41 +0300 (MSK)
-Received: (nullmailer pid 844425 invoked by uid 1000);
- Wed, 17 Jul 2024 11:06:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
- Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 14/16] backends/iommufd: Get rid of qemu_open_old()
-Date: Wed, 17 Jul 2024 14:06:38 +0300
-Message-Id: <20240717110640.844335-15-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
-References: <20240717110640.844335-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
+ id 1sU2SO-0000WS-E2
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:29 -0400
+Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
+ helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SM-0006zL-RI
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:24 -0400
+Received: by intel-mbp.local (Postfix, from userid 501)
+ id 81C2F37965C; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
+ graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
+ akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
+Subject: [PATCH 26/26] hw/display/apple-gfx: Removes UI pointer support check
+Date: Mon, 15 Jul 2024 23:07:05 +0200
+Message-Id: <20240715210705.32365-27-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
+References: <20240715210705.32365-1-phil@philjordan.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
+ helo=intel-mbp.local
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
+ NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,43 +58,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+The dpy_cursor_define_supported() check is destined for removal
+when the last UI frontend without cursor support (cocoa) gains
+cursor integration. This patch is required to reconcile with
+that change.
 
-For qemu_open_old(), osdep.h said:
-
-> Don't introduce new usage of this function, prefer the following
-> qemu_open/qemu_create that take an "Error **errp".
-
-So replace qemu_open_old() with qemu_open().
-
-Cc: Yi Liu <yi.l.liu@intel.com>
-Cc: Eric Auger <eric.auger@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- backends/iommufd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/display/apple-gfx.m | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 84fefbc9ee..cabd1b5002 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -77,9 +77,8 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
-     int fd;
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index e0ad784022..a4789be275 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -175,25 +175,6 @@ static void apple_gfx_render_frame_completed(AppleGFXState *s, void *vram,
+         g_free(vram);
+     } else {
+         copy_mtl_texture_to_surface_mem(texture, vram);
+-
+-        /* Need to render cursor manually if not supported by backend */
+-        if (!dpy_cursor_define_supported(s->con) && s->cursor && s->cursor_show) {
+-            pixman_image_t *image =
+-                pixman_image_create_bits(PIXMAN_a8r8g8b8,
+-                                         s->cursor->width,
+-                                         s->cursor->height,
+-                                         (uint32_t *)s->cursor->data,
+-                                         s->cursor->width * 4);
+-
+-            pixman_image_composite(PIXMAN_OP_OVER,
+-                                   image, NULL, s->surface->image,
+-                                   0, 0, 0, 0, s->pgdisp.cursorPosition.x,
+-                                   s->pgdisp.cursorPosition.y, s->cursor->width,
+-                                   s->cursor->height);
+-
+-            pixman_image_unref(image);
+-        }
+-
+         if (s->gfx_update_requested) {
+             s->gfx_update_requested = false;
+             dpy_gfx_update_full(s->con);
+@@ -234,11 +215,6 @@ static void update_cursor(AppleGFXState *s)
+ {
+     dpy_mouse_set(s->con, s->pgdisp.cursorPosition.x,
+                   s->pgdisp.cursorPosition.y, s->cursor_show);
+-
+-    /* Need to render manually if cursor is not natively supported */
+-    if (!dpy_cursor_define_supported(s->con)) {
+-        s->new_frame = true;
+-    }
+ }
  
-     if (be->owned && !be->users) {
--        fd = qemu_open_old("/dev/iommu", O_RDWR);
-+        fd = qemu_open("/dev/iommu", O_RDWR, errp);
-         if (fd < 0) {
--            error_setg_errno(errp, errno, "/dev/iommu opening failed");
-             return false;
-         }
-         be->fd = fd;
+ static void set_mode(AppleGFXState *s, uint32_t width, uint32_t height)
 -- 
-2.39.2
+2.39.3 (Apple Git-146)
 
 
