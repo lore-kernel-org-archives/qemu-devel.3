@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7610AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 17:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A9AC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 17:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTPZd-0004AR-Qd; Mon, 15 Jul 2024 13:33:17 -0400
+	id 1sTPiQ-0007gk-PW; Mon, 15 Jul 2024 13:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPZb-00043T-G1
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sTPiL-0007Ys-3g; Mon, 15 Jul 2024 13:42:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPZY-0002WJ-ME
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721064791;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vGWP2zIahwQibHpt/HvdPxGYAzCOyIC9FyRoPqRkhLc=;
- b=PYRWqjJOqpoHBEMcWdQBEDqxnxrePhlJktY1m6ywJH0lPgp6K9SsVrEGXwGF6R4nlMctQr
- Wxj61VlZ19vWYJ924v2k9h68ZBywUZTLKa6mWf05mMlzz8iWr/9/KwhPzH/86l0VYjvDBp
- W4OgFqvanTMUpI0HyBTXyy9fJ2mIifs=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-542-788L8aESNySOGhGJm2p-MA-1; Mon,
- 15 Jul 2024 13:33:08 -0400
-X-MC-Unique: 788L8aESNySOGhGJm2p-MA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53DF91956088; Mon, 15 Jul 2024 17:33:05 +0000 (UTC)
-Received: from scv.localdomain (unknown [10.22.65.127])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 851141955D42; Mon, 15 Jul 2024 17:32:58 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Joel Stanley <joel@jms.id.au>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Leonardo Bras <leobras@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- qemu-block@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Vladimir Sementsov-Ogievskiy <v.sementsov-og@mail.ru>,
- Cleber Rosa <crosa@redhat.com>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>,
- qemu-s390x@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- John Snow <jsnow@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Michael Roth <michael.roth@amd.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Andrew Jeffery <andrew@aj.id.au>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Juan Quintela <quintela@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PULL 2/6] python: Do not use pylint 3.2.4 with python 3.8
-Date: Mon, 15 Jul 2024 13:32:37 -0400
-Message-ID: <20240715173241.572048-3-jsnow@redhat.com>
-In-Reply-To: <20240715173241.572048-1-jsnow@redhat.com>
-References: <20240715173241.572048-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sTPiJ-0004nj-Ao; Mon, 15 Jul 2024 13:42:16 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46FH8g6L029986;
+ Mon, 15 Jul 2024 17:42:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ pQjUjO9WFwohyShxbYRl1OcsQjkvGfi2P5LWo7su1e8=; b=ePlxZkrfJEMi2YTQ
+ RfWCEPQgwV365JcxhVux7pCv7RMPTLHEqQZJLWsy8cELbCf6Nix5Zgzl+eB3BMmP
+ X4+nIwdh9f40CX1PZlEKZ8+nm1oEcXNpkNAUKV33m9jLaH4YMkc8g6O+wxS5sNEL
+ k9iUL5NLAG4SwQPcXIPJDT3/eQQMAyBXR2tdIp7eqJAWvQ0zh0T4Gslc0BpoUNyK
+ yVzpZ1wvEziVU4HPUCrKh8c8iU8/qX1vhdp/2iBnnD2ebuhgfghAR9bDxMk+ytQK
+ wIiwsiesxr8hEXhWa3PF9BDiBHCqweiofSBRidO+WKR/VfkoWIUMWDA1QaejkfZL
+ 4ncanA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bf9ed47e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2024 17:42:09 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 46FHg8kG024324
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2024 17:42:08 GMT
+Received: from [10.110.103.187] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 15 Jul
+ 2024 10:42:07 -0700
+Message-ID: <a1839140-181a-4547-993f-3a672c889eea@quicinc.com>
+Date: Mon, 15 Jul 2024 12:42:02 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] target/hexagon/imported/mmvec: Fix superfluous
+ trailing semicolon
+To: Michael Tokarev <mjt@tls.msk.ru>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+CC: <qemu-trivial@nongnu.org>, <qemu-devel@nongnu.org>
+References: <20240704084759.1824420-1-zhao1.liu@intel.com>
+ <20240704084759.1824420-5-zhao1.liu@intel.com>
+ <82dc0f6f-a00a-4013-84f7-8c6522062965@quicinc.com>
+ <d72fe736-2b6c-4c98-90d7-c613f21a2547@tls.msk.ru>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <d72fe736-2b6c-4c98-90d7-c613f21a2547@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: 2nB6anqruvKVbCyfQEw9cChflbd3gHuC
+X-Proofpoint-GUID: 2nB6anqruvKVbCyfQEw9cChflbd3gHuC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-15_12,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=792 mlxscore=0
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2407150138
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a bug in this version,
-see: https://github.com/pylint-dev/pylint/issues/9751
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20240626232230.408004-3-jsnow@redhat.com
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- python/setup.cfg | 1 +
- 1 file changed, 1 insertion(+)
+On 7/15/2024 4:59 AM, Michael Tokarev wrote:
+> 06.07.2024 00:50, Brian Cain wrote:
+>>
+>> On 7/4/2024 3:47 AM, Zhao Liu wrote:
+>>> Fix the superfluous trailing semicolon in 
+>>> target/hexagon/imported/mmvec/
+>>> ext.idef.
+>>>
+>>> Cc: Brian Cain <bcain@quicinc.com>
+>>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+>>
+>> Reviewed-by: Brian Cain <bcain@quicinc.com>
+>
+> Brian, is it okay to fix this in something "imported" ?
+> I realize you added your R-b, but do you realize it's "imported"?
+>
+Sure, it's fine - I'll just have to take extra care not to re-introduce 
+issues like these when making updates.  I can try and work with the 
+original sources to make sure it's addressed there.
 
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 48668609d3e..8ebd345d7ed 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -41,6 +41,7 @@ devel =
-     isort >= 5.1.2
-     mypy >= 1.4.0
-     pylint >= 2.17.3
-+    pylint != 3.2.4; python_version<"3.9"
-     tox >= 3.18.0
-     urwid >= 2.1.2
-     urwid-readline >= 0.13
--- 
-2.45.0
 
+> Thanks,
+>
+> /mjt
+>
+>>> ---
+>>>   target/hexagon/imported/mmvec/ext.idef | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/hexagon/imported/mmvec/ext.idef 
+>>> b/target/hexagon/imported/mmvec/ext.idef
+>>> index 98daabfb07c4..03d31f6181d7 100644
+>>> --- a/target/hexagon/imported/mmvec/ext.idef
+>>> +++ b/target/hexagon/imported/mmvec/ext.idef
+>>> @@ -2855,7 +2855,7 @@ EXTINSN(V6_vscattermhw_add, 
+>>> "vscatter(Rt32,Mu2,Vvv32.w).h+=Vw32", ATTRIBS(A_EXT
+>>>       fVALIGN(RtV, element_size);
+>>>       fVFOREACH(32, i) {
+>>>           for(j = 0; j < 2; j++) {
+>>> -             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);;
+>>> +             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);
+>>> fVLOG_VTCM_HALFWORD_INCREMENT_DV(EA,VvvV.v[j].uw[i],VwV,(2*i+j),i,j,ALIGNMENT,MuV);
+>>>           }
+>>>       }
+>>
+>
 
