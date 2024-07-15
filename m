@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EB0C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FA4C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2SE-0008Gf-QW; Wed, 17 Jul 2024 07:04:14 -0400
+	id 1sU2TE-0004Bn-H3; Wed, 17 Jul 2024 07:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
- id 1sU2SC-0008AT-7f
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:12 -0400
+ id 1sU2Sb-0001Ke-2g
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:38 -0400
 Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
  helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <phil@intel-mbp.local>) id 1sU2S8-0006yD-QA
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:11 -0400
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SZ-00072Y-0i
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:36 -0400
 Received: by intel-mbp.local (Postfix, from userid 501)
- id 7B82E379657; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+ id 5B102379645; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
  graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
  akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
-Subject: [PATCH 25/26] MAINTAINERS: Add myself as maintainer for apple-gfx,
- reviewer for HVF
-Date: Mon, 15 Jul 2024 23:07:04 +0200
-Message-Id: <20240715210705.32365-26-phil@philjordan.eu>
+Subject: [PATCH 20/26] hw/display/apple-gfx: Fixes cursor hotspot handling
+Date: Mon, 15 Jul 2024 23:06:59 +0200
+Message-Id: <20240715210705.32365-21-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
 References: <20240715210705.32365-1-phil@philjordan.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
  helo=intel-mbp.local
@@ -60,55 +58,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm happy to take responsibility for the macOS PV graphics code. As
-HVF patches don't seem to get much attention at the moment, I'm also
-adding myself as designated reviewer for HVF and x86 HVF to try and
-improve that.
+The ParavirtualizedGraphics framework provides the cursor's
+hotspot, this change actually passes that information through to
+Qemu's cursor handling.
 
-I anticipate that the resulting workload should be covered by the
-funding I'm receiving for improving Qemu in combination with macOS. As
-of right now this runs out at the end of 2024; I expect the workload on
-apple-gfx should be relatively minor and manageable in my spare time
-beyond that. I may have to remove myself from more general HVF duties
-once the contract runs out if it's more than I can manage.
+This change also seizes the opportunity to make other cursor
+related code conform to coding standards.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/display/apple-gfx.m | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d9811458c..b870bd6ad5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -511,6 +511,7 @@ F: target/arm/hvf/
- X86 HVF CPUs
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: target/i386/hvf/
-@@ -518,6 +519,7 @@ F: target/i386/hvf/
- HVF
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: accel/hvf/
-@@ -2624,6 +2626,11 @@ F: hw/display/edid*
- F: include/hw/display/edid.h
- F: qemu-edid.c
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 437294d0fb..bc9722b420 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -223,7 +223,8 @@ static void apple_gfx_fb_update_display(void *opaque)
  
-+macOS PV Graphics (apple-gfx)
-+M: Phil Dennis-Jordan <phil@philjordan.eu>
-+S: Maintained
-+F: hw/display/apple-gfx*
-+
- PIIX4 South Bridge (i82371AB)
- M: Hervé Poussineau <hpoussin@reactos.org>
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ static void update_cursor(AppleGFXState *s)
+ {
+-    dpy_mouse_set(s->con, s->pgdisp.cursorPosition.x, s->pgdisp.cursorPosition.y, s->cursor_show);
++    dpy_mouse_set(s->con, s->pgdisp.cursorPosition.x,
++                  s->pgdisp.cursorPosition.y, s->cursor_show);
+ 
+     /* Need to render manually if cursor is not natively supported */
+     if (!dpy_cursor_define_supported(s->con)) {
+@@ -423,7 +424,8 @@ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+         trace_apple_gfx_mode_change(sizeInPixels.x, sizeInPixels.y);
+         set_mode(s, sizeInPixels.x, sizeInPixels.y);
+     };
+-    disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph, PGDisplayCoord_t hotSpot) {
++    disp_desc.cursorGlyphHandler = ^(NSBitmapImageRep *glyph,
++                                     PGDisplayCoord_t hotSpot) {
+         uint32_t bpp = glyph.bitsPerPixel;
+         uint64_t width = glyph.pixelsWide;
+         uint64_t height = glyph.pixelsHigh;
+@@ -434,6 +436,8 @@ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+             cursor_unref(s->cursor);
+         }
+         s->cursor = cursor_alloc(width, height);
++        s->cursor->hot_x = hotSpot.x;
++        s->cursor->hot_y = hotSpot.y;
+ 
+         /* TODO handle different bpp */
+         if (bpp == 32) {
 -- 
 2.39.3 (Apple Git-146)
 
