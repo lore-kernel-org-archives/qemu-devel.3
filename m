@@ -4,38 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DDDC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B310FC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIUk-00005w-I4; Mon, 15 Jul 2024 05:59:46 -0400
+	id 1sTIVe-0004Kv-Sc; Mon, 15 Jul 2024 06:00:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTIUj-0008Ut-Jm; Mon, 15 Jul 2024 05:59:45 -0400
+ id 1sTIVc-0004E8-K8; Mon, 15 Jul 2024 06:00:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTIUh-0000Ma-SU; Mon, 15 Jul 2024 05:59:45 -0400
+ id 1sTIVa-0000yV-Py; Mon, 15 Jul 2024 06:00:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E9B97A5C9;
- Mon, 15 Jul 2024 12:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C79237A5CD;
+ Mon, 15 Jul 2024 13:00:35 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8277D108D68;
- Mon, 15 Jul 2024 12:59:41 +0300 (MSK)
-Message-ID: <d72fe736-2b6c-4c98-90d7-c613f21a2547@tls.msk.ru>
-Date: Mon, 15 Jul 2024 12:59:41 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1B820108D6E;
+ Mon, 15 Jul 2024 13:00:37 +0300 (MSK)
+Message-ID: <edb5b579-b1cf-479f-b72a-2fcffb02b18f@tls.msk.ru>
+Date: Mon, 15 Jul 2024 13:00:37 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/hexagon/imported/mmvec: Fix superfluous
- trailing semicolon
-To: Brian Cain <quic_bcain@quicinc.com>, Zhao Liu <zhao1.liu@intel.com>,
+Subject: Re: [PATCH 0/4] trivial: Fix superfluous trailing semicolon
+To: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org
 References: <20240704084759.1824420-1-zhao1.liu@intel.com>
- <20240704084759.1824420-5-zhao1.liu@intel.com>
- <82dc0f6f-a00a-4013-84f7-8c6522062965@quicinc.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -62,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <82dc0f6f-a00a-4013-84f7-8c6522062965@quicinc.com>
+In-Reply-To: <20240704084759.1824420-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -87,41 +84,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.07.2024 00:50, Brian Cain wrote:
+04.07.2024 11:47, Zhao Liu wrote:
+> Hi,
 > 
-> On 7/4/2024 3:47 AM, Zhao Liu wrote:
->> Fix the superfluous trailing semicolon in target/hexagon/imported/mmvec/
->> ext.idef.
->>
->> Cc: Brian Cain <bcain@quicinc.com>
->> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Reviewed-by: Brian Cain <bcain@quicinc.com>
+> I checked the files in QEMU to fix these few errors about "superfluous
+> trailing semicolon" to honor the requirement in checkpatch.pl.
 
-Brian, is it okay to fix this in something "imported" ?
-I realize you added your R-b, but do you realize it's "imported"?
+Applied to the trivial-patches queue (pending confirmation from Brian
+for the 4th patch).
 
 Thanks,
 
 /mjt
 
->> ---
->>   target/hexagon/imported/mmvec/ext.idef | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
->> index 98daabfb07c4..03d31f6181d7 100644
->> --- a/target/hexagon/imported/mmvec/ext.idef
->> +++ b/target/hexagon/imported/mmvec/ext.idef
->> @@ -2855,7 +2855,7 @@ EXTINSN(V6_vscattermhw_add,  "vscatter(Rt32,Mu2,Vvv32.w).h+=Vw32", ATTRIBS(A_EXT
->>       fVALIGN(RtV, element_size);
->>       fVFOREACH(32, i) {
->>           for(j = 0; j < 2; j++) {
->> -             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);;
->> +             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);
->>                fVLOG_VTCM_HALFWORD_INCREMENT_DV(EA,VvvV.v[j].uw[i],VwV,(2*i+j),i,j,ALIGNMENT,MuV);
->>           }
->>       }
-> 
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
