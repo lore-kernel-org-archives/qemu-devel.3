@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2039C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E84C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2V0-0000x6-3j; Wed, 17 Jul 2024 07:07:06 -0400
+	id 1sU2TP-0005Mt-EL; Wed, 17 Jul 2024 07:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Ut-0000Nr-3P; Wed, 17 Jul 2024 07:07:00 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Uq-0007So-2j; Wed, 17 Jul 2024 07:06:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3456B7B378;
- Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9BAE910B28D;
- Wed, 17 Jul 2024 14:06:40 +0300 (MSK)
-Received: (nullmailer pid 844400 invoked by uid 1000);
- Wed, 17 Jul 2024 11:06:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
- Brian Cain <bcain@quicinc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 06/16] target/hexagon/imported/mmvec: Fix superfluous trailing
- semicolon
-Date: Wed, 17 Jul 2024 14:06:30 +0300
-Message-Id: <20240717110640.844335-7-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
-References: <20240717110640.844335-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
+ id 1sU2Sb-0001MV-H9
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:38 -0400
+Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
+ helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SY-0006zL-Oz
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:36 -0400
+Received: by intel-mbp.local (Postfix, from userid 501)
+ id 547DB379643; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
+ graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
+ akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
+Subject: [PATCH 19/26] ui/cocoa: Adds non-app runloop on main thread mode
+Date: Mon, 15 Jul 2024 23:06:58 +0200
+Message-Id: <20240715210705.32365-20-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
+References: <20240715210705.32365-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
+ helo=intel-mbp.local
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
+ NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,35 +59,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Various system frameworks on macOS and other Apple platforms
+require a main runloop to be processing events on the process’s
+main thread. The Cocoa UI’s requirement to run the process as a
+Cocoa application automatically enables this runloop, but it
+can be useful to have the runloop handling events even without
+the Cocoa UI active.
 
-Fix the superfluous trailing semicolon in target/hexagon/imported/mmvec/
-ext.idef.
+This change adds a non-app runloop mode to the cocoa_main
+function. This can be requested by other code, while the Cocoa UI
+additionally enables app mode. This arrangement ensures there is
+only one qemu_main function switcheroo, and the Cocoa UI’s app
+mode requirement and other subsystems’ runloop requests don’t
+conflict with each other.
 
-Cc: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+The main runloop is required for the AppleGFX PV graphics device,
+so the runloop request call has been added to its initialisation.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- target/hexagon/imported/mmvec/ext.idef | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/display/apple-gfx.m |  3 +++
+ include/qemu-main.h    |  2 ++
+ ui/cocoa.m             | 15 +++++++++++++--
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/target/hexagon/imported/mmvec/ext.idef b/target/hexagon/imported/mmvec/ext.idef
-index 98daabfb07..03d31f6181 100644
---- a/target/hexagon/imported/mmvec/ext.idef
-+++ b/target/hexagon/imported/mmvec/ext.idef
-@@ -2855,7 +2855,7 @@ EXTINSN(V6_vscattermhw_add,  "vscatter(Rt32,Mu2,Vvv32.w).h+=Vw32", ATTRIBS(A_EXT
-     fVALIGN(RtV, element_size);
-     fVFOREACH(32, i) {
-         for(j = 0; j < 2; j++) {
--             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);;
-+             EA =  RtV + fVALIGN(VvvV.v[j].uw[i],ALIGNMENT);
-              fVLOG_VTCM_HALFWORD_INCREMENT_DV(EA,VvvV.v[j].uw[i],VwV,(2*i+j),i,j,ALIGNMENT,MuV);
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 5855d1d7f5..437294d0fb 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -14,6 +14,7 @@
+ 
+ #include "apple-gfx.h"
+ #include "trace.h"
++#include "qemu-main.h"
+ #include "qemu/main-loop.h"
+ #include "ui/console.h"
+ #include "monitor/monitor.h"
+@@ -309,6 +310,8 @@ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name)
+             error_report_err(local_err);
          }
      }
++
++    cocoa_enable_runloop_on_main_thread();
+ }
+ 
+ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+diff --git a/include/qemu-main.h b/include/qemu-main.h
+index 940960a7db..da4516e69e 100644
+--- a/include/qemu-main.h
++++ b/include/qemu-main.h
+@@ -8,4 +8,6 @@
+ int qemu_default_main(void);
+ extern int (*qemu_main)(void);
+ 
++void cocoa_enable_runloop_on_main_thread(void);
++
+ #endif /* QEMU_MAIN_H */
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 2935247cdd..ccef2aa93c 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -1941,6 +1941,7 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
+     exit(status);
+ }
+ 
++static bool run_as_cocoa_app = false;
+ static int cocoa_main(void)
+ {
+     QemuThread thread;
+@@ -1953,7 +1954,11 @@ static int cocoa_main(void)
+ 
+     // Start the main event loop
+     COCOA_DEBUG("Main thread: entering OSX run loop\n");
+-    [NSApp run];
++    if (run_as_cocoa_app) {
++        [NSApp run];
++    } else {
++        CFRunLoopRun();
++    }
+     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
+ 
+     abort();
+@@ -2012,13 +2017,19 @@ static void cocoa_refresh(DisplayChangeListener *dcl)
+     [pool release];
+ }
+ 
++void cocoa_enable_runloop_on_main_thread(void)
++{
++    qemu_main = cocoa_main;
++}
++
+ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ {
+     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+ 
+     COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
+ 
+-    qemu_main = cocoa_main;
++    run_as_cocoa_app = true;
++    cocoa_enable_runloop_on_main_thread();
+ 
+     // Pull this console process up to being a fully-fledged graphical
+     // app with a menubar and Dock icon
 -- 
-2.39.2
+2.39.3 (Apple Git-146)
 
 
