@@ -4,110 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64152C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 17:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599F6C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 18:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTPrw-0004mV-Iu; Mon, 15 Jul 2024 13:52:12 -0400
+	id 1sTQWz-0006tq-5S; Mon, 15 Jul 2024 14:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sTPrv-0004lu-1Y
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:52:11 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sTPrt-0006ge-I2
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:52:10 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 705D91F833;
- Mon, 15 Jul 2024 17:52:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721065927; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Gvv6QsC05O0yRUOL9IwASKdXg5sghzQCpN10VgcYfRY=;
- b=KCX4prKkJEs/4g3A7trba/HEPnJMtZB1G40nTffRDHbxoAk7lbaQfLfQGThBaopDb0OGgr
- 2ACe52zIaOJsUWmtNZfNscG/8Z4oVTvrkkehvmWp5LGHJ7o/gN+8aFDHCEqS7Y6PL2f/bv
- B+WoxXtmklh/bjiJC0sUNSUOTcArvVY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721065927;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Gvv6QsC05O0yRUOL9IwASKdXg5sghzQCpN10VgcYfRY=;
- b=ZcwbjmkJVNxZXUkgX5Y+v0kVGvxxSpT4sBtaqffBuiULS0XHseoTtDcECuq0b275A5CM2f
- V38+qW0r4OtZHnBQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721065926; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Gvv6QsC05O0yRUOL9IwASKdXg5sghzQCpN10VgcYfRY=;
- b=bLWbYwY5zYOFMwBdT7AHFGo58QQUjgoeALUaKDKxUp3GcFCQZ/KARJG2nnwGSFHmQVSM+j
- j+ukoCogEK/2lMarDZjDhwQfeYAkK/D99NLM1HFt/wjZxllo61l+onRslpVlsP8U97+X3J
- 2ICEEq8f/9jPVgEUBf1epl5ZHw441O8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721065926;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Gvv6QsC05O0yRUOL9IwASKdXg5sghzQCpN10VgcYfRY=;
- b=UalqbPFt/ctrgDUV83OA36Whsz39NECTX0mFXSVfEmpwv2Sf8qDmBmu6ZEm0MChiTyRBzY
- Mv/t5FLtRckjLBAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E9AD6137EB;
- Mon, 15 Jul 2024 17:52:05 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id V8BnK8VhlWZnKgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 15 Jul 2024 17:52:05 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Steve Sistare
- <steven.sistare@oracle.com>
-Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
-In-Reply-To: <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
-Date: Mon, 15 Jul 2024 14:52:03 -0300
-Message-ID: <87r0buczlo.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
+ id 1sTQWw-0006re-Os; Mon, 15 Jul 2024 14:34:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
+ id 1sTQWv-0007EU-4K; Mon, 15 Jul 2024 14:34:34 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46FIQqIB001291;
+ Mon, 15 Jul 2024 18:34:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=urfWThjjFr3ZYoB0jXnKk9ybnZ
+ y/dhWicBOk/Re0UEw=; b=hfkKEEACr+TYNAfT3rD7FNmFF6eyH4O195jeRyel++
+ pq1G0dE0JRyRi76uJ++5YZ3ujwaBk5afFQWwPYg5wJhAfBRxogmsVtcmaXmQhTiK
+ aqZR5MtmMwy0XN6DE2TD66kkI5voHZgGKffv+XTBOZdYxaei7Q6v6vVkDlYEYgOk
+ Z0ddoWPW9CA9p45df2lYlyFLG/EWRF9BCIopjowXxYjG8VmFDpqFoz7LwFRmDotM
+ FOEvj75wspShV2petEpOD0SlXsUDbUj/4dPhEupF3qGwQb8Bz9H+dnxbxUNyLFDE
+ nG85NnKFSUUZJwgyspfRLp2Y06wn0T9+7lZLo86D3I8A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40d7rqr7eb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2024 18:34:21 +0000 (GMT)
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46FIVHFD007101;
+ Mon, 15 Jul 2024 18:34:21 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40d7rqr7e8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2024 18:34:21 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46FExFZg028723; Mon, 15 Jul 2024 18:34:20 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40c6m2ywy6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2024 18:34:20 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46FIYF6e13697476
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 15 Jul 2024 18:34:17 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3BB5020040;
+ Mon, 15 Jul 2024 18:34:15 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0FE2C20043;
+ Mon, 15 Jul 2024 18:34:14 +0000 (GMT)
+Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 15 Jul 2024 18:34:13 +0000 (GMT)
+From: Michael Kowal <kowal@linux.vnet.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ npiggin@gmail.com, milesg@linux.ibm.com
+Subject: [PATCH v2 0/9] XIVE changes for Cache Watch, VSTs, STT and info pic
+Date: Mon, 15 Jul 2024 13:33:23 -0500
+Message-Id: <20240715183332.27287-1-kowal@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-1.60 / 50.00]; BAYES_HAM(-1.80)[93.81%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[11];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org,oracle.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, oracle.com:email,
- suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: wsdzXdatImug5IyRcBpyPfOXyo4RFFDi
+X-Proofpoint-ORIG-GUID: o3nyKDgdCPV-Me8EihtvYtonDQKeX5af
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-15_12,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 clxscore=1011 mlxscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=563 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407150143
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=kowal@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,33 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+These changes provide enhanced support of the External Interrupt Virtualization
+Engine.  The changes are focused on the following areas:
+ - Cache Watch, Cache Flush and Sync Injection
+ - Virtual Structure Tables
+ - Set Translation Table
+ - 'info pic' command data that is dumped
 
-> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
-> on the value of the anon-alloc machine property.  This affects
-> memory-backend-ram objects, guest RAM created with the global -m option
-> but without an associated memory-backend object and without the -mem-path
-> option, and various memory regions such as ROMs that are allocated when
-> devices are created.  This option does not affect memory-backend-file,
-> memory-backend-memfd, or memory-backend-epc objects.
->
-> The memfd option is intended to support new migration modes, in which the
-> memory region can be transferred in place to a new QEMU process, by sending
-> the memfd file descriptor to the process.  Memory contents are preserved,
-> and if the mode also transfers device descriptors, then pages that are
-> locked in memory for DMA remain locked.  This behavior is a pre-requisite
-> for supporting vfio, vdpa, and iommufd devices with the new modes.
->
-> To access the same memory in the old and new QEMU processes, the memory
-> must be mapped shared.  Therefore, the implementation always sets
-> RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
-> user must explicitly specify the share option.  In lieu of defining a new
-> RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
-> as the condition for calling memfd_create.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Frederic Barrat (7):
+  pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync Injection support
+  pnv/xive2: Add NVG and NVC to cache watch facility
+  pnv/xive2: Configure Virtualization Structure Tables through the PC
+  pnv/xive2: Enable VST NVG and NVC index compression
+  pnv/xive2: Set Translation Table for the NVC port space
+  pnv/xive2: Fail VST entry address computation if table has no VSD
+  pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
 
-The commit message is inconsistent with alloc-anon, anon-alloc.
+Michael Kowal (1):
+  pnv/xive2: Structure/define alignment changes
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Nicholas Piggin (1):
+  pnv/xive: Support cache flush and queue sync inject with notifications
+
+ hw/intc/pnv_xive2_regs.h    | 108 +++++++
+ include/hw/ppc/pnv_chip.h   |   1 +
+ include/hw/ppc/xive2_regs.h |   9 +
+ hw/intc/pnv_xive2.c         | 563 ++++++++++++++++++++++++++++++------
+ hw/intc/xive.c              |  12 +-
+ hw/intc/xive2.c             |  33 ++-
+ 6 files changed, 630 insertions(+), 96 deletions(-)
+
+--
+2.43.0
+
 
