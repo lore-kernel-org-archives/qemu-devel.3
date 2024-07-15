@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37CDC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 23:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 192B4C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 23:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTUro-0004zs-Ol; Mon, 15 Jul 2024 19:12:24 -0400
+	id 1sTUtE-0000hJ-Gh; Mon, 15 Jul 2024 19:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sTUrn-0004zO-QQ
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 19:12:23 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sTUtC-0000gH-QV; Mon, 15 Jul 2024 19:13:50 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sTUrl-0008Dq-Pq
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 19:12:23 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fb457b53c8so39860405ad.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 16:12:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sTUt4-0008W9-AL; Mon, 15 Jul 2024 19:13:50 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-4f2ee99e2d0so1431237e0c.0; 
+ Mon, 15 Jul 2024 16:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721085140; x=1721689940; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SwqeC+CBi7ipCIU/O9Ca47RDN0i1Obb0QQKO7S/4yok=;
- b=X4EWWBzuvtgKbqd5h+Z204Ee095AhfLMzKDAhNCf2kMRmVAN6XsmAM5w1jtlxDuPPC
- 62v+at6f5Mc4U5bEiUSl/YI8p9QDIfab5IqNOqt4+h4MVNn58CwLkErNHh5BjW7oB/l+
- NQ/agSYnFGhEbwa1EoUmRHM0Hm/bLS03l6Z5CmrQRsxixdc6WDFiu+rqFIJQYHN4xu0E
- sg+EVLOPAFOljAnz5T9vAdieltwga8qRk6V6W+eOf2Dm0+Fqc2rA1B3edwfMExXg8Bo3
- A5Z8H21AjzFo3RmBCoP1bK3oE8kX4v8HOq9hyoyoZmioM4TPhOBQ9l43ik+2CkXXj4R/
- nfMQ==
+ d=gmail.com; s=20230601; t=1721085220; x=1721690020; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YP2pa5m2p/qQSsKudUcc+T1gLsbfHKca4hCaD7YWDLo=;
+ b=jSI7IjYwmJLm9mZ7hLRE3KYEnSLO+FxT9rspCWbZDU5MELif2kvZR40Li1gnxfbn9L
+ M7kmsTLR/f9IR10uUoyIuteQdZZylKq3sX3koZe2bTYGF1ohygjnf71lOAbaMShDuqZa
+ BJFCfpwRj2KY7MBAnFu0KiuS6ItZT1BeYKX8rqrq4qubA9gUe9ULQogiVEKt9RP8GmDS
+ XfdS9yMpFqWUfsKuhb1ZrP4iHaCDoPgmBeAxakosbVZ7tsryWF7EhH2YgjTTOELfFlVL
+ ODh5FwyQ7hfJFvjEcPX7l9gOFHO+9OqykLUoNceIQWBEir43KFTZD4HNkccSR1JKt4tM
+ VkbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721085140; x=1721689940;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SwqeC+CBi7ipCIU/O9Ca47RDN0i1Obb0QQKO7S/4yok=;
- b=qLyEb+XBfEXxM9GX8BQSPVD4tBgtukl7wnL+W6BfNK75AIDoGtJ9k2SGaMN8gfGHG+
- rz0T4NTwN7bP/Jp8EyFnDGd/2EkxqNS3lFLm6vRdPSR++8/8mOBqgZuYKpPbog7p9Eo0
- ppiPKBzKJQeBytJfzvGKh//V7azqTunn3QVllA2623OTGRt2gYvQLs9uYzPDgCOIF8gh
- APQBrfc0iMcdGriHw6U/Ew5FH51LFYzD1jM14XWu1+wa4SxfCEm0RhfA0AMO+tiV9jJ2
- tnNj6+IhYSQeKCfnZlQ48nlIw+U7PDWJXqxy2DuFNDkhc9ZHUyGi7SsP9mp1enXbhJzK
- ZXMg==
+ d=1e100.net; s=20230601; t=1721085220; x=1721690020;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YP2pa5m2p/qQSsKudUcc+T1gLsbfHKca4hCaD7YWDLo=;
+ b=tDAKHLc7hEDVw0tpdd7RTDZbxHBvGorNRagQiCgS+HaCkHr8nkvbxVVervv4dm1VGF
+ hkkGU0ZKh1R5xBkQsiHByDNhn+mUhq+K7cCWfo0nh4KK14jyp+Uv0NtgqgoF8QD0pNH6
+ XuVUqPJoZF03gMJg31SLTnou7MGyoNEcXhb8DBgV+DCh3ZlSv3FEUD+9RduBQ6w4LtoH
+ H872xJ/+e2dvwUphRwj+r93SkMecZFQvvOu8yznUYpnKu9rvM9wlO43rjP+VpTl1azwn
+ TBg1BaWkOtMMnwr/zCdlzRyK1NSRPEr36ccuHZuHgQA069ltEahpFLRxLPt4mqXeF/bx
+ oixw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqILE5P0CitDAnPoJSCscKkL7EIvVmpCvSEvmIRixQusscsnafkU8l3lZCuZE8VN9E6X1g3Ud7+SpcnXBn2Br4aytBkoE=
-X-Gm-Message-State: AOJu0Yw4jKo1Ay0m72QGs0HHT3a8EvSseYYWIWurNUYNrq9z/q7Z5O/D
- yIA3EvTAHvsvZ28/8+bBsE6MkHKCVj14liSqscQ8JV1mu4bEHgl2AMBgdTbYWC4=
-X-Google-Smtp-Source: AGHT+IFULYnFcw0BAfQEIvYBmcD81mUr2XVBC4ZJ/CdBPIacG/CgUIDdcl1AKBB8vZarDcN6F3XxNQ==
-X-Received: by 2002:a17:902:cec5:b0:1fb:6574:8366 with SMTP id
- d9443c01a7336-1fc3d9c4baemr3056885ad.51.1721085139839; 
- Mon, 15 Jul 2024 16:12:19 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::bfd3? ([2604:3d08:9384:1d00::bfd3])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bb70107sm46627855ad.43.2024.07.15.16.12.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jul 2024 16:12:19 -0700 (PDT)
-Message-ID: <3c9c625b-6442-4e2d-9f27-793d91e8d89c@linaro.org>
-Date: Mon, 15 Jul 2024 16:12:17 -0700
+ AJvYcCUgmdCJ+63vjyZfPIBqdxJl7GcAxnzSk0KkYb8HbYuauDrl6NWHrtKtF4xI8s5iovUvXwqdUFT6Te2YFmhaXMrq+XQlepA=
+X-Gm-Message-State: AOJu0YwEKkWBWta7w3JxQMVT2QcBjCdxmArNJtJqJg4IG07B9NsTTjL1
+ WlNt+VH1gF59yBt+Nx2pJcJgih7JVJCuKtXwvWKXiQHh0Uu5fFhTEb6FmWVInUhvMqCCGC2Yqjq
+ QKZJc0pseINTyv9/jYz1N5VEudM8=
+X-Google-Smtp-Source: AGHT+IHjLrzFuSBkYc327CA6YxaV6lK+0UEULzNoG+do9/XliWKanqiHo+A2jjJe2lmuVYxsIJhHdFbBZgo0T7w+jmY=
+X-Received: by 2002:a05:6122:3124:b0:4d4:21cc:5f4f with SMTP id
+ 71dfb90a1353d-4f4d08636femr459984e0c.11.1721085219978; Mon, 15 Jul 2024
+ 16:13:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] plugins/stoptrigger: TCG plugin to stop execution
- under conditions
-Content-Language: en-US
-To: Simon Hamelin <simon.hamelin@grenoble-inp.org>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240715081521.19122-2-simon.hamelin@grenoble-inp.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240715081521.19122-2-simon.hamelin@grenoble-inp.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240715090455.145888-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20240715090455.145888-1-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 16 Jul 2024 09:13:13 +1000
+Message-ID: <CAKmqyKO5Gi=pr=fFmqXJ8qgLNQ7tzecjRkdYns7syxEmZDKAXQ@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/riscv/virt.c: re-insert and deprecate 'riscv,
+ delegate'
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, Conor Dooley <conor@kernel.org>, 
+ Anup Patel <apatel@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,240 +93,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/24 01:15, Simon Hamelin wrote:
-> This new plugin allows to stop emulation using conditions on the
-> emulation state. By setting this plugin arguments, it is possible
-> to set an instruction count limit and/or trigger address(es) to stop at.
-> The code returned at emulation exit can be customized.
-> 
-> This plugin demonstrates how someone could stop QEMU execution.
-> It could be used for research purposes to launch some code and
-> deterministically stop it and understand where its execution flow went.
-> 
-> Co-authored-by: Alexandre Iooss <erdnaxe@crans.org>
-> Signed-off-by: Simon Hamelin <simon.hamelin@grenoble-inp.org>
-> Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
-> ---
-> v2:
->    - use a scoreboard for counting instructions
->    - no longer hook each instruction to exit at given address
->    - add `exit_emulation` function for future use case such as stopping the VM or triggering a gdbstub exception
-> 
-> v3:
->    - add missing glib include
->    - refactor code to print exit address when icount is reached
-> 
-> v4:
->    - remove unnecessary lock
-> 
->   contrib/plugins/Makefile      |   1 +
->   contrib/plugins/stoptrigger.c | 151 ++++++++++++++++++++++++++++++++++
->   docs/devel/tcg-plugins.rst    |  22 +++++
->   3 files changed, 174 insertions(+)
->   create mode 100644 contrib/plugins/stoptrigger.c
-> 
-> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-> index 449ead1130..98a89d5c40 100644
-> --- a/contrib/plugins/Makefile
-> +++ b/contrib/plugins/Makefile
-> @@ -28,6 +28,7 @@ NAMES += hwprofile
->   NAMES += cache
->   NAMES += drcov
->   NAMES += ips
-> +NAMES += stoptrigger
->   
->   ifeq ($(CONFIG_WIN32),y)
->   SO_SUFFIX := .dll
-> diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
-> new file mode 100644
-> index 0000000000..03ee22f4c6
-> --- /dev/null
-> +++ b/contrib/plugins/stoptrigger.c
-> @@ -0,0 +1,151 @@
-> +/*
-> + * Copyright (C) 2024, Simon Hamelin <simon.hamelin@grenoble-inp.org>
-> + *
-> + * Stop execution once a given address is reached or if the
-> + * count of executed instructions reached a specified limit
-> + *
-> + * License: GNU GPL, version 2 or later.
-> + *   See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include <assert.h>
-> +#include <glib.h>
-> +#include <inttypes.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +
-> +/* Scoreboard to track executed instructions count */
-> +typedef struct {
-> +    uint64_t insn_count;
-> +} InstructionsCount;
-> +static struct qemu_plugin_scoreboard *insn_count_sb;
-> +static qemu_plugin_u64 insn_count;
-> +
-> +static uint64_t icount;
-> +static int icount_exit_code;
-> +
-> +static bool exit_on_icount;
-> +static bool exit_on_address;
-> +
-> +/* Map trigger addresses to exit code */
-> +static GHashTable *addrs_ht;
-> +
-> +static void exit_emulation(int return_code, char *message)
-> +{
-> +    qemu_plugin_outs(message);
-> +    g_free(message);
-> +    exit(return_code);
-> +}
-> +
-> +static void exit_icount_reached(unsigned int cpu_index, void *udata)
-> +{
-> +    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-> +    char *msg = g_strdup_printf("icount reached at 0x%" PRIx64 ", exiting\n",
-> +                                insn_vaddr);
-> +
-> +    exit_emulation(icount_exit_code, msg);
-> +}
-> +
-> +static void exit_address_reached(unsigned int cpu_index, void *udata)
-> +{
-> +    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-> +    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", insn_vaddr);
-> +    int exit_code;
-> +
-> +    exit_code = GPOINTER_TO_INT(
-> +        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
-> +
-> +    exit_emulation(exit_code, msg);
-> +}
-> +
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    size_t tb_n = qemu_plugin_tb_n_insns(tb);
-> +    for (size_t i = 0; i < tb_n; i++) {
-> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-> +        gpointer insn_vaddr = GUINT_TO_POINTER(qemu_plugin_insn_vaddr(insn));
-> +
-> +        if (exit_on_icount) {
-> +            /* Increment and check scoreboard for each instruction */
-> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-> +                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-> +            qemu_plugin_register_vcpu_insn_exec_cond_cb(
-> +                insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
-> +                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr);
-> +        }
-> +
-> +        if (exit_on_address) {
-> +            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
-> +                /* Exit triggered by address */
-> +                qemu_plugin_register_vcpu_insn_exec_cb(
-> +                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
-> +                    insn_vaddr);
-> +            }
-> +        }
-> +    }
-> +}
-> +
-> +static void plugin_exit(qemu_plugin_id_t id, void *p)
-> +{
-> +    g_hash_table_destroy(addrs_ht);
-> +    qemu_plugin_scoreboard_free(insn_count_sb);
-> +}
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info, int argc,
-> +                                           char **argv)
-> +{
-> +    addrs_ht = g_hash_table_new(NULL, g_direct_equal);
-> +
-> +    insn_count_sb = qemu_plugin_scoreboard_new(sizeof(InstructionsCount));
-> +    insn_count = qemu_plugin_scoreboard_u64_in_struct(
-> +        insn_count_sb, InstructionsCount, insn_count);
-> +
-> +    for (int i = 0; i < argc; i++) {
-> +        char *opt = argv[i];
-> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-> +        if (g_strcmp0(tokens[0], "icount") == 0) {
-> +            g_auto(GStrv) icount_tokens = g_strsplit(tokens[1], ":", 2);
-> +            icount = g_ascii_strtoull(icount_tokens[0], NULL, 0);
-> +            if (icount < 1 || g_strrstr(icount_tokens[0], "-") != NULL) {
-> +                fprintf(stderr,
-> +                        "icount parsing failed: '%s' must be a positive "
-> +                        "integer\n",
-> +                        icount_tokens[0]);
-> +                return -1;
-> +            }
-> +            if (icount_tokens[1]) {
-> +                icount_exit_code = g_ascii_strtoull(icount_tokens[1], NULL, 0);
-> +            }
-> +            exit_on_icount = true;
-> +        } else if (g_strcmp0(tokens[0], "addr") == 0) {
-> +            g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
-> +            uint64_t exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
-> +            int exit_code = 0;
-> +            if (addr_tokens[1]) {
-> +                exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-> +            }
-> +            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
-> +                                GINT_TO_POINTER(exit_code));
-> +            exit_on_address = true;
-> +        } else {
-> +            fprintf(stderr, "option parsing failed: %s\n", opt);
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    if (!exit_on_icount && !exit_on_address) {
-> +        fprintf(stderr, "'icount' or 'addr' argument missing\n");
-> +        return -1;
-> +    }
-> +
-> +    /* Register translation block and exit callbacks */
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-> +
-> +    return 0;
-> +}
-> diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-> index f7d7b9e3a4..954623f9bf 100644
-> --- a/docs/devel/tcg-plugins.rst
-> +++ b/docs/devel/tcg-plugins.rst
-> @@ -642,6 +642,28 @@ The plugin has a number of arguments, all of them are optional:
->     configuration arguments implies ``l2=on``.
->     (default: N = 2097152 (2MB), B = 64, A = 16)
->   
-> +- contrib/plugins/stoptrigger.c
-> +
-> +The stoptrigger plugin allows to setup triggers to stop emulation.
-> +It can be used for research purposes to launch some code and precisely stop it
-> +and understand where its execution flow went.
-> +
-> +Two types of triggers can be configured: a count of instructions to stop at,
-> +or an address to stop at. Multiple triggers can be set at once.
-> +
-> +By default, QEMU will exit with return code 0. A custom return code can be
-> +configured for each trigger using ``:CODE`` syntax.
-> +
-> +For example, to stop at the 20-th instruction with return code 41, at address
-> +0xd4 with return code 0 or at address 0xd8 with return code 42::
-> +
-> +  $ qemu-system-aarch64 $(QEMU_ARGS) \
-> +    -plugin ./contrib/plugins/libstoptrigger.so,icount=20:41,addr=0xd4,addr=0xd8:42 -d plugin
-> +
-> +The plugin will log the reason of exit, for example::
-> +
-> +  0xd4 reached, exiting
-> +
->   Plugin API
->   ==========
->   
+On Mon, Jul 15, 2024 at 7:05=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Commit b1f1e9dcfa renamed 'riscv,delegate' to 'riscv,delegation' since
+> it is the correct name as per dt-bindings, and the absence of the
+> correct name will result in validation fails when dumping the dtb and
+> using dt-validate.
+>
+> But this change has a side-effect: every other firmware available that
+> is AIA capable is using 'riscv,delegate', and it will fault/misbehave if
+> this property isn't present. The property was added back in QEMU 7.0,
+> meaning we have 2 years of firmware development using the wrong
+> property.
+>
+> Re-introducing 'riscv,delegate' while keeping 'riscv,delegation' allows
+> older firmwares to keep booting with the 'virt' machine.
+> 'riscv,delegate' is then marked for future deprecation with its use
+> being discouraged from now on.
+>
+> Cc: Conor Dooley <conor@kernel.org>
+> Cc: Anup Patel <apatel@ventanamicro.com>
+> Fixes: b1f1e9dcfa ("hw/riscv/virt.c: aplic DT: rename prop to 'riscv, del=
+egation'")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
+> ---
+>
+> v2:
+>  - changed commit msg to remove the 'dt-validate won't complain about
+>    it' bit since that was incorrect.
+>
+>  docs/about/deprecated.rst | 11 +++++++++++
+>  hw/riscv/virt.c           |  9 +++++++++
+>  2 files changed, 20 insertions(+)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 20b7a17cf0..88f0f03786 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -479,6 +479,17 @@ versions, aliases will point to newer CPU model vers=
+ions
+>  depending on the machine type, so management software must
+>  resolve CPU model aliases before starting a virtual machine.
+>
+> +RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +The "riscv,delegate" DT property was added in QEMU 7.0 as part of
+> +the AIA APLIC support.  The property changed name during the review
+> +process in Linux and the correct name ended up being
+> +"riscv,delegation".  Changing the DT property name will break all
+> +available firmwares that are using the current (wrong) name.  The
+> +property is kept as is in 9.1, together with "riscv,delegation", to
+> +give more time for firmware developers to change their code.
+> +
+>  Migration
+>  ---------
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index bc0893e087..9981e0f6c9 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -651,6 +651,15 @@ static void create_fdt_one_aplic(RISCVVirtState *s, =
+int socket,
+>          qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
+>                                 aplic_child_phandle, 0x1,
+>                                 VIRT_IRQCHIP_NUM_SOURCES);
+> +        /*
+> +         * DEPRECATED_9.1: Compat property kept temporarily
+> +         * to allow old firmwares to work with AIA. Do *not*
+> +         * use 'riscv,delegate' in new code: use
+> +         * 'riscv,delegation' instead.
+> +         */
+> +        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
+> +                               aplic_child_phandle, 0x1,
+> +                               VIRT_IRQCHIP_NUM_SOURCES);
+>      }
+>
+>      riscv_socket_fdt_write_id(ms, aplic_name, socket);
+> --
+> 2.45.2
+>
+>
 
