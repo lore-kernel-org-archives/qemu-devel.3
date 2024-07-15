@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60774C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C669CC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2Uw-0000Z8-Bl; Wed, 17 Jul 2024 07:07:02 -0400
+	id 1sU2SG-0008TQ-VV; Wed, 17 Jul 2024 07:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Ug-0007th-36; Wed, 17 Jul 2024 07:06:48 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Ud-0007R4-IF; Wed, 17 Jul 2024 07:06:45 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E54B37B373;
- Wed, 17 Jul 2024 14:06:35 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5B74210B288;
- Wed, 17 Jul 2024 14:06:40 +0300 (MSK)
-Received: (nullmailer pid 844385 invoked by uid 1000);
- Wed, 17 Jul 2024 11:06:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
-Subject: [PULL 01/16] block/curl: rewrite http header parsing function
-Date: Wed, 17 Jul 2024 14:06:25 +0300
-Message-Id: <20240717110640.844335-2-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
-References: <20240717110640.844335-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
+ id 1sU2SD-0008Fq-HT
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:13 -0400
+Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
+ helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SB-0006yr-Cj
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:13 -0400
+Received: by intel-mbp.local (Postfix, from userid 501)
+ id 6EAE537964D; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
+ graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
+ akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
+Subject: [PATCH 23/26] hw/display/apple-gfx: Host GPU picking improvements
+Date: Mon, 15 Jul 2024 23:07:02 +0200
+Message-Id: <20240715210705.32365-24-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
+References: <20240715210705.32365-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
+ helo=intel-mbp.local
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
+ NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,79 +58,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Existing code was long, unclear and twisty.
+During startup of the PV graphics device, we need to specify the
+host GPU to use for PV acceleration of the guest's graphics
+operations.
 
-This also relaxes the rules a tiny bit: allows to have
-whitespace before header name and colon and makes the
-header value match to be case-insensitive.
+On a host system, this is trivial: pick the only one. The
+MTLCreateSystemDefaultDevice() function will do the right thing
+in this case.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+It gets a little more complicated on systems with more than one
+GPU; first and foremost, this applies to x86-64 MacBook Pros
+with 15/16" displays. However, with eGPUs, in theory any x86-64
+Mac can gain one or more additional GPUs. In these cases, the
+default is often not ideal - usually, discrete GPUs are selected.
+In my tests, performance tends to be best with iGPUs, however,
+and they are usually also best in terms of energy consumption.
+
+Ideally, we will want to allow the user to manually select a GPU
+if they so choose. In this patch, I am interested in picking a
+sensible default. Instead of the built-in default logic, it is
+now:
+
+ 1. Select a GPU with unified memory (iGPU)
+ 2. If (1) fails, select a GPU that is built-in, not an eGPU.
+ 3. If (2) fails, fall back to system default.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- block/curl.c | 44 ++++++++++++++++++--------------------------
- 1 file changed, 18 insertions(+), 26 deletions(-)
+ hw/display/apple-gfx.m | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index ef5252d00b..0fdb6d39ac 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -210,37 +210,29 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
- {
-     BDRVCURLState *s = opaque;
-     size_t realsize = size * nmemb;
--    const char *header = (char *)ptr;
--    const char *end = header + realsize;
--    const char *accept_ranges = "accept-ranges:";
--    const char *bytes = "bytes";
-+    const char *p = ptr;
-+    const char *end = p + realsize;
-+    const char *t = "accept-ranges : bytes "; /* A lowercase template */
- 
--    if (realsize >= strlen(accept_ranges)
--        && g_ascii_strncasecmp(header, accept_ranges,
--                               strlen(accept_ranges)) == 0) {
--
--        char *p = strchr(header, ':') + 1;
--
--        /* Skip whitespace between the header name and value. */
--        while (p < end && *p && g_ascii_isspace(*p)) {
--            p++;
--        }
--
--        if (end - p >= strlen(bytes)
--            && strncmp(p, bytes, strlen(bytes)) == 0) {
--
--            /* Check that there is nothing but whitespace after the value. */
--            p += strlen(bytes);
--            while (p < end && *p && g_ascii_isspace(*p)) {
--                p++;
--            }
--
--            if (p == end || !*p) {
--                s->accept_range = true;
-+    /* check if header matches the "t" template */
-+    for (;;) {
-+        if (*t == ' ') { /* space in t matches any amount of isspace in p */
-+            if (p < end && g_ascii_isspace(*p)) {
-+                ++p;
-+            } else {
-+                ++t;
-             }
-+        } else if (*t && p < end && *t == g_ascii_tolower(*p)) {
-+            ++p, ++t;
-+        } else {
-+            break;
-         }
-     }
- 
-+    if (!*t && p == end) { /* if we managed to reach ends of both strings */
-+        s->accept_range = true;
-+    }
-+
-     return realsize;
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index cbcbaf0006..6c92f2579b 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -502,6 +502,32 @@ static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
+     return mode_array;
  }
  
++static id<MTLDevice> copy_suitable_metal_device(void)
++{
++    id<MTLDevice> dev = nil;
++    NSArray<id<MTLDevice>> *devs = MTLCopyAllDevices();
++
++    /* Prefer a unified memory GPU. Failing that, pick a non-removable GPU. */
++    for (size_t i = 0; i < devs.count; ++i) {
++        if (devs[i].hasUnifiedMemory) {
++            dev = devs[i];
++            break;
++        }
++        if (!devs[i].removable) {
++            dev = devs[i];
++        }
++    }
++
++    if (dev != nil) {
++        [dev retain];
++    } else {
++        dev = MTLCreateSystemDefaultDevice();
++    }
++    [devs release];
++
++    return dev;
++}
++
+ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc)
+ {
+     PGDisplayDescriptor *disp_desc = nil;
+@@ -509,7 +535,7 @@ void apple_gfx_common_realize(AppleGFXState *s, PGDeviceDescriptor *desc)
+     QTAILQ_INIT(&s->tasks);
+     s->render_queue = dispatch_queue_create("apple-gfx.render",
+                                             DISPATCH_QUEUE_SERIAL);
+-    s->mtl = MTLCreateSystemDefaultDevice();
++    s->mtl = copy_suitable_metal_device();
+     s->mtl_queue = [s->mtl newCommandQueue];
+ 
+     desc.device = s->mtl;
 -- 
-2.39.2
+2.39.3 (Apple Git-146)
 
 
