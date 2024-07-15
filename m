@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32629C3DA45
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89085C3DA45
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTE7j-00081X-Oz; Mon, 15 Jul 2024 01:19:43 -0400
+	id 1sTE8P-0000Pn-DC; Mon, 15 Jul 2024 01:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTE7h-0007zR-Ra
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:19:42 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1sTE87-0008Ll-N5
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:20:08 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTE7f-0007Pt-TQ
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:19:41 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-75c3afd7a50so2337868a12.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:19:39 -0700 (PDT)
+ id 1sTE7y-0007RS-8Y
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:20:07 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3d9e13ef9aaso2515037b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721020778; x=1721625578;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721020788; x=1721625588;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JsbtY5prZSpna0aeKvQ7z0WtqDoYDHYeieY3EKi1VU0=;
- b=XhZPi231WSMhQ74LXuXTIObza0f76IOKz38IyE+3mLKoIksgHoWUFHA0PK98tphKxT
- EAzmg/wUY9AYIp3d4m5hyX3rchZNRX4gt89c2Vo2D8WGRkptnmhDakdy70vpFuCw8Y/3
- IpUvibX24pUlBLv7VUbyNNwPJ3eGxTxqRwxFHKaAHJ74inqEm9D71qukGNTOe7eNIUCf
- 9d51dLUShvD2LFHpjSNRnlTPCPaQCjLdeWDG8v3GhKLFkD3sZduHPfed+SUKc3myuu3t
- 0AOkTuwvx0qKu9/4ehea/M6yHxTWpT6kS742PU2/w6yxNeOScYYk5YG5m8bXFZh3xGYM
- 2chQ==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=YW/hY5XCH9ysRbsD3Qw09WbyPo+KgPIedwlSdOeEQ/I=;
+ b=VzZmLZmr7q2xwEIUbv44GKi5Vl6mvNijx/Ig0yyaCubVFmuaMXQZcbuZfSM5WCchTJ
+ Kx9DOo8z9RODFOcTNuBfdeJ09an6OetkDNqwkL+wJUFEeHrEpdBuTPE3YTQi3oHyMj4S
+ HFM6KB+giuBLPSbEMK+V2U/DNFhvzHeG4sLovs4I8O6/LmrbHCbVQaJfOGSuAheQRiqq
+ KGqsj+su2FXawj4IBCrC5HPTGu+zlK/zcbndHDuPdxg0wEgmQq63TyfnN4rCqP30x2IQ
+ ZboAFhPL0U9d1ASAs+g92qoOyLqOrpxBgHzPL4TDRnxNL4YYtIBkWEQiHUYWvxW0GJ8Q
+ 1esw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721020778; x=1721625578;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JsbtY5prZSpna0aeKvQ7z0WtqDoYDHYeieY3EKi1VU0=;
- b=LrwSDg0pG8sRiRfzMoBGEsHoP4NtP8OBz6z3CMfygUKos0ez6pyUB3AVqK4COY0UB8
- jPJBFAzmCBtWb3flZWr7oAfOSRLizpJtSTnK5+6gAsH+EGP0mf/WF5daxkxPLu69RW0H
- LPnI3gtFT/cI4p71w5Q1L7MDk/faZYVe4Wqckns/77BZQp2+UEJbunswiV/WbJWxWzQG
- fDCHF6NGTFjhzQ2h4BpYMorwDFJdkPR+vDuvrFH7fgS481nUwj5SN7H662bsYbAVysSR
- 6UzffMBvNnVrvr62KtG+zwuo8xAbAF2Rjwij0LyarrP3iBsDwdUcd5NCO9jX8I1w4gxj
- cvyQ==
-X-Gm-Message-State: AOJu0Ywkp6iTuKxP5nlMD2HBNkaidlDP/ij4COmc4fwxbMFuDFgTzEh8
- Ep7l8b8tOtm4+re9NeHjXg8uhghfetQbU3Bsu8OuLJvsn8PudsJ+iWbo72L2G4M=
-X-Google-Smtp-Source: AGHT+IHiY6ToCEbmy5maePsAG720f5n44WBj7hOfzjmncPtCIAtwkeND/F3Ot6tT1ewcCz3FHtttFg==
-X-Received: by 2002:a05:6a20:7284:b0:1c0:e77b:d37 with SMTP id
- adf61e73a8af0-1c2982038a4mr18617635637.9.1721020778074; 
- Sun, 14 Jul 2024 22:19:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721020788; x=1721625588;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YW/hY5XCH9ysRbsD3Qw09WbyPo+KgPIedwlSdOeEQ/I=;
+ b=klkMom2N37dAEGNZ9uRvclaqJHqpomgyp8qP4yUNzB4JrNRB+Z5yr4VAKAh1sAp6ca
+ RThFI1CfIR/ZNAQXzon3En18xIyTWfsiLp4QgH8ohm0aEagQy1IDDhYUYQGuIx2DT7H+
+ 0pV7pSVDa5BEtq2WE/zfnyGFP7k/nie0zFZf7knXyPB4rclrufiDY9/IZekKv0cl24YS
+ Qep/IReVTKn76ws5cteE2/yoMVenTsr+hbJdlSAmYsTyowKZkgUMRMWWxuyVfDnj++o9
+ RPMup+hp/jO1MTpR56k7ZpS4tqYWUyM5CqG326TscthDGwLT0FY8Pq58rtyYx4n23LwS
+ O4ZQ==
+X-Gm-Message-State: AOJu0YxZqUF7LTc1PIRKtWjI1p04uCCeE15d6gMRrKndcTNKiseg1qm0
+ Ekatpa2fxZA94xUgAoF+jCtDFkWcQymFzQnebTU9UGmwjxSuID/TVpoigIX8MLw=
+X-Google-Smtp-Source: AGHT+IFN2JQLdponyCJBZ1jucvrPQlDscMYYstuf9XCTzad79EXooRWCe+QA57JVUTSx+igDfVwE5g==
+X-Received: by 2002:a05:6870:82a4:b0:255:1819:b444 with SMTP id
+ 586e51a60fabf-25eae75ec76mr15200830fac.7.1721020788160; 
+ Sun, 14 Jul 2024 22:19:48 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fc0bc2751bsm31601615ad.143.2024.07.14.22.19.35
+ d2e1a72fcca58-70b7ecd301csm3437136b3a.220.2024.07.14.22.19.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 22:19:37 -0700 (PDT)
+ Sun, 14 Jul 2024 22:19:47 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v5 0/8] virtio-net: add support for SR-IOV emulation
-Date: Mon, 15 Jul 2024 14:19:06 +0900
-Message-Id: <20240715-sriov-v5-0-3f5539093ffc@daynix.com>
+Date: Mon, 15 Jul 2024 14:19:08 +0900
+Subject: [PATCH v5 2/8] hw/pci: Fix SR-IOV VF number calculation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEqxlGYC/2XMTQ6DIBRG0a00jEsDDxDsqPtoOgCByqDaQEM0x
- r0XTUx/nJB85J07oeRicAmdDxOKLocU+q4McTygptXd3eFgy0ZAgNHy4BRDn3HNCXgDFRinULl
- 9RufDsHaut7LbkF59HNdspsvvfyFTTDADw4QkXhpbXaweuzCcmv6BlkSGL0bJxqAwU4vaKV1Zr
- /2OsY1xwojYGCtMG2ukkJIwCTvGP4yD2hhfWKN0UwGFWv2yeZ7fUdHve0ABAAA=
+Message-Id: <20240715-sriov-v5-2-3f5539093ffc@daynix.com>
+References: <20240715-sriov-v5-0-3f5539093ffc@daynix.com>
+In-Reply-To: <20240715-sriov-v5-0-3f5539093ffc@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
  Alex Williamson <alex.williamson@redhat.com>, 
@@ -82,13 +80,13 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Yui Washizu <yui.washidu@gmail.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::534;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x534.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,125 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
-("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+pci_config_get_bar_addr() had a division by vf_stride. vf_stride needs
+to be non-zero when there are multiple VFs, but the specification does
+not prohibit to make it zero when there is only one VF.
 
-Introduction
-------------
+Do not perform the division for the first VF to avoid division by zero.
 
-This series is based on the RFC series submitted by Yui Washizu[1].
-See also [2] for the context.
-
-This series enables SR-IOV emulation for virtio-net. It is useful
-to test SR-IOV support on the guest, or to expose several vDPA devices
-in a VM. vDPA devices can also provide L2 switching feature for
-offloading though it is out of scope to allow the guest to configure
-such a feature.
-
-The PF side code resides in virtio-pci. The VF side code resides in
-the PCI common infrastructure, but it is restricted to work only for
-virtio-net-pci because of lack of validation.
-
-User Interface
---------------
-
-A user can configure a SR-IOV capable virtio-net device by adding
-virtio-net-pci functions to a bus. Below is a command line example:
-  -netdev user,id=n -netdev user,id=o
-  -netdev user,id=p -netdev user,id=q
-  -device pcie-root-port,id=b
-  -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
-  -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
-  -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
-  -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
-
-The VFs specify the paired PF with "sriov-pf" property. The PF must be
-added after all VFs. It is user's responsibility to ensure that VFs have
-function numbers larger than one of the PF, and the function numbers
-have a consistent stride.
-
-Keeping VF instances
---------------------
-
-A problem with SR-IOV emulation is that it needs to hotplug the VFs as
-the guest requests. Previously, this behavior was implemented by
-realizing and unrealizing VFs at runtime. However, this strategy does
-not work well for the proposed virtio-net emulation; in this proposal,
-device options passed in the command line must be maintained as VFs
-are hotplugged, but they are consumed when the machine starts and not
-available after that, which makes realizing VFs at runtime impossible.
-
-As an strategy alternative to runtime realization/unrealization, this
-series proposes to reuse the code to power down PCI Express devices.
-When a PCI Express device is powered down, it will be hidden from the
-guest but will be kept realized. This effectively implements the
-behavior we need for the SR-IOV emulation.
-
-Summary
--------
-
-Patch 1 disables ROM BAR, which virtio-net-pci enables by default, for
-VFs.
-Patch 2 makes zero stride valid for 1 VF configuration.
-Patch 3 and 4 adds validations.
-Patch 5 adds user-created SR-IOV VF infrastructure.
-Patch 6 makes virtio-pci work as SR-IOV PF for user-created VFs.
-Patch 7 allows user to create SR-IOV VFs with virtio-net-pci.
-
-[1] https://patchew.org/QEMU/1689731808-3009-1-git-send-email-yui.washidu@gmail.com/
-[2] https://lore.kernel.org/all/5d46f455-f530-4e5e-9ae7-13a2297d4bc5@daynix.com/
-
-Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v5:
-- Dropped the RFC tag.
-- Fixed device unrealization.
-- Rebased.
-- Link to v4: https://lore.kernel.org/r/20240428-sriov-v4-0-ac8ac6212982@daynix.com
+ hw/pci/pci.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Changes in v4:
-- Added patch "hw/pci: Fix SR-IOV VF number calculation" to fix division
-  by zero reported by Yui Washizu.
-- Rebased.
-- Link to v3: https://lore.kernel.org/r/20240305-sriov-v3-0-abdb75770372@daynix.com
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 497a057b79f9..ae7137d70579 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1490,7 +1490,11 @@ static pcibus_t pci_config_get_bar_addr(PCIDevice *d, int reg,
+             pci_get_word(pf->config + sriov_cap + PCI_SRIOV_VF_OFFSET);
+         uint16_t vf_stride =
+             pci_get_word(pf->config + sriov_cap + PCI_SRIOV_VF_STRIDE);
+-        uint32_t vf_num = (d->devfn - (pf->devfn + vf_offset)) / vf_stride;
++        uint32_t vf_num = d->devfn - (pf->devfn + vf_offset);
++
++        if (vf_num) {
++            vf_num /= vf_stride;
++        }
+ 
+         if (type & PCI_BASE_ADDRESS_MEM_TYPE_64) {
+             new_addr = pci_get_quad(pf->config + bar);
 
-Changes in v3:
-- Rebased.
-- Link to v2: https://lore.kernel.org/r/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com
-
-Changes in v2:
-- Changed to keep VF instances.
-- Link to v1: https://lore.kernel.org/r/20231202-sriov-v1-0-32b3570f7bd6@daynix.com
-
----
-Akihiko Odaki (8):
-      hw/pci: Do not add ROM BAR for SR-IOV VF
-      hw/pci: Fix SR-IOV VF number calculation
-      pcie_sriov: Ensure PF and VF are mutually exclusive
-      pcie_sriov: Check PCI Express for SR-IOV PF
-      pcie_sriov: Allow user to create SR-IOV device
-      virtio-pci: Implement SR-IOV PF
-      virtio-net: Implement SR-IOV VF
-      docs: Document composable SR-IOV device
-
- MAINTAINERS                    |   1 +
- docs/system/index.rst          |   1 +
- docs/system/sriov.rst          |  36 +++++
- include/hw/pci/pci_device.h    |   6 +-
- include/hw/pci/pcie_sriov.h    |  18 +++
- include/hw/virtio/virtio-pci.h |   1 +
- hw/pci/pci.c                   |  76 +++++++----
- hw/pci/pcie_sriov.c            | 298 +++++++++++++++++++++++++++++++++--------
- hw/virtio/virtio-net-pci.c     |   1 +
- hw/virtio/virtio-pci.c         |  20 ++-
- 10 files changed, 369 insertions(+), 89 deletions(-)
----
-base-commit: e7b8390b9167be9272c2c959919d9b397842da7f
-change-id: 20231202-sriov-9402fb262be8
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.45.2
 
 
