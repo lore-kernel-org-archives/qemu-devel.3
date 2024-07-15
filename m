@@ -4,59 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7DCC3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 01:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51228C3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 01:53:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTAaf-00066i-UJ; Sun, 14 Jul 2024 21:33:21 -0400
+	id 1sTAtc-0004T2-Ue; Sun, 14 Jul 2024 21:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sTAae-00065h-3u; Sun, 14 Jul 2024 21:33:20 -0400
-Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sTAab-00057I-Vi; Sun, 14 Jul 2024 21:33:19 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sTAtb-0004Q0-1C
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 21:52:55 -0400
+Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sTAtZ-0001JI-FC
+ for qemu-devel@nongnu.org; Sun, 14 Jul 2024 21:52:54 -0400
+Received: by mail-il1-x133.google.com with SMTP id
+ e9e14a558f8ab-38b4e08c3e5so17384915ab.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 18:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1721007193; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=ObAsYTxWauE4NRBUtRwdGM7Yi+guC0pd/RDbRLa7Y4k=;
- b=Ud/xINOtMIFE1tIKlsnnQbgbfj/DO36GFZ9YBDdtP1bO2V3nBDCuX8zOzszWbkuo58s4Ad5opBeycTvjCxryJXhKW7HaUDw20KiF4Cdxv85OtdPmOu+zfy0IsB44XehIzxQMk348kSHNzZeHGeP3+acZX+vNDLudaB7xoNKJ0vo=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032019045;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0WAUQTA7_1721007191; 
-Received: from 30.166.64.89(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WAUQTA7_1721007191) by smtp.aliyun-inc.com;
- Mon, 15 Jul 2024 09:33:11 +0800
-Message-ID: <15738b4e-a014-40ba-9152-659afee5dc3f@linux.alibaba.com>
-Date: Mon, 15 Jul 2024 09:31:42 +0800
+ d=linaro.org; s=google; t=1721008371; x=1721613171; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=akjSYTi/SIhG7vng2qickbX58PdWGOOzZOgyUEXA0bQ=;
+ b=cNjsSAQiu7Pf/P2hRf0+vw+8GhqerLjM5EoqOgMBBbK2jpOa07gXrFVn6eX3BvTVLN
+ 9oohZscbXqVU18FQo75GCC7vDMfr6w+9VTc9LMnSis/1FuOC/WELVnzvxmBJMo2lBsZH
+ ZF/jZx3L6+m7MNgcoEckmrjrXwaWh/L0IMytHa+WKrjzWA12VtbVgCfOMpz8wMgdKX/4
+ I0pjaTg95od+CcyzvERx6MMS70skxmwK3b2mwOaOU0YBic/FiPUPil/i7iSsNlMb6bue
+ kNhnsT0VbBCqqzE8aux3bTJPPWjETtlJdpnoWHzwyYC/4AKC7ZBW8A9G9UXYvFjQ0pmC
+ BIAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721008371; x=1721613171;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=akjSYTi/SIhG7vng2qickbX58PdWGOOzZOgyUEXA0bQ=;
+ b=k8fRDfpJlMSaOI22bXV7eQFsNrMNaKSFvYDRIYrab3eEdvKCZXD9eMNv1HAmUnmEow
+ c5c1akxsmiJebB5EmgICGIBmHNIo1C1sbLqnC1wMFMNUlMvgasKqd0DkEQ45QYmmX/Ro
+ GZYC1LUsEMYgvff7wkKDOiDyMTx4w/oaR62x0TJ66Y/YcQCyKF9rOV3v+VKuHDO4EYlt
+ 37KZppjLkMPccEEMiiv6nGfVHxY+rNUymbUL4nPc89it6XNIzc1UbwPy+QuZO0FGmBs9
+ z9nzgYxafg2Oiwq1wtOMeJA7Vi39xhDZvFjK9F48sOfjBZN2dDIBH5PIkYzd4LAvbRLf
+ OkgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFCvQA9vKq4AyBnPIXOCa7yksS4bnegvCtgjOOd0DGjnistFdXtu82ALVcYtNFJiViZdJ7aExV+ZzZGlqucCJZsM0KCqQ=
+X-Gm-Message-State: AOJu0Yyhfmn7oRXx4n8nKWi/vG2X3u2A2wVfOY7kpCm8JZJbBKcZbarY
+ SVzCok5qwIu337YzPC2T1IunsXT7piRphzcaDp5RTmOL52VeeepoJLaZFtMRuII=
+X-Google-Smtp-Source: AGHT+IF+jX1G/VdAz662j+sSCwOjHuUcKXhWxL5aqJJmKtboiM5AYhuQuvDaDTBS2RbpkMLBxfP3hg==
+X-Received: by 2002:a05:6e02:1526:b0:381:aa0b:3ccc with SMTP id
+ e9e14a558f8ab-38a592f4bf4mr215060645ab.30.1721008371278; 
+ Sun, 14 Jul 2024 18:52:51 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7eba0de4sm3169605b3a.3.2024.07.14.18.52.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 14 Jul 2024 18:52:50 -0700 (PDT)
+Message-ID: <bbce3c1f-5d6b-41ab-8450-069089ad66fd@linaro.org>
+Date: Mon, 15 Jul 2024 11:52:42 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/7] target/riscv: Expose RV32 cpu to RV64 QEMU
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, bmeng.cn@gmail.com, =?UTF-8?B?55Sy5LiA?=
- <lzw194868@alibaba-inc.com>
-References: <20240710022430.1306-1-zhiwei_liu@linux.alibaba.com>
- <d46477b2-b0f0-4bf4-8c20-2ff2466d4d5f@ventanamicro.com>
+Subject: Re: [PULL v2 0/1] ufs queue
+To: Jeuk Kim <jeuk20.kim@gmail.com>, qemu-devel@nongnu.org
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com, thuth@redhat.com
+References: <cover.1720944812.git.jeuk20.kim@samsung.com>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <d46477b2-b0f0-4bf4-8c20-2ff2466d4d5f@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <cover.1720944812.git.jeuk20.kim@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x133.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,105 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/14/24 01:24, Jeuk Kim wrote:
+> From: Jeuk Kim<jeuk20.kim@samsung.com>
+> 
+> The following changes since commit 37fbfda8f4145ba1700f63f0cb7be4c108d545de:
+> 
+>    Merge tag 'edgar/xen-queue-2024-07-12.for-upstream' ofhttps://gitlab.com/edgar.iglesias/qemu  into staging (2024-07-12 09:53:22 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/jeuk20.kim/qemu.git  tags/pull-ufs-20240714
+> 
+> for you to fetch changes up to 50475f1511964775ff73c2b07239c3ff571f75cd:
+> 
+>    hw/ufs: Fix mcq register range check logic (2024-07-14 17:11:21 +0900)
+> 
+> ----------------------------------------------------------------
+> hw/ufs:
+>   - Fix invalid address access in mcq register check
+> 
+> I didn't cc qemu-stable@, as 5c079578d2e4 ("hw/ufs: Add support MCQ of
+> UFSHCI 4.0") is not yet included in any release tag. If I'm wrong,
+> please let me know. Thanks.
 
-On 2024/7/12 17:57, Daniel Henrique Barboza wrote:
->
->
-> On 7/9/24 11:24 PM, LIU Zhiwei wrote:
->> From: 甲一 <lzw194868@alibaba-inc.com>
->>
->> This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
->> qemu-system-riscv64 can directly boot a RV32 Linux.
->>
->> This patch set has been tested with 6.9.0 Linux Image.
->> And add an avocado test in tests/avocado.
->
-> Thanks for this work and sorry for the late review.
->
-> One thing to look out as a follow-up is the 'max' CPU. It has the same 
-> name
-> in both 32 and 64 bits so it'll result in a conflict with the 'max' 
-> CPU for
-> rv64.
->
-> One easy way out is to add a new 'max32' bit CPU for riscv32, which 
-> would be an
-> alias for the 'max' CPU, then adding 'max32' support in rv64.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-I think it is good. One question is if we should also add any32 cpu for 
-rv64, which has the similar conflict of 'max' CPU.
-
-Thanks,
-Zhiwei
-
->
->
-> Thanks,
->
-> Daniel
->
->
->>
->> # make check-avocado 
->> AVOCADO_TESTS=/home/jenkins/git/qemu/tests/avocado/boot_linux_console.py:BootLinuxConsole.test_riscv64_virt_rv32i
->>    VENVPIP install -e /home/jenkins/git/qemu/python/
->> /home/jenkins/git/qemu/build/pyvenv/bin/python3 -B 
->> /home/jenkins/git/qemu/python/scripts/mkvenv.py ensuregroup --online 
->> /home/jenkins/git/qemu/pythondeps.toml avocado
->> mkvenv: checking for avocado-framework(>=88.1, <93.0)
->> mkvenv: checking for pycdlib>=1.11.0
->> mkvenv: installing avocado-framework==88.1, pycdlib>=1.11.0
->>    AVOCADO tests/avocado
->> Fetching asset from 
->> /home/jenkins/git/qemu/tests/avocado/boot_linux_console.py:BootLinuxConsole.test_riscv64_virt_rv32i
->> Fetching asset from 
->> /home/jenkins/git/qemu/tests/avocado/boot_linux_console.py:BootLinuxConsole.test_riscv64_virt_rv32i
->> JOB ID     : 8c2e1ff918d3111d078a52eba9956893afaf9e1d
->> JOB LOG    : 
->> /home/jenkins/git/qemu/build/tests/results/job-2024-07-10T09.55-8c2e1ff/job.log
->>   (1/1) 
->> /home/jenkins/git/qemu/tests/avocado/boot_linux_console.py:BootLinuxConsole.test_riscv64_virt_rv32i: 
->> PASS (17.50 s)
->> RESULTS    : PASS 1 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 
->> 0 | CANCEL 0
->> JOB TIME   : 29.50 s
->>
->> v5:
->>    Rebase to master and add tags
->>
->> v4:
->>    Drop UL completely in PATCH v3 2/7, 4/7, 5/7.
->>    Avocado: Add "if=none" to "-drive" option in QEMU command line
->>
->> v3:
->>    Rebase to the master branch
->>
->> v2:
->>    Remove the line that was inadvertently left in PATCH v1 4/6.
->>    Add an avocado test.
->>
->> v1:
->> https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00501.html
->>
->> TANG Tiancheng (7):
->>    target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
->>    target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
->>    target/riscv: Correct SXL return value for RV32 in RV64 QEMU
->>    target/riscv: Detect sxl to set bit width for RV32 in RV64
->>    target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
->>    target/riscv: Enable RV32 CPU support in RV64 QEMU
->>    tests/avocado: Add an avocado test for riscv64
->>
->>   configs/targets/riscv64-softmmu.mak |  2 +-
->>   hw/riscv/boot.c                     | 35 +++++++++++++++++---------
->>   hw/riscv/sifive_u.c                 |  3 ++-
->>   include/hw/riscv/boot.h             |  4 ++-
->>   include/hw/riscv/boot_opensbi.h     | 29 ++++++++++++++++++++++
->>   target/riscv/cpu.c                  | 17 ++++++++++---
->>   target/riscv/cpu.h                  |  5 +++-
->>   target/riscv/cpu_helper.c           | 25 +++++++++++++------
->>   target/riscv/pmp.c                  |  2 +-
->>   tests/avocado/boot_linux_console.py | 38 +++++++++++++++++++++++++++++
->>   10 files changed, 132 insertions(+), 28 deletions(-)
->>
+r~
 
