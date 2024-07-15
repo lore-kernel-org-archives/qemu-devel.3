@@ -4,32 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF47C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D230C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2SF-0008M9-4s; Wed, 17 Jul 2024 07:04:15 -0400
+	id 1sU2TM-000579-Tg; Wed, 17 Jul 2024 07:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
- id 1sU2SC-0008AW-7l
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:12 -0400
+ id 1sU2SR-0000h8-3J
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:29 -0400
 Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
  helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <phil@intel-mbp.local>) id 1sU2S8-0006yB-QZ
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:11 -0400
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SN-0006yr-Sk
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:26 -0400
 Received: by intel-mbp.local (Postfix, from userid 501)
- id 0E13837961F; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+ id 4D97437963E; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
  graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
  akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
-Subject: [PATCH 10/26] hw/display/apple-gfx: Fixes ObjC new/init misuse,
- plugs leaks
-Date: Mon, 15 Jul 2024 23:06:49 +0200
-Message-Id: <20240715210705.32365-11-phil@philjordan.eu>
+Subject: [PATCH 18/26] hw/display/apple-gfx: Adds PCI implementation
+Date: Mon, 15 Jul 2024 23:06:57 +0200
+Message-Id: <20240715210705.32365-19-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
 References: <20240715210705.32365-1-phil@philjordan.eu>
@@ -59,85 +58,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The creation of Objective-C objects is split between 'alloc' and
-'init...' methods. The single 'new' method is shorthand for alloc+init.
-Calling 'new' then 'init...' is therefore redundant. The instances of
-new + initWith... are replaced with the alloc/initWith... pattern and
-the zero-argument 'init' call is removed from instances of the
-new + init pattern.
-
-'new' and alloc+init return an object with a retain count of 1. The
-change therefore also inserts release calls for temporary objects
-created in this way to prevent them leaking.
+This change wires up the PCI variant of the paravirtualised
+graphics device, mainly useful for x86-64 macOS guests, implemented
+by macOS's ParavirtualizedGraphics.framework. It builds on the shared
+code previously split from the vmapple MMIO variant of the device.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- hw/display/apple-gfx.m | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ hw/display/Kconfig         |   5 ++
+ hw/display/apple-gfx-pci.m | 125 +++++++++++++++++++++++++++++++++++++
+ hw/display/meson.build     |   1 +
+ 3 files changed, 131 insertions(+)
+ create mode 100644 hw/display/apple-gfx-pci.m
 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 7f0a231d26..073741ede5 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -63,7 +63,7 @@ -(PGIOSurfaceHostDeviceDescriptor *)init;
- @end
- 
- @interface PGIOSurfaceHostDevice : NSObject
---(void)initWithDescriptor:(PGIOSurfaceHostDeviceDescriptor *) desc;
-+-(instancetype)initWithDescriptor:(PGIOSurfaceHostDeviceDescriptor *) desc;
- -(uint32_t)mmioReadAtOffset:(size_t) offset;
- -(void)mmioWriteAtOffset:(size_t) offset value:(uint32_t)value;
- @end
-@@ -401,8 +401,8 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
--        modes[i] = [PGDisplayMode new];
--        [modes[i] initWithSizeInPixels:apple_gfx_modes[i] refreshRateInHz:60.];
-+        modes[i] =
-+            [[PGDisplayMode alloc] initWithSizeInPixels:apple_gfx_modes[i] refreshRateInHz:60.];
-     }
- 
-     s->mtl = MTLCreateSystemDefaultDevice();
-@@ -499,8 +499,9 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-     };
- 
-     s->pgdev = PGNewDeviceWithDescriptor(desc);
-+    [desc release];
-+    desc = nil;
- 
--    [disp_desc init];
-     disp_desc.name = @"QEMU display";
-     disp_desc.sizeInMillimeters = NSMakeSize(400., 300.); /* A 20" display */
-     disp_desc.queue = dispatch_get_main_queue();
-@@ -545,9 +546,14 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-     };
- 
-     s->pgdisp = [s->pgdev newDisplayWithDescriptor:disp_desc port:0 serialNum:1234];
-+    [disp_desc release];
-     s->pgdisp.modeList = [NSArray arrayWithObjects:modes count:ARRAY_SIZE(apple_gfx_modes)];
- 
--    [iosfc_desc init];
-+    for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
-+        [modes[i] release];
-+        modes[i] = nil;
+diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+index e3d10bf6ff..8a78a60670 100644
+--- a/hw/display/Kconfig
++++ b/hw/display/Kconfig
+@@ -151,3 +151,8 @@ config MAC_PVG
+ config MAC_PVG_VMAPPLE
+     bool
+     depends on MAC_PVG
++
++config MAC_PVG_PCI
++    bool
++    depends on MAC_PVG && PCI
++    default y if PCI_DEVICES
+diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
+new file mode 100644
+index 0000000000..bdbab35eed
+--- /dev/null
++++ b/hw/display/apple-gfx-pci.m
+@@ -0,0 +1,125 @@
++#include "apple-gfx.h"
++#include "hw/pci/pci_device.h"
++#include "hw/pci/msi.h"
++#include "qapi/error.h"
++#include "trace.h"
++#import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
++
++typedef struct AppleGFXPCIState {
++    PCIDevice parent_obj;
++
++    AppleGFXState common;
++} AppleGFXPCIState;
++
++OBJECT_DECLARE_SIMPLE_TYPE(AppleGFXPCIState, APPLE_GFX_PCI)
++
++static const char* apple_gfx_pci_option_rom_path = NULL;
++
++static void apple_gfx_init_option_rom_path(void)
++{
++    NSURL *option_rom_url = PGCopyOptionROMURL();
++    const char *option_rom_path = option_rom_url.fileSystemRepresentation;
++    if (option_rom_url.fileURL && option_rom_path != NULL) {
++        apple_gfx_pci_option_rom_path = g_strdup(option_rom_path);
++    }
++    [option_rom_url release];
++}
++
++static void apple_gfx_pci_init(Object *obj)
++{
++    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
++
++    if (!apple_gfx_pci_option_rom_path) {
++        /* Done on device not class init to avoid -daemonize ObjC fork crash */
++        PCIDeviceClass *pci = PCI_DEVICE_CLASS(object_get_class(obj));
++        apple_gfx_init_option_rom_path();
++        pci->romfile = apple_gfx_pci_option_rom_path;
 +    }
 +
-     iosfc_desc.mapMemory = ^(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-         trace_apple_iosfc_map_memory(phys, len, ro, va, e, f);
-         MemoryRegion *tmp_mr;
-@@ -573,8 +579,9 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-         return (bool)true;
-     };
++    apple_gfx_common_init(obj, &s->common, TYPE_APPLE_GFX_PCI);
++}
++
++static void apple_gfx_pci_interrupt(PCIDevice *dev, AppleGFXPCIState *s,
++                                    uint32_t vector)
++{
++    bool msi_ok;
++    trace_apple_gfx_raise_irq(vector);
++
++    msi_ok = msi_enabled(dev);
++    if (msi_ok) {
++        msi_notify(dev, vector);
++    }
++}
++
++static void apple_gfx_pci_realize(PCIDevice *dev, Error **errp)
++{
++    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
++    Error *err = NULL;
++    int ret;
++
++    pci_register_bar(dev, PG_PCI_BAR_MMIO,
++                     PCI_BASE_ADDRESS_SPACE_MEMORY, &s->common.iomem_gfx);
++
++    ret = msi_init(dev, 0x0 /* config offset; 0 = find space */,
++                   PG_PCI_MAX_MSI_VECTORS, true /* msi64bit */,
++                   false /*msi_per_vector_mask*/, &err);
++    if (ret != 0) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    @autoreleasepool {
++        PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
++        desc.raiseInterrupt = ^(uint32_t vector) {
++            apple_gfx_pci_interrupt(dev, s, vector);
++        };
++
++        apple_gfx_common_realize(&s->common, desc);
++        [desc release];
++        desc = nil;
++    }
++}
++
++static void apple_gfx_pci_reset(DeviceState *dev)
++{
++    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
++    if (@available(macOS 12,*)) {
++        [s->common.pgdev reset];
++    } else {
++        // TODO: tear down and bring back up
++    }
++}
++
++static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PCIDeviceClass *pci = PCI_DEVICE_CLASS(klass);
++
++    dc->reset = apple_gfx_pci_reset;
++    dc->desc = "macOS Paravirtualized Graphics PCI Display Controller";
++    dc->hotpluggable = false;
++    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
++
++    pci->vendor_id = PG_PCI_VENDOR_ID;
++    pci->device_id = PG_PCI_DEVICE_ID;
++    pci->class_id = PCI_CLASS_DISPLAY_OTHER;
++    pci->realize = apple_gfx_pci_realize;
++
++    // TODO: Property for setting mode list
++}
++
++static TypeInfo apple_gfx_pci_types[] = {
++    {
++        .name          = TYPE_APPLE_GFX_PCI,
++        .parent        = TYPE_PCI_DEVICE,
++        .instance_size = sizeof(AppleGFXPCIState),
++        .class_init    = apple_gfx_pci_class_init,
++        .instance_init = apple_gfx_pci_init,
++        .interfaces = (InterfaceInfo[]) {
++            { INTERFACE_PCIE_DEVICE },
++            { },
++        },
++    }
++};
++DEFINE_TYPES(apple_gfx_pci_types)
++
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index 70d855749c..ceb7bb0761 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -67,6 +67,7 @@ system_ss.add(when: 'CONFIG_ATI_VGA', if_true: [files('ati.c', 'ati_2d.c', 'ati_
  
--    s->pgiosfc = [PGIOSurfaceHostDevice new];
--    [s->pgiosfc initWithDescriptor:iosfc_desc];
-+    s->pgiosfc =
-+        [[PGIOSurfaceHostDevice alloc] initWithDescriptor:iosfc_desc];
-+    [iosfc_desc release];
+ system_ss.add(when: 'CONFIG_MAC_PVG',         if_true: [files('apple-gfx.m'), pvg, metal])
+ system_ss.add(when: 'CONFIG_MAC_PVG_VMAPPLE', if_true: [files('apple-gfx-vmapple.m'), pvg, metal])
++system_ss.add(when: 'CONFIG_MAC_PVG_PCI',     if_true: [files('apple-gfx-pci.m'), pvg, metal])
  
-     QTAILQ_INIT(&s->mrs);
-     QTAILQ_INIT(&s->tasks);
+ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+   virtio_gpu_ss = ss.source_set()
 -- 
 2.39.3 (Apple Git-146)
 
