@@ -4,60 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF99C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FDBC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIhf-0003Ro-Dy; Mon, 15 Jul 2024 06:13:07 -0400
+	id 1sTIj4-0000qj-7E; Mon, 15 Jul 2024 06:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTIhZ-0003AG-Uc; Mon, 15 Jul 2024 06:13:02 -0400
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sTIj1-0000iB-Fl
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:14:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTIhT-00037M-Pe; Mon, 15 Jul 2024 06:13:01 -0400
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46FACYOn080322
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Mon, 15 Jul 2024 18:12:34 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 15 Jul
- 2024 18:12:36 +0800
-To: <qemu-devel@nongnu.org>
-CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
- <david@redhat.com>, <philmd@linaro.org>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, Ethan Chen
- <ethan84@andestech.com>
-Subject: [PATCH v8 5/8] hw/misc/riscv_iopmp: Add API to set up IOPMP
- protection for system memory
-Date: Mon, 15 Jul 2024 18:12:28 +0800
-Message-ID: <20240715101228.1247759-1-ethan84@andestech.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
-In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
-References: <20240715095702.1222213-1-ethan84@andestech.com>
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sTIiz-0003El-Rs
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:14:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721038468;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3ClE7MssEkXPSJEJY2pJm4BRiFz4q2oFbFGcFlO5/nM=;
+ b=Ob4uIu3Klma+hRhVNHURC0HHQgAiYU/2Jse4byAa+OoB8FpjM/rQpjMehve9K14sx48Otw
+ 1GFN5HnxpfGaa9Jt4YibKWGpkv/CyR09Oq3WeUdpOmvdXJFAxT+R8MEJHKy4By2u86WjG3
+ 022f1DhKSaqGmk6aKFhZzI3Mix6rwz0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-RrJ1s6uCMMWLKAiwdORRvw-1; Mon, 15 Jul 2024 06:14:25 -0400
+X-MC-Unique: RrJ1s6uCMMWLKAiwdORRvw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42668699453so39182655e9.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 03:14:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721038464; x=1721643264;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3ClE7MssEkXPSJEJY2pJm4BRiFz4q2oFbFGcFlO5/nM=;
+ b=pY7MoLG/82QCk42e3hxTZOGWsMNE1P0HkZQ3p9WHdasxPEROmGKCLV0MlgmS86re7V
+ n3M1YCsxc2eIPA9k02aXi1Sr1K0pmlFYKl108yiN1uKIPx4gMfzaUBvjxSrLmvCHD0CG
+ U8ZLWYqtHHibTE3KZJvZf5afbx+UbIRtwI5n8AJ3N9X2P0g1wB4BOWYAHlGNV5vGbUD6
+ ypVqWYGIVewSnvK/wHUtbKHVuHQ9PrSD2q+CJunbLh1BUTrdzdDPiitSNsqGBzxtlQzh
+ iW1SxxP8Qz/rwjYmbwTHVbSm9aP5GGrvbgelQBXhfV3aE3gQkgK5JEl/6VG2nXe+mL1D
+ FCdw==
+X-Gm-Message-State: AOJu0Yzl214hG+jQdcOEFAoxQzkK0H4t+TQ/s+V+Xt2nch4oZ5UjpgrZ
+ ArovBQSFWKJHCgF7Jjd379npxqH6zrq5BYnQnA2/fT4gnsmf6wzOUZD4skQqWx0aksAif9O+jqi
+ LafJ5eJUwWPqWXuXsbHmWX4ILBtW5NFL7giLR56ghIVcvPBGbj6V0Uy7cjeJbJkevTF8QqnWOP+
+ 7LyK4F54SQr/hFhg3+zbGmQZrbSW8=
+X-Received: by 2002:a05:600c:4f8d:b0:427:9dae:2768 with SMTP id
+ 5b1f17b1804b1-4279dae2866mr82820055e9.38.1721038463868; 
+ Mon, 15 Jul 2024 03:14:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhYVJKn/uCKrKnoI3KOFZKe7gpdSbiEPh/Kx4FemTcT6wtteckA1uUtgMr1lk6SEtnPdf5FH0OnrKimDAUbk8=
+X-Received: by 2002:a05:600c:4f8d:b0:427:9dae:2768 with SMTP id
+ 5b1f17b1804b1-4279dae2866mr82819865e9.38.1721038463564; Mon, 15 Jul 2024
+ 03:14:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.1.106]
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46FACYOn080322
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
+In-Reply-To: <Zo_8fpKH8oBA8WV1@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 15 Jul 2024 15:44:06 +0530
+Message-ID: <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,111 +93,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To enable system memory transactions through the IOPMP, memory regions must
-be moved to the IOPMP downstream and then replaced with IOMMUs for IOPMP
-translation.
+On Thu, 11 Jul 2024 at 21:08, Peter Xu <peterx@redhat.com> wrote:
+> Hmm, I thought it was one of the vcpu threads that invoked
+> vhost_dev_start(), rather than any migration thread?
 
-The iopmp_setup_system_memory() function copies subregions of system memory
-to create the IOPMP downstream and then replaces the specified memory
-regions in system memory with the IOMMU regions of the IOPMP. It also
-adds entries to a protection map that records the relationship between
-physical address regions and the IOPMP, which is used by the IOPMP DMA
-API to send transaction information.
+     [QEMU=vhost-user-front-end]  <===========>   [QEMU=vhost-user-front-end]
+                            ^
+                                    |
+                            |
+                                     |
+                            |
+                                     |
+                            |
+                                    V
+[external-process=vhost-user-back-end]
+[external-process=vhost-user-back-end]
+===
+vhost-user-protocol:
+    -> https://www.qemu.org/docs/master/interop/vhost-user.html#vhost-user-proto
 
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
+* It is not clear which thread calls vhost_dev_start() routine, it
+could be a vCPU thread.  Sending 'postcopy_end' message to the
+'vhost-user-back-end', hints that the device was being migrated and
+migration finished before the device set-up was done. The protocol
+above says
+
+    "...The nature of the channel is implementation-defined, but it
+must generally behave like a pipe: The writing end will write all the
+data it has into it, signalling the end of data by closing its end.
+The reading end must read all of this data (until encountering the end
+of file) and process it."
+
+* It does not mention sending the 'postcopy_end' message. But it talks
+about the front-end sending 'VHOST_USER_CHECK_DEVICE_STATE' to the
+back-end to check if the migration of the device state was successful
+or not.
+
+> I remember after you added the rwlock, there's still a hang issue.
+> Did you investigated that?  Or do you mean this series will fix all the problems?
+
+* No, this series does not fix the guest hang issue. Root cause of
+that is still a mystery. If migration is ending abruptly before all of
+the guest state is migrated, the guest hang scenario seems possible.
+Adding vhost-user-rw-lock does not address the issue of end of
+migration.
+
+* From the protocol page above, it is not clear if the front-end
+should allow/have multiple threads talking to the same vhost-user
+device.
+
+Thank you.
 ---
- hw/misc/riscv_iopmp.c         | 61 +++++++++++++++++++++++++++++++++++
- include/hw/misc/riscv_iopmp.h |  3 ++
- 2 files changed, 64 insertions(+)
-
-diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
-index db43e3c73f..e62ac57437 100644
---- a/hw/misc/riscv_iopmp.c
-+++ b/hw/misc/riscv_iopmp.c
-@@ -1151,4 +1151,65 @@ iopmp_register_types(void)
-     type_register_static(&iopmp_iommu_memory_region_info);
- }
- 
-+/*
-+ * Copies subregions from the source memory region to the destination memory
-+ * region
-+ */
-+static void copy_memory_subregions(MemoryRegion *src_mr, MemoryRegion *dst_mr)
-+{
-+    int32_t priority;
-+    hwaddr addr;
-+    MemoryRegion *alias, *subregion;
-+    QTAILQ_FOREACH(subregion, &src_mr->subregions, subregions_link) {
-+        priority = subregion->priority;
-+        addr = subregion->addr;
-+        alias = g_malloc0(sizeof(MemoryRegion));
-+        memory_region_init_alias(alias, NULL, subregion->name, subregion, 0,
-+                                 memory_region_size(subregion));
-+        memory_region_add_subregion_overlap(dst_mr, addr, alias, priority);
-+    }
-+}
-+
-+/*
-+ * Create downstream of system memory for IOPMP, and overlap memory region
-+ * specified in memmap with IOPMP translator. Make sure subregions are added to
-+ * system memory before call this function. It also add entry to
-+ * iopmp_protection_memmaps for recording the relationship between physical
-+ * address regions and IOPMP.
-+ */
-+void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
-+                               uint32_t map_entry_num)
-+{
-+    IopmpState *s = IOPMP(dev);
-+    uint32_t i;
-+    MemoryRegion *iommu_alias;
-+    MemoryRegion *target_mr = get_system_memory();
-+    MemoryRegion *downstream = g_malloc0(sizeof(MemoryRegion));
-+    memory_region_init(downstream, NULL, "iopmp_downstream",
-+                       memory_region_size(target_mr));
-+    /* Copy subregions of target to downstream */
-+    copy_memory_subregions(target_mr, downstream);
-+
-+    iopmp_protection_memmap *map;
-+    for (i = 0; i < map_entry_num; i++) {
-+        /* Memory access to protected regions of target are through IOPMP */
-+        iommu_alias = g_new(MemoryRegion, 1);
-+        memory_region_init_alias(iommu_alias, NULL, "iommu_alias",
-+                                 MEMORY_REGION(&s->iommu), memmap[i].base,
-+                                 memmap[i].size);
-+        memory_region_add_subregion_overlap(target_mr, memmap[i].base,
-+                                            iommu_alias, 1);
-+        /* Record which IOPMP is responsible for the region */
-+        map = g_new0(iopmp_protection_memmap, 1);
-+        map->iopmp_s = s;
-+        map->entry.base = memmap[i].base;
-+        map->entry.size = memmap[i].size;
-+        QLIST_INSERT_HEAD(&iopmp_protection_memmaps, map, list);
-+    }
-+    s->downstream = downstream;
-+    address_space_init(&s->downstream_as, s->downstream,
-+                       "iopmp-downstream-as");
-+}
-+
-+
- type_init(iopmp_register_types);
-diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
-index b8fe479108..ebe9c4bc4a 100644
---- a/include/hw/misc/riscv_iopmp.h
-+++ b/include/hw/misc/riscv_iopmp.h
-@@ -165,4 +165,7 @@ typedef struct IopmpState {
-     uint32_t fabricated_v;
- } IopmpState;
- 
-+void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
-+                               uint32_t mapentry_num);
-+
- #endif
--- 
-2.34.1
+  - Prasad
 
 
