@@ -4,98 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C8CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 14:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1ABAC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 15:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTN0W-0001AE-4s; Mon, 15 Jul 2024 10:48:52 -0400
+	id 1sTNDy-0000Mb-Gc; Mon, 15 Jul 2024 11:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTN0U-00019K-0z
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:48:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1sTNDq-0000Lu-Q5
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 11:02:38 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTN0R-0002zE-Ad
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:48:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721054926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8hjOBwScs6Y159MlmdMvnyA8iJHd/1eRdc8iKf3WuJg=;
- b=hrg/QEvJ16Gw99nTS5GrNO1sJ3HoqZJlYxfw6iQHjSCBRIAnZz+oaXmfou562N+EyXqvfF
- pcGxsHpvaN7K/oIhI9U+uQIYM8ob0r0uP33rtbulIe1nIyITlHRLNz4u8JndUdMk8BgUqA
- ZOyPi0ClRb7hD+Ql0nZavUZqWj1VHqY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-ayAYFYrgOvaikeNyG3nbjQ-1; Mon, 15 Jul 2024 10:48:44 -0400
-X-MC-Unique: ayAYFYrgOvaikeNyG3nbjQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3678f832c75so3939733f8f.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 07:48:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721054923; x=1721659723;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8hjOBwScs6Y159MlmdMvnyA8iJHd/1eRdc8iKf3WuJg=;
- b=PLPo/QummYyeurR2am1fAsNWYqi54O6RxfAZ5PM6Mkt9zGyq7YMjIDcDryIJRqCX2K
- OGBS/sAPVw5rer3mgwYP7eBcvvU3s53pfUQYn8mEMw/vxKwXezH6Vz6KL3ju6lOkkDFD
- lrjpGJQceziNr3pwGufZQsGgM0RAfdOipdIxlwQdsCdGi+Nzw2Z8A0/8kaYd8DBxLXp1
- lc59B6O9kZ3LUk7Bep5OkV1bcdShtDBrN543b6+kYCz4urP9QwRJhMhWuJybnqDYLful
- 14eZMBMMBXHDLtzmmUtUQynOatb/rI7EX8X4fvU48gmQr7CJEn1TTILfkZhDl7SO29ug
- 8kVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQ1rkiW9PrcufRnmac0ySMHMqgybXW8MpgAKFa+y6Rk9nobek+R63066OIHhO8tnw5NGfMOaaxLaVN/Oeu1GFF5jt2jd4=
-X-Gm-Message-State: AOJu0YywC4R5HZUqiRy4oMWJ26ZTvl1RHq46HzUhIKlkdNNMQHLWu9xB
- DQEL2kYcXnC5T/mu+7QocfnJOcAmo2r3E+cZ2j1rbYLO5iTZLVK1FqvxYCICpVehETRZhrVEAFf
- ORSMErhNfDA1/XfZ2iAEGqK2j76hTA2udU/H8fLUp88ZC+sLY6ZJq
-X-Received: by 2002:a5d:4cd2:0:b0:367:9801:9c67 with SMTP id
- ffacd0b85a97d-367cead15c3mr15919210f8f.48.1721054923010; 
- Mon, 15 Jul 2024 07:48:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvo1BL8O24IggWGu4Fjt3lZuBhXRP2ZXF0fOsIrWPscfm99RTZvhO2hWCDAZCq3gWRZTWsng==
-X-Received: by 2002:a5d:4cd2:0:b0:367:9801:9c67 with SMTP id
- ffacd0b85a97d-367cead15c3mr15919178f8f.48.1721054922582; 
- Mon, 15 Jul 2024 07:48:42 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5e77488sm91062235e9.9.2024.07.15.07.48.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 07:48:42 -0700 (PDT)
-Date: Mon, 15 Jul 2024 16:48:41 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Markus Armbruster
- <armbru@redhat.com>
-Cc: <mst@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
- <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>, Dave Jiang <dave.jiang@intel.com>, Huang
- Ying <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH v5 10/13] hw/acpi: Generic Port Affinity Structure support
-Message-ID: <20240715164841.1979fdea@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240712110837.1439736-11-Jonathan.Cameron@huawei.com>
-References: <20240712110837.1439736-1-Jonathan.Cameron@huawei.com>
- <20240712110837.1439736-11-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1sTNDa-0005p6-86
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 11:02:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721055743; x=1752591743;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=QKrgKGunbCG4B/sh2MSUwBhgt1YWr7UbSdUDpVuY+Ko=;
+ b=KouMJH0IX1FHI9J78Eb40uFJjuIaNgesQzC/t1n6hGbnmGDiE/IERw6x
+ AAEkmb6C+OHwmSqKA8n+KZwTTxn9yv9t1m6w7wsHpNF9yR/KKx3pCvigj
+ EPGW5jq8hYnrQijSRpYPrj1+42GbUrj7C7m4Jb6Q5VRjZ76pttOPdG8ty
+ qCyxVV6GXGk18rL9eB6DpXZT/bCuQ8hoWWWTIhzCayGuZuW38VnTHrvyB
+ aPpjIGClngMb0ksBxrrbroRl1cwIreu+Mo/hrDC9R9mIkVXEc4ftIzixi
+ YK5YEZk2zif5C//FZ84ikD3QcQwurgQsFty2K5hVVX2bmB/bnu/Q1PicB g==;
+X-CSE-ConnectionGUID: d2q3Zmo6ROupMi+DLRSx3A==
+X-CSE-MsgGUID: bGPwTIA1T7ywzDdOVurb0Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="18056411"
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="18056411"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 08:02:18 -0700
+X-CSE-ConnectionGUID: /XKp/ch1TRmUN0EQ69eLug==
+X-CSE-MsgGUID: tIxcnrmFRhWldAlc9MnQSw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="50017246"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+ by orviesa006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 15 Jul 2024 08:02:12 -0700
+Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 15 Jul 2024 08:02:11 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 15 Jul 2024 08:02:11 -0700
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.44) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 15 Jul 2024 08:02:11 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ETWBgClm7lRf7kMWWbYt8mB0k2PRkD7yslOYzCp2H/Caq9BrmqBOVOFSSnEsMHQnZu9ZA+ZB8fBErQS5hbGq2Q9LD6ftA14fXfttlBEvAlodcVpXzSa00a+AeO0BnFiyQcU94y1ZXqAMtCl12Jvc3vAVYgJyhu4Luwxko+xZVITT/cOuCE5rXHgPUO1bt63X4pKx2KVIRsJoo20bUYSjbqYICgZ+Uz6yWilJFtcHTpoTNrHxSoY3jQ2tcHpGEI8nA73aVm/D3iNLrxOiykFZE/b7k0Gv+DxV/zCBIyMsoIuamQiSQHGJ0h6qU70It18qTk2nZVzE33UB4bTceempCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=e4zQRKm1gAronWf1RMUU4BL4ZmopjmeeH/Ira9nzx6E=;
+ b=Yh2mAe/9OjU9+8M4yi7rVlMgwSNf7knApHVk3nMZZH8nimTPrPy7rPC8BRO+z9zwVwJ7e0D/MDtsmgd86aLFCyEj7kEXKgnIZZ08H6uJmiznP13Wh08t/3nVG6pzjMryKLE4FqVF21hcD4yiYHmhjp9IC54+izZcxG0Qie5VD0M9SKei0VercY0P1IUv3JOxaE1ye98ByhYLS8JUeXKLHXR8DcStR4cIW9oIliJ22NYmuOKLe8kkNoWxxl0sO6nJsbmI+vjJolqlm+YgvQoqQWBpGjPDqrtUbpaFhMxyYqrlDuvzDLZyuhkG7SPRkLkfkbxVpk5mjrHiEoN6gVFSvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com (2603:10b6:510:13d::20)
+ by PH7PR11MB6882.namprd11.prod.outlook.com (2603:10b6:510:201::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.27; Mon, 15 Jul
+ 2024 15:02:01 +0000
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::2750:7e63:952:7f1d]) by PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::2750:7e63:952:7f1d%6]) with mapi id 15.20.7762.025; Mon, 15 Jul 2024
+ 15:02:01 +0000
+From: "Liu, Yuan1" <yuan1.liu@intel.com>
+To: "Wang, Yichen" <yichen.wang@bytedance.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?iso-8859-1?Q?Marc-Andr=E9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Hao Xiang <hao.xiang@linux.dev>, "Kumar, Shivam"
+ <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>, "Wang, Yichen" <yichen.wang@bytedance.com>
+Subject: RE: [PATCH v5 01/13] meson: Introduce new instruction set enqcmd to
+ the build system.
+Thread-Topic: [PATCH v5 01/13] meson: Introduce new instruction set enqcmd to
+ the build system.
+Thread-Index: AQHa09y9W9RvuwIPEkuCnm0pF++eQbH33EGA
+Date: Mon, 15 Jul 2024 15:02:01 +0000
+Message-ID: <PH7PR11MB59413BDDA018D8FA67775C9AA3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
+References: <20240711215244.19237-1-yichen.wang@bytedance.com>
+ <20240711215244.19237-2-yichen.wang@bytedance.com>
+In-Reply-To: <20240711215244.19237-2-yichen.wang@bytedance.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB5941:EE_|PH7PR11MB6882:EE_
+x-ms-office365-filtering-correlation-id: 55c588de-5e52-4f77-6b45-08dca4df14e0
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|921020|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?wl/aEGtlm+JIbt/7K3eFBc/4UwZmWHapXW9/Ci91WfuWC64JcRDJfV+juI?=
+ =?iso-8859-1?Q?PWFuJ6GkjvFF5f0sBiT+nO2h6mEUm9cF7vhTkOKwAFRiB5zhwFSUDHTmaQ?=
+ =?iso-8859-1?Q?uor1fxpaiOuRaicr6BLLWRrstoldTQhMnMxfPDTovn+AqE2KnCJfh3Gdx4?=
+ =?iso-8859-1?Q?QshEld3N1jBak6ymckRJmfh28uSj7ONhUkERB97BmngRzu/flCwgppLCJt?=
+ =?iso-8859-1?Q?Ji+eMPJA+PQ425gyD9smvGfSKwYjMcB3GZa2/cXlDPeHyCuBy95b7BG2Dq?=
+ =?iso-8859-1?Q?cwHYhDixQ5pyjBOA4r5ryK0PJ6Znraqc28fGbiVkfG1nmSJeW8EllF9WsT?=
+ =?iso-8859-1?Q?lAljPxYtfH9wWCgUtb2VLtCMgljt0FSkUkZEtuyS2eWMmfg8ellmnMSlHc?=
+ =?iso-8859-1?Q?4CO7s52JHQWKJ1+pDd3b6gWdZl3fpY+N+mSLNKBwFOcSkoHecRSlJOM5hT?=
+ =?iso-8859-1?Q?EZN/vXX4qdfpA/UdWB1mCKYmeRhKVqOvd0kEOt1CJyzMiVEiB0a0juKcam?=
+ =?iso-8859-1?Q?F2l/p2uQjVWGmeXIoWsq4nYRPxGv733UopiBRouWM52ANCOM+MFiZNhpQS?=
+ =?iso-8859-1?Q?3VHoHDwHn5K08w+Ct6WFDPXQTS/a7dDb1X0E+v9gL+BA1Yj5j32ruEUZzn?=
+ =?iso-8859-1?Q?Dy+QasnMEtErsGb+WgIdDlFNPJrX59hUuqGGcbl53ik1h7kxZvJ/+Qoytu?=
+ =?iso-8859-1?Q?jSWhcds8PTVZyuTiRWndegOhb+Ej0+dxtBKPzJivZ/xXXYh1EZLCSo1jZc?=
+ =?iso-8859-1?Q?MxcmSPrg9dxX0PlzcYxMuiwNUdR0R4y9a64LzgU5ThNrV4u2Sbb7gMiVte?=
+ =?iso-8859-1?Q?E5fBvSQ89XY9F/fJO/SqzK91vLun4iXdLI4ziDBQm29PgoVe8M+9uFDLfB?=
+ =?iso-8859-1?Q?gtPxaz9zM9znj9WbqGhMbW4rvww3Cuc3HmAdNOcs1t7J/7cnTZHwY35J6f?=
+ =?iso-8859-1?Q?9BR7PlfuJDgYyfHdukS1nW5WQJv9h4n71M/VzfMvL9ixgENcCBonx6Ual4?=
+ =?iso-8859-1?Q?+5CgT9hU9/+64X3GWzLC7sLZVgdECpE50fkWi40izzcBxrYAfaVAN2V3g6?=
+ =?iso-8859-1?Q?K7IGJm00wnXD+h8ZYCI4eRyeQKYrYsE6727euz85uphEjW/PlwECopCGH8?=
+ =?iso-8859-1?Q?akMF/1a0rgLcPEVEe0n63LeIofroGOChvkTRVVTdBF5UTiCVGJxjWvo8/L?=
+ =?iso-8859-1?Q?40caOmaDw/5rNa8zbSuIgw/uJOuMSQKdlxV0UizO6hFKXpIvY9ze84MUMd?=
+ =?iso-8859-1?Q?nswfzdnJkJ9RiMIj25BPs+Xep5/+s06bq6FiO9y2OPk615LouZwVpa3ILW?=
+ =?iso-8859-1?Q?i24hcehObM/TqF5jXEhKOma/U+AINtyE9X8OX80QnaJwD1vNC+RXBnrkPR?=
+ =?iso-8859-1?Q?FqH/aOl4EaFCesEUyCeiTDHMi3WMJISBSO8qL4SPcEH4HLQgB9maZ4CvUr?=
+ =?iso-8859-1?Q?Tc1XwWr80hJl7xTj?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR11MB5941.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(921020)(38070700018);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?K0cZH/G8i7zsWDjGmWGnk/aILsbHQVG/CjW+34dHQRLohjQWEJQH2MUu5N?=
+ =?iso-8859-1?Q?+3PyEPfEzdXJTOpGEmVyIyKPjrOoDHdp6SAlsdd6K6HM3WKwbY4L9mOZhH?=
+ =?iso-8859-1?Q?Xka6Y5pJ9jqkrnCZcwgVLgELK9YKcoHZEB/b7oQlkbUQNyhZsfb5VAc3KY?=
+ =?iso-8859-1?Q?eKUb3dgBfpyHTGRK/6N6sTmgg3X6YGm+U5pDmqQB2+C8ChI6syUKNJHn+x?=
+ =?iso-8859-1?Q?ReHXShhoaeg2dYsFr1YtwrdiT2b4gd/7kNfbavpNz7V3Vrs9DsBm0jxMz8?=
+ =?iso-8859-1?Q?Mjpo8Zxcl4fHlDqIYXLc5VX2IMfZx2KLPXIUrUKaNBozF322eFlV5aK0D0?=
+ =?iso-8859-1?Q?wQLsUDE3da1FSD9yTxgtTEIw768WFw56LG8WU3mxk5TYoG/Ao+Rj9sMu0b?=
+ =?iso-8859-1?Q?3xIesoT2teVQTn1z1AZ/QT95VNu11Hzr8HA+1LlXGBOM0brYHMhx1j89Kx?=
+ =?iso-8859-1?Q?yhoJbRyi8JMMo2bKLsImYF+X/yautfCMIxOIDxbEYbIU5iO+WpJv4sBYvE?=
+ =?iso-8859-1?Q?SKN87LzzBdbggp0xq5M92XhJclDgnbn5CI9YrGqMi5tbOSei8TE6W0V6zw?=
+ =?iso-8859-1?Q?A7SC9dAjEds/L+P2mosvCWyn3lbYA/piI8E5dHkxnEYO2N2prP1kxzONzy?=
+ =?iso-8859-1?Q?bbR6OajZsV4FqK016hMrlRggR/C6X5xASdpzqCFuPLOHpdxMo6qQOsfhaZ?=
+ =?iso-8859-1?Q?A1e2838vsmioG4mmNZeKfxBNkuLwI9k727uwQiY3gWVlBmDq/8CM9KL/9d?=
+ =?iso-8859-1?Q?hYdKSLhH8/W/cKjua/FxX33MwEXqO/m2Zid153k6BxSTyz14g6yea1iBpa?=
+ =?iso-8859-1?Q?iUPM0lW/Kl6aiwm4omwO3MDDzg2LCffKsoHpm1QlEhuv8U01+y/ebvyW4R?=
+ =?iso-8859-1?Q?dEuo7KDmWinAJ+ExoA/hz9k5zgBTq+dcMoSEVnhhPKfvhrnEbevuCdq/iE?=
+ =?iso-8859-1?Q?SOWBPwGb2XBzengAOGiNBNE3jVJcvDWNNEQ51kTLb/LtP48D1Dp/9fkGJb?=
+ =?iso-8859-1?Q?Mcb9UEjDo/cuC0X8KtDrBKnOaoI39O/hafCI//6vf7YXy56nBbp5wSQWwk?=
+ =?iso-8859-1?Q?c3qqgK65TGtX+3j0ZbcQjYu/0Gb8l5Q4JierkgQdpSv9Wf9GsX7mZbarO3?=
+ =?iso-8859-1?Q?3jna0pFdwWGllRrP4yTdHbA9+BMfy8oheJYO48jNCpvwpWWbxsWydlp4R2?=
+ =?iso-8859-1?Q?mjQyoPDbJ1mQ92Jo27MkyEm41QS1/tp+XShIiLVe60adHBfYBPo1myLghu?=
+ =?iso-8859-1?Q?S0019GPC2r+wDRF6DEjBSNk0Gh5JgTKIqctMHYdXC+UUbkERVECm1xMqDk?=
+ =?iso-8859-1?Q?/ll3u+dTiCu7faxT6AcTwrCwxggS4KLdirryC5cwbuqSi8S50kL/QgZpeF?=
+ =?iso-8859-1?Q?s4LnrcAVwzV2jMdEkt1hFPb7Eoczeaq7SE2fblYSrgKRx7q1eIBAx7qvbL?=
+ =?iso-8859-1?Q?piCGUav9RUnoyZZYP7EUFgfKVPVjrEpdQUeA8d5NsREDyQro/2klDrGyix?=
+ =?iso-8859-1?Q?Sp0NE5ZNMh/I1nV4DGBpNzgLxoY7IFLiqBG4vX2NtUYsIcUdwKAn7Lw5IP?=
+ =?iso-8859-1?Q?qGJVfS82BjaxPdOzXIEp+S8H/JBZn1Cu5QecxAyQmmpLB/2smZUTJ2hB+Q?=
+ =?iso-8859-1?Q?KPcr/lqzOL7hhUcmFjakyNwSNG3umas48x?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB5941.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 55c588de-5e52-4f77-6b45-08dca4df14e0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2024 15:02:01.4414 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5aKibe/6Y/tFNCzYQGFYDhjLvQaXeCG3iG29ICDcdg3+Wn8Cy+G4ZARFV7LwP1CsJvokip1aXHrArUiGlAqecQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6882
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=yuan1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,396 +209,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jul 2024 12:08:14 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-
-> These are very similar to the recently added Generic Initiators
-> but instead of representing an initiator of memory traffic they
-> represent an edge point beyond which may lie either targets or
-> initiators.  Here we add these ports such that they may
-> be targets of hmat_lb records to describe the latency and
-> bandwidth from host side initiators to the port.  A discoverable
-> mechanism such as UEFI CDAT read from CXL devices and switches
-> is used to discover the remainder of the path, and the OS can build
-> up full latency and bandwidth numbers as need for work and data
-> placement decisions.
-> 
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> Tested-by: "Huang, Ying" <ying.huang@intel.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-ACPI tables generation LGTM
-As for the rest my review is perfunctory mostly.
-
+> -----Original Message-----
+> From: Yichen Wang <yichen.wang@bytedance.com>
+> Sent: Friday, July 12, 2024 5:53 AM
+> To: Paolo Bonzini <pbonzini@redhat.com>; Marc-Andr=E9 Lureau
+> <marcandre.lureau@redhat.com>; Daniel P. Berrang=E9 <berrange@redhat.com>=
+;
+> Thomas Huth <thuth@redhat.com>; Philippe Mathieu-Daud=E9
+> <philmd@linaro.org>; Peter Xu <peterx@redhat.com>; Fabiano Rosas
+> <farosas@suse.de>; Eric Blake <eblake@redhat.com>; Markus Armbruster
+> <armbru@redhat.com>; Michael S. Tsirkin <mst@redhat.com>; Cornelia Huck
+> <cohuck@redhat.com>; qemu-devel@nongnu.org
+> Cc: Hao Xiang <hao.xiang@linux.dev>; Liu, Yuan1 <yuan1.liu@intel.com>;
+> Kumar, Shivam <shivam.kumar1@nutanix.com>; Ho-Ren (Jack) Chuang
+> <horenchuang@bytedance.com>; Wang, Yichen <yichen.wang@bytedance.com>
+> Subject: [PATCH v5 01/13] meson: Introduce new instruction set enqcmd to
+> the build system.
+>=20
+> From: Hao Xiang <hao.xiang@linux.dev>
+>=20
+> Enable instruction set enqcmd in build.
+>=20
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 > ---
-> v5: Push the definition of TYPE_ACPI_GENERIC_PORT down into the
->     c file (similar to TYPE_ACPI_GENERIC_INITIATOR in earlier patch)
-> ---
->  qapi/qom.json                       |  34 +++++++++
->  include/hw/acpi/aml-build.h         |   4 +
->  include/hw/acpi/pci.h               |   2 +-
->  include/hw/pci/pci_bridge.h         |   1 +
->  hw/acpi/aml-build.c                 |  40 ++++++++++
->  hw/acpi/pci.c                       | 112 +++++++++++++++++++++++++++-
->  hw/arm/virt-acpi-build.c            |   2 +-
->  hw/i386/acpi-build.c                |   2 +-
->  hw/pci-bridge/pci_expander_bridge.c |   1 -
->  9 files changed, 193 insertions(+), 5 deletions(-)
-> 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 8e75a419c3..b97c031b73 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -838,6 +838,38 @@
->    'data': { 'pci-dev': 'str',
->              'node': 'uint32' } }
->  
-> +##
-> +# @AcpiGenericPortProperties:
-> +#
-> +# Properties for acpi-generic-port objects.
-> +#
-> +# @pci-bus: QOM path of the PCI bus of the hostbridge associated with
-> +#     this SRAT Generic Port Affinity Structure.  This is the same as
-> +#     the bus parameter for the root ports attached to this host
-> +#     bridge.  The resulting SRAT Generic Port Affinity Structure will
-> +#     refer to the ACPI object in DSDT that represents the host bridge
-> +#     (e.g.  ACPI0016 for CXL host bridges).  See ACPI 6.5 Section
-> +#     5.2.16.7 for more information.
-> +#
-
-> +# @node: Similar to a NUMA node ID, but instead of providing a
-> +#     reference point used for defining NUMA distances and access
-> +#     characteristics to memory or from an initiator (e.g. CPU), this
-> +#     node defines the boundary point between non-discoverable system
-> +#     buses which must be described by firmware, and a discoverable
-> +#     bus.  NUMA distances and access characteristics are defined to
-> +#     and from that point.  For system software to establish full
-> +#     initiator to target characteristics this information must be
-> +#     combined with information retrieved from the discoverable part
-> +#     of the path.  An example would use CDAT (see UEFI.org)
-> +#     information read from devices and switches in conjunction with
-> +#     link characteristics read from PCIe Configuration space.
-
-you lost me here (even reading this several time doesn't help).
-Perhaps I lack specific domain knowledge, but is there a way to make it
-more comprehensible for layman?
-
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'struct': 'AcpiGenericPortProperties',
-> +  'data': { 'pci-bus': 'str',
-> +            'node': 'uint32' } }
-> +
->  ##
->  # @RngProperties:
->  #
-> @@ -1031,6 +1063,7 @@
->  { 'enum': 'ObjectType',
->    'data': [
->      'acpi-generic-initiator',
-> +    'acpi-generic-port',
->      'authz-list',
->      'authz-listfile',
->      'authz-pam',
-> @@ -1106,6 +1139,7 @@
->    'discriminator': 'qom-type',
->    'data': {
->        'acpi-generic-initiator':     'AcpiGenericInitiatorProperties',
-> +      'acpi-generic-port':          'AcpiGenericPortProperties',
->        'authz-list':                 'AuthZListProperties',
->        'authz-listfile':             'AuthZListFileProperties',
->        'authz-pam':                  'AuthZPAMProperties',
-> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> index 33eef85791..9e30c735bb 100644
-> --- a/include/hw/acpi/aml-build.h
-> +++ b/include/hw/acpi/aml-build.h
-> @@ -490,6 +490,10 @@ void build_srat_pci_generic_initiator(GArray *table_data, int node,
->                                        uint16_t segment, uint8_t bus,
->                                        uint8_t devfn);
->  
-> +void build_srat_acpi_generic_port(GArray *table_data, int node,
-> +                                  const char *hid,
-> +                                  uint32_t uid);
-> +
->  void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->                  const char *oem_id, const char *oem_table_id);
->  
-> diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-> index 3015a8171c..6359d574fd 100644
-> --- a/include/hw/acpi/pci.h
-> +++ b/include/hw/acpi/pci.h
-> @@ -41,6 +41,6 @@ Aml *aml_pci_device_dsm(void);
->  void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
->  void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
->  
-> -void build_srat_generic_pci_initiator(GArray *table_data);
-> +void build_srat_generic_affinity_structures(GArray *table_data);
->  
->  #endif
-> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-> index 5cd452115a..5456e24883 100644
-> --- a/include/hw/pci/pci_bridge.h
-> +++ b/include/hw/pci/pci_bridge.h
-> @@ -102,6 +102,7 @@ typedef struct PXBPCIEDev {
->      PXBDev parent_obj;
->  } PXBPCIEDev;
->  
-> +#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
->  #define TYPE_PXB_DEV "pxb"
->  OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
->  
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 968b654e58..4067100dd6 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -1955,6 +1955,19 @@ static void build_append_srat_pci_device_handle(GArray *table_data,
->      build_append_int_noprefix(table_data, 0, 12);
->  }
->  
-> +static void build_append_srat_acpi_device_handle(GArray *table_data,
-> +                                                 const char *hid,
-> +                                                 uint32_t uid)
-> +{
-> +    assert(strlen(hid) == 8);
-> +    /* Device Handle - ACPI */
-> +    for (int i = 0; i < sizeof(hid); i++) {
-> +        build_append_int_noprefix(table_data, hid[i], 1);
+>  meson.build                   | 14 ++++++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  3 files changed, 19 insertions(+)
+>=20
+> diff --git a/meson.build b/meson.build
+> index 6a93da48e1..af650cfabf 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2893,6 +2893,20 @@ config_host_data.set('CONFIG_AVX512BW_OPT',
+> get_option('avx512bw') \
+>      int main(int argc, char *argv[]) { return bar(argv[0]); }
+>    '''), error_message: 'AVX512BW not available').allowed())
+>=20
+> +config_host_data.set('CONFIG_DSA_OPT', get_option('enqcmd') \
+> +  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot
+> enable ENQCMD') \
+> +  .require(cc.links('''
+> +    #include <stdint.h>
+> +    #include <cpuid.h>
+> +    #include <immintrin.h>
+> +    static int __attribute__((target("enqcmd"))) bar(void *a) {
+> +      uint64_t dst[8] =3D { 0 };
+> +      uint64_t src[8] =3D { 0 };
+> +      return _enqcmd(dst, src);
 > +    }
-> +    build_append_int_noprefix(table_data, uid, 4);
-> +    build_append_int_noprefix(table_data, 0, 4);
-> +}
+> +    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
+> +  '''), error_message: 'ENQCMD not available').allowed())
 > +
->  /*
->   * ACPI spec, Revision 6.3
->   * 5.2.16.6 Generic Initiator Affinity Structure
-> @@ -1982,6 +1995,33 @@ void build_srat_pci_generic_initiator(GArray *table_data, int node,
->      build_append_int_noprefix(table_data, 0, 4);
->  }
->  
-> +/*
-> + * ACPI spec, Revision 6.5
-> + * 5.2.16.7 Generic Port Affinity Structure
-> + *   With ACPI Device Handle.
-> + */
-> +void build_srat_acpi_generic_port(GArray *table_data, int node,
 
-shouldn't node be uint32_t?
+How about using cpuid instruction to dynamically detect enqcmd and movdir64=
+b=20
+instructions?=20
 
-> +                                  const char *hid,
-> +                                  uint32_t uid)
-> +{
-> +    /* Type */
-> +    build_append_int_noprefix(table_data, 6, 1);
-> +    /* Length */
-> +    build_append_int_noprefix(table_data, 32, 1);
-> +    /* Reserved */
-> +    build_append_int_noprefix(table_data, 0, 1);
-> +    /* Device Handle Type: ACPI */
-> +    build_append_int_noprefix(table_data, 0, 1);
-> +    /* Proximity Domain */
-> +    build_append_int_noprefix(table_data, node, 4);
-> +    /* Device Handle */
-> +    build_append_srat_acpi_device_handle(table_data, hid, uid);
-> +    /* Flags - GP Enabled */
-> +    build_append_int_noprefix(table_data, 1, 4);
-> +    /* Reserved */
-> +    build_append_int_noprefix(table_data, 0, 4);
-> +}
-> +
->  /*
->   * ACPI spec 5.2.17 System Locality Distance Information Table
->   * (Revision 2.0 or later)
-> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-> index 3e1db161cc..020ad53c03 100644
-> --- a/hw/acpi/pci.c
-> +++ b/hw/acpi/pci.c
-> @@ -30,6 +30,7 @@
->  #include "hw/boards.h"
->  #include "hw/acpi/aml-build.h"
->  #include "hw/acpi/pci.h"
-> +#include "hw/pci/pci_bridge.h"
->  #include "hw/pci/pci_device.h"
->  #include "hw/pci/pcie_host.h"
->  
-> @@ -177,9 +178,118 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
->      return 0;
->  }
->  
-> -void build_srat_generic_pci_initiator(GArray *table_data)
-> +typedef struct AcpiGenericPort {
-> +    /* private */
-> +    Object parent;
-> +
-> +    /* public */
-> +    char *pci_bus;
-> +    uint16_t node;
+My reasons are as follows
+1. enqcmd/movdir64b and DSA devices are used together. DSA devices are dyna=
+mically
+   detected, so enqcmd can also dynamically detect.
 
-ditto
+   Simple code for dynamically detect movdir64b and enqcmd
+   bool check_dsa_instructions(void) {
+       uint32_t eax, ebx, ecx, edx;
+       bool movedirb_enabled;
+       bool enqcmd_enabled;
 
-> +} AcpiGenericPort;
-> +
-> +typedef struct AcpiGenericPortClass {
-> +    ObjectClass parent_class;
-> +} AcpiGenericPortClass;
-> +
-> +#define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
-> +
-> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
-> +                   ACPI_GENERIC_PORT, OBJECT,
-> +                   { TYPE_USER_CREATABLE },
-> +                   { NULL })
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
-> +
-> +static void acpi_generic_port_init(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->node = MAX_NODES;
-> +    gp->pci_bus = NULL;
-> +}
-> +
-> +static void acpi_generic_port_finalize(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    g_free(gp->pci_bus);
-> +}
-> +
-> +static void acpi_generic_port_set_pci_bus(Object *obj, const char *val,
-> +                                          Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->pci_bus = g_strdup(val);
-> +}
-> +
-> +static void acpi_generic_port_set_node(Object *obj, Visitor *v,
-> +                                       const char *name, void *opaque,
-> +                                       Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +    uint32_t value;
-> +
-> +    if (!visit_type_uint32(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (value >= MAX_NODES) {
-> +        error_printf("%s: Invalid NUMA node specified\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR);
-> +        exit(1);
-> +    }
-> +
-> +    gp->node = value;
+       cpuid(0x07, 0x0, &eax, &ebx, &ecx, &edx);
+       movedirb_enabled =3D (ecx >> 28) & 0x1;
+       if (!movedirb_enabled) {
+           return false;
+       }
+       enqcmd_enabled =3D (ecx >> 29) & 0x1;
+       if (!enqcmd_enabled) {
+           return false;
+       }
+       return true;
+    }
+    https://cdrdv2-public.intel.com/819680/architecture-instruction-set-ext=
+ensions-programming-reference.pdf
 
-as long as gp->node is uint32_t it should be fine.
-otherwise it's too fragile. 
+2. The enqcmd/movdir64b are new instructions, I checked they are integrated=
+ into GCC10
+   However, users do not need gcc10 or higher to use two instructions.
+   Simple code to implement enqcmd
+   static inline int enqcmd(volatile void *reg, struct dsa_hw_desc *desc)
+   {
+       uint8_t retry;
+       asm volatile (".byte 0xf2, 0x0f, 0x38, 0xf8, 0x02\t\n"
+       "setz %0\t\n":"=3Dr" (retry):"a"(reg), "d"(desc));
+       return (int)retry;
+   }=20
+   file:///C:/Users/yliu80/Downloads/353216-data-streaming-accelerator-user=
+-guide-002.pdf
 
-> +}
-> +
-> +static void acpi_generic_port_class_init(ObjectClass *oc, void *data)
-> +{
-> +    object_class_property_add_str(oc, "pci-bus", NULL,
-> +        acpi_generic_port_set_pci_bus);
-> +    object_class_property_add(oc, "node", "int", NULL,
-> +        acpi_generic_port_set_node, NULL, NULL);
-
-missing property description calls.
-
-> +}
-> +
-> +static int build_acpi_generic_port(Object *obj, void *opaque)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    const char *hid = "ACPI0016";
-> +    GArray *table_data = opaque;
-> +    AcpiGenericPort *gp;
-> +    uint32_t uid;
-> +    Object *o;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_PORT)) {
-> +        return 0;
-> +    }
-> +
-> +    gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    if (gp->node >= ms->numa_state->num_nodes) {
-
-> +        error_printf("%s: node %d is invalid.\n",
-> +                     TYPE_ACPI_GENERIC_PORT, gp->node);
-> +        exit(1);
-
-not sure, 
-maybe use error_fatal instead of using exit(1)?
-
-CCing Markus to check if it's ok.
-
-
-> +    }
-> +
-> +    o = object_resolve_path_type(gp->pci_bus, TYPE_PXB_CXL_BUS, NULL);
-> +    if (!o) {
-> +        error_printf("%s: device must be a CXL host bridge.\n",
-> +                     TYPE_ACPI_GENERIC_PORT);
-> +       exit(1);
-> +    }
-ditto
-
-> +
-> +    uid = object_property_get_uint(o, "acpi_uid", &error_fatal);
-> +    build_srat_acpi_generic_port(table_data, gp->node, hid, uid);
-> +
-> +    return 0;
-> +}
-> +
-> +void build_srat_generic_affinity_structures(GArray *table_data)
->  {
->      object_child_foreach_recursive(object_get_root(),
->                                     build_acpi_generic_initiator,
->                                     table_data);
-> +    object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
-> +                                   table_data);
->  }
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index a50b00b7c1..d98651df55 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -510,7 +510,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          }
->      }
->  
-> -    build_srat_generic_pci_initiator(table_data);
-> +    build_srat_generic_affinity_structures(table_data);
->  
->      if (ms->nvdimms_state->is_enabled) {
->          nvdimm_build_srat(table_data);
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 2eaa4c9203..7f5ca188c1 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -2048,7 +2048,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->          build_srat_memory(table_data, 0, 0, 0, MEM_AFFINITY_NOFLAGS);
->      }
->  
-> -    build_srat_generic_pci_initiator(table_data);
-> +    build_srat_generic_affinity_structures(table_data);
->  
->      /*
->       * Entry is required for Windows to enable memory hotplug in OS
-> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> index b94cb85cfb..cd7f2d5423 100644
-> --- a/hw/pci-bridge/pci_expander_bridge.c
-> +++ b/hw/pci-bridge/pci_expander_bridge.c
-> @@ -38,7 +38,6 @@ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
->  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
->                           TYPE_PXB_PCIE_BUS)
->  
-> -#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
->  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
->                           TYPE_PXB_CXL_BUS)
->  
+>  # For both AArch64 and AArch32, detect if builtins are available.
+>  config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
+>      #include <arm_neon.h>
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 0269fa0f16..4ed820bb8d 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -121,6 +121,8 @@ option('avx2', type: 'feature', value: 'auto',
+>         description: 'AVX2 optimizations')
+>  option('avx512bw', type: 'feature', value: 'auto',
+>         description: 'AVX512BW optimizations')
+> +option('enqcmd', type: 'feature', value: 'disabled',
+> +       description: 'ENQCMD optimizations')
+>  option('keyring', type: 'feature', value: 'auto',
+>         description: 'Linux keyring support')
+>  option('libkeyutils', type: 'feature', value: 'auto',
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
+h
+> index cfadb5ea86..280e117687 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -95,6 +95,7 @@ meson_options_help() {
+>    printf "%s\n" '  auth-pam        PAM access control'
+>    printf "%s\n" '  avx2            AVX2 optimizations'
+>    printf "%s\n" '  avx512bw        AVX512BW optimizations'
+> +  printf "%s\n" '  enqcmd          ENQCMD optimizations'
+>    printf "%s\n" '  blkio           libblkio block device driver'
+>    printf "%s\n" '  bochs           bochs image format support'
+>    printf "%s\n" '  bpf             eBPF support'
+> @@ -239,6 +240,8 @@ _meson_option_parse() {
+>      --disable-avx2) printf "%s" -Davx2=3Ddisabled ;;
+>      --enable-avx512bw) printf "%s" -Davx512bw=3Denabled ;;
+>      --disable-avx512bw) printf "%s" -Davx512bw=3Ddisabled ;;
+> +    --enable-enqcmd) printf "%s" -Denqcmd=3Denabled ;;
+> +    --disable-enqcmd) printf "%s" -Denqcmd=3Ddisabled ;;
+>      --enable-gcov) printf "%s" -Db_coverage=3Dtrue ;;
+>      --disable-gcov) printf "%s" -Db_coverage=3Dfalse ;;
+>      --enable-lto) printf "%s" -Db_lto=3Dtrue ;;
+> --
+> Yichen Wang
 
 
