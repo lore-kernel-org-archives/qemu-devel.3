@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9580C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69888C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIGq-0006Nd-K9; Mon, 15 Jul 2024 05:45:24 -0400
+	id 1sTIGW-0003mZ-9b; Mon, 15 Jul 2024 05:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIGo-00061W-MH
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:45:22 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIGG-00036S-GJ
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:49 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIGl-0005gb-4e
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:45:20 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2eedea0fd88so20500741fa.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:45:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIGA-0005Rz-0L
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:46 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3678f36f154so2388221f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721036716; x=1721641516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721036680; x=1721641480; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=a//mJPbnFwiilWEMy8qsTHnOig/DBpBaAeFKZiMZFzA=;
- b=yN8AcUUW4/4yKdzIp650pVtptJvdpU5U6MukcZAH9ySmzd2/z5vM1w5xFRgJgINnbv
- GXWqhoVp2Hgc69TEjfjTXb67IqMB+H0QTgMlnJ5qAAlzdvymwsTrB1pzRYwdO1Kty+H7
- ttDhmAqvvsUcRoaPCmpBGr5KdwwEqS9O8Wg6IhHg2tK6pMpLOTdGE8jl+zQu6n+kb/Iu
- loEqvCZv/BTH4vKX1ufUYY+MkJhZ531z3QLhKTGjhsT7pdQfP2Pr7+C475/gaHanEZ/a
- arXJIH24gLcOPobew/Eyn6zJ9jSc/0uIcsyfFjGtd4aDBqt9oMvCL1Y0gIoAMZnb7S9x
- kyrg==
+ bh=voOsnZmg1bnOTOj8efHaXA/kRvba9LY5vB88tFa2EpU=;
+ b=BVLS/g0wbYZrHZZjG9i09qEVjm53soPIpRUSLlPl1yGgVVBHjTHhGgvqek1oOqaKFe
+ vtPk5AVVWgr+l++kYo/J8e8oHjwQQMgbfk7u0ReaRZFdbN7uk6mj5Tr2sj9iU/VCMWNQ
+ UYfSe0umIUUOnfmuM8jeDXgsR0Hqj3ae91RnqpGJ3DxVWsOQzoiSN78e4ugDYVINIM5P
+ d+s8XVrlm+TekvRXXfP8UiR1MO3b5Mb0XK/WFfa5YI3cPCz/op8ancbs2a4Ii9zbA0OO
+ U7igQCIJ5oZ/jHKKfhh1eb5UnUwtFvfD8kqRbe4yiPbGOBb+IjJJTxvmpgMcvlf4fRHS
+ T5bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721036716; x=1721641516;
+ d=1e100.net; s=20230601; t=1721036680; x=1721641480;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a//mJPbnFwiilWEMy8qsTHnOig/DBpBaAeFKZiMZFzA=;
- b=qJu2eNgaYkc2hKiJn1hDCAh/uNOOaNbQIEVhRbcGKC01/nqZhOGoFUaCT51CbOrJF7
- VuuzjLblEPjK2v2ciMFBm4UEUbDxv40KIGr+hrBMic75LU3s7m6BiSsh1md950W97c9J
- GO8bazYgHc7Gir7JkeQ+XqRKEu7dlS+vgG7ToDzKdvNkwvDeWv/HARdab4VhO2wUgzVb
- i7Yf62qNtW3ffi6OMrmZWxgcpi7mW8gXAq9WvJoM+4v3j8kmJmCBi06nJ+tEt+KzME1P
- qLzTgObezboz77hQnmRHjYegZNGGMESzT7KaxV46mq4LO3z3tb7JoUJmiu8Ho1eQEfr7
- 7J9Q==
+ bh=voOsnZmg1bnOTOj8efHaXA/kRvba9LY5vB88tFa2EpU=;
+ b=g+xyzeTDesN8ihZBelPL7rJyZAg+f4WPbLH1MmVidyfOzGzg4clTbo8rIiNJxudhpJ
+ 9ohBhjh4WotkoVofDFIkSr5sCrXekbNkSVxWRH5q1e3U+VCBOdlzjF6meJ0gIBg37Da7
+ 7MI2o+XrqH7JPXiuNFqmi8L4usf96ju5VLCzMmt61rTTsPrg0Lu6q4U/AsmN8KEubh2K
+ 4ziDdGnfRnC6/S68qrEROR5KcoR9zkKCqTSYuniIIfzOVzEJeI4pezvuJrdPPfFviz57
+ 1iLX2ccw5IkfPzP92GYT9Jyialc2hKDjvIRWict/K1nDtDuoHso0/2bYtSlHLTmsZ07A
+ VohA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsBxaUbM3fboVMmJuLqLOBwFsrL0ClS9bmmR//Nl0KNSi/wG31PpLslQJ+OVHJgyhH8ki+IuBCzTNDL4Rq676ie3xU5hc=
-X-Gm-Message-State: AOJu0YxhjxL7X7zH+8iNIAYZCgF4j1z4IBH0uRTBffW2+E1k6E6jstzy
- 2dusi7moe05SqlrZqntmjwtsbIAz1AEQzv8kyaw8jYcAFVL5GGXQtGJNkiDwF8Y=
-X-Google-Smtp-Source: AGHT+IEmGRFsbDYOB8eIAOJLbucWkYaSVGq5DqOyoqveB8u+UAmtnOhk1qYkQAKf5+U+O0my0JS43A==
-X-Received: by 2002:a2e:9583:0:b0:2ea:91cf:a5f0 with SMTP id
- 38308e7fff4ca-2eeb30dbe58mr117780041fa.19.1721036716237; 
- Mon, 15 Jul 2024 02:45:16 -0700 (PDT)
+ AJvYcCV8B3SYQO/Oy30UeDEW620tivB2mbd33dQ+b/qH7zfDeILIVB3pYhg2bGuekoJ3GLka4InbJ/ZYKG9d1pDA2n/xszCFbAU=
+X-Gm-Message-State: AOJu0YwnOTJ9VigsKzvJ+qetbBgsJZ3xbygApEDBVKsPBp8el3Q3Xze5
+ 8VzjCMhR8o+apR/v/R6lQjo6sZSl8qOk9Is/u4S8di3Dq9k+IYnDLrDZ3z5vHAk=
+X-Google-Smtp-Source: AGHT+IGMuA8a3NNS+Y3b1tSyeFyuvbw5A6fnVnlhZlcJttcgLT/zgAkmHRj13smLnXiKZBNs3qXe8Q==
+X-Received: by 2002:a5d:47a9:0:b0:366:e7e2:13c8 with SMTP id
+ ffacd0b85a97d-367cea46a0bmr15484668f8f.11.1721036680377; 
+ Mon, 15 Jul 2024 02:44:40 -0700 (PDT)
 Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
  [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb478sm79597375e9.33.2024.07.15.02.45.13
+ ffacd0b85a97d-3680daccac2sm5791658f8f.56.2024.07.15.02.44.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jul 2024 02:45:14 -0700 (PDT)
-Message-ID: <c2e194f0-d774-47a7-ae53-f0a11f00fd1a@linaro.org>
-Date: Mon, 15 Jul 2024 11:45:12 +0200
+ Mon, 15 Jul 2024 02:44:39 -0700 (PDT)
+Message-ID: <5441aecd-0080-4528-a356-62318cb7704e@linaro.org>
+Date: Mon, 15 Jul 2024 11:44:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] backends/iommufd: Get rid of qemu_open_old()
+Subject: Re: [PATCH 3/7] hw/usb/u2f-passthru: Get rid of qemu_open_old()
 To: Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>,
  Laurent Vivier <laurent@vivier.eu>
 Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-trivial@nongnu.org, qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
+ qemu-trivial@nongnu.org, qemu-devel@nongnu.org
 References: <20240715082155.28771-1-zhao1.liu@intel.com>
- <20240715082155.28771-7-zhao1.liu@intel.com>
+ <20240715082155.28771-4-zhao1.liu@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240715082155.28771-7-zhao1.liu@intel.com>
+In-Reply-To: <20240715082155.28771-4-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,13 +107,10 @@ On 15/7/24 10:21, Zhao Liu wrote:
 > 
 > So replace qemu_open_old() with qemu_open().
 > 
-> Cc: Yi Liu <yi.l.liu@intel.com>
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   backends/iommufd.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   hw/usb/u2f-passthru.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
