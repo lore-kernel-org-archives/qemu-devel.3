@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E21C3DA52
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 08:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411C4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 08:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTGjw-0003KH-OI; Mon, 15 Jul 2024 04:07:20 -0400
+	id 1sTGjg-0002VG-Cb; Mon, 15 Jul 2024 04:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTGju-0003AU-6p; Mon, 15 Jul 2024 04:07:18 -0400
+ id 1sTGjd-0002SS-Cs; Mon, 15 Jul 2024 04:07:01 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTGjr-000480-Aw; Mon, 15 Jul 2024 04:07:17 -0400
+ id 1sTGja-00047o-QE; Mon, 15 Jul 2024 04:07:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721030835; x=1752566835;
+ t=1721030819; x=1752566819;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ZVM8m5lTvskYcDVaIB47aX485qUonoxl/4+eSxCJAec=;
- b=WkGlAoSjdA3J+kRXcgzhy3X8DGEhLRjtBiUOEQhUXwsIMmeCDXIHJb+4
- +M/ea4Ek4Q7SILRWizz6rc8qAsk4BYLJ/ec+D3vXtJ6Ee83rzK6omNpBI
- yUES8USsLFsjWxtz6xI0pZYDXpGey8mMKYm+jlfci+gn+IJEI/YH7aUUx
- s+n4dkHvl/4TFmNIz/Kl3WQA156KWSxUrMjSMWFcekCmv82neF3UayYik
- sJ3+VkqLDx8mqdbHKxsDNMi2EFkIm0LZPfvqvCuv8z4vhxkexrmALsx6W
- cP8jentPrURFUGFfFUT/X+KPXbFevJkFy7WzY6ynRgiGUT9f1phFgspIO w==;
-X-CSE-ConnectionGUID: tX4jCJXvRKSqI8kVraRB+g==
-X-CSE-MsgGUID: 65SU5QyLREWZph4bv/EyHQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35935684"
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35935684"
+ bh=cr4JZh2ySHCLoxlwCyTJncZxcFpDBYjniajzxyU5f7w=;
+ b=X65XGRPwa3e72+NIh9GKlcmQ1Nt04zWpRH/ZdS0pDvytslJaS0yJwUo3
+ Rqq82GPwVzLJ8fZ570WYOlzudSDibomrKVUVI27HtEvnh+zkVmfh20AkP
+ fYZrfQH5AdXj97FiMNTyPAnfER+n55OV8C39avBKaxBcHW6sJ3AVu/gso
+ P3r/zTkBuiqs4Eee1s6OG45truttfAXBgvNOqKmIzpScv35LieG8TRaEW
+ 7eqQS341CfNb0R7G7IFds7SC1wMk13Zg+Rhs4yQwrepvoy3fG4C89tFpG
+ AudTGtB9ijSIp6u/2XTV6he3GqCvXbjEFfj/L3K+6Hm+VRhUlDpAU35GS A==;
+X-CSE-ConnectionGUID: 3pRdSiAuQr2tHeqKj2Ei/w==
+X-CSE-MsgGUID: EZ+sMNkDTqSzMK6Ec+EpZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35935645"
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35935645"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 01:06:46 -0700
-X-CSE-ConnectionGUID: YlH62MMRRxiJ14Hvk5ZgqA==
-X-CSE-MsgGUID: esDv1OQKSPW76zLsMkw5Fw==
+ 15 Jul 2024 01:06:36 -0700
+X-CSE-ConnectionGUID: 98Xu5bW2SkmFPUCdK1+h/w==
+X-CSE-MsgGUID: aO1aHOwzTyKIcfBKFXYx6g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="49512596"
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="49512580"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 15 Jul 2024 01:06:43 -0700
+ by fmviesa009.fm.intel.com with ESMTP; 15 Jul 2024 01:06:33 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Michael Tokarev <mjt@tls.msk.ru>,
 	Laurent Vivier <laurent@vivier.eu>
@@ -50,12 +50,10 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 6/7] backends/iommufd: Get rid of qemu_open_old()
-Date: Mon, 15 Jul 2024 16:21:54 +0800
-Message-Id: <20240715082155.28771-7-zhao1.liu@intel.com>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 2/7] hw/usb/host-libusb: Get rid of qemu_open_old()
+Date: Mon, 15 Jul 2024 16:21:50 +0800
+Message-Id: <20240715082155.28771-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240715082155.28771-1-zhao1.liu@intel.com>
 References: <20240715082155.28771-1-zhao1.liu@intel.com>
@@ -92,29 +90,26 @@ For qemu_open_old(), osdep.h said:
 
 So replace qemu_open_old() with qemu_open().
 
-Cc: Yi Liu <yi.l.liu@intel.com>
-Cc: Eric Auger <eric.auger@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- backends/iommufd.c | 3 +--
+ hw/usb/host-libusb.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 84fefbc9ee7a..cabd1b50025d 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -77,9 +77,8 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
-     int fd;
- 
-     if (be->owned && !be->users) {
--        fd = qemu_open_old("/dev/iommu", O_RDWR);
-+        fd = qemu_open("/dev/iommu", O_RDWR, errp);
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index 80122b41259a..691bc881fbcd 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -1212,9 +1212,8 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+     if (s->hostdevice) {
+         int fd;
+         s->needs_autoscan = false;
+-        fd = qemu_open_old(s->hostdevice, O_RDWR);
++        fd = qemu_open(s->hostdevice, O_RDWR, errp);
          if (fd < 0) {
--            error_setg_errno(errp, errno, "/dev/iommu opening failed");
-             return false;
+-            error_setg_errno(errp, errno, "failed to open %s", s->hostdevice);
+             return;
          }
-         be->fd = fd;
+         rc = usb_host_open(s, NULL, fd);
 -- 
 2.34.1
 
