@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640C0C3DA45
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC90BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTEn0-0004MS-Sx; Mon, 15 Jul 2024 02:02:22 -0400
+	id 1sTFED-00018t-MT; Mon, 15 Jul 2024 02:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTEmz-0004G7-8C
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:02:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sTFEB-00015i-Jj; Mon, 15 Jul 2024 02:30:27 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTEmx-0001Gh-JG
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:02:21 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fb19ca5273so20586555ad.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 23:02:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sTFEA-0008VH-34; Mon, 15 Jul 2024 02:30:27 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1fbc0a1494dso22599145ad.3; 
+ Sun, 14 Jul 2024 23:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721023338; x=1721628138; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=PhK3uSw6+hnYNcdL6etCmPwutYwcHaSrYEaMaiWGi3E=;
- b=CQa7yLrDAV4bXg2QnOpAsgmttWK6lyrP9uP1AD789gGFO2sO1PjqTs43tSU+vtkFE4
- O1t1wX593GDcUWPakOd4Y7j2Z5PoIvLhS3q01FoRZdu/P0j3N1JItl8Qd+jfisfRZ1je
- WvXvkgu6UsTv6b7Xcxt1VhA18m1txa4Xxro9J+PooycezLn9aeXD5OfgPmk2lSOD2RGu
- 5wDSebnD7OlJTNZUkyeKq0lmHDNqzF5dOKIPq31b4POhXCD9LOZqLfeXVx1VaiI4tyyP
- PWpgV2/CQyF6wJ4eP7HtLIe2xpPcU2/S1DPXyXaEIM54e6VKJZgOmwu9OCdaaJ/FSoeE
- rM7g==
+ d=gmail.com; s=20230601; t=1721025024; x=1721629824; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kPcFtUwjn08CIhdLjhuQj730r0v8eBXex0TsGGwmZuE=;
+ b=j/brKHFfwIem1OgwdOJ2Tx2ybkLOQtjbMYi0UFgG5eDht9/hQODVs7T3F7gjzw/6gM
+ U/plDzNAQLxBpGV/90+JVhTUp+7y6AFk79FskDMGDSoVRuJQ7CPtAYGlziBpvfQsHY5M
+ v1zsl0K5s6b+QGWLDiYtI2OPRM6vrOwnm72ADu4Pa5gXjW1+2AJghojQIWlz58ikr9aT
+ ZKau6V+Ujkm1iKclNN0LlnDIx2/2TzT+Y+2Qb1O29sJsm2od+K6YOWDuXyQaG6WvtDhj
+ ojkk+DMZHGApA7sarchsUSAOtTxjUuseVfS6aJvbv7LVQaSaTCPYkkZzP9SxYFf3IEne
+ M7UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721023338; x=1721628138;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PhK3uSw6+hnYNcdL6etCmPwutYwcHaSrYEaMaiWGi3E=;
- b=r9aVHS+Mh1EHoO1fI2kY9VHoG9qpZtoeVcum1evnHfKjowEa5RybO25mUe2DZgcQtZ
- nDGuwUu/5P6yIDbxv/G1ENlLquQvcQOZpaSkyDzo+hzMHP4XraGzpEIZtBEuVuNoXdJq
- HmJchXj++DZgnZb7MSAhXB7pSrVwqtiKFq7s4dcLIDg1xcf6/rq5n+3fT1I4Id5Bgl3K
- 1BbGTe+pZL8yeOAVZ3njs0F2IJQiSnhW4FR0K1hjsJlZYpPqZa62RuEaITiu6P9U1S1U
- YZ417L1cC4+S18TgAnBYXdGNtVYU+9B0bgl2d71nSbTT+JLsHDw/7voVqDldepB1HJa0
- QdYA==
-X-Gm-Message-State: AOJu0YyPnjjsZCJK8HfkmrmIbAuNYD+zBKxVyw6jFauwkxrRUM/VB7u6
- uAfqQEE8A5GhEe3xV3VxjZ+ReoWSKG42KYwzhr9n2dhzXyFUyDPpkHMc5VxI8e+mmUs7QTAFTUQ
- 0jszdaQ==
-X-Google-Smtp-Source: AGHT+IG3SPmBmXRPok0ov/A9xaDX1tCSeVuiSZpQtKsx4qZ4Hc00My40qc5nY/SP259J8eTSdiON9Q==
-X-Received: by 2002:a17:903:32d1:b0:1fc:2b3b:5cbe with SMTP id
- d9443c01a7336-1fc2b3b5d22mr8215895ad.9.1721023337837; 
- Sun, 14 Jul 2024 23:02:17 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bbc68absm32044475ad.118.2024.07.14.23.02.15
+ d=1e100.net; s=20230601; t=1721025024; x=1721629824;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=kPcFtUwjn08CIhdLjhuQj730r0v8eBXex0TsGGwmZuE=;
+ b=O7pmfZOa0bKvtAJ/UUeykifhjzAc7tHp2rab0r0ZS4JDCzHdUt+pIS5MqHd0JSs2P5
+ NXT19rNxLuGRFtpsVMD5W8wSK1XVpb0Hj5+ok1UC921Us9si2I+3pLrVjWcOUUvsh70f
+ xBmIms3Y07ouiHtnWV5ufkcW2PKoV9bnZrh4g+PX5EWdbvV21qtrkm8syH1uHOH8tZwW
+ w+IAyW5h3O3Asqv55yMvtI4qRxtmhq/oNzFj4bD/OZuHFqR517sszaBXY+cbgbiAoZ5u
+ GRdCXxnfGRkqM+RM6n5qrDiUg1Er5YfhnccjCo8xbb++2RxD/w4qi/sDx0Ls2Fge37bE
+ eqGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPtP8f/yu2gZ2ZeEzX7Oco6DjcKYPEjuhDZaDDGgF8jhEphZNxScUovnhNw0vjsQMD4/AQGgh6JzjFGdYAN0hhp7XGLbvGIkFcbQ2hh5YhKlTs9rjJQW7XK0E=
+X-Gm-Message-State: AOJu0YzOMWBgQc8bwlex872PYArLBiU2b+rN3vr5nzE84Ez1PwyetYKs
+ 66eTSif3foVv7dqDYUry4CSxuzWX1BE8Nf2bOeCmGHeYxceQOUE8
+X-Google-Smtp-Source: AGHT+IGgKP6oFihz3AxpNVVxAe2WRgrjWE5r6BkkF7SBLznX3T93Yh0+dy2FA3sDEbKKJb/L2Zvw2A==
+X-Received: by 2002:a17:902:da89:b0:1fb:a388:38e1 with SMTP id
+ d9443c01a7336-1fbb6d893bbmr124721135ad.42.1721025023610; 
+ Sun, 14 Jul 2024 23:30:23 -0700 (PDT)
+Received: from localhost ([1.146.120.6]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fc0bc271a9sm32900515ad.172.2024.07.14.23.30.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 23:02:17 -0700 (PDT)
-Message-ID: <7a360b2d-4321-4fb5-b873-79a004071c85@linaro.org>
-Date: Mon, 15 Jul 2024 16:02:11 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/arm: Use FPST_F16 for SME FMOPA (widening)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: danikhan632@git.sr.ht, qemu-arm@nongnu.org, qemu-stable@nongnu.org,
- Daniyal Khan <danikhan632@gmail.com>
-References: <20240715055820.319035-1-richard.henderson@linaro.org>
- <20240715055820.319035-3-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20240715055820.319035-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ Sun, 14 Jul 2024 23:30:23 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 15 Jul 2024 16:30:17 +1000
+Message-Id: <D2PWGA4AB747.1I96QV6NN0XVQ@gmail.com>
+Cc: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Harsh
+ Prateek Bora" <harshpb@linux.ibm.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 03/19] ppc/pnv: Move timebase state into PnvCore
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240712120247.477133-1-npiggin@gmail.com>
+ <20240712120247.477133-4-npiggin@gmail.com>
+ <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
+In-Reply-To: <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,20 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/24 22:58, Richard Henderson wrote:
-> This operation has float16 inputs and thus must use
-> the FZ16 control not the FZ control.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Daniyal Khan <danikhan632@gmail.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2374
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/translate-sme.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+On Fri Jul 12, 2024 at 11:40 PM AEST, C=C3=A9dric Le Goater wrote:
+> On 7/12/24 14:02, Nicholas Piggin wrote:
+> > diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.=
+c
+> > index 39d397416e..52f9e6669c 100644
+> > --- a/target/ppc/timebase_helper.c
+> > +++ b/target/ppc/timebase_helper.c
+> > @@ -19,6 +19,7 @@
+> >   #include "qemu/osdep.h"
+> >   #include "cpu.h"
+> >   #include "hw/ppc/ppc.h"
+> > +#include "hw/ppc/pnv_core.h"
+>
+> I am afraid this header file is pulling too much definitions for
+> qemu-user. It breaks compile.
 
-Fixes: 3916841ac75 ("target/arm: Implement FMOPA, FMOPS (widening)")
+Humph, sorry I obviously wasn't testing it. I might just ifdef it for
+now.
 
+Not sure the best way to do it cleanly in the longer term , Power
+specific things could go into their own helper.c file, but I don't
+necessarily like to move them away from similar/related functions.
 
-r~
+Thanks,
+Nick
 
