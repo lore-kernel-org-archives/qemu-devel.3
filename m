@@ -4,60 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D436FC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D3BC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTISt-0006Yf-Gl; Mon, 15 Jul 2024 05:57:51 -0400
+	id 1sTIUb-0007yg-ER; Mon, 15 Jul 2024 05:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTISo-0006BO-Ez; Mon, 15 Jul 2024 05:57:46 -0400
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTISm-000097-E8; Mon, 15 Jul 2024 05:57:46 -0400
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46F9vE0G072662
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Mon, 15 Jul 2024 17:57:15 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 15 Jul
- 2024 17:57:16 +0800
-To: <qemu-devel@nongnu.org>
-CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
- <david@redhat.com>, <philmd@linaro.org>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, Ethan Chen
- <ethan84@andestech.com>
-Subject: [PATCH v8 2/8] system/physmem: Support IOMMU granularity smaller than
- TARGET_PAGE size
-Date: Mon, 15 Jul 2024 17:56:56 +0800
-Message-ID: <20240715095702.1222213-3-ethan84@andestech.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
-In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
-References: <20240715095702.1222213-1-ethan84@andestech.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIUZ-0007su-MB
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:59:35 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIUX-0000J2-Um
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:59:35 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-367a3d1a378so3654702f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721037571; x=1721642371; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pcaVBXPpmlyTHvYtq2LxI+nkD/SmHzorQzN90/YZHjs=;
+ b=YPla4KyU7+D+BuaY9w0Fvu1Oc7Gctt+lGzoeRgLYGfLlFT9XdoefN0DIvhquWcvf0P
+ GcEd/fzi8i7FRm3LP25eLlCFuesue/ycEZ+q/A1VQuiP3A8MyJywaDZ8YcP/8cfYdGwD
+ 7v3C51us061lXfz3NGL7LYgYMD2VJsGCX5DpULsa6UDkdBjCkY22sH2MnHp6+UZGybIq
+ yc+BGxMs2Qc+SEk5+iYz3fXWVGuUQWZoZTwwS/raQDR44e6CA0xacecpRtDyGR1m1mmh
+ 0diFV4oaKo2zEenAv42e2fvGZjTwvf0kcElPtGOSDoAhZPaH0WNKtnU+2PDsYd76RE39
+ 2e6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721037571; x=1721642371;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pcaVBXPpmlyTHvYtq2LxI+nkD/SmHzorQzN90/YZHjs=;
+ b=PNBRGC4nRkLtCjUrEU5JfD84TOmLBVkZlfEXNQ2Af0zY9vYb991jFzM0fBPbUjQha5
+ KWIYmFEp7bIKfUWja01yWv65q3xQ6JmzdoSDj5m8bdyB1b6Oy1vLnG/AA2hFBu+NSmdZ
+ AMFC7iW8KdoL/2t+VDCEI0QokC3FwHoHC0OlobxyNgEcWftc/rDPrvNlF6I6Ff9wq9QP
+ RVHRMJhCob0J+zX4dr4Nh5wXHwHg4aRBSKGHQF/80EvS/NtahQ1urmPRvKj/yESMLKHe
+ c+i+8C1/XhdflU8ACAhgRKoAHrGccHBct86ja0vzOGaYJGuihQtEsLnR79xEJFdREBx3
+ /MQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5AIFWMVC+jZmKTdMCoMK7duEiLZ8cBlmR04lTN3Y7bpeXJdnsprFeaO+O/l+T/cupGlDVfaDP44Yph2GmvOboUcFxebU=
+X-Gm-Message-State: AOJu0YzG6cKxCfCMAREwCGVk9oct/mOTsF/njRER6/ET2pVSANLRF7mG
+ ibCfvIcr+XeTCb5AROuSTKrVuvoPiO0odO1f2yZNgYCP/3XR/s4ngyQA4g8GHEU=
+X-Google-Smtp-Source: AGHT+IHqF/FfqfscOwMu5LwnE/vYRuUEnewuLdTEeN1trADJsLlNFmbWwxfX0cHNAR646BIljB5Gsg==
+X-Received: by 2002:a05:6000:1848:b0:367:890e:838e with SMTP id
+ ffacd0b85a97d-367cea96272mr19558253f8f.40.1721037571347; 
+ Mon, 15 Jul 2024 02:59:31 -0700 (PDT)
+Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
+ [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a5ef44a9sm79475865e9.40.2024.07.15.02.59.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jul 2024 02:59:30 -0700 (PDT)
+Message-ID: <1cf2b5cc-0837-4725-bf41-95bffd5a9b80@linaro.org>
+Date: Mon, 15 Jul 2024 11:59:29 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
+To: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+References: <20240715095939.72492-1-zhao1.liu@intel.com>
+ <20240715095939.72492-3-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240715095939.72492-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.1.106]
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46F9vE0G072662
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,80 +94,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the IOMMU granularity is smaller than the TARGET_PAGE size, there may be
- multiple entries within the same page. To obtain the correct result, pass
-the original address to the IOMMU.
+On 15/7/24 11:59, Zhao Liu wrote:
+> As the comment in qapi/error, dereferencing @errp requires
+> ERRP_GUARD():
+> 
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> * - It must not be dereferenced, because it may be null.
+> ...
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> *
+> * Using it when it's not needed is safe, but please avoid cluttering
+> * the source with useless code.
+> 
+> Though currently ga_run_command() only gets &local_err instead of NULL
+> @errp, it's still better to follow the requirement to add the
+> ERRP_GUARD().
+> 
+> But as error.h suggested, the best practice for callee is to return
+> something to indicate success / failure.
+> 
+> So make ga_wait_child() return boolean and check the returned boolean in
+> ga_run_command() instead of dereferencing @errp, which eliminates the
+> need of ERRP_GUARD().
 
-Similar to the RISC-V PMP solution, the TLB_INVALID_MASK will be set when
-there are multiple entries in the same page, ensuring that the IOMMU is
-checked on every access.
+I'd avoid mentioning ERRP_GUARD and just describe:
 
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
----
- accel/tcg/cputlb.c | 20 ++++++++++++++++----
- system/physmem.c   |  4 ++++
- 2 files changed, 20 insertions(+), 4 deletions(-)
+   Make ga_wait_child() return boolean and check the returned boolean
+   in ga_run_command() instead of dereferencing @errp.
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index edb3715017..7df106fea3 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1062,8 +1062,23 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
- 
-     prot = full->prot;
-     asidx = cpu_asidx_from_attrs(cpu, full->attrs);
--    section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
-+    section = address_space_translate_for_iotlb(cpu, asidx, full->phys_addr,
-                                                 &xlat, &sz, full->attrs, &prot);
-+    /* Update page size */
-+    full->lg_page_size = ctz64(sz);
-+    if (full->lg_page_size > TARGET_PAGE_BITS) {
-+        full->lg_page_size = TARGET_PAGE_BITS;
-+    } else {
-+        sz = TARGET_PAGE_SIZE;
-+    }
-+
-+    is_ram = memory_region_is_ram(section->mr);
-+    is_romd = memory_region_is_romd(section->mr);
-+    /* If the translated mr is ram/rom, make xlat align the TARGET_PAGE */
-+    if (is_ram || is_romd) {
-+        xlat &= TARGET_PAGE_MASK;
-+    }
-+
-     assert(sz >= TARGET_PAGE_SIZE);
- 
-     tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
-@@ -1076,9 +1091,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-         read_flags |= TLB_INVALID_MASK;
-     }
- 
--    is_ram = memory_region_is_ram(section->mr);
--    is_romd = memory_region_is_romd(section->mr);
--
-     if (is_ram || is_romd) {
-         /* RAM and ROMD both have associated host memory. */
-         addend = (uintptr_t)memory_region_get_ram_ptr(section->mr) + xlat;
-diff --git a/system/physmem.c b/system/physmem.c
-index 2154432cb6..346b015447 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -702,6 +702,10 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
-         iotlb = imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx);
-         addr = ((iotlb.translated_addr & ~iotlb.addr_mask)
-                 | (addr & iotlb.addr_mask));
-+        /* Update size */
-+        if (iotlb.addr_mask != -1 && *plen > iotlb.addr_mask + 1) {
-+            *plen = iotlb.addr_mask + 1;
-+        }
-         /* Update the caller's prot bits to remove permissions the IOMMU
-          * is giving us a failure response for. If we get down to no
-          * permissions left at all we can give up now.
--- 
-2.34.1
+For the code change:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Cc: Michael Roth <michael.roth@amd.com>
+> Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   qga/commands-posix.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+> index 7f05996495a2..64bb0be94479 100644
+> --- a/qga/commands-posix.c
+> +++ b/qga/commands-posix.c
+> @@ -59,7 +59,7 @@
+>   #endif
+>   #endif
+>   
+> -static void ga_wait_child(pid_t pid, int *status, Error **errp)
+> +static bool ga_wait_child(pid_t pid, int *status, Error **errp)
+>   {
+>       pid_t rpid;
+>   
+> @@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+>       if (rpid == -1) {
+>           error_setg_errno(errp, errno, "failed to wait for child (pid: %d)",
+>                            pid);
+> -        return;
+> +        return false;
+>       }
+>   
+>       g_assert(rpid == pid);
+> +    return true;
+>   }
+>   
+>   static ssize_t ga_pipe_read_str(int fd[2], char **str)
+> @@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], const char *in_str,
+>           goto out;
+>       }
+>   
+> -    ga_wait_child(pid, &status, errp);
+> -    if (*errp) {
+> +    if (!ga_wait_child(pid, &status, errp)) {
+>           goto out;
+>       }
+>   
 
 
