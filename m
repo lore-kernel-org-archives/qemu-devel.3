@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B46C41513
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D177C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIFq-0002ZR-Sj; Mon, 15 Jul 2024 05:44:22 -0400
+	id 1sTIFt-0002k1-NE; Mon, 15 Jul 2024 05:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIFp-0002VX-Bc
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:21 -0400
+ id 1sTIFs-0002gu-Qd
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:24 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIFm-0005Pt-Lb
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:20 -0400
+ id 1sTIFr-0005Pt-7I
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721036658; x=1752572658;
+ t=1721036663; x=1752572663;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=b5fT2v6rIKplI18OrZw/uOoTUXfEtQLspwPgsQjq34Y=;
- b=Gt2qhKtdPA+nQBZyhE3XjnIGUEnJeD5wdnhdh26koWLNuQWQYklwHE59
- NQnY88w+AscXfcExB0jlTsQZtb5llL1PfpzcznC0qY1JGIzMBSaNIoHS9
- Jqa6ku8wefhN2ddddsPLdsYe+j4VAcZ1XasY8v9tYEsp2eI6UgzvrWJA5
- BjoyLlOX3a1sjwTs1JteYRKnO70s51N7LLujdVKu33RtW6HXXt+fuy1ep
- wc2qspVXr023B+1RpEwR36QLo1znRPgpRhq5q+em0R0+uponN9WpZ8Kzd
- 4MMOAPUrmBzVitQmKEI9dGHo7vTrdCOzEbT4yVVkn4ImOgewu1GifcYDT Q==;
-X-CSE-ConnectionGUID: 00bEJPwlQu+pYLQaRsQAkg==
-X-CSE-MsgGUID: h2f+imAvR7KHcr2o1K1EWg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35837078"
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="35837078"
+ bh=aEt9NUuwJ/0VTGg32MzuEEaTFlLR/CAGW8RGmGngYGA=;
+ b=EtJ/OEmF2q23sjkLtqqJTMnYmyNTIJ1XmLhiVDIiikHb6xoP83R8pWIf
+ e+wJryULyM6cGwJ6vJzzuHws2pmIOy/Fz0kSFLf1eZmXlkEbu87XDJl/g
+ lmH7WR6NJdquLC7Fp0E/RAA2ByEXO/aoF9dDMlpYelM13l/TTqD2EZl2W
+ 5pty9IgMNds67SYbYWlm99xcj0leWGT8evlBOXgzLctzQfk0+NUfeRSnZ
+ 6qYowKNLKd4BRG9ep8NNBk/v5Jl5MV/N8pJrmSVAOIe/4F3fLYNZcSe8j
+ 9HUIjzJplmTmJoWwgTjAmBwcByhg+i8yjfkydw+VfIJkCqr1T40vdZKqB g==;
+X-CSE-ConnectionGUID: b+6awR79Qran8JJyicb3nA==
+X-CSE-MsgGUID: PbTrWlJRSGqJt0KB+JaUBw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35837080"
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="35837080"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 02:44:18 -0700
-X-CSE-ConnectionGUID: 2Lb3z7IbSjiriednDYeVrw==
-X-CSE-MsgGUID: GL/0xjgnRLWlCBqUEJe41A==
+ 15 Jul 2024 02:44:22 -0700
+X-CSE-ConnectionGUID: G+lYKG51TdeS73unNOr37Q==
+X-CSE-MsgGUID: PDmVSPx4STywGl14/CU/HA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="53854612"
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="53854615"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 15 Jul 2024 02:44:16 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 15 Jul 2024 02:44:21 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PATCH] hw/virtio/vdpa-dev: Check returned value instead of
- dereferencing @errp
-Date: Mon, 15 Jul 2024 17:59:38 +0800
-Message-Id: <20240715095939.72492-2-zhao1.liu@intel.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
+Date: Mon, 15 Jul 2024 17:59:39 +0800
+Message-Id: <20240715095939.72492-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240715095939.72492-1-zhao1.liu@intel.com>
 References: <20240715095939.72492-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -101,74 +98,58 @@ ERRP_GUARD():
 * Using it when it's not needed is safe, but please avoid cluttering
 * the source with useless code.
 
-Though vhost_vdpa_device_realize() is called at DeviceClass.realize()
-context and won't get NULL @errp, it's still better to follow the
-requirement to add the ERRP_GUARD().
+Though currently ga_run_command() only gets &local_err instead of NULL
+@errp, it's still better to follow the requirement to add the
+ERRP_GUARD().
 
-But qemu_open() and vhost_vdpa_device_get_u32()'s return values can
-distinguish between successful and unsuccessful calls, so check the
-return values directly without dereferencing @errp, which eliminates
-the need of ERRP_GUARD().
+But as error.h suggested, the best practice for callee is to return
+something to indicate success / failure.
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Eugenio Pérez" <eperezma@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
+So make ga_wait_child() return boolean and check the returned boolean in
+ga_run_command() instead of dereferencing @errp, which eliminates the
+need of ERRP_GUARD().
+
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/virtio/vdpa-dev.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ qga/commands-posix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 64b96b226c39..7b439efdc1d3 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -50,6 +50,7 @@ vhost_vdpa_device_get_u32(int fd, unsigned long int cmd, Error **errp)
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 7f05996495a2..64bb0be94479 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -59,7 +59,7 @@
+ #endif
+ #endif
  
- static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+-static void ga_wait_child(pid_t pid, int *status, Error **errp)
++static bool ga_wait_child(pid_t pid, int *status, Error **errp)
  {
-+    ERRP_GUARD();
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VhostVdpaDevice *v = VHOST_VDPA_DEVICE(vdev);
-     struct vhost_vdpa_iova_range iova_range;
-@@ -63,19 +64,19 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
+     pid_t rpid;
+ 
+@@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+     if (rpid == -1) {
+         error_setg_errno(errp, errno, "failed to wait for child (pid: %d)",
+                          pid);
+-        return;
++        return false;
      }
  
-     v->vhostfd = qemu_open(v->vhostdev, O_RDWR, errp);
--    if (*errp) {
-+    if (v->vhostfd < 0) {
-         return;
-     }
+     g_assert(rpid == pid);
++    return true;
+ }
  
-     v->vdev_id = vhost_vdpa_device_get_u32(v->vhostfd,
-                                            VHOST_VDPA_GET_DEVICE_ID, errp);
--    if (*errp) {
-+    if (v->vdev_id < 0) {
+ static ssize_t ga_pipe_read_str(int fd[2], char **str)
+@@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], const char *in_str,
          goto out;
      }
  
-     max_queue_size = vhost_vdpa_device_get_u32(v->vhostfd,
-                                                VHOST_VDPA_GET_VRING_NUM, errp);
+-    ga_wait_child(pid, &status, errp);
 -    if (*errp) {
-+    if (max_queue_size < 0) {
++    if (!ga_wait_child(pid, &status, errp)) {
          goto out;
-     }
- 
-@@ -89,7 +90,7 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
- 
-     v->num_queues = vhost_vdpa_device_get_u32(v->vhostfd,
-                                               VHOST_VDPA_GET_VQS_COUNT, errp);
--    if (*errp) {
-+    if (v->num_queues < 0) {
-         goto out;
-     }
- 
-@@ -127,7 +128,7 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
-     v->config_size = vhost_vdpa_device_get_u32(v->vhostfd,
-                                                VHOST_VDPA_GET_CONFIG_SIZE,
-                                                errp);
--    if (*errp) {
-+    if (v->config_size < 0) {
-         goto vhost_cleanup;
      }
  
 -- 
