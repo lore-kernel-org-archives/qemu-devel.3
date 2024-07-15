@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D80C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0340C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTEEO-0003Wz-6m; Mon, 15 Jul 2024 01:26:36 -0400
+	id 1sTEE4-00026D-34; Mon, 15 Jul 2024 01:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTEEM-0003MN-2K
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:34 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1sTEE1-0001vx-Ab
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:14 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTEE8-0000gA-Hx
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:33 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-78cc22902dcso731858a12.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:26:20 -0700 (PDT)
+ id 1sTEDz-0000fa-G8
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:13 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3dab3b85623so965203b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721021179; x=1721625979;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721021170; x=1721625970;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=A5DQvwhNUSdfuiyr6xdA4cBcty39lESgP6o5nYgfKFY=;
- b=jzA9XsY45Lav5cpWrR8OB1v5DY8cEjsFMSvX//hRdRHg8qLI637+f7yAyDKYRz1VSX
- zhiZREyMQOvM/yDoiQDIs3vdTOrDX4TK/klXHYowVuj9qdfoUqLvp9Ts0I1C918aARFU
- bN+yQTUKAN/2LXLHc1Y6adQHS5L99Ybw2q79pN+YKKoPA0Klx1wcVqP9bddiqllRWFEe
- F8xU8bFeuP+128zQ4U3CrpY2peSfLfgHj19sTtA6mY41pm4ZZ1FI2cFH06jj6IEiVNxV
- gKw6MtxbXNy8RxHyE35UCLeXiAwcINVBydJZNEqvGEmpqm6yZpKP5y/vNN1hgxr1mRFl
- KeLA==
+ :reply-to; bh=eynKNkc/q/6cUVvIvz9V6xDySPK0lqiqrd2y5gmcTLs=;
+ b=CwAfsYf/9HqQJ67/5oYMtjtUpQIKKq2KMr+CbQZ/DdTNym8CBeq7wengqq6Phvj8Hb
+ xhXu+GWNH+XXvmD1iZQvA5SZEZ5j2AX7kRx1/wJHFHZFonUr5D/hqKNYg0yYFOOCtI7y
+ UsPaqf8N1cZ3gm48TVjo0r0uNRryuxqX4ThZby8z4V/Ga6niI8+N2mXlN00U854fKhnp
+ qfKnLcspPMFTtvClpQoJ0kyAzWNHh89qAmv+Y3Q9atXkNI3Ud5LNKyg+/myg89nfdS0o
+ hrlYMkIY7LGLAx5cIJeUicJJ4KCM7O64x6lWyPXLDW4gd/v6fUIyyfYjITKa1Vvmmn7g
+ Y+bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721021179; x=1721625979;
+ d=1e100.net; s=20230601; t=1721021170; x=1721625970;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A5DQvwhNUSdfuiyr6xdA4cBcty39lESgP6o5nYgfKFY=;
- b=uHf8Mgsqy34yLv02qW0KP2gcR1ujgTrMBOHZNOKA94FB/NKHg++bekKkTyqm6DEFpW
- zIOqcY1NEHGyleBPCT16Ms3Snzsf+tUh6aoPQnJT+h3BxO6pzRnNBK21ZTra4UvbzNI4
- 3a5tQw8HxKQyw5T0MetNEQdrWbJzZsb1D5jjiB4FkD3TmeFi3v/bN9QthkkelKFG8eme
- C/E1mXGD6MMdeZ6655SHMF6LjIiPbekTCmTimirnF43rxIis0FcsGzBBi+UykneiAswW
- Wn9xKQLAT9r3FwETbNKNq/wHBVQlPTFLMhWcOCF8A/2douOlpu9lWnp7238QZFDeIZtu
- k32A==
-X-Gm-Message-State: AOJu0Yxm33bnw4CLmudo6JytlPlTtwj/EhISrryCS5hS+z7Xvqd0/3yB
- c06kLt4tM/r1AghE7iaME/gwLjtNfzHEh5y/PowSRUsSCJBCJahnLlLu1ocgW4hELfUc/eLGVdU
- sFw8=
-X-Google-Smtp-Source: AGHT+IG6ZTJyiWSpAJyCixANZSAj85vvDwMcslX2xfCRjN5x4MOMWqxorowMIRKWniFs7t2fkNIKtQ==
-X-Received: by 2002:a05:6a20:4328:b0:1c3:3436:a225 with SMTP id
- adf61e73a8af0-1c33436aef4mr14010262637.21.1721021179097; 
- Sun, 14 Jul 2024 22:26:19 -0700 (PDT)
+ bh=eynKNkc/q/6cUVvIvz9V6xDySPK0lqiqrd2y5gmcTLs=;
+ b=RVc5YensdYoXATktIwkY6cCUOtLcLNI/PnQau8IEVsZE+zcT3PqZKaZaZhM3Q3F7Y3
+ DsX9+dnPeZ3jd+whL8xkH7JiiN+M9HPEMkPYmxgqqetbkLadbRtUrJfoJV4EzTrI9P+e
+ FU5LsAyq8072SHR76PdW8X8BBByNjKtNIVagXLvJ+EmZyh5fx5FyMLvJKb3jYJaAsqv6
+ tYbs5Zjk/DdCLybOmZkwKhVbRXtGTY0DIpsrWBuR71H7jcUzE0nObPkbX0CH3Km5/73I
+ lRmh5/VaJzFKqRi3NxhaJeK76a6nOSVuFXaJ97IlX7htseEWspWsm77N6f6XHJITMWOP
+ itlQ==
+X-Gm-Message-State: AOJu0YzkPmPtwg7kZ/23dakYd7Sjh7wC+DMPgQHAyxazprs6eOYlDf5F
+ oxyoHdriaCY+qJVETnRv0sH0jupPONbyXJHXY86ClmSVeT3Y27b+Qyg6fdr2xl0=
+X-Google-Smtp-Source: AGHT+IELWKKMOQjG9sJiQZ+X8XveJoxLWPg34gKUuERTzYog4xi9QzXYkFjGTr1+gNvRI9VjNu8ZPg==
+X-Received: by 2002:a05:6808:1306:b0:3d9:324a:3db with SMTP id
+ 5614622812f47-3d93bdd181bmr22802771b6e.6.1721021170212; 
+ Sun, 14 Jul 2024 22:26:10 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2caedcac045sm3370440a91.57.2024.07.14.22.26.16
+ 41be03b00d2f7-78e34864b3esm2682982a12.42.2024.07.14.22.26.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 22:26:18 -0700 (PDT)
+ Sun, 14 Jul 2024 22:26:09 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 15 Jul 2024 14:25:45 +0900
-Subject: [PATCH v3 4/4] ui/console: Remove dpy_cursor_define_supported()
+Date: Mon, 15 Jul 2024 14:25:43 +0900
+Subject: [PATCH v3 2/4] ui/console: Convert mouse visibility parameter into
+ bool
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240715-cursor-v3-4-afa5b9492dbf@daynix.com>
+Message-Id: <20240715-cursor-v3-2-afa5b9492dbf@daynix.com>
 References: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
 In-Reply-To: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, 
@@ -78,13 +78,13 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::229;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,105 +101,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove dpy_cursor_define_supported() as it brings no benefit today and
-it has a few inherent problems.
-
-All graphical displays except egl-headless support cursor composition
-without DMA-BUF, and egl-headless is meant to be used in conjunction
-with another graphical display, so dpy_cursor_define_supported()
-always returns true and meaningless.
-
-Even if we add a new display without cursor composition in the future,
-dpy_cursor_define_supported() will be problematic as a cursor display
-fix for it because some display devices like virtio-gpu cannot tell the
-lack of cursor composition capability to the guest and are unable to
-utilize the value the function returns. Therefore, all non-headless
-graphical displays must actually implement cursor composition for
-correct cursor display.
-
-Another problem with dpy_cursor_define_supported() is that it returns
-true even if only some of the display listeners support cursor
-composition, which is wrong unless all display listeners that lack
-cursor composition is headless.
-
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/ui/console.h    |  1 -
- hw/display/qxl-render.c |  4 ----
- hw/display/vmware_vga.c |  6 ++----
- ui/console.c            | 13 -------------
- 4 files changed, 2 insertions(+), 22 deletions(-)
+ include/ui/console.h    |  4 ++--
+ hw/display/ati.c        |  2 +-
+ hw/display/virtio-gpu.c |  3 +--
+ hw/display/vmware_vga.c |  2 +-
+ ui/console.c            |  5 +++--
+ ui/dbus-listener.c      |  2 +-
+ ui/gtk.c                |  2 +-
+ ui/sdl2.c               |  4 ++--
+ ui/spice-display.c      | 11 ++++++-----
+ ui/vnc.c                |  2 +-
+ 10 files changed, 19 insertions(+), 18 deletions(-)
 
 diff --git a/include/ui/console.h b/include/ui/console.h
-index 82b573e68082..fa986ab97e3b 100644
+index a208a68b8886..82b573e68082 100644
 --- a/include/ui/console.h
 +++ b/include/ui/console.h
-@@ -324,7 +324,6 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h);
+@@ -233,7 +233,7 @@ typedef struct DisplayChangeListenerOps {
+ 
+     /* optional */
+     void (*dpy_mouse_set)(DisplayChangeListener *dcl,
+-                          int x, int y, int on);
++                          int x, int y, bool on);
+     /* optional */
+     void (*dpy_cursor_define)(DisplayChangeListener *dcl,
+                               QEMUCursor *cursor);
+@@ -322,7 +322,7 @@ void dpy_gfx_replace_surface(QemuConsole *con,
+ void dpy_text_cursor(QemuConsole *con, int x, int y);
+ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h);
  void dpy_text_resize(QemuConsole *con, int w, int h);
- void dpy_mouse_set(QemuConsole *con, int x, int y, bool on);
+-void dpy_mouse_set(QemuConsole *con, int x, int y, int on);
++void dpy_mouse_set(QemuConsole *con, int x, int y, bool on);
  void dpy_cursor_define(QemuConsole *con, QEMUCursor *cursor);
--bool dpy_cursor_define_supported(QemuConsole *con);
+ bool dpy_cursor_define_supported(QemuConsole *con);
  bool dpy_gfx_check_format(QemuConsole *con,
-                           pixman_format_code_t format);
- 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index ec99ec887a6e..837d2446cd52 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -307,10 +307,6 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-         return 1;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 8d2501bd8210..b1f94f5b767d 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -742,7 +742,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         if (!s->cursor_guest_mode &&
+             (s->regs.crtc_gen_cntl & CRTC2_CUR_EN) && !(t & BIT(31))) {
+             dpy_mouse_set(s->vga.con, s->regs.cur_hv_pos >> 16,
+-                          s->regs.cur_hv_pos & 0xffff, 1);
++                          s->regs.cur_hv_pos & 0xffff, true);
+         }
+         break;
      }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index d60b1b2973af..3281842bfe1b 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -109,8 +109,7 @@ static void update_cursor(VirtIOGPU *g, struct virtio_gpu_update_cursor *cursor)
+         s->cursor.pos.x = cursor->pos.x;
+         s->cursor.pos.y = cursor->pos.y;
+     }
+-    dpy_mouse_set(s->con, cursor->pos.x, cursor->pos.y,
+-                  cursor->resource_id ? 1 : 0);
++    dpy_mouse_set(s->con, cursor->pos.x, cursor->pos.y, cursor->resource_id);
+ }
  
--    if (!dpy_cursor_define_supported(qxl->vga.con)) {
--        return 0;
--    }
--
-     if (qxl->debug > 1 && cmd->type != QXL_CURSOR_MOVE) {
-         fprintf(stderr, "%s", __func__);
-         qxl_log_cmd_cursor(qxl, cmd, ext->group_id);
+ struct virtio_gpu_simple_resource *
 diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index 512f224b9f58..3db3ff98f763 100644
+index 1c0f9d9a991d..512f224b9f58 100644
 --- a/hw/display/vmware_vga.c
 +++ b/hw/display/vmware_vga.c
-@@ -904,10 +904,8 @@ static uint32_t vmsvga_value_read(void *opaque, uint32_t address)
-         caps |= SVGA_CAP_RECT_FILL;
- #endif
- #ifdef HW_MOUSE_ACCEL
--        if (dpy_cursor_define_supported(s->vga.con)) {
--            caps |= SVGA_CAP_CURSOR | SVGA_CAP_CURSOR_BYPASS_2 |
--                    SVGA_CAP_CURSOR_BYPASS;
--        }
-+        caps |= SVGA_CAP_CURSOR | SVGA_CAP_CURSOR_BYPASS_2 |
-+                SVGA_CAP_CURSOR_BYPASS;
- #endif
-         ret = caps;
-         break;
+@@ -1167,7 +1167,7 @@ static void vmsvga_reset(DeviceState *dev)
+     s->enable = 0;
+     s->config = 0;
+     s->svgaid = SVGA_ID;
+-    s->cursor.on = 0;
++    s->cursor.on = false;
+     s->redraw_fifo_last = 0;
+     s->syncing = 0;
+ 
 diff --git a/ui/console.c b/ui/console.c
-index 0ec70cb50ce6..33976446425e 100644
+index 1b2cd0c7365d..0ec70cb50ce6 100644
 --- a/ui/console.c
 +++ b/ui/console.c
-@@ -1001,19 +1001,6 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
+@@ -49,7 +49,8 @@ typedef struct QemuGraphicConsole {
+     uint32_t head;
+ 
+     QEMUCursor *cursor;
+-    int cursor_x, cursor_y, cursor_on;
++    int cursor_x, cursor_y;
++    bool cursor_on;
+ } QemuGraphicConsole;
+ 
+ typedef QemuConsoleClass QemuGraphicConsoleClass;
+@@ -957,7 +958,7 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
      }
  }
  
--bool dpy_cursor_define_supported(QemuConsole *con)
--{
--    DisplayState *s = con->ds;
--    DisplayChangeListener *dcl;
--
--    QLIST_FOREACH(dcl, &s->listeners, next) {
--        if (dcl->ops->dpy_cursor_define) {
--            return true;
--        }
--    }
--    return false;
--}
--
- QEMUGLContext dpy_gl_ctx_create(QemuConsole *con,
-                                 struct QEMUGLParams *qparams)
+-void dpy_mouse_set(QemuConsole *c, int x, int y, int on)
++void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
  {
+     QemuGraphicConsole *con = QEMU_GRAPHIC_CONSOLE(c);
+     DisplayState *s = c->ds;
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 54900880433e..a54123acea7d 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -726,7 +726,7 @@ static void dbus_gfx_switch(DisplayChangeListener *dcl,
+ }
+ 
+ static void dbus_mouse_set(DisplayChangeListener *dcl,
+-                           int x, int y, int on)
++                           int x, int y, bool on)
+ {
+     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 93b13b7a30ff..bc29f7a1b4f7 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -446,7 +446,7 @@ static GdkDevice *gd_get_pointer(GdkDisplay *dpy)
+ }
+ 
+ static void gd_mouse_set(DisplayChangeListener *dcl,
+-                         int x, int y, int visible)
++                         int x, int y, bool visible)
+ {
+     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
+     GdkDisplay *dpy;
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 0a0eb5a42d58..98ed97437171 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -49,7 +49,7 @@ static int gui_grab_code = KMOD_LALT | KMOD_LCTRL;
+ static SDL_Cursor *sdl_cursor_normal;
+ static SDL_Cursor *sdl_cursor_hidden;
+ static int absolute_enabled;
+-static int guest_cursor;
++static bool guest_cursor;
+ static int guest_x, guest_y;
+ static SDL_Cursor *guest_sprite;
+ static Notifier mouse_mode_notifier;
+@@ -729,7 +729,7 @@ void sdl2_poll_events(struct sdl2_console *scon)
+ }
+ 
+ static void sdl_mouse_warp(DisplayChangeListener *dcl,
+-                           int x, int y, int on)
++                           int x, int y, bool on)
+ {
+     struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+ 
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 8a8472d0294e..c794ae06498b 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -254,7 +254,7 @@ static void qemu_spice_create_update(SimpleSpiceDisplay *ssd)
+ static SimpleSpiceCursor*
+ qemu_spice_create_cursor_update(SimpleSpiceDisplay *ssd,
+                                 QEMUCursor *c,
+-                                int on)
++                                bool on)
+ {
+     size_t size = c ? c->width * c->height * 4 : 0;
+     SimpleSpiceCursor *update;
+@@ -448,7 +448,8 @@ void qemu_spice_display_switch(SimpleSpiceDisplay *ssd,
+     qemu_mutex_lock(&ssd->lock);
+     if (ssd->cursor) {
+         g_free(ssd->ptr_define);
+-        ssd->ptr_define = qemu_spice_create_cursor_update(ssd, ssd->cursor, 0);
++        ssd->ptr_define =
++            qemu_spice_create_cursor_update(ssd, ssd->cursor, false);
+     }
+     qemu_mutex_unlock(&ssd->lock);
+ }
+@@ -476,7 +477,7 @@ void qemu_spice_cursor_refresh_bh(void *opaque)
+         ssd->mouse_x = -1;
+         ssd->mouse_y = -1;
+         qemu_mutex_unlock(&ssd->lock);
+-        dpy_mouse_set(ssd->dcl.con, x, y, 1);
++        dpy_mouse_set(ssd->dcl.con, x, y, true);
+     } else {
+         qemu_mutex_unlock(&ssd->lock);
+     }
+@@ -747,7 +748,7 @@ static void display_refresh(DisplayChangeListener *dcl)
+ }
+ 
+ static void display_mouse_set(DisplayChangeListener *dcl,
+-                              int x, int y, int on)
++                              int x, int y, bool on)
+ {
+     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
+ 
+@@ -774,7 +775,7 @@ static void display_mouse_define(DisplayChangeListener *dcl,
+     g_free(ssd->ptr_move);
+     ssd->ptr_move = NULL;
+     g_free(ssd->ptr_define);
+-    ssd->ptr_define = qemu_spice_create_cursor_update(ssd, c, 0);
++    ssd->ptr_define = qemu_spice_create_cursor_update(ssd, c, false);
+     qemu_mutex_unlock(&ssd->lock);
+     qemu_spice_wakeup(ssd);
+ }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index dd530f04e579..dae5d51210be 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -981,7 +981,7 @@ int vnc_send_framebuffer_update(VncState *vs, int x, int y, int w, int h)
+ }
+ 
+ static void vnc_mouse_set(DisplayChangeListener *dcl,
+-                          int x, int y, int visible)
++                          int x, int y, bool visible)
+ {
+     /* can we ask the client(s) to move the pointer ??? */
+ }
 
 -- 
 2.45.2
