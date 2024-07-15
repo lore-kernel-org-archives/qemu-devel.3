@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D482C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 14:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C8CC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 14:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTMvL-00045I-B9; Mon, 15 Jul 2024 10:43:31 -0400
+	id 1sTN0W-0001AE-4s; Mon, 15 Jul 2024 10:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTMvK-00044Q-8t
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:43:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTN0U-00019K-0z
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:48:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTMvI-0001nL-7k
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:43:30 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTN0R-0002zE-Ad
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:48:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721054605;
+ s=mimecast20190719; t=1721054926;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MyiWcjy1J0tBPw0fqykkUUFq/D1LWGh95VOzE+IZvpY=;
- b=GG48SWygG8YvzwXO7qmq0NRPcsXhAFiEAsz43fsF674Hp7AQYwSmGYkFU6sEw7V6+RB0a7
- 1qNpjnJ8bwLZ9xf/ABQcXadpXL1D61hPMNzc1+scV1FS1sKPiZFoK42opGG9z/fnsJCKzE
- Qkhx5Muq99B3iQy0KbcVs/TGv953dMA=
+ bh=8hjOBwScs6Y159MlmdMvnyA8iJHd/1eRdc8iKf3WuJg=;
+ b=hrg/QEvJ16Gw99nTS5GrNO1sJ3HoqZJlYxfw6iQHjSCBRIAnZz+oaXmfou562N+EyXqvfF
+ pcGxsHpvaN7K/oIhI9U+uQIYM8ob0r0uP33rtbulIe1nIyITlHRLNz4u8JndUdMk8BgUqA
+ ZOyPi0ClRb7hD+Ql0nZavUZqWj1VHqY=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-2EhY7f0LP86qNt4K0ekKYQ-1; Mon, 15 Jul 2024 10:43:24 -0400
-X-MC-Unique: 2EhY7f0LP86qNt4K0ekKYQ-1
+ us-mta-594-ayAYFYrgOvaikeNyG3nbjQ-1; Mon, 15 Jul 2024 10:48:44 -0400
+X-MC-Unique: ayAYFYrgOvaikeNyG3nbjQ-1
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367960f4673so2966664f8f.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 07:43:23 -0700 (PDT)
+ ffacd0b85a97d-3678f832c75so3939733f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 07:48:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721054603; x=1721659403;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MyiWcjy1J0tBPw0fqykkUUFq/D1LWGh95VOzE+IZvpY=;
- b=X2i2c3qs82WwJwymINzvE74I8gis6wsbuh/qF5a+2QVk6mehpyPI0S4YiLGpA6TfxW
- oP2ikvKtCXFfnmFGRxUwoUvlANkCaO1Z5RDy7g/2QGBRQvaD3iyWX1KuaFbTui41kVdt
- UvtolmoZ8xe6Je6zGeve0xewQO3FHgBd5ZWQylitauzLLNM87mV+WsSHL0RLl70VdAoK
- 3lSYrGeA2HQgN0nYocxB7KHRDCnqIC8t55XXUQ2ruf8tIQn0kxYLV9d1/aMilTmceHeo
- /BCEaHU1A2dEcT2GG2l5FqFIJhjiVVmhg0WUnKB4Uz30tF6NMfWgso08xIT71T740K6P
- vPBg==
+ d=1e100.net; s=20230601; t=1721054923; x=1721659723;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8hjOBwScs6Y159MlmdMvnyA8iJHd/1eRdc8iKf3WuJg=;
+ b=PLPo/QummYyeurR2am1fAsNWYqi54O6RxfAZ5PM6Mkt9zGyq7YMjIDcDryIJRqCX2K
+ OGBS/sAPVw5rer3mgwYP7eBcvvU3s53pfUQYn8mEMw/vxKwXezH6Vz6KL3ju6lOkkDFD
+ lrjpGJQceziNr3pwGufZQsGgM0RAfdOipdIxlwQdsCdGi+Nzw2Z8A0/8kaYd8DBxLXp1
+ lc59B6O9kZ3LUk7Bep5OkV1bcdShtDBrN543b6+kYCz4urP9QwRJhMhWuJybnqDYLful
+ 14eZMBMMBXHDLtzmmUtUQynOatb/rI7EX8X4fvU48gmQr7CJEn1TTILfkZhDl7SO29ug
+ 8kVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWO1tkiAtB9tcRNDMBYy2EWaRCo52IaFS9g+eP5JSsJ9jxgGVKwbmsnEbFA2VWPRDEpkRx29XuV2pRFBxSkGhe+FL0Lzco=
-X-Gm-Message-State: AOJu0YxozieEw11frAhaQqfn4u+8E9jiChXKvNf2QS4AYWRViLQ6zOU9
- aGlvAUu0SubUFpgFmqXzRz4+w4MNakZXnSbiMkAb6mm3lAoYKmnn+76X3Zg8oC070c4PSlFoD8l
- cCyuHPPMVKtTiL5hAJPWa3pQDzvAbaCtsOE8UFskGbek7rZ3JkTWE
-X-Received: by 2002:a5d:6dc4:0:b0:367:895f:619e with SMTP id
- ffacd0b85a97d-367ff6edd0amr8215245f8f.11.1721054602989; 
- Mon, 15 Jul 2024 07:43:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0138J1NAVK32E0DlyX4TF2ohXNBVeXb7jik4+U72kBKBQ0Vy7nQ+YELA7mXFohFw5CZrnzQ==
-X-Received: by 2002:a5d:6dc4:0:b0:367:895f:619e with SMTP id
- ffacd0b85a97d-367ff6edd0amr8215211f8f.11.1721054602359; 
- Mon, 15 Jul 2024 07:43:22 -0700 (PDT)
-Received: from redhat.com ([2.52.29.159]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb478sm90804925e9.33.2024.07.15.07.43.18
+ AJvYcCWQ1rkiW9PrcufRnmac0ySMHMqgybXW8MpgAKFa+y6Rk9nobek+R63066OIHhO8tnw5NGfMOaaxLaVN/Oeu1GFF5jt2jd4=
+X-Gm-Message-State: AOJu0YywC4R5HZUqiRy4oMWJ26ZTvl1RHq46HzUhIKlkdNNMQHLWu9xB
+ DQEL2kYcXnC5T/mu+7QocfnJOcAmo2r3E+cZ2j1rbYLO5iTZLVK1FqvxYCICpVehETRZhrVEAFf
+ ORSMErhNfDA1/XfZ2iAEGqK2j76hTA2udU/H8fLUp88ZC+sLY6ZJq
+X-Received: by 2002:a5d:4cd2:0:b0:367:9801:9c67 with SMTP id
+ ffacd0b85a97d-367cead15c3mr15919210f8f.48.1721054923010; 
+ Mon, 15 Jul 2024 07:48:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvo1BL8O24IggWGu4Fjt3lZuBhXRP2ZXF0fOsIrWPscfm99RTZvhO2hWCDAZCq3gWRZTWsng==
+X-Received: by 2002:a5d:4cd2:0:b0:367:9801:9c67 with SMTP id
+ ffacd0b85a97d-367cead15c3mr15919178f8f.48.1721054922582; 
+ Mon, 15 Jul 2024 07:48:42 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a5e77488sm91062235e9.9.2024.07.15.07.48.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 07:43:21 -0700 (PDT)
-Date: Mon, 15 Jul 2024 10:42:35 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Liu, Yuan1" <yuan1.liu@intel.com>
-Cc: "Wang, Yichen" <yichen.wang@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Hao Xiang <hao.xiang@linux.dev>,
- "Kumar, Shivam" <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to offload zero
- page checking in multifd live migration.
-Message-ID: <20240715104015-mutt-send-email-mst@kernel.org>
-References: <20240711215244.19237-1-yichen.wang@bytedance.com>
- <20240711184131-mutt-send-email-mst@kernel.org>
- <PH7PR11MB594105D464F3A4C2C25F94FEA3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
- <20240715081857-mutt-send-email-mst@kernel.org>
- <PH7PR11MB5941A453AC1A4B3A387475A7A3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
+ Mon, 15 Jul 2024 07:48:42 -0700 (PDT)
+Date: Mon, 15 Jul 2024 16:48:41 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Markus Armbruster
+ <armbru@redhat.com>
+Cc: <mst@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
+ <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Dave Jiang <dave.jiang@intel.com>, Huang
+ Ying <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, Michael Roth <michael.roth@amd.com>, Ani Sinha
+ <anisinha@redhat.com>
+Subject: Re: [PATCH v5 10/13] hw/acpi: Generic Port Affinity Structure support
+Message-ID: <20240715164841.1979fdea@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240712110837.1439736-11-Jonathan.Cameron@huawei.com>
+References: <20240712110837.1439736-1-Jonathan.Cameron@huawei.com>
+ <20240712110837.1439736-11-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <PH7PR11MB5941A453AC1A4B3A387475A7A3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,168 +111,396 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 01:09:59PM +0000, Liu, Yuan1 wrote:
-> > -----Original Message-----
-> > From: Michael S. Tsirkin <mst@redhat.com>
-> > Sent: Monday, July 15, 2024 8:24 PM
-> > To: Liu, Yuan1 <yuan1.liu@intel.com>
-> > Cc: Wang, Yichen <yichen.wang@bytedance.com>; Paolo Bonzini
-> > <pbonzini@redhat.com>; Marc-André Lureau <marcandre.lureau@redhat.com>;
-> > Daniel P. Berrangé <berrange@redhat.com>; Thomas Huth <thuth@redhat.com>;
-> > Philippe Mathieu-Daudé <philmd@linaro.org>; Peter Xu <peterx@redhat.com>;
-> > Fabiano Rosas <farosas@suse.de>; Eric Blake <eblake@redhat.com>; Markus
-> > Armbruster <armbru@redhat.com>; Cornelia Huck <cohuck@redhat.com>; qemu-
-> > devel@nongnu.org; Hao Xiang <hao.xiang@linux.dev>; Kumar, Shivam
-> > <shivam.kumar1@nutanix.com>; Ho-Ren (Jack) Chuang
-> > <horenchuang@bytedance.com>
-> > Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to offload
-> > zero page checking in multifd live migration.
-> > 
-> > On Mon, Jul 15, 2024 at 08:29:03AM +0000, Liu, Yuan1 wrote:
-> > > > -----Original Message-----
-> > > > From: Michael S. Tsirkin <mst@redhat.com>
-> > > > Sent: Friday, July 12, 2024 6:49 AM
-> > > > To: Wang, Yichen <yichen.wang@bytedance.com>
-> > > > Cc: Paolo Bonzini <pbonzini@redhat.com>; Marc-André Lureau
-> > > > <marcandre.lureau@redhat.com>; Daniel P. Berrangé
-> > <berrange@redhat.com>;
-> > > > Thomas Huth <thuth@redhat.com>; Philippe Mathieu-Daudé
-> > > > <philmd@linaro.org>; Peter Xu <peterx@redhat.com>; Fabiano Rosas
-> > > > <farosas@suse.de>; Eric Blake <eblake@redhat.com>; Markus Armbruster
-> > > > <armbru@redhat.com>; Cornelia Huck <cohuck@redhat.com>; qemu-
-> > > > devel@nongnu.org; Hao Xiang <hao.xiang@linux.dev>; Liu, Yuan1
-> > > > <yuan1.liu@intel.com>; Kumar, Shivam <shivam.kumar1@nutanix.com>; Ho-
-> > Ren
-> > > > (Jack) Chuang <horenchuang@bytedance.com>
-> > > > Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to
-> > offload
-> > > > zero page checking in multifd live migration.
-> > > >
-> > > > On Thu, Jul 11, 2024 at 02:52:35PM -0700, Yichen Wang wrote:
-> > > > > * Performance:
-> > > > >
-> > > > > We use two Intel 4th generation Xeon servers for testing.
-> > > > >
-> > > > > Architecture:        x86_64
-> > > > > CPU(s):              192
-> > > > > Thread(s) per core:  2
-> > > > > Core(s) per socket:  48
-> > > > > Socket(s):           2
-> > > > > NUMA node(s):        2
-> > > > > Vendor ID:           GenuineIntel
-> > > > > CPU family:          6
-> > > > > Model:               143
-> > > > > Model name:          Intel(R) Xeon(R) Platinum 8457C
-> > > > > Stepping:            8
-> > > > > CPU MHz:             2538.624
-> > > > > CPU max MHz:         3800.0000
-> > > > > CPU min MHz:         800.0000
-> > > > >
-> > > > > We perform multifd live migration with below setup:
-> > > > > 1. VM has 100GB memory.
-> > > > > 2. Use the new migration option multifd-set-normal-page-ratio to
-> > control
-> > > > the total
-> > > > > size of the payload sent over the network.
-> > > > > 3. Use 8 multifd channels.
-> > > > > 4. Use tcp for live migration.
-> > > > > 4. Use CPU to perform zero page checking as the baseline.
-> > > > > 5. Use one DSA device to offload zero page checking to compare with
-> > the
-> > > > baseline.
-> > > > > 6. Use "perf sched record" and "perf sched timehist" to analyze CPU
-> > > > usage.
-> > > > >
-> > > > > A) Scenario 1: 50% (50GB) normal pages on an 100GB vm.
-> > > > >
-> > > > > 	CPU usage
-> > > > >
-> > > > > 	|---------------|---------------|---------------|-------------
-> > --|
-> > > > > 	|		|comm		|runtime(msec)	|totaltime(msec)|
-> > > > > 	|---------------|---------------|---------------|-------------
-> > --|
-> > > > > 	|Baseline	|live_migration	|5657.58	|		|
-> > > > > 	|		|multifdsend_0	|3931.563	|		|
-> > > > > 	|		|multifdsend_1	|4405.273	|		|
-> > > > > 	|		|multifdsend_2	|3941.968	|		|
-> > > > > 	|		|multifdsend_3	|5032.975	|		|
-> > > > > 	|		|multifdsend_4	|4533.865	|		|
-> > > > > 	|		|multifdsend_5	|4530.461	|		|
-> > > > > 	|		|multifdsend_6	|5171.916	|		|
-> > > > > 	|		|multifdsend_7	|4722.769	|41922		|
-> > > > > 	|---------------|---------------|---------------|-------------
-> > --|
-> > > > > 	|DSA		|live_migration	|6129.168	|		|
-> > > > > 	|		|multifdsend_0	|2954.717	|		|
-> > > > > 	|		|multifdsend_1	|2766.359	|		|
-> > > > > 	|		|multifdsend_2	|2853.519	|		|
-> > > > > 	|		|multifdsend_3	|2740.717	|		|
-> > > > > 	|		|multifdsend_4	|2824.169	|		|
-> > > > > 	|		|multifdsend_5	|2966.908	|		|
-> > > > > 	|		|multifdsend_6	|2611.137	|		|
-> > > > > 	|		|multifdsend_7	|3114.732	|		|
-> > > > > 	|		|dsa_completion	|3612.564	|32568		|
-> > > > > 	|---------------|---------------|---------------|-------------
-> > --|
-> > > > >
-> > > > > Baseline total runtime is calculated by adding up all multifdsend_X
-> > > > > and live_migration threads runtime. DSA offloading total runtime is
-> > > > > calculated by adding up all multifdsend_X, live_migration and
-> > > > > dsa_completion threads runtime. 41922 msec VS 32568 msec runtime and
-> > > > > that is 23% total CPU usage savings.
-> > > >
-> > > >
-> > > > Here the DSA was mostly idle.
-> > > >
-> > > > Sounds good but a question: what if several qemu instances are
-> > > > migrated in parallel?
-> > > >
-> > > > Some accelerators tend to basically stall if several tasks
-> > > > are trying to use them at the same time.
-> > > >
-> > > > Where is the boundary here?
-> > >
-> > > A DSA device can be assigned to multiple Qemu instances.
-> > > The DSA resource used by each process is called a work queue, each DSA
-> > > device can support up to 8 work queues and work queues are classified
-> > into
-> > > dedicated queues and shared queues.
-> > >
-> > > A dedicated queue can only serve one process. Theoretically, there is no
-> > limit
-> > > on the number of processes in a shared queue, it is based on enqcmd +
-> > SVM technology.
-> > >
-> > > https://www.kernel.org/doc/html/v5.17/x86/sva.html
-> > 
-> > This server has 200 CPUs which can thinkably migrate around 100 single
-> > cpu qemu instances with no issue. What happens if you do this with DSA?
+On Fri, 12 Jul 2024 12:08:14 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+
+> These are very similar to the recently added Generic Initiators
+> but instead of representing an initiator of memory traffic they
+> represent an edge point beyond which may lie either targets or
+> initiators.  Here we add these ports such that they may
+> be targets of hmat_lb records to describe the latency and
+> bandwidth from host side initiators to the port.  A discoverable
+> mechanism such as UEFI CDAT read from CXL devices and switches
+> is used to discover the remainder of the path, and the OS can build
+> up full latency and bandwidth numbers as need for work and data
+> placement decisions.
 > 
-> First, the DSA work queue needs to be configured in shared mode, and one
-> queue is enough. 
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Tested-by: "Huang, Ying" <ying.huang@intel.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+ACPI tables generation LGTM
+As for the rest my review is perfunctory mostly.
+
+> ---
+> v5: Push the definition of TYPE_ACPI_GENERIC_PORT down into the
+>     c file (similar to TYPE_ACPI_GENERIC_INITIATOR in earlier patch)
+> ---
+>  qapi/qom.json                       |  34 +++++++++
+>  include/hw/acpi/aml-build.h         |   4 +
+>  include/hw/acpi/pci.h               |   2 +-
+>  include/hw/pci/pci_bridge.h         |   1 +
+>  hw/acpi/aml-build.c                 |  40 ++++++++++
+>  hw/acpi/pci.c                       | 112 +++++++++++++++++++++++++++-
+>  hw/arm/virt-acpi-build.c            |   2 +-
+>  hw/i386/acpi-build.c                |   2 +-
+>  hw/pci-bridge/pci_expander_bridge.c |   1 -
+>  9 files changed, 193 insertions(+), 5 deletions(-)
 > 
-> The maximum depth of the work queue of the DSA hardware is 128, which means
-> that the number of zero-page detection tasks submitted cannot exceed 128,
-> otherwise, enqcmd will return an error until the work queue is available again
-> 
-> 100 Qemu instances need to be migrated concurrently, I don't have any data on
-> this yet, I think the 100 zero-page detection tasks can be successfully submitted
-> to the DSA hardware work queue, but the throughput of DSA's zero-page detection also
-> needs to be considered. Once the DSA maximum throughput is reached, the work queue
-> may be filled up quickly, this will cause some Qemu instances to be temporarily unable
-> to submit new tasks to DSA.
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 8e75a419c3..b97c031b73 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -838,6 +838,38 @@
+>    'data': { 'pci-dev': 'str',
+>              'node': 'uint32' } }
+>  
+> +##
+> +# @AcpiGenericPortProperties:
+> +#
+> +# Properties for acpi-generic-port objects.
+> +#
+> +# @pci-bus: QOM path of the PCI bus of the hostbridge associated with
+> +#     this SRAT Generic Port Affinity Structure.  This is the same as
+> +#     the bus parameter for the root ports attached to this host
+> +#     bridge.  The resulting SRAT Generic Port Affinity Structure will
+> +#     refer to the ACPI object in DSDT that represents the host bridge
+> +#     (e.g.  ACPI0016 for CXL host bridges).  See ACPI 6.5 Section
+> +#     5.2.16.7 for more information.
+> +#
 
-The unfortunate reality here would be that there's likely no QoS, this
-is purely fifo, right?
+> +# @node: Similar to a NUMA node ID, but instead of providing a
+> +#     reference point used for defining NUMA distances and access
+> +#     characteristics to memory or from an initiator (e.g. CPU), this
+> +#     node defines the boundary point between non-discoverable system
+> +#     buses which must be described by firmware, and a discoverable
+> +#     bus.  NUMA distances and access characteristics are defined to
+> +#     and from that point.  For system software to establish full
+> +#     initiator to target characteristics this information must be
+> +#     combined with information retrieved from the discoverable part
+> +#     of the path.  An example would use CDAT (see UEFI.org)
+> +#     information read from devices and switches in conjunction with
+> +#     link characteristics read from PCIe Configuration space.
 
-> This is likely to happen in the first round of migration
-> memory iteration.
+you lost me here (even reading this several time doesn't help).
+Perhaps I lack specific domain knowledge, but is there a way to make it
+more comprehensible for layman?
 
-Try testing this and see then?
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'AcpiGenericPortProperties',
+> +  'data': { 'pci-bus': 'str',
+> +            'node': 'uint32' } }
+> +
+>  ##
+>  # @RngProperties:
+>  #
+> @@ -1031,6 +1063,7 @@
+>  { 'enum': 'ObjectType',
+>    'data': [
+>      'acpi-generic-initiator',
+> +    'acpi-generic-port',
+>      'authz-list',
+>      'authz-listfile',
+>      'authz-pam',
+> @@ -1106,6 +1139,7 @@
+>    'discriminator': 'qom-type',
+>    'data': {
+>        'acpi-generic-initiator':     'AcpiGenericInitiatorProperties',
+> +      'acpi-generic-port':          'AcpiGenericPortProperties',
+>        'authz-list':                 'AuthZListProperties',
+>        'authz-listfile':             'AuthZListFileProperties',
+>        'authz-pam':                  'AuthZPAMProperties',
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index 33eef85791..9e30c735bb 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -490,6 +490,10 @@ void build_srat_pci_generic_initiator(GArray *table_data, int node,
+>                                        uint16_t segment, uint8_t bus,
+>                                        uint8_t devfn);
+>  
+> +void build_srat_acpi_generic_port(GArray *table_data, int node,
+> +                                  const char *hid,
+> +                                  uint32_t uid);
+> +
+>  void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>                  const char *oem_id, const char *oem_table_id);
+>  
+> diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+> index 3015a8171c..6359d574fd 100644
+> --- a/include/hw/acpi/pci.h
+> +++ b/include/hw/acpi/pci.h
+> @@ -41,6 +41,6 @@ Aml *aml_pci_device_dsm(void);
+>  void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
+>  void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
+>  
+> -void build_srat_generic_pci_initiator(GArray *table_data);
+> +void build_srat_generic_affinity_structures(GArray *table_data);
+>  
+>  #endif
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index 5cd452115a..5456e24883 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -102,6 +102,7 @@ typedef struct PXBPCIEDev {
+>      PXBDev parent_obj;
+>  } PXBPCIEDev;
+>  
+> +#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
+>  #define TYPE_PXB_DEV "pxb"
+>  OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
+>  
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 968b654e58..4067100dd6 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -1955,6 +1955,19 @@ static void build_append_srat_pci_device_handle(GArray *table_data,
+>      build_append_int_noprefix(table_data, 0, 12);
+>  }
+>  
+> +static void build_append_srat_acpi_device_handle(GArray *table_data,
+> +                                                 const char *hid,
+> +                                                 uint32_t uid)
+> +{
+> +    assert(strlen(hid) == 8);
+> +    /* Device Handle - ACPI */
+> +    for (int i = 0; i < sizeof(hid); i++) {
+> +        build_append_int_noprefix(table_data, hid[i], 1);
+> +    }
+> +    build_append_int_noprefix(table_data, uid, 4);
+> +    build_append_int_noprefix(table_data, 0, 4);
+> +}
+> +
+>  /*
+>   * ACPI spec, Revision 6.3
+>   * 5.2.16.6 Generic Initiator Affinity Structure
+> @@ -1982,6 +1995,33 @@ void build_srat_pci_generic_initiator(GArray *table_data, int node,
+>      build_append_int_noprefix(table_data, 0, 4);
+>  }
+>  
+> +/*
+> + * ACPI spec, Revision 6.5
+> + * 5.2.16.7 Generic Port Affinity Structure
+> + *   With ACPI Device Handle.
+> + */
+> +void build_srat_acpi_generic_port(GArray *table_data, int node,
+
+shouldn't node be uint32_t?
+
+> +                                  const char *hid,
+> +                                  uint32_t uid)
+> +{
+> +    /* Type */
+> +    build_append_int_noprefix(table_data, 6, 1);
+> +    /* Length */
+> +    build_append_int_noprefix(table_data, 32, 1);
+> +    /* Reserved */
+> +    build_append_int_noprefix(table_data, 0, 1);
+> +    /* Device Handle Type: ACPI */
+> +    build_append_int_noprefix(table_data, 0, 1);
+> +    /* Proximity Domain */
+> +    build_append_int_noprefix(table_data, node, 4);
+> +    /* Device Handle */
+> +    build_append_srat_acpi_device_handle(table_data, hid, uid);
+> +    /* Flags - GP Enabled */
+> +    build_append_int_noprefix(table_data, 1, 4);
+> +    /* Reserved */
+> +    build_append_int_noprefix(table_data, 0, 4);
+> +}
+> +
+>  /*
+>   * ACPI spec 5.2.17 System Locality Distance Information Table
+>   * (Revision 2.0 or later)
+> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
+> index 3e1db161cc..020ad53c03 100644
+> --- a/hw/acpi/pci.c
+> +++ b/hw/acpi/pci.c
+> @@ -30,6 +30,7 @@
+>  #include "hw/boards.h"
+>  #include "hw/acpi/aml-build.h"
+>  #include "hw/acpi/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "hw/pci/pci_device.h"
+>  #include "hw/pci/pcie_host.h"
+>  
+> @@ -177,9 +178,118 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+>      return 0;
+>  }
+>  
+> -void build_srat_generic_pci_initiator(GArray *table_data)
+> +typedef struct AcpiGenericPort {
+> +    /* private */
+> +    Object parent;
+> +
+> +    /* public */
+> +    char *pci_bus;
+> +    uint16_t node;
+
+ditto
+
+> +} AcpiGenericPort;
+> +
+> +typedef struct AcpiGenericPortClass {
+> +    ObjectClass parent_class;
+> +} AcpiGenericPortClass;
+> +
+> +#define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
+> +
+> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
+> +                   ACPI_GENERIC_PORT, OBJECT,
+> +                   { TYPE_USER_CREATABLE },
+> +                   { NULL })
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
+> +
+> +static void acpi_generic_port_init(Object *obj)
+> +{
+> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
+> +
+> +    gp->node = MAX_NODES;
+> +    gp->pci_bus = NULL;
+> +}
+> +
+> +static void acpi_generic_port_finalize(Object *obj)
+> +{
+> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
+> +
+> +    g_free(gp->pci_bus);
+> +}
+> +
+> +static void acpi_generic_port_set_pci_bus(Object *obj, const char *val,
+> +                                          Error **errp)
+> +{
+> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
+> +
+> +    gp->pci_bus = g_strdup(val);
+> +}
+> +
+> +static void acpi_generic_port_set_node(Object *obj, Visitor *v,
+> +                                       const char *name, void *opaque,
+> +                                       Error **errp)
+> +{
+> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
+> +    uint32_t value;
+> +
+> +    if (!visit_type_uint32(v, name, &value, errp)) {
+> +        return;
+> +    }
+> +
+> +    if (value >= MAX_NODES) {
+> +        error_printf("%s: Invalid NUMA node specified\n",
+> +                     TYPE_ACPI_GENERIC_INITIATOR);
+> +        exit(1);
+> +    }
+> +
+> +    gp->node = value;
+
+as long as gp->node is uint32_t it should be fine.
+otherwise it's too fragile. 
+
+> +}
+> +
+> +static void acpi_generic_port_class_init(ObjectClass *oc, void *data)
+> +{
+> +    object_class_property_add_str(oc, "pci-bus", NULL,
+> +        acpi_generic_port_set_pci_bus);
+> +    object_class_property_add(oc, "node", "int", NULL,
+> +        acpi_generic_port_set_node, NULL, NULL);
+
+missing property description calls.
+
+> +}
+> +
+> +static int build_acpi_generic_port(Object *obj, void *opaque)
+> +{
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+> +    const char *hid = "ACPI0016";
+> +    GArray *table_data = opaque;
+> +    AcpiGenericPort *gp;
+> +    uint32_t uid;
+> +    Object *o;
+> +
+> +    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_PORT)) {
+> +        return 0;
+> +    }
+> +
+> +    gp = ACPI_GENERIC_PORT(obj);
+> +
+> +    if (gp->node >= ms->numa_state->num_nodes) {
+
+> +        error_printf("%s: node %d is invalid.\n",
+> +                     TYPE_ACPI_GENERIC_PORT, gp->node);
+> +        exit(1);
+
+not sure, 
+maybe use error_fatal instead of using exit(1)?
+
+CCing Markus to check if it's ok.
 
 
--- 
-MST
+> +    }
+> +
+> +    o = object_resolve_path_type(gp->pci_bus, TYPE_PXB_CXL_BUS, NULL);
+> +    if (!o) {
+> +        error_printf("%s: device must be a CXL host bridge.\n",
+> +                     TYPE_ACPI_GENERIC_PORT);
+> +       exit(1);
+> +    }
+ditto
+
+> +
+> +    uid = object_property_get_uint(o, "acpi_uid", &error_fatal);
+> +    build_srat_acpi_generic_port(table_data, gp->node, hid, uid);
+> +
+> +    return 0;
+> +}
+> +
+> +void build_srat_generic_affinity_structures(GArray *table_data)
+>  {
+>      object_child_foreach_recursive(object_get_root(),
+>                                     build_acpi_generic_initiator,
+>                                     table_data);
+> +    object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
+> +                                   table_data);
+>  }
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index a50b00b7c1..d98651df55 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -510,7 +510,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>          }
+>      }
+>  
+> -    build_srat_generic_pci_initiator(table_data);
+> +    build_srat_generic_affinity_structures(table_data);
+>  
+>      if (ms->nvdimms_state->is_enabled) {
+>          nvdimm_build_srat(table_data);
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 2eaa4c9203..7f5ca188c1 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -2048,7 +2048,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>          build_srat_memory(table_data, 0, 0, 0, MEM_AFFINITY_NOFLAGS);
+>      }
+>  
+> -    build_srat_generic_pci_initiator(table_data);
+> +    build_srat_generic_affinity_structures(table_data);
+>  
+>      /*
+>       * Entry is required for Windows to enable memory hotplug in OS
+> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> index b94cb85cfb..cd7f2d5423 100644
+> --- a/hw/pci-bridge/pci_expander_bridge.c
+> +++ b/hw/pci-bridge/pci_expander_bridge.c
+> @@ -38,7 +38,6 @@ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
+>  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
+>                           TYPE_PXB_PCIE_BUS)
+>  
+> -#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
+>  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
+>                           TYPE_PXB_CXL_BUS)
+>  
 
 
