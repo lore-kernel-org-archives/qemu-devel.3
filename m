@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD08C2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6129DC41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTEDv-0001aI-Ut; Mon, 15 Jul 2024 01:26:07 -0400
+	id 1sTEEB-0002WT-0C; Mon, 15 Jul 2024 01:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTEDt-0001SC-Ut
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:05 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ id 1sTEE9-0002Sj-Vq
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:21 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTEDr-0000c6-6S
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:05 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3856b7be480so14317845ab.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:26:02 -0700 (PDT)
+ id 1sTEE3-0000fu-M4
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:26:21 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fb1ff21748so23037695ad.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721021162; x=1721625962;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721021174; x=1721625974;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iHuyZlhpKJ1Dkt9TX+IwKytrXQTRTNvimOeb8QrdFW0=;
- b=rvra3sxiby9c5cp3tTnp6w7zgkO0lxxkDlgTmE4jiW7FlVYV3zrNC6YnoQggqv6O+x
- Nq5sqtbcXF9Lg5fvIDbBKi0/ERjgWHaojaOCO1Omxm4164FZZTSgSbSpD2xnqfNUkJAI
- 0TxAWYl073JgK63uVy87cHFygC2WQQl7lkjKMsj12kjSPL10jLqcSrU3b54Irh+jq4g4
- Dn8iEKIA0wOA0ArR+forr8UxijEW/EQh5C3Axa7m9afE1lohf5v/mGIvYGMrDG3ppOEr
- G1vGAu71PhNChqUaaeX/stlNXxSL1Z5iw1SR0RFXxnJYsJg8Sn6BlVlL/Yn1/C8KLOYT
- jemg==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=HyblI6J8nHcgpLCqw/BWLjpJpAxCOF36i19GG8sv7lM=;
+ b=sqJg/Uq3v1Mtj5llX7QXC1CPbza4NoAaTVQrxr9cBjfnGg+6ESYfcdJCzFy9BFfRta
+ He0qVFkDPxCab8wBRQvzkh/pkRDbOI0NDsrQKNzQXbL+cS/BZtBVOMH9mHI65mrH0Knc
+ obaf8CUtIhk73jurQ7+GwlZcAhlbahl1AhDDIPCozr55KNUUT1DC9bo8dJwk0n4gQmxv
+ ybW5F3GW9B7jkkQZ/y0CTKctGMhHF4QNIHQH7T6LY1A5fxdKzOnoHBN6oZN15ChNHvjz
+ s9LMVeLEAwpU9Dk853M7UmvLtY2c33bXATDBy5/C77S/byiyGMmhy0wxKs/1TWYzSRaw
+ tDhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721021162; x=1721625962;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iHuyZlhpKJ1Dkt9TX+IwKytrXQTRTNvimOeb8QrdFW0=;
- b=iBu5o6eqEV9qeS6VubTWe0mMQA0Bys1DgHcObnrqDHpLe/ARLlUEmkfzlWeufPnsUV
- XxwiaZPEcRKFpIyDDJVGtUDOetPsJTAP+w2RXcJtqyegaNYpzwsKu9YMB5E1E2znsska
- bmiy9QLiVV9hHHLlLPaeHU8r4su4ZaKna7Z0q6FuwMpC5OZngmKGMRRhamvt0WqYDuQi
- A6SNCNrlIHcVr2bQuqwPrk4D78DwAHSIeGvna/RSW+xFFb6jsvMOTva4rwTURZEqaZxu
- S9Wo1lueNu0LLDG3bzU0Fv7xSGD2Hc9VJQj8eG6CpdI+TVl2f/ofqHOVdCut76UioWsB
- 8rwQ==
-X-Gm-Message-State: AOJu0YzYBZt+NEnrKR1W9HmtWYWiQqh5whUFI2L4ROEXaV9FqhZJBo4+
- V9cgAlFZSkB/vFfQlMhvFG6z7ZwGuaFZNMET3Q78SebBmZHf8mFR8dELmVlPnhk=
-X-Google-Smtp-Source: AGHT+IGSxM75DG6UjOxBq3kS94RHM8LonRuReIQC3M64tHFRB/AqbJcJh62W6aPFa8CONTWgs/gIFA==
-X-Received: by 2002:a05:6e02:170c:b0:375:ab93:5062 with SMTP id
- e9e14a558f8ab-38a57117d80mr252554035ab.2.1721021160855; 
- Sun, 14 Jul 2024 22:26:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721021174; x=1721625974;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HyblI6J8nHcgpLCqw/BWLjpJpAxCOF36i19GG8sv7lM=;
+ b=n9CR1mdvrp+hwhG47+jJdIdea/Bch13yVW4p71hCrz323lS7jUQJt2fhPt52Km5ATs
+ 8aSNTBkO/38pUtYVaHTXDCcOA2bXkkj+xzLEEotqy+VBTtg3+d9oOuhF3QUsRnz/hDNX
+ oHAOydfFbHFySB2rZAEbT4Ad5s5h9HsXZCdl52kDQ19Z6vJibf78jcA4ZjrA2MPt/UUK
+ seRIaHG3Cd5EKWqtG+Fp7MqNjp4EXErVfVIyV9+lla4+HMfhQsY/YUNpHg8JywVT1NIj
+ cOOtcXnZys+YZExNMsytIBEVtETJA2H3qLJsnxNOMEQiFml/rBjsYZe32OStGUR7bXqu
+ u4ag==
+X-Gm-Message-State: AOJu0YwWfYfCnASUjN7/6QGbTDOqlGLl7dwoOR882BGAPxEH4ftn3V+E
+ R0DLJlZE5tXzVDRVz5W3ub0nMN7YTJdw54qErYGNAJg4+pv2KRw0QKAdT/nJXTc=
+X-Google-Smtp-Source: AGHT+IHDkdivwGRLEIBJutOl4xE56xLlI1/bXDCfZ5YEIxvWpoUnO5VUijOS61umFJtNDdpAN0DhOw==
+X-Received: by 2002:a17:902:760f:b0:1fb:3474:9525 with SMTP id
+ d9443c01a7336-1fbb6d4dc4cmr76802695ad.29.1721021174306; 
+ Sun, 14 Jul 2024 22:26:14 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-70b7ecd26acsm3405261b3a.217.2024.07.14.22.25.58
+ d9443c01a7336-1fc0bb6fe47sm31660865ad.49.2024.07.14.22.26.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 22:26:00 -0700 (PDT)
+ Sun, 14 Jul 2024 22:26:14 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v3 0/4] ui/cocoa: Add cursor composition
-Date: Mon, 15 Jul 2024 14:25:41 +0900
-Message-Id: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
+Date: Mon, 15 Jul 2024 14:25:44 +0900
+Subject: [PATCH v3 3/4] ui/cocoa: Add cursor composition
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANaylGYC/2WMQQ6CMBBFr0JmbU07A6W68h7GBZRRupCaVhsI4
- e4WFhrj8v3892aIHBxHOBYzBE4uOj9koF0Btm+GGwvXZQaUWEpSRthXiD4IKg+qVUbqyiDk8yP
- w1Y1b6HzJ3Lv49GHaukmt618iKSGFbFvWlgyiqk9dMw1u3Ft/h7WR8OtprD8eZs+S7YiZKq30j
- 7csyxuTe/pJ1QAAAA==
+Message-Id: <20240715-cursor-v3-3-afa5b9492dbf@daynix.com>
+References: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
+In-Reply-To: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -79,8 +77,8 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::131;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-il1-x131.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,50 +114,188 @@ position interfers with the mouse input so it uses CALayer instead;
 although it is not specialized for cursor composition, it still can
 compose images with hardware acceleration.
 
+Co-authored-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v3:
-- Incorporated changes from:
-  "[PATCH v3 1/4] ui/cocoa: Typo fix in based-on patches"
-- Link to v2: https://lore.kernel.org/r/20240627-cursor-v2-0-c3cd3ee35616@daynix.com
+ meson.build |  3 +-
+ ui/cocoa.m  | 99 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+), 1 deletion(-)
 
-Changes in v2:
-- Incorporated changes from:
-  https://lore.kernel.org/r/20240625134931.92279-2-phil@philjordan.eu
-  ("[PATCH v2 1/2] ui/cocoa: Minor fixes to CALayer based cursors")
-- Added patch "ui/cocoa: Release CGColorSpace"
-- Added patch "ui/console: Convert mouse visibility parameter into bool"
-- Noted that the problem with warping is relevant only for relative
-  pointer devices.
-- Link to v1: https://lore.kernel.org/r/20240318-cursor-v1-0-0bbe6c382217@daynix.com
+diff --git a/meson.build b/meson.build
+index 638660714455..59cc1fb8bcfc 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1041,7 +1041,8 @@ if get_option('attr').allowed()
+   endif
+ endif
+ 
+-cocoa = dependency('appleframeworks', modules: ['Cocoa', 'CoreVideo'],
++cocoa = dependency('appleframeworks',
++                   modules: ['Cocoa', 'CoreVideo', 'QuartzCore'],
+                    required: get_option('cocoa'))
+ 
+ vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'))
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 908454a434c5..0f52cf0de934 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -25,6 +25,7 @@
+ #include "qemu/osdep.h"
+ 
+ #import <Cocoa/Cocoa.h>
++#import <QuartzCore/QuartzCore.h>
+ #include <crt_externs.h>
+ 
+ #include "qemu/help-texts.h"
+@@ -79,12 +80,16 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+                          DisplaySurface *surface);
+ 
+ static void cocoa_refresh(DisplayChangeListener *dcl);
++static void cocoa_mouse_set(DisplayChangeListener *dcl, int x, int y, bool on);
++static void cocoa_cursor_define(DisplayChangeListener *dcl, QEMUCursor *cursor);
+ 
+ static const DisplayChangeListenerOps dcl_ops = {
+     .dpy_name          = "cocoa",
+     .dpy_gfx_update = cocoa_update,
+     .dpy_gfx_switch = cocoa_switch,
+     .dpy_refresh = cocoa_refresh,
++    .dpy_mouse_set = cocoa_mouse_set,
++    .dpy_cursor_define = cocoa_cursor_define,
+ };
+ static DisplayChangeListener dcl = {
+     .ops = &dcl_ops,
+@@ -300,6 +305,11 @@ @interface QemuCocoaView : NSView
+     BOOL isAbsoluteEnabled;
+     CFMachPortRef eventsTap;
+     CGColorSpaceRef colorspace;
++    CALayer *cursorLayer;
++    QEMUCursor *cursor;
++    int mouseX;
++    int mouseY;
++    bool mouseOn;
+ }
+ - (void) switchSurface:(pixman_image_t *)image;
+ - (void) grabMouse;
+@@ -365,6 +375,12 @@ - (id)initWithFrame:(NSRect)frameRect
+ #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
+         [self setClipsToBounds:YES];
+ #endif
++        [self setWantsLayer:YES];
++        cursorLayer = [[CALayer alloc] init];
++        [cursorLayer setAnchorPoint:CGPointMake(0, 1)];
++        [cursorLayer setAutoresizingMask:kCALayerMaxXMargin |
++                                         kCALayerMinYMargin];
++        [[self layer] addSublayer:cursorLayer];
+ 
+     }
+     return self;
+@@ -383,6 +399,8 @@ - (void) dealloc
+     }
+ 
+     CGColorSpaceRelease(colorspace);
++    [cursorLayer release];
++    cursor_unref(cursor);
+     [super dealloc];
+ }
+ 
+@@ -426,6 +444,72 @@ - (void) unhideCursor
+     [NSCursor unhide];
+ }
+ 
++- (void)setMouseX:(int)x y:(int)y on:(bool)on
++{
++    CGPoint position;
++
++    mouseX = x;
++    mouseY = y;
++    mouseOn = on;
++
++    position.x = mouseX;
++    position.y = screen.height - mouseY;
++
++    [CATransaction begin];
++    [CATransaction setDisableActions:YES];
++    [cursorLayer setPosition:position];
++    [cursorLayer setHidden:!mouseOn];
++    [CATransaction commit];
++}
++
++- (void)setCursor:(QEMUCursor *)given_cursor
++{
++    CGDataProviderRef provider;
++    CGImageRef image;
++    CGRect bounds = CGRectZero;
++
++    cursor_unref(cursor);
++    cursor = given_cursor;
++
++    if (!cursor) {
++        return;
++    }
++
++    cursor_ref(cursor);
++
++    bounds.size.width = cursor->width;
++    bounds.size.height = cursor->height;
++
++    provider = CGDataProviderCreateWithData(
++        NULL,
++        cursor->data,
++        cursor->width * cursor->height * 4,
++        NULL
++    );
++
++    image = CGImageCreate(
++        cursor->width, //width
++        cursor->height, //height
++        8, //bitsPerComponent
++        32, //bitsPerPixel
++        cursor->width * 4, //bytesPerRow
++        colorspace, //colorspace
++        kCGBitmapByteOrder32Little | kCGImageAlphaFirst, //bitmapInfo
++        provider, //provider
++        NULL, //decode
++        0, //interpolate
++        kCGRenderingIntentDefault //intent
++    );
++
++    CGDataProviderRelease(provider);
++    [CATransaction begin];
++    [CATransaction setDisableActions:YES];
++    [cursorLayer setBounds:bounds];
++    [cursorLayer setContents:(id)image];
++    [CATransaction commit];
++    CGImageRelease(image);
++}
++
+ - (void) drawRect:(NSRect) rect
+ {
+     COCOA_DEBUG("QemuCocoaView: drawRect\n");
+@@ -2003,6 +2087,21 @@ static void cocoa_refresh(DisplayChangeListener *dcl)
+     [pool release];
+ }
+ 
++static void cocoa_mouse_set(DisplayChangeListener *dcl, int x, int y, bool on)
++{
++    dispatch_async(dispatch_get_main_queue(), ^{
++        [cocoaView setMouseX:x y:y on:on];
++    });
++}
++
++static void cocoa_cursor_define(DisplayChangeListener *dcl, QEMUCursor *cursor)
++{
++    dispatch_async(dispatch_get_main_queue(), ^{
++        BQL_LOCK_GUARD();
++        [cocoaView setCursor:qemu_console_get_cursor(dcl->con)];
++    });
++}
++
+ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ {
+     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 
----
-Akihiko Odaki (4):
-      ui/cocoa: Release CGColorSpace
-      ui/console: Convert mouse visibility parameter into bool
-      ui/cocoa: Add cursor composition
-      ui/console: Remove dpy_cursor_define_supported()
-
- meson.build             |   3 +-
- include/ui/console.h    |   5 +--
- hw/display/ati.c        |   2 +-
- hw/display/qxl-render.c |   4 --
- hw/display/virtio-gpu.c |   3 +-
- hw/display/vmware_vga.c |   8 ++--
- ui/console.c            |  18 ++-------
- ui/dbus-listener.c      |   2 +-
- ui/gtk.c                |   2 +-
- ui/sdl2.c               |   4 +-
- ui/spice-display.c      |  11 ++---
- ui/vnc.c                |   2 +-
- ui/cocoa.m              | 104 +++++++++++++++++++++++++++++++++++++++++++++++-
- 13 files changed, 126 insertions(+), 42 deletions(-)
----
-base-commit: 74abb45dac6979e7ff76172b7f0a24e869405184
-change-id: 20240318-cursor-3491b1806582
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.45.2
 
 
