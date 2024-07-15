@@ -4,48 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47832C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF1CC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTI6u-0003fQ-7f; Mon, 15 Jul 2024 05:35:08 -0400
+	id 1sTIFk-0002Gr-VT; Mon, 15 Jul 2024 05:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTI6W-0002xn-Sx; Mon, 15 Jul 2024 05:34:45 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTIFj-0002FA-Dn
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:15 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTI6U-0003wl-QH; Mon, 15 Jul 2024 05:34:44 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95C1B7A591;
- Mon, 15 Jul 2024 12:34:34 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D7C92108CFB;
- Mon, 15 Jul 2024 12:34:35 +0300 (MSK)
-Received: (nullmailer pid 571755 invoked by uid 1000);
- Mon, 15 Jul 2024 09:34:35 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTIFg-0005Pt-Mk
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721036652; x=1752572652;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=kdXjqi13CCe9SdliRbBIpnfNqhqkl6WeICywifF1dCI=;
+ b=SQvu4KkHq/UnxSEz6fDVN+6SougkPZghncyMBZKERHLl+WCsv4jetn6d
+ e1FbDzpNpebGblVv2VbwrkgamAHBgmLPikyZ5aReFDHQqntDZ5YrOr9mA
+ aUbX93JDH+RU3+5pzhDgADoCowG4cB+Tn55FGK9KIBUYnIngv6XABZmJh
+ j8fNW2D/tK03CFwQmlTFwm/BKOfbFVtRNxOoHeW4HoK18h5oWOkjs2VEf
+ ik5zJHzXFwQETwXsJLOdVTGXP2NRPIW9l3qopvOG0b2lH3U//BcrNK5AF
+ VV+4BNyURey26z3nFLI46cCEHvI/4ZlVnYYakPc7Qx21/4JpaDqpSUiFg A==;
+X-CSE-ConnectionGUID: x766oiNuTdeyTAHJBH1AbQ==
+X-CSE-MsgGUID: o5xPw17+Q/SKex5383hByg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35837073"
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="35837073"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 02:44:09 -0700
+X-CSE-ConnectionGUID: zahehWo1RLqTTaf3Hv4vmg==
+X-CSE-MsgGUID: GlMW/VGvSR+eSVXRjM7u8Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="53854606"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 15 Jul 2024 02:44:08 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Maxim Mikityanskiy <maxtram95@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 25/27] char-stdio: Restore blocking mode of stdout on
- exit
-Date: Mon, 15 Jul 2024 12:34:32 +0300
-Message-Id: <20240715093435.571721-3-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-9.0.2-20240715075000@cover.tls.msk.ru>
-References: <qemu-stable-9.0.2-20240715075000@cover.tls.msk.ru>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD() in
+ nubus_virtio_mmio_realize()
+Date: Mon, 15 Jul 2024 17:59:37 +0800
+Message-Id: <20240715095939.72492-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,52 +81,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-qemu_chr_open_fd() sets stdout into non-blocking mode. Restore the old
-fd flags on exit to avoid breaking unsuspecting applications that run on
-the same terminal after qemu and don't expect to get EAGAIN.
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+...
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
 
-While at at, also ensure term_exit is called once (at the moment it's
-called both from char_stdio_finalize() and as the atexit() hook.
+But in nubus_virtio_mmio_realize(), @errp is dereferenced without
+ERRP_GUARD().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2423
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20240703190812.3459514-1-maxtram95@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a0124e333e2176640f233e5ea57a2f413985d9b5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
+method - doesn't get the NULL @errp parameter, it hasn't triggered the
+bug that dereferencing the NULL @errp. It's still necessary to follow
+the requirement of @errp, so add missing ERRP_GUARD() in
+nubus_virtio_mmio_realize().
 
-diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
-index 3c648678ab..b960ddd4e4 100644
---- a/chardev/char-stdio.c
-+++ b/chardev/char-stdio.c
-@@ -41,6 +41,7 @@
- /* init terminal so that we can grab keys */
- static struct termios oldtty;
- static int old_fd0_flags;
-+static int old_fd1_flags;
- static bool stdio_in_use;
- static bool stdio_allow_signal;
- static bool stdio_echo_state;
-@@ -50,6 +51,8 @@ static void term_exit(void)
-     if (stdio_in_use) {
-         tcsetattr(0, TCSANOW, &oldtty);
-         fcntl(0, F_SETFL, old_fd0_flags);
-+        fcntl(1, F_SETFL, old_fd1_flags);
-+        stdio_in_use = false;
-     }
- }
+Cc: Laurent Vivier <laurent@vivier.eu>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ hw/nubus/nubus-virtio-mmio.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/nubus/nubus-virtio-mmio.c b/hw/nubus/nubus-virtio-mmio.c
+index 58a63c84d0be..a5558d3ec28b 100644
+--- a/hw/nubus/nubus-virtio-mmio.c
++++ b/hw/nubus/nubus-virtio-mmio.c
+@@ -23,6 +23,7 @@ static void nubus_virtio_mmio_set_input_irq(void *opaque, int n, int level)
  
-@@ -102,6 +105,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
- 
-     stdio_in_use = true;
-     old_fd0_flags = fcntl(0, F_GETFL);
-+    old_fd1_flags = fcntl(1, F_GETFL);
-     tcgetattr(0, &oldtty);
-     if (!g_unix_set_fd_nonblocking(0, true, NULL)) {
-         error_setg_errno(errp, errno, "Failed to set FD nonblocking");
+ static void nubus_virtio_mmio_realize(DeviceState *dev, Error **errp)
+ {
++    ERRP_GUARD();
+     NubusVirtioMMIODeviceClass *nvmdc = NUBUS_VIRTIO_MMIO_GET_CLASS(dev);
+     NubusVirtioMMIO *s = NUBUS_VIRTIO_MMIO(dev);
+     NubusDevice *nd = NUBUS_DEVICE(dev);
 -- 
-2.39.2
+2.34.1
 
 
