@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29405C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE50C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTL5E-0001uf-2v; Mon, 15 Jul 2024 08:45:36 -0400
+	id 1sTL7m-00087f-ID; Mon, 15 Jul 2024 08:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTL4z-0001cM-GK
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:45:23 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sTL7g-00084s-LB
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:48:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTL4u-0004tB-2B
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:45:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721047516; x=1752583516;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=HgCxm632MKI+ageSXo76+sPRdrBooforP1/ih5wmQEE=;
- b=j6aHo24mASlkGbVPlUgGYXD43+VrdVz/c4aMwyRFsR9X4LkM/YldMp47
- slqPrhOZvKI3sHqomKFgV/c8ueQlvTq3Rz2PrLDU/khFvarDid9BOjVH7
- rR2tREM7qu18ePfL+YmXZUnjWUV0IEfXpBMA9+Gs5VsOhiAMBv+q9Q+qG
- m6TbWrbjSeD3EXS93Ij9b5TuQW0hhsx78jWAkpsSB/dM/8BB9WRrlNe8y
- JBwa73SoiIDshcG6rLA5uwb43CXqYq/XVZ2ui7iEFHEC2xiYtXe8lfVMN
- i3no7pOCU92waVR9Iz0LheVb5a3VIxUAWv8+u99eSYpE85hy24/NIIdL5 Q==;
-X-CSE-ConnectionGUID: tBU/AjaqQHO4AUBmmAdfpw==
-X-CSE-MsgGUID: tqbs83CPQ06xfZZYj+bKyQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="18377068"
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="18377068"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 05:45:12 -0700
-X-CSE-ConnectionGUID: NgNQpvSES92NzU9mYNTslw==
-X-CSE-MsgGUID: 3VcObhf5Tai7eUqEKlc8eQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="87119060"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa001.jf.intel.com with ESMTP; 15 Jul 2024 05:45:11 -0700
-Date: Mon, 15 Jul 2024 21:00:51 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sTL7e-0005Ad-Ih
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:48:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721047682;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pfu6O8lg34RbDkDfXlGkHEP1e9e4uZMaHydNy/7oGns=;
+ b=fsmN9YzkpX6yneJ1+aems7w0Yhqja5tSLqk/qkoDoGd3ivk3UBT542eMgcq2rN2UOxitvM
+ iHieOzRabHLqolZO8ALk+ZyidmoaxkDSHKfiD0Fl3G5wn6EUS38WKzDpgXYX66JSIstnHN
+ qcyBuVMXt/A4BMfHF4zPVS2dZTrmO/M=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-E-zgKDX4MBuglY45-7PhHw-1; Mon,
+ 15 Jul 2024 08:47:59 -0400
+X-MC-Unique: E-zgKDX4MBuglY45-7PhHw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C3E41955D5B; Mon, 15 Jul 2024 12:47:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.18])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53A061955F40; Mon, 15 Jul 2024 12:47:54 +0000 (UTC)
+Date: Mon, 15 Jul 2024 13:47:51 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org
 Subject: Re: [PATCH] meson: Update meson-buildoptions.sh
-Message-ID: <ZpUdgyNb2lFga9PU@intel.com>
+Message-ID: <ZpUad0qRK2xBAnV5@redhat.com>
 References: <20240705054903.2100562-1-zhao1.liu@intel.com>
- <Zoe625Z3JxlB4G5D@redhat.com>
+ <Zoe625Z3JxlB4G5D@redhat.com> <ZpUdgyNb2lFga9PU@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zoe625Z3JxlB4G5D@redhat.com>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <ZpUdgyNb2lFga9PU@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +87,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+CC qemu-trivial
 
-On Fri, Jul 05, 2024 at 10:20:27AM +0100, Daniel P. Berrangé wrote:
-> Date: Fri, 5 Jul 2024 10:20:27 +0100
-> From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: Re: [PATCH] meson: Update meson-buildoptions.sh
+On Mon, Jul 15, 2024 at 09:00:51PM +0800, Zhao Liu wrote:
+> Hi Daniel,
 > 
-> On Fri, Jul 05, 2024 at 01:49:03PM +0800, Zhao Liu wrote:
-> > Update meson-buildoptions.sh to stay in sync with meson_options.txt.
+> On Fri, Jul 05, 2024 at 10:20:27AM +0100, Daniel P. BerrangÃ© wrote:
+> > Date: Fri, 5 Jul 2024 10:20:27 +0100
+> > From: "Daniel P. BerrangÃ©" <berrange@redhat.com>
+> > Subject: Re: [PATCH] meson: Update meson-buildoptions.sh
 > > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> >  scripts/meson-buildoptions.sh | 14 +++++++-------
-> >  1 file changed, 7 insertions(+), 7 deletions(-)
+> > On Fri, Jul 05, 2024 at 01:49:03PM +0800, Zhao Liu wrote:
+> > > Update meson-buildoptions.sh to stay in sync with meson_options.txt.
+> > > 
+> > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > > ---
+> > >  scripts/meson-buildoptions.sh | 14 +++++++-------
+> > >  1 file changed, 7 insertions(+), 7 deletions(-)
+> > 
+> > Reviewed-by: Daniel P. BerrangÃ© <berrange@redhat.com>
+> > 
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Thanks!
+> 
+> BTW, could you please help merge this change? Because recently this
+> script has been "polluting" my git staging workspace during
+> development.
+> 
+> Regards,
+> Zhao
 > 
 
-Thanks!
-
-BTW, could you please help merge this change? Because recently this
-script has been "polluting" my git staging workspace during
-development.
-
-Regards,
-Zhao
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
