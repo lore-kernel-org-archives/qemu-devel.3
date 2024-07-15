@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B56C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0070C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIjP-0002Ce-84; Mon, 15 Jul 2024 06:14:55 -0400
+	id 1sTIjV-0002zg-Oz; Mon, 15 Jul 2024 06:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTIjL-0001yq-HJ; Mon, 15 Jul 2024 06:14:51 -0400
+ id 1sTIjT-0002pS-AW; Mon, 15 Jul 2024 06:14:59 -0400
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTIjD-0003FB-OF; Mon, 15 Jul 2024 06:14:51 -0400
+ id 1sTIjR-0003Fw-3M; Mon, 15 Jul 2024 06:14:59 -0400
 Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46FAEPei081117
+ by Atcsqr.andestech.com with ESMTPS id 46FAEdjG081451
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Mon, 15 Jul 2024 18:14:25 +0800 (+08)
+ Mon, 15 Jul 2024 18:14:39 +0800 (+08)
  (envelope-from ethan84@andestech.com)
 Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS34.andestech.com
  (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 15 Jul
- 2024 18:14:27 +0800
+ 2024 18:14:40 +0800
 To: <qemu-devel@nongnu.org>
 CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
  <david@redhat.com>, <philmd@linaro.org>, <palmer@dabbelt.com>,
@@ -35,10 +35,9 @@ CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, Ethan Chen
  <ethan84@andestech.com>
-Subject: [PATCH v8 7/8] hw/misc/riscv_iopmp: Add DMA operation with IOPMP
- support API
-Date: Mon, 15 Jul 2024 18:14:21 +0800
-Message-ID: <20240715101421.1249537-1-ethan84@andestech.com>
+Subject: [PATCH v8 8/8] hw/riscv/virt: Add IOPMP support
+Date: Mon, 15 Jul 2024 18:14:34 +0800
+Message-ID: <20240715101434.1249621-1-ethan84@andestech.com>
 X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
 References: <20240715095702.1222213-1-ethan84@andestech.com>
@@ -49,7 +48,7 @@ X-Originating-IP: [10.0.1.106]
 X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
  ATCPCS34.andestech.com (10.0.1.134)
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46FAEPei081117
+X-MAIL: Atcsqr.andestech.com 46FAEdjG081451
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -75,106 +74,203 @@ From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The iopmp_dma_rw() function performs memory read/write operations to system
-memory with support for IOPMP. It sends transaction information to the IOPMP
-for partial hit detection.
+- Add 'iopmp=on' option to enable IOPMP. It adds an iopmp device virt machine
+  to protect all regions of system memory, and configures RRID of CPU.
 
 Signed-off-by: Ethan Chen <ethan84@andestech.com>
 ---
- hw/misc/riscv_iopmp.c         | 68 +++++++++++++++++++++++++++++++++++
- include/hw/misc/riscv_iopmp.h |  3 +-
- 2 files changed, 70 insertions(+), 1 deletion(-)
+ docs/system/riscv/virt.rst |  5 +++
+ hw/riscv/Kconfig           |  1 +
+ hw/riscv/virt.c            | 63 ++++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  5 ++-
+ 4 files changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
-index 374bf5c610..0be32ca819 100644
---- a/hw/misc/riscv_iopmp.c
-+++ b/hw/misc/riscv_iopmp.c
-@@ -1217,5 +1217,73 @@ void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid)
-     cpu->cfg.iopmp_rrid = rrid;
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 9a06f95a34..9fd006ccc2 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -116,6 +116,11 @@ The following machine-specific options are supported:
+   having AIA IMSIC (i.e. "aia=aplic-imsic" selected). When not specified,
+   the default number of per-HART VS-level AIA IMSIC pages is 0.
+ 
++- iopmp=[on|off]
++
++  When this option is "on", an IOPMP device is added to machine. IOPMP checks
++  memory transcations in system memory. This option is assumed to be "off".
++
+ Running Linux kernel
+ --------------------
+ 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index a2030e3a6f..0b45a5ade2 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -56,6 +56,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select RISCV_IOPMP
+ 
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index bc0893e087..5a03c03c4a 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -55,6 +55,7 @@
+ #include "hw/acpi/aml-build.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "hw/misc/riscv_iopmp.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia(RISCVVirtState *s)
+@@ -82,6 +83,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_IOPMP] =        { 0x10200000,      0x100000 },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -90,6 +92,11 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_DRAM] =         { 0x80000000,           0x0 },
+ };
+ 
++static const MemMapEntry iopmp_protect_memmap[] = {
++    /* IOPMP protect all regions by default */
++    {0, 0xFFFFFFFF},
++};
++
+ /* PCIe high mmio is fixed for RV32 */
+ #define VIRT32_HIGH_PCIE_MMIO_BASE  0x300000000ULL
+ #define VIRT32_HIGH_PCIE_MMIO_SIZE  (4 * GiB)
+@@ -1024,6 +1031,24 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
  }
  
-+static void send_transaction_start(IopmpState *s, uint32_t rrid)
-+{
-+    int flag = 0;
-+    if (rrid < s->rrid_num) {
-+        while (flag == 0) {
-+            /* Wait last transaction of rrid complete */
-+            while (s->transaction_state[rrid].running) {
-+                ;
-+            }
-+            qemu_mutex_lock(&s->iopmp_transaction_mutex);
-+            /* Check status again */
-+            if (s->transaction_state[rrid].running == false) {
-+                s->transaction_state[rrid].running = true;
-+                s->transaction_state[rrid].supported = true;
-+                flag = 1;
-+            }
-+            qemu_mutex_unlock(&s->iopmp_transaction_mutex);
-+        }
++static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntry *memmap,
++                             uint32_t irq_mmio_phandle) {
++    g_autofree char *name = NULL;
++    MachineState *ms = MACHINE(s);
++
++    name = g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT_IOPMP].base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_iopmp");
++    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIRT_IOPMP].base,
++        0x0, memmap[VIRT_IOPMP].size);
++    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
++    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
++        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP_IRQ);
++    } else {
++        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPMP_IRQ, 0x4);
 +    }
 +}
 +
-+static void send_transaction_complete(IopmpState *s, uint32_t rrid)
-+{
-+    if (rrid < s->rrid_num) {
-+        qemu_mutex_lock(&s->iopmp_transaction_mutex);
-+        s->transaction_state[rrid].running = false;
-+        s->transaction_state[rrid].supported = false;
-+        qemu_mutex_unlock(&s->iopmp_transaction_mutex);
-+    }
-+}
-+
-+static void send_transaction_info(IopmpState *s, uint32_t rrid,
-+                                  hwaddr start_addr, hwaddr size)
-+{
-+    if (rrid < s->rrid_num) {
-+        s->transaction_state[rrid].start_addr = start_addr;
-+        s->transaction_state[rrid].end_addr = start_addr + size - 1;
-+    }
-+}
-+
-+/*
-+ * Perform address_space_rw to system memory and send transaction information
-+ * to correspond IOPMP for partially hit detection.
-+ */
-+MemTxResult iopmp_dma_rw(hwaddr addr, uint32_t rrid, void *buf, hwaddr len,
-+                         bool is_write)
-+{
-+    MemTxResult result;
-+    MemTxAttrs attrs;
-+    iopmp_protection_memmap *map;
-+    /* Find which IOPMP is responsible for receiving transaction information */
-+    QLIST_FOREACH(map, &iopmp_protection_memmaps, list) {
-+        if (addr >= map->entry.base &&
-+            addr < map->entry.base + map->entry.size) {
-+            send_transaction_start(map->iopmp_s, rrid);
-+            send_transaction_info(map->iopmp_s, rrid, addr, len);
-+            break;
-+        }
-+    }
-+
-+    attrs.requester_id = rrid;
-+    result = address_space_rw(&address_space_memory, addr, attrs, buf, len,
-+                              is_write);
-+    if (map) {
-+        send_transaction_complete(map->iopmp_s, rrid);
-+    }
-+    return result;
-+}
+ static void finalize_fdt(RISCVVirtState *s)
+ {
+     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+@@ -1042,6 +1067,10 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
  
- type_init(iopmp_register_types);
-diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
-index 7e7da56d10..d87395170d 100644
---- a/include/hw/misc/riscv_iopmp.h
-+++ b/include/hw/misc/riscv_iopmp.h
-@@ -168,5 +168,6 @@ typedef struct IopmpState {
- void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
-                                uint32_t mapentry_num);
- void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid);
--
-+MemTxResult iopmp_dma_rw(hwaddr addr, uint32_t rrid, void *buf, hwaddr len,
-+                         bool is_write);
- #endif
+     create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
++
++    if (s->have_iopmp) {
++        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
++    }
+ }
+ 
+ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+@@ -1425,6 +1454,7 @@ static void virt_machine_init(MachineState *machine)
+     DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+     int i, base_hartid, hart_count;
+     int socket_count = riscv_socket_count(machine);
++    int cpu, socket;
+ 
+     /* Check socket count limit */
+     if (VIRT_SOCKETS_MAX < socket_count) {
+@@ -1606,6 +1636,19 @@ static void virt_machine_init(MachineState *machine)
+     }
+     virt_flash_map(s, system_memory);
+ 
++    if (s->have_iopmp) {
++        DeviceState *iopmp_dev = sysbus_create_simple(TYPE_IOPMP,
++            memmap[VIRT_IOPMP].base,
++            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
++
++        for (socket = 0; socket < socket_count; socket++) {
++            for (cpu = s->soc[socket].num_harts - 1; cpu >= 0; cpu--) {
++                iopmp_setup_cpu(&s->soc[socket].harts[cpu], 0);
++            }
++        }
++        iopmp_setup_system_memory(iopmp_dev, iopmp_protect_memmap, 1);
++    }
++
+     /* load/create device tree */
+     if (machine->dtb) {
+         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
+@@ -1702,6 +1745,20 @@ static void virt_set_aclint(Object *obj, bool value, Error **errp)
+     s->have_aclint = value;
+ }
+ 
++static bool virt_get_iopmp(Object *obj, Error **errp)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    return s->have_iopmp;
++}
++
++static void virt_set_iopmp(Object *obj, bool value, Error **errp)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    s->have_iopmp = value;
++}
++
+ bool virt_is_acpi_enabled(RISCVVirtState *s)
+ {
+     return s->acpi != ON_OFF_AUTO_OFF;
+@@ -1814,6 +1871,12 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+                               NULL, NULL);
+     object_class_property_set_description(oc, "acpi",
+                                           "Enable ACPI");
++
++    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
++                                   virt_set_iopmp);
++    object_class_property_set_description(oc, "iopmp",
++                                          "Set on/off to enable/disable "
++                                          "iopmp device");
+ }
+ 
+ static const TypeInfo virt_machine_typeinfo = {
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index c0dc41ff9a..009b4ebea7 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -55,6 +55,7 @@ struct RISCVVirtState {
+ 
+     int fdt_size;
+     bool have_aclint;
++    bool have_iopmp;
+     RISCVVirtAIAType aia_type;
+     int aia_guests;
+     char *oem_id;
+@@ -84,12 +85,14 @@ enum {
+     VIRT_PCIE_MMIO,
+     VIRT_PCIE_PIO,
+     VIRT_PLATFORM_BUS,
+-    VIRT_PCIE_ECAM
++    VIRT_PCIE_ECAM,
++    VIRT_IOPMP,
+ };
+ 
+ enum {
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
++    IOPMP_IRQ = 12,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+     VIRTIO_COUNT = 8,
+     PCIE_IRQ = 0x20, /* 32 to 35 */
 -- 
 2.34.1
 
