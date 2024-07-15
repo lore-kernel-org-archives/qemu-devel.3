@@ -4,36 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C0EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD4AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTEe0-0001s3-5o; Mon, 15 Jul 2024 01:53:04 -0400
+	id 1sTEe0-0001wh-Uz; Mon, 15 Jul 2024 01:53:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTEdw-0001nZ-R8; Mon, 15 Jul 2024 01:53:00 -0400
+ id 1sTEdx-0001pK-NH; Mon, 15 Jul 2024 01:53:02 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTEdu-00078g-QO; Mon, 15 Jul 2024 01:53:00 -0400
+ id 1sTEdu-00078f-R7; Mon, 15 Jul 2024 01:53:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9A0BE7A3CE;
+ by isrv.corpit.ru (Postfix) with ESMTP id AC8667A3CF;
  Mon, 15 Jul 2024 08:52:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A4BFB108AB2;
+ by tsrv.corpit.ru (Postfix) with SMTP id B0786108AB3;
  Mon, 15 Jul 2024 08:52:48 +0300 (MSK)
-Received: (nullmailer pid 564521 invoked by uid 1000);
+Received: (nullmailer pid 564526 invoked by uid 1000);
  Mon, 15 Jul 2024 05:52:48 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 00/19] Patch Round-up for stable 7.2.13,
- frozen on 2024-07-14
-Date: Mon, 15 Jul 2024 08:52:45 +0300
-Message-Id: <qemu-stable-7.2.13-20240715074912@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ jasowang@redhat.com, Xoykie <xoykie@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 18/19] virtio: remove virtio_tswap16s() call in
+ vring_packed_event_read()
+Date: Mon, 15 Jul 2024 08:52:46 +0300
+Message-Id: <20240715055248.564504-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.13-20240715074912@cover.tls.msk.ru>
+References: <qemu-stable-7.2.13-20240715074912@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,64 +65,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.13:
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+switched using of address_space_read_cached() to virito_lduw_phys_cached()
+to access packed descriptor event.
 
-Patch freeze is 2024-07-14 (frozen), and the release is planned for 2024-07-16:
+When we used address_space_read_cached(), we needed to call
+virtio_tswap16s() to handle the endianess of the field, but
+virito_lduw_phys_cached() already handles it internally, so we no longer
+need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
+but forgot for `flags`).
 
-  https://wiki.qemu.org/Planning/7.2
+Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+Cc: jasowang@redhat.com
+Cc: qemu-stable@nongnu.org
+Reported-by: Xoykie <xoykie@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240701075208.19634-1-sgarzare@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 7aa6492401e95fb296dec7cda81e67d91f6037d7)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 4a35d7cb0c..1227e3d692 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -732,7 +732,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
+     /* Make sure flags is seen before off_wrap */
+     smp_rmb();
+     e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
+-    virtio_tswap16s(vdev, &e->flags);
+ }
+ 
+ static void vring_packed_off_wrap_write(VirtIODevice *vdev,
+-- 
+2.39.2
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01* 3973615e7fba Mark Cave-Ayland:
-   target/i386: fix size of EBP writeback in gen_enter()
-02* 2c3e4e2de699 Alexey Dobriyan:
-   virtio-net: drop too short packets early
-03* b1cf266c82cb Gerd Hoffmann:
-   stdvga: fix screen blanking
-04* 54b27921026d Ilya Leoshkevich:
-   linux-user: Make TARGET_NR_setgroups affect only the current thread
-05* 521d7fb3ebdf Richard Henderson:
-   tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
-06* e030d08c2fc0 Thomas Huth:
-   gitlab-ci.d/buildtest: Merge the --without-default-* jobs
-07* 0054dc8bde40 Marc-André Lureau:
-   Update lcitool and fedora to 37
-08* d639cf79783a Paolo Bonzini:
-   ci, docker: update CentOS and OpenSUSE Python to non-EOL versions
-09* 641b1efe01b2 Thomas Huth:
-   tests: Update our CI to use CentOS Stream 9 instead of 8
-10* 7c7d369b33f0 Alex Bennée:
-   tests: don't run benchmarks for the tsan build
-11* f51f90c65ed7 Thomas Huth:
-   gitlab-ci: Disable the riscv64-debian-cross-container by default
-12* 903916f0a017 Chuang Xu:
-   i386/cpu: fixup number of addressable IDs for processor cores in the 
-   physical package
-13* 76bccf3cb9d9 Richard Henderson:
-   target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-14* bd385a5298d7 Kevin Wolf:
-   qcow2: Don't open data_file with BDRV_O_NO_IO
-15* 2eb42a728d27 Kevin Wolf:
-   iotests/244: Don't store data-file with protocol in image
-16* 7e1110664ecb Kevin Wolf:
-   iotests/270: Don't store data-file with json: prefix in image
-17* 7ead94699861 Kevin Wolf:
-   block: Parse filenames only when explicitly requested
-18 7aa6492401e9 Stefano Garzarella:
-   virtio: remove virtio_tswap16s() call in vring_packed_event_read()
-19 a0124e333e21 Maxim Mikityanskiy:
-   char-stdio: Restore blocking mode of stdout on exit
-
-(commit(s) marked with * were in previous series and are not resent)
 
