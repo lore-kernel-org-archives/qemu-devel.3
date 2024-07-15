@@ -4,84 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C0A4C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD6E6C3DA5E
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTI6K-0002Yh-EB; Mon, 15 Jul 2024 05:34:32 -0400
+	id 1sTI6V-0002tI-VE; Mon, 15 Jul 2024 05:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTI6G-0002X5-QN
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:34:28 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTI6F-0003vK-7S
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:34:28 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a797c62565aso428124666b.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:34:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721036065; x=1721640865; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=l3gzntefYhV39WsljDzZGId+IBzavZQfJWtPqLQ8scc=;
- b=uLACAsptQe5Sl3cLkoHk6Ge2L07dqmffML+1Lqj166xb63NW0uv34easSm0uvTYedi
- ACwWkpn4CEbNW6N9/ZYQZ+i4alDPi/bFGuw8nlfw18U08MYdyRBFi5aUfTcPFkJ66L8j
- XrrTyR0lNlHi20oMsDwfn71WkAQWn1Kn5gs2HTZElnUvh9E7XM9XWZukCJYuicj/FUH5
- D+rWpEuIL9Or2hAFcxL5e4bgkl2IHCS1MG9bxWXffGogugcjsMW7nxK3PXq6D+v94NxR
- 6VyAe3i16QTkQ1Dh6NTlqcblufJ9OYiM/YzLNX4+riqU+HCVSAG3y1UUOoBcTXNgE/m1
- 3jxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721036065; x=1721640865;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=l3gzntefYhV39WsljDzZGId+IBzavZQfJWtPqLQ8scc=;
- b=wls9GifDodbA06WKZcUhl74IKLANzQYQWhVeqWT0TMNWJpcgb+a0QI0l6Ij8205mCa
- 9FIviFQsXH3F2qP3lR5ttuNYPuaXhrTOF0Q3cYYSyYFWL6HbiwIp/fFaq8K4KaOpM30q
- w3JMkI4LiNZAK8p+P0IT++jEghO99TKWaZP8KgChKDB01k9H22jW5Y+0buGrO9rYPDL9
- y1gKAfwOjqMFFp6J6U13ZgUaozkIvTqxm2OXY8kLn98M2uxY8xhDZjCG9wB2DzJi/NT2
- UyoRMFxO7RmJB2BIbXQBWYGlCrG7gVgdbrjqSH8Elk8AZDaAfyVVCXgxX9hxQ+E420YX
- +B+w==
-X-Gm-Message-State: AOJu0YzRqCR8gf69DFE2KDi4mahDN5MccikW8KfocavNAFqmpPg6gBPe
- V3OI5WtSj8JfW6/Izak2C6mDJDJ9mNDCQ1Yq7LOv2OlCndm1J7NhtVoXYbxLiFU=
-X-Google-Smtp-Source: AGHT+IFnrXOmHdgIyAIpu+/J/66F3VCT5Yl2/kZ1WTB6gJbfe8H2SyamE2KUNIUuYaom7dQaHf2Qbw==
-X-Received: by 2002:a17:907:3f8a:b0:a77:da14:840a with SMTP id
- a640c23a62f3a-a780b89ec89mr1491756266b.69.1721036065037; 
- Mon, 15 Jul 2024 02:34:25 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc7ff775sm199031066b.171.2024.07.15.02.34.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 02:34:24 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6A7625F8CC;
- Mon, 15 Jul 2024 10:34:23 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  danikhan632@git.sr.ht,  qemu-arm@nongnu.org,
- Daniyal Khan <danikhan632@gmail.com>,  qemu-stable@nongnu.org
-Subject: Re: [PATCH 1/3] target/arm: Use float_status copy in sme_fmopa_s
-In-Reply-To: <20240715055820.319035-2-richard.henderson@linaro.org> (Richard
- Henderson's message of "Mon, 15 Jul 2024 15:58:18 +1000")
-References: <20240715055820.319035-1-richard.henderson@linaro.org>
- <20240715055820.319035-2-richard.henderson@linaro.org>
-Date: Mon, 15 Jul 2024 10:34:23 +0100
-Message-ID: <87wmlnhucg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sTI6S-0002qt-JZ; Mon, 15 Jul 2024 05:34:41 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sTI6Q-0003wD-9d; Mon, 15 Jul 2024 05:34:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 67E8A7A58E;
+ Mon, 15 Jul 2024 12:34:34 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id A7C64108CF8;
+ Mon, 15 Jul 2024 12:34:35 +0300 (MSK)
+Received: (nullmailer pid 571744 invoked by uid 1000);
+ Mon, 15 Jul 2024 09:34:35 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 00/27] Patch Round-up for stable 9.0.2,
+ frozen on 2024-07-14
+Date: Mon, 15 Jul 2024 12:34:29 +0300
+Message-Id: <qemu-stable-9.0.2-20240715075000@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,23 +59,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+The following patches are queued for QEMU stable v9.0.2:
 
-> From: Daniyal Khan <danikhan632@gmail.com>
->
-> We made a copy above because the fp exception flags
-> are not propagated back to the FPST register, but
-> then failed to use the copy.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 558e956c719 ("target/arm: Implement FMOPA, FMOPS (non-widening)")
-> Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-> [rth: Split from a larger patch]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-9.0
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Patch freeze is 2024-07-14 (frozen), and the release is planned for 2024-07-16:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+  https://wiki.qemu.org/Planning/9.0
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* 3973615e7fba Mark Cave-Ayland:
+   target/i386: fix size of EBP writeback in gen_enter()
+02* 2c3e4e2de699 Alexey Dobriyan:
+   virtio-net: drop too short packets early
+03* 77bf310084da Dongwon Kim:
+   ui/gtk: Draw guest frame at refresh cycle
+04* 719c6819ed9a Stefan Hajnoczi:
+   Revert "monitor: use aio_co_reschedule_self()"
+05* a276ec8e2632 Philippe Mathieu-Daudé:
+   hw/audio/virtio-snd: Always use little endian audio format
+06* b1cf266c82cb Gerd Hoffmann:
+   stdvga: fix screen blanking
+07* 3b279f73fa37 Anton Johansson:
+   accel/tcg: Fix typo causing tb->page_addr[1] to not be recorded
+08* 54b27921026d Ilya Leoshkevich:
+   linux-user: Make TARGET_NR_setgroups affect only the current thread
+09* 6b4965373e56 Clément Chigot:
+   target/sparc: use signed denominator in sdiv helper
+10* 521d7fb3ebdf Richard Henderson:
+   tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
+11* 6d3279655ac4 Fabiano Rosas:
+   migration: Fix file migration with fdset
+12* 641b1efe01b2 Thomas Huth:
+   tests: Update our CI to use CentOS Stream 9 instead of 8
+13* 903916f0a017 Chuang Xu:
+   i386/cpu: fixup number of addressable IDs for processor cores in the 
+   physical package
+14* 76bccf3cb9d9 Richard Henderson:
+   target/arm: Fix VCMLA Dd, Dn, Dm[idx]
+15* 7619129f0d4a Richard Henderson:
+   target/arm: Fix FJCVTZS vs flush-to-zero
+16* 9d7950edb0cd Daniel P. Berrangé:
+   hw/core: allow parameter=1 for SMP topology on any machine
+17* e68dcbb07923 Daniel P. Berrangé:
+   tests: add testing of parameter=1 for SMP topology
+18* bd385a5298d7 Kevin Wolf:
+   qcow2: Don't open data_file with BDRV_O_NO_IO
+19* 2eb42a728d27 Kevin Wolf:
+   iotests/244: Don't store data-file with protocol in image
+20* 7e1110664ecb Kevin Wolf:
+   iotests/270: Don't store data-file with json: prefix in image
+21* 7ead94699861 Kevin Wolf:
+   block: Parse filenames only when explicitly requested
+22* a71d9dfbf63d Richard Henderson:
+   tcg/optimize: Fix TCG_COND_TST* simplification of setcond2
+23 a113d041e8d0 Cindy Lu:
+   virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
+24 7aa6492401e9 Stefano Garzarella:
+   virtio: remove virtio_tswap16s() call in vring_packed_event_read()
+25 a0124e333e21 Maxim Mikityanskiy:
+   char-stdio: Restore blocking mode of stdout on exit
+26 e389929d19a5 Markus Armbruster:
+   sphinx/qapidoc: Fix to generate doc for explicit, unboxed arguments
+27 3936bbdf9a2e Vincent Fu:
+   hw/nvme: fix number of PIDs for FDP RUH update
+
+(commit(s) marked with * were in previous series and are not resent)
 
