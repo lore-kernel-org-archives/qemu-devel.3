@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9CEC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9D6AC3DA5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIcz-0008So-8B; Mon, 15 Jul 2024 06:08:17 -0400
+	id 1sTIdY-0002Da-Re; Mon, 15 Jul 2024 06:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTIcx-0008O0-MY
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:08:15 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTIcu-0002E1-Sh
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:08:15 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a7979c3ffb1so244460466b.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 03:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721038091; x=1721642891; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GP13fRwikpSSsa3FAOU0aqUwzV2spGvSDykYLSivG5Q=;
- b=xI6C85CZGxXvSWmNAYZAFGijr8JR80FK6BoCAE7bQYmX+g4xEEkeWR6MvCse4wBrPZ
- ddzC6Zr5w5Y/76dBE2KNuevG+eX7fHrS5vzIYVo8/8s0DNCEG72wyJMWqL9h7eePATeg
- suOwnimTPKsPefk19LsxV4e5nQeNGQhJkbZ++gPdRTDoqkaNQLrSZwg2ueC4GiBLEJOe
- 2F+NsiP5VP5ycpAj4P0LqRKmvQHiVtxIuOOyODBijNwUDPGbmARrMNGYGCJo9rLDftbb
- aKo9mbuGiEy1CTMNmJv9K9Je7pVew6e8N/fyHX1kSsdkddk8i8aqoozB64VY/dE2BkmX
- hTfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721038091; x=1721642891;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GP13fRwikpSSsa3FAOU0aqUwzV2spGvSDykYLSivG5Q=;
- b=niG5tvq0olFnjQprYtJJEWmvgUB4aafle1sUV1LnWVk6mkGOsHt2wSUXpHeO+L/nkF
- jHePPny/knzZs7QIbZmz8r61/j/3YvdzT7T8psLTfY5lVDAHUmLpuarKZh9QmawbWSin
- SBylyLg+1dXUwajXDbcTrut+ARpi5klOArchu0rZIBXTdqcoFlyLBm1brRf2iOr7JoMK
- rqTYf1kaIOlgBHLMk5EKcS/5Ev39yvbPLD6i0llz9cZLKM/BYlpjbTLkvqR08NNjOyLe
- u6EOLe+8mrAyA+MMUgErmyNYIvAHaHcSuPpds7qRr3dLWWsKrbQZIJW/Ns9n2xalGyPe
- dB6w==
-X-Gm-Message-State: AOJu0YxsjjbB5KlOLeWw+oFIIrG5Iue9c2RiP5Lj9Z8r0XE+3rlqpSs9
- j8cS/qOiZvk76rj/gRTX3z5Xa9dFirL6iFaAiRvX2Z4n5WAhfOVpbJjxV1UWFqM=
-X-Google-Smtp-Source: AGHT+IEiabEfjnmw4tsj56/4r/z6qXA5zx0vAXLzkDNbP6KT5L3BLphjYdTYRdhkrQhxKDl/+CS5dw==
-X-Received: by 2002:a05:6402:134f:b0:58d:77e0:5c29 with SMTP id
- 4fb4d7f45d1cf-594bb181cb8mr14872633a12.10.1721038090087; 
- Mon, 15 Jul 2024 03:08:10 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-59b26f61fcasm3193419a12.86.2024.07.15.03.08.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 03:08:09 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7CD265F8CC;
- Mon, 15 Jul 2024 11:08:08 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  danikhan632@git.sr.ht,  qemu-arm@nongnu.org,
- Daniyal Khan <danikhan632@gmail.com>
-Subject: Re: [PATCH 3/3] tests/tcg/aarch64: Add test cases for SME FMOPA
- (widening)
-In-Reply-To: <20240715055820.319035-4-richard.henderson@linaro.org> (Richard
- Henderson's message of "Mon, 15 Jul 2024 15:58:20 +1000")
-References: <20240715055820.319035-1-richard.henderson@linaro.org>
- <20240715055820.319035-4-richard.henderson@linaro.org>
-Date: Mon, 15 Jul 2024 11:08:08 +0100
-Message-ID: <87o76zhss7.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sTIdQ-0001mE-4k
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:08:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sTIdG-0002Et-8V
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:08:43 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cxp+oV9ZRmHZEEAA--.2866S3;
+ Mon, 15 Jul 2024 18:08:21 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxjscQ9ZRml6lJAA--.34943S3; 
+ Mon, 15 Jul 2024 18:08:18 +0800 (CST)
+Subject: Re: [PATCH v2 0/1] hw/intc/loongson_ipi: Fix for LoongArch
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
+ Huacai Chen <chenhuacai@kernel.org>
+References: <20240627125819.62779-1-philmd@linaro.org>
+ <05b70832-b1a6-4a6b-87f6-373f02fbbb4e@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <7cdc52b8-27e3-7580-a7a6-9cc77dee41d5@loongson.cn>
+Date: Mon, 15 Jul 2024 18:08:16 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <05b70832-b1a6-4a6b-87f6-373f02fbbb4e@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxjscQ9ZRml6lJAA--.34943S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoWrtry5KFyruF1fXrWDAFWUGFX_yoW3KFX_Za
+ n2y3s3ur1xX3y7GayIqr9xuFyxA3y7t3W8CasFvr47Xa45Jrn8JFn5GrZYvF1fKa9rZrn8
+ W397Ar4fZr17GosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbaAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E
+ 14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
+ CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
+ MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+ 4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8yrW7UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.994,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,18 +84,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
 
-> From: Daniyal Khan <danikhan632@gmail.com>
->
-> Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-> Message-Id: 172090222034.13953.16888708708822922098-1@git.sr.ht
-> [rth: Split test cases to separate patch, tidy assembly.]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+On 2024/7/15 下午5:57, Philippe Mathieu-Daudé wrote:
+> On 27/6/24 14:58, Philippe Mathieu-Daudé wrote:
+>> v2:
+>> - Only skip mmio-related code in loongson_ipi_realize()
+>>
+>> Jiaxun Yang (1):
+>>    hw/intc/loongson_ipi: Gate MMIO regions creation with property
+>>
+>>   include/hw/intc/loongson_ipi.h |  1 +
+>>   hw/intc/loongson_ipi.c         | 16 ++++++++++------
+>>   hw/mips/loongson3_virt.c       |  1 +
+>>   3 files changed, 12 insertions(+), 6 deletions(-)
+>>
+> 
+> ping?
+Hi Philippe,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+It is only temporary fix, in the long term we hope that interrupt 
+controller emulation is similar with other architectures in directory
+hw/intc/, and we post the patch at website:
+
+https://lore.kernel.org/qemu-devel/20240704033802.3838618-1-maobibo@loongson.cn/
+
+Regards
+Bibo Mao
+
 
