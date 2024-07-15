@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FEBFC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 17:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A62C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 17:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTPb6-0008Nr-Nl; Mon, 15 Jul 2024 13:34:49 -0400
+	id 1sTPaO-0005fD-UV; Mon, 15 Jul 2024 13:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPa2-0005KU-4X
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPZs-00059K-Nq
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPZz-0002in-LN
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:41 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTPZq-0002hA-Cg
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 13:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721064819;
+ s=mimecast20190719; t=1721064809;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UlN8lY5PJP7S659eIzOujYC9eIjixnVgiMPk4Up1ekI=;
- b=Nj+xL7tutSiMRZ0zzGHnppmqWRjM5uBoZpzkAf3TB0F5iEVRL5VrrVIifIcOuEVNtHr4mH
- 226ltgMG3yjipTxfs3v2YK0hJ+9XrV1ypV6RGhSzdQaheUpgegRpQn7T4cxxHkW80aGG4x
- nXpL456WKePABftZy2aE4ona5XyRS2M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GswL2wmVuqQkRjWn0doTswPT9wVRl9x4I39CHCAPioo=;
+ b=IGQt3QCweimRJjcJnhFH4v5l9wZ+V0eURxs8H8H/BevRKZa7YExZtePYSaapXs5GcJoaq3
+ TpU9oweK0Vz8XzMaTkGUvJpxN8IyqNxbQb0P9RTSDxrc6Z76P8vhw6calH2U0aVCg39nbA
+ vLnaL+vvCS5wIMKUy3X2+yzaWXHb4Lw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-QISIgKC9M2y7kXz5XtfgTg-1; Mon,
- 15 Jul 2024 13:33:33 -0400
-X-MC-Unique: QISIgKC9M2y7kXz5XtfgTg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-R3B7USsvOpiIEbnAgXPHjA-1; Mon,
+ 15 Jul 2024 13:33:26 -0400
+X-MC-Unique: R3B7USsvOpiIEbnAgXPHjA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84D511955F42; Mon, 15 Jul 2024 17:33:30 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3D921955D47; Mon, 15 Jul 2024 17:33:23 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.65.127])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 25EF91955D44; Mon, 15 Jul 2024 17:33:24 +0000 (UTC)
+ id 4CBCE1955D47; Mon, 15 Jul 2024 17:33:18 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Joel Stanley <joel@jms.id.au>,
@@ -67,22 +67,22 @@ Cc: Markus Armbruster <armbru@redhat.com>, Joel Stanley <joel@jms.id.au>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Peter Xu <peterx@redhat.com>
-Subject: [PULL 6/6] docs: remove Sphinx 1.x compatibility code
-Date: Mon, 15 Jul 2024 13:32:41 -0400
-Message-ID: <20240715173241.572048-7-jsnow@redhat.com>
+Subject: [PULL 5/6] Python: bump minimum sphinx version to 3.4.3
+Date: Mon, 15 Jul 2024 13:32:40 -0400
+Message-ID: <20240715173241.572048-6-jsnow@redhat.com>
 In-Reply-To: <20240715173241.572048-1-jsnow@redhat.com>
 References: <20240715173241.572048-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -100,232 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In general, the Use_SSI workaround is no longer needed, and neither is
-the pre-1.6 logging shim for kerneldoc.
+With RHEL 8 support retired (It's been two years since RHEL9 released),
+our very oldest build platform version of Sphinx is now 3.4.3; and
+keeping backwards compatibility for versions as old as v1.6 when using
+domain extensions is a lot of work we don't need to do.
+
+This patch is motivated by my work creating a new QAPI domain, which
+unlike the dbus documentation, cannot be allowed to regress by creating
+a "dummy" doc when operating under older sphinx versions. Easier is to
+raise our minimum version as far as we can push it forwards, reducing my
+burden in creating cross-compatibility hacks and patches.
+
+A sampling of sphinx versions from various distributions, courtesy
+https://repology.org/project/python:sphinx/versions
+
+Alpine 3.16: v4.3.0 (QEMU support ended 2024-05-23)
+Alpine 3.17: v5.3.0
+Alpine 3.18: v6.1.3
+Alpine 3.19: v6.2.1
+Ubuntu 20.04 LTS: EOL
+Ubuntu 22.04 LTS: v4.3.2
+Ubuntu 22.10: EOL
+Ubuntu 23.04: EOL
+Ubuntu 23.10: v5.3.0
+Ubuntu 24.04 LTS: v7.2.6
+Debian 11: v3.4.3 (QEMU support ends 2024-07-xx)
+Debian 12: v5.3.0
+Fedora 38: EOL
+Fedora 39: v6.2.1
+Fedora 40: v7.2.6
+CentOS Stream 8: v1.7.6 (QEMU support ended 2024-05-17)
+CentOS Stream 9: v3.4.3
+OpenSUSE Leap 15.4: EOL
+OpenSUSE Leap 15.5: 2.3.1, 4.2.0 and 7.2.6
+
+RHEL9 / CentOS Stream 9 becomes the new defining factor in staying at
+Sphinx 3.4.3 due to downstream offline build requirements that force us
+to use platform Sphinx instead of newer packages from PyPI.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 Acked-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20240703175235.239004-3-jsnow@redhat.com
-[rebased on top of origin/master. --js]
+Message-id: 20240703175235.239004-2-jsnow@redhat.com
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/hxtool.py    | 21 ++++-----------------
- docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------
- docs/sphinx/kernellog.py | 28 ----------------------------
- docs/sphinx/qapidoc.py   | 33 +++------------------------------
- 4 files changed, 19 insertions(+), 101 deletions(-)
- delete mode 100644 docs/sphinx/kernellog.py
+ docs/conf.py    | 7 +++----
+ pythondeps.toml | 2 +-
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/docs/sphinx/hxtool.py b/docs/sphinx/hxtool.py
-index 3729084a36c..a84723be19e 100644
---- a/docs/sphinx/hxtool.py
-+++ b/docs/sphinx/hxtool.py
-@@ -24,16 +24,10 @@
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
- from sphinx.errors import ExtensionError
-+from sphinx.util.docutils import switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- import sphinx
+diff --git a/docs/conf.py b/docs/conf.py
+index aae0304ac6e..876f6768815 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -53,10 +53,9 @@
  
--# Sphinx up to 1.6 uses AutodocReporter; 1.7 and later
--# use switch_source_input. Check borrowed from kerneldoc.py.
--Use_SSI = sphinx.__version__[:3] >= '1.7'
--if Use_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import AutodocReporter
+ # If your documentation needs a minimal Sphinx version, state it here.
+ #
+-# Sphinx 1.5 and earlier can't build our docs because they are too
+-# picky about the syntax of the argument to the option:: directive
+-# (see Sphinx bugs #646, #3366).
+-needs_sphinx = '1.6'
++# 3.4.3 is the oldest version of Sphinx that ships on a platform we
++# pledge build support for.
++needs_sphinx = '3.4.3'
  
- __version__ = '1.0'
+ # Add any Sphinx extension module names here, as strings. They can be
+ # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 6aba0c9daaa..f6e590fdd86 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -23,7 +23,7 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
  
-@@ -185,16 +179,9 @@ def run(self):
-     # of title_styles and section_level that kerneldoc.py does,
-     # because nested_parse_with_titles() does that for us.
-     def do_parse(self, result, node):
--        if Use_SSI:
--            with switch_source_input(self.state, result):
--                nested_parse_with_titles(self.state, result, node)
--        else:
--            save = self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(result, self.state.memo.reporter)
--            try:
--                nested_parse_with_titles(self.state, result, node)
--            finally:
--                self.state.memo.reporter = save
-+        with switch_source_input(self.state, result):
-+            nested_parse_with_titles(self.state, result, node)
-+
+ [docs]
+ # Please keep the installed versions in sync with docs/requirements.txt
+-sphinx = { accepted = ">=1.6", installed = "5.3.0", canary = "sphinx-build" }
++sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
+ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
  
- def setup(app):
-     """ Register hxtool-doc directive with Sphinx"""
-diff --git a/docs/sphinx/kerneldoc.py b/docs/sphinx/kerneldoc.py
-index 72c403a7379..3aa972f2e89 100644
---- a/docs/sphinx/kerneldoc.py
-+++ b/docs/sphinx/kerneldoc.py
-@@ -38,20 +38,14 @@
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
- 
--#
--# AutodocReporter is only good up to Sphinx 1.7
--#
- import sphinx
-+from sphinx.util import logging
-+from sphinx.util.docutils import switch_source_input
- 
--Use_SSI = sphinx.__version__[:3] >= '1.7'
--if Use_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import AutodocReporter
--
--import kernellog
- 
- __version__  = '1.0'
-+logger = logging.getLogger('kerneldoc')
-+
- 
- class KernelDocDirective(Directive):
-     """Extract kernel-doc comments from the specified file"""
-@@ -111,8 +105,7 @@ def run(self):
-         cmd += [filename]
- 
-         try:
--            kernellog.verbose(env.app,
--                              'calling kernel-doc \'%s\'' % (" ".join(cmd)))
-+            logger.verbose('calling kernel-doc \'%s\'' % (" ".join(cmd)))
- 
-             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-             out, err = p.communicate()
-@@ -122,8 +115,10 @@ def run(self):
-             if p.returncode != 0:
-                 sys.stderr.write(err)
- 
--                kernellog.warn(env.app,
--                               'kernel-doc \'%s\' failed with return code %d' % (" ".join(cmd), p.returncode))
-+                logger.warning(
-+                    'kernel-doc \'%s\' failed with return code %d' %
-+                    (" ".join(cmd), p.returncode)
-+                )
-                 return [nodes.error(None, nodes.paragraph(text = "kernel-doc missing"))]
-             elif env.config.kerneldoc_verbosity > 0:
-                 sys.stderr.write(err)
-@@ -149,22 +144,13 @@ def run(self):
-             return node.children
- 
-         except Exception as e:  # pylint: disable=W0703
--            kernellog.warn(env.app, 'kernel-doc \'%s\' processing failed with: %s' %
-+            logger.warning('kernel-doc \'%s\' processing failed with: %s' %
-                            (" ".join(cmd), str(e)))
-             return [nodes.error(None, nodes.paragraph(text = "kernel-doc missing"))]
- 
-     def do_parse(self, result, node):
--        if Use_SSI:
--            with switch_source_input(self.state, result):
--                self.state.nested_parse(result, 0, node, match_titles=1)
--        else:
--            save = self.state.memo.title_styles, self.state.memo.section_level, self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(result, self.state.memo.reporter)
--            self.state.memo.title_styles, self.state.memo.section_level = [], 0
--            try:
--                self.state.nested_parse(result, 0, node, match_titles=1)
--            finally:
--                self.state.memo.title_styles, self.state.memo.section_level, self.state.memo.reporter = save
-+        with switch_source_input(self.state, result):
-+            self.state.nested_parse(result, 0, node, match_titles=1)
- 
- 
- def setup(app):
-diff --git a/docs/sphinx/kernellog.py b/docs/sphinx/kernellog.py
-deleted file mode 100644
-index af924f51a7d..00000000000
---- a/docs/sphinx/kernellog.py
-+++ /dev/null
-@@ -1,28 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0
--#
--# Sphinx has deprecated its older logging interface, but the replacement
--# only goes back to 1.6.  So here's a wrapper layer to keep around for
--# as long as we support 1.4.
--#
--import sphinx
--
--if sphinx.__version__[:3] >= '1.6':
--    UseLogging = True
--    from sphinx.util import logging
--    logger = logging.getLogger('kerneldoc')
--else:
--    UseLogging = False
--
--def warn(app, message):
--    if UseLogging:
--        logger.warning(message)
--    else:
--        app.warn(message)
--
--def verbose(app, message):
--    if UseLogging:
--        logger.verbose(message)
--    else:
--        app.verbose(message)
--
--
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 2b06750a3cd..62b39833ca0 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -35,22 +35,11 @@
- from qapi.gen import QAPISchemaVisitor
- from qapi.schema import QAPISchema
- 
--import sphinx
- from sphinx.errors import ExtensionError
-+from sphinx.util.docutils import switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- 
- 
--# Sphinx up to 1.6 uses AutodocReporter; 1.7 and later
--# use switch_source_input. Check borrowed from kerneldoc.py.
--USE_SSI = sphinx.__version__[:3] >= "1.7"
--if USE_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import (  # pylint: disable=no-name-in-module
--        AutodocReporter,
--    )
--
--
- __version__ = "1.0"
- 
- 
-@@ -539,24 +528,8 @@ def do_parse(self, rstlist, node):
-         subheadings (titles) without confusing the rendering of
-         anything else.
-         """
--        # This is from kerneldoc.py -- it works around an API change in
--        # Sphinx between 1.6 and 1.7. Unlike kerneldoc.py, we use
--        # sphinx.util.nodes.nested_parse_with_titles() rather than the
--        # plain self.state.nested_parse(), and so we can drop the saving
--        # of title_styles and section_level that kerneldoc.py does,
--        # because nested_parse_with_titles() does that for us.
--        if USE_SSI:
--            with switch_source_input(self.state, rstlist):
--                nested_parse_with_titles(self.state, rstlist, node)
--        else:
--            save = self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(
--                rstlist, self.state.memo.reporter
--            )
--            try:
--                nested_parse_with_titles(self.state, rstlist, node)
--            finally:
--                self.state.memo.reporter = save
-+        with switch_source_input(self.state, rstlist):
-+            nested_parse_with_titles(self.state, rstlist, node)
- 
- 
- def setup(app):
+ [avocado]
 -- 
 2.45.0
 
