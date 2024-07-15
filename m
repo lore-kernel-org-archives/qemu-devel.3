@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97780C3DA45
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 04:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5E0C3DA45
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 04:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTDQI-00015X-KM; Mon, 15 Jul 2024 00:34:50 -0400
+	id 1sTDPy-0008LG-EM; Mon, 15 Jul 2024 00:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTDQC-0000qX-Fo
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:45 -0400
+ id 1sTDPw-0008EU-Lv
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:28 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTDQA-0004GK-Tz
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:44 -0400
+ id 1sTDPv-0004FI-1h
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721018084; x=1752554084;
+ t=1721018068; x=1752554068;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=zkaR53NTxYfZ7vr3XibkLp9FDRnY38s2Fxjaq5MK80o=;
- b=OlKHLkO0sDfYT+4aWHaHvxUSHqlTU8x9Dh9dG6LlJ6cXgKihFaUPupKQ
- X4rlVMxx7Qhdw/vo3H9of0d85PYoJwF1EPtUe8Shzq9U7nuRKHZ3BaVJy
- mBIAf/0mhXYskWQd2rVwc6g6EP6lr1n72ZUsot9lyeULGbPGM842B4ht5
- EB2TNIvMHf0rt6Y2xw5j/nqB7Gx9t4H9tjVm2Ki0pPYEU2xUhnGmKmcC8
- 3hNJvCsjASTTHisvNQ25bSxwgtFD72+Mu5CdqFs751aJcbsVU+E6g/uWS
- gLOBv3XjzZUoS6Hl5hAskAmXDJLFvHCfLmbaGHnQ4uMxAmKneQLhRb80y w==;
-X-CSE-ConnectionGUID: vYJGBbowQ/WYGEd45DJVow==
-X-CSE-MsgGUID: 4q2YJVxnQSC1y+EE65ut+A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35809869"
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35809869"
+ bh=ORQtPOUjRaH7fq192/3Uf+CcJuvKVSUruZo9xOxKbJw=;
+ b=U7cfQYPuFla3FoEfXEZIKA2F66OU+vB/OBJefMFRgiD3rmlJm+STD+FH
+ joSRccbG8H2PQZvf7nVbeJdBQrjts6GEZegCXX7G6Qe6hjZp2veCSBReU
+ ojv6uYKuL7mQhdmM/HS8V6ZaJQA9hBdrXUo85TcYaBmSTyvo9nEkAX7HL
+ kt8/T61EBPap0JNdY9DEPDYKlRaBqx3DPbZ86feGAwf/Zc0ftNmLnvUvB
+ 7/rjVOPVTnZYq65K7mmwdLidDGgHZbAIu87izsec+f7GAa/JOy9tURLm3
+ iZ7kuE8obNcphffGddB9Y1PxDOzQkWxdIe6JUIArzH7bxE21t1jDVZzsl A==;
+X-CSE-ConnectionGUID: vNxBxKNuTIeQ/BZBhZzyPw==
+X-CSE-MsgGUID: gYCamMGxSkCjN7BEajVJAg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35809816"
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35809816"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2024 21:34:43 -0700
-X-CSE-ConnectionGUID: k7iJzDdDTD2Rgyq/0IMfyw==
-X-CSE-MsgGUID: 1K2khsfRRb6jkzlWCBsdZg==
+ 14 Jul 2024 21:34:26 -0700
+X-CSE-ConnectionGUID: 1TK6ChxeSL2fX8CDCR/HwQ==
+X-CSE-MsgGUID: 4lGA0LgxTMmECm7U3JD7IQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="54043151"
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="54043046"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 14 Jul 2024 21:34:39 -0700
+ by fmviesa004.fm.intel.com with ESMTP; 14 Jul 2024 21:34:22 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 8/8] target/i386/kvm: Clean up error handling in
- kvm_arch_init()
-Date: Mon, 15 Jul 2024 12:49:55 +0800
-Message-Id: <20240715044955.3954304-9-zhao1.liu@intel.com>
+Subject: [PATCH v3 2/8] target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
+ MSR_KVM_SYSTEM_TIME definitions
+Date: Mon, 15 Jul 2024 12:49:49 +0800
+Message-Id: <20240715044955.3954304-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240715044955.3954304-1-zhao1.liu@intel.com>
 References: <20240715044955.3954304-1-zhao1.liu@intel.com>
@@ -88,62 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, there're following incorrect error handling cases in
-kvm_arch_init():
-* Missed to handle failure of kvm_get_supported_feature_msrs().
-* Missed to return when KVM_CAP_X86_DISABLE_EXITS enabling fails.
-* MSR filter related cases called exit() directly instead of returning
-  to kvm_init().
+These 2 MSRs have been already defined in kvm_para.h (standard-headers/
+asm-x86/kvm_para.h).
 
-Fix the above cases.
+Remove QEMU local definitions to avoid duplication.
 
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/kvm.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ target/i386/kvm/kvm.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0fd1d099ae4c..246fe12ae411 100644
+index 86e42beb78bf..6ad5a7dbf1fd 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -2682,7 +2682,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
+@@ -81,9 +81,6 @@
+ #define KVM_APIC_BUS_CYCLE_NS       1
+ #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
  
--    kvm_get_supported_feature_msrs(s);
-+    ret = kvm_get_supported_feature_msrs(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
- 
-     uname(&utsname);
-     lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
-@@ -2740,6 +2743,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         if (ret < 0) {
-             error_report("kvm: guest stopping CPU not supported: %s",
-                          strerror(-ret));
-+            return ret;
-         }
-     }
- 
-@@ -2785,7 +2789,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         if (ret) {
-             error_report("Could not enable user space MSRs: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
-         }
- 
-         ret = kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
-@@ -2793,7 +2797,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         if (ret) {
-             error_report("Could not install MSR_CORE_THREAD_COUNT handler: %s",
-                          strerror(-ret));
--            exit(1);
-+            return ret;
-         }
-     }
- 
+-#define MSR_KVM_WALL_CLOCK  0x11
+-#define MSR_KVM_SYSTEM_TIME 0x12
+-
+ /* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
+  * 255 kvm_msr_entry structs */
+ #define MSR_BUF_SIZE 4096
 -- 
 2.34.1
 
