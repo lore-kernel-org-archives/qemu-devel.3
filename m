@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5E0C3DA45
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 04:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF588C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTDPy-0008LG-EM; Mon, 15 Jul 2024 00:34:30 -0400
+	id 1sTE3c-00037E-VK; Mon, 15 Jul 2024 01:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTDPw-0008EU-Lv
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:28 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTDPv-0004FI-1h
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721018068; x=1752554068;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ORQtPOUjRaH7fq192/3Uf+CcJuvKVSUruZo9xOxKbJw=;
- b=U7cfQYPuFla3FoEfXEZIKA2F66OU+vB/OBJefMFRgiD3rmlJm+STD+FH
- joSRccbG8H2PQZvf7nVbeJdBQrjts6GEZegCXX7G6Qe6hjZp2veCSBReU
- ojv6uYKuL7mQhdmM/HS8V6ZaJQA9hBdrXUo85TcYaBmSTyvo9nEkAX7HL
- kt8/T61EBPap0JNdY9DEPDYKlRaBqx3DPbZ86feGAwf/Zc0ftNmLnvUvB
- 7/rjVOPVTnZYq65K7mmwdLidDGgHZbAIu87izsec+f7GAa/JOy9tURLm3
- iZ7kuE8obNcphffGddB9Y1PxDOzQkWxdIe6JUIArzH7bxE21t1jDVZzsl A==;
-X-CSE-ConnectionGUID: vNxBxKNuTIeQ/BZBhZzyPw==
-X-CSE-MsgGUID: gYCamMGxSkCjN7BEajVJAg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35809816"
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35809816"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2024 21:34:26 -0700
-X-CSE-ConnectionGUID: 1TK6ChxeSL2fX8CDCR/HwQ==
-X-CSE-MsgGUID: 4lGA0LgxTMmECm7U3JD7IQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="54043046"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 14 Jul 2024 21:34:22 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 2/8] target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
- MSR_KVM_SYSTEM_TIME definitions
-Date: Mon, 15 Jul 2024 12:49:49 +0800
-Message-Id: <20240715044955.3954304-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240715044955.3954304-1-zhao1.liu@intel.com>
-References: <20240715044955.3954304-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTE3X-00035u-Ky
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:15:25 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTE3V-0006d1-G4
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:15:23 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2caaae31799so2794305a91.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721020519; x=1721625319;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EQ3tdCobcBnF3rwxSrCSaF3bdLjYlA3SwLoJDP/4cFQ=;
+ b=oIQ9WFoSr/RGPHaeO+WF2ykkqobMcq8ErDKkYStvTSgq2roN0lF6XmwtsCeAHVrzeu
+ a14k6633rzqqtmVBgGvWG9/IYLdZAVp5fujJxTG1z1XteJ8fijmN9zJDh4HY88C8EXmC
+ IsRNOD8EOit7CaUTsgDgBxKyHR/6VsEjS8raGm3YfUQFRSYgKF20rehZVHM3bApoPGL4
+ yWMawPqfLtAOydj0yqgqXg+NpOu4XRkPhOxyda/JyJ1uH5yRiS25+Z0Jkcshl0yMLZb+
+ I6n570HBp7n/rQQPzqiotJk4T92EULdqnqDdzPqMk+hXMWO9MVes6H56Pasy2KC56MqD
+ kFxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721020519; x=1721625319;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EQ3tdCobcBnF3rwxSrCSaF3bdLjYlA3SwLoJDP/4cFQ=;
+ b=mtyzcQRUxeg0PpOLLx7yV4Du4owJdjXsaXVfbOY5uZoIJIBX+CN2y9OkD8FI1+TqUU
+ Jqt06oNW84aNQov6j+LBSFqRDr9us4p2I7czl+NP59yyMZOHjDMyTmGAVAs1x2aQJmsZ
+ FirxNLUnPyms9YWXbQT+5jTn2e+mikXwIzqpLu2y/bs31zqLStoBA0wfXgSdr2BBAMqK
+ OUjmwcxZ2WgG5KaRNY4Co4F6ccCPyunHQvteCbRPRGJ/LemaRAqwUSmkqmDNsOut5FaL
+ W754rt/n/11uI09cXUFmSRK8V3/y3/apXckg3cRTjzjvoGA+TfnxQtJB/wyMus4Y21GW
+ 0VHw==
+X-Gm-Message-State: AOJu0Yx7bvIXIhod4y7thfBAikTJlI3dhm6B+sBvYpXCi10lEG2+W1fN
+ Gm3bDnvNRwFBRinkFlK1L5ulllRhL3N6zEarTLPfMEybPr0RdjU8RJLzbrOJV80=
+X-Google-Smtp-Source: AGHT+IEgl1UPxdkc55sz+aenx5+OOEg2+5RfisqLt/dpPGfLE3vRNJdi5Gia5EX8v7TSs0GeqqzPvw==
+X-Received: by 2002:a17:90a:3882:b0:2c9:93a3:1db6 with SMTP id
+ 98e67ed59e1d1-2ca35c30e36mr15377292a91.11.1721020519230; 
+ Sun, 14 Jul 2024 22:15:19 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2caedbf71f1sm3400111a91.16.2024.07.14.22.15.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 14 Jul 2024 22:15:18 -0700 (PDT)
+Message-ID: <88ffcfa0-f3c4-406c-ac79-456b0f8b38bd@daynix.com>
+Date: Mon, 15 Jul 2024 14:15:15 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v4 0/7] virtio-net: add support for SR-IOV emulation
+To: Yui Washizu <yui.washidu@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
+ <966b756c-f4b9-40da-ad35-ddb7c6e7da50@gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <966b756c-f4b9-40da-ad35-ddb7c6e7da50@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,32 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These 2 MSRs have been already defined in kvm_para.h (standard-headers/
-asm-x86/kvm_para.h).
+On 2024/05/16 11:00, Yui Washizu wrote:
+> 
+> On 2024/04/28 18:05, Akihiko Odaki wrote:
+>> Based-on: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
+>> ("[PATCH for 9.1 v9 00/11] hw/pci: SR-IOV related fixes and 
+>> improvements")
+>>
+>> Introduction
+>> ------------
+>>
+>> This series is based on the RFC series submitted by Yui Washizu[1].
+>> See also [2] for the context.
+>>
+>> This series enables SR-IOV emulation for virtio-net. It is useful
+>> to test SR-IOV support on the guest, or to expose several vDPA devices
+>> in a VM. vDPA devices can also provide L2 switching feature for
+>> offloading though it is out of scope to allow the guest to configure
+>> such a feature.
+>>
+>> The PF side code resides in virtio-pci. The VF side code resides in
+>> the PCI common infrastructure, but it is restricted to work only for
+>> virtio-net-pci because of lack of validation.
+>>
+>> User Interface
+>> --------------
+>>
+>> A user can configure a SR-IOV capable virtio-net device by adding
+>> virtio-net-pci functions to a bus. Below is a command line example:
+>>    -netdev user,id=n -netdev user,id=o
+>>    -netdev user,id=p -netdev user,id=q
+>>    -device pcie-root-port,id=b
+>>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
+>>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
+>>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
+>>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
+>>
+>> The VFs specify the paired PF with "sriov-pf" property. The PF must be
+>> added after all VFs. It is user's responsibility to ensure that VFs have
+>> function numbers larger than one of the PF, and the function numbers
+>> have a consistent stride.
+> 
+> 
+> I tried to start a VM with more than 8 VFs allocated using your patch,
+> but the following error occured and qemu didn't work:
+> VF function number overflows.
+> 
+> I think the cause of this error is that virtio-net-pci PFs don't have ARI.
+> (pcie_ari_init is not added to virtio-net-pci when PFs are initialized.)
+> I think it is possible to add it later,
+> but how about adding pcie_ari_init ?
+> 
+> As a trial,
+> adding pcie_ari_init to virtio_pci_realize enabled the creation of more 
+> than 8 VFs.
 
-Remove QEMU local definitions to avoid duplication.
+I have just looked into that possibility, but adding pcie_ari_init to 
+virtio_pci_realize has some implications. Unconditionally calling 
+pcie_ari_init will break the existing configuration of virtio-pci 
+devices so we need to implement some logic to detect when ARI is needed. 
+Preferably such logic should be implemented in the common PCI 
+infrastructure instead of implementing it in virtio-pci so that other 
+PCI multifunction devices can benefit from it.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/kvm/kvm.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 86e42beb78bf..6ad5a7dbf1fd 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -81,9 +81,6 @@
- #define KVM_APIC_BUS_CYCLE_NS       1
- #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
- 
--#define MSR_KVM_WALL_CLOCK  0x11
--#define MSR_KVM_SYSTEM_TIME 0x12
--
- /* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
-  * 255 kvm_msr_entry structs */
- #define MSR_BUF_SIZE 4096
--- 
-2.34.1
-
+While I don't think implementing this will be too complicated, I need to 
+ensure that such a feature is really needed before doing so.
 
