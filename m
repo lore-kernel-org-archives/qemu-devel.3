@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E858C3DA59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F52C41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 14:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTMgu-0004Kb-N2; Mon, 15 Jul 2024 10:28:37 -0400
+	id 1sTMhH-0004Vk-VA; Mon, 15 Jul 2024 10:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTMgt-0004K1-9S
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:28:35 -0400
+ id 1sTMhG-0004VB-6G
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:28:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTMgo-0004kT-Db
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:28:32 -0400
+ id 1sTMhE-0004so-1g
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 10:28:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721053708;
+ s=mimecast20190719; t=1721053730;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=Q5W1KE42WuOYIQBeRTA987gly7BCI2Uoj3YSvsHDuLw=;
- b=dAg0F9JBlpjPqw1v5xbx8oTvFjl2Vew1BPVzMeSl1UDhqIVHJukyGxxG4FjX+pq/HWvkxd
- 1yGdvs0x8X+BU8ztqLy0Ic4hXdSrrmlDS4cG9nWbQsFFAfm5sHS3EoFGQWNt4Pi1mGujCc
- iI4UYxCLmKcHM0fdeURRjX1m6ZIItMY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=JpU+JE/QsjgiSqD9aEzHq8rn8hsVeuG9b3A5y7xlcPMbfbbwnf35bPxBOdWUUzl3Tdh0dG
+ UgznK5sd0y5rjf3NE4QDKcY2F9TZcxrbayuaCrEgeuH8cUVHqr6zoniTH5f7cplD57ORWn
+ SzSOLDNYMVt2GOxz1X9GGwtZx9tpQzo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-qXirRSy2Mx6jWZivm7gUxA-1; Mon, 15 Jul 2024 10:28:27 -0400
-X-MC-Unique: qXirRSy2Mx6jWZivm7gUxA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4265d3bf59dso32554365e9.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 07:28:27 -0700 (PDT)
+ us-mta-64-gLd6RjxFMA-o1Rkd9NEhqw-1; Mon, 15 Jul 2024 10:28:47 -0400
+X-MC-Unique: gLd6RjxFMA-o1Rkd9NEhqw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4266d0183feso28336625e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 07:28:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721053706; x=1721658506;
+ d=1e100.net; s=20230601; t=1721053725; x=1721658525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=Q5W1KE42WuOYIQBeRTA987gly7BCI2Uoj3YSvsHDuLw=;
- b=E4lyeYxo0cEDJyUeaYY2aW1Jt26Bv+i1KJXc78doPnV88xGXEBRHV5wHygIdnNcgAd
- 9hd3nlyjTOuH+PthPpdMlbKP9YDCTKpL2RuIcG5vRf1XRA1+hVO7jfUMw/STklO9lolM
- AuLFPeNfrIIcYo0HjMYCTAX3sQsTAM+wjqS7G/ELZtbK9njoaSPqzwv6cRompsSLKh6i
- gLLWkohQsA0Xl3nyGBCSeHTFiZQJUrs4lzKqdbWSWgAnJ289r6jjKBUfDurCUaYEqsP+
- 1NkT9Wvkk7PvihkcVADxZj+r+6tVMsIFay2urJDKVRyHaxX/PW0/t3DlFco7wiKXFqnV
- wTcw==
+ b=O2GueMPKEAZGU5kjFujhtS+7QSlAofpZTcy9YKV23nFuIHzlUTrV9sNDspLg2jtYkR
+ 0HDFvQ6ufsX9pAtbyTZjDcEtXAzIBMvK47iFI/ffPe9b78EJCta6zNCtY6lHVLcS9G4K
+ Q+X2Dh6z4h+LSnfA6/lu3qm5S9wFJaJtaZ/5VCuz7UFqk+m3gUUd0mNUUiFPNhk5O9N8
+ bHm9h+cp4UKdGtqbLVUu/Kltn45+n2bDo4G2R6iNU6ICzgJtB6Ot/DqU00U8mWpiKjGd
+ ZkrtimIqRRRGCZe56JBlPLMNaOceIhhF4UKm1Sn3ZkyU9LSQ5d7+kEuPtv2up4X22Fi1
+ y/9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVb2dzQDGTDiiqATdFzy3cdLN1XeduVtijKfMzdCTFgRyiVAPilBAGrax4HAG9u7Y4IxHNNwboJKCKtOv9Tg1zghDe56E8=
-X-Gm-Message-State: AOJu0YxR1ytxlkNqcVPK6En1z1jXYqv/b+5DYJd2BcCS7N5cUt+glvbi
- xlGRhT51z5/6i0jLNWpff46V/0bhCmAOX19UXcf7toUY09VDxAQi/Wei2fbbtNv6FAPv1Qs6Dav
- 3vuFeBpnlJeJfdSl6jIFOtoLPWWpe8KQVL1yc57fDJnx/W5EuiWwF
-X-Received: by 2002:a05:600c:6541:b0:426:6364:c2c4 with SMTP id
- 5b1f17b1804b1-426707cf9c4mr109759705e9.14.1721053706154; 
- Mon, 15 Jul 2024 07:28:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkiSdAJsZ4KS92/uHf4ztmPgpbLaqjZGDB4NeQ2JUrQ2mgfwWqLJF/auE8r3dQQuDRKP7/4g==
-X-Received: by 2002:a05:600c:6541:b0:426:6364:c2c4 with SMTP id
- 5b1f17b1804b1-426707cf9c4mr109759545e9.14.1721053705704; 
- Mon, 15 Jul 2024 07:28:25 -0700 (PDT)
+ AJvYcCX9aBwZwoj/9sEUv1eS2PqQTjIlDhvKeR2jjUEWwvetRKHMuW8C1VSwFxlu0o1RdOpKYrWj2VNxXeVAfufh/b9vgwwFWPo=
+X-Gm-Message-State: AOJu0YzafzslWxmZG+hJCFfMxf1yfvil8mG2OVR4tpuA0jb2/cxLu9Z+
+ 8/XAX+ax7fdZlbG7sHzUi5U9OStjli7NOK7vent8qeEfEzEFbhOSLgU0wLwE/eEM9yNLLitCCYd
+ MT/VZByNpyd0DXCxgt0sYi4JuG453umizalvH65qWcuMf7IQbe5a4dQZ3iyf9
+X-Received: by 2002:a05:600c:54c3:b0:426:5440:854a with SMTP id
+ 5b1f17b1804b1-426707cca09mr130783615e9.1.1721053725626; 
+ Mon, 15 Jul 2024 07:28:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG60JwFIeCIkXmkvcbmjGNXrDQUTJH7EjzTXjvabqLtTv3joxiy0itkzIjjwhsh+XOiNJXIBw==
+X-Received: by 2002:a05:600c:54c3:b0:426:5440:854a with SMTP id
+ 5b1f17b1804b1-426707cca09mr130783385e9.1.1721053725207; 
+ Mon, 15 Jul 2024 07:28:45 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5ef4793sm89451105e9.43.2024.07.15.07.28.24
+ 5b1f17b1804b1-427a5e77a55sm89639475e9.10.2024.07.15.07.28.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 07:28:25 -0700 (PDT)
-Date: Mon, 15 Jul 2024 16:28:24 +0200
+ Mon, 15 Jul 2024 07:28:44 -0700 (PDT)
+Date: Mon, 15 Jul 2024 16:28:43 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -79,7 +79,7 @@ Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
 Subject: Re: [PATCH v5 06/13] acpi/pci: Move Generic Initiator object
  handling into acpi/pci.*
-Message-ID: <20240715162824.6574fcd9@imammedo.users.ipa.redhat.com>
+Message-ID: <20240715162843.35f8dfe8@imammedo.users.ipa.redhat.com>
 In-Reply-To: <20240712110837.1439736-7-Jonathan.Cameron@huawei.com>
 References: <20240712110837.1439736-1-Jonathan.Cameron@huawei.com>
  <20240712110837.1439736-7-Jonathan.Cameron@huawei.com>
