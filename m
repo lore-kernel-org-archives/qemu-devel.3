@@ -4,105 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AB5C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E78C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTL9f-0005jd-OK; Mon, 15 Jul 2024 08:50:11 -0400
+	id 1sTLAX-0007Nv-Fu; Mon, 15 Jul 2024 08:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTL9e-0005eW-Cb
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTLAB-00071y-Gc
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:46 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTL9b-0005a6-Ux
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721047806;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lu2dlxaAnoyG8M5dAWM8Rq5ps2y5YNbk/Nphh1M5u8c=;
- b=SBJn+pqP6aIDlw2NUDabL65R+nrp5Pb761V+ZRORpx51t1y2TR7H1+76KGKoLwnaWTnlcQ
- 7CZkrdfM4AxXdsmc/1UikCUu/CrDLoV/OChaHaTH5YCkXdJq/Sd0M8WI1GT3oVyovkJvGY
- f0YeBNN0G1D9AcWypStSgRZl+uDPhaY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-chPYR-kEP5urBAa7fcEmAw-1; Mon, 15 Jul 2024 08:50:05 -0400
-X-MC-Unique: chPYR-kEP5urBAa7fcEmAw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42668699453so40417585e9.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 05:50:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721047804; x=1721652604;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lu2dlxaAnoyG8M5dAWM8Rq5ps2y5YNbk/Nphh1M5u8c=;
- b=fFr/zWLxM9YDbA34Jq1KQBydxSsZAkCvJaMDFFrC0fmzq77IYD6Q7tPwFXs4Ktkq+0
- yOqrNwwWX4hzXYtJnxMbx75lYHRz4ODct+H8vDN9X2Pre/qAw9H2XbH5DYrbLMrERYRl
- 0bxiZlBRVuzSoCFCgdNKeKiBux1KSN1Vi6/gntdDYKMhS8Z4FBgy9irihpZdfaDsRaHf
- LesjJo6zedkhaEgERioGey3TINFz7dUzJ2KwDBffCIxle7bkaSJbOOhaUU5NPcxQ1e1O
- tmdr9q0U3mqlpI0kzx1N2inQ+NLi9mOTopEKfE4F5o6v6MQ4Bzv39lOT6VrlOCWqOUyV
- Y3Zw==
-X-Gm-Message-State: AOJu0YxKG4L6aKkkkAqNRGghm1g6w9Agy2/88f4oomHXPnGCkp00hq4R
- NdkGzwGkmJFhYfxeqvByuvgL/yTinrdbBSWiVGMWLd5434ajIKXsib70vD14lXAGvAC4nPuGHfa
- neFKaxSCjs58GLSDFO6FuRb5ZMULp6RKAaXn+BrzDjYMvAiG+KSB5
-X-Received: by 2002:a5d:47a7:0:b0:360:75b1:77fb with SMTP id
- ffacd0b85a97d-367cea46438mr20868810f8f.8.1721047803986; 
- Mon, 15 Jul 2024 05:50:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBOMAr/JGL1SERF6gkJMDOcFpMynDA+km7rRqTPDZnhcaIdZCRfWhNWGy0t91+VeOqz/AT7w==
-X-Received: by 2002:a5d:47a7:0:b0:360:75b1:77fb with SMTP id
- ffacd0b85a97d-367cea46438mr20868788f8f.8.1721047803690; 
- Mon, 15 Jul 2024 05:50:03 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dabf151sm6303913f8f.29.2024.07.15.05.50.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 05:50:03 -0700 (PDT)
-Date: Mon, 15 Jul 2024 14:50:02 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <maz@kernel.org>,
- <jean-philippe@linaro.org>, <jonathan.cameron@huawei.com>,
- <lpieralisi@kernel.org>, <peter.maydell@linaro.org>,
- <richard.henderson@linaro.org>, <andrew.jones@linux.dev>,
- <david@redhat.com>, <philmd@linaro.org>, <eric.auger@redhat.com>,
- <oliver.upton@linux.dev>, <pbonzini@redhat.com>, <mst@redhat.com>,
- <will@kernel.org>, <gshan@redhat.com>, <rafael@kernel.org>,
- <alex.bennee@linaro.org>, <linux@armlinux.org.uk>,
- <darren@os.amperecomputing.com>, <ilkka@os.amperecomputing.com>,
- <vishnu@os.amperecomputing.com>, <karl.heubaum@oracle.com>,
- <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>,
- <zhukeqian1@huawei.com>, <wangxiongfeng2@huawei.com>,
- <wangyanan55@huawei.com>, <jiakernel2@gmail.com>, <maobibo@loongson.cn>,
- <lixianglai@loongson.cn>, <npiggin@gmail.com>, <harshpb@linux.ibm.com>,
- <linuxarm@huawei.com>, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH V15 2/7] hw/acpi: Move CPU ctrl-dev MMIO region len
- macro to common header file
-Message-ID: <20240715145002.0cedd39d@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240713182516.1457-3-salil.mehta@huawei.com>
-References: <20240713182516.1457-1-salil.mehta@huawei.com>
- <20240713182516.1457-3-salil.mehta@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTLA9-0005cy-6R
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721047841; x=1752583841;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Rgral5svhFwCi3vWx43JmcmPhf8C/VaAbMaiPVt2Yuw=;
+ b=G8ostIw/1cEijK3i6iVLmfV0YAjkvqPHeehJgqGyiRqfRYRrG8s0NzX+
+ rnqkHuXA49v/LgfbT0doLvLwzKJDW2sw+hOPREVFgigaxhP56pDi6dlAX
+ QqlGx/aqG6DSgvaGqop4OxQ3/lJZ0OUaNNlIMypG/HJ+i0acuNeD8bB3f
+ ZrS1BnA6MFtgZo4F+czwzTmO/7G64jRNlkNs1pEDhHMFfIyBS2k3q8Txp
+ OSciZ6Di6CboZ32u1yw0ivwpJC8D4n5q3tAO4bizvgOc0N05ITs0HtZnf
+ TbzHJCoj31OyqAQe8N1DAcCPrvDTBUEkZKO7O3M5uRFfmutZDQPSrsb8E w==;
+X-CSE-ConnectionGUID: OHvL2y+9RoOoQRmICK4ZJw==
+X-CSE-MsgGUID: jOU+PpVATbe+IcK7IcWEmw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="21337174"
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="21337174"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 05:50:38 -0700
+X-CSE-ConnectionGUID: uRymZ0oPS6e3ous1uHPOWA==
+X-CSE-MsgGUID: greVYBDgQ0OH28D+ndl9xg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="50381433"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa008.jf.intel.com with ESMTP; 15 Jul 2024 05:50:36 -0700
+Date: Mon, 15 Jul 2024 21:06:17 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ Michael Roth <michael.roth@amd.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
+Message-ID: <ZpUeycPmb3VHh5LL@intel.com>
+References: <20240715095939.72492-1-zhao1.liu@intel.com>
+ <20240715095939.72492-3-zhao1.liu@intel.com>
+ <1cf2b5cc-0837-4725-bf41-95bffd5a9b80@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1cf2b5cc-0837-4725-bf41-95bffd5a9b80@linaro.org>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,57 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 13 Jul 2024 19:25:11 +0100
-Salil Mehta <salil.mehta@huawei.com> wrote:
+On Mon, Jul 15, 2024 at 11:59:29AM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Mon, 15 Jul 2024 11:59:29 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: Re: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
+> 
+> On 15/7/24 11:59, Zhao Liu wrote:
+> > As the comment in qapi/error, dereferencing @errp requires
+> > ERRP_GUARD():
+> > 
+> > * = Why, when and how to use ERRP_GUARD() =
+> > *
+> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> > * - It must not be dereferenced, because it may be null.
+> > ...
+> > * ERRP_GUARD() lifts these restrictions.
+> > *
+> > * To use ERRP_GUARD(), add it right at the beginning of the function.
+> > * @errp can then be used without worrying about the argument being
+> > * NULL or &error_fatal.
+> > *
+> > * Using it when it's not needed is safe, but please avoid cluttering
+> > * the source with useless code.
+> > 
+> > Though currently ga_run_command() only gets &local_err instead of NULL
+> > @errp, it's still better to follow the requirement to add the
+> > ERRP_GUARD().
+> > 
+> > But as error.h suggested, the best practice for callee is to return
+> > something to indicate success / failure.
+> > 
+> > So make ga_wait_child() return boolean and check the returned boolean in
+> > ga_run_command() instead of dereferencing @errp, which eliminates the
+> > need of ERRP_GUARD().
+> 
+> I'd avoid mentioning ERRP_GUARD and just describe:
+> 
+>   Make ga_wait_child() return boolean and check the returned boolean
+>   in ga_run_command() instead of dereferencing @errp.
+> 
+> For the code change:
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> CPU ctrl-dev MMIO region length could be used in ACPI GED and various oth=
-er
-> architecture specific places. Move ACPI_CPU_HOTPLUG_REG_LEN macro to more
-> appropriate common header file.
->=20
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> Tested-by: Zhao Liu <zhao1.liu@intel.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Many thanks for your words and review!
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Will use your words in the next version.
 
-> ---
->  hw/acpi/cpu.c         | 1 -
->  include/hw/acpi/cpu.h | 2 ++
->  2 files changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-> index 2d81c1e790..cf5e9183e4 100644
-> --- a/hw/acpi/cpu.c
-> +++ b/hw/acpi/cpu.c
-> @@ -7,7 +7,6 @@
->  #include "trace.h"
->  #include "sysemu/numa.h"
-> =20
-> -#define ACPI_CPU_HOTPLUG_REG_LEN 12
->  #define ACPI_CPU_SELECTOR_OFFSET_WR 0
->  #define ACPI_CPU_FLAGS_OFFSET_RW 4
->  #define ACPI_CPU_CMD_OFFSET_WR 5
-> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-> index e6e1a9ef59..df87b15997 100644
-> --- a/include/hw/acpi/cpu.h
-> +++ b/include/hw/acpi/cpu.h
-> @@ -19,6 +19,8 @@
->  #include "hw/boards.h"
->  #include "hw/hotplug.h"
-> =20
-> +#define ACPI_CPU_HOTPLUG_REG_LEN 12
-> +
->  typedef struct AcpiCpuStatus {
->      CPUState *cpu;
->      uint64_t arch_id;
 
 
