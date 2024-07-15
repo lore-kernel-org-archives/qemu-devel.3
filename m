@@ -4,91 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F10C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF99C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 10:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIfX-0002yk-5h; Mon, 15 Jul 2024 06:10:55 -0400
+	id 1sTIhf-0003Ro-Dy; Mon, 15 Jul 2024 06:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIfV-0002q4-Ks
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:10:53 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIfI-0002ng-IQ
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 06:10:47 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4266fcb311cso28372065e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 03:10:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721038239; x=1721643039; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=86fNGiERpIq7oZQvKBWxfScMLn2QFS51FEn9dJqSkCw=;
- b=gaPA5yHkg2KC6WPvvA2rhNqmNNU6Z0wSXwCeOgAix72u4/sMDNJ2YMmgcUVwdv069Z
- udeKzaOYYApLpB42I3NDDDfj8vfjSfaP8M0DnBgTCqht/SqFWp/XLsovlzu/8A7Z4lRA
- jNPW2QgM5KEduA5nfHLzqWBwtKN9u0B9TfRu6ZLSTw0w41y1xQ9KO9AiMVqerNv+M0Eb
- 9MK6UggYeWpLI40uEUhGxlkaU0gBJzUdUzzjKihA1226veZ0znEeh+WK+Zc4rTAX6rxQ
- H29IzMzUvrRBjps4Ld2FRJ4fgQnoKu2Mw2T3Ku8loyPQZF8GC6Df1+gJYrWq0D0SeFj3
- 1KMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721038239; x=1721643039;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=86fNGiERpIq7oZQvKBWxfScMLn2QFS51FEn9dJqSkCw=;
- b=LtAvcpserZgojfQqWPfuaZb1Q4bZpfKUTpdmmEqXY1k41pmKiuWPYrlyIeMsZAni7O
- qas/6HTJVHd0OaA1gBRV+OZ+6Nho1f8HxbWBRVBG6QbTTcCycE//ik1pywsg/0Jty1h5
- 7J7CuDvdPiG9F/DQdnohCmKvh5u+ngCv2nWOUMEH52ZHeXJJlo7AvLJWiY/rLQoRo/Wh
- dKExcdRIiKCABFt+A3EoIAmiqGBC/ffk+MZC7Go3mFqfwsgZkUwN9o3BTXdM8+8r3V2S
- ryeyWTWYmn0oF0Sr1Kcaym7qWVTcq8jTtQ9r8SegFb/BcYEYJaz4FkILmFkX0BoZAVlj
- xnyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIBafXO/Ja3BKpA9rvZCqvqh9mImPXGo533rBfLNT2X741KUHkW1R1asqfrqbjubYOa2Q/6EGafZWeql1tIhOzmE/pQr4=
-X-Gm-Message-State: AOJu0YyQsei2nRJ8m3PhxrMaUzA2fWEvNYpBipIT0bdwOcAJUxpNkVb3
- LcyJzP7/eOyOK7OOqiuNb95o+Pjul8Bi248taYSsTvudk4Gedz/r51jhNlIovvA=
-X-Google-Smtp-Source: AGHT+IGihOESCCtU8uN8NCQ/V/MdgTZNrYEsDfYRV8smLnXoluPXcouwdRgDFAr/jqmgI+hS++PVJg==
-X-Received: by 2002:a05:600c:5354:b0:425:649b:60e8 with SMTP id
- 5b1f17b1804b1-426707e31b9mr120523815e9.18.1721038238694; 
- Mon, 15 Jul 2024 03:10:38 -0700 (PDT)
-Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
- [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5ef44a9sm80097935e9.40.2024.07.15.03.10.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jul 2024 03:10:38 -0700 (PDT)
-Message-ID: <876557e7-674b-4cab-9c85-3e24180316da@linaro.org>
-Date: Mon, 15 Jul 2024 12:10:35 +0200
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1sTIhZ-0003AG-Uc; Mon, 15 Jul 2024 06:13:02 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1sTIhT-00037M-Pe; Mon, 15 Jul 2024 06:13:01 -0400
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+ by Atcsqr.andestech.com with ESMTPS id 46FACYOn080322
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+ Mon, 15 Jul 2024 18:12:34 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 15 Jul
+ 2024 18:12:36 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
+ <david@redhat.com>, <philmd@linaro.org>, <palmer@dabbelt.com>,
+ <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, Ethan Chen
+ <ethan84@andestech.com>
+Subject: [PATCH v8 5/8] hw/misc/riscv_iopmp: Add API to set up IOPMP
+ protection for system memory
+Date: Mon, 15 Jul 2024 18:12:28 +0800
+Message-ID: <20240715101228.1247759-1-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
+In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
+References: <20240715095702.1222213-1-ethan84@andestech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/isa/vt82c686: Turn "intr" irq into a named gpio
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>, Huacai Chen <chenhuacai@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20240704205854.18537-1-shentey@gmail.com>
- <20240704205854.18537-2-shentey@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240704205854.18537-2-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.1.106]
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 46FACYOn080322
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,21 +70,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/24 22:58, Bernhard Beschow wrote:
-> Makes the code more comprehensible, matches the datasheet and the piix4 device
-> model.
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   hw/isa/vt82c686.c   | 2 +-
->   hw/mips/fuloong2e.c | 2 +-
->   hw/ppc/amigaone.c   | 4 ++--
->   hw/ppc/pegasos2.c   | 4 ++--
->   4 files changed, 6 insertions(+), 6 deletions(-)
+To enable system memory transactions through the IOPMP, memory regions must
+be moved to the IOPMP downstream and then replaced with IOMMUs for IOPMP
+translation.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The iopmp_setup_system_memory() function copies subregions of system memory
+to create the IOPMP downstream and then replaces the specified memory
+regions in system memory with the IOMMU regions of the IOPMP. It also
+adds entries to a protection map that records the relationship between
+physical address regions and the IOPMP, which is used by the IOPMP DMA
+API to send transaction information.
+
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
+---
+ hw/misc/riscv_iopmp.c         | 61 +++++++++++++++++++++++++++++++++++
+ include/hw/misc/riscv_iopmp.h |  3 ++
+ 2 files changed, 64 insertions(+)
+
+diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
+index db43e3c73f..e62ac57437 100644
+--- a/hw/misc/riscv_iopmp.c
++++ b/hw/misc/riscv_iopmp.c
+@@ -1151,4 +1151,65 @@ iopmp_register_types(void)
+     type_register_static(&iopmp_iommu_memory_region_info);
+ }
+ 
++/*
++ * Copies subregions from the source memory region to the destination memory
++ * region
++ */
++static void copy_memory_subregions(MemoryRegion *src_mr, MemoryRegion *dst_mr)
++{
++    int32_t priority;
++    hwaddr addr;
++    MemoryRegion *alias, *subregion;
++    QTAILQ_FOREACH(subregion, &src_mr->subregions, subregions_link) {
++        priority = subregion->priority;
++        addr = subregion->addr;
++        alias = g_malloc0(sizeof(MemoryRegion));
++        memory_region_init_alias(alias, NULL, subregion->name, subregion, 0,
++                                 memory_region_size(subregion));
++        memory_region_add_subregion_overlap(dst_mr, addr, alias, priority);
++    }
++}
++
++/*
++ * Create downstream of system memory for IOPMP, and overlap memory region
++ * specified in memmap with IOPMP translator. Make sure subregions are added to
++ * system memory before call this function. It also add entry to
++ * iopmp_protection_memmaps for recording the relationship between physical
++ * address regions and IOPMP.
++ */
++void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
++                               uint32_t map_entry_num)
++{
++    IopmpState *s = IOPMP(dev);
++    uint32_t i;
++    MemoryRegion *iommu_alias;
++    MemoryRegion *target_mr = get_system_memory();
++    MemoryRegion *downstream = g_malloc0(sizeof(MemoryRegion));
++    memory_region_init(downstream, NULL, "iopmp_downstream",
++                       memory_region_size(target_mr));
++    /* Copy subregions of target to downstream */
++    copy_memory_subregions(target_mr, downstream);
++
++    iopmp_protection_memmap *map;
++    for (i = 0; i < map_entry_num; i++) {
++        /* Memory access to protected regions of target are through IOPMP */
++        iommu_alias = g_new(MemoryRegion, 1);
++        memory_region_init_alias(iommu_alias, NULL, "iommu_alias",
++                                 MEMORY_REGION(&s->iommu), memmap[i].base,
++                                 memmap[i].size);
++        memory_region_add_subregion_overlap(target_mr, memmap[i].base,
++                                            iommu_alias, 1);
++        /* Record which IOPMP is responsible for the region */
++        map = g_new0(iopmp_protection_memmap, 1);
++        map->iopmp_s = s;
++        map->entry.base = memmap[i].base;
++        map->entry.size = memmap[i].size;
++        QLIST_INSERT_HEAD(&iopmp_protection_memmaps, map, list);
++    }
++    s->downstream = downstream;
++    address_space_init(&s->downstream_as, s->downstream,
++                       "iopmp-downstream-as");
++}
++
++
+ type_init(iopmp_register_types);
+diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
+index b8fe479108..ebe9c4bc4a 100644
+--- a/include/hw/misc/riscv_iopmp.h
++++ b/include/hw/misc/riscv_iopmp.h
+@@ -165,4 +165,7 @@ typedef struct IopmpState {
+     uint32_t fabricated_v;
+ } IopmpState;
+ 
++void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
++                               uint32_t mapentry_num);
++
+ #endif
+-- 
+2.34.1
 
 
