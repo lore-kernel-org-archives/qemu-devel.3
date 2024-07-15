@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD449C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12898C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIHh-0003Ag-N2; Mon, 15 Jul 2024 05:46:17 -0400
+	id 1sTIIT-0006k3-N2; Mon, 15 Jul 2024 05:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIHb-0002XM-9O
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:46:11 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIIS-0006aF-2w
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:47:04 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIHZ-0005to-Nu
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:46:10 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42726d6eca5so29327375e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:46:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIIP-00068J-6k
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:47:03 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52e96d4986bso4114258e87.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721036767; x=1721641567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721036819; x=1721641619; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Xj6bwdqhiWQ3fLyuzN05WrRvckrSIMS6gCDDt+KD8Xs=;
- b=IugAecbu/ypNAyM3/diVeGeUZlhSBhWdsFebuof67AQtPPv9D994inJdGCSR8hgEsY
- YCHQcFm4yuItRVos3Zs1iML8Pyrs90wGz1M1Jslo1xAobdE1gmhNwCgImkrWH9YVaPG+
- bdquFLSYW5ivcQ9oyXpQeO3b7S+/76j13pbSAkwDAgKz/4lEkRhqZuRXE1DBIHirzfvW
- MIl+l44UFl+ZE+JaSKiGhmZtxNO24aWH97vZBRBmxDfSFMGt7i0WiXvB7XStTBoTb7hk
- YskoftYCFHUrSZLakcZH0jUfwUZU6FzhYwc4MHfyeO0grHifCKZF7MAb6KEx/hc9rP/Y
- EVZg==
+ bh=uulBVX8O/AUeMJQW3OKnrM6R1QlmsYJxs0bjHqe8AIc=;
+ b=azDjVkvCxHtfvVoRfXPv+Uim8zv232Mu1JyMbeM6AnoirkavhHvnqnXlyArnX2oyDV
+ MFe56MwhQo3T2ioNUD2+cN08gqRo3NaDCxw503Orc69vD4+cqnm65st+IWVS+4oMlC3f
+ bhmGdKfmgOu52vOaZjCt3RwHT0V0Y5iCOf8zXA4ebEpfRsNXnC9+JDnDW0A7DT7LqYkU
+ gVrRtTqXRed2X773ovVoOcLq1kDoB9lFctcbbkQHjC2L1OMdaWsO2q6nHSER5LYwLA8N
+ J7Ta4SCV64C7qaFHQDBQBFRsnrzgL7J3qgw9CTqtQLNqX8af4M834/Nmxzlm3yyqC3B+
+ B/Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721036767; x=1721641567;
+ d=1e100.net; s=20230601; t=1721036819; x=1721641619;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xj6bwdqhiWQ3fLyuzN05WrRvckrSIMS6gCDDt+KD8Xs=;
- b=Vouncd4sNFHdLHN1ECOjIjgNdgelJT4Ar62mAIVbzNKohlaVbhX3UZnBsY30TxkWuI
- HD/KGlDCvHeZYsbSXpsdnYXiHjWthUAlfA1rjOdNY1BE48cCtpMXKwcjZY5idU2HHzbO
- 4b+fnW/adHHRnV8gm8/Y/cUP/TL/TnR7wSIdn6nBPfPrYGcm3RODSxFbaFtb9ZGObTzt
- NPZcZ0srGtM662C5sl/FdDRr6+2vPuEz4nNIg/1fiP9MBzoI7o0HIk2ReDGmB47on2FV
- 30p3kdE2Re5/1WZLFj2oD9msGc8XCO4eIjtVLmu/1+BG9V9MDQbdGccujR6s8NFtT0D8
- NToA==
+ bh=uulBVX8O/AUeMJQW3OKnrM6R1QlmsYJxs0bjHqe8AIc=;
+ b=YDz6SOjxC12NMAAmcG6ol7v9XUuDP8PJpVsI9S2FUud8rSRMBpR5CnsplqpNvOPyDG
+ cUCS7Xrux28YwLYkGJD7rppNJzuOW3cG3idzGA4/7Co+eg5meeMYUTuxNFBXGDP7KFAo
+ 9Uqd6sfyRDSbS42CK/YHFamZ65MVMn630F2mRGEQGLTs1gulITFNYxt9mlcNCaWRVXU2
+ Rh0ZKOQO6w2u/vGS7VzZHNjbz4FR7nEPQtme7rW3JTc67Mq66VDyLaAB7zKdg+qag9tE
+ g1vGHG02kG9kusp37cd03lpx2jbM7P7CkUa+EcCIYZ7gqFgxdriJwfQiTBb4yAsIu7X1
+ DNmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9npzekkoh6GIkslvSeKgyHdOB7LyKdlF0jDfcTxpuEc1qbThtoUAhoc34b6sAvyvj8a/5i93+77mKFgrdfohTwIoR7bc=
-X-Gm-Message-State: AOJu0Yxf8ttRW4ROACqn6i0Cw4ojs/ENMC6LbvPklEXk5Z40nOkaEfur
- ezAKiNb8denDtx5wRO3QqOMU6J9GnF6YS/J/QbzXv7yrBcC0G1rinz4d+9Fw550=
-X-Google-Smtp-Source: AGHT+IFz7dahbhDJ90FO3e7533XXW+WxiJt+FVfX0PK8SbUachVHVzIXezK4VyZ+0mTpIWIpOJAxtg==
-X-Received: by 2002:a05:600c:6d4:b0:426:6b85:bafb with SMTP id
- 5b1f17b1804b1-426707db6e7mr106982815e9.20.1721036765608; 
- Mon, 15 Jul 2024 02:46:05 -0700 (PDT)
+ AJvYcCX4YOFLPX8aRLBYF3cyxZ8awHhxyxkDy8gp7kCdO8jT6Py21qKZw+J9YJZuuXxoWPMynC346SDNB0bG7ZppPxoVLXlCsJY=
+X-Gm-Message-State: AOJu0YzVyxoSTN+ZJw+zI2mbJD+fG31EHTger+NtsKNUpKlA+u5qXght
+ 0vtUOojnx+vCX9gHAmfUbXIH/nrwx5lw/Ncwqg8Bo9ucF131ingLjIQSBifJKdc=
+X-Google-Smtp-Source: AGHT+IGK4tAWObWmg2ypjdvaS2tRjqRmGzxEtHM2/Ygze/8RgqfTqqA2xW4uu7K0RDDeS8/lp2C/RA==
+X-Received: by 2002:a05:6512:1248:b0:52c:caa6:13b4 with SMTP id
+ 2adb3069b0e04-52eb9991010mr12015220e87.3.1721036818652; 
+ Mon, 15 Jul 2024 02:46:58 -0700 (PDT)
 Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
  [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680db048b3sm5809576f8f.109.2024.07.15.02.46.04
+ 2adb3069b0e04-52ed24e29a9sm797385e87.26.2024.07.15.02.46.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jul 2024 02:46:05 -0700 (PDT)
-Message-ID: <7312c610-0640-4d95-b9cc-8262106f0c20@linaro.org>
-Date: Mon, 15 Jul 2024 11:46:03 +0200
+ Mon, 15 Jul 2024 02:46:58 -0700 (PDT)
+Message-ID: <01245850-b5df-4bf6-9a22-775d12fc07a0@linaro.org>
+Date: Mon, 15 Jul 2024 11:46:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] hw/vfio/container: Get rid of qemu_open_old()
+Subject: Re: [PATCH 7/7] backends/rng-random: Get rid of qemu_open_old()
 To: Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>,
  Laurent Vivier <laurent@vivier.eu>
 Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>
 References: <20240715082155.28771-1-zhao1.liu@intel.com>
- <20240715082155.28771-5-zhao1.liu@intel.com>
+ <20240715082155.28771-8-zhao1.liu@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240715082155.28771-5-zhao1.liu@intel.com>
+In-Reply-To: <20240715082155.28771-8-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,15 +106,41 @@ On 15/7/24 10:21, Zhao Liu wrote:
 >> Don't introduce new usage of this function, prefer the following
 >> qemu_open/qemu_create that take an "Error **errp".
 > 
-> So replace qemu_open_old() with qemu_open().
+> So replace qemu_open_old() with qemu_open(). And considering
+> rng_random_opened() will lose its obvious error handling case after
+> removing error_setg_file_open(), add comment to remind here.
 > 
-> Cc: Alex Williamson <alex.williamson@redhat.com>
-> Cc: "Cédric Le Goater" <clg@redhat.com>
+> Cc: Laurent Vivier <lvivier@redhat.com>
+> Cc: Amit Shah <amit@kernel.org>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   hw/vfio/container.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+>   backends/rng-random.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/backends/rng-random.c b/backends/rng-random.c
+> index 80eb5be138ce..3cdb982533b5 100644
+> --- a/backends/rng-random.c
+> +++ b/backends/rng-random.c
+> @@ -75,10 +75,11 @@ static void rng_random_opened(RngBackend *b, Error **errp)
+>           error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+>                      "filename", "a valid filename");
+>       } else {
+> -        s->fd = qemu_open_old(s->filename, O_RDONLY | O_NONBLOCK);
+> -        if (s->fd == -1) {
+> -            error_setg_file_open(errp, errno, s->filename);
+> -        }
+> +        /*
+> +         * Once the open fails, the error message is integrated into
+> +         * the *errp object by qemu_open().
+> +         */
+
+IMHO this comment is superfluous, I'd drop it, otherwise:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +        s->fd = qemu_open(s->filename, O_RDONLY | O_NONBLOCK, errp);
+>       }
+>   }
+>   
 
 
