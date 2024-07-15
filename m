@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E78C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C305FC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTLAX-0007Nv-Fu; Mon, 15 Jul 2024 08:51:08 -0400
+	id 1sTLF6-0003NB-5V; Mon, 15 Jul 2024 08:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTLAB-00071y-Gc
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:46 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <bfu@redhat.com>) id 1sTINH-0000hw-Nz
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:52:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTLA9-0005cy-6R
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:50:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721047841; x=1752583841;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=Rgral5svhFwCi3vWx43JmcmPhf8C/VaAbMaiPVt2Yuw=;
- b=G8ostIw/1cEijK3i6iVLmfV0YAjkvqPHeehJgqGyiRqfRYRrG8s0NzX+
- rnqkHuXA49v/LgfbT0doLvLwzKJDW2sw+hOPREVFgigaxhP56pDi6dlAX
- QqlGx/aqG6DSgvaGqop4OxQ3/lJZ0OUaNNlIMypG/HJ+i0acuNeD8bB3f
- ZrS1BnA6MFtgZo4F+czwzTmO/7G64jRNlkNs1pEDhHMFfIyBS2k3q8Txp
- OSciZ6Di6CboZ32u1yw0ivwpJC8D4n5q3tAO4bizvgOc0N05ITs0HtZnf
- TbzHJCoj31OyqAQe8N1DAcCPrvDTBUEkZKO7O3M5uRFfmutZDQPSrsb8E w==;
-X-CSE-ConnectionGUID: OHvL2y+9RoOoQRmICK4ZJw==
-X-CSE-MsgGUID: jOU+PpVATbe+IcK7IcWEmw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="21337174"
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="21337174"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 05:50:38 -0700
-X-CSE-ConnectionGUID: uRymZ0oPS6e3ous1uHPOWA==
-X-CSE-MsgGUID: greVYBDgQ0OH28D+ndl9xg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="50381433"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 15 Jul 2024 05:50:36 -0700
-Date: Mon, 15 Jul 2024 21:06:17 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
- Michael Roth <michael.roth@amd.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
-Message-ID: <ZpUeycPmb3VHh5LL@intel.com>
-References: <20240715095939.72492-1-zhao1.liu@intel.com>
- <20240715095939.72492-3-zhao1.liu@intel.com>
- <1cf2b5cc-0837-4725-bf41-95bffd5a9b80@linaro.org>
+ (Exim 4.90_1) (envelope-from <bfu@redhat.com>) id 1sTINF-0007Bk-Mm
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:52:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721037120;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=gWnaerq4VqejhtI3J8AaIYemLKLE4tyDuanVqba84gI=;
+ b=WuqhW8pjOB+WBGCNemHLwS23mTeOjX4DNlufCkTM55otJaiinxgSWL0VMNDIuOmUZy5l6n
+ GN87IzGVVRHVbsMhlbovGvDtNmhnRNZa1O37zbRrrFi4s1RrWmWLYUHq5/kn0D2ZPJyBgl
+ BWS16eIUDvWLtpFA6UbY9Cd+l9GsHRk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-456-H91ii6S0PZy851mZPf0B1A-1; Mon, 15 Jul 2024 05:50:34 -0400
+X-MC-Unique: H91ii6S0PZy851mZPf0B1A-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2c9f6677d8eso4489168a91.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:50:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721037032; x=1721641832;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gWnaerq4VqejhtI3J8AaIYemLKLE4tyDuanVqba84gI=;
+ b=cuSQTdl4CCkH1nR5CmYI2I4KP/aZHsxcxHqLvPDj6lEhfQWo1QuB2+a9yoh3spvPgU
+ Gmopwj3oC5WN3Ni5CALB2YNp1OccQn2OUPbU1of6PO8tVpVKHXLAldgqf2cyeYhW53nr
+ uGBajZLa7Z9K96og3o4f2VZ7eQfkneGKoz5njAvRRw6vt8+tpKuD7ksnWTIfdtBdMQxN
+ /F7jAdvCEWfGMmCH8voXYq/WPBv8OF7lA9gj6WSiRFM1flh/3LBGTlkdG3rtO2j2heoS
+ GJQtSPkWUr7bfaFp9+0SdVIHNy0Lt0HjAwpsb40JPS0bJB3wyrT5IH7c7ydwSXqslP3y
+ /WNg==
+X-Gm-Message-State: AOJu0YyPHpdc6k6yR/DGL2zg8lHDHYWXCkLCA9f5iEhdPS7b+m8dz+ko
+ pHGpzKzL8dfWiEdfOm8Vc06I1jK3uZTe49Xgw2C+BK4iHs2eryc39bInvs06RAVhquK6Lb1n2PI
+ T2igD2IAQum9OLspABe4c7Aly6Jgs/nSquE7S3iXICoGKLSA5HGYONDBZ3mCbcAEXXM/0V4JAWr
+ kwuFosYwSDpQG21H9J3FCWX/kyRq1NmX4MkkTCFcFx
+X-Received: by 2002:a17:90a:43c6:b0:2c8:660d:cc2 with SMTP id
+ 98e67ed59e1d1-2ca35be1c8dmr15646111a91.4.1721037032514; 
+ Mon, 15 Jul 2024 02:50:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8ergCTm9xuzsqmpTL5Iplp1c0LNwcKfBkoT1V9+j11zXfBG/3hgqXql7Z/bzwekZbpehDIdOfu63AEJhmfAk=
+X-Received: by 2002:a17:90a:43c6:b0:2c8:660d:cc2 with SMTP id
+ 98e67ed59e1d1-2ca35be1c8dmr15646105a91.4.1721037032196; Mon, 15 Jul 2024
+ 02:50:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1cf2b5cc-0837-4725-bf41-95bffd5a9b80@linaro.org>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+From: Boqiao Fu <bfu@redhat.com>
+Date: Mon, 15 Jul 2024 17:50:21 +0800
+Message-ID: <CAFRHJ6J9uMk+HMZL+W+KE1yoRCOLPgbPUVVDku55sdXYiGXXHg@mail.gmail.com>
+Subject: [PATCH] Manpage: Update description of 'user=username' for '-run-with'
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000f31df1061d4628d4"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=bfu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 15 Jul 2024 08:55:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,52 +90,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 11:59:29AM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Mon, 15 Jul 2024 11:59:29 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: Re: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
-> 
-> On 15/7/24 11:59, Zhao Liu wrote:
-> > As the comment in qapi/error, dereferencing @errp requires
-> > ERRP_GUARD():
-> > 
-> > * = Why, when and how to use ERRP_GUARD() =
-> > *
-> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> > * - It must not be dereferenced, because it may be null.
-> > ...
-> > * ERRP_GUARD() lifts these restrictions.
-> > *
-> > * To use ERRP_GUARD(), add it right at the beginning of the function.
-> > * @errp can then be used without worrying about the argument being
-> > * NULL or &error_fatal.
-> > *
-> > * Using it when it's not needed is safe, but please avoid cluttering
-> > * the source with useless code.
-> > 
-> > Though currently ga_run_command() only gets &local_err instead of NULL
-> > @errp, it's still better to follow the requirement to add the
-> > ERRP_GUARD().
-> > 
-> > But as error.h suggested, the best practice for callee is to return
-> > something to indicate success / failure.
-> > 
-> > So make ga_wait_child() return boolean and check the returned boolean in
-> > ga_run_command() instead of dereferencing @errp, which eliminates the
-> > need of ERRP_GUARD().
-> 
-> I'd avoid mentioning ERRP_GUARD and just describe:
-> 
->   Make ga_wait_child() return boolean and check the returned boolean
->   in ga_run_command() instead of dereferencing @errp.
-> 
-> For the code change:
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--000000000000f31df1061d4628d4
+Content-Type: text/plain; charset="UTF-8"
 
-Many thanks for your words and review!
+From: Boqiao Fu <bfu@redhat.com>
+Date: Mon, 15 Jul 2024 17:04:32 +0800
+Subject: [PATCH] Manpage: Update description of 'user=username' for
+ '-run-with'
 
-Will use your words in the next version.
+Manpage: the description of '-runs' didn't show this parameter will use
+setuid, so the customer might get confused when 'elevateprivileges=deny' is
+used. Since '-runas' is going to be deprecated and replaced by this
+parameter in the coming qemu9.1, add the message here.
 
+Signed-off-by: Boqiao Fu <bfu@redhat.com>
+---
+ qemu-options.hx | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/qemu-options.hx b/qemu-options.hx
+index ad6521ef5e..264525ed16 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5025,7 +5025,8 @@ SRST
+
+     ``user=username`` or ``user=uid:gid`` can be used to drop root
+privileges
+     by switching to the specified user (via username) or user and group
+-    (via uid:gid) immediately before starting guest execution.
++    (via uid:gid) immediately before starting guest execution. Effectively
++    uses the setuid system call to switch to another user id.
+ ERST
+ #endif
+
+-- 
+2.43.0
+
+--000000000000f31df1061d4628d4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>From: Boqiao Fu &lt;<a href=3D"mailto:bfu@redhat.com"=
+>bfu@redhat.com</a>&gt;<br>Date: Mon, 15 Jul 2024 17:04:32 +0800<br>Subject=
+: [PATCH] Manpage: Update description of &#39;user=3Dusername&#39; for<br>=
+=C2=A0&#39;-run-with&#39;<br><br>Manpage: the description of &#39;-runs&#39=
+; didn&#39;t show this parameter will use<br>setuid, so the customer might =
+get confused when &#39;elevateprivileges=3Ddeny&#39; is<br>used. Since &#39=
+;-runas&#39; is going to be deprecated and replaced by this<br>parameter in=
+ the coming qemu9.1, add the message here.<br><br>Signed-off-by: Boqiao Fu =
+&lt;<a href=3D"mailto:bfu@redhat.com">bfu@redhat.com</a>&gt;<br>---<br>=C2=
+=A0qemu-options.hx | 3 ++-<br>=C2=A01 file changed, 2 insertions(+), 1 dele=
+tion(-)<br><br>diff --git a/qemu-options.hx b/qemu-options.hx<br>index ad65=
+21ef5e..264525ed16 100644<br>--- a/qemu-options.hx<br>+++ b/qemu-options.hx=
+<br>@@ -5025,7 +5025,8 @@ SRST<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0``user=3Dus=
+ername`` or ``user=3Duid:gid`` can be used to drop root privileges<br>=C2=
+=A0 =C2=A0 =C2=A0by switching to the specified user (via username) or user =
+and group<br>- =C2=A0 =C2=A0(via uid:gid) immediately before starting guest=
+ execution.<br>+ =C2=A0 =C2=A0(via uid:gid) immediately before starting gue=
+st execution. Effectively<br>+ =C2=A0 =C2=A0uses the setuid system call to =
+switch to another user id.<br>=C2=A0ERST<br>=C2=A0#endif<br>=C2=A0<br>-- <b=
+r>2.43.0<br></div></div>
+
+--000000000000f31df1061d4628d4--
 
 
