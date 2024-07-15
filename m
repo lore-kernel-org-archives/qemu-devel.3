@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7232C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605AEC3DA45
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 05:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTEjS-0005Co-OY; Mon, 15 Jul 2024 01:58:42 -0400
+	id 1sTEjQ-00050m-0Y; Mon, 15 Jul 2024 01:58:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTEjQ-00054O-Pj
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:58:40 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1sTEjO-0004wH-WC
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:58:39 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTEjO-0008VG-UJ
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:58:40 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2ca4649ad49so2423112a91.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:58:38 -0700 (PDT)
+ id 1sTEjL-0008TI-W7
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 01:58:38 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2c8517aab46so3165118a91.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 22:58:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721023117; x=1721627917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721023114; x=1721627914; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JeM+PyZIgZuwJtOyeBwiQLcZE1Nzm+KGAI4nD2vg1aw=;
- b=PIizPCKQmIeN0doaiFJvzde2dR5ZhX2i2Epib/lJk6xHjczJqux+drG1YoyTSQzo0R
- tt6kY6/YWTpX4eDAmYhoXf7ojY62HqHSTDHFcokjCPCiBlg5VBX7n/cXBxaH11KSxcvX
- Ki7Cz6mURM1j2JjSm4mEU6i6X1YYkJflnmVVlA302NyNcbaFnof9CSOrYWNdLZpQrWrI
- 3T0iYM8Fz3RZ5rMbRu+bfszog0DcMRf/vJ/v5EjqJlCFGxXJiyo0ZU2J73vW98nBjwCj
- uYAOLAKMEfXA+I0KmRwRimFI/YRz45xggTzqTcWkIS9/x+E4+SjO6jqVX87/37Y2zYaM
- OrOw==
+ bh=bo/AQ8LDzk/AOqWq7VGMP1dwGD9Dmy3wpy1bY1Rsljs=;
+ b=Vvn3SVcxf53+Z3MHgiNQ8grXR8g3kafkpD215q2n3iPwukg//Fx4nL3BIsr4cxxgfo
+ vQqCCANYkrhcNWtEx5N874voAGWJ+1EbHVJCOhdKrhpRbZvW5P8PAQ/TXjZ4yC5nVTDG
+ oxZx+OeOrGWj6DyBW2oQtmP+fmA3YuJ6bGmFiT3HG5fNelcup/H1RKw59tHl3IuxD19M
+ WJZiuq0CWHcNHbdx3yepB6ewFewmgrHzGjXaR3MdvaUmdQ+wlUrvBAb3Y0f+jqx/SKdR
+ gpEWpx/svQemta7f/NdU0JCL5XeM/bf+nnJIBJg1zfi44E9LE8Cvw7tfjZdlRZYnZp0D
+ ZSbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721023117; x=1721627917;
+ d=1e100.net; s=20230601; t=1721023114; x=1721627914;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JeM+PyZIgZuwJtOyeBwiQLcZE1Nzm+KGAI4nD2vg1aw=;
- b=ODoTbYtKfAWC0zamLZkEQudRX72BO2knM3wdH0VpAczEmWWseZIQIEhwM80zGBEJiT
- ZyyYKjFTEjBzOL8uCjkt8H3fzD6Xk63owSYUtvKhaLdgDnHQK0Ro9hq4EuCaAQ3dmeyD
- uawQRlTYWICws/XHFpV5yj0wAJX403jwaQARDsKnHbxCeKhHVUTY7sjWnSYDSZGcgMkm
- JttWfQRFXwsXh9+9sHbqOqQFYLI6Jx7968NMy+syEJYflF/mDlQJ9UaR1tbqQDEexG85
- KXe0HvDSGfNIer075o1BegbgudzOOurs2do+jVyYrrbwDL0TzIHJjKvtZ++NlPCZu4Om
- 6huw==
-X-Gm-Message-State: AOJu0YwYQu6cGrIbX4yiYpTwRQ1wKpK+WRdWQDAmKNwEjcl0Xlq/IQrI
- Gkw7VJ3RkWvvEF+qOSqShKtj4dpu+k2xLIekZ5oZLLo6BAH39tWYRDHljpwdiSEWYR4MkWARTyy
- pkHnWRg==
-X-Google-Smtp-Source: AGHT+IHx1hOpKlv/sKh63LvXVfxvqzsbg6YmdsEYFqjze+rw1LrGDUeJwAnTUVfXkaF9CZ7kxlTppA==
-X-Received: by 2002:a17:90a:c684:b0:2c9:616a:6a46 with SMTP id
- 98e67ed59e1d1-2ca35c29460mr11836719a91.17.1721023117255; 
- Sun, 14 Jul 2024 22:58:37 -0700 (PDT)
+ bh=bo/AQ8LDzk/AOqWq7VGMP1dwGD9Dmy3wpy1bY1Rsljs=;
+ b=eOjaNwSS5y5hh4FGFQ5aXhoSUbHv2nHGIOfHFhsmwQJ1qlyUU0fNZ1Tt3TwNTF/ImI
+ ps+X/1zbzTYVHjmDuPLtHvz5tn2+B0JxaR6CdDt66LcrictOTINCufoeQ1lifvg38nHm
+ grvCRwRC7pUllqwN2/Fwagu//rCWznA7cCQe6nv79zOh7c67g0dR7JynNFX+2Sl0R195
+ jpLN/jpIsc/xq0bANm7rGv70U09mVROXkiZzDXE7j2R/oFyAXPPclfgeaA/+ksrBnMaX
+ JBhy0s61sAmGLdl6KrGW2TvJONvGwtxasCCoZ2/KBxce8sAi6Wv0c6p5FFgzL7SxYL8i
+ eHDA==
+X-Gm-Message-State: AOJu0YyQzBNZvamkeG0+gGBMyR1P4RQgtq+wjaC0rjfFh/Iz0K15YGv+
+ qfMDLNeafiULu1x/9MD7V7hy5MjsIPtd/0prX6pr4blesMUCW5MYayFzEzINjHNxPgMjNTczv9C
+ duhJ5yw==
+X-Google-Smtp-Source: AGHT+IE7Wrs6Be0q71OdWzgH0apo8uC9ZNEhm7xoeVQ4JpqRXJFbJ6zhaRWK/tu0BsBBjMai6yEAIA==
+X-Received: by 2002:a17:90a:ca87:b0:2c9:7ae1:8f62 with SMTP id
+ 98e67ed59e1d1-2ca35d599e0mr13652395a91.46.1721023114241; 
+ Sun, 14 Jul 2024 22:58:34 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cacd419af7sm5463589a91.25.2024.07.14.22.58.34
+ 98e67ed59e1d1-2cacd419af7sm5463589a91.25.2024.07.14.22.58.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jul 2024 22:58:36 -0700 (PDT)
+ Sun, 14 Jul 2024 22:58:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: danikhan632@git.sr.ht, qemu-arm@nongnu.org,
+Cc: danikhan632@git.sr.ht, qemu-arm@nongnu.org, qemu-stable@nongnu.org,
  Daniyal Khan <danikhan632@gmail.com>
-Subject: [PATCH 3/3] tests/tcg/aarch64: Add test cases for SME FMOPA (widening)
-Date: Mon, 15 Jul 2024 15:58:20 +1000
-Message-ID: <20240715055820.319035-4-richard.henderson@linaro.org>
+Subject: [PATCH 2/3] target/arm: Use FPST_F16 for SME FMOPA (widening)
+Date: Mon, 15 Jul 2024 15:58:19 +1000
+Message-ID: <20240715055820.319035-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240715055820.319035-1-richard.henderson@linaro.org>
 References: <20240715055820.319035-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -94,228 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniyal Khan <danikhan632@gmail.com>
+This operation has float16 inputs and thus must use
+the FZ16 control not the FZ control.
 
-Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-Message-Id: 172090222034.13953.16888708708822922098-1@git.sr.ht
-[rth: Split test cases to separate patch, tidy assembly.]
+Cc: qemu-stable@nongnu.org
+Reported-by: Daniyal Khan <danikhan632@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2374
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/aarch64/sme-fmopa-1.c   | 63 +++++++++++++++++++++++++++++++
- tests/tcg/aarch64/sme-fmopa-2.c   | 51 +++++++++++++++++++++++++
- tests/tcg/aarch64/sme-fmopa-3.c   | 58 ++++++++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.target |  5 ++-
- 4 files changed, 175 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/aarch64/sme-fmopa-1.c
- create mode 100644 tests/tcg/aarch64/sme-fmopa-2.c
- create mode 100644 tests/tcg/aarch64/sme-fmopa-3.c
+ target/arm/tcg/translate-sme.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/aarch64/sme-fmopa-1.c b/tests/tcg/aarch64/sme-fmopa-1.c
-new file mode 100644
-index 0000000000..652c4ea090
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-1.c
-@@ -0,0 +1,63 @@
-+/*
-+ * SME outer product, 1 x 1.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdio.h>
-+
-+static void foo(float *dst)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"
-+        "ptrue p0.s, vl4\n\t"
-+        "fmov z0.s, #1.0\n\t"
-+        /*
-+         * An outer product of a vector of 1.0 by itself should be a matrix of 1.0.
-+         * Note that we are using tile 1 here (za1.s) rather than tile 0.
-+         */
-+        "zero {za}\n\t"
-+        "fmopa za1.s, p0/m, p0/m, z0.s, z0.s\n\t"
-+        /*
-+         * Read the first 4x4 sub-matrix of elements from tile 1:
-+         * Note that za1h should be interchangeable here.
-+         */
-+        "mov w12, #0\n\t"
-+        "mova z0.s, p0/m, za1v.s[w12, #0]\n\t"
-+        "mova z1.s, p0/m, za1v.s[w12, #1]\n\t"
-+        "mova z2.s, p0/m, za1v.s[w12, #2]\n\t"
-+        "mova z3.s, p0/m, za1v.s[w12, #3]\n\t"
-+        /*
-+         * And store them to the input pointer (dst in the C code):
-+         */
-+        "st1w {z0.s}, p0, [%0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z1.s}, p0, [x0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z2.s}, p0, [x0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z3.s}, p0, [x0]\n\t"
-+        "smstop"
-+        : : "r"(dst)
-+        : "x12", "d0", "d1", "d2", "d3", "memory");
-+}
-+
-+int main()
-+{
-+    float dst[16] = { };
-+
-+    foo(dst);
-+
-+    for (int i = 0; i < 16; i++) {
-+        if (dst[i] != 1.0f) {
-+            goto failure;
-+        }
-+    }
-+    /* success */
-+    return 0;
-+
-+ failure:
-+    for (int i = 0; i < 16; i++) {
-+        printf("%f%c", dst[i], i % 4 == 3 ? '\n' : ' ');
-+    }
-+    return 1;
-+}
-diff --git a/tests/tcg/aarch64/sme-fmopa-2.c b/tests/tcg/aarch64/sme-fmopa-2.c
-new file mode 100644
-index 0000000000..198cc31528
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-2.c
-@@ -0,0 +1,51 @@
-+#include <stdint.h>
-+#include <stdio.h>
-+
-+static void test_fmopa(uint32_t *result)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"               /* Z*, P* and ZArray cleared */
-+        "ptrue p2.b, vl16\n\t"      /* Limit vector length to 16 */
-+        "ptrue p5.b, vl16\n\t"
-+        "movi d0, #0x00ff\n\t"      /* fp16 denormal */
-+        "movi d16, #0x00ff\n\t"
-+        "mov w15, #0x0001000000\n\t" /* FZ=1, FZ16=0 */
-+        "msr fpcr, x15\n\t"
-+        "fmopa za3.s, p2/m, p5/m, z16.h, z0.h\n\t"
-+        "mov w15, #0\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "mov w15, #2\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "smstop"
-+        : "+r"(result) :
-+        : "x15", "x16", "p2", "p5", "d0", "d16", "memory");
-+}
-+
-+int main(void)
-+{
-+    uint32_t result[4 * 4] = { };
-+
-+    test_fmopa(result);
-+
-+    if (result[0] != 0x2f7e0100) {
-+        printf("Test failed: Incorrect output in first 4 bytes\n"
-+               "Expected: %08x\n"
-+               "Got:      %08x\n",
-+               0x2f7e0100, result[0]);
-+        return 1;
-+    }
-+
-+    for (int i = 1; i < 16; ++i) {
-+        if (result[i] != 0) {
-+            printf("Test failed: Non-zero word at position %d\n", i);
-+            return 1;
-+        }
-+    }
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/aarch64/sme-fmopa-3.c b/tests/tcg/aarch64/sme-fmopa-3.c
-new file mode 100644
-index 0000000000..6617355c9d
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-3.c
-@@ -0,0 +1,58 @@
-+#include <stdio.h>
-+#include <stdint.h>
-+#include <string.h>
-+#include <math.h>
-+
-+static const float i_1234[4] = {
-+    1.0f, 2.0f, 3.0f, 4.0f
-+};
-+
-+static const float expected[4] = {
-+    4.515625f, 5.750000f, 6.984375f, 8.218750f
-+};
-+
-+static void test_fmopa(float *result)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"               /* ZArray cleared */
-+        "ptrue p2.b, vl16\n\t"      /* Limit vector length to 16 */
-+        "ld1w {z0.s}, p2/z, [%1]\n\t"
-+        "mov w15, #0\n\t"
-+        "mov za3h.s[w15, 0], p2/m, z0.s\n\t"
-+        "mov za3h.s[w15, 1], p2/m, z0.s\n\t"
-+        "mov w15, #2\n\t"
-+        "mov za3h.s[w15, 0], p2/m, z0.s\n\t"
-+        "mov za3h.s[w15, 1], p2/m, z0.s\n\t"
-+        "msr fpcr, xzr\n\t"
-+        "fmopa za3.s, p2/m, p2/m, z0.h, z0.h\n\t"
-+        "mov w15, #0\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "mov w15, #2\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "smstop"
-+        : "+r"(result) : "r"(i_1234)
-+        : "x15", "x16", "p2", "d0", "memory");
-+}
-+
-+int main(void)
-+{
-+    float result[4 * 4] = { };
-+    int ret = 0;
-+
-+    test_fmopa(result);
-+
-+    for (int i = 0; i < 4; i++) {
-+        float actual = result[i];
-+        if (fabsf(actual - expected[i]) > 0.001f) {
-+            printf("Test failed at element %d: Expected %f, got %f\n",
-+                   i, expected[i], actual);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index b53218e115..8cc62eb456 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -70,8 +70,9 @@ endif
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 46c7fce8b4..185a8a917b 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -304,6 +304,7 @@ static bool do_outprod(DisasContext *s, arg_op *a, MemOp esz,
+ }
  
- # SME Tests
- ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
--AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
--sme-outprod1 sme-smopa-1 sme-smopa-2: CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
-+SME_TESTS = sme-outprod1 sme-smopa-1 sme-smopa-2 sme-fmopa-1 sme-fmopa-2 sme-fmopa-3
-+AARCH64_TESTS += $(SME_TESTS)
-+$(SME_TESTS): CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
- endif
+ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
++                            ARMFPStatusFlavour e_fpst,
+                             gen_helper_gvec_5_ptr *fn)
+ {
+     int svl = streaming_vec_reg_size(s);
+@@ -319,15 +320,18 @@ static bool do_outprod_fpst(DisasContext *s, arg_op *a, MemOp esz,
+     zm = vec_full_reg_ptr(s, a->zm);
+     pn = pred_full_reg_ptr(s, a->pn);
+     pm = pred_full_reg_ptr(s, a->pm);
+-    fpst = fpstatus_ptr(FPST_FPCR);
++    fpst = fpstatus_ptr(e_fpst);
  
- # System Registers Tests
+     fn(za, zn, zm, pn, pm, fpst, tcg_constant_i32(desc));
+     return true;
+ }
+ 
+-TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_h)
+-TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a, MO_32, gen_helper_sme_fmopa_s)
+-TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a, MO_64, gen_helper_sme_fmopa_d)
++TRANS_FEAT(FMOPA_h, aa64_sme, do_outprod_fpst, a,
++           MO_32, FPST_FPCR_F16, gen_helper_sme_fmopa_h)
++TRANS_FEAT(FMOPA_s, aa64_sme, do_outprod_fpst, a,
++           MO_32, FPST_FPCR, gen_helper_sme_fmopa_s)
++TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
++           MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
+ 
+ /* TODO: FEAT_EBF16 */
+ TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
 -- 
 2.43.0
 
