@@ -4,61 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E76BC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 13:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEDDC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 13:28:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTLeU-0001XP-4D; Mon, 15 Jul 2024 09:22:02 -0400
+	id 1sTLkD-0007tg-D1; Mon, 15 Jul 2024 09:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ziyao@disroot.org>) id 1sTLeR-0001Wd-6Y
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 09:21:59 -0400
-Received: from layka.disroot.org ([178.21.23.139])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ziyao@disroot.org>) id 1sTLeO-0003sR-7t
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 09:21:58 -0400
-Received: from localhost (localhost [127.0.0.1])
- by disroot.org (Postfix) with ESMTP id 8303E4145F;
- Mon, 15 Jul 2024 15:21:52 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id anx3OCLEccJR; Mon, 15 Jul 2024 15:21:51 +0200 (CEST)
-Date: Mon, 15 Jul 2024 21:21:25 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
- t=1721049711; bh=vGR01nL2OTl0N0bc+FRDWfJQUaZ/KoF928QoociNh1I=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=iSRxHLuAOYPWSh4PGI8kSH4ytH4f9uEW5D5jGag8UnFJTIAOBpkIW6z0WIOt5Mq8n
- txURZxQHtDj2Kai0lZWI5+ozGfngzmvNu3M3rhdsNIUaqupSns1Q2Q7esb6HU1epkK
- 89CKmKtRKQBYpsp5pFys5tVA5LsO478OeLlr895j4E6jHYIXqSaplng9X8LOfb55LE
- bhjnvKTE/5futIGyL5ryhNhqjCubh9HbiA6tT0iiXjvVV771yTdQ6AXv7/lU0eg0ZV
- lZv3JevaGf9fzIFNH7DoLmHsB8gFpKDKAlULOsRj/tfDYjv7z7UioMh7s+tM57PWmb
- VfdBbOwTiuXrA==
-From: Yao Zi <ziyao@disroot.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] meson.build: fix libgcrypt detection on system without
- libgcrypt-config
-Message-ID: <ZpUiVe4wTHm7lmpP@ziyaolaptop.my.domain>
-References: <20240706201226.46089-1-ziyao@disroot.org>
- <ZpE1ApH6sWuRdf-L@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sTLkB-0007t6-Gk
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 09:27:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sTLk1-0005A2-SD
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 09:27:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721050062;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=o77D+3+EpheCtqg69Fmtg0LzvP4yoS7faoaZKaajlMA=;
+ b=PHV8CgyyhpnwaPNRAOquD4l9W0Io1Te+5KeUkuhy4Hv+JOqPCzOPv+zXpRkIvoKvFWaKFB
+ nhOtxrOSTYz8qHJxIuekeT2RCuBXCJJykmCCBDEp58f1n+q64JqFiTeS084ee9mUKcxf/F
+ MHiplTLHHD+TOvMHnFXHeBn0NNyDUZc=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-261-sAZoSLmIOIGCF3bMNBQC7g-1; Mon, 15 Jul 2024 09:27:40 -0400
+X-MC-Unique: sAZoSLmIOIGCF3bMNBQC7g-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-447dfad3387so10933771cf.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 06:27:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721050060; x=1721654860;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o77D+3+EpheCtqg69Fmtg0LzvP4yoS7faoaZKaajlMA=;
+ b=ItjidYS8+PxyQMPgU5yaGzaIcJ5FVJ61gt0Y7B1vudJQVC/K+HNHpSqpCUI07xYyl1
+ 6aEes6Tb3EnMnRvkkhcY8T1PjjvFOLCUZM2S15QV4+IFZBWS/hywtAWcEAjWcEVZkDyX
+ j49g4oi4OOQBdbG/BA9VA9Ne4T3Yb79Pwflo3Q2ZwWoUfsFbO9ogj0nyWpkfQe2HWpVF
+ bzJ04G2sGJe3Y5YBr9ZN5Qd4mnvn/9zorPod3UzqAzMe6+6btzhnuQfEqIlcwZ/sZne2
+ EQCQFoJRGQWBfGfq5eBJvYX8xLkb9nCw06L4SmzLGkB/NlZqUu7I3nxEnpUvYOZULtwZ
+ xVbg==
+X-Gm-Message-State: AOJu0Yy6Gj6+2rdydeFg0np+jL1NWVkuRECvt2z4+eK2V3h22LqM6xf6
+ guuePggOm2stl1DPRXXBJaHmZYfXwm8zutHY00Jb6aPu4RGe4YbNoDCwvgWqOSIFtrId3UVqksM
+ Q3S3Du4TU8pRcoXfni5b1gf3iAIUzL2mnyvGWu0+Uh6M7j86pCskM
+X-Received: by 2002:ac8:724c:0:b0:44e:cff7:3741 with SMTP id
+ d75a77b69052e-44ecff738a4mr63489621cf.7.1721050060025; 
+ Mon, 15 Jul 2024 06:27:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjRgYzA3ibP40PNf10p/Oga8VnXfT+TJmJ+AB2FmWDQ1kZjozYSnpNnXV58M8ZaMAlJIZ2GA==
+X-Received: by 2002:ac8:724c:0:b0:44e:cff7:3741 with SMTP id
+ d75a77b69052e-44ecff738a4mr63489421cf.7.1721050059694; 
+ Mon, 15 Jul 2024 06:27:39 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f5b7e32ffsm24613611cf.24.2024.07.15.06.27.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jul 2024 06:27:39 -0700 (PDT)
+Date: Mon, 15 Jul 2024 09:27:38 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Jason Wang <jasowang@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, mcoqueli@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 1/2] vhost-user: add a write-read lock
+Message-ID: <ZpUjys64KeOI1Kmx@x1n>
+References: <20240711131424.181615-1-ppandit@redhat.com>
+ <20240711131424.181615-2-ppandit@redhat.com> <Zo_9OlX0pV0paFj7@x1n>
+ <CAE8KmOzrAdxGMVb7=hYMOgAOuhhzUT+N0X=ONNN456S6f2i87A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZpE1ApH6sWuRdf-L@redhat.com>
-Received-SPF: pass client-ip=178.21.23.139; envelope-from=ziyao@disroot.org;
- helo=layka.disroot.org
+In-Reply-To: <CAE8KmOzrAdxGMVb7=hYMOgAOuhhzUT+N0X=ONNN456S6f2i87A@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,33 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 12, 2024 at 02:52:02PM +0100, Daniel P. Berrangé wrote:
-> On Sat, Jul 06, 2024 at 08:12:26PM +0000, Yao Zi wrote:
-> > libgcrypt starts providing correct pkg-config configuration and dropping
-> > libgcrypt-config since 1.11.0. So use auto method for detection of
-> > libgcrypt, in which meson will try both pkg-config and libgcrypt-config.
+On Mon, Jul 15, 2024 at 01:44:00PM +0530, Prasad Pandit wrote:
+> On Thu, 11 Jul 2024 at 21:12, Peter Xu <peterx@redhat.com> wrote:
+> > I apologize if I suggested WITH_QEMU_LOCK_GUARD when we talked.. I don't
+> > remember which one I suggested, but in this case IIUC it'll be much easier
+> > to review if you use the other sister function QEMU_LOCK_GUARD()
+> > instead.. That should make the diff much, much less.
 > 
-> The pkg-config file seems to be provided since 1.9 in fact.
-> 
-> Where do you see that ligcrypt-config is dropped ?
+> * Yes, QEMU_LOCK_GUARD simplifies the diff, but it may extend the time
+> for which lock is held, delaying other threads, is that okay?
 
-Commit 2db5b5e9
-("build: When no gpg-error-config, not install libgcrypt-config")[1] in
-libgcrypt says that
+I think it shouldn't be a major deal in most cases, if the extended cycles
+only cover a bunch of instructions. In special case we can still use
+WITH_QEMU_LOCK_GUARD, but I'd start with the simple first and only switch
+if necessary.
 
-> When system will migrate use of gpgrt-config and removal of
-> gpg-error-config, libgcrypt-config will not be installed
+Thanks,
 
-1.11.0 is the first release containing this commit.
+-- 
+Peter Xu
 
-> It still
-> exists in the gcrypt  git repo and in Fedora 1.11.0 packages.
-
-It does not on Arch Linux. For Fedora, I have no idea.
-
-[1]: https://github.com/gpg/libgcrypt/commit/2db5b5e995c21c5bd9cd193c2ed1109ba9b1a440
-[2]: https://archlinux.org/packages/core/x86_64/libgcrypt/
-
-Best regards,
-Yao Zi
 
