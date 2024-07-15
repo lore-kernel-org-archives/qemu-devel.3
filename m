@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E9AC3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 02:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC814C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 04:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTBUx-00081k-9d; Sun, 14 Jul 2024 22:31:31 -0400
+	id 1sTDPw-0008Cz-EZ; Mon, 15 Jul 2024 00:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sTBUu-00080S-HT
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 22:31:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTDPu-0008Bz-M5
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:26 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sTBUr-0001TL-Oj
- for qemu-devel@nongnu.org; Sun, 14 Jul 2024 22:31:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721010684;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9Dwjr1+pakyvD//iMH+S8hYK/5WYNs/wQ8LB/jvTJ6U=;
- b=UkQnVhzoMc3zXB5khMyWTiU+gntL2/ix5oj0RVp994ChXFVI5ocaNQsogGSPYc0gYx2qnY
- 7HL9lTD+RVYyRzVsB6O6uBMyuVaBqFDRqFuqDJGVe5v/BU3hn+RggT6fW92FJi24Y9NM/9
- VCqDsd3rZpfF9naQBjpb5m3lmUZuLCU=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-MGlk3BO6PoytivRjcGTiPw-1; Sun, 14 Jul 2024 22:30:39 -0400
-X-MC-Unique: MGlk3BO6PoytivRjcGTiPw-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-649731dd35bso2309734a12.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 19:30:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721010639; x=1721615439;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9Dwjr1+pakyvD//iMH+S8hYK/5WYNs/wQ8LB/jvTJ6U=;
- b=vMx81FBj9+Ls0Ur10GvE4gUvNzicarkgX50jWjRqG+NVLrfP7qObDPxwaTKDiI/zxZ
- R/0Nri0f/L1z1lAPg8lFYXkVBcBesReeoOQUIJHl13ikkZeRz95U/n7U2/aj2Sfc5VHI
- rBVDKv1e5t2BlCC9/xjYGD2peLZhxU7+Mps41F+OvjlN+0Fv4ksvVXLPzd17eykHVoKr
- s39cloJIJ1othP+XxXwjjm1nQt9NuYZAD3Z9FbGgv37KGuu1O44yfwsipgQ8Hr5BL3PO
- Hk662XGSabAEJV9botzkXo89xfFuBDdMvB+ZU7tcE5p9KxtodDvuBYjgzKFjd238RnLK
- di4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0SMK2cBZkfhgfyFzGnCqP6oFrc8xU9338m/IwPx30M5iI1oi+PclXKALs8KjrgQvskdPNGPK0XDWiH84QYvYnndK49Yw=
-X-Gm-Message-State: AOJu0Yw4JkrCTkGKzUyr+MoK0ZQOLndmBpuZXZ0sxYO8PplDVY7Z9Lzy
- Y1XKqFNrukdgZQnIiQ3fI5KFVJWfzqTfNWk+RFOqK0l1Kuck6ndljRyCwzPWWDCHxQanVwNvr7/
- bn3cVuKsHuXdp8iwAU86YdHRyIORSjJdnEHHbCIR1Vos48t0ulzmPYz82LXaqiJf4YonOFvsjaa
- hE0/o2oXyiGz7vhbSW3eEiQZj2jNI=
-X-Received: by 2002:a05:6a20:3941:b0:1be:d5e9:b444 with SMTP id
- adf61e73a8af0-1c297d67c2fmr19202912637.0.1721010638755; 
- Sun, 14 Jul 2024 19:30:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdeiqarU+4MbUKdv0qbyy8ByGB3YpDzvIGAvN9jN8uL1aH4MBnXcH8EO4k/8NEMP8TxFrGkisXbC0QaRCjHQU=
-X-Received: by 2002:a05:6a20:3941:b0:1be:d5e9:b444 with SMTP id
- adf61e73a8af0-1c297d67c2fmr19202892637.0.1721010638232; Sun, 14 Jul 2024
- 19:30:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTDPs-0004Ev-R7
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 00:34:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721018065; x=1752554065;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=+kWBSksCjwdQpHlmtbr87XOClMos7SBe4fOvnuHZMAU=;
+ b=EF1idCBXlxOcoNI0M6C5LfnJuTAEc5LDZNG5JyebTGxOXoAztgrkHK8C
+ jkTWvQQ71kSQvVnD4emtD6B6fvyqqADSP8445UQel6X0zBAuHzvmU+EML
+ 8U/jzM3WZt+H9eNUBcq5Pmx6TR64OWAeX7mQzPD8lDepZeQ76RznC3+sY
+ g0q4C7GNW2uScN1yml+sAUXG60ZsR+XQK+dtfpx8lCFYsL6Dp7rvDMXWZ
+ 2dzzXX36kXLsHyC6PFc7aXiHYgXo/I/2eWUKe9nDOnaskGPK5PWKNf4g3
+ lpiEBOWAyiwz9jWlojhhdOdQ4S+MGnME1ze1fKt3kMDupmxdd1ldC5bF4 A==;
+X-CSE-ConnectionGUID: FE8vuKVlRGG+Xw+10kFNGQ==
+X-CSE-MsgGUID: JMzuTY57RIilVTa5EBYrvw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35809797"
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="35809797"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2024 21:34:20 -0700
+X-CSE-ConnectionGUID: bC8wDrE7S1Onq3QSDONJhA==
+X-CSE-MsgGUID: XKOiyfdTRqCpV/EAIU1onA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,209,1716274800"; d="scan'208";a="54043024"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa004.fm.intel.com with ESMTP; 14 Jul 2024 21:34:16 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v3 0/8] [PATCH v3 0/8] target/i386: Misc cleanup on KVM PV
+ defs, outdated comments and error handling
+Date: Mon, 15 Jul 2024 12:49:47 +0800
+Message-Id: <20240715044955.3954304-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240628145710.1516121-1-aesteve@redhat.com>
- <87bk34i4dy.fsf@alyssa.is>
- <CAD=HUj7av_8Epkd0Fe0eWR7Z4bZMTuvTNgqzYoQcOzFQ82wvOg@mail.gmail.com>
- <20240712014407-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240712014407-mutt-send-email-mst@kernel.org>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 15 Jul 2024 10:30:27 +0800
-Message-ID: <CACGkMEseZTupyZ6OnxtVGWdxtzp_C7M0BEKOUQAMK7tp4-i1Xg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/5] vhost-user: Add SHMEM_MAP/UNMAP requests
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: David Stevens <stevensd@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
- Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org, david@redhat.com, 
- slp@redhat.com, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +86,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 12, 2024 at 1:48=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Fri, Jul 12, 2024 at 11:06:49AM +0900, David Stevens wrote:
-> > On Thu, Jul 11, 2024 at 7:56=E2=80=AFPM Alyssa Ross <hi@alyssa.is> wrot=
-e:
-> > >
-> > > Adding David Stevens, who implemented SHMEM_MAP and SHMEM_UNMAP in
-> > > crosvm a couple of years ago.
-> > >
-> > > David, I'd be particularly interested for your thoughts on the MEM_RE=
-AD
-> > > and MEM_WRITE commands, since as far as I know crosvm doesn't impleme=
-nt
-> > > anything like that.  The discussion leading to those being added star=
-ts
-> > > here:
-> > >
-> > > https://lore.kernel.org/qemu-devel/20240604185416.GB90471@fedora.redh=
-at.com/
-> > >
-> > > It would be great if this could be standardised between QEMU and cros=
-vm
-> > > (and therefore have a clearer path toward being implemented in other =
-VMMs)!
-> >
-> > Setting aside vhost-user for a moment, the DAX example given by Stefan
-> > won't work in crosvm today.
-> >
-> > Is universal access to virtio shared memory regions actually mandated
-> > by the virtio spec? Copying from virtiofs DAX to virtiofs sharing
-> > seems reasonable enough, but what about virtio-pmem to virtio-blk?
-> > What about screenshotting a framebuffer in virtio-gpu shared memory to
-> > virtio-scsi? I guess with some plumbing in the VMM, it's solvable in a
-> > virtualized environment. But what about when you have real hardware
-> > that speaks virtio involved? That's outside my wheelhouse, but it
-> > doesn't seem like that would be easy to solve.
->
-> Yes, it can work for physical devices if allowed by host configuration.
-> E.g. VFIO supports that I think. Don't think VDPA does.
->
+Hi,
 
-I guess you meant iommufd support here?
+This is my v3 cleanup series. Compared with v2 [1],
+ * v3 resolved the rebasing conflict (now based on 37fbfda8f414).
+ * Added 2 more patches (patch 7&8) to clean up error handling in
+   kvm_arch_init().
 
-Thanks
+
+Background and Introduction
+===========================
+
+This series picks cleanup from my previous kvmclock [2] (as other
+renaming attempts were temporarily put on hold).
+
+In addition, this series also include the cleanup on a historically
+workaround, recent comment of coco interface [3] and error handling
+corner cases in kvm_arch_init().
+
+Avoiding the fragmentation of these misc cleanups, I consolidated them
+all in one series and was able to tackle them in one go!
+
+[1]: https://lore.kernel.org/qemu-devel/20240506085153.2834841-1-zhao1.liu@intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20240329101954.3954987-1-zhao1.liu@linux.intel.com/
+[3]: https://lore.kernel.org/qemu-devel/2815f0f1-9e20-4985-849c-d74c6cdc94ae@intel.com/
+
+Thanks and Best Regards,
+Zhao
+---
+Zhao Liu (8):
+  target/i386/kvm: Add feature bit definitions for KVM CPUID
+  target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
+    MSR_KVM_SYSTEM_TIME definitions
+  target/i386/kvm: Only save/load kvmclock MSRs when kvmclock enabled
+  target/i386/kvm: Save/load MSRs of kvmclock2
+    (KVM_FEATURE_CLOCKSOURCE2)
+  target/i386/kvm: Drop workaround for KVM_X86_DISABLE_EXITS_HTL typo
+  target/i386/confidential-guest: Fix comment of
+    x86_confidential_guest_kvm_type()
+  target/i386/kvm: Clean up return values of MSR filter related
+    functions
+  target/i386/kvm: Clean up error handling in kvm_arch_init()
+
+ hw/i386/kvm/clock.c              |   5 +-
+ target/i386/confidential-guest.h |   2 +-
+ target/i386/cpu.h                |  25 +++++++
+ target/i386/kvm/kvm.c            | 108 ++++++++++++++++++-------------
+ target/i386/kvm/kvm_i386.h       |   4 +-
+ 5 files changed, 92 insertions(+), 52 deletions(-)
+
+-- 
+2.34.1
 
 
