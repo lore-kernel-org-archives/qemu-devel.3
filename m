@@ -4,78 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C305FC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B58C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTLF6-0003NB-5V; Mon, 15 Jul 2024 08:55:48 -0400
+	id 1sTLF3-0003D9-HN; Mon, 15 Jul 2024 08:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bfu@redhat.com>) id 1sTINH-0000hw-Nz
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:52:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTLF1-00039Q-F5
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:55:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bfu@redhat.com>) id 1sTINF-0007Bk-Mm
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:52:03 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTLEz-0006uI-Mw
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:55:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721037120;
+ s=mimecast20190719; t=1721048140;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=gWnaerq4VqejhtI3J8AaIYemLKLE4tyDuanVqba84gI=;
- b=WuqhW8pjOB+WBGCNemHLwS23mTeOjX4DNlufCkTM55otJaiinxgSWL0VMNDIuOmUZy5l6n
- GN87IzGVVRHVbsMhlbovGvDtNmhnRNZa1O37zbRrrFi4s1RrWmWLYUHq5/kn0D2ZPJyBgl
- BWS16eIUDvWLtpFA6UbY9Cd+l9GsHRk=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iXhi9NpfTXWHgY2dNzLAaqkM6ZDMZMLVgAna//bNgsM=;
+ b=bcL5geH5egfaRohoHdpevmYgxb8OiAYjc1k0yUA2yDnWiv+x4ENEA0vOGVEtRU0Q/W4d4q
+ GQ7P/WKEn5YxRDpn3Mq+1Buza9B0AHfH7Ux8e9Kdexjo9SZBuVCg+fKTtllLpCMDJGT+qA
+ 2De0sMl5g4romLHKxpkGTZzaC8gDo00=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-H91ii6S0PZy851mZPf0B1A-1; Mon, 15 Jul 2024 05:50:34 -0400
-X-MC-Unique: H91ii6S0PZy851mZPf0B1A-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2c9f6677d8eso4489168a91.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:50:33 -0700 (PDT)
+ us-mta-263-VzO5CJdKPgiR2EW-b0yl8Q-1; Mon, 15 Jul 2024 08:55:38 -0400
+X-MC-Unique: VzO5CJdKPgiR2EW-b0yl8Q-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ee8eaccb7aso42135371fa.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 05:55:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721037032; x=1721641832;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gWnaerq4VqejhtI3J8AaIYemLKLE4tyDuanVqba84gI=;
- b=cuSQTdl4CCkH1nR5CmYI2I4KP/aZHsxcxHqLvPDj6lEhfQWo1QuB2+a9yoh3spvPgU
- Gmopwj3oC5WN3Ni5CALB2YNp1OccQn2OUPbU1of6PO8tVpVKHXLAldgqf2cyeYhW53nr
- uGBajZLa7Z9K96og3o4f2VZ7eQfkneGKoz5njAvRRw6vt8+tpKuD7ksnWTIfdtBdMQxN
- /F7jAdvCEWfGMmCH8voXYq/WPBv8OF7lA9gj6WSiRFM1flh/3LBGTlkdG3rtO2j2heoS
- GJQtSPkWUr7bfaFp9+0SdVIHNy0Lt0HjAwpsb40JPS0bJB3wyrT5IH7c7ydwSXqslP3y
- /WNg==
-X-Gm-Message-State: AOJu0YyPHpdc6k6yR/DGL2zg8lHDHYWXCkLCA9f5iEhdPS7b+m8dz+ko
- pHGpzKzL8dfWiEdfOm8Vc06I1jK3uZTe49Xgw2C+BK4iHs2eryc39bInvs06RAVhquK6Lb1n2PI
- T2igD2IAQum9OLspABe4c7Aly6Jgs/nSquE7S3iXICoGKLSA5HGYONDBZ3mCbcAEXXM/0V4JAWr
- kwuFosYwSDpQG21H9J3FCWX/kyRq1NmX4MkkTCFcFx
-X-Received: by 2002:a17:90a:43c6:b0:2c8:660d:cc2 with SMTP id
- 98e67ed59e1d1-2ca35be1c8dmr15646111a91.4.1721037032514; 
- Mon, 15 Jul 2024 02:50:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8ergCTm9xuzsqmpTL5Iplp1c0LNwcKfBkoT1V9+j11zXfBG/3hgqXql7Z/bzwekZbpehDIdOfu63AEJhmfAk=
-X-Received: by 2002:a17:90a:43c6:b0:2c8:660d:cc2 with SMTP id
- 98e67ed59e1d1-2ca35be1c8dmr15646105a91.4.1721037032196; Mon, 15 Jul 2024
- 02:50:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721048137; x=1721652937;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iXhi9NpfTXWHgY2dNzLAaqkM6ZDMZMLVgAna//bNgsM=;
+ b=YppaELFoeIzDlEexyx6SUbF+KdGT///b1H0qpKM338mSHVIMiAn5IdTnVzZlYNrUrP
+ RxuZMpmRg7OeoafD1ApW/6ufP0OKpPq9Gnj+fX5uiWajNbq7N+t6vqq6JESFvcz9sBBO
+ nfSNxP2CfyEx8H3YC4kuJIHMVZFuCMDdGacNGTG8tiF5ASufY2ZeFlfYhBj0PLTQo05w
+ EbkyQxgTKsE+JRy5tfiEta/NRTt8To+PYSpa8kEQo8XaqzF2813TWyWCGpiOuj6GHeRY
+ KTtaBfdGF9ZTWz0xOyLFATmXWhJgO1YK2dTeOMSAQJu1qw00rITW3ydH3w2XXW3apaqV
+ DWkA==
+X-Gm-Message-State: AOJu0YzpGF6+RC4oC+O7QBhmkl6MB8xW1Ed/TvEvna6lpKvcENR75/FA
+ df1739efCokr54Hcf91R826n2aVoODIPNJXOHmWHjFgVV8orI6Bw754a10RAqnc/6+8qfEHpI9w
+ XVKqtKRsZ0R4WNnmTVDrzByaQNKNrXyqNGWg2yIl9l++oFBgjn/pU
+X-Received: by 2002:a2e:984b:0:b0:2ec:42db:96a2 with SMTP id
+ 38308e7fff4ca-2eeb30feb61mr121242391fa.29.1721048137447; 
+ Mon, 15 Jul 2024 05:55:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5t69s/oQdGoCvU0838QHjVWHc6yjxcwmeZbfhYKuuQesKJylhqkLb1Maqumo5giGTAMDiaA==
+X-Received: by 2002:a2e:984b:0:b0:2ec:42db:96a2 with SMTP id
+ 38308e7fff4ca-2eeb30feb61mr121241981fa.29.1721048136979; 
+ Mon, 15 Jul 2024 05:55:36 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4279f25a957sm120311775e9.13.2024.07.15.05.55.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jul 2024 05:55:36 -0700 (PDT)
+Date: Mon, 15 Jul 2024 14:55:35 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <maz@kernel.org>,
+ <jean-philippe@linaro.org>, <jonathan.cameron@huawei.com>,
+ <lpieralisi@kernel.org>, <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>, <andrew.jones@linux.dev>,
+ <david@redhat.com>, <philmd@linaro.org>, <eric.auger@redhat.com>,
+ <oliver.upton@linux.dev>, <pbonzini@redhat.com>, <mst@redhat.com>,
+ <will@kernel.org>, <gshan@redhat.com>, <rafael@kernel.org>,
+ <alex.bennee@linaro.org>, <linux@armlinux.org.uk>,
+ <darren@os.amperecomputing.com>, <ilkka@os.amperecomputing.com>,
+ <vishnu@os.amperecomputing.com>, <karl.heubaum@oracle.com>,
+ <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>,
+ <zhukeqian1@huawei.com>, <wangxiongfeng2@huawei.com>,
+ <wangyanan55@huawei.com>, <jiakernel2@gmail.com>, <maobibo@loongson.cn>,
+ <lixianglai@loongson.cn>, <npiggin@gmail.com>, <harshpb@linux.ibm.com>,
+ <linuxarm@huawei.com>, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH V15 4/7] hw/acpi: Update GED _EVT method AML with CPU scan
+Message-ID: <20240715145535.0626527e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240713182516.1457-5-salil.mehta@huawei.com>
+References: <20240713182516.1457-1-salil.mehta@huawei.com>
+ <20240713182516.1457-5-salil.mehta@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-From: Boqiao Fu <bfu@redhat.com>
-Date: Mon, 15 Jul 2024 17:50:21 +0800
-Message-ID: <CAFRHJ6J9uMk+HMZL+W+KE1yoRCOLPgbPUVVDku55sdXYiGXXHg@mail.gmail.com>
-Subject: [PATCH] Manpage: Update description of 'user=username' for '-run-with'
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000f31df1061d4628d4"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=bfu@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 15 Jul 2024 08:55:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,67 +117,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f31df1061d4628d4
-Content-Type: text/plain; charset="UTF-8"
+On Sat, 13 Jul 2024 19:25:13 +0100
+Salil Mehta <salil.mehta@huawei.com> wrote:
 
-From: Boqiao Fu <bfu@redhat.com>
-Date: Mon, 15 Jul 2024 17:04:32 +0800
-Subject: [PATCH] Manpage: Update description of 'user=username' for
- '-run-with'
+> OSPM evaluates _EVT method to map the event. The CPU hotplug event eventually
+> results in start of the CPU scan. Scan figures out the CPU and the kind of
+> event(plug/unplug) and notifies it back to the guest. Update the GED AML _EVT
+> method with the call to method \\_SB.CPUS.CSCN (via \\_SB.GED.CSCN)
+> 
+> Architecture specific code [1] might initialize its CPUs AML code by calling
+> common function build_cpus_aml() like below for ARM:
+> 
+> build_cpus_aml(scope, ms, opts, xx_madt_cpu_entry, memmap[VIRT_CPUHP_ACPI].base,
+>                "\\_SB", "\\_SB.GED.CSCN", AML_SYSTEM_MEMORY);
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240613233639.202896-13-salil.mehta@huawei.com/
+> 
+> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Tested-by: Zhao Liu <zhao1.liu@intel.com>
 
-Manpage: the description of '-runs' didn't show this parameter will use
-setuid, so the customer might get confused when 'elevateprivileges=deny' is
-used. Since '-runas' is going to be deprecated and replaced by this
-parameter in the coming qemu9.1, add the message here.
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-Signed-off-by: Boqiao Fu <bfu@redhat.com>
----
- qemu-options.hx | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ad6521ef5e..264525ed16 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5025,7 +5025,8 @@ SRST
-
-     ``user=username`` or ``user=uid:gid`` can be used to drop root
-privileges
-     by switching to the specified user (via username) or user and group
--    (via uid:gid) immediately before starting guest execution.
-+    (via uid:gid) immediately before starting guest execution. Effectively
-+    uses the setuid system call to switch to another user id.
- ERST
- #endif
-
--- 
-2.43.0
-
---000000000000f31df1061d4628d4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>From: Boqiao Fu &lt;<a href=3D"mailto:bfu@redhat.com"=
->bfu@redhat.com</a>&gt;<br>Date: Mon, 15 Jul 2024 17:04:32 +0800<br>Subject=
-: [PATCH] Manpage: Update description of &#39;user=3Dusername&#39; for<br>=
-=C2=A0&#39;-run-with&#39;<br><br>Manpage: the description of &#39;-runs&#39=
-; didn&#39;t show this parameter will use<br>setuid, so the customer might =
-get confused when &#39;elevateprivileges=3Ddeny&#39; is<br>used. Since &#39=
-;-runas&#39; is going to be deprecated and replaced by this<br>parameter in=
- the coming qemu9.1, add the message here.<br><br>Signed-off-by: Boqiao Fu =
-&lt;<a href=3D"mailto:bfu@redhat.com">bfu@redhat.com</a>&gt;<br>---<br>=C2=
-=A0qemu-options.hx | 3 ++-<br>=C2=A01 file changed, 2 insertions(+), 1 dele=
-tion(-)<br><br>diff --git a/qemu-options.hx b/qemu-options.hx<br>index ad65=
-21ef5e..264525ed16 100644<br>--- a/qemu-options.hx<br>+++ b/qemu-options.hx=
-<br>@@ -5025,7 +5025,8 @@ SRST<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0``user=3Dus=
-ername`` or ``user=3Duid:gid`` can be used to drop root privileges<br>=C2=
-=A0 =C2=A0 =C2=A0by switching to the specified user (via username) or user =
-and group<br>- =C2=A0 =C2=A0(via uid:gid) immediately before starting guest=
- execution.<br>+ =C2=A0 =C2=A0(via uid:gid) immediately before starting gue=
-st execution. Effectively<br>+ =C2=A0 =C2=A0uses the setuid system call to =
-switch to another user id.<br>=C2=A0ERST<br>=C2=A0#endif<br>=C2=A0<br>-- <b=
-r>2.43.0<br></div></div>
-
---000000000000f31df1061d4628d4--
+> ---
+>  hw/acpi/generic_event_device.c         | 3 +++
+>  include/hw/acpi/generic_event_device.h | 1 +
+>  2 files changed, 4 insertions(+)
+> 
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 1b31d633ba..15ffa12cb2 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -108,6 +108,9 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+>                  aml_append(if_ctx, aml_call0(MEMORY_DEVICES_CONTAINER "."
+>                                               MEMORY_SLOT_SCAN_METHOD));
+>                  break;
+> +            case ACPI_GED_CPU_HOTPLUG_EVT:
+> +                aml_append(if_ctx, aml_call0(AML_GED_EVT_CPU_SCAN_METHOD));
+> +                break;
+>              case ACPI_GED_PWR_DOWN_EVT:
+>                  aml_append(if_ctx,
+>                             aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index e091ac2108..40af3550b5 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -87,6 +87,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>  #define GED_DEVICE      "GED"
+>  #define AML_GED_EVT_REG "EREG"
+>  #define AML_GED_EVT_SEL "ESEL"
+> +#define AML_GED_EVT_CPU_SCAN_METHOD "\\_SB.GED.CSCN"
+>  
+>  /*
+>   * Platforms need to specify the GED event bitmap
 
 
