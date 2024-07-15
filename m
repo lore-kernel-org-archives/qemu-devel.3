@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE61C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342E2C3DA45
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTFd8-0005OE-EN; Mon, 15 Jul 2024 02:56:14 -0400
+	id 1sTFeg-0001DF-PY; Mon, 15 Jul 2024 02:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFd7-0005Nj-2h
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:56:13 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFef-0001Cd-Mo
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:57:49 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFd3-0005Cq-Li
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:56:12 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-52e9c6b5a62so4087864e87.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 23:56:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFee-0005Lk-0q
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:57:49 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ec61eeed8eso51593561fa.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 23:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721026567; x=1721631367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721026666; x=1721631466; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2m/51CZJRYThEaHOA3B56LkbjLHUlGg6N9pWHYRg/H4=;
- b=MgCHqDFx31iEh+uzYaox0kFrd6S/HgXIMi/mLOIs5CRM2DSofLWvF9LRlGip/qqZi9
- tRW5zJzo4fkCRSbbuBs3PtMjtOTyrojUxZe6s10icceodjgRvTz7xM1eCJLocQ9c52g1
- IsrQwM//APLR2Y42X4TU6R36a7MwATlM23rbb+ueWEiLxXh0JroFbo5/ATGdVum/CqPe
- J5/0JrFQzG1/h2VCdq2zlyqb7kqdFA2x5XswPTYC6vfhuitpU5VtVfjED2WamEF31spN
- mskjwYpG6GU3jVCudtEG/RFL0WC19+MAYcuKPw5Xg16c+4JbK7o3SpBW1nIHFV9HmYKp
- g6Jw==
+ bh=RehVoEof3WEmy2fUV8+DnuJXHxPuM7X5e+4aZgIbCY8=;
+ b=pUJEi2Rq/nWCxpw6ykylFsBvf6sLGJ0pI+OMLbd3NmY0BGMHUMwo3oo4BDzT1Hwg+k
+ 02vNgXyj8c3+pOo6uEs221w50XB9VpaqeDv1NKfebCgEXaL6h9OnuZkEQq3h7dc2r4p4
+ CKB5Okb1SXBvw/fxbvgAvXSgojv+JiZs3OlB8PvQitsBhK3fRfIFlkMbI1gSiG5djUtt
+ eTJjLsOODNfabEOFkR1XNn7OFIMbVZpgQIr6a1brfxP14rHYOzgjyVXTebs+Z153bMPm
+ R3Ant5882mjPaBGj9r17drKZC9GGp0pK8TTGKtg3De4AfkbbvON19VlMhDXneBbtaE2f
+ k1vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721026567; x=1721631367;
+ d=1e100.net; s=20230601; t=1721026666; x=1721631466;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2m/51CZJRYThEaHOA3B56LkbjLHUlGg6N9pWHYRg/H4=;
- b=AmPFxnX5xhVwVlGFwFIPEp5HsCpF6SuJQG05CxESTRbm9hX9kXmCA0XKa8W50iX5Vl
- 0jgAmqSrFFzQoksWp5IGmSDNQlBFjHPiW7GXXCAe9rIeD32ApSCOhOaqUbvDROHLR0/H
- yG9A1xo/N9O9yjmQ8dhmgPKuaizAkzrO0Elr1VbizVMon/IE2oSwbSXAxAvcTzjOb5UU
- 0rL0lnvglR4p6d91WpDKWvXwLzFE0tPrqXx5n/ngZvl+2XlMGijVnyOP6DvdKEVzwtsl
- naJ7VocY1fxKAzcf7t70kfrGKHNUAFn9k9PMma1BO3lPNZ0tIrAkXsk8toi+cUDlXrFP
- ck1A==
-X-Gm-Message-State: AOJu0YwSMWbmzFvTC7jz9l536lnxx68XhL1R1V8bylQJpAYeVMwyKWBt
- Hdj1NrPSh6k59PSupCkq4zwkbppDNLkIf5GPLVSCU/jNVt7wCfi4MvG/CdbrLyQ=
-X-Google-Smtp-Source: AGHT+IEVQGxtAhY/lIR36tpzxl3a+WQUFYfpnGz9PWLW77IL2gSxNWJ6Kt7RqAr8gPxQ4IDAspMOJw==
-X-Received: by 2002:a05:6512:b12:b0:52c:da09:ae65 with SMTP id
- 2adb3069b0e04-52ed0f429c7mr4337365e87.9.1721026567185; 
- Sun, 14 Jul 2024 23:56:07 -0700 (PDT)
+ bh=RehVoEof3WEmy2fUV8+DnuJXHxPuM7X5e+4aZgIbCY8=;
+ b=CVvh2HeRMqFypwq3RB+X24Vg289LsWePLUjgBRfuKZ0+22T/cRfA1gNJhUAxZvuc0P
+ YMgbECyKk6itna3vAzS3ABJP3lm2pMhHIG6rg3TAhj3lkhLiKXRhNwXjtEKnQ+l0fSPV
+ Ny7fN3b9WBMLOc20I2ymDHm8luG9kz4byUa8Du+XNvFs8uEJuzc5ySEhXmn50vKOud7o
+ MKZUKG8sosENbiwEIESegmNtK7L7flEGcccSFngL//CrnDMXliTUNj2A8vvaH7oWsytG
+ D62/Al/UxYEhUFP526ybJIwXsev+E/rSOTanwyByMQG+uA0ryxtii8Z3vp483v+yI5M8
+ x1ug==
+X-Gm-Message-State: AOJu0YzGcjbSC2m7lhKDE8qZUKn9igvibKy0XgqA/pm5/d2CFX23JHcN
+ UZljOt84soiDvW5FtO+N7/tOd+QZ0cPi4DqmccWMA7G/RemVlk8xYWFLIIZKEOs=
+X-Google-Smtp-Source: AGHT+IFS5uFMc0BR6oJfjmifTl7P11gSVVkH+TKOuwvClp4l8X1YtiXuCt+5WuhAmNfQu/VZozwT4g==
+X-Received: by 2002:a2e:87c5:0:b0:2ee:699b:466 with SMTP id
+ 38308e7fff4ca-2eeb3189e1dmr117875861fa.36.1721026666222; 
+ Sun, 14 Jul 2024 23:57:46 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.134.54])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5ef4617sm72621895e9.41.2024.07.14.23.56.05
+ 5b1f17b1804b1-4279f2397f7sm108703285e9.9.2024.07.14.23.57.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 23:56:06 -0700 (PDT)
-Message-ID: <b3925b50-841e-4893-a921-5c5fc4656943@linaro.org>
-Date: Mon, 15 Jul 2024 08:56:04 +0200
+ Sun, 14 Jul 2024 23:57:45 -0700 (PDT)
+Message-ID: <8e36641b-ea92-467e-95c3-babffbaeb44b@linaro.org>
+Date: Mon, 15 Jul 2024 08:57:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] ui/console: Convert mouse visibility parameter
- into bool
+Subject: Re: [PATCH v3 1/4] ui/cocoa: Release CGColorSpace
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -72,14 +71,14 @@ To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
 Cc: qemu-devel@nongnu.org
 References: <20240715-cursor-v3-0-afa5b9492dbf@daynix.com>
- <20240715-cursor-v3-2-afa5b9492dbf@daynix.com>
+ <20240715-cursor-v3-1-afa5b9492dbf@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240715-cursor-v3-2-afa5b9492dbf@daynix.com>
+In-Reply-To: <20240715-cursor-v3-1-afa5b9492dbf@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +102,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/7/24 07:25, Akihiko Odaki wrote:
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> CGImageCreate | Apple Developer Documentation
+> https://developer.apple.com/documentation/coregraphics/1455149-cgimagecreate
+>> The color space is retained; on return, you may safely release it.
+> 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
 > ---
->   include/ui/console.h    |  4 ++--
->   hw/display/ati.c        |  2 +-
->   hw/display/virtio-gpu.c |  3 +--
->   hw/display/vmware_vga.c |  2 +-
->   ui/console.c            |  5 +++--
->   ui/dbus-listener.c      |  2 +-
->   ui/gtk.c                |  2 +-
->   ui/sdl2.c               |  4 ++--
->   ui/spice-display.c      | 11 ++++++-----
->   ui/vnc.c                |  2 +-
->   10 files changed, 19 insertions(+), 18 deletions(-)
+>   ui/cocoa.m | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
