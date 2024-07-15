@@ -4,103 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B8FC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0DBC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 12:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTKka-00005e-5M; Mon, 15 Jul 2024 08:24:16 -0400
+	id 1sTKks-0000e6-K7; Mon, 15 Jul 2024 08:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTKkY-0008US-5J
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:24:14 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTKkq-0000dP-Fq
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:24:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTKkP-000829-8J
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:24:13 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTKkn-00089F-Br
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 08:24:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721046242;
+ s=mimecast20190719; t=1721046267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w4Eduw8aduiskin9r6RkwQ3S/uQgxHJt1b5haNWyHck=;
- b=B45q5nwZdqYFFaaBixOtPsz/KEuLhN56LdQmDQt1t3/BiP1kUxut8KDWh7mv/JrO1f4Gv8
- HjnQFgz7/Vya5H17G7IRRwUQQ4SScYJwBkI/OAvHNJEZf5QZsx4gJSBJBV+M6oMqerTsYK
- Qq5/hUS+2s1J20RsdkUcCq0Jk/RnKEI=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-_3MQTSGJMSuG-OFd7p-CCg-1; Mon, 15 Jul 2024 08:24:01 -0400
-X-MC-Unique: _3MQTSGJMSuG-OFd7p-CCg-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ee90339092so48816521fa.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 05:24:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721046240; x=1721651040;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w4Eduw8aduiskin9r6RkwQ3S/uQgxHJt1b5haNWyHck=;
- b=hfjtXKWc6B5XFY7uTT73b7WGL7YqPlwk8GYijvnjY9JHQ1iadLCJfQznGKtZo2qOTm
- GzrP55d52jMdEQYfrBQHM70DEgH3JjCAT5CjUCYL+HIjKp+Aqk9SL/yVEBrDox7EcSer
- SMgZFP2nqnh9c44KsXhp8mL/FVWcOrGeM7O8aAlc2V/q1r2Zr2pEsq/tc37KQ6U46Ywi
- QfRV1yk0Drs5LtZEikt2YJatQgtPFr0/Qgp9e6YkEvn4yY07NVQgUDuAPkyN9ONMCX4q
- pfPMq8YUywzPYkGOZkpySAfBUkImrgaWJ4vhq5o+af6iQrRoRO5XT89KU2z9WXoozzQA
- IAsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUG/v5V/1SB2zPwHfFvfyRs5OuEzVOVHV5Z5rgIz4PB6WlWEysktYClUrdlToSNj/3gJPPZMAVBd4PDUuVWryxYeTGE+yQ=
-X-Gm-Message-State: AOJu0YwRi8Tg1AMk5j7uzyXWUW2aX2YvOe5pSwNEMg7LFd9D30EekMJX
- RBLyHOmGslkKfdXgAvMBZS1uXKNkBkVEJaVMw/Zq3G6gquqRPTU4cQ3xYj3GhLOQTq4E+7zoPoA
- URg7RSS7Gk2L6ou+6w48Xq4g0FhoJLflXVOznqnqfUrT4TJHi0LGL
-X-Received: by 2002:a05:6512:3b20:b0:52c:c9ce:be8d with SMTP id
- 2adb3069b0e04-52eb99d6de0mr13127492e87.57.1721046240090; 
- Mon, 15 Jul 2024 05:24:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9hX7y4YY/obRohZnKqrQtama+0410+/71MmNWai0P8ar/AiIH6XqBUIJsLUVa9ByO+feVbQ==
-X-Received: by 2002:a05:6512:3b20:b0:52c:c9ce:be8d with SMTP id
- 2adb3069b0e04-52eb99d6de0mr13127473e87.57.1721046239417; 
- Mon, 15 Jul 2024 05:23:59 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:243:da88:7ff9:68fc:2f43:bcdf])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb4a3sm86299655e9.31.2024.07.15.05.23.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 05:23:58 -0700 (PDT)
-Date: Mon, 15 Jul 2024 08:23:53 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Liu, Yuan1" <yuan1.liu@intel.com>
-Cc: "Wang, Yichen" <yichen.wang@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Hao Xiang <hao.xiang@linux.dev>,
- "Kumar, Shivam" <shivam.kumar1@nutanix.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to offload zero
- page checking in multifd live migration.
-Message-ID: <20240715081857-mutt-send-email-mst@kernel.org>
-References: <20240711215244.19237-1-yichen.wang@bytedance.com>
- <20240711184131-mutt-send-email-mst@kernel.org>
- <PH7PR11MB594105D464F3A4C2C25F94FEA3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qZfMtSsSKRnHYwMRYZ6pPalGfv3zPch0BPlXlsB8SvM=;
+ b=G4i+ISy1I5u+gU9vyX3e3/7T3lHeh8ox6zEZWuGakXr2w3xQdOpCpx9QzUWfinz72WlfVb
+ cusPeUJmGTJmCVg/0nIWEsjWngaC3D2VGCmlfN7fvWiXX0sy7IboPRTHotml9SdiDGQOUR
+ XC0UvSyzRVVqojtiifDGDgDCwFvfaR0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-r3n4o8VYPdGZKTWamoY4aQ-1; Mon,
+ 15 Jul 2024 08:24:24 -0400
+X-MC-Unique: r3n4o8VYPdGZKTWamoY4aQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2515C19560A2; Mon, 15 Jul 2024 12:24:23 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 214AE1955D42; Mon, 15 Jul 2024 12:24:19 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, mst@redhat.com,
+ wangyanan55@huawei.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ anisinha@redhat.com, qemu-arm@nongnu.org
+Subject: [PATCH v2] smbios: make memory device size configurable per Machine
+Date: Mon, 15 Jul 2024 14:24:17 +0200
+Message-ID: <20240715122417.4059293-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <PH7PR11MB594105D464F3A4C2C25F94FEA3A12@PH7PR11MB5941.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,116 +82,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 08:29:03AM +0000, Liu, Yuan1 wrote:
-> > -----Original Message-----
-> > From: Michael S. Tsirkin <mst@redhat.com>
-> > Sent: Friday, July 12, 2024 6:49 AM
-> > To: Wang, Yichen <yichen.wang@bytedance.com>
-> > Cc: Paolo Bonzini <pbonzini@redhat.com>; Marc-André Lureau
-> > <marcandre.lureau@redhat.com>; Daniel P. Berrangé <berrange@redhat.com>;
-> > Thomas Huth <thuth@redhat.com>; Philippe Mathieu-Daudé
-> > <philmd@linaro.org>; Peter Xu <peterx@redhat.com>; Fabiano Rosas
-> > <farosas@suse.de>; Eric Blake <eblake@redhat.com>; Markus Armbruster
-> > <armbru@redhat.com>; Cornelia Huck <cohuck@redhat.com>; qemu-
-> > devel@nongnu.org; Hao Xiang <hao.xiang@linux.dev>; Liu, Yuan1
-> > <yuan1.liu@intel.com>; Kumar, Shivam <shivam.kumar1@nutanix.com>; Ho-Ren
-> > (Jack) Chuang <horenchuang@bytedance.com>
-> > Subject: Re: [PATCH v5 00/13] WIP: Use Intel DSA accelerator to offload
-> > zero page checking in multifd live migration.
-> > 
-> > On Thu, Jul 11, 2024 at 02:52:35PM -0700, Yichen Wang wrote:
-> > > * Performance:
-> > >
-> > > We use two Intel 4th generation Xeon servers for testing.
-> > >
-> > > Architecture:        x86_64
-> > > CPU(s):              192
-> > > Thread(s) per core:  2
-> > > Core(s) per socket:  48
-> > > Socket(s):           2
-> > > NUMA node(s):        2
-> > > Vendor ID:           GenuineIntel
-> > > CPU family:          6
-> > > Model:               143
-> > > Model name:          Intel(R) Xeon(R) Platinum 8457C
-> > > Stepping:            8
-> > > CPU MHz:             2538.624
-> > > CPU max MHz:         3800.0000
-> > > CPU min MHz:         800.0000
-> > >
-> > > We perform multifd live migration with below setup:
-> > > 1. VM has 100GB memory.
-> > > 2. Use the new migration option multifd-set-normal-page-ratio to control
-> > the total
-> > > size of the payload sent over the network.
-> > > 3. Use 8 multifd channels.
-> > > 4. Use tcp for live migration.
-> > > 4. Use CPU to perform zero page checking as the baseline.
-> > > 5. Use one DSA device to offload zero page checking to compare with the
-> > baseline.
-> > > 6. Use "perf sched record" and "perf sched timehist" to analyze CPU
-> > usage.
-> > >
-> > > A) Scenario 1: 50% (50GB) normal pages on an 100GB vm.
-> > >
-> > > 	CPU usage
-> > >
-> > > 	|---------------|---------------|---------------|---------------|
-> > > 	|		|comm		|runtime(msec)	|totaltime(msec)|
-> > > 	|---------------|---------------|---------------|---------------|
-> > > 	|Baseline	|live_migration	|5657.58	|		|
-> > > 	|		|multifdsend_0	|3931.563	|		|
-> > > 	|		|multifdsend_1	|4405.273	|		|
-> > > 	|		|multifdsend_2	|3941.968	|		|
-> > > 	|		|multifdsend_3	|5032.975	|		|
-> > > 	|		|multifdsend_4	|4533.865	|		|
-> > > 	|		|multifdsend_5	|4530.461	|		|
-> > > 	|		|multifdsend_6	|5171.916	|		|
-> > > 	|		|multifdsend_7	|4722.769	|41922		|
-> > > 	|---------------|---------------|---------------|---------------|
-> > > 	|DSA		|live_migration	|6129.168	|		|
-> > > 	|		|multifdsend_0	|2954.717	|		|
-> > > 	|		|multifdsend_1	|2766.359	|		|
-> > > 	|		|multifdsend_2	|2853.519	|		|
-> > > 	|		|multifdsend_3	|2740.717	|		|
-> > > 	|		|multifdsend_4	|2824.169	|		|
-> > > 	|		|multifdsend_5	|2966.908	|		|
-> > > 	|		|multifdsend_6	|2611.137	|		|
-> > > 	|		|multifdsend_7	|3114.732	|		|
-> > > 	|		|dsa_completion	|3612.564	|32568		|
-> > > 	|---------------|---------------|---------------|---------------|
-> > >
-> > > Baseline total runtime is calculated by adding up all multifdsend_X
-> > > and live_migration threads runtime. DSA offloading total runtime is
-> > > calculated by adding up all multifdsend_X, live_migration and
-> > > dsa_completion threads runtime. 41922 msec VS 32568 msec runtime and
-> > > that is 23% total CPU usage savings.
-> > 
-> > 
-> > Here the DSA was mostly idle.
-> > 
-> > Sounds good but a question: what if several qemu instances are
-> > migrated in parallel?
-> > 
-> > Some accelerators tend to basically stall if several tasks
-> > are trying to use them at the same time.
-> > 
-> > Where is the boundary here?
-> 
-> A DSA device can be assigned to multiple Qemu instances. 
-> The DSA resource used by each process is called a work queue, each DSA
-> device can support up to 8 work queues and work queues are classified into 
-> dedicated queues and shared queues. 
-> 
-> A dedicated queue can only serve one process. Theoretically, there is no limit 
-> on the number of processes in a shared queue, it is based on enqcmd + SVM technology.
-> 
-> https://www.kernel.org/doc/html/v5.17/x86/sva.html
+Currently QEMU describes initial[1] RAM* in SMBIOS as a series of
+virtual DIMMs (capped at 16Gb max) using type 17 structure entries.
 
-This server has 200 CPUs which can thinkably migrate around 100 single
-cpu qemu instances with no issue. What happens if you do this with DSA?
+Which is fine for the most cases.  However when starting guest
+with terabytes of RAM this leads to too many memory device
+structures, which eventually upsets linux kernel as it reserves
+only 64K for these entries and when that border is crossed out
+it runs out of reserved memory.
 
-> > --
-> > MST
+Instead of partitioning initial RAM on 16Gb DIMMs, use maximum
+possible chunk size that SMBIOS spec allows[2]. Which lets
+encode RAM in lower 31 bits of 32bit field (which amounts upto
+2047Tb per DIMM).
+As result initial RAM will generate only one type 17 structure
+until host/guest reach ability to use more RAM in the future.
+
+Compat changes:
+We can't unconditionally change chunk size as it will break
+QEMU<->guest ABI (and migration). Thus introduce a new machine
+class field that would let older versioned machines to use
+legacy 16Gb chunks, while new(er) machine type[s] use maximum
+possible chunk size.
+
+PS:
+While it might seem to be risky to rise max entry size this large
+(much beyond of what current physical RAM modules support),
+I'd not expect it causing much issues, modulo uncovering bugs
+in software running within guest. And those should be fixed
+on guest side to handle SMBIOS spec properly, especially if
+guest is expected to support so huge RAM configs.
+
+In worst case, QEMU can reduce chunk size later if we would
+care enough about introducing a workaround for some 'unfixable'
+guest OS, either by fixing up the next machine type or
+giving users a CLI option to customize it.
+
+1) Initial RAM - is RAM configured with help '-m SIZE' CLI option/
+   implicitly defined by machine. It doesn't include memory
+   configured with help of '-device' option[s] (pcdimm,nvdimm,...)
+2) SMBIOS 3.1.0 7.18.5 Memory Device â€” Extended Size
+
+PS:
+* tested on 8Tb host with RHEL6 guest, which seems to parse
+  type 17 SMBIOS table entries correctly (according to 'dmidecode').
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+v2:
+  * add comment in the code describing where 2047Tb comes from (mst)
+  * rephrase commit message a bit and clarify what RAM it applies.
+---
+ include/hw/boards.h |  4 ++++
+ hw/arm/virt.c       |  1 +
+ hw/core/machine.c   |  6 ++++++
+ hw/i386/pc_piix.c   |  1 +
+ hw/i386/pc_q35.c    |  1 +
+ hw/smbios/smbios.c  | 11 ++++++-----
+ 6 files changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index ef6f18f2c1..48ff6d8b93 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -237,6 +237,9 @@ typedef struct {
+  *    purposes only.
+  *    Applies only to default memory backend, i.e., explicit memory backend
+  *    wasn't used.
++ * @smbios_memory_device_size:
++ *    Default size of memory device,
++ *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
+  */
+ struct MachineClass {
+     /*< private >*/
+@@ -304,6 +307,7 @@ struct MachineClass {
+     const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
+     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
++    uint64_t smbios_memory_device_size;
+ };
+ 
+ /**
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b0c68d66a3..719e83e6a1 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3308,6 +3308,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
+ static void virt_machine_9_0_options(MachineClass *mc)
+ {
+     virt_machine_9_1_options(mc);
++    mc->smbios_memory_device_size = 16 * GiB;
+     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+ }
+ DEFINE_VIRT_MACHINE(9, 0)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index bc38cad7f2..ac30544e7f 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1004,6 +1004,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
+     /* Default 128 MB as guest ram size */
+     mc->default_ram_size = 128 * MiB;
+     mc->rom_file_has_mr = true;
++    /*
++     * SMBIOS 3.1.0 7.18.5 Memory Device â€” Extended Size
++     * use max possible value that could be encoded into
++     * 'Extended Size' field (2047Tb).
++     */
++    mc->smbios_memory_device_size = 2047 * TiB;
+ 
+     /* numa node memory size aligned on 8MB by default.
+      * On Linux, each node's border has to be 8MB aligned
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 9445b07b4f..d9e69243b4 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -495,6 +495,7 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+     pc_i440fx_machine_9_1_options(m);
+     m->alias = NULL;
+     m->is_default = false;
++    m->smbios_memory_device_size = 16 * GiB;
+ 
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 71d3c6d122..9d108b194e 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -374,6 +374,7 @@ static void pc_q35_machine_9_0_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_machine_9_1_options(m);
+     m->alias = NULL;
++    m->smbios_memory_device_size = 16 * GiB;
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+     pcmc->isa_bios_alias = false;
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 3b7703489d..a394514264 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1093,6 +1093,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+                        Error **errp)
+ {
+     unsigned i, dimm_cnt, offset;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
+     ERRP_GUARD();
+ 
+     assert(ep_type == SMBIOS_ENTRY_POINT_TYPE_32 ||
+@@ -1123,12 +1124,12 @@ static bool smbios_get_tables_ep(MachineState *ms,
+     smbios_build_type_9_table(errp);
+     smbios_build_type_11_table();
+ 
+-#define MAX_DIMM_SZ (16 * GiB)
+-#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
+-                                        : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
++#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? mc->smbios_memory_device_size \
++    : ((current_machine->ram_size - 1) % mc->smbios_memory_device_size) + 1)
+ 
+-    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
+-               MAX_DIMM_SZ;
++    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size,
++                             mc->smbios_memory_device_size) /
++               mc->smbios_memory_device_size;
+ 
+     /*
+      * The offset determines if we need to keep additional space between
+-- 
+2.43.0
 
 
