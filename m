@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC90BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C68C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTFED-00018t-MT; Mon, 15 Jul 2024 02:30:29 -0400
+	id 1sTFFI-0003F1-PY; Mon, 15 Jul 2024 02:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTFEB-00015i-Jj; Mon, 15 Jul 2024 02:30:27 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sTFFA-0002us-1N; Mon, 15 Jul 2024 02:31:30 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTFEA-0008VH-34; Mon, 15 Jul 2024 02:30:27 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fbc0a1494dso22599145ad.3; 
- Sun, 14 Jul 2024 23:30:24 -0700 (PDT)
+ id 1sTFF8-0000IL-FZ; Mon, 15 Jul 2024 02:31:27 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-6bce380eb9bso2342655a12.0; 
+ Sun, 14 Jul 2024 23:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721025024; x=1721629824; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1721025083; x=1721629883; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kPcFtUwjn08CIhdLjhuQj730r0v8eBXex0TsGGwmZuE=;
- b=j/brKHFfwIem1OgwdOJ2Tx2ybkLOQtjbMYi0UFgG5eDht9/hQODVs7T3F7gjzw/6gM
- U/plDzNAQLxBpGV/90+JVhTUp+7y6AFk79FskDMGDSoVRuJQ7CPtAYGlziBpvfQsHY5M
- v1zsl0K5s6b+QGWLDiYtI2OPRM6vrOwnm72ADu4Pa5gXjW1+2AJghojQIWlz58ikr9aT
- ZKau6V+Ujkm1iKclNN0LlnDIx2/2TzT+Y+2Qb1O29sJsm2od+K6YOWDuXyQaG6WvtDhj
- ojkk+DMZHGApA7sarchsUSAOtTxjUuseVfS6aJvbv7LVQaSaTCPYkkZzP9SxYFf3IEne
- M7UQ==
+ bh=qVRZB5WwE5p0SELqCmw/YkHNB16dGeg/n+sVn1d43PI=;
+ b=mjW8Rg6mIJ0uf6OPGzaTQm8Tqs/4MN+0hwH4DPOAUXoXYtnq+PnC94+ZgGD+wQY8pC
+ ikLWSsppf2XJAq4v46DtyxlQiK1Mdz1JSHTLtz4j8GBLU/PXLkQslkKfgKgF3RnPGJo+
+ Dw9ZFiuc7Lj8KEWt8yh/BppbGyGZ0snRlulGgaNsU+EMHKmqtV3MlZnQG63V9wFeFJYr
+ X4uSYp3sKYuNKExicb+2/v7DXmLweZoiSGCK/r4syDU14Rb5MUVGV3J19TsV2E8qV+AA
+ QuWQMOIT9H0MVvCTpuRztnLgNJSrR3rI6of/N8/MUk5vLqhpuuPxJwCHXbaxvUeANxCm
+ lOqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721025024; x=1721629824;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1721025083; x=1721629883;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kPcFtUwjn08CIhdLjhuQj730r0v8eBXex0TsGGwmZuE=;
- b=O7pmfZOa0bKvtAJ/UUeykifhjzAc7tHp2rab0r0ZS4JDCzHdUt+pIS5MqHd0JSs2P5
- NXT19rNxLuGRFtpsVMD5W8wSK1XVpb0Hj5+ok1UC921Us9si2I+3pLrVjWcOUUvsh70f
- xBmIms3Y07ouiHtnWV5ufkcW2PKoV9bnZrh4g+PX5EWdbvV21qtrkm8syH1uHOH8tZwW
- w+IAyW5h3O3Asqv55yMvtI4qRxtmhq/oNzFj4bD/OZuHFqR517sszaBXY+cbgbiAoZ5u
- GRdCXxnfGRkqM+RM6n5qrDiUg1Er5YfhnccjCo8xbb++2RxD/w4qi/sDx0Ls2Fge37bE
- eqGw==
+ bh=qVRZB5WwE5p0SELqCmw/YkHNB16dGeg/n+sVn1d43PI=;
+ b=hZS7SffQec9akLknYj28l9Vp9PTsAfFLceQ2Ficc10YkQnAYKSVdd1Tyey628xF9ut
+ DXlzZ1FKF535lCy7ELmeWH8ca7G4Uq+WG6gwcbVLRMv/Hh+a8BivWFqd8O/WmKzWnbKi
+ kx147VkoJHoA+pdsJpocW+wOwt9WKub1TL8X61Pmllnx7ZwUVQ4z4wTeasasN7BaXfl+
+ q+SrgWS3Fe4Xcdcl5lHAMzcysgEeZAWUh9rpid2pG20zuhTqtIqJTSUhA/6MQiNEbKpP
+ Z55WUJHdUx9z2OxZFzG2TltCEidtcJpDxPwgWPDDTnAu0OBje7CwEJtnevfydQVUuQVT
+ F5cQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWPtP8f/yu2gZ2ZeEzX7Oco6DjcKYPEjuhDZaDDGgF8jhEphZNxScUovnhNw0vjsQMD4/AQGgh6JzjFGdYAN0hhp7XGLbvGIkFcbQ2hh5YhKlTs9rjJQW7XK0E=
-X-Gm-Message-State: AOJu0YzOMWBgQc8bwlex872PYArLBiU2b+rN3vr5nzE84Ez1PwyetYKs
- 66eTSif3foVv7dqDYUry4CSxuzWX1BE8Nf2bOeCmGHeYxceQOUE8
-X-Google-Smtp-Source: AGHT+IGgKP6oFihz3AxpNVVxAe2WRgrjWE5r6BkkF7SBLznX3T93Yh0+dy2FA3sDEbKKJb/L2Zvw2A==
-X-Received: by 2002:a17:902:da89:b0:1fb:a388:38e1 with SMTP id
- d9443c01a7336-1fbb6d893bbmr124721135ad.42.1721025023610; 
- Sun, 14 Jul 2024 23:30:23 -0700 (PDT)
+ AJvYcCWbia6VVHaEdg4XHuL9i8de4MmUDPYLnE19lw1FceLVEQYWXKKccCfPlPnDXeUL+X6b+QAW2SW+Xc9ajzVH9urq1uSON5pxBc9QJtsM3Tl7aZuwH6zfM5gNPoU=
+X-Gm-Message-State: AOJu0Yysh/MSV98aGW1M4bUgcpuMrLrITQChsqvDefpFRk0sDECmPLLt
+ b5eLO5anmrKTzQH4NlU4aHz22KxDxPCL5Kbk/8zBKYosKYBpEbTb
+X-Google-Smtp-Source: AGHT+IFCGHLGmIkF3tRyQX2jaALQ9tXnhmW1KIA5Oud+LnX9kXPQyLP4plo0Yq6RSo5a70CYDJ3RCw==
+X-Received: by 2002:a05:6a20:918c:b0:1bf:70c:b542 with SMTP id
+ adf61e73a8af0-1c2984cab89mr23811229637.43.1721025083273; 
+ Sun, 14 Jul 2024 23:31:23 -0700 (PDT)
 Received: from localhost ([1.146.120.6]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bc271a9sm32900515ad.172.2024.07.14.23.30.20
+ 98e67ed59e1d1-2caedbfad6asm3543936a91.15.2024.07.14.23.31.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 23:30:23 -0700 (PDT)
+ Sun, 14 Jul 2024 23:31:22 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 15 Jul 2024 16:30:17 +1000
-Message-Id: <D2PWGA4AB747.1I96QV6NN0XVQ@gmail.com>
-Cc: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Harsh
- Prateek Bora" <harshpb@linux.ibm.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 03/19] ppc/pnv: Move timebase state into PnvCore
+Date: Mon, 15 Jul 2024 16:31:17 +1000
+Message-Id: <D2PWH1VZ9PO2.32WUGZQK6YD2U@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
+Cc: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Harsh
+ Prateek Bora" <harshpb@linux.ibm.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 10/19] ppc/pnv: Add a big-core mode that joins two
+ regular cores
 X-Mailer: aerc 0.17.0
 References: <20240712120247.477133-1-npiggin@gmail.com>
- <20240712120247.477133-4-npiggin@gmail.com>
- <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
-In-Reply-To: <050c0324-0886-4848-b7eb-039578561ac1@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+ <20240712120247.477133-11-npiggin@gmail.com>
+ <4f0e918b-336f-4423-bc48-25607662eabc@kaod.org>
+In-Reply-To: <4f0e918b-336f-4423-bc48-25607662eabc@kaod.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,29 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Jul 12, 2024 at 11:40 PM AEST, C=C3=A9dric Le Goater wrote:
+On Sat Jul 13, 2024 at 5:19 PM AEST, C=C3=A9dric Le Goater wrote:
 > On 7/12/24 14:02, Nicholas Piggin wrote:
-> > diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.=
-c
-> > index 39d397416e..52f9e6669c 100644
-> > --- a/target/ppc/timebase_helper.c
-> > +++ b/target/ppc/timebase_helper.c
-> > @@ -19,6 +19,7 @@
-> >   #include "qemu/osdep.h"
-> >   #include "cpu.h"
-> >   #include "hw/ppc/ppc.h"
-> > +#include "hw/ppc/pnv_core.h"
+> > POWER9 and POWER10 machines come in two variants, big-core and
+> > small-core. Big-core machines are SMT8 from software's point of view,
+> > but the low level platform topology ("xscom registers and pervasive
+> > addressing"), these look more like a pair of small cores ganged
+> > together.
+> >=20
+> > Presently the way this is modelled is to create one SMT8 PnvCore and ad=
+d
+> > special cases to xscom and pervasive for big-core mode that tries to
+> > split this into two small cores, but this is becoming too complicated t=
+o
+> > manage.
+> >=20
+> > A better approach is to create 2 core structures and ganging them
+> > together to look like an SMT8 core in TCG. Then the xscom and pervasive
+> > models mostly do not need to differentiate big and small core modes.
+> >=20
+> > This change adds initial mode bits and QEMU topology handling to
+> > split SMT8 cores into 2xSMT4 cores.
+> >=20
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 >
-> I am afraid this header file is pulling too much definitions for
-> qemu-user. It breaks compile.
+>
+> Looks good. See some proposal below,
 
-Humph, sorry I obviously wasn't testing it. I might just ifdef it for
-now.
+[snip]
 
-Not sure the best way to do it cleanly in the longer term , Power
-specific things could go into their own helper.c file, but I don't
-necessarily like to move them away from similar/related functions.
+All make sense, thank you will do.
 
-Thanks,
+Thnaks,
 Nick
 
