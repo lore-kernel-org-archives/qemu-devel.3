@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEC9C3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 00:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E99EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 00:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sT9he-00049H-BS; Sun, 14 Jul 2024 20:36:30 -0400
+	id 1sT9oN-00011w-0x; Sun, 14 Jul 2024 20:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sT9hc-00046z-DP; Sun, 14 Jul 2024 20:36:28 -0400
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1sT9oE-0000yt-4M; Sun, 14 Jul 2024 20:43:18 -0400
+Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sT9ha-00010c-NA; Sun, 14 Jul 2024 20:36:28 -0400
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-4f2f39829a9so1301512e0c.2; 
- Sun, 14 Jul 2024 17:36:24 -0700 (PDT)
+ id 1sT9oC-0002K4-K5; Sun, 14 Jul 2024 20:43:17 -0400
+Received: by mail-ua1-x936.google.com with SMTP id
+ a1e0cc1a2514c-8102c9a5badso1409491241.0; 
+ Sun, 14 Jul 2024 17:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721003784; x=1721608584; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721004194; x=1721608994; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sTNGB0fyGXxdKkWp2awMuHK25c5Y18PIoVdDO2+siOU=;
- b=PmpmmGRlaJ+/R+kf3sxefwlRiVt1ogFTIsrSVLwYZmqFLlI8GpsdGHl64+LrysyXyD
- lPtsB/9ma/+igutMPkOXSmSdzspscC1DznoWYaLId5NQ+yTt+7h7omigjchWgjzlBDd1
- BdecCdLMFZBbuN9nIBIFQe4DLJR07puwHMa86lv5+Bbuluqg0k0+e6PMmPV/w7b/XKgK
- fblGH3x3MINMjJsxKOPiMAfDjnu0tP8YBB89hCNdj+DHzz//PX/jbDvu3BWWcQOuH/ug
- 7mQOQ6jZejk0vVLT81yaB1414MYdLHrAXsowlBG1r90a/1iH+IHCQPrPPGxTiNW2bT4E
- DsfQ==
+ bh=TwqLkJ7dr6J48QvHCXqXRzVapbBZ5MoTFOshyMmKmtk=;
+ b=dTEknSZhdxKHSYFDO9OtoniDZvxQeaUv8zO+i9ubRTy30++1uDRGqB/HVoNcVhjyiK
+ 3tkVdinNaMiRtt+f/0ZfIu2PFIlK2/V+FLNCVMY12iPdyXXnFAPyFPTSz35uH2FpTS46
+ cQEiHDvYhTrzMPn6mfJeVEaocod8gj0lnrYqrK8lbthZ5Fk8opqt3uU4KLrTQe4O04MT
+ y/Gha8S6eNqrP0xffF+5dOxyaXKQPHuj7T2QjHavd0p3HVKmEfUZf0ae6VF9ktJKojLi
+ d0dolFp3KlAKxtThprSorqbYBtEx/bCpefr1EzguGGUfQEKX3Ui1R1m34ydIeSl4xGZR
+ Y4LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721003784; x=1721608584;
+ d=1e100.net; s=20230601; t=1721004194; x=1721608994;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sTNGB0fyGXxdKkWp2awMuHK25c5Y18PIoVdDO2+siOU=;
- b=CssGmenpQ1Hmpb6HIOj5hGC6saFYD1k0vLV4mrl1YI27gNWYRFTY6CLUI+X7DUN9pN
- ycuaPX9Ynk3c3iMuIZj6YzZ6WdH81vz5/VOkK9rMWwKDo2cUvgntaxD+suPkX/GusvM/
- mt8kk0JvQ+I5qCm/e4m1WkFG2Sz47Nx06q6yldjn9lGg2SkvFvFtHwtr+Ma8MOZkqm3o
- kLEZf5afhv3lRf7oG0omcdk4XPhIMIEeb824kPW//Rn1FzbLhiVTjDTetuzEFHJjeRbW
- Ba2hjzgDWvEpRQo3MhHOa53UTiu0ts8LBulc/vtOIwQieyloRgwdAs2XaSicA+gX813n
- z5jg==
+ bh=TwqLkJ7dr6J48QvHCXqXRzVapbBZ5MoTFOshyMmKmtk=;
+ b=Oixzfx++HBBozkmguQDMYejTssEm002u7cTu562t0c1PCEGcN3pnS9yk1ssomjLGzs
+ ziC6N8jfGdl7is6imjeCSSi0oamUubyyyGsFZmFWPPaXgcdle6PdHJxxiOS/HXR+pbbH
+ fVdTLqVXUcTypUQwvq4z4wl38ltKaOsKToi71KBR1d/U4W6G1jPtxMH7CN3rQZW4Q/Sq
+ WNdZVvi0qZX5hX7BLKouZTAoY1HSbzq3MMDmQR+m5f/a5qbStz8v10LPKMWZMb2ePXdo
+ J0ZMV79xc46Gp2VUjknhYkA1rW1jyQwdeHzRE91+G9jaJpugjtVQXH0LWML90Gx7IEQ4
+ ugPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJ2QQ846WDysSqJsehnlU29LQJ7b6FDRQGQUXBjtg7yJUONz8Y8ofI/TCTB5RTOwhuydfyavVFM8qyh4x4S/bkPtmqJEE=
-X-Gm-Message-State: AOJu0YwJ8aiBYGpeL1bA8Q1d4/3DlXoHQ9qGihYNT/9pgSXl3M+s+SIX
- Oh42T4jqRY1IT6PygmWZCRyjb4bXeO/dLprg2PgCAWf9DqVyl3IfUi3XhFyTgWsvLoJX7Cxvq70
- IrBmY/t52Ze7EUc3q0hdSeVZBrPE=
-X-Google-Smtp-Source: AGHT+IGWFMdXnaZYcIU0kohzI46jugKHee1Jbq0pEhVcVq4Y3vXt+iErmrn+yH/5CQ0GbjM8IXiiffkfGwK7TvcJ9Io=
-X-Received: by 2002:a05:6122:3c88:b0:4f2:f1df:89c3 with SMTP id
- 71dfb90a1353d-4f33efcc8b1mr23649157e0c.0.1721003784036; Sun, 14 Jul 2024
- 17:36:24 -0700 (PDT)
+ AJvYcCXDAxAT9kRY4h5spO7JzY61i4nz/+weax+X1p/ig0nawOCrvkUriZ64Yv7yxYzYBBcDtuTRJrQzJT5BTcfTA7azwnUSQlo=
+X-Gm-Message-State: AOJu0YyLLKWSegGVNxWnR4jbl7z9yEyDfI3WTMlG42G3+LWAsqY3647M
+ nJGAwOlz0e6C5x6c5qRW7fZl32HsuX3zUdxE5oud3yGkIxL4ztxacJczRLeYzfyi6Zf1DY7fA1v
+ /9XFwbPSGcrqtDswmIp0cz29eeI0=
+X-Google-Smtp-Source: AGHT+IFLMLKD/WzgjVP8LVtLdb6bVenbjq7oiaGPLCO23Frjw+/m6Zdh7olJ8qgG5iYX+cK1UZBJpSE2JrAJwCEwilo=
+X-Received: by 2002:a05:6102:4405:b0:48f:79de:909e with SMTP id
+ ada2fe7eead31-490321a413amr24394383137.18.1721004194326; Sun, 14 Jul 2024
+ 17:43:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240713174325.107685-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240713174325.107685-1-dbarboza@ventanamicro.com>
+References: <20240711-smcntrpmf_v7-v8-0-b7c38ae7b263@rivosinc.com>
+ <20240711-smcntrpmf_v7-v8-3-b7c38ae7b263@rivosinc.com>
+In-Reply-To: <20240711-smcntrpmf_v7-v8-3-b7c38ae7b263@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Jul 2024 10:35:57 +1000
-Message-ID: <CAKmqyKP1dTXoaRWGX3cCAY4VmqFtBbpjCjDsmxbMyyM6gAzPRg@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/virt.c: re-insert and deprecate 'riscv, delegate'
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, Conor Dooley <conor@kernel.org>, 
- Anup Patel <apatel@ventanamicro.com>
+Date: Mon, 15 Jul 2024 10:42:48 +1000
+Message-ID: <CAKmqyKNK1Nxk6OmEPaj2BZMgXim6T_yqGHS3v17umg7Z5Re1AQ@mail.gmail.com>
+Subject: Re: [PATCH v8 03/13] target/riscv: Add cycle & instret privilege mode
+ filtering properties
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,89 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jul 14, 2024 at 3:44=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Fri, Jul 12, 2024 at 8:33=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
+rote:
 >
-> Commit b1f1e9dcfa renamed 'riscv,delegate' to 'riscv,delegation' since
-> it is the correct name as per dt-bindings, and the absence of the
-> correct name will result in validation fails when dumping the dtb and
-> using dt-validate.
+> From: Kaiwen Xue <kaiwenx@rivosinc.com>
 >
-> But this change has a side-effect: every other firmware available that
-> is AIA capable is using 'riscv,delegate', and it will fault/misbehave if
-> this property isn't present. The property was added back in QEMU 7.0,
-> meaning we have 2 years of firmware development using the wrong
-> property.
+> This adds the properties for ISA extension smcntrpmf. Patches
+> implementing it will follow.
 >
-> Re-introducing 'riscv,delegate' while keeping 'riscv,delegation' will
-> make current firmwares to keep booting with the 'virt' machine and
-> dt-validate won't complain about it since we're still using the expected
-> property 'riscv,delegation'. 'riscv,delegate' is then marked for future
-> deprecation and its use is being discouraged.
->
-> Cc: Conor Dooley <conor@kernel.org>
-> Cc: Anup Patel <apatel@ventanamicro.com>
-> Fixes: b1f1e9dcfa ("hw/riscv/virt.c: aplic DT: rename prop to 'riscv, del=
-egation'")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  docs/about/deprecated.rst | 11 +++++++++++
->  hw/riscv/virt.c           |  9 +++++++++
->  2 files changed, 20 insertions(+)
+>  target/riscv/cpu.c     | 1 +
+>  target/riscv/cpu_cfg.h | 1 +
+>  2 files changed, 2 insertions(+)
 >
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 20b7a17cf0..88f0f03786 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -479,6 +479,17 @@ versions, aliases will point to newer CPU model vers=
-ions
->  depending on the machine type, so management software must
->  resolve CPU model aliases before starting a virtual machine.
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 4760cb2cc17f..63f553c92b00 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -178,6 +178,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+>      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+> +    ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+>      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index fb7eebde523b..b1376beb1dab 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -74,6 +74,7 @@ struct RISCVCPUConfig {
+>      bool ext_ztso;
+>      bool ext_smstateen;
+>      bool ext_sstc;
+> +    bool ext_smcntrpmf;
+>      bool ext_svadu;
+>      bool ext_svinval;
+>      bool ext_svnapot;
 >
-> +RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> +the AIA APLIC support.  The property changed name during the review
-> +process in Linux and the correct name ended up being
-> +"riscv,delegation".  Changing the DT property name will break all
-> +available firmwares that are using the current (wrong) name.  The
-> +property is kept as is in 9.1, together with "riscv,delegation", to
-> +give more time for firmware developers to change their code.
-> +
->  Migration
->  ---------
->
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index bc0893e087..9981e0f6c9 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -651,6 +651,15 @@ static void create_fdt_one_aplic(RISCVVirtState *s, =
-int socket,
->          qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
->                                 aplic_child_phandle, 0x1,
->                                 VIRT_IRQCHIP_NUM_SOURCES);
-> +        /*
-> +         * DEPRECATED_9.1: Compat property kept temporarily
-> +         * to allow old firmwares to work with AIA. Do *not*
-> +         * use 'riscv,delegate' in new code: use
-> +         * 'riscv,delegation' instead.
-> +         */
-> +        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
-> +                               aplic_child_phandle, 0x1,
-> +                               VIRT_IRQCHIP_NUM_SOURCES);
->      }
->
->      riscv_socket_fdt_write_id(ms, aplic_name, socket);
 > --
-> 2.45.2
+> 2.34.1
 >
 >
 
