@@ -4,82 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9F5C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED01CC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2ai-0003cj-TZ; Wed, 17 Jul 2024 07:13:00 -0400
+	id 1sU2TO-0005I9-Jv; Wed, 17 Jul 2024 07:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sU2aZ-0002sq-IO
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:12:51 -0400
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sU2aJ-00035w-TB
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:12:51 -0400
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-4f2c8e99c0fso519754e0c.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 04:12:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721214753; x=1721819553;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eUiCpw6FOC3LTxm8Tr0fPAgbCAVN5AsSVaku3idwslA=;
- b=UHWTvj3vO4+LCZIM7cjk+YsEr8QDGc4yor1I9TGsFkOJFle4+7preDt7TWSJndXftW
- FOs7hsSr4CD9L+7Sk2leBNKZ5rlTvYasBxFI7wkP2KptrD7DX/4u9c6Wb3NA7lxPvfV+
- oeCeUCdJpcHFBsflFmWhVCARYoutvpq7PjBm39xdpCEyKMfYr1z3WfJg23I84zA/uLOD
- M+PIWUFmoZXkbF/WvjFVJ8HsaA1/5typEPxreB8eN638IcUOHp9FVDNp5JPf1O5F/PSW
- NdEdx+MsGPMKKrRAFymHPbSlQNfsHnGwhcgFdzEAc9RuoB2UGXn9a7Xlf77/Bp+zq/3H
- rvdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721214753; x=1721819553;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eUiCpw6FOC3LTxm8Tr0fPAgbCAVN5AsSVaku3idwslA=;
- b=HGn+h2A6aorNEP4EVsr8FG8tbqrALRra9WlcS/rIewctxrv6oAlJ11/+znHatXFSsr
- hWUmcqIzpZuOnxMfTHWQtXPCEQKg2YPzfpjVy76xdMVpUNrrZDwmDBu6yksTE04GOrbh
- IO+9JUZiTrYuTTzEv7JpVGPNX1IiLILgCwOEMN6JUnOZNdcK0srA9SEUEBMqq6tVbv1W
- lV4YdCdZuP88q1CBey6XB17TLdoW96y5Im2cCYVXo9dXBcvcL4bksoIQd9HeYxqEbKm5
- D63DTcta56bQ48YmiPsGCGgpCxraQ+nATf5jJ4GMH0xsuIwVLn3uKEeB2hwCwls+KII3
- aLgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXuakm6652YtZqK4ivhbJXfhujHtIeB6UWhlpsKHRuoFtM1HeGeJpQEME70YRfHodK8yog5O27Yxl7+2BfdUOSiKTPCks=
-X-Gm-Message-State: AOJu0Yxkm9Ma/PlSeEyheTfFg+aRMUTgVoTaYflKdDzgVZSykcnkcPp0
- Zv6c1EXW1+F2ZogkJjcVlpemK0wQzGWMIKd0sgtvmBh19NL5DswEMUjbGOXMiaofLoSNbtCIUMe
- JBIsuGeEMFt8OFZv1y9TVDMz1ZTlhaVrNMogn
-X-Google-Smtp-Source: AGHT+IHX7gOBsZW72JWEVYUQpSouB2UXmlgjyiu4UTm0wPc9KFKkmdJ9FM1OPEbcZMLkmUkpXk26J49XMMzY7TUuSU0=
-X-Received: by 2002:a05:6122:912:b0:4ef:5e6b:6ccc with SMTP id
- 71dfb90a1353d-4f4df6da32dmr1809663e0c.7.1721214752597; Wed, 17 Jul 2024
- 04:12:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240715210705.32365-1-phil@philjordan.eu>
- <eca02ec3-e2f2-4994-baf5-b86908fa0418@daynix.com>
- <a7087230-9fc6-4ab4-b35c-d3df032d16df@linaro.org>
- <6c65537d-ee67-4e0f-9f76-3da2b2ef8c71@daynix.com>
-In-Reply-To: <6c65537d-ee67-4e0f-9f76-3da2b2ef8c71@daynix.com>
+ (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
+ id 1sU2SR-0000h2-2r
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:29 -0400
+Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
+ helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SN-0006yq-RP
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:26 -0400
+Received: by intel-mbp.local (Postfix, from userid 501)
+ id 334ED379630; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Wed, 17 Jul 2024 13:12:22 +0200
-Message-ID: <CAAibmn2kPFxXH8sdTW8_-Z4_ZDQ6FvJ_An=J=mLXFnP2HZW2iQ@mail.gmail.com>
-Subject: Re: hw/display/apple-gfx
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de, graf@amazon.com, 
- marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com, 
- peter.maydell@linaro.org, lists@philjordan.eu
-Content-Type: multipart/alternative; boundary="000000000000e94c9a061d6f898f"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::a33;
- envelope-from=phil@philjordan.eu; helo=mail-vk1-xa33.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
+ graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
+ akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
+Subject: [PATCH 14/26] hw/display/apple-gfx: Refactoring of realize function
+Date: Mon, 15 Jul 2024 23:06:53 +0200
+Message-Id: <20240715210705.32365-15-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
+References: <20240715210705.32365-1-phil@philjordan.eu>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
+ helo=intel-mbp.local
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
+ NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,57 +58,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e94c9a061d6f898f
-Content-Type: text/plain; charset="UTF-8"
+The apple_gfx_realize function was very long, with different
+sections of the code doing mostly unrelated things.
 
-On Tue, 16 Jul 2024 at 08:48, Akihiko Odaki <akihiko.odaki@daynix.com>
-wrote:
+This change groups some of the functionality into helper
+functions, which hopefully makes the code easier to understand.
 
-> The cover letter says:
->
->  > 04-13: These patches address issues identified during code review in
->  > the original e-mail threads as well as my own review.
->
-> So these patches are certainly to be squashed. There are other patches
-> titled "fixes" or "refactoring", which should also be squashed. I expect
-> squashing them will reduce the number of patches (and code to review)
-> drastically.
->
+There are also some code formatting fixes in the general
+vicinity of the refactored code.
 
-I've just resubmitted the patch set after squashing most of the commits
-into the original one. (and rebasing on latest upstream) Squashing is easy,
-pulling the individual changes back out is hard, so I figured I'd rather
-send it as too many patches first time around in case anyone wanted to see
-the individual changes I made.
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+---
+ hw/display/apple-gfx.m | 120 ++++++++++++++++++++++++++---------------
+ 1 file changed, 76 insertions(+), 44 deletions(-)
 
-Thanks for taking a look!
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 39e33ed999..f9046f41a0 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -360,26 +360,9 @@ static void apple_gfx_init(Object *obj)
+     }
+ }
+ 
+-static void apple_gfx_realize(DeviceState *dev, Error **errp)
++static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
++                                                     PGDeviceDescriptor *desc)
+ {
+-    @autoreleasepool {
+-    AppleGFXState *s = APPLE_GFX(dev);
+-    PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
+-    PGDisplayDescriptor *disp_desc = [PGDisplayDescriptor new];
+-    PGIOSurfaceHostDeviceDescriptor *iosfc_desc = [PGIOSurfaceHostDeviceDescriptor new];
+-    PGDisplayMode *modes[ARRAY_SIZE(apple_gfx_modes)];
+-    int i;
+-
+-    for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
+-        modes[i] =
+-            [[PGDisplayMode alloc] initWithSizeInPixels:apple_gfx_modes[i] refreshRateInHz:60.];
+-    }
+-
+-    s->mtl = MTLCreateSystemDefaultDevice();
+-
+-    desc.device = s->mtl;
+-    desc.usingIOSurfaceMapper = true;
+-
+     desc.createTask = ^(uint64_t vmSize, void * _Nullable * _Nonnull baseAddress) {
+         AppleGFXTask *task = apple_gfx_new_task(s, vmSize);
+         *baseAddress = (void*)task->address;
+@@ -450,29 +433,18 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
+         return (bool)true;
+     };
+ 
+-    desc.readMemory = ^(uint64_t physicalAddress, uint64_t length, void * _Nonnull dst) {
++    desc.readMemory = ^(uint64_t physicalAddress, uint64_t length,
++                        void * _Nonnull dst) {
+         trace_apple_gfx_read_memory(physicalAddress, length, dst);
+         cpu_physical_memory_read(physicalAddress, dst, length);
+         return (bool)true;
+     };
+ 
+-    desc.raiseInterrupt = ^(uint32_t vector) {
+-        bool locked;
+-
+-        trace_apple_gfx_raise_irq(vector);
+-        locked = bql_locked();
+-        if (!locked) {
+-            bql_lock();
+-        }
+-        qemu_irq_pulse(s->irq_gfx);
+-        if (!locked) {
+-            bql_unlock();
+-        }
+-    };
++}
+ 
+-    s->pgdev = PGNewDeviceWithDescriptor(desc);
+-    [desc release];
+-    desc = nil;
++static PGDisplayDescriptor *apple_gfx_prepare_display_handlers(AppleGFXState *s)
++{
++    PGDisplayDescriptor *disp_desc = [PGDisplayDescriptor new];
+ 
+     disp_desc.name = @"QEMU display";
+     disp_desc.sizeInMillimeters = NSMakeSize(400., 300.); /* A 20" display */
+@@ -484,7 +456,8 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
+         s->handles_frames = true;
+         s->new_frame = true;
+     };
+-    disp_desc.modeChangeHandler = ^(PGDisplayCoord_t sizeInPixels, OSType pixelFormat) {
++    disp_desc.modeChangeHandler = ^(PGDisplayCoord_t sizeInPixels,
++                                    OSType pixelFormat) {
+         trace_apple_gfx_mode_change(sizeInPixels.x, sizeInPixels.y);
+         set_mode(s, sizeInPixels.x, sizeInPixels.y);
+     };
+@@ -517,15 +490,35 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
+         update_cursor(s);
+     };
+ 
+-    s->pgdisp = [s->pgdev newDisplayWithDescriptor:disp_desc port:0 serialNum:1234];
+-    [disp_desc release];
+-    s->pgdisp.modeList = [NSArray arrayWithObjects:modes count:ARRAY_SIZE(apple_gfx_modes)];
++    return disp_desc;
++}
++
++static NSArray<PGDisplayMode*>* apple_gfx_prepare_display_mode_array(void)
++{
++    PGDisplayMode *modes[ARRAY_SIZE(apple_gfx_modes)];
++    NSArray<PGDisplayMode*>* mode_array = nil;
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
++        modes[i] =
++            [[PGDisplayMode alloc] initWithSizeInPixels:apple_gfx_modes[i] refreshRateInHz:60.];
++    }
++
++    mode_array = [NSArray arrayWithObjects:modes count:ARRAY_SIZE(apple_gfx_modes)];
+ 
+     for (i = 0; i < ARRAY_SIZE(apple_gfx_modes); i++) {
+         [modes[i] release];
+         modes[i] = nil;
+     }
+ 
++    return mode_array;
++}
++
++static PGIOSurfaceHostDevice *apple_gfx_prepare_iosurface_host_device(AppleGFXState *s)
++{
++    PGIOSurfaceHostDeviceDescriptor *iosfc_desc = [PGIOSurfaceHostDeviceDescriptor new];
++    PGIOSurfaceHostDevice *iosfc_host_dev = nil;
++
+     iosfc_desc.mapMemory = ^(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
+         trace_apple_iosfc_map_memory(phys, len, ro, va, e, f);
+         MemoryRegion *tmp_mr;
+@@ -551,13 +544,52 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
+         return (bool)true;
+     };
+ 
+-    s->pgiosfc =
+-        [[PGIOSurfaceHostDevice alloc] initWithDescriptor:iosfc_desc];
++    iosfc_host_dev = [[PGIOSurfaceHostDevice alloc] initWithDescriptor:iosfc_desc];
+     [iosfc_desc release];
++    return iosfc_host_dev;
++}
++
++static void apple_gfx_realize(DeviceState *dev, Error **errp)
++{
++    @autoreleasepool {
++        AppleGFXState *s = APPLE_GFX(dev);
++        PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
++        PGDisplayDescriptor *disp_desc = nil;
++
++        QTAILQ_INIT(&s->tasks);
++        s->mtl = MTLCreateSystemDefaultDevice();
++
++        desc.device = s->mtl;
++        desc.usingIOSurfaceMapper = true;
++
++        apple_gfx_register_task_mapping_handlers(s, desc);
++
++        desc.raiseInterrupt = ^(uint32_t vector) {
++            bool locked;
++
++            trace_apple_gfx_raise_irq(vector);
++            locked = bql_locked();
++            if (!locked) {
++                bql_lock();
++            }
++            qemu_irq_pulse(s->irq_gfx);
++            if (!locked) {
++                bql_unlock();
++            }
++        };
++
++        s->pgdev = PGNewDeviceWithDescriptor(desc);
++        [desc release];
++        desc = nil;
++
++        disp_desc = apple_gfx_prepare_display_handlers(s);
++        s->pgdisp = [s->pgdev newDisplayWithDescriptor:disp_desc port:0 serialNum:1234];
++        [disp_desc release];
++        s->pgdisp.modeList = apple_gfx_prepare_display_mode_array();
+ 
+-    QTAILQ_INIT(&s->tasks);
++        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
+ 
+-    create_fb(s);
++        create_fb(s);
+     }
+ }
+ 
+-- 
+2.39.3 (Apple Git-146)
 
---000000000000e94c9a061d6f898f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
-mail_attr">On Tue, 16 Jul 2024 at 08:48, Akihiko Odaki &lt;<a href=3D"mailt=
-o:akihiko.odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-The cover letter says:<br>
-<br>
-=C2=A0&gt; 04-13: These patches address issues identified during code revie=
-w in<br>
-=C2=A0&gt; the original e-mail threads as well as my own review.<br>
-<br>
-So these patches are certainly to be squashed. There are other patches <br>
-titled &quot;fixes&quot; or &quot;refactoring&quot;, which should also be s=
-quashed. I expect <br>
-squashing them will reduce the number of patches (and code to review) <br>
-drastically.<br></blockquote><div><br></div><div>I&#39;ve just resubmitted =
-the patch set after squashing most of the commits into the original one. (a=
-nd rebasing on latest upstream) Squashing is easy, pulling the individual c=
-hanges back out is hard, so I figured I&#39;d rather send it as too many pa=
-tches first time around in case anyone wanted to see the individual changes=
- I made.</div><div><br></div><div>Thanks for taking a look!<br></div></div>=
-</div>
-
---000000000000e94c9a061d6f898f--
 
