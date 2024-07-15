@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979ABC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 22:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6482DC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 22:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTTlt-0007EL-UY; Mon, 15 Jul 2024 18:02:13 -0400
+	id 1sTTwk-0005OC-Rx; Mon, 15 Jul 2024 18:13:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sTTlr-0007Dq-UD
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 18:02:12 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sTTlm-0004Sa-6S
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 18:02:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=3G0nd98lqzyWiyTPskOpR+JG/LXzjs/z30i19ss/1To=; b=zLOe4lCraDIUzrrv2EnUFmaHXg
- TqcrmIlkuPeyWJ0h0ke1a2Lkwo674I+8ABWVkKgOAvpIJ+orggQ8pDtTnYGUeqq2EYooK/QgS38xq
- iyaMAEelNHamb56h7yuMla1LMxWhFPNp68TzTtaJboRka7zrbwi5pxg0Ck3VaH+6gedaf9MNWQElE
- zjET/bYGmrfL3hsdQZT1SBhdQrlbC6WcBCGNHdAEHBnUVWZ6OYKJtH6Z0gi/kIQAsiL6jr/tFcOwR
- 5RK8qo2YtmAfNxIQwQofacWWNqyrjk2Ag57gkEdYHpVQwhI30nlZ4weLkfNxRGpWXWs+nDm+4O0hZ
- uyJEdHtrEaLeKx+ihROO3Y5aS1PLNH/lTKGuWm13qEOrL5NHDhR5QQYTincmlrpsjOjLQv/hYPj64
- aOfF1Kxuut45FOJKTh7CQK5wyh5rXu9Lj8H3rczDGO2TlJ0ijYRHTLME+5+WeGil3IZa+7VAVMrg3
- 54/EVcedk1m2BBhPKjZKw/5WdPeKcTyciBMpurrCg9uXELsH8DRy6ai40RjhhG+No7vnnpRJ5W38/
- Yw7tGpiYK2Ki8I8M/Jn+EcSMTkHrMKwSUbopkkpNhZ+Fvbz7SRY5+aRfIkeZSEj1617R4+Ele1D12
- Oux+zc96hUYJjdyjC61LU2e+z/4wc+RNhQ6Nxv1LY=;
-Received: from [2a00:23c4:8bb4:4000:dd63:31f7:d07b:53e1]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sTTkC-0002cv-LB; Mon, 15 Jul 2024 23:00:32 +0100
-Message-ID: <de7fe2e4-a590-4fe0-801c-b7998927c570@ilande.co.uk>
-Date: Mon, 15 Jul 2024 23:01:55 +0100
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1sTTwX-00052b-3M
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 18:13:14 -0400
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1sTTwU-0006Jd-D0
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 18:13:12 -0400
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-7a05b7c8e38so299769885a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 15:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1721081589; x=1721686389; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NtQRXR081mPdg+iBE1h9Ruh0NVDJquglGauP30LQ6ak=;
+ b=LBDdu93bUrtJHKIwEW49XJUKb9z8jeikMwuJMGMG93gVdbqOeTmofsRPfR9YE9eaTq
+ UKC3fulxuGrBcVLFXCWV7oxXvrLbhoVOVVIKTQOPPjD/qIkaxscstiUxehlKxWrvbHZS
+ 6MhJDxFGCd7eVi4c9i3TEaWIRiv+yOLNGms3//qcOAK8PIs02NCVZyA78IlMY40mozmb
+ aUykFOZP3JLfbBe1fawOD5rtJwqLIi9nKTkQZO3jFkuXowmmACYjy+Wk4I7vx8A1EsVa
+ WkdIiDlbBiKtxVuIYRHDXqg+wUKUaJdkoMbTTeEXdROZzU7DuFKdbEGDBb6I6mSK66B0
+ z2PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721081589; x=1721686389;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NtQRXR081mPdg+iBE1h9Ruh0NVDJquglGauP30LQ6ak=;
+ b=QJcaEUyFxamPe/pDCIGx3Aw1e++vFl2fL4akpWueIwYgQ6R9e3uBXYjFsNgXZW+EvP
+ BuKzuOR5iMEXWZr8ziqVjdB7ceM9N1JMhP3w9aNoDvpOGRKjWF7hnKCH51azViOn9+gk
+ rFGMZm7FmkFx1MSExltwzDjOtoqlcWlcouEeKGCNk6JoU5bFultZ+XwKvpVt7CXsU9+m
+ p94r3aU2g1jUJXrMczIkVy49GM9J6nDkJsdRO4TTrlyP6h42GRSG1T11+ql+z+ErV2C3
+ eZ+y9rhJRuU61WoEYsXz2oC5nMzztEH5WvY2P5QMQCRX/6PXjJeK628mTiyWL2hFF/7H
+ WXcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPm4RyITN2sUMAxvpTMg92PTOe4w+yURUckxVDU4KMMqErGyjObVim7NASsBbx3pIy26Z9hLVYmMZbPqVJlR6Y1k+5i8Y=
+X-Gm-Message-State: AOJu0Yz+V+OMc0bg5QPBV+9nzFk9wMh67pvGzxWIYhs26LcSlXGvQnrm
+ n/RXpQESY4iNuiwdGlaUoJOrq54ZqZV1v7PAKLifyM6y8zEOva6Ft47d0+aMIyY=
+X-Google-Smtp-Source: AGHT+IG1O70h1bBEad9Ej2nzjmlU4QO5EvL5hHI68l7Inyr/9wyKwStT/+7VuvBRbs7r5w1TtBv2Mg==
+X-Received: by 2002:a05:6214:ca8:b0:6b5:fa20:9b3d with SMTP id
+ 6a1803df08f44-6b77f5b472cmr5539676d6.46.1721081588962; 
+ Mon, 15 Jul 2024 15:13:08 -0700 (PDT)
+Received: from DY4X0N7X05.bytedance.net
+ (ec2-52-8-182-0.us-west-1.compute.amazonaws.com. [52.8.182.0])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b76198aca3sm25398326d6.51.2024.07.15.15.13.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 15 Jul 2024 15:13:08 -0700 (PDT)
+From: Yichen Wang <yichen.wang@bytedance.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ "Yichen Wang" <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH v6 4/5] migration: Introduce 'qatzip' compression method
+Date: Mon, 15 Jul 2024 15:12:44 -0700
+Message-Id: <20240715221245.12435-5-yichen.wang@bytedance.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240715221245.12435-1-yichen.wang@bytedance.com>
+References: <20240715221245.12435-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, fam@euphon.net
-References: <20240713224249.468084-1-mark.cave-ayland@ilande.co.uk>
- <1408e396-b597-4481-b537-e7b53976d5d1@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <1408e396-b597-4481-b537-e7b53976d5d1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:dd63:31f7:d07b:53e1
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] esp.c: remove transfer size check from DMA DATA IN and
- DATA OUT transfers
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-qk1-x72b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,39 +108,497 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/07/2024 07:48, Philippe Mathieu-Daudé wrote:
+From: Bryan Zhang <bryan.zhang@bytedance.com>
 
-> On 14/7/24 00:42, Mark Cave-Ayland wrote:
->> The transfer size check was originally added to prevent consecutive DMA TI
->> commands from causing an assert() due to an existing SCSI request being in
->> progress, but since the last set of updates
-> 
-> [*]
-> 
->> this is no longer required.
->>
->> Remove the transfer size check from DMA DATA IN and DATA OUT transfers so
->> that issuing a DMA TI command when there is no data left to transfer does
->> not cause an assert() due to an existing SCSI request being in progress.
->>
-> 
-> [*] See commits f3ace75be8..78d68f312a
-> 
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2415
->> ---
->>   hw/scsi/esp.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Queued adding [*], thanks.
+Adds support for 'qatzip' as an option for the multifd compression
+method parameter, and implements using QAT for 'qatzip' compression and
+decompression.
 
-Awesome, thanks Phil!
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+---
+ hw/core/qdev-properties-system.c |   2 +-
+ migration/meson.build            |   1 +
+ migration/multifd-qatzip.c       | 382 +++++++++++++++++++++++++++++++
+ migration/multifd.h              |   5 +-
+ qapi/migration.json              |   3 +
+ tests/qtest/meson.build          |   4 +
+ 6 files changed, 394 insertions(+), 3 deletions(-)
+ create mode 100644 migration/multifd-qatzip.c
 
-
-ATB,
-
-Mark.
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index f13350b4fb..a56fbf728d 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd/qpl/uadk",
++                   "none/zlib/zstd/qpl/uadk/qatzip",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/meson.build b/migration/meson.build
+index 5ce2acb41e..c9454c26ae 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -41,6 +41,7 @@ system_ss.add(when: rdma, if_true: files('rdma.c'))
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
++system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
+ 
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+new file mode 100644
+index 0000000000..b74cda503a
+--- /dev/null
++++ b/migration/multifd-qatzip.c
+@@ -0,0 +1,382 @@
++/*
++ * Multifd QATzip compression implementation
++ *
++ * Copyright (c) Bytedance
++ *
++ * Authors:
++ *  Bryan Zhang <bryan.zhang@bytedance.com>
++ *  Hao Xiang <hao.xiang@bytedance.com>
++ *  Yichen Wang <yichen.wang@bytedance.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "exec/ramblock.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qapi/qapi-types-migration.h"
++#include "options.h"
++#include "multifd.h"
++#include <qatzip.h>
++
++typedef struct {
++    /*
++     * Unique session for use with QATzip API
++     */
++    QzSession_T sess;
++
++    /*
++     * For compression: Buffer for pages to compress
++     * For decompression: Buffer for data to decompress
++     */
++    uint8_t *in_buf;
++    uint32_t in_len;
++
++    /*
++     * For compression: Output buffer of compressed data
++     * For decompression: Output buffer of decompressed data
++     */
++    uint8_t *out_buf;
++    uint32_t out_len;
++} QatzipData;
++
++/**
++ * qatzip_send_setup: Set up QATzip session and private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_send_setup(MultiFDSendParams *p, Error **errp)
++{
++    QatzipData *q;
++    QzSessionParamsDeflate_T params;
++    const char *err_msg;
++    int ret;
++
++    q = g_new0(QatzipData, 1);
++    p->compress_data = q;
++    /* We need one extra place for the packet header */
++    p->iov = g_new0(struct iovec, 2);
++
++    /*
++     * Prefer without sw_fallback because of bad performance with sw_fallback.
++     * Warn if sw_fallback needs to be used.
++     */
++    ret = qzInit(&q->sess, false);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        /* Warn, and try with sw_fallback. */
++        warn_report_once(
++            "[Sender] Initializing QAT with software fallback...");
++        ret = qzInit(&q->sess, true);
++        if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++            err_msg = "qzInit failed";
++            goto err;
++        }
++    }
++
++    ret = qzGetDefaultsDeflate(&params);
++    if (ret != QZ_OK) {
++        err_msg = "qzGetDefaultsDeflate failed";
++        goto err;
++    }
++
++    /* Make sure to use configured QATzip compression level. */
++    params.common_params.comp_lvl = migrate_multifd_qatzip_level();
++    ret = qzSetupSessionDeflate(&q->sess, &params);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzSetupSessionDeflate failed";
++        goto err;
++    }
++
++    if (MULTIFD_PACKET_SIZE > UINT32_MAX) {
++        err_msg = "packet size too large for QAT";
++        goto err;
++    }
++
++    q->in_len = MULTIFD_PACKET_SIZE;
++    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
++    if (!q->in_buf) {
++        err_msg = "qzMalloc failed";
++        goto err;
++    }
++
++    q->out_len = qzMaxCompressedLength(MULTIFD_PACKET_SIZE, &q->sess);
++    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
++    if (!q->out_buf) {
++        err_msg = "qzMalloc failed";
++        goto err;
++    }
++
++    return 0;
++
++err:
++    error_setg(errp, "multifd %u: [sender] %s", p->id, err_msg);
++    return -1;
++}
++
++/**
++ * qatzip_send_cleanup: Tear down QATzip session and release private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     None
++ */
++static void qatzip_send_cleanup(MultiFDSendParams *p, Error **errp)
++{
++    QatzipData *q = p->compress_data;
++
++    if (q->in_buf) {
++        qzFree(q->in_buf);
++    }
++    if (q->out_buf) {
++        qzFree(q->out_buf);
++    }
++    (void)qzTeardownSession(&q->sess);
++    (void)qzClose(&q->sess);
++
++    g_free(p->iov);
++    p->iov = NULL;
++    g_free(q);
++    p->compress_data = NULL;
++}
++
++/**
++ * qatzip_send_prepare: Compress pages and update IO channel info.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
++{
++    MultiFDPages_t *pages = p->pages;
++    QatzipData *q = p->compress_data;
++    int ret;
++    unsigned int in_len, out_len;
++
++    if (!multifd_send_prepare_common(p)) {
++        goto out;
++    }
++
++    /*
++     * Unlike other multifd compression implementations, we use a non-streaming
++     * API and place all the data into one buffer, rather than sending each
++     * page to the compression API at a time. Based on initial benchmarks, the
++     * non-streaming API outperforms the streaming API. Plus, the logic in QEMU
++     * is friendly to using the non-streaming API anyway. If either of these
++     * statements becomes no longer true, we can revisit adding a streaming
++     * implementation.
++     */
++    for (int i = 0; i < pages->normal_num; i++) {
++        memcpy(q->in_buf + (i * p->page_size),
++               pages->block->host + pages->offset[i],
++               p->page_size);
++    }
++
++    in_len = pages->normal_num * p->page_size;
++    if (in_len > q->in_len) {
++        error_setg(errp, "multifd %u: unexpectedly large input", p->id);
++        return -1;
++    }
++    out_len = q->out_len;
++
++    ret = qzCompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len, 1);
++    if (ret != QZ_OK) {
++        error_setg(errp, "multifd %u: QATzip returned %d instead of QZ_OK",
++                   p->id, ret);
++        return -1;
++    }
++    if (in_len != pages->normal_num * p->page_size) {
++        error_setg(errp, "multifd %u: QATzip failed to compress all input",
++                   p->id);
++        return -1;
++    }
++
++    p->iov[p->iovs_num].iov_base = q->out_buf;
++    p->iov[p->iovs_num].iov_len = out_len;
++    p->iovs_num++;
++    p->next_packet_size = out_len;
++
++out:
++    p->flags |= MULTIFD_FLAG_QATZIP;
++    multifd_send_fill_packet(p);
++    return 0;
++}
++
++/**
++ * qatzip_recv_setup: Set up QATzip session and allocate private buffers.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_recv_setup(MultiFDRecvParams *p, Error **errp)
++{
++    QatzipData *q;
++    QzSessionParamsDeflate_T params;
++    const char *err_msg;
++    int ret;
++
++    q = g_new0(QatzipData, 1);
++    p->compress_data = q;
++
++    /*
++     * Prefer without sw_fallback because of bad performance with sw_fallback.
++     * Warn if sw_fallback needs to be used.
++     */
++    ret = qzInit(&q->sess, false);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        /* Warn, and try with sw_fallback. */
++        warn_report_once(
++            "[Receiver] Initializing QAT with software fallback...");
++        ret = qzInit(&q->sess, true);
++        if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++            err_msg = "qzInit failed";
++            goto err;
++        }
++    }
++
++    ret = qzGetDefaultsDeflate(&params);
++    if (ret != QZ_OK) {
++        err_msg = "qzGetDefaultsDeflate failed";
++        goto err;
++    }
++
++    ret = qzSetupSessionDeflate(&q->sess, &params);
++    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
++        err_msg = "qzSetupSessionDeflate failed";
++        goto err;
++    }
++
++    /*
++     * Reserve extra spaces for the incoming packets. Current implementation
++     * doesn't send uncompressed pages in case the compression gets too big.
++     */
++    q->in_len = MULTIFD_PACKET_SIZE * 2;
++    /*
++     * PINNED_MEM is an enum from qatzip headers, which means to use
++     * kzalloc_node() to allocate memory for QAT DMA purposes.
++     */
++    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
++    if (!q->in_buf) {
++        err_msg = "qzMalloc failed";
++        goto err;
++    }
++
++    q->out_len = MULTIFD_PACKET_SIZE;
++    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
++    if (!q->out_buf) {
++        err_msg = "qzMalloc failed";
++        goto err;
++    }
++
++    return 0;
++
++err:
++    error_setg(errp, "multifd %u: [receiver] %s", p->id, err_msg);
++    return -1;
++}
++
++/**
++ * qatzip_recv_cleanup: Tear down QATzip session and release private buffers.
++ *
++ * @param p    Multifd channel params
++ * @return     None
++ */
++static void qatzip_recv_cleanup(MultiFDRecvParams *p)
++{
++    QatzipData *q = p->compress_data;
++
++    if (q->in_buf) {
++        qzFree(q->in_buf);
++    }
++    if (q->out_buf) {
++        qzFree(q->out_buf);
++    }
++    (void)qzTeardownSession(&q->sess);
++    (void)qzClose(&q->sess);
++    g_free(q);
++    p->compress_data = NULL;
++}
++
++
++/**
++ * qatzip_recv: Decompress pages and copy them to the appropriate
++ * locations.
++ *
++ * @param p    Multifd channel params
++ * @param errp Pointer to error, which will be set in case of error
++ * @return     0 on success, -1 on error (and *errp will be set)
++ */
++static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
++{
++    QatzipData *q = p->compress_data;
++    int ret;
++    unsigned int in_len, out_len;
++    uint32_t in_size = p->next_packet_size;
++    uint32_t expected_size = p->normal_num * p->page_size;
++    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
++
++    if (in_size > q->in_len) {
++        error_setg(errp, "multifd %u: received unexpectedly large packet",
++                   p->id);
++        return -1;
++    }
++
++    if (flags != MULTIFD_FLAG_QATZIP) {
++        error_setg(errp, "multifd %u: flags received %x flags expected %x",
++                   p->id, flags, MULTIFD_FLAG_QATZIP);
++        return -1;
++    }
++
++    multifd_recv_zero_page_process(p);
++    if (!p->normal_num) {
++        assert(in_size == 0);
++        return 0;
++    }
++
++    ret = qio_channel_read_all(p->c, (void *)q->in_buf, in_size, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    in_len = in_size;
++    out_len = q->out_len;
++    ret = qzDecompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len);
++    if (ret != QZ_OK) {
++        error_setg(errp, "multifd %u: qzDecompress failed", p->id);
++        return -1;
++    }
++    if (out_len != expected_size) {
++        error_setg(errp, "multifd %u: packet size received %u size expected %u",
++                   p->id, out_len, expected_size);
++        return -1;
++    }
++
++    /* Copy each page to its appropriate location. */
++    for (int i = 0; i < p->normal_num; i++) {
++        memcpy(p->host + p->normal[i],
++               q->out_buf + p->page_size * i,
++               p->page_size);
++    }
++    return 0;
++}
++
++static MultiFDMethods multifd_qatzip_ops = {
++    .send_setup = qatzip_send_setup,
++    .send_cleanup = qatzip_send_cleanup,
++    .send_prepare = qatzip_send_prepare,
++    .recv_setup = qatzip_recv_setup,
++    .recv_cleanup = qatzip_recv_cleanup,
++    .recv = qatzip_recv
++};
++
++static void multifd_qatzip_register(void)
++{
++    multifd_register_ops(MULTIFD_COMPRESSION_QATZIP, &multifd_qatzip_ops);
++}
++
++migration_init(multifd_qatzip_register);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 0ecd6f47d7..adceb65050 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -34,14 +34,15 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
+ 
+-/* We reserve 4 bits for compression methods */
+-#define MULTIFD_FLAG_COMPRESSION_MASK (0xf << 1)
++/* We reserve 5 bits for compression methods */
++#define MULTIFD_FLAG_COMPRESSION_MASK (0x1f << 1)
+ /* we need to be compatible. Before compression value was 0 */
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
+ #define MULTIFD_FLAG_QPL (4 << 1)
+ #define MULTIFD_FLAG_UADK (8 << 1)
++#define MULTIFD_FLAG_QATZIP (16 << 1)
+ 
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index cd08f2f710..42b5363449 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -558,6 +558,8 @@
+ #
+ # @zstd: use zstd compression method.
+ #
++# @qatzip: use qatzip compression method. (Since 9.1)
++#
+ # @qpl: use qpl compression method.  Query Processing Library(qpl) is
+ #       based on the deflate compression algorithm and use the Intel
+ #       In-Memory Analytics Accelerator(IAA) accelerated compression
+@@ -570,6 +572,7 @@
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+             { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
++            { 'name': 'qatzip', 'if': 'CONFIG_QATZIP'},
+             { 'name': 'qpl', 'if': 'CONFIG_QPL' },
+             { 'name': 'uadk', 'if': 'CONFIG_UADK' } ] }
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 6508bfb1a2..3068d73e08 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -327,6 +327,10 @@ if gnutls.found()
+   endif
+ endif
+ 
++if qatzip.found()
++  migration_files += [qatzip]
++endif
++
+ qtests = {
+   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
+   'cdrom-test': files('boot-sector.c'),
+-- 
+Yichen Wang
 
 
