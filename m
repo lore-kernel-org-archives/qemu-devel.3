@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BD5C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63411C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIPx-00043f-3I; Mon, 15 Jul 2024 05:54:49 -0400
+	id 1sTISO-0005Mf-CR; Mon, 15 Jul 2024 05:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIPu-0003xD-Qh; Mon, 15 Jul 2024 05:54:46 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIPs-00081A-UM; Mon, 15 Jul 2024 05:54:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721037285; x=1752573285;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=LapDANChhrEqCXMS7GYF4vmGDux79W3PxBHvfqK5iZo=;
- b=VKbR+Zed2b9XuzXdUGIzFQrG1v+Wdh1UE32jhg7QnMjs9GaHoA1WhsoX
- k4OINx7SvrgJDyp8aktILQOglDTHl4fzTucNrxGv8L07+7CsP35O6r7KF
- UFanIP2eeyYgTOi+XS7TuwWbvKARGFlACVKrq0/RwD+zW4ZVAca8JlEL+
- L2Vdehgsct9O3mOmIgeDppcp3BphqTwP0mTB6d6doIZHXw5pvqhdhgpoL
- wd1UXBnIAY8n19zRoi2FVCTt0LxOeRPJm50nl/cWAqIUcSu4efHBLo39J
- RL+qoPUI2utev73HnQ5kbA55Djn+REyBYmH2aztIERDvjXCQ8Ia7AE2EY A==;
-X-CSE-ConnectionGUID: exmnF7G9TvKuvCM3LIrMBg==
-X-CSE-MsgGUID: y3O1eufAQHq1ErL3gdqIpw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="18219405"
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="18219405"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 02:54:41 -0700
-X-CSE-ConnectionGUID: /vG4t8zoS/2CedoHMhkKKg==
-X-CSE-MsgGUID: 8nvzbuioRyGaHXmbpnUg0A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="54743486"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 15 Jul 2024 02:54:38 -0700
-Date: Mon, 15 Jul 2024 18:10:19 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-trivial@nongnu.org,
- qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Amit Shah <amit@kernel.org>
-Subject: Re: [PATCH 7/7] backends/rng-random: Get rid of qemu_open_old()
-Message-ID: <ZpT1iy5NPqwjqaLB@intel.com>
-References: <20240715082155.28771-1-zhao1.liu@intel.com>
- <20240715082155.28771-8-zhao1.liu@intel.com>
- <01245850-b5df-4bf6-9a22-775d12fc07a0@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTISM-0005IP-M0
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:57:18 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTISK-00007u-Oj
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:57:18 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4257d5fc9b7so31401555e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:57:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721037434; x=1721642234; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9fq/ix6OT2tXwL94/8kdg9s1x8WQDE9G1JkkFziTutA=;
+ b=b3Hc/pnrJqhexCvKzqXzKEVtunYoBSRW/GDQDUJ1yX0GuxKtWUSvs+eEzuEkcaFu2H
+ nUmR2/ShEXORdOTyi8y0A7PyWejMkhO7T7455XfZHgxozsa7MOqKgS2mL/3uKdEesq5x
+ d/vToyxO6kiWfxFG6aNMadVnJHTe4yl8t/r5bxwKaRrJidq9rxvo4MRnqt35S9aanFqV
+ 9TaSpTXEwun9re/DeLm5RLkH/Z0FGJ6JkrXdvhgJ6AF6/LsXAUy3sws//m6Us7912Z91
+ D3W7vxPqo3yJlm8TVzSNJ7w9XT5+tABNeJ9HdcMwCT+1lTcpIG28sSOpNZzZ+uvHw9/F
+ 0wZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721037434; x=1721642234;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9fq/ix6OT2tXwL94/8kdg9s1x8WQDE9G1JkkFziTutA=;
+ b=o7I4I8Tk5inRy2Y2+Wev/2lo1hU6QzdMXjdkQ+CuRfoS+Msqu2vpDs1O+L6jjXswiD
+ 186bMdu/HtS6LADHQxID8BWcYt8IifphplvGIrjfWtFdZFifSRdBhDKAZEssDAI+X7qt
+ QKDTT11mgN0ZkGyBkykpwfhB5iohLIoVIVxWbjPXRH084xMEuckFY85fbfKgePKkeIow
+ +V1V4KKOoydWx6r3hXSlMloO/lT5VkN8PpGdNZejZOpBqSBDAC5uFjEkgTtIsQU+I6Rg
+ 20K22XcUoVOFvuY3fkfyoSgsZ48IQnYP1X1+IGmsr5r4faoC5a6v15YROATTbt+oUqMw
+ xWOQ==
+X-Gm-Message-State: AOJu0YwX8a1yVrcmvCEykCh713gnIe+WJLgSaExKXNdcmv4ikAvLXuuF
+ 4zvRoYYKEFX6bdPA44KqOrKZB1/ktH0VNNMvPvbPW/IYKgwuy5zKWotlVvhPSIxYKtcYpWgpdqY
+ aQjo=
+X-Google-Smtp-Source: AGHT+IEfT3I4/7zhWueWxuxJPqFiQFGATOKIIHCQHqcLQ5RiYsxNE2pJT+dHk1UB/VtAb0fV4L3JIQ==
+X-Received: by 2002:a05:600c:2206:b0:426:6822:5aa8 with SMTP id
+ 5b1f17b1804b1-426707da4eemr151508415e9.18.1721037434433; 
+ Mon, 15 Jul 2024 02:57:14 -0700 (PDT)
+Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
+ [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a5e77b0bsm79545605e9.1.2024.07.15.02.57.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jul 2024 02:57:13 -0700 (PDT)
+Message-ID: <05b70832-b1a6-4a6b-87f6-373f02fbbb4e@linaro.org>
+Date: Mon, 15 Jul 2024 11:57:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/1] hw/intc/loongson_ipi: Fix for LoongArch
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
+ maobibo <maobibo@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>
+References: <20240627125819.62779-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240627125819.62779-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <01245850-b5df-4bf6-9a22-775d12fc07a0@linaro.org>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,52 +95,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 11:46:54AM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Mon, 15 Jul 2024 11:46:54 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: Re: [PATCH 7/7] backends/rng-random: Get rid of qemu_open_old()
+On 27/6/24 14:58, Philippe Mathieu-DaudÃ© wrote:
+> v2:
+> - Only skip mmio-related code in loongson_ipi_realize()
 > 
-> On 15/7/24 10:21, Zhao Liu wrote:
-> > For qemu_open_old(), osdep.h said:
-> > 
-> > > Don't introduce new usage of this function, prefer the following
-> > > qemu_open/qemu_create that take an "Error **errp".
-> > 
-> > So replace qemu_open_old() with qemu_open(). And considering
-> > rng_random_opened() will lose its obvious error handling case after
-> > removing error_setg_file_open(), add comment to remind here.
-> > 
-> > Cc: Laurent Vivier <lvivier@redhat.com>
-> > Cc: Amit Shah <amit@kernel.org>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> >   backends/rng-random.c | 9 +++++----
-> >   1 file changed, 5 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/backends/rng-random.c b/backends/rng-random.c
-> > index 80eb5be138ce..3cdb982533b5 100644
-> > --- a/backends/rng-random.c
-> > +++ b/backends/rng-random.c
-> > @@ -75,10 +75,11 @@ static void rng_random_opened(RngBackend *b, Error **errp)
-> >           error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-> >                      "filename", "a valid filename");
-> >       } else {
-> > -        s->fd = qemu_open_old(s->filename, O_RDONLY | O_NONBLOCK);
-> > -        if (s->fd == -1) {
-> > -            error_setg_file_open(errp, errno, s->filename);
-> > -        }
-> > +        /*
-> > +         * Once the open fails, the error message is integrated into
-> > +         * the *errp object by qemu_open().
-> > +         */
+> Jiaxun Yang (1):
+>    hw/intc/loongson_ipi: Gate MMIO regions creation with property
 > 
-> IMHO this comment is superfluous, I'd drop it, otherwise:
+>   include/hw/intc/loongson_ipi.h |  1 +
+>   hw/intc/loongson_ipi.c         | 16 ++++++++++------
+>   hw/mips/loongson3_virt.c       |  1 +
+>   3 files changed, 12 insertions(+), 6 deletions(-)
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->
 
-Thanks Philippe! I'll wait patch 1's comment, after that I can post a
-new version with the change you mentioned.
-
-
+ping?
 
