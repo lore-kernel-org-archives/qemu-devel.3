@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155CEC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D436FC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTISp-0006Hf-VY; Mon, 15 Jul 2024 05:57:49 -0400
+	id 1sTISt-0006Yf-Gl; Mon, 15 Jul 2024 05:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTISn-00066N-D1; Mon, 15 Jul 2024 05:57:45 -0400
+ id 1sTISo-0006BO-Ez; Mon, 15 Jul 2024 05:57:46 -0400
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sTISk-00008g-CK; Mon, 15 Jul 2024 05:57:45 -0400
+ id 1sTISm-000097-E8; Mon, 15 Jul 2024 05:57:46 -0400
 Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46F9vE0F072662
+ by Atcsqr.andestech.com with ESMTPS id 46F9vE0G072662
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
  Mon, 15 Jul 2024 17:57:15 +0800 (+08)
  (envelope-from ethan84@andestech.com)
@@ -35,9 +35,10 @@ CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, Ethan Chen
  <ethan84@andestech.com>
-Subject: [PATCH v8 1/8] memory: Introduce memory region fetch operation
-Date: Mon, 15 Jul 2024 17:56:55 +0800
-Message-ID: <20240715095702.1222213-2-ethan84@andestech.com>
+Subject: [PATCH v8 2/8] system/physmem: Support IOMMU granularity smaller than
+ TARGET_PAGE size
+Date: Mon, 15 Jul 2024 17:56:56 +0800
+Message-ID: <20240715095702.1222213-3-ethan84@andestech.com>
 X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 In-Reply-To: <20240715095702.1222213-1-ethan84@andestech.com>
 References: <20240715095702.1222213-1-ethan84@andestech.com>
@@ -48,7 +49,7 @@ X-Originating-IP: [10.0.1.106]
 X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
  ATCPCS34.andestech.com (10.0.1.134)
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46F9vE0F072662
+X-MAIL: Atcsqr.andestech.com 46F9vE0G072662
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -74,235 +75,74 @@ From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow memory regions to have different behaviors for read and fetch
-operations.
+If the IOMMU granularity is smaller than the TARGET_PAGE size, there may be
+ multiple entries within the same page. To obtain the correct result, pass
+the original address to the IOMMU.
 
-For example, the RISC-V IOPMP could raise an interrupt when the CPU
-tries to fetch from a non-executable region.
-
-If the fetch operation for a memory region is not implemented, the read
-operation will still be used for fetch operations.
+Similar to the RISC-V PMP solution, the TLB_INVALID_MASK will be set when
+there are multiple entries in the same page, ensuring that the IOMMU is
+checked on every access.
 
 Signed-off-by: Ethan Chen <ethan84@andestech.com>
 ---
- accel/tcg/cputlb.c    |   9 +++-
- include/exec/memory.h |  30 ++++++++++++
- system/memory.c       | 104 ++++++++++++++++++++++++++++++++++++++++++
- system/trace-events   |   2 +
- 4 files changed, 143 insertions(+), 2 deletions(-)
+ accel/tcg/cputlb.c | 20 ++++++++++++++++----
+ system/physmem.c   |  4 ++++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 117b516739..edb3715017 100644
+index edb3715017..7df106fea3 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1942,8 +1942,13 @@ static uint64_t int_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
-         this_size = 1 << this_mop;
-         this_mop |= MO_BE;
+@@ -1062,8 +1062,23 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
  
--        r = memory_region_dispatch_read(mr, mr_offset, &val,
--                                        this_mop, full->attrs);
-+        if (type == MMU_INST_FETCH) {
-+            r = memory_region_dispatch_fetch(mr, mr_offset, &val,
-+                                             this_mop, full->attrs);
-+        } else {
-+            r = memory_region_dispatch_read(mr, mr_offset, &val,
-+                                            this_mop, full->attrs);
-+        }
-         if (unlikely(r != MEMTX_OK)) {
-             io_failed(cpu, full, addr, this_size, type, mmu_idx, r, ra);
-         }
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 02f7528ec0..d837d7d7eb 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -274,6 +274,13 @@ struct MemoryRegionOps {
-                   uint64_t data,
-                   unsigned size);
- 
-+    /* Fetch from the memory region. @addr is relative to @mr; @size is
-+     * in bytes. */
-+    uint64_t (*fetch)(void *opaque,
-+                      hwaddr addr,
-+                      unsigned size);
-+
-+
-     MemTxResult (*read_with_attrs)(void *opaque,
-                                    hwaddr addr,
-                                    uint64_t *data,
-@@ -284,6 +291,12 @@ struct MemoryRegionOps {
-                                     uint64_t data,
-                                     unsigned size,
-                                     MemTxAttrs attrs);
-+    MemTxResult (*fetch_with_attrs)(void *opaque,
-+                                    hwaddr addr,
-+                                    uint64_t *data,
-+                                    unsigned size,
-+                                    MemTxAttrs attrs);
-+
- 
-     enum device_endian endianness;
-     /* Guest-visible constraints: */
-@@ -2602,6 +2615,23 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-                                          MemOp op,
-                                          MemTxAttrs attrs);
- 
-+
-+/**
-+ * memory_region_dispatch_fetch: perform a fetch directly to the specified
-+ * MemoryRegion.
-+ *
-+ * @mr: #MemoryRegion to access
-+ * @addr: address within that region
-+ * @pval: pointer to uint64_t which the data is written to
-+ * @op: size, sign, and endianness of the memory operation
-+ * @attrs: memory transaction attributes to use for the access
-+ */
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                         hwaddr addr,
-+                                         uint64_t *pval,
-+                                         MemOp op,
-+                                         MemTxAttrs attrs);
-+
- /**
-  * address_space_init: initializes an address space
-  *
-diff --git a/system/memory.c b/system/memory.c
-index 5e6eb459d5..b46721446c 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -477,6 +477,51 @@ static MemTxResult memory_region_read_with_attrs_accessor(MemoryRegion *mr,
-     return r;
- }
- 
-+static MemTxResult memory_region_fetch_accessor(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *value,
-+                                                unsigned size,
-+                                                signed shift,
-+                                                uint64_t mask,
-+                                                MemTxAttrs attrs)
-+{
-+    uint64_t tmp;
-+
-+    tmp = mr->ops->fetch(mr->opaque, addr, size);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                     memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult memory_region_fetch_with_attrs_accessor(MemoryRegion *mr,
-+                                                          hwaddr addr,
-+                                                          uint64_t *value,
-+                                                          unsigned size,
-+                                                          signed shift,
-+                                                          uint64_t mask,
-+                                                          MemTxAttrs attrs)
-+{
-+    uint64_t tmp = 0;
-+    MemTxResult r;
-+
-+    r = mr->ops->fetch_with_attrs(mr->opaque, addr, &tmp, size, attrs);
-+    if (mr->subpage) {
-+        trace_memory_region_subpage_fetch(get_cpu_index(), mr, addr, tmp, size);
-+    } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_FETCH)) {
-+        hwaddr abs_addr = memory_region_to_absolute_addr(mr, addr);
-+        trace_memory_region_ops_fetch(get_cpu_index(), mr, abs_addr, tmp, size,
-+                                      memory_region_name(mr));
-+    }
-+    memory_region_shift_read_access(value, shift, mask, tmp);
-+    return r;
-+}
-+
- static MemTxResult memory_region_write_accessor(MemoryRegion *mr,
-                                                 hwaddr addr,
-                                                 uint64_t *value,
-@@ -1461,6 +1506,65 @@ MemTxResult memory_region_dispatch_read(MemoryRegion *mr,
-     return r;
- }
- 
-+static MemTxResult memory_region_dispatch_fetch1(MemoryRegion *mr,
-+                                                hwaddr addr,
-+                                                uint64_t *pval,
-+                                                unsigned size,
-+                                                MemTxAttrs attrs)
-+{
-+    *pval = 0;
-+
-+    if (mr->ops->fetch) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_fetch_accessor,
-+                                         mr, attrs);
-+    } else if (mr->ops->fetch_with_attrs) {
-+        return access_with_adjusted_size(addr, pval, size,
-+            mr->ops->impl.min_access_size,
-+            mr->ops->impl.max_access_size,
-+            memory_region_fetch_with_attrs_accessor,
-+            mr, attrs);
-+    } else if (mr->ops->read) {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_accessor,
-+                                         mr, attrs);
+     prot = full->prot;
+     asidx = cpu_asidx_from_attrs(cpu, full->attrs);
+-    section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
++    section = address_space_translate_for_iotlb(cpu, asidx, full->phys_addr,
+                                                 &xlat, &sz, full->attrs, &prot);
++    /* Update page size */
++    full->lg_page_size = ctz64(sz);
++    if (full->lg_page_size > TARGET_PAGE_BITS) {
++        full->lg_page_size = TARGET_PAGE_BITS;
 +    } else {
-+        return access_with_adjusted_size(addr, pval, size,
-+                                         mr->ops->impl.min_access_size,
-+                                         mr->ops->impl.max_access_size,
-+                                         memory_region_read_with_attrs_accessor,
-+                                         mr, attrs);
-+    }
-+}
-+
-+MemTxResult memory_region_dispatch_fetch(MemoryRegion *mr,
-+                                        hwaddr addr,
-+                                        uint64_t *pval,
-+                                        MemOp op,
-+                                        MemTxAttrs attrs)
-+{
-+    unsigned size = memop_size(op);
-+    MemTxResult r;
-+
-+    if (mr->alias) {
-+        return memory_region_dispatch_fetch(mr->alias,
-+                                           mr->alias_offset + addr,
-+                                           pval, op, attrs);
-+    }
-+    if (!memory_region_access_valid(mr, addr, size, false, attrs)) {
-+        *pval = unassigned_mem_read(mr, addr, size);
-+        return MEMTX_DECODE_ERROR;
++        sz = TARGET_PAGE_SIZE;
 +    }
 +
-+    r = memory_region_dispatch_fetch1(mr, addr, pval, size, attrs);
-+    adjust_endianness(mr, pval, op);
-+    return r;
-+}
++    is_ram = memory_region_is_ram(section->mr);
++    is_romd = memory_region_is_romd(section->mr);
++    /* If the translated mr is ram/rom, make xlat align the TARGET_PAGE */
++    if (is_ram || is_romd) {
++        xlat &= TARGET_PAGE_MASK;
++    }
 +
- /* Return true if an eventfd was signalled */
- static bool memory_region_dispatch_write_eventfds(MemoryRegion *mr,
-                                                     hwaddr addr,
-diff --git a/system/trace-events b/system/trace-events
-index 2ed1d59b1f..a8fc70f28f 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -11,8 +11,10 @@ cpu_out(unsigned int addr, char size, unsigned int val) "addr 0x%x(%c) value %u"
- # memory.c
- memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
-+memory_region_ops_fetch(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
-+memory_region_subpage_fetch(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+     assert(sz >= TARGET_PAGE_SIZE);
+ 
+     tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
+@@ -1076,9 +1091,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+         read_flags |= TLB_INVALID_MASK;
+     }
+ 
+-    is_ram = memory_region_is_ram(section->mr);
+-    is_romd = memory_region_is_romd(section->mr);
+-
+     if (is_ram || is_romd) {
+         /* RAM and ROMD both have associated host memory. */
+         addend = (uintptr_t)memory_region_get_ram_ptr(section->mr) + xlat;
+diff --git a/system/physmem.c b/system/physmem.c
+index 2154432cb6..346b015447 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -702,6 +702,10 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+         iotlb = imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx);
+         addr = ((iotlb.translated_addr & ~iotlb.addr_mask)
+                 | (addr & iotlb.addr_mask));
++        /* Update size */
++        if (iotlb.addr_mask != -1 && *plen > iotlb.addr_mask + 1) {
++            *plen = iotlb.addr_mask + 1;
++        }
+         /* Update the caller's prot bits to remove permissions the IOMMU
+          * is giving us a failure response for. If we get down to no
+          * permissions left at all we can give up now.
 -- 
 2.34.1
 
