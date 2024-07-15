@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D177C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1488C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 09:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTIFt-0002k1-NE; Mon, 15 Jul 2024 05:44:25 -0400
+	id 1sTIGT-0003IZ-1b; Mon, 15 Jul 2024 05:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIFs-0002gu-Qd
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:24 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTIFr-0005Pt-7I
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721036663; x=1752572663;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=aEt9NUuwJ/0VTGg32MzuEEaTFlLR/CAGW8RGmGngYGA=;
- b=EtJ/OEmF2q23sjkLtqqJTMnYmyNTIJ1XmLhiVDIiikHb6xoP83R8pWIf
- e+wJryULyM6cGwJ6vJzzuHws2pmIOy/Fz0kSFLf1eZmXlkEbu87XDJl/g
- lmH7WR6NJdquLC7Fp0E/RAA2ByEXO/aoF9dDMlpYelM13l/TTqD2EZl2W
- 5pty9IgMNds67SYbYWlm99xcj0leWGT8evlBOXgzLctzQfk0+NUfeRSnZ
- 6qYowKNLKd4BRG9ep8NNBk/v5Jl5MV/N8pJrmSVAOIe/4F3fLYNZcSe8j
- 9HUIjzJplmTmJoWwgTjAmBwcByhg+i8yjfkydw+VfIJkCqr1T40vdZKqB g==;
-X-CSE-ConnectionGUID: b+6awR79Qran8JJyicb3nA==
-X-CSE-MsgGUID: PbTrWlJRSGqJt0KB+JaUBw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11133"; a="35837080"
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="35837080"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 02:44:22 -0700
-X-CSE-ConnectionGUID: G+lYKG51TdeS73unNOr37Q==
-X-CSE-MsgGUID: PDmVSPx4STywGl14/CU/HA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,210,1716274800"; d="scan'208";a="53854615"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 15 Jul 2024 02:44:21 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH] qga/commands-posix: Make ga_wait_child() return boolean
-Date: Mon, 15 Jul 2024 17:59:39 +0800
-Message-Id: <20240715095939.72492-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240715095939.72492-1-zhao1.liu@intel.com>
-References: <20240715095939.72492-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIG9-00030O-Uf
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:42 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTIG4-0005Rb-7K
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 05:44:40 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4279c924ca7so23440945e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 02:44:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721036672; x=1721641472; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BOAqUmobpFO1Jx0eFtVmkOJtUM11wxqJzutKMTITd/I=;
+ b=ieynYuFSnfbUL30WQMIeX5HhhX21RM7WPvRBqp0vVEaLIH3i9NSdDuFVPVWGvYiKU0
+ +CaU50pYkgup8pAZ2v4AjboFdEcSUEvTjKIGwLpzk+/b4GYqKl3bNY8HH/ecoLj7yeph
+ UsE1U64rsujASZwYoXuhJUenjBdaJdqLARMZcHoXYKdS2i5e+Oz8qXAaMhzFDKwn1p4Q
+ aoc3odKNvezqVUOFEdf++BrTqu3yUA9sDETTdpb/W35OqzkeSYEzlW1mTOfvEh3rYf/8
+ mCqWqnd18wgUhfhwy8hqOKmd3xMxNgV+wWN1blegPMJaNQD9NH1o/EX3xDaPFkAvXu3y
+ Tp2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721036672; x=1721641472;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BOAqUmobpFO1Jx0eFtVmkOJtUM11wxqJzutKMTITd/I=;
+ b=H5sxflUnpjXi2M8QeW1zaJX11FCv9aSJcAw++rzaVCEf8WOe6Q/1OW25Z1Nm9KlOG0
+ BXGcSwDUEjChpxFX6aKml/B65Flp7WZd5oJh/d4wMATfChBJSA0WC1O6QOerLT2UCIEU
+ B8WuOQyX0VNoWmiJhJO650RopNnYCbb7q70CN08ayROsJDG88ob/qve2hjY+DMpetqri
+ /rxFtUpDZUiFH6c4WkLYkClQ6+jnM6G0h40NzKMyIYq2fX58wTEcsgQNFfJJyNJ3xNen
+ tF8mLmZ2kK/h3Pqh2hMADqhlxnGRXbSfhrz3D5HNwUiR23YZthf1E0h7zSfVIVnozRPV
+ kAhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgYna6/I9xQmqBtshnxfBeCH3smUARXH6tYing81Zg1mEzHKqle/2Ln/LgEEbME7yNHK5iXMfuxOGQ/QOmjnwKC4cGdVQ=
+X-Gm-Message-State: AOJu0Yz+eOaY+s4Gvs1cq6gi81BqPaNAAlfwiGkQU6lyLN49eOIlHkbA
+ jGNG2bkas4/0AbnGAsmFMR0asi+C8MXq8FL7rYo68eWh1vnTIflDuX/7Jy1I9sw=
+X-Google-Smtp-Source: AGHT+IEXFsGo3BdrUqln/kFZze0xcuuDnqJbpOi3UiXGHCpQ9feWbUY7zpjv6vC5gT7SlF2ywvqEIg==
+X-Received: by 2002:a05:600c:41c4:b0:426:62c5:4741 with SMTP id
+ 5b1f17b1804b1-426706c903emr114944755e9.2.1721036672455; 
+ Mon, 15 Jul 2024 02:44:32 -0700 (PDT)
+Received: from [192.168.121.175] (91.red-95-127-43.staticip.rima-tde.net.
+ [95.127.43.91]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-426740d88bcsm165008935e9.1.2024.07.15.02.44.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jul 2024 02:44:32 -0700 (PDT)
+Message-ID: <9946ada2-ecf6-4a4c-9415-915d400240bc@linaro.org>
+Date: Mon, 15 Jul 2024 11:44:30 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] hw/usb/host-libusb: Get rid of qemu_open_old()
+To: Zhao Liu <zhao1.liu@intel.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-trivial@nongnu.org, qemu-devel@nongnu.org
+References: <20240715082155.28771-1-zhao1.liu@intel.com>
+ <20240715082155.28771-3-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240715082155.28771-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,78 +99,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+On 15/7/24 10:21, Zhao Liu wrote:
+> For qemu_open_old(), osdep.h said:
+> 
+>> Don't introduce new usage of this function, prefer the following
+>> qemu_open/qemu_create that take an "Error **errp".
+> 
+> So replace qemu_open_old() with qemu_open().
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   hw/usb/host-libusb.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-...
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
-
-Though currently ga_run_command() only gets &local_err instead of NULL
-@errp, it's still better to follow the requirement to add the
-ERRP_GUARD().
-
-But as error.h suggested, the best practice for callee is to return
-something to indicate success / failure.
-
-So make ga_wait_child() return boolean and check the returned boolean in
-ga_run_command() instead of dereferencing @errp, which eliminates the
-need of ERRP_GUARD().
-
-Cc: Michael Roth <michael.roth@amd.com>
-Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- qga/commands-posix.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 7f05996495a2..64bb0be94479 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -59,7 +59,7 @@
- #endif
- #endif
- 
--static void ga_wait_child(pid_t pid, int *status, Error **errp)
-+static bool ga_wait_child(pid_t pid, int *status, Error **errp)
- {
-     pid_t rpid;
- 
-@@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
-     if (rpid == -1) {
-         error_setg_errno(errp, errno, "failed to wait for child (pid: %d)",
-                          pid);
--        return;
-+        return false;
-     }
- 
-     g_assert(rpid == pid);
-+    return true;
- }
- 
- static ssize_t ga_pipe_read_str(int fd[2], char **str)
-@@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], const char *in_str,
-         goto out;
-     }
- 
--    ga_wait_child(pid, &status, errp);
--    if (*errp) {
-+    if (!ga_wait_child(pid, &status, errp)) {
-         goto out;
-     }
- 
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
