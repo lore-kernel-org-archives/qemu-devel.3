@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B36C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C79C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 06:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTFIx-0000v3-8L; Mon, 15 Jul 2024 02:35:26 -0400
+	id 1sTFVa-0007hD-OL; Mon, 15 Jul 2024 02:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFIq-0000qf-Hs
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:35:17 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFVY-0007gW-LZ
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:48:24 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFIo-0000qV-Na
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:35:16 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3680667d831so1329393f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 23:35:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTFVX-0003ew-0Q
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 02:48:24 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4266edee10cso24489705e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jul 2024 23:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721025313; x=1721630113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721026098; x=1721630898; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1ZM+8MEwDB7RXfXkCuzXW/XmZtNyrPCPggfs/ca6Pg8=;
- b=LBV8WTBXtUGmRnwffyTfhWy1TIizLoJYXQ4x/AVdIxJ2NFlrJ86A9F3xJ/rOv1Fy4H
- V52RHfV+idRC6+3Fq21hzTNp5/tr+W1sxF1Zqu5SGL9WxposASz57QZUrsmU30JrwnxD
- ZGaDCzu2BnqH3tMPC2wia1xXuGBCn5wZzsSSiCl1vE6PkPVu7Cdi+Ai3u5cV5JjbvYPP
- t3vhzgQ1bIc5MUeDnnfBisYMZIy42r09kMaVpzgMCR3EdjYO0/oq6u3omDTZ+k6zLkXB
- EifjQ0wyeK2gzVsv43ZXXFz3PdkmBkNUhrXBZU9Uqw8lkICfbs0yigB5ANqLQg34GzZ2
- t5uw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ejM0fchB/+7b5+8oaXsShCr6BuLuqd5/JmcZT6oPNn8=;
+ b=Eq4UntjAtSgTskRx1h3nNFuC58CziJt+H5So2KmUowFM7xmz5dxpKzqYQC3cxR60oI
+ JBVRRD8peuBm8vyrt5Dt1rOBUHgqi0LD8tIX34VBr2eDpNN/ytaGwzfcvSJa9B2EJBXA
+ AihLseIldgH4LRd8tB5fOdXkHnwbaNmoHhrbHUJfs5TiNKUVo0Uo1bbGwkrijjwrfmwh
+ elw/gicVXQNrDueoebE8IaCvqjGTTW1cnFiLjZOPAhKC6nkmtBYNHgroWtkFJGLvzkFN
+ bQ6zGyA7HOR8pjJG1dK0JhUT+P4AKCV4l8ssiaLB60ylUivEtMoWUm3qiITpaFsEhYjD
+ E1eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721025313; x=1721630113;
+ d=1e100.net; s=20230601; t=1721026098; x=1721630898;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1ZM+8MEwDB7RXfXkCuzXW/XmZtNyrPCPggfs/ca6Pg8=;
- b=s8UtOJecqwlVOMx1o28TACPQQpzqi59qTHuSpb2MHmmoclYsvMW82IH4ixaD+mx4Of
- pXODvP9g9alI1gIErdMSCS1vYVzR7drw6YfqJ/Bir7FnxkxB2S35J1Tx8YA+Nmq+FMdI
- Ct+oTfCiKjLDd9zLANYbEPWPgvSmb6p0Zl9NmsVSEKh5fa8CtvU5xprdwSEiC70AiEnT
- DKB3d5q1P3OT+rwZB9ZBhQpYL9uEss42vWPRHrzlDQ8OtOACqDAF9bS6J2ivoBPAv6TO
- BsUlzBNgcF37eHdL6v+XLSAmxZcPGSGsyHYMRwin3u0+icuq1w9Ltx5noUB3WkjIf/TX
- 8tyw==
+ bh=ejM0fchB/+7b5+8oaXsShCr6BuLuqd5/JmcZT6oPNn8=;
+ b=QSv4M4tTR0jDRgeq53WXwAeacHinvvB8TCd0Q0mODT4LiAGXQxVsTo9bEcv6iFRPTu
+ dk/3XdJT210Nv1UZU3cc6FW6izfH2XFnq5HS3cOqpLhayvLIj0OodTuwDTf5pEiHSB1b
+ 2v4jj2bgelHK87+/RbxefSo4vAvGkRHRlJkBORaIgBXLNT2YswH3xQgBdgscV4yokRG+
+ WPTv8lnIa97ItOIcfrwG3g4FmZ1QY3Y1xQ6jbPeylxDrKdGiIkIumAt/9mBR8CjVhjCD
+ YtnB8Mf2UrUs2shKQzYZcIDCv66B3pnlGZLXFdE5Apq1TMJgMn1djHjI7fMa7JUEdgRX
+ CxvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU52oIQUH2K0Vie1g9D2UWaOSxgAwNzPeOTGONOBb89k0X8VjVgooKoAEAyVerebhEiIba/dT7+BQFCD2y6lHU74xqY2ik=
-X-Gm-Message-State: AOJu0YzGJ9u+h5XYjPzkFcP2zd5AUU2LwPujvhZM0WlwckQuDDejKea5
- h1ZEAMyYmgm+HukEDPkzG5Cl/A52JPWMAMDgowd4SMe3YieinAuPaHT978vicdg=
-X-Google-Smtp-Source: AGHT+IHC6wRf7/bYcJHxFp6Vlvct5v9uMTBEZFH8gEK2Pdi9udAlTnjsCpDQZ/oNsKeyqunrh6y5WA==
-X-Received: by 2002:a5d:4523:0:b0:368:75:26fe with SMTP id
- ffacd0b85a97d-368007527d8mr4950123f8f.32.1721025312721; 
- Sun, 14 Jul 2024 23:35:12 -0700 (PDT)
+ AJvYcCV6KKLP2weBOy6s97woqcfNoZNiMZ6OdT2se09ii5zqbz2OKEbJSrht69gnJ3yCYMfTOnprdcQuRqhTGIDTXmFgVg0Fy/4=
+X-Gm-Message-State: AOJu0YxyXjJ1hiJxGr/T99cHR71P7BUJzAiS+mkbWRfZP1GH6i8jzc9Z
+ ajwNmw1u/rLq7Uf747IXeROQvZOkokVj4UKlayOkLDaXt3CypOzVr4WmKigacsAOfL7CJR76+aJ
+ d
+X-Google-Smtp-Source: AGHT+IFTZgdFbXziU/o+CNnuWbi6HFqyXy04ySjz+PL9CdoNzRdACHmv4xkUbWHsEoB11TiyGS8QqA==
+X-Received: by 2002:a05:600c:6b05:b0:426:58cb:8ca3 with SMTP id
+ 5b1f17b1804b1-426707e21d1mr114557505e9.21.1721026098176; 
+ Sun, 14 Jul 2024 23:48:18 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.134.54])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafbb07sm5376464f8f.86.2024.07.14.23.35.11
+ 5b1f17b1804b1-4279f25abf0sm108424305e9.14.2024.07.14.23.48.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 14 Jul 2024 23:35:12 -0700 (PDT)
-Message-ID: <e70f5115-20a7-47e5-92cf-ab1ff5e7de46@linaro.org>
-Date: Mon, 15 Jul 2024 08:35:10 +0200
+ Sun, 14 Jul 2024 23:48:17 -0700 (PDT)
+Message-ID: <1408e396-b597-4481-b537-e7b53976d5d1@linaro.org>
+Date: Mon, 15 Jul 2024 08:48:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm: Use float_status copy in sme_fmopa_s
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: danikhan632@git.sr.ht, qemu-arm@nongnu.org,
- Daniyal Khan <danikhan632@gmail.com>, qemu-stable@nongnu.org
-References: <20240715055820.319035-1-richard.henderson@linaro.org>
- <20240715055820.319035-2-richard.henderson@linaro.org>
+Subject: Re: [PATCH] esp.c: remove transfer size check from DMA DATA IN and
+ DATA OUT transfers
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, fam@euphon.net
+References: <20240713224249.468084-1-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240715055820.319035-2-richard.henderson@linaro.org>
+In-Reply-To: <20240713224249.468084-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/24 07:58, Richard Henderson wrote:
-> From: Daniyal Khan <danikhan632@gmail.com>
+On 14/7/24 00:42, Mark Cave-Ayland wrote:
+> The transfer size check was originally added to prevent consecutive DMA TI
+> commands from causing an assert() due to an existing SCSI request being in
+> progress, but since the last set of updates
+
+[*]
+
+> this is no longer required.
 > 
-> We made a copy above because the fp exception flags
-> are not propagated back to the FPST register, but
-> then failed to use the copy.
+> Remove the transfer size check from DMA DATA IN and DATA OUT transfers so
+> that issuing a DMA TI command when there is no data left to transfer does
+> not cause an assert() due to an existing SCSI request being in progress.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 558e956c719 ("target/arm: Implement FMOPA, FMOPS (non-widening)")
-> Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-> [rth: Split from a larger patch]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+[*] See commits f3ace75be8..78d68f312a
+
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2415
 > ---
->   target/arm/tcg/sme_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/scsi/esp.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Queued adding [*], thanks.
 
