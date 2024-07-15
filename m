@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4265C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 08:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE78C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jul 2024 08:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTHRA-00063E-LD; Mon, 15 Jul 2024 04:52:00 -0400
+	id 1sTHTc-0007nN-G7; Mon, 15 Jul 2024 04:54:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTHR7-0005sa-T5
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 04:51:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTHR6-00059V-C8
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 04:51:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721033514;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=etJ+aew3jzFKWW7IbJ/vk7g/UkA89WF0fx1dlUfz5JQ=;
- b=GtxOrZAVGLqAXXQ60u6KdBr/w1s8ftHG6hrvVlchPyrLBwOZKig8F6ARBKz6foI1JOC8aM
- QB7SbIodwdOa7DJFg9cYw3jCa6+Jplk8JjKKrcV2f2eojqKUC/nKjc/iH29jiRfHqqGnbN
- rAhhFisrWYePJLUlaE6SNBpGJom4+6g=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-cOPUomXbNvCSADKxo129mQ-1; Mon, 15 Jul 2024 04:51:52 -0400
-X-MC-Unique: cOPUomXbNvCSADKxo129mQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-426703ac88dso26882445e9.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 01:51:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sTHTa-0007gA-GA
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 04:54:30 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sTHTM-0005Mf-UW
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 04:54:29 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1fb3cf78fcaso27707765ad.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 01:54:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721033654; x=1721638454; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PHntyS8Bl+V6jyChnRVxLkBaG1KNp5GLTw7JtNq6Qso=;
+ b=mU3apMJ8x3GywVvMSkmrjgVGLUdnUmQO5dRCs3qlHU6eesrmK8wok2rVwDlmFnlNch
+ LgQcljUPaRNbs/AInVjEw7v0eXPlyTELfQy1MbqCgPvB3ipU+DH0WgmnYk4zurlPdNAI
+ gnIPudMI72aYGts8LCXdT9DZ4J3lyxtLIqQh8VwAIAEbyg8jnTlsn2jleCR3hbKn9Ado
+ 28Ww45uUgZoHlNHt7SVJJaAps1w9hwut9zeUsFUlKo8PG3PhbHFxl5M6476QxRC4S4Tg
+ DL08EQBuSOezWRdZRhBAVm20Uhtyl5ofGVZoE3mo0LeUlfPnJVqX5jVnftZLdpxxq5+7
+ WE6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721033511; x=1721638311;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1721033654; x=1721638454;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=etJ+aew3jzFKWW7IbJ/vk7g/UkA89WF0fx1dlUfz5JQ=;
- b=BSrGhVkts+GIkVsSB/yZSRKW5e6IzrINSkWS452CPpbm0Qo3m/RvqF0fbYPDb5Hfjt
- fPVxKl6AZjebGMqB8x2h7hQIubNm9tkiqqq0jnv1UGygSQmKywzmd8SEhm1ES9cSddLd
- 8XS2iT8yiHBzP7Bp9ZRZY3O+rxo6g/sjuVIWg+bjjE4coPkqoWeCMXhWgSPX/MSglQ2W
- 3fIfZeEx4p7uc0gAKH4YDRTR8zBC249VYEFQN8MycHZQ413S6Q+CrSuqN8rYvq9y293D
- NIeaZ+BIiWM/52uO9vPD99LjFiicW40Pay/By1Z+I+pr1DVKOLVXK1fFX8dixpAD6zFE
- bnCg==
-X-Gm-Message-State: AOJu0Yzgw5Yj+PAjTtDKoZ1tlDAJHGymWH8ONNqSUBXc9dcbhYZ5d8Qd
- GWRaFZTZshiIQvk3VfWkukSodO0oIV4fE1wgW3itx6voknZi4dbTVzRE98DxArHedsSrdbfvJF1
- 1EKa8WiKI+BWEDPsWw6u9aUsInLgYePoe1Vsvm2gU2/EM04a8AMWx
-X-Received: by 2002:a05:600c:6d8f:b0:426:6f0e:a60 with SMTP id
- 5b1f17b1804b1-426707e2ffdmr124732585e9.17.1721033511426; 
- Mon, 15 Jul 2024 01:51:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBPFUeKMPzKFIZyIR9kxkphVkwOyzia+Rw5DpRQwWc7m07JkYYPqHx68Zpqzdosqjow4CdNw==
-X-Received: by 2002:a05:600c:6d8f:b0:426:6f0e:a60 with SMTP id
- 5b1f17b1804b1-426707e2ffdmr124732395e9.17.1721033510899; 
- Mon, 15 Jul 2024 01:51:50 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:240:5146:27c:20a3:47d4:904])
+ bh=PHntyS8Bl+V6jyChnRVxLkBaG1KNp5GLTw7JtNq6Qso=;
+ b=lvRq6GJXlRQSYBSoKcs97nKpWkReFRVx/ImnAzOANLlm4AtcRTZ4aVuPI9+Rn72qBo
+ RQuZqjlh7pMXrslVzw0MeSzr8ns0suzJkDtQvSfgIrALhanRkJWGjCPy47zQhhiG5AK4
+ lzKRDzB8kqEOZMWvjIqcK0upSVvhPiHU8saOv91ocOHVHWK1cwsAmCH0Vv5yoUhgfvE/
+ HIddbwYHv1YdLvfZ7uqopx6XU6uLTcYkN3bjbWlHsFlD7Ru+ZBPvpfY0MWgc+Z0Qob04
+ Ee3Vra4M25JlZUcgufXrTb/jBnsSyR1dbPYKyxFPOC/sg0hCOi36xkstTn0U2k8xXwZt
+ bbjw==
+X-Gm-Message-State: AOJu0YyzvnMnqcUf41/0nPl0t6jKFmFXfT0S23289jwvRRpVS4AFmHfI
+ BkUCMx3ZT2Ll6fz6LmXYFxwWCxRRFphFaiPeOZjfCgL7TKTzrRpoPOCCwUfRo1M=
+X-Google-Smtp-Source: AGHT+IE8HxN8mfq/VWXMTsyQMq5fiuVRB1clDQlDoeBFfl4TH29yYhSQ+su6/tUhlugQgdYX3bvjgA==
+X-Received: by 2002:a17:902:d48d:b0:1fb:4fa4:d20 with SMTP id
+ d9443c01a7336-1fbb6d59ed0mr199157815ad.38.1721033654321; 
+ Mon, 15 Jul 2024 01:54:14 -0700 (PDT)
+Received: from [192.168.68.109] ([179.193.8.43])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a14d32e8sm104070185e9.17.2024.07.15.01.51.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jul 2024 01:51:50 -0700 (PDT)
-Date: Mon, 15 Jul 2024 04:51:46 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-Subject: Re: [PATCH v7 0/4] VT-d minor fixes
-Message-ID: <20240715045137-mutt-send-email-mst@kernel.org>
-References: <20240709142557.317271-1-clement.mathieu--drif@eviden.com>
- <83110d22-6046-425e-8e4d-aa408f998d0b@eviden.com>
+ d9443c01a7336-1fc0bc6027bsm35746325ad.305.2024.07.15.01.54.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jul 2024 01:54:13 -0700 (PDT)
+Message-ID: <53bfd9c7-432d-425d-b911-818305bc0c48@ventanamicro.com>
+Date: Mon, 15 Jul 2024 05:54:10 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <83110d22-6046-425e-8e4d-aa408f998d0b@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/virt.c: re-insert and deprecate 'riscv, delegate'
+To: Conor Dooley <conor@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, Anup Patel <apatel@ventanamicro.com>
+References: <20240713174325.107685-1-dbarboza@ventanamicro.com>
+ <20240713-wreckage-humid-79c9acd37542@spud>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240713-wreckage-humid-79c9acd37542@spud>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,75 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 08:48:52AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> Hi Michael, Yi and Jason
+
+
+On 7/13/24 3:57 PM, Conor Dooley wrote:
+> On Sat, Jul 13, 2024 at 02:43:25PM -0300, Daniel Henrique Barboza wrote:
+>> Commit b1f1e9dcfa renamed 'riscv,delegate' to 'riscv,delegation' since
+>> it is the correct name as per dt-bindings, and the absence of the
+>> correct name will result in validation fails when dumping the dtb and
+>> using dt-validate.
+>>
+>> But this change has a side-effect: every other firmware available that
+>> is AIA capable is using 'riscv,delegate', and it will fault/misbehave if
+>> this property isn't present. The property was added back in QEMU 7.0,
+>> meaning we have 2 years of firmware development using the wrong
+>> property.
+>>
+>> Re-introducing 'riscv,delegate' while keeping 'riscv,delegation' will
+>> make current firmwares to keep booting with the 'virt' machine and
+>> dt-validate won't complain about it since we're still using the expected
+>> property 'riscv,delegation'. 'riscv,delegate' is then marked for future
+>> deprecation and its use is being discouraged.
 > 
-> Thanks for your feedback on the previous versions.
-> If you agree with the series, do you think we can move forward?
+> dt-validate /should/ complain about it - does yours not? It's probably a
+> bug if it doesn't. Whether dt-validate complains or not here I don't
+> think is relevant though, only the impact on firmware of removing it.
+
+We'll keep the property as a temporary documented band-aid that we'll remove
+a few releases from now. OpenSBI was also updated to use the right property
+recently so we shouldn't have any problems.
+
+Oh, and dt-validate will complain about it if we use the right command line that
+creates the controller ... something that I failed to do in v1 :(  I'll re-send
+the patch with an updated commit msg.
 
 
-Yes, tagged, thanks!
+Thanks,
 
-> Thanks!
->  >cmd
+Daniel
+
 > 
-> On 09/07/2024 16:26, CLEMENT MATHIEU--DRIF wrote:
-> > From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> >
-> > Various fixes for VT-d
-> >
-> > This series contains fixes that will be necessary
-> > when adding in-guest (fully emulated) SVM support.
-> >
-> > v7
-> >      intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo:
-> >      	- Edit commit message
-> >
-> > v6
-> >      intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo:
-> >      	- Add 'Fixes' tag
-> >
-> > v5
-> >      intel_iommu: fix FRCD construction macro:
-> >      	- Remove empty line after 'Fixes'
-> >      
-> >      intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo:
-> >      	- Edit commit message after comment from Yi
-> >      
-> >      intel_iommu: make types match:
-> >      	- Edit commit message (s/"make types match"/"make type match"/)
-> >
-> > v4
-> >      - Move declarations of VTD_FRCD_PV and VTD_FRCD_PP
-> >      - intel_iommu: make types match:
-> >      	- edit commit message to explain that we are not fixing a bug
-> >      - intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo
-> >      	- edit commit message
-> >
-> > v3
-> >      FRCD construction macro :
-> >      	- Longer sha1 for the 'Fixes' tag
-> >      	- Add '.' at the end of the sentence
-> >      
-> >      Make types match :
-> >      	- Split into 2 patches (one for the fix and one for type matching)
-> >      
-> >      Remove patch for wait descriptor handling (will be in the PRI series)
-> >
-> > v2
-> >      Make commit author consistent
-> >
-> >
-> >
-> > Clément Mathieu--Drif (4):
-> >    intel_iommu: fix FRCD construction macro
-> >    intel_iommu: move VTD_FRCD_PV and VTD_FRCD_PP declarations
-> >    intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo
-> >    intel_iommu: make type match
-> >
-> >   hw/i386/intel_iommu.c          | 2 +-
-> >   hw/i386/intel_iommu_internal.h | 6 +++---
-> >   2 files changed, 4 insertions(+), 4 deletions(-)
-> >
-
 
