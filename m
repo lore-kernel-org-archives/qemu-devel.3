@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3B8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F193C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTe3f-0007Vi-EV; Tue, 16 Jul 2024 05:01:15 -0400
+	id 1sTe5Y-0003Ld-4F; Tue, 16 Jul 2024 05:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTe3c-0007Sn-CP
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:01:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Simon.Hamelin@grenoble-inp.org>)
+ id 1sTe5R-0003JE-Gp
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:03:06 -0400
+Received: from smtpout01-ext2.partage.renater.fr ([194.254.240.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTe3N-0000Vs-MT
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:01:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721120455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nn6LWkSU28aw4wa2A9R1Uc+par669e6qPoKBMRBmcmE=;
- b=iea3RoGC889N5iI5vnfb4CKOF0AEDV/+qOD6Hlv2y0ADi0OPZKlbH0WyKt37JNI77hHsIO
- U9PmodH2zoZtnQ2LaOQntYcabVXMa83PTv3hzOvE8Nl3FLJVw+9u/xqti9bHNGH8hhnK7d
- 8krSZLOvDtQO026mghM7ASV7ueU+LpA=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-RdKR-L9OM0-ic43wrEoD7w-1; Tue, 16 Jul 2024 05:00:54 -0400
-X-MC-Unique: RdKR-L9OM0-ic43wrEoD7w-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52e969d34bbso5582981e87.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:00:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721120452; x=1721725252;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nn6LWkSU28aw4wa2A9R1Uc+par669e6qPoKBMRBmcmE=;
- b=BogepzP5J11v06nWPL3b0flnOhpxZovY4Eo4Ib6kGjZml3+3fOsG60W0E6gIujyEmJ
- x1z1J3HWZBaJWgPqcB8JAENSIi8DJt9m3gwI/ygdRZz+IvGv6cXYaZoIPHR2G89g9Fiy
- iGTNPT7kHCO1iFSM52cCuuQa1RV98oQWhV+yaz8E4ourxhFhLgDeiW9zpScMbCI3M3cJ
- eFxYpIu1TrHNu/BdRLvFCUOHYUe0ljWTZOtpmk+Bk2xGW3dtooOuTmUYGM6kZOv573uo
- T3RrF2jNhtpWk7g2BswX3qLUuxS8RTmr9jRpFusOQrzuKRKnPBNfpl6PcYa2SE5SC12Z
- Wcrg==
-X-Gm-Message-State: AOJu0YztTyvrv4MAZ5Oe1DVCfp9GHn0KX9Qd1QZrkNwSRjcWaKDtKkfr
- 5xa/FW4+dNINRjvu2v5RMJCKD3kQLC3BGBQyGEIvYqaBB8qWkCJudtEkA11LEjmf/49jXzAaIqc
- dDYlP1oNGlASBIk9SUocXYrIbJ6BC6mB4qXjsjfzHlTkBaavgspam
-X-Received: by 2002:a05:6512:2253:b0:52e:9f43:c150 with SMTP id
- 2adb3069b0e04-52edf032e9fmr1033462e87.62.1721120452142; 
- Tue, 16 Jul 2024 02:00:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEld7gLltZJoUXHW1ivCZ/ojGTcZORkcN7jHlvGrIGzZX4NG+qDfQm9mQ2MafkG8Hn5qj4Mhg==
-X-Received: by 2002:a05:6512:2253:b0:52e:9f43:c150 with SMTP id
- 2adb3069b0e04-52edf032e9fmr1033442e87.62.1721120451753; 
- Tue, 16 Jul 2024 02:00:51 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f25abf0sm151143715e9.14.2024.07.16.02.00.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 02:00:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Boqiao Fu <bfu@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] Manpage: Update description of 'user=username' for
- '-run-with'
-Date: Tue, 16 Jul 2024 11:00:09 +0200
-Message-ID: <20240716090008.187506-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <CAFRHJ6J9uMk+HMZL+W+KE1yoRCOLPgbPUVVDku55sdXYiGXXHg@mail.gmail.com>
-References: 
+ (Exim 4.90_1) (envelope-from <Simon.Hamelin@grenoble-inp.org>)
+ id 1sTe5P-0000hd-Ls
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:03:05 -0400
+Received: from zmtaauth05.partage.renater.fr (zmtaauth05.partage.renater.fr
+ [194.254.240.27])
+ by smtpout10.partage.renater.fr (Postfix) with ESMTP id CCC9C63C90;
+ Tue, 16 Jul 2024 11:02:50 +0200 (CEST)
+Received: from zmtaauth05.partage.renater.fr (localhost [127.0.0.1])
+ by zmtaauth05.partage.renater.fr (Postfix) with ESMTPS id 8EE10200DC;
+ Tue, 16 Jul 2024 11:02:22 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zmtaauth05.partage.renater.fr (Postfix) with ESMTP id 7B67F201F9;
+ Tue, 16 Jul 2024 11:02:22 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth05.partage.renater.fr 7B67F201F9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grenoble-inp.org;
+ s=F42A61D9-9621-4693-8E8E-830FB5F1ED6E; t=1721120542;
+ bh=WB8uX7VshZX8TQ0upnmN3iTdgugu9Fx+mHxWiOS1p9A=;
+ h=Message-ID:Date:MIME-Version:To:From;
+ b=eGo8iTAk0m4GEOGFH7wR5d79SOP3zBpTXQ1dYJnfDaM0eHuPDQhGZLiybsvRJtjkP
+ 5ph6oA2BIU1kg3XDATglAPToCSqbbREVkLkTwbEyzA/kSrpWrYJsl6GduzlwE50xvC
+ 0SBAqRdaHOiCciqdRNDSGzsdVIH+6/7gn+mUywcfEocGE02qr8xn8+Lz8lIELwRAvd
+ NLDKS/wxLJD1grq3c09nGUm/FQ3DgJij2l0zCiPf3FPgAruJ8ZqhnC1BrDNLUByjqS
+ JodS5T1yl3yU7JnkldIwyrvA9+DDViECqjt6r2ryV00aW8cHI0RHNu4aBL5H9rjjBW
+ UOhEqwvZGV7Rw==
+Received: from zmtaauth05.partage.renater.fr ([127.0.0.1])
+ by localhost (zmtaauth05.partage.renater.fr [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id EHgxgg1zmMuY; Tue, 16 Jul 2024 11:02:22 +0200 (CEST)
+Received: from 188.231.11.184 (unknown [194.254.241.251])
+ by zmtaauth05.partage.renater.fr (Postfix) with ESMTPA id 0BC3F200DC;
+ Tue, 16 Jul 2024 11:02:21 +0200 (CEST)
+Message-ID: <b964ae7b-6ae4-43a4-b886-70e8e9875f58@grenoble-inp.org>
+Date: Tue, 16 Jul 2024 11:02:44 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] plugins/stoptrigger: TCG plugin to stop execution
+ under conditions
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240710120854.34333-2-simon.hamelin@grenoble-inp.org>
+ <87jzhsqm97.fsf@draig.linaro.org>
+ <b03c9f17-a99a-4b6e-883b-37ce092d2a57@grenoble-inp.org>
+ <95ebaf0d-2dee-4403-94c6-44e654f05b38@linaro.org>
+ <ceab7747-1baa-46d3-860d-b99247e3a65c@grenoble-inp.org>
+ <4967cfde-65d0-46ac-8956-a23eb9836e90@linaro.org>
+Content-Language: en-US
+From: Simon Hamelin <Simon.Hamelin@grenoble-inp.org>
+In-Reply-To: <4967cfde-65d0-46ac-8956-a23eb9836e90@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav02
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: -100
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgeeftddrgeeggddutdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepufhimhhonhcujfgrmhgvlhhinhcuoefuihhmohhnrdfjrghmvghlihhnsehgrhgvnhhosghlvgdqihhnphdrohhrgheqnecuggftrfgrthhtvghrnhepfefhjeektddtvdffgfdtieelgeeigeevtddtuefgfeelhfdutdfftddtleegleeunecukfhppeduleegrddvheegrddvgedurddvhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepudelgedrvdehgedrvdeguddrvdehuddphhgvlhhopedukeekrddvfedurdduuddrudekgedpmhgrihhlfhhrohhmpefuihhmohhnrdfjrghmvghlihhnsehgrhgvnhhosghlvgdqihhnphdrohhrghdpnhgspghrtghpthhtohepjedprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprghlvgigrdgsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegvrhgunhgrgigvsegtrhgrnhhsrdhorhhgpdhrtghpthhtohepmhgrrdhmrghnughouhhrrhesghhm
+ rghilhdrtghomhdprhgtphhtthhopehrihgthhgrrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdrohhrgh
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: none client-ip=194.254.240.33;
+ envelope-from=Simon.Hamelin@grenoble-inp.org;
+ helo=smtpout01-ext2.partage.renater.fr
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_HELO_IP_MISMATCH=2.368, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,30 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Manpage: the description of '-runs' didn't show this parameter will use
-> setuid, so the customer might get confused when 'elevateprivileges=deny' is
-> used. Since '-runas' is going to be deprecated and replaced by this
-> parameter in the coming qemu9.1, add the message here.
 
-Queued, thanks.  I modified the patch a bit to explain how setgid and
-setgroups are used in addition to setuid:
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ad6521ef5e7..694fa37f284 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5024,8 +5024,11 @@ SRST
-     in combination with -runas.
+On 7/16/24 01:08, Pierrick Bouvier wrote:
+> On 7/15/24 01:09, Simon Hamelin wrote:
+>> Hello Pierrick,
+>>
+>>> Could you share a bit more information on the final goal, if possible=
+?
+>>> Is that used for fuzzing binaries, security analysis, or other things=
+?
+>>
+>> I'm currently using this plugin for security analysis purposes.
+>> Basically my goal is to simulate fault injection using QEMU. To do so
+>> I'm using this plugin along with another plugin that skips an
+>> instruction at a given address. With this plugin I'm able to see how t=
+he
+>> program reacts to the fault and stop it with a custom return code.
+>> Basically there are 4 cases:
+>> =C2=A0=C2=A0=C2=A0=C2=A0 - The fault does not disrupt the program and =
+it reaches the expected
+>> address.
+>> =C2=A0=C2=A0=C2=A0=C2=A0 - The fault disrupt the program and it reache=
+s an unexpected address
+>> known as the "target" address.
+>> =C2=A0=C2=A0=C2=A0=C2=A0 - The fault disrupt the program in such a way=
+ that it executes a lot
+>> of instructions without reaching the expected address, this situation =
+is
+>> known as a "timeout".
+>> =C2=A0=C2=A0=C2=A0=C2=A0 - The fault crashes the guest, causing it to =
+reach an error handler
+>> address.
+>>
+>=20
+> Thanks for sharing this, it's an interesting use case.
+>=20
+> How did you implement instruction skipping?
+> Is that based on current API, or do you have a QEMU fork?
+>=20
 
-     ``user=username`` or ``user=uid:gid`` can be used to drop root privileges
--    by switching to the specified user (via username) or user and group
--    (via uid:gid) immediately before starting guest execution.
-+    before starting guest execution. QEMU will use the ``setuid`` and ``setgid``
-+    system calls to switch to the specified identity.  Note that the
-+    ``user=username`` syntax will also apply the full set of supplementary
-+    groups for the user, whereas the ``user=uid:gid`` will use only the
-+    ``gid`` group.
-
-Paolo
+I had to extend the current API to support writing guest registers,=20
+specifically I'm skipping instructions by writing to the PC register. To=20
+do this I use the set_pc function of the CPUClass struct. This requires=20
+a bit of a hack to make the TCG react to the PC change as it's normal=20
+behavior is to execute the entire TB and ignore the PC change. To make=20
+the TCG react to this modification the only way I've found is to leave=20
+it midway it's execution using the `cpu_loop_exit` function.
 
 
