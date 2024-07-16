@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 056A6C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB915C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sThsK-0007s4-VY; Tue, 16 Jul 2024 09:05:48 -0400
+	id 1sThso-0008Se-8K; Tue, 16 Jul 2024 09:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThsI-0007ov-UK
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:05:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThsm-0008Lw-7i
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:06:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThsG-0008Dw-AO
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:05:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThsj-0008Pe-Cr
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:06:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721135143;
+ s=mimecast20190719; t=1721135172;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Yh9OERLQkLrXdyvBxGlZ2joiP5r19cWo6wbZFDEqUhE=;
- b=U4QFlVGgNs52pPGgjg0dmiG4HUXVjk8QUW6Ww8IOznluKFSj0cCFvuCWF1O5EhjEf1Vv+D
- JHNx/gzCgQCT/KDp165KoecR4UY0xGyEUrYRF84mnTXI8VGjVulQsTV0H+TcIqSb7aE44f
- L+yQZw7sEpMs/uAJq9JzfhVmlaX8IJU=
+ bh=maWtgPkxeR1w3aAEhYdFJHtq3Lxdss5BtOE4/8g2HWo=;
+ b=MYMfXoozHuYePadJ1qMCI2bBTwpLkF2u8iJfso0YTgF2cUK2hvBVdk4RLj0aeC2FsKXLlY
+ bhf3di9Y4V5FW9fmwnFaN9P37myMYhih3f/FlJfqCddrx56Z9DtgLoYb8PHnbFI/iQNVNy
+ r8yObvHQXH6jDBzuOsM2r2QoMPaVncE=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-ehimPU8QNn6ENOuo4RD4mw-1; Tue, 16 Jul 2024 09:05:41 -0400
-X-MC-Unique: ehimPU8QNn6ENOuo4RD4mw-1
+ us-mta-390-XSS24S_TMEyhVaJo1xOP8Q-1; Tue, 16 Jul 2024 09:06:11 -0400
+X-MC-Unique: XSS24S_TMEyhVaJo1xOP8Q-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4279837c024so39054645e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:05:41 -0700 (PDT)
+ 5b1f17b1804b1-426624f4ce3so35546695e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:06:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721135141; x=1721739941;
+ d=1e100.net; s=20230601; t=1721135170; x=1721739970;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yh9OERLQkLrXdyvBxGlZ2joiP5r19cWo6wbZFDEqUhE=;
- b=GM68Q3NQ/QGqL3l9Rh4U8l4AWXVwPG9myhWvHE+yK1n9OdzdyHpOqrkEio+nxgtzQW
- bACY8JiVmfZ736wxPJv/avW+xBFH/dyPt7CJVAkOruFEIMpTboA+V4r1cRXY2pbGPNF2
- Qv0B9xzP2JJQ9LlVBgQq1+HfQjCxioqlkZ2AeaJ4YdYmbqfKlU3f4ef/U+Z1A3HQ9K+X
- D5oKWXK/WZ37KVV4RzE7mfZQIZ2x+gO0umTaaiLfg1ujs6FHGyy9IqPV1CRk1/n/xmK/
- my0gUE+7jAte1a3Ky45/fmbvYS8xt87TJrCGg/2TxXqypfA0zzKMST0kdacvgq/gR9uY
- kwcQ==
+ bh=maWtgPkxeR1w3aAEhYdFJHtq3Lxdss5BtOE4/8g2HWo=;
+ b=ILN2lZj5aUWPW+Sb1P1GVorp/45ICZZLoQfYuZS6XL3ynkrq+//tbTN+cPxN6qWHY5
+ xiw6qN1L/CIGmzKxQvRxFu1MOqp7LQ03jE7zKYzi2FF++nJumuByzDiAkay1G2jQzoKH
+ I1Lj6jZJjLuQZoeutJ8fP97xfjssmnQ46IlQfnWXL+i0h6WFMz7m8WCMh5ZCPoERiq5c
+ vr6h29S5fsolMTwogW96IM4lqh3UgOZ+x4kCEE9Omggu5OfC7B/8L49csCMZJQy93o8j
+ Y7LmE3qntFgGNLfmLRjsyZfKV9tgejax7TnlHZBTMtoP0tH+vJH1SJ9xn3p+bB8+dR8C
+ HMrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmFNV87A0p6lkHYfWgVvBbVBYJ8a97VyxfKUUhKtdDCgtv1fP2vR0iD1WbAsuItwBYGqAkaMSsOXwcKvTjTH10owRDZYI=
-X-Gm-Message-State: AOJu0YzoTKfbgP3D7vkv9gyFAVr6TIZlPd9ImpCwzlUMLDXWkbApI755
- O+GSFiVDVxKITEd7ERnaLHab+cGekpXOFjupQupD5jaRr5QiVcIkP6xIdtxWYpfIlOXjtMzvHX4
- B5YxgGwca1Xed0wiiM8cVXWkiO/b9KMPAAcbg0VPT2ZyMxob6/AB6
-X-Received: by 2002:a05:600c:4fce:b0:426:8ee5:5d29 with SMTP id
- 5b1f17b1804b1-427ba628f03mr15060025e9.9.1721135140740; 
- Tue, 16 Jul 2024 06:05:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHomq/WOpc6Ez97CWNoufjPSNUZmEIc9cVilDqSL0lBzvxTzEYXg0F4HxGMXoLMUtv90GZFhA==
-X-Received: by 2002:a05:600c:4fce:b0:426:8ee5:5d29 with SMTP id
- 5b1f17b1804b1-427ba628f03mr15059845e9.9.1721135140331; 
- Tue, 16 Jul 2024 06:05:40 -0700 (PDT)
+ AJvYcCWzjiumGFADPsxE3uRd9sFsULpul/gzCe1DfPGuy/VPKGeJrKJ2wOqmlC8XShBbdE1LjhmJFDBm0aXcWaRPH1DNPh5ITeU=
+X-Gm-Message-State: AOJu0YxXTKgeRIdmRZaBlli/rk8xSuTaRBQrT/NNTB2wRnznYMyBP5gT
+ 4laf6dNNysCUnn7owA1RhW8NHQmNh8bIrrd0iNtQW62RJJGOolLQAXOjelQ6WGCSInQIy7iXf9n
+ ZO2FXVJrirr1Kz2SbvW72by2clQMak04t0Uylntrzk8Rhu/ROR6ZD
+X-Received: by 2002:a05:600c:4f41:b0:426:5de3:2ae5 with SMTP id
+ 5b1f17b1804b1-427ba67f609mr13822735e9.10.1721135169860; 
+ Tue, 16 Jul 2024 06:06:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHp9/OjHdfduIr5SMQVjsDPGd4UATXyqtQ288eAT0qo8wDCS773NgqvWpn3nCRFCVi+JSjcvw==
+X-Received: by 2002:a05:600c:4f41:b0:426:5de3:2ae5 with SMTP id
+ 5b1f17b1804b1-427ba67f609mr13822595e9.10.1721135169550; 
+ Tue, 16 Jul 2024 06:06:09 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
  ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680db04748sm8967576f8f.102.2024.07.16.06.05.39
+ 5b1f17b1804b1-4279f27846bsm160945185e9.25.2024.07.16.06.06.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 06:05:39 -0700 (PDT)
-Message-ID: <6f076ede-0939-4804-a878-6c1e094dff17@redhat.com>
-Date: Tue, 16 Jul 2024 15:05:38 +0200
+ Tue, 16 Jul 2024 06:06:09 -0700 (PDT)
+Message-ID: <ee956f5d-676c-404e-a07c-8bc3330cdbcd@redhat.com>
+Date: Tue, 16 Jul 2024 15:06:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] Revert "virtio-iommu: Clear IOMMUDevice when VFIO
- device is unplugged"
+Subject: Re: [PATCH 2/6] virtio-iommu: Remove probe_done
 To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
  jean-philippe@linaro.org, peter.maydell@linaro.org,
  zhenzhong.duan@intel.com, alex.williamson@redhat.com, jasowang@redhat.com
 Cc: yanghliu@redhat.com
 References: <20240716094619.1713905-1-eric.auger@redhat.com>
- <20240716094619.1713905-2-eric.auger@redhat.com>
+ <20240716094619.1713905-3-eric.auger@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240716094619.1713905-2-eric.auger@redhat.com>
+In-Reply-To: <20240716094619.1713905-3-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,34 +108,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/16/24 11:45, Eric Auger wrote:
-> This reverts commit 1b889d6e39c32d709f1114699a014b381bcf1cb1.
-> There are different problems with that tentative fix:
-> - Some resources are left dangling (resv_regions,
->    host_resv_ranges) and memory subregions are left attached to
->    the root MR although freed as embedded in the sdev IOMMUDevice.
->    Finally the sdev->as is not destroyed and associated listeners
->    are left.
-> - Even when fixing the above we observe a memory corruption
->    associated with the deallocation of the IOMMUDevice. This can
->    be observed when a VFIO device is hotplugged, hot-unplugged
->    and a system reset is issued. At this stage we have not been
->    able to identify the root cause (IOMMU MR or as structs beeing
->    overwritten and used later on?).
-> - Another issue is HostIOMMUDevice are indexed by non aliased
->    BDF whereas the IOMMUDevice is indexed by aliased BDF - yes the
->    current naming is really misleading -. Given the state of the
->    code I don't think the virtio-iommu device works in non
->    singleton group case though.
+> Now we have switched to PCIIOMMUOps to convey host IOMMU information,
+> the host reserved regions are transmitted when the PCIe topology is
+> built. This happens way before the virtio-iommu driver calls the probe
+> request. So let's remove the probe_done flag that allowed to check
+> the probe was not done before the IOMMU MR got enabled. Besides this
+> probe_done flag had a flaw wrt migration since it was not saved/restored.
 > 
-> So let's revert the patch for now. This means the IOMMU MR/as survive
-> the hotunplug. This is what is done in the intel_iommu for instance.
-> It does not sound very logical to keep those but currently there is
-> no symetric function to pci_device_iommu_address_space().
-
-Fully agree.
-  
-> probe_done issue will be handled in a subsequent patch. Also
-> resv_regions and host_resv_regions will be deallocated separately.
+> The only case at risk is if 2 devices were plugged to a
+> PCIe to PCI bridge and thus aliased. First of all we
+> discovered in the past this case was not properly supported for
+> neither SMMU nor virtio-iommu on guest kernel side: see
+> 
+> [RFC] virtio-iommu: Take into account possible aliasing in virtio_iommu_mr()
+> https://lore.kernel.org/all/20230116124709.793084-1-eric.auger@redhat.com/
+> 
+> If this were supported by the guest kernel, it is unclear what the call
+> sequence would be from a virtio-iommu driver point of view.
 > 
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
@@ -149,47 +137,42 @@ C.
 
 
 > ---
->   hw/virtio/virtio-iommu.c | 21 ---------------------
->   1 file changed, 21 deletions(-)
+>   include/hw/virtio/virtio-iommu.h | 1 -
+>   hw/virtio/virtio-iommu.c         | 3 ---
+>   2 files changed, 4 deletions(-)
 > 
+> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+> index bdb3da72d0..7db4210b16 100644
+> --- a/include/hw/virtio/virtio-iommu.h
+> +++ b/include/hw/virtio/virtio-iommu.h
+> @@ -43,7 +43,6 @@ typedef struct IOMMUDevice {
+>       MemoryRegion bypass_mr;     /* The alias of shared memory MR */
+>       GList *resv_regions;
+>       GList *host_resv_ranges;
+> -    bool probe_done;
+>   } IOMMUDevice;
+>   
+>   typedef struct IOMMUPciBus {
 > diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 33ae61c4a6..4e34dacd6e 100644
+> index 4e34dacd6e..2c54c0d976 100644
 > --- a/hw/virtio/virtio-iommu.c
 > +++ b/hw/virtio/virtio-iommu.c
-> @@ -467,26 +467,6 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
->       return &sdev->as;
->   }
+> @@ -555,8 +555,6 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
 >   
-> -static void virtio_iommu_device_clear(VirtIOIOMMU *s, PCIBus *bus, int devfn)
-> -{
-> -    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
-> -    IOMMUDevice *sdev;
+>       current_ranges = sdev->host_resv_ranges;
+>   
+> -    g_assert(!sdev->probe_done);
 > -
-> -    if (!sbus) {
-> -        return;
-> -    }
-> -
-> -    sdev = sbus->pbdev[devfn];
-> -    if (!sdev) {
-> -        return;
-> -    }
-> -
-> -    g_list_free_full(sdev->resv_regions, g_free);
-> -    sdev->resv_regions = NULL;
-> -    g_free(sdev);
-> -    sbus->pbdev[devfn] = NULL;
-> -}
-> -
->   static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
->   {
->       const struct hiod_key *key1 = v1;
-> @@ -728,7 +708,6 @@ virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+>       /* check that each new resv region is included in an existing one */
+>       if (sdev->host_resv_ranges) {
+>           range_inverse_array(iova_ranges,
+> @@ -956,7 +954,6 @@ static int virtio_iommu_probe(VirtIOIOMMU *s,
 >       }
+>       buf += count;
+>       free -= count;
+> -    sdev->probe_done = true;
 >   
->       g_hash_table_remove(viommu->host_iommu_devices, &key);
-> -    virtio_iommu_device_clear(viommu, bus, devfn);
+>       return VIRTIO_IOMMU_S_OK;
 >   }
->   
->   static const PCIIOMMUOps virtio_iommu_ops = {
 
 
