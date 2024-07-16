@@ -4,67 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FE0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B236C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgBa-0005WA-OQ; Tue, 16 Jul 2024 07:17:34 -0400
+	id 1sTgKS-0000Pf-RR; Tue, 16 Jul 2024 07:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sTgBX-0005BE-6o; Tue, 16 Jul 2024 07:17:31 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKR-0000Js-Fe
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sTgBU-0001qX-KU; Tue, 16 Jul 2024 07:17:30 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WNc2L6mxyz6JBF9;
- Tue, 16 Jul 2024 19:16:10 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 4B9001400C8;
- Tue, 16 Jul 2024 19:17:26 +0800 (CST)
-Received: from 00293818-MRGF.huawei.com (10.126.170.92) by
- lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 16 Jul 2024 12:17:08 +0100
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
- <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
- <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
- <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
- <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
- <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
- <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
- <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
- <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Shaoqin
- Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH V16 6/7] physmem: Add helper function to destroy CPU
- AddressSpace
-Date: Tue, 16 Jul 2024 12:15:01 +0100
-Message-ID: <20240716111502.202344-7-salil.mehta@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240716111502.202344-1-salil.mehta@huawei.com>
-References: <20240716111502.202344-1-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKP-0003eb-Pl
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721129201;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CbeK7o2Avj9RP/nuuizYkz3rpCRVuPxR4fikDUeYbMw=;
+ b=TPtuyzcDxmslnunUvtxPwUNLJHmljpJbXluohPTXgj8iqq7AHnZbsSZzjfZgG1kGE9V9oK
+ OgDwnzMruZCYZye8b+hDTTESEtHge1Yq+mVBqW2oEeSngda1lP3DlSJLTGlE1+tHlFfY+c
+ LEemwe5q6/tWbswkkHOG301EHTBagj0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-kUWn3jTQNauKBvXuQNwphw-1; Tue,
+ 16 Jul 2024 07:26:38 -0400
+X-MC-Unique: kUWn3jTQNauKBvXuQNwphw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B83871944A9B; Tue, 16 Jul 2024 11:26:36 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.154])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6E7101955F40; Tue, 16 Jul 2024 11:26:33 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH 04/11] tests/functional: Add python-based tests to the meson
+ build system
+Date: Tue, 16 Jul 2024 13:26:07 +0200
+Message-ID: <20240716112614.1755692-5-thuth@redhat.com>
+In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
+References: <20240716112614.1755692-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.170.92]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- lhrpeml500001.china.huawei.com (7.191.163.213)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,108 +85,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
-involves destruction of the CPU AddressSpace. Add common function to help
-destroy the CPU AddressSpace.
+Integrate the new python-based test framework with the meson build
+system. Since these tests now require the pycotap module, make
+sure that it gets installed in the venv.
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-Tested-by: Zhao Liu <zhao1.liu@intel.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+The changes to the meson.build files are partly based on an earlier
+patch by Ani Sinha (but heavily modified by Thomas Huth e.g. to use
+pycotap for running the tests instead).
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/exec/cpu-common.h |  8 ++++++++
- include/hw/core/cpu.h     |  1 +
- system/physmem.c          | 29 +++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+ pythondeps.toml              |  3 +-
+ tests/Makefile.include       | 18 ++++++++-
+ tests/functional/meson.build | 75 ++++++++++++++++++++++++++++++++++++
+ tests/meson.build            |  1 +
+ 4 files changed, 95 insertions(+), 2 deletions(-)
+ create mode 100644 tests/functional/meson.build
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 815342d043..240ee04369 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -129,6 +129,14 @@ size_t qemu_ram_pagesize_largest(void);
-  */
- void cpu_address_space_init(CPUState *cpu, int asidx,
-                             const char *prefix, MemoryRegion *mr);
-+/**
-+ * cpu_address_space_destroy:
-+ * @cpu: CPU for which address space needs to be destroyed
-+ * @asidx: integer index of this address space
-+ *
-+ * Note that with KVM only one address space is supported.
-+ */
-+void cpu_address_space_destroy(CPUState *cpu, int asidx);
+diff --git a/pythondeps.toml b/pythondeps.toml
+index f6e590fdd8..c018b4d74a 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -26,9 +26,10 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
+ sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
+ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
  
- void cpu_physical_memory_rw(hwaddr addr, void *buf,
-                             hwaddr len, bool is_write);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index a2c8536943..c7dbfdfb11 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -496,6 +496,7 @@ struct CPUState {
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
+-[avocado]
++[tests]
+ # Note that qemu.git/python/ is always implicitly installed.
+ # Prefer an LTS version when updating the accepted versions of
+ # avocado-framework, for example right now the limit is 92.x.
+ avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
+ pycdlib = { accepted = ">=1.11.0" }
++pycotap = { accepted = ">=1.1.0" }
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index d39d5dd6a4..2bdf607977 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -9,6 +9,8 @@ check-help:
+ 	@echo "Individual test suites:"
+ 	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
+ 	@echo " $(MAKE) check-qtest            Run qtest tests"
++	@echo " $(MAKE) check-functional       Run python-based functional tests"
++	@echo " $(MAKE) check-functional-TARG  Run functional tests for a given target"
+ 	@echo " $(MAKE) check-unit             Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
+ 	@echo " $(MAKE) check-block            Run block tests"
+@@ -111,7 +113,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
  
-     struct CPUAddressSpace *cpu_ases;
-+    int cpu_ases_count;
-     int num_ases;
-     AddressSpace *as;
-     MemoryRegion *memory;
-diff --git a/system/physmem.c b/system/physmem.c
-index 14aa025d41..ddd1fc3a25 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -763,6 +763,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+ $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+ 	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< avocado
++	$(MKVENV_ENSUREGROUP) $< tests
+ 	$(call quiet-command, touch $@)
  
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-+        cpu->cpu_ases_count = cpu->num_ases;
-     }
+ $(TESTS_RESULTS_DIR):
+@@ -152,6 +154,20 @@ check-acceptance-deprecated-warning:
  
-     newas = &cpu->cpu_ases[asidx];
-@@ -776,6 +777,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-     }
- }
+ check-acceptance: check-acceptance-deprecated-warning | check-avocado
  
-+void cpu_address_space_destroy(CPUState *cpu, int asidx)
-+{
-+    CPUAddressSpace *cpuas;
++# Make sure that pycotap is installed before running any functional tests:
++ifneq ($(filter check-func%,$(MAKECMDGOALS))$(filter check,$(MAKECMDGOALS)),)
++do-meson-check: check-venv
++endif
 +
-+    assert(cpu->cpu_ases);
-+    assert(asidx >= 0 && asidx < cpu->num_ases);
-+    /* KVM cannot currently support multiple address spaces. */
-+    assert(asidx == 0 || !kvm_enabled());
++FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
++.PHONY: $(FUNCTIONAL_TARGETS)
++$(FUNCTIONAL_TARGETS):
++	@make SPEED=thorough $(subst -functional,-func,$@)
 +
-+    cpuas = &cpu->cpu_ases[asidx];
-+    if (tcg_enabled()) {
-+        memory_listener_unregister(&cpuas->tcg_as_listener);
-+    }
++.PHONY: check-functional
++check-functional:
++	@make SPEED=thorough check-func check-func-quick
 +
-+    address_space_destroy(cpuas->as);
-+    g_free_rcu(cpuas->as, rcu);
+ # Consolidated targets
+ 
+ .PHONY: check check-clean get-vm-images
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+new file mode 100644
+index 0000000000..11352b5bb5
+--- /dev/null
++++ b/tests/functional/meson.build
+@@ -0,0 +1,75 @@
++# QEMU functional tests:
++# Tests that are put in the 'quick' category are run by default during
++# 'make check'. Everything that should not be run during 'make check'
++# (e.g. tests that fetch assets from the internet) should be put into
++# the 'thorough' category instead.
 +
-+    if (asidx == 0) {
-+        /* reset the convenience alias for address space 0 */
-+        cpu->as = NULL;
-+    }
++# Most tests run too slow with TCI enabled, so skip the functional tests there
++if get_option('tcg_interpreter')
++  subdir_done()
++endif
 +
-+    if (--cpu->cpu_ases_count == 0) {
-+        g_free(cpu->cpu_ases);
-+        cpu->cpu_ases = NULL;
-+    }
++# Timeouts for individual tests that can be slow e.g. with debugging enabled
++test_timeouts = {
++  'ppc_74xx' : 90,
 +}
 +
- AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
- {
-     /* Return the AddressSpace corresponding to the specified index */
++tests_generic = [
++  'empty_cpu_model',
++  'info_usernet',
++  'version',
++]
++
++tests_ppc_quick = [
++  'ppc_74xx',
++]
++
++tests_x86_64_quick = [
++  'cpu_queries',
++  'mem_addr_space',
++  'pc_cpu_hotplug_props',
++  'virtio_version',
++]
++
++foreach speed : ['quick', 'thorough']
++  foreach dir : target_dirs
++    if not dir.endswith('-softmmu')
++      continue
++    endif
++
++    target_base = dir.split('-')[0]
++    test_emulator = emulators['qemu-system-' + target_base]
++
++    if speed == 'quick'
++      suites = ['func-quick', 'func-' + target_base]
++      target_tests = get_variable('tests_' + target_base + '_quick', []) + tests_generic
++    else
++      suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
++      target_tests = get_variable('tests_' + target_base + '_' + speed, [])
++    endif
++
++    test_deps = roms
++    test_env = environment()
++    if have_tools
++      test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
++      test_deps += [qemu_img]
++    endif
++    test_env.set('QEMU_TEST_QEMU_BINARY',
++                 meson.global_build_root() / 'qemu-system-' + target_base)
++    test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
++    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
++                               meson.current_source_dir())
++
++    foreach test : target_tests
++      test('func-@0@/@1@'.format(target_base, test),
++           python,
++           depends: [test_deps, test_emulator, emulator_modules],
++           env: test_env,
++           args: [meson.current_source_dir() / 'test_' + test + '.py'],
++           protocol: 'tap',
++           timeout: test_timeouts.get(test, 60),
++           priority: test_timeouts.get(test, 60),
++           suite: suites)
++    endforeach
++  endforeach
++endforeach
+diff --git a/tests/meson.build b/tests/meson.build
+index acb6807094..3345ad2098 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -85,3 +85,4 @@ subdir('unit')
+ subdir('qapi-schema')
+ subdir('qtest')
+ subdir('migration')
++subdir('functional')
 -- 
-2.34.1
+2.45.2
 
 
