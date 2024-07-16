@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73148C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27ECC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTmcj-0006UP-ME; Tue, 16 Jul 2024 14:10:01 -0400
+	id 1sTmcY-0005kH-Cl; Tue, 16 Jul 2024 14:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmch-0006Jm-5u
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:09:59 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmcW-0005bV-2q
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:09:48 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmcf-0000uA-0l
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:09:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-427aeebaecdso16860645e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:09:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmcU-0000tR-4u
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:09:47 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4265b7514fcso45015e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721153395; x=1721758195; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sasciBya2HV1iigybBBfHdwHjguksb3KeHQbVPO+dbY=;
- b=foVM5Fb6P/vCLvrpC461DSE9E+gXEVZirL+ZC8I528nRwtIa0El1fslKMt6qnLlSD0
- 3/Zys9tUIokhxJj77PB+QtF7MkScROmhy9W5/1nTu04UGB2dJgmpJPVOinvN6mgptBRE
- Z+I2YcGFekHAnD/eAD09hFEwkdUQIQP6G7/ZNJUnBWBAHfZT4xUSqOeeEwgRpUEHG5CU
- 9u14TMgsyEE64ZRNazVU4KGJ7lZg2wedlgUKPp6A4DcYOoG14bMXR5Pfe14fZG8qsGT0
- hrEm3vfRlWtA/swC7g/3lGxbfGH3unFy5xr/SgwdYzRReZNIMEtlM/G+0HFaXfXAWc2S
- 5OSg==
+ d=linaro.org; s=google; t=1721153384; x=1721758184; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SaiD9U9AwP/1bByOyja0Uxov4Ba81ZpHCardor2uqFY=;
+ b=uT1GU/nymVRWTg1jZG8mz2ULrusAkoP81bvrczqMDo0axZw2xvXdCxefKOZv++6369
+ zhiyTeSXU9y3U65UY8dgHRbzzO7Ia9qcMIFRMD1De+U2+g7XiWhH0Z8aKEUxU58oThon
+ uBsfkXh74BAcJMh4K2EvH355MXwpvKj/gm+bagWdPnFxIxwgju5lDL4pm+RiO7PWL6Va
+ AGCcSYdbLRSDMJcG/3zsuaWYraoRIOhuohKhVMQQbUa3gHt5zTkzI5KMacgZ7nFjt2R/
+ PL86Q8JLjl8yNiaImshAZ0JC3AoNLT9Izz8SCvRyYVQwFGyQMkD2TAi81FnuRJq1Y4mH
+ Vbrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721153395; x=1721758195;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sasciBya2HV1iigybBBfHdwHjguksb3KeHQbVPO+dbY=;
- b=sIZA8yT/IpjLwnKvGZt/qczdhMDamqKgk4N5Jws9ee38XKiZJmcOLBSoQHPl83+q4H
- P5AdfeaR35HrcoYKuiNadtB6eovwo5r0/X0d88CKRZfpdgfjS9mlsOc82uFDx0NEZoJ8
- e1+mKiwlwLWUwZfoTFPSc4sURH8qRohqomxQHjHrfhk3xN54v8nxkxeH69Qv1Iqz6tCh
- Ar/wBTZmYn3iVimPgr2oMC5lxJmNAJOghA3DTnao/GC2VlaPv3jB2PklnuF747Qc6Gqt
- CG8sWRS/mgI3sk2X0jmIDCCHVObBP32W3aPAFacOAHfPdvo8CYwYvSySG1ksCI90DXBT
- Gf2Q==
-X-Gm-Message-State: AOJu0YzvxAn6+sHhZ1W4lqdiaFcR7ZLl8NMmNZy0tR4cX4m5KdKBu3aW
- UV3hy71nCYHWjp6R5VngflvBXylZkJgjOTfFKIhKbOwr9PDUSx4nzpEgf7G24dY7v8uVFpiQaiR
- sMDhJfg==
-X-Google-Smtp-Source: AGHT+IHeY//i6i+4+LVB7X+fP70swhnOlP7YBFgtHGFe24micFKjeRpqhDhL3Lrije1qB/czoa14QQ==
-X-Received: by 2002:a05:6000:2c6:b0:367:9903:a81 with SMTP id
- ffacd0b85a97d-368261df9fcmr2732143f8f.43.1721153395073; 
- Tue, 16 Jul 2024 11:09:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721153384; x=1721758184;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SaiD9U9AwP/1bByOyja0Uxov4Ba81ZpHCardor2uqFY=;
+ b=Cyat26W89Nn0TSOIEA9n9NNK60mvlA9GrGInYzRZaf4YupXI+13jrAWKVZ+exdZpty
+ DhzunylTjlDs4wEkor/apCpFz5pztpcyM+UQReIP1/eG+Dw2sVF+37YOxbWpEH5wD7P6
+ pKYaZZry46Ho4ENGgHPhp8VR7CttU40nnxYM+/0iAYptJvKQAyjpOnAaHwxKrvHzQk+/
+ efFMv6ZY5wBFV9GXEx0xoRtirxypf26ifWAGAkc5HlTWHfHW9k8udfRxpLNcdwPRKBGY
+ SG2Bg+fBpJvbPmF9wZ0T4q0hFG3ZQBKCny6Wls05NvUSTLHIfzi+VNT/uMqwnEbHvNuI
+ iDDg==
+X-Gm-Message-State: AOJu0YyXs8M2DXGw/SgSNr6LffXitNId7m98XSUWdw6OgXdwl4IQwZhB
+ YPVifZzdasNTCuMri+vAb1KCFyOO0JQxMDaR2oKhE93N5MzUkWztd86HawBnh5lY8a3CR13yYw4
+ aScnqOQ==
+X-Google-Smtp-Source: AGHT+IGdZ8J1MEZFUCNw/TZ4hZJ4Bw4pdQzeIQfp/m1ouXl0MCN6qIvDvPzG4hAS0q0pgJadRt9hsQ==
+X-Received: by 2002:a5d:6612:0:b0:360:866f:5083 with SMTP id
+ ffacd0b85a97d-368274eb83cmr1973074f8f.32.1721153384049; 
+ Tue, 16 Jul 2024 11:09:44 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.209.82])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafbea9sm9777803f8f.82.2024.07.16.11.09.53
+ ffacd0b85a97d-3680daccdffsm9762862f8f.54.2024.07.16.11.09.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jul 2024 11:09:54 -0700 (PDT)
+ Tue, 16 Jul 2024 11:09:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/13] hw/isa/vt82c686: Turn "intr" irq into a named gpio
-Date: Tue, 16 Jul 2024 20:09:29 +0200
-Message-ID: <20240716180941.40211-3-philmd@linaro.org>
+Cc: Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/13] Misc HW/UI patches for 2024-07-16
+Date: Tue, 16 Jul 2024 20:09:27 +0200
+Message-ID: <20240716180941.40211-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240716180941.40211-1-philmd@linaro.org>
-References: <20240716180941.40211-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,80 +90,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+The following changes since commit 959269e910944c03bc13f300d65bf08b060d5d0f:
 
-Makes the code more comprehensible, matches the datasheet and
-the piix4 device model.
+  Merge tag 'python-pull-request' of https://gitlab.com/jsnow/qemu into staging (2024-07-16 06:45:23 +1000)
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240704205854.18537-2-shentey@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/isa/vt82c686.c   | 2 +-
- hw/mips/fuloong2e.c | 2 +-
- hw/ppc/amigaone.c   | 5 +++--
- hw/ppc/pegasos2.c   | 4 ++--
- 4 files changed, 7 insertions(+), 6 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 8582ac0322..505b44c4e6 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -719,7 +719,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-     ISABus *isa_bus;
-     int i;
- 
--    qdev_init_gpio_out(dev, &s->cpu_intr, 1);
-+    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
-     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
-     isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
-     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index a45aac368c..6e4303ba47 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -299,7 +299,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-                               object_resolve_path_component(OBJECT(pci_dev),
-                                                             "rtc"),
-                               "date");
--    qdev_connect_gpio_out(DEVICE(pci_dev), 0, env->irq[5]);
-+    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
- 
-     dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
-     pci_ide_create_devs(PCI_DEVICE(dev));
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index ddfa09457a..900f93c15e 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -153,8 +153,9 @@ static void amigaone_init(MachineState *machine)
-     object_property_add_alias(OBJECT(machine), "rtc-time",
-                               object_resolve_path_component(via, "rtc"),
-                               "date");
--    qdev_connect_gpio_out(DEVICE(via), 0,
--                          qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-+    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-+                                qdev_get_gpio_in(DEVICE(cpu),
-+                                PPC6xx_INPUT_INT));
-     for (i = 0; i < PCI_NUM_PINS; i++) {
-         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
-                                                              "pirq", i));
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index c1bd8dfa21..9b0a6b70ab 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -195,8 +195,8 @@ static void pegasos2_init(MachineState *machine)
-     object_property_add_alias(OBJECT(machine), "rtc-time",
-                               object_resolve_path_component(via, "rtc"),
-                               "date");
--    qdev_connect_gpio_out(DEVICE(via), 0,
--                          qdev_get_gpio_in_named(pm->mv, "gpp", 31));
-+    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-+                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
- 
-     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
-     pci_ide_create_devs(dev);
+  https://github.com/philmd/qemu.git tags/hw-misc-20240716
+
+for you to fetch changes up to 644a52778a90581dbda909f38b9eaf71501fd9cd:
+
+  system/physmem: use return value of ram_block_discard_require() as errno (2024-07-16 20:04:08 +0200)
+
+Ignored checkpatch error:
+
+  WARNING: line over 80 characters
+  #30: FILE: system/vl.c:1004:
+  +    if (!ti->class_names[0] || module_object_class_by_name(ti->class_names[0])) {
+
+Ignored CI failures:
+
+ - bios-tables-test on cross-i686-tci
+ - qtest-sparc on msys2-64bit
+
+----------------------------------------------------------------
+Misc HW & UI patches queue
+
+- Allow loading safely ROMs larger than 4GiB (Gregor)
+- Convert vt82c686 IRQ as named 'intr' (Bernhard)
+- Clarify QDev GPIO API (Peter)
+- Drop unused load_image_gzipped function (Ani)
+- Make TCGCPUOps::cpu_exec_interrupt handler mandatory (Peter)
+- Factor cpu_pause() out (Nicholas)
+- Remove transfer size check from ESP DMA DATA IN / OUT transfers (Mark)
+- Add accelerated cursor composition to Cocoa UI (Akihiko)
+- Fix '-vga help' CLI (Marc-André)
+- Fix displayed errno in ram_block_add (Zhenzhong)
+
+----------------------------------------------------------------
+
+Akihiko Odaki (4):
+  ui/cocoa: Release CGColorSpace
+  ui/console: Convert mouse visibility parameter into bool
+  ui/cocoa: Add cursor composition
+  ui/console: Remove dpy_cursor_define_supported()
+
+Ani Sinha (1):
+  loader: remove load_image_gzipped function as its not used anywhere
+
+Bernhard Beschow (1):
+  hw/isa/vt82c686: Turn "intr" irq into a named gpio
+
+Gregor Haas (1):
+  hw/core/loader: allow loading larger ROMs
+
+Marc-André Lureau (1):
+  vl: fix "type is NULL" in -vga help
+
+Mark Cave-Ayland (1):
+  esp: remove transfer size check from DMA DATA IN and DATA OUT
+    transfers
+
+Nicholas Piggin (1):
+  system/cpus: Add cpu_pause() function
+
+Peter Maydell (2):
+  include/hw/qdev-core.h: Correct and clarify gpio doc comments
+  accel/tcg: Make cpu_exec_interrupt hook mandatory
+
+Zhenzhong Duan (1):
+  system/physmem: use return value of ram_block_discard_require() as
+    errno
+
+ meson.build             |   3 +-
+ include/hw/core/cpu.h   |   8 ++++
+ include/hw/loader.h     |   4 +-
+ include/hw/qdev-core.h  |  17 +++----
+ include/ui/console.h    |   5 +-
+ accel/tcg/cpu-exec.c    |   4 +-
+ hw/core/loader.c        |  45 +++--------------
+ hw/display/ati.c        |   2 +-
+ hw/display/qxl-render.c |   4 --
+ hw/display/virtio-gpu.c |   3 +-
+ hw/display/vmware_vga.c |   8 ++--
+ hw/isa/vt82c686.c       |   2 +-
+ hw/mips/fuloong2e.c     |   2 +-
+ hw/ppc/amigaone.c       |   5 +-
+ hw/ppc/pegasos2.c       |   4 +-
+ hw/scsi/esp.c           |   4 +-
+ system/cpus.c           |  30 +++++++-----
+ system/physmem.c        |   7 ++-
+ system/vl.c             |  13 +++--
+ target/tricore/cpu.c    |   6 +++
+ ui/console.c            |  18 ++-----
+ ui/dbus-listener.c      |   2 +-
+ ui/gtk.c                |   2 +-
+ ui/sdl2.c               |   4 +-
+ ui/spice-display.c      |  11 +++--
+ ui/vnc.c                |   2 +-
+ ui/cocoa.m              | 104 +++++++++++++++++++++++++++++++++++++++-
+ 27 files changed, 200 insertions(+), 119 deletions(-)
+
 -- 
 2.41.0
 
