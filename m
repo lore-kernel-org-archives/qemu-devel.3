@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEDEC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 08:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A0AC3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 08:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTdXv-0005Sq-0s; Tue, 16 Jul 2024 04:28:27 -0400
+	id 1sTdY9-00067k-GW; Tue, 16 Jul 2024 04:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTdXq-0005Pv-99
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:28:22 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1sTdY6-0005zJ-Hi
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:28:38 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTdXo-0001xQ-Dz
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:28:22 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70af0684c2bso3402557b3a.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 01:28:20 -0700 (PDT)
+ id 1sTdY4-00021V-W9
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:28:38 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70b03ffbb3aso4103444b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 01:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721118498; x=1721723298;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721118515; x=1721723315;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nV9f7Z9uo7GcDlW1Lk+YDEAFR+k4t86UdCv3nK4ea5k=;
- b=P4RdhPylTDK0ht42nMLv3Suc7TILkDRjTrs6N7FjYTEWU8SstDhrkQSxoiZDXiS+qg
- Hp1t3yustZmCXpM9Sab3bw5lQKuO2Ge+Zr709H62sWHqPAvI8RqdllO+Vi1ecyGNquzy
- +TmFQ3kwqxfUK7lZedCtL7VFxp50MmT6WWIvB/F7KYBCChoVHlieoLgwmZ1U3RTNUcT1
- P+nr35ghrE5EPEmk23UcR90s2D1YGfkxhv5Unu6qJ70A0ls98/onrfRl7Ov08roDmfK3
- h0debI81iE60m7k5c+4Z/FDcmNfBsZwPpMKPmSBUAZ227Ich4sKAqtZROCNXBDqrdVGC
- nuDA==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MzrJ2SIc0b0nCcptbEys+0+C2juhcCeb9eqlhLMneTY=;
+ b=RjhIQy3Jn61z6pWbnUKBtfJ5E59Fc78RYzT0HLUCdq/S2QN48PdGZ5x2Wu7hQ9fmBm
+ PFu26cX9z7fmRqgWmjd13KDrmQyz//w9MJgzo5CR28S8C7Udp6XHfTb5YpAvYrKK73il
+ eSeS5rI/HHuyDId44GL+BRxEEe+3lxl41oDsSEYJUUKUmFGQoA9ChWpxTmH0RG/ZsZei
+ 2RrEiZJNsIZda0KYkdscSLkVQBvAqUkL7iUhCuH70MP32xGTS9QzP2nG+PdCE+wheNQb
+ 0IqcoD/sRpR5PAlLGhUBms+hhzytZ76gkgOpcbF11fARBFGu5KFT6dWmBe0RrgykIsYQ
+ dcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721118498; x=1721723298;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nV9f7Z9uo7GcDlW1Lk+YDEAFR+k4t86UdCv3nK4ea5k=;
- b=kcKxTcoVL/Rt0HpaYTxH28Z8vnvoWMTBi/gaj16f39xD8FndUHp6XeAkcjhSLPhqkH
- C0vwSjz76YkNQPdm8zDLitiZjJr/ni/b6g7FGflYp23DNhLfIVhR6QavLe2/qBaDxx9x
- wa00IktL6f2UkOImNQ/oeecaNATwl7PYI2q8ykAqfYiL0ehFhx7Wv0FZDg5zdNMbAQZt
- 5dali0/9sltK5p2IgOoXcWntY4zc91Sg33K5iYDT+e6UK3B+X6BXMxZF/mmlAJNBYb8K
- 584GwuZHJv9fL2XRsAPBuVkDhsVNiiTETEOrXp0VuTFrFW97nXCF/4LAA2ODesNIvFlV
- ND7g==
+ d=1e100.net; s=20230601; t=1721118515; x=1721723315;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MzrJ2SIc0b0nCcptbEys+0+C2juhcCeb9eqlhLMneTY=;
+ b=BbwZ+rRMjGTPCXNfUyBu4uKxpW8+C6HZuCF3dBVfoHHheW0yK9wkJeu9+otqLfoqTQ
+ 4WummgoqkxxuX48mBQqo1ilF8BVUotENjUqS7OjRfMGmI2NlljD3YMC6hy/O593zvLI8
+ Hr+Lvr91V1PG/sVOltcPF1CGtP1owWpm9borL2RCiNbv/YrIhiKcWBH+s4KJiJu52zDq
+ abDBFkwzCacodnGdsIY1z/xizW1vBDxnpdzv6zQ7Gsged/JRTQJXOkQZ42Sv49IXWPp3
+ i7R/PtRCg8E4P1ZWj782yFfs9WeKwjKyM+ZGVRuGepwdqkhjWOVYOc+Y4gABdOx8GplR
+ EQTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2vhfcjuhKX3x8xtIDGKaiNLyCPs3PPuKr29jLfwjs6sndnGImUClqkEm/r1pLf5p19b65eBTW4ynjptnBO9JkvQbpKEs=
-X-Gm-Message-State: AOJu0YyKeJZ6kL/g6/ucFhoV79qjho+O5muejPEMrVgezmjDQKAB0Ycv
- QYmhCp4d3Y+t7svtzjL3kp0p2zw2wN4jEi/Ridj5Q3wPv/lL3RHG89eG2MkRoa+yZ0m2GIEE/IL
- z9Uk=
-X-Google-Smtp-Source: AGHT+IGsZPdOQ4Ab1XYOcZBH+a1KzRN1zlp9N/4LCn0myfcSlM65hfdqg9Q/s4CxqLRSjJl4Tv+tXg==
-X-Received: by 2002:a05:6a20:7487:b0:1c1:c3ff:1f43 with SMTP id
- adf61e73a8af0-1c3f12729f3mr1770285637.43.1721118497799; 
- Tue, 16 Jul 2024 01:28:17 -0700 (PDT)
+ AJvYcCWLTrHITK07A+sB32duwP8iUFcarJmSTQ8UyfAuMJ1LTuyMmZXqZ9NpRL4jSiRcNj0jJd1toCbnYNJgCRtJ6Hp8uOVjK1o=
+X-Gm-Message-State: AOJu0YxTqw0HUWbdOi58K8roVXYH+Co3Zi9S3kLiZC72iujsoAHXrnOD
+ mF0da8wZ+3ljqVNGkpLTYncqNM8z/27ofwBEuAQ2JVqphpJLHtB96byR4ppZyKTF22J6jOS6fak
+ 2W/I=
+X-Google-Smtp-Source: AGHT+IEMIQeQRXNUb8ccsuZ8VrtU3dndgT6Vd8nvN3x21ZLqX5Ahg/3t5RVankt3OZCxhbx/gbmsPA==
+X-Received: by 2002:a05:6a21:6da9:b0:1c0:e629:3912 with SMTP id
+ adf61e73a8af0-1c3f12a2231mr1826892637.48.1721118515601; 
+ Tue, 16 Jul 2024 01:28:35 -0700 (PDT)
 Received: from localhost ([157.82.128.7]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2cacd7037d6sm7693451a91.53.2024.07.16.01.28.15
+ d9443c01a7336-1fc0bbc2e0csm52710255ad.106.2024.07.16.01.28.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 01:28:17 -0700 (PDT)
+ Tue, 16 Jul 2024 01:28:35 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v2 0/5] target/arm/kvm: Report PMU unavailability
-Date: Tue, 16 Jul 2024 17:28:12 +0900
-Message-Id: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
+Date: Tue, 16 Jul 2024 17:28:16 +0900
+Subject: [PATCH v2 4/5] target/arm: Always add pmu property
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABwvlmYC/1WMyw6DIBBFf8XMujQwVXys+h+NCwpYZyEYaInG8
- O+l7ro8N/ecA6INZCMM1QHBJorkXQG8VKBn5V6WkSkMyLHmEnu2Lh+mTDPJ1qJuDIfyXIOdaDs
- rj7HwTPHtw35Gk/it/34SjLMWZS/w9uw6Vd+N2h1tV+0XGHPOXxgpFQOXAAAA
+Message-Id: <20240716-pmu-v2-4-f3e3e4b2d3d5@daynix.com>
+References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
+In-Reply-To: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,38 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target/arm/kvm.c checked PMU availability but claimed PMU is
-available even if it is not. In fact, Asahi Linux supports KVM but lacks
-PMU support. Only advertise PMU availability only when it is really
-available.
-
-Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
+kvm-steal-time and sve properties are added for KVM even if the
+corresponding features are not available. Always add pmu property too.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v2:
-- Restricted writes to 'pmu' to host and max.
-- Prohibited writes to 'pmu' for hvf.
-- Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
+ target/arm/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
----
-Akihiko Odaki (5):
-      tests/arm-cpu-features: Do not assume PMU availability
-      target/arm: Allow setting 'pmu' only for host and max
-      target/arm: Do not allow setting 'pmu' for hvf
-      target/arm: Always add pmu property
-      target/arm/kvm: Report PMU unavailability
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 9e1d15701468..32508644aee7 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1781,9 +1781,10 @@ void arm_cpu_post_init(Object *obj)
+ 
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+         cpu->has_pmu = true;
+-        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+     }
+ 
++    object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
++
+     /*
+      * Allow user to turn off VFP and Neon support, but only for TCG --
+      * KVM does not currently allow us to lie to the guest about its
 
- target/arm/cpu.c               | 14 +++++++++++++-
- target/arm/kvm.c               |  2 +-
- tests/qtest/arm-cpu-features.c | 13 ++++++++-----
- 3 files changed, 22 insertions(+), 7 deletions(-)
----
-base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
-change-id: 20240629-pmu-ad5f67e2c5d0
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.45.2
 
 
