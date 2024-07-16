@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0523DC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8789C3DA59
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgAg-0003E6-OT; Tue, 16 Jul 2024 07:16:38 -0400
+	id 1sTgAl-0003QA-4W; Tue, 16 Jul 2024 07:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sTgAP-000353-7N; Tue, 16 Jul 2024 07:16:26 -0400
+ id 1sTgAd-00039M-5n; Tue, 16 Jul 2024 07:16:35 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sTgA0-0001f6-8f; Tue, 16 Jul 2024 07:16:17 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WNbzc3w3Xz6K6Yq;
- Tue, 16 Jul 2024 19:13:48 +0800 (CST)
+ id 1sTgAa-0001kQ-Tj; Tue, 16 Jul 2024 07:16:34 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WNc0j2R7bz6K6Xp;
+ Tue, 16 Jul 2024 19:14:45 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id E47C71406AE;
- Tue, 16 Jul 2024 19:15:32 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A9BFC140136;
+ Tue, 16 Jul 2024 19:16:29 +0800 (CST)
 Received: from 00293818-MRGF.huawei.com (10.126.170.92) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 16 Jul 2024 12:15:15 +0100
+ 15.1.2507.39; Tue, 16 Jul 2024 12:16:10 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -42,23 +42,29 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>
-Subject: [PATCH V16 0/7] Add architecture agnostic code to support vCPU Hotplug
-Date: Tue, 16 Jul 2024 12:14:55 +0100
-Message-ID: <20240716111502.202344-1-salil.mehta@huawei.com>
+ <npiggin@gmail.com>, <harshpb@linux.ibm.com>, <linuxarm@huawei.com>, Jonathan
+ Cameron <Jonathan.Cameron@huawei.com>, Shaoqin Huang <shahuang@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH V16 3/7] hw/acpi: Update ACPI GED framework to support vCPU
+ Hotplug
+Date: Tue, 16 Jul 2024 12:14:58 +0100
+Message-ID: <20240716111502.202344-4-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240716111502.202344-1-salil.mehta@huawei.com>
+References: <20240716111502.202344-1-salil.mehta@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.126.170.92]
 X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
  lhrpeml500001.china.huawei.com (7.191.163.213)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,200 +83,207 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[Note: References are present at the last after the revision history]
+ACPI GED (as described in the ACPI 6.4 spec) uses an interrupt listed in the
+_CRS object of GED to intimate OSPM about an event. Later then demultiplexes the
+notified event by evaluating ACPI _EVT method to know the type of event. Use
+ACPI GED to also notify the guest kernel about any CPU hot(un)plug events.
 
-Virtual CPU hotplug support is being added across various architectures [1][3].
-This series adds various code bits common across all architectures:
+Note, GED interface is used by many hotplug events like memory hotplug, NVDIMM
+hotplug and non-hotplug events like system power down event. Each of these can
+be selected using a bit in the 32 bit GED IO interface. A bit has been reserved
+for the CPU hotplug event.
 
-1. vCPU creation and Parking code refactor [Patch 1]
-2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
-3. ACPI CPUs AML code change [Patch 4,5]
-4. Helper functions to support unrealization of CPU objects [Patch 6,7]
+ACPI CPU hotplug related initialization should only happen if ACPI_CPU_HOTPLUG
+support has been enabled for particular architecture. Add cpu_hotplug_hw_init()
+stub to avoid compilation break.
 
-Repository:
-
-[*] Architecture *Agnostic* Patch-set (This series)
-   V14: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3.arch.agnostic.v15
-
-   NOTE: This series is meant to work in conjunction with the architecture-specific
-   patch-set. For ARM, a combined patch-set (architecture agnostic + specific) was
-   earlier pushed as RFC V2 [1]. Later, RFC V2 was split into the ARM Architecture
-   specific patch-set RFC V3 [4] (a subset of RFC V2) and the architecture agnostic
-   patch-set. Patch-set V16 is the latest version in that series. This series
-   works in conjunction with RFC V4-rc3, present at the following link.
-
-[*] ARM Architecture *Specific* Patch-set
-   RFC V3 [4]: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3
-   RFC V4-rc3: https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v4-rc3 (combined)
-
-
-Revision History:
-
-Patch-set V15 -> V16
-1. Addressed feedbacks from Igor Mammedov on [PATCH V15 1/7,3/7,7/7]
-   - Fixed the checkpatch.pl errors and warnings
-   - Made initialization of CPU hotplug regions within GED realize conditional
-   - Collected {Reviewed,Acked}-Bys for [PATCH V15 1/7,2/7,4/7,5/7,7/7]
-Link: https://lore.kernel.org/qemu-devel/20240713182516.1457-1-salil.mehta@huawei.com/
-
-Patch-set V14 -> V15
-1. Addressed comment by Igor Mammedov on [PATCH V14 4/7]
-   - Removed ACPI_CPU_SCAN_METHOD
-   - Introduced AML_GED_EVT_CPU_SCAN_METHOD ("\\_SB.GED.CPSCN") macro
-2. Fix the stray change of "assert (" in "PATCH V14 3/7"
-Link: https://lore.kernel.org/qemu-devel/20240712134201.214699-4-salil.mehta@huawei.com/
-
-Patch-set V13 -> V14
-1. Addressed Igor Mammedov's following review comments
-   - Mentioned abput new external APIs in the header note of [PATCH 1/7]
-   - Merged Doc [PATCH V13 8/8] with [PATCH V14 3/7]
-   - Introduced GED realize function for various CPU Hotplug regions initializations
-   - Added back event handler method to indirectly expose \\_SB.CPUS.CSCN to GED
-     _EVT. Like for ARM, it would be through \\_SB.GED.CSCN event handler method
-   - Collected the Ack given for [Patch V13 6/8]
-   - Added back the gfree'ing of GDB regs in common finalize and made it conditional
-   - Updated the header notes of [PATCH V13 3/8,4/8,5/8] to reflect the changes
-
-Patch-set  V12 -> V13
-1. Added Reviewed-by Tag of Harsh Prateek Bora's (IBM) [PATCH V12 1/8]
-2. Moved the kvm_{create,park,unpark}_vcpu prototypes from accel/kvm/kvm-cpus.h
-   to include/sysemu/kvm.h. These can later be exported through AccelOps.
-Link: https://lore.kernel.org/qemu-devel/62f55169-1796-4d8e-a35d-7f003a172750@linux.ibm.com/
-
-Patch-set  V11 -> V12
-1. Addressed Harsh Prateek Bora's (IBM) comment
-   - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu protoype header/
-2. Added Zhao Liu's (Intel) Tested-by for whole series
-   - Qtest does not breaks on Intel platforms now.
-3. Added Zhao Liu's (Intel) Reviewed-by for [PATCH V11 {1/8 - 3/8}]
-Link: https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/
-Link: https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com/
-
-Patch-set  V10 -> V11
-1. Addressed Nicholas Piggin's (IBM) comment
-   - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the end
-   - Added the Reviewed-by Tag for [PATCH V10 1/8]
-2.  Addressed Alex Bennée's (Linaro) comments
-   - Added a note explaining dependency of the [PATCH V10 7/8] on Arch specific patch-set
-Link: https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/ 
-Link: https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
-
-Patch-set  V9 -> V10
-1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daudé (Linaro) comments
-   - carved out kvm_unpark_vcpu and added its trace
-   - Widened the scope of the kvm_unpark_vcpu so that it can be used by generic framework
-     being thought out
-Link: https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei.com/
-Link: https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@linaro.org/
-
-Patch-set  V8 -> V9
-1. Addressed Vishnu Pajjuri's (Ampere) comments
-   - Added kvm_fd to trace in kvm_create_vcpu
-   - Some clean ups: arch vcpu-id and sbd variable
-   - Added the missed initialization of cpu->gdb_num_regs
-2. Addressed the commnet from Zhao Liu (Intel)
-   - Make initialization of CPU Hotplug state conditional (possible_cpu_arch_ids!=NULL)
-Link: https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.com/
-
-Patch-set V7 -> V8
-1. Rebased and Fixed the conflicts
-
-Patch-set  V6 -> V7
-1. Addressed Alex Bennée's comments
-   - Updated the docs
-2. Addressed Igor Mammedov's comments
-   - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
-   - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
-3. Added Shaoqin Huang's Reviewed-by tags for whole series.
-Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
-
-Patch-set  V5 -> V6
-1. Addressed Gavin Shan's comments
-   - Fixed the assert() ranges of address spaces
-   - Rebased the patch-set to latest changes in the qemu.git
-   - Added Reviewed-by tags for patches {8,9}
-2. Addressed Jonathan Cameron's comments
-   - Updated commit-log for [Patch V5 1/9] with mention of trace events
-   - Added Reviewed-by tags for patches {1,5}
-3. Added Tested-by tags from Xianglai Li
-4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
-Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
-
-Patch-set  V4 -> V5
-1. Addressed Gavin Shan's comments
-   - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
-   - Added Reviewed-by tag for patch {1}
-2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
-3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
-4. Dropped the ARM specific [Patch V4 10/10]
-Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
-
-Patch-set  V3 -> V4
-1. Addressed David Hilderbrand's comments
-   - Fixed the wrong doc comment of kvm_park_vcpu API prototype
-   - Added Reviewed-by tags for patches {2,4}
-Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
-
-Patch-set  V2 -> V3
-1. Addressed Jonathan Cameron's comments
-   - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
-   - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
-   - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
-   - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
-   - Added Reviewed-by tags for patches {2,3,4,6,7}
-2. Addressed Gavin Shan's comments
-   - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
-   - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
-   - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
-   - Fixed the kvm_{create,park}_vcpu prototypes docs
-   - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
-3. Addressed one earlier missed comment by Alex Bennée in RFC V1
-   - Added traces instead of DPRINTF in the newly added and some existing functions
-Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
-
-Patch-set V1 -> V2
-1. Addressed Alex Bennée's comments
-   - Refactored the kvm_create_vcpu logic to get rid of goto
-   - Added the docs for kvm_{create,park}_vcpu prototypes
-   - Splitted the gdbstub and AddressSpace destruction change into separate patches
-   - Added Reviewed-by tags for patches {2,10}
-Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
-
-References:
-
-[1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
-[2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
-[3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
-[4] https://lore.kernel.org/qemu-devel/20240613233639.202896-2-salil.mehta@huawei.com/
-
-Salil Mehta (7):
-  accel/kvm: Extract common KVM vCPU {creation,parking} code
-  hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
-  hw/acpi: Update ACPI GED framework to support vCPU Hotplug
-  hw/acpi: Update GED _EVT method AML with CPU scan
-  hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
-  physmem: Add helper function to destroy CPU AddressSpace
-  gdbstub: Add helper function to unregister GDB register space
-
- accel/kvm/kvm-all.c                    | 95 +++++++++++++++++---------
- accel/kvm/kvm-cpus.h                   |  1 -
- accel/kvm/trace-events                 |  5 +-
+Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Tested-by: Xianglai Li <lixianglai@loongson.cn>
+Tested-by: Miguel Luis <miguel.luis@oracle.com>
+Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Tested-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
  docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
- gdbstub/gdbstub.c                      | 13 ++++
- hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
- hw/acpi/cpu.c                          | 18 +++--
- hw/acpi/generic_event_device.c         | 50 ++++++++++++++
- hw/core/cpu-common.c                   |  5 +-
- hw/i386/acpi-build.c                   |  3 +-
- include/exec/cpu-common.h              |  8 +++
- include/exec/gdbstub.h                 |  6 ++
- include/hw/acpi/cpu.h                  |  7 +-
- include/hw/acpi/generic_event_device.h |  5 ++
- include/hw/core/cpu.h                  |  1 +
- include/sysemu/kvm.h                   | 25 +++++++
- system/physmem.c                       | 29 ++++++++
- 17 files changed, 236 insertions(+), 44 deletions(-)
+ hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++++
+ hw/acpi/generic_event_device.c         | 47 ++++++++++++++++++++++++++
+ include/hw/acpi/generic_event_device.h |  4 +++
+ 4 files changed, 59 insertions(+), 1 deletion(-)
 
+diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
+index 0bd3f9399f..3acd6fcd8b 100644
+--- a/docs/specs/acpi_hw_reduced_hotplug.rst
++++ b/docs/specs/acpi_hw_reduced_hotplug.rst
+@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
+        0: Memory hotplug event
+        1: System power down event
+        2: NVDIMM hotplug event
+-    3-31: Reserved
++       3: CPU hotplug event
++    4-31: Reserved
+ 
+ **write_access:**
+ 
+diff --git a/hw/acpi/acpi-cpu-hotplug-stub.c b/hw/acpi/acpi-cpu-hotplug-stub.c
+index 3fc4b14c26..c6c61bb9cd 100644
+--- a/hw/acpi/acpi-cpu-hotplug-stub.c
++++ b/hw/acpi/acpi-cpu-hotplug-stub.c
+@@ -19,6 +19,12 @@ void legacy_acpi_cpu_hotplug_init(MemoryRegion *parent, Object *owner,
+     return;
+ }
+ 
++void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
++                         CPUHotplugState *state, hwaddr base_addr)
++{
++    return;
++}
++
+ void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list)
+ {
+     return;
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 2d6e91b124..4641933a0f 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -25,6 +25,7 @@ static const uint32_t ged_supported_events[] = {
+     ACPI_GED_MEM_HOTPLUG_EVT,
+     ACPI_GED_PWR_DOWN_EVT,
+     ACPI_GED_NVDIMM_HOTPLUG_EVT,
++    ACPI_GED_CPU_HOTPLUG_EVT,
+ };
+ 
+ /*
+@@ -234,6 +235,8 @@ static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
+         } else {
+             acpi_memory_plug_cb(hotplug_dev, &s->memhp_state, dev, errp);
+         }
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        acpi_cpu_plug_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
+     } else {
+         error_setg(errp, "virt: device plug request for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -248,6 +251,8 @@ static void acpi_ged_unplug_request_cb(HotplugHandler *hotplug_dev,
+     if ((object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) &&
+                        !(object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM)))) {
+         acpi_memory_unplug_request_cb(hotplug_dev, &s->memhp_state, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        acpi_cpu_unplug_request_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
+     } else {
+         error_setg(errp, "acpi: device unplug request for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -261,6 +266,8 @@ static void acpi_ged_unplug_cb(HotplugHandler *hotplug_dev,
+ 
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         acpi_memory_unplug_cb(&s->memhp_state, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        acpi_cpu_unplug_cb(&s->cpuhp_state, dev, errp);
+     } else {
+         error_setg(errp, "acpi: device unplug for unsupported device"
+                    " type: %s", object_get_typename(OBJECT(dev)));
+@@ -272,6 +279,7 @@ static void acpi_ged_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list)
+     AcpiGedState *s = ACPI_GED(adev);
+ 
+     acpi_memory_ospm_status(&s->memhp_state, list);
++    acpi_cpu_ospm_status(&s->cpuhp_state, list);
+ }
+ 
+ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+@@ -286,6 +294,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+         sel = ACPI_GED_PWR_DOWN_EVT;
+     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
++    } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
++        sel = ACPI_GED_CPU_HOTPLUG_EVT;
+     } else {
+         /* Unknown event. Return without generating interrupt. */
+         warn_report("GED: Unsupported event %d. No irq injected", ev);
+@@ -371,6 +381,42 @@ static const VMStateDescription vmstate_acpi_ged = {
+     }
+ };
+ 
++static void acpi_ged_realize(DeviceState *dev, Error **errp)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    AcpiGedState *s = ACPI_GED(dev);
++    uint32_t ged_events;
++    int i;
++
++    ged_events = ctpop32(s->ged_event_bitmap);
++
++    for (i = 0; i < ARRAY_SIZE(ged_supported_events) && ged_events; i++) {
++        uint32_t event = s->ged_event_bitmap & ged_supported_events[i];
++
++        if (!event) {
++            continue;
++        }
++
++        switch (event) {
++        case ACPI_GED_CPU_HOTPLUG_EVT:
++            /* initialize CPU Hotplug related regions */
++            memory_region_init(&s->container_cpuhp, OBJECT(dev),
++                                "cpuhp container",
++                                ACPI_CPU_HOTPLUG_REG_LEN);
++            sysbus_init_mmio(sbd, &s->container_cpuhp);
++            cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
++                                &s->cpuhp_state, 0);
++            break;
++        }
++        ged_events--;
++    }
++
++    if (ged_events) {
++        error_report("Unsupported events specified");
++        abort();
++    }
++}
++
+ static void acpi_ged_initfn(Object *obj)
+ {
+     DeviceState *dev = DEVICE(obj);
+@@ -411,6 +457,7 @@ static void acpi_ged_class_init(ObjectClass *class, void *data)
+     dc->desc = "ACPI Generic Event Device";
+     device_class_set_props(dc, acpi_ged_properties);
+     dc->vmsd = &vmstate_acpi_ged;
++    dc->realize = acpi_ged_realize;
+ 
+     hc->plug = acpi_ged_device_plug_cb;
+     hc->unplug_request = acpi_ged_unplug_request_cb;
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index ba84ce0214..e091ac2108 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -62,6 +62,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/acpi/memory_hotplug.h"
+ #include "hw/acpi/ghes.h"
++#include "hw/acpi/cpu.h"
+ #include "qom/object.h"
+ 
+ #define ACPI_POWER_BUTTON_DEVICE "PWRB"
+@@ -95,6 +96,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+ #define ACPI_GED_MEM_HOTPLUG_EVT   0x1
+ #define ACPI_GED_PWR_DOWN_EVT      0x2
+ #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
++#define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+ 
+ typedef struct GEDState {
+     MemoryRegion evt;
+@@ -106,6 +108,8 @@ struct AcpiGedState {
+     SysBusDevice parent_obj;
+     MemHotplugState memhp_state;
+     MemoryRegion container_memhp;
++    CPUHotplugState cpuhp_state;
++    MemoryRegion container_cpuhp;
+     GEDState ged_state;
+     uint32_t ged_event_bitmap;
+     qemu_irq irq;
 -- 
 2.34.1
 
