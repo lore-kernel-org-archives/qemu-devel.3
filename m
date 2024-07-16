@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8A5C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC46CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTec3-0006eq-N4; Tue, 16 Jul 2024 05:36:47 -0400
+	id 1sTeds-00067v-ME; Tue, 16 Jul 2024 05:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sTec2-0006ai-LK
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:36:46 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sTedr-00061G-1b
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:38:39 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sTebz-00070i-5O
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:36:45 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c5112so363420a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:36:41 -0700 (PDT)
+ id 1sTedo-0007H2-H0
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:38:37 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-52ea7bdde68so5707684e87.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721122600; x=1721727400; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721122714; x=1721727514; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Dc/GStB3d5Kj1Bf0cTf6aqXmkTcJcXLB485vy4LOdzc=;
- b=i4IHgcAl3cl+tqmXfu8prcKlliouwOGCjZdYpkxFXskL+LeyIIbvoq2wKnG81aOeSZ
- T20ZsCKKzw2EHmsn7BrfX80liMmo/U2kxEyggm2FDtml2gPRAPNWLVIg+OkHPGRh+5ls
- W/GMFwx3w+kXRZWJM65KjZjPcUeGN8oyBdf4TGOdgEm2LWkRl1jqHOLzXXuk8yLbcqAn
- 9h6PFFjbRfLLSnOYjp40EV1kqszflOheBWWD6QbAtsAy33tKszcus8AmaqXa8o+CkK8Z
- 19b8JCobsvK5nknj1P6X1TEFNiZdf5PBFz3HiUzeBJOymcJA2Okyq+FevpDKs+XOo/T2
- EBMw==
+ bh=WpFEopssxRMq/XY7VP7h1cKQm2UsYSwLtfUQNc39NM8=;
+ b=iJnvX+3rZylpwpCB3OsZ7QFoAIzIUZ9T0EoGog2rzxfSx3NBNdWPcDRY8X8dKbtF89
+ M4aZ+16lPlq7tIZyrkvp9mZsxF1QweotoubQHtU4gN7B2R4Q4KTI8FwNJ78rYWcLkwIu
+ xG+Ng9tjWHPnGM2zbhFYWW6apR/oyBz+VmMR7+QK0OOB/b48LxbewJSaZ2sTOZq+Raqj
+ 3z3ysiqA+MRRwf6RmTLnZhRalDl6WOwb77bemJpuAPhHI7djdXUEjgUR18IFzHTyTzNZ
+ zUAqIe9XF4fOiq4P77xiul5jAMAaI07fTYRYWW6KljCIZhZ6RCyvXj8H4MTBdeQkLlaQ
+ wQoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721122600; x=1721727400;
+ d=1e100.net; s=20230601; t=1721122714; x=1721727514;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Dc/GStB3d5Kj1Bf0cTf6aqXmkTcJcXLB485vy4LOdzc=;
- b=IAV1I7PCtTRjG56ZfMDYy9i5S9PexGRMRVT0pjlOslyney+Fej0MwXTVQqaCNJNtR5
- PkXQWe3kZPWEqc606FgmolsM7ycQSx/js3czIcYwTmn9QLr/nX7xqSUIueFZ0YKhaCcf
- Tl4s67DrJEuGucb/gExMSFFrWM9cUFGq7Rxpml1LAvWXw26e+WrPYFQx2Mf8HgCB5YzT
- mUpQfndOt0ZaJwANYSWvqllN+kZs5EYl6HziDp8o6mDS0iuVYh4ws37a4ghiZiu8RsAC
- CCa7UP4RuJifqV8KXS+PkthA3vzjiHuZ1CUXiB3XzG7Tuto0UCg+3KC1LjcISgZ4IQbb
- RPIQ==
+ bh=WpFEopssxRMq/XY7VP7h1cKQm2UsYSwLtfUQNc39NM8=;
+ b=viYX6FmUNSuRucJCJvq2eRN+U2DcPc0QcPOQQ0me75/Hs2C6VPzUY5rrFK6tx8Z75c
+ zoqU/GtswjSBnQQbV6Aa5IBjr0vGn4lDIN999Oxbnnwmak0cyMC9Uf1ujh9jU1kHi6Kx
+ LKGgjgfvoZqHsWyPoodIgh8tMuBNxFXS1qxalgXOj0net+9fiY7Y6zuoim12thNGnBr6
+ f1LbQP7v20cXGxzepjsfd8oUIHVqpxU/aobyb2DxbA21Qg5nHib1g4NW3J2FUc7v3Uyj
+ 1uBcZzHp2J2deXx28lbMzZqjeFjLgphLCIXKrmMOXPCEp62NgFuFuJESd1/f3fysaFXY
+ VoBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSJcQlomrkpn7jic8Bmm+N1I37LNF2JGvN2qHEXMEvLJJ0tDrCcA0VLGhhoekpLisuM1QLpdoFwTwlWaIWx6DvYfPP3dk=
-X-Gm-Message-State: AOJu0YxYcUOda3gt3gZCCkjYtd9FPI3xkAB8vbcavTn3bjFbTFKU9CL+
- 5haKsdOwtGyrpoI4n5zu3Wb/S2mVSELWUWm9KEbrYojudscqgmd4LK+BBlT7khvkgxkORqZCOV4
- +Z8ZEsObIU8/Q03E5ouZlXAJdUAZqddX6x6lj/g==
-X-Google-Smtp-Source: AGHT+IGaN+Ei2ULusap6WGT3oe08l2+JpHlHRDgnm+JkMuCHt9oh4QsPoWK0iHggAtS+dEd5b/8Ac+xbNNu3GwpoJIo=
-X-Received: by 2002:a50:cd19:0:b0:57c:70b0:d541 with SMTP id
- 4fb4d7f45d1cf-59eef158729mr846034a12.20.1721122599935; Tue, 16 Jul 2024
- 02:36:39 -0700 (PDT)
+ AJvYcCWQRyUESlDYcuJgJ5YzE3pUQBKlGc8mXfwJkhPHEtZLlQIXkTENejCblDAdS5y8el5Tdi4pBtcPLkR1LV2SEud06O9Usb0=
+X-Gm-Message-State: AOJu0Yz2Fg+50eXR5Q3pSTX2fp8v0xz71nu4MfxL+ZXKiqAszekzdab2
+ YqVH2kayD4fEZ3ZwNrkKoBzdkuciPTw4U4wDqxAVZ8PLAi133Q7N8GgGKZ3v8T50PGWRy5Se8Ev
+ ZYZUWqWg+2T4OCFB0u5+1yJKcd+pNsP5xE/4AfA==
+X-Google-Smtp-Source: AGHT+IFqJyW5OerElBsx4iiHI316ewP1w1c+mP4RFDTmwEBuuXHDAYcbcNxafJafDOTi/kKb/b5RZzl0R18zaV4wcWo=
+X-Received: by 2002:a05:6512:31d2:b0:52e:97b3:42a1 with SMTP id
+ 2adb3069b0e04-52edef1ebdbmr1027270e87.24.1721122714506; Tue, 16 Jul 2024
+ 02:38:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
- <20240716-pmu-v2-2-f3e3e4b2d3d5@daynix.com>
-In-Reply-To: <20240716-pmu-v2-2-f3e3e4b2d3d5@daynix.com>
+References: <20240715213943.1210355-1-gustavo.romero@linaro.org>
+ <20240716084836.185488-1-pbonzini@redhat.com>
+In-Reply-To: <20240716084836.185488-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jul 2024 10:36:28 +0100
-Message-ID: <CAFEAcA_Rw9ceo6D1mXUhzAim6FmGKvLJOmOFLdCpgbTnYYiLMw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] target/arm: Allow setting 'pmu' only for host and
- max
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
+Date: Tue, 16 Jul 2024 10:38:23 +0100
+Message-ID: <CAFEAcA-h_NmUsEgfbGkvBGR_KzaNGGn=2FKAsf61-P+_4poinA@mail.gmail.com>
+Subject: Re: [PATCH] disas: Fix build against Capstone v6
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org, 
+ alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,36 +91,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jul 2024 at 09:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Tue, 16 Jul 2024 at 09:48, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> Setting 'pmu' does not make sense for CPU types emulating physical
-> CPUs.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  target/arm/cpu.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 14d4eca12740..8c180c679ce2 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1594,6 +1594,13 @@ static bool arm_get_pmu(Object *obj, Error **errp)
->  static void arm_set_pmu(Object *obj, bool value, Error **errp)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    const char *typename = object_get_typename(obj);
-> +
-> +    if (strcmp(typename, ARM_CPU_TYPE_NAME("host")) &&
-> +        strcmp(typename, ARM_CPU_TYPE_NAME("max"))) {
-> +        error_setg(errp, "Setting 'pmu' is only supported by host and max");
-> +        return;
-> +    }
+> Queued, thanks.
 
-This doesn't seem right. In general where we provide a
-user-facing -cpu foo,bar=off option we allow the user to
-use it to disable the bar feature on named CPUs too.
-So you can use it to say "give me a neoverse-v1 without the PMU".
+Could you add
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2438
+
+to the commit message?
 
 thanks
 -- PMM
