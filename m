@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C2A6C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12089C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTkWe-0000B1-72; Tue, 16 Jul 2024 11:55:36 -0400
+	id 1sTkWc-0000Av-Br; Tue, 16 Jul 2024 11:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTkWN-000064-8i
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:55:24 -0400
+ id 1sTkWT-00006a-TR
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:55:26 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTkWI-0007SW-Bi
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:55:17 -0400
+ id 1sTkWO-0007SW-T2
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:55:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721145315; x=1752681315;
+ t=1721145321; x=1752681321;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ORQtPOUjRaH7fq192/3Uf+CcJuvKVSUruZo9xOxKbJw=;
- b=UyfVZ7bnkBlv/IWk4o4cBXhK6e/YbYQJ+8reW3uVfkDM38Cl0pGsu67r
- xciI1OhuDwCfoNDBEXzxM4+yRFcYBUYdw3dmp0ROwfHR4zaO3WPm+XQJs
- 2lpqI+7BcxfrPx6qvqWVsGMMcRGG4KmdslomAVEbfhjW7iCBkGvC5dyQJ
- TtsJRnqMt2HgCHmzWkXDA0LUw7wW4ocXXXBgBU/ePlld3krlhww5arN4O
- RnZfpkPENlxTghEAdx7YBdQ1lwYCnsh7FgY1cwEHWwH6UPsijQrHvBXWH
- HEvulm5H5MatMMHNPbA9ZAd83M4XK3bESmgyZ0xjEkYtTo7EKBlOw7T03 g==;
-X-CSE-ConnectionGUID: tTLxJbjxR6ylfQ7wRd6B7g==
-X-CSE-MsgGUID: wvkroJ5NSYS1k/a8Oqa+FQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="18743697"
-X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="18743697"
+ bh=M+INEDceyzqNpPErcKN6L7u48TTH5fEDjgdcYW5fAXE=;
+ b=RmSdTa8u6fKU4Hwykhzlr+HD0az6CDdVnSRLWHWuRu6rPX2oPo475nQ4
+ 2Snv11i0eCwf3PUk5kUaPsr7sc9+AEuN5zdslJe6x2KX7lMUAJGlWqpzn
+ lo8CC9NsUzIigJ3sHnZwtzVQU5romzRfn3PA59WCLGIC+S3V/H8tSfISd
+ YQ7sWZwlqSYs9wBnZqwbYGYDOBCnZuxvBrYRXSaC1QeqZE3FQE66Zed54
+ gTwSghJZzW2uXRMYDIq+yc6n5ZyS7Tt4VFHwXDitZH/DI0wc+Rb2paCeG
+ bjOAJtDNB6Racn5rVjlzHWik1ukzoMpLhnIEHXl+mzvZCTQxlQFqICq4V Q==;
+X-CSE-ConnectionGUID: KhCsjZsxTc6km0F4SgipXg==
+X-CSE-MsgGUID: 8i+vroKPSOC+Hhm5aj5TlA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="18743719"
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="18743719"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jul 2024 08:54:52 -0700
-X-CSE-ConnectionGUID: sX48Ry9oS9a3ksiDhRNKcg==
-X-CSE-MsgGUID: IzrrmODeTFCDv39AExZSaQ==
+ 16 Jul 2024 08:54:58 -0700
+X-CSE-ConnectionGUID: yaG6rVfWQRio/3iUZpNdng==
+X-CSE-MsgGUID: NRCi32nqSbSgQyQJ9+MGCw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="50788277"
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="50788325"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 16 Jul 2024 08:54:49 -0700
+ by orviesa008.jf.intel.com with ESMTP; 16 Jul 2024 08:54:55 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -55,10 +55,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v4 2/9] target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK and
- MSR_KVM_SYSTEM_TIME definitions
-Date: Wed, 17 Jul 2024 00:10:08 +0800
-Message-Id: <20240716161015.263031-3-zhao1.liu@intel.com>
+Subject: [PATCH v4 4/9] target/i386/kvm: Save/load MSRs of kvmclock2
+ (KVM_FEATURE_CLOCKSOURCE2)
+Date: Wed, 17 Jul 2024 00:10:10 +0800
+Message-Id: <20240716161015.263031-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240716161015.263031-1-zhao1.liu@intel.com>
 References: <20240716161015.263031-1-zhao1.liu@intel.com>
@@ -88,31 +88,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These 2 MSRs have been already defined in kvm_para.h (standard-headers/
-asm-x86/kvm_para.h).
+MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to
+kvmclock2 (KVM_FEATURE_CLOCKSOURCE2).
 
-Remove QEMU local definitions to avoid duplication.
+Add the save/load support for these 2 MSRs just like kvmclock MSRs.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/kvm.c | 3 ---
- 1 file changed, 3 deletions(-)
+ target/i386/cpu.h     |  2 ++
+ target/i386/kvm/kvm.c | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index b59bdc1c9d9d..35dc68631989 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1826,6 +1826,8 @@ typedef struct CPUArchState {
+ 
+     uint64_t system_time_msr;
+     uint64_t wall_clock_msr;
++    uint64_t system_time_new_msr;
++    uint64_t wall_clock_new_msr;
+     uint64_t steal_time_msr;
+     uint64_t async_pf_en_msr;
+     uint64_t async_pf_int_msr;
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 86e42beb78bf..6ad5a7dbf1fd 100644
+index ac434e83b64c..64e54beac7b3 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -81,9 +81,6 @@
- #define KVM_APIC_BUS_CYCLE_NS       1
- #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
- 
--#define MSR_KVM_WALL_CLOCK  0x11
--#define MSR_KVM_SYSTEM_TIME 0x12
--
- /* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
-  * 255 kvm_msr_entry structs */
- #define MSR_BUF_SIZE 4096
+@@ -3423,6 +3423,12 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+             kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
+             kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
+         }
++        if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
++            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW,
++                              env->system_time_new_msr);
++            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW,
++                              env->wall_clock_new_msr);
++        }
+         if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+             kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
+         }
+@@ -3901,6 +3907,10 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+         kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
+     }
++    if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
++        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW, 0);
++        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW, 0);
++    }
+     if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
+         kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
+     }
+@@ -4167,6 +4177,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_KVM_WALL_CLOCK:
+             env->wall_clock_msr = msrs[i].data;
+             break;
++        case MSR_KVM_SYSTEM_TIME_NEW:
++            env->system_time_new_msr = msrs[i].data;
++            break;
++        case MSR_KVM_WALL_CLOCK_NEW:
++            env->wall_clock_new_msr = msrs[i].data;
++            break;
+         case MSR_MCG_STATUS:
+             env->mcg_status = msrs[i].data;
+             break;
 -- 
 2.34.1
 
