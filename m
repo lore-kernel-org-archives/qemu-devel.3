@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F0FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D636C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTkaB-0003M8-9i; Tue, 16 Jul 2024 11:59:15 -0400
+	id 1sTke0-0003ic-3S; Tue, 16 Jul 2024 12:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTkZz-0002hr-9d
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:59:04 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTkZu-00081X-7v
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:59:02 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a77c080b521so606808066b.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 08:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721145533; x=1721750333; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EGMgzTpfMVZQJdw7JKV9s9tLpOelb413fiZFpq7MqHM=;
- b=YkkntWpjjI2T+qYBu7D1WNlDhdGwQmL2fq9+HYIHo5FvVmdG62RvQlu/dt7vQdWIBT
- bwmZqltsu+768Xb2dcwykcnp0/0CSxy7n0o7jb8QvTJ2ezmuUu4XhKhtRWS4+xoZxJGY
- HEAtkMpHOvdHVVcNsM/oLCYdyyhNO5DJ9yhPmRwyfZt1hmdhOXMfkvQaRu+6WzPSCcgC
- 1orYoXJ3v9BlteeFSg3tSNAzd0Mplzr+rOHjIKvzIuhtdPYYb3ptPhVI/lP7K4CLrR8L
- ArDAyXOWvOXnWl+SiGPV9Mezrcg3sY58QXSUcMBJFcFoIQ/hCgXMGMxqvmrwLEmnJTFS
- q41A==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sTkdw-0003UX-Ou
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:03:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sTkdr-0000WA-VE
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:03:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721145781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yB4AxlEEPuHJDRDMcxc71g4V/TGK3tF7rWkhub3hXRo=;
+ b=DxecuAs1KtbREytgegA9lRfQv3jrch1sA1JRqilPcyXgsulqTMj/MPtvzTHWQpo4Cxt8JX
+ yBMseZCWHhQxrLq50+6kyEnVIASHgr42ypgtKiFUC759k6PWiMbbW3TyavyX3mqE4x9CQg
+ WU6W/buNcWs+EN4120dUvvznS0GQHas=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-30-lf-xQHAMPKGPeDFvFwROjQ-1; Tue, 16 Jul 2024 12:02:59 -0400
+X-MC-Unique: lf-xQHAMPKGPeDFvFwROjQ-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e03b3f48c65so10152713276.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 09:02:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721145533; x=1721750333;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1721145778; x=1721750578;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EGMgzTpfMVZQJdw7JKV9s9tLpOelb413fiZFpq7MqHM=;
- b=VGoaC1/kXjlpaqZCoR+Giig4LmTqfEwLdKiYuuWVOLgVPyAnk/UZ9IhdE95Pwvs7U7
- sz3CtkOa6cDH+Tuq1ruT/B5WgNdi+uauUETree0gQRljeSwiAWj0kugmqxJ1O57eaIaC
- J8IpDFshI2yKiFUm3z7ZDdEr826n6OXEHF8IkyN8t6qx7sWGZJObVpDEf/DauibX0QPd
- Hxtv5QVoFT7hxPC1jea3KR71pAj6zTste0H/cphegbZHv3it9OK3T7mezD9ATs2brjmD
- V9Sgzg2yQxCrKWYFf0xQtqLtLNRae+cT2DlOoHmQavFHnniX8WBV670tq8yjbe8so3dG
- KTug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsb1yfvE06AMFvr06vO+x3m0SGN06tVu0PDIPDlZ4nCDn0p/eB9kzOXYdjBGvcr26tNTygbZ/6PuV3eBl9nZwCVqUICZg=
-X-Gm-Message-State: AOJu0YyIbSB31NNb5m3UnHS69LSmTDuzS4zejgJYB8TdVqflWE0JYg4D
- AamHei9fFvwBSIon/zL2GLXIZP5/K4PyWzaEyWOKGI1/fsDs6+1evHA6hTR+TuM=
-X-Google-Smtp-Source: AGHT+IH0F83ZBkxZScIg7HOe//hXAvrzMvFG8ifYxSOATlPmpeoTHINGGBL/JmRX8Uzoq87nXCCb7w==
-X-Received: by 2002:a17:906:7c44:b0:a77:cad0:5a92 with SMTP id
- a640c23a62f3a-a79ea4367a8mr181106666b.24.1721145533058; 
- Tue, 16 Jul 2024 08:58:53 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc5a3a3bsm333303766b.34.2024.07.16.08.58.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 08:58:52 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7C7885F7A0;
- Tue, 16 Jul 2024 16:58:51 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] cpu: Free queued CPU work
-In-Reply-To: <20240714-cpu-v1-1-19c2f8de2055@daynix.com> (Akihiko Odaki's
- message of "Sun, 14 Jul 2024 19:46:52 +0900")
-References: <20240714-cpu-v1-1-19c2f8de2055@daynix.com>
-Date: Tue, 16 Jul 2024 16:58:51 +0100
-Message-ID: <87h6cpgwg4.fsf@draig.linaro.org>
+ bh=yB4AxlEEPuHJDRDMcxc71g4V/TGK3tF7rWkhub3hXRo=;
+ b=Mh7pJ/nmCq9VkTeena2HcByhWb/I6RhPyE5hlZI4yJaJvT1PXlwxSILuGwzcgdKYBS
+ ViIXSRS/kjVfkhzu5Ggma6EC9fkE9A3UpytSPGzx/eFzJmJr9Qsa5rnFgtRBMPoWPDn7
+ Gc6RS7VOQ3LZokgOXYiDDH4Diahxsww5/sfOLGRuLfWXz40o9KfX4+wqW9USgoHo0OkZ
+ 5Ayo8aWoqIanuS7BkH/GWJfLZotIH2Dy1CvkgyZqPS43R/5xS2i8iDv0an7MuW/EFL+Q
+ qUoVpSNo8eiA+MBGvj4SU8DVQj8dSJMg9KzJdXisx97kwG7GRkJgH3S/b+01GGZBA6To
+ dTlg==
+X-Gm-Message-State: AOJu0YxfokOxYlTy1FiubNiXUw8Awb7SfJLJvCmzhdB7JEIt1C1VDppm
+ UPaZVQ71pPK5lrHhz/9pE9G9UIEuz5y5FKDNtFfMvQNPgOo8L9g7Tf7KHSTUFB8cdIRr45c42PI
+ p+OE0bf/6uIlDTZ8egHukA6TyiFDLpyF7SdlCdU8p+nbsxIYOe6zlhAwYuyk6g/fe4aX7ZFoCi8
+ bQiy/ZJsCfEUJaB+PcW0hfZOdL8k8=
+X-Received: by 2002:a05:6902:102f:b0:e03:2bfc:b1f0 with SMTP id
+ 3f1490d57ef6-e05d56b75e7mr2975067276.16.1721145778516; 
+ Tue, 16 Jul 2024 09:02:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3Iq1Ws3ktvWKMo5AAm81KxwgMZNuwhzhVsP1bQYUODiB7PA4K3PT+b8zGPFbXD7YJrO8C8x3VZcfbWBdxQOo=
+X-Received: by 2002:a05:6902:102f:b0:e03:2bfc:b1f0 with SMTP id
+ 3f1490d57ef6-e05d56b75e7mr2975029276.16.1721145778053; Tue, 16 Jul 2024
+ 09:02:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240715095939.72492-1-zhao1.liu@intel.com>
+ <20240715095939.72492-2-zhao1.liu@intel.com>
+ <CAJaqyWcRv53hNYXT31tZ9M317OTBsxSgQ5bJvo1y-E=VoVS24g@mail.gmail.com>
+ <ZpXnKCoz/7hRJZ6+@intel.com>
+In-Reply-To: <ZpXnKCoz/7hRJZ6+@intel.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 16 Jul 2024 18:02:22 +0200
+Message-ID: <CAJaqyWdP_xuU6q_cLeq1tHx5Hjd=5VJ85Rq8mT7DRpm=Q1EKiw@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio/vdpa-dev: Check returned value instead of
+ dereferencing @errp
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,100 +101,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
-
-> Running qemu-system-aarch64 -M virt -nographic and terminating it will
-> result in a LeakSanitizer error due to remaining queued CPU work so
-> free it.
+On Tue, Jul 16, 2024 at 5:05=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-FWIW this is likely the queued async task that
-qemu_plugin_vcpu_init_hook sets up on the fake CPU -M virt creates at:
-
-        /*
-         * Instantiate a temporary CPU object to find out about what
-         * we are about to deal with. Once this is done, get rid of
-         * the object.
-         */
-        cpuobj =3D object_new(possible_cpus->cpus[0].type);
-        armcpu =3D ARM_CPU(cpuobj);
-
-        pa_bits =3D arm_pamax(armcpu);
-
-        object_unref(cpuobj);
-
-Anyway:
-
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-
-> ---
->  include/hw/core/cpu.h |  6 ++++++
->  cpu-common.c          | 11 +++++++++++
->  hw/core/cpu-common.c  |  1 +
->  3 files changed, 18 insertions(+)
+> On Mon, Jul 15, 2024 at 11:01:08PM +0200, Eugenio Perez Martin wrote:
+> > Date: Mon, 15 Jul 2024 23:01:08 +0200
+> > From: Eugenio Perez Martin <eperezma@redhat.com>
+> > Subject: Re: [PATCH] hw/virtio/vdpa-dev: Check returned value instead o=
+f
+> >  dereferencing @errp
+> >
+> > On Mon, Jul 15, 2024 at 11:45=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com>=
+ wrote:
+> > >
+> > > As the comment in qapi/error, dereferencing @errp requires
+> > > ERRP_GUARD():
+> > >
+> > > * =3D Why, when and how to use ERRP_GUARD() =3D
+> > > *
+> > > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> > > * - It must not be dereferenced, because it may be null.
+> > > ...
+> > > * ERRP_GUARD() lifts these restrictions.
+> > > *
+> > > * To use ERRP_GUARD(), add it right at the beginning of the function.
+> > > * @errp can then be used without worrying about the argument being
+> > > * NULL or &error_fatal.
+> > > *
+> > > * Using it when it's not needed is safe, but please avoid cluttering
+> > > * the source with useless code.
+> > >
+> > > Though vhost_vdpa_device_realize() is called at DeviceClass.realize()
+> > > context and won't get NULL @errp, it's still better to follow the
+> > > requirement to add the ERRP_GUARD().
+> > >
+> > > But qemu_open() and vhost_vdpa_device_get_u32()'s return values can
+> > > distinguish between successful and unsuccessful calls, so check the
+> > > return values directly without dereferencing @errp, which eliminates
+> > > the need of ERRP_GUARD().
+> > >
+> > > Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> > > Cc: "Eugenio P=C3=A9rez" <eperezma@redhat.com>
+> > > Cc: Jason Wang <jasowang@redhat.com>
+> > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > > ---
+> > >  hw/virtio/vdpa-dev.c | 11 ++++++-----
+> > >  1 file changed, 6 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> > > index 64b96b226c39..7b439efdc1d3 100644
+> > > --- a/hw/virtio/vdpa-dev.c
+> > > +++ b/hw/virtio/vdpa-dev.c
+> > > @@ -50,6 +50,7 @@ vhost_vdpa_device_get_u32(int fd, unsigned long int=
+ cmd, Error **errp)
+> > >
+> > >  static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp=
+)
+> > >  {
+> > > +    ERRP_GUARD();
+> >
+> > Good catch, thank you! But removing the err dereferencing eliminates
+> > the need for ERRP_GUARD(), doesn't it?
+> >
 >
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index a2c8536943f7..8e6466c1ddab 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -1000,6 +1000,12 @@ void cpu_resume(CPUState *cpu);
->   */
->  void cpu_remove_sync(CPUState *cpu);
->=20=20
-> +/**
-> + * free_queued_cpu_work() - free all items on CPU work queue
-> + * @cpu: The CPU which work queue to free.
-> + */
-> +void free_queued_cpu_work(CPUState *cpu);
-> +
->  /**
->   * process_queued_cpu_work() - process all items on CPU work queue
->   * @cpu: The CPU which work queue to process.
-> diff --git a/cpu-common.c b/cpu-common.c
-> index ce78273af597..7ae136f98ca7 100644
-> --- a/cpu-common.c
-> +++ b/cpu-common.c
-> @@ -331,6 +331,17 @@ void async_safe_run_on_cpu(CPUState *cpu, run_on_cpu=
-_func func,
->      queue_work_on_cpu(cpu, wi);
->  }
->=20=20
-> +void free_queued_cpu_work(CPUState *cpu)
-> +{
-> +    while (!QSIMPLEQ_EMPTY(&cpu->work_list)) {
-> +        struct qemu_work_item *wi =3D QSIMPLEQ_FIRST(&cpu->work_list);
-> +        QSIMPLEQ_REMOVE_HEAD(&cpu->work_list, node);
-> +        if (wi->free) {
-> +            g_free(wi);
-> +        }
-> +    }
-> +}
-> +
->  void process_queued_cpu_work(CPUState *cpu)
->  {
->      struct qemu_work_item *wi;
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index b19e1fdacf22..d2e3e4570ab7 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -281,6 +281,7 @@ static void cpu_common_finalize(Object *obj)
->          g_free(cpu->plugin_state);
->      }
->  #endif
-> +    free_queued_cpu_work(cpu);
->      g_array_free(cpu->gdb_regs, TRUE);
->      qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
->      qemu_mutex_destroy(&cpu->work_mutex);
+> Thanks Eugenio! You're right and I forgot to delete it. I'll post a new
+> version.
 >
-> ---
-> base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
-> change-id: 20240714-cpu-c4d28823b4c2
 >
-> Best regards,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Good! With that removed,
+
+Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+
+Thanks!
+
 
