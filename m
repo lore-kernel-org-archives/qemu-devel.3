@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB74DC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEADC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTkiM-0005D2-Jc; Tue, 16 Jul 2024 12:07:42 -0400
+	id 1sTkj4-0008F9-5N; Tue, 16 Jul 2024 12:08:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkiE-0004oB-Pd
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:07:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTkj1-00085W-Nq
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:08:23 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkiA-00027T-2q
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:07:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721146048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zOcHz3RLFBS6q02plrZ2zcfz1xOB1yAGTa16NUYQd0c=;
- b=IeoQZLAelkBCtPmBhDiYJZ8TqvxqhBBvLSQYxUpjGqiB2h5mYAb1v71VF510wUsvt0lbis
- MDu/ZTO+ta3zrIosmgJs5euf4POd+67ayc5GtVWS2RqyJsTIeVvTdFVWj17me2lnjnRixb
- 2Bz0cHMeU7BAF1Zx7KeAgVsO/H0bZe8=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-2qkVGXiSOxup-HMez11asw-1; Tue, 16 Jul 2024 12:07:27 -0400
-X-MC-Unique: 2qkVGXiSOxup-HMez11asw-1
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-7876e1a04faso3713352a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 09:07:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721146046; x=1721750846;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zOcHz3RLFBS6q02plrZ2zcfz1xOB1yAGTa16NUYQd0c=;
- b=Y0Bm/2b6c07JtkceXOCfApzBT8VcMFMMAo8G82cAJshqyo15fQE3EQgPY3YBnfO5z8
- dRl6Uyv8uj7Nnio5evGQlLDUcUtTOL0wv3h7wuNG14SgZOBKG3Alx5dMX9neLEc0E4jq
- LM5v2es0fe4H+hWnVoc1z7f6mwnzRHplhC4cN/dqwDYbQBNSkEQoXKXw3yxsxsOYnlsW
- Gndbm+aoWznh734kLKDnWRym7e35dk+gziCTi+e+3wq8uh1PRy78Mprv3D6hFWUB2a97
- /fDqDxYqg39v062ZIA3tDq2hYNe38aEaW5wa3rEazSMk949LHXqNxerRmjEcVD8ZdOxS
- QOqw==
-X-Gm-Message-State: AOJu0YyBj46Pey66N/hVzjM0sPFTLCNqMs660TU/3gTOGrHh9ZIIVElk
- /fUdNcvx5gU0CFd+AYy66dDKkhUyYYB9dEEls4jieNSA7qht4DWw3frGkY438Z0uhp+qvDkDeFC
- bJ9WZvdWqKgK5/hRAhZdGj4HWv4U6tggFNV/2EC5VhO/CCpSoYcaBZNbKvtue0wCf59Yizvz9eD
- be5sqgWAqCH2dKj0MK21Y7xFjo5b0=
-X-Received: by 2002:a05:6a21:7898:b0:1c0:e5d1:619e with SMTP id
- adf61e73a8af0-1c3f1220134mr3240523637.18.1721146046186; 
- Tue, 16 Jul 2024 09:07:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1r3+lJWDL7Xs6x5PQBbEDAyb8Ti5rDD2y4YazMWqBb3Elbc7qTkytH8wk2km8fO5ACYe2xLwwyq89N7dBFwo=
-X-Received: by 2002:a05:6a21:7898:b0:1c0:e5d1:619e with SMTP id
- adf61e73a8af0-1c3f1220134mr3240484637.18.1721146045821; Tue, 16 Jul 2024
- 09:07:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTkiy-0002DB-VY
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:08:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721146101; x=1752682101;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=jdrHZl+5t0J7nAGpopmSrmO15ARJrcpwdsnX0JbfuZk=;
+ b=NXVfaSgEOGb90LeZzd+R8HHeE7kxMd+F8njiHPaxFoS0RJ+2a39xLx5o
+ /hpROPQh6Hhz9tKl/H0ViO2mshCrMT8C0agAc8sgTmukrPKtgfW2NaoB8
+ kw2JsW2uEQkxflcxoEL8YXetzO+s7jfSj6TxetwOlegZc8Kpfa1TM1FY2
+ ZuBEmPm2mCbL14iZPSFh4tJ0FFJj1t5ibH5Bv9afZOR/bnRzBROKm8F6I
+ +DmzdBQxykhgzS/G8/x3jS4wuZto/rFUgZt10J3d9G/ijMUZBAS1AV+Pr
+ g0dri5S2skh+0Rhh/SUYitVfxfEDHIVBE9rOldJEET3c9pGO9CnRo7itc g==;
+X-CSE-ConnectionGUID: 2g0zSBhBRwmQ0FnPcYl3+g==
+X-CSE-MsgGUID: MGMbemqSRBO6lrAmYxdmnw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="29189655"
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="29189655"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jul 2024 09:08:18 -0700
+X-CSE-ConnectionGUID: HdqbjBEXSXe+ou+TnHJ5sA==
+X-CSE-MsgGUID: 4vSt+rPbQUyuDQ3bxBY4lQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; d="scan'208";a="50007312"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 16 Jul 2024 09:08:16 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH v2] qga/commands-posix: Make ga_wait_child() return boolean
+Date: Wed, 17 Jul 2024 00:23:51 +0800
+Message-Id: <20240716162351.270095-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240711112228.2140606-1-armbru@redhat.com>
- <20240711112228.2140606-2-armbru@redhat.com>
-In-Reply-To: <20240711112228.2140606-2-armbru@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 16 Jul 2024 12:07:13 -0400
-Message-ID: <CAFn=p-bRkqOeuLTD5MhPyuFYur2GUCs=NWat6Qs-6eRt_g88iA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] qapi/pci: Clean up documentation around PciDeviceClass
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>, 
- Michael Tsirkin <mst@redhat.com>, Daniel Berrange <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000ab1269061d5f8abb"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,112 +81,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ab1269061d5f8abb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Make ga_wait_child() return boolean and check the returned boolean
+in ga_run_command() instead of dereferencing @errp.
 
-On Thu, Jul 11, 2024, 7:24=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
-
-> PciDeviceInfo's doc comment has a note on PciDeviceClass member @desc.
-> Since the note applies always, not just within PciDeviceInfo, merge it
-> into PciDeviceClass's description of member @desc.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->
-
-Reviewed-by: John Snow <jsnow@redhat.com>
-
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
->  qapi/pci.json | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/qapi/pci.json b/qapi/pci.json
-> index 8287d15dd0..97179920fb 100644
-> --- a/qapi/pci.json
-> +++ b/qapi/pci.json
-> @@ -93,7 +93,8 @@
->  #
->  # Information about the Class of a PCI device
->  #
-> -# @desc: a string description of the device's class
-> +# @desc: a string description of the device's class (not stable, and
-> +#     should only be treated as informational)
->  #
->  # @class: the class code of the device
->  #
-> @@ -146,9 +147,6 @@
->  #
->  # @regions: a list of the PCI I/O regions associated with the device
->  #
-> -# .. note:: The contents of @class_info.desc are not stable and should
-> -#    only be treated as informational.
-> -#
->  # Since: 0.14
->  ##
->  { 'struct': 'PciDeviceInfo',
-> --
-> 2.45.0
->
->
->
+v2:
+ * Added Phil's r/b.
+ * Used Phil's polished words.
+---
+ qga/commands-posix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---000000000000ab1269061d5f8abb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Thu, Jul 11, 2024, 7:24=E2=80=AFAM Markus Armbruste=
-r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
-<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">PciDeviceInfo&#39;s doc comment ha=
-s a note on PciDeviceClass member @desc.<br>
-Since the note applies always, not just within PciDeviceInfo, merge it<br>
-into PciDeviceClass&#39;s description of member @desc.<br>
-<br>
-Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
-arget=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br></blockquo=
-te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Reviewed-by: J=
-ohn Snow &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt;</=
-div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
-"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
-1px #ccc solid;padding-left:1ex">
----<br>
-=C2=A0qapi/pci.json | 6 ++----<br>
-=C2=A01 file changed, 2 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/qapi/pci.json b/qapi/pci.json<br>
-index 8287d15dd0..97179920fb 100644<br>
---- a/qapi/pci.json<br>
-+++ b/qapi/pci.json<br>
-@@ -93,7 +93,8 @@<br>
-=C2=A0#<br>
-=C2=A0# Information about the Class of a PCI device<br>
-=C2=A0#<br>
--# @desc: a string description of the device&#39;s class<br>
-+# @desc: a string description of the device&#39;s class (not stable, and<b=
-r>
-+#=C2=A0 =C2=A0 =C2=A0should only be treated as informational)<br>
-=C2=A0#<br>
-=C2=A0# @class: the class code of the device<br>
-=C2=A0#<br>
-@@ -146,9 +147,6 @@<br>
-=C2=A0#<br>
-=C2=A0# @regions: a list of the PCI I/O regions associated with the device<=
-br>
-=C2=A0#<br>
--# .. note:: The contents of @class_info.desc are not stable and should<br>
--#=C2=A0 =C2=A0 only be treated as informational.<br>
--#<br>
-=C2=A0# Since: 0.14<br>
-=C2=A0##<br>
-=C2=A0{ &#39;struct&#39;: &#39;PciDeviceInfo&#39;,<br>
--- <br>
-2.45.0<br>
-<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000ab1269061d5f8abb--
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 7f05996495a2..64bb0be94479 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -59,7 +59,7 @@
+ #endif
+ #endif
+ 
+-static void ga_wait_child(pid_t pid, int *status, Error **errp)
++static bool ga_wait_child(pid_t pid, int *status, Error **errp)
+ {
+     pid_t rpid;
+ 
+@@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+     if (rpid == -1) {
+         error_setg_errno(errp, errno, "failed to wait for child (pid: %d)",
+                          pid);
+-        return;
++        return false;
+     }
+ 
+     g_assert(rpid == pid);
++    return true;
+ }
+ 
+ static ssize_t ga_pipe_read_str(int fd[2], char **str)
+@@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], const char *in_str,
+         goto out;
+     }
+ 
+-    ga_wait_child(pid, &status, errp);
+-    if (*errp) {
++    if (!ga_wait_child(pid, &status, errp)) {
+         goto out;
+     }
+ 
+-- 
+2.34.1
 
 
