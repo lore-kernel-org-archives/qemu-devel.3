@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9176C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA366C3DA59
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgKW-0000eL-I0; Tue, 16 Jul 2024 07:26:48 -0400
+	id 1sTgKS-0000NE-7Q; Tue, 16 Jul 2024 07:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKV-0000Z7-6C
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKQ-0000BE-Ft
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKT-0003fB-OF
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKN-0003eM-LQ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721129205;
+ s=mimecast20190719; t=1721129199;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XHN7AYgHuHljyH4exkRaU7dMz5pCsBSrCydjHlqdXLk=;
- b=gSuD+2iN/cZXJcH2wgJCSaIFxP+WGI9d2dSUee4PDRbS0jVzlaGP/5v0M9T8hyDdVl2zbY
- wDwbDtL+OinA+JMZJrWyOFSnNcZUJgCgcEEYwj4Q3ic9hmB70ezN1iOSLVcztsbrJcVf28
- qyHLcjqFCay7L9VhqEV4pGYZLKQxKlk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oWk6OiijvNFxzzsXUSJ3tpnyPsRwaP/81mITTt4wWbY=;
+ b=DqxfA6VSvveUlCZdlsE0pEkBn0FSeee1+lFH+BAL9MP61KMN7rRiNk3Qspq0qeBZ1FC8TC
+ jTyAHJn8A6rz6qotIsqkd50/O0mnmAm9iBTNEzDYIs1/WNUZx2PDi+71bUv9kf/vdAIkDh
+ qC8FxnYOnQxikQ549011a8+s6LFikyQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-14--R4wowlLNDi4WVuRkOwxlw-1; Tue,
- 16 Jul 2024 07:26:41 -0400
-X-MC-Unique: -R4wowlLNDi4WVuRkOwxlw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376--5NRluNtN7KM8eg3D6n7-Q-1; Tue,
+ 16 Jul 2024 07:26:34 -0400
+X-MC-Unique: -5NRluNtN7KM8eg3D6n7-Q-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A345E1944B25; Tue, 16 Jul 2024 11:26:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 627211956080; Tue, 16 Jul 2024 11:26:33 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.154])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2A2B31955F40; Tue, 16 Jul 2024 11:26:36 +0000 (UTC)
+ id B9F5E1955E76; Tue, 16 Jul 2024 11:26:28 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -54,10 +54,10 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 05/11] tests/functional: Implement fetch_asset() method for
- downloading assets
-Date: Tue, 16 Jul 2024 13:26:08 +0200
-Message-ID: <20240716112614.1755692-6-thuth@redhat.com>
+Subject: [PATCH 03/11] tests/functional: Convert avocado tests that just need
+ a small adjustment
+Date: Tue, 16 Jul 2024 13:26:06 +0200
+Message-ID: <20240716112614.1755692-4-thuth@redhat.com>
 In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
 References: <20240716112614.1755692-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,77 +88,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the new python test framework, we cannot use the fetch_asset()
-function from Avocado anymore, so we have to provide our own
-implementation now instead. Thus add such a function based on the
-urllib python module for this purpose.
+These simple tests can be converted to stand-alone tests quite easily,
+e.g. by just setting the machine to 'none' now manually or by adding
+"-cpu" command line parameters, since we don't support the corresponding
+avocado tags in the new python test framework.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py | 36 ++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ .../test_info_usernet.py}                     | 11 ++-
+ .../test_ppc_74xx.py}                         | 74 ++++++++-----------
+ .../version.py => functional/test_version.py} | 13 ++--
+ 3 files changed, 47 insertions(+), 51 deletions(-)
+ rename tests/{avocado/info_usernet.py => functional/test_info_usernet.py} (87%)
+ mode change 100644 => 100755
+ rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
+ mode change 100644 => 100755
+ rename tests/{avocado/version.py => functional/test_version.py} (78%)
+ mode change 100644 => 100755
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index e73705d40a..77c3b14d34 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -11,6 +11,8 @@
+diff --git a/tests/avocado/info_usernet.py b/tests/functional/test_info_usernet.py
+old mode 100644
+new mode 100755
+similarity index 87%
+rename from tests/avocado/info_usernet.py
+rename to tests/functional/test_info_usernet.py
+index e1aa7a6e0a..ded973253a
+--- a/tests/avocado/info_usernet.py
++++ b/tests/functional/test_info_usernet.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Test for the hmp command "info usernet"
+ #
+ # Copyright (c) 2021 Red Hat, Inc.
+@@ -8,18 +10,16 @@
  # This work is licensed under the terms of the GNU GPL, version 2 or
  # later.  See the COPYING file in the top-level directory.
  
-+import hashlib
-+import urllib.request
- import logging
- import os
- import pycotap
-@@ -23,6 +25,7 @@
- import unittest
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
  
- from pathlib import Path
-+from shutil import copyfileobj
- from qemu.machine import QEMUMachine
- from qemu.utils import (get_info_usernet_hostfwd_port, kvm_available,
-                         tcg_available)
-@@ -215,6 +218,39 @@ def setUp(self, bin_prefix):
-         if not os.path.exists(self.workdir):
-             os.makedirs(self.workdir)
+ from qemu.utils import get_info_usernet_hostfwd_port
  
-+    def check_hash(self, file_name, expected_hash):
-+        if not expected_hash:
-+            return True
-+        if len(expected_hash) == 40:
-+            sum_prog = 'sha1sum'
-+        elif len(expected_hash) == 64:
-+            sum_prog = 'sha256sum'
-+        elif len(expected_hash) == 128:
-+            sum_prog = 'sha512sum'
-+        else:
-+            raise Exception("unknown hash type")
-+        checksum = subprocess.check_output([sum_prog, file_name]).split()[0]
-+        return expected_hash == checksum.decode("utf-8")
+ 
+ class InfoUsernet(QemuSystemTest):
+-    """
+-    :avocado: tags=machine:none
+-    """
+ 
+     def test_hostfwd(self):
+         self.require_netdev('user')
++        self.machine = 'none'
+         self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22')
+         self.vm.launch()
+         res = self.vm.cmd('human-monitor-command',
+@@ -31,3 +31,6 @@ def test_hostfwd(self):
+         self.assertGreater(port, 0,
+                            ('Found a redirected port that is not greater than'
+                             ' zero'))
 +
-+    def fetch_asset(self, url, asset_hash):
-+        cache_dir = os.path.expanduser("~/.cache/qemu/download")
-+        if not os.path.exists(cache_dir):
-+            os.makedirs(cache_dir)
-+        fname = os.path.join(cache_dir,
-+                             hashlib.sha256(url.encode("utf-8")).hexdigest())
-+        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
-+            return fname
-+        self.log.info("Downloading %s to %s...", url, fname)
-+        dl_fname = fname + ".download"
-+        with urllib.request.urlopen(url) as src:
-+            with open(dl_fname, "wb+") as dst:
-+                copyfileobj(src, dst)
-+        if not self.check_hash(dl_fname, asset_hash):
-+            os.remove(dl_fname)
-+            raise Exception("Hash of " + url + " does not match")
-+        os.rename(dl_fname, fname)
-+        return fname
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/ppc_74xx.py b/tests/functional/test_ppc_74xx.py
+old mode 100644
+new mode 100755
+similarity index 74%
+rename from tests/avocado/ppc_74xx.py
+rename to tests/functional/test_ppc_74xx.py
+index f54757c243..5386016f26
+--- a/tests/avocado/ppc_74xx.py
++++ b/tests/functional/test_ppc_74xx.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Smoke tests for 74xx cpus (aka G4).
+ #
+ # Copyright (c) 2021, IBM Corp.
+@@ -5,132 +7,120 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
+ 
+ class ppc74xxCpu(QemuSystemTest):
+-    """
+-    :avocado: tags=arch:ppc
+-    :avocado: tags=accel:tcg
+-    """
 +
-     def main():
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
+     timeout = 5
+ 
+     def test_ppc_7400(self):
+-        """
+-        :avocado: tags=cpu:7400
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7400')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7410(self):
+-        """
+-        :avocado: tags=cpu:7410
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7410')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,74xx')
+ 
+     def test_ppc_7441(self):
+-        """
+-        :avocado: tags=cpu:7441
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7441')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7445(self):
+-        """
+-        :avocado: tags=cpu:7445
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7445')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7447(self):
+-        """
+-        :avocado: tags=cpu:7447
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7447')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7447a(self):
+-        """
+-        :avocado: tags=cpu:7447a
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7447a')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7448(self):
+-        """
+-        :avocado: tags=cpu:7448
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7448')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,MPC86xx')
+ 
+     def test_ppc_7450(self):
+-        """
+-        :avocado: tags=cpu:7450
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7450')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7451(self):
+-        """
+-        :avocado: tags=cpu:7451
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7451')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7455(self):
+-        """
+-        :avocado: tags=cpu:7455
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7455')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7457(self):
+-        """
+-        :avocado: tags=cpu:7457
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7457')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
+ 
+     def test_ppc_7457a(self):
+-        """
+-        :avocado: tags=cpu:7457a
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('g3beige')
+         self.vm.set_console()
++        self.vm.add_args('-cpu', '7457a')
+         self.vm.launch()
+         wait_for_console_pattern(self, '>> OpenBIOS')
+         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/version.py b/tests/functional/test_version.py
+old mode 100644
+new mode 100755
+similarity index 78%
+rename from tests/avocado/version.py
+rename to tests/functional/test_version.py
+index c6139568a1..5e566d76b1
+--- a/tests/avocado/version.py
++++ b/tests/functional/test_version.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Version check example test
+ #
+ # Copyright (c) 2018 Red Hat, Inc.
+@@ -9,17 +11,18 @@
+ # later.  See the COPYING file in the top-level directory.
+ 
+ 
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ 
+ class Version(QemuSystemTest):
+-    """
+-    :avocado: tags=quick
+-    :avocado: tags=machine:none
+-    """
++
+     def test_qmp_human_info_version(self):
++        self.machine = 'none'
+         self.vm.add_args('-nodefaults')
+         self.vm.launch()
+         res = self.vm.cmd('human-monitor-command',
+                           command_line='info version')
+         self.assertRegex(res, r'^(\d+\.\d+\.\d)')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.45.2
 
