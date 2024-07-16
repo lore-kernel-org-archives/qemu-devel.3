@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82548C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36518C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTn7o-0000JZ-HS; Tue, 16 Jul 2024 14:42:08 -0400
+	id 1sTn7f-0008B2-IU; Tue, 16 Jul 2024 14:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTn7k-0008UX-9Y
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:42:04 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTn7e-00085Q-3B
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:41:58 -0400
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTn7i-0007L8-PO
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:42:04 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTn7V-0007KW-T9
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:41:51 -0400
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4266fd39527so43704785e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:42:01 -0700 (PDT)
+ 5b1f17b1804b1-426526d30aaso41530095e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721155320; x=1721760120; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=25d8r/+FljDN61432gFDtIj9k/AKYUKw9R2OfNlM2/Y=;
- b=lkUt3VNWtIVDPyy9lW8YeeFGFswrLc66ezotrtvNxvJsqbxjsd9jcW87Vg5ThyKbz9
- ft+2usm6W5aBbXjTTZD9iTZ89DqZln1X8Deo3CSecnE42iPk/iX/2cwka0BATfbGs9fq
- S+7sa8i8C0ztiXwkebq4Yv6zwt8JoQLiZ/PvOSKptKNzzXqWu1srYkNe86t8ruPLY/94
- lTXOQj+xCoaG2QJD13VAHt9WjBvgJjuv2fFNLRKlNJeXEygWAxvMG2odxAg0Txs78RX/
- bwA5KuEwPMDzpx/6DEroPxt7UqCNkqDm5/KvnqXG4OoBvBhUSk0b8NHNSk8qps9g7rqz
- dJCA==
+ d=linaro.org; s=google; t=1721155307; x=1721760107; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sO58Q1dbbNWbXhV70n6r409eHgPzIHoWD1JYp3xYgPs=;
+ b=FhEics8Ysh8Yjb2YONp1yTkiCiK2QtRkiiTB/mBq2Ke8nW/O0CWL1axxxXcKjoX15L
+ FdOnVr8D411DX3LJBvebyRm6IrIvo4mncnlnq58OUY8TtwoO/bd/8G+srDs5NuFC/8V4
+ XHMuiPXz3z+JiCjt6WJCfIB5gfCrbKHIRA7fak8Uml+ztkBj/Obo3S5jsWREYsSR9tQc
+ rDptUpjFZBuBfQDZwkN/lOQdAzkQbm83EpXXzIbbmjTpTmp6hJ7x2rWgj/tpLil6ysLD
+ WEl0UHsmRXUX9ZPIm8wbUcCG1nU3JzdOztwAesxw2UE46pmjyrhnA+7uhJd9EOMNGX1K
+ tNgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721155320; x=1721760120;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=25d8r/+FljDN61432gFDtIj9k/AKYUKw9R2OfNlM2/Y=;
- b=Bu6I+e/7U8oB8mFFMjsMKBq6OnaQga9ojwW5M+FuFTECyayOItVqYxF7uCtPXtZYdA
- i3bTR6VSyV2EH5q8ybXD2NP5Z4evDF3MqUw0EMrQ2K9XT2LuiAKU3+lGWXVPGPX2EwkV
- prbgylDkjEZOI69FhelFDqTFLs6JRiwfAkjCyl+g+eZxhlfs5BJK3mVpxsWsYd0K1OR4
- RKgUFYOrFsEteIiNe0ONkxkBSRD8YvhGC11+0advCq/DKDERxGFibaozg71Fh6DmCpTJ
- 8Gh+hEtRo4PypQfYHm4n34ZofcTGbQrI02CgBdlEKzWXbQoG78gbvmAhuGlMUkhrBKKg
- IEHw==
-X-Gm-Message-State: AOJu0YxAtz78Fvw7ry7f3BuSXTerk4KJW/Y5xlMUc4wysxSBNWnz9PRf
- 4++dSj8+U4yv3N+4LplWljty3BASJUWoW1Zjp+SJMxDeg+qn3Cd23CT49TRCgacT5s5nsP8xQXd
- AN67kLw==
-X-Google-Smtp-Source: AGHT+IEEoaRLnDm6/kaRws9zdI+TKhU18bBeBSd+bS1rifA2wHqwT/JUwywb+4Rjx4DwOm0yTYaNTA==
-X-Received: by 2002:a05:600c:4fd5:b0:426:5546:71a with SMTP id
- 5b1f17b1804b1-427ba656518mr19501355e9.2.1721155319826; 
- Tue, 16 Jul 2024 11:41:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721155307; x=1721760107;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sO58Q1dbbNWbXhV70n6r409eHgPzIHoWD1JYp3xYgPs=;
+ b=AiAoOrqKl4B5YUbDmvOPGkclB74jAIMLw0pZ0tHChwBSVDeD/8No0DJWfN5M9Ft8NP
+ 55Kdl4lp+uuicaDAqhk/74Ic2K6RpxTNfOokgdBtzAOmwKSWZIydKooeBSm2f4QLo9dd
+ aPF1UMXUQSr1WtfiipZ1l55LFgr/uMYi+jlgG7Ldf0AcoMakEFOpLlfZnojjF3uTwC9k
+ 1QK6n6fMX9DMOClXgNG3bzCK5E3Munqqbf+FBBlY7WqYF6/d7IHvV2Om/LRYpirLuZZJ
+ 6tLtyqyMCkKNbmivKlKJoh1Q2cs0DojLYGrGka8JyEV7U6XQvhtHN7qxOe6nKBePALDn
+ npaw==
+X-Gm-Message-State: AOJu0YxJVtKAuxdf2lch2t+bPNpd1dNgFqfgJdrB+iOfCiMN0kuAKXM8
+ ERl1xwxFOXObMT4Qjr2GDII67DQ7rhab7LR07yPBFk/WA9R0xayCFV9JtnWjEFSrWHhJ2OQs1LX
+ b/DnJ7Q==
+X-Google-Smtp-Source: AGHT+IFZtrtNMTiIO8Np2fohEpckJmLaIs5tKoUmL3ZZ8yn12hubrj9XMj1yiRYhNI9zCtO3juIgDg==
+X-Received: by 2002:a5d:4e52:0:b0:367:988d:fb99 with SMTP id
+ ffacd0b85a97d-36825f72661mr2099701f8f.8.1721155307398; 
+ Tue, 16 Jul 2024 11:41:47 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.209.82])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a14d32e8sm165818145e9.17.2024.07.16.11.41.58
+ ffacd0b85a97d-3680db046e2sm9780765f8f.105.2024.07.16.11.41.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jul 2024 11:41:59 -0700 (PDT)
+ Tue, 16 Jul 2024 11:41:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 02/11] hw/sd/sdcard: Register generic command handlers
-Date: Tue, 16 Jul 2024 20:41:35 +0200
-Message-ID: <20240716184144.42463-3-philmd@linaro.org>
+Cc: Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/11] SD/MMC patches for 2024-07-16
+Date: Tue, 16 Jul 2024 20:41:33 +0200
+Message-ID: <20240716184144.42463-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240716184144.42463-1-philmd@linaro.org>
-References: <20240716184144.42463-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::332;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
@@ -95,50 +90,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240712162719.88165-3-philmd@linaro.org>
----
- hw/sd/sd.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+The following changes since commit 959269e910944c03bc13f300d65bf08b060d5d0f:
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index ea01bf6e28..0093bbab3e 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2442,6 +2442,29 @@ static const SDProto sd_proto_emmc = {
-     /* Only v4.3 is supported */
-     .name = "eMMC",
-     .cmd = {
-+        [0]  = {0,  sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
-+        [1]  = {0,  sd_bcr,  "SEND_OP_COND", sd_cmd_SEND_OP_COND},
-+        [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
-+        [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
-+        [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
-+        [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
-+        [12] = {0,  sd_ac,   "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
-+        [13] = {0,  sd_ac,   "SEND_STATUS", sd_cmd_SEND_STATUS},
-+        [15] = {0,  sd_ac,   "GO_INACTIVE_STATE", sd_cmd_GO_INACTIVE_STATE},
-+        [16] = {2,  sd_ac,   "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
-+        [17] = {2,  sd_adtc, "READ_SINGLE_BLOCK", sd_cmd_READ_SINGLE_BLOCK},
-+        [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
-+        [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
-+        [27] = {4,  sd_adtc, "PROGRAM_CSD", sd_cmd_PROGRAM_CSD},
-+        [28] = {6,  sd_ac,   "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
-+        [29] = {6,  sd_ac,   "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
-+        [30] = {6,  sd_adtc, "SEND_WRITE_PROT", sd_cmd_SEND_WRITE_PROT},
-+        [35] = {5,  sd_ac,   "ERASE_WR_BLK_START", sd_cmd_ERASE_WR_BLK_START},
-+        [36] = {5,  sd_ac,   "ERASE_WR_BLK_END", sd_cmd_ERASE_WR_BLK_END},
-+        [38] = {5,  sd_ac,   "ERASE", sd_cmd_ERASE},
-+        [42] = {7,  sd_adtc, "LOCK_UNLOCK", sd_cmd_LOCK_UNLOCK},
-+        [55] = {8,  sd_ac,   "APP_CMD", sd_cmd_APP_CMD},
-+        [56] = {8,  sd_adtc, "GEN_CMD", sd_cmd_GEN_CMD},
-     },
- };
- 
+  Merge tag 'python-pull-request' of https://gitlab.com/jsnow/qemu into staging (2024-07-16 06:45:23 +1000)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/sdmmc-20240716
+
+for you to fetch changes up to c8cb19876d3e29bffd7ffd87586ff451f97f5f46:
+
+  hw/sd/sdcard: Support boot area in emmc image (2024-07-16 20:30:15 +0200)
+
+Ignored checkpatch error:
+
+  WARNING: line over 80 characters
+  #109: FILE: hw/sd/sd.c:500:
+  +    sd->ext_csd[EXT_CSD_HC_WP_GRP_SIZE] = 0x01; /* HC write protect group size */
+
+----------------------------------------------------------------
+SD/MMC patches queue
+
+Addition of eMMC support is a long-term collaborative virtual work by:
+
+ - Cédric Le Goater
+ - Edgar E. Iglesias
+ - Francisco Iglesias
+ - Joel Stanley
+ - Luc Michel
+ - Philippe Mathieu-Daudé
+ - Sai Pavan Boddu
+ - Vincent Palatin
+
+----------------------------------------------------------------
+
+Cédric Le Goater (2):
+  hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR handler (CMD3)
+  hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
+
+Joel Stanley (1):
+  hw/sd/sdcard: Support boot area in emmc image
+
+Luc Michel (1):
+  hw/sd/sdcard: Implement eMMC sleep state (CMD5)
+
+Philippe Mathieu-Daudé (5):
+  hw/sd/sdcard: Basis for eMMC support
+  hw/sd/sdcard: Register generic command handlers
+  hw/sd/sdcard: Register unimplemented command handlers
+  hw/sd/sdcard: Add emmc_cmd_PROGRAM_CID handler (CMD26)
+  hw/sd/sdcard: Add eMMC 'boot-partition-size' property
+
+Sai Pavan Boddu (1):
+  hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
+
+Vincent Palatin (1):
+  hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
+
+ include/hw/sd/sd.h |   3 +
+ hw/sd/sd.c         | 385 ++++++++++++++++++++++++++++++++++++++++++++-
+ hw/sd/trace-events |   2 +
+ 3 files changed, 384 insertions(+), 6 deletions(-)
+
 -- 
 2.41.0
 
