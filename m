@@ -4,203 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20ECAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7E7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTenM-0007Vr-FU; Tue, 16 Jul 2024 05:48:28 -0400
+	id 1sTeq6-00024U-95; Tue, 16 Jul 2024 05:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sTenK-0007Om-MW
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:48:26 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sTepo-0001Qx-D0
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:51:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sTenI-0000Zl-I5
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:48:26 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46G2tVTE005464;
- Tue, 16 Jul 2024 09:48:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=KaqP6Yp7VZUnHoKJss1F97tMInwTnkmenW9xNKxH0/A=; b=
- UR2Vse4Eo8t/pQs1im4Mjwi/M+GWYvvZdTmJsAftcA+qMvGbwYfqScpcTgQ8kSvK
- 8Bq/2Epjq4i0v8jhBB7layAmGqaWiBy3kUwjPPo680zYNI2sG+85U1m89fKYwEQw
- 4oN+S0jAM4fWLLMKoDMKosSvXTSGaOkzkYrjvtzczFxDNjCItx9Mjq9T3fENngtt
- XDaQTfiZRHJQMXoUcOVIYHg26DuSY643qyNuCObul0k2XeA6vkL/Mb+5mnOZGzvy
- D+wEFI3M+fx7+0MoB/7kO1f1IZ7RvanxliNSpWt9YockFz35P3hX2ny2zj2yMjVw
- x5nDD2ijklNzx5dgndMmEQ==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40bj4tn5bt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jul 2024 09:48:21 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46G90GgZ040645; Tue, 16 Jul 2024 09:48:19 GMT
-Received: from nam04-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam04lp2040.outbound.protection.outlook.com [104.47.73.40])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40bg193ug0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jul 2024 09:48:19 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i6Vt2A7UHRPNwhYMQIjMlBdGumBuG+yT3sBCzfY+M5khQUlj8Ku9JhzfnzzSu6oAVN6H0Yl4oyp4tEKf2Yvo/8nwwVwy+h/J9vT7H+3Pu+JzZA57wS1mH9SDoHPvCeg8J1f/H8+VTUzc7hAzGdPrWqUwA8oOSQt+bphlDswImPP6A+FZCzXeDo4lqNRFsQUKJ3EZIUMg094pl0U2+twWEIb6mFvI8DyDYlVBy6xhA9UKjyes+pS6v8wkM0CgVespCcRrGtUosS8rkD2bHZiR/Xf+Q0tr2HZqBMVweW/4rbiajXvtnAhRKmPtNqyqojV1hW6gujr8Z8uF0DQxnsMAGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KaqP6Yp7VZUnHoKJss1F97tMInwTnkmenW9xNKxH0/A=;
- b=Jy5rCwpfyRHgdrx1gvWet5oZyHxjDE2/32nWfT6a8Kn1rXsIvTo3jx4Dl78lhaQQo35d1G1dooi+NZD3RGSTnZBkACI9reINPDfKmzczj0UUtANH9QeMH0oIjsTZPw0RupeJx3VIUCeHeK/TCpAFeVCVpyDTBqaOu5jH7vbPdXBkPASpl7ZVMybWOAGpStJmBlK3x3LSCB7uuH8zDXkoTjTRYn3n/HxuExOzjYOBGznk9M9ZgvydvWL9wbfJv92jU2RKKN5m1umNcGM3NoL/G434fLN2//4UqDuStcun8J4DAcJM0np5VlL7JzwmU+jMKxdWl/tnyrLlzrFkL1oU0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KaqP6Yp7VZUnHoKJss1F97tMInwTnkmenW9xNKxH0/A=;
- b=rmu7aTLqqiS9vc4JDWbEs4cAHIF9+tp48MwIjGMSJw0F1sGUZz5dAnUN4D2bMi3F53V9M7fE/+PeCdC2H7r+La7DAQK0jdBdq+QA94h/XdFZyuMDxQk4HTUyABFZx7m2VY/0/DrLuDhP1LhsnXxe6ThAc6JYD2WC43n6+sV8420=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by SA2PR10MB4809.namprd10.prod.outlook.com (2603:10b6:806:113::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.28; Tue, 16 Jul
- 2024 09:47:55 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%3]) with mapi id 15.20.7762.025; Tue, 16 Jul 2024
- 09:47:55 +0000
-Message-ID: <e9dfe18b-9f0b-46f8-b6c3-3fe453a48bd3@oracle.com>
-Date: Tue, 16 Jul 2024 10:47:21 +0100
-Subject: Re: [PATCH v4 05/12] vfio/iommufd: Introduce auto domain creation
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-6-joao.m.martins@oracle.com>
- <78c7c331-c4cf-4239-a875-b321ca5d7e08@redhat.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <78c7c331-c4cf-4239-a875-b321ca5d7e08@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P265CA0264.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:37c::15) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sTepk-0000xf-OS
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:50:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721123452;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EfIYTyildlEIKJNiGECAF3xLhdzN3hrTw2pA0kJdYy0=;
+ b=FKyVziqPMqdHZDLO23lkoFazCQboQb+PJDtlgvsqlPsv58RSiwjx40ww4twRp2I4zGAW78
+ +WdIAQdLDmat+ziJsOPkPb9iIhzgKX0En+Jtfo62E1gHDz0mQC0EVk89zli5sSMJLinGYZ
+ Yy9toklS9XXww83wcWgsqKcg+mfnhXw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-524-M92MJ8ChMb-X-wT2esgnkA-1; Tue, 16 Jul 2024 05:50:51 -0400
+X-MC-Unique: M92MJ8ChMb-X-wT2esgnkA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-426683d9c4bso34301225e9.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:50:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721123450; x=1721728250;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=EfIYTyildlEIKJNiGECAF3xLhdzN3hrTw2pA0kJdYy0=;
+ b=HXvkhUkZH7dUsMp2Wq/AFg06aQgXa0nRB6nmqtrNDU+ZIwgy4jY48sI0gSJusx7xqy
+ sBOghxoPH+C9zdAFA3oshD5dHqyh/1tKYlVKsY3ZPdOnZ9yjxSK9PmJjhR1JKxTZYmWB
+ MMBT/KG/OI32NCP+Q81E1JdwbjyImIVdE+2FOLJDUx7R78A+ZvgvVYlXCET0HAya4VR0
+ 8dm8hqgNVwrMH53zkEw/a5PlKAm9+zsL4019eYYnhN2kPRGuV49jdk/7JLTK72wlG4YA
+ +dnqegppzs13nFp4f/YGIKQFZyMxoBV0s0wEu9ZqDcnmFj8yl7UQ7as+ZIQuwSvvdpgF
+ 1Tvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+i1Ievk/O29xzFOnuSY6tA/EP8B2BtFhmcBzRR51bMy5GVjlEMH56u+UPW66fSPTBt5Fu4AJXCj92Rcw60SC7s3nNo4M=
+X-Gm-Message-State: AOJu0Yxoismm4Z5cNDpSlzx9rKnW5iU5RljjUZ6OEWagBqgikd8H8EpA
+ Zt0TkL4xEc4OyF00MdmpD2Hwyx87T9GPZonEMWq1wNgsXr1pH9Cx+sRoN6/OF9fvaxGtN3tl+t1
+ GH9jkJ0aIBZQhdda7FTCbMEnHTycFxe7SeTNAJj3IR89Jt7uhXN75
+X-Received: by 2002:a05:600c:524f:b0:426:5269:9838 with SMTP id
+ 5b1f17b1804b1-427ba654c24mr11175145e9.4.1721123450103; 
+ Tue, 16 Jul 2024 02:50:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGIaAvMNz++jgziWekJV8jfQZfplr5N0ZE7Kqf5toTOkxL+s4RBXKkZklJEs59jn54YxSGeg==
+X-Received: by 2002:a05:600c:524f:b0:426:5269:9838 with SMTP id
+ 5b1f17b1804b1-427ba654c24mr11174955e9.4.1721123449638; 
+ Tue, 16 Jul 2024 02:50:49 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f02:7c00:e95e:dbc6:7ea8:d075?
+ (p200300d82f027c00e95edbc67ea8d075.dip0.t-ipconnect.de.
+ [2003:d8:2f02:7c00:e95e:dbc6:7ea8:d075])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a5ef44b4sm118691055e9.42.2024.07.16.02.50.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 02:50:49 -0700 (PDT)
+Message-ID: <378de2e9-123e-42c8-bd07-a98f4f4d87ef@redhat.com>
+Date: Tue, 16 Jul 2024 11:50:48 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|SA2PR10MB4809:EE_
-X-MS-Office365-Filtering-Correlation-Id: 65e280b6-56a2-4334-aadd-08dca57c5dd0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MWlyYm4xNzhRMk82dVhFSzVacGdwTHIwdVk1Uzl4c2h4YnRGRFNRZ0x5T2d4?=
- =?utf-8?B?UlZIdU9aL29vRDdQUzdmaU0vMkJuaUczNnFwMjAxTmdwV0I2U3ZBbmdac3NU?=
- =?utf-8?B?M0lNWnNmT1VqaUZETlpRN1FJcjZucmx2SnpaNml1TnFMeEhBazVRS1JEZ3VZ?=
- =?utf-8?B?TlQ5RG9FNGQ0c3VVcUJjVXV6YzZlMjE4eUtSeEZQdlQ4bzFkZFBYbHZrWHB0?=
- =?utf-8?B?MnRyWlVwNE96S01oRkxKMHNjeHQyUDU1NStEYXVmdHJMWERWallpK0ZLMlU4?=
- =?utf-8?B?RTFVajRYM0owMEMwZGFod051YVg4RWtuY3RsdWtHb2VuYW1HcmVGVTlsdStw?=
- =?utf-8?B?a21kTE16YW41ajBHMTRmaUlyVXVPZFFBd1VTeHJjWENtdjFNRU1wZkpReEs3?=
- =?utf-8?B?ZE1oYVJLbjVzUEZOTjE3SXNNcHFGcUhEUUFUMlFaOXQ5UmxNMDJINjBXQ21q?=
- =?utf-8?B?TXQvYWVKTmpUMzJDMkJIaHVFeVRxbk9VNFFmOWcrZk9OL0syeE9zUC81ci91?=
- =?utf-8?B?WG9OR3ppNEptYXNvaUp6bVhTbm5wdm02VWRidGVGckdTY2NJNklkYksyTXIx?=
- =?utf-8?B?bWtZRkF1QVhNSTdSVm1kMytXVWlqSE9YTkZiTGlMeXduUTYvOUs4MmhBdmFI?=
- =?utf-8?B?akMzV2JyUGJLbk90WmxHcGtjRW5rTEJHUzUvYXhPeklneGtRcDB3RTNObGtG?=
- =?utf-8?B?ekViRmFOZjJZQUozYnNsQi9DZldmK1FtSjRtQjhyK3hORUJ6SjFidkZCbmZ5?=
- =?utf-8?B?bjhrWklBR3pzZ0lmakM1UzkySWxrY29YV3lzcWJkTWVkNTRKS00rMExGdFY4?=
- =?utf-8?B?WFhLZ3BCaXdzK294aGdzQlRsbzY4aTUzYW0xZFdIZUxMQUlkUWlTZ0duVkpm?=
- =?utf-8?B?RUMvSkRETnBERVhVc0VNTm9PZmxDOExzWXZNSzFWTzN0SGlEcmRyVkxnb0FX?=
- =?utf-8?B?bGFUS0NXbVFjMnY1bUMxa1BlcGpaZHljTzRRbjhvbGx0L3J2dEp6eDJWZ2tk?=
- =?utf-8?B?UFZHM0VwcnU1VTlUanlDN3gza0VVSTN6Rk5Yb2ZGL2RQZ002U2JwV29TZ2VB?=
- =?utf-8?B?cXAzTmRIOVdJMG5vQktJZ05wSE53WXhNRGFaMXJiSlNzOGdXeTQ1YlhPYUtz?=
- =?utf-8?B?dkpETkdvQ2lCTVNnZjVMcjcwUCsvM25OUWJKTi9LMjkxZHZEWThCOGdCKzRq?=
- =?utf-8?B?L2ZlTk01WnZScm12UUhQaFBEbHhEMm1FQ2dzaTF0NTZ0YW14OVU5LzVZRmla?=
- =?utf-8?B?UHhlQUh0d2ZrWG9GQkRTWTdXeUJHbjAvTE16T3dXYlVId3M4VUpxa1QrdzNo?=
- =?utf-8?B?SThWWGpka2NFSmc4bGEvS294ZFFwekcxcVNWTFlIRCsxS29NM0VwZmVGeXZP?=
- =?utf-8?B?MXc4V0VCQmppT3RnM3BaTkd2cjFLQ3dSTzJzREdyUTk3SHBHbGJuT3VkU3pR?=
- =?utf-8?B?Q2JoQzd3Y1AyWlVFcVFUMUcyMzFadlQ3NWRPSmc5RmdYTk9YWEU5OHlvNUtV?=
- =?utf-8?B?QkdRUlVMYlRsS3oxcUM1Z2dLS0ppVlFDSWhxdlI3eDg2cTcvWkpYODkzSWNv?=
- =?utf-8?B?bkpXQzBVVm5La2xQcjlsODQvZXpSNkxCa2cwRG03ZnE5NjlwRy8xempBSUNs?=
- =?utf-8?B?dGtQdHR3Ym02c1NnWlNpRXJSNUlwditKclo1TEd5cHNWNi9xWFhTYS9KS0kw?=
- =?utf-8?B?ZnBSb0hEdUJJUEdDU2E5Wk9JVzBUU2pmb09xY0RIM05mamhjekxzS2RTL09Q?=
- =?utf-8?B?WklGK0U2a0pUZUNLZ3Z5NTU1TEx3OGFxdTE4T3VVL1VaSTUxU05YSGlEVHNY?=
- =?utf-8?B?ZXlYb1JtNjUxTGd2TFp0dz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WDl5Nlhtd1l1T29ZcWMyRTlOajgySGhBMGJmOFJIQVArVTAvcHRHdDNRRndJ?=
- =?utf-8?B?Q1E3TEtTQVB3VEpjdmlLaGZ0TjhKS05LUXBhSWFHSVZzWktSejA2VTRLQ1Zj?=
- =?utf-8?B?WWhNejZRbjVhNnNCRkpQWldleGFiNExEa05oSVZNeitPMDRpeVR0QnQzdHNr?=
- =?utf-8?B?NzB0c1hVS2R5UnM4cWVsckJiSjlCcy9WWXJaMVBVZ3U3VG81QzU2WER4K1Ax?=
- =?utf-8?B?aVVQV0hGYTJZamYwWDh5MU5KeWtHUGFpYUtlVS91djhYdWh3Z0JKOURpSVZj?=
- =?utf-8?B?aFFaZm8wL2NDaU5wc0lFVWJpcEk2VVRQaG91dXF3VWViTElmVFN6Y1AwL3dt?=
- =?utf-8?B?Mm1UUktERXU5cnQyeDZ1TUJVVk5WY2p3SzNJeFB3Y0l4Q2RnM0kyU0FVMGs1?=
- =?utf-8?B?Tm85NHV4eU9KTkNuUUw1S3kzbVFCN1ZaOTUvanpPWlZhejV1Y0ZIMUZicUxN?=
- =?utf-8?B?TU1wSy9qOS92TmcrQ0tqWmZ4b0Q3K1pKSlBhMmpPYVZxcHkzcndGY1NiZG44?=
- =?utf-8?B?NnNDNFl1VHJGUW1uVGU1SlVaTHhUdC9pc29ORTZZL1FHK28rRDBKckFaSFkr?=
- =?utf-8?B?QlBaWlRRMGlQQnNpZnREQXNnZno3QzF6MlM5cjFLZzlMeWU5NHBTYVVmSlYx?=
- =?utf-8?B?amtyTnpkcUdLenZ3WHMyRUMwZVdsMTg3NzBMelR0UHFkbm9idTlZTmxUR0RY?=
- =?utf-8?B?aDJ0d0xVNlF1UWdibTVwb25LcUxkWExEUmhZcVFQTG5oNEJ1Umg4bzRONmht?=
- =?utf-8?B?RTdRZnkwSmFHZVBFM21UYy9CckQ5aEt1U1JqREtqamZEOWxYeklBRkN1c3Ez?=
- =?utf-8?B?d0RBYU1KZWVWYUp1NjM5SWhjaWtvY2RmNTJIY2xzeVNsbUlYNFhzT2M4NW5t?=
- =?utf-8?B?TkttTE4xbzJrekxUWVB1bGZaWXloajNOQmVFUWRtSlhzN0VGNHVOT0R0ZUgv?=
- =?utf-8?B?NlArSituWFd1NTBWRlVsREpOamEzOXZReWI4M2hDT0J4VS9xU2NYU1FRSkgy?=
- =?utf-8?B?dmsvdnY0QXZWaHZGRzZaMjlUR0dOOE44SzBCL2dYR2I3UU5vRlA5bmdZM2pR?=
- =?utf-8?B?RG1MVlVwSzFXaFRRQzhjdVpiYzZ2MW5OL0lZdmVYbktBTDRnSzN5VFhKbXlL?=
- =?utf-8?B?RnJwVHMyL3YreTg1WE12aEdBaWtqQUYrWExBaGFWYjlRUWZ6Q1ViS1hFSWYv?=
- =?utf-8?B?amg2dWkrWjY2elVQcVAwZk1UR2c5MHB1aGFNckMwMEtVTnQvV01ncGFkSG0z?=
- =?utf-8?B?R29vRFZPYVZKaGNsMHdVNUNyeTNZaFo4M3dIaVc0clFZcXN0aHh5VUZuaytp?=
- =?utf-8?B?U0VaazhtZnFrSGN1YkRHcGlsdG5DYjBxL3VBc2RJWDA5TForWkFFRGhHdE1u?=
- =?utf-8?B?Q2NySERpT1hMVGFSQXQyQXZXRmJ1T295Z1JlZ1R1V1ZVdW1IczNhcnJjSXQ0?=
- =?utf-8?B?TTcybW1VV2k2VVNJTGJtNllVV2lGbkVJQXlzZEU4M3VKRkhXbC9STEtIZzlm?=
- =?utf-8?B?VDBjeUt3QlNYeTRpUGpTbTNKWHA1L1VRT0w1V0JEK0Z1NU8wQldBK1hENkx6?=
- =?utf-8?B?VUlNbndxSE1EVTZUaXN2VW1McTgxbzNJT054bEVKVEEwTWlLeUhMWHFGMjJz?=
- =?utf-8?B?S0M0Nkk1R1U4aTN2aDVsdERtVDl1Z1d5U2lVMlhKWHdmZDJFSUkwdFphaDJG?=
- =?utf-8?B?NWhkSkFuQWdPNStSVVVzdzhFUis4ZHBGRkl0RStvSy9IV0xsMjh6ODZ2SytQ?=
- =?utf-8?B?bVRpbkQyNVRUUEYwNnZaYUg3c21NVEpRM1hFZGRaVVZ0b0N6by8vSmFZRDFj?=
- =?utf-8?B?QlVtUFpZa3Qrci9mUURzaS9PbkV6dk91RXBwZ2dvZ0hnQldER21MZTd5bEx5?=
- =?utf-8?B?Ni82RkJMNUMrb3BtMFpoYUQ4eVFDcFZ0UHdOakpxOTZZdHBFTnRyL1lxK3ZX?=
- =?utf-8?B?Nk5ic1dBbE5ORExxNWtvQWhkNDNjY29xWXpSSm40TXVnRStBUnNpZ0ZPaXcz?=
- =?utf-8?B?ajZRSThhUmNtdlV6R3MwK21MaVhIbm9VVWtpeEJNM1Z6SloyM2dpcHJWSWtQ?=
- =?utf-8?B?dHJVS0hHcitBYktEM1JhalljL1NUMHlycC82Z0tYelY2a2JWMHg1Z1lMdldp?=
- =?utf-8?B?by8wbWJWczR6RTd1OXc3SHM2MDVuSjJVenpxR0JvQ3hLT203MStqLzNZRm11?=
- =?utf-8?B?d0E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 4ozmth1phlv4Y+2j9rOOFonJOvsKEMYBaTXUzW4xVJtsLuCDX/yWynpGrQGRzb7pLMTmAwAhVZFP52ra1N/Nuu1i6AQigETqwvBnwh0aES6G+XmwXV6AhjkRYZ+9bcf1ho/2qlB6a7CBBw5+H0jDnV1DM4I2Vgwz8RaoDjlaFtzTprdEkiF6nvCVzLtAzY8hTexCmkZx5+OCA1q2/CDvfgurBZf3lIZVXWhQn+uTiDuBGi6zdC0gQ1HzGgHGou4S8tr3gyaIsENfYLAlWoDkjjJdiKEscU++UoGqoz6Kuviv4K8eDfj5/Rto97TRkf8l2h61vNAP3gBORDaE+KCVWmExu8CVw+b2+nlv6BrOo1oW6dUAMVKXuo68A70BBDIrypiORZQ51lp6PLETlo197CsiI2qKiAwYJnnGm9omyQYCbTnSkKjH6HpmWHFnf1gkuSGwJFS+/HwrKUxvGyr7/GuEu6vJZwvY2wLdF1Ild36GoOmyNfMggO2CeRQe63BoMAQFpOmw12YOp5ivQ5pUuBSSOGhJJGfwBsRjLqgvRzCWHJpu5cCmXTQC8l2gSeSCFheF2de3dfhkqhSCxFgQmyieAeuF7n9SG2nmr9t8C3o=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 65e280b6-56a2-4334-aadd-08dca57c5dd0
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2024 09:47:55.2849 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S8A4fkiJz29rAVCGNuaEWKcCTNqShEHhYLMfsgglYUthyZ8lhe+a38wOZ4f3cvUqSNcB/kAxW+FQcaDJdittyFhCwC9lOdoELn+2IsBGpI8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4809
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-15_19,2024-07-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 mlxscore=0
- phishscore=0 mlxlogscore=621 bulkscore=0 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
- definitions=main-2407160071
-X-Proofpoint-ORIG-GUID: KEAhpItAJF3uMFXqv6ZPd-EjgEIAH3r4
-X-Proofpoint-GUID: KEAhpItAJF3uMFXqv6ZPd-EjgEIAH3r4
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] RAMBlock: use return value of ram_block_discard_require()
+ as errno
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240716064213.290696-1-zhenzhong.duan@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240716064213.290696-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -216,65 +153,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/07/2024 10:39, Cédric Le Goater wrote:
-> On 7/12/24 13:46, Joao Martins wrote:
->> There's generally two modes of operation for IOMMUFD:
->>
->> * The simple user API which intends to perform relatively simple things
->> with IOMMUs e.g. DPDK. It generally creates an IOAS and attach to VFIO
->> and mainly performs IOAS_MAP and UNMAP.
->>
->> * The native IOMMUFD API where you have fine grained control of the
->> IOMMU domain and model it accordingly. This is where most new feature
->> are being steered to.
->>
->> For dirty tracking 2) 
+On 16.07.24 08:42, Zhenzhong Duan wrote:
+> When ram_block_discard_require() fails, errno is passed to error_setg_errno().
+> It's a stale value or 0 which is unrelated to ram_block_discard_require().
 > 
-> I suppose 1) and 2) are the bullets above ?
+> As ram_block_discard_require() already returns -EBUSY in failure case,
+> use it as errno for error_setg_errno().
 > 
-yeah
+> Fixes: 852f0048f3ea ("make guest_memfd require uncoordinated discard")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   system/physmem.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 2154432cb6..9a3b3a7636 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -1845,11 +1845,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>       }
+>   
+>       if (new_block->flags & RAM_GUEST_MEMFD) {
+> +        int ret;
+> +
+>           assert(kvm_enabled());
+>           assert(new_block->guest_memfd < 0);
+>   
+> -        if (ram_block_discard_require(true) < 0) {
+> -            error_setg_errno(errp, errno,
+> +        ret = ram_block_discard_require(true);
+> +        if (ret < 0) {
+> +            error_setg_errno(errp, -ret,
+>                                "cannot set up private guest memory: discard currently blocked");
+>               error_append_hint(errp, "Are you using assigned devices?\n");
+>               goto out_free;
 
->> is required, as it needs to ensure that
->> the stage-2/parent IOMMU domain will only attach devices
->> that support dirty tracking (so far it is all homogeneous in x86, likely
->> not the case for smmuv3). Such invariant on dirty tracking provides a
->> useful guarantee to VMMs that will refuse incompatible device
->> attachments for IOMMU domains.
->>
->> Dirty tracking insurance is enforced via HWPT_ALLOC, which is
->> responsible for creating an IOMMU domain. This is contrast to the
->> 'simple API' where the IOMMU domain is created by IOMMUFD automatically
->> when it attaches to VFIO (usually referred as autodomains) but it has
->> the needed handling for mdevs.
->>
->> To support dirty tracking with the advanced IOMMUFD API, it needs
->> similar logic, where IOMMU domains are created and devices attached to
->> compatible domains. Essentially mimmicing kernel
-> 
-> mimmicing -> mimicking, I think.
-> 
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-Ack
+-- 
+Cheers,
 
->> iommufd_device_auto_get_domain(). With mdevs given there's no IOMMU domain
->> it falls back to IOAS attach.
->>
->> The auto domain logic allows different IOMMU domains to be created when
->> DMA dirty tracking is not desired (and VF can provide it), and others where
->> it is. Here is not used in this way here given how VFIODevice migration
->> state is initialized after the device attachment. But such mixed mode of
->> IOMMU dirty tracking + device dirty tracking is an improvement that can
->> be added on. Keep the 'all of nothing' of type1 approach that we have
->> been using so far between container vs device dirty tracking.
->>
->> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> 
-> This needs feedback from IOMMUFD experts also.
+David / dhildenb
 
-I take it that by IOMMUFD experts you the ones more familiar with Qemu side
-(Zhenzhong and/or Yi)
-
-	Joao
 
