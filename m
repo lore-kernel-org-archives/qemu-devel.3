@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2997EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0472BC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTkq5-0002BT-Ly; Tue, 16 Jul 2024 12:15:42 -0400
+	id 1sTkqu-0004Gr-Fz; Tue, 16 Jul 2024 12:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkph-00024a-Ov
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:15:20 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkqj-0003Xj-PQ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:16:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkpf-0003xZ-7I
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:15:17 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTkqe-0004D2-WB
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:16:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721146512;
+ s=mimecast20190719; t=1721146573;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LNZC4qWSDA+U/JYLPXCd+pbgouv/BxVxgEMVLmo6HGs=;
- b=dbC0WM6syELYI45NHu2cwGUaA14iUz3qwvYyHCIxNQG0iys+YrJHtfHWIg2y2F/Gt/lZAp
- w6HxpsxMGBOntfGfGdZvwRgC/nqSGryX7v4t45UngwgZCe1k0kHeQMQIW5xPkzB+TT98/M
- fNFnlKLhfK4b9+1DZfEG6AKJYbgxxAg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=llUEcp3/mBKf7v1I8YRblH3j8G4ZCN2F4ZWAIdjkhOU=;
+ b=IaWXpqWGtck5Ou8CoBqTQ1bRNTp6YuDgR0S/mwwLvf+V+SlOEMdfO0ghsIXfYdNfHZEKCx
+ A+5d8rX7fDpVNaOat9gG0tOufzefUN84KbBWBPMuw8Q5WFwLV1opgMyjqv5k9RKrEMEAQy
+ J6u19twoQiIqqOW56o2DARadFfpP7kM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-483-VvxKiUNxPlqLCjdH-hu-sg-1; Tue, 16 Jul 2024 12:15:10 -0400
-X-MC-Unique: VvxKiUNxPlqLCjdH-hu-sg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3678fbf4aa7so3296142f8f.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 09:15:10 -0700 (PDT)
+ us-mta-235-hnivro37O1ifSsEdU7PKIw-1; Tue, 16 Jul 2024 12:16:10 -0400
+X-MC-Unique: hnivro37O1ifSsEdU7PKIw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-367a058fa21so3287213f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 09:16:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721146509; x=1721751309;
+ d=1e100.net; s=20230601; t=1721146569; x=1721751369;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LNZC4qWSDA+U/JYLPXCd+pbgouv/BxVxgEMVLmo6HGs=;
- b=C/bhVRNJ6rSbJPXLmeVNxYZ6IG9gCmHau2tpUqGMk3/ju/UXEF9mrvnmcJxs+hvcHN
- 4P1dy8URRF3JCyuSrfwpCY5MWSHwV+MjHQVrwN63HMG5HbbZEx5fjmSwDyM1kQVfWpOr
- BDlOr5oETvzXgX9YIYIVzMWqAqHXQxpnAJJwm8xdb+OrRpKdHZdm6HwbUkAaez3gKazn
- shddZAHUsUFA66A4OP/BvI83oHXg0t0QOfNERgXMHJ5gpAcSTFwBWIH3iWueooosy2zi
- DpLaXtlouY1Zr3z0gIt0ZTJDEPk4Ad/hO3LpiNSRZ8f/uOmVpyPKVtAAfibC5ZhQwF5u
- IrWg==
-X-Gm-Message-State: AOJu0YzcganJVyMvYV1abp6ltjX9KJvEvJF7f77kRn+Q1GnEsYMjjI8L
- a0QuZ6dFiR0kebjdcZW6LOLNs5XX04J8wJ5P1ytOJ2OfDMogA2TZJoqL/XGePREe9Iq/HrNslAp
- uWbPLVcveIRVu5gqgn6XDRDYPfaT/WqnlHdW7WCKyGOnnZwq6Qyk7u5naixtZc4AZx4FFkvF1Jr
- SnExNomQE5Ajc/4T3UOLgPJzfWCmM=
-X-Received: by 2002:a5d:5f8a:0:b0:367:97b9:d5ed with SMTP id
- ffacd0b85a97d-36825f66ebcmr1739149f8f.9.1721146509098; 
- Tue, 16 Jul 2024 09:15:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5IxvmUZfEQH4zEk8CW0alVHEwoh2uQnlAbDeIWZ4FQ6W3iW0W1IkV/rS21dvbiRRy36NJUIhAYYU8oKRu4pQ=
-X-Received: by 2002:a5d:5f8a:0:b0:367:97b9:d5ed with SMTP id
- ffacd0b85a97d-36825f66ebcmr1739132f8f.9.1721146508756; Tue, 16 Jul 2024
- 09:15:08 -0700 (PDT)
+ bh=llUEcp3/mBKf7v1I8YRblH3j8G4ZCN2F4ZWAIdjkhOU=;
+ b=kLNbARGL7EU4OJMGa/Iug6lnhb2urFQfbous3vw2cFj7BnLo5GegOjz+oXY1mwaL3H
+ CeDxepAJGW6P2l48jwvy+fRfTZDLWAKBdqISsJCan/ikNr2toV/+/Nukl73Wi45CLmOx
+ lLCDhyiWNZoZAXJrHsdTQz6GKqTUZhVxwnD59O0HIrU5mSU0rWeWBiHvWzlaMCXzYwC5
+ /uCSS85cSGQK+IyKz+FJT8Vaxi3EUrA2XpbJPQOhjYfdQASJNHJCQIjrFSUGtLosOSNe
+ KrmhKLLV2uftx9v1xs6CdnnjN8M67D2U+0RYqfuhp70Ow5p2wTrTBsn4z4J/A2WNvvM7
+ mxlw==
+X-Gm-Message-State: AOJu0YwQSlgdw4tS5U1aOLfjkqeuTKhxcvjIU1N8OfnsrZlm2m+ecBPU
+ Gsz3vePQe8+yXcF8YTzBhftHZPGELI5GbFvYrJqo78dDv2dFBZWJScm2H8Elf1G9H1ukc2u+7x+
+ LMYB7n3Yw71F0qYCOkmmMquNRZuRNn14VhT5oWPS8JWP8zxQP1DgdKkJmPuG9sg2GiMd2htiSYt
+ 1Y/32lORKh1I/MSOW2n4LkB2mKS3Y=
+X-Received: by 2002:a5d:6585:0:b0:368:5d0:5c2c with SMTP id
+ ffacd0b85a97d-36827592ce5mr1832163f8f.29.1721146569101; 
+ Tue, 16 Jul 2024 09:16:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzxYlNnInBoVVkhj949TlIgR2LHR0URy8BwvhirV3vVxdw/AP7/oBw0BaYn6/pzySeHCuRt4GkH3jbZ2CbkuI=
+X-Received: by 2002:a5d:6585:0:b0:368:5d0:5c2c with SMTP id
+ ffacd0b85a97d-36827592ce5mr1832142f8f.29.1721146568738; Tue, 16 Jul 2024
+ 09:16:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240711112228.2140606-1-armbru@redhat.com>
- <20240711112228.2140606-4-armbru@redhat.com>
-In-Reply-To: <20240711112228.2140606-4-armbru@redhat.com>
+ <20240711112228.2140606-5-armbru@redhat.com>
+In-Reply-To: <20240711112228.2140606-5-armbru@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 16 Jul 2024 12:14:52 -0400
-Message-ID: <CAFn=p-Zv9e7MFhpGK=PssPYGbe7Q3R-A0CAdYEMbtaY60ATWrw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] qapi/machine: Clarify query-uuid value when none has
- been specified
+Date: Tue, 16 Jul 2024 12:15:55 -0400
+Message-ID: <CAFn=p-ZCPyK11HVpvRy7Xw7g5bZN8P3i-899SYYx01WOZ+HU0A@mail.gmail.com>
+Subject: Re: [PATCH 4/5] qapi/sockets: Move deprecation note out of
+ SocketAddress doc comment
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -75,7 +75,7 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
  Michael Tsirkin <mst@redhat.com>, Daniel Berrange <berrange@redhat.com>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  Igor Mammedov <imammedo@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000042e6c4061d5fa674"
+Content-Type: multipart/alternative; boundary="000000000000d62523061d5fa9bf"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -101,29 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000042e6c4061d5fa674
+--000000000000d62523061d5fa9bf
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Thu, Jul 11, 2024, 7:22=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
  wrote:
 
-> When no UUID has been specified, query-uuid returns
->
->     {"UUID": "00000000-0000-0000-0000-000000000000"}
->
-> The doc comment calls this "a null UUID", which I find less than
-> clear.  Change it to "an all-zero UUID".
+> Doc comments are reference documentation for users of QMP.
+> SocketAddress's doc comment contains a deprecation note advising
+> developers to use SocketAddress for new code.  Irrelevant for users of
+> QMP.  Move the note out of the doc comment.
 >
 
-Technically it's a "nil UUID";
-https://datatracker.ietf.org/doc/html/rfc9562#name-nil-uuid
-
-If you wanted to be pedantic, you could say "the nil UUID (all zeroes) is
-returned"
-
-but your rephrasing is clear even w/o using the standard name, so I'm fine
-either way.
+Sure.
 
 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
@@ -131,32 +122,42 @@ either way.
 
 Reviewed-by: John Snow <jsnow@redhat.com>
 
+
 ---
->  qapi/machine.json | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  qapi/sockets.json | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 50ff102d56..f40427f21a 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -305,9 +305,8 @@
+> diff --git a/qapi/sockets.json b/qapi/sockets.json
+> index 4d78d2ccb7..e76fdb9925 100644
+> --- a/qapi/sockets.json
+> +++ b/qapi/sockets.json
+> @@ -179,10 +179,6 @@
 >  #
->  # Since: 0.14
+>  # @type: Transport type
 >  #
-> -# .. note:: If no UUID was specified for the guest, a null UUID is
-> -#    returned.
+> -# .. note:: This type is deprecated in favor of SocketAddress.  The
+> -#    difference between SocketAddressLegacy and SocketAddress is that
+> -#    the latter has fewer ``{}`` on the wire.
 > -#
-> +# .. note:: If no UUID was specified for the guest, an all-zero UUID
-> +#    is returned.
+>  # Since: 1.3
 >  ##
->  { 'struct': 'UuidInfo', 'data': {'UUID': 'str'} }
+>  { 'union': 'SocketAddressLegacy',
+> @@ -193,6 +189,9 @@
+>      'unix': 'UnixSocketAddressWrapper',
+>      'vsock': 'VsockSocketAddressWrapper',
+>      'fd': 'FdSocketAddressWrapper' } }
+> +# Note: This type is deprecated in favor of SocketAddress.  The
+> +# difference between SocketAddressLegacy and SocketAddress is that the
+> +# latter has fewer ``{}`` on the wire.
 >
+>  ##
+>  # @SocketAddressType:
 > --
 > 2.45.0
 >
 >
 
---00000000000042e6c4061d5fa674
+--000000000000d62523061d5fa9bf
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -164,59 +165,61 @@ Content-Transfer-Encoding: quoted-printable
 class=3D"gmail_attr">On Thu, Jul 11, 2024, 7:22=E2=80=AFAM Markus Armbruste=
 r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
 <br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">When no UUID has been specified, q=
-uery-uuid returns<br>
+er-left:1px #ccc solid;padding-left:1ex">Doc comments are reference documen=
+tation for users of QMP.<br>
+SocketAddress&#39;s doc comment contains a deprecation note advising<br>
+developers to use SocketAddress for new code.=C2=A0 Irrelevant for users of=
 <br>
-=C2=A0 =C2=A0 {&quot;UUID&quot;: &quot;00000000-0000-0000-0000-000000000000=
-&quot;}<br>
-<br>
-The doc comment calls this &quot;a null UUID&quot;, which I find less than<=
-br>
-clear.=C2=A0 Change it to &quot;an all-zero UUID&quot;.<br></blockquote></d=
-iv></div><div dir=3D"auto"><br></div><div dir=3D"auto">Technically it&#39;s=
- a &quot;nil UUID&quot;;=C2=A0<a href=3D"https://datatracker.ietf.org/doc/h=
-tml/rfc9562#name-nil-uuid">https://datatracker.ietf.org/doc/html/rfc9562#na=
-me-nil-uuid</a></div><div dir=3D"auto"><br></div><div dir=3D"auto">If you w=
-anted to be pedantic, you could say &quot;the nil UUID (all zeroes) is retu=
-rned&quot;</div><div dir=3D"auto"><br></div><div dir=3D"auto">but your reph=
-rasing is clear even w/o using the standard name, so I&#39;m fine either wa=
-y.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_q=
-uote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-l=
-eft:1px #ccc solid;padding-left:1ex">
+QMP.=C2=A0 Move the note out of the doc comment.<br></blockquote></div></di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">Sure.</div><div dir=3D"auto=
+"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
+ing-left:1ex">
 <br>
 Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
 arget=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br></blockquo=
 te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Reviewed-by: J=
 ohn Snow &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt;</=
-div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
-"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
-1px #ccc solid;padding-left:1ex">
+div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"aut=
+o"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
 ---<br>
-=C2=A0qapi/machine.json | 5 ++---<br>
-=C2=A01 file changed, 2 insertions(+), 3 deletions(-)<br>
+=C2=A0qapi/sockets.json | 7 +++----<br>
+=C2=A01 file changed, 3 insertions(+), 4 deletions(-)<br>
 <br>
-diff --git a/qapi/machine.json b/qapi/machine.json<br>
-index 50ff102d56..f40427f21a 100644<br>
---- a/qapi/machine.json<br>
-+++ b/qapi/machine.json<br>
-@@ -305,9 +305,8 @@<br>
+diff --git a/qapi/sockets.json b/qapi/sockets.json<br>
+index 4d78d2ccb7..e76fdb9925 100644<br>
+--- a/qapi/sockets.json<br>
++++ b/qapi/sockets.json<br>
+@@ -179,10 +179,6 @@<br>
 =C2=A0#<br>
-=C2=A0# Since: 0.14<br>
+=C2=A0# @type: Transport type<br>
 =C2=A0#<br>
--# .. note:: If no UUID was specified for the guest, a null UUID is<br>
--#=C2=A0 =C2=A0 returned.<br>
+-# .. note:: This type is deprecated in favor of SocketAddress.=C2=A0 The<b=
+r>
+-#=C2=A0 =C2=A0 difference between SocketAddressLegacy and SocketAddress is=
+ that<br>
+-#=C2=A0 =C2=A0 the latter has fewer ``{}`` on the wire.<br>
 -#<br>
-+# .. note:: If no UUID was specified for the guest, an all-zero UUID<br>
-+#=C2=A0 =C2=A0 is returned.<br>
+=C2=A0# Since: 1.3<br>
 =C2=A0##<br>
-=C2=A0{ &#39;struct&#39;: &#39;UuidInfo&#39;, &#39;data&#39;: {&#39;UUID&#3=
-9;: &#39;str&#39;} }<br>
+=C2=A0{ &#39;union&#39;: &#39;SocketAddressLegacy&#39;,<br>
+@@ -193,6 +189,9 @@<br>
+=C2=A0 =C2=A0 =C2=A0&#39;unix&#39;: &#39;UnixSocketAddressWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0&#39;vsock&#39;: &#39;VsockSocketAddressWrapper&#39;,<b=
+r>
+=C2=A0 =C2=A0 =C2=A0&#39;fd&#39;: &#39;FdSocketAddressWrapper&#39; } }<br>
++# Note: This type is deprecated in favor of SocketAddress.=C2=A0 The<br>
++# difference between SocketAddressLegacy and SocketAddress is that the<br>
++# latter has fewer ``{}`` on the wire.<br>
 <br>
+=C2=A0##<br>
+=C2=A0# @SocketAddressType:<br>
 -- <br>
 2.45.0<br>
 <br>
 </blockquote></div></div></div>
 
---00000000000042e6c4061d5fa674--
+--000000000000d62523061d5fa9bf--
 
 
