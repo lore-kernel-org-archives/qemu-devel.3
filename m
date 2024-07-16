@@ -4,85 +4,198 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52005C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D50C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgaJ-00068q-4X; Tue, 16 Jul 2024 07:43:08 -0400
+	id 1sTgle-0001Qc-J0; Tue, 16 Jul 2024 07:54:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTgZx-0004zm-7Z
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:42:46 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sTgZu-0006UD-TO
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:42:44 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e37feeso6630557a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 04:42:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721130158; x=1721734958; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bx18rqi4jDY8+2uStTKkW27rK/9dqrmkRYtusDvfm4Y=;
- b=IYYdd4Zl1HMWlUR3AKEXpHyIwzTp5TnsEwQpqxGaCfUYHt1TcefQmGo6F2/q+KsYTU
- Sc/Ynph6WqLd4DIMS8hua1iZYo4u7jCMdUtXrOV6BWnDrVCmMZj5g9rxOmiviYuOl5Zr
- Npb5VP43Dz5I5NqDt/gbAAh1F4Ftd+X+qoOsmQT0abJ4KECXVfABgKC4+JAIrIeM3TE5
- 2t4sDwkH9jOBvCEPeOCeVaoBdACXza4Tpu2Xp2fwTzfHLIv544pHq6EBVbyUvMfGpD3x
- FviyzlvJtegceDBKrYaTiQ05ItEKMoSlBlGRvBviZUd+ifPv1CGyvtGCv+c5/ERaA2lx
- 47ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721130158; x=1721734958;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bx18rqi4jDY8+2uStTKkW27rK/9dqrmkRYtusDvfm4Y=;
- b=f9v59fhF0UbzhVmpDOqBgBcKQZ2IjDlh8DbU6M2FIlvF9aPQudRD6aGvCz9mOVyEFs
- oIy52u3qGUdzTCiVDA0THCCnhNLztH7WTUYO7xO4Tp1dDtBhfI/e58jqtF+EgyaNDZ7r
- UHgaHTqQVt883pWcmI9RsiH+HMvdrPoG6rYcnDFcQefSsEX9fYmswPMR/HzrQnmkcU5t
- tNpZpMziVkvBkp++jJxCjWySjTESjI5e6Lr31/Kv82JsDkgubMiZKmcI4Aov0loniWAy
- RS7HLIf5pEtUCTR8bX6+EWH+XLevHGSVp3ZlCs93aBNBRcuF4AvgeYz+oDjg9SFgebXb
- qipg==
-X-Gm-Message-State: AOJu0Yz9oelvwbEy1368XTkMloZGRswodcrfD7LBR5vU+hPAbwGwRRAR
- puBbLa4crQDVbZkII1vPoSiv7Qz98DxshNRcB5lkfSu4/gZSKNXNAK58QC9bx+Gd/pd/BGQJWG+
- b
-X-Google-Smtp-Source: AGHT+IGTYArVxkWoNOrkJsxFufKKXHjTe3u+WIGO2w7UDf34L5cUIrKPT93j0y+h+slQ6Ol2ho2jSg==
-X-Received: by 2002:a05:6402:26c6:b0:57d:101f:ae9f with SMTP id
- 4fb4d7f45d1cf-59ef06bad2fmr1309321a12.33.1721130158001; 
- Tue, 16 Jul 2024 04:42:38 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-59b25526dc8sm4784467a12.46.2024.07.16.04.42.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 04:42:37 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 81AE75F7A0;
- Tue, 16 Jul 2024 12:42:36 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH] gdbstub: Re-factor gdb command extensions
-Date: Tue, 16 Jul 2024 12:42:29 +0100
-Message-Id: <20240716114229.329355-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <peter.hilber@opensynergy.com>)
+ id 1sTglb-0001Pc-TM
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:54:47 -0400
+Received: from repost01.tmes.trendmicro.eu ([18.185.115.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peter.hilber@opensynergy.com>)
+ id 1sTglZ-0000OV-3O
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:54:47 -0400
+Received: from 40.93.78.51_.trendmicro.com (unknown [172.21.193.255])
+ by repost01.tmes.trendmicro.eu (Postfix) with SMTP id 4506F10000F67;
+ Tue, 16 Jul 2024 11:54:40 +0000 (UTC)
+X-TM-MAIL-RECEIVED-TIME: 1721130879.059000
+X-TM-MAIL-UUID: 07f8d397-e31e-491a-8391-53e46d32ddfb
+Received: from FR5P281CU006.outbound.protection.outlook.com (unknown
+ [40.93.78.51])
+ by repre01.tmes.trendmicro.eu (Trend Micro Email Security) with ESMTPS id
+ 0E8BD100058F1; Tue, 16 Jul 2024 11:54:39 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uMJ9888jVmLWxtmZh9PBv+TUyNpkLebU379TlpOgcZIrLzuvT13pwSDt6Ad+QXrdavkek5WMRsOtjSWpARPsqKVn2jtbuXZ92tsBG/QrIC8RMW23qfmmVj1iDxsxaJU6iyZf2JxT5ldQ3bM8VcBWP+N8VwQu6UkTuuW6o45dnQv44HydZcYspudAzBlDQ2zZAhQ3UTYu5Y8N8iHuHu8hdJyv3BGTiGye9njlOjFXrgYejgywIdfRq6aB0I4OY9NYahB2xj1F29Sfmowwlz7WJgT8V8BD6TGuOZnFrwvBTIk4eoCcfeTgapLwlIICMen0NgHzhjLGoywi3vs8RGgsdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fLOO5tFGuCicnglknhsanGILZD+I6faSsGVhzkfgeM8=;
+ b=W3XG5t9UZgakNgEZiBfMsFnpn18SHESkpn2LC0S+SblPp5tJTFRzEJRAdkO1cCfGkMGIR6DwZNmcHcHcyM+yH6dJL+idSfVHdqh9MIDb3Htr0R9NJ/nGY0LET+fUZ9W7Y1wcVKDy8T1qPodnq8WdPEhAlJWVv/W1wKO1oxTBwmuNPWgJAd7oQYGAqRjtvJKALZmhtZ1U3A0VV8hbGZWt0OXGYYsKyT6TKB1bu8rtoCPB31f2N1JUMuVHG+re79nC9/a4tZblUafaa4F7pNMESYhu4B0CvuDf/bz/JFa00RtaS3/DVbCmNVyjbQ3DLETz83STHFxuhQHxFoTqs6m82w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=opensynergy.com; dmarc=pass action=none
+ header.from=opensynergy.com; dkim=pass header.d=opensynergy.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=opensynergy.com;
+Message-ID: <2e875592-f6e7-4694-8f51-655d0b9a2988@opensynergy.com>
+Date: Tue, 16 Jul 2024 13:54:36 +0200
+Subject: Re: [RFC PATCH v4] ptp: Add vDSO-style vmclock support
+To: David Woodhouse <dwmw2@infradead.org>, linux-kernel@vger.kernel.org,
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>,
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>,
+ "Chashper, David" <chashper@amazon.com>
+Cc: "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org,
+ Richard Cochran <richardcochran@gmail.com>, Stephen Boyd <sboyd@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
+ <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+References: <20240708092924.1473461-1-dwmw2@infradead.org>
+Content-Language: en-US
+In-Reply-To: <20240708092924.1473461-1-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+X-ClientProxiedBy: BE1P281CA0179.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:66::7) To BE1P281MB1906.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:3d::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BE1P281MB1906:EE_|BE1P281MB2579:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4c8a8bc9-004c-429f-2567-08dca58e110e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|921020; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SDJIT3Fwc3FIWEg4VlZ6Q05TN1ZjcGNsVHJvZEozcUVuRTlHZmcwb0hyclJp?=
+ =?utf-8?B?T2tIUTVuMDgzZWhzZUpWbWhXRHFhUCs4aDI4RUJ6VXV6VkF1STFHcHRMTlJy?=
+ =?utf-8?B?QjRGWFRPcEtSamdxT0lhQiszK1YxcG9BZGsxbHNVQWhmNnR3OEhmZ0NSRHhr?=
+ =?utf-8?B?dS9XL1VURk9tS1ozVy9LMjVLSEowaXBDWmlzOW10SUlIS05zQ0FhRDMxWUow?=
+ =?utf-8?B?a3ZwNWpYUXJISVN1eCs0WDdNcjkrNldGR2JoWjRmQWFZZ1hZRWVCeitnOERZ?=
+ =?utf-8?B?WjVWVitySUxZT042bU5iQXZkdW1EWDNxaFpNYkxocWdldThTMjFyRDdVbmNT?=
+ =?utf-8?B?eFJ1bExjaTcxemE3REVUalVKQnNRVG5QcDNqVTZLZnlOTWllQy9jdVNPSmhu?=
+ =?utf-8?B?WnlNVnhNSVFNNVpXRVZmOE4vTEducURmZ3VYV2NmNXRULzBGTGo4cUR2c3VZ?=
+ =?utf-8?B?bTl2ZGFvcml0cTZPK1RNdFFmbzVJMXp6cEwvUVM3SThNUElKanRaL0d2NlJX?=
+ =?utf-8?B?R1RoTUJBS21Xb2xTQWY2NHlTNzU5T0pFWTFRa3FuUnV5RnlvNjdZNmViNXdz?=
+ =?utf-8?B?SGV1NE0xUnZYcXRHK1UvS24zRFBTOEtJNDYzbjNVOFA4aVJ2UjRkbkM0cSta?=
+ =?utf-8?B?V0VmYjBmLzVzMjFvYXlXNnZsaVVlUE5weHlTb0ZZaHZDaFU5Nk1mdXM0N0NJ?=
+ =?utf-8?B?bVdrS0F1M3FRNFpBYUpsMERxWmNCc2xZZktqYTY1V0dZUVZzaUxDSzZKb2t2?=
+ =?utf-8?B?YVRpb3NndDNFZG82TmlablhYVkJ4ai9GaFYyWjFQdmJXUGdBVnh4ckdsVFhT?=
+ =?utf-8?B?NXFiRkU1UE1wMlpHOVovU0xOY1l0am5rTVZ4MWpyK2pXOUROYVhkMXJWaEhT?=
+ =?utf-8?B?MGxzZWtaTnRvdnJudWZjdENYQXFieTVTbmtmeXJ2eGFpQlpDYmJSUG9EV0Rp?=
+ =?utf-8?B?ZXdCSjhSUFNUVEpZV3hoSWNCdnpTN3RwOU1WWlBGaEc3djM3dlNjTVZxeU1w?=
+ =?utf-8?B?T1BJYlhnS04zWWR0c3l1U05lQXdRZkxtbTIvMjRFdlI4SFoxUDNVN2Z1NDFt?=
+ =?utf-8?B?MnpvM0lGUEEreVRzazdvWjNXdVRxb0k4aDMyc0R6MTJWUGIzU3F2UmsxUDVT?=
+ =?utf-8?B?eEE4cGcxRXJaY1NzYk9XSWhLSEZMK3ZlMXlwaHVpazZ1QitIRG1VSm5LaVM3?=
+ =?utf-8?B?eWFUdjMrOGlqM0VSWStzbGJraVB0a2lXbmRwTkFKOW5qRk81OGxleStDNk9o?=
+ =?utf-8?B?dVd5OGJpZmMwd3UvS2FXQ0Y2SVlKUnhMTFF6Y3F4T2F1cGxzNFUrMW5NaE9k?=
+ =?utf-8?B?bmZTUWpqNEszcGhWZS9XeHlXaUNSdEdFelhVdVJ4My9kNDNUemVORzlZOStz?=
+ =?utf-8?B?b3NSLzlzN1o3a2ozYSswL1RGWEFXVkRrVitoMGlrUjE1SlhTdWFac2VkYnBk?=
+ =?utf-8?B?TUFVVS9kdkZsNGo4bFVCd0E3WTd2UUM2WjdOYnVtRStQL3FLZTh5NzdneldV?=
+ =?utf-8?B?am1CVVdmelpvWE53THJocW9IWStyaEtKMUhGWGZ2d05oK0FOZUJjeGEvYVI2?=
+ =?utf-8?B?dURuaXlMcHpFdm1NcE0yeVorUWVDNDE5VXVkcjRDT09zN1RyM1M4NVRMNHoy?=
+ =?utf-8?B?Zm4wQ3dPTXBQOXNhQmxic3pXeDRYRzBoUWVSK0t3ZkIyY0x2YUZwd3Erb0Z1?=
+ =?utf-8?B?UG1Ua1BhZXdkSE9NZUY3QzIxYXhqaDdHSHRPMDZOL2dvTkpXNE5FUXlsVVRI?=
+ =?utf-8?B?U0hKZ05aNWp4WUhyMGRRRTVLcHA0MVJ5MTM3MTRjTE5ycEtXdnh5ZkJxVml0?=
+ =?utf-8?B?dFlJL2hXVFl6V3J4cVlnZlpuNUhKVUMvdlpUWlMyTU9nbjZwM1RvSmI1QVdq?=
+ =?utf-8?Q?D91KTkVFbyhnk?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BE1P281MB1906.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(921020); DIR:OUT; SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bnpaem01VWlLaXVLd3dTYnFSc0VJYTdndXJoZm93Smpmb0d2VVkrWnBEVmdo?=
+ =?utf-8?B?TkxuYms5MWo4cmg1d041RHVZYzU5Rm5KRkFzdFlMNWhaVU11WHhETkkxL01Z?=
+ =?utf-8?B?UkhVeEJjalJwRWlzNDRZRlRLd1pJdFpUZ1ZpN01tTGU2ZGtlNzVOZ1YrcUI4?=
+ =?utf-8?B?WW91UUVnd3F2YmUySUZnbFUvbFdLZXA4ZkIrbk1CUFo1cXR1czZmR3BGbmQy?=
+ =?utf-8?B?cUprNnk0ZmVrR0pyUVpQWXBDWWhyWDdJTWFwOHovaHJQY0F1ZnBKTUQyNE05?=
+ =?utf-8?B?ZE1QUndKOEgxRVRWUlVCd21WdTRkcHJLMnY0U281Vml2LzkybFd1dWxUeXQr?=
+ =?utf-8?B?d2UveW4wS0FxM1JxNUNDcmd3R0R5Z0pLOGN5ZkNucm95bnNXNEllRFE1d1FW?=
+ =?utf-8?B?bXNKdkFDYjBzQlQveFh2MEtNN2VrT2RJQ1o1QVRqWGpBOUV4TVcxSEJJc2M0?=
+ =?utf-8?B?N29tNDJyZG1UTTFPdTFYeXdESldHZEZ0SWNobEJnS0VJKy9wRTlCVXJ0N2Jp?=
+ =?utf-8?B?TDgxYXhYOXU3cTAraXZOUEdOMnJZOXFTZHFXeExhSDNGRHcxVmgwZk0yNXpN?=
+ =?utf-8?B?Wkh2dWtSMk14QmpseXVLeHZ2d2djZGYzSWNhc28zNVgwNUJKV2UyWVFIVXdl?=
+ =?utf-8?B?d2RjcUxXZjY1d0pkQ3lmVitmSm1pYUJ5ZEVxS2VlYlNCdEtwWmRRWGNPUkhR?=
+ =?utf-8?B?RjNUUml3MjRlNHhHbXdENHZvV2NSdnpGc0hqUWRvYTdCTS84eExhUk0wOGhj?=
+ =?utf-8?B?dERYR1JQYzA0dHplbXVnOTRqWlVRc1Uzd3F0aU9xNWZySnlvYks4VUJITEVD?=
+ =?utf-8?B?UFVVb1REbWkrUGhnM0xPWWZNeDNOdkNibkV0VEJOVFlidU5ibkRNSUc2M2Iy?=
+ =?utf-8?B?cWZqZXljTVc3cjUraDMzYW4yakI2aG90ajl3Kyt1bElCejdNcDkzbWFnenky?=
+ =?utf-8?B?VnVvQXdnWUZCcW4zNTRGRm5Mc3RqK3E4cHZKZlRNUUs5K0VwTTVLdWJBSW9Y?=
+ =?utf-8?B?UTZkQytjcDYrV0JMTHFNSHRSWWFLLzVoNkpLV2s1elg5S2FiaTFZYUl2RHVR?=
+ =?utf-8?B?b2FOaVZ0eTZ5d3Q0dmlpc1YzbFlveklIdEFjSFpacFVoeG1wdjZjeHFuSUJx?=
+ =?utf-8?B?NVNUR254eXZtb05oSW5tcUNrZmg1OGpnMUxhSDd3V1BYeG1LaURlb0Z2Wjd6?=
+ =?utf-8?B?TDNaeHFIU1RaSHMrNlJHYkxKaGdCNlJCTkw4SG90emdXTGNzVHZQRzVxK05o?=
+ =?utf-8?B?ODA3eTU3T2tEcU5KWFJDSWRlKzFvTlRrM1Y1MkVicVBvUW9TNFRoSUd6UGZ6?=
+ =?utf-8?B?U2hLRzBnT3RYNlRSaFNzNVF5ZmpPS2hJYnVqVk5QWUtBVVRQMmxpZUVBNmFB?=
+ =?utf-8?B?UENWLzI2TFZPc0Q2RW5OUXVhZS9QN29YQjVIZjEwaERSSWRLQ0w4anBzNis2?=
+ =?utf-8?B?bXMrcUpJRFVHWnd6aGMrd0RXbTJxZHVRS0g4TmdTTVR2aUE1eTl5UyttOThy?=
+ =?utf-8?B?Q3BuL0kyR2ZkOERqNjN4RWNtZlZpZ0NkaEIveTJYd2lxMTFydTQzVWlkS1pG?=
+ =?utf-8?B?Y3UyQW93YWh3UkNOcC8wRUh6cFFZb1dYRWw2dWRpZWJKa2dOSTc0RlNoZ0Jm?=
+ =?utf-8?B?dHhiMVEyejQvcHRiVEtTYnYrdHVFOUtpMWZFZE4rU1cxM3NlazRVdWY2VDBN?=
+ =?utf-8?B?ajBEUnFDTjh0YUFsa01hbkdFcHFDeFBwT1FCck5wWThsVHVqSWdZdGpncytw?=
+ =?utf-8?B?WUx1RytQKzFTbXBmSVpkS1dxdXF2aE5LRHV4MHJnNjVLR0N0dStrS2xycTBM?=
+ =?utf-8?B?Q1UrdDdHWFVJMW45TFBqVW1CTXN6WitrcjN4THNyTFUvQS9WUG4zU1JBYXpJ?=
+ =?utf-8?B?Z3NEcTNBQU04a1QvRU45dGs1T3pVODIzbnY5L3Y3UzltM3dVMWdoampxcTJV?=
+ =?utf-8?B?WUZKSGVaaG9YUXVIc2hHYlVGdXQwajVycHpXZnJONWNadUJpcHExckFjaUE5?=
+ =?utf-8?B?TjY0SksyN2laWUE5N1daSG0vOStHSE5BVkVhZ1lWVHNHanJoWG1jN2kxa2hF?=
+ =?utf-8?B?Rm5ad1JlaFZEWmhUc0dwdi9qdjRqaDZRSWVQS2N6TkpOMHhBZDh2dXFvcEZI?=
+ =?utf-8?B?K3czRE9NOGl1NGtJaDBDQVZjSEFuaVRmZis4MDQ1K2tTZWpGbWxTWFhrV1BH?=
+ =?utf-8?Q?vluIYIlcS1OZZ5kgRVacAlbjo/3fUWA/nfmsvoJXlp5+?=
+X-OriginatorOrg: opensynergy.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c8a8bc9-004c-429f-2567-08dca58e110e
+X-MS-Exchange-CrossTenant-AuthSource: BE1P281MB1906.DEUP281.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2024 11:54:37.1668 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 800fae25-9b1b-4edc-993d-c939c4e84a64
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RuRYGgWWHsaF0Ejt8+Rxl2yF09Qkr6p+8sWfIs4Prf0gF+fFC79EMPW6Re5h3VO9vlBT+Zb0G/TuMt6o8TV8HQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BE1P281MB2579
+X-TM-AS-ERS: 40.93.78.51-0.0.0.0
+X-TMASE-Version: StarCloud-1.3-9.1.1026-28532.005
+X-TMASE-Result: 10--3.262000-4.000000
+X-TMASE-MatchedRID: +c13yJDs9035ETspAEX/ngw4DIWv1jSVbU+XbFYs1xL+teBvtXSx+MN0
+ ttU53zjBnL8fU/fu1hTxEXPBUZeoEui1lkUvOtVfawJUqbmGPB3aPuPIIqmcJ/p4OuSy0UFxr54
+ JIx46I6RsGRtqiNjgbNWDK+ZtBYu5J3n9e/k5m875IMfcfKKBtPxcvA3b4B4wOwBXM346/+zno9
+ 6w7u5Z9S3CfmATSj/USUiCGruO9KvzKEA3aTy2ixhuNHkFvYwX
+X-TMASE-XGENCLOUD: c4dd0b7a-6166-480e-9140-bbba4e759555-0-0-200-0
+X-TM-Deliver-Signature: 689296F135A6F3DFCE2FF4DC86D46286
+X-TM-Addin-Auth: CctZJ005x7gWrbPs7hK8I9s9/Ac8KgX7OpCaIyE1d9ogMOhFRldcd1V6Iia
+ s1v9aAoLKnXmyjDYqLUD624/rUBf+dBvg+GHYLz2umoGfsy8eN3EH1Je9tD8pfxM/cXaKtGxT/l
+ 7Nyxh/CLi+T3Jn6dwbLF5LTw7n412EZU482GmQYgoQwZ9JqyDD5jIdEMvPhiTtGdQzu92fvvhCk
+ d7XLI+90qgwFhysELxktHdNYhgKkuVrTt9ti2kAzpPDE2HZTSl7ZL9FiJKbBVG9Cx8J3151bZus
+ 6hOsT9h/btrTQjI=.GRvUgDOFl0+jM12lvosh7xmt6J8QxSgzPyNkavxE3Uvlu1/SVQ1k/nuQlq
+ mCF+blR9A4EE2JQwLXXHQwIIJlAstmVK/WmBg566Mp4aDK7GylY/rnYOHJhv5c2rHCT3yLWmzV1
+ o7KPPoXXCdt7+3hlFOrbntX8hmhFW6tf1gRpOrXI5YvtAjwKxhwSFH3ogxu+X2PzTwKC6OahX4x
+ oZExG3dO+oQqqkAzIux5oJssLtkW8BhWzGXz4D6XkhZ/sz1JD/N3PhfclvusZCC7pJlKDLFRK5Z
+ vRssKwyxgknOUYxJ8f/KPEb2tTIeqYzt3KouH1kV+2IY+d+Nll1j/t3hQcg==
+X-TM-Addin-ProductCode: EMS
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=opensynergy.com;
+ s=TM-DKIM-20210503141657; t=1721130880;
+ bh=NBUnKggH2eN8Xxe9CsqKHNMLJTF1hB7t8r1yElnZknk=; l=378;
+ h=Date:From:To;
+ b=CKambLYg0UNpIxULNVEAfraPqC/ETAkhRf3617fKsAa+JeLdcFKF2KkELVWxel3MN
+ RHTBFByJpf+F1fu4H/xEtTURUK7rd9j28VX74xqq9VXRFs6QlCsB2rV+t83R70G0ex
+ hSDUq2mYaunhx+0CKNZW9ez6Prq8Tjp+05P7ooe/Oo3lrbgM4j9zBsna1xjwG/tddU
+ lApHyEBCcHGdpkPomv4JQHUvQYszEQ5OdKLXrr8ZRoAXkZUjmHinFvDkD3ZeOHG7oc
+ A+jzxAxdPHNv5eUlU3/03rPP+24LifIZKfSjwj9CCbFFm3wmuUkaSWuqLxZX/iQz9u
+ 7l3lSRCD90jHg==
+Received-SPF: pass client-ip=18.185.115.123;
+ envelope-from=peter.hilber@opensynergy.com; helo=repost01.tmes.trendmicro.eu
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,366 +209,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Peter Hilber <peter.hilber@opensynergy.com>
+From:  Peter Hilber via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reported a memory leak (CID 1549757) in this code and its
-admittedly rather clumsy handling of extending the command table.
-Instead of handing over a full array of the commands lets use the
-lighter weight GPtrArray and simply test for the presence of each
-entry as we go. This avoids complications of transferring ownership of
-arrays and keeps the final command entries as static entries in the
-target code.
+On 08.07.24 11:27, David Woodhouse wrote:
+> +
+> +	/*
+> +	 * Time according to time_type field above.
+> +	 */
+> +	uint64_t time_sec;		/* Seconds since time_type epoch */
+> +	uint64_t time_frac_sec;		/* (seconds >> 64) */
+> +	uint64_t time_esterror_picosec;	/* (± picoseconds) */
+> +	uint64_t time_maxerror_picosec;	/* (± picoseconds) */
 
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/gdbstub/commands.h |  19 ++++--
- target/arm/internals.h     |   4 +-
- gdbstub/gdbstub.c          | 127 +++++++++++++++++++++----------------
- target/arm/gdbstub.c       |  16 ++---
- target/arm/gdbstub64.c     |  11 ++--
- 5 files changed, 95 insertions(+), 82 deletions(-)
-
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index f3058f9dda..40f0514fe9 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -74,23 +74,28 @@ int gdb_put_packet(const char *buf);
- 
- /**
-  * gdb_extend_query_table() - Extend query table.
-- * @table: The table with the additional query packet handlers.
-- * @size: The number of handlers to be added.
-+ * @table: GPtrArray of GdbCmdParseEntry entries.
-+ *
-+ * The caller should free @table afterwards
-  */
--void gdb_extend_query_table(GdbCmdParseEntry *table, int size);
-+void gdb_extend_query_table(GPtrArray *table);
- 
- /**
-  * gdb_extend_set_table() - Extend set table.
-- * @table: The table with the additional set packet handlers.
-- * @size: The number of handlers to be added.
-+ * @table: GPtrArray of GdbCmdParseEntry entries.
-+ *
-+ * The caller should free @table afterwards
-  */
--void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
-+void gdb_extend_set_table(GPtrArray *table);
- 
- /**
-  * gdb_extend_qsupported_features() - Extend the qSupported features string.
-  * @qsupported_features: The additional qSupported feature(s) string. The string
-  * should start with a semicolon and, if there are more than one feature, the
-- * features should be separate by a semiocolon.
-+ * features should be separate by a semicolon.
-+ *
-+ * The caller should free @qsupported_features afterwards if
-+ * dynamically allocated.
-  */
- void gdb_extend_qsupported_features(char *qsupported_features);
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index da22d04121..757b1fae92 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -359,8 +359,8 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu);
- void arm_translate_init(void);
- 
- void arm_cpu_register_gdb_commands(ARMCPU *cpu);
--void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *, GArray *,
--                                       GArray *);
-+void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *,
-+                                       GPtrArray *, GPtrArray *);
- 
- void arm_restore_state_to_opc(CPUState *cs,
-                               const TranslationBlock *tb,
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b9ad0a063e..fd7b4ecddb 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1615,17 +1615,16 @@ static void handle_query_thread_extra(GArray *params, void *user_ctx)
- }
- 
- static char *extended_qsupported_features;
-+
- void gdb_extend_qsupported_features(char *qsupported_features)
- {
--    /*
--     * We don't support different sets of CPU gdb features on different CPUs yet
--     * so assert the feature strings are the same on all CPUs, or is set only
--     * once (1 CPU).
--     */
--    g_assert(extended_qsupported_features == NULL ||
--             g_strcmp0(extended_qsupported_features, qsupported_features) == 0);
--
--    extended_qsupported_features = qsupported_features;
-+    if (!extended_qsupported_features) {
-+        extended_qsupported_features = g_strdup(qsupported_features);
-+    } else if (!g_strrstr(extended_qsupported_features, qsupported_features)) {
-+        char *old = extended_qsupported_features;
-+        extended_qsupported_features = g_strdup_printf("%s%s", old, qsupported_features);
-+        g_free(old);
-+    }
- }
- 
- static void handle_query_supported(GArray *params, void *user_ctx)
-@@ -1753,39 +1752,59 @@ static const GdbCmdParseEntry gdb_gen_query_set_common_table[] = {
-     },
- };
- 
--/* Compares if a set of command parsers is equal to another set of parsers. */
--static bool cmp_cmds(GdbCmdParseEntry *c, GdbCmdParseEntry *d, int size)
-+/**
-+ * extend_table() - extend one of the command tables
-+ * @table: the command table to extend (or NULL)
-+ * @extensions: a list of GdbCmdParseEntry pointers
-+ *
-+ * The entries themselves should be pointers to static const
-+ * GdbCmdParseEntry entries. If the entry is already in the table we
-+ * skip adding it again.
-+ *
-+ * Returns (a potentially freshly allocated) GPtrArray of GdbCmdParseEntry
-+ */
-+static GPtrArray * extend_table(GPtrArray *table, GPtrArray *extensions)
- {
--    for (int i = 0; i < size; i++) {
--        if (!(c[i].handler == d[i].handler &&
--            g_strcmp0(c[i].cmd, d[i].cmd) == 0 &&
--            c[i].cmd_startswith == d[i].cmd_startswith &&
--            g_strcmp0(c[i].schema, d[i].schema) == 0)) {
-+    if (!table) {
-+        table = g_ptr_array_new();
-+    }
- 
--            /* Sets are different. */
--            return false;
-+
-+    for (int i = 0; i < extensions->len; i++) {
-+        gpointer entry = g_ptr_array_index(extensions, i);
-+        if (!g_ptr_array_find(table, entry, NULL)) {
-+            g_ptr_array_add(table, entry);
-         }
-     }
- 
--    /* Sets are equal, i.e. contain the same command parsers. */
--    return true;
-+    return table;
- }
- 
--static GdbCmdParseEntry *extended_query_table;
--static int extended_query_table_size;
--void gdb_extend_query_table(GdbCmdParseEntry *table, int size)
-+/**
-+ * process_extended_table() - run through an extended command table
-+ * @table: the command table to check
-+ * @data: parameters
-+ *
-+ * returns true if the command was found and executed
-+ */
-+static bool process_extended_table(GPtrArray *table, const char *data)
- {
--    /*
--     * We don't support different sets of CPU gdb features on different CPUs yet
--     * so assert query table is the same on all CPUs, or is set only once
--     * (1 CPU).
--     */
--    g_assert(extended_query_table == NULL ||
--             (extended_query_table_size == size &&
--              cmp_cmds(extended_query_table, table, size)));
-+    for (int i = 0; i < table->len; i++) {
-+        const GdbCmdParseEntry *entry = g_ptr_array_index(table, i);
-+        if (process_string_cmd(data, entry, 1)) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
- 
--    extended_query_table = table;
--    extended_query_table_size = size;
-+
-+/* Ptr to GdbCmdParseEntry */
-+static GPtrArray *extended_query_table;
-+
-+void gdb_extend_query_table(GPtrArray *new_queries)
-+{
-+    extended_query_table = extend_table(extended_query_table, new_queries);
- }
- 
- static const GdbCmdParseEntry gdb_gen_query_table[] = {
-@@ -1880,20 +1899,12 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
- #endif
- };
- 
--static GdbCmdParseEntry *extended_set_table;
--static int extended_set_table_size;
--void gdb_extend_set_table(GdbCmdParseEntry *table, int size)
--{
--    /*
--     * We don't support different sets of CPU gdb features on different CPUs yet
--     * so assert set table is the same on all CPUs, or is set only once (1 CPU).
--     */
--    g_assert(extended_set_table == NULL ||
--             (extended_set_table_size == size &&
--              cmp_cmds(extended_set_table, table, size)));
-+/* Ptr to GdbCmdParseEntry */
-+static GPtrArray *extended_set_table;
- 
--    extended_set_table = table;
--    extended_set_table_size = size;
-+void gdb_extend_set_table(GPtrArray *new_set)
-+{
-+    extended_set_table = extend_table(extended_set_table, new_set);
- }
- 
- static const GdbCmdParseEntry gdb_gen_set_table[] = {
-@@ -1924,26 +1935,28 @@ static const GdbCmdParseEntry gdb_gen_set_table[] = {
- 
- static void handle_gen_query(GArray *params, void *user_ctx)
- {
-+    const char *data;
-+
-     if (!params->len) {
-         return;
-     }
- 
--    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+    data = gdb_get_cmd_param(params, 0)->data;
-+
-+    if (process_string_cmd(data,
-                            gdb_gen_query_set_common_table,
-                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+    if (process_string_cmd(data,
-                            gdb_gen_query_table,
-                            ARRAY_SIZE(gdb_gen_query_table))) {
-         return;
-     }
- 
-     if (extended_query_table &&
--        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
--                           extended_query_table,
--                           extended_query_table_size)) {
-+        process_extended_table(extended_query_table, data)) {
-         return;
-     }
- 
-@@ -1953,26 +1966,28 @@ static void handle_gen_query(GArray *params, void *user_ctx)
- 
- static void handle_gen_set(GArray *params, void *user_ctx)
- {
-+    const char *data;
-+
-     if (!params->len) {
-         return;
-     }
- 
--    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+    data = gdb_get_cmd_param(params, 0)->data;
-+
-+    if (process_string_cmd(data,
-                            gdb_gen_query_set_common_table,
-                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+    if (process_string_cmd(data,
-                            gdb_gen_set_table,
-                            ARRAY_SIZE(gdb_gen_set_table))) {
-         return;
-     }
- 
-     if (extended_set_table &&
--        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
--                           extended_set_table,
--                           extended_set_table_size)) {
-+        process_extended_table(extended_set_table, data)) {
-         return;
-     }
- 
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index c3a9b5eb1e..554b8736bb 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -477,11 +477,9 @@ static GDBFeature *arm_gen_dynamic_m_secextreg_feature(CPUState *cs,
- 
- void arm_cpu_register_gdb_commands(ARMCPU *cpu)
- {
--    GArray *query_table =
--        g_array_new(FALSE, FALSE, sizeof(GdbCmdParseEntry));
--    GArray *set_table =
--        g_array_new(FALSE, FALSE, sizeof(GdbCmdParseEntry));
--    GString *qsupported_features = g_string_new(NULL);
-+    g_autoptr(GPtrArray) query_table = g_ptr_array_new();
-+    g_autoptr(GPtrArray) set_table = g_ptr_array_new();
-+    g_autoptr(GString) qsupported_features = g_string_new(NULL);
- 
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-     #ifdef TARGET_AARCH64
-@@ -492,16 +490,12 @@ void arm_cpu_register_gdb_commands(ARMCPU *cpu)
- 
-     /* Set arch-specific handlers for 'q' commands. */
-     if (query_table->len) {
--        gdb_extend_query_table(&g_array_index(query_table,
--                                              GdbCmdParseEntry, 0),
--                                              query_table->len);
-+        gdb_extend_query_table(query_table);
-     }
- 
-     /* Set arch-specific handlers for 'Q' commands. */
-     if (set_table->len) {
--        gdb_extend_set_table(&g_array_index(set_table,
--                             GdbCmdParseEntry, 0),
--                             set_table->len);
-+        gdb_extend_set_table(set_table);
-     }
- 
-     /* Set arch-specific qSupported feature. */
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 2e2bc2700b..c8cef8cbc0 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -564,7 +564,7 @@ enum Command {
-     NUM_CMDS
- };
- 
--static GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
-+static const GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
-     [qMemTags] = {
-         .handler = handle_q_memtag,
-         .cmd_startswith = true,
-@@ -590,17 +590,16 @@ static GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
- #endif /* CONFIG_USER_ONLY */
- 
- void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
--                                       GArray *qtable, GArray *stable)
-+                                       GPtrArray *qtable, GPtrArray *stable)
- {
- #ifdef CONFIG_USER_ONLY
-     /* MTE */
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         g_string_append(qsupported, ";memory-tagging+");
- 
--        g_array_append_val(qtable, cmd_handler_table[qMemTags]);
--        g_array_append_val(qtable, cmd_handler_table[qIsAddressTagged]);
--
--        g_array_append_val(stable, cmd_handler_table[QMemTags]);
-+        g_ptr_array_add(qtable, (gpointer) &cmd_handler_table[qMemTags]);
-+        g_ptr_array_add(qtable, (gpointer) &cmd_handler_table[qIsAddressTagged]);
-+        g_ptr_array_add(stable, (gpointer) &cmd_handler_table[QMemTags]);
-     }
- #endif
- }
--- 
-2.39.2
-
+Is this unsigned or signed?
 
