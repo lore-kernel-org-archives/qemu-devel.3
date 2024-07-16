@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287E0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D456C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgTx-0006hV-6M; Tue, 16 Jul 2024 07:36:33 -0400
+	id 1sTgaO-0006gK-NC; Tue, 16 Jul 2024 07:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTgTv-0006cK-TQ
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:36:31 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTgTu-0005eG-3Z
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:36:31 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-70b5117ae06so3904299b3a.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 04:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721129788; x=1721734588;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fIrjmnrcime12URGWOz+U3tVhvhx495pQrmKJbaCEkE=;
- b=zbmzwRiM6T8rwiISfNhDefuTEkyXP4V3uS/i/mWfpUJzFPg2+C1VOzbp9ZmK3PJDE0
- n/mdgVxwPtMk93c238W80KxW7WYX8024vUEaD0MPHRDP8kyFjTnup8PU0ixHotGpCCeQ
- MfroBArFEbkEjIjYy90pDYEUFvsIrOovqhIk6K6BlhEnBjFIzz+NmaavxDt/lU+kF415
- rInk8bhX4Y7nofea+1KZBRi5O2z9LfTdJHnqxmcfndZTtaR0i/W3LWQ/X3hDTOiFLF+Q
- FfERzjlzzh4W7NtrGRFBpQ/y69pjZKolZVC/MckoMNxrs0C7sBB0Y2tdsaH+/tGExqb5
- 3AFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721129788; x=1721734588;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fIrjmnrcime12URGWOz+U3tVhvhx495pQrmKJbaCEkE=;
- b=VYqT/kIDPaQbU1pYLhEnGJYBGMzLwnRtre04qrt0dWavKiqUhzsdsmV/qSJhK096WP
- CjrTg7iqfQIujNej0uTlhSqLB9yFk1V2VOe5WL70IhdldGBuYfgkRYv7wBIFIogX9/vm
- gqDjwtrHx97evGrVMEEwQpnoW9Qh8cMpCvOoGdwPOV2Q4S74b8tw7c/O75ztH65yEr5+
- lDK3Iz/YGLfvadqH2QlJVP+odHxAEQff7YY3rYKE7U8L2fpr/t0n1+pQ7XHUpXZaSwLp
- gnCi3sW940zvqvSN1W8GV/WCf1eQDlZqX9bQWkZUFUQIO4nNHuIyycVEl8VLAZLCQ0GF
- q4lQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqVuhSZP98OY5NrJEvQtvWmA2ItSDcOqO6llAjA9JVvzYtWNiEZJi0w89W9RC5SHkdOi5Bel2vxaNo1+J2lV7NFNrGupk=
-X-Gm-Message-State: AOJu0YwYn7zHC2UV6lASWBvEyM+VIVcTddAroA4H8njs2ihJanw/LZlS
- MoOgm+cGfrRzqb87aCR+vb2ssuzjBsZQq0t8Vy+dNxrLM+nsuy4dixNpt7l96x0=
-X-Google-Smtp-Source: AGHT+IEQVrTfKfyPKCJhRlvLtuj+FAKBk0KVvsPqj+ybVV0I53B3fwt1t2Qgzq9+Gr8iqBo42rH2aQ==
-X-Received: by 2002:a05:6a20:2590:b0:1c2:1ed4:4f91 with SMTP id
- adf61e73a8af0-1c3f124ac4bmr1630429637.31.1721129788574; 
- Tue, 16 Jul 2024 04:36:28 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7ec7da24sm6056707b3a.113.2024.07.16.04.36.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 04:36:28 -0700 (PDT)
-Message-ID: <cdd5ce60-230f-48a1-bcf3-9591b8bede95@daynix.com>
-Date: Tue, 16 Jul 2024 20:36:25 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] target/arm: Always add pmu property
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
- <20240716-pmu-v2-4-f3e3e4b2d3d5@daynix.com>
- <CAFEAcA9trFnYaZbVehHhxET68QF=+X6GRsEh+zcavL-1DxDB4w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sTgaL-0006Wg-6m
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:43:10 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sTgaG-0006Up-NQ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:43:08 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WNcbs4n4Wz6JBDY;
+ Tue, 16 Jul 2024 19:41:45 +0800 (CST)
+Received: from lhrpeml500003.china.huawei.com (unknown [7.191.162.67])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1A4611400D9;
+ Tue, 16 Jul 2024 19:43:01 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml500003.china.huawei.com (7.191.162.67) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 16 Jul 2024 12:43:00 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Tue, 16 Jul 2024 12:43:00 +0100
+To: Igor Mammedov <imammedo@redhat.com>, Salil Mehta <salil.mehta@opnsrc.net>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "maz@kernel.org"
+ <maz@kernel.org>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "will@kernel.org" <will@kernel.org>, "gshan@redhat.com"
+ <gshan@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "npiggin@gmail.com" <npiggin@gmail.com>, "harshpb@linux.ibm.com"
+ <harshpb@linux.ibm.com>, Linuxarm <linuxarm@huawei.com>, "peterx@redhat.com"
+ <peterx@redhat.com>
+Subject: RE: [PATCH V15 0/7] Add architecture agnostic code to support vCPU
+ Hotplug
+Thread-Topic: [PATCH V15 0/7] Add architecture agnostic code to support vCPU
+ Hotplug
+Thread-Index: AQHa1VIYzbBqk8ub30G0ZXbYzNwFGLH3waYAgAASi1CAAAR3IP///pcAgADQmICAAGhoAIAAKp3A
+Date: Tue, 16 Jul 2024 11:43:00 +0000
+Message-ID: <b8ec039d53534d48b8389aedd1f959f6@huawei.com>
+References: <20240713182516.1457-1-salil.mehta@huawei.com>
+ <20240715155436.577d34c5@imammedo.users.ipa.redhat.com>
+ <b93b570158794e28bf8c00a949afa8b4@huawei.com>
+ <3848723ea2584b9b813c3d76e1e6dd59@huawei.com>
+ <20240715171154.2667d187@imammedo.users.ipa.redhat.com>
+ <4b829bf1-d31c-49eb-b18f-6d87e08c5c04@opnsrc.net>
+ <20240716115210.08ca24ba@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240716115210.08ca24ba@imammedo.users.ipa.redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA9trFnYaZbVehHhxET68QF=+X6GRsEh+zcavL-1DxDB4w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.170.92]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +102,250 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/16 20:32, Peter Maydell wrote:
-> On Tue, 16 Jul 2024 at 09:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> kvm-steal-time and sve properties are added for KVM even if the
->> corresponding features are not available. Always add pmu property too.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   target/arm/cpu.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 9e1d15701468..32508644aee7 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -1781,9 +1781,10 @@ void arm_cpu_post_init(Object *obj)
->>
->>       if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
->>           cpu->has_pmu = true;
->> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
->>       }
->>
->> +    object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
->> +
->>       /*
->>        * Allow user to turn off VFP and Neon support, but only for TCG --
->>        * KVM does not currently allow us to lie to the guest about its
-> 
-> Before we do this we need to do something to forbid setting
-> the pmu property to true on CPUs which don't have it. That is:
-> 
->   * for CPUs which do have a PMU, we should default to present, and
->     allow the user to turn it on and off with pmu=on/off
->   * for CPUs which do not have a PMU, we should not let the user
->     turn it on and off (either by not providing the property, or
->     else by making the property-set method raise an error, or by
->     having realize detect the discrepancy and raise an error)
+Hi Igor,
 
-I don't think there is any reason to prohibit adding a PMU to a CPU that 
-doesn't have when you allow to remove one. For example, neoverse-v1 
-should always have PMU in the real world.
+>  From: Igor Mammedov <imammedo@redhat.com>
+>  Sent: Tuesday, July 16, 2024 10:52 AM
+>  To: Salil Mehta <salil.mehta@opnsrc.net>
+> =20
+>  On Tue, 16 Jul 2024 03:38:29 +0000
+>  Salil Mehta <salil.mehta@opnsrc.net> wrote:
+> =20
+>  > Hi Igor,
+>  >
+>  > On 15/07/2024 15:11, Igor Mammedov wrote:
+>  > > On Mon, 15 Jul 2024 14:19:12 +0000
+>  > > Salil Mehta <salil.mehta@huawei.com> wrote:
+>  > >
+>  > >>>   From: qemu-arm-bounces+salil.mehta=3Dhuawei.com@nongnu.org  <qem=
+u-
+>  > >>>   arm-bounces+salil.mehta=3Dhuawei.com@nongnu.org> On Behalf Of  S=
+alil
+>  > >>>   Mehta via
+>  > >>>   Sent: Monday, July 15, 2024 3:14 PM
+>  > >>>   To: Igor Mammedov <imammedo@redhat.com>
+>  > >>>
+>  > >>>   Hi Igor,
+>  > >>>
+>  > >>>   >  From: Igor Mammedov <imammedo@redhat.com>
+>  > >>>   >  Sent: Monday, July 15, 2024 2:55 PM
+>  > >>>   >  To: Salil Mehta <salil.mehta@huawei.com>
+>  > >>>   >
+>  > >>>   >  On Sat, 13 Jul 2024 19:25:09 +0100
+>  > >>>   >  Salil Mehta <salil.mehta@huawei.com> wrote:
+>  > >>>   >
+>  > >>>   >  > [Note: References are present at the last after the revisio=
+n
+>  > >>>   > history]  >  > Virtual CPU hotplug support is being added acro=
+ss
+>  > >>>   > various architectures  [1][3].
+>  > >>>   >  > This series adds various code bits common across all archit=
+ectures:
+>  > >>>   >  >
+>  > >>>   >  > 1. vCPU creation and Parking code refactor [Patch 1] 2. Upd=
+ate ACPI
+>  > >>>   > > GED framework to support vCPU Hotplug [Patch 2,3] 3. ACPI CP=
+Us AML
+>  > >>>   > > code change [Patch 4,5] 4. Helper functions to support unrea=
+lization
+>  > >>>   > > of CPU objects [Patch 6,7]
+>  > >>>   >
+>  > >>>   >  with patch 1 and 3 fixed should be good to go.
+>  > >>>   >
+>  > >>>   >  Salil,
+>  > >>>   >  Can you remind me what happened to migration part of this?
+>  > >>>   >  Ideally it should be a part of of this series as it should be=
+ common
+>  > >>>   > for  everything that uses GED and should be a conditional part=
+ of
+>  > >>>   > GED's  VMSTATE.
+>  > >>>   >
+>  > >>>   >  If this series is just a common base and no actual hotplug on=
+ top of
+>  > >>>   > it is  merged in this release (provided patch 13 is fixed), I'=
+m fine
+>  > >>>   > with migration  bits being a separate series on top.
+>  > >>>   >
+>  > >>>   >  However if some machine would be introducing cpu hotplug in t=
+he same
+>  > >>>   > release, then the migration part should be merged before it or=
+ be a
+>  > >>>   > part  that cpu hotplug series.
+>  > >>>
+>  > >>>   We have tested Live/Pseudo Migration and it seem to work with th=
+e
+>  > >>>   changes part of the architecture specific patch-set.
+>  > >
+>  > > have you tested, migration from new QEMU to an older one (that doesn=
+'t have cpuhotplug builtin)?
+>  >
+>  >
+>  > Just curious, how can we detect at source Qemu what version of the
+>  > Qemu destination is running. We require some sort of compatibility
+>  > check but then this is a problem not specific to CPU Hotplug?
+> =20
+>  it's usually managed by version machine types + compat settings for
+>  machine/device.
 
-Perhaps it may make sense to prohibit adding a PMU when the CPU is not 
-Armv8 as the PMU we emulate is apparently PMUv3, which is part of Armv8.
+Ok. it looks to be a static checking at the source. I'm sure there must be
+a way to dynamically do the same by negotiating the features i.e. only
+enabling the common subset at the destination. I quickly skimmed the
+migration code and I cannot find any thing like this being done as of now.
+And this problem looks to be a pandoras box to me.=20
 
-Regards,
-Akihiko Odaki
+> =20
+>  > We  are not initializing CPU Hotplug VMSD in this patch-set. I was
+>  > wondering then how can a new machine attempt to migrate VMSD state
+>  > from new Qemu to older Qemu.
+> =20
+>  If I'm not mistaken without VMSD it shouldn't explode, since CPUHP code
+>  shouldn't create memory-regions that are migrated.
+>  (If I recall correctly, mmio regions aren't going into migration stream)
+
+Correct.
+
+> =20
+>  > ARM vCPU Hotplug patches will be on top of this later in next Qemu cyc=
+le.
+>  then it's fine to introduce VMSD later on, just make sure others who add=
+ing
+>  cpu hotplug elsewhere also aware of it and pickup the same patch.
+
+
+Yes, thanks.
+
+
+>  > >>>
+>  > >>>   Ampere: https://lore.kernel.org/all/e17e28ac-28c7-496f-b212-
+>  > >>>   2c9b552dbf63@amperemail.onmicrosoft.com/
+>  > >>>   Oracle: https://lore.kernel.org/all/46D74D30-EE54-4AD2-8F0E-
+>  > >>>   BA5627FAA63E@oracle.com/
+>  > >>>
+>  > >>>
+>  > >>>   For ARM, please check below patch part of RFC V3 for changes rel=
+ated to
+>  > >>>   migration:
+>  > >>>   https://lore.kernel.org/qemu-devel/20240613233639.202896-15-
+>  > >>>   salil.mehta@huawei.com/
+>  > >>
+>  > >>
+>  > >> Do you wish to move below change into this path-set and make it
+>  > >> common to all instead?
+>  > >
+>  > > it would be the best to include this with here.
+>  > >
+>  > >>
+>  > >>
+>  > >> diff --git a/hw/acpi/generic_event_device.c
+>  > >> b/hw/acpi/generic_event_device.c index 63226b0040..e92ce07955
+>  > >> 100644
+>  > >> --- a/hw/acpi/generic_event_device.c
+>  > >> +++ b/hw/acpi/generic_event_device.c
+>  > >> @@ -333,6 +333,16 @@ static const VMStateDescription
+>  vmstate_memhp_state =3D {
+>  > >>       }
+>  > >>   };
+>  > >>
+>  > >> +static const VMStateDescription vmstate_cpuhp_state =3D {
+>  > >> +    .name =3D "acpi-ged/cpuhp",
+>  > >> +    .version_id =3D 1,
+>  > >> +    .minimum_version_id =3D 1,
+>  > >> +    .fields      =3D (VMStateField[]) {
+>  > >> +        VMSTATE_CPU_HOTPLUG(cpuhp_state, AcpiGedState),
+>  > >> +        VMSTATE_END_OF_LIST()
+>  > >> +    }
+>  > >> +};
+>  > >> +
+>  > >>   static const VMStateDescription vmstate_ged_state =3D {
+>  > >>       .name =3D "acpi-ged-state",
+>  > >>       .version_id =3D 1,
+>  > >> @@ -381,6 +391,7 @@ static const VMStateDescription
+>  vmstate_acpi_ged =3D {
+>  > >>       },
+>  > >>       .subsections =3D (const VMStateDescription * const []) {
+>  > >>           &vmstate_memhp_state,
+>  > >> +        &vmstate_cpuhp_state,
+>  > >
+>  > > I'm not migration guru but I believe this should be conditional to
+>  > > avoid breaking cross-version migration.
+>  > > See 679dd1a957d '.needed =3D vmstate_test_use_cpuhp. part
+>  >
+>  >
+>  > Sure, thanks for this. As I can see, the needed() function is used at
+>  > the source to decide if the state corresponding to a particular device
+>  > can be forwarded to the destination QEMU/VM. But how can this be used
+>  > to check for cross-version migration?
+> =20
+>  what I'd do is to make sure that older machine types to not have cpu
+>  hotplug enabled in supported events, and only machine that has full
+>  support for hotplug enabled the bit. And then machine_init depending on
+>  that would manage actual 'ged-event'
+>  property.
+> =20
+>  Then later VMSD.needed would check ged-event to decide if section should
+>  be used or omitted.
+
+I understand this part, as discussed above this is not relevant to this pat=
+ch-set
+as we are not adding CPU Hotplug specific VMSD. But yes, I take your point =
+and
+will add above suggested change in the following patches in the next Qemu C=
+ycle.
+
+
+>  > BTW, I've prepared V16. May I request a quick peek at:
+>  >
+>  > https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-
+>  v3.ar
+>  > ch.agnostic.v16/
+> =20
+>  looked at
+>     hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+> =20
+>  I get that ged_event loop in realize was copy-pasted from _EVT handler, =
+but
+>  that looks a bit complicated (though I won't object, it's matter of tast=
+e)
+
+Yes, I did that intentionally to increase the code reuse which usually is e=
+ncouraged.
+This reduces the amount of re-testing required. But yes, there is a con sid=
+e as
+well to this approach if not done properly i.e. any issues in the older cod=
+e also
+get propagated in the newer code.
+
+Generally we bank upon FFS function to get the next bit and use bit shiftin=
+g to
+deal with this kind of logic efficiently.=20
+
+> =20
+>  I'd prefer simpler condition than for() {} loop, and just use simpler 'i=
+f'
+> =20
+>  if (enabled_events & ACPI_GED_CPU_HOTPLUG_EVT) {
+>      init cpu hp code
+>  }
+> =20
+>  PS:
+>  if you keep for loop, I'd replace  error_report() + abort() with 'error_=
+abort'
+
+Maybe I should have looked a this earlier. I've  missed to address this in =
+V16.
+Do you mean error_setg(&error_abort,....) kind of logic? it has been discou=
+raged
+in favor of assert() I think?
+
+Can we live with this for now or do you want me to send V17 for this change=
+?
+
+
+Thanks
+Salil.
 
