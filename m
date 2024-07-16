@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD69C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37B82C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTiFb-0002iS-QT; Tue, 16 Jul 2024 09:29:51 -0400
+	id 1sTiGE-00052b-H1; Tue, 16 Jul 2024 09:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTiFa-0002hf-9N
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:29:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTiFV-0003p6-HF
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:29:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721136584;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vRg/z9OA72c3JjyTF6wOH7XQTE5k8Cx5BGSXMBf+eVI=;
- b=Tplp57Z7RVl0yPpT9viMR6I7Dh4FpmMob89+beOaFpNAsGMk+GZF/o0f5Kdiys0l7i2dKs
- XIyT7Cc25FsK1zDf8HBDqQnQiAgPTBnX3rXe0MO68nrSLJSfYH1eELDYERsm0hv3iKiA8M
- UE+R0vL90COwKORo6vdB3dAfvpkP1Zg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-wdzJBeJbM1u3es5T2X2kNw-1; Tue, 16 Jul 2024 09:29:41 -0400
-X-MC-Unique: wdzJBeJbM1u3es5T2X2kNw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367987e6ebcso4104429f8f.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:29:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTiGB-0004pO-U6
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:30:27 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTiG9-0004BA-Q8
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:30:27 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4266ea6a412so38420765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721136624; x=1721741424; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=fqYXuI8dFITP7ECgsEI6Gm6t3TwXwSXdH4+K1VfcJ58=;
+ b=v+F+EIM2Q285VXDsAfnK+SpTRPjQlCuA403rtm1Q72YevwP1OIoz1MOzioHiuiDsVy
+ wOfKvJP+bTIw9VuZK8/6S2huNxeTyLrP8eWluu343irhG2RUuQR0Hl5lf8+sUNbLV5+/
+ 4PGxAMJuGuYSWdOHqWKpaJ6ZLVKDgnT7IVdXyHRDBY74KUMKLnZ6m+vWVcsMkhtXfQFg
+ 0d1IkxyYwn8/Ck29wKtkEzfYQKrkbM7oj3VuCb/NvXs1ZrZN3EQNAuQvHUO3D9XhHsKz
+ vWY1NQF7ggjMpoSAzpU146VkTz8Lhm8sPsqeRFAC5w2x9xnw48K3brjR2Jeq0QcYcokV
+ FiQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721136581; x=1721741381;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vRg/z9OA72c3JjyTF6wOH7XQTE5k8Cx5BGSXMBf+eVI=;
- b=eip9Jl3oeVY/rvCjb5AmmJorWKn1oyKnIWv/YRl4U1k0lqRSKUOzoEpV3+24F11ctH
- Xkt1u0PoWipwUUo9nNshaP7uNtH6iNnXbE5nPKoq+txx2FNPfQ1O+dZWKzvQ2bXk6dIk
- EIIhDbVPQfvNTqPKxoqbYBnNQzqAcwOnuXbJR57/nJ06GA0Pd4D41cruAy1ubv4WKrsb
- uwb0R8PLkcUbnN6AOYq7rvEYSalD+L2DZ2TPoUgfjj/lEpdXGkAs7AI4dQTH5LW/wU/X
- BK4N5x+utD9JqdgBIRKn2g3/WmpL1H4ld2/lG4SdH2zs0L0M1kyqfF1hGAx5ZqPS95Iq
- +nqQ==
+ d=1e100.net; s=20230601; t=1721136624; x=1721741424;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fqYXuI8dFITP7ECgsEI6Gm6t3TwXwSXdH4+K1VfcJ58=;
+ b=sZVHD8OHmiog2A03jBB9Yl/cJuz1yaGvXjZr5M3574UPq1cTM9ZNOu+3TW9AgGY8Mr
+ SPA/F8HNtqfhYgSwRLeel98CXkiqzJdUSB96UFAe9LYeRtZm6RLXGff6vW5v28IRMcdj
+ Uosk4M3tgaLgc3Nrn+ETPtQzAPqOcov5d3gsjjzWu51tCFyPnovYP6RHxAG1+aJuiL1E
+ c0t4gCV6lvA4bX9zMFTYwhE3wC+feEgTNmPfZLtsoD2kXvjZhjPiCcqNeACni24PLqFJ
+ ulmPypfNWwPfRqETT77gjr3KaSqjUAE+SiJvuSZKfn2w6NE20czY/+xQcfCkGO22tPvU
+ ht7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMvHGcwVhJbfqefb+DVp9uUMOnNNH6lT65NMswSC3BtWNuy8vSmFRESSOF31NDvTBa9bD7A4A/Yl24fj2HVSYUFt6iYTg=
-X-Gm-Message-State: AOJu0Yy6nx/mRYJHU0gQkZzP95KLjuVfMyma4bh2PeE/M51VmHrCyhwk
- Lmx1hrcMfHFeJPBPIh+11IqWs8UDSKNO9IH35lQU1o2wQE5Ml7aBsb41PkBnvHeBAexDmCdrlXm
- ngIeyBlwynvf3OuOOEJjESJAMp5pxog82DaX9Qyp4z5asXjeOf4NAoNjJDmWH5+8MA0K2cjNLmz
- 8TCeacgj3HQhkMO5IZWmx6Jsz9N+Y=
-X-Received: by 2002:a5d:47a4:0:b0:366:eb61:b45 with SMTP id
- ffacd0b85a97d-368260c0bb3mr1675416f8f.1.1721136580910; 
- Tue, 16 Jul 2024 06:29:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4tJV1t6fbWXWSYopoYBu+A47PqwQ7TAr26XB0WDbUh/3nLek1QNRBlEV1VXK5S3TOrKDjc8znmmSLlkWxv0o=
-X-Received: by 2002:a5d:47a4:0:b0:366:eb61:b45 with SMTP id
- ffacd0b85a97d-368260c0bb3mr1675396f8f.1.1721136580610; Tue, 16 Jul 2024
- 06:29:40 -0700 (PDT)
+ AJvYcCXOZOHyPunDA2gRqAbmCz6ZtDMwTnfvPaC0DGOjtiIoMIfmkPOzpWDcIpjBxRWYEzpVHmfpVL6p0I5yprTpiqUd0FFSkBs=
+X-Gm-Message-State: AOJu0YwSvCd2vZoAiU8f8U5TmNoJBSTGgW35M2i1hebNEWDZyk6/WxaK
+ IQsEzgF6rj/nw3whE0woB1HiYhRUvXiS1OdAy4kWw5LTaTtRsQD0QFtO/WSe75Q=
+X-Google-Smtp-Source: AGHT+IEovbz1ZRXArko3wKnQ3TE42VUM+o/S/VvsIH/eusW/xkkqVMLHXLQnulnJ1EvtQac3GyUz0g==
+X-Received: by 2002:adf:f548:0:b0:367:97bf:f65c with SMTP id
+ ffacd0b85a97d-3682610e9cdmr1392840f8f.22.1721136624051; 
+ Tue, 16 Jul 2024 06:30:24 -0700 (PDT)
+Received: from [192.168.1.172] ([185.87.38.242])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3680dab3e27sm9104176f8f.15.2024.07.16.06.30.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 06:30:23 -0700 (PDT)
+Message-ID: <a47858bf-fa2e-4316-b48e-3927d6c14698@linaro.org>
+Date: Tue, 16 Jul 2024 15:30:22 +0200
 MIME-Version: 1.0
-References: <20240716-run-v4-0-5f7a29631168@daynix.com>
- <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
- <ZpZDseDnUD39cBzE@redhat.com>
- <CABgObfasdAS443K6+2hHE1chWXei_1ytyRTOi7tX+ma8hZEC6A@mail.gmail.com>
- <3a74c242-2510-4ae0-8ac7-02b6cf7dde69@daynix.com>
-In-Reply-To: <3a74c242-2510-4ae0-8ac7-02b6cf7dde69@daynix.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 16 Jul 2024 15:29:27 +0200
-Message-ID: <CABgObfab1xUc8bz7Sr4zs+tiKwLBmPK-App+iULE2AHhz2-rbw@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] util: Introduce qemu_get_runtime_dir()
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Fam Zheng <fam@euphon.net>, 
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Yan Vugenfirer <yan@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] esp.c: remove transfer size check from DMA DATA IN and
+ DATA OUT transfers
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, fam@euphon.net
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240713224249.468084-1-mark.cave-ayland@ilande.co.uk>
+ <1408e396-b597-4481-b537-e7b53976d5d1@linaro.org>
+ <de7fe2e4-a590-4fe0-801c-b7998927c570@ilande.co.uk>
+ <bcbd4622-ba30-4210-91c0-321406bd1f1a@linaro.org>
+ <fbf76f1f-6efa-401f-a45d-ba4be739e51d@linaro.org>
+Content-Language: en-US
+In-Reply-To: <fbf76f1f-6efa-401f-a45d-ba4be739e51d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,45 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 2:46=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2024/07/16 19:43, Paolo Bonzini wrote:
-> > On Tue, Jul 16, 2024 at 11:56=E2=80=AFAM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com> wrote:
-> >>
-> >> On Tue, Jul 16, 2024 at 11:06:57AM +0300, Michael Tokarev wrote:
-> >>> 16.07.2024 10:27, Akihiko Odaki wrote:
-> >>>> qemu_get_runtime_dir() returns a dynamically allocated directory pat=
-h
-> >>>> that is appropriate for storing runtime files. It corresponds to "ru=
-n"
-> >>>> directory in Unix.
-> >>>
-> >>> Since runtime dir is always used with a filename within, how about
-> >>>
-> >>>    char *qemu_get_runtime_path(const char *filename)
-> >>>
-> >>> which return RUNTIME_DIR/filename instead of just RUNTIME_DIR ?
-> >>
-> >> Yeah, I agree, every single caller of the function goes on to call
-> >> g_build_filename with the result. The helper should just be building
-> >> the filename itself.
-> >
-> > That would mean using variable arguments and g_build_filename_valist().
->
-> We can't prepend an element to va_list.
+On 16/7/24 10:56, Philippe Mathieu-Daudé wrote:
+> On 16/7/24 08:46, Philippe Mathieu-Daudé wrote:
+>> On 16/7/24 00:01, Mark Cave-Ayland wrote:
+>>> On 15/07/2024 07:48, Philippe Mathieu-Daudé wrote:
+>>>
+>>>> On 14/7/24 00:42, Mark Cave-Ayland wrote:
+>>>>> The transfer size check was originally added to prevent consecutive 
+>>>>> DMA TI
+>>>>> commands from causing an assert() due to an existing SCSI request 
+>>>>> being in
+>>>>> progress, but since the last set of updates
+>>>>
+>>>> [*]
+>>>>
+>>>>> this is no longer required.
+>>>>>
+>>>>> Remove the transfer size check from DMA DATA IN and DATA OUT 
+>>>>> transfers so
+>>>>> that issuing a DMA TI command when there is no data left to 
+>>>>> transfer does
+>>>>> not cause an assert() due to an existing SCSI request being in 
+>>>>> progress.
+>>>>>
+>>>>
+>>>> [*] See commits f3ace75be8..78d68f312a
+>>>>
+>>>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2415
+>>>>> ---
+>>>>>   hw/scsi/esp.c | 4 ++--
+>>>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>
+>>>> Queued adding [*], thanks.
+>>>
+>>> Awesome, thanks Phil!
+>>
+>> I'm getting dubious timeout on the msys2 build on the SPARC target:
+>> https://gitlab.com/philmd/qemu/-/jobs/7347774958
+>>
+>> qemu:qtest+qtest-sparc / qtest-sparc/qom-test time out (After 900.0 
+>> seconds)
+>>    1/151 qemu:qtest+qtest-sparc / qtest-sparc/qom-test TIMEOUT 
+>> 900.38s   exit status 1
+>> qemu:qtest+qtest-sparc / qtest-sparc/device-introspect-test time out 
+>> (After 720.0 seconds)
+>>    2/151 qemu:qtest+qtest-sparc / qtest-sparc/device-introspect-test 
+>> TIMEOUT        720.23s   exit status 1
+>> qemu:qtest+qtest-sparc / qtest-sparc/prom-env-test time out (After 
+>> 360.0 seconds)
+>>    4/151 qemu:qtest+qtest-sparc / qtest-sparc/prom-env-test 
+>> TIMEOUT        360.17s   exit status 1
+>>
+>> Not sure this patch is the culprit, but since only SPARC is affected,
+>> likely. I'll retest without this patch.
+> 
+> Same failure without this patch, so not this patch fault ;)
 
-You could do it in two steps, with g_build_filename(runtime_dir,
-first) followed by g_build_filename_valist(result, ap); doing these
-steps only if if first !=3D NULL of course.
-
-But I agree that leaving the concatenation in the caller is not
-particularly worse, and makes qemu_get_runtime_dir() more readable.
-
-Paolo
-
-
-Paolo
+Actually I couldn't find any patch in my PR triggering this,
+then noticed it is also happening on the main branch:
+https://gitlab.com/qemu-project/qemu/-/jobs/7347517442
+:/
 
 
