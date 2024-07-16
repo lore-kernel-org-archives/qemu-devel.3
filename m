@@ -4,86 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC93C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 01:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5645AC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 02:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTXSC-0003YY-Kj; Mon, 15 Jul 2024 21:58:08 -0400
+	id 1sTXjg-0001yd-MT; Mon, 15 Jul 2024 22:16:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1sTXSA-0003Xq-F1
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:58:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lwhsu@freebsd.org>) id 1sTXjc-0001xV-NV
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 22:16:09 -0400
+Received: from mx2.freebsd.org ([2610:1c1:1:606c::19:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1sTXS8-00067m-Js
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:58:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721095082;
+ (Exim 4.90_1) (envelope-from <lwhsu@freebsd.org>) id 1sTXjX-0001rf-2o
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 22:16:08 -0400
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits)
+ client-signature RSA-PSS (4096 bits))
+ (Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
+ by mx2.freebsd.org (Postfix) with ESMTPS id 4WNN2z5jdLz4QHW
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:15:55 +0000 (UTC)
+ (envelope-from lwhsu@freebsd.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org
+ [IPv6:2610:1c1:1:606c::24b:4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "smtp.freebsd.org", Issuer "R10" (verified OK))
+ by mx1.freebsd.org (Postfix) with ESMTPS id 4WNN2z4xBkz4S9f
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:15:55 +0000 (UTC)
+ (envelope-from lwhsu@freebsd.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+ t=1721096155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aJ9uRaA/pgUTohQkTocotLavEjg0G3cgh1Hl90+UeSE=;
- b=aMkVvbwORVWCwrcvqCJBLBqHg5yvvL8Yr/VkHN/XViwZ38jQIwVbLTPOuvKcgRW6TMbVLh
- SRuZIvgx7TG7cAkoef2aGw1anckumagf5OgBVCrFGI5/y7hJcuRARHQcYAZqWGd90St8yn
- wggydGEOPNfcxuTLdtzSeVMALWeHRlY=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-FfJ5Jsk_PtSmF9Ozr1sTsg-1; Mon, 15 Jul 2024 21:56:41 -0400
-X-MC-Unique: FfJ5Jsk_PtSmF9Ozr1sTsg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-59980727364so3394971a12.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 18:56:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721095000; x=1721699800;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aJ9uRaA/pgUTohQkTocotLavEjg0G3cgh1Hl90+UeSE=;
- b=YAWctoUUDWDK5P/29cziI7+Sm0ZYoum4GNoV1w4sjALza2o56YJZ6SVu4Es+euY+f3
- bddQv9MWW5w0WZptwF38QfdjpO/G/Q4czBZnyennosaswE6w3RKnDQ3205YITxo78VzE
- tN8XSkiwF41SSBbAyAegdK9JowCNOFQcK4MDlyV+NAYqx8q37fY0u8AIJruxwjr4hdIW
- 33q+BqxnhnzTDCXWfo4m61cgFM9uRtJZEJgNM8RwmgxJXLiu9vscuNSGQkEOyF3S6HdN
- +0GxKVQlbt0sgbkwz64WyFNhB6s59AIThK9/a+475faqpRXJSli1dKzBNepvgZDEHB1F
- 7ZeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBzu57crfyzpAj/55x4BR8hiOfsZ6ax69A6sP/yFG56AR1p9rbydIKRD+Dslr/g6492UsNEjUWPbak7n75pLId5c+Bbyk=
-X-Gm-Message-State: AOJu0Yx2CQpuWvm7ZZR03fId5ikUHMyjsfsSzz+++gbjJlqBHWBfCcyJ
- FrcHrd2whB/sUefOFTbFz4Sd8KwDyMXAk0D45rHxB9ynLa7+25ToQKWVmb43HkO816MotTotJYH
- eenWfkfPa5F1jJLB+kJswFgsETB35Erps9kuIYY0+8R/D1IdSAWEYOF7wpMiXBR9Uwzl59Mm2K9
- m6XvQgpJFDC/ZiV7wG/wItlF8JdaM=
-X-Received: by 2002:a17:906:c251:b0:a77:d52c:c431 with SMTP id
- a640c23a62f3a-a79ea437a59mr29232366b.22.1721095000341; 
- Mon, 15 Jul 2024 18:56:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIlY9QdoGy1wvXGDzqvzgSlrEtvYJuX9YNa/bprVSKTIgkcYrp0DjzVKUwrkNd96+xSC0OHOUCNG9hJd/6q1c=
-X-Received: by 2002:a17:906:c251:b0:a77:d52c:c431 with SMTP id
- a640c23a62f3a-a79ea437a59mr29231666b.22.1721094999978; Mon, 15 Jul 2024
- 18:56:39 -0700 (PDT)
+ bh=Vha0Kq0W/b66/a2FEmCPyEVvb3V3dScAGRJBSS2iC0A=;
+ b=BZHn4Mhlrr9+TPyanlfpjhX9RJ/0QpoDEKmFH/AICT7L0o8p97vXhSqTl226W6PkAmTCbm
+ +jcgr2HV2Y099w6ntm/lkfPf/hxobv8zABpYKGA5I+kXkrhpdMBm3IOeN9aq0EaFKYIeuY
+ IThIo/tKiyFoXE4B6O8EDCPHXpjTdHjZ7aVV/ovK2Vo+1X6nom7NgvL0T/1G+r+zfgNHa0
+ JOiSwmSobPZQAikXfaL7NWu/KM9nNPDVD2rO5VToklue3Zl59zZEhB2jo1icCZrKtzBw2X
+ kmAZev8zvXWINiW3sdxv4QVXZBh7UvJtpDV4eqbwoMsN3H0ehf0/C+3rv/oXCQ==
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1721096155; a=rsa-sha256; cv=none;
+ b=v2JnBy1rZGSkPJlGEzaSrDc10R/HRPoIsqY+P14r6fw5p8pWk3+ylpeOGTevR0f/khmlKV
+ X/J69V0heW+zmYkeeibBvZGA66qvUAJbBBTa1UO73KemPXIRJpHFtXkU1xcZli7e5e0Fzc
+ yYDMG4WtD0p4fXi6dAqf/zLMYJe6HPMglT/Ok1T50NjKoRxyGaDOA1wTuhb172Nk9hVKCm
+ q3oXVNXLWVafib6mW7XpC74fNN7wGqzo19X8hbdm1y5nDZMcNDzBEngWPuxJ637spHlKZh
+ 6pHFmv/YXe9wcePE3kXiqci91lHb3Dvk8MgePUwX+yKheGNYwwWREDY5m0zWog==
+ARC-Authentication-Results: i=1;
+	mx1.freebsd.org;
+	none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+ s=dkim; t=1721096155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vha0Kq0W/b66/a2FEmCPyEVvb3V3dScAGRJBSS2iC0A=;
+ b=hc0f6wnhsuUUAZpI+9Bd41az6b0EnlcMbBl0oD0PujFOoU3LkkhqHqefzBN5qBFs5JqaR8
+ gWB36FHNma8OPidEL844Xys2OORJZBmKcyk9WB6brsbUx5t943mqPvX9gm9ibUt5k5Hms3
+ 9NHG9ImoXhKVBN9gFxF8zvkMw4eCufYPm0S+afZwahsd8iTOoGfPk8UIOG8SjbGXOZPVxb
+ jE1GFLId27ubxDA04/W+UX8lyHwm749IUyVb4eRtd83RR6QNxZ+lTImrHt0ir3hfQBnWvc
+ uAmByBgq7x/p0mCyVz8nUdrxhs5D89GwXIYG5XDj8bI+8Ydy0gr94dmAelSV6g==
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com
+ [209.85.210.54])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (2048 bits) client-digest SHA256)
+ (Client CN "smtp.gmail.com", Issuer "WR4" (verified OK))
+ (Authenticated sender: lwhsu/mail)
+ by smtp.freebsd.org (Postfix) with ESMTPSA id 4WNN2z4Y2szLFf
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:15:55 +0000 (UTC)
+ (envelope-from lwhsu@freebsd.org)
+Received: by mail-ot1-f54.google.com with SMTP id
+ 46e09a7af769-7035b2947a4so2883854a34.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 19:15:55 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyglxsmnZyDLhN5lyHdxAtgelkpspFimptfwFijSA//LtYTWdlH
+ hp5LqA8AEREdtWUz1mi2/ndTgYD5yp3vvgjYC4IxE16PFbLdiD/+Vx7qOOPGnvU302CXMwd4g3X
+ Yq7MSUEpnGiZnyill1El50p7RpdE=
+X-Google-Smtp-Source: AGHT+IGPRNjqjx1a7MX3Rqq4M6DKZzPNyzDfWWewrIKvudUgU3hBa9Uw+ZkhlmBYsLo+mzkXi0ObUCu2QmwBmzsCLyc=
+X-Received: by 2002:a05:6830:268c:b0:703:7a58:d005 with SMTP id
+ 46e09a7af769-708d994ec9bmr1037539a34.11.1721096154366; Mon, 15 Jul 2024
+ 19:15:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240716011349.821777-1-lulu@redhat.com>
-In-Reply-To: <20240716011349.821777-1-lulu@redhat.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Tue, 16 Jul 2024 09:56:03 +0800
-Message-ID: <CAPpAL=xKRjtAYPW9+sVfqnKR=ZOiThh+=XVEQb_aokD1WGKgAA@mail.gmail.com>
-Subject: Re: [RFC v2] virtio-net: check the mac address for vdpa device
-To: Cindy Lu <lulu@redhat.com>
-Cc: dtatulea@nvidia.com, mst@redhat.com, jasowang@redhat.com, parav@nvidia.com,
- netdev@vger.kernel.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <63699dab-42d9-45ca-932f-acd6df688b6e@linaro.org>
+In-Reply-To: <63699dab-42d9-45ca-932f-acd6df688b6e@linaro.org>
+From: Li-Wen Hsu <lwhsu@freebsd.org>
+Date: Tue, 16 Jul 2024 10:15:42 +0800
+X-Gmail-Original-Message-ID: <CAKBkRUzf1ZWahU3WrTxfM_fHPpxVBMC=YcjHu+evKB5PWdQGaQ@mail.gmail.com>
+Message-ID: <CAKBkRUzf1ZWahU3WrTxfM_fHPpxVBMC=YcjHu+evKB5PWdQGaQ@mail.gmail.com>
+Subject: Re: FreeBSD update required for CI?
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Warner Losh <imp@bsdimp.com>, Ed Maste <emaste@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000e7cf85061d53ec79"
+Received-SPF: pass client-ip=2610:1c1:1:606c::19:2;
+ envelope-from=lwhsu@freebsd.org; helo=mx2.freebsd.org
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,130 +123,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cindy
+--000000000000e7cf85061d53ec79
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If needed, QE can help test this MR before merging into the master branch.
+On Tue, Jul 16, 2024 at 7:01=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-Best Regards
-Lei
-
-
-On Tue, Jul 16, 2024 at 9:14=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote:
+> Hi guys,
 >
-> When using a VDPA device, it is important to ensure that the MAC address
-> in the hardware matches the MAC address from the QEMU command line.
+> CI currently failing FreeBSD:
 >
-> There are only two acceptable situations:
-> 1. The hardware MAC address is the same as the MAC address specified in t=
-he QEMU
-> command line, and both MAC addresses are not 0.
-> 2. The hardware MAC address is not 0, and the MAC address in the QEMU com=
-mand line is 0.
-> In this situation, the hardware MAC address will overwrite the QEMU comma=
-nd line address.
+> https://gitlab.com/qemu-project/qemu/-/jobs/7347517439
 >
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
-> ---
->  hw/net/virtio-net.c | 43 +++++++++++++++++++++++++++++++++++++------
->  1 file changed, 37 insertions(+), 6 deletions(-)
+> > pkg: No packages available to install matching 'py39-pillow' have been
+> found in the repositories
+> > pkg: No packages available to install matching 'py39-pip' have been
+> found in the repositories
+> > pkg: No packages available to install matching 'py39-sphinx' have been
+> found in the repositories
+> > pkg: No packages available to install matching 'py39-sphinx_rtd_theme'
+> have been found in the repositories
+> > pkg: No packages available to install matching 'py39-yaml' have been
+> found in the repositories
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 9c7e85caea..8f79785f59 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -178,8 +178,8 @@ static void virtio_net_get_config(VirtIODevice *vdev,=
- uint8_t *config)
->           * correctly elsewhere - just not reported by the device.
->           */
->          if (memcmp(&netcfg.mac, &zero, sizeof(zero)) =3D=3D 0) {
-> -            info_report("Zero hardware mac address detected. Ignoring.")=
-;
-> -            memcpy(netcfg.mac, n->mac, ETH_ALEN);
-> +          error_report("Zero hardware mac address detected in vdpa devic=
-e. "
-> +                       "please check the vdpa device!");
->          }
->
->          netcfg.status |=3D virtio_tswap16(vdev,
-> @@ -3579,12 +3579,42 @@ static bool failover_hide_primary_device(DeviceLi=
-stener *listener,
->      /* failover_primary_hidden is set during feature negotiation */
->      return qatomic_read(&n->failover_primary_hidden);
->  }
-> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
-> +                                      MACAddr *cmdline_mac, Error **errp=
-) {
-> +  struct virtio_net_config hwcfg =3D {};
-> +  static const MACAddr zero =3D {.a =3D {0, 0, 0, 0, 0, 0}};
->
-> +  vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_A=
-LEN);
-> +
-> +  /* For VDPA device: Only two situations are acceptable:
-> +   * 1.The hardware MAC address is the same as the QEMU command line MAC
-> +   *   address, and both of them are not 0.
-> +   * 2.The hardware MAC address is NOT 0, and the QEMU command line MAC =
-address
-> +   *   is 0. In this situation, the hardware MAC address will overwrite =
-the QEMU
-> +   *   command line address.
-> +   */
-> +
-> +  if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
-> +    if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0) ||
-> +        (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) =3D=3D 0)) {
-> +      /* overwrite the mac address with hardware address*/
-> +      memcpy(&n->mac[0], &hwcfg.mac, sizeof(n->mac));
-> +      memcpy(&n->nic_conf.macaddr, &hwcfg.mac, sizeof(n->mac));
-> +
-> +      return true;
-> +    }
-> +  }
-> +  error_setg(errp, "vdpa hardware mac !=3D the mac address from "
-> +                   "qemu cmdline, please check the the vdpa device's set=
-ting.");
-> +
-> +  return false;
-> +}
->  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->  {
->      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
->      VirtIONet *n =3D VIRTIO_NET(dev);
->      NetClientState *nc;
-> +    MACAddr macaddr_cmdline;
->      int i;
->
->      if (n->net_conf.mtu) {
-> @@ -3692,6 +3722,7 @@ static void virtio_net_device_realize(DeviceState *=
-dev, Error **errp)
->      virtio_net_add_queue(n, 0);
->
->      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
-> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
->      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
->      n->status =3D VIRTIO_NET_S_LINK_UP;
-> @@ -3739,10 +3770,10 @@ static void virtio_net_device_realize(DeviceState=
- *dev, Error **errp)
->      nc->rxfilter_notify_enabled =3D 1;
->
->     if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
-DPA) {
-> -        struct virtio_net_config netcfg =3D {};
-> -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> -        vhost_net_set_config(get_vhost_net(nc->peer),
-> -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONT=
-END);
-> +     if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
-> +       virtio_cleanup(vdev);
-> +       return;
-> +     }
->      }
->      QTAILQ_INIT(&n->rsc_chains);
->      n->qdev =3D dev;
-> --
-> 2.45.0
->
+> Has FreeBSD ports updated to something beyond python 3.9, and we need an
+> update to match?
 >
 
+Oh yes, the default python version has been changed to 3.11 so the `py39-`
+prefix of the package name should be also changed to `py311-`
+
+Where are those packages name listed? I can check if it is possible to
+change to use some more deterministic names.
+
+Best,
+Li-Wen
+
+--000000000000e7cf85061d53ec79
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Tue, Jul 16, 2024 at 7:01=E2=80=AFAM R=
+ichard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">richar=
+d.henderson@linaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote"><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">Hi guys,<br>
+<br>
+CI currently failing FreeBSD:<br>
+<br>
+<a href=3D"https://gitlab.com/qemu-project/qemu/-/jobs/7347517439" rel=3D"n=
+oreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/jobs/73=
+47517439</a><br>
+<br>
+&gt; pkg: No packages available to install matching &#39;py39-pillow&#39; h=
+ave been found in the repositories<br>
+&gt; pkg: No packages available to install matching &#39;py39-pip&#39; have=
+ been found in the repositories<br>
+&gt; pkg: No packages available to install matching &#39;py39-sphinx&#39; h=
+ave been found in the repositories<br>
+&gt; pkg: No packages available to install matching &#39;py39-sphinx_rtd_th=
+eme&#39; have been found in the repositories<br>
+&gt; pkg: No packages available to install matching &#39;py39-yaml&#39; hav=
+e been found in the repositories<br>
+<br>
+Has FreeBSD ports updated to something beyond python 3.9, and we need an up=
+date to match?<br></blockquote><div><br></div><div>Oh yes, the default pyth=
+on version has been changed to 3.11 so the `py39-` prefix of the package na=
+me should be also changed to `py311-`</div><div><br></div><div>Where are th=
+ose packages name listed? I can check if it is possible to change to use so=
+me more deterministic names.<br></div><div><br></div><div>Best,<br></div><d=
+iv>Li-Wen<br></div></div></div>
+
+--000000000000e7cf85061d53ec79--
 
