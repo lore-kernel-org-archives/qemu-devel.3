@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1299DC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C20C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTjP4-0004xu-Eo; Tue, 16 Jul 2024 10:43:42 -0400
+	id 1sTjRp-0004JH-Ay; Tue, 16 Jul 2024 10:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sTjP2-0004qM-Gu
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:43:40 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTjRn-000457-LS
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:46:31 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sTjP0-00031y-IN
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:43:40 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2caff99b1c9so1627213a91.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTjRb-0003qc-Ly
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:46:22 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-52e9a920e73so6363727e87.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721141015; x=1721745815; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+KfKbby5lTjhfa6Vdk/itKY016O5bwA9FOzSxkIpTYs=;
- b=T9n6TNDwp3xYE7XboJyQ8X+rARDHC1dL1SuweI84HuhY2RWiNw7MyfGmktgvO4M3cy
- x5X2bD2zGPfQbKybAfg3P8cT7/uaQHlGOd8WTtchG5W9ft5x4YcYIbVcvMVTKe+mp/Xw
- njC8yBc0yw9493ny7ulySYY8w1Xvd0uWqpRz6UI67wguECDeAY8Tyv27Uu0AEHJM/DAp
- +KsUygaUvaOH295aGdLP8wVoKKFSBazw0LqHMVKlntIh8fx0/tJukLcjxhayGbxM2XMC
- 3Bznfhl1Oj9pG6Q9flyPXh37RzMQYii/zUugfrciKK/C7WaTbStRtd5puzQXjq32R3x7
- xzpg==
+ d=linaro.org; s=google; t=1721141178; x=1721745978; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yqokjoCG55Te5jtEkDpVM9qgh4gKS4rDpXQ67Rl5yPw=;
+ b=ZoTVsLbw9qL2q95gdQl23/P3TvE5wHCEMrC/YummDjXb1zvPqCYx73qgrjQfObwj6M
+ EHFlT61W+KtmMn7qAtJ0lNN1J8yqEve/I8h+XkEIIhYrSVisJbBAkoex7iB4Db2QEyQT
+ JLmw6WDR8irHwe11/3C6u7nrVzvBrTUYkAxl99mB8RdFfFQfpGBCB3r6kWNip1qoMFyC
+ 4dh+vG9SjidGpPJj01dmJTaD0bkfXygLjzuFxD7raSg67SBI0IeIUncgH2EIhvlYfTk3
+ sx6EA8hJxtZ9Xf8Jp/onocb32zzsCCehhM2NMg46qDcZQg3YoYLMqpe2MV8hJduPPhue
+ 8Ryg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721141015; x=1721745815;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+KfKbby5lTjhfa6Vdk/itKY016O5bwA9FOzSxkIpTYs=;
- b=K48hRu052rZIcvBJ2LaIwKvYbx0vCZQ/uhjs8CYQ1JmOX4/6/h0mWWpT7DhjK/boRs
- MW/EGmaFe/mA6v9FO1lu8e7unXJqxgsDYabg9wcPd+DlgvKFq1n9FOcRd+cZP+ey/wfz
- /jFYVXdPR7Jl0JRP6Qpob2FiQnpANqper5d9oIJyIE8CcNeP0UgwvS7qC13QPRw3CfjD
- o0Eo2Kke0V7e3iy5lMBU3ZocqyJYLNhuwuZgB3zGQowpBllDp//xL7M4MK6CKJr9lyZG
- OFBiLoIcSOSMfqSuxYNvX1YVEk51wyOK9ze+Em53klDyaLxLoKEhFq8vOzlA7txXHAp6
- u97g==
-X-Gm-Message-State: AOJu0Yz9mWMbynQ42xZ9Yk85WaeaMuZTW6sBD2OqtbMH3b4/6PsL6FBC
- PP4v6aExIFKlaMuOZpfbCis8SlUoSqe+i3gjgz9mHuMpy+kK5+065nHPpxoQtUNNAkgfKw3hJU9
- uCsc=
-X-Google-Smtp-Source: AGHT+IEi8ohGsBAli3I+6roxo6TS2R0wtWdlpKQ+RvgnhLTyTpZtsNfB2/eojXGNsQRvXWUcUpaIuw==
-X-Received: by 2002:a17:90b:4388:b0:2c9:80fd:a111 with SMTP id
- 98e67ed59e1d1-2cb36d88feamr1863873a91.18.1721141014898; 
- Tue, 16 Jul 2024 07:43:34 -0700 (PDT)
-Received: from sunil-pc.tail07344b.ts.net ([106.51.187.237])
+ d=1e100.net; s=20230601; t=1721141178; x=1721745978;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yqokjoCG55Te5jtEkDpVM9qgh4gKS4rDpXQ67Rl5yPw=;
+ b=HZ6o1kwr2EwQjRTwP17I65rV6yicmLDhfkjlLZQiccZmnCUCsnQJgj5iMm8z264tAn
+ 6MPruKb8CxP4FGdR8LJ/2QK8Lnznlt/RmAjrsLUAy9eLupaGkl4jTw9GZe8ZjnULsbsX
+ lg8H0fUCqd4fRG4BmzAsAwMRF7IVg32B0kiTYDK9wE1X476DhGVzcPNKVk8D9DG6DyRX
+ BvpnvO1z/CVIzF2yBRkieecy0Kk7cYahsTNh/Y3WJ7Zb6GmiuDwkNKeZ9kzmb9psM6fJ
+ zkqNLOIHuJET17m7XBM4roEWcrboZQ9RrA+LO6nX5+HRqV9CUe3dIBPaubbw/vvGYuKO
+ sWJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoGt+ME9LDcEsYlh8sbPojGMzNVAuxgLuEeCn8ylT9AKRQXua61Rj1U97whASjl3Om1pG6rplGnvV6+AlhyxP4zEW2R8o=
+X-Gm-Message-State: AOJu0YwQiprak5mX1iIpH3tzP0qtBFT77CWYvHoh8YOOegdMuZO5aV6X
+ zZu9skecfLdZFA3hlAUqcTg6/1agu9qCKFHK9mwQy1SJh/o45oWxkocQX4e/Wqs=
+X-Google-Smtp-Source: AGHT+IEqNmJaYVXFyhUl+i6jrfksfR4ca2p8WzxmEuW9nYjNKrENPBs5SNRyW2MxDFx74GyK6+70hw==
+X-Received: by 2002:a05:6512:4018:b0:52e:be50:9c55 with SMTP id
+ 2adb3069b0e04-52edf033f76mr1510967e87.52.1721141177639; 
+ Tue, 16 Jul 2024 07:46:17 -0700 (PDT)
+Received: from [192.168.1.172] ([185.87.38.242])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2caf480d61bsm6084782a91.18.2024.07.16.07.43.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 07:43:34 -0700 (PDT)
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Sunil V L <sunilvl@ventanamicro.com>
-Subject: [PATCH v4 4/9] acpi/gpex: Create PCI link devices outside PCI root
- bridge
-Date: Tue, 16 Jul 2024 20:13:01 +0530
-Message-ID: <20240716144306.2432257-5-sunilvl@ventanamicro.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240716144306.2432257-1-sunilvl@ventanamicro.com>
-References: <20240716144306.2432257-1-sunilvl@ventanamicro.com>
+ 5b1f17b1804b1-427bb99a23dsm20287815e9.1.2024.07.16.07.46.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 07:46:17 -0700 (PDT)
+Message-ID: <64d26790-5003-4da5-9cb2-eb9ea43112b3@linaro.org>
+Date: Tue, 16 Jul 2024 16:46:14 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] osdep: add a qemu_close_all_open_fd() helper
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240716144006.6571-1-cleger@rivosinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240716144006.6571-1-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,88 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, PCI link devices (PNP0C0F) are always created within the
-scope of the PCI root bridge. However, RISC-V needs these link devices
-to be created outside to ensure the probing order in the OS. This
-matches the example given in the ACPI specification [1] as well. Hence,
-create these link devices directly under _SB instead of under the PCI
-root bridge.
+Hi Clément,
 
-To keep these link device names unique for multiple PCI bridges, change
-the device name from GSIx to LXXY format where XX is the PCI bus number
-and Y is the INTx.
+On 16/7/24 16:39, Clément Léger wrote:
+> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+> POSIX"), the maximum number of file descriptors that can be opened are
+> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+> of 1073741816 file descriptors. Now, when forking to start
+> qemu-bridge-helper, this actually calls close() on the full possible file
+> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+> takes a considerable amount of time. In order to reduce that time,
+> factorize existing code to close all open files descriptors in a new
+> qemu_close_all_open_fd() function. This function uses various methods
+> to close all the open file descriptors ranging from the most efficient
+> one to the least one. It also accepts an ordered array of file
+> descriptors that should not be closed since this is required by the
+> callers that calls it after forking.
+> 
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> 
+> ----
+> 
+> v3:
+>   - Use STD*_FILENO defines instead of raw values
+>   - Fix indentation of close_all_fds_after_fork()
+>   - Check for nksip in fallback code
+>   - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
+>   - Use unsigned for cur_skip
+>   - Move ifdefs inside close_fds functions rather than redefining them
+>   - Remove uneeded 'if(nskip)' test
+>   - Add comments to close_range version
+>   - Reduce range of skip fd as we find them in
+>   - v2: https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
+> 
+> v2:
+>   - Factorize async_teardown.c close_fds implementation as well as tap.c ones
+>   - Apply checkpatch
+>   - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
+> 
+> ---
+>   include/qemu/osdep.h    |   8 +++
+>   net/tap.c               |  33 +++++-----
+>   system/async-teardown.c |  37 +-----------
+>   util/osdep.c            | 129 ++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 157 insertions(+), 50 deletions(-)
+> 
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index 191916f38e..43a035d756 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -757,6 +757,14 @@ static inline void qemu_reset_optind(void)
+>   
+>   int qemu_fdatasync(int fd);
+>   
+> +/**
+> + * Close all open file descriptors except the ones supplied in the @skip array
+> + *
+> + * @skip: ordered array of distinct file descriptors that should not be closed
+> + * @nskip: number of entries in the @skip array.
+> + */
 
-GPEX is currently used by riscv, aarch64/virt and x86/microvm machines.
-So, this change will alter the DSDT for those systems.
+Can we mention @skip is optional, and @nskip can be 0?
 
-[1] - ACPI 5.1: 6.2.13.1 Example: Using _PRT to Describe PCI IRQ Routing
-
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
----
- hw/pci-host/gpex-acpi.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index f69413ea2c..391fabb8a8 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -7,7 +7,8 @@
- #include "hw/pci/pcie_host.h"
- #include "hw/acpi/cxl.h"
- 
--static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-+static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
-+                                          Aml *scope, uint8_t bus_num)
- {
-     Aml *method, *crs;
-     int i, slot_no;
-@@ -20,7 +21,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-             Aml *pkg = aml_package(4);
-             aml_append(pkg, aml_int((slot_no << 16) | 0xFFFF));
-             aml_append(pkg, aml_int(i));
--            aml_append(pkg, aml_name("GSI%d", gsi));
-+            aml_append(pkg, aml_name("L%.02X%X", bus_num, gsi));
-             aml_append(pkg, aml_int(0));
-             aml_append(rt_pkg, pkg);
-         }
-@@ -30,7 +31,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-     /* Create GSI link device */
-     for (i = 0; i < PCI_NUM_PINS; i++) {
-         uint32_t irqs = irq + i;
--        Aml *dev_gsi = aml_device("GSI%d", i);
-+        Aml *dev_gsi = aml_device("L%.02X%X", bus_num, i);
-         aml_append(dev_gsi, aml_name_decl("_HID", aml_string("PNP0C0F")));
-         aml_append(dev_gsi, aml_name_decl("_UID", aml_int(i)));
-         crs = aml_resource_template();
-@@ -45,7 +46,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-         aml_append(dev_gsi, aml_name_decl("_CRS", crs));
-         method = aml_method("_SRS", 1, AML_NOTSERIALIZED);
-         aml_append(dev_gsi, method);
--        aml_append(dev, dev_gsi);
-+        aml_append(scope, dev_gsi);
-     }
- }
- 
-@@ -174,7 +175,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-                 aml_append(dev, aml_name_decl("_PXM", aml_int(numa_node)));
-             }
- 
--            acpi_dsdt_add_pci_route_table(dev, cfg->irq);
-+            acpi_dsdt_add_pci_route_table(dev, cfg->irq, scope, bus_num);
- 
-             /*
-              * Resources defined for PXBs are composed of the following parts:
-@@ -205,7 +206,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-     aml_append(dev, aml_name_decl("_STR", aml_unicode("PCIe 0 Device")));
-     aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
- 
--    acpi_dsdt_add_pci_route_table(dev, cfg->irq);
-+    acpi_dsdt_add_pci_route_table(dev, cfg->irq, scope, 0);
- 
-     method = aml_method("_CBA", 0, AML_NOTSERIALIZED);
-     aml_append(method, aml_return(aml_int(cfg->ecam.base)));
--- 
-2.43.0
-
+Also I'd assert(skip != NULL || nskip == 0).
 
