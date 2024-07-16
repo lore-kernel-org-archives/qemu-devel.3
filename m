@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA366C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70189C3DA62
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgKS-0000NE-7Q; Tue, 16 Jul 2024 07:26:44 -0400
+	id 1sTgLg-0003Ii-V5; Tue, 16 Jul 2024 07:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKQ-0000BE-Ft
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKN-0003eM-LQ
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721129199;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oWk6OiijvNFxzzsXUSJ3tpnyPsRwaP/81mITTt4wWbY=;
- b=DqxfA6VSvveUlCZdlsE0pEkBn0FSeee1+lFH+BAL9MP61KMN7rRiNk3Qspq0qeBZ1FC8TC
- jTyAHJn8A6rz6qotIsqkd50/O0mnmAm9iBTNEzDYIs1/WNUZx2PDi+71bUv9kf/vdAIkDh
- qC8FxnYOnQxikQ549011a8+s6LFikyQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-376--5NRluNtN7KM8eg3D6n7-Q-1; Tue,
- 16 Jul 2024 07:26:34 -0400
-X-MC-Unique: -5NRluNtN7KM8eg3D6n7-Q-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 627211956080; Tue, 16 Jul 2024 11:26:33 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.154])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B9F5E1955E76; Tue, 16 Jul 2024 11:26:28 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 03/11] tests/functional: Convert avocado tests that just need
- a small adjustment
-Date: Tue, 16 Jul 2024 13:26:06 +0200
-Message-ID: <20240716112614.1755692-4-thuth@redhat.com>
-In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
-References: <20240716112614.1755692-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTgLV-0002na-5G
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:27:49 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTgLR-0003m1-U7
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:27:48 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-70368b53cc0so2749403a34.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 04:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721129264; x=1721734064;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bPVucKPJWt4W6yJCP3srg8CWMuE+MlMZIZcqQhpW4Rg=;
+ b=1GD79LIbTVxyxfFDmKfxRsHivmzJs32eu8StoDowVAP9aGvLPK2FjQOLbN3sDvCWip
+ 2xWbP5Kc8UvZR6D73NSe+5CGkZYBOWFCPPZLkgF0PbSiJA279l1JLMA3adyfwPCsW4a6
+ oQgZfE1ZMPxDrzFWAuDfHQqeu8P2mHmFoFoHGuxlw6qxwcrugPOtHzpqDXV5HMTUPPJm
+ vHQmUcx5z0Jeam4gCuyMNMM+8FPEJ9nTzfAOYQh6kKurti+ZAlYuaZm4K7YFiYXb/t3Z
+ HrxaX2nqUVymbuOotR7uUjXg+D6xw206rrYCYKkA5ahPzKQGV0TCZjFjxG9T6JjmewSB
+ jb1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721129264; x=1721734064;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bPVucKPJWt4W6yJCP3srg8CWMuE+MlMZIZcqQhpW4Rg=;
+ b=nfsTRtFJbnz6f26WxVxDVJTtrbgpdh/rYrLnHc6mJEVTFun/UmonO1R9YzqoPhKb7X
+ 7i93Wu3MjsQ4Y6g/x8wNVDRWnG7MP3JqwxI//xT0YQM9EWPBy2/JNhoyABopkpFB459N
+ xMiqB+vh+cmJaqTznkPfVXWd4X7LAsnRGwIwslDKZR/FxLMJWwAiEsaRAnQQuSlsCkNz
+ 6DIdq89V6FeIToAFUkr7yRv1KJfen1P8vOR+gh0S5RLdtwEWVB4pJ7x0Yb4bTibUArXg
+ p2ucTSWSRdi2A9PZITn0F1bGnkO9k/f86Zbc5myzl8vf1muKSVA/Yax+zp8wGnLCGW+y
+ JaJw==
+X-Gm-Message-State: AOJu0YxjQir5ZWXe9i73nmoXiL3wXbsWgWzxQpZugWQruZmAf37i7G8j
+ 6v3z4ujgCGHKrz3MvNPQRxc0VddMdYFP5ZtwKhWsHrM1MtyF9lSUOsrArZYzMtY=
+X-Google-Smtp-Source: AGHT+IEN7GIHwCeTtc3AYf9mmChN4qoeVpb8ZYeLLHe+WbF8H2+zTtuTV9eiuD8P4JxSdHnEcGmmpA==
+X-Received: by 2002:a05:6870:9694:b0:25d:f8fa:b538 with SMTP id
+ 586e51a60fabf-260bdddbb0dmr1309185fac.29.1721129263807; 
+ Tue, 16 Jul 2024 04:27:43 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7ecabadasm6010338b3a.181.2024.07.16.04.27.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 04:27:43 -0700 (PDT)
+Message-ID: <7bee9c26-d75e-4d83-bc2a-c97b06416080@daynix.com>
+Date: Tue, 16 Jul 2024 20:27:39 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/7] util: Introduce qemu_get_runtime_dir()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>
+References: <20240716-run-v4-0-5f7a29631168@daynix.com>
+ <20240716-run-v4-1-5f7a29631168@daynix.com> <ZpZC8AaUJH9WW6uF@redhat.com>
+ <087e1eee-e7e3-4147-9c8c-882d458c1abd@daynix.com>
+ <ZpZRYyW74wfqR6Zr@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <ZpZRYyW74wfqR6Zr@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::329;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x329.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,285 +105,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These simple tests can be converted to stand-alone tests quite easily,
-e.g. by just setting the machine to 'none' now manually or by adding
-"-cpu" command line parameters, since we don't support the corresponding
-avocado tags in the new python test framework.
+On 2024/07/16 19:54, Daniel P. Berrangé wrote:
+> On Tue, Jul 16, 2024 at 07:52:00PM +0900, Akihiko Odaki wrote:
+>> On 2024/07/16 18:53, Daniel P. Berrangé wrote:
+>>> On Tue, Jul 16, 2024 at 04:27:31PM +0900, Akihiko Odaki wrote:
+>>>> qemu_get_runtime_dir() returns a dynamically allocated directory path
+>>>> that is appropriate for storing runtime files. It corresponds to "run"
+>>>> directory in Unix.
+>>>>
+>>>> With a tree-wide search, it was found that there are several cases
+>>>> where such a functionality is implemented so let's have one as a common
+>>>> utlity function.
+>>>>
+>>>> A notable feature of qemu_get_runtime_dir() is that it uses
+>>>> $XDG_RUNTIME_DIR if available. While the function is often called by
+>>>> executables which requires root privileges, it is still possible that
+>>>> they are called from a user without privilege to write the system
+>>>> runtime directory. In fact, I decided to write this patch when I ran
+>>>> virtiofsd in a Linux namespace created by a normal user and realized
+>>>> it tries to write the system runtime directory, not writable in this
+>>>> case. $XDG_RUNTIME_DIR should provide a writable directory in such
+>>>> cases.
+>>>>
+>>>> This function does not use qemu_get_local_state_dir() or its logic
+>>>> for Windows. Actually the implementation of qemu_get_local_state_dir()
+>>>> for Windows seems not right as it calls g_get_system_data_dirs(),
+>>>> which refers to $XDG_DATA_DIRS. In Unix terminology, it is basically
+>>>> "/usr/share", not "/var", which qemu_get_local_state_dir() is intended
+>>>> to provide. Instead, this function try to use the following in order:
+>>>> - $XDG_RUNTIME_DIR
+>>>> - LocalAppData folder
+>>>> - get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+>>>>
+>>>> This function does not use g_get_user_runtime_dir() either as it
+>>>> falls back to g_get_user_cache_dir() when $XDG_DATA_DIRS is not
+>>>> available. In the case, we rather use:
+>>>> get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>> Message-Id: <20230921075425.16738-2-akihiko.odaki@daynix.com>
+>>>> ---
+>>>>    include/qemu/osdep.h | 12 ++++++++++++
+>>>>    util/oslib-posix.c   | 11 +++++++++++
+>>>>    util/oslib-win32.c   | 26 ++++++++++++++++++++++++++
+>>>>    3 files changed, 49 insertions(+)
+>>>>
+>>>> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>>>> index 191916f38e6d..fe8609fc1375 100644
+>>>> --- a/include/qemu/osdep.h
+>>>> +++ b/include/qemu/osdep.h
+>>>> @@ -670,6 +670,18 @@ void qemu_set_cloexec(int fd);
+>>>>     */
+>>>>    char *qemu_get_local_state_dir(void);
+>>>> +/**
+>>>> + * qemu_get_runtime_dir:
+>>>> + *
+>>>> + * Return a dynamically allocated directory path that is appropriate for storing
+>>>> + * runtime files. It corresponds to "run" directory in Unix, and uses
+>>>> + * $XDG_RUNTIME_DIR if available.
+>>>> + *
+>>>> + * The caller is responsible for releasing the value returned with g_free()
+>>>> + * after use.
+>>>> + */
+>>>> +char *qemu_get_runtime_dir(void);
+>>>> +
+>>>>    /**
+>>>>     * qemu_getauxval:
+>>>>     * @type: the auxiliary vector key to lookup
+>>>> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+>>>> index e76441695bdc..9599509a9aa7 100644
+>>>> --- a/util/oslib-posix.c
+>>>> +++ b/util/oslib-posix.c
+>>>> @@ -278,6 +278,17 @@ qemu_get_local_state_dir(void)
+>>>>        return get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR);
+>>>>    }
+>>>> +char *
+>>>> +qemu_get_runtime_dir(void)
+>>>> +{
+>>>> +    char *env = getenv("XDG_RUNTIME_DIR");
+>>>> +    if (env) {
+>>>> +        return g_strdup(env);
+>>>> +    }
+>>>> +
+>>>> +    return get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run");
+>>>> +}
+>>>
+>>> I'm not convinced this is the correct logic to be following.
+>>>
+>>> In the cover letter you mention not using g_get_user_runtime_dir()
+>>> because it falls back to XDG_CACHE_HOME, and we need to fallback
+>>> to LOCALSTATEDIR/run. This is not right for normal users though,
+>>> where falling back to LOCALSTATEDIR/run is always wrong, as it
+>>> won't be writable - the g_get_user_runtime_dir() fallback is
+>>> desirable for non-root users.
+>>
+>> It also checks LocalAppData, which should be usually available.
+>>
+>> g_get_user_runtime_dir() is not a proper fallback in case neither of
+>> XDG_RUNTIME_DIR and LocalAppData are available. g_get_user_cache_dir(),
+>> which gets called by g_get_user_runtime_dir(), internally uses:
+>> - XDG_CACHE_HOME or
+>> - FOLDERID_InternetCache
+>>
+>> g_get_user_cache_dir() just returns NULL if neither of them is available.
+>>
+>> We can't expect XDG_CACHE_HOME is present when XDG_RUNTIME_DIR is missing.
+>> FOLDERID_InternetCache points to %LOCALAPPDATA%\Microsoft\Windows\Temporary
+>> Internet Files, according to:
+>> https://learn.microsoft.com/en-us/windows/win32/shell/knownfolderid
+>>
+>> So we can't expect FOLDERID_InternetCache is available when LocalAppData is
+>> missing.
+> 
+> XDG_CACHE_HOME isn't required to be present. Glib will use a fallback
+> location if XDG_CACHE_HOME isn't set, and it will mkdir() the location
+> if it doesn't exist.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .../test_info_usernet.py}                     | 11 ++-
- .../test_ppc_74xx.py}                         | 74 ++++++++-----------
- .../version.py => functional/test_version.py} | 13 ++--
- 3 files changed, 47 insertions(+), 51 deletions(-)
- rename tests/{avocado/info_usernet.py => functional/test_info_usernet.py} (87%)
- mode change 100644 => 100755
- rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
- mode change 100644 => 100755
- rename tests/{avocado/version.py => functional/test_version.py} (78%)
- mode change 100644 => 100755
+The fallback location is FOLDERID_InternetCache, which is not better 
+than looking at LocalAppData.
 
-diff --git a/tests/avocado/info_usernet.py b/tests/functional/test_info_usernet.py
-old mode 100644
-new mode 100755
-similarity index 87%
-rename from tests/avocado/info_usernet.py
-rename to tests/functional/test_info_usernet.py
-index e1aa7a6e0a..ded973253a
---- a/tests/avocado/info_usernet.py
-+++ b/tests/functional/test_info_usernet.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Test for the hmp command "info usernet"
- #
- # Copyright (c) 2021 Red Hat, Inc.
-@@ -8,18 +10,16 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- from qemu.utils import get_info_usernet_hostfwd_port
- 
- 
- class InfoUsernet(QemuSystemTest):
--    """
--    :avocado: tags=machine:none
--    """
- 
-     def test_hostfwd(self):
-         self.require_netdev('user')
-+        self.machine = 'none'
-         self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22')
-         self.vm.launch()
-         res = self.vm.cmd('human-monitor-command',
-@@ -31,3 +31,6 @@ def test_hostfwd(self):
-         self.assertGreater(port, 0,
-                            ('Found a redirected port that is not greater than'
-                             ' zero'))
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/ppc_74xx.py b/tests/functional/test_ppc_74xx.py
-old mode 100644
-new mode 100755
-similarity index 74%
-rename from tests/avocado/ppc_74xx.py
-rename to tests/functional/test_ppc_74xx.py
-index f54757c243..5386016f26
---- a/tests/avocado/ppc_74xx.py
-+++ b/tests/functional/test_ppc_74xx.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Smoke tests for 74xx cpus (aka G4).
- #
- # Copyright (c) 2021, IBM Corp.
-@@ -5,132 +7,120 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
-+from qemu_test import QemuSystemTest
-+from qemu_test import wait_for_console_pattern
- 
- class ppc74xxCpu(QemuSystemTest):
--    """
--    :avocado: tags=arch:ppc
--    :avocado: tags=accel:tcg
--    """
-+
-     timeout = 5
- 
-     def test_ppc_7400(self):
--        """
--        :avocado: tags=cpu:7400
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7400')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7410(self):
--        """
--        :avocado: tags=cpu:7410
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7410')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,74xx')
- 
-     def test_ppc_7441(self):
--        """
--        :avocado: tags=cpu:7441
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7441')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7445(self):
--        """
--        :avocado: tags=cpu:7445
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7445')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7447(self):
--        """
--        :avocado: tags=cpu:7447
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7447')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7447a(self):
--        """
--        :avocado: tags=cpu:7447a
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7447a')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7448(self):
--        """
--        :avocado: tags=cpu:7448
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7448')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,MPC86xx')
- 
-     def test_ppc_7450(self):
--        """
--        :avocado: tags=cpu:7450
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7450')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7451(self):
--        """
--        :avocado: tags=cpu:7451
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7451')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7455(self):
--        """
--        :avocado: tags=cpu:7455
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7455')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7457(self):
--        """
--        :avocado: tags=cpu:7457
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7457')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
- 
-     def test_ppc_7457a(self):
--        """
--        :avocado: tags=cpu:7457a
--        """
-         self.require_accelerator("tcg")
-+        self.set_machine('g3beige')
-         self.vm.set_console()
-+        self.vm.add_args('-cpu', '7457a')
-         self.vm.launch()
-         wait_for_console_pattern(self, '>> OpenBIOS')
-         wait_for_console_pattern(self, '>> CPU type PowerPC,G4')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/version.py b/tests/functional/test_version.py
-old mode 100644
-new mode 100755
-similarity index 78%
-rename from tests/avocado/version.py
-rename to tests/functional/test_version.py
-index c6139568a1..5e566d76b1
---- a/tests/avocado/version.py
-+++ b/tests/functional/test_version.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Version check example test
- #
- # Copyright (c) 2018 Red Hat, Inc.
-@@ -9,17 +11,18 @@
- # later.  See the COPYING file in the top-level directory.
- 
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- 
- class Version(QemuSystemTest):
--    """
--    :avocado: tags=quick
--    :avocado: tags=machine:none
--    """
-+
-     def test_qmp_human_info_version(self):
-+        self.machine = 'none'
-         self.vm.add_args('-nodefaults')
-         self.vm.launch()
-         res = self.vm.cmd('human-monitor-command',
-                           command_line='info version')
-         self.assertRegex(res, r'^(\d+\.\d+\.\d)')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.45.2
-
+Regards,
+Akihiko Odaki
 
