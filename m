@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47B8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 21:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022B7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 21:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTpXe-0005wz-4q; Tue, 16 Jul 2024 17:16:58 -0400
+	id 1sTpYE-0006D7-Bi; Tue, 16 Jul 2024 17:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTpXa-0005vq-LM
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 17:16:55 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTpYA-0006CQ-Jm
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 17:17:30 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTpXY-0004dI-Pe
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 17:16:54 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTpY9-0004iW-3W
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 17:17:30 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4266eda81c5so48354555e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 14:16:51 -0700 (PDT)
+ 5b1f17b1804b1-426717a2d12so979145e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 14:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721164611; x=1721769411; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721164647; x=1721769447; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Q73bjHDDMOePFIH4er+/8JN2abdwD0pFh7+cOTS0NC8=;
- b=lscb3Jl1N1YcWEuRQi6vJUZeJUBEjKLh3yTx90l9OhM8EMT87i0LCGp9nP//TffGMl
- mOvRTMTIitm6h0rIjnjVftDoA801UR4n98pWZlfIaAj+W1UCjhGotJzvObSv/tNQBz4T
- 2ao8658KZMsaVt+cTJx4vghGffHB/imRl5g5o+EeAQ+731lA9lDQcgXI/rMqopoVaZJ7
- ufwA8Dq4gqF0dJ21zs3I/wk+P1TTgclShw18urQzYn6YBtAmycsmztMIvEzkMPQP40HU
- nztbQRvr8lz8MRVtlfv+6cVQe9lqLwU62F7iJOicGbNWQfzcWxjI7zj7rEyRrMzhrwT3
- RS7w==
+ bh=bT3+F0lsgckSr7EkHOkFy+1HwUoonZs4RrHg9lk0r34=;
+ b=p3z3O67Y3oE5OeD3f/vEoSrrqf9EVWp2qWVuvXZVMmsevBgLBlqrEFATIg+jsCAoEg
+ BRDEYlnxNzGUNje9Fq0/+dtqqYqRHMz7zMFnzPdNNZyqbFOVW1aYXheXQbUjPZMhYAKc
+ nzGeMx3S8ZRunW4gRLC6KZWEygDzTlY3+aTQWUtt10tCdNmvTiAakDJb9xM5iF9ApFeK
+ cfPx2PFRyPZOab6ylOjsj34nsDBg/J4yGjCu1RHnuoNxQ+b6Q8qEkznD+s82A8Jb0bcS
+ +DM+AioN06OUi7d/YOoGYN4lCzKLxd3RoQXW6Gshs9bUeiZpE1kIL5tl6JA7v74zCo+K
+ PKjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721164611; x=1721769411;
+ d=1e100.net; s=20230601; t=1721164647; x=1721769447;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q73bjHDDMOePFIH4er+/8JN2abdwD0pFh7+cOTS0NC8=;
- b=aHQGWPbiV/vhMgQfaprpUqGKXOlMQL7N8QaAVXaTfjBt8TURrn9YPGqd3eqhr8RQmB
- wxmBdASKlAPGLjKu3B4DUpkDzxrra0uEzvHCCTG6aNXaONoth6686fQ2YZz2LMuIk3Cl
- AljlDw41UeNS3vFLdimNEC79NMI2K304kfbxzWE3GREkqTR4BSMH2tWtFXL6bmVQ1nzC
- MpMFhBA/xNbeY6DVftK14gX/A8v4Hge9TyrujSg8Xo7khtvcFX9Bi8Wtjjq30YwnR2f5
- +lFoOYEDhtRUOoXpnSS4DF5Y9vAttBnyj0lvz96tPWT/rn5EiicqK7u61aZCUbtFclYX
- Z87A==
-X-Gm-Message-State: AOJu0YxfFairvmgkucuJ1XQ375SO30eWwxPoyX6/uAUFc7InIfikOKdl
- wp4P1f1QIuc3lDLGRb8ErWyz69LoYONxgL60RMsgoZX2fpTVdTUImDpq4jt9I4w=
-X-Google-Smtp-Source: AGHT+IH1xmKPpyAMbLNM3g0or1/+qOIwX6yswK+tT5y6vf9fN6DXHbTsAzWsomX3/P8XBzsCuMOg/g==
-X-Received: by 2002:a05:600c:3548:b0:426:6f87:65fc with SMTP id
- 5b1f17b1804b1-427ba6872f1mr31474165e9.17.1721164610695; 
- Tue, 16 Jul 2024 14:16:50 -0700 (PDT)
+ bh=bT3+F0lsgckSr7EkHOkFy+1HwUoonZs4RrHg9lk0r34=;
+ b=ecx5JYuM8BROZ5tpROpzFOJe77gTTS9DOEn7/TtHzWduhhd7+i+TZ2TVXtvM5nBP4x
+ UXVRwZWrgseeQt/dQrOTDQY/VZyBoGd4qmiBMf1S2sATQdECsbRVoKpra850iNaRIK4X
+ OVCQrddo9UPmCu2zafV/qxyf1W5A4ufj/taH8F4eTNOZRVM22iwfKAcQYBn7GDoIHYp0
+ W0WCpS4GCGnhnScFAoswK1A8FLyeQHH/0zxoQTY4K1AguBGyxSU7gCnfbp+10gBBiFPd
+ z/wBgomi+HQQSwCkjX1rAmoVkjenfvPiIPsx0DA4YO6i4zna1HYst1/pHdd/v7miEj7d
+ 410w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpH/qbj1u31NOPyWQqxak+OeKQajj81x62Bl3ajstzYdT6v3zK70l/awJlsqgU4E/2hJwk6aGZfaXMc0QPQ2tEAb64+X4=
+X-Gm-Message-State: AOJu0YwxXPZSrLXhaHlo4PKMQ1bNYlMZlRYxbHuhwoq7wEfYotd8JMdO
+ 4QwT/6mA+k+rM+nmkDdSRv9Kl/zqEPkRWiyJBwTupDMXOp3D0kps9XiW8A7cFdM=
+X-Google-Smtp-Source: AGHT+IH9s4aCXnqfKEpGgxVyMlMNdV3e/jqnE951OYAFByXPoSnQ+UmuDrPKo/61RUHUvkMPDfp5+A==
+X-Received: by 2002:a05:600c:190a:b0:426:67f9:a7d8 with SMTP id
+ 5b1f17b1804b1-427bb6d2e0amr24932905e9.9.1721164647453; 
+ Tue, 16 Jul 2024 14:17:27 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.209.82])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427bb99a23dsm28509015e9.1.2024.07.16.14.16.48
+ 5b1f17b1804b1-427bb9988f6sm24308115e9.1.2024.07.16.14.17.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 14:16:50 -0700 (PDT)
-Message-ID: <056b70a6-7040-46cb-9e88-3724a0671a65@linaro.org>
-Date: Tue, 16 Jul 2024 23:16:47 +0200
+ Tue, 16 Jul 2024 14:17:26 -0700 (PDT)
+Message-ID: <d25b8cd5-e580-48c9-b416-7462d060f1c8@linaro.org>
+Date: Tue, 16 Jul 2024 23:17:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] qapi/machine: Clarify query-uuid value when none has
- been specified
-To: Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Michael Tsirkin <mst@redhat.com>, Daniel Berrange <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PATCH 4/5] qapi/sockets: Move deprecation note out of
+ SocketAddress doc comment
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, wangyanan55@huawei.com,
+ eblake@redhat.com, mst@redhat.com, berrange@redhat.com,
+ marcandre.lureau@redhat.com, jsnow@redhat.com, imammedo@redhat.com
 References: <20240711112228.2140606-1-armbru@redhat.com>
- <20240711112228.2140606-4-armbru@redhat.com>
- <CAFn=p-Zv9e7MFhpGK=PssPYGbe7Q3R-A0CAdYEMbtaY60ATWrw@mail.gmail.com>
- <87v815i4t5.fsf@pond.sub.org>
+ <20240711112228.2140606-5-armbru@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87v815i4t5.fsf@pond.sub.org>
+In-Reply-To: <20240711112228.2140606-5-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::331;
@@ -102,24 +99,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/24 20:12, Markus Armbruster wrote:
-> John Snow <jsnow@redhat.com> writes:
+On 11/7/24 13:22, Markus Armbruster wrote:
+> Doc comments are reference documentation for users of QMP.
+> SocketAddress's doc comment contains a deprecation note advising
+> developers to use SocketAddress for new code.  Irrelevant for users of
+> QMP.  Move the note out of the doc comment.
 > 
->> On Thu, Jul 11, 2024, 7:22 AM Markus Armbruster <armbru@redhat.com> wrote:
->>
->>> When no UUID has been specified, query-uuid returns
->>>
->>>      {"UUID": "00000000-0000-0000-0000-000000000000"}
->>>
->>> The doc comment calls this "a null UUID", which I find less than
->>> clear.  Change it to "an all-zero UUID".
->>>
->>
->> Technically it's a "nil UUID";
->> https://datatracker.ietf.org/doc/html/rfc9562#name-nil-uuid
->>
->> If you wanted to be pedantic, you could say "the nil UUID (all zeroes) is
->> returned"
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   qapi/sockets.json | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
