@@ -4,139 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7E7C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696F1C3DA60
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTeq6-00024U-95; Tue, 16 Jul 2024 05:51:18 -0400
+	id 1sTer6-0007M1-MY; Tue, 16 Jul 2024 05:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sTepo-0001Qx-D0
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:51:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTer5-0007IU-O7
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:52:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sTepk-0000xf-OS
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:50:58 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTer3-0001EN-Nx
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:52:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721123452;
+ s=mimecast20190719; t=1721123536;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EfIYTyildlEIKJNiGECAF3xLhdzN3hrTw2pA0kJdYy0=;
- b=FKyVziqPMqdHZDLO23lkoFazCQboQb+PJDtlgvsqlPsv58RSiwjx40ww4twRp2I4zGAW78
- +WdIAQdLDmat+ziJsOPkPb9iIhzgKX0En+Jtfo62E1gHDz0mQC0EVk89zli5sSMJLinGYZ
- Yy9toklS9XXww83wcWgsqKcg+mfnhXw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=UpF3qQq2kmXRL4FEhfI32M1trhYoK+BGVkbJvwzIOM8=;
+ b=aew3Dp99Kv/JIHTLyNYd0lHX0tYEGX5rLRTh5V7wGrrlcAgrjVGuF1shqUKmZCRf1pbR4L
+ +00Zz2N7t1oc0y4BD4FaD4pqPtuX1xgIauPbHn5jTxuPF3PPs3fy4HC6+q0f+5XVn888Pu
+ QdXBNf8aIwthAe0MD6jArq6iI53EAbY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-M92MJ8ChMb-X-wT2esgnkA-1; Tue, 16 Jul 2024 05:50:51 -0400
-X-MC-Unique: M92MJ8ChMb-X-wT2esgnkA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-426683d9c4bso34301225e9.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:50:51 -0700 (PDT)
+ us-mta-417-VaIygq4QOQemuxv2sVIUfQ-1; Tue, 16 Jul 2024 05:52:13 -0400
+X-MC-Unique: VaIygq4QOQemuxv2sVIUfQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-367a058fa21so3074653f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:52:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721123450; x=1721728250;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EfIYTyildlEIKJNiGECAF3xLhdzN3hrTw2pA0kJdYy0=;
- b=HXvkhUkZH7dUsMp2Wq/AFg06aQgXa0nRB6nmqtrNDU+ZIwgy4jY48sI0gSJusx7xqy
- sBOghxoPH+C9zdAFA3oshD5dHqyh/1tKYlVKsY3ZPdOnZ9yjxSK9PmJjhR1JKxTZYmWB
- MMBT/KG/OI32NCP+Q81E1JdwbjyImIVdE+2FOLJDUx7R78A+ZvgvVYlXCET0HAya4VR0
- 8dm8hqgNVwrMH53zkEw/a5PlKAm9+zsL4019eYYnhN2kPRGuV49jdk/7JLTK72wlG4YA
- +dnqegppzs13nFp4f/YGIKQFZyMxoBV0s0wEu9ZqDcnmFj8yl7UQ7as+ZIQuwSvvdpgF
- 1Tvw==
+ d=1e100.net; s=20230601; t=1721123533; x=1721728333;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UpF3qQq2kmXRL4FEhfI32M1trhYoK+BGVkbJvwzIOM8=;
+ b=VTaHba+dpPkp7cBEHEYs+XrEhekfA5zacX30RqKnEJmvFIUPaN8Q2+D0+/UL8f5lcM
+ OsjQjh18nYNGxtcbmbNVgPvtsECzxReu4zYQL3c6Flkg0iSF9ebKjcvmDPBxW+/i2W8M
+ u1pgEvuTNSO1DQAg3wLwWa3Agyn47eLp9zn03BeprH8bAa/Zxvx07Ouqr2IopWC6Nwth
+ YqkWrOsigtUZ2Hf9wWmM4Eyt8Z+cwOu/az9/r/uBhezWx77+5LYyCcrWAKOP0BUM+mKo
+ QH9sM8wYclTVjQbfWWiBGkL2DRYatNG33xyvUmLzMMKLF9osTNKbMogxjOVodNLC//mr
+ 8SuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+i1Ievk/O29xzFOnuSY6tA/EP8B2BtFhmcBzRR51bMy5GVjlEMH56u+UPW66fSPTBt5Fu4AJXCj92Rcw60SC7s3nNo4M=
-X-Gm-Message-State: AOJu0Yxoismm4Z5cNDpSlzx9rKnW5iU5RljjUZ6OEWagBqgikd8H8EpA
- Zt0TkL4xEc4OyF00MdmpD2Hwyx87T9GPZonEMWq1wNgsXr1pH9Cx+sRoN6/OF9fvaxGtN3tl+t1
- GH9jkJ0aIBZQhdda7FTCbMEnHTycFxe7SeTNAJj3IR89Jt7uhXN75
-X-Received: by 2002:a05:600c:524f:b0:426:5269:9838 with SMTP id
- 5b1f17b1804b1-427ba654c24mr11175145e9.4.1721123450103; 
- Tue, 16 Jul 2024 02:50:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGIaAvMNz++jgziWekJV8jfQZfplr5N0ZE7Kqf5toTOkxL+s4RBXKkZklJEs59jn54YxSGeg==
-X-Received: by 2002:a05:600c:524f:b0:426:5269:9838 with SMTP id
- 5b1f17b1804b1-427ba654c24mr11174955e9.4.1721123449638; 
- Tue, 16 Jul 2024 02:50:49 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f02:7c00:e95e:dbc6:7ea8:d075?
- (p200300d82f027c00e95edbc67ea8d075.dip0.t-ipconnect.de.
- [2003:d8:2f02:7c00:e95e:dbc6:7ea8:d075])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5ef44b4sm118691055e9.42.2024.07.16.02.50.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 02:50:49 -0700 (PDT)
-Message-ID: <378de2e9-123e-42c8-bd07-a98f4f4d87ef@redhat.com>
-Date: Tue, 16 Jul 2024 11:50:48 +0200
+ AJvYcCUddYx5GLACjAhPuFsb7O371yvDSm/KSSgJ6tmT6LRN/s1ojUsZHr66S4BpCZQhq+ymHzguZLlmbiYAMjI8cd6/+FsLjjY=
+X-Gm-Message-State: AOJu0YyW1GmdESqVXsAu/qQKy/+WgB5o5psxRT89hT9VjP2hxagl1Erw
+ pubMaptgozemtjqyxMEKuy84n2qGQjHW99MJ7E53FbdXZxcSDBtctlJfrGq8OZxGFEP4aDZXmVK
+ kXIKcAuLNUBB1wk7Eq34AaaPSYe9MsHcvP9cy6XJQPPru3KQdKK72
+X-Received: by 2002:a5d:6612:0:b0:360:866f:5083 with SMTP id
+ ffacd0b85a97d-368274eb83cmr982086f8f.32.1721123532801; 
+ Tue, 16 Jul 2024 02:52:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxtQ9AQrtbNpmZFz7OQNZ0eAQvauOpzpGZcxmgZuMBkcCo8etr4f5naiFZkcHn8Tj3oqxdZg==
+X-Received: by 2002:a5d:6612:0:b0:360:866f:5083 with SMTP id
+ ffacd0b85a97d-368274eb83cmr982075f8f.32.1721123532411; 
+ Tue, 16 Jul 2024 02:52:12 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3680dabf0e4sm8512161f8f.33.2024.07.16.02.52.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 02:52:11 -0700 (PDT)
+Date: Tue, 16 Jul 2024 11:52:10 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@opnsrc.net>
+Cc: Salil Mehta <salil.mehta@huawei.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "will@kernel.org" <will@kernel.org>, "gshan@redhat.com"
+ <gshan@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng
+ (C)" <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "npiggin@gmail.com" <npiggin@gmail.com>, "harshpb@linux.ibm.com"
+ <harshpb@linux.ibm.com>, Linuxarm <linuxarm@huawei.com>, peterx@redhat.com
+Subject: Re: [PATCH V15 0/7] Add architecture agnostic code to support vCPU
+ Hotplug
+Message-ID: <20240716115210.08ca24ba@imammedo.users.ipa.redhat.com>
+In-Reply-To: <4b829bf1-d31c-49eb-b18f-6d87e08c5c04@opnsrc.net>
+References: <20240713182516.1457-1-salil.mehta@huawei.com>
+ <20240715155436.577d34c5@imammedo.users.ipa.redhat.com>
+ <b93b570158794e28bf8c00a949afa8b4@huawei.com>
+ <3848723ea2584b9b813c3d76e1e6dd59@huawei.com>
+ <20240715171154.2667d187@imammedo.users.ipa.redhat.com>
+ <4b829bf1-d31c-49eb-b18f-6d87e08c5c04@opnsrc.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] RAMBlock: use return value of ram_block_discard_require()
- as errno
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20240716064213.290696-1-zhenzhong.duan@intel.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240716064213.290696-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,46 +133,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.07.24 08:42, Zhenzhong Duan wrote:
-> When ram_block_discard_require() fails, errno is passed to error_setg_errno().
-> It's a stale value or 0 which is unrelated to ram_block_discard_require().
-> 
-> As ram_block_discard_require() already returns -EBUSY in failure case,
-> use it as errno for error_setg_errno().
-> 
-> Fixes: 852f0048f3ea ("make guest_memfd require uncoordinated discard")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   system/physmem.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 2154432cb6..9a3b3a7636 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -1845,11 +1845,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->       }
->   
->       if (new_block->flags & RAM_GUEST_MEMFD) {
-> +        int ret;
-> +
->           assert(kvm_enabled());
->           assert(new_block->guest_memfd < 0);
->   
-> -        if (ram_block_discard_require(true) < 0) {
-> -            error_setg_errno(errp, errno,
-> +        ret = ram_block_discard_require(true);
-> +        if (ret < 0) {
-> +            error_setg_errno(errp, -ret,
->                                "cannot set up private guest memory: discard currently blocked");
->               error_append_hint(errp, "Are you using assigned devices?\n");
->               goto out_free;
+On Tue, 16 Jul 2024 03:38:29 +0000
+Salil Mehta <salil.mehta@opnsrc.net> wrote:
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+> Hi Igor,
+> 
+> On 15/07/2024 15:11, Igor Mammedov wrote:
+> > On Mon, 15 Jul 2024 14:19:12 +0000
+> > Salil Mehta <salil.mehta@huawei.com> wrote:
+> >   
+> >>>   From: qemu-arm-bounces+salil.mehta=huawei.com@nongnu.org <qemu-
+> >>>   arm-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Salil
+> >>>   Mehta via
+> >>>   Sent: Monday, July 15, 2024 3:14 PM
+> >>>   To: Igor Mammedov <imammedo@redhat.com>
+> >>>   
+> >>>   Hi Igor,
+> >>>       
+> >>>   >  From: Igor Mammedov <imammedo@redhat.com>
+> >>>   >  Sent: Monday, July 15, 2024 2:55 PM
+> >>>   >  To: Salil Mehta <salil.mehta@huawei.com>
+> >>>   >
+> >>>   >  On Sat, 13 Jul 2024 19:25:09 +0100
+> >>>   >  Salil Mehta <salil.mehta@huawei.com> wrote:
+> >>>   >  
+> >>>   >  > [Note: References are present at the last after the revision  
+> >>>   > history]  >  > Virtual CPU hotplug support is being added across
+> >>>   > various architectures  [1][3].  
+> >>>   >  > This series adds various code bits common across all architectures:
+> >>>   >  >
+> >>>   >  > 1. vCPU creation and Parking code refactor [Patch 1] 2. Update ACPI
+> >>>   > > GED framework to support vCPU Hotplug [Patch 2,3] 3. ACPI CPUs AML
+> >>>   > > code change [Patch 4,5] 4. Helper functions to support unrealization
+> >>>   > > of CPU objects [Patch 6,7]  
+> >>>   >
+> >>>   >  with patch 1 and 3 fixed should be good to go.
+> >>>   >
+> >>>   >  Salil,
+> >>>   >  Can you remind me what happened to migration part of this?
+> >>>   >  Ideally it should be a part of of this series as it should be common
+> >>>   > for  everything that uses GED and should be a conditional part of
+> >>>   > GED's  VMSTATE.
+> >>>   >
+> >>>   >  If this series is just a common base and no actual hotplug on top of
+> >>>   > it is  merged in this release (provided patch 13 is fixed), I'm fine
+> >>>   > with migration  bits being a separate series on top.
+> >>>   >
+> >>>   >  However if some machine would be introducing cpu hotplug in the same
+> >>>   > release, then the migration part should be merged before it or be a
+> >>>   > part  that cpu hotplug series.  
+> >>>   
+> >>>   We have tested Live/Pseudo Migration and it seem to work with the
+> >>>   changes part of the architecture specific patch-set.  
+> > 
+> > have you tested, migration from new QEMU to an older one (that doesn't have cpuhotplug builtin)?  
+> 
+> 
+> Just curious, how can we detect at source Qemu what version of the Qemu
+> destination is running. We require some sort of compatibility check but
+> then this is a problem not specific to CPU Hotplug?
 
--- 
-Cheers,
+it's usually managed by version machine types + compat settings for
+machine/device.
 
-David / dhildenb
+> We  are not initializing CPU Hotplug VMSD in this patch-set. I was
+> wondering then how can a new machine attempt to migrate VMSD state from 
+> new Qemu to older Qemu.
+
+If I'm not mistaken without VMSD it shouldn't explode, since CPUHP
+code shouldn't create memory-regions that are migrated.
+(If I recall correctly, mmio regions aren't going into migration stream)
+
+> ARM vCPU Hotplug patches will be on top of this later in next Qemu cycle.
+then it's fine to introduce VMSD later on, just make sure others
+who adding cpu hotplug elsewhere also aware of it and pickup the same patch.
+
+> 
+> 
+> >   
+> >>>   
+> >>>   Ampere: https://lore.kernel.org/all/e17e28ac-28c7-496f-b212-
+> >>>   2c9b552dbf63@amperemail.onmicrosoft.com/
+> >>>   Oracle: https://lore.kernel.org/all/46D74D30-EE54-4AD2-8F0E-
+> >>>   BA5627FAA63E@oracle.com/
+> >>>   
+> >>>   
+> >>>   For ARM, please check below patch part of RFC V3 for changes related to
+> >>>   migration:
+> >>>   https://lore.kernel.org/qemu-devel/20240613233639.202896-15-
+> >>>   salil.mehta@huawei.com/  
+> >>
+> >>
+> >> Do you wish to move below change into this path-set and make it common
+> >> to all instead?  
+> > 
+> > it would be the best to include this with here.
+> >   
+> >>
+> >>
+> >> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> >> index 63226b0040..e92ce07955 100644
+> >> --- a/hw/acpi/generic_event_device.c
+> >> +++ b/hw/acpi/generic_event_device.c
+> >> @@ -333,6 +333,16 @@ static const VMStateDescription vmstate_memhp_state = {
+> >>       }
+> >>   };
+> >>   
+> >> +static const VMStateDescription vmstate_cpuhp_state = {
+> >> +    .name = "acpi-ged/cpuhp",
+> >> +    .version_id = 1,
+> >> +    .minimum_version_id = 1,
+> >> +    .fields      = (VMStateField[]) {
+> >> +        VMSTATE_CPU_HOTPLUG(cpuhp_state, AcpiGedState),
+> >> +        VMSTATE_END_OF_LIST()
+> >> +    }
+> >> +};
+> >> +
+> >>   static const VMStateDescription vmstate_ged_state = {
+> >>       .name = "acpi-ged-state",
+> >>       .version_id = 1,
+> >> @@ -381,6 +391,7 @@ static const VMStateDescription vmstate_acpi_ged = {
+> >>       },
+> >>       .subsections = (const VMStateDescription * const []) {
+> >>           &vmstate_memhp_state,
+> >> +        &vmstate_cpuhp_state,  
+> > 
+> > I'm not migration guru but I believe this should be conditional
+> > to avoid breaking cross-version migration.
+> > See 679dd1a957d '.needed = vmstate_test_use_cpuhp. part  
+> 
+> 
+> Sure, thanks for this. As I can see, the needed() function is used at
+> the source to decide if the state corresponding to a particular device
+> can be forwarded to the destination QEMU/VM. But how can this be used
+> to check for cross-version migration?
+
+what I'd do is to make sure that older machine types to not have
+cpu hotplug enabled in supported events, and only machine that
+has full support for hotplug enabled the bit. And then
+machine_init depending on that would manage actual 'ged-event'
+property.
+
+Then later VMSD.needed would check ged-event to decide
+if section should be used or omitted.
+
+
+> 
+> BTW, I've prepared V16. May I request a quick peek at:
+> 
+> https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v3.arch.agnostic.v16/
+
+looked at
+   hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+
+I get that ged_event loop in realize was copy-pasted from _EVT handler,
+but that looks a bit complicated (though I won't object, it's matter of taste)
+
+I'd prefer simpler condition than for() {} loop, and just use simpler 'if'
+
+if (enabled_events & ACPI_GED_CPU_HOTPLUG_EVT) {
+    init cpu hp code
+}
+
+PS:
+if you keep for loop, I'd replace  error_report() + abort() with 'error_abort'
+
+> 
+> 
+> Above does not have the suggested migration change yet. I can add it as
+> a separate path
+> 
+> 
+> Best regards,
+> Salil
+> 
+> > 
+> > CCing Peter
+> >   
+> >>           &vmstate_ghes_state,
+> >>           NULL
+> >>       }
+> >>
+> >> Maybe I can add a separate patch for this in the end? Please confirm.
+> >>
+> >> Thanks
+> >> Salil.  
+> >   
+> 
 
 
