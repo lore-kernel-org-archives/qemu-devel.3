@@ -4,53 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C265DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8666DC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTlRF-0008AQ-0b; Tue, 16 Jul 2024 12:54:05 -0400
+	id 1sTlSZ-0004zA-5A; Tue, 16 Jul 2024 12:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
- id 1sTlRD-00085F-Mk; Tue, 16 Jul 2024 12:54:03 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
- id 1sTlRB-0003ea-NB; Tue, 16 Jul 2024 12:54:03 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WNlX739bSz4wc4;
- Wed, 17 Jul 2024 02:53:59 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WNlX53GSfz4wbh;
- Wed, 17 Jul 2024 02:53:57 +1000 (AEST)
-Message-ID: <d29f8da0-fab2-45f8-8efc-49345c10db57@kaod.org>
-Date: Tue, 16 Jul 2024 18:53:54 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sTlSJ-0004XV-JT
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:55:13 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sTlSE-0003iU-Jy
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:55:11 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a77c7d3e8bcso716007566b.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 09:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721148904; x=1721753704; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9pwJNQL5TjDlheLsaizl714seAOK57vuXzverIPqvJY=;
+ b=xjrvkcgTac1PQ0AR5/dkRRhz4wgkZ2i6iTSpMm5KdmGVXbUYomg1TOOXrHnjMdXu38
+ BKqs9XmMdMCrxJ23UcnqQlmDZDcLsB7uBllheW0GJi+YxMwHeKZ9X4XK84vkl60MG463
+ Qyddeuttm9ZMNIx9YpB6VhiKYqH5Z2FTqrLG+tv7Z16jOAtBt3EDGg7VaI3jZ4zmg3+0
+ G2WNmDY2AFXaPahXlmH8C3xe2F34p03fQGhfOMeBLSB5gWayo2M3lkPFcXOi5DwYMW9e
+ 8uz1QM1lF4GT+CLLlkndLBPrXMZFekGm/IbuJEH+i0xLDYWEgG42wP5TPqB3uVKR+lgI
+ A4eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721148904; x=1721753704;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9pwJNQL5TjDlheLsaizl714seAOK57vuXzverIPqvJY=;
+ b=bYDe+JAvqU5QDb0Xl3mLgdgdS/C2zSoFtPcSfSIVWTapKiNvs39Izlj33ku7WDMpkm
+ UlN0c4ezF5rSbdp4sdRVMREoVl3h5BI3uFkO/080erRcLq0+LtlABtLgfTmvqqhco7QP
+ ajL6NCEh2NBV/OKn5nB85AJs1ergX7GvDc9LXpEOQV7eVHXLtSlee1nGI/hgDH3xLgf7
+ uUlwA2sHWyd/1W+PV542/ZfKBF28dLgQTOK24o5lrzid9qwwoJhEYMeZeT7bCdLits3i
+ 7qDclnwsva3huy1OmPpi7EOT2oBG24AXvFADzwOYjnqw3v5oVioGmOiK5ZRxNmKITWSx
+ kLHw==
+X-Gm-Message-State: AOJu0YynQrwxUer/90YyRfVDnSm/nVlYlr0wZMEQGFvBYtLG9UBqQ8YP
+ 1I1QV9WqWRDk2C8ZKv6rsT/qJHH865cz5/gFlstBAVhZcsLi/l7Bxf1WvQG6jzg=
+X-Google-Smtp-Source: AGHT+IEWFOPVsVgAfK0at++S8Xub0gng6wvQ0mu6ymNS2TkBERZaAW2260eCOg6QHFNadAEh3hQ5Tg==
+X-Received: by 2002:a17:906:ad5:b0:a77:cd3c:e9b4 with SMTP id
+ a640c23a62f3a-a79ea417874mr213943766b.24.1721148902846; 
+ Tue, 16 Jul 2024 09:55:02 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a79bc5b37f8sm337612966b.46.2024.07.16.09.55.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 09:55:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 17EEE5F7A0;
+ Tue, 16 Jul 2024 17:55:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Subject: Re: [RFC PATCH] gdbstub: Re-factor gdb command extensions
+In-Reply-To: <b9b178fc-04f5-49a6-992a-f6920408b41f@linaro.org> (Richard
+ Henderson's message of "Wed, 17 Jul 2024 02:33:23 +1000")
+References: <20240716114229.329355-1-alex.bennee@linaro.org>
+ <b9b178fc-04f5-49a6-992a-f6920408b41f@linaro.org>
+Date: Tue, 16 Jul 2024 17:55:01 +0100
+Message-ID: <87cyndgtui.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/19] ppc/pnv: Add allow for big-core differences in
- DT generation
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20240716162617.32161-1-npiggin@gmail.com>
- <20240716162617.32161-12-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240716162617.32161-12-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,109 +99,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/24 18:26, Nicholas Piggin wrote:
-> device-tree building needs to account for big-core mode, because it is
-> driven by qemu cores (small cores). Every second core should be skipped,
-> and every core should describe threads for both small-cores that make
-> up the big core.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Richard Henderson <richard.henderson@linaro.org> writes:
 
+> On 7/16/24 21:42, Alex Benn=C3=A9e wrote:
+>>   void gdb_extend_qsupported_features(char *qsupported_features)
+>>   {
+>> -    /*
+>> -     * We don't support different sets of CPU gdb features on different=
+ CPUs yet
+>> -     * so assert the feature strings are the same on all CPUs, or is se=
+t only
+>> -     * once (1 CPU).
+>> -     */
+>> -    g_assert(extended_qsupported_features =3D=3D NULL ||
+>> -             g_strcmp0(extended_qsupported_features, qsupported_feature=
+s) =3D=3D 0);
+>> -
+>> -    extended_qsupported_features =3D qsupported_features;
+>> +    if (!extended_qsupported_features) {
+>> +        extended_qsupported_features =3D g_strdup(qsupported_features);
+>> +    } else if (!g_strrstr(extended_qsupported_features, qsupported_feat=
+ures)) {
+>
+> Did you really need the last instance of the substring?
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Not really - I just want to check the string hasn't been added before.
 
-Thanks,
+>
+> I'll note that g_strrstr is quite simplistic, whereas strstr has a
+> much more scalable algorithm.
+>
+>
+>> +        char *old =3D extended_qsupported_features;
+>> +        extended_qsupported_features =3D g_strdup_printf("%s%s", old, q=
+supported_features);
+>
+> Right tool for the right job, please: g_strconcat().
+>
+> That said, did you *really* want to concatenate now, and have to
+> search through the middle, as opposed to storing N strings separately?
+> You could defer the concat until the actual negotiation with gdb.
+> That would reduce strstr above to a loop over strcmp.
+>
+>> +    for (int i =3D 0; i < extensions->len; i++) {
+>> +        gpointer entry =3D g_ptr_array_index(extensions, i);
+>> +        if (!g_ptr_array_find(table, entry, NULL)) {
+>> +            g_ptr_array_add(table, entry);
+>
+> Are you expecting the same GdbCmdParseEntry object to be registered
+> multiple times?  Can we fix that at a higher level?
 
-C.
+Its basically a hack to deal with the fact everything is tied to the
+CPUObject so we register everything multiple times. We could do a if
+(!registerd) register() dance but I guess I'm thinking forward to a
+hydrogenous future but I guess we'd need to do more work then anyway.
 
+>
+>
+> r~
 
-> ---
->   hw/ppc/pnv.c | 43 +++++++++++++++++++++++++++++++++++--------
->   1 file changed, 35 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index d902860ecd..1d08176b75 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -141,9 +141,9 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->       CPUPPCState *env = &cpu->env;
->       PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cs);
->       PnvChipClass *pnv_cc = PNV_CHIP_GET_CLASS(chip);
-> -    g_autofree uint32_t *servers_prop = g_new(uint32_t, smt_threads);
-> +    uint32_t *servers_prop;
->       int i;
-> -    uint32_t pir;
-> +    uint32_t pir, tir;
->       uint32_t segs[] = {cpu_to_be32(28), cpu_to_be32(40),
->                          0xffffffff, 0xffffffff};
->       uint32_t tbfreq = PNV_TIMEBASE_FREQ;
-> @@ -154,7 +154,10 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->       char *nodename;
->       int cpus_offset = get_cpus_node(fdt);
->   
-> -    pnv_cc->get_pir_tir(chip, pc->hwid, 0, &pir, NULL);
-> +    pnv_cc->get_pir_tir(chip, pc->hwid, 0, &pir, &tir);
-> +
-> +    /* Only one DT node per (big) core */
-> +    g_assert(tir == 0);
->   
->       nodename = g_strdup_printf("%s@%x", dc->fw_name, pir);
->       offset = fdt_add_subnode(fdt, cpus_offset, nodename);
-> @@ -235,12 +238,28 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->       }
->   
->       /* Build interrupt servers properties */
-> -    for (i = 0; i < smt_threads; i++) {
-> -        pnv_cc->get_pir_tir(chip, pc->hwid, i, &pir, NULL);
-> -        servers_prop[i] = cpu_to_be32(pir);
-> +    if (pc->big_core) {
-> +        servers_prop = g_new(uint32_t, smt_threads * 2);
-> +        for (i = 0; i < smt_threads; i++) {
-> +            pnv_cc->get_pir_tir(chip, pc->hwid, i, &pir, NULL);
-> +            servers_prop[i * 2] = cpu_to_be32(pir);
-> +
-> +            pnv_cc->get_pir_tir(chip, pc->hwid + 1, i, &pir, NULL);
-> +            servers_prop[i * 2 + 1] = cpu_to_be32(pir);
-> +        }
-> +        _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
-> +                          servers_prop, sizeof(*servers_prop) * smt_threads
-> +                                        * 2)));
-> +    } else {
-> +        servers_prop = g_new(uint32_t, smt_threads);
-> +        for (i = 0; i < smt_threads; i++) {
-> +            pnv_cc->get_pir_tir(chip, pc->hwid, i, &pir, NULL);
-> +            servers_prop[i] = cpu_to_be32(pir);
-> +        }
-> +        _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
-> +                          servers_prop, sizeof(*servers_prop) * smt_threads)));
->       }
-> -    _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
-> -                       servers_prop, sizeof(*servers_prop) * smt_threads)));
-> +    g_free(servers_prop);
->   
->       return offset;
->   }
-> @@ -389,6 +408,10 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
->                              pa_features_300, sizeof(pa_features_300))));
-> +
-> +        if (pnv_core->big_core) {
-> +            i++; /* Big-core groups two QEMU cores */
-> +        }
->       }
->   
->       if (chip->ram_size) {
-> @@ -450,6 +473,10 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
->                              pa_features_31, sizeof(pa_features_31))));
-> +
-> +        if (pnv_core->big_core) {
-> +            i++; /* Big-core groups two QEMU cores */
-> +        }
->       }
->   
->       if (chip->ram_size) {
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
