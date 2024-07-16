@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB7DCC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 19:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EFCC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 19:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTo84-0002GM-At; Tue, 16 Jul 2024 15:46:28 -0400
+	id 1sToE6-0007qG-HK; Tue, 16 Jul 2024 15:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTo82-0002FZ-G7
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 15:46:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTo7z-0004E9-JT
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 15:46:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721159182;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VvfpbyafhHJXpoqlHHNlren4NPD5yskeZx7TFXbqdgQ=;
- b=RTTo4Vq+6ai7cRX6fZayqwTgNDiz6wfJpJLeGwj241UjEpa900V2jOnh16xK1zvNn5a32Z
- DfNVTNPe0QoE2NlNJfcYYBEa+pLHyq8GfDds819B6c9ISTeR+vx4nExKHHC5I4Zptripjc
- 8oujpZoyEJPX9aZlc4n007PrjCwxsIA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453--_Pg8lD4NAOXoo6cl8Yi8g-1; Tue,
- 16 Jul 2024 15:46:18 -0400
-X-MC-Unique: -_Pg8lD4NAOXoo6cl8Yi8g-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 809D91955F77; Tue, 16 Jul 2024 19:46:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65E89300018F; Tue, 16 Jul 2024 19:46:13 +0000 (UTC)
-Date: Tue, 16 Jul 2024 20:46:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH 0/8] Convert avocado tests to normal Python unittests
-Message-ID: <ZpbOAXDbfTjLF98K@redhat.com>
-References: <20240711115546.40859-1-thuth@redhat.com>
- <CAFn=p-bMXm9qCD0hWiikyOmagFRryCZWrTx8xne9+x5j0QeNYQ@mail.gmail.com>
- <CABgObfbVdSDiJxNzv5TdUfOLLB=dLCkB0KgFQOxAcnG02gpDLA@mail.gmail.com>
- <Zpa3kFjfNMf-ZDi1@redhat.com>
- <CABgObfYgWnG5WidzY1dhMzwqijTXM6dyQBW_WMVGiHE5W8+bDQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sToE5-0007pc-A9
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 15:52:41 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sToE3-0005XN-M0
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 15:52:41 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c513aso6440170a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 12:52:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721159558; x=1721764358; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XyzJyIWdZSdOyKdSD+N0CLsjpYqDypIR11rjGDjOzfU=;
+ b=ZxMz4B1P/1QC3A5MF6OJw+UYC25yv0HoN/Q6zIJaf/aNVIwUaOXw8GAZnteGi848GL
+ xo/h/81tlVURY4ZuTtKJUNQhahTZ83/7FKD/K0RI3Ff6lDxziq1PKog4DoI3mnWS3dTn
+ 4WYvMolCRH5eLiairnzwNHkI7MBp/fwEsNRueD7oFChzHX0LGeJQPcIx1zwsNIHb/9GX
+ iCvIhS4O66a6KGF3V2320RbxIUdXdpxcMCY6T1QFAt+IvNKuOarPrjOg9IySLQff8ZCC
+ yu0smVEZvLwytK0jGcf+K+rSYglJS/7WJCnox+QyoPM8rGhXyqyGl3DzGcc4mDbAudAZ
+ 8avw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721159558; x=1721764358;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XyzJyIWdZSdOyKdSD+N0CLsjpYqDypIR11rjGDjOzfU=;
+ b=gzTph30fOthU/r60ywMy23G8hyxttX46pDuz6kmwDbt+6RiGt2hvBXMyJjKgYcuzoU
+ +pyTs1WPQcbE2u4uo+mnc9Gd7jTPJysyX4N09ANkEIpUBuhAkb1MNRV7U7KlIaLuozvm
+ 445MF6GVESoL4aYclIXVTCBd1qxKA//m5LxKMBSF+piOdbuZEVWoNe3NdFvU/lzBm8H7
+ kc6R6HkbPTkbg+fOvNJrZyaqz4/O0CL1EZcs4GmlAFl5dX29mvmI8H8x0cVDZWmXHF2R
+ o/XUQyyI/UTc2EktnGYxJjCdOsmYJhfBNq2gvd5aAsyqJla54hSYJpFLSz84WeERLLzb
+ k1TA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdfkIn1kaYcKKwgXzM60ozct9FNabdaH8lp+0nwdO+y8xf7Zvk+Gwio0XqSkPHUrUUWVhMOvMK4Pe7kv/VKIB9OmCWvoY=
+X-Gm-Message-State: AOJu0YznedlPgzZy2QXMoaO2dC7QCO0EB/gTfaDXkv2xj+LXAxvPF6QB
+ lBO8PI/u1eLhSf+WNuCZTiCNSCP9z9fjbacFBkoPWshjw/bBePQ4NsS7zQOO1Wek+Apy2AUONOy
+ zgUYOj/cBS/87kbOM1jo2cP2tu3gVC3hySMnwGQ==
+X-Google-Smtp-Source: AGHT+IGCsHOas4DDAVVORGOc/2FgD/4LYV0AdLyBbR18gfu0FPgNHUg8HJtpuvFaK2Mqy0HAFyS+JDrq23kF8sjqAXE=
+X-Received: by 2002:a50:d797:0:b0:59e:f6e7:53a3 with SMTP id
+ 4fb4d7f45d1cf-59ef6e75a49mr1974567a12.14.1721159557666; Tue, 16 Jul 2024
+ 12:52:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYgWnG5WidzY1dhMzwqijTXM6dyQBW_WMVGiHE5W8+bDQ@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240716125930.620861-1-imammedo@redhat.com>
+ <20240716090554-mutt-send-email-mst@kernel.org>
+ <c8208ef8-0a97-4aad-b49c-cbafb7ff5817@redhat.com>
+In-Reply-To: <c8208ef8-0a97-4aad-b49c-cbafb7ff5817@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jul 2024 20:52:26 +0100
+Message-ID: <CAFEAcA-WQxqZCY2zuTKhUgdiO8HOKee5aj6dJNFXZWk99gjdTA@mail.gmail.com>
+Subject: Re: [PATCH] tests: increase timeout per instance of bios-tables-test
+To: Thomas Huth <thuth@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ qemu-devel@nongnu.org, lvivier@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,56 +89,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 09:34:41PM +0200, Paolo Bonzini wrote:
-> Il mar 16 lug 2024, 20:10 Daniel P. Berrangé <berrange@redhat.com> ha
-> scritto:
-> 
-> > On Tue, Jul 16, 2024 at 08:03:54PM +0200, Paolo Bonzini wrote:
-> > > Il mar 16 lug 2024, 18:45 John Snow <jsnow@redhat.com> ha scritto:
-> > >
-> > > > My only ask is that we keep the tests running in the custom venv
-> > > > environment we set up at build time
-> > > >
-> > >
-> > > Yes, they do, however pytest should also be added to pythondeps.toml if
-> > we
-> > > go this way.
+On Tue, 16 Jul 2024 at 18:45, Thomas Huth <thuth@redhat.com> wrote:
+>
+> On 16/07/2024 15.06, Michael S. Tsirkin wrote:
+> > On Tue, Jul 16, 2024 at 02:59:30PM +0200, Igor Mammedov wrote:
+> >> CI often fails 'cross-i686-tci' job due to runner slowness
+> >> Log shows that test almost complete, with a few remaining
+> >> when bios-tables-test timeout hits:
+> >>
+> >>    19/270 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
+> >>      TIMEOUT        610.02s   killed by signal 15 SIGTERM
+> >>    ...
+> >>    stderr:
+> >>    TAP parsing error: Too few tests run (expected 8, got 7)
+> >>
+> >> At the same time overall job running time is only ~30 out of 1hr allowed.
+> >>
+> >> Increase bios-tables-test instance timeout on 5min as a fix
+> >> for slow CI runners.
+> >>
+> >> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 > >
-> > Done in this patch:
-> >
-> >   https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg03596.html
-> 
-> 
-> That adds pycotap, not pytest.
+> > We can't just keep increasing the timeout.
+> > The issue is checking wall time on a busy host,
+> > isn't it? Let's check CPU time instead.
+>
+> The timeout setting comes from meson, not sure whether you can switch that
+> easily to use CPU time instead of wall time?
+>
+> Anyway, if the bios-tables-test is getting more and more complex, it's maybe
+> not such a good idea to run it in a job that is using TCI ... Maybe it's
+> best to remove aarch64-softmmu from the cross-i686-tci job?
 
-Yep, the next posting of this series uses only pycotap, there's no
-need for using pytest at all, as meson can be the harness directly
-when we emit TAP format.
+It's one of the few tests that actually runs code in the guest:
+we definitely shouldn't reduce the coverage of the actual TCI
+part of the TCI job, I think.
 
-> > Yep, that's the part that I am a bit more doubtful about.
-> >
-> > Pulling & caching VM images isn't much more than a URL download to
-> > a local file, not very complex in python. Assuming that's what you
-> > are refering to, then it is already done in this patch:
-> >
-> >   https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg03598.html
-> 
-> 
-> I think there are also compressed assets that have to be passed through
-> gzip/xzip/zstd. I am worried that Thomas's patches do 90% of the job but
-> that is not a good estimation of what's left.
+I continue to think we need to find out why this CI job is
+perpetually flaky and fix the underlying cause, not simply
+increase timeouts or drop test cases or configs from it.
 
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
