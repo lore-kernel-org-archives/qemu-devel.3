@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926D5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8A5C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTeZe-0003lh-Ah; Tue, 16 Jul 2024 05:34:18 -0400
+	id 1sTec3-0006eq-N4; Tue, 16 Jul 2024 05:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTeZb-0003hV-Ui
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:34:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTeZa-0006Ay-Ga
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:34:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721122453;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=TuFgJAiaqaiYIKjf76Zp2Be2tXV0AfqSqjMt/8eq9G4=;
- b=G55hgfFtNIRUsfajRlgQrmM0fKr0CjWZsHoeLEUsXfoNelXvQ0tqXNvAChmh3vRS6IYoU3
- WzDpPM86NZ/QpSPiW73ZW56DUdZbo8RgxPhh7hs4sCXrSiKjtx5csZgwSCXTUMHMvFKwd+
- z6JHd0O4OmT7LynZbRrZOKAnX3u6+Lk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-qNwiAaCfOTWktu_2E-lJnA-1; Tue, 16 Jul 2024 05:34:11 -0400
-X-MC-Unique: qNwiAaCfOTWktu_2E-lJnA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36805bfd95aso2649610f8f.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:34:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sTec2-0006ai-LK
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:36:46 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sTebz-00070i-5O
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:36:45 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c5112so363420a12.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721122600; x=1721727400; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dc/GStB3d5Kj1Bf0cTf6aqXmkTcJcXLB485vy4LOdzc=;
+ b=i4IHgcAl3cl+tqmXfu8prcKlliouwOGCjZdYpkxFXskL+LeyIIbvoq2wKnG81aOeSZ
+ T20ZsCKKzw2EHmsn7BrfX80liMmo/U2kxEyggm2FDtml2gPRAPNWLVIg+OkHPGRh+5ls
+ W/GMFwx3w+kXRZWJM65KjZjPcUeGN8oyBdf4TGOdgEm2LWkRl1jqHOLzXXuk8yLbcqAn
+ 9h6PFFjbRfLLSnOYjp40EV1kqszflOheBWWD6QbAtsAy33tKszcus8AmaqXa8o+CkK8Z
+ 19b8JCobsvK5nknj1P6X1TEFNiZdf5PBFz3HiUzeBJOymcJA2Okyq+FevpDKs+XOo/T2
+ EBMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721122449; x=1721727249;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1721122600; x=1721727400;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TuFgJAiaqaiYIKjf76Zp2Be2tXV0AfqSqjMt/8eq9G4=;
- b=COrgJiBGk/GgS7OaIVFKaTqJWOMiVZCt4WZDtWZ2gLz5mTyuyE/0Q7LM1+cxEXftk9
- fX58tGBr1tv6sSZbRQovwcEF+XKnO1U5/Su9PFCQxh88E99o3d09gCZKdwa4k2MAC8+z
- meX7wyafkLnqfpyOx5u+EeyMiFcJmCUudaJqxeEOpcBRG+84tWupGLo32bsLVQwxgEKP
- cFBnlDrzmdk6tH1Ra4tXxrb/RdZTj/cFswDPkK31xgsGISRn8phhOleBECAVd5hTKOr2
- 4wR42is/F84UApFBj6UizBJ+mQmLN8AL49pMx7CvM8GCqDL4mdBghxI37S/UmoxpXuoV
- PQ+Q==
-X-Gm-Message-State: AOJu0Yz51ZWuOvpZnJayk9DDrVckpf60u2mMX2HNCtrlPIFoUTU13Hpa
- Ii99Vu8cT1lcjI10tZU0kfMutBuqVcTW8eAAMIwPRahq5hGa21Gi7uOVo1urC0eIUIRsP2i/8yC
- 6/X/HbECdL/NQCMM9oDHjWcU79/YFW1BACdnu9pz+bEL5dvaqctNLvQpmVtCrOMCLp7nepKqJ5i
- yonB0HCVfq3jCC/OAPzLu3JCSiiaKK1v0LPi2g
-X-Received: by 2002:a5d:548a:0:b0:35f:b03:bf45 with SMTP id
- ffacd0b85a97d-368261138famr1013490f8f.24.1721122449644; 
- Tue, 16 Jul 2024 02:34:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqMyJRfPM3kWOHwJH9yhHkpRnwRi/On+uzsj2kMjsmUK23apnIrlivd/zxmygdpypfnkZ/yg==
-X-Received: by 2002:a5d:548a:0:b0:35f:b03:bf45 with SMTP id
- ffacd0b85a97d-368261138famr1013473f8f.24.1721122449225; 
- Tue, 16 Jul 2024 02:34:09 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680db04581sm8565987f8f.97.2024.07.16.02.34.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 02:34:08 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: taisei1212@outlook.jp
-Subject: [PATCH 0/2] first batch of hpet fixes
-Date: Tue, 16 Jul 2024 11:34:05 +0200
-Message-ID: <20240716093407.194065-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ bh=Dc/GStB3d5Kj1Bf0cTf6aqXmkTcJcXLB485vy4LOdzc=;
+ b=IAV1I7PCtTRjG56ZfMDYy9i5S9PexGRMRVT0pjlOslyney+Fej0MwXTVQqaCNJNtR5
+ PkXQWe3kZPWEqc606FgmolsM7ycQSx/js3czIcYwTmn9QLr/nX7xqSUIueFZ0YKhaCcf
+ Tl4s67DrJEuGucb/gExMSFFrWM9cUFGq7Rxpml1LAvWXw26e+WrPYFQx2Mf8HgCB5YzT
+ mUpQfndOt0ZaJwANYSWvqllN+kZs5EYl6HziDp8o6mDS0iuVYh4ws37a4ghiZiu8RsAC
+ CCa7UP4RuJifqV8KXS+PkthA3vzjiHuZ1CUXiB3XzG7Tuto0UCg+3KC1LjcISgZ4IQbb
+ RPIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSJcQlomrkpn7jic8Bmm+N1I37LNF2JGvN2qHEXMEvLJJ0tDrCcA0VLGhhoekpLisuM1QLpdoFwTwlWaIWx6DvYfPP3dk=
+X-Gm-Message-State: AOJu0YxYcUOda3gt3gZCCkjYtd9FPI3xkAB8vbcavTn3bjFbTFKU9CL+
+ 5haKsdOwtGyrpoI4n5zu3Wb/S2mVSELWUWm9KEbrYojudscqgmd4LK+BBlT7khvkgxkORqZCOV4
+ +Z8ZEsObIU8/Q03E5ouZlXAJdUAZqddX6x6lj/g==
+X-Google-Smtp-Source: AGHT+IGaN+Ei2ULusap6WGT3oe08l2+JpHlHRDgnm+JkMuCHt9oh4QsPoWK0iHggAtS+dEd5b/8Ac+xbNNu3GwpoJIo=
+X-Received: by 2002:a50:cd19:0:b0:57c:70b0:d541 with SMTP id
+ 4fb4d7f45d1cf-59eef158729mr846034a12.20.1721122599935; Tue, 16 Jul 2024
+ 02:36:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
+ <20240716-pmu-v2-2-f3e3e4b2d3d5@daynix.com>
+In-Reply-To: <20240716-pmu-v2-2-f3e3e4b2d3d5@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jul 2024 10:36:28 +0100
+Message-ID: <CAFEAcA_Rw9ceo6D1mXUhzAim6FmGKvLJOmOFLdCpgbTnYYiLMw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] target/arm: Allow setting 'pmu' only for host and
+ max
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,18 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extracted from the patch that TaiseiIto <taisei1212@outlook.jp> tested.
-While not sufficient to fix their problems, this is a step in the
-right direction.
+On Tue, 16 Jul 2024 at 09:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> Setting 'pmu' does not make sense for CPU types emulating physical
+> CPUs.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  target/arm/cpu.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 14d4eca12740..8c180c679ce2 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1594,6 +1594,13 @@ static bool arm_get_pmu(Object *obj, Error **errp)
+>  static void arm_set_pmu(Object *obj, bool value, Error **errp)
+>  {
+>      ARMCPU *cpu = ARM_CPU(obj);
+> +    const char *typename = object_get_typename(obj);
+> +
+> +    if (strcmp(typename, ARM_CPU_TYPE_NAME("host")) &&
+> +        strcmp(typename, ARM_CPU_TYPE_NAME("max"))) {
+> +        error_setg(errp, "Setting 'pmu' is only supported by host and max");
+> +        return;
+> +    }
 
-Paolo Bonzini (2):
-  hpet: fix clamping of period
-  hpet: fix HPET_TN_SETVAL for high 32-bits of the comparator
+This doesn't seem right. In general where we provide a
+user-facing -cpu foo,bar=off option we allow the user to
+use it to disable the bar feature on named CPUs too.
+So you can use it to say "give me a neoverse-v1 without the PMU".
 
- hw/timer/hpet.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
-
--- 
-2.45.2
-
+thanks
+-- PMM
 
