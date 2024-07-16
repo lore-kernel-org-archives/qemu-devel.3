@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1E2C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E996AC3DA60
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTfDQ-0004nv-Ou; Tue, 16 Jul 2024 06:15:25 -0400
+	id 1sTfHa-0002vi-TP; Tue, 16 Jul 2024 06:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sTfDM-0004nA-SO
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:15:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sTfHZ-0002v8-6U
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sTfDJ-00060U-VQ
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:15:20 -0400
+ id 1sTfHX-0006ZZ-Q2
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721124914;
+ s=mimecast20190719; t=1721125179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0njENZQPQiFEtWR5OrUYIMAkmtiD62XOlemDsVtllj8=;
- b=gVwms3WKlnUd7+QTss5Qu77gI/pzMgq1Rq79+DH1XeN5VUFJzWsM30pEgx+ZNH/KAPM2fz
- MZrD4cYmDxZy7zWZOW6yLioqGnTGsciCT5m3aIHpqC9bArs6K7ffIo1RASiAsTgHJiHZNi
- ZLBQ4KqkmB+o8RFtIMLyXKFiTo3MFa4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k47+0r+3UMCaQNRblcynTbey68L/APZhu/L4CLrdht8=;
+ b=hQqoo0Ph0LxtFA2pDG3UUs/u4Nebv0p2HazBR++8VbwpJ0Q833PzIrkf3haE4x4vRjupIo
+ e6lNfI2tgnmsqo8BGWLJOKdaiWTJ1WLPIvoUJpHmYxe5n6BHtWmL5qO5an/+03GSTjjZPm
+ gDBdyuybH9Trr9DOUsJGNRXT6vQxrwI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-WWTm7rA6OQaQWdgTYWLMYw-1; Tue, 16 Jul 2024 06:15:12 -0400
-X-MC-Unique: WWTm7rA6OQaQWdgTYWLMYw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42668699453so50099835e9.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:15:12 -0700 (PDT)
+ us-mta-567-8OMFxdTXMK2Kp0Aiux0wkw-1; Tue, 16 Jul 2024 06:19:37 -0400
+X-MC-Unique: 8OMFxdTXMK2Kp0Aiux0wkw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4264dc624a5so34553525e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:19:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721124911; x=1721729711;
+ d=1e100.net; s=20230601; t=1721125176; x=1721729976;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0njENZQPQiFEtWR5OrUYIMAkmtiD62XOlemDsVtllj8=;
- b=kyFtv5pTrNrN9v0SgxOfPaFqOEyMvGnDRhgJ22DuhYhN87Vx2heVrbQZCpExHlMsun
- 8VZTKZc4jH1ijji22XumDkI7c9nj6NrliQzeDEo+z0T42YvL5+DHU2neRBJ8YAZJ/XNi
- K2Uy5JbBmxUsxooubgJNI/WkbJcZ3+zMjXWgcXqNZeP0za8ZZt3vnNw34Y8N884WFYuK
- 39EPYepuR9HlcoRCm2/OdbT7N5qz1ktyXnyVlnXCXy2EjJvXFup+BV8gmiOQpEzqryOn
- +uYYLLw/HKjrB6BwhZRGGdM0V5r47ln5jub2uAMxalZB/WOzEY37GrkQEB8EjwH3fKmt
- YTNQ==
-X-Gm-Message-State: AOJu0YzcAVSGZ4WUAjRegroX0rSIjCBO9gfDpfsubstZFbmw92GfrI9n
- 46puDIr42eXuT1jtGraGht1tJwRzaFW76FcTIuv0r6NRfzicUFLcyhUrHkPz43peVmO9NiWEHXZ
- FoWGJh9QMQHuXcT/Gm9XlXbkDPLvB/mntY3O4GZaC2Amc1a488Mii11jWmhpc+SCiIzJ2ITNVXB
- vR6CdmagF1wrMkDtvw4wNikC6Ksco=
-X-Received: by 2002:a05:600c:1e14:b0:426:58cb:8ca4 with SMTP id
- 5b1f17b1804b1-427ba720da7mr12914115e9.37.1721124911552; 
- Tue, 16 Jul 2024 03:15:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwqdb3z8jrtZBFAqcPQulCKJJwx/cIyqqBQLzLohF+lsEdAjCytLECZTJwHgTNgAccRXGTN2ZLfHpY4ytrPTU=
-X-Received: by 2002:a05:600c:1e14:b0:426:58cb:8ca4 with SMTP id
- 5b1f17b1804b1-427ba720da7mr12913925e9.37.1721124911242; Tue, 16 Jul 2024
- 03:15:11 -0700 (PDT)
+ bh=k47+0r+3UMCaQNRblcynTbey68L/APZhu/L4CLrdht8=;
+ b=VFeKlZ3k7rm501/g5gmNtVuan/NcoLe55IDZxCm+ssz3NOt7eImho2BqoXhJcAPKe+
+ DhEeq+Pd92F9vEo+uhuQTfq2uL3KiwDWc5cbPDFTv+NAXivtkf6bCssf6EEXurvGi22g
+ yIBnErr48p1DZIz+Lnq4E/Dgu9+plw/44oGstsKiqzTBf2xUqd+7dFXi5MjJVkmcEXIr
+ zwVhtehzfW/d8/fTbcbCdPxdlm8jWOoTrom8r+7KlLryt1m1yDUdaxZF08n9ciBoECbq
+ tNUVHEiTbUc71WQiano+5vGyP4bIT/Tnld1mEtLTI8xgHxwZWMfuQM56gt0R4KHCPm/4
+ 5vNA==
+X-Gm-Message-State: AOJu0YxS802Z5HTlFMKMARmbFmNd6GqD/jNO9B4x1UkQcM0spV6XfkyX
+ 3xDtyRVwQGaz7vscJkRSfEKTmI4+zKC+l9Z8DyAKu6I9hlJMuHh0glXbrp6VcLCCNOyMYPXExtH
+ DQmpUgUgVs7SJBHLHSgL7y0q9hLdayOBvv8bpsUckf0POHYgKZMV1f1Ka20Zs9IyXSdGjT8l/H1
+ H9mOOGSfePj8HXv81UIKdkZMMc3wc=
+X-Received: by 2002:a05:600c:3c96:b0:426:629f:154e with SMTP id
+ 5b1f17b1804b1-427ba6dc289mr11050955e9.30.1721125176681; 
+ Tue, 16 Jul 2024 03:19:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEcUx9U+tFzbTSrQt6yOPlxJW9U1TkmROAFTIse42JitfxEN+qyE3zP1JI5v8GjAf9m3Z6qcagF69fje1CoyAw=
+X-Received: by 2002:a05:600c:3c96:b0:426:629f:154e with SMTP id
+ 5b1f17b1804b1-427ba6dc289mr11050835e9.30.1721125176401; Tue, 16 Jul 2024
+ 03:19:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
- <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
- <ZpUmrTrEnx0RcO2y@x1n>
-In-Reply-To: <ZpUmrTrEnx0RcO2y@x1n>
+References: <20240711131424.181615-1-ppandit@redhat.com>
+ <20240711131424.181615-2-ppandit@redhat.com> <Zo_9OlX0pV0paFj7@x1n>
+ <CAE8KmOzrAdxGMVb7=hYMOgAOuhhzUT+N0X=ONNN456S6f2i87A@mail.gmail.com>
+ <ZpUjys64KeOI1Kmx@x1n>
+In-Reply-To: <ZpUjys64KeOI1Kmx@x1n>
 From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 16 Jul 2024 15:44:54 +0530
-Message-ID: <CAE8KmOxY_LQ9vNjvmPyRgk_dcnEZFG6_M1q14473NQoBUSM4ow@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
+Date: Tue, 16 Jul 2024 15:49:19 +0530
+Message-ID: <CAE8KmOx+3coBeWooXc3TAdMODb8cr-K1STZoftE-VmJsaYe+zA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] vhost-user: add a write-read lock
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
  Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,37 +99,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
+On Mon, 15 Jul 2024 at 18:57, Peter Xu <peterx@redhat.com> wrote:
+> I think it shouldn't be a major deal in most cases, if the extended cycles
+> only cover a bunch of instructions. In special case we can still use
+> WITH_QEMU_LOCK_GUARD, but I'd start with the simple first and only switch
+> if necessary.
 
-On Mon, 15 Jul 2024 at 19:10, Peter Xu <peterx@redhat.com> wrote:
-> IMHO it's better we debug and fix all the issues before merging this one,
-> otherwise we may overlook something.
-
-* Well we don't know where the issue is, not sure where the fix may go
-in, ex. if the issue turns out to be how virsh(1) invokes
-migrate-postcopy, fix may go in virsh(1). Patches in this series
-anyway don't help to fix the migration convergence issue, so they
-could be reviewed independently I guess.
-
-> You could pass over the patch to whoever going to debug this, so it will be included in the whole set to be
-> posted when the bug is completely fixed.
-
-* Yes, this patch series is linked there.
-
-> The protocol should have no restriction on the thread model of a front-end.
-> It only describes the wire protocol.
->
-> IIUC the protocol was designed to be serialized by nature (where there's no
-> request ID, so we can't match reply to any of the previous response), then
-> the front-end can manage the threads well to serialize all the requests,
-> like using this rwlock.
-
-* I see, okay. The simple protocol definition seems to indicate that
-it is meant for one front-end/back-end pair. If we are dividing the
-front-end across multiple threads, maybe we need a document to
-describe those threads and how they work, at least for the QEMU
-(front-end) side. Because the back-end could be a non-QEMU process, we
-can not do much there. (just thinking)
+* Okay, will send patch v2.
 
 Thank you.
 ---
