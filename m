@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2773C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 06:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92597C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 06:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTbvq-0006JC-SS; Tue, 16 Jul 2024 02:45:04 -0400
+	id 1sTbxE-0001cC-1y; Tue, 16 Jul 2024 02:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sTbvn-0006Hz-WF
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:45:00 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sTbvl-0006MB-NX
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:44:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721112298; x=1752648298;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=zyW61cnkfWfTmVlDKXApgd62xeMGyXleZUcSfIula40=;
- b=RYQaCT+6gQ+78HqHnMCnz7xhubEbeXn6yxTlooEsc2dUpFwqvOqxKqsV
- A+dV1kvESGpw6t5+Zsbnc0KETaYxhzBbpp7FKXcdeap3T4mCgkR9eh3X/
- op105qXAUrRMCUs+YNt1Flr47yOU+KlpFeQ5nKTE82GLTGXjEy3XNAoFe
- 6riwcBR56xX9trYH7N2euP85oQC2BWoD1qnBFOTY6nHRRax/ip0e6ukWv
- rS9sivC7bMib1I5K2ACVLoi22YIZp4/gD+tL1+o9iKI67OZBb2Rm57JWl
- pRC/0QBtQxiN+kVYGq+IkhgJ2239+jWnN/3UeLZViApwpibKd8utzqncz g==;
-X-CSE-ConnectionGUID: 9Q801fXvTneV6tKnY7u1vQ==
-X-CSE-MsgGUID: kMOLznKKTDiGtcWnpIXD4w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="18642565"
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="18642565"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 23:44:53 -0700
-X-CSE-ConnectionGUID: ne3RG43aQBa7gvGrAmMGHQ==
-X-CSE-MsgGUID: Ig4rPgF9QzqtEAhstUZ1IA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="49783572"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 23:44:51 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] RAMBlock: use return value of ram_block_discard_require() as
- errno
-Date: Tue, 16 Jul 2024 14:42:12 +0800
-Message-Id: <20240716064213.290696-1-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTbxB-0001Ue-UU
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:46:26 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTbxA-0006oX-A2
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:46:25 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-79f0e7faafcso388579385a.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 23:46:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721112383; x=1721717183; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tFY05EHBNnl/nE8BkwEPaEzQLibDujt1klfTquQnq8s=;
+ b=D/XGAoiuLtTqB6L75Z7NvIVJPRRBeuNFcogV9z5DUfNqKfWWR4W7uhsobTyLSdDwPa
+ pAqRsUN0pZsDBWbsHo8cAB62SpU/lT/2owO4TEHCqoNgY/1tHrcnFPMLdd+cxYLoFO5C
+ bGZJ8hB+QUtlzyZBm4E7Qz2g2fU+OqmWchDMQSh7ZR6fF4rY1JdOOAFKRS6+DWj7hDcr
+ o+2GCKEJsuDpK0zRW+XmXl0pQXyyLzX5NJrpHtLq4TxNlAp+2qG6hHyWvCP8P7xPSvlT
+ xPdJSENbZ4q8rFPMFrSKuEtizcbBan9Eost03c0rrijrgb72LwpRZTp3gTtrFbhjvIRh
+ DSTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721112383; x=1721717183;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tFY05EHBNnl/nE8BkwEPaEzQLibDujt1klfTquQnq8s=;
+ b=TgtaJPNBb4vnjpMdwSD4SmrGrH0NyB5bP6li0Gzgq3BDPTNE69UgUHx9BZEOnNRpw4
+ 456JqANBwgthBJo2fjUNCyB4vKuiinteGuWOP+sOjtcOl+MS8XpUV4O/XVefCuw7JCRv
+ +vuGHgP8vbTMv4fmS2TJkcmstur/68VVdrZx6d+TGHk1ktg7XYq7yrkr9axUS0USd3sj
+ +Tocyct2nsA1LrUuPSRx6tq+btkCgOCUWUE1eAIx9ynwVnziBwFe99SwRGUzhoix2OfN
+ w2Y1Gx0YcHg6Jn2cnJRJHaRTVgX/k/K7VeO2A7Yb2k6wNkP0TjCXIOCovTwcXk014+II
+ qPGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSZl16bUd7fHrXRhaKIwKIdkDL8rPTVTuhPo8fpQ0xP01S8RFmrCdsjf3CItWCsSxPCeJFnzI07QpJS/0J3miiF4zgbSA=
+X-Gm-Message-State: AOJu0YzJ8PpqBHjMg/5j5ocrCoaWGWQxiYWcuB75zN0sGcWik0BAqTaV
+ qfM3nn5jTRq1/qz5uJsAnqb4ZUR1ppSSok5ze6ALJ1hBsUiGuJvwrGNOXs9xLtQ=
+X-Google-Smtp-Source: AGHT+IGMIjHby855Cg7rvMEF0d88q5Koz6iE7idYc+opUa6ZYlgOJw8Bgacro8+vWZsogL+7tgyxyA==
+X-Received: by 2002:a05:620a:24d2:b0:79d:5565:5120 with SMTP id
+ af79cd13be357-7a17b6da07amr151327185a.34.1721112383083; 
+ Mon, 15 Jul 2024 23:46:23 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.82])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a160c6f5efsm266243785a.107.2024.07.15.23.46.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jul 2024 23:46:22 -0700 (PDT)
+Message-ID: <bcbd4622-ba30-4210-91c0-321406bd1f1a@linaro.org>
+Date: Tue, 16 Jul 2024 08:46:19 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] esp.c: remove transfer size check from DMA DATA IN and
+ DATA OUT transfers
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, fam@euphon.net
+References: <20240713224249.468084-1-mark.cave-ayland@ilande.co.uk>
+ <1408e396-b597-4481-b537-e7b53976d5d1@linaro.org>
+ <de7fe2e4-a590-4fe0-801c-b7998927c570@ilande.co.uk>
+Content-Language: en-US
+Cc: Thomas Huth <thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <de7fe2e4-a590-4fe0-801c-b7998927c570@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.17;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,40 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When ram_block_discard_require() fails, errno is passed to error_setg_errno().
-It's a stale value or 0 which is unrelated to ram_block_discard_require().
+On 16/7/24 00:01, Mark Cave-Ayland wrote:
+> On 15/07/2024 07:48, Philippe Mathieu-Daudé wrote:
+> 
+>> On 14/7/24 00:42, Mark Cave-Ayland wrote:
+>>> The transfer size check was originally added to prevent consecutive 
+>>> DMA TI
+>>> commands from causing an assert() due to an existing SCSI request 
+>>> being in
+>>> progress, but since the last set of updates
+>>
+>> [*]
+>>
+>>> this is no longer required.
+>>>
+>>> Remove the transfer size check from DMA DATA IN and DATA OUT 
+>>> transfers so
+>>> that issuing a DMA TI command when there is no data left to transfer 
+>>> does
+>>> not cause an assert() due to an existing SCSI request being in progress.
+>>>
+>>
+>> [*] See commits f3ace75be8..78d68f312a
+>>
+>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2415
+>>> ---
+>>>   hw/scsi/esp.c | 4 ++--
+>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>> Queued adding [*], thanks.
+> 
+> Awesome, thanks Phil!
 
-As ram_block_discard_require() already returns -EBUSY in failure case,
-use it as errno for error_setg_errno().
+I'm getting dubious timeout on the msys2 build on the SPARC target:
+https://gitlab.com/philmd/qemu/-/jobs/7347774958
 
-Fixes: 852f0048f3ea ("make guest_memfd require uncoordinated discard")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- system/physmem.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+qemu:qtest+qtest-sparc / qtest-sparc/qom-test time out (After 900.0 seconds)
+   1/151 qemu:qtest+qtest-sparc / qtest-sparc/qom-test 
+TIMEOUT        900.38s   exit status 1
+qemu:qtest+qtest-sparc / qtest-sparc/device-introspect-test time out 
+(After 720.0 seconds)
+   2/151 qemu:qtest+qtest-sparc / qtest-sparc/device-introspect-test 
+TIMEOUT        720.23s   exit status 1
+qemu:qtest+qtest-sparc / qtest-sparc/prom-env-test time out (After 360.0 
+seconds)
+   4/151 qemu:qtest+qtest-sparc / qtest-sparc/prom-env-test 
+TIMEOUT        360.17s   exit status 1
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 2154432cb6..9a3b3a7636 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1845,11 +1845,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     }
- 
-     if (new_block->flags & RAM_GUEST_MEMFD) {
-+        int ret;
-+
-         assert(kvm_enabled());
-         assert(new_block->guest_memfd < 0);
- 
--        if (ram_block_discard_require(true) < 0) {
--            error_setg_errno(errp, errno,
-+        ret = ram_block_discard_require(true);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret,
-                              "cannot set up private guest memory: discard currently blocked");
-             error_append_hint(errp, "Are you using assigned devices?\n");
-             goto out_free;
--- 
-2.34.1
+Not sure this patch is the culprit, but since only SPARC is affected,
+likely. I'll retest without this patch.
 
+Regards,
+
+Phil.
 
