@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AFBBC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217AFC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sThE4-0001LK-Ue; Tue, 16 Jul 2024 08:24:12 -0400
+	id 1sThGH-0005pw-Tr; Tue, 16 Jul 2024 08:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThE4-0001KH-56
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:24:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThE2-0007A7-E3
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:24:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721132648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UdS83IvNJLwfSwN9FiEgATBMKBR189+2rm0NqPmACx4=;
- b=MfaKYqGGMUtCG8UgG+k64WYg3GBl6sZ5+JMc4JdMIbYWcaRs0gEtKaEjvCri6V5X11p0GC
- IVaj6dT+IFmhSnUmQWyrP5JTfqv8M8VJYBRuKrGcHUZybKqz0uDgcofOxucI4vQDYLgF+H
- GieUM8ptUe3uDXD6TwzObJy33buNHTA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-ZzWNDtGTMtSJEmBtG5_VYw-1; Tue, 16 Jul 2024 08:24:05 -0400
-X-MC-Unique: ZzWNDtGTMtSJEmBtG5_VYw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42794cb8251so35269015e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:24:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sThGD-0005mT-JB
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:26:28 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sThGB-0007lD-8y
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:26:25 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-70361745053so2146056a34.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721132781; x=1721737581; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=70On1nl54TUx4JS0/JF64ELZTTFL0csQutk2/9F/nqQ=;
+ b=F+8svhvbmzDM/cCCltTLPNqFN89TfGmYImoehZseG+aFELpBt+CMmVKYIUKXs8V4N4
+ qDnUFjNSRUqSZRnDql7NKohw+UEsPuqFsNaa0xIcrFjcQv0ETuz1konO3p7GvnDw1l/9
+ mltYC4IbQSYCrFBHaF4Uv7/z22S5xzohBBXNvBUcngv+GwI0OLLE08SrpCf+r3/VC66P
+ FuKixqQLzXrTmBQ4/Ho/wPocylfgvcclcvt1ubKuedlfqaMV+lD+ChhUcX5FXc3gav0i
+ qaB7snB63KyWzH6cTye0k2JVIOVoQj/KfBxE8ZUc5/dBtLQti2Lth7k/yRqhQs2ZAsu/
+ liVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721132645; x=1721737445;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1721132781; x=1721737581;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UdS83IvNJLwfSwN9FiEgATBMKBR189+2rm0NqPmACx4=;
- b=TW8f2UHDtNl4KIK6i7WwJB1rYc2TRhNw7cOEUnfn5C3W6hw7+3TzH7BzIjGRE9JO90
- xBii128m4Xu32sr93J7M60X5+t2nvXS5f//JVr+FtavsifccJV6r3OEMCIDhxkhzyeDD
- oiY/ECEVH2n+0EWAulaYuB/mxGoib3LwT4rCzhTFdHyueeUl44VgQDcKBtfID95wwsKQ
- OpJLt8HUlkYiYt3YF1r+xH6TR4/rcdpS1Violwq2xtJ0ZEdngT0q44nI81JlJ+NZxzSF
- 2myS0e/hJHOf1fOD06D/81AsIkHet5HCTRFSvLWv4HafGOAWK2gLvRnlVjS3gcBMe/9P
- vCsA==
+ bh=70On1nl54TUx4JS0/JF64ELZTTFL0csQutk2/9F/nqQ=;
+ b=SCvWrRyzyqLKQog2ShRfllTGR2WQuqvjVYLPd6Lyj2vqJz2vOIktcc2QTMURyBPoCx
+ POsYxL33wHAxr8HWI7bpWOvpAgzKGIme8XumRB90usQ7Nrn/mTBTL4OgIIeRDsEslyBy
+ 1vtm4tgflrtQcNi1JAdOxfCO6w3KeMzz0oO0nrLA7lgwvHuSf3vwLJ9XnilSwgzMj7d6
+ wL3fekDefsROa/SjOF8MbiSE33VeXdsXEC7mqj5IBgL5CbG3EpviBPElaumtq6MVPW7d
+ SAdinEo2jmRenAy5eNPYOo6XvZhjli2wBMBYh+sq5gCaqVQwSCddqR4/cWPqpKy/bXk7
+ 2IXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvCp80DlmXx27CZzAUF7UpdnJ/V1qdyhnkmOHWtkgNMFKc+C/fxx0ikzdwZ78vedEgN2Nj4ZB0CQ0BCdkfqy0jdT7KAAI=
-X-Gm-Message-State: AOJu0YzVuNgbvWjWDoxClS7ZjYFd+V+UhIaP1OMkXk8ZVFB2MK3vQsUZ
- GEZ8aIM+/2lwaN1nnLse5THyI7Y51GHnJSUHmQWqQNnS4I9jZpZ/xLl0yMDXGid85hUKZq3Ml+o
- Z9Iu3pMWQ4arj6YAlSc5idpM8HAZjtSo1EBXPVk4MVzGTDIHS3KmY
-X-Received: by 2002:a05:600c:4f8e:b0:426:61af:e1d3 with SMTP id
- 5b1f17b1804b1-427ba6dc04fmr12598055e9.31.1721132644803; 
- Tue, 16 Jul 2024 05:24:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4qAhwQuX1zddJwAaxvkdsbDCmgGr/nowHSeY6q9fU4150zJd0EPKrsmcDcmTEjcBJnGkVjw==
-X-Received: by 2002:a05:600c:4f8e:b0:426:61af:e1d3 with SMTP id
- 5b1f17b1804b1-427ba6dc04fmr12597905e9.31.1721132644426; 
- Tue, 16 Jul 2024 05:24:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
- ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
+ AJvYcCXdzzGYmHUOcj0+uZtgqQmDjV8uGpR2sKUb+iDG7KROPrk7fIkQkiG3mzTRjSNjA3B+MJH/RZVdffdO2Nq8P57a1z5Ck7Q=
+X-Gm-Message-State: AOJu0YwjCjSeyMR2QbNsLhPx1jAVJWmZJ4m0Dms7HEtzuHvS0L9d8wZc
+ pBFJqWUIg9Owb3I8I9BoChcF67ukwsHjXj0zjINLxEo7zpcfwdKAYCgsvLbyktw=
+X-Google-Smtp-Source: AGHT+IEq9EFHQosCXk61rGc638X4mwwlsqU0netSsjr948S4FLnIm6218cdlgomyK9/mGf81/JpHdQ==
+X-Received: by 2002:a9d:5606:0:b0:703:63d4:afbf with SMTP id
+ 46e09a7af769-708db33a4c3mr553178a34.16.1721132780670; 
+ Tue, 16 Jul 2024 05:26:20 -0700 (PDT)
+Received: from sunil-laptop ([106.51.187.237])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafbe93sm8861098f8f.77.2024.07.16.05.24.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 05:24:03 -0700 (PDT)
-Message-ID: <df0fef13-447b-4ace-af86-741f8f3e25d8@redhat.com>
-Date: Tue, 16 Jul 2024 14:24:02 +0200
+ 46e09a7af769-708c0d01667sm1295259a34.63.2024.07.16.05.26.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 05:26:20 -0700 (PDT)
+Date: Tue, 16 Jul 2024 17:56:11 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v2 0/9] RISC-V: ACPI: Namespace updates
+Message-ID: <ZpZm48s9zt/glU/H@sunil-laptop>
+References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
+ <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
+ <ZpEmuB6xyh2K77Ic@redhat.com>
+ <20240712155010.3756bb82@imammedo.users.ipa.redhat.com>
+ <20240714034105-mutt-send-email-mst@kernel.org>
+ <20240715144352.22d36779@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/12] vfio/iommufd: Implement
- VFIOIOMMUClass::set_dirty_tracking support
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-10-joao.m.martins@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240712114704.8708-10-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240715144352.22d36779@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,158 +108,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 13:47, Joao Martins wrote:
-> ioctl(iommufd, IOMMU_HWPT_SET_DIRTY_TRACKING, arg) is the UAPI that
-> enables or disables dirty page tracking. It is used if the hwpt
-> has been created with dirty tracking supported domain (stored in
-> hwpt::flags) and it is called on the whole list of iommu domains
-> it is are tracking. On failure it rolls it back.
+On Mon, Jul 15, 2024 at 02:43:52PM +0200, Igor Mammedov wrote:
+> On Sun, 14 Jul 2024 03:46:36 -0400
+> "Michael S. Tsirkin" <mst@redhat.com> wrote:
 > 
-> The checking of hwpt::flags is introduced here as a second user
-> and thus consolidate such check into a helper function
-> iommufd_hwpt_dirty_tracking().
+> > On Fri, Jul 12, 2024 at 03:50:10PM +0200, Igor Mammedov wrote:
+> > > On Fri, 12 Jul 2024 13:51:04 +0100
+> > > Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > >   
+> > > > On Fri, Jul 12, 2024 at 02:43:19PM +0200, Igor Mammedov wrote:  
+> > > > > On Mon,  8 Jul 2024 17:17:32 +0530
+> > > > > Sunil V L <sunilvl@ventanamicro.com> wrote:
+> > > > >     
+> > > > > > This series adds few updates to RISC-V ACPI namespace for virt platform.
+> > > > > > Additionally, it has patches to enable ACPI table testing for RISC-V.
+> > > > > > 
+> > > > > > 1) PCI Link devices need to be created outside the scope of the PCI root
+> > > > > > complex to ensure correct probe ordering by the OS. This matches the
+> > > > > > example given in ACPI spec as well.
+> > > > > > 
+> > > > > > 2) Add PLIC and APLIC as platform devices as well to ensure probing
+> > > > > > order as per BRS spec [1] requirement.
+> > > > > > 
+> > > > > > 3) BRS spec requires RISC-V to use new ACPI ID for the generic UART. So,
+> > > > > > update the HID of the UART.
+> > > > > > 
+> > > > > > 4) Enabled ACPI tables tests for RISC-V which were originally part of
+> > > > > > [2] but couldn't get merged due to updates required in the expected AML
+> > > > > > files. I think combining those patches with this series makes it easier
+> > > > > > to merge since expected AML files are updated.
+> > > > > > 
+> > > > > > [1] - https://github.com/riscv-non-isa/riscv-brs
+> > > > > > [2] - https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg04734.html    
+> > > > > 
+> > > > > btw: CI is not happy about series, see:
+> > > > >  https://gitlab.com/imammedo/qemu/-/pipelines/1371119552
+> > > > > also 'cross-i686-tci' job routinely timeouts on bios-tables-test
+> > > > > but we still keep adding more tests to it.
+> > > > > We should either bump timeout to account for slowness or
+> > > > > disable bios-tables-test for that job.    
+> > > > 
+> > > > Asumming the test is functionally correct, and not hanging, then bumping
+> > > > the timeout is the right answer. You can do this in the meson.build
+> > > > file  
+> > > 
+> > > I think test is fine, since once in a while it passes (I guess it depends on runner host/load)
+> > > 
+> > > Overal job timeout is 1h, but that's not what fails.
+> > > What I see is, the test aborts after 10min timeout.
+> > > it's likely we hit boot_sector_test()/acpi_find_rsdp_address_uefi() timeout.
+> > > That's what we should try to bump.
+> > > 
+> > > PS:
+> > > I've just started the job with 5min bump, lets see if it is enough.  
+> > 
+> > Because we should wait for 5min CPU time, not wall time.
+> > Why don't we do that?
+> > Something like getrusage should work I think.
+> > 
 > 
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->   include/sysemu/iommufd.h |  3 +++
->   backends/iommufd.c       | 23 +++++++++++++++++++++++
->   hw/vfio/iommufd.c        | 39 ++++++++++++++++++++++++++++++++++++++-
->   backends/trace-events    |  1 +
->   4 files changed, 65 insertions(+), 1 deletion(-)
+> It turned out to be a meson timeout that's set individually per test file.
+> I'll send a patch later on.
 > 
-> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-> index e917e7591d05..7416d9219703 100644
-> --- a/include/sysemu/iommufd.h
-> +++ b/include/sysemu/iommufd.h
-> @@ -55,6 +55,9 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->                                   uint32_t data_type, uint32_t data_len,
->                                   void *data_ptr, uint32_t *out_hwpt,
->                                   Error **errp);
-> +bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
-> +                                        bool start, Error **errp);
->   
->   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
-> +
->   #endif
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 41a9dec3b2c5..239f0976e0ad 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -239,6 +239,29 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->       return true;
->   }
->   
-> +bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
-> +                                        uint32_t hwpt_id, bool start,
-> +                                        Error **errp)
-> +{
-> +    int ret;
-> +    struct iommu_hwpt_set_dirty_tracking set_dirty = {
-> +            .size = sizeof(set_dirty),
-> +            .hwpt_id = hwpt_id,
-> +            .flags = !start ? 0 : IOMMU_HWPT_DIRTY_TRACKING_ENABLE,
+Hi Igor,
 
-How about :
+I am unable to get msys2-64bit test in CI to pass. I tried including
+your change in meson as well but no luck. I can't guess how enabling
+bios-tables-test for RISC-V is affecting this particular test. Does this
+pass for you? 
 
-             .flags = start ? IOMMU_HWPT_DIRTY_TRACKING_ENABLE : 0,
+https://gitlab.com/vlsunil/qemu/-/jobs/7343701148
 
-?
-
-
-Thanks,
-
-C.
-
-
-> +    };
-> +
-> +    ret = ioctl(be->fd, IOMMU_HWPT_SET_DIRTY_TRACKING, &set_dirty);
-> +    trace_iommufd_backend_set_dirty(be->fd, hwpt_id, start, ret ? errno : 0);
-> +    if (ret) {
-> +        error_setg_errno(errp, errno,
-> +                         "IOMMU_HWPT_SET_DIRTY_TRACKING(hwpt_id %u) failed",
-> +                         hwpt_id);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->                                        uint32_t *type, void *data, uint32_t len,
->                                        uint64_t *caps, Error **errp)
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index edc8f97d8f3d..da678315faeb 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -110,6 +110,42 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
->       iommufd_backend_disconnect(vbasedev->iommufd);
->   }
->   
-> +static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
-> +{
-> +    return hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
-> +}
-> +
-> +static int iommufd_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
-> +                                           bool start, Error **errp)
-> +{
-> +    const VFIOIOMMUFDContainer *container =
-> +        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
-> +    VFIOIOASHwpt *hwpt;
-> +
-> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
-> +        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
-> +            continue;
-> +        }
-> +
-> +        if (!iommufd_backend_set_dirty_tracking(container->be,
-> +                                                hwpt->hwpt_id, start, errp)) {
-> +            goto err;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +
-> +err:
-> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
-> +        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
-> +            continue;
-> +        }
-> +        iommufd_backend_set_dirty_tracking(container->be,
-> +                                           hwpt->hwpt_id, !start, NULL);
-> +    }
-> +    return -EINVAL;
-> +}
-> +
->   static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->   {
->       ERRP_GUARD();
-> @@ -278,7 +314,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->       QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
->       QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
->       container->bcontainer.dirty_pages_supported |=
-> -                              (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING);
-> +                              iommufd_hwpt_dirty_tracking(hwpt);
->       return true;
->   }
->   
-> @@ -717,6 +753,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
->       vioc->attach_device = iommufd_cdev_attach;
->       vioc->detach_device = iommufd_cdev_detach;
->       vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
-> +    vioc->set_dirty_page_tracking = iommufd_set_dirty_page_tracking;
->   };
->   
->   static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-> diff --git a/backends/trace-events b/backends/trace-events
-> index 4d8ac02fe7d6..28aca3b859d4 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -16,3 +16,4 @@ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t si
->   iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
->   iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
->   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
-> +iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
-
+Thanks!
+Sunil
 
