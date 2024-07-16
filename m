@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C20C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C84C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTjRp-0004JH-Ay; Tue, 16 Jul 2024 10:46:33 -0400
+	id 1sTjUA-00052Q-5h; Tue, 16 Jul 2024 10:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTjRn-000457-LS
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:46:31 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTjRb-0003qc-Ly
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:46:22 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-52e9a920e73so6363727e87.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:46:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721141178; x=1721745978; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yqokjoCG55Te5jtEkDpVM9qgh4gKS4rDpXQ67Rl5yPw=;
- b=ZoTVsLbw9qL2q95gdQl23/P3TvE5wHCEMrC/YummDjXb1zvPqCYx73qgrjQfObwj6M
- EHFlT61W+KtmMn7qAtJ0lNN1J8yqEve/I8h+XkEIIhYrSVisJbBAkoex7iB4Db2QEyQT
- JLmw6WDR8irHwe11/3C6u7nrVzvBrTUYkAxl99mB8RdFfFQfpGBCB3r6kWNip1qoMFyC
- 4dh+vG9SjidGpPJj01dmJTaD0bkfXygLjzuFxD7raSg67SBI0IeIUncgH2EIhvlYfTk3
- sx6EA8hJxtZ9Xf8Jp/onocb32zzsCCehhM2NMg46qDcZQg3YoYLMqpe2MV8hJduPPhue
- 8Ryg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjTq-0004PT-Kk
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:48:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjTj-0004H7-Eh
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:48:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721141309;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yv/he6kSdfWA9ox/1K0866EPQziI3Z7o94CZyEviW7g=;
+ b=MrNuC2cCI3cAzsuKA2MEQiurcsV72gkL+GJ1trgA+ApUFIfKF/BEtvSXiqj9UlaGiDUWV1
+ Lkj3J/u4ajjk3/xfqrBPBrruGyjFDk5mSPDUGpzGtf+EVim9U7MAFliMknQWHc/NNWRFZl
+ JAS103/w2WClRo1xkg8+zscCn/zI8i8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-LayDxbcqNGWwqEjJIydBlg-1; Tue, 16 Jul 2024 10:48:27 -0400
+X-MC-Unique: LayDxbcqNGWwqEjJIydBlg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42725ec6e0aso41633845e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:48:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721141178; x=1721745978;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yqokjoCG55Te5jtEkDpVM9qgh4gKS4rDpXQ67Rl5yPw=;
- b=HZ6o1kwr2EwQjRTwP17I65rV6yicmLDhfkjlLZQiccZmnCUCsnQJgj5iMm8z264tAn
- 6MPruKb8CxP4FGdR8LJ/2QK8Lnznlt/RmAjrsLUAy9eLupaGkl4jTw9GZe8ZjnULsbsX
- lg8H0fUCqd4fRG4BmzAsAwMRF7IVg32B0kiTYDK9wE1X476DhGVzcPNKVk8D9DG6DyRX
- BvpnvO1z/CVIzF2yBRkieecy0Kk7cYahsTNh/Y3WJ7Zb6GmiuDwkNKeZ9kzmb9psM6fJ
- zkqNLOIHuJET17m7XBM4roEWcrboZQ9RrA+LO6nX5+HRqV9CUe3dIBPaubbw/vvGYuKO
- sWJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoGt+ME9LDcEsYlh8sbPojGMzNVAuxgLuEeCn8ylT9AKRQXua61Rj1U97whASjl3Om1pG6rplGnvV6+AlhyxP4zEW2R8o=
-X-Gm-Message-State: AOJu0YwQiprak5mX1iIpH3tzP0qtBFT77CWYvHoh8YOOegdMuZO5aV6X
- zZu9skecfLdZFA3hlAUqcTg6/1agu9qCKFHK9mwQy1SJh/o45oWxkocQX4e/Wqs=
-X-Google-Smtp-Source: AGHT+IEqNmJaYVXFyhUl+i6jrfksfR4ca2p8WzxmEuW9nYjNKrENPBs5SNRyW2MxDFx74GyK6+70hw==
-X-Received: by 2002:a05:6512:4018:b0:52e:be50:9c55 with SMTP id
- 2adb3069b0e04-52edf033f76mr1510967e87.52.1721141177639; 
- Tue, 16 Jul 2024 07:46:17 -0700 (PDT)
-Received: from [192.168.1.172] ([185.87.38.242])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427bb99a23dsm20287815e9.1.2024.07.16.07.46.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 07:46:17 -0700 (PDT)
-Message-ID: <64d26790-5003-4da5-9cb2-eb9ea43112b3@linaro.org>
-Date: Tue, 16 Jul 2024 16:46:14 +0200
+ d=1e100.net; s=20230601; t=1721141306; x=1721746106;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yv/he6kSdfWA9ox/1K0866EPQziI3Z7o94CZyEviW7g=;
+ b=FXlE7QG8w5SqMUat5bAhM2FE4N7rew5bANkPA/8yv0APcNp641rrV2qYjP7lfWMPDh
+ vSqbSnOY/SWYdZthX+T4DlgRXQjc4e+N+izgAtBunvGZWCTNf+ZiSDtmJj++pqkroJGH
+ DATeGPb4mqPnmzEEDGUHeALI0y6X6o+p8DblnWgXUq42usujvxo/Ol2tx8wnAaFuG6wL
+ X721W8K0NLJIwn8sjQBjcfIoMkoxvpag04iUQPLhon5Km1knOEHTKNyuP5py+T04TOAX
+ Gee4aTd1oORjsjwq0ZtXps0Vv6QJRp9mgK2bBw4JUI6Kpo7Ha0xIpgpJcVJiB8m/aB1g
+ d4Xg==
+X-Gm-Message-State: AOJu0YzQOsqzhewh8gqEfbH3I0bm/5h7+yewscqBGkuNN7K3xSMCFkcJ
+ V6ZiLj8kgBJ4yn/j1jgJbR1ZfYMohYCwjEI1SFZsMbubAc0E4H4qJfnwP7wXbO2ag7xBs9ELUMQ
+ lYfbvGfP4LWgnyu+x9ZL1ggLAauMEK8lF5uFPxeWxQNmKhTiU/s77
+X-Received: by 2002:a5d:5265:0:b0:367:83e9:b4a5 with SMTP id
+ ffacd0b85a97d-3682631f714mr1608234f8f.49.1721141306724; 
+ Tue, 16 Jul 2024 07:48:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQXe31laLHVBszqoxU7Cqjw+mBkkC1F6/dzKxOubqc9BehIgrr5POKv2Up9Bkw4Rgp+Cne0g==
+X-Received: by 2002:a5d:5265:0:b0:367:83e9:b4a5 with SMTP id
+ ffacd0b85a97d-3682631f714mr1608215f8f.49.1721141306378; 
+ Tue, 16 Jul 2024 07:48:26 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3681c30a024sm4990652f8f.96.2024.07.16.07.48.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 07:48:25 -0700 (PDT)
+Date: Tue, 16 Jul 2024 16:48:25 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] tests: increase timeout per instance of bios-tables-test
+Message-ID: <20240716164825.5e374077@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240716090554-mutt-send-email-mst@kernel.org>
+References: <20240716125930.620861-1-imammedo@redhat.com>
+ <20240716090554-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] osdep: add a qemu_close_all_open_fd() helper
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240716144006.6571-1-cleger@rivosinc.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240716144006.6571-1-cleger@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,67 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Clément,
+On Tue, 16 Jul 2024 09:06:59 -0400
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-On 16/7/24 16:39, Clément Léger wrote:
-> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
-> POSIX"), the maximum number of file descriptors that can be opened are
-> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
-> of 1073741816 file descriptors. Now, when forking to start
-> qemu-bridge-helper, this actually calls close() on the full possible file
-> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
-> takes a considerable amount of time. In order to reduce that time,
-> factorize existing code to close all open files descriptors in a new
-> qemu_close_all_open_fd() function. This function uses various methods
-> to close all the open file descriptors ranging from the most efficient
-> one to the least one. It also accepts an ordered array of file
-> descriptors that should not be closed since this is required by the
-> callers that calls it after forking.
+> On Tue, Jul 16, 2024 at 02:59:30PM +0200, Igor Mammedov wrote:
+> > CI often fails 'cross-i686-tci' job due to runner slowness
+> > Log shows that test almost complete, with a few remaining
+> > when bios-tables-test timeout hits:
+> > 
+> >   19/270 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
+> >     TIMEOUT        610.02s   killed by signal 15 SIGTERM
+> >   ...
+> >   stderr:
+> >   TAP parsing error: Too few tests run (expected 8, got 7)
+> > 
+> > At the same time overall job running time is only ~30 out of 1hr allowed.
+> > 
+> > Increase bios-tables-test instance timeout on 5min as a fix
+> > for slow CI runners.
+> > 
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>  
 > 
-> Signed-off-by: Clément Léger <cleger@rivosinc.com>
-> 
-> ----
-> 
-> v3:
->   - Use STD*_FILENO defines instead of raw values
->   - Fix indentation of close_all_fds_after_fork()
->   - Check for nksip in fallback code
->   - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
->   - Use unsigned for cur_skip
->   - Move ifdefs inside close_fds functions rather than redefining them
->   - Remove uneeded 'if(nskip)' test
->   - Add comments to close_range version
->   - Reduce range of skip fd as we find them in
->   - v2: https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
-> 
-> v2:
->   - Factorize async_teardown.c close_fds implementation as well as tap.c ones
->   - Apply checkpatch
->   - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
-> 
-> ---
->   include/qemu/osdep.h    |   8 +++
->   net/tap.c               |  33 +++++-----
->   system/async-teardown.c |  37 +-----------
->   util/osdep.c            | 129 ++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 157 insertions(+), 50 deletions(-)
-> 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index 191916f38e..43a035d756 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -757,6 +757,14 @@ static inline void qemu_reset_optind(void)
->   
->   int qemu_fdatasync(int fd);
->   
-> +/**
-> + * Close all open file descriptors except the ones supplied in the @skip array
-> + *
-> + * @skip: ordered array of distinct file descriptors that should not be closed
-> + * @nskip: number of entries in the @skip array.
-> + */
+> We can't just keep increasing the timeout.
+in this case I'm following precedent
+https://gitlab.com/qemu-project/qemu/-/commit/a1f5a47b60d119859d974bed4d66db745448aac6
+I'm not saying that the right approach (though seems to work for now)
 
-Can we mention @skip is optional, and @nskip can be 0?
+> The issue is checking wall time on a busy host,
+> isn't it? Let's check CPU time instead.
+It likely won't help as we still racing with wallclock
+overall job timeout (which sometimes triggers failure too,
+I guess it depends on stars alignment and load on the host).
 
-Also I'd assert(skip != NULL || nskip == 0).
+Anyways, I don't have know-how when it comes to meson,
+to do more than this patch.
+
+with this patch 'cross-i686-tci' job passes for me,
+but we have msys2-64bit failing atm due timeouts as well
+(seems to be limited to sparc tests)
+
+> 
+> > ---
+> >  tests/qtest/meson.build | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> > index 6508bfb1a2..ff9200f882 100644
+> > --- a/tests/qtest/meson.build
+> > +++ b/tests/qtest/meson.build
+> > @@ -1,6 +1,6 @@
+> >  slow_qtests = {
+> >    'aspeed_smc-test': 360,
+> > -  'bios-tables-test' : 610,
+> > +  'bios-tables-test' : 910,
+> >    'cdrom-test' : 610,
+> >    'device-introspect-test' : 720,
+> >    'migration-test' : 480,
+> > -- 
+> > 2.43.0  
+> 
+
 
