@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3234AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE0EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTkDU-0001Hr-Rd; Tue, 16 Jul 2024 11:35:48 -0400
+	id 1sTkNH-0000k0-Bi; Tue, 16 Jul 2024 11:45:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sTkDR-0001H6-Qh
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:35:47 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sTkMo-0000eK-Mn
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:45:26 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sTkDP-0002VU-H7
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:35:45 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70b04cb28acso4500851b3a.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 08:35:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sTkMj-0005Rv-AD
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:45:26 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-59a47d5c22aso6577371a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 08:45:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721144141; x=1721748941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ltMjZYg8iamV7WgWKaU9Pk0pD9QhZaxjdrP4FA9UljU=;
- b=JAjZJCZcWVCPfvuiVLI5UgJuaYO3xzTI602DADb1CrgDQ5xCpQzH0PR+/2r9frYJZ3
- mcRowctlh2Nk4OsvGXYr9a/n6ssuO4lrrMUGBJpLRhpthXi9PLtDo5yPNyOvUHmNac6m
- ttlFZYJp17oSqE1TkrSanfrD4h1NDjzf97Jup2pXr6TqUbLkV9ON4jhwzGX+MWMdDTrT
- dWozNlLNusj3Wruq6ODnOHPOId8WXxCV2cd8RHM0NyMt33Qh2s61nAcCoOFkdj7Py20T
- 3GEyc/azoAGDYj6U1spHqnDj4NWfxPXIqi0TQaDI/k2LLX1clH6IhAyOt5iSvN0CRMn6
- 55lA==
+ d=linaro.org; s=google; t=1721144717; x=1721749517; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tnC94CA6Wtnoc/KfdjZwVUh67iEETLFKI5zEbjRRUA8=;
+ b=VgM1KUNAc2dhMu7RUNpdWGxB1RBHBcsdRs+AidnAocZI4vN/BQ1EBKzJ3B2jONEfAN
+ fSqCD/c6vMbzvMGoZSMscWLj7HRxY9PMo3yD7SjU9QYIp9Lns7Y3Aq3UR0kTAJ9kmIdd
+ GM54Yb0Pp8/4sIQvDqFwu196q/6TxIAZuljLZsD381o4lDFx3lF4NpVKLJcCPRT/G9Nt
+ s32EvsW86KxnAFXtOSYSGxp+HZSCmr6lZEWX4WRRAhE7ifVbQ2GtGHdQB/Nm/KuRHfdk
+ C0kl5HOLvrRMBZ2KPn+vAwjPzfF+vEVr/11301yAlFO0cZ6gFsQMSr9Uhs9yE7Vzrw9o
+ cKZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721144141; x=1721748941;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ltMjZYg8iamV7WgWKaU9Pk0pD9QhZaxjdrP4FA9UljU=;
- b=CZw3n1tfaq5goYvn2dJJpwvJzj3CPjOeM4FuGS9wQc7Arcw5uzIUS+Qs358SBSiVyh
- V5GcI8Qm4w7xJ6sJAEGUPzYeH4HcjN+xMoxCrrM7VA3Gze2nLFWFPvuSR5y12do7QUI1
- lXCH0K0InB1E2HtECOygY9mLAuQJrYRaqs7XNeWwCuNK1lAv1n7FvT5/A2XqYihOj0cr
- +mGqrNjztX91AVwf8yDdhEVWZhr+U6tO3HbhycbB/5uWu0Yo/T8cSgeRNkjWbs/UU381
- a0Wftv2xoSalo4zVZCeOlsdxsOIPXEMIle88F23QeNX90SVw+elG+KNaRcQbdM8pzzM6
- DR4A==
-X-Gm-Message-State: AOJu0YxKQoOnk3Mi+V8+sW5aWV39Jt5yTIRSJWWqQttd6KAp0BPdfnre
- 4DcxW8+O5wkINGZlh9Iga95B0mMifm69xTKlODKq9xRWpOLc7aen9nG0HhAS23U=
-X-Google-Smtp-Source: AGHT+IG/U0RNhrGZ/NK6NqVHRx9F+7EDzy3MUvVdKKrDs+Oo/ekFsbqiuJHWeszs/JWZo2OrGuEQEw==
-X-Received: by 2002:a05:6a00:3d53:b0:706:6867:7a63 with SMTP id
- d2e1a72fcca58-70cd839b428mr3468259b3a.6.1721144141127; 
- Tue, 16 Jul 2024 08:35:41 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::bfd3? ([2604:3d08:9384:1d00::bfd3])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-78e33cb6232sm5061491a12.24.2024.07.16.08.35.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 08:35:40 -0700 (PDT)
-Message-ID: <da5e6235-311e-4dc2-ad01-fc4fd12b22df@linaro.org>
-Date: Tue, 16 Jul 2024 08:35:39 -0700
+ d=1e100.net; s=20230601; t=1721144717; x=1721749517;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tnC94CA6Wtnoc/KfdjZwVUh67iEETLFKI5zEbjRRUA8=;
+ b=nD8gcLLWTH17+apuYedc2mCKgQfZZ0Mt1ifOtuE+79cJHQ5gN6/tzWTklzt4UQw9yr
+ 8SpCLqXZO4nUmC82WbbzFR6s/Ciw5WLLT5b20HFI+PkQwLtfM6ew9xtFZQkzBbpUyvCN
+ 8YO2x2FKgAQPrBRKFmAeLckyKZjGRqjPaeupkSKUQ15clfs1i7nxBrWADYn01L+z/nWf
+ lFuu403SEkGoAys0RDci3L8JnVkafymmLs4YN4dm2nbbXEGjFslj9aTsygn4pj433msx
+ 3ZUcd1gUohdquKnzcpxagXamhfr13f8+vMw9xVHjBlpabjMcnYwVhQHRFugTUXaiu60p
+ KYfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyhAEbEQ7vaugZ+C7E/LiWru8hcGoA57KCwLYEzfGmpVedEnGl4aDIdhwtCqTIviJLLwKmhLqSaGkSzey8Ju/OAOsgq+U=
+X-Gm-Message-State: AOJu0Yw1ZlSGlNyztpW5yn472II2/4ahaKEc03benFvVi3163iwjvsMp
+ vzXaGdLIQCfr2F0Jt7kEzK4J83Np78Ug7PJQxWXsgx+PxnlEcO9vWttKdtVMZmPQvN/VTGj5Rb3
+ bxW/HkzsmnF8+l8Q7WECdG5xZ8Xvz3zHaIML5EA==
+X-Google-Smtp-Source: AGHT+IEs3jK3hckx/cw9tJsCBh5KG0VMX0CBpcDARh/n27bdiCT/MjmCHK2eXWtkmCLOsFdtOEIw2E4nVUug/3GNFZY=
+X-Received: by 2002:a50:8adb:0:b0:57c:f091:f607 with SMTP id
+ 4fb4d7f45d1cf-59ef00b4020mr1733294a12.29.1721144716935; Tue, 16 Jul 2024
+ 08:45:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] plugins/stoptrigger: TCG plugin to stop execution
- under conditions
-To: Simon Hamelin <Simon.Hamelin@grenoble-inp.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240710120854.34333-2-simon.hamelin@grenoble-inp.org>
- <87jzhsqm97.fsf@draig.linaro.org>
- <b03c9f17-a99a-4b6e-883b-37ce092d2a57@grenoble-inp.org>
- <95ebaf0d-2dee-4403-94c6-44e654f05b38@linaro.org>
- <ceab7747-1baa-46d3-860d-b99247e3a65c@grenoble-inp.org>
- <4967cfde-65d0-46ac-8956-a23eb9836e90@linaro.org>
- <b964ae7b-6ae4-43a4-b886-70e8e9875f58@grenoble-inp.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b964ae7b-6ae4-43a4-b886-70e8e9875f58@grenoble-inp.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+References: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+In-Reply-To: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jul 2024 16:45:05 +0100
+Message-ID: <CAFEAcA_7BOXSLXJ=VV0pWDvrN=2dWrM3bRTG+31ivPjeVbWGKQ@mail.gmail.com>
+Subject: Re: [PATCH] arm/kvm: add support for MTE
+To: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org, 
+ darren@os.amperecomputing.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +90,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNy8xNi8yNCAwMjowMiwgU2ltb24gSGFtZWxpbiB3cm90ZToNCj4gDQo+IA0KPiBPbiA3
-LzE2LzI0IDAxOjA4LCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gT24gNy8xNS8yNCAw
-MTowOSwgU2ltb24gSGFtZWxpbiB3cm90ZToNCj4+PiBIZWxsbyBQaWVycmljaywNCj4+Pg0K
-Pj4+PiBDb3VsZCB5b3Ugc2hhcmUgYSBiaXQgbW9yZSBpbmZvcm1hdGlvbiBvbiB0aGUgZmlu
-YWwgZ29hbCwgaWYgcG9zc2libGU/DQo+Pj4+IElzIHRoYXQgdXNlZCBmb3IgZnV6emluZyBi
-aW5hcmllcywgc2VjdXJpdHkgYW5hbHlzaXMsIG9yIG90aGVyIHRoaW5ncz8NCj4+Pg0KPj4+
-IEknbSBjdXJyZW50bHkgdXNpbmcgdGhpcyBwbHVnaW4gZm9yIHNlY3VyaXR5IGFuYWx5c2lz
-IHB1cnBvc2VzLg0KPj4+IEJhc2ljYWxseSBteSBnb2FsIGlzIHRvIHNpbXVsYXRlIGZhdWx0
-IGluamVjdGlvbiB1c2luZyBRRU1VLiBUbyBkbyBzbw0KPj4+IEknbSB1c2luZyB0aGlzIHBs
-dWdpbiBhbG9uZyB3aXRoIGFub3RoZXIgcGx1Z2luIHRoYXQgc2tpcHMgYW4NCj4+PiBpbnN0
-cnVjdGlvbiBhdCBhIGdpdmVuIGFkZHJlc3MuIFdpdGggdGhpcyBwbHVnaW4gSSdtIGFibGUg
-dG8gc2VlIGhvdyB0aGUNCj4+PiBwcm9ncmFtIHJlYWN0cyB0byB0aGUgZmF1bHQgYW5kIHN0
-b3AgaXQgd2l0aCBhIGN1c3RvbSByZXR1cm4gY29kZS4NCj4+PiBCYXNpY2FsbHkgdGhlcmUg
-YXJlIDQgY2FzZXM6DQo+Pj4gIMKgwqDCoMKgIC0gVGhlIGZhdWx0IGRvZXMgbm90IGRpc3J1
-cHQgdGhlIHByb2dyYW0gYW5kIGl0IHJlYWNoZXMgdGhlIGV4cGVjdGVkDQo+Pj4gYWRkcmVz
-cy4NCj4+PiAgwqDCoMKgwqAgLSBUaGUgZmF1bHQgZGlzcnVwdCB0aGUgcHJvZ3JhbSBhbmQg
-aXQgcmVhY2hlcyBhbiB1bmV4cGVjdGVkIGFkZHJlc3MNCj4+PiBrbm93biBhcyB0aGUgInRh
-cmdldCIgYWRkcmVzcy4NCj4+PiAgwqDCoMKgwqAgLSBUaGUgZmF1bHQgZGlzcnVwdCB0aGUg
-cHJvZ3JhbSBpbiBzdWNoIGEgd2F5IHRoYXQgaXQgZXhlY3V0ZXMgYSBsb3QNCj4+PiBvZiBp
-bnN0cnVjdGlvbnMgd2l0aG91dCByZWFjaGluZyB0aGUgZXhwZWN0ZWQgYWRkcmVzcywgdGhp
-cyBzaXR1YXRpb24gaXMNCj4+PiBrbm93biBhcyBhICJ0aW1lb3V0Ii4NCj4+PiAgwqDCoMKg
-wqAgLSBUaGUgZmF1bHQgY3Jhc2hlcyB0aGUgZ3Vlc3QsIGNhdXNpbmcgaXQgdG8gcmVhY2gg
-YW4gZXJyb3IgaGFuZGxlcg0KPj4+IGFkZHJlc3MuDQo+Pj4NCj4+DQo+PiBUaGFua3MgZm9y
-IHNoYXJpbmcgdGhpcywgaXQncyBhbiBpbnRlcmVzdGluZyB1c2UgY2FzZS4NCj4+DQo+PiBI
-b3cgZGlkIHlvdSBpbXBsZW1lbnQgaW5zdHJ1Y3Rpb24gc2tpcHBpbmc/DQo+PiBJcyB0aGF0
-IGJhc2VkIG9uIGN1cnJlbnQgQVBJLCBvciBkbyB5b3UgaGF2ZSBhIFFFTVUgZm9yaz8NCj4+
-DQo+IA0KPiBJIGhhZCB0byBleHRlbmQgdGhlIGN1cnJlbnQgQVBJIHRvIHN1cHBvcnQgd3Jp
-dGluZyBndWVzdCByZWdpc3RlcnMsDQo+IHNwZWNpZmljYWxseSBJJ20gc2tpcHBpbmcgaW5z
-dHJ1Y3Rpb25zIGJ5IHdyaXRpbmcgdG8gdGhlIFBDIHJlZ2lzdGVyLiBUbw0KPiBkbyB0aGlz
-IEkgdXNlIHRoZSBzZXRfcGMgZnVuY3Rpb24gb2YgdGhlIENQVUNsYXNzIHN0cnVjdC4gVGhp
-cyByZXF1aXJlcw0KPiBhIGJpdCBvZiBhIGhhY2sgdG8gbWFrZSB0aGUgVENHIHJlYWN0IHRv
-IHRoZSBQQyBjaGFuZ2UgYXMgaXQncyBub3JtYWwNCj4gYmVoYXZpb3IgaXMgdG8gZXhlY3V0
-ZSB0aGUgZW50aXJlIFRCIGFuZCBpZ25vcmUgdGhlIFBDIGNoYW5nZS4gVG8gbWFrZQ0KPiB0
-aGUgVENHIHJlYWN0IHRvIHRoaXMgbW9kaWZpY2F0aW9uIHRoZSBvbmx5IHdheSBJJ3ZlIGZv
-dW5kIGlzIHRvIGxlYXZlDQo+IGl0IG1pZHdheSBpdCdzIGV4ZWN1dGlvbiB1c2luZyB0aGUg
-YGNwdV9sb29wX2V4aXRgIGZ1bmN0aW9uLg0KPiANCg0KT2suDQpTbyBmYXIsIG91ciBBUEkg
-aXMgZGVzaWduZWQgdG8gbm90IGFsbG93IG1vZGlmaWNhdGlvbiBvbiBndWVzdCBzaWRlIA0K
-KGNvZGUgb3IgZGF0YSB3aXNlKS4gSXQncyBkZWZpbml0ZWx5IGEgZGlzY3Vzc2lvbiB3ZSBz
-aG91bGQgc3RhcnQgYXQgDQpzb21lIHBvaW50LCBhcyBpdCBtYXkgYmUgbmVlZGVkIGZvciBz
-cGVjaWZpYyB1c2UgY2FzZXMuDQoNClRoYW5rcyENCg==
+On Tue, 9 Jul 2024 at 07:05, Ganapatrao Kulkarni
+<gankulkarni@os.amperecomputing.com> wrote:
+>
+> Extend the 'mte' property for the virt machine to cover KVM as
+> well. For KVM, we don't allocate tag memory, but instead enable
+> the capability.
+>
+> If MTE has been enabled, we need to disable migration, as we do not
+> yet have a way to migrate the tags as well. Therefore, MTE will stay
+> off with KVM unless requested explicitly.
+>
+> This patch is rework of commit b320e21c48ce64853904bea6631c0158cc2ef227
+> which broke TCG since it made the TCG -cpu max
+> report the presence of MTE to the guest even if the board hadn't
+> enabled MTE by wiring up the tag RAM. This meant that if the guest
+> then tried to use MTE QEMU would segfault accessing the
+> non-existent tag RAM.
+>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+> ---
+
+In target/arm/cpu.c:arm_cpu_realizefn() there is this code:
+
+    if (cpu_isar_feature(aa64_mte, cpu)) {
+        /*
+         * The architectural range of GM blocksize is 2-6, however qemu
+         * doesn't support blocksize of 2 (see HELPER(ldgm)).
+         */
+        if (tcg_enabled()) {
+            assert(cpu->gm_blocksize >= 3 && cpu->gm_blocksize <= 6);
+        }
+
+#ifndef CONFIG_USER_ONLY
+        /*
+         * If we do not have tag-memory provided by the machine,
+         * reduce MTE support to instructions enabled at EL0.
+         * This matches Cortex-A710 BROADCASTMTE input being LOW.
+         */
+        if (cpu->tag_memory == NULL) {
+            cpu->isar.id_aa64pfr1 =
+                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
+        }
+#endif
+    }
+
+With this patch, for KVM we will end up going through the
+"squash ID_AA64PFR1_EL1.MTE to 1" codepath, because KVM doesn't
+set cpu->tag_memory and this is still using that as its check.
+
+More generally, how does the enabling of the MTE KVM cap
+interact with the ID_AA64PFR1_EL1 value that we read from
+the host in kvm_arm_get_host_cpu_features() ? We care that we
+have the right ID register values because we use ID field
+checks to determine whether the vcpu has a feature or not,
+even in the KVM case.
+
+Since Cornelia first wrote the patch this is based on, we've
+landed gdbstub support for MTE (so gdb can find out which
+addresses in the memory map have tags and read and write
+those tags). So I think the KVM MTE support now also needs to
+handle that. (See aarch64_cpu_register_gdb_commands() in
+target/arm/gdbstub64.c.)
+
+thanks
+-- PMM
 
