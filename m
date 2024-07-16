@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3FAC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 07:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948EBC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 07:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTcbc-0004hq-SI; Tue, 16 Jul 2024 03:28:12 -0400
+	id 1sTcc1-0006Qi-Cp; Tue, 16 Jul 2024 03:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTcbb-0004be-9O
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 03:28:11 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sTcbz-0006I0-BF
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 03:28:35 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sTcbZ-0006SI-In
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 03:28:11 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70af22a9c19so3833944b3a.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 00:28:09 -0700 (PDT)
+ id 1sTcbx-0006Xy-0b
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 03:28:35 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-704156d0e0dso2739194a34.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 00:28:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721114888; x=1721719688;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721114912; x=1721719712;
  darn=nongnu.org; 
  h=to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qNvh0sTzcav+0om+9KQZskLO4kNiX/u7v2HI6UKmLHk=;
- b=LerFN5urRqZgKez4ESAfHVp+SvfTN7fa/1tyWLskur+bKSL1usHxmL/JA6p9sppSUj
- 6oMcC49hsbOJ5mp7fgY97I1NpP4RXzVNDNhSxWPP6w/0juYWRSvEise4MOe8v31fM2Wt
- IFZzAvsEFpDnMVrsBOOQgsTHWqL4gMPjijkc4JCvE5yPnzvPszu6vWXV7ZTMKTY+OKxl
- YdLfK3FyNBN00hz9ph39+CSUvid3nQhSsUoeCabrT55pYNf0ImuHoZkBEzyMF/RI7cjF
- sk8YzpXBoAXH9hDdxzHo1LThZAtFryt6H1atoKDAJb3YcSF9eqTos3bNis7XGjgSfsfZ
- MEEg==
+ :reply-to; bh=DgK+8Ab0My7nZ1jTou6SSJrbwenaRoM5fcR5nlg4MS0=;
+ b=1FMd6PeQeNKrl5qqpkI67ydyKuD+WJbzGn2zHz+l25pAN3NgSiL/DbLKxgYFFT0BJi
+ 0t63+dogfzW9oZyV3iIC89BzS0xFbKTqmorHPy/pxQIdBYXxtTamzQTE4YrY4z56rMLe
+ J3a97zyRJw4+o+fErB3BDomYbEMowODcUr6eZNpZpeoWa02BQr2xRLHrCcrQadqB1CRf
+ gNWe7NJbO7cTpDL1jSdWiYioZATDNXp8CefXF7+nXDJB1HsSF/zpimMuryP1UEBBew/F
+ zf9rgp301hXJSKaDCjwqY+ehfAz+mO3d+ClgEFwe7KkjrtUdQ/WUqwk3RiCov0qk4CHW
+ we/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721114888; x=1721719688;
+ d=1e100.net; s=20230601; t=1721114912; x=1721719712;
  h=to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qNvh0sTzcav+0om+9KQZskLO4kNiX/u7v2HI6UKmLHk=;
- b=e0vwidUowt+6leTCRMdY/hTKK6Tcc+/7pw2kFGRxcJReqTTjhpE/+KxQhupJICOR7N
- L2xKJ4TyAPtIjaD+o66mMcxhwwBfdzOxT3/oyegkRova9rEpLfCGpdup/m4lIUtvzTUQ
- LlTqjNqyFG509WIXP9I809mCorXVyHxPnrihCtgy8kX545MWfk5A+ivk3bfOzqN4rtvc
- t7p5gNXZVUAE0yHBieD1A1BzGxuz8gJf1HXcpj9BEiaQqc7tY21zAUltOzUmnsOA/4JL
- 9VcN2EYVaByDx54CQ4taO10bOdsCEUwHLwewG3RGPmtCf1d35SJr1kNiFEY4jvOP4PoU
- meBA==
-X-Gm-Message-State: AOJu0YwE4QyLjO2WvBe5GlUw2Y3rt0j42dBGorm4W8yuw9RcZdC/6+T4
- EhcVOmYg7g0NQba9nCwPtRdCLxetBg/x3tYUh5Rjuq9WohzV78lDeeRKP3jglnU=
-X-Google-Smtp-Source: AGHT+IFqa3dZaRCSXfEBl+BtO2+GcZJyqDHq2hTmhGre9DnwRCjm9IDiG7gqnIbVtB4XKEdTTdSi3g==
-X-Received: by 2002:a05:6a20:3d88:b0:1c0:ef24:413e with SMTP id
- adf61e73a8af0-1c3f1295d2cmr1383042637.36.1721114888199; 
- Tue, 16 Jul 2024 00:28:08 -0700 (PDT)
+ bh=DgK+8Ab0My7nZ1jTou6SSJrbwenaRoM5fcR5nlg4MS0=;
+ b=wnNbjTZ3AQwRDLBPdAlu9V+s3qftdMIPFMGDynXwRBwkVww7IAt1B6mjE7VeFI55vh
+ sjdetUdasH6F3yyUj93tujPrz33cdbrdPcFuuWUBa7kgw851BIv3HwC+uL/XFTRoIUS/
+ UX2BoZcewlsl2ENJC8r5fwKmEGKjUuiTYeF7Bq7s5nK6XKlTrKvmRilIS7ieZstcqxqF
+ L9AtzCrMjWygsybcdhe/DPAcDoKgVpISxiI1ycYKtv9H7ba7Alix5S7A78PEJFfZXPwb
+ oj9iITfqG9YeKZ5nLjXN7Q+RjVRqi0JIfMX464J61etBiRdbwtIviwncnv6bYa04gPZV
+ XZ+g==
+X-Gm-Message-State: AOJu0Yz8RRvZvJH0FuoBruKSerlOtf8vMSy/gsnPv2DEqypnLdMt0rw4
+ SjBiFhHysX3K2BIQDaXJZC1UC6BvVhMNgm4INhMC7vpJyH2TOKWxZFzUy3uAYOM=
+X-Google-Smtp-Source: AGHT+IGB8zQ/FUrAaZCwGH4mmwPrK3IkiI9TIQiLOyTf/QokXdHbW+L25GnXfVqtiak8fNaYte6LXA==
+X-Received: by 2002:a05:6830:929:b0:703:6aa3:d091 with SMTP id
+ 46e09a7af769-708d99609a3mr1848889a34.2.1721114911857; 
+ Tue, 16 Jul 2024 00:28:31 -0700 (PDT)
 Received: from localhost ([157.82.128.7]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fc0bc52568sm51780885ad.290.2024.07.16.00.28.05
+ 41be03b00d2f7-78e3485dcc7sm4400161a12.39.2024.07.16.00.28.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 00:28:07 -0700 (PDT)
+ Tue, 16 Jul 2024 00:28:31 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 16 Jul 2024 16:27:32 +0900
-Subject: [PATCH v4 2/7] ivshmem-server: Use qemu_get_runtime_dir()
+Date: Tue, 16 Jul 2024 16:27:37 +0900
+Subject: [PATCH v4 7/7] spice-app: Use qemu_get_runtime_dir()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240716-run-v4-2-5f7a29631168@daynix.com>
+Message-Id: <20240716-run-v4-7-5f7a29631168@daynix.com>
 References: <20240716-run-v4-0-5f7a29631168@daynix.com>
 In-Reply-To: <20240716-run-v4-0-5f7a29631168@daynix.com>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org, virtio-fs@redhat.com, 
@@ -76,8 +76,8 @@ To: qemu-devel@nongnu.org, qemu-block@nongnu.org, virtio-fs@redhat.com,
  Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::330;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,84 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_get_runtime_dir() is used to construct the default PID file path.
+qemu_get_runtime_dir() provides QEMU-specific fallback of runtime
+directory.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20230921075425.16738-3-akihiko.odaki@daynix.com>
+Message-Id: <20230921075425.16738-9-akihiko.odaki@daynix.com>
 ---
- contrib/ivshmem-server/main.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ ui/spice-app.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/ivshmem-server/main.c b/contrib/ivshmem-server/main.c
-index 5901f17707e0..313124dd4520 100644
---- a/contrib/ivshmem-server/main.c
-+++ b/contrib/ivshmem-server/main.c
-@@ -14,7 +14,6 @@
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index a10b4a58fe74..bbe17358c8d4 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -151,8 +151,8 @@ static void spice_app_display_early_init(DisplayOptions *opts)
+     atexit(spice_app_atexit);
  
- #define IVSHMEM_SERVER_DEFAULT_VERBOSE        0
- #define IVSHMEM_SERVER_DEFAULT_FOREGROUND     0
--#define IVSHMEM_SERVER_DEFAULT_PID_FILE       "/var/run/ivshmem-server.pid"
- #define IVSHMEM_SERVER_DEFAULT_UNIX_SOCK_PATH "/tmp/ivshmem_socket"
- #define IVSHMEM_SERVER_DEFAULT_SHM_PATH       "ivshmem"
- #define IVSHMEM_SERVER_DEFAULT_SHM_SIZE       (4 * 1024 * 1024)
-@@ -35,15 +34,23 @@ typedef struct IvshmemServerArgs {
-     unsigned n_vectors;
- } IvshmemServerArgs;
- 
-+static char *ivshmem_server_get_default_pid_file(void)
-+{
-+    g_autofree char *run = qemu_get_runtime_dir();
-+    return g_build_filename(run, "ivshmem-server.pid", NULL);
-+}
-+
- static void
- ivshmem_server_usage(const char *progname)
- {
-+    g_autofree char *pid_file = ivshmem_server_get_default_pid_file();
-+
-     printf("Usage: %s [OPTION]...\n"
-            "  -h: show this help\n"
-            "  -v: verbose mode\n"
-            "  -F: foreground mode (default is to daemonize)\n"
-            "  -p <pid-file>: path to the PID file (used in daemon mode only)\n"
--           "     default " IVSHMEM_SERVER_DEFAULT_PID_FILE "\n"
-+           "     default %s\n"
-            "  -S <unix-socket-path>: path to the unix socket to listen to\n"
-            "     default " IVSHMEM_SERVER_DEFAULT_UNIX_SOCK_PATH "\n"
-            "  -M <shm-name>: POSIX shared memory object to use\n"
-@@ -54,7 +61,7 @@ ivshmem_server_usage(const char *progname)
-            "     default %u\n"
-            "  -n <nvectors>: number of vectors\n"
-            "     default %u\n",
--           progname, IVSHMEM_SERVER_DEFAULT_SHM_SIZE,
-+           progname, pid_file, IVSHMEM_SERVER_DEFAULT_SHM_SIZE,
-            IVSHMEM_SERVER_DEFAULT_N_VECTORS);
- }
- 
-@@ -189,10 +196,10 @@ main(int argc, char *argv[])
- {
-     IvshmemServer server;
-     struct sigaction sa, sa_quit;
-+    g_autofree char *default_pid_file = NULL;
-     IvshmemServerArgs args = {
-         .verbose = IVSHMEM_SERVER_DEFAULT_VERBOSE,
-         .foreground = IVSHMEM_SERVER_DEFAULT_FOREGROUND,
--        .pid_file = IVSHMEM_SERVER_DEFAULT_PID_FILE,
-         .unix_socket_path = IVSHMEM_SERVER_DEFAULT_UNIX_SOCK_PATH,
-         .shm_path = IVSHMEM_SERVER_DEFAULT_SHM_PATH,
-         .use_shm_open = true,
-@@ -207,6 +214,11 @@ main(int argc, char *argv[])
-      */
-     printf("*** Example code, do not use in production ***\n");
- 
-+    qemu_init_exec_dir(argv[0]);
-+
-+    default_pid_file = ivshmem_server_get_default_pid_file();
-+    args.pid_file = default_pid_file;
-+
-     /* parse arguments, will exit on error */
-     ivshmem_server_parse_args(&args, argc, argv);
- 
+     if (qemu_name) {
+-        app_dir = g_build_filename(g_get_user_runtime_dir(),
+-                                   "qemu", qemu_name, NULL);
++        g_autofree char *run = qemu_get_runtime_dir();
++        app_dir = g_build_filename(run, "qemu", qemu_name, NULL);
+         if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
+             error_report("Failed to create directory %s: %s",
+                          app_dir, strerror(errno));
 
 -- 
 2.45.2
