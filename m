@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B236C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A450CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgKS-0000Pf-RR; Tue, 16 Jul 2024 07:26:44 -0400
+	id 1sTgKu-00010L-RC; Tue, 16 Jul 2024 07:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKR-0000Js-Fe
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKh-0000xV-93
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKP-0003eb-Pl
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKf-0003gS-2d
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721129201;
+ s=mimecast20190719; t=1721129216;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CbeK7o2Avj9RP/nuuizYkz3rpCRVuPxR4fikDUeYbMw=;
- b=TPtuyzcDxmslnunUvtxPwUNLJHmljpJbXluohPTXgj8iqq7AHnZbsSZzjfZgG1kGE9V9oK
- OgDwnzMruZCYZye8b+hDTTESEtHge1Yq+mVBqW2oEeSngda1lP3DlSJLTGlE1+tHlFfY+c
- LEemwe5q6/tWbswkkHOG301EHTBagj0=
+ bh=Ut7/B3YSWJMlNJhfuXedKJXIltv1yhmAq/VM2uBUkSM=;
+ b=D5z4xl10J4d73mqDzCsvoz/Q8Cfrh6Kod6qNZR919x2OEILlCBCfVte7iPn4VJnw3CJCc3
+ 8bV09Ikujn1yWlM7t1HJSl+FasOn4UvPkTVaR+yy83mwSZo4YfNnOjsEDvpmlOgksZR5uz
+ Mqijz+IO4uAhEAFJkXHWf+WxROd40eg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-kUWn3jTQNauKBvXuQNwphw-1; Tue,
- 16 Jul 2024 07:26:38 -0400
-X-MC-Unique: kUWn3jTQNauKBvXuQNwphw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-YT5X2P7ROOOf0rRAD1LDdA-1; Tue,
+ 16 Jul 2024 07:26:53 -0400
+X-MC-Unique: YT5X2P7ROOOf0rRAD1LDdA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B83871944A9B; Tue, 16 Jul 2024 11:26:36 +0000 (UTC)
+ id E997E1944AB2; Tue, 16 Jul 2024 11:26:51 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.154])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E7101955F40; Tue, 16 Jul 2024 11:26:33 +0000 (UTC)
+ id 836151955F40; Tue, 16 Jul 2024 11:26:48 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -54,10 +54,10 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 04/11] tests/functional: Add python-based tests to the meson
- build system
-Date: Tue, 16 Jul 2024 13:26:07 +0200
-Message-ID: <20240716112614.1755692-5-thuth@redhat.com>
+Subject: [PATCH 08/11] tests/functional: Convert some avocado tests that
+ needed avocado.utils.archive
+Date: Tue, 16 Jul 2024 13:26:11 +0200
+Message-ID: <20240716112614.1755692-9-thuth@redhat.com>
 In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
 References: <20240716112614.1755692-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,172 +88,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Integrate the new python-based test framework with the meson build
-system. Since these tests now require the pycotap module, make
-sure that it gets installed in the venv.
-
-The changes to the meson.build files are partly based on an earlier
-patch by Ani Sinha (but heavily modified by Thomas Huth e.g. to use
-pycotap for running the tests instead).
+Instead of using the "archive" module from avocado.utils, switch
+these tests to use the new wrapper function that is based on the
+"tarfile" module instead.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pythondeps.toml              |  3 +-
- tests/Makefile.include       | 18 ++++++++-
- tests/functional/meson.build | 75 ++++++++++++++++++++++++++++++++++++
- tests/meson.build            |  1 +
- 4 files changed, 95 insertions(+), 2 deletions(-)
- create mode 100644 tests/functional/meson.build
+ MAINTAINERS                                   |  6 ++---
+ tests/functional/meson.build                  |  6 +++++
+ .../test_arm_canona1100.py}                   | 21 +++++++++-------
+ .../test_ppc_bamboo.py}                       | 23 ++++++++---------
+ .../test_sparc64_sun4u.py}                    | 25 +++++++++++--------
+ 5 files changed, 46 insertions(+), 35 deletions(-)
+ rename tests/{avocado/machine_arm_canona1100.py => functional/test_arm_canona1100.py} (71%)
+ mode change 100644 => 100755
+ rename tests/{avocado/ppc_bamboo.py => functional/test_ppc_bamboo.py} (75%)
+ mode change 100644 => 100755
+ rename tests/{avocado/machine_sparc64_sun4u.py => functional/test_sparc64_sun4u.py} (60%)
+ mode change 100644 => 100755
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index f6e590fdd8..c018b4d74a 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -26,9 +26,10 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
- sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
- sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 533e22b548..025227954c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -730,7 +730,7 @@ S: Odd Fixes
+ F: include/hw/arm/digic.h
+ F: hw/*/digic*
+ F: include/hw/*/digic*
+-F: tests/avocado/machine_arm_canona1100.py
++F: tests/functional/test_arm_canona1100.py
+ F: docs/system/arm/digic.rst
  
--[avocado]
-+[tests]
- # Note that qemu.git/python/ is always implicitly installed.
- # Prefer an LTS version when updating the accepted versions of
- # avocado-framework, for example right now the limit is 92.x.
- avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
- pycdlib = { accepted = ">=1.11.0" }
-+pycotap = { accepted = ">=1.1.0" }
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index d39d5dd6a4..2bdf607977 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -9,6 +9,8 @@ check-help:
- 	@echo "Individual test suites:"
- 	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
- 	@echo " $(MAKE) check-qtest            Run qtest tests"
-+	@echo " $(MAKE) check-functional       Run python-based functional tests"
-+	@echo " $(MAKE) check-functional-TARG  Run functional tests for a given target"
- 	@echo " $(MAKE) check-unit             Run qobject tests"
- 	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
- 	@echo " $(MAKE) check-block            Run block tests"
-@@ -111,7 +113,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+ Goldfish RTC
+@@ -1425,7 +1425,7 @@ L: qemu-ppc@nongnu.org
+ S: Orphan
+ F: hw/ppc/ppc440_bamboo.c
+ F: hw/pci-host/ppc4xx_pci.c
+-F: tests/avocado/ppc_bamboo.py
++F: tests/functional/test_ppc_bamboo.py
  
- $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
- 	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
--	$(MKVENV_ENSUREGROUP) $< avocado
-+	$(MKVENV_ENSUREGROUP) $< tests
- 	$(call quiet-command, touch $@)
+ e500
+ L: qemu-ppc@nongnu.org
+@@ -1711,7 +1711,7 @@ F: include/hw/pci-host/sabre.h
+ F: hw/pci-bridge/simba.c
+ F: include/hw/pci-bridge/simba.h
+ F: pc-bios/openbios-sparc64
+-F: tests/avocado/machine_sparc64_sun4u.py
++F: tests/functional/test_sparc64_sun4u.py
  
- $(TESTS_RESULTS_DIR):
-@@ -152,6 +154,20 @@ check-acceptance-deprecated-warning:
- 
- check-acceptance: check-acceptance-deprecated-warning | check-avocado
- 
-+# Make sure that pycotap is installed before running any functional tests:
-+ifneq ($(filter check-func%,$(MAKECMDGOALS))$(filter check,$(MAKECMDGOALS)),)
-+do-meson-check: check-venv
-+endif
-+
-+FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
-+.PHONY: $(FUNCTIONAL_TARGETS)
-+$(FUNCTIONAL_TARGETS):
-+	@make SPEED=thorough $(subst -functional,-func,$@)
-+
-+.PHONY: check-functional
-+check-functional:
-+	@make SPEED=thorough check-func check-func-quick
-+
- # Consolidated targets
- 
- .PHONY: check check-clean get-vm-images
+ Sun4v
+ M: Artyom Tarasenko <atar4qemu@gmail.com>
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-new file mode 100644
-index 0000000000..11352b5bb5
---- /dev/null
+index 947f9ac74f..c8fc9f6c07 100644
+--- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -0,0 +1,75 @@
-+# QEMU functional tests:
-+# Tests that are put in the 'quick' category are run by default during
-+# 'make check'. Everything that should not be run during 'make check'
-+# (e.g. tests that fetch assets from the internet) should be put into
-+# the 'thorough' category instead.
-+
-+# Most tests run too slow with TCI enabled, so skip the functional tests there
-+if get_option('tcg_interpreter')
-+  subdir_done()
-+endif
-+
-+# Timeouts for individual tests that can be slow e.g. with debugging enabled
-+test_timeouts = {
-+  'ppc_74xx' : 90,
-+}
-+
-+tests_generic = [
-+  'empty_cpu_model',
-+  'info_usernet',
-+  'version',
+@@ -22,6 +22,7 @@ tests_generic = [
+ ]
+ 
+ tests_arm_thorough = [
++  'arm_canona1100',
+   'arm_n8x0',
+ ]
+ 
+@@ -43,6 +44,11 @@ tests_ppc_quick = [
+ 
+ tests_ppc_thorough = [
+   'ppc_405',
++  'ppc_bamboo',
 +]
 +
-+tests_ppc_quick = [
-+  'ppc_74xx',
-+]
++tests_sparc64_thorough = [
++  'sparc64_sun4u',
+ ]
+ 
+ tests_x86_64_quick = [
+diff --git a/tests/avocado/machine_arm_canona1100.py b/tests/functional/test_arm_canona1100.py
+old mode 100644
+new mode 100755
+similarity index 71%
+rename from tests/avocado/machine_arm_canona1100.py
+rename to tests/functional/test_arm_canona1100.py
+index a42d8b0f2b..de6169f2af
+--- a/tests/avocado/machine_arm_canona1100.py
++++ b/tests/functional/test_arm_canona1100.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that boots the canon-a1100 machine with firmware
+ #
+ # Copyright (c) 2020 Red Hat, Inc.
+@@ -8,9 +10,9 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import archive
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from qemu_test.utils import archive_extract
+ 
+ class CanonA1100Machine(QemuSystemTest):
+     """Boots the barebox firmware and checks that the console is operational"""
+@@ -18,18 +20,19 @@ class CanonA1100Machine(QemuSystemTest):
+     timeout = 90
+ 
+     def test_arm_canona1100(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:canon-a1100
+-        :avocado: tags=device:pflash_cfi02
+-        """
++        self.set_machine('canon-a1100')
 +
-+tests_x86_64_quick = [
-+  'cpu_queries',
-+  'mem_addr_space',
-+  'pc_cpu_hotplug_props',
-+  'virtio_version',
-+]
+         tar_url = ('https://qemu-advcal.gitlab.io'
+                    '/qac-best-of-multiarch/download/day18.tar.xz')
+         tar_hash = '068b5fc4242b29381acee94713509f8a876e9db6'
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(file_path, self.workdir)
++        archive_extract(file_path, dest_dir=self.workdir,
++                        member="day18/barebox.canon-a1100.bin")
+         self.vm.set_console()
+         self.vm.add_args('-bios',
+                          self.workdir + '/day18/barebox.canon-a1100.bin')
+         self.vm.launch()
+         wait_for_console_pattern(self, 'running /env/bin/init')
 +
-+foreach speed : ['quick', 'thorough']
-+  foreach dir : target_dirs
-+    if not dir.endswith('-softmmu')
-+      continue
-+    endif
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
+old mode 100644
+new mode 100755
+similarity index 75%
+rename from tests/avocado/ppc_bamboo.py
+rename to tests/functional/test_ppc_bamboo.py
+index a81be3d608..652b31e95a
+--- a/tests/avocado/ppc_bamboo.py
++++ b/tests/functional/test_ppc_bamboo.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Test that Linux kernel boots on the ppc bamboo board and check the console
+ #
+ # Copyright (c) 2021 Red Hat
+@@ -5,30 +7,24 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado.utils import archive
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado_qemu import exec_command_and_wait_for_pattern
++from qemu_test.utils import archive_extract
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
+ 
+ class BambooMachine(QemuSystemTest):
+ 
+     timeout = 90
+ 
+     def test_ppc_bamboo(self):
+-        """
+-        :avocado: tags=arch:ppc
+-        :avocado: tags=machine:bamboo
+-        :avocado: tags=cpu:440epb
+-        :avocado: tags=device:rtl8139
+-        :avocado: tags=accel:tcg
+-        """
++        self.set_machine('bamboo')
+         self.require_accelerator("tcg")
+         self.require_netdev('user')
+         tar_url = ('http://landley.net/aboriginal/downloads/binaries/'
+                    'system-image-powerpc-440fp.tar.gz')
+         tar_hash = '53e5f16414b195b82d2c70272f81c2eedb39bad9'
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(file_path, self.workdir)
++        archive_extract(file_path, self.workdir)
+         self.vm.set_console()
+         self.vm.add_args('-kernel', self.workdir +
+                                    '/system-image-powerpc-440fp/linux',
+@@ -40,3 +36,6 @@ def test_ppc_bamboo(self):
+         exec_command_and_wait_for_pattern(self, 'ping 10.0.2.2',
+                                           '10.0.2.2 is alive!')
+         exec_command_and_wait_for_pattern(self, 'halt', 'System Halted')
 +
-+    target_base = dir.split('-')[0]
-+    test_emulator = emulators['qemu-system-' + target_base]
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/machine_sparc64_sun4u.py b/tests/functional/test_sparc64_sun4u.py
+old mode 100644
+new mode 100755
+similarity index 60%
+rename from tests/avocado/machine_sparc64_sun4u.py
+rename to tests/functional/test_sparc64_sun4u.py
+index d333c0ae91..cd89d4a1d6
+--- a/tests/avocado/machine_sparc64_sun4u.py
++++ b/tests/functional/test_sparc64_sun4u.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that boots a Linux kernel and checks the console
+ #
+ # Copyright (c) 2020 Red Hat, Inc.
+@@ -10,27 +12,28 @@
+ 
+ import os
+ 
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import archive
+-from boot_linux_console import LinuxKernelTest
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from qemu_test.utils import archive_extract
+ 
+-class Sun4uMachine(LinuxKernelTest):
++class Sun4uMachine(QemuSystemTest):
+     """Boots the Linux kernel and checks that the console is operational"""
+ 
+     timeout = 90
+ 
+     def test_sparc64_sun4u(self):
+-        """
+-        :avocado: tags=arch:sparc64
+-        :avocado: tags=machine:sun4u
+-        """
++        self.set_machine('sun4u')
+         tar_url = ('https://qemu-advcal.gitlab.io'
+                    '/qac-best-of-multiarch/download/day23.tar.xz')
+         tar_hash = '142db83cd974ffadc4f75c8a5cad5bcc5722c240'
+         file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
+-        archive.extract(file_path, self.workdir)
++        kernel_name = 'day23/vmlinux'
++        archive_extract(file_path, self.workdir, kernel_name)
+         self.vm.set_console()
+-        self.vm.add_args('-kernel', self.workdir + '/day23/vmlinux',
+-                         '-append', self.KERNEL_COMMON_COMMAND_LINE)
++        self.vm.add_args('-kernel', os.path.join(self.workdir, kernel_name),
++                         '-append', 'printk.time=0')
+         self.vm.launch()
+         wait_for_console_pattern(self, 'Starting logging: OK')
 +
-+    if speed == 'quick'
-+      suites = ['func-quick', 'func-' + target_base]
-+      target_tests = get_variable('tests_' + target_base + '_quick', []) + tests_generic
-+    else
-+      suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
-+      target_tests = get_variable('tests_' + target_base + '_' + speed, [])
-+    endif
-+
-+    test_deps = roms
-+    test_env = environment()
-+    if have_tools
-+      test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
-+      test_deps += [qemu_img]
-+    endif
-+    test_env.set('QEMU_TEST_QEMU_BINARY',
-+                 meson.global_build_root() / 'qemu-system-' + target_base)
-+    test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
-+    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-+                               meson.current_source_dir())
-+
-+    foreach test : target_tests
-+      test('func-@0@/@1@'.format(target_base, test),
-+           python,
-+           depends: [test_deps, test_emulator, emulator_modules],
-+           env: test_env,
-+           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-+           protocol: 'tap',
-+           timeout: test_timeouts.get(test, 60),
-+           priority: test_timeouts.get(test, 60),
-+           suite: suites)
-+    endforeach
-+  endforeach
-+endforeach
-diff --git a/tests/meson.build b/tests/meson.build
-index acb6807094..3345ad2098 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -85,3 +85,4 @@ subdir('unit')
- subdir('qapi-schema')
- subdir('qtest')
- subdir('migration')
-+subdir('functional')
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.45.2
 
