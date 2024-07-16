@@ -4,107 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 850ADC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0621C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTjtw-000389-Pk; Tue, 16 Jul 2024 11:15:36 -0400
+	id 1sTjzn-0002eN-2L; Tue, 16 Jul 2024 11:21:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sTjtt-00031L-HP
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:15:33 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sTjtd-0006h3-Gx
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:15:33 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7B74321C0A;
- Tue, 16 Jul 2024 15:15:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721142913; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjzl-0002dl-EX
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:21:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjzf-00084W-RN
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 11:21:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721143290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=630dNQ6c3rVbnGzaiFeJPRWgwLZ89SA/5bcUYISZ4gQ=;
- b=i6t9ArZavsR6UB233KkIlwL8XKUeBzoEiAU+quFsE/yy2tV79nvzjvD5xrTW8J8Pg0MfjB
- NzMD3br84GwXjScw/XLGgDVTixiX1jTIwY3EiKyUTFN8Nhb46atisE8BcKEbnVspdUP3dy
- 6alMb7gEfitZdqVzAK7bWagK1mKM0Xc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721142913;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=630dNQ6c3rVbnGzaiFeJPRWgwLZ89SA/5bcUYISZ4gQ=;
- b=pMNQyssKztBT7ZlYb/tz3Gz6sx4BPAVl0+R0XM025qumWfNfSSv+PpFSzpArAtzJHvGQnI
- 79LRp1anaaTkP1Bw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721142913; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=630dNQ6c3rVbnGzaiFeJPRWgwLZ89SA/5bcUYISZ4gQ=;
- b=i6t9ArZavsR6UB233KkIlwL8XKUeBzoEiAU+quFsE/yy2tV79nvzjvD5xrTW8J8Pg0MfjB
- NzMD3br84GwXjScw/XLGgDVTixiX1jTIwY3EiKyUTFN8Nhb46atisE8BcKEbnVspdUP3dy
- 6alMb7gEfitZdqVzAK7bWagK1mKM0Xc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721142913;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=630dNQ6c3rVbnGzaiFeJPRWgwLZ89SA/5bcUYISZ4gQ=;
- b=pMNQyssKztBT7ZlYb/tz3Gz6sx4BPAVl0+R0XM025qumWfNfSSv+PpFSzpArAtzJHvGQnI
- 79LRp1anaaTkP1Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F047F13795;
- Tue, 16 Jul 2024 15:15:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UwkrLYCOlmY3DwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 16 Jul 2024 15:15:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Subject: Re: [PATCH 04/11] tests/functional: Add python-based tests to the
- meson build system
-In-Reply-To: <20240716112614.1755692-5-thuth@redhat.com>
-References: <20240716112614.1755692-1-thuth@redhat.com>
- <20240716112614.1755692-5-thuth@redhat.com>
-Date: Tue, 16 Jul 2024 12:15:10 -0300
-Message-ID: <87o76xcqrl.fsf@suse.de>
+ bh=AqTxCVQA1Nc87dI2wAb3bdg/By49iAQspFoo/847FrI=;
+ b=Ed6QRCgYpqHsKUg1GB1hOjyQW235Wm+CLnlSkrbJWpIxhc9aRz3Mfg17oefC7Uhd2f2fq1
+ bS+XqkdySJVwITRvFdq8X6kmdCV2hM19mBJnNUjFULDXgbdSAvfKhfftL6X2D7sma46t/c
+ pvZP1zJOPEMmkFHgTHJQ6XWI0H6W0FY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-185-NiYZKnm1NkCbTduLBvS18g-1; Tue, 16 Jul 2024 11:21:28 -0400
+X-MC-Unique: NiYZKnm1NkCbTduLBvS18g-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-36789dfcc8bso3428329f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 08:21:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721143287; x=1721748087;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AqTxCVQA1Nc87dI2wAb3bdg/By49iAQspFoo/847FrI=;
+ b=TcLackEg1Y+lwAma0r3/YDaTZbYNi/fjIiKq/z1MCIzU+DH0J96rf0BiTdeBwY8uf8
+ bzKuwSGjF/aFfpPL3uQ9zBbeixuUvEQxDeTsF09nUbysESNDFCcsWA3diN3e+gx/q+/O
+ 5REM53yxMvvj1NBDPyCuHhIhsIsf7qc7x9/uJfxALQHv1zn/WiNvm7rl6TenpBJc3a4Y
+ eOLDGliUiPv2Bym0jG4tsTRl35ovLuF8NWDTjUNlN0uPO43WSIWFAgmXnuAHSWaSZdoy
+ Hdv/gV7MtGCOpkloZJ7kXmQ08vQnuP5mmN8PowxRLMeCjdYLV78mPaxeN8NVvKwtYY7F
+ grLA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjIuE7EC1NURdagz9giOVEZsJZVyDy5WfbDNfIKaXDBslurpWjV2aOOlb4GL4qAslJIiOtipAhfGBA8tliUpzEK1s98OY=
+X-Gm-Message-State: AOJu0Yy/FNFnvGA4YgM/kDFgeRSQJY0O8vVHpnL/ch1TPsC+fppLesq/
+ 0Zmrp274eauAszz13Z+NHF3mycdVkmUzaa580Py5onaJt/zLOl+swx52EfJ2wLDhXkR4ZaSOyxG
+ v2ny/W4USAHhWa5qjyDFoLeGfNjJEiOTw4e8O8NeJ8Nq2dJjnYH9l
+X-Received: by 2002:adf:e6c8:0:b0:367:973e:c20a with SMTP id
+ ffacd0b85a97d-36826089105mr1598587f8f.18.1721143287315; 
+ Tue, 16 Jul 2024 08:21:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6CG1LC6NdrxZ0OWPay8Q/qIMpnzyUHy4tKIi9eBpSzU2rpIhjxfwXjSyAdB6yz+sA4wijWg==
+X-Received: by 2002:adf:e6c8:0:b0:367:973e:c20a with SMTP id
+ ffacd0b85a97d-36826089105mr1598554f8f.18.1721143286933; 
+ Tue, 16 Jul 2024 08:21:26 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3680daccc9csm9331403f8f.57.2024.07.16.08.21.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 08:21:26 -0700 (PDT)
+Date: Tue, 16 Jul 2024 17:21:25 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: Salil Mehta <salil.mehta@opnsrc.net>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "will@kernel.org" <will@kernel.org>, "gshan@redhat.com"
+ <gshan@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng
+ (C)" <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "npiggin@gmail.com" <npiggin@gmail.com>, "harshpb@linux.ibm.com"
+ <harshpb@linux.ibm.com>, Linuxarm <linuxarm@huawei.com>,
+ "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH V15 0/7] Add architecture agnostic code to support vCPU
+ Hotplug
+Message-ID: <20240716172125.0b1fd791@imammedo.users.ipa.redhat.com>
+In-Reply-To: <b8ec039d53534d48b8389aedd1f959f6@huawei.com>
+References: <20240713182516.1457-1-salil.mehta@huawei.com>
+ <20240715155436.577d34c5@imammedo.users.ipa.redhat.com>
+ <b93b570158794e28bf8c00a949afa8b4@huawei.com>
+ <3848723ea2584b9b813c3d76e1e6dd59@huawei.com>
+ <20240715171154.2667d187@imammedo.users.ipa.redhat.com>
+ <4b829bf1-d31c-49eb-b18f-6d87e08c5c04@opnsrc.net>
+ <20240716115210.08ca24ba@imammedo.users.ipa.redhat.com>
+ <b8ec039d53534d48b8389aedd1f959f6@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-0.30 / 50.00];
- NEURAL_HAM_SHORT(-0.20)[-0.995]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,194 +136,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On Tue, 16 Jul 2024 11:43:00 +0000
+Salil Mehta <salil.mehta@huawei.com> wrote:
 
-> Integrate the new python-based test framework with the meson build
-> system. Since these tests now require the pycotap module, make
-> sure that it gets installed in the venv.
->
-> The changes to the meson.build files are partly based on an earlier
-> patch by Ani Sinha (but heavily modified by Thomas Huth e.g. to use
-> pycotap for running the tests instead).
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Hi Igor,
+> 
+> >  From: Igor Mammedov <imammedo@redhat.com>
+> >  Sent: Tuesday, July 16, 2024 10:52 AM
+> >  To: Salil Mehta <salil.mehta@opnsrc.net>
+> >  
+> >  On Tue, 16 Jul 2024 03:38:29 +0000
+> >  Salil Mehta <salil.mehta@opnsrc.net> wrote:
+> >    
+> >  > Hi Igor,
+> >  >
+> >  > On 15/07/2024 15:11, Igor Mammedov wrote:  
+> >  > > On Mon, 15 Jul 2024 14:19:12 +0000
+> >  > > Salil Mehta <salil.mehta@huawei.com> wrote:
+> >  > >  
+> >  > >>>   From: qemu-arm-bounces+salil.mehta=huawei.com@nongnu.org  <qemu-
+> >  > >>>   arm-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of  Salil
+> >  > >>>   Mehta via
+> >  > >>>   Sent: Monday, July 15, 2024 3:14 PM
+> >  > >>>   To: Igor Mammedov <imammedo@redhat.com>
+> >  > >>>
+> >  > >>>   Hi Igor,
+> >  > >>>  
+> >  > >>>   >  From: Igor Mammedov <imammedo@redhat.com>
+> >  > >>>   >  Sent: Monday, July 15, 2024 2:55 PM
+> >  > >>>   >  To: Salil Mehta <salil.mehta@huawei.com>
+> >  > >>>   >
+> >  > >>>   >  On Sat, 13 Jul 2024 19:25:09 +0100
+> >  > >>>   >  Salil Mehta <salil.mehta@huawei.com> wrote:
+> >  > >>>   >  
+> >  > >>>   >  > [Note: References are present at the last after the revision  
+> >  > >>>   > history]  >  > Virtual CPU hotplug support is being added across
+> >  > >>>   > various architectures  [1][3].  
+> >  > >>>   >  > This series adds various code bits common across all architectures:
+> >  > >>>   >  >
+> >  > >>>   >  > 1. vCPU creation and Parking code refactor [Patch 1] 2. Update ACPI
+> >  > >>>   > > GED framework to support vCPU Hotplug [Patch 2,3] 3. ACPI CPUs AML
+> >  > >>>   > > code change [Patch 4,5] 4. Helper functions to support unrealization
+> >  > >>>   > > of CPU objects [Patch 6,7]  
+> >  > >>>   >
+> >  > >>>   >  with patch 1 and 3 fixed should be good to go.
+> >  > >>>   >
+> >  > >>>   >  Salil,
+> >  > >>>   >  Can you remind me what happened to migration part of this?
+> >  > >>>   >  Ideally it should be a part of of this series as it should be common
+> >  > >>>   > for  everything that uses GED and should be a conditional part of
+> >  > >>>   > GED's  VMSTATE.
+> >  > >>>   >
+> >  > >>>   >  If this series is just a common base and no actual hotplug on top of
+> >  > >>>   > it is  merged in this release (provided patch 13 is fixed), I'm fine
+> >  > >>>   > with migration  bits being a separate series on top.
+> >  > >>>   >
+> >  > >>>   >  However if some machine would be introducing cpu hotplug in the same
+> >  > >>>   > release, then the migration part should be merged before it or be a
+> >  > >>>   > part  that cpu hotplug series.  
+> >  > >>>
+> >  > >>>   We have tested Live/Pseudo Migration and it seem to work with the
+> >  > >>>   changes part of the architecture specific patch-set.  
+> >  > >
+> >  > > have you tested, migration from new QEMU to an older one (that doesn't have cpuhotplug builtin)?  
+> >  >
+> >  >
+> >  > Just curious, how can we detect at source Qemu what version of the
+> >  > Qemu destination is running. We require some sort of compatibility
+> >  > check but then this is a problem not specific to CPU Hotplug?  
+> >  
+> >  it's usually managed by version machine types + compat settings for
+> >  machine/device.  
+> 
+> Ok. it looks to be a static checking at the source. I'm sure there must be
+> a way to dynamically do the same by negotiating the features i.e. only
+> enabling the common subset at the destination. I quickly skimmed the
+> migration code and I cannot find any thing like this being done as of now.
+> And this problem looks to be a pandoras box to me. 
+no dynamic negotiating as far as I'm aware.
 
-Just one touch-up below.
+We've managed to survive so far with static compat knobs
+(with an occasional disaster along the way)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+...
+> 
+> Thanks
+> Salil.
+> 
 
-> ---
->  pythondeps.toml              |  3 +-
->  tests/Makefile.include       | 18 ++++++++-
->  tests/functional/meson.build | 75 ++++++++++++++++++++++++++++++++++++
->  tests/meson.build            |  1 +
->  4 files changed, 95 insertions(+), 2 deletions(-)
->  create mode 100644 tests/functional/meson.build
->
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index f6e590fdd8..c018b4d74a 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -26,9 +26,10 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
->  sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
->  sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
->  
-> -[avocado]
-> +[tests]
->  # Note that qemu.git/python/ is always implicitly installed.
->  # Prefer an LTS version when updating the accepted versions of
->  # avocado-framework, for example right now the limit is 92.x.
->  avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
->  pycdlib = { accepted = ">=1.11.0" }
-> +pycotap = { accepted = ">=1.1.0" }
-> diff --git a/tests/Makefile.include b/tests/Makefile.include
-> index d39d5dd6a4..2bdf607977 100644
-> --- a/tests/Makefile.include
-> +++ b/tests/Makefile.include
-> @@ -9,6 +9,8 @@ check-help:
->  	@echo "Individual test suites:"
->  	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
->  	@echo " $(MAKE) check-qtest            Run qtest tests"
-> +	@echo " $(MAKE) check-functional       Run python-based functional tests"
-> +	@echo " $(MAKE) check-functional-TARG  Run functional tests for
-> a given target"
->  	@echo " $(MAKE) check-unit             Run qobject tests"
->  	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
->  	@echo " $(MAKE) check-block            Run block tests"
-> @@ -111,7 +113,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
->  
->  $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
->  	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
-> -	$(MKVENV_ENSUREGROUP) $< avocado
-> +	$(MKVENV_ENSUREGROUP) $< tests
->  	$(call quiet-command, touch $@)
->  
->  $(TESTS_RESULTS_DIR):
-> @@ -152,6 +154,20 @@ check-acceptance-deprecated-warning:
->  
->  check-acceptance: check-acceptance-deprecated-warning | check-avocado
->  
-> +# Make sure that pycotap is installed before running any functional tests:
-> +ifneq ($(filter check-func%,$(MAKECMDGOALS))$(filter check,$(MAKECMDGOALS)),)
-> +do-meson-check: check-venv
-> +endif
-> +
-> +FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
-> +.PHONY: $(FUNCTIONAL_TARGETS)
-> +$(FUNCTIONAL_TARGETS):
-> +	@make SPEED=thorough $(subst -functional,-func,$@)
-> +
-> +.PHONY: check-functional
-> +check-functional:
-> +	@make SPEED=thorough check-func check-func-quick
-
-I think these^ two should use $(MAKE) instead:
-
-make[1]: warning: jobserver unavailable: using -j1.  Add '+' to parent
-make rule.
-
-> +
->  # Consolidated targets
->  
->  .PHONY: check check-clean get-vm-images
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> new file mode 100644
-> index 0000000000..11352b5bb5
-> --- /dev/null
-> +++ b/tests/functional/meson.build
-> @@ -0,0 +1,75 @@
-> +# QEMU functional tests:
-> +# Tests that are put in the 'quick' category are run by default during
-> +# 'make check'. Everything that should not be run during 'make check'
-> +# (e.g. tests that fetch assets from the internet) should be put into
-> +# the 'thorough' category instead.
-> +
-> +# Most tests run too slow with TCI enabled, so skip the functional tests there
-> +if get_option('tcg_interpreter')
-> +  subdir_done()
-> +endif
-> +
-> +# Timeouts for individual tests that can be slow e.g. with debugging enabled
-> +test_timeouts = {
-> +  'ppc_74xx' : 90,
-> +}
-> +
-> +tests_generic = [
-> +  'empty_cpu_model',
-> +  'info_usernet',
-> +  'version',
-> +]
-> +
-> +tests_ppc_quick = [
-> +  'ppc_74xx',
-> +]
-> +
-> +tests_x86_64_quick = [
-> +  'cpu_queries',
-> +  'mem_addr_space',
-> +  'pc_cpu_hotplug_props',
-> +  'virtio_version',
-> +]
-> +
-> +foreach speed : ['quick', 'thorough']
-> +  foreach dir : target_dirs
-> +    if not dir.endswith('-softmmu')
-> +      continue
-> +    endif
-> +
-> +    target_base = dir.split('-')[0]
-> +    test_emulator = emulators['qemu-system-' + target_base]
-> +
-> +    if speed == 'quick'
-> +      suites = ['func-quick', 'func-' + target_base]
-> +      target_tests = get_variable('tests_' + target_base + '_quick', []) + tests_generic
-> +    else
-> +      suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
-> +      target_tests = get_variable('tests_' + target_base + '_' + speed, [])
-> +    endif
-> +
-> +    test_deps = roms
-> +    test_env = environment()
-> +    if have_tools
-> +      test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 'qemu-img')
-> +      test_deps += [qemu_img]
-> +    endif
-> +    test_env.set('QEMU_TEST_QEMU_BINARY',
-> +                 meson.global_build_root() / 'qemu-system-' + target_base)
-> +    test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
-> +    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-> +                               meson.current_source_dir())
-> +
-> +    foreach test : target_tests
-> +      test('func-@0@/@1@'.format(target_base, test),
-> +           python,
-> +           depends: [test_deps, test_emulator, emulator_modules],
-> +           env: test_env,
-> +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
-> +           protocol: 'tap',
-> +           timeout: test_timeouts.get(test, 60),
-> +           priority: test_timeouts.get(test, 60),
-> +           suite: suites)
-> +    endforeach
-
-2/19 qemu:func-thorough+func-s390x-thorough+thorough / func-s390x/s390x_ccw_virtio         OK              48.82s   2 subtests passe
-
-func, thorough, func, thorough, thorough, func
-s390x, s390x, s390x
-
-=)
-
-I know, not much we can do...
-
-> +  endforeach
-> +endforeach
-> diff --git a/tests/meson.build b/tests/meson.build
-> index acb6807094..3345ad2098 100644
-> --- a/tests/meson.build
-> +++ b/tests/meson.build
-> @@ -85,3 +85,4 @@ subdir('unit')
->  subdir('qapi-schema')
->  subdir('qtest')
->  subdir('migration')
-> +subdir('functional')
 
