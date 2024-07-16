@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0FEC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 17:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94ECCC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 17:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTm3W-00068q-9T; Tue, 16 Jul 2024 13:33:40 -0400
+	id 1sTmAh-0008C5-PZ; Tue, 16 Jul 2024 13:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sTm3O-00065l-36; Tue, 16 Jul 2024 13:33:30 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sTmAa-0008Ab-Qv
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:40:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sTm3L-0002r4-Fj; Tue, 16 Jul 2024 13:33:29 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46GGx3WD027107;
- Tue, 16 Jul 2024 17:33:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=pp1; bh=CyXkRjxt2L5UTAQ3Qjd074WqZr
- qtT3JqJAy5WiL3wgk=; b=X7iWMSoeGWfoGpYSsGfJoGffPhZBfHMpC95aT4ckP5
- xDX9jY9BFLAxtRsRgJa8TKtNplkQssulfMZ6nuGe5ES+q9LCP/4JMNCdlAoR4grG
- DAHSmwArF561OVQ2n0nxU+jYJhGAuWNdyya4eaue0tdyenMkYnoK34JPjOpudy2n
- fUzjg+rjzIpV3WLBh/bQCzF/p4EWIEIBVJ7aQ1+HH6oivo4Qe86ZxWv5BvPAaWLr
- 7hXl3Sp+iZI9TzAXfW/vQun5gJ5/sJcwagnUob3v26eD5mTDoJ6x60dM1BpInptY
- vvzKZ0zNo4vnOVzd+qF4xlX6UCIUrarOdrZIiZWaTjMQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40dvupr2j5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Jul 2024 17:33:15 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46GHVgEl008115;
- Tue, 16 Jul 2024 17:33:15 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40dvupr2hy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Jul 2024 17:33:15 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46GGu41s030523; Tue, 16 Jul 2024 17:33:13 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40c4a0namx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Jul 2024 17:33:13 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46GHXBQ564422172
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jul 2024 17:33:13 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F64C5806D;
- Tue, 16 Jul 2024 17:33:11 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76D1A5805D;
- Tue, 16 Jul 2024 17:33:10 +0000 (GMT)
-Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
- [9.12.68.85]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Jul 2024 17:33:10 +0000 (GMT)
-From: Collin Walling <walling@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- armbru@redhat.com, Jiri Denemark <jdenemar@redhat.com>
-Subject: [PATCH v2] target/s390x: filter deprecated properties based on model
- expansion type
-Date: Tue, 16 Jul 2024 13:32:53 -0400
-Message-ID: <20240716173253.28533-1-walling@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sTmAU-000439-L1
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:40:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721151648;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PHiqoCl323aqZPUSxM4kA48IRRNUeQ2nvta0Ggt1GDo=;
+ b=DoSBXnoV4Z7TnBRhXqqivyjptYBCTJlNtdM4Twr/yUdS1u2ubT1J/AYTvlRz2oAtXRu+ob
+ KRebquMJ+jMUCu6AJJSodSY9XnC+xzcL2ddFq8Es7CYKcgD0ooQpQ26YpgCt/FAOQi8okN
+ xUu/8La78y6ESkSn1v5k5UIZNAZrTGY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-311-02jS2VTcNUST7QlayoA7xQ-1; Tue, 16 Jul 2024 13:40:47 -0400
+X-MC-Unique: 02jS2VTcNUST7QlayoA7xQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3678fd1edf8so3289907f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 10:40:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721151646; x=1721756446;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PHiqoCl323aqZPUSxM4kA48IRRNUeQ2nvta0Ggt1GDo=;
+ b=sAIJR/NVpw7+8wOFy8aDJApiVfr1pQBtlA3Q+RMLzZD/KSvuGq7m86wvh1hBhBGjxA
+ vIM6Z3B3DumIQv2Dj/n6oLU5Ors/faQINmgIms8R7sp0ESzMioT89X8KADDxn/lJIB6j
+ 37fA0UnGLGwskK9jXrWDPfHGWuv37R6XrKaFXblqnrY8RFopME9rq8NuX+jWFzQ+IDrW
+ 0YCMMU/B1LOtuS82ia0WsBoLRisyO1GLmmQH6DBT9Ro+iBWKbw79b1EZA29d8CbA4V8l
+ C6k4IDrnCenicQkSys4EiQHxFBSdIp3Jf4tLs0A29ekb3DvgEVA2HdgSoeWppASp4ACT
+ +Lvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzRMDN3QCsz3gWraMeRblUMLGO1J82P74QLhlG7hWx5zSMl0xG0yIvFoMxKlH//40rkXEu4hpUv6jF3pZTLyyTaqm7n8Q=
+X-Gm-Message-State: AOJu0YxhUGEtviP2nueZp+meajKMbiIIMguadabatRrgpaf5LFY5cYsN
+ lkJJWWzMDBz4rViMCAMJZ9XQ77ZZZ5syL1ZddRpArk9w0woqh7wX9ssz6D9QjcnZlSiRVSdTtgM
+ NXtAkVU9z6igUPTYtxnCHSRRfH3Ku01gTUK342+XHSwv6YdBNTgoL
+X-Received: by 2002:a5d:5582:0:b0:361:94d9:1e9f with SMTP id
+ ffacd0b85a97d-3682734828dmr1797863f8f.7.1721151646089; 
+ Tue, 16 Jul 2024 10:40:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNG20euGOoSq4tdUGY7h9qrT/UGYpUMWEMyqYq/KDNlg1Y+LQwAVzqMhzMfFBvbCoYnNZ+Eg==
+X-Received: by 2002:a5d:5582:0:b0:361:94d9:1e9f with SMTP id
+ ffacd0b85a97d-3682734828dmr1797853f8f.7.1721151645630; 
+ Tue, 16 Jul 2024 10:40:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4279f25a962sm170036915e9.12.2024.07.16.10.40.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 10:40:45 -0700 (PDT)
+Message-ID: <903e6f5a-76fc-4f8c-b83e-d7d2a0f45d7c@redhat.com>
+Date: Tue, 16 Jul 2024 19:40:43 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: PKPI-_0YAJmn66XKkltmsz5dFjN6wC2Z
-X-Proofpoint-ORIG-GUID: skxeCEK7bzUCKg2Q99t3QLMqU8hTbLEG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-15_19,2024-07-16_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0
- spamscore=0 mlxscore=0 impostorscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407160127
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/12] vfio/{iommufd,container}: Remove caps::aw_bits
+Content-Language: en-US
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-7-joao.m.martins@oracle.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240712114704.8708-7-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,124 +108,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As s390 CPU models progress and deprecated properties are dropped
-outright, it will be cumbersome for management apps to query the host
-for a comprehensive list of deprecated properties that will need to be
-disabled on older models. To remedy this, the query-cpu-model-expansion
-output now behaves by filtering deprecated properties based on the
-expansion type instead of filtering based off of the model's full set
-of features:
+Hi Joao,
 
-When reporting a static CPU model, only show deprecated properties that
-are a subset of the model's enabled features.
+On 7/12/24 13:46, Joao Martins wrote:
+> In preparation to moving HostIOMMUDevice realize() being able to called
+> early during attach_device(), remove properties that rely on container
+> being initialized.
+It is difficult to parse the above sentence. Would deserve some rephrasing.
 
-When reporting a full CPU model, show the entire list of deprecated
-properties regardless if they are supported on the model.
-
-Suggested-by: Jiri Denemark <jdenemar@redhat.com>
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
----
-
-Changelog:
-
-    v2
-    - Changed commit message
-    - Added documentation reflecting this change
-    - Made code changes that more accurately filter the deprecated
-        properties based on expansion type.  This change makes it
-        so that the deprecated-properties reported for a static model
-        expansion are a subset of the model's properties instead of
-        the model's full-definition properties.
-
-        For example:
-
-        Previously, the z900 static model would report 'bpb' in the
-        list of deprecated-properties.  However, this prop is *not*
-        a part of the model's feature set, leading to some inaccuracy
-        (albeit harmless).
-
-        Now, this feature will not show during a static expansion.
-        It will, however, show up in a full expansion (along with
-        the rest of the list: 'csske', 'te', 'cte').
-
-@David, I've elected to respectully forgo adding your ack-by on this
-iteration since I have changed the code (and therefore the behavior)
-between this version and the previous in case you do not agree with
-these adjustments.
-
----
- qapi/machine-target.json         |  8 ++++++--
- target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
- 2 files changed, 15 insertions(+), 9 deletions(-)
-
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index a8d9ec87f5..d151504f25 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -21,8 +21,12 @@
- # @props: a dictionary of QOM properties to be applied
- #
- # @deprecated-props: a list of properties that are flagged as deprecated
--#     by the CPU vendor.  These props are a subset of the full model's
--#     definition list of properties. (since 9.1)
-+#     by the CPU vendor.  (since 9.1).
-+#
-+# .. note:: Since 9.1, the list of deprecated props were always a subset
-+#    of the model's full-definition list of properites. Now, this list is
-+#    populated with the model's enabled property set when delta changes
-+#    are applied. All deprecated properties are reported otherwise.
- #
- # Since: 2.8
- ##
-diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-index 977fbc6522..e28ecf7ab9 100644
---- a/target/s390x/cpu_models_sysemu.c
-+++ b/target/s390x/cpu_models_sysemu.c
-@@ -174,11 +174,15 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-                                 bool delta_changes)
- {
-     QDict *qdict = qdict_new();
--    S390FeatBitmap bitmap;
-+    S390FeatBitmap bitmap, deprecated;
- 
-     /* always fallback to the static base model */
-     info->name = g_strdup_printf("%s-base", model->def->name);
- 
-+    /* features flagged as deprecated */
-+    bitmap_zero(deprecated, S390_FEAT_MAX);
-+    s390_get_deprecated_features(deprecated);
-+
-     if (delta_changes) {
-         /* features deleted from the base feature set */
-         bitmap_andnot(bitmap, model->def->base_feat, model->features,
-@@ -193,6 +197,9 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-         if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
-             s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
-         }
-+
-+        /* deprecated features that are a subset of the model's features */
-+        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
-     } else {
-         /* expand all features */
-         s390_feat_bitmap_to_ascii(model->features, qdict,
-@@ -207,12 +214,7 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-         info->props = QOBJECT(qdict);
-     }
- 
--    /* features flagged as deprecated */
--    bitmap_zero(bitmap, S390_FEAT_MAX);
--    s390_get_deprecated_features(bitmap);
--
--    bitmap_and(bitmap, bitmap, model->def->full_feat, S390_FEAT_MAX);
--    s390_feat_bitmap_to_ascii(bitmap, &info->deprecated_props, list_add_feat);
-+    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
-     info->has_deprecated_props = !!info->deprecated_props;
- }
- 
--- 
-2.45.1
+Also properties have a different meaning in qemu.
+>
+> This means removing caps::aw_bits which requires the
+> bcontainer::iova_ranges to be inititalized after device is actually
+initialized
+> attached. Instead defer that to .get_cap() and call
+> vfio_device_get_aw_bits() directly.
+>
+> Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>  include/sysemu/host_iommu_device.h | 1 -
+>  backends/iommufd.c                 | 3 ++-
+>  hw/vfio/container.c                | 5 +----
+>  hw/vfio/iommufd.c                  | 1 -
+>  4 files changed, 3 insertions(+), 7 deletions(-)
+>
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> index ee6c813c8b22..20e77cf54568 100644
+> --- a/include/sysemu/host_iommu_device.h
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -24,7 +24,6 @@
+>   */
+>  typedef struct HostIOMMUDeviceCaps {
+>      uint32_t type;
+> -    uint8_t aw_bits;
+the doc comment needs to be updated accordingly.
+>  } HostIOMMUDeviceCaps;
+>  
+>  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 5d3dfa917415..41a9dec3b2c5 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -18,6 +18,7 @@
+>  #include "qemu/error-report.h"
+>  #include "monitor/monitor.h"
+>  #include "trace.h"
+> +#include "hw/vfio/vfio-common.h"
+>  #include <sys/ioctl.h>
+>  #include <linux/iommufd.h>
+>  
+> @@ -270,7 +271,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>      case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
+>          return caps->type;
+>      case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+> -        return caps->aw_bits;
+> +        return vfio_device_get_aw_bits(hiod->agent);
+>      default:
+>          error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>          return -EINVAL;
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 88ede913d6f7..c27f448ba26e 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -1144,7 +1144,6 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>      VFIODevice *vdev = opaque;
+>  
+>      hiod->name = g_strdup(vdev->name);
+> -    hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
+>      hiod->agent = opaque;
+>  
+>      return true;
+> @@ -1153,11 +1152,9 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>  static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+>                                      Error **errp)
+>  {
+> -    HostIOMMUDeviceCaps *caps = &hiod->caps;
+> -
+>      switch (cap) {
+>      case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+> -        return caps->aw_bits;
+> +        return vfio_device_get_aw_bits(hiod->agent);
+>      default:
+>          error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>          return -EINVAL;
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 325c7598d5a1..873c919e319c 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -722,7 +722,6 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>  
+>      hiod->name = g_strdup(vdev->name);
+>      caps->type = type;
+> -    caps->aw_bits = vfio_device_get_aw_bits(vdev);
+>  
+>      return true;
+>  }
 
 
