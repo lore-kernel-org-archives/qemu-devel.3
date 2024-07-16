@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B25C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B803C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTl2S-000303-SV; Tue, 16 Jul 2024 12:28:28 -0400
+	id 1sTl2P-0002bL-IC; Tue, 16 Jul 2024 12:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1K-0006XA-1z; Tue, 16 Jul 2024 12:27:19 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1sTl1i-0007WI-5Q; Tue, 16 Jul 2024 12:27:45 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1I-0006cN-7E; Tue, 16 Jul 2024 12:27:17 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-25e00f348e6so3141107fac.1; 
- Tue, 16 Jul 2024 09:27:15 -0700 (PDT)
+ id 1sTl1d-0006eH-6H; Tue, 16 Jul 2024 12:27:40 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70b3c0a00f2so3564031b3a.3; 
+ Tue, 16 Jul 2024 09:27:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721147234; x=1721752034; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721147249; x=1721752049; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tyPOIb2VK3dD8F4THz9rJokTRHuUTmaR6trLMdHrvl0=;
- b=iUlodgZ488qDY1iBEs5cF2EZeeopKbXggh7GaEPzM6OITVfrF0tOAmnBZPWPyF+ciK
- eZG94lHILxALY3MXAUy56erTK8m6kxbfQZetagvu2djWgw6v2HlE+5Bat7g+iPyna0+v
- uPlCe9YZePx+VDl0GPez2Y1DKQzSnZbIsd5WxkVqxR2dTVvV+KS/lv/IxsFrcKiFQFe7
- NuWlSEW8LU4Rd0EPgGZBmmyq382HKicrhbPZ3mZB21AKmpjbfEHiJWCuwIWAhXJXJ9LP
- cGQVZ/R1le1u904IB6TnfLXk58lve0jkSqlM2vBlwy2QUvBaDYsobQ/MPFcyXelqfTyc
- CRnQ==
+ bh=EUzOrDcz1AGLPLWjWXyXaCj3TBotsysZNYHGdl2IwIE=;
+ b=HmaadkDt3OJnZ6PeBjPEXm+pIQqn0EQNPUJ9zXZTWXhHkxgAO5LTimL5BR0oPdJbCE
+ bTY8ih6+fTnJds//XqgTEZ+KkqMBs/RXKbyHCyluViQ0VMdVeCDnRuQo21e8TeCjouG1
+ y2wmB1/z5pOVLCBrHOtH5BXmZ1vz/PC6Woht+gkKl8hiSrTccu0jFA0WvMpRM7SY8C3Y
+ 6SKTdHqXN+cSm+rBcqObHXCSXvqppOXVQJgqlR1IXax7PQcw9XXr46lhj6STDy5yikzw
+ a4EBDyXQfh07YhdnaRNLp7Ag9MOcWfL0b3TZeRaAcEJSrVpts1FaYpaYsw7xmh0W4oeP
+ WYtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721147234; x=1721752034;
+ d=1e100.net; s=20230601; t=1721147249; x=1721752049;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tyPOIb2VK3dD8F4THz9rJokTRHuUTmaR6trLMdHrvl0=;
- b=VaBQRX6I6lxLZTeFB5xWnjaioGn4Rne78EpCHdp/UKbHAtoWvUlor86wXpJXafzIiY
- hb8baPnRA6uPOe8Zxf9UdZWZ5fXVnzOS1j06Y4jyzUhU8urMm9kU0+b2k/f2wjK2ea4u
- FCoqhkHrG0GJar2R/1YaBjNpRfN5PIOEff45toyXHBzFM7sxlcovY1G0Z99bavBf0LUN
- o+Y4YAcwelYXVTxWMviJIKbtpzKKRqVRUDzHyn9KEW+pK+65ea0aaEmxPudvRSU+632p
- lTqOgPA0hknIbN/xCKtlyy1zW9aOiPCIh4onmOkH/p/BgJTgiceCefAGzLcUi4IY56Bs
- 7Ktg==
+ bh=EUzOrDcz1AGLPLWjWXyXaCj3TBotsysZNYHGdl2IwIE=;
+ b=limZgmeqLjaNzdb7rXm+YwgGJ3kWMHM3J+70kijkATj+tZblJSQocxVQS+TpK9j6WJ
+ 5LFNjJBqe67Z/xRDFsSiKsD7KLidMpt2pzc7HaQ9Mb5qYOoQYdDh4QySa7rfKNLXvTHX
+ b8D+EWBQozsiF7t2WgaNRGCLsLh7agN63zff8ENQeBmz21jYGMBzhOMlew32cBQEfPjH
+ o3V0MCD5JpRTTFcEG5aioaYAXh6WvAzKV9xeTLdsdY1pFjJFAYeVMce/4WWkV8fOHJJG
+ uWdeFYhaaFAqVWn3wECj8YB3F5g/K52pzZhMM8JC/OOjXK99lrspJ7ft0CkgLFzFR+1T
+ xuEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrfpuw/CMQ87jLR/b79/8os+Njgk2PatoM5jSO5nAphwQwVK4fKgkVBfcryyvsWwfCliL0HKpZsNPR/Lz8CZjNNI3REoM=
-X-Gm-Message-State: AOJu0YxA1lU0lvZInPv5x0JH5CBvEPG7FspL/e/hqH9Hvah2hyIkc7lQ
- ZfUBi0W+fATNk1AITWgk/lJo0VHJNgXf9Kx1kjltEuZL3AWysrAnk7ngeQ==
-X-Google-Smtp-Source: AGHT+IH1G7haDJ80o4RXttZ9v+RvaZNkthlUOhSX+Njl8qCD5Ag07eiR83L7fH89xKeCjBAX1Tw6Fw==
-X-Received: by 2002:a05:6870:d189:b0:25e:b999:d24 with SMTP id
- 586e51a60fabf-260bd9cfee0mr1972510fac.0.1721147234009; 
- Tue, 16 Jul 2024 09:27:14 -0700 (PDT)
+ AJvYcCW/SwT3JuDp7qmLbHYnQho1ckQ5iAqOGgIHDB5LydSWi8uJdIYZ+v1j0Pk+LaMwRfvNTQysiuqoN8BA/I6dgtx8wev8XfU=
+X-Gm-Message-State: AOJu0YycQQC830MSQcVQEdVrSHZdqLqo5qhwoiklEm9AQ72Y9Oj5XrEp
+ vPw2sj8V1XgCN1NmHUcEBMuJ8x0D71Mj0yknnwPfDweMDv/6ZXJ79FhLqw==
+X-Google-Smtp-Source: AGHT+IGisbjoUBY8Bi/ZzYpmwNxJIj1gJ96cZDU2Ndw8B+sWdrDvbw8sz7oAc7HR3TFGAdSgKYOu6Q==
+X-Received: by 2002:a05:6a20:7f93:b0:1c2:a6ad:d23e with SMTP id
+ adf61e73a8af0-1c3f1256149mr2853498637.30.1721147248836; 
+ Tue, 16 Jul 2024 09:27:28 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.27.11
+ d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.27.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 09:27:13 -0700 (PDT)
+ Tue, 16 Jul 2024 09:27:28 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 13/19] ppc/pnv: Implement Power9 CPU core thread state
- indirect register
-Date: Wed, 17 Jul 2024 02:26:09 +1000
-Message-ID: <20240716162617.32161-14-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 17/19] ppc/pnv: Add a CPU nmi and resume function
+Date: Wed, 17 Jul 2024 02:26:13 +1000
+Message-ID: <20240716162617.32161-18-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240716162617.32161-1-npiggin@gmail.com>
 References: <20240716162617.32161-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,43 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power9 CPUs have a core thread state register accessible via SPRC/SPRD
-indirect registers. This register includes a bit for big-core mode,
-which skiboot requires.
+Power CPUs have an execution control facility that can pause, resume,
+and cause NMIs, among other things. Add a function that will nmi a CPU
+and resume it if it was paused, in preparation for implementing the
+control facility.
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/misc_helper.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ include/hw/ppc/pnv.h |  2 ++
+ hw/ppc/pnv.c         | 14 +++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 692e48e6bc..e69236d2de 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -319,6 +319,23 @@ target_ulong helper_load_sprd(CPUPPCState *env)
-     case 0: /* SCRATCH0-3 */
-     case 1: /* SCRATCH4-7 */
-         return pc->scratch[(sprc >> 3) & 0x7];
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index c56d152889..b7858d310d 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -112,6 +112,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
+ #define PNV_FDT_ADDR          0x01000000
+ #define PNV_TIMEBASE_FREQ     512000000ULL
+ 
++void pnv_cpu_do_nmi_resume(CPUState *cs);
 +
-+    case 0x1e0: /* core thread state */
-+        if (env->excp_model == POWERPC_EXCP_POWER9) {
-+            /*
-+             * Only implement for POWER9 because skiboot uses it to check
-+             * big-core mode. Other bits are unimplemented so we would
-+             * prefer to get unimplemented message on POWER10 if it were
-+             * used anywhere.
-+             */
-+            if (pc->big_core) {
-+                return PPC_BIT(63);
-+            } else {
-+                return 0;
-+            }
-+        }
-+        /* fallthru */
+ /*
+  * BMC helpers
+  */
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 08aaac359b..f7580947ed 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2751,11 +2751,23 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
+          */
+         env->spr[SPR_SRR1] |= SRR1_WAKESCOM;
+     }
++    if (arg.host_int == 1) {
++        cpu_resume(cs);
++    }
++}
 +
-     default:
-         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-                                   TARGET_FMT_lx"\n", sprc);
++/*
++ * Send a SRESET (NMI) interrupt to the CPU, and resume execution if it was
++ * paused.
++ */
++void pnv_cpu_do_nmi_resume(CPUState *cs)
++{
++    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(1));
+ }
+ 
+ static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
+ {
+-    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(0));
+ }
+ 
+ static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
 -- 
 2.45.1
 
