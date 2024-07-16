@@ -4,169 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3438C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D1BC3DA5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTj9w-0001oP-BD; Tue, 16 Jul 2024 10:28:04 -0400
+	id 1sTjAB-00022p-Q0; Tue, 16 Jul 2024 10:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sTj9o-0001gW-1b; Tue, 16 Jul 2024 10:27:57 -0400
-Received: from mail-am6eur05on2072a.outbound.protection.outlook.com
- ([2a01:111:f403:2612::72a]
- helo=EUR05-AM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjA9-00021X-QE
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:28:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sTj9l-0008Mv-NP; Tue, 16 Jul 2024 10:27:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZlILWOzLTPw+BKRTi4wERzvWOicZ+5I4jua5AUr5696n7kSxuYtykjsQbr1BrBgN28Fk64eNIdIy9PoJ58zTGp3Bx/V3H9hcfSVtq12s8IxwihLQwLY3VyhpD7m6jbSq9xYaWJJ6U40MMKfOYZtHUhJKuItwKvCswcXlU5lnki/11LoRfIbvpp7FzFHYSl/3/TChVLcUnPTX0+C/kBwsX2BElSU3lCJUQXhuUvL3simoN1LF/SZJ4aVgr1h7UjuGs2MhsiOeCgK7Va+Bygwjb4t8fujNWN2NswH7KBB6PMq6Z+FEIuVvm91CtMIlVZSCJN5Zai6CEFqEKavnavpE2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V/bO529ignCUh6on/j9UyHbUve3Mp1WA7C8BBMHSsB8=;
- b=hWS8H8QfsfKIylJhmZkCcpOaWdFct1vLiiDlbR06lxPpAcE930deJzoxXQzOH3MkrSWkKwb5b42EutjY4dwGh0lIEU6klr2cR+vJNyhOPxOFzCWXCTgclD7VqPPoMCM8yT3SV133aFOIU7163q47MHh2ouFl4ismQrjNN0vBvcjcJASBkj+F1Bhv8BWlVdsq3hIte/JclkJisoqRGFfQscZsE8YQyOoyRTuAN3NEZdIxGHqSqxAonCbao+ZkDhWiLc5M28jw4uHvZPwk3DD+zDVQqyBIOg1KLq1MRNC0bGZO5dFhSRVY05bDUG5cEOzt7bShF77jGrOzPheTziiJdg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V/bO529ignCUh6on/j9UyHbUve3Mp1WA7C8BBMHSsB8=;
- b=NKpK5bcqINgCnah6EudMmZQ2mEWg1vTJqsTaExGQx41UNj3s5uAWrhrWG4wbuZL1V220dMv8+HrY0e26z36nzC4qrgDigbhx8Es16OWMa/hP/HooGMW0gO1Tqny+67SoWCAj/21O2eYwYg9nfLXRJN8XlKO89t+T8ZRU+Exv9cLH5MZJbe8HyPKtB5KNbBkH9K9gTeA1l/NN2sBfB4Vu75R+NoMPL2Ggy4sOVaKtGx+0E/3/cYiy03nksXZ0pS9WHhjyvkezehLIk1PM7a1xleNwjZGrggbAjcT3FvCnDdb/PQ3glkhJwFzxIR/35/Ve/3h7hWnKFqjmdDC8OEwxeQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by PAXPR08MB6671.eurprd08.prod.outlook.com
- (2603:10a6:102:13b::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.29; Tue, 16 Jul
- 2024 14:27:46 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::7f30:b6c:9887:74a7]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::7f30:b6c:9887:74a7%3]) with mapi id 15.20.7784.013; Tue, 16 Jul 2024
- 14:27:46 +0000
-Message-ID: <58192891-7520-443a-bbaf-6a6b9b905bea@virtuozzo.com>
-Date: Tue, 16 Jul 2024 17:27:48 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] block: zero data data corruption using
- prealloc-filter
-To: "Denis V. Lunev" <den@virtuozzo.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- pbonzini@redhat.com, eesposit@redhat.com
-References: <20240712094617.565237-1-andrey.drobyshev@virtuozzo.com>
- <20240712094617.565237-2-andrey.drobyshev@virtuozzo.com>
- <ee1cf8a6-a381-4e30-9f5b-e6fd0a049863@yandex-team.ru>
- <a5104e75-dd44-4524-916d-1196fd585647@virtuozzo.com>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <a5104e75-dd44-4524-916d-1196fd585647@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR5P281CA0030.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f1::6) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sTjA7-0008QD-7h
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:28:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721140093;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lvZ99WZGHNNJL/1pbkXp9By1bGmdjsSz0FHFOR+ydPs=;
+ b=RDk11JaknywMccAAZ9R9HwA421U6M8jgnlRi3T4Xz/hgnlFzyC9HPs0b3XOdelX0cbKtic
+ QGtmCyXyx4GAe/UPE7BttelsxTFvnzBw9YLjohG6oi3gIGGJNYn6ZjSEUjGgUnwAEzbjwg
+ AAbk4sSy99L6x62IWUXDCR/9sFmnNv8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-27-9L7ihSRqM92fQmumcC8iqw-1; Tue, 16 Jul 2024 10:28:11 -0400
+X-MC-Unique: 9L7ihSRqM92fQmumcC8iqw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-367990a5796so3418765f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:28:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721140089; x=1721744889;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lvZ99WZGHNNJL/1pbkXp9By1bGmdjsSz0FHFOR+ydPs=;
+ b=I33AqAiYsTF9GzYl5bMwvLxejycu+9AL0+5LLCeiSV4E2O1GRS47j+XfuXQYb7zXfo
+ 9ogox6/1Q6RYcgAwqxuybfkmq+7KCipT0bNC0Nqv8KW7gbl60bh7yjWYrozIirkoqUL0
+ +RN14eXA0+yh2bWmScMz241zkc+O56pAC3KRpROJZnVqXD2KaKX9W0Yn+KtxpDttrwcz
+ yL6+y1n24qSqe8YYmda708MZ7wUos1kt10jJQzj/7e2+HOj+ZFxLczWGULGSHm4qB9nY
+ xLFZ/mDMTzIXC865PtLrVHnzwmMpetwyuiSc7z1Ra4mgSrEQOstMQ2fvp5PlQie+ywtY
+ MrVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7T+12dIbvXrGg3CvoxA0xRJGzuK6FI+Fq0SRA5u+pGGTrMDY9r3JIVmQDaCtN8a/bxqgcjn9t8YISbjcJOe5lHVFKlyw=
+X-Gm-Message-State: AOJu0YztGhrJTXMzZqQ9IojCDv1LCdTP1uluBy79mCfSyIfsAFxi3r66
+ hsH1jWPEXEWugaCXzShLz4wYgG8PEq/tgrZqsfs2yl5yKws8tQHX8x2PA1jRgE3sF93WRVYx2AV
+ TpgeurFJggYzIMIBbXf1QchJHkpRINTWuEEGeT6zO8s4ygtIhuh4C
+X-Received: by 2002:adf:9b83:0:b0:367:f281:260e with SMTP id
+ ffacd0b85a97d-36825f65dfcmr1493564f8f.3.1721140089534; 
+ Tue, 16 Jul 2024 07:28:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBiI/Rz6MbcptMVBR6eBR522D9sI5H+9GNR6dib3RCPLy1CUI7f6DflnvUTEBa7L4VbujMvA==
+X-Received: by 2002:adf:9b83:0:b0:367:f281:260e with SMTP id
+ ffacd0b85a97d-36825f65dfcmr1493549f8f.3.1721140089144; 
+ Tue, 16 Jul 2024 07:28:09 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3680dafbf29sm9272528f8f.70.2024.07.16.07.28.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 07:28:08 -0700 (PDT)
+Date: Tue, 16 Jul 2024 16:28:07 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFu?=
+ =?UTF-8?B?Z8Op?=" <berrange@redhat.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
+ Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei
+ Li <liwei1518@gmail.com>, Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ani
+ Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v2 0/9] RISC-V: ACPI: Namespace updates
+Message-ID: <20240716162807.3aa78399@imammedo.users.ipa.redhat.com>
+In-Reply-To: <ZpZm48s9zt/glU/H@sunil-laptop>
+References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
+ <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
+ <ZpEmuB6xyh2K77Ic@redhat.com>
+ <20240712155010.3756bb82@imammedo.users.ipa.redhat.com>
+ <20240714034105-mutt-send-email-mst@kernel.org>
+ <20240715144352.22d36779@imammedo.users.ipa.redhat.com>
+ <ZpZm48s9zt/glU/H@sunil-laptop>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAXPR08MB6671:EE_
-X-MS-Office365-Filtering-Correlation-Id: 80c55cdb-7eff-4ec1-a7b4-08dca5a3763f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?YlBGOVlPMjFvVW4vYUhYKzZmNGhzUDd0UXAyOUJ2aFE2N0xQU3hGSGZFdXdU?=
- =?utf-8?B?VytOMjJrWndUeUZKcTMvK3hudy9VVmRzcUgyejcxc1UvVWlCclBzbmJqa2pF?=
- =?utf-8?B?OWY5UlZwRWxwUXI4YURmMENMbjhXN2FOTDgwVDNjSExnRGtCcm0vR1E5a2I1?=
- =?utf-8?B?QmdYak8yeVQ2UWFadHJYd3N1TWloWWhTNjVlZDdkeXYyeFJTRHVIY3E3R0JM?=
- =?utf-8?B?cXpWQk9yajUyOGpNVk5LVStsYm90ZGhRbTVIc1owcExtSFFHOXJwRWZEMEc1?=
- =?utf-8?B?eHpxSlptUkwwSkk2aXJLZFZtK1IxTVJkK0s5ZVNQRUNod3YydVovZkoxdmlq?=
- =?utf-8?B?aGM4Y2hBSjVZdXB1WGt1SnFDOXYrSWNtYms0bFBPUTBwWlVZYUFkcDJhTi9o?=
- =?utf-8?B?ODQwRjJQNVJHVEhReHJCTlNKc2ExQWxjelVLWWgrTXRZQmtjK1pIbDZxV0RQ?=
- =?utf-8?B?Vkh3cEtNWHB5dE44eGNzQUt0d1h1L0kyUzVISVNrNDFBZ0lwTjFFSWFPL1Jv?=
- =?utf-8?B?cUtDMktoMmRTejM2OGlqQkZqWFcrKys1MHNnZEZKdGM5b3RmNWFBdWtoN3hG?=
- =?utf-8?B?VGNnZlQyMjdqWEdGRCs2bld3U1hGdUxMN0Q5Qm42R0R3RFpINk1VaWtCWkIw?=
- =?utf-8?B?dmZTVWg2a3ZpNTF3U3VhQkViaGNVTnBVaFhWU001eFJ4QTRZOHRla2xsUXFy?=
- =?utf-8?B?Nk5YUU9tWU9QdHU2SXRKcHhHdXdwaFdwcjJlL1pJZytkS0p0N0MwVko1NVZI?=
- =?utf-8?B?alBsTHhYT2pjNk0zQk1ZNWtIWEd4dWlCU0FhZ3g2aVFnMHA4K0VtWmJLOENB?=
- =?utf-8?B?Si9TYTVwV1l2MXUwcEk0eFlYRTdlMExBN0ptK3NZODlURzUxZi9PeFViWll1?=
- =?utf-8?B?UTZ0aTNzUVQ1NUFHazY3TWx4RjR3elhtOXQrT0RIYjdIVUdYSFRKb0dDRmY0?=
- =?utf-8?B?R2JKM2M5M3VDK0x0R1ZBVTBIZWlWSjZEOTBLV0w4TXFHM2xNd1h6UW9vYXAv?=
- =?utf-8?B?ZkFkR0p6cUZtcmhZWFg1STlXcE5PaFNubHZPOUhZV0N2cmdjanZUYkpGT09O?=
- =?utf-8?B?dktMSjEzTXphY1BMckFjaEVkYnJVQ0N0dUtTTlFYcmVQNS9BRXRBM1pGU3Jr?=
- =?utf-8?B?SDdSdzJvTE50OGNONitkMm12Y1luVjA3TW51cWVGL1Npa0VtTVczdTBiS0VE?=
- =?utf-8?B?bkNadlhiMVA4RlBRY1dad3BMUTNFdUNYNHNkQXlwZTRaMWRkaENVcWxqNXBt?=
- =?utf-8?B?VmNwRmFyVC9GRTFVSmllVnRqbFRucjBSZGtIa2JMb1FERHlDbkhYblBwRkda?=
- =?utf-8?B?UEM1cTdhbHlQZ290T3hWZVRMQzBEcUMvalpDaDN5OWx0cWF2U2Y1M2dzZE9L?=
- =?utf-8?B?cEFUTWw1Y1BXdTJ6djZhT2hNbkxlUmgvRlREZFM5Z1JmbEM3Y2VmTEhXTGJG?=
- =?utf-8?B?SHNpdDdJYnNiMFlTY3E1ZSthZUpBUys2dHRGZSt5Qy9KOThnZDd6OWN3OXl4?=
- =?utf-8?B?cFdvbjl6V1lNMnpZOUloTnNNSCtHQ0l6cm8vaU1oY3Y3UC9lMk16TGR3RDVp?=
- =?utf-8?B?ajRHRWdEMndaOG11R0doUTRWQ0lBa1k3UE5McERMYVFUTnZIdjlBNGdjNXZv?=
- =?utf-8?B?ZTVXRTZtWXlWcWdvM0hLZG1rTzd4bXZreVk4eElrUW41ZTcyRlFpUUNQS3pZ?=
- =?utf-8?B?VEI1WmgwbXRsS3g4K1hiZnh2REoxNWhkSjA5a0g2QTdYSHdSVEgrSU9wZ3k0?=
- =?utf-8?B?QkpMZUZNZjl5ZHJSZHRyWDl2NGJpWFIzNnV3c3FFd2hETTQvVkJIN1ErRnRZ?=
- =?utf-8?B?SjFiMVU0eWQ3YXp3T09NZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TEFjampPcFJ2Y0ZmREN3LzVtaEY0NjZwV0U3N0g5ckcvN3VyY2ppSFpKVDF2?=
- =?utf-8?B?RWRYVmhVbzFlcENlM0tseHVYbmJVeWZSQmJDZVVVYnJRZHdrS0ZzWW9OZzVR?=
- =?utf-8?B?dWhLTzg4cURxMG1Lc0tIaXM4MnVJU3RrTEtvN1Rwd0NJZFdSS21kWWpBMkxI?=
- =?utf-8?B?VlhBckJveW52UmlvQ2VKZVVBaDdTV3NjME9sNEk0cjdMenl4TDJ1Q21PUVNh?=
- =?utf-8?B?bHRSNWJrQ2MrdWNaZDRDOWpnOHQzNzZvcDhvY005ZlNEdmZ0d2Rmbk43NkpM?=
- =?utf-8?B?VU9XZGRseXFhQXBCL0VaOEhOa0JBV3R5NUtKSUowQVNpT3pTc1BSWCtwLzdj?=
- =?utf-8?B?UVpXdkVTOXlRSU1lSmQwVGVTZWhyeDVGeUxqOFByVHRCZWlXNVdjZVUycVV0?=
- =?utf-8?B?T0pORmlxUG9iU040TEJIZmphYzh3NWR0MUtHVXppTVlWZzB2azdrdEF2dkNN?=
- =?utf-8?B?aU1oZ2ZPbTNWOG9GYXY5cCtNcTZzQXd5MlBqcjhvWlovLzdZZlVubEZQMkhM?=
- =?utf-8?B?L1J5OE9vcy9jY3RnQnplMHJodzB0aFR1U3NPeUN4UTBHZTI2QmdrWUROQjZr?=
- =?utf-8?B?QlJNS1VXZ0R4SlpKZE1DMXVYMnNOYW5OZStteEVFYmt6REFVUDNuYnZwREo0?=
- =?utf-8?B?VndxK2NxMmZ5MFN1c2lER1FPNVZ4WEU4ZHBtdVRHV3NSZ0hwMVNwUjlMSkNh?=
- =?utf-8?B?d2NXYVd1VlQ4M0IvRjVteVVzUmFtWnJlaTJTMXdrT0JPcmg2aU1xS3pzWExF?=
- =?utf-8?B?T3VlSTlMRnh4UHdManRoYll6NC9JbHVZWGlWc3lJV29MVG96RFhIMmI1YS9H?=
- =?utf-8?B?bWZQZGpndEpUQ1BNbTV3SGZ3UEtTMTNhb3VZaVQyOGl2N1NXYTVCQ2JuTHpm?=
- =?utf-8?B?bEZieE1jbGRBaVF0bmFkdUoxMk8vQlBSZzZNanY4WUEwY2VKanhVMTF6NC9H?=
- =?utf-8?B?MlNzRmRtNk51c294V2VPN255WnloZWlKYWtsQTEzdXEveGJGOWZkMTRZb1dN?=
- =?utf-8?B?aE1lcCtOVERUR0J1U3hCTWgwTlhmQThpZzUyc2xtTnJQczU4YjdBOXVjQndB?=
- =?utf-8?B?Qitpc1MzZmtXRmR1OEtaM2lMWUQ1Y3dNYjJCdGJRMHJKdmp0TnpaVCs2cm0v?=
- =?utf-8?B?ZXdBeFpNdldWVld5OFJHNmdBWnFIZGZ6WE1PMWVGVStBN05oWmVWbXkwOVpV?=
- =?utf-8?B?QWliNU5pTCtkZDZxNFZ3ZUFEYVdBYXd5Rm1aOVVlckNXNkxCZHVBcVZMdDJl?=
- =?utf-8?B?UFkzU21ScjlXUnE1YnkxT1kvbUlwRjh5TTRWWTA0Q3dGNzhQTCtQaCsxaWdn?=
- =?utf-8?B?VjFpVjNKZ21RRS80R0hMVlZWSmNzSmQ5OUFmWjBZeHB4OW9oV1FGM2FrNXZL?=
- =?utf-8?B?ZTFBVWtnV1crbnNQemt1bXdaR1hRSnFnRnU4ZXovY21jNGpHWXFENTR4WHhC?=
- =?utf-8?B?NzJ2cyt2d055bTdJQ2w1YUpUSlBFTFh1SFVSclJuQ0hONUg5dDhlT3B3Q2FS?=
- =?utf-8?B?Ri9zN3lRbFhtRnNnT3VuM3hrUkhIaWtmcnBKeS9HRXlQQ0ZyTktNZTVoWVBE?=
- =?utf-8?B?ZHNWTG4yUnE5ZEtUTnZUWDgrYkpGL21XQTV1WWs5Y21zUFgwVHlORi9EdC9W?=
- =?utf-8?B?RjJyZFBwMzdkWUZsSmpRbnpPa0IzWkdHL2ZoOEw2ZUZXWmk3cHlSczlwWjR3?=
- =?utf-8?B?ZFFKYXpmRkNpdXRZdDZXdGVhMWJmM2RDYkFJc1M4SWlJbGtoYTd3VU9sV3pI?=
- =?utf-8?B?UXJCVXNHOU1qTEZRb090TXRUUkdnNU5nOGZ5bFY2Y3YrU0NZVWJka0gzeS9m?=
- =?utf-8?B?aFc5dkEyUE9rNGtMNUVZM1lPTC8wbWF4VUtZaDhNRGJvenZ6RGhSNG9pWTN2?=
- =?utf-8?B?T0tjNWVZL0FZbFNoZ3FPdTh0djVrekVKS1kwb2FUNEtVNGRXU2NXWUtpa3I5?=
- =?utf-8?B?OE8wVFBNSWYrSEVzZWtKSmxnVThIdFBob0Rveng3WHNkUjJaQTRnSlhsRkw1?=
- =?utf-8?B?UDZpUFRlcXp5UlVOS05xRFRuR05NRG96MmRkdWtkelRpa3ljeXdvNzZnWWV2?=
- =?utf-8?B?OFIxUC9vZW5hc3FnZDM2aVU5NnZyUDFSME50U2htandvbVN1TGJ1OHlFU0Fx?=
- =?utf-8?B?UmVUOHRLT1luVGlkdWFUN3d4czZSTWptelRub0NtQzZtVm0xRWdtVlZCenJp?=
- =?utf-8?B?aWc9PQ==?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 80c55cdb-7eff-4ec1-a7b4-08dca5a3763f
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2024 14:27:46.3017 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d/Yhdhq8HkRouEcGocoam2Q7o60ElmPaVRzix50tlZYJ6x9S7yDwcABP6ekgxxWAINCpBudr/IfmGjn7gtZNz2/TIoHjwEUbGVbHOSmIZiE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR08MB6671
-Received-SPF: pass client-ip=2a01:111:f403:2612::72a;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=EUR05-AM6-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,125 +115,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/24 4:32 PM, Denis V. Lunev wrote:
-> On 7/12/24 13:55, Vladimir Sementsov-Ogievskiy wrote:
->> On 12.07.24 12:46, Andrey Drobyshev wrote:
->>> From: "Denis V. Lunev" <den@openvz.org>
->>>
->>> We have observed that some clusters in the QCOW2 files are zeroed
->>> while preallocation filter is used.
->>>
->>> We are able to trace down the following sequence when prealloc-filter
->>> is used:
->>>      co=0x55e7cbed7680 qcow2_co_pwritev_task()
->>>      co=0x55e7cbed7680 preallocate_co_pwritev_part()
->>>      co=0x55e7cbed7680 handle_write()
->>>      co=0x55e7cbed7680 bdrv_co_do_pwrite_zeroes()
->>>      co=0x55e7cbed7680 raw_do_pwrite_zeroes()
->>>      co=0x7f9edb7fe500 do_fallocate()
->>>
->>> Here coroutine 0x55e7cbed7680 is being blocked waiting while coroutine
->>> 0x7f9edb7fe500 will finish with fallocate of the file area. OK. It is
->>> time to handle next coroutine, which
->>>      co=0x55e7cbee91b0 qcow2_co_pwritev_task()
->>>      co=0x55e7cbee91b0 preallocate_co_pwritev_part()
->>>      co=0x55e7cbee91b0 handle_write()
->>>      co=0x55e7cbee91b0 bdrv_co_do_pwrite_zeroes()
->>>      co=0x55e7cbee91b0 raw_do_pwrite_zeroes()
->>>      co=0x7f9edb7deb00 do_fallocate()
->>>
->>> The trouble comes here. Coroutine 0x55e7cbed7680 has not advanced
->>> file_end yet and coroutine 0x55e7cbee91b0 will start fallocate() for
->>> the same area. This means that if (once fallocate is started inside
->>> 0x7f9edb7deb00) original fallocate could end and the real write will
->>> be executed. In that case write() request is handled at the same time
->>> as fallocate().
->>>
->>> The patch moves s->file_lock assignment before fallocate and that is
->>
->> text need to be updated
->>
->>> crucial. The idea is that all subsequent requests into the area
->>> being preallocation will be issued as just writes without fallocate
->>> to this area and they will not proceed thanks to overlapping
->>> requests mechanics. If preallocation will fail, we will just switch
->>> to the normal expand-by-write behavior and that is not a problem
->>> except performance.
->>>
->>> Signed-off-by: Denis V. Lunev <den@openvz.org>
->>> Tested-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>> ---
->>>   block/preallocate.c | 8 +++++++-
->>>   1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/block/preallocate.c b/block/preallocate.c
->>> index d215bc5d6d..ecf0aa4baa 100644
->>> --- a/block/preallocate.c
->>> +++ b/block/preallocate.c
->>> @@ -383,6 +383,13 @@ handle_write(BlockDriverState *bs, int64_t
->>> offset, int64_t bytes,
->>>         want_merge_zero = want_merge_zero && (prealloc_start <= offset);
->>>   +    /*
->>> +     * Assign file_end before making actual preallocation. This will
->>> ensure
->>> +     * that next request performed while preallocation is in
->>> progress will
->>> +     * be passed without preallocation.
->>> +     */
->>> +    s->file_end = prealloc_end;
->>> +
->>>       ret = bdrv_co_pwrite_zeroes(
->>>               bs->file, prealloc_start, prealloc_end - prealloc_start,
->>>               BDRV_REQ_NO_FALLBACK | BDRV_REQ_SERIALISING |
->>> BDRV_REQ_NO_WAIT);
->>> @@ -391,7 +398,6 @@ handle_write(BlockDriverState *bs, int64_t
->>> offset, int64_t bytes,
->>>           return false;
->>>       }
->>>   -    s->file_end = prealloc_end;
->>>       return want_merge_zero;
->>>   }
->>
->>
->> Hmm. But this way we set both s->file_end and s->zero_start prior to
->> actual write_zero operation. This means that next write-zero operation
->> may go fast-path (see preallocate_co_pwrite_zeroes()) and return
->> success, even before actual finish of preallocation write_zeroes
->> operation (which may also fail). Seems we need to update logic around
->> s->zero_start too.
->>
-> Yes. This is not a problem at all. We go fast path and this new
-> fast-pathed write request will stuck on overlapped request check.
-> This if fine on success path.
-> 
-> But error path is a trickier question.
-> 
-> iris ~/src/qemu $ cat 1.c
-> #include <stdio.h>
-> #include <unistd.h>
-> #include <string.h>
-> #include <fcntl.h>
-> 
-> int main()
-> {
->     int fd = open("file", O_RDWR | O_CREAT);
->     char buf[4096];
-> 
->     memset(buf, 'a', sizeof(buf));
->     pwrite(fd, buf, sizeof(buf), 4096);
-> 
->     return 0;
-> }
-> iris ~/src/qemu $
-> 
-> This works just fine, thus error path would be also fine.
-> 
-> Den
+On Tue, 16 Jul 2024 17:56:11 +0530
+Sunil V L <sunilvl@ventanamicro.com> wrote:
 
-This would also be relatively easy to check by modifying our original
-test case in 298 so that half of aio_write requests write actual data,
-and other half cause write_zeroes operations.  It doesn't seem to fail
-with this v2 patch.
+> On Mon, Jul 15, 2024 at 02:43:52PM +0200, Igor Mammedov wrote:
+> > On Sun, 14 Jul 2024 03:46:36 -0400
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> >  =20
+> > > On Fri, Jul 12, 2024 at 03:50:10PM +0200, Igor Mammedov wrote: =20
+> > > > On Fri, 12 Jul 2024 13:51:04 +0100
+> > > > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+> > > >    =20
+> > > > > On Fri, Jul 12, 2024 at 02:43:19PM +0200, Igor Mammedov wrote:   =
+=20
+> > > > > > On Mon,  8 Jul 2024 17:17:32 +0530
+> > > > > > Sunil V L <sunilvl@ventanamicro.com> wrote:
+> > > > > >      =20
+> > > > > > > This series adds few updates to RISC-V ACPI namespace for vir=
+t platform.
+> > > > > > > Additionally, it has patches to enable ACPI table testing for=
+ RISC-V.
+> > > > > > >=20
+> > > > > > > 1) PCI Link devices need to be created outside the scope of t=
+he PCI root
+> > > > > > > complex to ensure correct probe ordering by the OS. This matc=
+hes the
+> > > > > > > example given in ACPI spec as well.
+> > > > > > >=20
+> > > > > > > 2) Add PLIC and APLIC as platform devices as well to ensure p=
+robing
+> > > > > > > order as per BRS spec [1] requirement.
+> > > > > > >=20
+> > > > > > > 3) BRS spec requires RISC-V to use new ACPI ID for the generi=
+c UART. So,
+> > > > > > > update the HID of the UART.
+> > > > > > >=20
+> > > > > > > 4) Enabled ACPI tables tests for RISC-V which were originally=
+ part of
+> > > > > > > [2] but couldn't get merged due to updates required in the ex=
+pected AML
+> > > > > > > files. I think combining those patches with this series makes=
+ it easier
+> > > > > > > to merge since expected AML files are updated.
+> > > > > > >=20
+> > > > > > > [1] - https://github.com/riscv-non-isa/riscv-brs
+> > > > > > > [2] - https://lists.gnu.org/archive/html/qemu-devel/2024-06/m=
+sg04734.html     =20
+> > > > > >=20
+> > > > > > btw: CI is not happy about series, see:
+> > > > > >  https://gitlab.com/imammedo/qemu/-/pipelines/1371119552
+> > > > > > also 'cross-i686-tci' job routinely timeouts on bios-tables-test
+> > > > > > but we still keep adding more tests to it.
+> > > > > > We should either bump timeout to account for slowness or
+> > > > > > disable bios-tables-test for that job.     =20
+> > > > >=20
+> > > > > Asumming the test is functionally correct, and not hanging, then =
+bumping
+> > > > > the timeout is the right answer. You can do this in the meson.bui=
+ld
+> > > > > file   =20
+> > > >=20
+> > > > I think test is fine, since once in a while it passes (I guess it d=
+epends on runner host/load)
+> > > >=20
+> > > > Overal job timeout is 1h, but that's not what fails.
+> > > > What I see is, the test aborts after 10min timeout.
+> > > > it's likely we hit boot_sector_test()/acpi_find_rsdp_address_uefi()=
+ timeout.
+> > > > That's what we should try to bump.
+> > > >=20
+> > > > PS:
+> > > > I've just started the job with 5min bump, lets see if it is enough.=
+   =20
+> > >=20
+> > > Because we should wait for 5min CPU time, not wall time.
+> > > Why don't we do that?
+> > > Something like getrusage should work I think.
+> > >  =20
+> >=20
+> > It turned out to be a meson timeout that's set individually per test fi=
+le.
+> > I'll send a patch later on.
+> >  =20
+> Hi Igor,
+>=20
+> I am unable to get msys2-64bit test in CI to pass. I tried including
+> your change in meson as well but no luck. I can't guess how enabling
+> bios-tables-test for RISC-V is affecting this particular test. Does this
+> pass for you?=20
+>=20
+> https://gitlab.com/vlsunil/qemu/-/jobs/7343701148
 
-I'll modify the testcase accordingly in v3.
+it doesn't pass for me either,
+but bios-tables-test is not among those that timed out,
+so I'd ignore failure in this case
+
+>=20
+> Thanks!
+> Sunil
+>=20
+
 
