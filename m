@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F05C3DA61
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38A6C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgLO-00029i-V2; Tue, 16 Jul 2024 07:27:43 -0400
+	id 1sTgKN-0008V9-H3; Tue, 16 Jul 2024 07:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKu-000113-Mx
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:27:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKL-0008TT-S9
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKp-0003hA-VV
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:27:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTgKH-0003dk-Uh
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:26:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721129224;
+ s=mimecast20190719; t=1721129193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cQC9YgpQ0Go3a4yLyP+3PWN3jDPG9o3cRP2hX1hIGP0=;
- b=gsr2fogGJKgx4UQ3imwhrl4/mm2In0pyj94kHViP0dJ1QE828uaqstNvrCaaIapt5eqR36
- TwEIBl5noJoCWxR/43OiJ232CzxQqen94ZdYNDa12VKVvbAFdtrBMjXa5jf4jhG/Z0VkG4
- jxXKGvPLuMDyD71Q7E79DB3WyLq/1H4=
+ bh=eOQyPkgbOHdxK2vV5sE/Al50Xpo82g2Pi5D+dxkdVGU=;
+ b=N6g2FuzMaF89eXcS+SHRbSfJqiWfLlkg80wQ/GYHT7AuKwL6w9NxwAh0v9RW5IsxgsDqAc
+ kNh+GWSxfzwujYfXuAmQ8V4m+uVZkNFS+qEPU2ihvA/4VS4+G8ZjE46amQCmEMKlM6SNwD
+ FqGIApXxTyCNu3Zb9KuTdekuToJcJsg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-0XJ36HnjMGKvkaxXfL0Ybw-1; Tue,
- 16 Jul 2024 07:27:00 -0400
-X-MC-Unique: 0XJ36HnjMGKvkaxXfL0Ybw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-Citnl_BnM8Oa_WY0VEMiqw-1; Tue,
+ 16 Jul 2024 07:26:30 -0400
+X-MC-Unique: Citnl_BnM8Oa_WY0VEMiqw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7083B1944A8F; Tue, 16 Jul 2024 11:26:59 +0000 (UTC)
+ id D386C1944AB5; Tue, 16 Jul 2024 11:26:28 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.154])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A7281955F40; Tue, 16 Jul 2024 11:26:55 +0000 (UTC)
+ id CCAE31955F40; Tue, 16 Jul 2024 11:26:24 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -54,10 +54,10 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 10/11] tests/functional: Convert the s390x avocado tests into
- standalone tests
-Date: Tue, 16 Jul 2024 13:26:13 +0200
-Message-ID: <20240716112614.1755692-11-thuth@redhat.com>
+Subject: [PATCH 02/11] tests/functional: Convert simple avocado tests into
+ standalone python tests
+Date: Tue, 16 Jul 2024 13:26:05 +0200
+Message-ID: <20240716112614.1755692-3-thuth@redhat.com>
 In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
 References: <20240716112614.1755692-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,357 +88,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These tests use archive.lzma_uncompress() from the Avocado utils,
-so provide a small helper function for this, based on the
-standard lzma module from Python instead.
-
-And while we're at it, replace the MD5 hashes in the topology test
-with proper SHA256 hashes, since MD5 should not be used anymore
-nowadays.
+These test are rather simple and don't need any modifications apart
+from adjusting the "from avocado_qemu" line. To ease debugging, make
+the files executable and add a shebang line and Python '__main__'
+handling, too, so that these tests can now be run by executing them
+directly.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  4 +-
- tests/functional/meson.build                  |  6 ++
- tests/functional/qemu_test/utils.py           |  7 ++
- .../test_s390x_ccw_virtio.py}                 | 32 ++++-----
- .../test_s390x_topology.py}                   | 70 +++++++------------
- 5 files changed, 52 insertions(+), 67 deletions(-)
- rename tests/{avocado/machine_s390_ccw_virtio.py => functional/test_s390x_ccw_virtio.py} (95%)
+ .../test_cpu_queries.py}                      |  7 ++-
+ .../test_empty_cpu_model.py}                  |  7 ++-
+ .../test_mem_addr_space.py}                   | 53 +++----------------
+ .../test_pc_cpu_hotplug_props.py}             | 11 ++--
+ .../test_virtio_version.py}                   |  8 +--
+ 5 files changed, 29 insertions(+), 57 deletions(-)
+ rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
  mode change 100644 => 100755
- rename tests/{avocado/s390_topology.py => functional/test_s390x_topology.py} (90%)
+ rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
+ mode change 100644 => 100755
+ rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (92%)
+ mode change 100644 => 100755
+ rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
+ mode change 100644 => 100755
+ rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
  mode change 100644 => 100755
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 025227954c..cbefb6fb81 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1739,7 +1739,7 @@ S: Supported
- F: hw/s390x/
- F: include/hw/s390x/
- F: configs/devices/s390x-softmmu/default.mak
--F: tests/avocado/machine_s390_ccw_virtio.py
-+F: tests/functional/test_s390x_ccw_virtio.py
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
-@@ -1802,7 +1802,7 @@ F: hw/s390x/cpu-topology.c
- F: target/s390x/kvm/stsi-topology.c
- F: docs/devel/s390-cpu-topology.rst
- F: docs/system/s390x/cpu-topology.rst
--F: tests/avocado/s390_topology.py
-+F: tests/functional/test_s390x_topology.py
- 
- X86 Machines
- ------------
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c8fc9f6c07..f6de9af8a2 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -13,6 +13,7 @@ endif
- test_timeouts = {
-   'netdev_ethtool' : 180,
-   'ppc_74xx' : 90,
-+  's390x_ccw_virtio' : 180,
- }
- 
- tests_generic = [
-@@ -47,6 +48,11 @@ tests_ppc_thorough = [
-   'ppc_bamboo',
- ]
- 
-+tests_s390x_thorough = [
-+  's390x_ccw_virtio',
-+  's390x_topology',
-+]
-+
- tests_sparc64_thorough = [
-   'sparc64_sun4u',
- ]
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 4eb5e5d5e5..8115d9d1da 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -8,6 +8,8 @@
+diff --git a/tests/avocado/cpu_queries.py b/tests/functional/test_cpu_queries.py
+old mode 100644
+new mode 100755
+similarity index 89%
+rename from tests/avocado/cpu_queries.py
+rename to tests/functional/test_cpu_queries.py
+index d3faa14720..97dd600c01
+--- a/tests/avocado/cpu_queries.py
++++ b/tests/functional/test_cpu_queries.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Sanity check of query-cpu-* results
+ #
+ # Copyright (c) 2019 Red Hat, Inc.
+@@ -8,7 +10,7 @@
  # This work is licensed under the terms of the GNU GPL, version 2 or
  # later.  See the COPYING file in the top-level directory.
  
-+import lzma
-+import shutil
- import tarfile
- 
- def archive_extract(archive, dest_dir, member=None):
-@@ -19,3 +21,8 @@ def archive_extract(archive, dest_dir, member=None):
-             tf.extract(member=member, path=dest_dir)
-         else:
-             tf.extractall(path=dest_dir)
-+
-+def lzma_uncompress(xz_path, output_path):
-+    with lzma.open(xz_path, 'rb') as lzma_in:
-+        with open(output_path, 'wb') as raw_out:
-+            shutil.copyfileobj(lzma_in, raw_out)
-diff --git a/tests/avocado/machine_s390_ccw_virtio.py b/tests/functional/test_s390x_ccw_virtio.py
-old mode 100644
-new mode 100755
-similarity index 95%
-rename from tests/avocado/machine_s390_ccw_virtio.py
-rename to tests/functional/test_s390x_ccw_virtio.py
-index 26e938c9e9..b2cbaacd21
---- a/tests/avocado/machine_s390_ccw_virtio.py
-+++ b/tests/functional/test_s390x_ccw_virtio.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional test that boots an s390x Linux guest with ccw and PCI devices
- # attached and checks whether the devices are recognized by Linux
- #
-@@ -12,11 +14,10 @@
- import os
- import tempfile
- 
--from avocado import skipUnless
 -from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
 +from qemu_test import QemuSystemTest
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import lzma_uncompress
  
- class S390CCWVirtioMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-@@ -41,11 +42,7 @@ def clear_guest_dmesg(self):
-         self.dmesg_clear_count += 1
- 
-     def test_s390x_devices(self):
--
--        """
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
--        """
-+        self.set_machine('s390-ccw-virtio')
- 
-         kernel_url = ('https://snapshot.debian.org/archive/debian/'
-                       '20201126T092837Z/dists/buster/main/installer-s390x/'
-@@ -160,15 +157,7 @@ def test_s390x_devices(self):
- 
- 
-     def test_s390x_fedora(self):
--
--        """
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
--        :avocado: tags=device:virtio-gpu
--        :avocado: tags=device:virtio-crypto
--        :avocado: tags=device:virtio-net
--        :avocado: tags=flaky
--        """
-+        self.set_machine('s390-ccw-virtio')
- 
-         kernel_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/31/Server/s390x/os'
-@@ -182,7 +171,7 @@ def test_s390x_fedora(self):
-         initrd_hash = '3de45d411df5624b8d8ef21cd0b44419ab59b12f'
-         initrd_path_xz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-         initrd_path = os.path.join(self.workdir, 'initrd-raw.img')
--        archive.lzma_uncompress(initrd_path_xz, initrd_path)
-+        lzma_uncompress(initrd_path_xz, initrd_path)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE + ' audit=0 '
-@@ -275,3 +264,6 @@ def test_s390x_fedora(self):
-         exec_command_and_wait_for_pattern(self,
-                         'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
-                         ' sleep 1 ; done', 'Start virtcrypto_remove.')
+ class QueryCPUModelExpansion(QemuSystemTest):
+     """
+@@ -33,3 +35,6 @@ def test(self):
+             e = self.vm.cmd('query-cpu-model-expansion', model=model,
+                             type='full')
+             self.assertEqual(e['model']['name'], c['name'])
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
-diff --git a/tests/avocado/s390_topology.py b/tests/functional/test_s390x_topology.py
+diff --git a/tests/avocado/empty_cpu_model.py b/tests/functional/test_empty_cpu_model.py
 old mode 100644
 new mode 100755
-similarity index 90%
-rename from tests/avocado/s390_topology.py
-rename to tests/functional/test_s390x_topology.py
-index 9154ac8776..39c5ce0b3d
---- a/tests/avocado/s390_topology.py
-+++ b/tests/functional/test_s390x_topology.py
+similarity index 84%
+rename from tests/avocado/empty_cpu_model.py
+rename to tests/functional/test_empty_cpu_model.py
+index d906ef3d3c..0081b06d85
+--- a/tests/avocado/empty_cpu_model.py
++++ b/tests/functional/test_empty_cpu_model.py
 @@ -1,3 +1,5 @@
 +#!/usr/bin/env python3
 +#
- # Functional test that boots a Linux kernel and checks the console
+ # Check for crash when using empty -cpu option
  #
- # Copyright IBM Corp. 2023
-@@ -9,16 +11,13 @@
+ # Copyright (c) 2019 Red Hat, Inc.
+@@ -7,7 +9,7 @@
+ #
+ # This work is licensed under the terms of the GNU GPL, version 2 or
  # later.  See the COPYING file in the top-level directory.
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
  
- import os
--import shutil
- import time
+ class EmptyCPUModel(QemuSystemTest):
+     def test(self):
+@@ -17,3 +19,6 @@ def test(self):
+         self.vm.wait()
+         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
+         self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/mem-addr-space-check.py b/tests/functional/test_mem_addr_space.py
+old mode 100644
+new mode 100755
+similarity index 92%
+rename from tests/avocado/mem-addr-space-check.py
+rename to tests/functional/test_mem_addr_space.py
+index 85541ea051..bb0cf062ca
+--- a/tests/avocado/mem-addr-space-check.py
++++ b/tests/functional/test_mem_addr_space.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Check for crash when using memory beyond the available guest processor
+ # address space.
+ #
+@@ -8,8 +10,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
 -from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import interrupt_interactive_console_until_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import process
--from avocado.utils import archive
+-import signal
 +from qemu_test import QemuSystemTest
-+from qemu_test import exec_command
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import lzma_uncompress
+ import time
  
+ class MemAddrCheck(QemuSystemTest):
+@@ -23,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
+     # for all 32-bit cases, pci64_hole_size is 0.
+     def test_phybits_low_pse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         With pse36 feature ON, a processor has 36 bits of addressing. So it can
+         access up to a maximum of 64GiB of memory. Memory hotplug region begins
+         at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
+@@ -53,9 +51,6 @@ def test_phybits_low_pse36(self):
  
- class S390CPUTopology(QemuSystemTest):
-@@ -81,18 +80,16 @@ def kernel_init(self):
-         kernel_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/35/Server/s390x/os'
-                       '/images/kernel.img')
--        kernel_hash = '0d1aaaf303f07cf0160c8c48e56fe638'
--        kernel_path = self.fetch_asset(kernel_url, algorithm='md5',
--                                       asset_hash=kernel_hash)
-+        kernel_hash = '1f2dddfd11bb1393dd2eb2e784036fbf6fc11057a6d7d27f9eb12d3edc67ef73'
-+        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+     def test_phybits_low_pae(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         With pae feature ON, a processor has 36 bits of addressing. So it can
+         access up to a maximum of 64GiB of memory. Rest is the same as the case
+         with pse36 above.
+@@ -73,9 +68,6 @@ def test_phybits_low_pae(self):
  
-         initrd_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/35/Server/s390x/os'
-                       '/images/initrd.img')
--        initrd_hash = 'a122057d95725ac030e2ec51df46e172'
--        initrd_path_xz = self.fetch_asset(initrd_url, algorithm='md5',
--                                          asset_hash=initrd_hash)
-+        initrd_hash = '1100145fbca00240c8c372ae4b89b48c99844bc189b3dfbc3f481dc60055ca46'
-+        initrd_path_xz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-         initrd_path = os.path.join(self.workdir, 'initrd-raw.img')
--        archive.lzma_uncompress(initrd_path_xz, initrd_path)
-+        lzma_uncompress(initrd_path_xz, initrd_path)
+     def test_phybits_ok_pentium_pse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Setting maxmem to 59.5G and making sure that QEMU can start with the
+         same options as the failing case above with pse36 cpu feature.
+         """
+@@ -92,9 +84,6 @@ def test_phybits_ok_pentium_pse36(self):
  
-         self.vm.set_console()
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-@@ -115,10 +112,8 @@ def system_init(self):
-     def test_single(self):
+     def test_phybits_ok_pentium_pae(self):
          """
-         This test checks the simplest topology with a single CPU.
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
 -
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -127,10 +122,8 @@ def test_single(self):
-     def test_default(self):
-         """
-         This test checks the implicit topology.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '13,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -154,10 +147,8 @@ def test_move(self):
-         """
-         This test checks the topology modification by moving a CPU
-         to another socket: CPU 0 is moved from socket 0 to socket 2.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '1,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -174,10 +165,8 @@ def test_dash_device(self):
-         """
-         This test verifies that a CPU defined with the '-device'
-         command line option finds its right place inside the topology.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '1,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -221,10 +210,8 @@ def test_polarization(self):
-         """
-         This test verifies that QEMU modifies the entitlement change after
-         several guest polarization change requests.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -267,10 +254,8 @@ def test_entitlement(self):
-         """
-         This test verifies that QEMU modifies the entitlement
-         after a guest request and that the guest sees the change.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -313,10 +298,8 @@ def test_dedicated(self):
-         CPU is made dedicated.
-         QEMU retains the entitlement value when horizontal polarization is in effect.
-         For the guest, the field shows the effective value of the entitlement.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -345,10 +328,8 @@ def test_socket_full(self):
-         This test verifies that QEMU does not accept to overload a socket.
-         The socket-id 0 on book-id 0 already contains CPUs 0 and 1 and can
-         not accept any new CPU while socket-id 0 on book-id 1 is free.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '3,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -369,10 +350,8 @@ def test_dedicated_error(self):
-         """
-         This test verifies that QEMU refuses to lower the entitlement
-         of a dedicated CPU
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -417,10 +396,8 @@ def test_move_error(self):
-         """
-         This test verifies that QEMU refuses to move a CPU to an
-         nonexistent location
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -437,3 +414,6 @@ def test_move_error(self):
-         self.assertEqual(res['error']['class'], 'GenericError')
+         Test is same as above but now with pae cpu feature turned on.
+         Setting maxmem to 59.5G and making sure that QEMU can start fine
+         with the same options as the case above.
+@@ -112,9 +101,6 @@ def test_phybits_ok_pentium_pae(self):
  
-         self.check_topology(0, 0, 0, 0, 'medium', False)
+     def test_phybits_ok_pentium2(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Pentium2 has 36 bits of addressing, so its same as pentium
+         with pse36 ON.
+         """
+@@ -131,9 +117,6 @@ def test_phybits_ok_pentium2(self):
+ 
+     def test_phybits_low_nonpse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Pentium processor has 32 bits of addressing without pse36 or pae
+         so it can access physical address up to 4 GiB. Setting maxmem to
+         4 GiB should make QEMU fail to start with "phys-bits too low"
+@@ -154,9 +137,6 @@ def test_phybits_low_nonpse36(self):
+     # now lets test some 64-bit CPU cases.
+     def test_phybits_low_tcg_q35_70_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         For q35 7.1 machines and above, there is a HT window that starts at
+         1024 GiB and ends at 1 TiB - 1. If the max GPA falls in this range,
+         "above_4G" memory is adjusted to start at 1 TiB boundary for AMD cpus
+@@ -183,9 +163,6 @@ def test_phybits_low_tcg_q35_70_amd(self):
+ 
+     def test_phybits_low_tcg_q35_71_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD_HT_START is defined to be at 1012 GiB. So for q35 machines
+         version > 7.0 and AMD cpus, instead of 1024 GiB limit for 40 bit
+         processor address space, it has to be 1012 GiB , that is 12 GiB
+@@ -206,9 +183,6 @@ def test_phybits_low_tcg_q35_71_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_70_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as q35-7.0 AMD case except that here we check that QEMU can
+         successfully start when maxmem is < 988G.
+         """
+@@ -225,9 +199,6 @@ def test_phybits_ok_tcg_q35_70_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_71_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as q35-7.1 AMD case except that here we check that QEMU can
+         successfully start when maxmem is < 976G.
+         """
+@@ -244,9 +215,6 @@ def test_phybits_ok_tcg_q35_71_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_71_intel(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same parameters as test_phybits_low_tcg_q35_71_amd() but use
+         Intel cpu instead. QEMU should start fine in this case as
+         "above_4G" memory starts at 4G.
+@@ -265,9 +233,6 @@ def test_phybits_ok_tcg_q35_71_intel(self):
+ 
+     def test_phybits_low_tcg_q35_71_amd_41bits(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
+         By setting maxram above 1012 GiB  - 32 GiB - 4 GiB = 976 GiB, we can
+         force "above_4G" memory to start at 1 TiB for q35-7.1 machines
+@@ -292,9 +257,6 @@ def test_phybits_low_tcg_q35_71_amd_41bits(self):
+ 
+     def test_phybits_ok_tcg_q35_71_amd_41bits(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
+         Same as above but by setting maxram between 976 GiB and 992 Gib,
+         QEMU should start fine.
+@@ -313,9 +275,6 @@ def test_phybits_ok_tcg_q35_71_amd_41bits(self):
+ 
+     def test_phybits_low_tcg_q35_intel_cxl(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         cxl memory window starts after memory device range. Here, we use 1 GiB
+         of cxl window memory. 4G_mem end aligns at 4G. pci64_hole is 32 GiB and
+         starts after the cxl memory window.
+@@ -336,9 +295,6 @@ def test_phybits_low_tcg_q35_intel_cxl(self):
+ 
+     def test_phybits_ok_tcg_q35_intel_cxl(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as above but here we do not reserve any cxl memory window. Hence,
+         with the exact same parameters as above, QEMU should start fine even
+         with cxl enabled.
+@@ -353,3 +309,6 @@ def test_phybits_ok_tcg_q35_intel_cxl(self):
+         time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
+         self.vm.shutdown()
+         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/pc_cpu_hotplug_props.py b/tests/functional/test_pc_cpu_hotplug_props.py
+old mode 100644
+new mode 100755
+similarity index 90%
+rename from tests/avocado/pc_cpu_hotplug_props.py
+rename to tests/functional/test_pc_cpu_hotplug_props.py
+index 4bd3e02665..9d5a37cb17
+--- a/tests/avocado/pc_cpu_hotplug_props.py
++++ b/tests/functional/test_pc_cpu_hotplug_props.py
+@@ -1,3 +1,4 @@
++#!/usr/bin/env python3
+ #
+ # Ensure CPU die-id can be omitted on -device
+ #
+@@ -20,16 +21,16 @@
+ # License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ #
+ 
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ class OmittedCPUProps(QemuSystemTest):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=cpu:qemu64
+-    """
++
+     def test_no_die_id(self):
+         self.vm.add_args('-nodefaults', '-S')
+         self.vm.add_args('-smp', '1,sockets=2,cores=2,threads=2,maxcpus=8')
+         self.vm.add_args('-device', 'qemu64-x86_64-cpu,socket-id=1,core-id=0,thread-id=0')
+         self.vm.launch()
+         self.assertEqual(len(self.vm.cmd('query-cpus-fast')), 2)
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/virtio_version.py b/tests/functional/test_virtio_version.py
+old mode 100644
+new mode 100755
+similarity index 98%
+rename from tests/avocado/virtio_version.py
+rename to tests/functional/test_virtio_version.py
+index afe5e828b5..eb23060564
+--- a/tests/avocado/virtio_version.py
++++ b/tests/functional/test_virtio_version.py
+@@ -1,3 +1,4 @@
++#!/usr/bin/env python3
+ """
+ Check compatibility of virtio device types
+ """
+@@ -12,7 +13,7 @@
+ import os
+ 
+ from qemu.machine import QEMUMachine
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ # Virtio Device IDs:
+ VIRTIO_NET = 1
+@@ -60,8 +61,6 @@ class VirtioVersionCheck(QemuSystemTest):
+     Check if virtio-version-specific device types result in the
+     same device tree created by `disable-modern` and
+     `disable-legacy`.
+-
+-    :avocado: tags=arch:x86_64
+     """
+ 
+     # just in case there are failures, show larger diff:
+@@ -173,3 +172,6 @@ def test_modern_only_devs(self):
+         self.check_modern_only('virtio-mouse-pci', VIRTIO_INPUT)
+         self.check_modern_only('virtio-tablet-pci', VIRTIO_INPUT)
+         self.check_modern_only('virtio-keyboard-pci', VIRTIO_INPUT)
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
