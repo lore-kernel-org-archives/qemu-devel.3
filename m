@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EFBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C15BC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTmct-0007AD-KB; Tue, 16 Jul 2024 14:10:11 -0400
+	id 1sTmd5-0008DD-8W; Tue, 16 Jul 2024 14:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmcs-00074l-08
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:10:10 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmd2-0007ys-Na
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:10:20 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmcq-00011q-1C
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:10:09 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4257d5fc9b7so46452065e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:10:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTmd0-0001AY-U9
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:10:20 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4257d5fc9b7so46453835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 11:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721153406; x=1721758206; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721153417; x=1721758217; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5NkIaFDVC7mCONUcx74ZzxY6giGkJtU3xAyO2Vz6jhE=;
- b=SlCuDIqTNSAU0XZafHImW+vkQTc8KerUAgv2Xtw88DZPaacCDZbO+KP/WeThltH4/+
- gFQxOz6C2Ph8npnKpYlLEqgexKsP2hSnGfrTuZ/ynshfnK5JEb7t+eLpNYmM/a6MbM0f
- xeWB2cYtnLaDoHzHeOryWmy+NkKWKfFrQ8vRUwVsMpxbZKi9Hmdsa8D3Jmqf7eWfpaIR
- QoQ84Elzz4r03nYLx9w42HS0/u+VxVp2RnDw+lb/ZYcqhilPAWPLBlsjHeRZoKVtpnxy
- Z67OHs5UImoZ5ljMHdDN7+N8RcfA/klrBT4HBXu2oYe6MsA4PEjyg1b+JK07cUbmuj61
- 1EdQ==
+ bh=J/fWelIsDk94bV5CUZ155GFV3Kb2G+dluPKM584VupM=;
+ b=I2n9uXesiILmZMw4DqEKU37v8iPPPG90TR2n/IPhfnEEeYO64uPxQVO/T89VR7HoI2
+ FpLIvBycJhuMrBlInrhGOxcHuIiu/iqULdm9Sb3IZLVTtHWGxEWSp9O4eoqpOuRzs+9U
+ 3ataOTTFWMgkbin+GQmtH//MzMPL8craq9cArUwYMgUpxw75yfn0bXBpV2ywZe4OaU5m
+ A6nZd14cr9T6qkJgJC2jW05Y1uM8SQCXJy6GYw2eQ3Fsq6mkU2T/bZBzy4rwlts0bKJn
+ 2lVb4sJoihBZvW3F2vLs0D1uHMSLbpYBCqh2xqnR5m1dfU6zo61Qjkl2ualZKQTqSs3m
+ Fgzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721153406; x=1721758206;
+ d=1e100.net; s=20230601; t=1721153417; x=1721758217;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5NkIaFDVC7mCONUcx74ZzxY6giGkJtU3xAyO2Vz6jhE=;
- b=osFJ5dQAp/snQNpz+Ylw1JrJuFYO4NEU4ZJUR7JLF1FcoJiri5YgjKYQbDv3FIwje5
- HC3RJOO9FU515SfVBVw8wI6sNQ1BLHtBywgkKwlRQpvbUDuwm7EYngW20/KDI0G7QMxz
- igpBcf7GBxBFiyZnTrotKGSkaovKei5ES+KfOYvwKLTCinrhetZkgeiySlNsRbH8Lka6
- r/cEQGeY44RW3Zeej1qxZy0QjMxxr3Fkmk1eejKFjKdHD3ld33FKgVqITAfsm+Wmzb91
- wxlObYjkQ1i+uZOy5I0UPFJPInUaioCF6beliE1m/2SDprOWNJUZugzuE+t2XAGLYY3M
- kwEw==
-X-Gm-Message-State: AOJu0Yx09P4MDmbE3mIOIX94NxabFFmI1/A4iW6L7mhEidi1UU2tnyov
- PmzlbqDwGhcQMt6KcqMRWGHZCE+67BwJccvHdAAQzbxwx9tP5hIcOuf8RtYAxkKz/6T7Qhis5B5
- PoRw1cw==
-X-Google-Smtp-Source: AGHT+IHdodhoA0epDnnbqGTqdUBk0g1Gjnb+TH1mQmnHijHygTUmTo6CrO2Zqrh09qatHzq0zS4aBA==
-X-Received: by 2002:a05:600c:1f90:b0:426:6b14:1839 with SMTP id
- 5b1f17b1804b1-427ba47ab0amr26929585e9.0.1721153406167; 
- Tue, 16 Jul 2024 11:10:06 -0700 (PDT)
+ bh=J/fWelIsDk94bV5CUZ155GFV3Kb2G+dluPKM584VupM=;
+ b=wutjvGfOZt1ZLWiCIsiJE4Lv/Tdsyf39fEoHo4xEhmYq2/GwcbIH9LCSZaaQ8/qyXC
+ 0YQvkjcM5iG4Tsm/fOFO/lV7skx1Q20ir/3fdOHzVCFTZLdTs2ed/VHm091g4A7Qp2iD
+ RD9bWQoSYe5mjw31ByPWaVaIysPVWZz4tIB7GG0/dCdEpj73LGtqEv8ba9CN8hInPmnH
+ M13HEy3nt9qneJ6lBoBC59ur+UVmnYI/9sQBg9kemiBbV8QT+Vdf6uZsNDGAqg+uzByN
+ 8at0lHXWa1MjTCi7svCTA6IRzGuM2WWqoVUtRxlpXghdI8KLVJgH+NikrhXhJEJlq95k
+ D9Gw==
+X-Gm-Message-State: AOJu0YwAi6lgzinvWvqyaZjSG6yeBOdcA+v2QGTdipxsZ73usx8Pk8jW
+ AVg7aHOfQGRMfZFNBdX+0WE+hAAjskG0BkiD1FzQEuqyiviHR/ewuNUuz4T9HVU9uLEgyV86cR1
+ 9zItL2g==
+X-Google-Smtp-Source: AGHT+IG7hb9GySRVSkBP7ow1KqrpAE8f5R/t8WpXPajvnPY9tJMGGUSQlUMbV4rgB+uDvn+Jj1GhYw==
+X-Received: by 2002:a05:600c:198e:b0:426:52a5:1ca4 with SMTP id
+ 5b1f17b1804b1-427ba69ae4emr23743705e9.21.1721153417039; 
+ Tue, 16 Jul 2024 11:10:17 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.209.82])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dabefa6sm9664487f8f.44.2024.07.16.11.10.05
+ ffacd0b85a97d-3680dabf133sm9532426f8f.37.2024.07.16.11.10.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jul 2024 11:10:05 -0700 (PDT)
+ Tue, 16 Jul 2024 11:10:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/13] loader: remove load_image_gzipped function as its not
- used anywhere
-Date: Tue, 16 Jul 2024 20:09:31 +0200
-Message-ID: <20240716180941.40211-5-philmd@linaro.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 06/13] system/cpus: Add cpu_pause() function
+Date: Tue, 16 Jul 2024 20:09:33 +0200
+Message-ID: <20240716180941.40211-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240716180941.40211-1-philmd@linaro.org>
 References: <20240716180941.40211-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,65 +96,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-load_image_gzipped() does not seem to be used anywhere. Remove it.
+This factors the CPU pause function from pause_all_vcpus() into a
+new cpu_pause() function, similarly to cpu_resume(). cpu_resume()
+is moved to keep it next to cpu_pause().
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240711072448.32673-1-anisinha@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20240712120247.477133-17-npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/loader.h |  4 +---
- hw/core/loader.c    | 13 -------------
- 2 files changed, 1 insertion(+), 16 deletions(-)
+ include/hw/core/cpu.h |  8 ++++++++
+ system/cpus.c         | 30 +++++++++++++++++-------------
+ 2 files changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 9844c5e3cf..7f6d06b956 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -77,15 +77,13 @@ ssize_t load_image_targphys(const char *filename, hwaddr,
- ssize_t load_image_mr(const char *filename, MemoryRegion *mr);
- 
- /* This is the limit on the maximum uncompressed image size that
-- * load_image_gzipped_buffer() and load_image_gzipped() will read. It prevents
-+ * load_image_gzipped_buffer() will read. It prevents
-  * g_malloc() in those functions from allocating a huge amount of memory.
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index a2c8536943..e6acfcb59a 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -984,6 +984,14 @@ void cpu_reset_interrupt(CPUState *cpu, int mask);
   */
- #define LOAD_IMAGE_MAX_GUNZIP_BYTES (256 << 20)
+ void cpu_exit(CPUState *cpu);
  
- ssize_t load_image_gzipped_buffer(const char *filename, uint64_t max_sz,
-                                   uint8_t **buffer);
--ssize_t load_image_gzipped(const char *filename, hwaddr addr, uint64_t max_sz);
--
++/**
++ * cpu_pause:
++ * @cpu: The CPU to pause.
++ *
++ * Pauses CPU, i.e. puts CPU into stopped state.
++ */
++void cpu_pause(CPUState *cpu);
++
  /**
-  * unpack_efi_zboot_image:
-  * @buffer: pointer to a variable holding the address of a buffer containing the
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 39bd8f9e4d..31593a1171 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -845,19 +845,6 @@ ssize_t load_image_gzipped_buffer(const char *filename, uint64_t max_sz,
-     return ret;
+  * cpu_resume:
+  * @cpu: The CPU to resume.
+diff --git a/system/cpus.c b/system/cpus.c
+index d3640c9503..5e3a988a0a 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -568,6 +568,22 @@ void cpu_thread_signal_destroyed(CPUState *cpu)
+     qemu_cond_signal(&qemu_cpu_cond);
  }
  
--/* Load a gzip-compressed kernel. */
--ssize_t load_image_gzipped(const char *filename, hwaddr addr, uint64_t max_sz)
--{
--    ssize_t bytes;
--    uint8_t *data;
--
--    bytes = load_image_gzipped_buffer(filename, max_sz, &data);
--    if (bytes != -1) {
--        rom_add_blob_fixed(filename, data, bytes, addr);
--        g_free(data);
--    }
--    return bytes;
--}
++void cpu_pause(CPUState *cpu)
++{
++    if (qemu_cpu_is_self(cpu)) {
++        qemu_cpu_stop(cpu, true);
++    } else {
++        cpu->stop = true;
++        qemu_cpu_kick(cpu);
++    }
++}
++
++void cpu_resume(CPUState *cpu)
++{
++    cpu->stop = false;
++    cpu->stopped = false;
++    qemu_cpu_kick(cpu);
++}
  
- /* The PE/COFF MS-DOS stub magic number */
- #define EFI_PE_MSDOS_MAGIC        "MZ"
+ static bool all_vcpus_paused(void)
+ {
+@@ -588,12 +604,7 @@ void pause_all_vcpus(void)
+ 
+     qemu_clock_enable(QEMU_CLOCK_VIRTUAL, false);
+     CPU_FOREACH(cpu) {
+-        if (qemu_cpu_is_self(cpu)) {
+-            qemu_cpu_stop(cpu, true);
+-        } else {
+-            cpu->stop = true;
+-            qemu_cpu_kick(cpu);
+-        }
++        cpu_pause(cpu);
+     }
+ 
+     /* We need to drop the replay_lock so any vCPU threads woken up
+@@ -613,13 +624,6 @@ void pause_all_vcpus(void)
+     bql_lock();
+ }
+ 
+-void cpu_resume(CPUState *cpu)
+-{
+-    cpu->stop = false;
+-    cpu->stopped = false;
+-    qemu_cpu_kick(cpu);
+-}
+-
+ void resume_all_vcpus(void)
+ {
+     CPUState *cpu;
 -- 
 2.41.0
 
