@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82D6C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:27:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD69C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 13:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTiCb-00062s-BP; Tue, 16 Jul 2024 09:26:45 -0400
+	id 1sTiFb-0002iS-QT; Tue, 16 Jul 2024 09:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTiCZ-00061u-H8
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:26:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sTiFa-0002hf-9N
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:29:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTiCV-0003MR-KU
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:26:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sTiFV-0003p6-HF
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 09:29:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721136395;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1721136584;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pwYBYSx+R7/E/8HsXUFCxs5MwT3+6mafjqne8dQCWg4=;
- b=S1NP+fQAfTluX7rhu2M8RpIc4QRyQhQ9KaF82LiHODRUfHHHu/480qtKl5Gyj1S/+PicIG
- B5ZQ34Lvf2UwuckoQdjdJArEMOVWruJjPd969v0kK5TOJjUdud9xIKBW97nL1uEcN4VQok
- GJizlOooVrs/Ewycc3pWX9MJHVOm/+A=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vRg/z9OA72c3JjyTF6wOH7XQTE5k8Cx5BGSXMBf+eVI=;
+ b=Tplp57Z7RVl0yPpT9viMR6I7Dh4FpmMob89+beOaFpNAsGMk+GZF/o0f5Kdiys0l7i2dKs
+ XIyT7Cc25FsK1zDf8HBDqQnQiAgPTBnX3rXe0MO68nrSLJSfYH1eELDYERsm0hv3iKiA8M
+ UE+R0vL90COwKORo6vdB3dAfvpkP1Zg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-1-RAS4yHO4-xNjUj9__W_g-1; Tue, 16 Jul 2024 09:26:33 -0400
-X-MC-Unique: 1-RAS4yHO4-xNjUj9__W_g-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6af35481ea6so79998246d6.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:26:33 -0700 (PDT)
+ us-mta-633-wdzJBeJbM1u3es5T2X2kNw-1; Tue, 16 Jul 2024 09:29:41 -0400
+X-MC-Unique: wdzJBeJbM1u3es5T2X2kNw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-367987e6ebcso4104429f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 06:29:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721136393; x=1721741193;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pwYBYSx+R7/E/8HsXUFCxs5MwT3+6mafjqne8dQCWg4=;
- b=NwKyuNt8Ebk8h5IRuuGqLgJTZxmJaOMwc8XORE9QBvjeP1ZRBinUqM+bb9Zt4VrZlC
- uxwQwMWfnhgITGi8Ec50YodVgypaLg0os5eK3MQUkFnabDnRpp2QCafwtNKSaJX1L8Xg
- 6t16SkCFCm/rTB7wBtYN01uJh9TU+Vd+BpeHrKCvJ3sA0N4k+Rp2/f73ZzwlKlSV7txt
- wPWD8sXSoJMZAggQqJE3tvTR+dDpHzRQG0Q6W9ZhsqMT8kSWB4qATmmXcMRHMxHORCUB
- W8Xz4aLsgMl5DDx2QzlSUYQwf5BpEgbesGHPywo/FB8xFk7/6E7Y8dbKywYfLcmBHreU
- ME0Q==
+ d=1e100.net; s=20230601; t=1721136581; x=1721741381;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vRg/z9OA72c3JjyTF6wOH7XQTE5k8Cx5BGSXMBf+eVI=;
+ b=eip9Jl3oeVY/rvCjb5AmmJorWKn1oyKnIWv/YRl4U1k0lqRSKUOzoEpV3+24F11ctH
+ Xkt1u0PoWipwUUo9nNshaP7uNtH6iNnXbE5nPKoq+txx2FNPfQ1O+dZWKzvQ2bXk6dIk
+ EIIhDbVPQfvNTqPKxoqbYBnNQzqAcwOnuXbJR57/nJ06GA0Pd4D41cruAy1ubv4WKrsb
+ uwb0R8PLkcUbnN6AOYq7rvEYSalD+L2DZ2TPoUgfjj/lEpdXGkAs7AI4dQTH5LW/wU/X
+ BK4N5x+utD9JqdgBIRKn2g3/WmpL1H4ld2/lG4SdH2zs0L0M1kyqfF1hGAx5ZqPS95Iq
+ +nqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXX67Vb+TzmIsZz5kUpbJCuXdzkvJz1ui8HK2JdoCDp8DwKInIqtarDeIjxxvMdx+H95QNiINwoDaI3lJoRP6aYS679poI=
-X-Gm-Message-State: AOJu0Yz5VdMPO4/x5/fJGve+za/3IorE8r+iDbOyuAK2GFRvYlnkHJXM
- McjY1QuI05ccrb+mIFVNBxLNQQDXBAjW+MFNGY2lLLNmFd1rkdmF52WkZpK+OXGALnGiBLDY8Mp
- rBAgdRN6u0FhdDCLrWZ/R8R6dy/crxEB2JDousls2XfklTe8+kNWt
-X-Received: by 2002:a05:6214:2524:b0:6b5:4249:7c5 with SMTP id
- 6a1803df08f44-6b77f54d483mr28681656d6.36.1721136393068; 
- Tue, 16 Jul 2024 06:26:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOYeJGev2u3QL8JsgDti8kGD1hKUX/LNnWPqZVwuiu6sJEmaNgY7/KgZzRPDv+wQwxcJp6TQ==
-X-Received: by 2002:a05:6214:2524:b0:6b5:4249:7c5 with SMTP id
- 6a1803df08f44-6b77f54d483mr28681436d6.36.1721136392756; 
- Tue, 16 Jul 2024 06:26:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b76197d5b3sm30678616d6.41.2024.07.16.06.26.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 06:26:32 -0700 (PDT)
-Message-ID: <12699274-15e7-49fa-8f37-c97dbf79ac44@redhat.com>
-Date: Tue, 16 Jul 2024 15:26:24 +0200
+ AJvYcCUMvHGcwVhJbfqefb+DVp9uUMOnNNH6lT65NMswSC3BtWNuy8vSmFRESSOF31NDvTBa9bD7A4A/Yl24fj2HVSYUFt6iYTg=
+X-Gm-Message-State: AOJu0Yy6nx/mRYJHU0gQkZzP95KLjuVfMyma4bh2PeE/M51VmHrCyhwk
+ Lmx1hrcMfHFeJPBPIh+11IqWs8UDSKNO9IH35lQU1o2wQE5Ml7aBsb41PkBnvHeBAexDmCdrlXm
+ ngIeyBlwynvf3OuOOEJjESJAMp5pxog82DaX9Qyp4z5asXjeOf4NAoNjJDmWH5+8MA0K2cjNLmz
+ 8TCeacgj3HQhkMO5IZWmx6Jsz9N+Y=
+X-Received: by 2002:a5d:47a4:0:b0:366:eb61:b45 with SMTP id
+ ffacd0b85a97d-368260c0bb3mr1675416f8f.1.1721136580910; 
+ Tue, 16 Jul 2024 06:29:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4tJV1t6fbWXWSYopoYBu+A47PqwQ7TAr26XB0WDbUh/3nLek1QNRBlEV1VXK5S3TOrKDjc8znmmSLlkWxv0o=
+X-Received: by 2002:a5d:47a4:0:b0:366:eb61:b45 with SMTP id
+ ffacd0b85a97d-368260c0bb3mr1675396f8f.1.1721136580610; Tue, 16 Jul 2024
+ 06:29:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/12] vfio/iommufd: Don't initialize nor set a
- HOST_IOMMU_DEVICE with mdev
-Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-3-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240712114704.8708-3-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20240716-run-v4-0-5f7a29631168@daynix.com>
+ <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
+ <ZpZDseDnUD39cBzE@redhat.com>
+ <CABgObfasdAS443K6+2hHE1chWXei_1ytyRTOi7tX+ma8hZEC6A@mail.gmail.com>
+ <3a74c242-2510-4ae0-8ac7-02b6cf7dde69@daynix.com>
+In-Reply-To: <3a74c242-2510-4ae0-8ac7-02b6cf7dde69@daynix.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 16 Jul 2024 15:29:27 +0200
+Message-ID: <CABgObfab1xUc8bz7Sr4zs+tiKwLBmPK-App+iULE2AHhz2-rbw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] util: Introduce qemu_get_runtime_dir()
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Fam Zheng <fam@euphon.net>, 
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Yan Vugenfirer <yan@daynix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,79 +108,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/12/24 13:46, Joao Martins wrote:
-> mdevs aren't "physical" devices and when asking for backing IOMMU info, it
-> fails the entire provisioning of the guest. Fix that by skipping
-> HostIOMMUDevice initialization in the presence of mdevs, and skip setting
-> an iommu device when it is known to be an mdev.
+On Tue, Jul 16, 2024 at 2:46=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
 >
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Fixes: 930589520128 ("vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler")
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-With or without Cédric's suggestion
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-> ---
->  hw/vfio/common.c |  4 ++++
->  hw/vfio/pci.c    | 10 +++++++---
->  2 files changed, 11 insertions(+), 3 deletions(-)
+> On 2024/07/16 19:43, Paolo Bonzini wrote:
+> > On Tue, Jul 16, 2024 at 11:56=E2=80=AFAM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com> wrote:
+> >>
+> >> On Tue, Jul 16, 2024 at 11:06:57AM +0300, Michael Tokarev wrote:
+> >>> 16.07.2024 10:27, Akihiko Odaki wrote:
+> >>>> qemu_get_runtime_dir() returns a dynamically allocated directory pat=
+h
+> >>>> that is appropriate for storing runtime files. It corresponds to "ru=
+n"
+> >>>> directory in Unix.
+> >>>
+> >>> Since runtime dir is always used with a filename within, how about
+> >>>
+> >>>    char *qemu_get_runtime_path(const char *filename)
+> >>>
+> >>> which return RUNTIME_DIR/filename instead of just RUNTIME_DIR ?
+> >>
+> >> Yeah, I agree, every single caller of the function goes on to call
+> >> g_build_filename with the result. The helper should just be building
+> >> the filename itself.
+> >
+> > That would mean using variable arguments and g_build_filename_valist().
 >
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 7cdb969fd396..b0beed44116e 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1556,6 +1556,10 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->          return false;
->      }
->  
-> +    if (vbasedev->mdev) {
-> +        return true;
-> +    }
-> +
->      hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
->      if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
->          object_unref(hiod);
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 585f23a18406..3fc72e898a25 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3116,7 +3116,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->  
->      vfio_bars_register(vdev);
->  
-> -    if (!pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
-> +    if (!is_mdev && !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
->          error_prepend(errp, "Failed to set iommu_device: ");
->          goto out_teardown;
->      }
-> @@ -3239,7 +3239,9 @@ out_deregister:
->          timer_free(vdev->intx.mmap_timer);
->      }
->  out_unset_idev:
-> -    pci_device_unset_iommu_device(pdev);
-> +    if (!is_mdev) {
-> +        pci_device_unset_iommu_device(pdev);
-> +    }
->  out_teardown:
->      vfio_teardown_msi(vdev);
->      vfio_bars_exit(vdev);
-> @@ -3284,7 +3286,9 @@ static void vfio_exitfn(PCIDevice *pdev)
->      vfio_pci_disable_rp_atomics(vdev);
->      vfio_bars_exit(vdev);
->      vfio_migration_exit(vbasedev);
-> -    pci_device_unset_iommu_device(pdev);
-> +    if (!vbasedev->mdev) {
-> +        pci_device_unset_iommu_device(pdev);
-> +    }
->  }
->  
->  static void vfio_pci_reset(DeviceState *dev)
+> We can't prepend an element to va_list.
+
+You could do it in two steps, with g_build_filename(runtime_dir,
+first) followed by g_build_filename_valist(result, ap); doing these
+steps only if if first !=3D NULL of course.
+
+But I agree that leaving the concatenation in the caller is not
+particularly worse, and makes qemu_get_runtime_dir() more readable.
+
+Paolo
+
+
+Paolo
 
 
