@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C850C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D908C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTeMQ-0007Dh-CS; Tue, 16 Jul 2024 05:20:38 -0400
+	id 1sTeN3-0001w0-UH; Tue, 16 Jul 2024 05:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTeMH-0006sf-04
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:20:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeN2-0001ly-FG
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:21:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTeLu-00045v-Kl
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:20:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeN0-0004Cd-IZ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:21:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721121605;
+ s=mimecast20190719; t=1721121673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BTlbPKs+4Bm4nQJI4EZPlaFhTkl7XP9JqBzFaKbk33U=;
- b=KXDykBzBeksMYrg44T0Ljvsn2FenpAmiapZrk7UOF3iBZqOtBTciVxDpsj0uA4jM6udm00
- a+lsSoG6oyzrKrfExEHs5aWN/v5b/Uv804Hsp10AyuDbjDrvh05TTbft8kksqDQGN5Fz7L
- 8R4/l6w3Fww48iEFXgINAO48550hhiU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b4aszqtHwLiyYFZKFOuWs6dlsSCVyfwEeCtGna2akxY=;
+ b=fKWjkCPkMHMJj5TRJiW7pnSaWnKS3ox+0CBJkyXXTDS63a/sKS3rqzZ3nit6xS61auK9Pg
+ S3iRPTkfCvhSKphJbZOncfQdFq12G91kEk7XzvjPZSwYMKpipARqmJeoZGGy/NngfKywVB
+ Fj94Xu9noJD/W1xpVuXy71THVDdGu1k=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-uQ3Q4lv-NPCsdbWycRegyQ-1; Tue, 16 Jul 2024 05:19:58 -0400
-X-MC-Unique: uQ3Q4lv-NPCsdbWycRegyQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42490ae735dso49724215e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:19:58 -0700 (PDT)
+ us-mta-621-BoCsHYwtP06ygOw8xzMbpg-1; Tue, 16 Jul 2024 05:21:11 -0400
+X-MC-Unique: BoCsHYwtP06ygOw8xzMbpg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52e994d8e26so5155945e87.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:21:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721121597; x=1721726397;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BTlbPKs+4Bm4nQJI4EZPlaFhTkl7XP9JqBzFaKbk33U=;
- b=RH4wqiCNGalPdTiVN7HHAQrUlpta6NKj8amA+fNqcxUh2LZiyuY5Cif79GmStTAbEz
- H8WMMXT9NBATtrKQCTHDqColnKFFBJbWPpdHGwdsyLcvTeHwj+Zc55tSE+SgXfvsH+0h
- p0gJeUz4IkeKC5pZG5YxmZ1/Np3dhE7HbYDdaL8EaJfuQmSDnfK/0VpdGIlz7pT5oDNa
- +bjCNX6zEcA1/iD0G/6gCh5kf1JdfkxRbXBDFudek514bsdNdkKPyUII7X2EV8KQitLk
- 8hB4bKT07D45+GgT6LA2H9MuA6jpKAms8uhOOegqa9o2ts8h46ivtcBlL4tdSH9uc2qX
- dflw==
-X-Gm-Message-State: AOJu0YwBnZM2dPRCSjgW05pBwmA+UmmcQthVsbxRWA6EtyqJ/vvQHzdv
- ItQcI2tSqiwaSFvf5RoGaQ7QmF47YVXSOBLxyvdS0IzC9dl/UhdvQ1gn8z8seNSudMkM+6VR9rx
- l07biBSyNzOoqVx08w8TV4dvQ6hGDJA2A1+D0C5xMV5pupA2m3Axl
-X-Received: by 2002:a05:600c:1908:b0:426:5e1c:1ac2 with SMTP id
- 5b1f17b1804b1-427ba650391mr13707035e9.8.1721121597333; 
- Tue, 16 Jul 2024 02:19:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVp1hAWRue/mg6ji036nU/N1NEKg1/NWQeHQKwt3GJHINoStuet8p862Uw/OdcPm+CCdOYrg==
-X-Received: by 2002:a05:600c:1908:b0:426:5e1c:1ac2 with SMTP id
- 5b1f17b1804b1-427ba650391mr13706805e9.8.1721121596909; 
- Tue, 16 Jul 2024 02:19:56 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5ef460csm117280935e9.44.2024.07.16.02.19.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 02:19:56 -0700 (PDT)
-Date: Tue, 16 Jul 2024 11:19:55 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, David Hildenbrand <david@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, Markus
- Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
-Message-ID: <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1721121670; x=1721726470;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b4aszqtHwLiyYFZKFOuWs6dlsSCVyfwEeCtGna2akxY=;
+ b=n55AL4qnw0LmDmaIjEF9r0YeS2vykRDrB47DuGQI8EN08lRVOo9Xw5/YAPZBNxcjF0
+ SD3pvPo7NzHUt7kNIy/es3g5nD9DSqX4PKGJySNefEp37iZEVAXfxH88YPgEGoqZEOby
+ A5u4WPWiTlg4wSv7bEUpUO/jRIu8UKRC3wceiGFXASBgvzp03lP3s+x+vwaaCLNvf2h3
+ dcwRIDhPfd8+YuA6uo6d43SieZx3VjJk2IV9k9lKxmUIbxOEynqLlbp+27EjRwaH9c0Y
+ hHtzr0AcvtBi5U2V95CnWxWr8xqARHry2Voo1GY8A+ko4et93P4z3+44gB6iIIYeCR/u
+ 96wA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4+Jn2DPRGVL+lnTqLRlc957x73mtlajN/WRkUY572NfoIZZxUcHuBRaSB79CGRzLi9d396ASBPa8Zd+Q9pwoCILNYv5M=
+X-Gm-Message-State: AOJu0YzxVK5D8Nm6aSGfN7Fh/O+XgAKdGsJdNDnM8EQsqD/55VwYWqQl
+ HbjzmlR1b4qQRUGDn88Cjr+JnIFyXoIfVTT6jqlCxSG+Lv3r3rsQKBchtxSS+0xXz5M3wC1BtyM
+ EQsHtPqQiBr8IkBT8vU+MmhuZvByrJ8qQwVEOX+UegKOUEWmqeJd1
+X-Received: by 2002:a05:6512:3d10:b0:52e:9951:7891 with SMTP id
+ 2adb3069b0e04-52edf0386a5mr965767e87.53.1721121669905; 
+ Tue, 16 Jul 2024 02:21:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzMN4LvuHcSfw/i+VHnvWyTmvh/GW+4864v52E1DronexUaN5fZRJoBuyDUtdcxSm5KuEMaA==
+X-Received: by 2002:a05:6512:3d10:b0:52e:9951:7891 with SMTP id
+ 2adb3069b0e04-52edf0386a5mr965752e87.53.1721121669520; 
+ Tue, 16 Jul 2024 02:21:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
+ ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a79bc8217a4sm284602966b.224.2024.07.16.02.21.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 02:21:09 -0700 (PDT)
+Message-ID: <36b9e5c2-660e-4020-a645-4f4f33b208b8@redhat.com>
+Date: Tue, 16 Jul 2024 11:21:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/12] vfio/pci: Extract mdev check into an helper
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-2-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240712114704.8708-2-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,305 +107,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 30 Jun 2024 12:40:24 -0700
-Steve Sistare <steven.sistare@oracle.com> wrote:
+Hello Joao
 
-> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
-> on the value of the anon-alloc machine property.  This affects
-> memory-backend-ram objects, guest RAM created with the global -m option
-> but without an associated memory-backend object and without the -mem-path
-> option
-nowadays, all machines were converted to use memory backend for VM RAM.
-so -m option implicitly creates memory-backend object,
-which will be either MEMORY_BACKEND_FILE if -mem-path present
-or MEMORY_BACKEND_RAM otherwise.
-
-
-> To access the same memory in the old and new QEMU processes, the memory
-> must be mapped shared.  Therefore, the implementation always sets
-
-> RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
-> user must explicitly specify the share option.  In lieu of defining a new
-so statement at the top that memory-backend-ram is affected is not
-really valid? 
-
-> RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
-> as the condition for calling memfd_create.
-
-In general I do dislike adding yet another option that will affect
-guest RAM allocation (memory-backends  should be sufficient).
-
-However I do see that you need memfd for device memory (vram, roms, ...).
-Can we just use memfd/shared unconditionally for those and
-avoid introducing a new confusing option?
-
-
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  hw/core/machine.c   | 24 ++++++++++++++++++++++++
->  include/hw/boards.h |  1 +
->  qapi/machine.json   | 14 ++++++++++++++
->  qemu-options.hx     | 13 +++++++++++++
->  system/memory.c     | 12 +++++++++---
->  system/physmem.c    | 38 +++++++++++++++++++++++++++++++++++++-
->  system/trace-events |  3 +++
->  7 files changed, 101 insertions(+), 4 deletions(-)
+On 7/12/24 13:46, Joao Martins wrote:
+> In preparation to skip initialization of the HostIOMMUDevice for mdev,
+> extract the checks that validate if a device is an mdev into helpers.
 > 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 655d75c..7ca2ad0 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -454,6 +454,20 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
->      ms->mem_merge = value;
->  }
->  
-> +static int machine_get_anon_alloc(Object *obj, Error **errp)
+> A vfio_set_mdev() is created, and subsystems consult VFIODevice::mdev
+> to check if it's mdev or not.
+> 
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>   include/hw/vfio/vfio-common.h |  2 ++
+>   hw/vfio/helpers.c             | 18 ++++++++++++++++++
+>   hw/vfio/pci.c                 |  9 ++-------
+>   3 files changed, 22 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index e8ddf92bb185..7419466bca92 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -116,6 +116,7 @@ typedef struct VFIODevice {
+>       DeviceState *dev;
+>       int fd;
+>       int type;
+> +    bool mdev;
+>       bool reset_works;
+>       bool needs_reset;
+>       bool no_mmap;
+> @@ -231,6 +232,7 @@ void vfio_region_exit(VFIORegion *region);
+>   void vfio_region_finalize(VFIORegion *region);
+>   void vfio_reset_handler(void *opaque);
+>   struct vfio_device_info *vfio_get_device_info(int fd);
+> +void vfio_set_mdev(VFIODevice *vbasedev);
+>   bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>                           AddressSpace *as, Error **errp);
+>   void vfio_detach_device(VFIODevice *vbasedev);
+> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> index b14edd46edc9..bace0e788a09 100644
+> --- a/hw/vfio/helpers.c
+> +++ b/hw/vfio/helpers.c
+> @@ -675,3 +675,21 @@ int vfio_device_get_aw_bits(VFIODevice *vdev)
+>   
+>       return HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX;
+>   }
+> +
+> +void vfio_set_mdev(VFIODevice *vbasedev)
+
+Could you please change this routine to :
+
+   bool vfio_device_is_mdev(VFIODevice *vbasedev)
+
 > +{
-> +    MachineState *ms = MACHINE(obj);
+> +    g_autofree char *tmp = NULL;
+> +    char *subsys;
+
+a g_autofree variable is preferable here.
+
+> +    bool is_mdev;
 > +
-> +    return ms->anon_alloc;
-> +}
-> +
-> +static void machine_set_anon_alloc(Object *obj, int value, Error **errp)
-> +{
-> +    MachineState *ms = MACHINE(obj);
-> +
-> +    ms->anon_alloc = value;
-> +}
-> +
->  static bool machine_get_usb(Object *obj, Error **errp)
->  {
->      MachineState *ms = MACHINE(obj);
-> @@ -1066,6 +1080,11 @@ static void machine_class_init(ObjectClass *oc, void *data)
->      object_class_property_set_description(oc, "mem-merge",
->          "Enable/disable memory merge support");
->  
-> +    object_class_property_add_enum(oc, "anon-alloc", "AnonAllocOption",
-> +                                   &AnonAllocOption_lookup,
-> +                                   machine_get_anon_alloc,
-> +                                   machine_set_anon_alloc);
-> +
->      object_class_property_add_bool(oc, "usb",
->          machine_get_usb, machine_set_usb);
->      object_class_property_set_description(oc, "usb",
-> @@ -1416,6 +1435,11 @@ static bool create_default_memdev(MachineState *ms, const char *path, Error **er
->      if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
->          goto out;
->      }
-> +    if (!object_property_set_bool(obj, "share",
-> +                                  ms->anon_alloc == ANON_ALLOC_OPTION_MEMFD,
-> +                                  errp)) {
-> +        goto out;
+> +    if (!vbasedev->sysfsdev) {
+> +        return;
 > +    }
->      object_property_add_child(object_get_objects_root(), mc->default_ram_id,
->                                obj);
->      /* Ensure backend's memory region name is equal to mc->default_ram_id */
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 73ad319..77f16ad 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -383,6 +383,7 @@ struct MachineState {
->      bool enable_graphics;
->      ConfidentialGuestSupport *cgs;
->      HostMemoryBackend *memdev;
-> +    AnonAllocOption anon_alloc;
->      /*
->       * convenience alias to ram_memdev_id backend memory region
->       * or to numa container memory region
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 2fd3e9c..9173953 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1881,3 +1881,17 @@
->  { 'command': 'x-query-interrupt-controllers',
->    'returns': 'HumanReadableText',
->    'features': [ 'unstable' ]}
 > +
-> +##
-> +# @AnonAllocOption:
-> +#
-> +# An enumeration of the options for allocating anonymous guest memory.
-> +#
-> +# @mmap: allocate using mmap MAP_ANON
-> +#
-> +# @memfd: allocate using memfd_create
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'enum': 'AnonAllocOption',
-> +  'data': [ 'mmap', 'memfd' ] }
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 8ca7f34..595b693 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "                nvdimm=on|off controls NVDIMM support (default=off)\n"
->      "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
->      "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-> +    "                anon-alloc=mmap|memfd allocate anonymous guest RAM using mmap MAP_ANON or memfd_create (default: mmap)\n"
->      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n",
->      QEMU_ARCH_ALL)
-> @@ -101,6 +102,18 @@ SRST
->          Enables or disables ACPI Heterogeneous Memory Attribute Table
->          (HMAT) support. The default is off.
->  
-> +    ``anon-alloc=mmap|memfd``
-> +        Allocate anonymous guest RAM using mmap MAP_ANON (the default)
-> +        or memfd_create.  This affects memory-backend-ram objects,
-> +        RAM created with the global -m option but without an
-> +        associated memory-backend object and without the -mem-path
-> +        option, and various memory regions such as ROMs that are
-> +        allocated when devices are created.  This option does not
-> +        affect memory-backend-file, memory-backend-memfd, or
-> +        memory-backend-epc objects.
+> +    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
+> +    subsys = realpath(tmp, NULL);
+> +    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
+
+simply return is the result here and ....
+
+> +    free(subsys);
 > +
-> +        Some migration modes require anon-alloc=memfd.
-> +
->      ``memory-backend='id'``
->          An alternative to legacy ``-mem-path`` and ``mem-prealloc`` options.
->          Allows to use a memory backend as main RAM.
-> diff --git a/system/memory.c b/system/memory.c
-> index 2d69521..28a837d 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1552,8 +1552,10 @@ bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
->                                        uint64_t size,
->                                        Error **errp)
->  {
-> +    uint32_t flags = (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD) ?
-> +                     RAM_SHARED : 0;
->      return memory_region_init_ram_flags_nomigrate(mr, owner, name,
-> -                                                  size, 0, errp);
-> +                                                  size, flags, errp);
->  }
->  
->  bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-> @@ -1713,8 +1715,10 @@ bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
->                                        uint64_t size,
->                                        Error **errp)
->  {
-> +    uint32_t flags = (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD) ?
-> +                     RAM_SHARED : 0;
->      if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-> -                                                size, 0, errp)) {
-> +                                                size, flags, errp)) {
->           return false;
->      }
->      mr->readonly = true;
-> @@ -1731,6 +1735,8 @@ bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
->                                               Error **errp)
->  {
->      Error *err = NULL;
-> +    uint32_t flags = (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD) ?
-> +                     RAM_SHARED : 0;
->      assert(ops);
->      memory_region_init(mr, owner, name, size);
->      mr->ops = ops;
-> @@ -1738,7 +1744,7 @@ bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
->      mr->terminates = true;
->      mr->rom_device = true;
->      mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
-> +    mr->ram_block = qemu_ram_alloc(size, flags, mr, &err);
->      if (err) {
->          mr->size = int128_zero();
->          object_unparent(OBJECT(mr));
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 33d09f7..efe95ff 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -47,6 +47,7 @@
->  #include "qemu/qemu-print.h"
->  #include "qemu/log.h"
->  #include "qemu/memalign.h"
-> +#include "qemu/memfd.h"
->  #include "exec/memory.h"
->  #include "exec/ioport.h"
->  #include "sysemu/dma.h"
-> @@ -54,6 +55,7 @@
->  #include "sysemu/hw_accel.h"
->  #include "sysemu/xen-mapcache.h"
->  #include "trace/trace-root.h"
-> +#include "trace.h"
->  
->  #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
->  #include <linux/falloc.h>
-> @@ -69,6 +71,8 @@
->  
->  #include "qemu/pmem.h"
->  
-> +#include "qapi/qapi-types-migration.h"
-> +#include "migration/options.h"
->  #include "migration/vmstate.h"
->  
->  #include "qemu/range.h"
-> @@ -1828,6 +1832,32 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->                  qemu_mutex_unlock_ramlist();
->                  return;
->              }
-> +
-> +        } else if (new_block->flags & RAM_SHARED) {
-> +            size_t max_length = new_block->max_length;
-> +            MemoryRegion *mr = new_block->mr;
-> +            const char *name = memory_region_name(mr);
-> +
-> +            new_block->mr->align = QEMU_VMALLOC_ALIGN;
-> +
-> +            if (new_block->fd == -1) {
-> +                new_block->fd = qemu_memfd_create(name, max_length + mr->align,
-> +                                                  0, 0, 0, errp);
-> +            }
-> +
-> +            if (new_block->fd >= 0) {
-> +                int mfd = new_block->fd;
-> +                qemu_set_cloexec(mfd);
-> +                new_block->host = file_ram_alloc(new_block, max_length, mfd,
-> +                                                 false, 0, errp);
-> +            }
-> +            if (!new_block->host) {
-> +                qemu_mutex_unlock_ramlist();
-> +                return;
-> +            }
-> +            memory_try_enable_merging(new_block->host, new_block->max_length);
-> +            free_on_error = true;
-> +
->          } else {
->              new_block->host = qemu_anon_ram_alloc(new_block->max_length,
->                                                    &new_block->mr->align,
-> @@ -1911,6 +1941,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->          ram_block_notify_add(new_block->host, new_block->used_length,
->                               new_block->max_length);
->      }
-> +    trace_ram_block_add(memory_region_name(new_block->mr), new_block->flags,
-> +                        new_block->fd, new_block->used_length,
-> +                        new_block->max_length);
->      return;
->  
->  out_free:
-> @@ -2097,8 +2130,11 @@ RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t maxsz,
->                                                       void *host),
->                                       MemoryRegion *mr, Error **errp)
->  {
-> +    uint32_t flags = (current_machine->anon_alloc == ANON_ALLOC_OPTION_MEMFD) ?
-> +                     RAM_SHARED : 0;
-> +    flags |= RAM_RESIZEABLE;
->      return qemu_ram_alloc_internal(size, maxsz, resized, NULL,
-> -                                   RAM_RESIZEABLE, mr, errp);
-> +                                   flags, mr, errp);
->  }
->  
->  static void reclaim_ramblock(RAMBlock *block)
-> diff --git a/system/trace-events b/system/trace-events
-> index 69c9044..f8ebf42 100644
-> --- a/system/trace-events
-> +++ b/system/trace-events
-> @@ -38,3 +38,6 @@ dirtylimit_state_finalize(void)
->  dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t time_us) "CPU[%d] throttle percent: %" PRIu64 ", throttle adjust time %"PRIi64 " us"
->  dirtylimit_set_vcpu(int cpu_index, uint64_t quota) "CPU[%d] set dirty page rate limit %"PRIu64
->  dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) "CPU[%d] sleep %"PRIi64 " us"
-> +
-> +#physmem.c
-> +ram_block_add(const char *name, uint32_t flags, int fd, size_t used_length, size_t max_length) "%s, flags %u, fd %d, len %lu, maxlen %lu"
+> +    vbasedev->mdev = is_mdev;
+> +}
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index e03d9f3ba546..585f23a18406 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2963,12 +2963,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>       ERRP_GUARD();
+>       VFIOPCIDevice *vdev = VFIO_PCI(pdev);
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    char *subsys;
+>       int i, ret;
+>       bool is_mdev;
+>       char uuid[UUID_STR_LEN];
+>       g_autofree char *name = NULL;
+> -    g_autofree char *tmp = NULL;
+>   
+>       if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
+>           if (!(~vdev->host.domain || ~vdev->host.bus ||
+> @@ -2997,11 +2995,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+>        * stays in sync with the active working set of the guest driver.  Prevent
+>        * the x-balloon-allowed option unless this is minimally an mdev device.
+>        */
+> -    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
+> -    subsys = realpath(tmp, NULL);
+> -    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
+> -    free(subsys);
+> -
+> +    vfio_set_mdev(vbasedev);
+> +    is_mdev = vbasedev->mdev;
+
+replace with :
+
+   vbasedev->mdev = vfio_device_is_mdev(vbasedev);
+
+and use vbasedev->mdev instead of is_mdev where needed.
+
+
+Thanks,
+
+C.
+
+
+
+
+>       trace_vfio_mdev(vbasedev->name, is_mdev);
+>   
+>       if (vbasedev->ram_block_discard_allowed && !is_mdev) {
 
 
