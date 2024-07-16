@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E996AC3DA60
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8F6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTfHa-0002vi-TP; Tue, 16 Jul 2024 06:19:42 -0400
+	id 1sTfHT-0002lw-GX; Tue, 16 Jul 2024 06:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sTfHZ-0002v8-6U
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:41 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTfHO-0002kV-Fl
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sTfHX-0006ZZ-Q2
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTfHL-0006YA-Ev
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:19:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721125179;
+ s=mimecast20190719; t=1721125166;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k47+0r+3UMCaQNRblcynTbey68L/APZhu/L4CLrdht8=;
- b=hQqoo0Ph0LxtFA2pDG3UUs/u4Nebv0p2HazBR++8VbwpJ0Q833PzIrkf3haE4x4vRjupIo
- e6lNfI2tgnmsqo8BGWLJOKdaiWTJ1WLPIvoUJpHmYxe5n6BHtWmL5qO5an/+03GSTjjZPm
- gDBdyuybH9Trr9DOUsJGNRXT6vQxrwI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JE+7+OoyAxSdYZfRR8Xtyv9JyHUKQtBpGDYiVfdg/0w=;
+ b=gGtP9IXxc+eRZoHIxqQ7V/zlMbINdlF2IrrZrNeTnSBnuZ53WA64Qeazu9vDC8M8TL1ehh
+ pLrrLuy6CcRl23q9BFgrK/efwk2f3S/cGfbZfBrnIAP/AdHkoSDzb3qtLNZPsUtdtXU81V
+ MLRtGDsYeKzHxf+w6aZfWiKvmzs80IA=
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-8OMFxdTXMK2Kp0Aiux0wkw-1; Tue, 16 Jul 2024 06:19:37 -0400
-X-MC-Unique: 8OMFxdTXMK2Kp0Aiux0wkw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4264dc624a5so34553525e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:19:37 -0700 (PDT)
+ us-mta-367-a7KfdNOSMK-ITG6QqR_iVg-1; Tue, 16 Jul 2024 06:19:24 -0400
+X-MC-Unique: a7KfdNOSMK-ITG6QqR_iVg-1
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-48ff6c5d2e3so1825750137.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:19:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721125176; x=1721729976;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=k47+0r+3UMCaQNRblcynTbey68L/APZhu/L4CLrdht8=;
- b=VFeKlZ3k7rm501/g5gmNtVuan/NcoLe55IDZxCm+ssz3NOt7eImho2BqoXhJcAPKe+
- DhEeq+Pd92F9vEo+uhuQTfq2uL3KiwDWc5cbPDFTv+NAXivtkf6bCssf6EEXurvGi22g
- yIBnErr48p1DZIz+Lnq4E/Dgu9+plw/44oGstsKiqzTBf2xUqd+7dFXi5MjJVkmcEXIr
- zwVhtehzfW/d8/fTbcbCdPxdlm8jWOoTrom8r+7KlLryt1m1yDUdaxZF08n9ciBoECbq
- tNUVHEiTbUc71WQiano+5vGyP4bIT/Tnld1mEtLTI8xgHxwZWMfuQM56gt0R4KHCPm/4
- 5vNA==
-X-Gm-Message-State: AOJu0YxS802Z5HTlFMKMARmbFmNd6GqD/jNO9B4x1UkQcM0spV6XfkyX
- 3xDtyRVwQGaz7vscJkRSfEKTmI4+zKC+l9Z8DyAKu6I9hlJMuHh0glXbrp6VcLCCNOyMYPXExtH
- DQmpUgUgVs7SJBHLHSgL7y0q9hLdayOBvv8bpsUckf0POHYgKZMV1f1Ka20Zs9IyXSdGjT8l/H1
- H9mOOGSfePj8HXv81UIKdkZMMc3wc=
-X-Received: by 2002:a05:600c:3c96:b0:426:629f:154e with SMTP id
- 5b1f17b1804b1-427ba6dc289mr11050955e9.30.1721125176681; 
- Tue, 16 Jul 2024 03:19:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcUx9U+tFzbTSrQt6yOPlxJW9U1TkmROAFTIse42JitfxEN+qyE3zP1JI5v8GjAf9m3Z6qcagF69fje1CoyAw=
-X-Received: by 2002:a05:600c:3c96:b0:426:629f:154e with SMTP id
- 5b1f17b1804b1-427ba6dc289mr11050835e9.30.1721125176401; Tue, 16 Jul 2024
- 03:19:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721125164; x=1721729964;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JE+7+OoyAxSdYZfRR8Xtyv9JyHUKQtBpGDYiVfdg/0w=;
+ b=s4sHx/X8SIOy+RY1MbBpAyYrsxakvvv77VMhjI6bGCjHQolbslw+bWialqQEfOvejn
+ WoP74/1wiwK2MAfdNxLHCwEZSvAO1rw2hMpiDQ/al9bDQmc3qaPPBTwYz63SIZyflJPo
+ s9PUK+S6zKziN0+v2Qgo7q5yMcwDtT+eEaNE/zRXxMqOXfn4fvKkX4nJSO1H8i+g20AL
+ YRvVAXN/34RBdNcQ1KgwwweoMW69nEwra3cGvNtEQTaFItHrKdId7HnqH0QgbtPI5EiJ
+ sf7dKcAaPcOFVGikMmXgPAx1PUTewPxCjGCT2bpp0xO143L1j5kimfr/JPgjEuAopSaR
+ VHjA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVQG3nZeTzbdEHks76Tp7j9MZbd+/faWjksoXLttKNJn4cnzhGH5sps4+V0FsPIHLVBHTRI43rXnr6+zTv76ec4+Jl1WQ=
+X-Gm-Message-State: AOJu0YxYO8bWQxYqCPj7XXmFetT1G5XjrFA1y9OMaywpimAyYaUOET4/
+ XqeyKp4olYS5TMF+Av31Kzr6EjPvChPnudqa+V7Tpm6XgdxeSy0ROEiaH6x9JMcyjIjJ67FCXAd
+ qhxOz2tC5jiHcfDkQGkWsYJ3fL2XqRofkhRdIufDl5BMO1t9lZ4RK
+X-Received: by 2002:a05:6102:2c10:b0:48f:e68a:81b1 with SMTP id
+ ada2fe7eead31-4914c578c58mr2047867137.23.1721125164178; 
+ Tue, 16 Jul 2024 03:19:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoByM3vy8iPwvzY+5PYLmC2SRJe5jj4S7YMOpzM20Zk51q6/z3EF6viET+QRpj5ehsynxHlA==
+X-Received: by 2002:a05:6102:2c10:b0:48f:e68a:81b1 with SMTP id
+ ada2fe7eead31-4914c578c58mr2047843137.23.1721125163807; 
+ Tue, 16 Jul 2024 03:19:23 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
+ ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f5b7bb8edsm33342671cf.18.2024.07.16.03.19.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 03:19:23 -0700 (PDT)
+Message-ID: <aa34d6c6-dadf-4181-8d77-75a4eb31182a@redhat.com>
+Date: Tue, 16 Jul 2024 12:19:20 +0200
 MIME-Version: 1.0
-References: <20240711131424.181615-1-ppandit@redhat.com>
- <20240711131424.181615-2-ppandit@redhat.com> <Zo_9OlX0pV0paFj7@x1n>
- <CAE8KmOzrAdxGMVb7=hYMOgAOuhhzUT+N0X=ONNN456S6f2i87A@mail.gmail.com>
- <ZpUjys64KeOI1Kmx@x1n>
-In-Reply-To: <ZpUjys64KeOI1Kmx@x1n>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 16 Jul 2024 15:49:19 +0530
-Message-ID: <CAE8KmOx+3coBeWooXc3TAdMODb8cr-K1STZoftE-VmJsaYe+zA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] vhost-user: add a write-read lock
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/12] vfio/{iommufd,container}: Remove caps::aw_bits
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-7-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240712114704.8708-7-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,16 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 15 Jul 2024 at 18:57, Peter Xu <peterx@redhat.com> wrote:
-> I think it shouldn't be a major deal in most cases, if the extended cycles
-> only cover a bunch of instructions. In special case we can still use
-> WITH_QEMU_LOCK_GUARD, but I'd start with the simple first and only switch
-> if necessary.
+On 7/12/24 13:46, Joao Martins wrote:
+> In preparation to moving HostIOMMUDevice realize() being able to called
+> early during attach_device(), remove properties that rely on container
+> being initialized.
+> 
+> This means removing caps::aw_bits which requires the
+> bcontainer::iova_ranges to be inititalized after device is actually
+> attached. Instead defer that to .get_cap() and call
+> vfio_device_get_aw_bits() directly.
+> 
+> Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 
-* Okay, will send patch v2.
 
-Thank you.
----
-  - Prasad
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   include/sysemu/host_iommu_device.h | 1 -
+>   backends/iommufd.c                 | 3 ++-
+>   hw/vfio/container.c                | 5 +----
+>   hw/vfio/iommufd.c                  | 1 -
+>   4 files changed, 3 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> index ee6c813c8b22..20e77cf54568 100644
+> --- a/include/sysemu/host_iommu_device.h
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -24,7 +24,6 @@
+>    */
+>   typedef struct HostIOMMUDeviceCaps {
+>       uint32_t type;
+> -    uint8_t aw_bits;
+>   } HostIOMMUDeviceCaps;
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 5d3dfa917415..41a9dec3b2c5 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -18,6 +18,7 @@
+>   #include "qemu/error-report.h"
+>   #include "monitor/monitor.h"
+>   #include "trace.h"
+> +#include "hw/vfio/vfio-common.h"
+>   #include <sys/ioctl.h>
+>   #include <linux/iommufd.h>
+>   
+> @@ -270,7 +271,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>       case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
+>           return caps->type;
+>       case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+> -        return caps->aw_bits;
+> +        return vfio_device_get_aw_bits(hiod->agent);
+>       default:
+>           error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>           return -EINVAL;
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 88ede913d6f7..c27f448ba26e 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -1144,7 +1144,6 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>       VFIODevice *vdev = opaque;
+>   
+>       hiod->name = g_strdup(vdev->name);
+> -    hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
+>       hiod->agent = opaque;
+>   
+>       return true;
+> @@ -1153,11 +1152,9 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>   static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+>                                       Error **errp)
+>   {
+> -    HostIOMMUDeviceCaps *caps = &hiod->caps;
+> -
+>       switch (cap) {
+>       case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+> -        return caps->aw_bits;
+> +        return vfio_device_get_aw_bits(hiod->agent);
+>       default:
+>           error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>           return -EINVAL;
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 325c7598d5a1..873c919e319c 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -722,7 +722,6 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>   
+>       hiod->name = g_strdup(vdev->name);
+>       caps->type = type;
+> -    caps->aw_bits = vfio_device_get_aw_bits(vdev);
+>   
+>       return true;
+>   }
 
 
