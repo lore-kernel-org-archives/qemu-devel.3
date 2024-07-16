@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99914C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 02:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE94C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 03:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTY1M-0002VO-8s; Mon, 15 Jul 2024 22:34:28 -0400
+	id 1sTYTv-0002b3-Bf; Mon, 15 Jul 2024 23:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sTY1J-0002Uh-6O
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 22:34:26 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ id 1sTYTq-0002aS-1G
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 23:03:55 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sTY1F-000651-RL
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 22:34:24 -0400
+ id 1sTYTn-0004V1-Mz
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 23:03:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721097262; x=1752633262;
+ t=1721099032; x=1752635032;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=ZBMZHa3QvQ1DSwQn1o3mokUg9tjwrll5FRXTKxpUJj4=;
- b=KZnOo/CRHkVzc0Z1aPXsbbsUdSlAADW8nMktQbECtGbki41+vgvGwoSX
- 5/9y5cdZvAcBEgwCya2QczCdGtwD6JazuT8Kg0DNKilrsHvX4OVJ5Lj1x
- iEFLkLimjIdI2ewPUsdVmtrenCOuq4vGrO6n0tKvuJwNJXU3Zx3eG0G1U
- 0KxF+jev5Dg+0v6/FY6LOyrQCnPEWi8tcBSyAV+2kZAPRRYzlX1goEkZZ
- cbuIcwU7Tm+Gy/r+FYXgkbCJ932CkI5mrFtz60OUCvhEHEAxim0hwE0cy
- b8HWjJdIsQqZrS7Tp/Cuq49ij8LfDKZ81FeBUMYw/rfsbz9M1fWDdfxQL A==;
-X-CSE-ConnectionGUID: mytvsgTATwWO8Z786RiRxg==
-X-CSE-MsgGUID: bXupj4ujQ3eldHwu4/U6RA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="29660837"
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="29660837"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2024 19:34:18 -0700
-X-CSE-ConnectionGUID: fAQc1c9OQr+z8XvnGIembg==
-X-CSE-MsgGUID: S7W9LR1PTHOTeCiuuZGs1w==
+ bh=BaLfrLwOblxU3ZjDnFzafpk0eskfOtFSngMFKEWxV+k=;
+ b=YMIUV+5L7nrGGX3Rdd9tqhBVUuINv3pba1ZRLhruKqpAaGz/bIgSzAhz
+ r8EubNLLB/H0Sh3GS4NZ2U1XcI9PFKyT4BnG37QGcfycJTMCGPhomXVk6
+ 8gyqSR3r8yLIoiYjx0MXgsC7MugeAYZlb0Z0e/rVKSXa/vB4h9V1VIwPF
+ ZnAVFGbl2xeDHrk7qlxBf6D5MCvB5b2w0K6bPT7Rx0fcbHu+jg48QkJwH
+ cHVamelqCFPKRrn6rmEBhaGzayp1NYQIFofxknVkqxWnsKdXeBlEoWc0U
+ ymKJy3B0ISFhavvl9X/Wd7bl/SXyjHnyme2gEZA24WzyjF1hVygaYa6q6 w==;
+X-CSE-ConnectionGUID: aJ9xhuZgQSqn4Ikn6+JkoQ==
+X-CSE-MsgGUID: AvxwQvshQJWVUxgTgI/Qgw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="41037015"
+X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="41037015"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 20:03:49 -0700
+X-CSE-ConnectionGUID: VyfAi7lQRfi0zOMbbCJZoA==
+X-CSE-MsgGUID: K7AV4ZHzSEq3US2yJEWLHQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="49690385"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
- by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 15 Jul 2024 19:34:17 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="49779889"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by fmviesa008.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 15 Jul 2024 20:03:47 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Mon, 15 Jul 2024 19:34:16 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.1.2507.39; Mon, 15 Jul 2024 20:03:46 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Mon, 15 Jul 2024 19:34:16 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.49) by
- edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ 15.1.2507.39 via Frontend Transport; Mon, 15 Jul 2024 20:03:46 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.46) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 15 Jul 2024 19:34:16 -0700
+ 15.1.2507.39; Mon, 15 Jul 2024 20:03:46 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lL0YtGkZ6UqdCaYJlXL9jqQ/b5nIC3JY2TLdnc3OBz8oI5Zts/XY5hORa0gCFpA3R6iDZ2v5Gjq0sV0a8s/HoBOcZxSwhSjg7/jKw/ohzyzWAwVtdURS/iuMoGuMGCduHrHQCSYglGrCvse/lDZrBlyzzXWIq09KHGMyHw83uBtUhghXaVsQ2mTsmL6kCMx38EUkItU89P1XMZeEyEn2yRMblk7UZFmO/8wyiycQYKPu0cIOYAyi+8g6dgkKGoyYCLqPD9NRy6AmWZCAABguWxfLEcZh6ntyglb+eP8wYP6pKjMAwm2rLsGO/QGAF0ETlIfpnNXSPgUpwwXO13URfA==
+ b=gluYW4dEuQJn0SIRZiffmy65EXixAdznSlWh5TtQMwraCbwRIS0x2F5YTNafbhHb3JyRsagPDqTqfAy54cguguKthpZl1JlTUolN20HRfxNvStTIiJuPW/LjZgUJMYEytUs8bIY9HiFl73zHDWBtDG9DRJ7vrn0tYTHojrH8eyQWMp2h1bwqxB37jtjQyr5E6fig+AGPs8+N2vMYpSNgzK8mPNb8lDHFB5NDAfFdC0in+dUtCoXsrZyG6qEC76gqpc6gyQQhV3gqdf6daXoQQhwtFT52qALU1M3wyemXz1juJjyZ0qz7655g4dJKsRZr552gwTHCjURcNIYFpJU4Ug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BtqfvDhcjV/JVYcAABot8Wop00GmJikIky4CqZJoY+s=;
- b=oX1F05l2jVk/pFxrIVNSXFuFvxXoXJMcbbI1561grP2wlHRQLzfbBUJzTtGC65wIfeeVEgvh4xtYxwXK8iY+Eg8WDAeOOQ23t4V0/VOnRAEqtvh1mP+1TNSVU3WE9SQAdOol8a5wHssTUYGPCdLWTu6XKObsyoH7x3gRqu5RoW9kHPS7N63FXO/xHjuRQkoqN2FHxr45G5/h3V6wVVE3KEB4Pd1Mt51PA0/BMOsZX8Y02WnqAJSMIPrBMifCNk3eR6uSD/Ju66V0T4y4mjuHtXm7mSkQ9ryJn2fWTGkGD3NQCb2ydANJOA6IX18m/QDYrCTVrBSZ+G9oHXRkLD+n/Q==
+ bh=fEHfvitPMOKohJ/l3kLwFyNSechC5Lkq+ws9M2NrIfM=;
+ b=kiNv3wtuIxGJXHdmUg6wHcWEjqXZ7sZFhUtSm8c3ebOK6he/qchOk9nMEtXLBipRcSxbBL6cwEW5JTY97S1TopuHjWVZW08hOrtC/cNmddlhMQC8sEmYzvAjAv+BbIGjqzv6hbfEdUg0DPjQVoHexDvUiSHy2xpB3YnpVVZQH2TArHpWkDC4lTsPBeUTTcoe8Laaxt2YdMlccU6NaYsO63SdNduOAUeUBYeTzX/IRIxLzDPD/t6fDViiHtN8MKkxgemtDv7C2dKfg2u/cVXmqj7swlNoCqzeIP9gC8L3CwPb8Oa8ubfOTy3cQR/bf2GFZZkdDchhlM22yhYyDy5+Ig==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from PH7PR11MB5941.namprd11.prod.outlook.com (2603:10b6:510:13d::20)
- by PH7PR11MB7429.namprd11.prod.outlook.com (2603:10b6:510:270::7)
+ by BL3PR11MB6483.namprd11.prod.outlook.com (2603:10b6:208:3be::13)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.28; Tue, 16 Jul
- 2024 02:34:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.23; Tue, 16 Jul
+ 2024 03:03:41 +0000
 Received: from PH7PR11MB5941.namprd11.prod.outlook.com
  ([fe80::2750:7e63:952:7f1d]) by PH7PR11MB5941.namprd11.prod.outlook.com
  ([fe80::2750:7e63:952:7f1d%6]) with mapi id 15.20.7762.025; Tue, 16 Jul 2024
- 02:34:07 +0000
+ 03:03:41 +0000
 From: "Liu, Yuan1" <yuan1.liu@intel.com>
 To: "Wang, Yichen" <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>, 
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -88,15 +88,17 @@ To: "Wang, Yichen" <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
  <lvivier@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: Hao Xiang <hao.xiang@linux.dev>, "Zou, Nanhai" <nanhai.zou@intel.com>,
  "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, "Wang, Yichen"
- <yichen.wang@bytedance.com>
-Subject: RE: [PATCH v6 1/5] docs/migration: add qatzip compression feature
-Thread-Topic: [PATCH v6 1/5] docs/migration: add qatzip compression feature
-Thread-Index: AQHa1wQ1enQ4qsaU50qKhJvQzA0F47H4oTJQ
-Date: Tue, 16 Jul 2024 02:34:07 +0000
-Message-ID: <PH7PR11MB59410143A089733E8FAC5A36A3A22@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <yichen.wang@bytedance.com>, Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: RE: [PATCH v6 2/5] meson: Introduce 'qatzip' feature to the build
+ system
+Thread-Topic: [PATCH v6 2/5] meson: Introduce 'qatzip' feature to the build
+ system
+Thread-Index: AQHa1wQ0zwDezs9yr0CEBmbHTa3DVrH4pDfg
+Date: Tue, 16 Jul 2024 03:03:41 +0000
+Message-ID: <PH7PR11MB5941855152B88359581D7E1DA3A22@PH7PR11MB5941.namprd11.prod.outlook.com>
 References: <20240715221245.12435-1-yichen.wang@bytedance.com>
- <20240715221245.12435-2-yichen.wang@bytedance.com>
-In-Reply-To: <20240715221245.12435-2-yichen.wang@bytedance.com>
+ <20240715221245.12435-3-yichen.wang@bytedance.com>
+In-Reply-To: <20240715221245.12435-3-yichen.wang@bytedance.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -104,85 +106,86 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH7PR11MB5941:EE_|PH7PR11MB7429:EE_
-x-ms-office365-filtering-correlation-id: bd52dbf0-66b0-41fa-3926-08dca53fc452
+x-ms-traffictypediagnostic: PH7PR11MB5941:EE_|BL3PR11MB6483:EE_
+x-ms-office365-filtering-correlation-id: 230fafc6-d2e5-42cb-3f81-08dca543e596
 x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|921020|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?N3rKLarMhkGZ5/e/jBUgPBbqv1Ha/X7mYV1u5csed0ZtrwJJCxtOKJfwuX?=
- =?iso-8859-1?Q?XnCI+rtDY4D3EPWQ1Z9Ik/nWMcNOG9mhBe7hrltxhEflplk2908vHIJ+Op?=
- =?iso-8859-1?Q?MaPJg/iOxmqKj18qlKaBR0n9VX5m1whueGjUl3GcEVVZN3wf+NDjJgJJTu?=
- =?iso-8859-1?Q?xBZY0G/yR83SUeBc4ZvFQ7sQRe8LdlvPgfuQhOlHkKtbCsVdlfpnsgJMB8?=
- =?iso-8859-1?Q?k1v5RkH0MpKtmqSegr2EW5FNySG42Rh7WylZO7qdmr7s4ulFoamiRfpOlD?=
- =?iso-8859-1?Q?zsiRkP0iVx1WwXq//bi727MQ2obyH2DYddOEcW7l0ne8N80TS2Ru3kNZlS?=
- =?iso-8859-1?Q?zmU0ah5B4CDhff5CknU69AxLyaRE9Qs56IeHoc4vCmuGwXhA69tOUr0RjE?=
- =?iso-8859-1?Q?GwlY+NAm/O1cjlq0HiMoR4zXB5LHHHabPIJ7fYFCB3ehZIc2cXOXL+mquv?=
- =?iso-8859-1?Q?M2lwhWr5ekhy+M7fyU4F1o5LrtvF90z9GkA7KQtyVXPjo2XfV/N+ttv6cC?=
- =?iso-8859-1?Q?K0Bx99lkpGDsbuq8wIjo4us0EvcJvJGIDjmUWD8l0H/N+CMD2iwf9OmEL1?=
- =?iso-8859-1?Q?fO+YjUIr1EwSIj760TYmKZTrLKv6uRH4pbBbqIDGwIKcSTkjTIFIlopZV6?=
- =?iso-8859-1?Q?4nPLag+WgOcxYoeGxXo79nx9177iW1SSpdRolTcfmWZe5gk+ZBN/EQIPPo?=
- =?iso-8859-1?Q?ZFDzNsw2400y9K6SrMv+L+kHxseEk5bhxhdLkmjrt+ZkKbs5C2oTjdxxCe?=
- =?iso-8859-1?Q?r6fJ+2e+EKejx2EEWkN/gM7xISHWUCtOgvMCy3N6rCX/pMei4lBHib5MQM?=
- =?iso-8859-1?Q?MIpav6MTR8/jPVzd6OLVhVvk8QnWBFes1p8vM44XWdoXMG+nONV3lwvNqq?=
- =?iso-8859-1?Q?ryl6qjuJB17uhujYqvutsZENTDIi4VQPfLRCNiLIKLfJmeSpJunIt/eZXE?=
- =?iso-8859-1?Q?3J5e76sXLqZbmJw8Emy8QGHse0afRtUdv+zylMJd7ln8wvR5JWzHfpIYE/?=
- =?iso-8859-1?Q?h5u9z6MyV2wbnRfLw+6fG9OIjGKFYxoCYSr4o5wc4TC+VUZeGsM1D6WbLk?=
- =?iso-8859-1?Q?cC8bhie++QDwtRZoAPcKzdM6RKM5ANRjJIkJvFB94Xwne7lF4l1gaSXySq?=
- =?iso-8859-1?Q?V3sXixyucMElEetBd33J1DAMGjqrAU01iJs6UzaGhnH44d2TnOUV65NFyN?=
- =?iso-8859-1?Q?Ta7mUWJFG5LqjGIII/sSpwVrAkZ2KxfbpksYHhO+7EES2AQbPszDeWsD6K?=
- =?iso-8859-1?Q?mYkKaCrrGDdP+jVxR72UR4N6VQ3MBZyGsKi1XB0eE6RLRxCsMhQJjCr5EO?=
- =?iso-8859-1?Q?pJ9qaHVUN6cofqOsn6N4zd9cR9+I61EMZKfOVDWbmBFcv8EcmK+J06T8UF?=
- =?iso-8859-1?Q?J0kVTKNtubu8iMCOw4ZDhC2NcjDXOE8EkNyu6r8BMdMlvaDFHNmCaN3UXV?=
- =?iso-8859-1?Q?qXaVUW5ZzAuzS6PM?=
+ ARA:13230040|376014|1800799024|366016|7416014|921020|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?Ra7m5ecxBQwLI9ZIEfBDZ/j1U6nxs4oypZa3wMT8ILvlWY17Z6BVlRIFpN?=
+ =?iso-8859-1?Q?9mLssmIN8ryP6BgHQ/dHZpM3k7DkfBa3XYcz2+ZUR45/sAJUWVPY39izz9?=
+ =?iso-8859-1?Q?1S5BjW6ETTm7OyHVITcv1v7QcFkmtp1T498QXard310S/ernOLDwfPJXyM?=
+ =?iso-8859-1?Q?sPoOrrvZ8E8NTJW4z3+tPB+QOyGtyA4HBoHbErtRc0iDJOwyhjD+9bL02M?=
+ =?iso-8859-1?Q?npQFbHPE685tR5WUwoEGLAB7GuNFvSjulX/ADt45iSRZ+ExR3kLmTkRA7E?=
+ =?iso-8859-1?Q?FPDSlHywMZ0bcq7sW6Nt2Du4DqykrBkvzC+GUI0KzRSOJFgDn8dToADfu0?=
+ =?iso-8859-1?Q?5zcuDdDb2aYFbONo9bJM2AWgxhUOfzIeM8aWJDth6EEbaEeVCVfZDqa36Y?=
+ =?iso-8859-1?Q?ogGQaufMWUvo0/zsDtvROJoL6E0/BG3xvzqlH6G56pjLJdMS9/fQrMmZoQ?=
+ =?iso-8859-1?Q?HCFOcKXXkaMXVzRMS1ta9k4egQnvJ5/AkfOnmbJntN8j0sBXyvY83dK58O?=
+ =?iso-8859-1?Q?evYA9NHm3VQFT0tQMOWiLFVHk+4BLrhBsI57jI+iHwTYw5XEGVkKTA2Tqu?=
+ =?iso-8859-1?Q?cHNmOJOIz4khpJqp+GY7L6ih+S6WbXdYdzpvRqT2cS+K6Y5+N9JTbEiH+M?=
+ =?iso-8859-1?Q?SZwPT4EkIW/IdiNMyfaZuehJBKeQ5rL9sYNU3+j8a4vJghF0SgrQJU1j51?=
+ =?iso-8859-1?Q?P5hEuYtUeCafINr2NF5zLZPRw3qC9jctQ989olqX4ivYEYTc2TR0sQ2Fwa?=
+ =?iso-8859-1?Q?iCFAi+C6+cu92y6NVXtAF+WQM995yqvx6Z1wWEkHCxpVoVW6aDd8K/pAce?=
+ =?iso-8859-1?Q?gbSVgjf11McziMIDecMnJ2JOm+yMmDhUMCpWUSDkUr3FO09yLkvJO7pJ6k?=
+ =?iso-8859-1?Q?RlHo2Em5M6NnkKdKGkLoNh4tnAvUcr3xPLagi2/ffVdQI/voRt5VauriBJ?=
+ =?iso-8859-1?Q?Hn2pbc3Lv/GkhLC7pTFZhG6hZxiFCEObrXb3IUgcNwXn3ZilYrvJPSNKDa?=
+ =?iso-8859-1?Q?mMVzkXYcr3rGy9pL/zWzjVpO2oFhBACulYoQUYu5zKBHTO6KkOxVbon8Hd?=
+ =?iso-8859-1?Q?JxC2vM7T3MSw5MlSC3m5spOV9YhbQfWmgAnoUUW3ODPXr8L93slkEfmlDV?=
+ =?iso-8859-1?Q?LysS7JlyJCnAiEh10ul0WdgngO0HBnsNBxUBaED68aG6zxVoH7x53LAZSr?=
+ =?iso-8859-1?Q?IWFOGg0DkdJgwOM+3EoyDxiFiCWOFhsff/Vwuvm7Fss1wbzmw/TaxKVVyr?=
+ =?iso-8859-1?Q?/v6t4SJkWJSZdkWUggLSK63h+mia8SB2sMfBfw+6MoNSjcNs/cTJ7S7iMw?=
+ =?iso-8859-1?Q?TarwpgcxvUuxE1qpgK8FFWZ9mzKSWT+HWbukUVmtDgeG9+nisONqlET3Ri?=
+ =?iso-8859-1?Q?aEE6tsrZbHA54nZYSi4v87t5AoP/xiuPbZnrYk5ilRt0e3ABNh0qik29Sx?=
+ =?iso-8859-1?Q?YN1IwqtRXMtv5MIIe/AamlkCByfF9z9ZDYaZCrYr3ILt8nl9gzkQBGejKg?=
+ =?iso-8859-1?Q?k=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH7PR11MB5941.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(921020)(38070700018);
+ SFS:(13230040)(376014)(1800799024)(366016)(7416014)(921020)(38070700018);
  DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?+8Kwt5RqrD99ApO+Zvz58ntP1P/Tw2zM9q8qvMcy6X+hkno3jnn10mTsAI?=
- =?iso-8859-1?Q?lZO6UPuDq3VcFuKkdinPtXk+3NMCJHSIDBk599PvCNxsdUKF7uUxxFqB6z?=
- =?iso-8859-1?Q?SdSEuJXVnALnBQTqSxe7iT7d/la8o6C8uA/+ppBcsZuaEgkKIo4W0Qk7N3?=
- =?iso-8859-1?Q?OKJo8CsqS0GUiT/Fph7/OydHmknEEFmCRODlNHkQRyyuw76nf7EOKI3wd+?=
- =?iso-8859-1?Q?pEQPX3GhkHkiXclGtozxeaNwMAlAaKI5F5gWeCdNRndCdsqAFT4R7dVevA?=
- =?iso-8859-1?Q?NS7ZnPA5QPACpDxNYaiSQ92+qNwUR9CXqLxCKHfezB591SYAwyddQVPtQO?=
- =?iso-8859-1?Q?150v/53zjeHrp4bYSFrTdTVy1Ck2Xfk7AsAE5vZK/BI9xvujFvaL/IjmaV?=
- =?iso-8859-1?Q?RvmqPBaJwREBdCTGbPmdKTwQsYwrYzkKSBqhvA8uFCcWDyS4WnqGUyti21?=
- =?iso-8859-1?Q?Kin3WngidSLvbCvQqWqzGlv8cJWFjexfHF3V/D0UyAGhZzipBYOMWFFoX+?=
- =?iso-8859-1?Q?zhIZXQtaYXKM4YnzvgY6Zo+2jUbKwmC45dAEFlO1he2dQsUjmpLSVa9z3X?=
- =?iso-8859-1?Q?WXS41kHkt2OB6quWAC7QB1UWw0LZmuLVY5jStvio9b2Cl+h+MncrFBLE+d?=
- =?iso-8859-1?Q?+X0VRNAq8d0W3O+TlWDzbbfRgUx8tAwfaYaktTmX8w2U3M80K44SGqMTJd?=
- =?iso-8859-1?Q?4kx/LL1UUXlsKjfx46D7KEmP1rRFT9X0wVbpYop02Q361esjeA+Ybj57+c?=
- =?iso-8859-1?Q?dBM1D5IUSfOpz/Jvg9tlNmXnxOvWGGvyGKMtqjFCdQ/FgHaZ701wxOjE6O?=
- =?iso-8859-1?Q?GgBVl9K/LKd/iS8FVv/E0TZfDs7i3cpEjAH3FiQCjfVLfMq4UtkMUeBfGG?=
- =?iso-8859-1?Q?THcnP6+2OPzH38RLvgsqh6q00jdr2g8H9HEk7ty/TwvrCjT59OzO7kulZz?=
- =?iso-8859-1?Q?QrHhtARWqYhZERtal9L7Mwl6LqHPbBhE5BwsM0zOLJeX31qthrfnTJcoRx?=
- =?iso-8859-1?Q?yZjw+fPSxBSE9NBPpoOEydkRJY2e+kU2XaXtECBHdO9gNSm6csrSNS2DWd?=
- =?iso-8859-1?Q?QHCiVdK7nt7MmuLg+IerMLW0qwSuyXc3tmjp5JraGOPAnWZFhKaFl+rYCW?=
- =?iso-8859-1?Q?chMeg9B113mKQ//RASzifICiTWumCFciklex7Sb47kNT/t5vPN1zKSLEez?=
- =?iso-8859-1?Q?lVSb0lUjHma2vthDxAZak1mTw85XJXBcl+JVmKMcAwidgUJauCPcryK1DK?=
- =?iso-8859-1?Q?+QRy+FB42wJH+OgsrIp2HQgdv1hL0pTS9mQvhJYmSRU8ZdZqhU9JYX/zMu?=
- =?iso-8859-1?Q?He21yeRzSTZ9aKwlPiGXxrYUkU16gTFMZeKP7UnPk2MtX+JPEtO3BqZG7Y?=
- =?iso-8859-1?Q?1uSDBU8jpx0r0pDU+TL7Y7nehBDHvMiKPuz+AlcPvwVuBPOjV7ikyuLVM7?=
- =?iso-8859-1?Q?M1gmBku6MEY6PQ62RZtzORNVZDJ2yACKvF+80UJGelLCf7xwZm1bMbx6TA?=
- =?iso-8859-1?Q?H97QOks0KJqoE8TLd2musV0mvrBDTKWWSl0rXzD0qSN1GrECV3yFBLeOL3?=
- =?iso-8859-1?Q?o61ZF+wuP1JxmL5stYr5lDSQfHdlWHkAeDtDeNhGMrCPVDcS1NdTifsVVX?=
- =?iso-8859-1?Q?7TJzEYRx3rVWMPQhvhyhvDH9IAbxqoultn?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?SI2QTgaQI2EUjmvbzT+xwlPkc2ujN8VC85kucqUrlJwIH5FvhJq1iI1ZM1?=
+ =?iso-8859-1?Q?C5VPN2ZdKE2pINOgRMYbg6vSMXfoIVwiNlYZ//Cp/Y5FlEO4QgNB0u1+k9?=
+ =?iso-8859-1?Q?0asPBOpLyjJlqwL6iZZ3QHCGUDkQl19NvDBuVOVP7X53ogbQiwQ8D//I4w?=
+ =?iso-8859-1?Q?w/O5e+Or56YExmPTib7y5l9NEesuq2plNUNGHaVK7gBAMEDh3oIeK/EdCg?=
+ =?iso-8859-1?Q?6c+mJly73BUElnsvHC8psTHq7m82c647eUz7lkUwcjPs0KaTZ1p6WYTIUM?=
+ =?iso-8859-1?Q?TiytOFump3lJl61Pv1LC9gOKFBPey7eD/9jBMZXCcQcqip0ocAn9gnfbo5?=
+ =?iso-8859-1?Q?xsyd80b8dmU0xfIyevx+aJ6l0fINtfCrVDVkWQEcZ49SPUMSIF14QfEikt?=
+ =?iso-8859-1?Q?Uw/sZ40STCVZVlrVLFM8JpfkRr13lJY1gPUDNRMjLixQE9kPd8G5wB7gaW?=
+ =?iso-8859-1?Q?79KgHl1oY8QSDqU0dCFU+W4t24B5tW4Eo5pBtTIbnhKWaa+JY+YwBA9TJF?=
+ =?iso-8859-1?Q?1wC16uyNIR7kIANGnRg7meOoYSK7bdR1MewfxaMwyjiEB7zpc4XzJaxkt5?=
+ =?iso-8859-1?Q?TQAJCTeejYBlwd1p3sNXfOy86zqk4lYJ1KALBId8h53qTIZtXzr0uD47Ka?=
+ =?iso-8859-1?Q?eB2QLbJq/cDqa5pDJX17JRvPrLoZafknsk7LYkkq1bMkA3xWag6bgnHI0o?=
+ =?iso-8859-1?Q?4tsoWGQpYdcTNpncP7BS8ovsFFzQFQvsEsjl3RqVHB6wyn6jlfD2bHzwtD?=
+ =?iso-8859-1?Q?FJ18YniAeoc1o0L37nkMd1Y6a3hH+Q+DQuKEX73p4trY9JNcjkWAPrw6JB?=
+ =?iso-8859-1?Q?qOGFa7x/50BKsBcLf5rafyFKh+IbaD3+OJEbtjYp5urJb2gkX8KfRw1JVA?=
+ =?iso-8859-1?Q?TqFeEMXn37+ERBJAh1R4o0wdSZ8137RAbT3WmqI/QnC11AzSWgV1gxzH7w?=
+ =?iso-8859-1?Q?Ng8b0iHzAH0HfJ60MDZqmikRvfJAUnbIJN8hA5GW6BuNab01O0pnCaDbeT?=
+ =?iso-8859-1?Q?W132Vmi9CdqP1Ik78ViHf2CPDwAoNpUenY8XocWcxVT8y/DRICcwiKyeq0?=
+ =?iso-8859-1?Q?0qJVBH76LeqNEwVGIopuC7t7KdIm2wmfFHt2LRFS724yARC/7TtpXbls23?=
+ =?iso-8859-1?Q?3nfCcWvBOnszDtHtauxGCDFwppcv4CAkpckUq2/RtUow05x+6eKBmrNh1w?=
+ =?iso-8859-1?Q?VRqJQ4w3JPKQDXf1ud5hwTxklgyjJvw4zDZUTalfgbj3jR+n8fnKntZ6mn?=
+ =?iso-8859-1?Q?n5ygWGuAbjd0187EklIcRnRIQ1R76R25ktyaC1WgQyXecybZaolIrCjeTP?=
+ =?iso-8859-1?Q?oJ6TT5sHLIxgDrhTfJyT03TjRRL0n6TRul1IPoHgrwTH4CU5kr61o5JWrw?=
+ =?iso-8859-1?Q?CORe6mrjdksmcqAQT3DnPHOQo5eWXBBDFwFA3LpdHWD+ps3BwIbB46/shm?=
+ =?iso-8859-1?Q?w4ecr3eOgm80sIT9P2whzu00Mo215vpikDrRY/PiXd0iNu+1SXAxS3/+HZ?=
+ =?iso-8859-1?Q?IUatBsMD5zAIP/NDRrz/gamd2vqxVVVhHsDsuHLG/QhFxjt6EA7UtiWlcc?=
+ =?iso-8859-1?Q?GbTsx8/R/mGE1Qw873jZnzaZSr0IRVe9qW7pTC1w9XcTvM8NSdppAqk5qj?=
+ =?iso-8859-1?Q?0pL4GYuIKbqWmq+gzJks5yvTqTZ7e3bSIT?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB5941.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd52dbf0-66b0-41fa-3926-08dca53fc452
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2024 02:34:07.4803 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 230fafc6-d2e5-42cb-3f81-08dca543e596
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2024 03:03:41.2699 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: g0bAWXJuV96SDznRuHlIYxblOiSvr2S/pWox5O8JmDS4x7uplQxSv1CoQ9EL3A7o8MFnzwKuqo4MNntREayCzg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7429
+X-MS-Exchange-CrossTenant-userprincipalname: nW0zXJ4yq9edd92ekbZioWRBnDDRfysGmGGF4mrogpBFjudFssj5QV/lF5s0wBzWNJ8/DRsUt2KRcNIXTkzebg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR11MB6483
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -221,377 +224,118 @@ us
 > devel@nongnu.org
 > Cc: Hao Xiang <hao.xiang@linux.dev>; Liu, Yuan1 <yuan1.liu@intel.com>;
 > Zou, Nanhai <nanhai.zou@intel.com>; Ho-Ren (Jack) Chuang
-> <horenchuang@bytedance.com>; Wang, Yichen <yichen.wang@bytedance.com>
-> Subject: [PATCH v6 1/5] docs/migration: add qatzip compression feature
+> <horenchuang@bytedance.com>; Wang, Yichen <yichen.wang@bytedance.com>;
+> Bryan Zhang <bryan.zhang@bytedance.com>
+> Subject: [PATCH v6 2/5] meson: Introduce 'qatzip' feature to the build
+> system
 >=20
-> From: Yuan Liu <yuan1.liu@intel.com>
+> From: Bryan Zhang <bryan.zhang@bytedance.com>
 >=20
-> add Intel QATzip compression method introduction
+> Add a 'qatzip' feature, which is automatically disabled, and which
+> depends on the QATzip library if enabled.
 >=20
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Yichen Wang <yichen.wang@bytedance.com>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
 > ---
->  docs/devel/migration/features.rst           |   1 +
->  docs/devel/migration/qatzip-compression.rst | 251 ++++++++++++++++++++
->  2 files changed, 252 insertions(+)
->  create mode 100644 docs/devel/migration/qatzip-compression.rst
+>  meson.build                   | 10 ++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  3 files changed, 15 insertions(+)
 >=20
-> diff --git a/docs/devel/migration/features.rst
-> b/docs/devel/migration/features.rst
-> index 58f8fd9e16..8f431d52f9 100644
-> --- a/docs/devel/migration/features.rst
-> +++ b/docs/devel/migration/features.rst
-> @@ -14,3 +14,4 @@ Migration has plenty of features to support different
-> use cases.
->     CPR
->     qpl-compression
->     uadk-compression
-> +   qatzip-compression
-> diff --git a/docs/devel/migration/qatzip-compression.rst
-> b/docs/devel/migration/qatzip-compression.rst
-> new file mode 100644
-> index 0000000000..72fa3e2826
-> --- /dev/null
-> +++ b/docs/devel/migration/qatzip-compression.rst
-> @@ -0,0 +1,251 @@
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +QATzip Compression
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +In scenarios with limited network bandwidth, the ``QATzip`` solution can
-> help
-> +users save a lot of host CPU resources by accelerating compression and
-> +decompression through the Intel QuickAssist Technology(``QAT``) hardware=
-.
+> diff --git a/meson.build b/meson.build
+> index 6a93da48e1..ea977c6cbf 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1244,6 +1244,14 @@ if not get_option('uadk').auto() or have_system
+>       uadk =3D declare_dependency(dependencies: [libwd, libwd_comp])
+>    endif
+>  endif
+> +
+> +qatzip =3D not_found
+> +if get_option('qatzip').enabled()
+> +  qatzip =3D dependency('qatzip', version: '>=3D1.1.2',
+> +                      required: get_option('qatzip'),
+> +                      method: 'pkg-config')
+> +endif
+> +
 
-Hi Yichen
+How about changing to the following code=20
+if not get_option('qatzip').auto() or have_system
+  qatzip =3D dependency('qatzip', version: '>=3D1.1.2',
+                      required: get_option('qatzip'),
+                      method: 'pkg-config')
+endif
 
-Thanks for adding the part of Performance Testing with QATzip, I wonder if =
-we
-can remove Performance Testing with QATzip part and directly add the follow=
-ing
-content.=20
+This means that on all Qemu emulation targets, always use=20
+--enable-qatzip and --disable-qatzip to determine whether
+qatzip is required.
 
-Here, we use a typical example of limited bandwidth to illustrate the advan=
-tages
-of QATzip. If the user is interested in qatzip, he still needs to verify th=
-e performance
-by himself.
+I think your previous code can remove if get_option('qatzip').enabled()
+And it also can work
 
-+The following test was conducted using 8 multifd channels and 10Gbps netwo=
-rk
-+bandwidth. The results show that, compared to zstd, ``QATzip`` significant=
-ly
-+saves CPU resources on the sender and reduces migration time. Compared to =
-the
-+uncompressed solution, ``QATzip`` greatly improves the dirty page processi=
-ng
-+capability, indicated by the Pages per Second metric, and also reduces the
-+total migration time.
-+
-+::
-+
-+   VM Configuration: 16 vCPU and 64G memory
-+   VM Workload: all vCPUs are idle and 54G memory is filled with Silesia d=
-ata.
-+   QAT Devices: 4
-+   |-----------|--------|---------|----------|----------|------|------|
-+   |8 Channels |Total   |down     |throughput|pages per | send | recv |
-+   |           |time(ms)|time(ms) |(mbps)    |second    | cpu %| cpu% |
-+   |-----------|--------|---------|----------|----------|------|------|
-+   |qatzip     |   16630|       28|     10467|   2940235|   160|   360|
-+   |-----------|--------|---------|----------|----------|------|------|
-+   |zstd       |   20165|       24|      8579|   2391465|   810|   340|
-+   |-----------|--------|---------|----------|----------|------|------|
-+   |none       |   46063|       40|     10848|    330240|    45|    85|
-+   |-----------|--------|---------|----------|----------|------|------|
+>  virgl =3D not_found
+>=20
+>  have_vhost_user_gpu =3D have_tools and host_os =3D=3D 'linux' and
+> pixman.found()
+> @@ -2378,6 +2386,7 @@ config_host_data.set('CONFIG_STATX_MNT_ID',
+> has_statx_mnt_id)
+>  config_host_data.set('CONFIG_ZSTD', zstd.found())
+>  config_host_data.set('CONFIG_QPL', qpl.found())
+>  config_host_data.set('CONFIG_UADK', uadk.found())
+> +config_host_data.set('CONFIG_QATZIP', qatzip.found())
+>  config_host_data.set('CONFIG_FUSE', fuse.found())
+>  config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
+>  config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
+> @@ -4484,6 +4493,7 @@ summary_info +=3D {'lzfse support':     liblzfse}
+>  summary_info +=3D {'zstd support':      zstd}
+>  summary_info +=3D {'Query Processing Library support': qpl}
+>  summary_info +=3D {'UADK Library support': uadk}
+> +summary_info +=3D {'qatzip support':    qatzip}
+>  summary_info +=3D {'NUMA host support': numa}
+>  summary_info +=3D {'capstone':          capstone}
+>  summary_info +=3D {'libpmem support':   libpmem}
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 0269fa0f16..35a69f6697 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -261,6 +261,8 @@ option('qpl', type : 'feature', value : 'auto',
+>         description: 'Query Processing Library support')
+>  option('uadk', type : 'feature', value : 'auto',
+>         description: 'UADK Library support')
+> +option('qatzip', type: 'feature', value: 'disabled',
 
+If you agree with the above changes, set the qatzip value to auto
+option('qatzip', type: 'feature', value: 'auto'
 
-> +``QATzip`` is a user space library which builds on top of the Intel
-> QuickAssist
-> +Technology user space library, to provide extended accelerated
-> compression and
-> +decompression services.
-> +
-> +For more ``QATzip`` introduction, please refer to `QATzip Introduction
-> +<https://github.com/intel/QATzip?tab=3Dreadme-ov-file#introductionl>`_
-> +
-> +QATzip Compression Framework
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-> +
-> +::
-> +
-> +  +----------------+
-> +  | MultiFd Thread |
-> +  +-------+--------+
-> +          |
-> +          | compress/decompress
-> +  +-------+--------+
-> +  | QATzip library |
-> +  +-------+--------+
-> +          |
-> +  +-------+--------+
-> +  |  QAT library   |
-> +  +-------+--------+
-> +          |         user space
-> +  --------+---------------------
-> +          |         kernel space
-> +   +------+-------+
-> +   |  QAT  Driver |
-> +   +------+-------+
-> +          |
-> +   +------+-------+
-> +   | QAT Devices  |
-> +   +--------------+
-> +
-> +
-> +QATzip Installation
-> +-------------------
-> +
-> +The ``QATzip`` installation package has been integrated into some Linux
-> +distributions and can be installed directly. For example, the Ubuntu
-> Server
-> +24.04 LTS system can be installed using below command
-> +
-> +.. code-block:: shell
-> +
-> +   #apt search qatzip
-> +   libqatzip-dev/noble 1.2.0-0ubuntu3 amd64
-> +     Intel QuickAssist user space library development files
-> +
-> +   libqatzip3/noble 1.2.0-0ubuntu3 amd64
-> +     Intel QuickAssist user space library
-> +
-> +   qatzip/noble,now 1.2.0-0ubuntu3 amd64 [installed]
-> +     Compression user-space tool for Intel QuickAssist Technology
-> +
-> +   #sudo apt install libqatzip-dev libqatzip3 qatzip
-> +
-> +If your system does not support the ``QATzip`` installation package, you
-> can
-> +use the source code to build and install, please refer to `QATzip source
-> code installation
-> +<https://github.com/intel/QATzip?tab=3Dreadme-ov-file#build-intel-
-> quickassist-technology-driver>`_
-> +
-> +QAT Hardware Deployment
-> +-----------------------
-> +
-> +``QAT`` supports physical functions(PFs) and virtual functions(VFs) for
-> +deployment, and users can configure ``QAT`` resources for migration
-> according
-> +to actual needs. For more details about ``QAT`` deployment, please refer
-> to
-> +`Intel QuickAssist Technology Documentation
-> +<https://intel.github.io/quickassist/index.html>`_
-> +
-> +For more ``QAT`` hardware introduction, please refer to `intel-quick-
-> assist-technology-overview
-> +<https://www.intel.com/content/www/us/en/architecture-and-
-> technology/intel-quick-assist-technology-overview.html>`_
-> +
-> +How To Use QATzip Compression
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-> +
-> +1 - Install ``QATzip`` library
-> +
-> +2 - Build ``QEMU`` with ``--enable-qatzip`` parameter
-> +
-> +  E.g. configure --target-list=3Dx86_64-softmmu --enable-kvm ``--enable-
-> qatzip``
-> +
-> +3 - Set ``migrate_set_parameter multifd-compression qatzip``
-> +
-> +4 - Set ``migrate_set_parameter multifd-qatzip-level comp_level``, the
-> default
-> +comp_level value is 1, and it supports levels from 1 to 9
-> +
-> +
-> +Performance Testing with QATzip
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-> +
-> +Testing environment is being set as below:
-> +
-> +VM configuration:16 vCPU, 64G memory;
-> +
-> +VM Workload: all vCPUs are idle and 54G memory is filled with Silesia
-> data;
-> +
-> +QAT Devices: 4;
-> +
-> +Sender migration parameters:
-> +
-> +.. code-block:: shell
-> +
-> +    migrate_set_capability multifd on
-> +    migrate_set_parameter multifd-channels 2/4/8
-> +    migrate_set_parameter max-bandwidth 1G/10G
-> +    migrate_set_parameter multifd-compression qatzip/zstd
-> +
-> +Receiver migration parameters:
-> +
-> +.. code-block:: shell
-> +
-> +    migrate_set_capability multifd on
-> +    migrate_set_parameter multifd-channels 2
-> +    migrate_set_parameter multifd-compression qatzip/zstd
-> +
-> +max-bandwidth: 1 GBps (Gbytes/sec)
-> +
-> +.. code-block:: text
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |2 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   21607|       77|      8051|    88|   125|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   78351|       96|      2199|   204|    80|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |4 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   20336|       25|      8557|   110|   190|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   39324|       31|      4389|   406|   160|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |8 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   20208|       22|      8613|   125|   300|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   20515|       22|      8438|   800|   340|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +max-bandwidth: 10 GBps (Gbytes/sec)
-> +
-> +.. code-block:: text
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |2 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   22450|       77|      7748|    80|   125|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   78339|       76|      2199|   204|    80|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |4 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   13017|       24|     13401|   180|   285|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   39466|       21|      4373|   406|   160|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +    |-----------|--------|---------|----------|------|------|
-> +    |8 Channels |Total   |down     |throughput| send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|------|------|
-> +    |qatzip     |   10255|       22|     17037|   280|   590|
-> +    |-----------|--------|---------|----------|------|------|
-> +    |zstd       |   20126|       77|      8595|   810|   340|
-> +    |-----------|--------|---------|----------|------|------|
-> +
-> +max-bandwidth: 1.25 GBps (Gbytes/sec)
-> +
-> +.. code-block:: text
-> +
-> +    |-----------|--------|---------|----------|----------|------|------|
-> +    |8 Channels |Total   |down     |throughput|pages per | send | recv |
-> +    |           |time(ms)|time(ms) |(mbps)    |second    | cpu %| cpu% |
-> +    |-----------|--------|---------|----------|----------|------|------|
-> +    |qatzip     |   16630|       28|     10467|   2940235|   160|   360|
-> +    |-----------|--------|---------|----------|----------|------|------|
-> +    |zstd       |   20165|       24|      8579|   2391465|   810|   340|
-> +    |-----------|--------|---------|----------|----------|------|------|
-> +    |none       |   46063|       40|     10848|    330240|    45|    85|
-> +    |-----------|--------|---------|----------|----------|------|------|
-> +
-> +If the user has enabled compression in live migration, using QAT can sav=
-e
-> the
-> +host CPU resources.
-> +
-> +When compression is enabled, the bottleneck of migration is usually the
-> +compression throughput on the sender side, since CPU decompression
-> throughput
-> +is higher than compression, some reference data
-> +https://github.com/inikep/lzbench, so more CPU resources need to be
-> allocated
-> +to the sender side.
-> +
-> +Summary:
-> +
-> +1. In the 1GBps case, QAT only uses 88% CPU utilization to reach 1GBps,
-> but
-> +   ZSTD needs 800%.
-> +
-> +2. In the 10Gbps case, QAT uses 180% CPU utilization to reach 10GBps. bu=
-t
-> ZSTD
-> +   still cannot reach 10Gbps even if it uses 810%.
-> +
-> +3. The QAT decompression CPU utilization is higher than compression and
-> ZSTD,
-> +   because:
-> +
-> +   a. When using QAT compression, the data needs to be copied to the QAT
-> memory
-> +   (for DMA operations), and the same for decompression. However,
-> +   do_user_addr_fault will be triggered during decompression because the
-> QAT
-> +   decompressed data is copied to the VM address space for the first
-> time, in
-> +   addition, both compression and decompression are processed by QAT and
-> do not
-> +   consume CPU resources, so the CPU utilization of the receiver is
-> slightly
-> +   higher than the sender.
-> +
-> +   b. Since zstd decompression decompresses data directly into the VM
-> address
-> +   space, there is one less memory copy than QAT, so the CPU utilization
-> on the
-> +   receiver is better than QAT. For the 1GBps case, the receiver CPU
-> +   utilization is 125%, and the memory copy occupies ~80% of CPU
-> utilization.
-> +
-> +How To Choose Between QATzip and QPL
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +Starting from Intel 4th Gen Intel Xeon Scalable processors, codenamed
-> Sapphire
-> +Rapids processor(``SPR``), it supports multiple build-in accelerators
-> including
-> +``QAT`` and ``IAA``, the former can accelerate ``QATzip``, and the latte=
-r
-> is
-> +used to accelerate ``QPL``.
-> +
-> +Here are some suggestions:
-> +
-> +1 - If your live migration scenario is limited network bandwidth and
-> ``QAT``
-> +hardware resources exceed ``IAA``, then use the ``QATzip`` method, which
-> +can save a lot of host CPU resources for compression.
-> +
-> +2 - If your system cannot support shared virtual memory(SVM) technology,
-> please
-> +use ``QATzip`` method because ``QPL`` performance is not good without SV=
-M
-> +support.
-> +
-> +3 - For other scenarios, please use the ``QPL`` method first.
+> +       description: 'QATzip compression support')
+>  option('fuse', type: 'feature', value: 'auto',
+>         description: 'FUSE block device export')
+>  option('fuse_lseek', type : 'feature', value : 'auto',
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
+h
+> index cfadb5ea86..1ce467e9cc 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -163,6 +163,7 @@ meson_options_help() {
+>    printf "%s\n" '  pixman          pixman support'
+>    printf "%s\n" '  plugins         TCG plugins via shared library
+> loading'
+>    printf "%s\n" '  png             PNG support with libpng'
+> +  printf "%s\n" '  qatzip          QATzip compression support'
+>    printf "%s\n" '  qcow1           qcow1 image format support'
+>    printf "%s\n" '  qed             qed image format support'
+>    printf "%s\n" '  qga-vss         build QGA VSS support (broken with
+> MinGW)'
+> @@ -427,6 +428,8 @@ _meson_option_parse() {
+>      --enable-png) printf "%s" -Dpng=3Denabled ;;
+>      --disable-png) printf "%s" -Dpng=3Ddisabled ;;
+>      --prefix=3D*) quote_sh "-Dprefix=3D$2" ;;
+> +    --enable-qatzip) printf "%s" -Dqatzip=3Denabled ;;
+> +    --disable-qatzip) printf "%s" -Dqatzip=3Ddisabled ;;
+>      --enable-qcow1) printf "%s" -Dqcow1=3Denabled ;;
+>      --disable-qcow1) printf "%s" -Dqcow1=3Ddisabled ;;
+>      --enable-qed) printf "%s" -Dqed=3Denabled ;;
 > --
 > Yichen Wang
 
