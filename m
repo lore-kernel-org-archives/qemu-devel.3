@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D93CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 08:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A139EC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 08:55:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTduH-00029y-I6; Tue, 16 Jul 2024 04:51:33 -0400
+	id 1sTdxT-00059a-2w; Tue, 16 Jul 2024 04:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTduF-00022T-OL
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:51:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTduE-0007Lr-FS
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:51:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721119888;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=V8ZCV9p0N0t7L3QJ8wOjCf/PR+WvBh7IKM/aMASCeLN7rHfddlFXuvj37sAYY7KtBpGAp3
- ZN5wkJwTMK7JhDu0XIhUlXDR9kSOCYuSGm8lBY5I0SBl3l3mkIy8ztM5ve6P/1ykx9jNfK
- TNJ6CMe1vFWZZXdexqqXbreJh0z6MYE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-eK9oPuBoNU-bjIZei2GPhw-1; Tue, 16 Jul 2024 04:51:27 -0400
-X-MC-Unique: eK9oPuBoNU-bjIZei2GPhw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-368255decf3so495878f8f.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 01:51:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTdxO-00058M-Tm
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:54:48 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTdxE-0007nh-BI
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 04:54:45 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4266ea6a412so35941085e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 01:54:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721120074; x=1721724874; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ePQosVdHXI/CSps8s7Gi0EgFdKrW6ePfrGnNmyknnJo=;
+ b=qduy/uyMo7eWi1Tziv74psC0orgQYVvLR7ZBn81UDEZmHkmDp3pDdBqfSouxVQ8z9v
+ hpIodRsHiFEw4kRtyLRM6Hf/i+T7aqC1YRpCaBcRQm5DglHZmVmYhSGmWVVepyBieU87
+ z+9mDVuYR6YJOIezo8iXc17AQ4Us9SRnDH4J7BRtuZaRq6x6OnwNtCniMG3SDku+AjjK
+ PFgPPHbSM4CPewVfMR2GpC8PEHCG8k7108bPunvEx/9huVPdpNRHgZYdldEM7g8ZmRXC
+ Z1vnHlvOtuLYYSC1EM7MCse0oNIykZY/pKmChMu+4lkRMK0SG/bIi35E2DM6iXOhVoVs
+ Wh8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721119886; x=1721724686;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=pgDlCzgVBpSVvC8LEzNzDWSkgyV6Q7i8uIuAC/Zg7o2YSxe/WzbcPvCUSMKTN7SPhZ
- ykzTD2UIvyCyksuamXUC57CN/C/U0gD6qqPDR0+fY3ob92EdqbmsHVcRTBwd7/6RtySW
- +TsI2Bhkp6d3HBQdh+V168MoUA5EBQiAaDtn5pKd7/kseaKMG/nQMgtNV5juW+k3yRMW
- RQ0QfFKRYcB92agrFQ+hQ4V2TS2PESwknBTKkbmzjG80XROhDsIntS7ekU5UogrDplzZ
- ULSVicQe93uUnos0179nBtQtz1o0R0eNxZ4G3457OUyWB61Lx621zMzQ2/J+tSG51Myg
- E9Aw==
-X-Gm-Message-State: AOJu0YweJjvJZCK284NL0/r9dkWNBabOPomKxlKySQLu/2ZcGK8BOiWt
- yPR3IIkgkTIdJQfpM/yko8lrEb//TomTVHdK6HaUgkCVBL9YIV/iQCRP450D0V5ONbQttPJs1ml
- UTP+8F6pDNjz7XeLtsiOmLVnEceh2jwx+rGT5PphKGYS+Hhg9Vz70
-X-Received: by 2002:adf:f886:0:b0:367:8811:cab7 with SMTP id
- ffacd0b85a97d-368261e8cbcmr975267f8f.41.1721119885793; 
- Tue, 16 Jul 2024 01:51:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9Avpp7k7ETsomMYi7vi4zqY3dolLmSqicOzZ+SXUhk6pjXXo2EjX9acRVNpz8/x67Vk74Pg==
-X-Received: by 2002:adf:f886:0:b0:367:8811:cab7 with SMTP id
- ffacd0b85a97d-368261e8cbcmr975246f8f.41.1721119885443; 
- Tue, 16 Jul 2024 01:51:25 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dab3e71sm8342653f8f.12.2024.07.16.01.51.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 01:51:25 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
- richard.henderson@linaro.org, peter.maydell@linaro.org,
- pbonzini@redhat.com, maobibo@loongson.cn
-Subject: Re: [PATCH] qemu/timer: Add host ticks function for LoongArch
-Date: Tue, 16 Jul 2024 10:51:21 +0200
-Message-ID: <20240716085121.186007-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240716031500.4193498-1-gaosong@loongson.cn>
-References: 
+ d=1e100.net; s=20230601; t=1721120074; x=1721724874;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ePQosVdHXI/CSps8s7Gi0EgFdKrW6ePfrGnNmyknnJo=;
+ b=o0azB7/AbxqxmJRpwbdJ6nqoovn3tw23F/6X6l9KKGicqRHlx41UKsc9lSmV03JCoJ
+ DL4sv/PyIp49gz7/uHxP+3ryoUkWW1qNTpCKUsSogtJ53ie8TNQVD2u1Zbnf7x1INHGQ
+ lwxrizumPtEE8oKylFHdMI8wQErDSVyzbtSRQmlhibJLdUJoWo6iGpiK+NDBe++iZ7hi
+ a7gtbm+VAeLRj+3KitsuHikghK66WcOt6ZTSjvuJ3RFfH4QVEWKP1F8OttGZTYoURKm+
+ azN7jh7K8lSVirBIfUzSrGpqC68wzs8sjjuT5EhO0SzhTexoGj5eMCl6UWyGElucWSCJ
+ 8CHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfidUHY07sp1rR4sFpg6/EK9L0oB8Rvlu3Ls+PJUgAf7owJfLY5JdSgYgKpNlJF3NGW9pGbsR45X3ARMOeH/5slzddrq0=
+X-Gm-Message-State: AOJu0YwlNluk3FUqxSugVVzQ72lb0N8RtNOcLgCMw7zJ0GDS2PqpD4nr
+ aKRCo0IbJZeqBFFbWzjZ3naddGmnBgIaKOMIh90YtGC9zKw7P5vj9IE4QPLEJfMtzIpHVzbO+IW
+ JPNg=
+X-Google-Smtp-Source: AGHT+IEd+OrkySYRqTvbFPtUQtjZqzOh41L/uCt9nPj51I1IscqYX70612GZ4E7aS6abr6rW+xV2yA==
+X-Received: by 2002:a05:6000:d84:b0:367:8847:5bf4 with SMTP id
+ ffacd0b85a97d-368260c4e16mr968456f8f.10.1721120074569; 
+ Tue, 16 Jul 2024 01:54:34 -0700 (PDT)
+Received: from [192.168.86.175] (233.red-95-127-43.staticip.rima-tde.net.
+ [95.127.43.233]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a5e83273sm115614745e9.17.2024.07.16.01.54.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 01:54:34 -0700 (PDT)
+Message-ID: <618d4219-6791-4afa-9101-8e83f6758027@linaro.org>
+Date: Tue, 16 Jul 2024 10:54:32 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] RAMBlock: use return value of ram_block_discard_require()
+ as errno
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+References: <20240716064213.290696-1-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240716064213.290696-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,8 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On 16/7/24 08:42, Zhenzhong Duan wrote:
+> When ram_block_discard_require() fails, errno is passed to error_setg_errno().
+> It's a stale value or 0 which is unrelated to ram_block_discard_require().
+> 
+> As ram_block_discard_require() already returns -EBUSY in failure case,
+> use it as errno for error_setg_errno().
+> 
+> Fixes: 852f0048f3ea ("make guest_memfd require uncoordinated discard")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   system/physmem.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
-Paolo
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+and queued, thanks.
 
