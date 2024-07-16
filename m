@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2892C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5712C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTeTE-00016l-TI; Tue, 16 Jul 2024 05:27:40 -0400
+	id 1sTeXn-0007Tx-Eo; Tue, 16 Jul 2024 05:32:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeTC-00013t-LZ
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:27:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeTB-00050L-2S
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:27:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721122055;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qoE5pxRWoC783eaJBydPASemyX0zbq2/a/jvVhOQtOU=;
- b=MyB1hSteevNnbv5IXHWABynIs2MuPnrxRXbazTcPSrDzRHwgFSptrxOU0NFlv9wMTVfA4b
- trK/WlIgTQuGss4vRD0n13K3V9/LfLJFbEhUMFbM29vF8moKbW8yJqVMplrcASKdaBaMlb
- plByoQOS+3Fp572bDfC8K+tJ7ZfO3f4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-KFEmKq9SNJ2CEfXTOCOCbw-1; Tue, 16 Jul 2024 05:27:33 -0400
-X-MC-Unique: KFEmKq9SNJ2CEfXTOCOCbw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-427a7a65e7dso13829155e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:27:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721122052; x=1721726852;
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTeXe-0007SN-9s
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:32:15 -0400
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTeXc-0005wQ-Fa
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:32:13 -0400
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-3dab3b85623so1657406b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721122331; x=1721727131;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0h7vEO93IdCSRgDAkWXmBz30RLWjKvU0Oa4UseQwWlc=;
+ b=I6EHR60WeB08/2+UJ5uTxbTxDatIRd6fD01bnhCk6B6k9yg9gzTyUB6dRh+WT7BPyf
+ /HCubGLZ5GrVONbzUBy6qoB9Cp+pFlahx2hLdqhwTEGUpiDqKwt3hWf3OWQL2Hi9BIEt
+ sZJLJe38KWw0E4QZfiDsVSSylhwzVna0bXA1kDGSYVLy/IUjZSgcjw+7d3kSWAWucvka
+ 1fLlXTRUQ7mX2e9tw6NA3a2iE/wPDw+BnOjgp8I/NvadTDWdq/xxhYNyqQDaYvc1xILa
+ WbujDpHTUuDpL0eoeg0pMfYmZI962Pv1se9B92DTH29C4sVaSSyb6MIyX5GQDtj+Mj/A
+ rrJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721122331; x=1721727131;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qoE5pxRWoC783eaJBydPASemyX0zbq2/a/jvVhOQtOU=;
- b=maNTkn52U1UK5LedXjBXZlcdDcvO+k1ySCZd2A+1nFByptroVj/W4RU4mK6fOhj1U6
- 1gYMsMY0jUvHXQ3DUxGnwAM2Sx4xj+oc4Sc7W5M9mj3ffYgmtrQBi7JzvpCg0zgvsDDA
- GT4WYlUiYg4rA+Q0/8K1XnK3nt/zm11UEQy9tEJ+Ii+Tp0Wvemj3kyQmVayQxdWdffK3
- GpZc7m9/qANy+z/TFZiTZ/Z4BIWoNM0pvwxad70O9ts5n8cMaJWhCdlxqteKkwURx/eE
- WLSbrkiGtGlJ15K15Kpkg6r//N6noYqODsxq6Iu0Juu6+Sr8MTIgPCdpZTK4GpImRkOB
- 8BpQ==
+ bh=0h7vEO93IdCSRgDAkWXmBz30RLWjKvU0Oa4UseQwWlc=;
+ b=N3Yd9B7p107Lf74R48XCS3Ezeoa01ryzpmHyy/WMUV0Ao1mhNREczPAKXqh9N/mUm0
+ dXSz59lsSfnNwEeqxBxvdzgVvygQWiecH3KaIIq0fTYlakzvUzM5daeSzfiAAQzWLlVO
+ jPrH1PfHmYsKtWdDihlfY0ejDj4T8wd8rtXhjIZnO8ZXpCJMI8Dad6qavyGv6fuVl+6d
+ 4IkkhN1a3Z/qoJlAlKxoqgSpkmHKbuWnsld8Kg5U5CTkTDL6VULU5TI7KKO7e8z+QHiY
+ tAZ8yJWCQAlvSS7zamprcVrOxE1cvxaod7dc1+pgLzHriAOLVUwhcbyv2pqKonbxoggM
+ 2Ghw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaOUmQmmwbXc5XPE38PF+L/A0gcxOdqPGvxEKCuRVo15hAed1BwXrqiANwQ5GuWaYzKzD6cn9gOdQrIyVcIzn73FN3R5c=
-X-Gm-Message-State: AOJu0YwCIB2i9VHRCEP/FS7jSi0qBfW0anb5C6jMidfSGkB8Qhs/s8Jw
- nOYolnoArVvm+QjO9V0RzTA9U8Ka+tl4mBbtrs8v07yMhT413DdoYIR0GdQLcE1F2FwSXQ/iBmz
- CraZSBMAAimCscV9kanE3udENZoyUaiGlFFA7tYNfGOVIbcZBFzmN
-X-Received: by 2002:a05:600c:1e09:b0:426:62a2:34fc with SMTP id
- 5b1f17b1804b1-427bf39020amr1161125e9.11.1721122052672; 
- Tue, 16 Jul 2024 02:27:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFde64tvqtfv6hHRZeSl7y6WZFXP6xWFL0y3QbTfaWuDMBAfRXPN7gS96IxIhVOZfKh2sL8OQ==
-X-Received: by 2002:a05:600c:1e09:b0:426:62a2:34fc with SMTP id
- 5b1f17b1804b1-427bf39020amr1161025e9.11.1721122052314; 
- Tue, 16 Jul 2024 02:27:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
- ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
+ AJvYcCVGeDQcR5XKLl6nIo5gSWDnCax0qDV26rlUkHu/SzJzU/PVX6InQIdXI7KKV32BMiAo6WCKfpileq+1JhK9KM4d2A3eTCE=
+X-Gm-Message-State: AOJu0YyVYXreR/z02FtKctVt/axXFaJp5WHgzT7z3RVh2E6cUjwclDTX
+ ecwRkCBuJR0Y+E9lZhnrPCQu3fFE1eO5NWUClRvpG//5J3sGUGYEz+WzxRKyYRo=
+X-Google-Smtp-Source: AGHT+IGs3zKFxOknL5dJxI4LghUcg8hvg1z69dlhCXcJh2Nyi4MGZnSIdYjuXJwm/6FD/Y9HGph4Wg==
+X-Received: by 2002:a05:6808:1586:b0:3d5:1eba:10b5 with SMTP id
+ 5614622812f47-3dac7b81044mr2234126b6e.12.1721122331249; 
+ Tue, 16 Jul 2024 02:32:11 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb525sm115774265e9.34.2024.07.16.02.27.31
+ d2e1a72fcca58-70b7eca8303sm6022623b3a.173.2024.07.16.02.32.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 02:27:31 -0700 (PDT)
-Message-ID: <75110bf5-a4d4-4d68-9c37-8a653be2bcac@redhat.com>
-Date: Tue, 16 Jul 2024 11:27:30 +0200
+ Tue, 16 Jul 2024 02:32:10 -0700 (PDT)
+Message-ID: <8498a828-cbc0-4f3d-9028-862f8372ebb3@daynix.com>
+Date: Tue, 16 Jul 2024 18:32:06 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/12] vfio/iommufd: Return errno in
- iommufd_cdev_attach_ioas_hwpt()
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-5-joao.m.martins@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240712114704.8708-5-joao.m.martins@oracle.com>
+Subject: Re: [PATCH v4 0/7] util: Introduce qemu_get_runtime_dir()
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, virtio-fs@redhat.com,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>
+References: <20240716-run-v4-0-5f7a29631168@daynix.com>
+ <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::231;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x231.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,63 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 13:46, Joao Martins wrote:
-> In preparation to implement auto domains have the attach function
-> return the errno it got during domain attach instead of a bool.
+On 2024/07/16 17:06, Michael Tokarev wrote:
+> 16.07.2024 10:27, Akihiko Odaki wrote:
+>> qemu_get_runtime_dir() returns a dynamically allocated directory path
+>> that is appropriate for storing runtime files. It corresponds to "run"
+>> directory in Unix.
 > 
-> -EINVAL is tracked to track domain incompatibilities, and decide whether
-> to create a new IOMMU domain.
+> Since runtime dir is always used with a filename within, how about
 > 
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/vfio/iommufd.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>    char *qemu_get_runtime_path(const char *filename)
 > 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 604eaa4d9a5d..077dea8f1b64 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -172,7 +172,7 @@ out:
->       return ret;
->   }
->   
-> -static bool iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
-> +static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
->                                            Error **errp)
->   {
->       int iommufd = vbasedev->iommufd->fd;
-> @@ -187,12 +187,12 @@ static bool iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
->           error_setg_errno(errp, errno,
->                            "[iommufd=%d] error attach %s (%d) to id=%d",
->                            iommufd, vbasedev->name, vbasedev->fd, id);
-> -        return false;
-> +        return -errno;
->       }
->   
->       trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
->                                           vbasedev->fd, id);
-> -    return true;
-> +    return 0;
->   }
->   
->   static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
-> @@ -216,7 +216,7 @@ static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
->                                             VFIOIOMMUFDContainer *container,
->                                             Error **errp)
->   {
-> -    return iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
-> +    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
->   }
->   
->   static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
+> which return RUNTIME_DIR/filename instead of just RUNTIME_DIR ?
 
+I'm not sure. Such a function would be certainly useful, but I slightly 
+feel such a function concerns with too many responsibilities. Getting a 
+runtime directory is one responsibility, and how to use is another. They 
+are clearly distinguished; it does not matter how the path to the 
+runtime directory is used after acquiring it. For example, you can keep 
+the path to the runtime directory, and derive the paths to two files in 
+the directory.
+
+I don't object to such a change, but I rather keep this series as is 
+unless there is anything wrong else.
+
+Regards,
+Akihiko Odaki
 
