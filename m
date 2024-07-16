@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34383C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C03AC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 18:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTmiM-0001ol-0C; Tue, 16 Jul 2024 14:15:50 -0400
+	id 1sTmkr-0005tL-Gh; Tue, 16 Jul 2024 14:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTmiK-0001iJ-90
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:15:48 -0400
+ id 1sTmkb-0005EU-0p
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:18:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTmiI-0002Dj-Hx
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:15:48 -0400
+ id 1sTmkY-0002fr-CF
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 14:18:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721153745;
+ s=mimecast20190719; t=1721153885;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LPnOGuv5Y5m/bVn3d+Ch2VfSObKs5BLuWDmmQK1dlrc=;
- b=iLbSUDSpa5eFXv43ddCHeVU7Kzdfd7Gpo+LmhygRgN+cqvucoNC4gHi9EnpdOpiyesKPmh
- GPZHWE1+TJGeZApDFlHhIvq+xlJ1fft6lo22mGdYISDZ5FTo3SiWbKyCKqXO0yhySyhIL5
- nAYec5EcJqzUbUwP9nrzbN96vuP5Bj8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Rp+Q/k4E8xVOVrrj97OL8nULCD643ypzWapLarWEofw=;
+ b=SItdtyRxVL34ZQUADqeBLoa8leR062PSpuq98HnAaWJnAOnpKvVwyRMz1AzvT+URUk8MWO
+ dgwbo1KBD0eu7VOxn6VWxWpnKqF+updAlP2MV19mzRLHL/dgUkW1MPKvniUJkDQvJZoCNh
+ cXqUpZyEbh3GrKJRha1bfYxTjKWEm5c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-bvMX8C3_OzOfyk0vTlm18A-1; Tue,
- 16 Jul 2024 14:15:39 -0400
-X-MC-Unique: bvMX8C3_OzOfyk0vTlm18A-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-TuqeoaGONsCoSoWfEdWH6w-1; Tue,
+ 16 Jul 2024 14:18:03 -0400
+X-MC-Unique: TuqeoaGONsCoSoWfEdWH6w-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C6C4F1956048; Tue, 16 Jul 2024 18:15:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 494B11955BF6; Tue, 16 Jul 2024 18:18:02 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2F7B1955D42; Tue, 16 Jul 2024 18:15:31 +0000 (UTC)
-Date: Tue, 16 Jul 2024 19:15:28 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9537919560B2; Tue, 16 Jul 2024 18:17:58 +0000 (UTC)
+Date: Tue, 16 Jul 2024 19:17:54 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -58,18 +56,17 @@ Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 03/11] tests/functional: Convert avocado tests that just
- need a small adjustment
-Message-ID: <Zpa4wNI_SFQTX0cY@redhat.com>
+Subject: Re: [PATCH 05/11] tests/functional: Implement fetch_asset() method
+ for downloading assets
+Message-ID: <Zpa5Un6oAdVstI-r@redhat.com>
 References: <20240716112614.1755692-1-thuth@redhat.com>
- <20240716112614.1755692-4-thuth@redhat.com>
+ <20240716112614.1755692-6-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240716112614.1755692-4-thuth@redhat.com>
+In-Reply-To: <20240716112614.1755692-6-thuth@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -96,27 +93,92 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 01:26:06PM +0200, Thomas Huth wrote:
-> These simple tests can be converted to stand-alone tests quite easily,
-> e.g. by just setting the machine to 'none' now manually or by adding
-> "-cpu" command line parameters, since we don't support the corresponding
-> avocado tags in the new python test framework.
+On Tue, Jul 16, 2024 at 01:26:08PM +0200, Thomas Huth wrote:
+> In the new python test framework, we cannot use the fetch_asset()
+> function from Avocado anymore, so we have to provide our own
+> implementation now instead. Thus add such a function based on the
+> urllib python module for this purpose.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  .../test_info_usernet.py}                     | 11 ++-
->  .../test_ppc_74xx.py}                         | 74 ++++++++-----------
->  .../version.py => functional/test_version.py} | 13 ++--
->  3 files changed, 47 insertions(+), 51 deletions(-)
->  rename tests/{avocado/info_usernet.py => functional/test_info_usernet.py} (87%)
->  mode change 100644 => 100755
->  rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
->  mode change 100644 => 100755
->  rename tests/{avocado/version.py => functional/test_version.py} (78%)
->  mode change 100644 => 100755
+>  tests/functional/qemu_test/__init__.py | 36 ++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
+> 
+> diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+> index e73705d40a..77c3b14d34 100644
+> --- a/tests/functional/qemu_test/__init__.py
+> +++ b/tests/functional/qemu_test/__init__.py
+> @@ -11,6 +11,8 @@
+>  # This work is licensed under the terms of the GNU GPL, version 2 or
+>  # later.  See the COPYING file in the top-level directory.
+>  
+> +import hashlib
+> +import urllib.request
+>  import logging
+>  import os
+>  import pycotap
+> @@ -23,6 +25,7 @@
+>  import unittest
+>  
+>  from pathlib import Path
+> +from shutil import copyfileobj
+>  from qemu.machine import QEMUMachine
+>  from qemu.utils import (get_info_usernet_hostfwd_port, kvm_available,
+>                          tcg_available)
+> @@ -215,6 +218,39 @@ def setUp(self, bin_prefix):
+>          if not os.path.exists(self.workdir):
+>              os.makedirs(self.workdir)
+>  
+> +    def check_hash(self, file_name, expected_hash):
+> +        if not expected_hash:
+> +            return True
+> +        if len(expected_hash) == 40:
+> +            sum_prog = 'sha1sum'
+> +        elif len(expected_hash) == 64:
+> +            sum_prog = 'sha256sum'
+> +        elif len(expected_hash) == 128:
+> +            sum_prog = 'sha512sum'
+> +        else:
+> +            raise Exception("unknown hash type")
+> +        checksum = subprocess.check_output([sum_prog, file_name]).split()[0]
+> +        return expected_hash == checksum.decode("utf-8")
+> +
+> +    def fetch_asset(self, url, asset_hash):
+> +        cache_dir = os.path.expanduser("~/.cache/qemu/download")
+> +        if not os.path.exists(cache_dir):
+> +            os.makedirs(cache_dir)
+> +        fname = os.path.join(cache_dir,
+> +                             hashlib.sha256(url.encode("utf-8")).hexdigest())
+> +        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
+> +            return fname
+> +        self.log.info("Downloading %s to %s...", url, fname)
+> +        dl_fname = fname + ".download"
+> +        with urllib.request.urlopen(url) as src:
+> +            with open(dl_fname, "wb+") as dst:
+> +                copyfileobj(src, dst)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+For cleanliness we should probably wrap this and delete the file on
+error, eg
 
+   try:
+     with open(dl_fname,....) as dst
+        ....
+   except:
+     os.remove(dl_fname)
+     raise
+
+> +        if not self.check_hash(dl_fname, asset_hash):
+> +            os.remove(dl_fname)
+> +            raise Exception("Hash of " + url + " does not match")
+> +        os.rename(dl_fname, fname)
+> +        return fname
+> +
+>      def main():
+>          tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+>                                     test_output_log = pycotap.LogMode.LogToError)
+> -- 
+> 2.45.2
+> 
 
 With regards,
 Daniel
