@@ -4,83 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313E6C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 06:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2773C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 06:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTbrb-0007MU-Ot; Tue, 16 Jul 2024 02:40:39 -0400
+	id 1sTbvq-0006JC-SS; Tue, 16 Jul 2024 02:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTbrY-0007BM-Fm
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:40:36 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTbrW-0005ty-Oh
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:40:36 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42797bcfc77so35656595e9.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 23:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721112033; x=1721716833; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Yop3I/GSDZjU2Z8+7A8Mw8g/mzz/FstNyOPA6EunhAk=;
- b=uxMI3VXC+6SfXjMqWMxX0jZ12nXIChZQkz969VZLTGjlX5eAj2g/8N2bubnSFuwWNc
- aP+pvpUUyESE0Q673+s4XL81EG/saTuvO3xjCUpo8QgAPR/0cMiqtVb9RnM+mDfhuoAV
- 37AtFbodioWbSvQwPep8/56EV3d5cJPo6Zf2AvMG8k58yf6xewKxal4t5tHquUn02DBU
- 2ZMx0I10Q6gjQAGT1YyGwvlc56tjtTCmi3SxrlJT4kGu2ech9lreYubhtACjcmtmPRcs
- 5Q4bEBDuV/A+HYloYupnof7Zig4IqdMkwlIZHY6AVwxgw9dpUFxrD5s/v0R/82y0QRWo
- Ci1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721112033; x=1721716833;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yop3I/GSDZjU2Z8+7A8Mw8g/mzz/FstNyOPA6EunhAk=;
- b=lcRr0LXwEwPO3srORr172Z8LTGz0CZSMaWvlybIvrVQtEeSOlnpeq75GNr5n3CtHm4
- JdlP1QydQSVAXLUGqgUQotlcnmsJ2DGZUKpjmBnALTAkklEbas0egfitCP91oP/QyVzK
- Abl73gOJ71cNk8mrqsU9vMM5jbEFkHrkDoMENsFt2OAYWsIm/CeTtAyuEbdcC4pPcT1e
- MpEnntVNwSGR1FJSx47EWBU4UAUZnonSreSW//Nbk0DdTNXKG1C19lPv2jGhlyjx1Zyk
- qzBGbdw1oEsI4HSlq4wtgFCGVYIDwiiPn7lG5MlqYzwlT+rPeiwu61R621JRqsDQr+r5
- k7Gw==
-X-Gm-Message-State: AOJu0YyZgZuoVUZJpKcjAhjMXp6EmwXgKffgspS3jcMY2UGhHmK6CRg9
- YAXmdkwTz50oDZTR92CrC7SHFJvcmCx+zCf8VhoWlWJOObW2BVBPxylit12FuCc=
-X-Google-Smtp-Source: AGHT+IE8cxInwX67B7DAoc05mMKRiR4KhzfcYfBzlv03pIuzygncC4kHRJE/zVTmSTtFXsGJh6Shsg==
-X-Received: by 2002:a05:600c:4ec6:b0:426:5dd0:a1ea with SMTP id
- 5b1f17b1804b1-427ba6f4958mr8086135e9.28.1721112033151; 
- Mon, 15 Jul 2024 23:40:33 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.209.82])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427bb9988f6sm6893515e9.1.2024.07.15.23.40.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jul 2024 23:40:32 -0700 (PDT)
-Message-ID: <4061a31e-1cd8-4cd7-96f3-3e5208e12a87@linaro.org>
-Date: Tue, 16 Jul 2024 08:40:31 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sTbvn-0006Hz-WF
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:45:00 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sTbvl-0006MB-NX
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 02:44:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721112298; x=1752648298;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=zyW61cnkfWfTmVlDKXApgd62xeMGyXleZUcSfIula40=;
+ b=RYQaCT+6gQ+78HqHnMCnz7xhubEbeXn6yxTlooEsc2dUpFwqvOqxKqsV
+ A+dV1kvESGpw6t5+Zsbnc0KETaYxhzBbpp7FKXcdeap3T4mCgkR9eh3X/
+ op105qXAUrRMCUs+YNt1Flr47yOU+KlpFeQ5nKTE82GLTGXjEy3XNAoFe
+ 6riwcBR56xX9trYH7N2euP85oQC2BWoD1qnBFOTY6nHRRax/ip0e6ukWv
+ rS9sivC7bMib1I5K2ACVLoi22YIZp4/gD+tL1+o9iKI67OZBb2Rm57JWl
+ pRC/0QBtQxiN+kVYGq+IkhgJ2239+jWnN/3UeLZViApwpibKd8utzqncz g==;
+X-CSE-ConnectionGUID: 9Q801fXvTneV6tKnY7u1vQ==
+X-CSE-MsgGUID: kMOLznKKTDiGtcWnpIXD4w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="18642565"
+X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="18642565"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 23:44:53 -0700
+X-CSE-ConnectionGUID: ne3RG43aQBa7gvGrAmMGHQ==
+X-CSE-MsgGUID: Ig4rPgF9QzqtEAhstUZ1IA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; d="scan'208";a="49783572"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2024 23:44:51 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] RAMBlock: use return value of ram_block_discard_require() as
+ errno
+Date: Tue, 16 Jul 2024 14:42:12 +0800
+Message-Id: <20240716064213.290696-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
-To: maobibo <maobibo@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
- <682d514b-1d49-4e23-9cb7-a6fd83cbd863@linaro.org>
- <d26cf86a-2247-b5d9-3674-64cead2fa816@loongson.cn>
- <b4a9e1e9-467c-2d50-0d24-174fc9e5c5fe@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b4a9e1e9-467c-2d50-0d24-174fc9e5c5fe@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.17;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,49 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/24 03:29, maobibo wrote:
-> 
-> 
-> On 2024/7/16 上午9:04, maobibo wrote:
->>
->>
->> On 2024/7/15 下午11:17, Philippe Mathieu-Daudé wrote:
->>> On 4/7/24 05:37, Bibo Mao wrote:
->>>> Now loongson ipi and loongarch ipi share the same code with different
->>>> macro, loongson ipi has its separate function such mmio region,
->>>> loongarch ipi has other requirement such as irqchip in kernel.
->>>>
->>>> Interrupt irqchip has strong relationship with architecture, since
->>>> it sends irq to vcpu and interfaces to get irqchip register is also
->>>> architecture specific.
->>>>
->>>> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
->>>> is added, it comes from loongson ipi mostly. And it defined four 
->>>> abstract
->>>> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 
->>>> machine,
->>>> also can be used for 3A5000 irqchip in kernel mode soon.
->>>>
->>>> Also Loongarch ipi and loongson ipi device are added here, it inherits
->>>> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
->>>> loongson ipi device only passes to compile and make check, it is not
->>>> tested.
->>>>
->>>> Bibo Mao (4):
->>>>    hw/intc/loongson_ipi_common: Add loongson ipi common class
->>>>    hw/intc/loongarch_ipi: Add loongarch ipi support
->>>>    hw/loongarch/virt: Replace loongson ipi with loongarch ipi
->>>>    hw/intc/loongson_ipi: reconstruct driver inherit from common class
->>>
->>> I'll try to respin a clearer v3.
->> I am ok with it since it solve the problem, and it is suitable for 9.1 
->> release. Only that in the long time we hope that intc emulation driver 
->> has common base class + tcg/kvm driver, similar with other architecture.
->>
-> Sorry for the confusion, I had thought it was another topic.
-> 
-> Thanks for pointing out the problem and welcome the v3 version.
+When ram_block_discard_require() fails, errno is passed to error_setg_errno().
+It's a stale value or 0 which is unrelated to ram_block_discard_require().
 
-Please do not post v3, let me post it.
+As ram_block_discard_require() already returns -EBUSY in failure case,
+use it as errno for error_setg_errno().
+
+Fixes: 852f0048f3ea ("make guest_memfd require uncoordinated discard")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ system/physmem.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 2154432cb6..9a3b3a7636 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1845,11 +1845,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     }
+ 
+     if (new_block->flags & RAM_GUEST_MEMFD) {
++        int ret;
++
+         assert(kvm_enabled());
+         assert(new_block->guest_memfd < 0);
+ 
+-        if (ram_block_discard_require(true) < 0) {
+-            error_setg_errno(errp, errno,
++        ret = ram_block_discard_require(true);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret,
+                              "cannot set up private guest memory: discard currently blocked");
+             error_append_hint(errp, "Are you using assigned devices?\n");
+             goto out_free;
+-- 
+2.34.1
 
 
