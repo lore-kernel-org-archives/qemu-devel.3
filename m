@@ -4,102 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF11C3DA60
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631F4C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sToVc-0000lO-8p; Tue, 16 Jul 2024 16:10:49 -0400
+	id 1sTodg-00029B-MW; Tue, 16 Jul 2024 16:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToVZ-0000kt-8m
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 16:10:45 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
+ (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
+ id 1sTodc-00026m-Ko; Tue, 16 Jul 2024 16:19:05 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToVU-00008E-2b
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 16:10:45 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToV7-0000tB-J4; Tue, 16 Jul 2024 22:10:17 +0200
-Message-ID: <35969f33-f6f3-4c34-8b9d-8c1ebac3305e@maciej.szmigiero.name>
-Date: Tue, 16 Jul 2024 22:10:12 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
+ id 1sToda-0001v4-9d; Tue, 16 Jul 2024 16:19:04 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WNr4b5YQjz4x4c;
+ Wed, 17 Jul 2024 06:18:55 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WNr4Y2QdDz4wym;
+ Wed, 17 Jul 2024 06:18:53 +1000 (AEST)
+Message-ID: <82d1e292-7ce0-4423-8dbf-2581140cb63c@kaod.org>
+Date: Tue, 16 Jul 2024 22:18:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v1_00/13=5D_Multifd_=F0=9F=94=80_device_st?=
- =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
-References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
- <ZniFH14DT6ycjbrL@x1n>
- <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
- <Znr9mOo_t0DkkLbD@x1n>
- <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
- <Znt0FQHJEtGxcLxj@x1n>
- <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
- <ZnxAZDcjlZ5oerq-@x1n>
- <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
- <Zn19kaeFiYuwwc4B@x1n>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <Zn19kaeFiYuwwc4B@x1n>
+Subject: Re: [PATCH v3 5/9] pnv/xive2: Configure Virtualization Structure
+ Tables through the PC
+To: Michael Kowal <kowal@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com
+References: <20240716195633.12679-1-kowal@linux.vnet.ibm.com>
+ <20240716195633.12679-6-kowal@linux.vnet.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240716195633.12679-6-kowal@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,131 +66,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.06.2024 16:56, Peter Xu wrote:
-> On Thu, Jun 27, 2024 at 11:14:28AM +0200, Maciej S. Szmigiero wrote:
->> On 26.06.2024 18:23, Peter Xu wrote:
->>> On Wed, Jun 26, 2024 at 05:47:34PM +0200, Maciej S. Szmigiero wrote:
->>>> On 26.06.2024 03:51, Peter Xu wrote:
->>>>> On Wed, Jun 26, 2024 at 12:44:29AM +0200, Maciej S. Szmigiero wrote:
->>>>>> On 25.06.2024 19:25, Peter Xu wrote:
->>>>>>> On Mon, Jun 24, 2024 at 09:51:18PM +0200, Maciej S. Szmigiero wrote:
->>>>>>>> Hi Peter,
->>>>>>>
->>>>>>> Hi, Maciej,
->>>>>>>
->>>>>>>>
->>>>>>>> On 23.06.2024 22:27, Peter Xu wrote:
->>>>>>>>> On Tue, Jun 18, 2024 at 06:12:18PM +0200, Maciej S. Szmigiero wrote:
->>>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>>>>>>
->>>>>>>>>> This is an updated v1 patch series of the RFC (v0) series located here:
->>>>>>>>>> https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
->>>>>>>>>
->>>>>>>>> OK I took some hours thinking about this today, and here's some high level
->>>>>>>>> comments for this series.  I'll start with which are more relevant to what
->>>>>>>>> Fabiano has already suggested in the other thread, then I'll add some more.
->>>>>>>>>
->>>>>>>>> https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
->>>>>>>>
->>>>>>>> That's a long list, thanks for these comments.
->>>>>>>>
->>>>>>>> I have responded to them inline below.
->>>>>>>>(..)
->>>>>>
->>>>>> 2) Submit this operation to the thread pool and wait for it to complete,
->>>>>
->>>>> VFIO doesn't need to have its own code waiting.  If this pool is for
->>>>> migration purpose in general, qemu migration framework will need to wait at
->>>>> some point for all jobs to finish before moving on.  Perhaps it should be
->>>>> at the end of the non-iterative session.
->>>>
->>>> So essentially, instead of calling save_live_complete_precopy_end handlers
->>>> from the migration code you would like to hard-code its current VFIO
->>>> implementation of calling vfio_save_complete_precopy_async_thread_thread_terminate().
->>>>
->>>> Only it wouldn't be then called VFIO precopy async thread terminate but some
->>>> generic device state async precopy thread terminate function.
->>>
->>> I don't understand what did you mean by "hard code".
->>
->> "Hard code" wasn't maybe the best expression here.
->>
->> I meant the move of the functionality that's provided by
->> vfio_save_complete_precopy_async_thread_thread_terminate() in this patch set
->> to the common migration code.
+On 7/16/24 21:56, Michael Kowal wrote:
+> From: Frederic Barrat <fbarrat@linux.ibm.com>
 > 
-> I see.  That function only does a thread_join() so far.
+> Both the virtualization layer (VC) and presentation layer (PC) need to
+> be configured to access the VSTs. Since the information is redundant,
+> the xive model combines both into one set of tables and only the
+> definitions going through the VC are kept. The definitions through the
+> PC are ignored. That works well as long as firmware calls the VC for
+> all the tables.
 > 
-> So can I understand it as below [1] should work for us, and it'll be clean
-> too (with nothing to hard-code)?
+> For the NVG and NVC tables, it can make sense to only configure them
+> with the PC, since they are only used by the presenter. So this patch
+> allows firmware to configure the VST tables through the PC as well.
+> The definitions are still shared, since the VST tables can be set
+> through both the VC and/or PC, they are dynamically re-mapped in
+> memory by first deleting the memory subregion.
+> 
+> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+> Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
 
-It will need some signal to the worker threads pool to terminate before
-waiting for them to finish (as the code in [1] just waits).
-
-In the case of current vfio_save_complete_precopy_async_thread() implementation,
-this signal isn't necessary as this thread simply terminates when it has read
-all the date it needs from the device.
-
-In a worker threads pool case there will be some threads waiting for
-jobs to be queued to them and so they will need to be somehow signaled
-to exit.
-
-> The time to join() the worker threads can be even later, until
-> migrate_fd_cleanup() on sender side.  You may have a better idea on when
-> would be the best place to do it when start working on it.
-> 
->>
->>> What I was saying is if we target the worker thread pool to be used for
->>> "concurrently dump vmstates", then it'll make sense to make sure all the
->>> jobs there were flushed after qemu dumps all non-iterables (because this
->>> should be the last step of the switchover).
->>>
->>> I expect it looks like this:
->>>
->>>     while (pool->active_threads) {
->>>         qemu_sem_wait(&pool->job_done);
->>>     }
-> 
-> [1]
-> 
-(..)
->> I think that with this thread pool introduction we'll unfortunately almost certainly
->> need to target this patch set at 9.2, since these overall changes (and Fabiano
->> patches too) will need good testing, might uncover some performance regressions
->> (for example related to the number of buffers limit or Fabiano multifd changes),
->> bring some review comments from other people, etc.
->>
->> In addition to that, we are in the middle of holiday season and a lot of people
->> aren't available - like Fabiano said he will be available only in a few weeks.
-> 
-> Right, that's unfortunate.  Let's see, but still I really hope we can also
-> get some feedback from Fabiano before it lands, even with that we have
-> chance for 9.1 but it's just challenging, it's the same condition I
-> mentioned since the 1st email.  And before Fabiano's back (he's the active
-> maintainer for this release), I'm personally happy if you can propose
-> something that can land earlier in this release partly.  E.g., if you want
-> we can at least upstream Fabiano's idea first, or some more on top.
-> 
-> For that, also feel to have a look at my comment today:
-> 
-> https://lore.kernel.org/r/Zn15y693g0AkDbYD@x1n
-> 
-> Feel free to comment there too.  There's a tiny uncertainty there so far on
-> specifying "max size for a device state" if do what I suggested, as multifd
-> setup will need to allocate an enum buffer suitable for both ram + device.
-> But I think that's not an issue and you'll tackle that properly when
-> working on it.  It's more about whether you agree on what I said as a
-> general concept.
-> 
-
-Since it seems that the discussion on Fabiano's patch set has subsided I think
-I will start by basing my updated patch set on top of his RFC and then if
-Fabiano wants to submit v1/v2 of his patch set then I will rebase mine on top
-of it.
-
-Otherwise, you can wait until I have a v2 ready and then we can work with that.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
-Maciej
+
+C.
+
+
+> ---
+>   hw/intc/pnv_xive2.c | 47 ++++++++++++++++++++++++++++++++++++---------
+>   1 file changed, 38 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> index dfb0927fd3..d4ee104300 100644
+> --- a/hw/intc/pnv_xive2.c
+> +++ b/hw/intc/pnv_xive2.c
+> @@ -762,6 +762,9 @@ static void pnv_xive2_vst_set_exclusive(PnvXive2 *xive, uint8_t type,
+>            * entries provisioned by FW (such as skiboot) and resize the
+>            * ESB window accordingly.
+>            */
+> +        if (memory_region_is_mapped(&xsrc->esb_mmio)) {
+> +            memory_region_del_subregion(&xive->esb_mmio, &xsrc->esb_mmio);
+> +        }
+>           if (!(VSD_INDIRECT & vsd)) {
+>               memory_region_set_size(&xsrc->esb_mmio, vst_tsize * SBE_PER_BYTE
+>                                      * (1ull << xsrc->esb_shift));
+> @@ -777,6 +780,9 @@ static void pnv_xive2_vst_set_exclusive(PnvXive2 *xive, uint8_t type,
+>           /*
+>            * Backing store pages for the END.
+>            */
+> +        if (memory_region_is_mapped(&end_xsrc->esb_mmio)) {
+> +            memory_region_del_subregion(&xive->end_mmio, &end_xsrc->esb_mmio);
+> +        }
+>           if (!(VSD_INDIRECT & vsd)) {
+>               memory_region_set_size(&end_xsrc->esb_mmio, (vst_tsize / info->size)
+>                                      * (1ull << end_xsrc->esb_shift));
+> @@ -801,13 +807,10 @@ static void pnv_xive2_vst_set_exclusive(PnvXive2 *xive, uint8_t type,
+>    * Both PC and VC sub-engines are configured as each use the Virtual
+>    * Structure Tables
+>    */
+> -static void pnv_xive2_vst_set_data(PnvXive2 *xive, uint64_t vsd)
+> +static void pnv_xive2_vst_set_data(PnvXive2 *xive, uint64_t vsd,
+> +                                   uint8_t type, uint8_t blk)
+>   {
+>       uint8_t mode = GETFIELD(VSD_MODE, vsd);
+> -    uint8_t type = GETFIELD(VC_VSD_TABLE_SELECT,
+> -                            xive->vc_regs[VC_VSD_TABLE_ADDR >> 3]);
+> -    uint8_t blk = GETFIELD(VC_VSD_TABLE_ADDRESS,
+> -                           xive->vc_regs[VC_VSD_TABLE_ADDR >> 3]);
+>       uint64_t vst_addr = vsd & VSD_ADDRESS_MASK;
+>   
+>       if (type > VST_ERQ) {
+> @@ -842,6 +845,16 @@ static void pnv_xive2_vst_set_data(PnvXive2 *xive, uint64_t vsd)
+>       }
+>   }
+>   
+> +static void pnv_xive2_vc_vst_set_data(PnvXive2 *xive, uint64_t vsd)
+> +{
+> +    uint8_t type = GETFIELD(VC_VSD_TABLE_SELECT,
+> +                            xive->vc_regs[VC_VSD_TABLE_ADDR >> 3]);
+> +    uint8_t blk = GETFIELD(VC_VSD_TABLE_ADDRESS,
+> +                           xive->vc_regs[VC_VSD_TABLE_ADDR >> 3]);
+> +
+> +    pnv_xive2_vst_set_data(xive, vsd, type, blk);
+> +}
+> +
+>   /*
+>    * MMIO handlers
+>    */
+> @@ -1271,7 +1284,7 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
+>       case VC_VSD_TABLE_ADDR:
+>          break;
+>       case VC_VSD_TABLE_DATA:
+> -        pnv_xive2_vst_set_data(xive, val);
+> +        pnv_xive2_vc_vst_set_data(xive, val);
+>           break;
+>   
+>       /*
+> @@ -1490,6 +1503,16 @@ static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
+>       return val;
+>   }
+>   
+> +static void pnv_xive2_pc_vst_set_data(PnvXive2 *xive, uint64_t vsd)
+> +{
+> +    uint8_t type = GETFIELD(PC_VSD_TABLE_SELECT,
+> +                            xive->pc_regs[PC_VSD_TABLE_ADDR >> 3]);
+> +    uint8_t blk = GETFIELD(PC_VSD_TABLE_ADDRESS,
+> +                           xive->pc_regs[PC_VSD_TABLE_ADDR >> 3]);
+> +
+> +    pnv_xive2_vst_set_data(xive, vsd, type, blk);
+> +}
+> +
+>   static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
+>                                     uint64_t val, unsigned size)
+>   {
+> @@ -1500,12 +1523,18 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
+>       switch (offset) {
+>   
+>       /*
+> -     * VSD table settings. Only taken into account in the VC
+> -     * sub-engine because the Xive2Router model combines both VC and PC
+> -     * sub-engines
+> +     * VSD table settings.
+> +     * The Xive2Router model combines both VC and PC sub-engines. We
+> +     * allow to configure the tables through both, for the rare cases
+> +     * where a table only really needs to be configured for one of
+> +     * them (e.g. the NVG table for the presenter). It assumes that
+> +     * firmware passes the same address to the VC and PC when tables
+> +     * are defined for both, which seems acceptable.
+>        */
+>       case PC_VSD_TABLE_ADDR:
+> +        break;
+>       case PC_VSD_TABLE_DATA:
+> +        pnv_xive2_pc_vst_set_data(xive, val);
+>           break;
+>   
+>       case PC_NXC_PROC_CONFIG:
 
 
