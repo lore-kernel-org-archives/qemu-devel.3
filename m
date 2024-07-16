@@ -4,64 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D344C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 01:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91093C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 01:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTWla-0003ql-PU; Mon, 15 Jul 2024 21:14:06 -0400
+	id 1sTWt9-0000MK-RQ; Mon, 15 Jul 2024 21:21:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sTWlZ-0003qA-Jt
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:14:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sTWlY-0004yi-2V
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:14:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721092441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=SHlgMgT9UBt4PrV/SgTuYZQey7Svi/OASjw1leV6MUM=;
- b=Vv5nPbQYKZQrvCMCWHprzlqZVza37ArdFOj1GA3Ib3NdzJCIFLCLqzJ0n+XTMMahVYjBla
- RQLnYoHTwHZa5zjClP5D1ZMCqIIZlzOoCMTJoGJxMwV8tqIwDkHoKjKzd1LfxGU7nLKV5g
- tb8NWdiP9Q4ZRtVC1auoGH//XvrjjZ8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-iVi_21hKO0ersLd0W02VyA-1; Mon,
- 15 Jul 2024 21:13:59 -0400
-X-MC-Unique: iVi_21hKO0ersLd0W02VyA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 343171955D42; Tue, 16 Jul 2024 01:13:58 +0000 (UTC)
-Received: from server.redhat.com (unknown [10.72.112.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E45219560B2; Tue, 16 Jul 2024 01:13:53 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, dtatulea@nvidia.com, mst@redhat.com, jasowang@redhat.com,
- parav@nvidia.com, netdev@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [RFC v2] virtio-net: check the mac address for vdpa device
-Date: Tue, 16 Jul 2024 09:13:49 +0800
-Message-ID: <20240716011349.821777-1-lulu@redhat.com>
+ (Exim 4.90_1) (envelope-from <stevensd@chromium.org>)
+ id 1sTWt6-0000KU-MA
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:21:53 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stevensd@chromium.org>)
+ id 1sTWt3-0006WR-Ah
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:21:50 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2eedea0fd88so30114831fa.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jul 2024 18:21:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=chromium.org; s=google; t=1721092906; x=1721697706; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7C3R3y8KGJV/wN/0Qbef83eSCdPG1rBmGA4RGs+1vN4=;
+ b=jE+Caj6wItoc0gHXlyIe79Mx55qB8H5FwC3OzSvpta2FZRWxkevkd9mUt3YAq0o8NC
+ bwXVBwx+bm7vS98twqkpViZK+zmNBwMkh+7hrlW0C6+9gpy/H6imEA4X+v5KZ0XZ1HB4
+ cBTz98qZEM4OUd3QVsZRnHGUtuMzAlsDjIhkk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721092906; x=1721697706;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7C3R3y8KGJV/wN/0Qbef83eSCdPG1rBmGA4RGs+1vN4=;
+ b=MLQ/TW5FEFaDvEmp9KoqA3pLqO0A0nOlYnE3U4YoJ5BU/kOjfXBX86NXXsPNfMT/Y8
+ PyLf/ef1UUtrk19dlTXC4fvcD6pKnEU85q5sR9GmJBbBiCcCA/3hjO+24Nac6+oDJgTt
+ yJ2GIXPepB8yvrfF2ZLnYHvKF7w3oVJUSFA1J5aN4GE40ZO1ZblfBKcrF+Gtcxr/gZeQ
+ nOKor2pXKasmJkT6uXgXmrRh7Hvhs33MHOyKoSCogmk8gMRcpIB6mqIBqQ772GTDRQj2
+ 8WcYwGkKfDxxoBX92+TotiEK+PTjy2pmnP1w0/P4EPInO9G+SD8WztPIVASS04DZb12q
+ A5oA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLMDzgsdvhxIuoPX78z3oZUWQ1b1DsJPVVjWrcPGuLGPbrcHXd/GnklmeEgJkYxD8KhJ/RtcYOI1Xfk4s3TZak0BE/270=
+X-Gm-Message-State: AOJu0YwRJCeHRoybSSObAMk0s1OmT8uV+LxtsCnIKDBzqpsFCnKjvT91
+ WourP33OX7foRkIvYIAJMkJVm246piVN434J+fCC7lQ/VCHUtmiJSgTuRDT6VtX7F+BXmKsyQV+
+ n+607eiiwdcakw4WvegnfmlStcYMs7qdDYIem
+X-Google-Smtp-Source: AGHT+IGhuIJQbxqvC+Y/Sz2g/ASRH/vp11b1umlXS8v+bEXiXMIm4rJ/3qEgWYjm9z7Uf/H11ZCClaUM7GonuH7Gehw=
+X-Received: by 2002:a2e:99c7:0:b0:2ee:8749:d49e with SMTP id
+ 38308e7fff4ca-2eef415ba02mr3385661fa.10.1721092906491; Mon, 15 Jul 2024
+ 18:21:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20240628145710.1516121-1-aesteve@redhat.com>
+ <87bk34i4dy.fsf@alyssa.is>
+ <CAD=HUj7av_8Epkd0Fe0eWR7Z4bZMTuvTNgqzYoQcOzFQ82wvOg@mail.gmail.com>
+ <20240712014407-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240712014407-mutt-send-email-mst@kernel.org>
+From: David Stevens <stevensd@chromium.org>
+Date: Tue, 16 Jul 2024 10:21:35 +0900
+Message-ID: <CAD=HUj7iDbwnojq5a68s6B3S8z4vtpCa=B=9+ZBVYZV50zG+5g@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/5] vhost-user: Add SHMEM_MAP/UNMAP requests
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Alyssa Ross <hi@alyssa.is>, Albert Esteve <aesteve@redhat.com>,
+ qemu-devel@nongnu.org, 
+ jasowang@redhat.com, david@redhat.com, slp@redhat.com, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=stevensd@chromium.org; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,102 +94,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using a VDPA device, it is important to ensure that the MAC address
-in the hardware matches the MAC address from the QEMU command line.
+On Fri, Jul 12, 2024 at 2:47=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Fri, Jul 12, 2024 at 11:06:49AM +0900, David Stevens wrote:
+> > On Thu, Jul 11, 2024 at 7:56=E2=80=AFPM Alyssa Ross <hi@alyssa.is> wrot=
+e:
+> > >
+> > > Adding David Stevens, who implemented SHMEM_MAP and SHMEM_UNMAP in
+> > > crosvm a couple of years ago.
+> > >
+> > > David, I'd be particularly interested for your thoughts on the MEM_RE=
+AD
+> > > and MEM_WRITE commands, since as far as I know crosvm doesn't impleme=
+nt
+> > > anything like that.  The discussion leading to those being added star=
+ts
+> > > here:
+> > >
+> > > https://lore.kernel.org/qemu-devel/20240604185416.GB90471@fedora.redh=
+at.com/
+> > >
+> > > It would be great if this could be standardised between QEMU and cros=
+vm
+> > > (and therefore have a clearer path toward being implemented in other =
+VMMs)!
+> >
+> > Setting aside vhost-user for a moment, the DAX example given by Stefan
+> > won't work in crosvm today.
+> >
+> > Is universal access to virtio shared memory regions actually mandated
+> > by the virtio spec? Copying from virtiofs DAX to virtiofs sharing
+> > seems reasonable enough, but what about virtio-pmem to virtio-blk?
+> > What about screenshotting a framebuffer in virtio-gpu shared memory to
+> > virtio-scsi? I guess with some plumbing in the VMM, it's solvable in a
+> > virtualized environment. But what about when you have real hardware
+> > that speaks virtio involved? That's outside my wheelhouse, but it
+> > doesn't seem like that would be easy to solve.
+>
+> Yes, it can work for physical devices if allowed by host configuration.
+> E.g. VFIO supports that I think. Don't think VDPA does.
 
-There are only two acceptable situations:
-1. The hardware MAC address is the same as the MAC address specified in the QEMU
-command line, and both MAC addresses are not 0.
-2. The hardware MAC address is not 0, and the MAC address in the QEMU command line is 0.
-In this situation, the hardware MAC address will overwrite the QEMU command line address.
+I'm sure it can work, but that sounds more like a SHOULD (MAY?),
+rather than a MUST.
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
----
- hw/net/virtio-net.c | 43 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 37 insertions(+), 6 deletions(-)
+> > For what it's worth, my interpretation of the target scenario:
+> >
+> > > Other backends don't see these mappings. If the guest submits a vring
+> > > descriptor referencing a mapping to another backend, then that backen=
+d
+> > > won't be able to access this memory
+> >
+> > is that it's omitting how the implementation is reconciled with
+> > section 2.10.1 of v1.3 of the virtio spec, which states that:
+> >
+> > > References into shared memory regions are represented as offsets from
+> > > the beginning of the region instead of absolute memory addresses. Off=
+sets
+> > > are used both for references between structures stored within shared
+> > > memory and for requests placed in virtqueues that refer to shared mem=
+ory.
+> >
+> > My interpretation of that statement is that putting raw guest physical
+> > addresses corresponding to virtio shared memory regions into a vring
+> > is a driver spec violation.
+> >
+> > -David
+>
+> This really applies within device I think. Should be clarified ...
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..8f79785f59 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -178,8 +178,8 @@ static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
-          * correctly elsewhere - just not reported by the device.
-          */
-         if (memcmp(&netcfg.mac, &zero, sizeof(zero)) == 0) {
--            info_report("Zero hardware mac address detected. Ignoring.");
--            memcpy(netcfg.mac, n->mac, ETH_ALEN);
-+          error_report("Zero hardware mac address detected in vdpa device. "
-+                       "please check the vdpa device!");
-         }
- 
-         netcfg.status |= virtio_tswap16(vdev,
-@@ -3579,12 +3579,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     /* failover_primary_hidden is set during feature negotiation */
-     return qatomic_read(&n->failover_primary_hidden);
- }
-+static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
-+                                      MACAddr *cmdline_mac, Error **errp) {
-+  struct virtio_net_config hwcfg = {};
-+  static const MACAddr zero = {.a = {0, 0, 0, 0, 0, 0}};
- 
-+  vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_ALEN);
-+
-+  /* For VDPA device: Only two situations are acceptable:
-+   * 1.The hardware MAC address is the same as the QEMU command line MAC
-+   *   address, and both of them are not 0.
-+   * 2.The hardware MAC address is NOT 0, and the QEMU command line MAC address
-+   *   is 0. In this situation, the hardware MAC address will overwrite the QEMU
-+   *   command line address.
-+   */
-+
-+  if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) != 0) {
-+    if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0) ||
-+        (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) == 0)) {
-+      /* overwrite the mac address with hardware address*/
-+      memcpy(&n->mac[0], &hwcfg.mac, sizeof(n->mac));
-+      memcpy(&n->nic_conf.macaddr, &hwcfg.mac, sizeof(n->mac));
-+
-+      return true;
-+    }
-+  }
-+  error_setg(errp, "vdpa hardware mac != the mac address from "
-+                   "qemu cmdline, please check the the vdpa device's setting.");
-+
-+  return false;
-+}
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIONet *n = VIRTIO_NET(dev);
-     NetClientState *nc;
-+    MACAddr macaddr_cmdline;
-     int i;
- 
-     if (n->net_conf.mtu) {
-@@ -3692,6 +3722,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     virtio_net_add_queue(n, 0);
- 
-     n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
-+    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
-     qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
-     memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
-     n->status = VIRTIO_NET_S_LINK_UP;
-@@ -3739,10 +3770,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     nc->rxfilter_notify_enabled = 1;
- 
-    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
--        struct virtio_net_config netcfg = {};
--        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
--        vhost_net_set_config(get_vhost_net(nc->peer),
--            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
-+     if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
-+       virtio_cleanup(vdev);
-+       return;
-+     }
-     }
-     QTAILQ_INIT(&n->rsc_chains);
-     n->qdev = dev;
--- 
-2.45.0
+You mean that a virtio device can use absolute memory addresses for
+other devices' shared memory regions, but it can't use absolute memory
+addresses for its own shared memory regions? That's a rather strange
+requirement. Or is the statement simply giving an addressing strategy
+that device type specifications are free to ignore?
 
+-David
 
