@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8179EC3DA59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2B9C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTeOA-0006sR-En; Tue, 16 Jul 2024 05:22:27 -0400
+	id 1sTeOJ-0007PA-T9; Tue, 16 Jul 2024 05:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTeNy-00067J-H3
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:22:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sTeNw-0004GP-DT
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:22:14 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4267345e746so35749835e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721121731; x=1721726531; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UqGtqsf1B4cToMHFdDFjCfP7fcLn3bLanhmec2hX5KY=;
- b=OjEhtDsz4qfo9AEBqCni3TVIIIVcliUkQQHM6XU/tbiPSODoOALoOdJzGumbaApKaL
- WcZZITLnDUHPs9aOD8vXufkBE6udsw0WUs4aDwHmTuMfd4+f4DODrIq2IaMmZArmziNO
- ajmO+1ZxB1eZ4avQxZcpYx/0dlug8SxjR7x4hA+vau77pI+A4yZk9PnTI+Xj+y7UgcVj
- OI5kxPquRJ4E+z4Ip1FGaHUzmDhQI0KY+DZ7AAVqqz+dfTXbwyb64PPiC8r/L4MJMcXH
- 0HOqElgkxc8ljwXCXq+1GHIkBRsfld0JZTgENNnH6k7amZl6FVuvaY31uunETWFUfm1o
- bN/Q==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeOB-00073Q-Kw
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:22:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTeO9-0004HV-2u
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:22:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721121744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7J+9DCtfIaY3E6FvvRBauPvp4oQLML3lASC6CYLH6zE=;
+ b=av5LNz7gMtw31+pUhAyY9b6jBzrE0nznJ58m96tKLzu6axPkgstFmIa6fpMNgTortfO3Gx
+ eptWXTBt+C3UCRscmoTKCoFOxJPhC9a6z19UDHzY8es2+qaFVkRzeb1CwkUeNw0zAQu0R4
+ ElpoaKQlrx/Cqmm82ns4VncTxoNguXY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-333-FZaKr2kSPMKAMRgUIJtgsg-1; Tue, 16 Jul 2024 05:22:21 -0400
+X-MC-Unique: FZaKr2kSPMKAMRgUIJtgsg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-367962f0cb0so3714212f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 02:22:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721121731; x=1721726531;
+ d=1e100.net; s=20230601; t=1721121740; x=1721726540;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UqGtqsf1B4cToMHFdDFjCfP7fcLn3bLanhmec2hX5KY=;
- b=TYSzx1INZgdJL3KrVa9unmhRqqbDjXRI7ROCwCD92QUsD56ablXqCUjtelxtqoNc4h
- 1FvXltHNwPnN5sI3VsawEQ796V+/f+KeaAOrKGVIa8mty87dRW0aE8QylAfcjF717xFR
- zqCmBQW/4kbmCYMNj+o9z7Vp5f+dgt2UjB3IxHYpma240/yw5s3voCq4sZoC9R17Xls0
- O329QPOgxS2MQbZ0YafACcwY3pR+8K6r59ZU6SBYQUqYxjnv9m92yS5bIpBDv+xRSU4S
- uhnbkZQSZJUjRA68pYvTagEa2ZDPBsAx50QxHV7PYMzOpvHW+ENXUjzm7NJ/Y8onU2Gl
- pkDQ==
+ bh=7J+9DCtfIaY3E6FvvRBauPvp4oQLML3lASC6CYLH6zE=;
+ b=CS/pMSZZix4qOOKvFcs7ZLHLCX2YFzc6cmMpDT8sXT3MgL5qFdkD+gpxZspHHrutLa
+ L0kYNCgDQrVuxjPSVLbDYocxXDkk5eo2MU4IFKEduOSIyagFyQL+Z8NkSgg5/Aivse5a
+ pZv8WNw4a65DEt1lFSiVwbnaEzcBBAMTikOPJh5jiSTvAbLMJT8i4uxzn5H0JXwslFkQ
+ JI5qeMoU5HmHkbPmh8f0ciYx2Ve/L0Je9mUTKhAJirpg5kUM8Dqpgy+BoCGcJ3VObk1V
+ kmC9B/P8FxS7lMz/wJzGy6zCBx7Qe+tLU7YQx1YO9YCAUWCbxl3kW4VIewt+Z7drgRAc
+ jZ8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhRn/wZcIURYLk9o5H2Oe0bqFNmEqDAtsM9tRb35bHHhH/cMT3kF1sDI6Y4dBytfmHeC4mtgnkRsbScKMixvmJEwM/yr8=
-X-Gm-Message-State: AOJu0Yzq3el2hk5oc+fv/Ezpi13u0E82h21XiOk9F5PI2f4wpG9rYWca
- NFwafPv1M4P/nNbmfV+YYFIhY7HpcYluu6CCjGY9InpP/xhMylbtjE3aCsN76ks=
-X-Google-Smtp-Source: AGHT+IEPy1rnh7HUbBX5o5w/iN0Pcj4O3W+gelE8CSpmBmGVsbZ6S2/qCBmZfPJ8vebsc6aHJXgXsw==
-X-Received: by 2002:a05:600c:4e91:b0:426:6ad8:3e3c with SMTP id
- 5b1f17b1804b1-427ba69694fmr10792965e9.17.1721121730865; 
- Tue, 16 Jul 2024 02:22:10 -0700 (PDT)
-Received: from [192.168.86.175] (233.red-95-127-43.staticip.rima-tde.net.
- [95.127.43.233]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680db0481fsm8416913f8f.106.2024.07.16.02.22.08
+ AJvYcCUUvD6zMcCRFGs7qcwJhYnbo3OhyBmtSMGYb2cmzLc7UudrTU0HNG2t05CHpB9pvlcFYwo5PsQcHVOXxREPoyGoK4E3J3Y=
+X-Gm-Message-State: AOJu0YymUNsRLBH+l5Ma7smReBsX6CGw34d8u3efCdbaU1UPcp2mgw0c
+ gtunKMJWSmM6Sit/60n79h50WOa+Xv9zdys/b2cqZiEdyqKPe9PP/2+WgtmGdH4vNRHT4NMcrzJ
+ NGBq952BkvKRQ/vrqnKynuIdPEvYPS4E1NH8XeaCC7uCR9cVRIfFB
+X-Received: by 2002:a5d:5889:0:b0:367:f0f2:66c1 with SMTP id
+ ffacd0b85a97d-368260af2b7mr1230897f8f.12.1721121740475; 
+ Tue, 16 Jul 2024 02:22:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHV2iyn7XCa7dWyKSB8JIVFimH/xEKQdGKrZAvRGyyeQSnYBfz9T4FlXA6B7fQ0KG0DdMyjQ==
+X-Received: by 2002:a5d:5889:0:b0:367:f0f2:66c1 with SMTP id
+ ffacd0b85a97d-368260af2b7mr1230885f8f.12.1721121740248; 
+ Tue, 16 Jul 2024 02:22:20 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
+ ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4279f23981fsm153251945e9.4.2024.07.16.02.22.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 02:22:10 -0700 (PDT)
-Message-ID: <3ef05b2b-06da-40ca-9344-2d5a8cdd6dba@linaro.org>
-Date: Tue, 16 Jul 2024 11:22:06 +0200
+ Tue, 16 Jul 2024 02:22:19 -0700 (PDT)
+Message-ID: <225de763-21fc-4a44-89a5-2b86d8a81737@redhat.com>
+Date: Tue, 16 Jul 2024 11:22:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] target/arm/kvm: Report PMU unavailability
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Wei Huang <wei@redhat.com>, Andrew Jones <ajones@ventanamicro.com>
-References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
- <20240716-pmu-v2-5-f3e3e4b2d3d5@daynix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240716-pmu-v2-5-f3e3e4b2d3d5@daynix.com>
+Subject: Re: [PATCH v4 03/12] backends/iommufd: Extend
+ iommufd_backend_get_device_info() to fetch HW capabilities
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-4-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240712114704.8708-4-joao.m.martins@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,43 +108,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/24 10:28, Akihiko Odaki wrote:
-> target/arm/kvm.c checked PMU availability but claimed PMU is
-> available even if it is not. In fact, Asahi Linux supports KVM but lacks
-> PMU support. Only advertise PMU availability only when it is really
-> available.
+On 7/12/24 13:46, Joao Martins wrote:
+> The helper will be able to fetch vendor agnostic IOMMU capabilities
+> supported both by hardware and software. Right now it is only iommu dirty
+> tracking.
 > 
-> Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Commit dc40d45ebd8e only moves the code around. I suppose you meant:
 
-Fixes: 929e754d5a ("arm: Add an option to turn on/off vPMU support")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Thanks,
+
+C.
+
+
 > ---
->   target/arm/kvm.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/sysemu/iommufd.h | 2 +-
+>   backends/iommufd.c       | 4 +++-
+>   hw/vfio/iommufd.c        | 4 +++-
+>   3 files changed, 7 insertions(+), 3 deletions(-)
 > 
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 70f79eda33cd..b20a35052f41 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -280,6 +280,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->       if (kvm_arm_pmu_supported()) {
->           init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->           pmu_supported = true;
-> +        features |= 1ULL << ARM_FEATURE_PMU;
+> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+> index 9edfec604595..57d502a1c79a 100644
+> --- a/include/sysemu/iommufd.h
+> +++ b/include/sysemu/iommufd.h
+> @@ -49,7 +49,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>                                 hwaddr iova, ram_addr_t size);
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+> -                                     Error **errp);
+> +                                     uint64_t *caps, Error **errp);
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>   #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 84fefbc9ee7a..2b3d51af26d2 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -210,7 +210,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>   
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+> -                                     Error **errp)
+> +                                     uint64_t *caps, Error **errp)
+>   {
+>       struct iommu_hw_info info = {
+>           .size = sizeof(info),
+> @@ -226,6 +226,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>   
+>       g_assert(type);
+>       *type = info.out_data_type;
+> +    g_assert(caps);
+> +    *caps = info.out_capabilities;
+>   
+>       return true;
+>   }
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index c2f158e60386..604eaa4d9a5d 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -628,11 +628,13 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>       union {
+>           struct iommu_hw_info_vtd vtd;
+>       } data;
+> +    uint64_t hw_caps;
+>   
+>       hiod->agent = opaque;
+>   
+>       if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+> -                                         &type, &data, sizeof(data), errp)) {
+> +                                         &type, &data, sizeof(data),
+> +                                         &hw_caps, errp)) {
+>           return false;
 >       }
 >   
->       if (!kvm_arm_create_scratch_host_vcpu(cpus_to_try, fdarray, &init)) {
-> @@ -448,7 +449,6 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->       features |= 1ULL << ARM_FEATURE_V8;
->       features |= 1ULL << ARM_FEATURE_NEON;
->       features |= 1ULL << ARM_FEATURE_AARCH64;
-> -    features |= 1ULL << ARM_FEATURE_PMU;
->       features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
->   
->       ahcf->features = features;
-> 
 
 
