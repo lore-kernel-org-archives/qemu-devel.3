@@ -4,48 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AE1C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D54C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgyc-00067C-Ky; Tue, 16 Jul 2024 08:08:14 -0400
+	id 1sTh4k-0007md-Pu; Tue, 16 Jul 2024 08:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sTgya-0005yB-8t; Tue, 16 Jul 2024 08:08:12 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sTgyT-0003kj-LZ; Tue, 16 Jul 2024 08:08:12 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9400B4E601D;
- Tue, 16 Jul 2024 14:08:00 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 19mYf-UXpyYo; Tue, 16 Jul 2024 14:07:58 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9917D4E6013; Tue, 16 Jul 2024 14:07:58 +0200 (CEST)
-Message-Id: <ec23cd8584882f1ef70bb5bd2e376d0b5a9dfdbb.1721131193.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1721131193.git.balaton@eik.bme.hu>
-References: <cover.1721131193.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 2/2] hw/ppc: Consolidate ppc440 initial mapping creation
- functions
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Edgar E. Iglesias <edgar.iglesias@gmail.com>
-Date: Tue, 16 Jul 2024 14:07:58 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sTh4i-0007lJ-Lg
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:14:32 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sTh4g-0005AI-L8
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:14:32 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5c6661bca43so2601919eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:14:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721132069; x=1721736869; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=/Tggox4RdI7d6bUKw+7ERaVYQ6HLn2fdjceqxumTiU4=;
+ b=lMMDXmwwgVRS+Ph3VikrfWCO3KL7+BmqNtCeGGtFm/Vk7YGajqOpSTXUhvbQS18Ka0
+ K1AMBJwKPm/MLCt7ecFy2AxPKnTphRgiF6rqe7ILeiQcLIQV4H/55dtLpig1U0FRr9tG
+ Ewb4BCHIuI7kT/KOT5DqxGajNenG8QHDqJcoHkEXfSzMuphECkbHuiYHlxZwj0CeJMzf
+ y3aBuWrpFqR50wGUliydTkruAhf5MZVXERsFk0ghh/x05TCFqNVWgI8BIxRfcW5s9Pxt
+ NA3InTl9OMZMqWUJZBOZu5DwWAvcbFXax/yghNCd+sFINxbTpmdWSdPP9PL1dxQMrxWd
+ TXLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721132069; x=1721736869;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/Tggox4RdI7d6bUKw+7ERaVYQ6HLn2fdjceqxumTiU4=;
+ b=LmgQg6Xro0o+UGZsVwETo+jCSd6l7B6sxDCaiteBwkTJ62Nkd6Q9mnDR0p0xtHdTyp
+ szQe6JRqOCR6NeBg7m8vmxK1sNXHh7SEOZNKGksRjRZhGdWrVt/2fEgFKpX7JCh6YTRf
+ PcrYxWd19cLrcQTlV+78i9BlO9PO3bnwX8G/+C0Juqm/2rtphD1cRUFZ4abYrXkpUuqp
+ 51tKQCBgTTSHyidpg7H7kck55zS+L/1EvAXJJsKbNTsdkR6glkheyzzRN1oIwhpvSU1b
+ mV5sKsgB9Xg2Pl0nfVu2Df1Bs3GH5/w7aKpBNNkJPb/pmeKE/PRXpVJhrAVRKcnn7fzU
+ IKmQ==
+X-Gm-Message-State: AOJu0Yyw5zkn4pC1e6GgJ4Jb3W4a1WTvdeM8wwIfSc5vWpCFNkKrZAvo
+ i2xobJ7iPP9CvW4fbNzcqpCS1TKvkH+NCM1B40bLBZZqW0NPZYa37Te5GrMYrG8=
+X-Google-Smtp-Source: AGHT+IHis4KoGb/Usco8bZ+NtZHbo8CjA+KH8V0mZ5wZqbLQ6limCjFW7xWmhotpk5DXCUY3x9SxjQ==
+X-Received: by 2002:a05:6820:2714:b0:5c6:9320:53a3 with SMTP id
+ 006d021491bc7-5d28931fcaemr2481633eaf.4.1721132068911; 
+ Tue, 16 Jul 2024 05:14:28 -0700 (PDT)
+Received: from sunil-laptop ([106.51.187.237])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5ce757ab0ddsm1090819eaf.19.2024.07.16.05.14.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jul 2024 05:14:28 -0700 (PDT)
+Date: Tue, 16 Jul 2024 17:44:19 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 1/9] hw/riscv/virt-acpi-build.c: Add namespace devices
+ for PLIC and APLIC
+Message-ID: <ZpZkGz8mvJH8RstD@sunil-laptop>
+References: <20240715171129.1168896-1-sunilvl@ventanamicro.com>
+ <20240715171129.1168896-2-sunilvl@ventanamicro.com>
+ <20240716122405.3057913c@imammedo.users.ipa.redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240716122405.3057913c@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-oo1-xc2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,219 +101,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a utility function and use it to replace very similar
-create_initial_mapping functions in 440 based machines.
+On Tue, Jul 16, 2024 at 12:24:05PM +0200, Igor Mammedov wrote:
+> On Mon, 15 Jul 2024 22:41:21 +0530
+> Sunil V L <sunilvl@ventanamicro.com> wrote:
+> 
+> > As per the requirement ACPI_080 in the RISC-V Boot and Runtime Services
+> > (BRS) specification [1],  PLIC and APLIC should be in namespace as well.
+> > So, add them using the defined HID.
+> > 
+> > [1] - https://github.com/riscv-non-isa/riscv-brs/blob/main/acpi.adoc
+> >       (commit : 241575b3189c5d9e60b5e55e78cf0443092713bf)
+> 
+> in spec links 'See RVI ACPI IDs' and right below it 'additional guidance',
+> do lead nowhere hence do not clarify anything.
+> 
+Thanks Igor. I didn't realize links work only in the final PDF generated
+from the sources. Let me point to the PDF itself where these
+requirements were documented first.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/ppc/ppc440_bamboo.c | 28 +++-----------------------
- hw/ppc/ppc_booke.c     | 10 ++++++++++
- hw/ppc/sam460ex.c      | 45 ++++++++++--------------------------------
- hw/ppc/virtex_ml507.c  | 28 +++-----------------------
- include/hw/ppc/ppc.h   |  2 ++
- 5 files changed, 28 insertions(+), 85 deletions(-)
-
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index 73f80cf706..ae4d6cd96b 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -110,29 +110,6 @@ static int bamboo_load_device_tree(MachineState *machine,
-     return 0;
- }
- 
--/* Create reset TLB entries for BookE, spanning the 32bit addr space.  */
--static void mmubooke_create_initial_mapping(CPUPPCState *env,
--                                     target_ulong va,
--                                     hwaddr pa)
--{
--    ppcemb_tlb_t *tlb = &env->tlb.tlbe[0];
--
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 1U << 31; /* up to 0x80000000  */
--    tlb->EPN = va & TARGET_PAGE_MASK;
--    tlb->RPN = pa & TARGET_PAGE_MASK;
--    tlb->PID = 0;
--
--    tlb = &env->tlb.tlbe[1];
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 1U << 31; /* up to 0xffffffff  */
--    tlb->EPN = 0x80000000 & TARGET_PAGE_MASK;
--    tlb->RPN = 0x80000000 & TARGET_PAGE_MASK;
--    tlb->PID = 0;
--}
--
- static void main_cpu_reset(void *opaque)
- {
-     PowerPCCPU *cpu = opaque;
-@@ -143,8 +120,9 @@ static void main_cpu_reset(void *opaque)
-     env->gpr[3] = FDT_ADDR;
-     env->nip = entry;
- 
--    /* Create a mapping for the kernel.  */
--    mmubooke_create_initial_mapping(env, 0, 0);
-+    /* Create a mapping spanning the 32bit addr space. */
-+    booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1U << 31);
-+    booke_set_tlb(&env->tlb.tlbe[1], 0x80000000, 0x80000000, 1U << 31);
- }
- 
- static void bamboo_init(MachineState *machine)
-diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
-index ca22da196a..c8849e66ff 100644
---- a/hw/ppc/ppc_booke.c
-+++ b/hw/ppc/ppc_booke.c
-@@ -31,6 +31,16 @@
- #include "hw/loader.h"
- #include "kvm_ppc.h"
- 
-+void booke_set_tlb(ppcemb_tlb_t *tlb, target_ulong va, hwaddr pa,
-+                   target_ulong size)
-+{
-+    tlb->attr = 0;
-+    tlb->prot = PAGE_RWX << 4 | PAGE_VALID;
-+    tlb->size = size;
-+    tlb->EPN = va & TARGET_PAGE_MASK;
-+    tlb->RPN = pa & TARGET_PAGE_MASK;
-+    tlb->PID = 0;
-+}
- 
- /* Timer Control Register */
- 
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 8dc75fb9f0..ea99a4c624 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -213,38 +213,6 @@ static int sam460ex_load_device_tree(MachineState *machine,
-     return fdt_size;
- }
- 
--/* Create reset TLB entries for BookE, mapping only the flash memory.  */
--static void mmubooke_create_initial_mapping_uboot(CPUPPCState *env)
--{
--    ppcemb_tlb_t *tlb = &env->tlb.tlbe[0];
--
--    /* on reset the flash is mapped by a shadow TLB,
--     * but since we don't implement them we need to use
--     * the same values U-Boot will use to avoid a fault.
--     */
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 0x10000000; /* up to 0xffffffff  */
--    tlb->EPN = 0xf0000000 & TARGET_PAGE_MASK;
--    tlb->RPN = (0xf0000000 & TARGET_PAGE_MASK) | 0x4;
--    tlb->PID = 0;
--}
--
--/* Create reset TLB entries for BookE, spanning the 32bit addr space.  */
--static void mmubooke_create_initial_mapping(CPUPPCState *env,
--                                     target_ulong va,
--                                     hwaddr pa)
--{
--    ppcemb_tlb_t *tlb = &env->tlb.tlbe[0];
--
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 1 << 31; /* up to 0x80000000  */
--    tlb->EPN = va & TARGET_PAGE_MASK;
--    tlb->RPN = pa & TARGET_PAGE_MASK;
--    tlb->PID = 0;
--}
--
- static void main_cpu_reset(void *opaque)
- {
-     PowerPCCPU *cpu = opaque;
-@@ -253,20 +221,27 @@ static void main_cpu_reset(void *opaque)
- 
-     cpu_reset(CPU(cpu));
- 
--    /* either we have a kernel to boot or we jump to U-Boot */
-+    /*
-+     * On reset the flash is mapped by a shadow TLB, but since we
-+     * don't implement them we need to use the same values U-Boot
-+     * will use to avoid a fault.
-+     * either we have a kernel to boot or we jump to U-Boot
-+     */
-     if (bi->entry != UBOOT_ENTRY) {
-         env->gpr[1] = (16 * MiB) - 8;
-         env->gpr[3] = FDT_ADDR;
-         env->nip = bi->entry;
- 
-         /* Create a mapping for the kernel.  */
--        mmubooke_create_initial_mapping(env, 0, 0);
-+        booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1 << 31);
-         env->gpr[6] = tswap32(EPAPR_MAGIC);
-         env->gpr[7] = (16 * MiB) - 8; /* bi->ima_size; */
- 
-     } else {
-         env->nip = UBOOT_ENTRY;
--        mmubooke_create_initial_mapping_uboot(env);
-+        /* Create a mapping for U-Boot. */
-+        booke_set_tlb(&env->tlb.tlbe[0], 0xf0000000, 0xf0000000, 0x10000000);
-+        env->tlb.tlbe[0].RPN |= 4;
-     }
- }
- 
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index c49da1f46f..16ddb528fe 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -67,29 +67,6 @@ static struct boot_info
-     void *vfdt;
- } boot_info;
- 
--/* Create reset TLB entries for BookE, spanning the 32bit addr space.  */
--static void mmubooke_create_initial_mapping(CPUPPCState *env,
--                                     target_ulong va,
--                                     hwaddr pa)
--{
--    ppcemb_tlb_t *tlb = &env->tlb.tlbe[0];
--
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 1U << 31; /* up to 0x80000000  */
--    tlb->EPN = va & TARGET_PAGE_MASK;
--    tlb->RPN = pa & TARGET_PAGE_MASK;
--    tlb->PID = 0;
--
--    tlb = &env->tlb.tlbe[1];
--    tlb->attr = 0;
--    tlb->prot = PAGE_VALID | ((PAGE_READ | PAGE_WRITE | PAGE_EXEC) << 4);
--    tlb->size = 1U << 31; /* up to 0xffffffff  */
--    tlb->EPN = 0x80000000 & TARGET_PAGE_MASK;
--    tlb->RPN = 0x80000000 & TARGET_PAGE_MASK;
--    tlb->PID = 0;
--}
--
- static PowerPCCPU *ppc440_init_xilinx(const char *cpu_type, uint32_t sysclk)
- {
-     PowerPCCPU *cpu;
-@@ -139,8 +116,9 @@ static void main_cpu_reset(void *opaque)
-     env->gpr[3] = bi->fdt;
-     env->nip = bi->bootstrap_pc;
- 
--    /* Create a mapping for the kernel.  */
--    mmubooke_create_initial_mapping(env, 0, 0);
-+    /* Create a mapping spanning the 32bit addr space. */
-+    booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1U << 31);
-+    booke_set_tlb(&env->tlb.tlbe[1], 0x80000000, 0x80000000, 1U << 31);
-     env->gpr[6] = tswap32(EPAPR_MAGIC);
-     env->gpr[7] = bi->ima_size;
- }
-diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
-index 070524b02e..8a14d623f8 100644
---- a/include/hw/ppc/ppc.h
-+++ b/include/hw/ppc/ppc.h
-@@ -119,6 +119,8 @@ enum {
- #ifndef CONFIG_USER_ONLY
- void booke206_set_tlb(ppcmas_tlb_t *tlb, target_ulong va, hwaddr pa,
-                       hwaddr len);
-+void booke_set_tlb(ppcemb_tlb_t *tlb, target_ulong va, hwaddr pa,
-+                   target_ulong size);
- #endif
- 
- /* ppc_booke.c */
--- 
-2.30.9
-
+Thanks,
+Sunil
+> > 
+> > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> > Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> 
+> Acked-by: Igor Mammedov <imammedo@redhat.com>
+> 
+> > ---
+> >  hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 32 insertions(+)
+> > 
+> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> > index 0925528160..5f5082a35b 100644
+> > --- a/hw/riscv/virt-acpi-build.c
+> > +++ b/hw/riscv/virt-acpi-build.c
+> > @@ -141,6 +141,30 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
+> >      }
+> >  }
+> >  
+> > +static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
+> > +                                     uint64_t mmio_base, uint64_t mmio_size,
+> > +                                     const char *hid)
+> > +{
+> > +    uint64_t plic_aplic_addr;
+> > +    uint32_t gsi_base;
+> > +    uint8_t  socket;
+> > +
+> > +    for (socket = 0; socket < socket_count; socket++) {
+> > +        plic_aplic_addr = mmio_base + mmio_size * socket;
+> > +        gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
+> > +        Aml *dev = aml_device("IC%.02X", socket);
+> > +        aml_append(dev, aml_name_decl("_HID", aml_string("%s", hid)));
+> > +        aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
+> > +        aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
+> > +
+> > +        Aml *crs = aml_resource_template();
+> > +        aml_append(crs, aml_memory32_fixed(plic_aplic_addr, mmio_size,
+> > +                                           AML_READ_WRITE));
+> > +        aml_append(dev, aml_name_decl("_CRS", crs));
+> > +        aml_append(scope, dev);
+> > +    }
+> > +}
+> > +
+> >  static void
+> >  acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+> >                      uint32_t uart_irq)
+> > @@ -411,6 +435,14 @@ static void build_dsdt(GArray *table_data,
+> >  
+> >      socket_count = riscv_socket_count(ms);
+> >  
+> > +    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
+> > +        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_PLIC].base,
+> > +                                 memmap[VIRT_PLIC].size, "RSCV0001");
+> > +    } else {
+> > +        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_APLIC_S].base,
+> > +                                 memmap[VIRT_APLIC_S].size, "RSCV0002");
+> > +    }
+> > +
+> >      acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
+> >  
+> >      if (socket_count == 1) {
+> 
 
