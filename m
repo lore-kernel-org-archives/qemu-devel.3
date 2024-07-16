@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6541CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE207C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTl2Q-0002mY-H5; Tue, 16 Jul 2024 12:28:26 -0400
+	id 1sTl2T-0003E2-A3; Tue, 16 Jul 2024 12:28:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1F-0006V6-KT; Tue, 16 Jul 2024 12:27:17 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1sTl1b-0007B0-65; Tue, 16 Jul 2024 12:27:36 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1A-0006TI-0N; Tue, 16 Jul 2024 12:27:10 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-70b0d0fefe3so3801992b3a.2; 
- Tue, 16 Jul 2024 09:26:57 -0700 (PDT)
+ id 1sTl1M-0006cu-8N; Tue, 16 Jul 2024 12:27:22 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-70b0e7f6f8bso4983722b3a.3; 
+ Tue, 16 Jul 2024 09:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721147216; x=1721752016; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721147237; x=1721752037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P/jaJY+EjT/k2aXL1glM+yk4w079Fmr/WkbzC5YoxgU=;
- b=RYVIg9MBTk8JoppeoCyfz8yyNctBqeVy2ikaQLcm3RxjOTZ4BvxILMlbFyPIimUytP
- fPazvoOly+Ljb7xzdYDk0RknEdwODFdGbv4ZBqGLKFIkaACjeEI63w/dVm0swi9SXy5X
- pmlATUQDGkxl0hW44iT+VORSBkw0CNlDaW1Bpc35yWgwTg9EGbKczEK9lLX2wzNdXOdX
- p4EGd/fZVKSM9Zyj4Ro1tgROgzDT7SB1p/xkizEvYGbnaRRHRauadaAity12OHqEYz0P
- ydn9mfMHTIT+7RCi3caVEuP1xuYrVon974k3aU5f6NLWJDrKYMUS/n+leDXs6PVKKFfF
- fEHA==
+ bh=3Njtj68/O8+IW2jvRZMh3SlkL4jNiwEp56S0K4b4BOQ=;
+ b=m+mCQsNAhSDlb0fGWBvqjixmjvTKb96mpzye10uhPMA4fllCipFjH85f+sOVVneORJ
+ ZKP0rxae+JPYrmrV1RQRSGwFDYhMrpfPewCFT7OECvBR2bvHo9XVwfck7ylgrtaT1zse
+ 4+6c8dlECLGVcf8ZhriWeGhRdy1x7IDZcDQaQ4dIZdRoUdD9bBa3uCjox6X6hhso361v
+ ZyN5YxEbMGSlcn856UNxsm56B0Zf3CF+NFt0oT8QMFrW+FTjqlfdommL9sBPoJTOxoLu
+ oOO21GGZ3BCN/8lrHlpJOvN1LobzQae9pyUECHddPLDilNhSxO7cO5vdGmOx27EzFQNA
+ 9jew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721147216; x=1721752016;
+ d=1e100.net; s=20230601; t=1721147237; x=1721752037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P/jaJY+EjT/k2aXL1glM+yk4w079Fmr/WkbzC5YoxgU=;
- b=V/EtW/Vrf1bIPMvQ3HxEk4DDpOz6k4loImwAB+RIqvmzpFrR2P2E+8cdvh6Re5rQ9Y
- pxKpTaVxFe9taFpdxxB6oN9MG7N9IEVKuoYNJAuIeZRg6b3oIUtg9n9UX6v5rjIbNSQa
- rJhwxIX5mUqs5+/r4NXDewUhg00iUT96I2HSk6lSeYSl0xjp0lZQrY4gsEZzt6a9nn24
- Y+GSZBI6kfFrDzfba97a4EA8MafO9qUvBSwpU1Tbaq5vmvM08g8WFpTFId/RZGZyXqw4
- O7wC7dQnzTkYRsBa3FW+3RhifPacZcLe3DKebd6H0Nj/3kpyh0U2m2iPE9XzdqndBUEl
- oLhQ==
+ bh=3Njtj68/O8+IW2jvRZMh3SlkL4jNiwEp56S0K4b4BOQ=;
+ b=BuUapqnUzpKr3TNpDmKAICpQDTu2mXg1jMk4YfJu8UHe3j5XdhHecR3baiW9JedIxR
+ kYZ91hraJt25cxI3NgPhLSM3s+hFLA6VTXBoW8MjsP8eHsgbH+EmGTr+2FeOdCUBj6fn
+ dJKCCEEv+YkSK8RWbE/vnIuGfbHsRN25VzALNKDNFNPfrQWnsxEBmFmcgb08/N51FqQ4
+ qH7EAe8H1EYkTHM9rYtFz9aPuYPPkji/nZfyGo6SndoAIaSQ4f83O7czLsgfYDF9Ndvl
+ dDe7ZN4pBxbiMoJPVciyAmwDhcXyC1x6EgjcRbX0OMwYxgAVqFnfMZ0VJiVQeMtGVYoC
+ 3Mew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/iGw8bkiuUaAlqPZ9sQmwfFOCBaS4NfZjCFdTZgCVVauXLa/fDrjoVF/HRbtQ2O0YfYC0XUPRiAvXBmLREoF6IWsEIag=
-X-Gm-Message-State: AOJu0YxigkXMVa6hAfw3xsVQaXhVnXvPu66+KZfZa+29qLelF/jCmxgr
- BtcBKEhiY+0FOuk26FXCos4HasDKI1DPNEyztkhZqRcX+uidpGACxAU++Q==
-X-Google-Smtp-Source: AGHT+IFiEEZ1j7C3/LhPSE88tX/K0zT0Bl2AVFxe4IpKxW8/Ty5QAFI2Jt8T8VBlf19/hKHlNPXVpQ==
-X-Received: by 2002:a05:6a21:3384:b0:1c2:8f4b:503b with SMTP id
- adf61e73a8af0-1c3f11eb825mr3369001637.11.1721147215765; 
- Tue, 16 Jul 2024 09:26:55 -0700 (PDT)
+ AJvYcCUDTFJc2oBn1YuI9FWEb18oJERxIvEPOCzmRoXolT3P2T4ydS+ZuPHg4fC54pdCYN+c7GyqE22U2eeccoLnLcpP9EiHSIc=
+X-Gm-Message-State: AOJu0YwFH4o13dnod/SsIm6PNHe19HPUcXkxbIUiW56oVK4QILgh46XN
+ OAjJRIJrneKTdrzqp5Hy1XMfeZ4U5i4OUHu6PN8JFzM8eqP5VTw8xTteQw==
+X-Google-Smtp-Source: AGHT+IGUcLO+DOsEDizjEL8gRWiv+J6cmM9jlYyhz5lEjJ+96WneJ+jmT3tS05vZRFWJ3a68TsZZmg==
+X-Received: by 2002:aa7:8891:0:b0:707:ffa4:de3f with SMTP id
+ d2e1a72fcca58-70c1fbe3451mr3442654b3a.17.1721147237466; 
+ Tue, 16 Jul 2024 09:27:17 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.26.52
+ d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.27.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 09:26:55 -0700 (PDT)
+ Tue, 16 Jul 2024 09:27:17 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 08/19] target/ppc: Add helpers to check for SMT sibling
- threads
-Date: Wed, 17 Jul 2024 02:26:04 +1000
-Message-ID: <20240716162617.32161-9-npiggin@gmail.com>
+Subject: [PATCH v3 14/19] ppc/pnv: Add POWER10 ChipTOD quirk for big-core
+Date: Wed, 17 Jul 2024 02:26:10 +1000
+Message-ID: <20240716162617.32161-15-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240716162617.32161-1-npiggin@gmail.com>
 References: <20240716162617.32161-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,238 +96,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helpers for TCG code to determine if there are SMT siblings
-sharing per-core and per-lpar registers. This simplifies the
-callers and makes SMT register topology simpler to modify with
-later changes.
+POWER10 has a quirk in its ChipTOD addressing that requires the even
+small-core to be selected even when programming the odd small-core.
+This allows skiboot chiptod init to run in big-core mode.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h             | 11 +++++++++++
- target/ppc/cpu_init.c        |  2 +-
- target/ppc/excp_helper.c     | 17 +++++------------
- target/ppc/misc_helper.c     | 27 ++++++---------------------
- target/ppc/timebase_helper.c | 20 +++++++-------------
- 5 files changed, 30 insertions(+), 47 deletions(-)
+ include/hw/ppc/pnv.h         | 1 +
+ include/hw/ppc/pnv_core.h    | 7 +++++++
+ hw/ppc/pnv.c                 | 7 ++++++-
+ hw/ppc/pnv_core.c            | 2 ++
+ target/ppc/timebase_helper.c | 9 +++++++++
+ 5 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 7b52a9bb18..417b284318 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1512,6 +1512,17 @@ struct PowerPCCPUClass {
-     int  (*check_attn)(CPUPPCState *env);
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 283ddd50e7..c56d152889 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -77,6 +77,7 @@ struct PnvMachineClass {
+     const char *compat;
+     int compat_size;
+     int max_smt_threads;
++    bool quirk_tb_big_core;
+ 
+     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
+     void (*i2c_init)(PnvMachineState *pnv);
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index 50164e9e1f..c8784777a4 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -27,6 +27,13 @@
+ 
+ /* Per-core ChipTOD / TimeBase state */
+ typedef struct PnvCoreTODState {
++    /*
++     * POWER10 DD2.0 - big core TFMR drives the state machine on the even
++     * small core. Skiboot has a workaround that targets the even small core
++     * for CHIPTOD_TO_TB ops.
++     */
++    bool big_core_quirk;
++
+     int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
+     int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+ 
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 1d08176b75..322ab9073b 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2290,11 +2290,12 @@ static void pnv_chip_core_sanitize(PnvMachineState *pnv, PnvChip *chip,
+ 
+ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+ {
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(pnv);
+     Error *error = NULL;
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+     const char *typename = pnv_chip_core_typename(chip);
+     int i, core_hwid;
+-    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+ 
+     if (!object_class_by_name(typename)) {
+         error_setg(errp, "Unable to find PowerNV CPU Core '%s'", typename);
+@@ -2335,8 +2336,11 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+                                 &error_fatal);
+         object_property_set_bool(OBJECT(pnv_core), "big-core", chip->big_core,
+                                 &error_fatal);
++        object_property_set_bool(OBJECT(pnv_core), "quirk-tb-big-core",
++                                pmc->quirk_tb_big_core, &error_fatal);
+         object_property_set_link(OBJECT(pnv_core), "chip", OBJECT(chip),
+                                  &error_abort);
++
+         qdev_realize(DEVICE(pnv_core), NULL, &error_fatal);
+ 
+         /* Each core has an XSCOM MMIO region */
+@@ -2650,6 +2654,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 4;
++    pmc->quirk_tb_big_core = true;
+     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ 
+     xfc->match_nvt = pnv10_xive_match_nvt;
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 43cfeaa2d4..1783795b23 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -364,6 +364,8 @@ static Property pnv_core_properties[] = {
+     DEFINE_PROP_UINT32("hwid", PnvCore, hwid, 0),
+     DEFINE_PROP_UINT64("hrmor", PnvCore, hrmor, 0),
+     DEFINE_PROP_BOOL("big-core", PnvCore, big_core, false),
++    DEFINE_PROP_BOOL("quirk-tb-big-core", PnvCore, tod_state.big_core_quirk,
++                     false),
+     DEFINE_PROP_LINK("chip", PnvCore, chip, TYPE_PNV_CHIP, PnvChip *),
+     DEFINE_PROP_END_OF_LIST(),
  };
- 
-+static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
-+{
-+    return cs->nr_threads == 1;
-+}
-+
-+static inline bool ppc_cpu_lpar_single_threaded(CPUState *cs)
-+{
-+    return !(POWERPC_CPU(cs)->env.flags & POWERPC_FLAG_SMT_1LPAR) ||
-+           ppc_cpu_core_single_threaded(cs);
-+}
-+
- ObjectClass *ppc_cpu_class_by_name(const char *name);
- PowerPCCPUClass *ppc_cpu_class_by_pvr(uint32_t pvr);
- PowerPCCPUClass *ppc_cpu_class_by_pvr_mask(uint32_t pvr);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 164bb62e63..81dd4e1a7a 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6993,7 +6993,7 @@ static void ppc_cpu_realize(DeviceState *dev, Error **errp)
- 
-     pcc->parent_realize(dev, errp);
- 
--    if (env_cpu(env)->nr_threads > 1) {
-+    if (!ppc_cpu_core_single_threaded(cs)) {
-         env->flags |= POWERPC_FLAG_SMT;
-     }
- 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 5368bf2ff3..5ecd662f9e 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -3014,18 +3014,11 @@ static void msgsnd_core_tir(CPUPPCState *env, uint32_t target_tir, int irq)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
--    }
--
--    if (target_tir >= nr_threads) {
--        return;
--    }
--
--    if (nr_threads == 1) {
--        ppc_set_irq(cpu, irq, 1);
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-+        if (target_tir == 0) {
-+            ppc_set_irq(cpu, irq, 1);
-+        }
-     } else {
-         CPUState *ccs;
- 
-@@ -3080,7 +3073,7 @@ void helper_book3s_msgsnd(CPUPPCState *env, target_ulong rb)
-         brdcast = true;
-     }
- 
--    if (cs->nr_threads == 1 || !brdcast) {
-+    if (ppc_cpu_core_single_threaded(cs) || !brdcast) {
-         ppc_set_irq(cpu, PPC_INTERRUPT_HDOORBELL, 1);
-         return;
-     }
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 4d3c1bddd9..692e48e6bc 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -49,9 +49,8 @@ void helper_spr_core_write_generic(CPUPPCState *env, uint32_t sprn,
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1) {
-+    if (ppc_cpu_core_single_threaded(cs)) {
-         env->spr[sprn] = val;
-         return;
-     }
-@@ -196,7 +195,7 @@ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
-             return;
-         }
- 
--        if (cs->nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+        if (ppc_cpu_lpar_single_threaded(cs)) {
-             env->spr[SPR_PTCR] = val;
-             tlb_flush(cs);
-         } else {
-@@ -243,16 +242,12 @@ target_ulong helper_load_dpdes(CPUPPCState *env)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
-     target_ulong dpdes = 0;
- 
-     helper_hfscr_facility_check(env, HFSCR_MSGP, "load DPDES", HFSCR_IC_MSGP);
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
--    }
--
--    if (nr_threads == 1) {
-+    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-             dpdes = 1;
-         }
-@@ -279,21 +274,11 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-     PowerPCCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
-     helper_hfscr_facility_check(env, HFSCR_MSGP, "store DPDES", HFSCR_IC_MSGP);
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
--    }
--
--    if (val & ~(nr_threads - 1)) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid DPDES register value "
--                      TARGET_FMT_lx"\n", val);
--        val &= (nr_threads - 1); /* Ignore the invalid bits */
--    }
--
--    if (nr_threads == 1) {
-+    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & 0x1);
-         return;
-     }
 diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-index 52f9e6669c..44cacf065e 100644
+index 44cacf065e..019b8ee41f 100644
 --- a/target/ppc/timebase_helper.c
 +++ b/target/ppc/timebase_helper.c
-@@ -63,9 +63,8 @@ void helper_store_purr(CPUPPCState *env, target_ulong val)
+@@ -20,6 +20,7 @@
+ #include "cpu.h"
+ #include "hw/ppc/ppc.h"
+ #include "hw/ppc/pnv_core.h"
++#include "hw/ppc/pnv_chip.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
+ #include "qemu/log.h"
+@@ -297,6 +298,14 @@ static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
  {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
+     PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
  
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_purr(env, val);
-         return;
-     }
-@@ -82,9 +81,8 @@ void helper_store_tbl(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
++    if (pc->big_core && pc->tod_state.big_core_quirk) {
++        /* Must operate on the even small core */
++        int core_id = CPU_CORE(pc)->core_id;
++        if (core_id & 1) {
++            pc = pc->chip->cores[core_id & ~1];
++        }
++    }
++
+     return &pc->tod_state;
+ }
  
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbl(env, val);
-         return;
-     }
-@@ -99,9 +97,8 @@ void helper_store_tbu(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbu(env, val);
-         return;
-     }
-@@ -141,9 +138,8 @@ void helper_store_hdecr(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_hdecr(env, val);
-         return;
-     }
-@@ -158,9 +154,8 @@ void helper_store_vtb(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_vtb(env, val);
-         return;
-     }
-@@ -175,9 +170,8 @@ void helper_store_tbu40(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbu40(env, val);
-         return;
-     }
-@@ -288,7 +282,7 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
- 
--    if (cs->nr_threads == 1) {
-+    if (ppc_cpu_core_single_threaded(cs)) {
-         env->spr[SPR_TFMR] = val;
-     } else {
-         CPUState *ccs;
 -- 
 2.45.1
 
