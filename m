@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D1BC3DA5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FD6C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 14:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTjAB-00022p-Q0; Tue, 16 Jul 2024 10:28:19 -0400
+	id 1sTjBG-0005lc-1b; Tue, 16 Jul 2024 10:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTjA9-00021X-QE
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:28:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sTjA7-0008QD-7h
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:28:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721140093;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lvZ99WZGHNNJL/1pbkXp9By1bGmdjsSz0FHFOR+ydPs=;
- b=RDk11JaknywMccAAZ9R9HwA421U6M8jgnlRi3T4Xz/hgnlFzyC9HPs0b3XOdelX0cbKtic
- QGtmCyXyx4GAe/UPE7BttelsxTFvnzBw9YLjohG6oi3gIGGJNYn6ZjSEUjGgUnwAEzbjwg
- AAbk4sSy99L6x62IWUXDCR/9sFmnNv8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-9L7ihSRqM92fQmumcC8iqw-1; Tue, 16 Jul 2024 10:28:11 -0400
-X-MC-Unique: 9L7ihSRqM92fQmumcC8iqw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-367990a5796so3418765f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:28:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sTjBD-0005YG-Gz
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:29:23 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sTjBB-00008o-4S
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:29:23 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-8102bbc95d1so105212241.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:29:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721140158; x=1721744958;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NokxzlWojGk6SIAlluI/GG6PeT3IT3aIYhtNcIm6PMc=;
+ b=uRvFlyDMy8H+6W4c54b3liBd42HEVm6Up3klcUCQDUdpNDx/RShg2r5B69oyMfJp89
+ Kn1/R8JN2mPqSAc8d52MfnPYbsNWTHwKtmzkxweg55fj3bLjZTvPhh3gmL/ohin4gl+y
+ JPT6y4ESKXRFA9XBvuD/fSqwDUWQmzDxqNIAy/8HNIYUXb5/LX+zEw9+9cLYiHN0pQc2
+ 5dg8+uqS4TLEmsV+vyxc6sLGFsdq5MexphDJk9Ck8WNlQufdxQlsw3nSETFjZ+tVEnt+
+ LASQfQ919re055NVlQtr1pd09r2G/dwLDzRhWp9NqFddOUQwdxVt3cISooBl870NqTor
+ pTwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721140089; x=1721744889;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lvZ99WZGHNNJL/1pbkXp9By1bGmdjsSz0FHFOR+ydPs=;
- b=I33AqAiYsTF9GzYl5bMwvLxejycu+9AL0+5LLCeiSV4E2O1GRS47j+XfuXQYb7zXfo
- 9ogox6/1Q6RYcgAwqxuybfkmq+7KCipT0bNC0Nqv8KW7gbl60bh7yjWYrozIirkoqUL0
- +RN14eXA0+yh2bWmScMz241zkc+O56pAC3KRpROJZnVqXD2KaKX9W0Yn+KtxpDttrwcz
- yL6+y1n24qSqe8YYmda708MZ7wUos1kt10jJQzj/7e2+HOj+ZFxLczWGULGSHm4qB9nY
- xLFZ/mDMTzIXC865PtLrVHnzwmMpetwyuiSc7z1Ra4mgSrEQOstMQ2fvp5PlQie+ywtY
- MrVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7T+12dIbvXrGg3CvoxA0xRJGzuK6FI+Fq0SRA5u+pGGTrMDY9r3JIVmQDaCtN8a/bxqgcjn9t8YISbjcJOe5lHVFKlyw=
-X-Gm-Message-State: AOJu0YztGhrJTXMzZqQ9IojCDv1LCdTP1uluBy79mCfSyIfsAFxi3r66
- hsH1jWPEXEWugaCXzShLz4wYgG8PEq/tgrZqsfs2yl5yKws8tQHX8x2PA1jRgE3sF93WRVYx2AV
- TpgeurFJggYzIMIBbXf1QchJHkpRINTWuEEGeT6zO8s4ygtIhuh4C
-X-Received: by 2002:adf:9b83:0:b0:367:f281:260e with SMTP id
- ffacd0b85a97d-36825f65dfcmr1493564f8f.3.1721140089534; 
- Tue, 16 Jul 2024 07:28:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBiI/Rz6MbcptMVBR6eBR522D9sI5H+9GNR6dib3RCPLy1CUI7f6DflnvUTEBa7L4VbujMvA==
-X-Received: by 2002:adf:9b83:0:b0:367:f281:260e with SMTP id
- ffacd0b85a97d-36825f65dfcmr1493549f8f.3.1721140089144; 
- Tue, 16 Jul 2024 07:28:09 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafbf29sm9272528f8f.70.2024.07.16.07.28.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 07:28:08 -0700 (PDT)
-Date: Tue, 16 Jul 2024 16:28:07 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFu?=
- =?UTF-8?B?Z8Op?=" <berrange@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
- Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei
- Li <liwei1518@gmail.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 0/9] RISC-V: ACPI: Namespace updates
-Message-ID: <20240716162807.3aa78399@imammedo.users.ipa.redhat.com>
-In-Reply-To: <ZpZm48s9zt/glU/H@sunil-laptop>
-References: <20240708114741.3499585-1-sunilvl@ventanamicro.com>
- <20240712144319.233c19a7@imammedo.users.ipa.redhat.com>
- <ZpEmuB6xyh2K77Ic@redhat.com>
- <20240712155010.3756bb82@imammedo.users.ipa.redhat.com>
- <20240714034105-mutt-send-email-mst@kernel.org>
- <20240715144352.22d36779@imammedo.users.ipa.redhat.com>
- <ZpZm48s9zt/glU/H@sunil-laptop>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1721140158; x=1721744958;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NokxzlWojGk6SIAlluI/GG6PeT3IT3aIYhtNcIm6PMc=;
+ b=eq/bzDoZELMD+3BvXWiRnCpViGMTehoy7+iLARl3ItzSjS6G7taTgrlewriC3+iwSO
+ e10NTR5XxINaxaI5XsniLY5YaVcVBSStzZamIVX4Oe3l3R3atHry7iw7vtB04jjqryoK
+ 5w8fU5AVTElenc1ZKvPMZMuxOmLbxP2NVaA+A4VcqlqOu/YTylcvczV60wHV3yPh58iJ
+ DfFIdhVLkB/rjY9scFh3DfkkFMaxs0ZuCf6F+IkCH7hbPHK1DaNwUIyTcJx9vFUue7+F
+ jmr15wER8jKLe2h3bsQPZwuhAuuOO9HNml685jiNqKztVKm8ITuxBgQvbw8lnfC3DyZG
+ FhMw==
+X-Gm-Message-State: AOJu0Yw9+LVmVcqRKOXuYrsG3lW+R1Pjgg0tqgElzwO/XS7cv9qBoCTa
+ yybRbxfAINYxh+q8Haj9+JrtLeAfzoDnHKvbV2VgVYRBeY8xAKnv0aZftY74ESc8NIAuUJw9Box
+ fVtqdzb8kF+r27UKePWbDyGJfYmcm0fMJqJuo
+X-Google-Smtp-Source: AGHT+IHu+AIJ3uAnhVuZdWWqojXtvEcSHGXKfdKrQXa7UGJ7mDjJuyvoSObQ5PzGxbE76sJ0Gj5oqbeFMdF51xvoHYE=
+X-Received: by 2002:a05:6122:8c1:b0:4f2:a973:8ae with SMTP id
+ 71dfb90a1353d-4f4d6f360a3mr1314077e0c.5.1721140158668; Tue, 16 Jul 2024
+ 07:29:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240715210705.32365-1-phil@philjordan.eu>
+ <20240715210705.32365-17-phil@philjordan.eu>
+ <28a35035-840a-4c70-aaba-4192f7cd8ef3@linaro.org>
+In-Reply-To: <28a35035-840a-4c70-aaba-4192f7cd8ef3@linaro.org>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 16 Jul 2024 16:29:07 +0200
+Message-ID: <CAAibmn1zEFWVt-K3LkucStVxL-jyj=EWThwwtewwyKbKodQ0Sw@mail.gmail.com>
+Subject: Re: [PATCH 16/26] hw/display/apple-gfx: Asynchronous MMIO writes on
+ x86-64
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de, 
+ graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com, 
+ thuth@redhat.com, peter.maydell@linaro.org, akihiko.odaki@daynix.com, 
+ lists@philjordan.eu
+Content-Type: multipart/alternative; boundary="000000000000c4415a061d5e2b92"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=phil@philjordan.eu; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,104 +93,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jul 2024 17:56:11 +0530
-Sunil V L <sunilvl@ventanamicro.com> wrote:
+--000000000000c4415a061d5e2b92
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, Jul 15, 2024 at 02:43:52PM +0200, Igor Mammedov wrote:
-> > On Sun, 14 Jul 2024 03:46:36 -0400
-> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >  =20
-> > > On Fri, Jul 12, 2024 at 03:50:10PM +0200, Igor Mammedov wrote: =20
-> > > > On Fri, 12 Jul 2024 13:51:04 +0100
-> > > > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
-> > > >    =20
-> > > > > On Fri, Jul 12, 2024 at 02:43:19PM +0200, Igor Mammedov wrote:   =
-=20
-> > > > > > On Mon,  8 Jul 2024 17:17:32 +0530
-> > > > > > Sunil V L <sunilvl@ventanamicro.com> wrote:
-> > > > > >      =20
-> > > > > > > This series adds few updates to RISC-V ACPI namespace for vir=
-t platform.
-> > > > > > > Additionally, it has patches to enable ACPI table testing for=
- RISC-V.
-> > > > > > >=20
-> > > > > > > 1) PCI Link devices need to be created outside the scope of t=
-he PCI root
-> > > > > > > complex to ensure correct probe ordering by the OS. This matc=
-hes the
-> > > > > > > example given in ACPI spec as well.
-> > > > > > >=20
-> > > > > > > 2) Add PLIC and APLIC as platform devices as well to ensure p=
-robing
-> > > > > > > order as per BRS spec [1] requirement.
-> > > > > > >=20
-> > > > > > > 3) BRS spec requires RISC-V to use new ACPI ID for the generi=
-c UART. So,
-> > > > > > > update the HID of the UART.
-> > > > > > >=20
-> > > > > > > 4) Enabled ACPI tables tests for RISC-V which were originally=
- part of
-> > > > > > > [2] but couldn't get merged due to updates required in the ex=
-pected AML
-> > > > > > > files. I think combining those patches with this series makes=
- it easier
-> > > > > > > to merge since expected AML files are updated.
-> > > > > > >=20
-> > > > > > > [1] - https://github.com/riscv-non-isa/riscv-brs
-> > > > > > > [2] - https://lists.gnu.org/archive/html/qemu-devel/2024-06/m=
-sg04734.html     =20
-> > > > > >=20
-> > > > > > btw: CI is not happy about series, see:
-> > > > > >  https://gitlab.com/imammedo/qemu/-/pipelines/1371119552
-> > > > > > also 'cross-i686-tci' job routinely timeouts on bios-tables-test
-> > > > > > but we still keep adding more tests to it.
-> > > > > > We should either bump timeout to account for slowness or
-> > > > > > disable bios-tables-test for that job.     =20
-> > > > >=20
-> > > > > Asumming the test is functionally correct, and not hanging, then =
-bumping
-> > > > > the timeout is the right answer. You can do this in the meson.bui=
-ld
-> > > > > file   =20
-> > > >=20
-> > > > I think test is fine, since once in a while it passes (I guess it d=
-epends on runner host/load)
-> > > >=20
-> > > > Overal job timeout is 1h, but that's not what fails.
-> > > > What I see is, the test aborts after 10min timeout.
-> > > > it's likely we hit boot_sector_test()/acpi_find_rsdp_address_uefi()=
- timeout.
-> > > > That's what we should try to bump.
-> > > >=20
-> > > > PS:
-> > > > I've just started the job with 5min bump, lets see if it is enough.=
-   =20
-> > >=20
-> > > Because we should wait for 5min CPU time, not wall time.
-> > > Why don't we do that?
-> > > Something like getrusage should work I think.
-> > >  =20
-> >=20
-> > It turned out to be a meson timeout that's set individually per test fi=
-le.
-> > I'll send a patch later on.
-> >  =20
-> Hi Igor,
->=20
-> I am unable to get msys2-64bit test in CI to pass. I tried including
-> your change in meson as well but no luck. I can't guess how enabling
-> bios-tables-test for RISC-V is affecting this particular test. Does this
-> pass for you?=20
->=20
-> https://gitlab.com/vlsunil/qemu/-/jobs/7343701148
+On Mon, 15 Jul 2024 at 23:26, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g>
+wrote:
 
-it doesn't pass for me either,
-but bios-tables-test is not among those that timed out,
-so I'd ignore failure in this case
+> Hi Phil,
+>
+> On 15/7/24 23:06, Phil Dennis-Jordan wrote:
+> > This change ensures that the MMIO write calls into the PVG
+> > framework are performed asynchronously on a background dispatch
+> > queue. Without this, we rapidly run into re-entrant MMIO issues.
+> >
+> > This problem only seems to exist on x86-64 hosts. Conversely,
+> > doing it async on arm64/vmapple causes other issues,
+>
+> Such as?
+>
 
->=20
-> Thanks!
-> Sunil
->=20
+Sorry for being vague. I've just refreshed my memory by testing with async
+MMIO writes on aarch64, and the guest never manages to initialise the
+display at all. I've admittedly not attempted to debug through this in any
+significant way, though with PVG being something of a black box I'm not
+sure it's worth it. It works reliably on x86-64 with async writes, and on
+aarch64 with sync writes.
 
+I'll add comments to the #ifdefs for v2.
+
+Thanks,
+Phil
+
+--000000000000c4415a061d5e2b92
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, 15 Jul 2024 at 23:26, Philipp=
+e Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro=
+.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Hi Phil,<br>
+<br>
+On 15/7/24 23:06, Phil Dennis-Jordan wrote:<br>
+&gt; This change ensures that the MMIO write calls into the PVG<br>
+&gt; framework are performed asynchronously on a background dispatch<br>
+&gt; queue. Without this, we rapidly run into re-entrant MMIO issues.<br>
+&gt; <br>
+&gt; This problem only seems to exist on x86-64 hosts. Conversely,<br>
+&gt; doing it async on arm64/vmapple causes other issues,<br>
+<br>
+Such as?<br></blockquote><div><br></div><div>Sorry for being vague. I&#39;v=
+e just refreshed my memory by testing with async MMIO writes on aarch64, an=
+d the guest never manages to initialise the display at all. I&#39;ve admitt=
+edly not attempted to debug through this in any significant way, though wit=
+h PVG being something of a black box I&#39;m not sure it&#39;s worth it. It=
+ works reliably on x86-64 with async writes, and on aarch64 with sync write=
+s.<br></div><div><br></div><div>I&#39;ll add comments to the #ifdefs for v2=
+.<br></div><div><br></div><div>Thanks,</div><div>Phil</div><div><br></div><=
+/div></div>
+
+--000000000000c4415a061d5e2b92--
 
