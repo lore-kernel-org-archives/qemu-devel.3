@@ -4,82 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE0C7C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32889C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 17:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTlSd-0005ny-O4; Tue, 16 Jul 2024 12:55:31 -0400
+	id 1sTlap-0000ix-2u; Tue, 16 Jul 2024 13:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTlSW-0005KY-6s
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:55:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTlam-0000Zf-Rd
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:03:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTlSS-0003wM-QF
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 12:55:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTlal-0005Kz-3m
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:03:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721148919;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1721149432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RopYr7yi/z3GdeENqtiGj0imSU52iJDDPNaCrpzk7b4=;
- b=LwunfCDJayyilgWRVMAiB5ZnKqEWsAT5bpA7rcMYhkjZeqTIFwcUpwjH7BbJfB0uzMqQF5
- vO9bxTr2vIgVQPLkdgoOUVDGny7Y5LGcJp2pArp5QGPxIK4fgdkxYp7MyjU/nYISJXs9Ej
- d6+mxKTtL+GlwRczV94FaDoWSJta//4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-BvVv6h9CPfKrgJ_D5QMUIg-1; Tue,
- 16 Jul 2024 12:55:18 -0400
-X-MC-Unique: BvVv6h9CPfKrgJ_D5QMUIg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D0641955D48; Tue, 16 Jul 2024 16:55:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 215FA1955F6B; Tue, 16 Jul 2024 16:55:12 +0000 (UTC)
-Date: Tue, 16 Jul 2024 17:55:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rEFRTgl83Zk8Uv8ogF9dPxemaqqdVNgxbYgMdVota6Y=;
+ b=YXIbtVw4BFIXyJ/RZXKrHKK/1UEaAQb5TfR+NpSSg8LwKXHXnAbNOk1FuZdZ1IL5LoI6cf
+ ytvPxfPemoKWAXgwWJpRDB9+SHi17sH30yXjxXIWZMhrQARR7ZtQbE+yf/5zpceWWP51l5
+ jWbTwN+kSbwA9sYMcUQCB0IHlzjY+CQ=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-698kcM1AN5uBdCzWAYWYqA-1; Tue, 16 Jul 2024 13:03:51 -0400
+X-MC-Unique: 698kcM1AN5uBdCzWAYWYqA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-447f84aadc1so74919251cf.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 10:03:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721149431; x=1721754231;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rEFRTgl83Zk8Uv8ogF9dPxemaqqdVNgxbYgMdVota6Y=;
+ b=LXcu/fY5PV6CP+5tbXNHNgDUhddkwVKJKn2CKqJNhxDDWLkWTD3Bt4ZOFz5bmFeRx/
+ HoDycS51dkEc0XsE2GujjgpWQ5yjSU0TpDb7+xYmcMpqQEegOWZjcwrAzSYvyOBTMk+2
+ nInx+IwK1RCuza965DBNfghWsdboheeQHN6BE0V0ecDxJYNh7iYypmAvKn41fiIriYrl
+ wMDmza6/QOcrKB6P9Ird1iwDaPYDm0aeqxI0AdFRiiqORdmolL+6EAnKkx/lS8DCT1DQ
+ wJCJv/eCw6tIrWsV7ux7GA9NcZb+1jBNnPG+AyjDKXI8GRm8PfnVm6Q7ERfuOueQLF46
+ LXEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUr90hounBWBNr8niAQgI6AovxqR0WoHhMT9fn2iPd3ZSCT6E3jqY4nbzkC3n4UWVAovuU1+PY0u4eXp29mevxGi8qcig=
+X-Gm-Message-State: AOJu0YzkNxfW3xey2LmbvxLpGoxdgSeMj4PNW8nXDSCZ3HlJXiqHwZ1m
+ +qiHZ0zlNQH/57LE/CJPxId4t6Ak02VJ95b/3ltFzWCBRzgzNmBcQ8TpGNWmpjl41BiWloNxglf
+ fLA6/ejykG/x1Q3Wzo4e8QJJzWNX6AqgfZt/ldBTO7GyynmsQJCMw
+X-Received: by 2002:ac8:7fd5:0:b0:447:e51b:60c0 with SMTP id
+ d75a77b69052e-44f7abc7860mr36555231cf.12.1721149430526; 
+ Tue, 16 Jul 2024 10:03:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQutWQBUAPhe72nXv3D5xX3fAhjxJ4/7L0wb9igykvehWAXYWBcysa1OvKRWTaR3R9SMM7RQ==
+X-Received: by 2002:ac8:7fd5:0:b0:447:e51b:60c0 with SMTP id
+ d75a77b69052e-44f7abc7860mr36554871cf.12.1721149430138; 
+ Tue, 16 Jul 2024 10:03:50 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
+ [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f5b7ee809sm37128361cf.35.2024.07.16.10.03.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 10:03:49 -0700 (PDT)
+Message-ID: <b34746d2-b55d-486e-91a8-1394be4dfaeb@redhat.com>
+Date: Tue, 16 Jul 2024 19:03:45 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 00/11] Convert avocado tests to normal Python unittests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 04/11] tests/functional: Add python-based tests to the
- meson build system
-Message-ID: <Zpal7fNcmV8A47BO@redhat.com>
 References: <20240716112614.1755692-1-thuth@redhat.com>
- <20240716112614.1755692-5-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ <ZpalCr_tcx7nsevQ@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ZpalCr_tcx7nsevQ@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240716112614.1755692-5-thuth@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,79 +149,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 01:26:07PM +0200, Thomas Huth wrote:
-> Integrate the new python-based test framework with the meson build
-> system. Since these tests now require the pycotap module, make
-> sure that it gets installed in the venv.
+On 16/07/2024 18.51, Daniel P. Berrangé wrote:
+> On Tue, Jul 16, 2024 at 01:26:03PM +0200, Thomas Huth wrote:
+...
+>> So instead of trying to update the python-based test suite in QEMU
+>> to a newer version of Avocado, we should maybe try to better integrate
+>> it with the meson test runner instead. Indeed most tests work quite
+>> nicely without the Avocado framework already, as you can see with
+>> this patch series - it does not convert all tests, just a subset so
+>> far, but this already proves that many tests only need small modifi-
+>> cations to work without Avocado.
+...
+>> Now if you want to try out these patches: Apply the patches, then
+>> recompile and then run:
+>>
+>>   make check-functional
+>>
+>> You can also run single targets e.g. with:
+>>
+>>   make check-functional-ppc
+>>
+>> You can also run the tests without any test runner now by
+>> setting the PYTHONPATH environment variable to the "python" folder
+>> of your source tree, and by specifying the build directory via
+>> QEMU_BUILD_ROOT (if autodetection fails) and by specifying the
+>> QEMU binary via QEMU_TEST_QEMU_BINARY. For example:
+>>
+>>   export PYTHONPATH=$HOME/qemu/python
+>>   export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
+>>   export PYTHONPATH=$HOME/qemu/build
+>>   ~/qemu/tests/functional/test_virtio_version.py
 > 
-> The changes to the meson.build files are partly based on an earlier
-> patch by Ani Sinha (but heavily modified by Thomas Huth e.g. to use
-> pycotap for running the tests instead).
+> For the whole series as is
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  pythondeps.toml              |  3 +-
->  tests/Makefile.include       | 18 ++++++++-
->  tests/functional/meson.build | 75 ++++++++++++++++++++++++++++++++++++
->  tests/meson.build            |  1 +
->  4 files changed, 95 insertions(+), 2 deletions(-)
->  create mode 100644 tests/functional/meson.build
-
-Strictly speaking this patch probably ought to be #2, otherwise we
-have a bisection window where we've converted some tests but not
-run them.
-
+>   Tested-by: Daniel P. Berrangé <berrange@redhat.com>
 > 
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index f6e590fdd8..c018b4d74a 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -26,9 +26,10 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
->  sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
->  sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
->  
-> -[avocado]
-> +[tests]
->  # Note that qemu.git/python/ is always implicitly installed.
->  # Prefer an LTS version when updating the accepted versions of
->  # avocado-framework, for example right now the limit is 92.x.
->  avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
->  pycdlib = { accepted = ">=1.11.0" }
-> +pycotap = { accepted = ">=1.1.0" }
-> diff --git a/tests/Makefile.include b/tests/Makefile.include
-> index d39d5dd6a4..2bdf607977 100644
-> --- a/tests/Makefile.include
-> +++ b/tests/Makefile.include
-> @@ -9,6 +9,8 @@ check-help:
->  	@echo "Individual test suites:"
->  	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
->  	@echo " $(MAKE) check-qtest            Run qtest tests"
-> +	@echo " $(MAKE) check-functional       Run python-based functional tests"
-> +	@echo " $(MAKE) check-functional-TARG  Run functional tests for a given target"
+> as it does what you claim it does here when I tried it.
 
-We could increase whitespace by 2 to fit TARGET, or shorten all
-cases to TGT ?
+Thanks!
 
->  	@echo " $(MAKE) check-unit             Run qobject tests"
->  	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
->  	@echo " $(MAKE) check-block            Run block tests"
-> @@ -111,7 +113,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
->  
+>> The logs of the tests can be found in the build directory under
+>> tests/functional/<testname> - console log and general logs will
+>> be put in separate files there.
+> 
+> As an example, one dir name appears to be:
+> 
+>    __main__.MemAddrCheck.test_phybits_ok_pentium_pae
+> 
+> I'd rather prefer it if the dir name matched the test script
+> file name - in this case test_mem_addr_space.py, as I don't
+> want to have to lookup which class names were defined inside
+> each test script. We could drop the "test_" prefix from the
+> method name too
+> 
+> IOW, could we make this dir name be:
+> 
+>    test_mem_addr_space.phybits_ok_pentium_pae
 
-The above is a minor non-functional point though so
+I can try to change that, indeed ... but the boilerplate code will increase 
+a little bit, I guess, since I cannot simply rely on the unittest.id() 
+function in that case anymore...
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+  Thomas
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
