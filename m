@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D54C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B52C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTh4k-0007md-Pu; Tue, 16 Jul 2024 08:14:34 -0400
+	id 1sThBy-0004lp-9O; Tue, 16 Jul 2024 08:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sTh4i-0007lJ-Lg
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:14:32 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sTh4g-0005AI-L8
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:14:32 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5c6661bca43so2601919eaf.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721132069; x=1721736869; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=/Tggox4RdI7d6bUKw+7ERaVYQ6HLn2fdjceqxumTiU4=;
- b=lMMDXmwwgVRS+Ph3VikrfWCO3KL7+BmqNtCeGGtFm/Vk7YGajqOpSTXUhvbQS18Ka0
- K1AMBJwKPm/MLCt7ecFy2AxPKnTphRgiF6rqe7ILeiQcLIQV4H/55dtLpig1U0FRr9tG
- Ewb4BCHIuI7kT/KOT5DqxGajNenG8QHDqJcoHkEXfSzMuphECkbHuiYHlxZwj0CeJMzf
- y3aBuWrpFqR50wGUliydTkruAhf5MZVXERsFk0ghh/x05TCFqNVWgI8BIxRfcW5s9Pxt
- NA3InTl9OMZMqWUJZBOZu5DwWAvcbFXax/yghNCd+sFINxbTpmdWSdPP9PL1dxQMrxWd
- TXLA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThBu-0004l0-V5
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:21:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThBq-0006lO-Qi
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:21:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721132513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xMuj4EK4kqfgUO1n0py68lKj8rAeh0YzitqvfWm6EZA=;
+ b=BGk8BqTCoXzkgkfnEv6IuD9KbBuxJgWaOwpr+gHEqAYa5+ZEEjbfD0wg/Ri1ZVVm1XuyMU
+ gmFBs11VfILF3NHXljNWtZuALwJbKR++RhgUMlTkHUj3Cie2yn2+wyNXDviCxByd91Rt+e
+ InMd5aUosQMqE1g5Js22zaeYuYnos9o=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-ttJgH7s3MJ6rUJ-qdY4qcA-1; Tue, 16 Jul 2024 08:21:51 -0400
+X-MC-Unique: ttJgH7s3MJ6rUJ-qdY4qcA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-367a058fa21so3157966f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:21:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721132069; x=1721736869;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Tggox4RdI7d6bUKw+7ERaVYQ6HLn2fdjceqxumTiU4=;
- b=LmgQg6Xro0o+UGZsVwETo+jCSd6l7B6sxDCaiteBwkTJ62Nkd6Q9mnDR0p0xtHdTyp
- szQe6JRqOCR6NeBg7m8vmxK1sNXHh7SEOZNKGksRjRZhGdWrVt/2fEgFKpX7JCh6YTRf
- PcrYxWd19cLrcQTlV+78i9BlO9PO3bnwX8G/+C0Juqm/2rtphD1cRUFZ4abYrXkpUuqp
- 51tKQCBgTTSHyidpg7H7kck55zS+L/1EvAXJJsKbNTsdkR6glkheyzzRN1oIwhpvSU1b
- mV5sKsgB9Xg2Pl0nfVu2Df1Bs3GH5/w7aKpBNNkJPb/pmeKE/PRXpVJhrAVRKcnn7fzU
- IKmQ==
-X-Gm-Message-State: AOJu0Yyw5zkn4pC1e6GgJ4Jb3W4a1WTvdeM8wwIfSc5vWpCFNkKrZAvo
- i2xobJ7iPP9CvW4fbNzcqpCS1TKvkH+NCM1B40bLBZZqW0NPZYa37Te5GrMYrG8=
-X-Google-Smtp-Source: AGHT+IHis4KoGb/Usco8bZ+NtZHbo8CjA+KH8V0mZ5wZqbLQ6limCjFW7xWmhotpk5DXCUY3x9SxjQ==
-X-Received: by 2002:a05:6820:2714:b0:5c6:9320:53a3 with SMTP id
- 006d021491bc7-5d28931fcaemr2481633eaf.4.1721132068911; 
- Tue, 16 Jul 2024 05:14:28 -0700 (PDT)
-Received: from sunil-laptop ([106.51.187.237])
+ d=1e100.net; s=20230601; t=1721132510; x=1721737310;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xMuj4EK4kqfgUO1n0py68lKj8rAeh0YzitqvfWm6EZA=;
+ b=wwOXNft+uTDodQu+i6AI2Gq79HzYjLEfWwgMi4KTOqkKaeFTvbX34IYrbm5lRV08y/
+ 6jXDUXPBrJzC+ACsCAWd59lbJLl+D50Ckpm9RMx+EEfCD4HibYw7EZOwExreB+hRFGEn
+ IX07kQfMyGYBvfDnQ//7TIWyGjrmn8lUBE8KTWLq3dqDGM99SZxARL/NozlGZvh8imOL
+ 2+3ODlg+PsAofxWDvoVj+i2fAK2S93On+qdqe3EQ8E3GfqveSOeeVsZv+y7F9DnxAGnH
+ 4QFyVBbBKGl1XBgZA7lB2F8Ud7BCOWrGZ52lk58KkJscGTETulAnCnqasViFDxeAM9qG
+ mwzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVId98VUMwxKyjvQ6p0o1rh1Mrm4rE7X6wr/lorG/aGavTJArH1bhA3vhttv4mTop2Z0ZDSE2EU0o4Tz+VicV0W0yYer6s=
+X-Gm-Message-State: AOJu0YzOzNYlBJEqxrYheLXLAp8gUU5In9p+amX83aneEPAB6uCw5lBY
+ kDKAr4g0K8PSrBqwFpQMmKuXsJKTMmljc46BCIEAMSPNKZe+IWkYHo3BQ/dFN0A1+6ktdya3sk1
+ q4U1FNHKEe2tzCpAcm6yXoOBEe2b2TxnRp2iweEFc8Wkt3lUw56fC
+X-Received: by 2002:a5d:6b8f:0:b0:367:865d:30b6 with SMTP id
+ ffacd0b85a97d-368273b9a8emr1211767f8f.8.1721132510719; 
+ Tue, 16 Jul 2024 05:21:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkt+rEkL0OxXbWiYKdqJb4uFXMidy2gnOac8MxN91JyuX2Amx8VKGRCK+RmD/8PZZ5MN5OGw==
+X-Received: by 2002:a5d:6b8f:0:b0:367:865d:30b6 with SMTP id
+ ffacd0b85a97d-368273b9a8emr1211749f8f.8.1721132510380; 
+ Tue, 16 Jul 2024 05:21:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
+ ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5ce757ab0ddsm1090819eaf.19.2024.07.16.05.14.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 05:14:28 -0700 (PDT)
-Date: Tue, 16 Jul 2024 17:44:19 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 1/9] hw/riscv/virt-acpi-build.c: Add namespace devices
- for PLIC and APLIC
-Message-ID: <ZpZkGz8mvJH8RstD@sunil-laptop>
-References: <20240715171129.1168896-1-sunilvl@ventanamicro.com>
- <20240715171129.1168896-2-sunilvl@ventanamicro.com>
- <20240716122405.3057913c@imammedo.users.ipa.redhat.com>
+ ffacd0b85a97d-3680dafbf19sm8812126f8f.68.2024.07.16.05.21.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 05:21:49 -0700 (PDT)
+Message-ID: <deb8811d-7293-4e99-aa99-415c1bf8d324@redhat.com>
+Date: Tue, 16 Jul 2024 14:21:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240716122405.3057913c@imammedo.users.ipa.redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-oo1-xc2a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/12] vfio/iommufd: Probe and request hwpt dirty
+ tracking capability
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-9-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240712114704.8708-9-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,85 +108,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 12:24:05PM +0200, Igor Mammedov wrote:
-> On Mon, 15 Jul 2024 22:41:21 +0530
-> Sunil V L <sunilvl@ventanamicro.com> wrote:
+On 7/12/24 13:47, Joao Martins wrote:
+> Probe hardware dirty tracking support by querying device hw capabilities via
+> IOMMUFD_GET_HW_INFO.
 > 
-> > As per the requirement ACPI_080 in the RISC-V Boot and Runtime Services
-> > (BRS) specification [1],  PLIC and APLIC should be in namespace as well.
-> > So, add them using the defined HID.
-> > 
-> > [1] - https://github.com/riscv-non-isa/riscv-brs/blob/main/acpi.adoc
-> >       (commit : 241575b3189c5d9e60b5e55e78cf0443092713bf)
+> In preparation to using the dirty tracking UAPI, request dirty tracking in the
+> HWPT flags when the IOMMU supports dirty tracking.
 > 
-> in spec links 'See RVI ACPI IDs' and right below it 'additional guidance',
-> do lead nowhere hence do not clarify anything.
+> The auto domain logic allows different IOMMU domains to be created when DMA
+> dirty tracking is not desired (and VF can provide it) while others doesn't have
+> it and want the IOMMU capability. This is not used in this way here given how
+> VFIODevice migration capability checking takes place *after* the device
+> attachment.
 > 
-Thanks Igor. I didn't realize links work only in the final PDF generated
-from the sources. Let me point to the PDF itself where these
-requirements were documented first.
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>   include/hw/vfio/vfio-common.h |  1 +
+>   hw/vfio/iommufd.c             | 12 ++++++++++++
+>   2 files changed, 13 insertions(+)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index 2dd468ce3c02..760f31d84ac8 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -97,6 +97,7 @@ typedef struct IOMMUFDBackend IOMMUFDBackend;
+>   
+>   typedef struct VFIOIOASHwpt {
+>       uint32_t hwpt_id;
+> +    uint32_t hwpt_flags;
+>       QLIST_HEAD(, VFIODevice) device_list;
+>       QLIST_ENTRY(VFIOIOASHwpt) next;
+>   } VFIOIOASHwpt;
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index d34dc88231ec..edc8f97d8f3d 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -246,6 +246,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>           }
+>       }
+>   
+> +    /*
+> +     * This is quite early and VFIODevice isn't yet fully initialized,
+> +     * thus rely on IOMMU hardware capabilities as to whether IOMMU dirty
+> +     * tracking is going to be needed.
+> +     */
+> +    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
+> +        flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+> +    }
+> +
+>       if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
+>                                       container->ioas_id, flags,
+>                                       IOMMU_HWPT_DATA_NONE, 0, NULL,
+> @@ -255,6 +264,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>   
+>       hwpt = g_malloc0(sizeof(*hwpt));
+>       hwpt->hwpt_id = hwpt_id;
+> +    hwpt->hwpt_flags = flags;
+>       QLIST_INIT(&hwpt->device_list);
+>   
+>       ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
+> @@ -267,6 +277,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>       vbasedev->hwpt = hwpt;
+>       QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
+>       QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
+> +    container->bcontainer.dirty_pages_supported |=
+> +                              (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING);
+>       return true;
+>   }
+>   
+
+
+Could you please introduce in this patch helper :
+
+   static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+   {
+       return hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+   }
+
+
 
 Thanks,
-Sunil
-> > 
-> > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> > Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> 
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
-> 
-> > ---
-> >  hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
-> >  1 file changed, 32 insertions(+)
-> > 
-> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> > index 0925528160..5f5082a35b 100644
-> > --- a/hw/riscv/virt-acpi-build.c
-> > +++ b/hw/riscv/virt-acpi-build.c
-> > @@ -141,6 +141,30 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
-> >      }
-> >  }
-> >  
-> > +static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
-> > +                                     uint64_t mmio_base, uint64_t mmio_size,
-> > +                                     const char *hid)
-> > +{
-> > +    uint64_t plic_aplic_addr;
-> > +    uint32_t gsi_base;
-> > +    uint8_t  socket;
-> > +
-> > +    for (socket = 0; socket < socket_count; socket++) {
-> > +        plic_aplic_addr = mmio_base + mmio_size * socket;
-> > +        gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-> > +        Aml *dev = aml_device("IC%.02X", socket);
-> > +        aml_append(dev, aml_name_decl("_HID", aml_string("%s", hid)));
-> > +        aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-> > +        aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-> > +
-> > +        Aml *crs = aml_resource_template();
-> > +        aml_append(crs, aml_memory32_fixed(plic_aplic_addr, mmio_size,
-> > +                                           AML_READ_WRITE));
-> > +        aml_append(dev, aml_name_decl("_CRS", crs));
-> > +        aml_append(scope, dev);
-> > +    }
-> > +}
-> > +
-> >  static void
-> >  acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
-> >                      uint32_t uart_irq)
-> > @@ -411,6 +435,14 @@ static void build_dsdt(GArray *table_data,
-> >  
-> >      socket_count = riscv_socket_count(ms);
-> >  
-> > +    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
-> > +        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_PLIC].base,
-> > +                                 memmap[VIRT_PLIC].size, "RSCV0001");
-> > +    } else {
-> > +        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_APLIC_S].base,
-> > +                                 memmap[VIRT_APLIC_S].size, "RSCV0002");
-> > +    }
-> > +
-> >      acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-> >  
-> >      if (socket_count == 1) {
-> 
+
+C.
+
+
 
