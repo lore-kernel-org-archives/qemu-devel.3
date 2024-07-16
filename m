@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D96C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EBDC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 16:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTl2M-00021D-6B; Tue, 16 Jul 2024 12:28:22 -0400
+	id 1sTl2V-0003hw-K1; Tue, 16 Jul 2024 12:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1J-0006VV-K0; Tue, 16 Jul 2024 12:27:19 -0400
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ id 1sTl0n-0005xw-Nb; Tue, 16 Jul 2024 12:26:48 -0400
+Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sTl1F-0006bt-RL; Tue, 16 Jul 2024 12:27:16 -0400
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-25e134abf00so2810986fac.1; 
- Tue, 16 Jul 2024 09:27:12 -0700 (PDT)
+ id 1sTl0k-0006L6-Te; Tue, 16 Jul 2024 12:26:45 -0400
+Received: by mail-oo1-xc29.google.com with SMTP id
+ 006d021491bc7-5cce7626c87so1821139eaf.2; 
+ Tue, 16 Jul 2024 09:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721147230; x=1721752030; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721147201; x=1721752001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RNZWaeAaQd+FgPrD7L1WMdXukzJbPCdt43L1w3ipbZg=;
- b=mE71lWa1v1qDE/6ErfLgBoIRWJs9b8rb2OMtKuUiO0Xx3TegYRuy6zUPDSoL+zVgL3
- tkL4ROMzKlGPN9Ga+NfLbnP2AyTHAxtkQ+egjBuF7AIFqsZSdwUgISihnpA0sR9JvRbI
- 1yn6MAPG1ichwo0WK1P6/qg0GuVY2MZfI5xwETqycvC65gBSJNHdpZvvJcuE6464g/hE
- +hnJlv0QY6tGDt7C1PxuG6aAkD8Y0ARa/gPC9KJt/sD8nsy95G4uTocp0lKgZoFERLoQ
- Nylv430tdWhJP5b18FpxYvcbmhAWiJuEe+Y6AfUKdBYLTQ/qonMc7ysPU0qEU2k3FIbj
- znAw==
+ bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
+ b=P6pmAKKSNNsk4E2vvpl3Tmhggnk8Cj9Yf8HfFcHutaz5YRgoZ5Nf4RyBc6Q0+pMlMx
+ cmvAFNEWDVPsy1rmEen3zKNwayoDc3ey3+BmoIzsC2bJHiurPOUlYsXjvtzXwKmO/4X8
+ w39pgp193SVMVZvjlR2qkForu9R4PDpv03RI6pmWQO+WnR+nYr6fE7/KbHWa5XMJqEsL
+ sNlpFrd2Pn/OO+aGK20gA64nu7NyRLhvMPi3n5iPCDLMMRgpQJZ3J90iFXEkHubAaVzM
+ BRAp/Xtn1ME4f3E4xs3J8tTWE54/jSlQwTWaeF5HsUjKhgP3Y0VL7t5pkyrt0EfMNNNO
+ ubLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721147230; x=1721752030;
+ d=1e100.net; s=20230601; t=1721147201; x=1721752001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RNZWaeAaQd+FgPrD7L1WMdXukzJbPCdt43L1w3ipbZg=;
- b=wXM0yXuD3V/VJtzZmXEy8qq4F/p0rf76oazzPsBpCzZnw9iQwm5K9/XZTDrHioTDeq
- /pAoxaKlt2o2rp4EDzuj6tfN5orp+ccw7OuuQiQPVVZNRYOJn77v/u8m8gXF7CoM9TIA
- ukv02RheXyM3GSQgbUpVJNjM2awo9Kc0KJolzWAgLbE6B36OzaLAe2pt4CYqIcKPJp4V
- 388sS5L+nMIU4OYb+2H9YXRkhRXKmC2P4JDb91bCf2Dcbdp5nbAnIEHjLTAC0OsryMGz
- lOVZjE8XdEt92Ar09/idDbNnK7UWwe4nKhs9ico0TLUYMUHbHh/DRaKROznda5ISQL+M
- 1EHw==
+ bh=SyhirM3GRw4vaEFR7fdPD23qctfXv4t8r+16JQT6sG0=;
+ b=uC0Mh4qQ+PpMgm1KhnZQwH8MdtRVfdx2A35OGOlsgL3/kIj7gSp8HYtPCAqEjj0hlX
+ 4EBI6vGL2I88PHg+8rLOQedNIm43X0mKa3ExpXQI9tvW8D5ZvcEB5oLTb4DTe3vjSZhi
+ l+TORggVhEMeCiJWxNB202Ua0nEX9N6IXh6fJ4cOiENnzAJlKfIlRymOGH2AWgDhc2BA
+ O35xjtsGuo4LBj0Mppn66whHBEHdXR7JRFezdk1un8xQpH7/tLkqkfrkAtubJUMRBwMr
+ 9cz0prjaSg0eeJigbPhuarJeDVTUnzu9sra+bhPvAJscv2mf87RyQh7a+UmygpowEaNr
+ jzzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVBCzZ2zSFjmN9piSosrsSZGwj7DOVt2ZcjRDcMP3z9uJTls1ikW0FImLUht7KbXqu9jkbqhvQlsSr3vEuJUnps06P35E=
-X-Gm-Message-State: AOJu0Yzu1ef3tH3+iCtVW9atZYMcnYFiuf5smVCvxT+M91clWmR8FolA
- mGboFvNj3CgNAXgf5L0kAH16J0OSIRV8bP4jWa7b39VGjvIdJD7j6KBOZA==
-X-Google-Smtp-Source: AGHT+IEyiUUhnKUIXWWM3ddqsHvRndyuL9HtRyw0F+VlNDRYkFMvZgafga3Tg50dngvSzIuvG/1Pwg==
-X-Received: by 2002:a05:6870:6489:b0:23d:a1d0:7334 with SMTP id
- 586e51a60fabf-260bd5bdb07mr2051825fac.17.1721147230428; 
- Tue, 16 Jul 2024 09:27:10 -0700 (PDT)
+ AJvYcCXneEQxVDWFexREytI0AeYXwOgFty0+xqTsDgpXW09WhS2hF6PBFYBZWLEDIo2KY4Vfh64zW3WBcUd4th0U5lXXlHQBrh8=
+X-Gm-Message-State: AOJu0YyiBKrmeLtP+lpnxVDZQFSqqR0IsfLsXGJE8QGvWN8y2hJOq9SW
+ ZetqA05Ofl29uPRzXYBB3E5tFzrikCzVujgiI8cxA/AydgT7LJs9LqqkFQ==
+X-Google-Smtp-Source: AGHT+IEuPNCrQtiixPNowUbictzK3rNDu2r+99ZW1Y0beUXoqfG9FkBltyngmkpQ0RAokqluZ/jA9w==
+X-Received: by 2002:a05:6870:b52b:b0:25e:27a4:4e51 with SMTP id
+ 586e51a60fabf-260bdd82c79mr2131619fac.20.1721147200653; 
+ Tue, 16 Jul 2024 09:26:40 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.27.07
+ d2e1a72fcca58-70b7eca86d6sm6722161b3a.179.2024.07.16.09.26.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 09:27:10 -0700 (PDT)
+ Tue, 16 Jul 2024 09:26:40 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 12/19] ppc/pnv: Implement big-core PVR for Power9/10
-Date: Wed, 17 Jul 2024 02:26:08 +1000
-Message-ID: <20240716162617.32161-13-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH v3 04/19] target/ppc: Move SPR indirect registers into PnvCore
+Date: Wed, 17 Jul 2024 02:26:00 +1000
+Message-ID: <20240716162617.32161-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240716162617.32161-1-npiggin@gmail.com>
 References: <20240716162617.32161-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
+ envelope-from=npiggin@gmail.com; helo=mail-oo1-xc29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,34 +96,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power9/10 CPUs have PVR[51] set in small-core mode and clear in big-core
-mode. This is used by skiboot firmware.
+SPRC/SPRD were recently added to all BookS CPUs supported, but
+they are only tested on POWER9 and POWER10, so restrict them to
+those CPUs.
 
-PVR is not hypervisor-privileged but it is not so important that spapr
-to implement this because it's generally masked out of PVR matching code
-in kernels, and only used by firmware.
+SPR indirect scratch registers presently replicated per-CPU like
+SMT SPRs, but the PnvCore is a better place for them since they
+are restricted to P9/P10.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Also add SPR indirect read access to core thread state for POWER9
+since skiboot accesses that when booting to check for big-core
+mode.
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/hw/ppc/pnv_core.h |  1 +
+ target/ppc/cpu.h          |  3 --
+ target/ppc/cpu_init.c     | 21 +++++++-------
+ target/ppc/misc_helper.c  | 60 ++++++++++++++++++---------------------
+ 4 files changed, 39 insertions(+), 46 deletions(-)
 
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 6dc05534d7..43cfeaa2d4 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -58,6 +58,10 @@ static void pnv_core_cpu_reset(PnvCore *pc, PowerPCCPU *cpu)
-     env->nip = 0x10;
-     env->msr |= MSR_HVB; /* Hypervisor mode */
-     env->spr[SPR_HRMOR] = pc->hrmor;
-+    if (pc->big_core) {
-+        /* Clear "small core" bit on Power9/10 (this is set in default PVR) */
-+        env->spr[SPR_PVR] &= ~PPC_BIT(51);
-+    }
-     hreg_compute_hflags(env);
-     ppc_maybe_interrupt(env);
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index ffec8516ae..693acb189b 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -53,6 +53,7 @@ struct PnvCore {
+     uint32_t hwid;
+     uint64_t hrmor;
  
++    target_ulong scratch[8]; /* SPRC/SPRD indirect SCRATCH registers */
+     PnvCoreTODState tod_state;
+ 
+     PnvChip *chip;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index c78d6ca91a..95ba9e7590 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1253,9 +1253,6 @@ struct CPUArchState {
+     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
+     struct CPUBreakpoint *ciabr_breakpoint;
+     struct CPUWatchpoint *dawr0_watchpoint;
+-
+-    /* POWER CPU regs/state */
+-    target_ulong scratch[8]; /* SCRATCH registers (shared across core) */
+ #endif
+     target_ulong sr[32];   /* segment registers */
+     uint32_t nb_BATs;      /* number of BATs */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index e38f62b08d..164bb62e63 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5777,16 +5777,6 @@ static void register_power_common_book4_sprs(CPUPPCState *env)
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_core_write_generic,
+                  0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_generic, &spr_write_sprc,
+-                 0x00000000);
+-    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 SPR_NOACCESS, SPR_NOACCESS,
+-                 &spr_read_sprd, &spr_write_sprd,
+-                 0x00000000);
+ #endif
+ }
+ 
+@@ -5799,6 +5789,17 @@ static void register_power9_book4_sprs(CPUPPCState *env)
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_WORT, 0);
++    /* SPRC/SPRD exist in earlier CPUs but only tested on POWER9/10 */
++    spr_register_hv(env, SPR_POWER_SPRC, "SPRC",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_generic, &spr_write_sprc,
++                 0x00000000);
++    spr_register_hv(env, SPR_POWER_SPRD, "SPRD",
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 SPR_NOACCESS, SPR_NOACCESS,
++                 &spr_read_sprd, &spr_write_sprd,
++                 0x00000000);
+ #endif
+ }
+ 
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index fa47be2298..4d3c1bddd9 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -26,6 +26,7 @@
+ #include "qemu/main-loop.h"
+ #include "mmu-book3s-v3.h"
+ #include "hw/ppc/ppc.h"
++#include "hw/ppc/pnv_core.h"
+ 
+ #include "helper_regs.h"
+ 
+@@ -321,11 +322,18 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
+ 
+ target_ulong helper_load_sprd(CPUPPCState *env)
+ {
++    /*
++     * SPRD is a HV-only register for Power CPUs, so this will only be
++     * accessed by powernv machines.
++     */
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+ 
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        return env->scratch[(sprc >> 3) & 0x7];
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        return pc->scratch[(sprc >> 3) & 0x7];
+     default:
+         qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+@@ -334,41 +342,27 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+     return 0;
+ }
+ 
+-static void do_store_scratch(CPUPPCState *env, int nr, target_ulong val)
+-{
+-    CPUState *cs = env_cpu(env);
+-    CPUState *ccs;
+-    uint32_t nr_threads = cs->nr_threads;
+-
+-    /*
+-     * Log stores to SCRATCH, because some firmware uses these for debugging
+-     * and logging, but they would normally be read by the BMC, which is
+-     * not implemented in QEMU yet. This gives a way to get at the information.
+-     * Could also dump these upon checkstop.
+-     */
+-    qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
+-
+-    if (nr_threads == 1) {
+-        env->scratch[nr] = val;
+-        return;
+-    }
+-
+-    THREAD_SIBLING_FOREACH(cs, ccs) {
+-        CPUPPCState *cenv = &POWERPC_CPU(ccs)->env;
+-        cenv->scratch[nr] = val;
+-    }
+-}
+-
+ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+ {
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
+-
+-    switch (sprc & 0x3c0) {
+-    case 0: /* SCRATCH0-7 */
+-        do_store_scratch(env, (sprc >> 3) & 0x7, val);
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        /*
++         * Log stores to SCRATCH, because some firmware uses these for
++         * debugging and logging, but they would normally be read by the BMC,
++         * which is not implemented in QEMU yet. This gives a way to get at the
++         * information. Could also dump these upon checkstop.
++         */
++        int nr = (sprc >> 3) & 0x7;
++        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
++        pc->scratch[nr] = val;
+         break;
+     default:
+-        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
++        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
+                                   TARGET_FMT_lx"\n", sprc);
+         break;
+     }
 -- 
 2.45.1
 
