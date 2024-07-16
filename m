@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C61C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92381C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:48:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTelp-0006CI-5H; Tue, 16 Jul 2024 05:46:53 -0400
+	id 1sTelu-0006bK-Ut; Tue, 16 Jul 2024 05:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTelm-000648-UU
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:46:50 -0400
+ id 1sTelt-0006V9-8U
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:46:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTela-0000Mb-TH
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:46:50 -0400
+ id 1sTelr-0000P4-J8
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:46:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721123198;
+ s=mimecast20190719; t=1721123215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sFTtJtdsThEqMi7LJVZYeWhDHRsj81sqf11CY+bIUpM=;
- b=PSJ/MG9CIzxhjgJ9kXJMR6P9BI+NR9Q4IMShM/pHOXDDv2o8sm64p1IM60ETYeumjiCtAY
- Lyh3BMGVeXBGnE38jjqfv4d67mipUGXTnfnsugl2uGZowXlsrWXQZdxocMdfysJAmkLfdM
- uz9w/35MkWM7y5O64hQI0heJyowbYxY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SU1kJ0X8nNI5cBpcnHA6rq85FBjXuBZPC89l80NxH+E=;
+ b=S8xZ4l4HX+QICnT6tfLj1+jxpb3TMxdP1YHrmB5MhadGnoPMv9Gg8Ln6A1nS+OJiXnozSI
+ UUqPy752LogRXt1r7Qc8TusWqxUzKl3IL+3+7gNe5CoWsOed79Yh+ZZq7l8VKr7aIv96vM
+ FoPDhOdAf1hmd9ZGNPHSo939OQDW9Qk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-20GRXQARPnWqsfGkyA3HvQ-1; Tue,
- 16 Jul 2024 05:46:34 -0400
-X-MC-Unique: 20GRXQARPnWqsfGkyA3HvQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-3Jfvq2nQPN6zwA6fiN-6sA-1; Tue,
+ 16 Jul 2024 05:46:53 -0400
+X-MC-Unique: 3Jfvq2nQPN6zwA6fiN-6sA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 880651955F0B; Tue, 16 Jul 2024 09:46:33 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2711A1955D50; Tue, 16 Jul 2024 09:46:52 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.39.192.185])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE5AF300018D; Tue, 16 Jul 2024 09:46:28 +0000 (UTC)
+ id 62035300018E; Tue, 16 Jul 2024 09:46:48 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
  peter.maydell@linaro.org, clg@redhat.com, zhenzhong.duan@intel.com,
  alex.williamson@redhat.com, jasowang@redhat.com
 Cc: yanghliu@redhat.com
-Subject: [PATCH 1/6] Revert "virtio-iommu: Clear IOMMUDevice when VFIO device
- is unplugged"
-Date: Tue, 16 Jul 2024 11:45:03 +0200
-Message-ID: <20240716094619.1713905-2-eric.auger@redhat.com>
+Subject: [PATCH 5/6] hw/vfio/common: Add vfio_listener_region_del_iommu trace
+ event
+Date: Tue, 16 Jul 2024 11:45:07 +0200
+Message-ID: <20240716094619.1713905-6-eric.auger@redhat.com>
 In-Reply-To: <20240716094619.1713905-1-eric.auger@redhat.com>
 References: <20240716094619.1713905-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -63,12 +63,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,77 +86,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 1b889d6e39c32d709f1114699a014b381bcf1cb1.
-There are different problems with that tentative fix:
-- Some resources are left dangling (resv_regions,
-  host_resv_ranges) and memory subregions are left attached to
-  the root MR although freed as embedded in the sdev IOMMUDevice.
-  Finally the sdev->as is not destroyed and associated listeners
-  are left.
-- Even when fixing the above we observe a memory corruption
-  associated with the deallocation of the IOMMUDevice. This can
-  be observed when a VFIO device is hotplugged, hot-unplugged
-  and a system reset is issued. At this stage we have not been
-  able to identify the root cause (IOMMU MR or as structs beeing
-  overwritten and used later on?).
-- Another issue is HostIOMMUDevice are indexed by non aliased
-  BDF whereas the IOMMUDevice is indexed by aliased BDF - yes the
-  current naming is really misleading -. Given the state of the
-  code I don't think the virtio-iommu device works in non
-  singleton group case though.
-
-So let's revert the patch for now. This means the IOMMU MR/as survive
-the hotunplug. This is what is done in the intel_iommu for instance.
-It does not sound very logical to keep those but currently there is
-no symetric function to pci_device_iommu_address_space().
-
-probe_done issue will be handled in a subsequent patch. Also
-resv_regions and host_resv_regions will be deallocated separately.
+Trace when VFIO gets notified about the deletion of an IOMMU MR.
+Also trace the name of the region in the add_iommu trace message.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 21 ---------------------
- 1 file changed, 21 deletions(-)
+ hw/vfio/common.c     | 3 ++-
+ hw/vfio/trace-events | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 33ae61c4a6..4e34dacd6e 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -467,26 +467,6 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
-     return &sdev->as;
- }
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 6d15b36e0b..cfc44a4569 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -599,7 +599,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
+         IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+         int iommu_idx;
  
--static void virtio_iommu_device_clear(VirtIOIOMMU *s, PCIBus *bus, int devfn)
--{
--    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
--    IOMMUDevice *sdev;
--
--    if (!sbus) {
--        return;
--    }
--
--    sdev = sbus->pbdev[devfn];
--    if (!sdev) {
--        return;
--    }
--
--    g_list_free_full(sdev->resv_regions, g_free);
--    sdev->resv_regions = NULL;
--    g_free(sdev);
--    sbus->pbdev[devfn] = NULL;
--}
--
- static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
- {
-     const struct hiod_key *key1 = v1;
-@@ -728,7 +708,6 @@ virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
-     }
+-        trace_vfio_listener_region_add_iommu(iova, end);
++        trace_vfio_listener_region_add_iommu(section->mr->name, iova, end);
+         /*
+          * FIXME: For VFIO iommu types which have KVM acceleration to
+          * avoid bouncing all map/unmaps through qemu this way, this
+@@ -725,6 +725,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     if (memory_region_is_iommu(section->mr)) {
+         VFIOGuestIOMMU *giommu;
  
-     g_hash_table_remove(viommu->host_iommu_devices, &key);
--    virtio_iommu_device_clear(viommu, bus, devfn);
- }
- 
- static const PCIIOMMUOps virtio_iommu_ops = {
++        trace_vfio_listener_region_del_iommu(section->mr->name);
+         QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
+             if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
+                 giommu->n.start == section->offset_within_region) {
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index e16179b507..98bd4dccea 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -95,7 +95,8 @@ vfio_region_read(char *name, int index, uint64_t addr, unsigned size, uint64_t d
+ vfio_iommu_map_notify(const char *op, uint64_t iova_start, uint64_t iova_end) "iommu %s @ 0x%"PRIx64" - 0x%"PRIx64
+ vfio_listener_region_skip(const char *name, uint64_t start, uint64_t end) "SKIPPING %s 0x%"PRIx64" - 0x%"PRIx64
+ vfio_spapr_group_attach(int groupfd, int tablefd) "Attached groupfd %d to liobn fd %d"
+-vfio_listener_region_add_iommu(uint64_t start, uint64_t end) "region_add [iommu] 0x%"PRIx64" - 0x%"PRIx64
++vfio_listener_region_add_iommu(const char* name, uint64_t start, uint64_t end) "region_add [iommu] %s 0x%"PRIx64" - 0x%"PRIx64
++vfio_listener_region_del_iommu(const char *name) "region_del [iommu] %s"
+ vfio_listener_region_add_ram(uint64_t iova_start, uint64_t iova_end, void *vaddr) "region_add [ram] 0x%"PRIx64" - 0x%"PRIx64" [%p]"
+ vfio_known_safe_misalignment(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
+ vfio_listener_region_add_no_dma_map(const char *name, uint64_t iova, uint64_t size, uint64_t page_size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" is not aligned to 0x%"PRIx64" and cannot be mapped for DMA"
 -- 
 2.41.0
 
