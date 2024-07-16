@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A23BC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368DCC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 15:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTjeJ-00061k-Ep; Tue, 16 Jul 2024 10:59:27 -0400
+	id 1sTjl2-000518-Oo; Tue, 16 Jul 2024 11:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTjeH-0005sY-2S
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:59:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sTjkm-0002t5-01; Tue, 16 Jul 2024 11:06:08 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTjeE-0007Ai-IH
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 10:59:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721141961;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S1PxolepRSOrb2n2US5yhZ+v8cjPWcxydv/e3e2gsfg=;
- b=I+y+T/HSinX2+tstBE6QM332bDSlaAjEBC2PNkCIDIL41k2i++fDw2OmLwrT2+7sY/7+FQ
- hM7Gdi/d+5Of3XPYQzuW8RnkyBHQeSsfgp7foYYZWiMMwOMkLy4Bejb+LVVyu27C1Fw3Cy
- YDtWRfOQnLjP3kPatDj9L2Qap754aPc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-wvf5uRbWN6iJyYr0vG3Img-1; Tue, 16 Jul 2024 10:59:18 -0400
-X-MC-Unique: wvf5uRbWN6iJyYr0vG3Img-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42667cc80e8so40101605e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 07:59:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721141957; x=1721746757;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S1PxolepRSOrb2n2US5yhZ+v8cjPWcxydv/e3e2gsfg=;
- b=IOx0htD0MY+tnsRf/VE3DS9/XLHC5gqZusznx0tstAkAG0Yr5adUHh/ECvyLhP5lT7
- flydheMXrSUJUHHNYxu3OGs7vhXnZlCp01zebE3Ddl9KePER8Hq8jdCdmeIKfVfVXayG
- VUidcd9g52wyQNzOYuxd1hqr+aCc78XX6/5T8x+6Yly8qfpVU0u74fsbPqLYZh+66igm
- nMciBmMM5zkxh+Yi87pUpclFBNEn9Dyk8jTycoZn17zyRDFJRqC/lJCGzZhiXCZ+nW0b
- JAXB3ZehWUoe9Wlds+VSamx8aalBORXjzZmXRZGRkWnZCQkbvLBSPV/2IB6sBz23jWEv
- v93g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVo0xUrMRvVQNFPbVO1OPHpVpidGcNMSQesu5vng4wDuoKzUaQjjYrSSvN97xOFatVrr7MSK+Y6U7kBXyb0jX9G/tU1PTM=
-X-Gm-Message-State: AOJu0YwfgzoJX8i6KWt/zVxtnGX+9gRLBWs8v7L/KYjb2dsNOwQXLBUe
- PCoIjnbs59Gr6Lf4pSliTqmOPrp8tYA+/cuO2yCLmarrb9IkXPuPs/QHKIeyD+HhXpsuzYC1iXN
- ifwlb7tq1o7V8xTeYJQy5i5VFJehUlYS2DkyD2qbsqll7EjHAVI6m
-X-Received: by 2002:a05:600c:4f4d:b0:426:6f31:a605 with SMTP id
- 5b1f17b1804b1-427ba64599fmr18891105e9.17.1721141957444; 
- Tue, 16 Jul 2024 07:59:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGVsCu1EKInsOLeUFMHgwraVarKlZvjbJTvFad3RUWeAskgXPWtPSnHMAdALnRCZgZMCkmZQ==
-X-Received: by 2002:a05:600c:4f4d:b0:426:6f31:a605 with SMTP id
- 5b1f17b1804b1-427ba64599fmr18890945e9.17.1721141957087; 
- Tue, 16 Jul 2024 07:59:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dabf02csm9252330f8f.41.2024.07.16.07.59.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 07:59:16 -0700 (PDT)
-Message-ID: <8a642d1e-0ae1-431e-91de-654e717c6894@redhat.com>
-Date: Tue, 16 Jul 2024 16:59:15 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] VIRTIO-IOMMU/VFIO: Revert IOMMUDevice clear and fix
- hotunplug
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sTjki-0002hQ-D9; Tue, 16 Jul 2024 11:06:07 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WNj5x2wjqz67Ct7;
+ Tue, 16 Jul 2024 23:04:37 +0800 (CST)
+Received: from lhrpeml500002.china.huawei.com (unknown [7.191.160.78])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3C143140CB9;
+ Tue, 16 Jul 2024 23:05:53 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml500002.china.huawei.com (7.191.160.78) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 16 Jul 2024 16:05:44 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Tue, 16 Jul 2024 16:05:44 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "will@kernel.org" <will@kernel.org>, "gshan@redhat.com"
+ <gshan@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
+ <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
+ <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "npiggin@gmail.com"
+ <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
+ Linuxarm <linuxarm@huawei.com>, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: RE: [PATCH V16 3/7] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Thread-Topic: [PATCH V16 3/7] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Thread-Index: AQHa13GbaBCSg7yfCECaTcsqvJ7Q7LH5YB+AgAAT/3A=
+Date: Tue, 16 Jul 2024 15:05:44 +0000
+Message-ID: <d2ea492ce0e5476eae53e07bb4d7bbdc@huawei.com>
+References: <20240716111502.202344-1-salil.mehta@huawei.com>
+ <20240716111502.202344-4-salil.mehta@huawei.com>
+ <20240716165315.4862e1a0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240716165315.4862e1a0@imammedo.users.ipa.redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com, jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, alex.williamson@redhat.com, jasowang@redhat.com
-Cc: yanghliu@redhat.com
-References: <20240716094619.1713905-1-eric.auger@redhat.com>
- <5f64db5d-7690-4d18-8c31-cfe8e2083f5f@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <5f64db5d-7690-4d18-8c31-cfe8e2083f5f@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.126.170.92]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,64 +98,253 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+>  From: Igor Mammedov <imammedo@redhat.com>
+>  Sent: Tuesday, July 16, 2024 3:53 PM
+>  To: Salil Mehta <salil.mehta@huawei.com>
+> =20
+>  On Tue, 16 Jul 2024 12:14:58 +0100
+>  Salil Mehta <salil.mehta@huawei.com> wrote:
+> =20
+>  > ACPI GED (as described in the ACPI 6.4 spec) uses an interrupt listed
+>  > in the _CRS object of GED to intimate OSPM about an event. Later then
+>  > demultiplexes the notified event by evaluating ACPI _EVT method to
+>  > know the type of event. Use ACPI GED to also notify the guest kernel
+>  about any CPU hot(un)plug events.
+>  >
+>  > Note, GED interface is used by many hotplug events like memory
+>  > hotplug, NVDIMM hotplug and non-hotplug events like system power
+>  down
+>  > event. Each of these can be selected using a bit in the 32 bit GED IO
+>  > interface. A bit has been reserved for the CPU hotplug event.
+>  >
+>  > ACPI CPU hotplug related initialization should only happen if
+>  > ACPI_CPU_HOTPLUG support has been enabled for particular
+>  architecture.
+>  > Add cpu_hotplug_hw_init() stub to avoid compilation break.
+>  >
+>  > Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+>  > Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+>  > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+>  > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>  > Reviewed-by: Gavin Shan <gshan@redhat.com>
+>  > Reviewed-by: David Hildenbrand <david@redhat.com>
+>  > Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+>  > Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+>  > Tested-by: Xianglai Li <lixianglai@loongson.cn>
+>  > Tested-by: Miguel Luis <miguel.luis@oracle.com>
+>  > Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+>  > Tested-by: Zhao Liu <zhao1.liu@intel.com>
+>  > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> =20
+>  I haven't tested it but looks fine to me, it missing migration bits, but=
+ as long
+>  as there is no actual users in this release it could be a patch on top l=
+ater on.
+> =20
+>  Acked-by: Igor Mammedov <imammedo@redhat.com>
 
-On 7/16/24 16:02, Cédric Le Goater wrote:
-> On 7/16/24 11:45, Eric Auger wrote:
->> 1b889d6e39c3 ("virtio-iommu: Clear IOMMUDevice when VFIO
->> device is unplugged" fixes the VFIO hotplug/hotunplug/hotplug
->> sequence by clearing the IOMMUDevice which backs the VFIO device.
->> However this brings other troubles such as a memory corruption.
->>
->> Even when fixing some cleanups that were missed on the first
->> attempt the memory corruption still exists if the IOMMUDevice is
->> freed. Until we understand the exact cause let's make things simpler:
->> let the backing IOMMUDevice survive the unplug as what is done
->> on intel iommu for instance. Clean up/reset resources that would
->> prevent the device from being hotplugged again (probe_done is removed,
->> [host_]resv_regions are reset). By doing this we also rule out the
->> use case of aliased BDFs which is known to be not functional with
->> virtio-iommu (missing guest kernel support) and the virtio-iommu device
->> implementation is not ready either.
->>
->> This series can be found at:
->> https://github.com/eauger/qemu/tree/virtio_iommu_device_clear_fixes_v1
->>
->>
->> Eric Auger (6):
->>    Revert "virtio-iommu: Clear IOMMUDevice when VFIO device is
->> unplugged"
->>    virtio-iommu: Remove probe_done
->>    virtio-iommu: Free [host_]resv_ranges on unset_iommu_devices
->>    virtio-iommu: Remove the end point on detach
->>    hw/vfio/common: Add vfio_listener_region_del_iommu trace event
->>    virtio-iommu: Add trace point on
->>      virtio_iommu_detach_endpoint_from_domain
->>
->>   include/hw/virtio/virtio-iommu.h |  1 -
->>   hw/vfio/common.c                 |  3 +-
->>   hw/virtio/virtio-iommu.c         | 88 +++++++++++---------------------
->>   hw/vfio/trace-events             |  3 +-
->>   hw/virtio/trace-events           |  1 +
->>   5 files changed, 35 insertions(+), 61 deletions(-)
->>
->
->
-> Tested-by: Cédric Le Goater <clg@redhat.com>
->
-> with a vfio-pci device (mlx5 VF) and a virtio-net-pci device.
+Many thanks!
 
-Many Thanks!
+Best regards
+Salil.
 
-Eric
->
-> Thanks,
->
-> C.
->
+>  >  docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
+>  >  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++++
+>  >  hw/acpi/generic_event_device.c         | 47
+>  ++++++++++++++++++++++++++
+>  >  include/hw/acpi/generic_event_device.h |  4 +++
+>  >  4 files changed, 59 insertions(+), 1 deletion(-)
+>  >
+>  > diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst
+>  > b/docs/specs/acpi_hw_reduced_hotplug.rst
+>  > index 0bd3f9399f..3acd6fcd8b 100644
+>  > --- a/docs/specs/acpi_hw_reduced_hotplug.rst
+>  > +++ b/docs/specs/acpi_hw_reduced_hotplug.rst
+>  > @@ -64,7 +64,8 @@ GED IO interface (4 byte access)
+>  >         0: Memory hotplug event
+>  >         1: System power down event
+>  >         2: NVDIMM hotplug event
+>  > -    3-31: Reserved
+>  > +       3: CPU hotplug event
+>  > +    4-31: Reserved
+>  >
+>  >  **write_access:**
+>  >
+>  > diff --git a/hw/acpi/acpi-cpu-hotplug-stub.c
+>  > b/hw/acpi/acpi-cpu-hotplug-stub.c index 3fc4b14c26..c6c61bb9cd 100644
+>  > --- a/hw/acpi/acpi-cpu-hotplug-stub.c
+>  > +++ b/hw/acpi/acpi-cpu-hotplug-stub.c
+>  > @@ -19,6 +19,12 @@ void legacy_acpi_cpu_hotplug_init(MemoryRegion
+>  *parent, Object *owner,
+>  >      return;
+>  >  }
+>  >
+>  > +void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+>  > +                         CPUHotplugState *state, hwaddr base_addr) {
+>  > +    return;
+>  > +}
+>  > +
+>  >  void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList
+>  > ***list)  {
+>  >      return;
+>  > diff --git a/hw/acpi/generic_event_device.c
+>  > b/hw/acpi/generic_event_device.c index 2d6e91b124..4641933a0f 100644
+>  > --- a/hw/acpi/generic_event_device.c
+>  > +++ b/hw/acpi/generic_event_device.c
+>  > @@ -25,6 +25,7 @@ static const uint32_t ged_supported_events[] =3D {
+>  >      ACPI_GED_MEM_HOTPLUG_EVT,
+>  >      ACPI_GED_PWR_DOWN_EVT,
+>  >      ACPI_GED_NVDIMM_HOTPLUG_EVT,
+>  > +    ACPI_GED_CPU_HOTPLUG_EVT,
+>  >  };
+>  >
+>  >  /*
+>  > @@ -234,6 +235,8 @@ static void
+>  acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
+>  >          } else {
+>  >              acpi_memory_plug_cb(hotplug_dev, &s->memhp_state, dev,
+>  errp);
+>  >          }
+>  > +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>  > +        acpi_cpu_plug_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
+>  >      } else {
+>  >          error_setg(errp, "virt: device plug request for unsupported d=
+evice"
+>  >                     " type: %s", object_get_typename(OBJECT(dev)));
+>  > @@ -248,6 +251,8 @@ static void
+>  acpi_ged_unplug_request_cb(HotplugHandler *hotplug_dev,
+>  >      if ((object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) &&
+>  >                         !(object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM=
+)))) {
+>  >          acpi_memory_unplug_request_cb(hotplug_dev, &s->memhp_state,
+>  > dev, errp);
+>  > +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>  > +        acpi_cpu_unplug_request_cb(hotplug_dev, &s->cpuhp_state, dev,
+>  > + errp);
+>  >      } else {
+>  >          error_setg(errp, "acpi: device unplug request for unsupported
+>  device"
+>  >                     " type: %s", object_get_typename(OBJECT(dev)));
+>  > @@ -261,6 +266,8 @@ static void acpi_ged_unplug_cb(HotplugHandler
+>  > *hotplug_dev,
+>  >
+>  >      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+>  >          acpi_memory_unplug_cb(&s->memhp_state, dev, errp);
+>  > +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>  > +        acpi_cpu_unplug_cb(&s->cpuhp_state, dev, errp);
+>  >      } else {
+>  >          error_setg(errp, "acpi: device unplug for unsupported device"
+>  >                     " type: %s", object_get_typename(OBJECT(dev)));
+>  > @@ -272,6 +279,7 @@ static void acpi_ged_ospm_status(AcpiDeviceIf
+>  *adev, ACPIOSTInfoList ***list)
+>  >      AcpiGedState *s =3D ACPI_GED(adev);
+>  >
+>  >      acpi_memory_ospm_status(&s->memhp_state, list);
+>  > +    acpi_cpu_ospm_status(&s->cpuhp_state, list);
+>  >  }
+>  >
+>  >  static void acpi_ged_send_event(AcpiDeviceIf *adev,
+>  > AcpiEventStatusBits ev) @@ -286,6 +294,8 @@ static void
+>  acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+>  >          sel =3D ACPI_GED_PWR_DOWN_EVT;
+>  >      } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+>  >          sel =3D ACPI_GED_NVDIMM_HOTPLUG_EVT;
+>  > +    } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
+>  > +        sel =3D ACPI_GED_CPU_HOTPLUG_EVT;
+>  >      } else {
+>  >          /* Unknown event. Return without generating interrupt. */
+>  >          warn_report("GED: Unsupported event %d. No irq injected",
+>  > ev); @@ -371,6 +381,42 @@ static const VMStateDescription
+>  vmstate_acpi_ged =3D {
+>  >      }
+>  >  };
+>  >
+>  > +static void acpi_ged_realize(DeviceState *dev, Error **errp) {
+>  > +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
+>  > +    AcpiGedState *s =3D ACPI_GED(dev);
+>  > +    uint32_t ged_events;
+>  > +    int i;
+>  > +
+>  > +    ged_events =3D ctpop32(s->ged_event_bitmap);
+>  > +
+>  > +    for (i =3D 0; i < ARRAY_SIZE(ged_supported_events) && ged_events;=
+ i++)
+>  {
+>  > +        uint32_t event =3D s->ged_event_bitmap &
+>  > + ged_supported_events[i];
+>  > +
+>  > +        if (!event) {
+>  > +            continue;
+>  > +        }
+>  > +
+>  > +        switch (event) {
+>  > +        case ACPI_GED_CPU_HOTPLUG_EVT:
+>  > +            /* initialize CPU Hotplug related regions */
+>  > +            memory_region_init(&s->container_cpuhp, OBJECT(dev),
+>  > +                                "cpuhp container",
+>  > +                                ACPI_CPU_HOTPLUG_REG_LEN);
+>  > +            sysbus_init_mmio(sbd, &s->container_cpuhp);
+>  > +            cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
+>  > +                                &s->cpuhp_state, 0);
+>  > +            break;
+>  > +        }
+>  > +        ged_events--;
+>  > +    }
+>  > +
+>  > +    if (ged_events) {
+>  > +        error_report("Unsupported events specified");
+>  > +        abort();
+>  > +    }
+>  > +}
+>  > +
+>  >  static void acpi_ged_initfn(Object *obj)  {
+>  >      DeviceState *dev =3D DEVICE(obj);
+>  > @@ -411,6 +457,7 @@ static void acpi_ged_class_init(ObjectClass *class=
+,
+>  void *data)
+>  >      dc->desc =3D "ACPI Generic Event Device";
+>  >      device_class_set_props(dc, acpi_ged_properties);
+>  >      dc->vmsd =3D &vmstate_acpi_ged;
+>  > +    dc->realize =3D acpi_ged_realize;
+>  >
+>  >      hc->plug =3D acpi_ged_device_plug_cb;
+>  >      hc->unplug_request =3D acpi_ged_unplug_request_cb; diff --git
+>  > a/include/hw/acpi/generic_event_device.h
+>  > b/include/hw/acpi/generic_event_device.h
+>  > index ba84ce0214..e091ac2108 100644
+>  > --- a/include/hw/acpi/generic_event_device.h
+>  > +++ b/include/hw/acpi/generic_event_device.h
+>  > @@ -62,6 +62,7 @@
+>  >  #include "hw/sysbus.h"
+>  >  #include "hw/acpi/memory_hotplug.h"
+>  >  #include "hw/acpi/ghes.h"
+>  > +#include "hw/acpi/cpu.h"
+>  >  #include "qom/object.h"
+>  >
+>  >  #define ACPI_POWER_BUTTON_DEVICE "PWRB"
+>  > @@ -95,6 +96,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState,
+>  ACPI_GED)
+>  >  #define ACPI_GED_MEM_HOTPLUG_EVT   0x1
+>  >  #define ACPI_GED_PWR_DOWN_EVT      0x2
+>  >  #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+>  > +#define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+>  >
+>  >  typedef struct GEDState {
+>  >      MemoryRegion evt;
+>  > @@ -106,6 +108,8 @@ struct AcpiGedState {
+>  >      SysBusDevice parent_obj;
+>  >      MemHotplugState memhp_state;
+>  >      MemoryRegion container_memhp;
+>  > +    CPUHotplugState cpuhp_state;
+>  > +    MemoryRegion container_cpuhp;
+>  >      GEDState ged_state;
+>  >      uint32_t ged_event_bitmap;
+>  >      qemu_irq irq;
+> =20
 
 
