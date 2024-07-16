@@ -4,73 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6AEC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 01:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D344C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 01:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTWiz-0007j9-Nq; Mon, 15 Jul 2024 21:11:25 -0400
+	id 1sTWla-0003ql-PU; Mon, 15 Jul 2024 21:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sTWiw-0007ic-AU
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:11:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sTWit-000449-Nw
- for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:11:22 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxjuuzyJVm89IEAA--.12519S3;
- Tue, 16 Jul 2024 09:11:15 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxlsWwyJVmEo1KAA--.26235S3; 
- Tue, 16 Jul 2024 09:11:14 +0800 (CST)
-Subject: Re: [PATCH v2 1/4] hw/intc/loongson_ipi_common: Add loongson ipi
- common class
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
- <20240704033802.3838618-2-maobibo@loongson.cn>
- <3cf8df41-f5b2-49b2-be0f-28c96c0e638f@linaro.org>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <4258e01d-1334-dd63-81c3-4895670a9a13@loongson.cn>
-Date: Tue, 16 Jul 2024 09:11:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sTWlZ-0003qA-Jt
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:14:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sTWlY-0004yi-2V
+ for qemu-devel@nongnu.org; Mon, 15 Jul 2024 21:14:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721092441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SHlgMgT9UBt4PrV/SgTuYZQey7Svi/OASjw1leV6MUM=;
+ b=Vv5nPbQYKZQrvCMCWHprzlqZVza37ArdFOj1GA3Ib3NdzJCIFLCLqzJ0n+XTMMahVYjBla
+ RQLnYoHTwHZa5zjClP5D1ZMCqIIZlzOoCMTJoGJxMwV8tqIwDkHoKjKzd1LfxGU7nLKV5g
+ tb8NWdiP9Q4ZRtVC1auoGH//XvrjjZ8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-iVi_21hKO0ersLd0W02VyA-1; Mon,
+ 15 Jul 2024 21:13:59 -0400
+X-MC-Unique: iVi_21hKO0ersLd0W02VyA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 343171955D42; Tue, 16 Jul 2024 01:13:58 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0E45219560B2; Tue, 16 Jul 2024 01:13:53 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, dtatulea@nvidia.com, mst@redhat.com, jasowang@redhat.com,
+ parav@nvidia.com, netdev@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [RFC v2] virtio-net: check the mac address for vdpa device
+Date: Tue, 16 Jul 2024 09:13:49 +0800
+Message-ID: <20240716011349.821777-1-lulu@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <3cf8df41-f5b2-49b2-be0f-28c96c0e638f@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxlsWwyJVmEo1KAA--.26235S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCr4DAw4fAFWDZry8WFy3trc_yoW5CrykpF
- ykCrZ8GryUJrn3Jr13Jr17XFy5Zr95J3Z8JF10qF1UAryDJr1F9w1UWr9Fgw1UJr48Jr1U
- Xr1jqr9ruF17JFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wNVDUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.467,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +77,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When using a VDPA device, it is important to ensure that the MAC address
+in the hardware matches the MAC address from the QEMU command line.
 
+There are only two acceptable situations:
+1. The hardware MAC address is the same as the MAC address specified in the QEMU
+command line, and both MAC addresses are not 0.
+2. The hardware MAC address is not 0, and the MAC address in the QEMU command line is 0.
+In this situation, the hardware MAC address will overwrite the QEMU command line address.
 
-On 2024/7/15 下午11:31, Philippe Mathieu-Daudé wrote:
-> On 4/7/24 05:37, Bibo Mao wrote:
->> Loongson ipi common class and instance is created here, it comes
->> from file loongson_ipi mostly. For the new added loongson ipi
->> common class, there is four interfaces defined here:
->>   1. Interfaces pre_save/post_load are used for future kvm child class
->>   2. Interface get_iocsr_as can be used for different architectures,
->> now MIPS 3A4000 and LoongArch 3A5000 machine use this ip, can inherit
->> this common class.
->>   3. Interace cpu_by_arch_id is added, by default generic function
->> cpu_by_arch_id() is used to search vcpu from physical cpuid, it is
->> generic searching method. Different machine may define other search
->> methods such binary searching method.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   hw/intc/loongson_ipi_common.c         | 394 ++++++++++++++++++++++++++
->>   include/hw/intc/loongson_ipi_common.h |  77 +++++
->>   2 files changed, 471 insertions(+)
->>   create mode 100644 hw/intc/loongson_ipi_common.c
->>   create mode 100644 include/hw/intc/loongson_ipi_common.h
-> 
-> 
->> +static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, 
->> CPUState *cpu,
->> +                                 uint64_t val,
->> +                                 hwaddr addr, MemTxAttrs attrs)
->> +{
->> +    int i, mask = 0, data = 0;
->> +    AddressSpace *iocsr_as;
->> +    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
->> +
->> +    iocsr_as = NULL;
->> +    if (licc->get_iocsr_as) {
->> +        iocsr_as = licc->get_iocsr_as(cpu);
->> +    }
->> +
->> +    if (!iocsr_as) {
->> +        return MEMTX_DECODE_ERROR;
->> +    }
->> +
->> +    /*
->> +     * bit 27-30 is mask for byte writing,
->> +     * if the mask is 0, we need not to do anything.
->> +     */
->> +    if ((val >> 27) & 0xf) {
->> +        data = address_space_ldl_le(iocsr_as, addr, attrs, NULL);
-> 
-> Adding/removing files make noticing the uncommented changes very hard
-> (see my v3).
-> 
-> Here you use little-endian instead of host one. This device is L-E only
-> so this makes sense, but I'd have appreciate at least a comment about
-> it.
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+---
+ hw/net/virtio-net.c | 43 +++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 37 insertions(+), 6 deletions(-)
 
-Good catch, there is compile warning when address_space_ldl() is used, 
-so address_space_ldl_le() is used to remove compile warning. I will 
-double check the compile warning issue.
-
-Regard
-Bibo Mao
-> 
->> +        for (i = 0; i < 4; i++) {
->> +            /* get mask for byte writing */
->> +            if (val & (0x1 << (27 + i))) {
->> +                mask |= 0xff << (i * 8);
->> +            }
->> +        }
->> +    }
->> +
->> +    data &= mask;
->> +    data |= (val >> 32) & ~mask;
->> +    address_space_stl_le(iocsr_as, addr, data, attrs, NULL);
-> 
-> Ditto.
-> 
->> +    return MEMTX_OK;
->> +}
-> 
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9c7e85caea..8f79785f59 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -178,8 +178,8 @@ static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
+          * correctly elsewhere - just not reported by the device.
+          */
+         if (memcmp(&netcfg.mac, &zero, sizeof(zero)) == 0) {
+-            info_report("Zero hardware mac address detected. Ignoring.");
+-            memcpy(netcfg.mac, n->mac, ETH_ALEN);
++          error_report("Zero hardware mac address detected in vdpa device. "
++                       "please check the vdpa device!");
+         }
+ 
+         netcfg.status |= virtio_tswap16(vdev,
+@@ -3579,12 +3579,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+     /* failover_primary_hidden is set during feature negotiation */
+     return qatomic_read(&n->failover_primary_hidden);
+ }
++static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
++                                      MACAddr *cmdline_mac, Error **errp) {
++  struct virtio_net_config hwcfg = {};
++  static const MACAddr zero = {.a = {0, 0, 0, 0, 0, 0}};
+ 
++  vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_ALEN);
++
++  /* For VDPA device: Only two situations are acceptable:
++   * 1.The hardware MAC address is the same as the QEMU command line MAC
++   *   address, and both of them are not 0.
++   * 2.The hardware MAC address is NOT 0, and the QEMU command line MAC address
++   *   is 0. In this situation, the hardware MAC address will overwrite the QEMU
++   *   command line address.
++   */
++
++  if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) != 0) {
++    if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0) ||
++        (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) == 0)) {
++      /* overwrite the mac address with hardware address*/
++      memcpy(&n->mac[0], &hwcfg.mac, sizeof(n->mac));
++      memcpy(&n->nic_conf.macaddr, &hwcfg.mac, sizeof(n->mac));
++
++      return true;
++    }
++  }
++  error_setg(errp, "vdpa hardware mac != the mac address from "
++                   "qemu cmdline, please check the the vdpa device's setting.");
++
++  return false;
++}
+ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VirtIONet *n = VIRTIO_NET(dev);
+     NetClientState *nc;
++    MACAddr macaddr_cmdline;
+     int i;
+ 
+     if (n->net_conf.mtu) {
+@@ -3692,6 +3722,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     virtio_net_add_queue(n, 0);
+ 
+     n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
++    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+     qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+     memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+     n->status = VIRTIO_NET_S_LINK_UP;
+@@ -3739,10 +3770,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     nc->rxfilter_notify_enabled = 1;
+ 
+    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+-        struct virtio_net_config netcfg = {};
+-        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+-        vhost_net_set_config(get_vhost_net(nc->peer),
+-            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
++     if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
++       virtio_cleanup(vdev);
++       return;
++     }
+     }
+     QTAILQ_INIT(&n->rsc_chains);
+     n->qdev = dev;
+-- 
+2.45.0
 
 
