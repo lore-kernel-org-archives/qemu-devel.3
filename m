@@ -4,39 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B7DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF11C3DA60
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sToVg-0000pK-VA; Tue, 16 Jul 2024 16:10:52 -0400
+	id 1sToVc-0000lO-8p; Tue, 16 Jul 2024 16:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToVZ-0000lN-RQ
+ id 1sToVZ-0000kt-8m
  for qemu-devel@nongnu.org; Tue, 16 Jul 2024 16:10:45 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToVU-00008j-2g
+ id 1sToVU-00008E-2b
  for qemu-devel@nongnu.org; Tue, 16 Jul 2024 16:10:45 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1sToVL-0000tR-5w; Tue, 16 Jul 2024 22:10:31 +0200
-Message-ID: <53d0ddf0-07f7-430e-a424-b4fcc38a16d0@maciej.szmigiero.name>
-Date: Tue, 16 Jul 2024 22:10:25 +0200
+ id 1sToV7-0000tB-J4; Tue, 16 Jul 2024 22:10:17 +0200
+Message-ID: <35969f33-f6f3-4c34-8b9d-8c1ebac3305e@maciej.szmigiero.name>
+Date: Tue, 16 Jul 2024 22:10:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
- the channel parameters
-To: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
-Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240620212111.29319-1-farosas@suse.de>
- <20240620212111.29319-7-farosas@suse.de>
- <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com> <Zn15y693g0AkDbYD@x1n>
- <877cdtfcsi.fsf@suse.de> <Zo7cncqkxB89AUBe@x1n> <87y169dmu3.fsf@suse.de>
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v1_00/13=5D_Multifd_=F0=9F=94=80_device_st?=
+ =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
+ <ZniFH14DT6ycjbrL@x1n>
+ <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
+ <Znr9mOo_t0DkkLbD@x1n>
+ <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
+ <Znt0FQHJEtGxcLxj@x1n>
+ <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
+ <ZnxAZDcjlZ5oerq-@x1n>
+ <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
+ <Zn19kaeFiYuwwc4B@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -80,7 +90,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <87y169dmu3.fsf@suse.de>
+In-Reply-To: <Zn19kaeFiYuwwc4B@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=37.28.154.113;
@@ -105,96 +115,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.07.2024 22:16, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
->> On Wed, Jul 10, 2024 at 01:10:37PM -0300, Fabiano Rosas wrote:
->>> Peter Xu <peterx@redhat.com> writes:
->>>
->>>> On Thu, Jun 27, 2024 at 11:27:08AM +0800, Wang, Lei wrote:
->>>>>> Or graphically:
+On 27.06.2024 16:56, Peter Xu wrote:
+> On Thu, Jun 27, 2024 at 11:14:28AM +0200, Maciej S. Szmigiero wrote:
+>> On 26.06.2024 18:23, Peter Xu wrote:
+>>> On Wed, Jun 26, 2024 at 05:47:34PM +0200, Maciej S. Szmigiero wrote:
+>>>> On 26.06.2024 03:51, Peter Xu wrote:
+>>>>> On Wed, Jun 26, 2024 at 12:44:29AM +0200, Maciej S. Szmigiero wrote:
+>>>>>> On 25.06.2024 19:25, Peter Xu wrote:
+>>>>>>> On Mon, Jun 24, 2024 at 09:51:18PM +0200, Maciej S. Szmigiero wrote:
+>>>>>>>> Hi Peter,
+>>>>>>>
+>>>>>>> Hi, Maciej,
+>>>>>>>
+>>>>>>>>
+>>>>>>>> On 23.06.2024 22:27, Peter Xu wrote:
+>>>>>>>>> On Tue, Jun 18, 2024 at 06:12:18PM +0200, Maciej S. Szmigiero wrote:
+>>>>>>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>>>>>>>
+>>>>>>>>>> This is an updated v1 patch series of the RFC (v0) series located here:
+>>>>>>>>>> https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
+>>>>>>>>>
+>>>>>>>>> OK I took some hours thinking about this today, and here's some high level
+>>>>>>>>> comments for this series.  I'll start with which are more relevant to what
+>>>>>>>>> Fabiano has already suggested in the other thread, then I'll add some more.
+>>>>>>>>>
+>>>>>>>>> https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
+>>>>>>>>
+>>>>>>>> That's a long list, thanks for these comments.
+>>>>>>>>
+>>>>>>>> I have responded to them inline below.
+>>>>>>>>(..)
 >>>>>>
->>>>>> 1) client fills the active slot with data. Channels point to nothing
->>>>>>     at this point:
->>>>>>    [a]      <-- active slot
->>>>>>    [][][][] <-- free slots, one per-channel
->>>>>>
->>>>>>    [][][][] <-- channels' p->data pointers
->>>>>>
->>>>>> 2) multifd_send() swaps the pointers inside the client slot. Channels
->>>>>>     still point to nothing:
->>>>>>    []
->>>>>>    [a][][][]
->>>>>>
->>>>>>    [][][][]
->>>>>>
->>>>>> 3) multifd_send() finds an idle channel and updates its pointer:
+>>>>>> 2) Submit this operation to the thread pool and wait for it to complete,
 >>>>>
->>>>> It seems the action "finds an idle channel" is in step 2 rather than step 3,
->>>>> which means the free slot is selected based on the id of the channel found, am I
->>>>> understanding correctly?
+>>>>> VFIO doesn't need to have its own code waiting.  If this pool is for
+>>>>> migration purpose in general, qemu migration framework will need to wait at
+>>>>> some point for all jobs to finish before moving on.  Perhaps it should be
+>>>>> at the end of the non-iterative session.
 >>>>
->>>> I think you're right.
+>>>> So essentially, instead of calling save_live_complete_precopy_end handlers
+>>>> from the migration code you would like to hard-code its current VFIO
+>>>> implementation of calling vfio_save_complete_precopy_async_thread_thread_terminate().
 >>>>
->>>> Actually I also feel like the desription here is ambiguous, even though I
->>>> think I get what Fabiano wanted to say.
->>>>
->>>> The free slot should be the first step of step 2+3, here what Fabiano
->>>> really wanted to suggest is we move the free buffer array from multifd
->>>> channels into the callers, then the caller can pass in whatever data to
->>>> send.
->>>>
->>>> So I think maybe it's cleaner to write it as this in code (note: I didn't
->>>> really change the code, just some ordering and comments):
->>>>
->>>> ===8<===
->>>> @@ -710,15 +710,11 @@ static bool multifd_send(MultiFDSlots *slots)
->>>>        */
->>>>       active_slot = slots->active;
->>>>       slots->active = slots->free[p->id];
->>>> -    p->data = active_slot;
->>>> -
->>>> -    /*
->>>> -     * By the next time we arrive here, the channel will certainly
->>>> -     * have consumed the active slot. Put it back on the free list
->>>> -     * now.
->>>> -     */
->>>>       slots->free[p->id] = active_slot;
->>>>   
->>>> +    /* Assign the current active slot to the chosen thread */
->>>> +    p->data = active_slot;
->>>> ===8<===
->>>>
->>>> The comment I removed is slightly misleading to me too, because right now
->>>> active_slot contains the data hasn't yet been delivered to multifd, so
->>>> we're "putting it back to free list" not because of it's free, but because
->>>> we know it won't get used until the multifd send thread consumes it
->>>> (because before that the thread will be busy, and we won't use the buffer
->>>> if so in upcoming send()s).
->>>>
->>>> And then when I'm looking at this again, I think maybe it's a slight
->>>> overkill, and maybe we can still keep the "opaque data" managed by multifd.
->>>> One reason might be that I don't expect the "opaque data" payload keep
->>>> growing at all: it should really be either RAM or device state as I
->>>> commented elsewhere in a relevant thread, after all it's a thread model
->>>> only for migration purpose to move vmstates..
+>>>> Only it wouldn't be then called VFIO precopy async thread terminate but some
+>>>> generic device state async precopy thread terminate function.
 >>>
->>> Some amount of flexibility needs to be baked in. For instance, what
->>> about the handshake procedure? Don't we want to use multifd threads to
->>> put some information on the wire for that as well?
+>>> I don't understand what did you mean by "hard code".
 >>
->> Is this an orthogonal question?
+>> "Hard code" wasn't maybe the best expression here.
+>>
+>> I meant the move of the functionality that's provided by
+>> vfio_save_complete_precopy_async_thread_thread_terminate() in this patch set
+>> to the common migration code.
 > 
-> I don't think so. You say the payload data should be either RAM or
-> device state. I'm asking what other types of data do we want the multifd
-> channel to transmit and suggesting we need to allow room for the
-> addition of that, whatever it is. One thing that comes to mind that is
-> neither RAM or device state is some form of handshake or capabilities
-> negotiation.
+> I see.  That function only does a thread_join() so far.
+> 
+> So can I understand it as below [1] should work for us, and it'll be clean
+> too (with nothing to hard-code)?
 
-The RFC version of my multifd device state transfer patch set introduced
-a new migration channel header (by Avihai) for clean and extensible
-migration channel handshaking but people didn't like so it was removed in v1.
+It will need some signal to the worker threads pool to terminate before
+waiting for them to finish (as the code in [1] just waits).
+
+In the case of current vfio_save_complete_precopy_async_thread() implementation,
+this signal isn't necessary as this thread simply terminates when it has read
+all the date it needs from the device.
+
+In a worker threads pool case there will be some threads waiting for
+jobs to be queued to them and so they will need to be somehow signaled
+to exit.
+
+> The time to join() the worker threads can be even later, until
+> migrate_fd_cleanup() on sender side.  You may have a better idea on when
+> would be the best place to do it when start working on it.
+> 
+>>
+>>> What I was saying is if we target the worker thread pool to be used for
+>>> "concurrently dump vmstates", then it'll make sense to make sure all the
+>>> jobs there were flushed after qemu dumps all non-iterables (because this
+>>> should be the last step of the switchover).
+>>>
+>>> I expect it looks like this:
+>>>
+>>>     while (pool->active_threads) {
+>>>         qemu_sem_wait(&pool->job_done);
+>>>     }
+> 
+> [1]
+> 
+(..)
+>> I think that with this thread pool introduction we'll unfortunately almost certainly
+>> need to target this patch set at 9.2, since these overall changes (and Fabiano
+>> patches too) will need good testing, might uncover some performance regressions
+>> (for example related to the number of buffers limit or Fabiano multifd changes),
+>> bring some review comments from other people, etc.
+>>
+>> In addition to that, we are in the middle of holiday season and a lot of people
+>> aren't available - like Fabiano said he will be available only in a few weeks.
+> 
+> Right, that's unfortunate.  Let's see, but still I really hope we can also
+> get some feedback from Fabiano before it lands, even with that we have
+> chance for 9.1 but it's just challenging, it's the same condition I
+> mentioned since the 1st email.  And before Fabiano's back (he's the active
+> maintainer for this release), I'm personally happy if you can propose
+> something that can land earlier in this release partly.  E.g., if you want
+> we can at least upstream Fabiano's idea first, or some more on top.
+> 
+> For that, also feel to have a look at my comment today:
+> 
+> https://lore.kernel.org/r/Zn15y693g0AkDbYD@x1n
+> 
+> Feel free to comment there too.  There's a tiny uncertainty there so far on
+> specifying "max size for a device state" if do what I suggested, as multifd
+> setup will need to allocate an enum buffer suitable for both ram + device.
+> But I think that's not an issue and you'll tackle that properly when
+> working on it.  It's more about whether you agree on what I said as a
+> general concept.
+> 
+
+Since it seems that the discussion on Fabiano's patch set has subsided I think
+I will start by basing my updated patch set on top of his RFC and then if
+Fabiano wants to submit v1/v2 of his patch set then I will rebase mine on top
+of it.
+
+Otherwise, you can wait until I have a v2 ready and then we can work with that.
 
 Thanks,
 Maciej
