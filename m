@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A13CEC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287E0C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 11:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTgTI-0003j5-Ro; Tue, 16 Jul 2024 07:35:52 -0400
+	id 1sTgTx-0006hV-6M; Tue, 16 Jul 2024 07:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sTgTI-0003fs-1L
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:35:52 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTgTv-0006cK-TQ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:36:31 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sTgTG-0005M2-8O
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:35:51 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c5112so523231a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 04:35:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTgTu-0005eG-3Z
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 07:36:31 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70b5117ae06so3904299b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 04:36:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721129748; x=1721734548; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=b8mtSeHdgs7/KzJ6E6HcTqjOuu9I5+g5tFY5GMOz27Q=;
- b=x2I6XejazEM25OBayzfCZMoiBSGEqVRrt1LNpHuCr/p0dlXBQYp7UeC/tqAmn1Kued
- 2lHet/mdQgb48P32G5A961P757lhd8jm7anrq5QMClm8oE0CpppPoaGsknenxkezhTyg
- CGLLHUHCs7kmL9iMSRSKhxOx1PCtHAY7jnmYhpqlZdR6OtejsDkSpELy5RNrwEyVdl/O
- tvkVChOmKqdnFCM+fGYajOmZGdgY1XiyFWnREYMX5Pjdi/64+4yefxWGD6WxzaUej2U9
- wxe6rtpoyO8OL0/YTOzrqYmxaM+bOmz965sypizPitinGL4Vo66G2sxdFBKY9fui42HQ
- awGA==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721129788; x=1721734588;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fIrjmnrcime12URGWOz+U3tVhvhx495pQrmKJbaCEkE=;
+ b=zbmzwRiM6T8rwiISfNhDefuTEkyXP4V3uS/i/mWfpUJzFPg2+C1VOzbp9ZmK3PJDE0
+ n/mdgVxwPtMk93c238W80KxW7WYX8024vUEaD0MPHRDP8kyFjTnup8PU0ixHotGpCCeQ
+ MfroBArFEbkEjIjYy90pDYEUFvsIrOovqhIk6K6BlhEnBjFIzz+NmaavxDt/lU+kF415
+ rInk8bhX4Y7nofea+1KZBRi5O2z9LfTdJHnqxmcfndZTtaR0i/W3LWQ/X3hDTOiFLF+Q
+ FfERzjlzzh4W7NtrGRFBpQ/y69pjZKolZVC/MckoMNxrs0C7sBB0Y2tdsaH+/tGExqb5
+ 3AFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721129748; x=1721734548;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b8mtSeHdgs7/KzJ6E6HcTqjOuu9I5+g5tFY5GMOz27Q=;
- b=rupobq8sk3ucEja6VIEAK09yTuzuQ+mmQ4K42KDdUdKYsiPZ5JrxSN+WXR4Wv2gYdW
- 7BlGaRNSSac577tERAE1gQRptnOPc0PMtd33DYDQlqSMSgfnZwX4roDrmBxxPlZXINXT
- 4FqQ1fYdGh52VXDrsBNUiBY4MG8bE5QacbFmnfcIdS+Bi3Bv19QrnmOsrf1+XRKyOk/0
- ZjKfudGzA7zH+jhTE2YEz7qJ7ok/A8yOxvZyan5zN/GMDAmDqTBObgWThpQlg813ikRC
- 4qvjfb1KJc7jPSOSqE7EyM1JLBL+pjKbO+aLud3d490ry/inp0wrVC7L56WiyQ6RelO9
- c5Ng==
-X-Gm-Message-State: AOJu0YwlpYsVgIjSaT4UCqy56B+xtxIizHRQfVjktX5wQWhwW/r6jOn8
- qSGPoSfzWaGNX/dXT1KMLD5zk7IoROf0lV5tCMxQMGZuDcb1RzFqffvV8vc+aPlnl0w/zRN6Jif
- KxddoONYAh7EyPIEl25WfOCr3URV0pqqOsJFW5w==
-X-Google-Smtp-Source: AGHT+IGHwCHFI6ggmfZmb3IgedbXCEg/J6ydNGfG2gidnl+SwyCRov3cb2Zrz6bk1NnY4ZE/6CduzMDu0lgfndqeuHM=
-X-Received: by 2002:a50:99dd:0:b0:57c:947c:52f6 with SMTP id
- 4fb4d7f45d1cf-59ef00b5524mr1215922a12.26.1721129747896; Tue, 16 Jul 2024
- 04:35:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721129788; x=1721734588;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fIrjmnrcime12URGWOz+U3tVhvhx495pQrmKJbaCEkE=;
+ b=VYqT/kIDPaQbU1pYLhEnGJYBGMzLwnRtre04qrt0dWavKiqUhzsdsmV/qSJhK096WP
+ CjrTg7iqfQIujNej0uTlhSqLB9yFk1V2VOe5WL70IhdldGBuYfgkRYv7wBIFIogX9/vm
+ gqDjwtrHx97evGrVMEEwQpnoW9Qh8cMpCvOoGdwPOV2Q4S74b8tw7c/O75ztH65yEr5+
+ lDK3Iz/YGLfvadqH2QlJVP+odHxAEQff7YY3rYKE7U8L2fpr/t0n1+pQ7XHUpXZaSwLp
+ gnCi3sW940zvqvSN1W8GV/WCf1eQDlZqX9bQWkZUFUQIO4nNHuIyycVEl8VLAZLCQ0GF
+ q4lQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqVuhSZP98OY5NrJEvQtvWmA2ItSDcOqO6llAjA9JVvzYtWNiEZJi0w89W9RC5SHkdOi5Bel2vxaNo1+J2lV7NFNrGupk=
+X-Gm-Message-State: AOJu0YwYn7zHC2UV6lASWBvEyM+VIVcTddAroA4H8njs2ihJanw/LZlS
+ MoOgm+cGfrRzqb87aCR+vb2ssuzjBsZQq0t8Vy+dNxrLM+nsuy4dixNpt7l96x0=
+X-Google-Smtp-Source: AGHT+IEQVrTfKfyPKCJhRlvLtuj+FAKBk0KVvsPqj+ybVV0I53B3fwt1t2Qgzq9+Gr8iqBo42rH2aQ==
+X-Received: by 2002:a05:6a20:2590:b0:1c2:1ed4:4f91 with SMTP id
+ adf61e73a8af0-1c3f124ac4bmr1630429637.31.1721129788574; 
+ Tue, 16 Jul 2024 04:36:28 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7ec7da24sm6056707b3a.113.2024.07.16.04.36.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 04:36:28 -0700 (PDT)
+Message-ID: <cdd5ce60-230f-48a1-bcf3-9591b8bede95@daynix.com>
+Date: Tue, 16 Jul 2024 20:36:25 +0900
 MIME-Version: 1.0
-References: <20240715055820.319035-1-richard.henderson@linaro.org>
- <20240715055820.319035-4-richard.henderson@linaro.org>
-In-Reply-To: <20240715055820.319035-4-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jul 2024 12:35:37 +0100
-Message-ID: <CAFEAcA9FnBV+9MtvHf1YkaNxjKJjaX8iYV6gAnH+pUYYaGfunA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] tests/tcg/aarch64: Add test cases for SME FMOPA
- (widening)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, danikhan632@git.sr.ht, qemu-arm@nongnu.org, 
- Daniyal Khan <danikhan632@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/5] target/arm: Always add pmu property
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
+ <20240716-pmu-v2-4-f3e3e4b2d3d5@daynix.com>
+ <CAFEAcA9trFnYaZbVehHhxET68QF=+X6GRsEh+zcavL-1DxDB4w@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA9trFnYaZbVehHhxET68QF=+X6GRsEh+zcavL-1DxDB4w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,25 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 15 Jul 2024 at 06:58, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> From: Daniyal Khan <danikhan632@gmail.com>
->
-> Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-> Message-Id: 172090222034.13953.16888708708822922098-1@git.sr.ht
-> [rth: Split test cases to separate patch, tidy assembly.]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 2024/07/16 20:32, Peter Maydell wrote:
+> On Tue, 16 Jul 2024 at 09:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> kvm-steal-time and sve properties are added for KVM even if the
+>> corresponding features are not available. Always add pmu property too.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   target/arm/cpu.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 9e1d15701468..32508644aee7 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -1781,9 +1781,10 @@ void arm_cpu_post_init(Object *obj)
+>>
+>>       if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+>>           cpu->has_pmu = true;
+>> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+>>       }
+>>
+>> +    object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+>> +
+>>       /*
+>>        * Allow user to turn off VFP and Neon support, but only for TCG --
+>>        * KVM does not currently allow us to lie to the guest about its
+> 
+> Before we do this we need to do something to forbid setting
+> the pmu property to true on CPUs which don't have it. That is:
+> 
+>   * for CPUs which do have a PMU, we should default to present, and
+>     allow the user to turn it on and off with pmu=on/off
+>   * for CPUs which do not have a PMU, we should not let the user
+>     turn it on and off (either by not providing the property, or
+>     else by making the property-set method raise an error, or by
+>     having realize detect the discrepancy and raise an error)
 
-> --- /dev/null
-> +++ b/tests/tcg/aarch64/sme-fmopa-2.c
-> @@ -0,0 +1,51 @@
-> +#include <stdint.h>
-> +#include <stdio.h>
+I don't think there is any reason to prohibit adding a PMU to a CPU that 
+doesn't have when you allow to remove one. For example, neoverse-v1 
+should always have PMU in the real world.
 
-Can we have copyright-and-license header comments on all
-new files, please?
+Perhaps it may make sense to prohibit adding a PMU when the CPU is not 
+Armv8 as the PMU we emulate is apparently PMUv3, which is part of Armv8.
 
-thanks
--- PMM
+Regards,
+Akihiko Odaki
 
