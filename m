@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34879C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 09:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1E2C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTevP-0008QA-QA; Tue, 16 Jul 2024 05:56:47 -0400
+	id 1sTfDQ-0004nv-Ou; Tue, 16 Jul 2024 06:15:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTevO-0008Mb-RH
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:56:46 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sTfDM-0004nA-SO
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:15:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sTevI-0001oJ-9L
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 05:56:46 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1sTfDJ-00060U-VQ
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:15:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721123797;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=PYG+MjjYuVHww8upQug3rNBcnkq772cpBpyVROXN31Y=;
- b=jE5fazUF9HOxywagE9sVY/Ds/Y/NqpYlRCagEQaeaudM9Dys73xbfolGzl3WwJ3I67wa0A
- fAk84QiDLDBgCyw1B7Q15Y//TgI9dn1MpWY6T+LrX3abtUO7QwQFMhj0HOFH/Rnbc3AD34
- DhyFBcxe6xZkAQAYcGOzNc7idBUK8ZM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-O-UVFu8SOG2ifwx1_sAnIw-1; Tue,
- 16 Jul 2024 05:56:32 -0400
-X-MC-Unique: O-UVFu8SOG2ifwx1_sAnIw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65AB4195421B; Tue, 16 Jul 2024 09:56:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF917195605F; Tue, 16 Jul 2024 09:56:23 +0000 (UTC)
-Date: Tue, 16 Jul 2024 10:56:20 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Yan Vugenfirer <yan@daynix.com>
-Subject: Re: [PATCH v4 0/7] util: Introduce qemu_get_runtime_dir()
-Message-ID: <ZpZDseDnUD39cBzE@redhat.com>
-References: <20240716-run-v4-0-5f7a29631168@daynix.com>
- <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
+ s=mimecast20190719; t=1721124914;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0njENZQPQiFEtWR5OrUYIMAkmtiD62XOlemDsVtllj8=;
+ b=gVwms3WKlnUd7+QTss5Qu77gI/pzMgq1Rq79+DH1XeN5VUFJzWsM30pEgx+ZNH/KAPM2fz
+ MZrD4cYmDxZy7zWZOW6yLioqGnTGsciCT5m3aIHpqC9bArs6K7ffIo1RASiAsTgHJiHZNi
+ ZLBQ4KqkmB+o8RFtIMLyXKFiTo3MFa4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-312-WWTm7rA6OQaQWdgTYWLMYw-1; Tue, 16 Jul 2024 06:15:12 -0400
+X-MC-Unique: WWTm7rA6OQaQWdgTYWLMYw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42668699453so50099835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:15:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721124911; x=1721729711;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0njENZQPQiFEtWR5OrUYIMAkmtiD62XOlemDsVtllj8=;
+ b=kyFtv5pTrNrN9v0SgxOfPaFqOEyMvGnDRhgJ22DuhYhN87Vx2heVrbQZCpExHlMsun
+ 8VZTKZc4jH1ijji22XumDkI7c9nj6NrliQzeDEo+z0T42YvL5+DHU2neRBJ8YAZJ/XNi
+ K2Uy5JbBmxUsxooubgJNI/WkbJcZ3+zMjXWgcXqNZeP0za8ZZt3vnNw34Y8N884WFYuK
+ 39EPYepuR9HlcoRCm2/OdbT7N5qz1ktyXnyVlnXCXy2EjJvXFup+BV8gmiOQpEzqryOn
+ +uYYLLw/HKjrB6BwhZRGGdM0V5r47ln5jub2uAMxalZB/WOzEY37GrkQEB8EjwH3fKmt
+ YTNQ==
+X-Gm-Message-State: AOJu0YzcAVSGZ4WUAjRegroX0rSIjCBO9gfDpfsubstZFbmw92GfrI9n
+ 46puDIr42eXuT1jtGraGht1tJwRzaFW76FcTIuv0r6NRfzicUFLcyhUrHkPz43peVmO9NiWEHXZ
+ FoWGJh9QMQHuXcT/Gm9XlXbkDPLvB/mntY3O4GZaC2Amc1a488Mii11jWmhpc+SCiIzJ2ITNVXB
+ vR6CdmagF1wrMkDtvw4wNikC6Ksco=
+X-Received: by 2002:a05:600c:1e14:b0:426:58cb:8ca4 with SMTP id
+ 5b1f17b1804b1-427ba720da7mr12914115e9.37.1721124911552; 
+ Tue, 16 Jul 2024 03:15:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwqdb3z8jrtZBFAqcPQulCKJJwx/cIyqqBQLzLohF+lsEdAjCytLECZTJwHgTNgAccRXGTN2ZLfHpY4ytrPTU=
+X-Received: by 2002:a05:600c:1e14:b0:426:58cb:8ca4 with SMTP id
+ 5b1f17b1804b1-427ba720da7mr12913925e9.37.1721124911242; Tue, 16 Jul 2024
+ 03:15:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
+ <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
+ <ZpUmrTrEnx0RcO2y@x1n>
+In-Reply-To: <ZpUmrTrEnx0RcO2y@x1n>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 16 Jul 2024 15:44:54 +0530
+Message-ID: <CAE8KmOxY_LQ9vNjvmPyRgk_dcnEZFG6_M1q14473NQoBUSM4ow@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Jason Wang <jasowang@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,31 +95,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 11:06:57AM +0300, Michael Tokarev wrote:
-> 16.07.2024 10:27, Akihiko Odaki wrote:
-> > qemu_get_runtime_dir() returns a dynamically allocated directory path
-> > that is appropriate for storing runtime files. It corresponds to "run"
-> > directory in Unix.
-> 
-> Since runtime dir is always used with a filename within, how about
-> 
->   char *qemu_get_runtime_path(const char *filename)
-> 
-> which return RUNTIME_DIR/filename instead of just RUNTIME_DIR ?
+Hello Peter,
 
-Yeah, I agree, every single caller of the function goes on to call
-g_build_filename with the result. The helper should just be building
-the filename itself.
+On Mon, 15 Jul 2024 at 19:10, Peter Xu <peterx@redhat.com> wrote:
+> IMHO it's better we debug and fix all the issues before merging this one,
+> otherwise we may overlook something.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+* Well we don't know where the issue is, not sure where the fix may go
+in, ex. if the issue turns out to be how virsh(1) invokes
+migrate-postcopy, fix may go in virsh(1). Patches in this series
+anyway don't help to fix the migration convergence issue, so they
+could be reviewed independently I guess.
+
+> You could pass over the patch to whoever going to debug this, so it will be included in the whole set to be
+> posted when the bug is completely fixed.
+
+* Yes, this patch series is linked there.
+
+> The protocol should have no restriction on the thread model of a front-end.
+> It only describes the wire protocol.
+>
+> IIUC the protocol was designed to be serialized by nature (where there's no
+> request ID, so we can't match reply to any of the previous response), then
+> the front-end can manage the threads well to serialize all the requests,
+> like using this rwlock.
+
+* I see, okay. The simple protocol definition seems to indicate that
+it is meant for one front-end/back-end pair. If we are dividing the
+front-end across multiple threads, maybe we need a document to
+describe those threads and how they work, at least for the QEMU
+(front-end) side. Because the back-end could be a non-QEMU process, we
+can not do much there. (just thinking)
+
+Thank you.
+---
+  - Prasad
 
 
