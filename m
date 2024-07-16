@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B89C3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1E6C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sThZH-0005Ur-JZ; Tue, 16 Jul 2024 08:46:09 -0400
+	id 1sThdy-0002io-P5; Tue, 16 Jul 2024 08:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sThZ9-0005Np-2f
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:46:00 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sThdv-0002fm-Qh
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:50:55 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sThZ3-0003om-1a
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:45:58 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-70b0d0fefe3so3602856b3a.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:45:52 -0700 (PDT)
+ id 1sThdu-0004tQ-3F
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:50:55 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fbc3a9d23bso38729145ad.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:50:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721133951; x=1721738751;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721134252; x=1721739052;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rOuxCoACSPq1GnfkCfn7NwbtjJPC2BPJg/qz9qiakzk=;
- b=KJf8D+EE8xS8Z9jA4CQc49IxX5y4ZyS3TyuMFVSU4MARiJhkYG+RkOvFB7fMWDjfgJ
- l3O74GL4cV789Jyla3tNoQiUF5YO6j+ilWVe1l6Ojo8xtQXsoo6BtSp0hnG5UyVBY3P9
- gddS6sAAVHwksS6gCINI4cZJnDK2VDyPStCICgFCWb2dzG2aaxaG6BtYYC2rmu0M/E49
- 8Jqgjz8WzCrgPpGe+vKdT3jgFGAiPg1POXCOUaR3SaEYAHTq2WpIpN67VoPpSjlRx3+t
- 4j4Y+GmBoqMxir/MS3UzvBv67guuAKeHMuTBEM1JFJhAAd8F24+MIEf7I9Cuw0vCEmkB
- eHnw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=JQOKrG52Y2enmmfF+L80VMku0KsDSGPKvaWKbQs8/U8=;
+ b=m2yrH7AToaaQYMk4fmqkPFq51mJZG4TbSXdbUnpVZWxlY5zPP6+YkQDwyaTOnbl6mJ
+ Opdp+BBEuvkHivyh3fDlotFK72DvTwpbxfataVrQQH7K7cNB4A/fOu9lqHAwQGkfpIW2
+ /Tld4BsOgtPB81djnErmb1Gt9OOqEFQwpFW4hKjcbjTydv+uSH3h8B2VpNvICPmfBQRf
+ eDcIs/2z/EJjlaDy8qFiczbZXhEEDrQLCLI4gjsZc5PdYaaM/MWHN7MreFXj1OQ2/b6h
+ IZcVpYo5edovVSKNo/g0wZc6Hs9xt1ObZ+sIGmEtnruOZBMP8vmeRni+xc5GQ0L99ouL
+ Zs/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721133951; x=1721738751;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rOuxCoACSPq1GnfkCfn7NwbtjJPC2BPJg/qz9qiakzk=;
- b=YHUaSkUNlAMpUaF2WvN+KJodPtKWPRuUMSOePVWaDjQUVUVRtKh2AeQFpf9379oSDQ
- FMfR1iusQhbLhqEZZ7GIX7PiDh54tvXyWnmhKD0Wzs2D4HGYlzAGUNXMGIgcd6YUGsjH
- aigmMDNxWYCDq3It3MDnM2HdLX7xS49iUYizEmaHd6RSQNwpLMhf7/Ik2vm+ACyLBiwD
- zMe+wujCbC8rsjByWrf5/ntWpjZoZ/w2ZW7YUHJfZoBo3CZZymsNXNH3IynxR0HkaLg7
- ZBf3ZyXzQIHO4cEF0r7iWrg/Qy3n0awynlXpU0BTp2MoZR8fiOso0FB+7EfaRNHMcm9b
- tZGQ==
+ d=1e100.net; s=20230601; t=1721134252; x=1721739052;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JQOKrG52Y2enmmfF+L80VMku0KsDSGPKvaWKbQs8/U8=;
+ b=eFAovTuzR/CFm1/2l375ZkNmi3c14+U/i7NeS+H6PQELM0poGDMwNieCOfz/anw+AU
+ cu0RHejQ1WGlh41R1Cc0OXjcLV2MRl4gbuMIipNhiBLZ+Tq0KMgU26fFL/pDwStfZqD8
+ QNlyZTMl3qNUgSxkMIyJoW8HHB+wyxrY7gUFc1oNI6tCH1fZaUBh4+gkZOF6TioEO3Jz
+ 8nSFNCWEAEsAMPa3T2XUIfoAFO71zQB5Z04mxIPrDVt+p+e5jOeXIGH9Kdm4YWZP+LLg
+ BXbm7uikyS13Iqv4DfqjMnsWsSekDdzeenxtKTNcdNNAC6duHWexUgcB41YNcVHQeWPc
+ JTqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJktcu7rh7XNhHZh1+z+zr6KazYHsldBxR0t4LVY5JeSmMP6a2djkjC3Xjec8oCO2my2U67On978wLAZeSVYGtInBR58Q=
-X-Gm-Message-State: AOJu0YzEIH0oGtYieLZWznEuoX+NUV9lv/PQck261X9SwjgWTv7vjpSR
- fte4ktIvQ/5aHe55E7Jx+w0GLoXXf25GttSZg0FI9T5u32NEGkHWM2pb7jQSi+o=
-X-Google-Smtp-Source: AGHT+IECKw7wFrpgo0Q1tZO8NywNi3az5CXkY7ssFafMP8uZXc9nn/xviLtn1qzYNgqnWYL6t5Cc8Q==
-X-Received: by 2002:a05:6a00:2eaa:b0:70a:f576:beef with SMTP id
- d2e1a72fcca58-70c1fb3c3e0mr2752390b3a.5.1721133951477; 
- Tue, 16 Jul 2024 05:45:51 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7eb9e232sm6180370b3a.34.2024.07.16.05.45.48
+ AJvYcCVxNVS+Y6T6xffxjuQdzsLMERoacSYt0DGJDXKmjRxGGoS51tIUl/Dmpx7JU3Wp7JCp/Q3m4W5mdrxf/DepeLbEbeDr1sw=
+X-Gm-Message-State: AOJu0Yw4fYe6fH2LR1aYW/UFXfGqVGlWSkoIaT4c1ZI0Gk3dU9poTVAE
+ mEOXmOKG00nH8tyH3IEQZa5tSsCrms9pnOybk3jWmfHA66CV5hF+ECKaCOoZQlU=
+X-Google-Smtp-Source: AGHT+IEMWtqXVNzll+cDTZQ2V/r1p60YjN5JuNoyF806T14A3/IAKFSdJwa9M9vuTjedOixfKkqgIg==
+X-Received: by 2002:a17:903:1c9:b0:1fb:6794:b47d with SMTP id
+ d9443c01a7336-1fc3cc6a2b5mr19748855ad.52.1721134252576; 
+ Tue, 16 Jul 2024 05:50:52 -0700 (PDT)
+Received: from localhost ([157.82.202.230])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1fc0bc270f0sm57678555ad.131.2024.07.16.05.50.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 05:45:51 -0700 (PDT)
-Message-ID: <3a74c242-2510-4ae0-8ac7-02b6cf7dde69@daynix.com>
-Date: Tue, 16 Jul 2024 21:45:47 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] util: Introduce qemu_get_runtime_dir()
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Fam Zheng <fam@euphon.net>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>
-References: <20240716-run-v4-0-5f7a29631168@daynix.com>
- <bca5bd94-d6af-450b-a023-0bbe57fdba3f@tls.msk.ru>
- <ZpZDseDnUD39cBzE@redhat.com>
- <CABgObfasdAS443K6+2hHE1chWXei_1ytyRTOi7tX+ma8hZEC6A@mail.gmail.com>
-Content-Language: en-US
+ Tue, 16 Jul 2024 05:50:52 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CABgObfasdAS443K6+2hHE1chWXei_1ytyRTOi7tX+ma8hZEC6A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Date: Tue, 16 Jul 2024 21:50:31 +0900
+Subject: [PATCH v3 2/5] target/arm/kvm: Fix PMU feature bit early
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
+References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
+In-Reply-To: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
+To: Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,37 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/16 19:43, Paolo Bonzini wrote:
-> On Tue, Jul 16, 2024 at 11:56 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> On Tue, Jul 16, 2024 at 11:06:57AM +0300, Michael Tokarev wrote:
->>> 16.07.2024 10:27, Akihiko Odaki wrote:
->>>> qemu_get_runtime_dir() returns a dynamically allocated directory path
->>>> that is appropriate for storing runtime files. It corresponds to "run"
->>>> directory in Unix.
->>>
->>> Since runtime dir is always used with a filename within, how about
->>>
->>>    char *qemu_get_runtime_path(const char *filename)
->>>
->>> which return RUNTIME_DIR/filename instead of just RUNTIME_DIR ?
->>
->> Yeah, I agree, every single caller of the function goes on to call
->> g_build_filename with the result. The helper should just be building
->> the filename itself.
-> 
-> That would mean using variable arguments and g_build_filename_valist().
+kvm_arm_get_host_cpu_features() used to add the PMU feature
+unconditionally, and kvm_arch_init_vcpu() removed it when it is actually
+not available. Conditionally add the PMU feature in
+kvm_arm_get_host_cpu_features() to save code.
 
-We can't prepend an element to va_list. The best thing I came up with is 
-a macro as follows:
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ target/arm/kvm.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-#define get_runtime_path(first_element, ...) ({ \
-   g_autofree char *_s = qemu_get_runtime_dir(); \
-   g_build_filename(_s, first_element, ...); \
-})
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 70f79eda33cd..849e2e21b304 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -280,6 +280,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     if (kvm_arm_pmu_supported()) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+         pmu_supported = true;
++        features |= 1ULL << ARM_FEATURE_PMU;
+     }
+ 
+     if (!kvm_arm_create_scratch_host_vcpu(cpus_to_try, fdarray, &init)) {
+@@ -448,7 +449,6 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     features |= 1ULL << ARM_FEATURE_V8;
+     features |= 1ULL << ARM_FEATURE_NEON;
+     features |= 1ULL << ARM_FEATURE_AARCH64;
+-    features |= 1ULL << ARM_FEATURE_PMU;
+     features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
+ 
+     ahcf->features = features;
+@@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+     }
+-    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
+-        cpu->has_pmu = false;
+-    }
+     if (cpu->has_pmu) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+-    } else {
+-        env->features &= ~(1ULL << ARM_FEATURE_PMU);
+     }
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+         assert(kvm_arm_sve_supported());
 
-But it makes me wonder if we need such a macro.
+-- 
+2.45.2
 
-Regards,
-Akihiko Odaki
 
