@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2696FC3DA59
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA55C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 12:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sThgS-0005xQ-38; Tue, 16 Jul 2024 08:53:32 -0400
+	id 1sThh8-0000cA-Im; Tue, 16 Jul 2024 08:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThgH-0005H7-8B
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:53:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sThgF-0005Ac-9Z
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:53:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721134398;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AKD9kgYhxoujlKSB43EIzyzXcpA7KdSfRQimkttTnQo=;
- b=TXTm1ZyEiX/FhRgWWEPsUY4jZd4X6pBWG0m8DmOP5KhV21pUJgMYnt/CoQw87yeXfUllNl
- PC1P7vTNhk4p5Kp1l8xaRqmKifWRCRDlUOMhMxRsArHTBDm3xwNL0hPapElyUliI6VmTAe
- 5APnG9924PjjOglqGYVvbNEwtN95iCc=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-ckm9I_N-NVe3IDmw1RqGDg-1; Tue, 16 Jul 2024 08:53:15 -0400
-X-MC-Unique: ckm9I_N-NVe3IDmw1RqGDg-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52ebdb0ef28so6738195e87.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sThh4-0000JR-En
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:54:11 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sThh1-0005FH-Ti
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 08:54:10 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-59f9f59b827so426838a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 05:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721134444; x=1721739244; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sqljEqn1C9apKy4t0qCyw2u/x/yBR1Iv52IL5ilLhCY=;
+ b=suOUfdRnh/R8trgJSSDxiCdNE2QIA/WRRwI8Ip1ezlZrXAyOWsKi7tjEJ/ghyKC6jA
+ jUE48EXLBxkAVy6jerrM5e2SwVctjUZQqJ+fUzyTXoiJvgoDlynR0YCXmkyYYDgCigzB
+ 6Vv8/hjIpQ3D4MDfRHbwsZtqjdpLfYpUcOqMPQP/aRK0Yo5pv+X0dBJH+QU/fv+QszHL
+ +mioYnxSPjAbjgjtjCzpZQXuqg8uXxIEJSLr+3KgbgY7mm1ccBTRgwEcsyRNSQ1lLskY
+ aYseuCC6BhMN9KsKImDAYxwY+lNN96voKUcFIb2Vgr4DImY3FKepnpskDTHjv2+DNbtj
+ oPQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721134394; x=1721739194;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AKD9kgYhxoujlKSB43EIzyzXcpA7KdSfRQimkttTnQo=;
- b=AU/2ynKttdlUqHW7aSX9nGlhAXykc/zSyBzffN/a7doWwiDpKUE3QES0h2bO3hiser
- qB75/LTU78/nn1TTuPPdIfiGHk7JaKKVhfCmZrQvp6szvWVS2E0VlAbx9C/oHoB/wOPl
- wBfW6PM7DvzSiC9VzvvX7jykeTRTlz5sqrsMCeFQ84E6ycjEFSQBWzZh+r9jImbcyoeP
- NzzuQgY34yV18jiN9fu97AWXQqqwrcxHc5dTQEMz7893k6WXGaGTyjhqMMkrIOKNLlER
- rqB1qjGxCtmkuo84yx1W1LUcT7b92NabkRyz4dKHS2Ti6G5VhyTYVtitIxu32iGhoCGl
- rA7A==
+ d=1e100.net; s=20230601; t=1721134444; x=1721739244;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sqljEqn1C9apKy4t0qCyw2u/x/yBR1Iv52IL5ilLhCY=;
+ b=qn0GrGGjsIGffBSXv9VGmI3B2Hjg5NB6sb98k7r2gTFjOYQwKbD7bc48MVPe/cvyB5
+ Wsd16jZJeO+FzBNSWgXXnoH3zu08InTAsZ+VdKeS5+DKk4tS6yuzdzvlVRhG75gaTAqv
+ XbR2/g4JD5s5XVA7NKhuiIIeoC6o7yroPfHKj7oKExF5Uvpo250bDQ84GHdj73L42ocU
+ /KBC3PmZlBWE5kJbjr5AmvUcIMWP9gwE0JMxvoCFA2Gxqe2KT47NU7V2Ofm2FtaZiTed
+ DDnioqBsaEtLbOJeCI3+c/lOadn9Z6Vo6prcJl5hz5x4yA0XpYe57fTrHgr3DXhKoIa2
+ qGwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfsrWB3m8TjEaKoK6UbKY/TkOe0XzeTGXMsf/ODPVlnirOQdx+Mxgie1h20ukjLH2YCrJfkIlMK1WWZ1oCtBm0ojoiCy4=
-X-Gm-Message-State: AOJu0Yy6My2ex+n+RqrtQGVHnkBw7JGCxY3lgnSXbFQnjUmhDWf9sCBN
- 2eUvRNgvrLM+4YgJIm9guEqkjLWFh1HuKwudWAMuaANQAp3E/OPx//PFHNsrJLFynI0pJjMRz9T
- 67m8IMde3sdeOY4GAvh/gl9+dUdiqVlQ8888+DrDH+wbx1bxHnURZ
-X-Received: by 2002:a05:6512:31d6:b0:52c:842b:c276 with SMTP id
- 2adb3069b0e04-52edf0389b8mr1547704e87.53.1721134394461; 
- Tue, 16 Jul 2024 05:53:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmr5iD4jUgiQFWQ6waLPwfx8V+mCcCThpDEYQYEmhEHhpNlcMJf+W58yhfoX8a5bT+I1i7yQ==
-X-Received: by 2002:a05:6512:31d6:b0:52c:842b:c276 with SMTP id
- 2adb3069b0e04-52edf0389b8mr1547686e87.53.1721134394025; 
- Tue, 16 Jul 2024 05:53:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
- ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a63449fcsm124982015e9.29.2024.07.16.05.53.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 05:53:13 -0700 (PDT)
-Message-ID: <e8964fb4-3825-4bc4-afd0-740318af26cf@redhat.com>
-Date: Tue, 16 Jul 2024 14:53:12 +0200
+ AJvYcCUT4Ib4NsQ0VqvKzkYYhqsJZFaFPx7fviNA+rzWgDSdR91djS3N9LS/glKsVYJcHgyh1SGbI8tgL1HMIcEp87WE0ev0FXM=
+X-Gm-Message-State: AOJu0Ywkj3tSFp4ykfKAThD7/yUgPzkZ6aeEZ7kBfBNsySYqUurKUZAY
+ u0Pd3hUnCSdvdMgATH6RvE0J5UxFmqvzRvJlblBDBmcUl74zSjGk5PIOZVWl8ss5W9/hfm+1VyI
+ 9gCGjvyAfGwC62IQzcSSKZmGPeu1XpjP99OEEBw==
+X-Google-Smtp-Source: AGHT+IH2Eliu1efySAYYHAHGXrPaDZry8xEgFbC6jwNndsueWrJca5sZiNONC9zsXBngKhCtvNx4kLRoixRPSKjI86Q=
+X-Received: by 2002:a05:6402:1ed6:b0:599:73cf:b219 with SMTP id
+ 4fb4d7f45d1cf-59eef45de4cmr1413426a12.21.1721134444289; Tue, 16 Jul 2024
+ 05:54:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/12] vfio/iommufd: Implement
- VFIOIOMMUClass::query_dirty_bitmap support
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-11-joao.m.martins@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240712114704.8708-11-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com>
+ <20240716-pmu-v2-4-f3e3e4b2d3d5@daynix.com>
+ <CAFEAcA9trFnYaZbVehHhxET68QF=+X6GRsEh+zcavL-1DxDB4w@mail.gmail.com>
+ <cdd5ce60-230f-48a1-bcf3-9591b8bede95@daynix.com>
+In-Reply-To: <cdd5ce60-230f-48a1-bcf3-9591b8bede95@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jul 2024 13:53:52 +0100
+Message-ID: <CAFEAcA8qN3X2yaBjth=1a7kUCmYY32Ho9nG5e2tiL21QCw1DkA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/5] target/arm: Always add pmu property
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,152 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 13:47, Joao Martins wrote:
-> ioctl(iommufd, IOMMU_HWPT_GET_DIRTY_BITMAP, arg) is the UAPI
-> that fetches the bitmap that tells what was dirty in an IOVA
-> range.
-> 
-> A single bitmap is allocated and used across all the hwpts
-> sharing an IOAS which is then used in log_sync() to set Qemu
-> global bitmaps.
-> 
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->   include/sysemu/iommufd.h |  4 ++++
->   backends/iommufd.c       | 29 +++++++++++++++++++++++++++++
->   hw/vfio/iommufd.c        | 27 +++++++++++++++++++++++++++
->   backends/trace-events    |  1 +
->   4 files changed, 61 insertions(+)
-> 
-> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-> index 7416d9219703..869ca8b7ef59 100644
-> --- a/include/sysemu/iommufd.h
-> +++ b/include/sysemu/iommufd.h
-> @@ -57,6 +57,10 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->                                   Error **errp);
->   bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
->                                           bool start, Error **errp);
-> +bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
-> +                                      uint64_t iova, ram_addr_t size,
-> +                                      uint64_t page_size, uint64_t *data,
-> +                                      Error **errp);
->   
->   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
->   
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 239f0976e0ad..46be719cae71 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -262,6 +262,35 @@ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
->       return true;
->   }
->   
-> +bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
-> +                                      uint32_t hwpt_id,
-> +                                      uint64_t iova, ram_addr_t size,
-> +                                      uint64_t page_size, uint64_t *data,
-> +                                      Error **errp)
-> +{
-> +    int ret;
-> +    struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
-> +        .size = sizeof(get_dirty_bitmap),
-> +        .hwpt_id = hwpt_id,
-> +        .iova = iova,
-> +        .length = size,
-> +        .page_size = page_size,
-> +        .data = (uintptr_t)data,
-> +    };
-> +
-> +    ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP, &get_dirty_bitmap);
-> +    trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id, iova, size,
-> +                                           page_size, ret ? errno : 0);
-> +    if (ret) {
-> +        error_setg_errno(errp, errno,
-> +                         "IOMMU_HWPT_GET_DIRTY_BITMAP (iova: 0x%"HWADDR_PRIx
-> +                         " size: 0x%"HWADDR_PRIx") failed", iova, size);
+On Tue, 16 Jul 2024 at 12:36, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> On 2024/07/16 20:32, Peter Maydell wrote:
+> > On Tue, 16 Jul 2024 at 09:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+> > Before we do this we need to do something to forbid setting
+> > the pmu property to true on CPUs which don't have it. That is:
+> >
+> >   * for CPUs which do have a PMU, we should default to present, and
+> >     allow the user to turn it on and off with pmu=on/off
+> >   * for CPUs which do not have a PMU, we should not let the user
+> >     turn it on and off (either by not providing the property, or
+> >     else by making the property-set method raise an error, or by
+> >     having realize detect the discrepancy and raise an error)
+>
+> I don't think there is any reason to prohibit adding a PMU to a CPU that
+> doesn't have when you allow to remove one. For example, neoverse-v1
+> should always have PMU in the real world.
 
-format should be:
-                             " size: 0x"RAM_ADDR_FMT") failed", iova, size);
-    
+For example, the Cortex-M3 doesn't have a PMU anything like the
+A-profile one, so we shouldn't allow the user to set pmu=on.
+The Arm1176 doesn't have a PMU like the one we emulate, so we
+shouldn't allow the user to turn it on. All the CPUs where it
+is reasonable and architecturally valid to have a PMU set the
+ARM_FEATURE_PMU bit, so there (by design) is no CPU where that
+bit isn't set by default but could reasonably be enabled by
+the user.
 
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->                                        uint32_t *type, void *data, uint32_t len,
->                                        uint64_t *caps, Error **errp)
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index da678315faeb..1fd1558fa0c0 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -25,6 +25,7 @@
->   #include "qemu/cutils.h"
->   #include "qemu/chardev_open.h"
->   #include "pci.h"
-> +#include "exec/ram_addr.h"
->   
->   static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->                               ram_addr_t size, void *vaddr, bool readonly)
-> @@ -146,6 +147,31 @@ err:
->       return -EINVAL;
->   }
->   
-> +static int iommufd_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-> +                                      VFIOBitmap *vbmap, hwaddr iova,
-> +                                      hwaddr size, Error **errp)
-> +{
-> +    VFIOIOMMUFDContainer *container = container_of(bcontainer,
-> +                                                   VFIOIOMMUFDContainer,
-> +                                                   bcontainer);
-> +    unsigned long page_size = qemu_real_host_page_size();
-> +    VFIOIOASHwpt *hwpt;
-> +
-> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
-> +        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
-> +            continue;
-> +        }
-> +
-> +        if (!iommufd_backend_get_dirty_bitmap(container->be, hwpt->hwpt_id,
-> +                                              iova, size, page_size,
-> +                                              vbmap->bitmap, errp)) {
-vbmap->bitmap needs a cast.
+Conversely, the PMUv3 is architecturally optional, so it's not
+unreasonable to allow the user to disable it even if the
+real-hardware Neoverse-V1 doesn't provide that as a config
+option in the RTL.
 
-
-Thanks,
-
-C.
-
-
-
-> +            return -EINVAL;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->   {
->       ERRP_GUARD();
-> @@ -754,6 +780,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
->       vioc->detach_device = iommufd_cdev_detach;
->       vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
->       vioc->set_dirty_page_tracking = iommufd_set_dirty_page_tracking;
-> +    vioc->query_dirty_bitmap = iommufd_query_dirty_bitmap;
->   };
->   
->   static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-> diff --git a/backends/trace-events b/backends/trace-events
-> index 28aca3b859d4..40811a316215 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -17,3 +17,4 @@ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
->   iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
->   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
->   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
-> +iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
-
+thanks
+-- PMM
 
