@@ -4,126 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0CA0C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD14FC3DA49
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 10:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTfmV-0003W1-Vp; Tue, 16 Jul 2024 06:51:40 -0400
+	id 1sTfn3-0003nH-OU; Tue, 16 Jul 2024 06:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTfmV-0003VX-9E
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:51:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTfmE-0004CT-VJ
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:51:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721127079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=n6BYVNNZVP39nT/WG3Zy/ktffzjBk2lR8pGdDxK77d0=;
- b=NdYzJKBYQsQOqr/LvZCckBo+QOigM2TQNXN7rXTtWUAo1adWVgPq9uxkeHmlPNc5f3tTGR
- ZY2JZC7VFmxETw6phqbQ/xJFoWHNomJNVZbUESaVaPpeRC+Ktjep4xB1sx7IAj8tCJ3CEJ
- PfE/t6FrhZaGpj8qfRkoRses/WLXmNY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-AWHTaIMqMSWyzy3kH0ey7A-1; Tue, 16 Jul 2024 06:51:18 -0400
-X-MC-Unique: AWHTaIMqMSWyzy3kH0ey7A-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367987cff30so3522424f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:51:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTfmz-0003kn-5X
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:52:09 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sTfmw-0004HC-PX
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 06:52:08 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-70211abf4cbso3619360a34.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 03:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721127125; x=1721731925;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ii84E40ke4EeP+xXzYDBaA7V3jaCkKB2VhGLqcFZKi8=;
+ b=mO6joOU7I4CDtrsoAptbEgfUqkywGrxM93rRhPMEP5Rq6EhCpvJt9XflizJLzO5LnV
+ Fi539xVPqtUjlBQpYouTmM7TwFZ6qSC8y5i6/XJANiHc6o5OJLY6LdDMzZvgcYuR7BYr
+ t22WPHrNbDMXvRhY8afYS6k3oZyfPzLegCyyaEFmXWwWfqwykrTn7zIggAoBV4ehtE9+
+ NSNiGtFNm+IJhlei1EQPBQka0HoI+vQVfK1J1K62QWecsdx4rxvNQY1TZ+m0diarJrYc
+ qT2ECJJ45H5/xPNFA5zS2n48UBma9u4dAfuNEyFNfvLVAM+JXbl/A4HOAHzb/gZf/0Ty
+ Zalw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721127076; x=1721731876;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n6BYVNNZVP39nT/WG3Zy/ktffzjBk2lR8pGdDxK77d0=;
- b=fQfqQp2dyATg2MFxZTjUaqqqF6oQZqaT8Q+R6mnoZySLH5Zdjap4wjXp1Ret2odv9i
- ngp+qscAA1b7dRjm22wvbSckaghiJNPyPjsE97iUvRIFuKq5t1WrOcyVxP60c9l8g3Uv
- TbV6Kox4ByeDTY8VCp+G+1d9LxiMzT544CEXIE7koDePHZ8Q9n3jBgCSMNHQvNFVtqKk
- I+aoa73vRvn37AErEZfC39m7pF3pu32+NooAD9k+cH44fDPMlNXlxNwcQa41VBZ08sGF
- VkXhiNeIoRWxS0rSnNknuNAQu5swtCKFpNqtcl1wi1z0VL2J5+DgHh6fXzkS950ZdSS5
- UOOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWLWOuI19h8/F2V5808YRYZdA5+bJrTz+/9oKeRksqDUp8HS/6fGpJ+nBaAkKGLgHueAOcpUL/vNLQfoITZ8DOV+Gd2Jc=
-X-Gm-Message-State: AOJu0YwlupcN8zRKBIb74nrfumtNsH912Dq174FAI5y4hMQoZ6U/O5Wt
- cmHezoriw8JQuz7smBwwn6HWZtPTVdteZ7RnwJ14jGV9SBR6oQUpJ5p6wT7kgvLWcwff05vNNA7
- v/++iJNfJadcWMH1eJj9sGkVDRWkWkW1k80fBabGjL1TSAeM+onKJQ4WEYXoM
-X-Received: by 2002:a5d:47c4:0:b0:366:f8e7:d898 with SMTP id
- ffacd0b85a97d-36826313455mr1333657f8f.50.1721127076200; 
- Tue, 16 Jul 2024 03:51:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVac2SQ8vzfvBQRbOfLdiA7aboEtfcVWnVpUF5TMNH4dMG5kGTcTMCwMRqbasyOlROIrj18A==
-X-Received: by 2002:a5d:47c4:0:b0:366:f8e7:d898 with SMTP id
- ffacd0b85a97d-36826313455mr1333643f8f.50.1721127075688; 
- Tue, 16 Jul 2024 03:51:15 -0700 (PDT)
-Received: from [192.168.10.47] ([151.95.101.29])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3680db047c4sm8715236f8f.108.2024.07.16.03.51.14
+ d=1e100.net; s=20230601; t=1721127125; x=1721731925;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ii84E40ke4EeP+xXzYDBaA7V3jaCkKB2VhGLqcFZKi8=;
+ b=eKk+Dln9b0VxRlMV32ISY2tK8oJdTXz1SgQKyGeIpnVu+DJdmuVlI0/94eyI02vatI
+ moDaUMYAt4vx35Hx1609G3NgG9ENx3BuqaYK33R226NqEEqq37HVDfa0ApC+yDs7oI7U
+ wrahRyY/Ga2dCooEcPTBU2yxfFE/DKv5oQDGaIGfgvXwq60gDGGNMVmlyj3AsbAJaaGH
+ 8UkHhvassEOanEWaAgjm0o35lMKowh7qHXb+0XehwtTRRSpDr72C35JAtmOzM6tmKBDs
+ KTKaSUInxkv5J/SzyVtyJu/Po+65ucU7ipulPzVC5FPFKj3jVINyot7/fzavY5j9TORt
+ MH/w==
+X-Gm-Message-State: AOJu0YyHtzyDgFAP0gHDJDfUyVrEIQlTSIcWZMAsyZGTo+PKqCGegs+i
+ rVUvVmNi2FMlrFL5pdsh96vV7wNIcpoEMZDY4advn+2SksOOt97Jxpn6fFRSAv4=
+X-Google-Smtp-Source: AGHT+IH/9PuJhO8xiPBVwEeA44XEGiA9WG/+ohjMh4FRAqp8OnNexooJEtQVggA92lKq9V0/7bLfjA==
+X-Received: by 2002:a05:6830:3988:b0:707:8b7d:b924 with SMTP id
+ 46e09a7af769-708d9942fc9mr2031344a34.10.1721127125411; 
+ Tue, 16 Jul 2024 03:52:05 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-78e33bbb4bbsm4654630a12.27.2024.07.16.03.52.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 03:51:14 -0700 (PDT)
-Message-ID: <acc7f06a-0a95-428b-8946-71286fbcceb1@redhat.com>
-Date: Tue, 16 Jul 2024 12:51:13 +0200
+ Tue, 16 Jul 2024 03:52:05 -0700 (PDT)
+Message-ID: <087e1eee-e7e3-4147-9c8c-882d458c1abd@daynix.com>
+Date: Tue, 16 Jul 2024 19:52:00 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/timer/hpet: Fix wrong HPET interrupts
-To: TaiseiIto <taisei1212@outlook.jp>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com
-References: <TY0PR0101MB42852FB948F0F0E8E753E257A4A72@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 1/7] util: Introduce qemu_get_runtime_dir()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>
+References: <20240716-run-v4-0-5f7a29631168@daynix.com>
+ <20240716-run-v4-1-5f7a29631168@daynix.com> <ZpZC8AaUJH9WW6uF@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <TY0PR0101MB42852FB948F0F0E8E753E257A4A72@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <ZpZC8AaUJH9WW6uF@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::332;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,118 +103,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/24 13:54, TaiseiIto wrote:
-> Before this commit, there are 3 problems about HPET timer interrupts. First,
-> HPET periodic timers cause a too early interrupt before HPET main counter
-> value reaches a value written its comparator value register. Second,
-> disabled HPET timers whose comparator value register is not
-> 0xffffffffffffffff cause wrong interrupts. Third, enabled HPET timers whose
-> comparator value register is 0xffffffffffffffff don't cause any interrupts.
-> About the first one, for example, an HPET driver writes 0x00000000aaaaaaaa
-> to an HPET periodic timer comparator value register. As a result, the
-> register becomes 0xffffffffaaaaaaaa because writing to the higher 32 bits of
-> the register doesn't affect itself in periodic mode. (see
-> "case HPET_TN_CMP + 4" of "hpet_ram_write" function.) And "timer->period"
-> which means interrupt period in periodic mode becomes 0xaaaaaaaa. Next, the
-> HPET driver sets the HPET_CFG_ENABLE flag to start the main counter. The
-> comparator value register (0xffffffffaaaaaaaa) indicate the next interrupt
-> time. The period (0xaaaaaaaa) is added to the comparator value register at
-> "hpet_timer" function because "hpet_time_after64" function returns true when
-> the main counter is small. So, the first interrupt is planned when the main
-> counter is 0x0000000055555554, but the first interrupt should occur when the
-> main counter is 0x00000000aaaaaaaa. To solve this problem, I fix
-> "case HPET_TN_CMP + 4" of "hpet_ram_write" function to ensure that writings
-> to higher 32 bits of a comparator value register reflect itself even if in
-> periodic mode. About the other two problems, it was decided by comparator
-> value whether each timer is enabled, but it should be decided by
-> "timer_enabled" function which confirm "HPET_TN_ENABLE" flag. To solve these
-> problems, I fix the code to decide correctly whether each timer is enabled.
-> After this commit, the 3 problems are solved. First, HPET periodic timers
-> cause the first interrupt when the main counter value reaches a value
-> written its comparator value register. Second, disabled HPET timers never
-> cause any interrupt. Third, enabled HPET timers cause interrupts correctly
-> even if an HPET driver writes 0xffffffffffffffff to its comparator value
-> register.
+On 2024/07/16 18:53, Daniel P. Berrangé wrote:
+> On Tue, Jul 16, 2024 at 04:27:31PM +0900, Akihiko Odaki wrote:
+>> qemu_get_runtime_dir() returns a dynamically allocated directory path
+>> that is appropriate for storing runtime files. It corresponds to "run"
+>> directory in Unix.
+>>
+>> With a tree-wide search, it was found that there are several cases
+>> where such a functionality is implemented so let's have one as a common
+>> utlity function.
+>>
+>> A notable feature of qemu_get_runtime_dir() is that it uses
+>> $XDG_RUNTIME_DIR if available. While the function is often called by
+>> executables which requires root privileges, it is still possible that
+>> they are called from a user without privilege to write the system
+>> runtime directory. In fact, I decided to write this patch when I ran
+>> virtiofsd in a Linux namespace created by a normal user and realized
+>> it tries to write the system runtime directory, not writable in this
+>> case. $XDG_RUNTIME_DIR should provide a writable directory in such
+>> cases.
+>>
+>> This function does not use qemu_get_local_state_dir() or its logic
+>> for Windows. Actually the implementation of qemu_get_local_state_dir()
+>> for Windows seems not right as it calls g_get_system_data_dirs(),
+>> which refers to $XDG_DATA_DIRS. In Unix terminology, it is basically
+>> "/usr/share", not "/var", which qemu_get_local_state_dir() is intended
+>> to provide. Instead, this function try to use the following in order:
+>> - $XDG_RUNTIME_DIR
+>> - LocalAppData folder
+>> - get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+>>
+>> This function does not use g_get_user_runtime_dir() either as it
+>> falls back to g_get_user_cache_dir() when $XDG_DATA_DIRS is not
+>> available. In the case, we rather use:
+>> get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Message-Id: <20230921075425.16738-2-akihiko.odaki@daynix.com>
+>> ---
+>>   include/qemu/osdep.h | 12 ++++++++++++
+>>   util/oslib-posix.c   | 11 +++++++++++
+>>   util/oslib-win32.c   | 26 ++++++++++++++++++++++++++
+>>   3 files changed, 49 insertions(+)
+>>
+>> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>> index 191916f38e6d..fe8609fc1375 100644
+>> --- a/include/qemu/osdep.h
+>> +++ b/include/qemu/osdep.h
+>> @@ -670,6 +670,18 @@ void qemu_set_cloexec(int fd);
+>>    */
+>>   char *qemu_get_local_state_dir(void);
+>>   
+>> +/**
+>> + * qemu_get_runtime_dir:
+>> + *
+>> + * Return a dynamically allocated directory path that is appropriate for storing
+>> + * runtime files. It corresponds to "run" directory in Unix, and uses
+>> + * $XDG_RUNTIME_DIR if available.
+>> + *
+>> + * The caller is responsible for releasing the value returned with g_free()
+>> + * after use.
+>> + */
+>> +char *qemu_get_runtime_dir(void);
+>> +
+>>   /**
+>>    * qemu_getauxval:
+>>    * @type: the auxiliary vector key to lookup
+>> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+>> index e76441695bdc..9599509a9aa7 100644
+>> --- a/util/oslib-posix.c
+>> +++ b/util/oslib-posix.c
+>> @@ -278,6 +278,17 @@ qemu_get_local_state_dir(void)
+>>       return get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR);
+>>   }
+>>   
+>> +char *
+>> +qemu_get_runtime_dir(void)
+>> +{
+>> +    char *env = getenv("XDG_RUNTIME_DIR");
+>> +    if (env) {
+>> +        return g_strdup(env);
+>> +    }
+>> +
+>> +    return get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run");
+>> +}
 > 
-> Signed-off-by: TaiseiIto <taisei1212@outlook.jp>
-> ---
+> I'm not convinced this is the correct logic to be following.
 > 
-> Changes in v2:
-> - Reflect writings to higher 32 bits of a comparator value register rather
->    than clearing these bits.
-> - Fix wrong indents.
-> - Link to v1: https://lore.kernel.org/qemu-devel/TY0PR0101MB4285838139BC56DEC3D1CCFDA4CE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com/
-> 
->   hw/timer/hpet.c | 24 +++++++++++++++---------
->   1 file changed, 15 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-> index 01efe4885d..4b6352e257 100644
-> --- a/hw/timer/hpet.c
-> +++ b/hw/timer/hpet.c
-> @@ -552,6 +552,10 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
->                   timer->period =
->                       (timer->period & 0xffffffff00000000ULL) | new_val;
->               }
-> +            /*
-> +             * FIXME: on a 64-bit write, HPET_TN_SETVAL should apply to the
-> +             * high bits part as well.
-> +             */
->               timer->config &= ~HPET_TN_SETVAL;
->               if (hpet_enabled(s)) {
->                   hpet_set_timer(timer);
-> @@ -562,20 +566,22 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
->               if (!timer_is_periodic(timer)
->                   || (timer->config & HPET_TN_SETVAL)) {
->                   timer->cmp = (timer->cmp & 0xffffffffULL) | new_val << 32;
-> -            } else {
-> +            }
-> +            if (timer_is_periodic(timer)) {
->                   /*
->                    * FIXME: Clamp period to reasonable min value?
->                    * Clamp period to reasonable max value
->                    */
-> -                new_val &= (timer->config & HPET_TN_32BIT ? ~0u : ~0ull) >> 1;
-> +                new_val = MIN(new_val, ~0u >> 1);
-> +                timer->cmp = (timer->cmp & 0xffffffffULL) | new_val << 32;
+> In the cover letter you mention not using g_get_user_runtime_dir()
+> because it falls back to XDG_CACHE_HOME, and we need to fallback
+> to LOCALSTATEDIR/run. This is not right for normal users though,
+> where falling back to LOCALSTATEDIR/run is always wrong, as it
+> won't be writable - the g_get_user_runtime_dir() fallback is
+> desirable for non-root users.
 
-This seems wrong to me.  The comparator must be reset using 
-HPET_TN_SETVAL, otherwise it just keeps running.  From the specification:
+It also checks LocalAppData, which should be usually available.
 
-"If software wants to change the periodic rate, it should write a new 
-value to the comparator value register.  At the point when the timer’s 
-comparator indicates a match, this new value will be added to derive the 
-next matching point. So as to avoid race conditions where the new value 
-is written just as a match occurs, either the main counter should be 
-halted or the comparator disabled when the new periodic rate is written".
+g_get_user_runtime_dir() is not a proper fallback in case neither of 
+XDG_RUNTIME_DIR and LocalAppData are available. g_get_user_cache_dir(), 
+which gets called by g_get_user_runtime_dir(), internally uses:
+- XDG_CACHE_HOME or
+- FOLDERID_InternetCache
 
-The sentence "at the point when the timer’s comparator indicates a 
-match" indicates that the comparator register is not written.
+g_get_user_cache_dir() just returns NULL if neither of them is available.
 
-I suspect you're hitting the other issue, and HPET_TN_SETVAL is cleared 
-incorrectly by a 64-bit write.  I'll try sending out a patch to fix that.
+We can't expect XDG_CACHE_HOME is present when XDG_RUNTIME_DIR is 
+missing. FOLDERID_InternetCache points to 
+%LOCALAPPDATA%\Microsoft\Windows\Temporary Internet Files, according to:
+https://learn.microsoft.com/en-us/windows/win32/shell/knownfolderid
 
-> -                    if ((&s->timer[i])->cmp != ~0ULL) {
-> +                    if (hpet_enabled(s)) {
->                           hpet_set_timer(&s->timer[i]);
->                       }
->                   }
+So we can't expect FOLDERID_InternetCache is available when LocalAppData 
+is missing.
 
-This is incorrect too.  "hpet_enabled(s)" is always true here; I think 
-the bug is that timer_enabled() should only affect generation of 
-interrupts.  Are you perhaps using level-triggered interrupts?  If so, 
-it makes sense that you want the timer to be running - and then when 
-setting HPET_TN_ENABLE the interrupt will fire.
-
-However, we're making progress; you're just finding more bugs.
-
-I have some ideas on what needs to be fixed next, and I placed them at a 
-branch "hpet" of https://gitlab.com/bonzini/qemu.git.  Unfortunately, I 
-don't have a way to test them (writing testcases is on my list but I 
-don't have time right now) and as the branch proceeds things get more 
-experimental; but let me know if it helps or if you can make small 
-changes to the patches that fix your testcase.
-
-Paolo
-
+Regards,
+Akihiko Odaki
 
