@@ -4,98 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94ECCC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 17:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 989FFC3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 17:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTmAh-0008C5-PZ; Tue, 16 Jul 2024 13:41:03 -0400
+	id 1sTmEQ-000660-MS; Tue, 16 Jul 2024 13:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTmAa-0008Ab-Qv
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:40:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTmEO-000636-AA
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:44:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sTmAU-000439-L1
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:40:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTmEL-0004Kf-1y
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 13:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721151648;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1721151888;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PHiqoCl323aqZPUSxM4kA48IRRNUeQ2nvta0Ggt1GDo=;
- b=DoSBXnoV4Z7TnBRhXqqivyjptYBCTJlNtdM4Twr/yUdS1u2ubT1J/AYTvlRz2oAtXRu+ob
- KRebquMJ+jMUCu6AJJSodSY9XnC+xzcL2ddFq8Es7CYKcgD0ooQpQ26YpgCt/FAOQi8okN
- xUu/8La78y6ESkSn1v5k5UIZNAZrTGY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/ShBRzrUmvjtJTNQztmfGvpQ1puJROasGF6g5BEavNo=;
+ b=BNRDQUiFNt8HdMDVPvj+0Nn6XzPuADnl7fmgEwj3vhHgOYDFUwzyYfYfFTiWr4m/RwG1Ko
+ 8ifkGFT9XYlHOjRD4mGGPVPVk/9O6L7HKydZS2CGDr3lNMS54089mUu+wJz6d5TeYlCn7y
+ uy96kAhLjFjYdfvg6XczGs7My0oUSNc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-02jS2VTcNUST7QlayoA7xQ-1; Tue, 16 Jul 2024 13:40:47 -0400
-X-MC-Unique: 02jS2VTcNUST7QlayoA7xQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3678fd1edf8so3289907f8f.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 10:40:46 -0700 (PDT)
+ us-mta-412-Qrns_1N7P0umPso-d3h4ag-1; Tue, 16 Jul 2024 13:44:46 -0400
+X-MC-Unique: Qrns_1N7P0umPso-d3h4ag-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-44f594e5605so62580731cf.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 10:44:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721151646; x=1721756446;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PHiqoCl323aqZPUSxM4kA48IRRNUeQ2nvta0Ggt1GDo=;
- b=sAIJR/NVpw7+8wOFy8aDJApiVfr1pQBtlA3Q+RMLzZD/KSvuGq7m86wvh1hBhBGjxA
- vIM6Z3B3DumIQv2Dj/n6oLU5Ors/faQINmgIms8R7sp0ESzMioT89X8KADDxn/lJIB6j
- 37fA0UnGLGwskK9jXrWDPfHGWuv37R6XrKaFXblqnrY8RFopME9rq8NuX+jWFzQ+IDrW
- 0YCMMU/B1LOtuS82ia0WsBoLRisyO1GLmmQH6DBT9Ro+iBWKbw79b1EZA29d8CbA4V8l
- C6k4IDrnCenicQkSys4EiQHxFBSdIp3Jf4tLs0A29ekb3DvgEVA2HdgSoeWppASp4ACT
- +Lvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzRMDN3QCsz3gWraMeRblUMLGO1J82P74QLhlG7hWx5zSMl0xG0yIvFoMxKlH//40rkXEu4hpUv6jF3pZTLyyTaqm7n8Q=
-X-Gm-Message-State: AOJu0YxhUGEtviP2nueZp+meajKMbiIIMguadabatRrgpaf5LFY5cYsN
- lkJJWWzMDBz4rViMCAMJZ9XQ77ZZZ5syL1ZddRpArk9w0woqh7wX9ssz6D9QjcnZlSiRVSdTtgM
- NXtAkVU9z6igUPTYtxnCHSRRfH3Ku01gTUK342+XHSwv6YdBNTgoL
-X-Received: by 2002:a5d:5582:0:b0:361:94d9:1e9f with SMTP id
- ffacd0b85a97d-3682734828dmr1797863f8f.7.1721151646089; 
- Tue, 16 Jul 2024 10:40:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNG20euGOoSq4tdUGY7h9qrT/UGYpUMWEMyqYq/KDNlg1Y+LQwAVzqMhzMfFBvbCoYnNZ+Eg==
-X-Received: by 2002:a5d:5582:0:b0:361:94d9:1e9f with SMTP id
- ffacd0b85a97d-3682734828dmr1797853f8f.7.1721151645630; 
- Tue, 16 Jul 2024 10:40:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f25a962sm170036915e9.12.2024.07.16.10.40.44
+ d=1e100.net; s=20230601; t=1721151886; x=1721756686;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/ShBRzrUmvjtJTNQztmfGvpQ1puJROasGF6g5BEavNo=;
+ b=miZJpTZtOjttQfimjMI0cAfDBDJZTLdjrcDI1Wy9Gra4Wn9b3JX0orFiCvBuIWTVsv
+ yzMy6nRkivPnxfx36bF03UTY1MQpYMHmAgNJWbl7ep5zO39uI+ri4n6e7YxOYaO7hZ3P
+ ykiX+F21MGhYaV7pQJ7+S2xPFvL96Znh1lmvxQ2d3Z/dTnJmgvcnRd+oHEiPGTN/eocf
+ rKR4miekgrJ/UBM2bBl1Q50NVwjJ2R96D/ll7zb1ShhCAgd5ykybkpaaKrdCXDBJUMwW
+ 9tzG+aBlErXv/ZS2iwvnM37v2CtR739+/Ds1geyM3Bh9j+lYvyDjVNoFgeM+Zd+ozj8i
+ 0KUg==
+X-Gm-Message-State: AOJu0YxzBcjf2anOWEWgkf4B56e0a/F32q+l/LuGxCqu9aQDU+3jBwFw
+ 5b5mkU/CM8zVJhXcvuuqoRWev7E7l3ClijVhEat4++gfJo3/nC7tZkR4dsND/0OgIvt5k2rYjxM
+ B1GBJtASkMAaNa2s1kvQgkMViO+6lf91ihPIglF3wq3e7hCW2KoY6
+X-Received: by 2002:ac8:5f09:0:b0:447:f934:66f with SMTP id
+ d75a77b69052e-44f7aeb274bmr35954301cf.39.1721151886203; 
+ Tue, 16 Jul 2024 10:44:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEq5EYTW56KNOAb9buX+JYlZQ+5CyYl5os8THOgfe89WtOhrjqY8EvdqxUSPCLsex2Hpy3UzA==
+X-Received: by 2002:ac8:5f09:0:b0:447:f934:66f with SMTP id
+ d75a77b69052e-44f7aeb274bmr35954081cf.39.1721151885873; 
+ Tue, 16 Jul 2024 10:44:45 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
+ [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f5b7eded2sm37408751cf.39.2024.07.16.10.44.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jul 2024 10:40:45 -0700 (PDT)
-Message-ID: <903e6f5a-76fc-4f8c-b83e-d7d2a0f45d7c@redhat.com>
-Date: Tue, 16 Jul 2024 19:40:43 +0200
+ Tue, 16 Jul 2024 10:44:45 -0700 (PDT)
+Message-ID: <c8208ef8-0a97-4aad-b49c-cbafb7ff5817@redhat.com>
+Date: Tue, 16 Jul 2024 19:44:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/12] vfio/{iommufd,container}: Remove caps::aw_bits
+Subject: Re: [PATCH] tests: increase timeout per instance of bios-tables-test
+To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, lvivier@redhat.com, pbonzini@redhat.com
+References: <20240716125930.620861-1-imammedo@redhat.com>
+ <20240716090554-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-7-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240712114704.8708-7-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240716090554-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,105 +141,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Joao,
+On 16/07/2024 15.06, Michael S. Tsirkin wrote:
+> On Tue, Jul 16, 2024 at 02:59:30PM +0200, Igor Mammedov wrote:
+>> CI often fails 'cross-i686-tci' job due to runner slowness
+>> Log shows that test almost complete, with a few remaining
+>> when bios-tables-test timeout hits:
+>>
+>>    19/270 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
+>>      TIMEOUT        610.02s   killed by signal 15 SIGTERM
+>>    ...
+>>    stderr:
+>>    TAP parsing error: Too few tests run (expected 8, got 7)
+>>
+>> At the same time overall job running time is only ~30 out of 1hr allowed.
+>>
+>> Increase bios-tables-test instance timeout on 5min as a fix
+>> for slow CI runners.
+>>
+>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> 
+> We can't just keep increasing the timeout.
+> The issue is checking wall time on a busy host,
+> isn't it? Let's check CPU time instead.
 
-On 7/12/24 13:46, Joao Martins wrote:
-> In preparation to moving HostIOMMUDevice realize() being able to called
-> early during attach_device(), remove properties that rely on container
-> being initialized.
-It is difficult to parse the above sentence. Would deserve some rephrasing.
+The timeout setting comes from meson, not sure whether you can switch that 
+easily to use CPU time instead of wall time?
 
-Also properties have a different meaning in qemu.
->
-> This means removing caps::aw_bits which requires the
-> bcontainer::iova_ranges to be inititalized after device is actually
-initialized
-> attached. Instead defer that to .get_cap() and call
-> vfio_device_get_aw_bits() directly.
->
-> Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->  include/sysemu/host_iommu_device.h | 1 -
->  backends/iommufd.c                 | 3 ++-
->  hw/vfio/container.c                | 5 +----
->  hw/vfio/iommufd.c                  | 1 -
->  4 files changed, 3 insertions(+), 7 deletions(-)
->
-> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-> index ee6c813c8b22..20e77cf54568 100644
-> --- a/include/sysemu/host_iommu_device.h
-> +++ b/include/sysemu/host_iommu_device.h
-> @@ -24,7 +24,6 @@
->   */
->  typedef struct HostIOMMUDeviceCaps {
->      uint32_t type;
-> -    uint8_t aw_bits;
-the doc comment needs to be updated accordingly.
->  } HostIOMMUDeviceCaps;
->  
->  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 5d3dfa917415..41a9dec3b2c5 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -18,6 +18,7 @@
->  #include "qemu/error-report.h"
->  #include "monitor/monitor.h"
->  #include "trace.h"
-> +#include "hw/vfio/vfio-common.h"
->  #include <sys/ioctl.h>
->  #include <linux/iommufd.h>
->  
-> @@ -270,7 +271,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
->      case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
->          return caps->type;
->      case HOST_IOMMU_DEVICE_CAP_AW_BITS:
-> -        return caps->aw_bits;
-> +        return vfio_device_get_aw_bits(hiod->agent);
->      default:
->          error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
->          return -EINVAL;
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 88ede913d6f7..c27f448ba26e 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -1144,7 +1144,6 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->      VFIODevice *vdev = opaque;
->  
->      hiod->name = g_strdup(vdev->name);
-> -    hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
->      hiod->agent = opaque;
->  
->      return true;
-> @@ -1153,11 +1152,9 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->  static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
->                                      Error **errp)
->  {
-> -    HostIOMMUDeviceCaps *caps = &hiod->caps;
-> -
->      switch (cap) {
->      case HOST_IOMMU_DEVICE_CAP_AW_BITS:
-> -        return caps->aw_bits;
-> +        return vfio_device_get_aw_bits(hiod->agent);
->      default:
->          error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
->          return -EINVAL;
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 325c7598d5a1..873c919e319c 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -722,7 +722,6 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->  
->      hiod->name = g_strdup(vdev->name);
->      caps->type = type;
-> -    caps->aw_bits = vfio_device_get_aw_bits(vdev);
->  
->      return true;
->  }
+Anyway, if the bios-tables-test is getting more and more complex, it's maybe 
+not such a good idea to run it in a job that is using TCI ... Maybe it's 
+best to remove aarch64-softmmu from the cross-i686-tci job?
+
+  Thomas
 
 
