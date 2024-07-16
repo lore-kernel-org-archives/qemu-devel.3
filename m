@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA50C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CA7C3DA59
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jul 2024 20:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sToeD-0004Iy-Rp; Tue, 16 Jul 2024 16:19:41 -0400
+	id 1sToez-0000AK-CL; Tue, 16 Jul 2024 16:20:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
- id 1sToeB-00049T-Ic; Tue, 16 Jul 2024 16:19:40 -0400
+ id 1sToer-00087R-5P; Tue, 16 Jul 2024 16:20:22 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZcYX=OQ=kaod.org=clg@ozlabs.org>)
- id 1sToe9-00020J-RW; Tue, 16 Jul 2024 16:19:39 -0400
+ id 1sToeo-00025j-Le; Tue, 16 Jul 2024 16:20:20 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WNr5M2QCnz4x4c;
- Wed, 17 Jul 2024 06:19:35 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WNr675lxcz4x4c;
+ Wed, 17 Jul 2024 06:20:15 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WNr5J6YVYz4wym;
- Wed, 17 Jul 2024 06:19:32 +1000 (AEST)
-Message-ID: <b5d2ead5-1f47-4690-8dba-418468d5f83a@kaod.org>
-Date: Tue, 16 Jul 2024 22:19:30 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WNr650WRQz4x7F;
+ Wed, 17 Jul 2024 06:20:12 +1000 (AEST)
+Message-ID: <455e5eb4-809d-4643-90eb-228d8cedbc2d@kaod.org>
+Date: Tue, 16 Jul 2024 22:20:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/9] pnv/xive2: Structure/define alignment changes
+Subject: Re: [PATCH v3 3/9] pnv/xive: Support cache flush and queue sync
+ inject with notifications
 To: Michael Kowal <kowal@linux.vnet.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
  milesg@linux.ibm.com
 References: <20240716195633.12679-1-kowal@linux.vnet.ibm.com>
- <20240716195633.12679-3-kowal@linux.vnet.ibm.com>
+ <20240716195633.12679-4-kowal@linux.vnet.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240716195633.12679-3-kowal@linux.vnet.ibm.com>
+In-Reply-To: <20240716195633.12679-4-kowal@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -66,9 +67,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/16/24 21:56, Michael Kowal wrote:
-> Made changes to some structure and define elements to ease review in
-> next patchset.
+> From: Nicholas Piggin <npiggin@gmail,com>
 > 
+> Adds support for writing a completion notification byte in memory
+> whenever a cache flush or queue sync inject operation is requested by
+> software.  QEMU does not cache any of the XIVE data that is in memory and
+> therefore it simply writes the completion notification byte at the time
+> that the operation is requested.
+> 
+> Co-authored-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 > Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
 
 
@@ -79,58 +89,313 @@ Thanks,
 C.
 
 > ---
->   hw/intc/pnv_xive2.c | 30 +++++++++++++++---------------
->   1 file changed, 15 insertions(+), 15 deletions(-)
+>   hw/intc/pnv_xive2_regs.h  |  16 ++++
+>   include/hw/ppc/pnv_chip.h |   1 +
+>   hw/intc/pnv_xive2.c       | 154 +++++++++++++++++++++++++++++++++++++-
+>   3 files changed, 169 insertions(+), 2 deletions(-)
 > 
+> diff --git a/hw/intc/pnv_xive2_regs.h b/hw/intc/pnv_xive2_regs.h
+> index f8e4a677c6..ca05255d20 100644
+> --- a/hw/intc/pnv_xive2_regs.h
+> +++ b/hw/intc/pnv_xive2_regs.h
+> @@ -232,6 +232,10 @@
+>   #define  VC_ESBC_FLUSH_POLL_BLOCK_ID_MASK       PPC_BITMASK(32, 35)
+>   #define  VC_ESBC_FLUSH_POLL_OFFSET_MASK         PPC_BITMASK(36, 63) /* 28-bit */
+>   
+> +/* ESBC cache flush inject register */
+> +#define X_VC_ESBC_FLUSH_INJECT                  0x142
+> +#define VC_ESBC_FLUSH_INJECT                    0x210
+> +
+>   /* ESBC configuration */
+>   #define X_VC_ESBC_CFG                           0x148
+>   #define VC_ESBC_CFG                             0x240
+> @@ -250,6 +254,10 @@
+>   #define  VC_EASC_FLUSH_POLL_BLOCK_ID_MASK       PPC_BITMASK(32, 35)
+>   #define  VC_EASC_FLUSH_POLL_OFFSET_MASK         PPC_BITMASK(36, 63) /* 28-bit */
+>   
+> +/* EASC flush inject register */
+> +#define X_VC_EASC_FLUSH_INJECT                  0x162
+> +#define VC_EASC_FLUSH_INJECT                    0x310
+> +
+>   /*
+>    * VC2
+>    */
+> @@ -270,6 +278,10 @@
+>   #define  VC_ENDC_FLUSH_POLL_BLOCK_ID_MASK       PPC_BITMASK(36, 39)
+>   #define  VC_ENDC_FLUSH_POLL_OFFSET_MASK         PPC_BITMASK(40, 63) /* 24-bit */
+>   
+> +/* ENDC flush inject register */
+> +#define X_VC_ENDC_FLUSH_INJECT                  0x182
+> +#define VC_ENDC_FLUSH_INJECT                    0x410
+> +
+>   /* ENDC Sync done */
+>   #define X_VC_ENDC_SYNC_DONE                     0x184
+>   #define VC_ENDC_SYNC_DONE                       0x420
+> @@ -403,6 +415,10 @@
+>   #define  PC_NXC_FLUSH_POLL_BLOCK_ID_MASK        PPC_BITMASK(36, 39)
+>   #define  PC_NXC_FLUSH_POLL_OFFSET_MASK          PPC_BITMASK(40, 63) /* 24-bit */
+>   
+> +/* NxC Cache flush inject */
+> +#define X_PC_NXC_FLUSH_INJECT                   0x282
+> +#define PC_NXC_FLUSH_INJECT                     0x410
+> +
+>   /* NxC Cache watch assign */
+>   #define X_PC_NXC_WATCH_ASSIGN                   0x286
+>   #define PC_NXC_WATCH_ASSIGN                     0x430
+> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+> index a4ed17ac59..9502248561 100644
+> --- a/include/hw/ppc/pnv_chip.h
+> +++ b/include/hw/ppc/pnv_chip.h
+> @@ -131,6 +131,7 @@ struct Pnv10Chip {
+>   
+>   #define PNV10_PIR2FUSEDCORE(pir) (((pir) >> 3) & 0xf)
+>   #define PNV10_PIR2CHIP(pir)      (((pir) >> 8) & 0x7f)
+> +#define PNV10_PIR2THREAD(pir)    (((pir) & 0x7f))
+>   
+>   struct PnvChipClass {
+>       /*< private >*/
 > diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index af9ab68fc6..08b6da78fb 100644
+> index 08b6da78fb..3dbbfddacb 100644
 > --- a/hw/intc/pnv_xive2.c
 > +++ b/hw/intc/pnv_xive2.c
-> @@ -45,16 +45,16 @@ typedef struct XiveVstInfo {
+> @@ -25,6 +25,7 @@
+>   #include "hw/ppc/ppc.h"
+>   #include "hw/qdev-properties.h"
+>   #include "sysemu/reset.h"
+> +#include "sysemu/qtest.h"
 >   
->   static const XiveVstInfo vst_infos[] = {
+>   #include <libfdt.h>
 >   
-> -    [VST_EAS]  = { "EAT",  sizeof(Xive2Eas),  16 },
-> -    [VST_ESB]  = { "ESB",  1,                  16 },
-> -    [VST_END]  = { "ENDT", sizeof(Xive2End),  16 },
-> +    [VST_EAS]  = { "EAT",  sizeof(Xive2Eas),     16 },
-> +    [VST_ESB]  = { "ESB",  1,                    16 },
-> +    [VST_END]  = { "ENDT", sizeof(Xive2End),     16 },
+> @@ -32,6 +33,16 @@
 >   
-> -    [VST_NVP]  = { "NVPT", sizeof(Xive2Nvp),  16 },
-> -    [VST_NVG]  = { "NVGT", sizeof(Xive2Nvgc), 16 },
-> -    [VST_NVC]  = { "NVCT", sizeof(Xive2Nvgc), 16 },
-> +    [VST_NVP]  = { "NVPT", sizeof(Xive2Nvp),     16 },
-> +    [VST_NVG]  = { "NVGT", sizeof(Xive2Nvgc),    16 },
-> +    [VST_NVC]  = { "NVCT", sizeof(Xive2Nvgc),    16 },
+>   #undef XIVE2_DEBUG
 >   
-> -    [VST_IC]  =  { "IC",   1 /* ? */         , 16 }, /* Topology # */
-> -    [VST_SYNC] = { "SYNC", 1 /* ? */         , 16 }, /* Topology # */
-> +    [VST_IC]  =  { "IC",   1, /* ? */            16 }, /* Topology # */
-> +    [VST_SYNC] = { "SYNC", 1, /* ? */            16 }, /* Topology # */
+> +/* XIVE Sync or Flush Notification Block */
+> +typedef struct XiveSfnBlock {
+> +    uint8_t bytes[32];
+> +} XiveSfnBlock;
+> +
+> +/* XIVE Thread Sync or Flush Notification Area */
+> +typedef struct XiveThreadNA {
+> +    XiveSfnBlock topo[16];
+> +} XiveThreadNA;
+> +
+>   /*
+>    * Virtual structures table (VST)
+>    */
+> @@ -54,7 +65,7 @@ static const XiveVstInfo vst_infos[] = {
+>       [VST_NVC]  = { "NVCT", sizeof(Xive2Nvgc),    16 },
+>   
+>       [VST_IC]  =  { "IC",   1, /* ? */            16 }, /* Topology # */
+> -    [VST_SYNC] = { "SYNC", 1, /* ? */            16 }, /* Topology # */
+> +    [VST_SYNC] = { "SYNC", sizeof(XiveThreadNA), 16 }, /* Topology # */
 >   
 >       /*
 >        * This table contains the backing store pages for the interrupt
-> @@ -1720,13 +1720,13 @@ static const MemoryRegionOps pnv_xive2_ic_lsi_ops = {
->   /*
->    * Sync MMIO page (write only)
->    */
-> -#define PNV_XIVE2_SYNC_IPI      0x000
-> -#define PNV_XIVE2_SYNC_HW       0x080
-> -#define PNV_XIVE2_SYNC_NxC      0x100
-> -#define PNV_XIVE2_SYNC_INT      0x180
-> -#define PNV_XIVE2_SYNC_OS_ESC   0x200
-> -#define PNV_XIVE2_SYNC_POOL_ESC 0x280
-> -#define PNV_XIVE2_SYNC_HARD_ESC 0x300
-> +#define PNV_XIVE2_SYNC_IPI              0x000
-> +#define PNV_XIVE2_SYNC_HW               0x080
-> +#define PNV_XIVE2_SYNC_NxC              0x100
-> +#define PNV_XIVE2_SYNC_INT              0x180
-> +#define PNV_XIVE2_SYNC_OS_ESC           0x200
-> +#define PNV_XIVE2_SYNC_POOL_ESC         0x280
-> +#define PNV_XIVE2_SYNC_HARD_ESC         0x300
+> @@ -329,6 +340,73 @@ static int pnv_xive2_write_end(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
+>                                 word_number);
+>   }
+>   
+> +static inline int pnv_xive2_get_current_pir(PnvXive2 *xive)
+> +{
+> +    if (!qtest_enabled()) {
+> +        PowerPCCPU *cpu = POWERPC_CPU(current_cpu);
+> +        return ppc_cpu_pir(cpu);
+> +    }
+> +    return 0;
+> +}
+> +
+> +/*
+> + * After SW injects a Queue Sync or Cache Flush operation, HW will notify
+> + * SW of the completion of the operation by writing a byte of all 1's (0xff)
+> + * to a specific memory location.  The memory location is calculated by first
+> + * looking up a base address in the SYNC VSD using the Topology ID of the
+> + * originating thread as the "block" number.  This points to a
+> + * 64k block of memory that is further divided into 128 512 byte chunks of
+> + * memory, which is indexed by the thread id of the requesting thread.
+> + * Finally, this 512 byte chunk of memory is divided into 16 32 byte
+> + * chunks which are indexed by the topology id of the targeted IC's chip.
+> + * The values below are the offsets into that 32 byte chunk of memory for
+> + * each type of cache flush or queue sync operation.
+> + */
+> +#define PNV_XIVE2_QUEUE_IPI              0x00
+> +#define PNV_XIVE2_QUEUE_HW               0x01
+> +#define PNV_XIVE2_QUEUE_NXC              0x02
+> +#define PNV_XIVE2_QUEUE_INT              0x03
+> +#define PNV_XIVE2_QUEUE_OS               0x04
+> +#define PNV_XIVE2_QUEUE_POOL             0x05
+> +#define PNV_XIVE2_QUEUE_HARD             0x06
+> +#define PNV_XIVE2_CACHE_ENDC             0x08
+> +#define PNV_XIVE2_CACHE_ESBC             0x09
+> +#define PNV_XIVE2_CACHE_EASC             0x0a
+> +#define PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO   0x10
+> +#define PNV_XIVE2_QUEUE_NXC_LD_LCL_CO    0x11
+> +#define PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI   0x12
+> +#define PNV_XIVE2_QUEUE_NXC_ST_LCL_CI    0x13
+> +#define PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI   0x14
+> +#define PNV_XIVE2_QUEUE_NXC_ST_RMT_CI    0x15
+> +#define PNV_XIVE2_CACHE_NXC              0x18
+> +
+> +static int pnv_xive2_inject_notify(PnvXive2 *xive, int type)
+> +{
+> +    uint64_t addr;
+> +    int pir = pnv_xive2_get_current_pir(xive);
+> +    int thread_nr = PNV10_PIR2THREAD(pir);
+> +    int thread_topo_id = PNV10_PIR2CHIP(pir);
+> +    int ic_topo_id = xive->chip->chip_id;
+> +    uint64_t offset = ic_topo_id * sizeof(XiveSfnBlock);
+> +    uint8_t byte = 0xff;
+> +    MemTxResult result;
+> +
+> +    /* Retrieve the address of requesting thread's notification area */
+> +    addr = pnv_xive2_vst_addr(xive, VST_SYNC, thread_topo_id, thread_nr);
+> +
+> +    if (!addr) {
+> +        xive2_error(xive, "VST: no SYNC entry %x/%x !?",
+> +                    thread_topo_id, thread_nr);
+> +        return -1;
+> +    }
+> +
+> +    address_space_stb(&address_space_memory, addr + offset + type, byte,
+> +                      MEMTXATTRS_UNSPECIFIED, &result);
+> +    assert(result == MEMTX_OK);
+> +
+> +    return 0;
+> +}
+> +
+>   static int pnv_xive2_end_update(PnvXive2 *xive, uint8_t watch_engine)
+>   {
+>       uint8_t  blk;
+> @@ -1178,6 +1256,10 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
+>           /* ESB update */
+>           break;
+>   
+> +    case VC_ESBC_FLUSH_INJECT:
+> +        pnv_xive2_inject_notify(xive, PNV_XIVE2_CACHE_ESBC);
+> +        break;
+> +
+>       case VC_ESBC_CFG:
+>           break;
+>   
+> @@ -1190,6 +1272,10 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
+>           /* EAS update */
+>           break;
+>   
+> +    case VC_EASC_FLUSH_INJECT:
+> +        pnv_xive2_inject_notify(xive, PNV_XIVE2_CACHE_EASC);
+> +        break;
+> +
+>       case VC_ENDC_CFG:
+>           break;
+>   
+> @@ -1224,6 +1310,10 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
+>           xive->vc_regs[VC_ENDC_FLUSH_CTRL >> 3] |= VC_ENDC_FLUSH_CTRL_POLL_VALID;
+>           break;
+>   
+> +    case VC_ENDC_FLUSH_INJECT:
+> +        pnv_xive2_inject_notify(xive, PNV_XIVE2_CACHE_ENDC);
+> +        break;
+> +
+>       /*
+>        * Indirect invalidation
+>        */
+> @@ -1424,6 +1514,10 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
+>           xive->pc_regs[PC_NXC_FLUSH_CTRL >> 3] |= PC_NXC_FLUSH_CTRL_POLL_VALID;
+>           break;
+>   
+> +    case PC_NXC_FLUSH_INJECT:
+> +        pnv_xive2_inject_notify(xive, PNV_XIVE2_CACHE_NXC);
+> +        break;
+> +
+>       /*
+>        * Indirect invalidation
+>        */
+> @@ -1727,6 +1821,12 @@ static const MemoryRegionOps pnv_xive2_ic_lsi_ops = {
+>   #define PNV_XIVE2_SYNC_OS_ESC           0x200
+>   #define PNV_XIVE2_SYNC_POOL_ESC         0x280
+>   #define PNV_XIVE2_SYNC_HARD_ESC         0x300
+> +#define PNV_XIVE2_SYNC_NXC_LD_LCL_NCO   0x800
+> +#define PNV_XIVE2_SYNC_NXC_LD_LCL_CO    0x880
+> +#define PNV_XIVE2_SYNC_NXC_ST_LCL_NCI   0x900
+> +#define PNV_XIVE2_SYNC_NXC_ST_LCL_CI    0x980
+> +#define PNV_XIVE2_SYNC_NXC_ST_RMT_NCI   0xA00
+> +#define PNV_XIVE2_SYNC_NXC_ST_RMT_CI    0xA80
 >   
 >   static uint64_t pnv_xive2_ic_sync_read(void *opaque, hwaddr offset,
 >                                          unsigned size)
+> @@ -1738,22 +1838,72 @@ static uint64_t pnv_xive2_ic_sync_read(void *opaque, hwaddr offset,
+>       return -1;
+>   }
+>   
+> +/*
+> + * The sync MMIO space spans two pages.  The lower page is use for
+> + * queue sync "poll" requests while the upper page is used for queue
+> + * sync "inject" requests.  Inject requests require the HW to write
+> + * a byte of all 1's to a predetermined location in memory in order
+> + * to signal completion of the request.  Both pages have the same
+> + * layout, so it is easiest to handle both with a single function.
+> + */
+>   static void pnv_xive2_ic_sync_write(void *opaque, hwaddr offset,
+>                                       uint64_t val, unsigned size)
+>   {
+>       PnvXive2 *xive = PNV_XIVE2(opaque);
+> +    int inject_type;
+> +    hwaddr pg_offset_mask = (1ull << xive->ic_shift) - 1;
+>   
+> -    switch (offset) {
+> +    /* adjust offset for inject page */
+> +    hwaddr adj_offset = offset & pg_offset_mask;
+> +
+> +    switch (adj_offset) {
+>       case PNV_XIVE2_SYNC_IPI:
+> +        inject_type = PNV_XIVE2_QUEUE_IPI;
+> +        break;
+>       case PNV_XIVE2_SYNC_HW:
+> +        inject_type = PNV_XIVE2_QUEUE_HW;
+> +        break;
+>       case PNV_XIVE2_SYNC_NxC:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC;
+> +        break;
+>       case PNV_XIVE2_SYNC_INT:
+> +        inject_type = PNV_XIVE2_QUEUE_INT;
+> +        break;
+>       case PNV_XIVE2_SYNC_OS_ESC:
+> +        inject_type = PNV_XIVE2_QUEUE_OS;
+> +        break;
+>       case PNV_XIVE2_SYNC_POOL_ESC:
+> +        inject_type = PNV_XIVE2_QUEUE_POOL;
+> +        break;
+>       case PNV_XIVE2_SYNC_HARD_ESC:
+> +        inject_type = PNV_XIVE2_QUEUE_HARD;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_LD_LCL_NCO:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_LD_LCL_NCO;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_LD_LCL_CO:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_LD_LCL_CO;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_ST_LCL_NCI:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_ST_LCL_NCI;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_ST_LCL_CI:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_ST_LCL_CI;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_ST_RMT_NCI:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_ST_RMT_NCI;
+> +        break;
+> +    case PNV_XIVE2_SYNC_NXC_ST_RMT_CI:
+> +        inject_type = PNV_XIVE2_QUEUE_NXC_ST_RMT_CI;
+>           break;
+>       default:
+>           xive2_error(xive, "SYNC: invalid write @%"HWADDR_PRIx, offset);
+> +        return;
+> +    }
+> +
+> +    /* Write Queue Sync notification byte if writing to sync inject page */
+> +    if ((offset & ~pg_offset_mask) != 0) {
+> +        pnv_xive2_inject_notify(xive, inject_type);
+>       }
+>   }
+>   
 
 
