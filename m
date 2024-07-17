@@ -4,109 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA0AC3DA62
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 18:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5127AC3DA60
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 18:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU9Yv-00038s-5K; Wed, 17 Jul 2024 14:39:37 -0400
+	id 1sU9j1-0003tn-7Z; Wed, 17 Jul 2024 14:50:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU9Yu-00038O-Cm
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:39:36 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU9Ys-0003B9-KZ
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:39:36 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5845921A77;
- Wed, 17 Jul 2024 18:39:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721241573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9iz-0003sG-H0
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:50:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9ix-0005VJ-4Z
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:50:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721242195;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7fJQXeToqjFz8yCd9Lvcj3zs1EICaJgUO/2Q+sMPnSk=;
- b=hx4clKv5yI9EEk5uTuVe/RjwqkgDlqdUCFEwUONGTdmSQwzsybKvLRWu4lKvlf2K35BNVH
- nNcGyfym/MoI+By0LyxnPNnMaeHxhGavY/eZJsmXM8r2RGV3r9+KApmRrPCIebcIoIkRMw
- 7osM1B0dYSEke0joH7YYWc92mWD36xc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721241573;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7fJQXeToqjFz8yCd9Lvcj3zs1EICaJgUO/2Q+sMPnSk=;
- b=e/LQYr0guZUY8yK/Eots/wbMmfT5r1YfZ1fsp8k4HeF8sV2I4I9vNsjdivl4yMiC7A9K4U
- nLuxt8yJr1Kx+sAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721241573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7fJQXeToqjFz8yCd9Lvcj3zs1EICaJgUO/2Q+sMPnSk=;
- b=hx4clKv5yI9EEk5uTuVe/RjwqkgDlqdUCFEwUONGTdmSQwzsybKvLRWu4lKvlf2K35BNVH
- nNcGyfym/MoI+By0LyxnPNnMaeHxhGavY/eZJsmXM8r2RGV3r9+KApmRrPCIebcIoIkRMw
- 7osM1B0dYSEke0joH7YYWc92mWD36xc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721241573;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7fJQXeToqjFz8yCd9Lvcj3zs1EICaJgUO/2Q+sMPnSk=;
- b=e/LQYr0guZUY8yK/Eots/wbMmfT5r1YfZ1fsp8k4HeF8sV2I4I9vNsjdivl4yMiC7A9K4U
- nLuxt8yJr1Kx+sAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5C481368F;
- Wed, 17 Jul 2024 18:39:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id P5GGJuQPmGbSTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Jul 2024 18:39:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Steve Sistare
- <steven.sistare@oracle.com>
-Subject: Re: [PATCH V2 03/11] migration: save cpr mode
-In-Reply-To: <1719776434-435013-4-git-send-email-steven.sistare@oracle.com>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-4-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 17 Jul 2024 15:39:30 -0300
-Message-ID: <87v813278d.fsf@suse.de>
+ bh=f/TJiVMKEGM+6c4j3xqiHXBOgXk48a2Mb3GTPBayjI4=;
+ b=OtKtQmpxL/oi/hc1eDwLq84E3OtSM6xKH/4yleskTKgYW9BWp4+dZJSrUPYvK1t3Di/+gq
+ CKq3MD2GeEvnWLReHCYXwZmFMb3/tN+NfkdUDUERUly00Y1Pnw/86ylwVn5rVWJg3Rm9MB
+ y/hpSjkuzEC/P9z7mENHgiw7EhKtLWU=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-55nxyhS2Nei5zuXWAwGVOA-1; Wed, 17 Jul 2024 14:49:52 -0400
+X-MC-Unique: 55nxyhS2Nei5zuXWAwGVOA-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6b792d6fe5bso65276d6.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 11:49:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721242192; x=1721846992;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f/TJiVMKEGM+6c4j3xqiHXBOgXk48a2Mb3GTPBayjI4=;
+ b=SQQ8U1QBnX0GFQfr8KQfxCiFr4FtlZUE1Kdk4d3sLTzu8gK5XaTBXunot2KZHk/thr
+ 1S+DsgVsU73XAfN9yU3itecTBu8sTzWR76MTtiySc779x6y73IXe0oiW2eQNopxaRCVv
+ qU+RWzyQlm9BPWl9VPu20kkW4Ua6cis0c291NA15jGFLDwKn6uaG7ktZtCocgLShX/Yn
+ 8aAVRbGL15NCtd/YpT5pnRbZGt+Su2KES4K8TX6UCQKXz0rVNHPJbf4HjdSxKk+6skDH
+ tMWAscRZbssZFhOKgpkyiTOlXpXn34gUJODhXc0nqkrrBZXyuNw8zbIIwyrKaQOTDN0I
+ fzVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8HgvkYNLsBP8f7pcFoymNBoAq+LknfePJ6Qe/arh9CmnMWkgWQ3zsyJlcopa5n6OOySH9nT7WXCj4li0hJNcOKMO2fy8=
+X-Gm-Message-State: AOJu0Yz0vhdrASzrcfgAZzk+2URpyQXI9A/3fB2Hp+mSyvULcOIiq5ac
+ FH/pHiDZxWAzJILUJoxY+gtVz0i8usnOfWgWNDHXkEDhOuV8dI1vldylkCsYrGJT719llJnCcIk
+ veL/agS/6R28gSDuqVaJ8LwZhTQw2KLXS0VhmTt1ly98aKAV+F17Z
+X-Received: by 2002:a05:620a:294b:b0:79f:726:e2d6 with SMTP id
+ af79cd13be357-7a1874ccaeemr171439885a.5.1721242191612; 
+ Wed, 17 Jul 2024 11:49:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRwLYD9SFTU0VTBcAA6mUyUmcHW0kJgkSe545rgG8qCNRW24BrO6HEfoxYMoMAVwyQcjWJ5A==
+X-Received: by 2002:a05:620a:294b:b0:79f:726:e2d6 with SMTP id
+ af79cd13be357-7a1874ccaeemr171438685a.5.1721242191216; 
+ Wed, 17 Jul 2024 11:49:51 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f5b7f1f98sm51728841cf.43.2024.07.17.11.49.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 11:49:50 -0700 (PDT)
+Date: Wed, 17 Jul 2024 14:49:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 00/13] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
+ device state transfer support with VFIO consumer
+Message-ID: <ZpgSTCAGbKwWi_o8@x1n>
+References: <ZniFH14DT6ycjbrL@x1n>
+ <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
+ <Znr9mOo_t0DkkLbD@x1n>
+ <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
+ <Znt0FQHJEtGxcLxj@x1n>
+ <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
+ <ZnxAZDcjlZ5oerq-@x1n>
+ <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
+ <Zn19kaeFiYuwwc4B@x1n>
+ <35969f33-f6f3-4c34-8b9d-8c1ebac3305e@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TAGGED_RCPT(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[11];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org,oracle.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <35969f33-f6f3-4c34-8b9d-8c1ebac3305e@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,130 +115,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+On Tue, Jul 16, 2024 at 10:10:12PM +0200, Maciej S. Szmigiero wrote:
+> On 27.06.2024 16:56, Peter Xu wrote:
+> > On Thu, Jun 27, 2024 at 11:14:28AM +0200, Maciej S. Szmigiero wrote:
+> > > On 26.06.2024 18:23, Peter Xu wrote:
+> > > > On Wed, Jun 26, 2024 at 05:47:34PM +0200, Maciej S. Szmigiero wrote:
+> > > > > On 26.06.2024 03:51, Peter Xu wrote:
+> > > > > > On Wed, Jun 26, 2024 at 12:44:29AM +0200, Maciej S. Szmigiero wrote:
+> > > > > > > On 25.06.2024 19:25, Peter Xu wrote:
+> > > > > > > > On Mon, Jun 24, 2024 at 09:51:18PM +0200, Maciej S. Szmigiero wrote:
+> > > > > > > > > Hi Peter,
+> > > > > > > > 
+> > > > > > > > Hi, Maciej,
+> > > > > > > > 
+> > > > > > > > > 
+> > > > > > > > > On 23.06.2024 22:27, Peter Xu wrote:
+> > > > > > > > > > On Tue, Jun 18, 2024 at 06:12:18PM +0200, Maciej S. Szmigiero wrote:
+> > > > > > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > > > > > > > 
+> > > > > > > > > > > This is an updated v1 patch series of the RFC (v0) series located here:
+> > > > > > > > > > > https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
+> > > > > > > > > > 
+> > > > > > > > > > OK I took some hours thinking about this today, and here's some high level
+> > > > > > > > > > comments for this series.  I'll start with which are more relevant to what
+> > > > > > > > > > Fabiano has already suggested in the other thread, then I'll add some more.
+> > > > > > > > > > 
+> > > > > > > > > > https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
+> > > > > > > > > 
+> > > > > > > > > That's a long list, thanks for these comments.
+> > > > > > > > > 
+> > > > > > > > > I have responded to them inline below.
+> > > > > > > > > (..)
+> > > > > > > 
+> > > > > > > 2) Submit this operation to the thread pool and wait for it to complete,
+> > > > > > 
+> > > > > > VFIO doesn't need to have its own code waiting.  If this pool is for
+> > > > > > migration purpose in general, qemu migration framework will need to wait at
+> > > > > > some point for all jobs to finish before moving on.  Perhaps it should be
+> > > > > > at the end of the non-iterative session.
+> > > > > 
+> > > > > So essentially, instead of calling save_live_complete_precopy_end handlers
+> > > > > from the migration code you would like to hard-code its current VFIO
+> > > > > implementation of calling vfio_save_complete_precopy_async_thread_thread_terminate().
+> > > > > 
+> > > > > Only it wouldn't be then called VFIO precopy async thread terminate but some
+> > > > > generic device state async precopy thread terminate function.
+> > > > 
+> > > > I don't understand what did you mean by "hard code".
+> > > 
+> > > "Hard code" wasn't maybe the best expression here.
+> > > 
+> > > I meant the move of the functionality that's provided by
+> > > vfio_save_complete_precopy_async_thread_thread_terminate() in this patch set
+> > > to the common migration code.
+> > 
+> > I see.  That function only does a thread_join() so far.
+> > 
+> > So can I understand it as below [1] should work for us, and it'll be clean
+> > too (with nothing to hard-code)?
+> 
+> It will need some signal to the worker threads pool to terminate before
+> waiting for them to finish (as the code in [1] just waits).
+> 
+> In the case of current vfio_save_complete_precopy_async_thread() implementation,
+> this signal isn't necessary as this thread simply terminates when it has read
+> all the date it needs from the device.
+> 
+> In a worker threads pool case there will be some threads waiting for
+> jobs to be queued to them and so they will need to be somehow signaled
+> to exit.
 
-> Save the mode in CPR state, so the user does not need to explicitly specify
-> it for the target.  Modify migrate_mode() so it returns the incoming mode on
-> the target.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/migration/cpr.h |  7 +++++++
->  migration/cpr.c         | 23 ++++++++++++++++++++++-
->  migration/migration.c   |  1 +
->  migration/options.c     |  9 +++++++--
->  4 files changed, 37 insertions(+), 3 deletions(-)
->
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 8e7e705..42b4019 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -8,6 +8,13 @@
->  #ifndef MIGRATION_CPR_H
->  #define MIGRATION_CPR_H
->  
-> +#include "qapi/qapi-types-migration.h"
-> +
-> +#define MIG_MODE_NONE MIG_MODE__MAX
+Right.  We may need something like multifd_send_should_exit() +
+MultiFDSendParams.sem.  It'll be nicer if we can generalize that part so
+multifd threads can also rebase to that thread model, but maybe I'm asking
+too much.
 
-What happens when a QEMU that knows about a new mode migrates into a
-QEMU that doesn't know that mode, i.e. sees it as MIG_MODE__MAX?
+> 
+> > The time to join() the worker threads can be even later, until
+> > migrate_fd_cleanup() on sender side.  You may have a better idea on when
+> > would be the best place to do it when start working on it.
+> > 
+> > > 
+> > > > What I was saying is if we target the worker thread pool to be used for
+> > > > "concurrently dump vmstates", then it'll make sense to make sure all the
+> > > > jobs there were flushed after qemu dumps all non-iterables (because this
+> > > > should be the last step of the switchover).
+> > > > 
+> > > > I expect it looks like this:
+> > > > 
+> > > >     while (pool->active_threads) {
+> > > >         qemu_sem_wait(&pool->job_done);
+> > > >     }
+> > 
+> > [1]
+> > 
+> (..)
+> > > I think that with this thread pool introduction we'll unfortunately almost certainly
+> > > need to target this patch set at 9.2, since these overall changes (and Fabiano
+> > > patches too) will need good testing, might uncover some performance regressions
+> > > (for example related to the number of buffers limit or Fabiano multifd changes),
+> > > bring some review comments from other people, etc.
+> > > 
+> > > In addition to that, we are in the middle of holiday season and a lot of people
+> > > aren't available - like Fabiano said he will be available only in a few weeks.
+> > 
+> > Right, that's unfortunate.  Let's see, but still I really hope we can also
+> > get some feedback from Fabiano before it lands, even with that we have
+> > chance for 9.1 but it's just challenging, it's the same condition I
+> > mentioned since the 1st email.  And before Fabiano's back (he's the active
+> > maintainer for this release), I'm personally happy if you can propose
+> > something that can land earlier in this release partly.  E.g., if you want
+> > we can at least upstream Fabiano's idea first, or some more on top.
+> > 
+> > For that, also feel to have a look at my comment today:
+> > 
+> > https://lore.kernel.org/r/Zn15y693g0AkDbYD@x1n
+> > 
+> > Feel free to comment there too.  There's a tiny uncertainty there so far on
+> > specifying "max size for a device state" if do what I suggested, as multifd
+> > setup will need to allocate an enum buffer suitable for both ram + device.
+> > But I think that's not an issue and you'll tackle that properly when
+> > working on it.  It's more about whether you agree on what I said as a
+> > general concept.
+> > 
+> 
+> Since it seems that the discussion on Fabiano's patch set has subsided I think
+> I will start by basing my updated patch set on top of his RFC and then if
+> Fabiano wants to submit v1/v2 of his patch set then I will rebase mine on top
+> of it.
+> 
+> Otherwise, you can wait until I have a v2 ready and then we can work with that.
 
-I'd just use -1.
+Oh I thought you already started modifying his patchset.
 
-> +
-> +MigMode cpr_get_incoming_mode(void);
-> +void cpr_set_incoming_mode(MigMode mode);
-> +
->  typedef int (*cpr_walk_fd_cb)(int fd);
->  void cpr_save_fd(const char *name, int id, int fd);
->  void cpr_delete_fd(const char *name, int id);
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index 313e74e..1c296c6 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -21,10 +21,23 @@
->  typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
->  
->  typedef struct CprState {
-> +    MigMode mode;
->      CprFdList fds;
->  } CprState;
->  
-> -static CprState cpr_state;
-> +static CprState cpr_state = {
-> +    .mode = MIG_MODE_NONE,
-> +};
-> +
-> +MigMode cpr_get_incoming_mode(void)
-> +{
-> +    return cpr_state.mode;
-> +}
-> +
-> +void cpr_set_incoming_mode(MigMode mode)
-> +{
-> +    cpr_state.mode = mode;
-> +}
->  
->  /****************************************************************************/
->  
-> @@ -124,11 +137,19 @@ void cpr_resave_fd(const char *name, int id, int fd)
->  /*************************************************************************/
->  #define CPR_STATE "CprState"
->  
-> +static int cpr_state_presave(void *opaque)
-> +{
-> +    cpr_state.mode = migrate_mode();
-> +    return 0;
-> +}
-> +
->  static const VMStateDescription vmstate_cpr_state = {
->      .name = CPR_STATE,
->      .version_id = 1,
->      .minimum_version_id = 1,
-> +    .pre_save = cpr_state_presave,
->      .fields = (VMStateField[]) {
-> +        VMSTATE_UINT32(mode, CprState),
->          VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
->          VMSTATE_END_OF_LIST()
->      }
-> diff --git a/migration/migration.c b/migration/migration.c
-> index e394ad7..0f47765 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -411,6 +411,7 @@ void migration_incoming_state_destroy(void)
->          mis->postcopy_qemufile_dst = NULL;
->      }
->  
-> +    cpr_set_incoming_mode(MIG_MODE_NONE);
->      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->  }
->  
-> diff --git a/migration/options.c b/migration/options.c
-> index 645f550..305397a 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -22,6 +22,7 @@
->  #include "qapi/qmp/qnull.h"
->  #include "sysemu/runstate.h"
->  #include "migration/colo.h"
-> +#include "migration/cpr.h"
->  #include "migration/misc.h"
->  #include "migration.h"
->  #include "migration-stats.h"
-> @@ -758,8 +759,12 @@ uint64_t migrate_max_postcopy_bandwidth(void)
->  
->  MigMode migrate_mode(void)
->  {
-> -    MigrationState *s = migrate_get_current();
-> -    MigMode mode = s->parameters.mode;
-> +    MigMode mode = cpr_get_incoming_mode();
-> +
-> +    if (mode == MIG_MODE_NONE) {
-> +        MigrationState *s = migrate_get_current();
-> +        mode = s->parameters.mode;
-> +    }
->  
->      assert(mode >= 0 && mode < MIG_MODE__MAX);
->      return mode;
+In this case, AFAIR Fabiano has plan to rework that RFC series, so maybe
+you want to double check with him, and can also wait for his new version if
+that's easier, because I do expect there'll be major changes.
+
+Fabiano?
+
+-- 
+Peter Xu
+
 
