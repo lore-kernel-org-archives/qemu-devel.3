@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1EDC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD61C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU3Of-0000mz-PU; Wed, 17 Jul 2024 08:04:37 -0400
+	id 1sU3dR-0008MA-Jf; Wed, 17 Jul 2024 08:19:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU3Oc-0000i7-Vn
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:04:35 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sU3dO-0008FW-Qy
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:19:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU3OT-00035W-Ai
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:04:34 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sU3dM-0000tz-LS
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:19:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721217864;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1721218786;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2pUE+T5kXt2vezvqzz45odUPwf1QNuMOfFNa515TT8Y=;
- b=Z0/3PlwP7UhmCNdQxcfOIHssqMWjxli/JAPl83PDJjN9kw4LQZj5On33j/tUepcOI2po5+
- BTJMod2ccdwKkxxbHkxihGvMOn+BFb/Zu53tq9DhdFJpJ3/QSyGzyMHfBPVLETurVLTviK
- /WtXJk+eyvodNsR1UYBWsfSrZAjNFIk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2wCUyz8MS1RSEczJaZkFxh9bu1fvYy48TPOGIcx9XLw=;
+ b=aaIQUMzg81eCw9pKRQonmf+XkTT+4G/gvSILLaRUAGbAilR0m5XnBYab1AvjR+K57SRYdT
+ iaGQCzC0QXIijnLSjcvgU9DfnZ82qIzD2akUkOJ7oLFaiaD+lvK4GChfNYtnl6nLUY8Pu/
+ 5CLrMVEfviDLhpWuTnRVNn8SIMw3aOM=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-rSQjBHF9MHenbw8FwLuykg-1; Wed, 17 Jul 2024 08:04:22 -0400
-X-MC-Unique: rSQjBHF9MHenbw8FwLuykg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367963c4f52so4545979f8f.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:04:22 -0700 (PDT)
+ us-mta-591-wi_L3Bm_PdirCZvHRG8KOw-1; Wed, 17 Jul 2024 08:19:45 -0400
+X-MC-Unique: wi_L3Bm_PdirCZvHRG8KOw-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-447f84aadc1so85468891cf.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:19:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721217861; x=1721822661;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2pUE+T5kXt2vezvqzz45odUPwf1QNuMOfFNa515TT8Y=;
- b=dB+Hyo074O8jDFuHLvdfgkUQQ0ov9TgpkkP3r/Qt8643/Z0ESxIMKhrr+iz2hoRzXb
- TWDujD8FPs8HOynHxIwu4s4+d9hQiEuERUea2tzGvbJP8NO/HrW8AQsuc8KKiFtDVwo0
- 7QtF6uzUKomce+chsdBXZm3NyNIHsx9ahE/bLXDRcBHDpk3GcoN0YMIJumaENibpkwSp
- eAW7hmhdRiB0GcETX2upHu4wuWHwb0wVGVEGgaSUoQoAl+C4vQiE4MyfXT2PH1pPfpHL
- pEx6yP4nIC157lnk7GpbhtofL9rl9ZfmE+mEPLRbsJr+D1ueJ0W88B5hMBs+c4t8F6zF
- KV5g==
+ d=1e100.net; s=20230601; t=1721218785; x=1721823585;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2wCUyz8MS1RSEczJaZkFxh9bu1fvYy48TPOGIcx9XLw=;
+ b=kbGy/yXXKo8weEcmGMRfdqrA4EJB1+sXel7qWaBuJ9QsVTrKYyCWqrKd1Vd/VW8JIv
+ zJBqxBDJCD1MGxnL6poHASKC+06JsnGlInvy5u3WFxSd0l0w4FOrBHZdiXHTCCLOCLFy
+ Q5/tMXe2NJ19MXD7dSqbakdlcgFWTTFqgOXXR7po03IZzZe25sdqzCrD1PhWn9M6r7MF
+ GC17l1fzeUFjaoRXKCciElQ5d7U/jURiboA2J+W8FDZ4SNGJAnyVmjE4kj99QCh6FTzC
+ tHl9H3ctC0x92Cwwx5M+C4cOgJ4ko1RWz8mltq2dHYn9sQ+ncM2szwESP8YuSB3vZA5+
+ Yifg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRRjkbizslVTtfeanl0wl2UqfzAEyoxtEfBkMgEBouvDRnpr/NCxlx25g5tuOs5gJXDn4eDUYxV8EO552MB2oi7s8zgew=
-X-Gm-Message-State: AOJu0Yx6Ryd/mV+wIQODKIvTtQ29tfHY6JtKqRbgCe1wcmcX1KUWEt3i
- Y00KI/9BnYvVwEs9jqlZBI2o/EHgCRmzf1dgDHWY0Vk4go230d5zN8YV082+KWQafrDV6IWBlPI
- xlTHxXWGgf5nSDwlEPcsDp0ydlYRyCB4nYVWlHIm/KJxVSqUL1cNQ
-X-Received: by 2002:adf:ee52:0:b0:367:9299:46dd with SMTP id
- ffacd0b85a97d-36831605ac2mr942460f8f.24.1721217861212; 
- Wed, 17 Jul 2024 05:04:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJfiWanD2O/xnWvOGnjGd5Jg6+V542aZojbyzuLVoqPFulTjxxmF5kY/e95GHHUXpBEYtOXw==
-X-Received: by 2002:adf:ee52:0:b0:367:9299:46dd with SMTP id
- ffacd0b85a97d-36831605ac2mr942438f8f.24.1721217860425; 
- Wed, 17 Jul 2024 05:04:20 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f2:c194:849d:f1e:3618:dc03])
+ AJvYcCWwhMe/DMDYX6iXBREo3lGKuZWIk3doYeb/mBCDUOlHrWZ7MvFmxTPb7fwl7fvKL+DUpRev2hGw8wHQpjK10pDn6Bvm5ys=
+X-Gm-Message-State: AOJu0YxyHh+YRv8SQ9piUOejsi9v/Exp+lRMRprLrgavmHPfHRr5fAON
+ URPo//viq5qL/gClGmge87321r8pZ0H5HntKUYYFzaVTJjGWYpm76k8us83FPGNpWFUOHkt1knu
+ vAwsJ+wOZtBASQ83mRzcphM590yZkr46OgCHTipx/lsr+RdoEj7e7
+X-Received: by 2002:a05:622a:44b:b0:446:4730:f1a4 with SMTP id
+ d75a77b69052e-44f86e6391dmr17782731cf.58.1721218785019; 
+ Wed, 17 Jul 2024 05:19:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECRl9xcGeiSiuWj/TF1FvnIbg5PKmLGMyo5e/35agR1oFo6k2Zqdpiywv1whqBkgAcfwtdMA==
+X-Received: by 2002:a05:622a:44b:b0:446:4730:f1a4 with SMTP id
+ d75a77b69052e-44f86e6391dmr17782491cf.58.1721218784599; 
+ Wed, 17 Jul 2024 05:19:44 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3681c30a024sm7236655f8f.96.2024.07.17.05.04.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 05:04:19 -0700 (PDT)
-Date: Wed, 17 Jul 2024 08:04:16 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Cc: marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org,
- jonathan.cameron@huawei.com
-Subject: Re: [PATCH v2] pci-bridge: avoid linking a single downstream port
- more than once
-Message-ID: <20240717080308-mutt-send-email-mst@kernel.org>
-References: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
+ d75a77b69052e-44f5b7e32ffsm46756711cf.24.2024.07.17.05.19.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Jul 2024 05:19:43 -0700 (PDT)
+Message-ID: <6b67c303-774a-44cb-bbe0-24df973ab889@redhat.com>
+Date: Wed, 17 Jul 2024 14:19:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/12] vfio/{iommufd,container}: Initialize
+ HostIOMMUDeviceCaps during attach_device()
+Content-Language: en-US
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Avihai Horon <avihaih@nvidia.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-8-joao.m.martins@oracle.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240712114704.8708-8-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,83 +109,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 17, 2024 at 04:56:21AM -0400, Yao Xingtao wrote:
-> Since the downstream port is not checked, two slots can be linked to
-> a single port. However, this can prevent the driver from detecting the
-> device properly.
-> 
-> It is necessary to ensure that a downstream port is not linked more than
-> once.
-> 
-> Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
-> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Hi Joao,
 
-You also need to take ARI into account.
-That can look like slot != 0.
+On 7/12/24 13:46, Joao Martins wrote:
+> Fetch IOMMU hw raw caps behind the device and thus move the
+what does mean "Fetch IOMMU hw raw caps behind the device'"
+> HostIOMMUDevice::realize() to be done during the attach of the device. It
+> allows it to cache the information obtained from IOMMU_GET_HW_INFO from
+what do you mean by " It allows it to cache the information obtained
+from IOMMU_GET_HW_INFO from iommufd early on"
+> iommufd early on. However, while legacy HostIOMMUDevice caps
+what does mean "legacy HostIOMMUDevice caps always return true"?
+> always return true and doesn't have dependency on other things, the IOMMUFD
+> backend requires the iommufd FD to be connected and having a devid to be
+> able to query capabilities. Hence when exactly is HostIOMMUDevice
+> initialized inside backend ::attach_device() implementation is backend
+> specific.
+>
+> This is in preparation to fetch parse hw capabilities and understand if
+fetch parse?
+> dirty tracking is supported by device backing IOMMU without necessarily
+> duplicating the amount of calls we do to IOMMU_GET_HW_INFO.
+But we move code from generic place to BE specific place?
 
+Sorry I feel really hard to understand the commit msg in general
+
+Eric
+
+
+>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 > ---
-> V1[1] -> V2:
->  - Move downstream port check forward
-> 
-> [1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
-> ---
->  hw/pci-bridge/cxl_downstream.c     | 5 +++++
->  hw/pci-bridge/pcie_root_port.c     | 5 +++++
->  hw/pci-bridge/xio3130_downstream.c | 5 +++++
->  3 files changed, 15 insertions(+)
-> 
-> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-> index 742da07a015a..af81ddfeec13 100644
-> --- a/hw/pci-bridge/cxl_downstream.c
-> +++ b/hw/pci-bridge/cxl_downstream.c
-> @@ -142,6 +142,11 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
->      MemoryRegion *component_bar = &cregs->component_registers;
->      int rc;
+>  include/sysemu/host_iommu_device.h |  1 +
+>  hw/vfio/common.c                   | 16 ++++++----------
+>  hw/vfio/container.c                |  6 ++++++
+>  hw/vfio/iommufd.c                  |  7 +++++++
+>  4 files changed, 20 insertions(+), 10 deletions(-)
+>
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> index 20e77cf54568..b1e5f4b8ac3e 100644
+> --- a/include/sysemu/host_iommu_device.h
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -24,6 +24,7 @@
+>   */
+>  typedef struct HostIOMMUDeviceCaps {
+>      uint32_t type;
+> +    uint64_t hw_caps;
+please also update the doc comment
+>  } HostIOMMUDeviceCaps;
 >  
-> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
-> +        return;
+>  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index b0beed44116e..cc14f0e3fe24 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -1544,7 +1544,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>  {
+>      const VFIOIOMMUClass *ops =
+>          VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+> -    HostIOMMUDevice *hiod;
+> +    HostIOMMUDevice *hiod = NULL;
+>  
+>      if (vbasedev->iommufd) {
+>          ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+> @@ -1552,21 +1552,17 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>  
+>      assert(ops);
+>  
+> -    if (!ops->attach_device(name, vbasedev, as, errp)) {
+> -        return false;
+> -    }
+>  
+> -    if (vbasedev->mdev) {
+> -        return true;
+> +    if (!vbasedev->mdev) {
+> +        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+> +        vbasedev->hiod = hiod;
+>      }
+>  
+> -    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+> -    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
+> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
+>          object_unref(hiod);
+> -        ops->detach_device(vbasedev);
+> +        vbasedev->hiod = NULL;
+>          return false;
+>      }
+> -    vbasedev->hiod = hiod;
+>  
+>      return true;
+>  }
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index c27f448ba26e..29da261bbf3e 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -907,6 +907,7 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>                                        AddressSpace *as, Error **errp)
+>  {
+>      int groupid = vfio_device_groupid(vbasedev, errp);
+> +    HostIOMMUDevice *hiod = vbasedev->hiod;
+>      VFIODevice *vbasedev_iter;
+>      VFIOGroup *group;
+>      VFIOContainerBase *bcontainer;
+> @@ -917,6 +918,11 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>  
+>      trace_vfio_attach_device(vbasedev->name, groupid);
+>  
+> +    if (hiod &&
+> +        !HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
+> +        return false;
 > +    }
 > +
->      pci_bridge_initfn(d, TYPE_PCIE_BUS);
->      pcie_port_init_reg(d);
+>      group = vfio_get_group(groupid, as, errp);
+>      if (!group) {
+>          return false;
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 873c919e319c..d34dc88231ec 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -384,6 +384,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>      Error *err = NULL;
+>      const VFIOIOMMUClass *iommufd_vioc =
+>          VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+> +    HostIOMMUDevice *hiod = vbasedev->hiod;
 >  
-> diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-> index 09a34786bc62..a540204bda27 100644
-> --- a/hw/pci-bridge/pcie_root_port.c
-> +++ b/hw/pci-bridge/pcie_root_port.c
-> @@ -67,6 +67,11 @@ static void rp_realize(PCIDevice *d, Error **errp)
->      PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(d);
->      int rc;
+>      if (vbasedev->fd < 0) {
+>          devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
+> @@ -401,6 +402,11 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
 >  
-> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
-> +        return;
+>      space = vfio_get_address_space(as);
+>  
+> +    if (hiod &&
+> +        !HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
+> +        return false;
 > +    }
 > +
->      pci_config_set_interrupt_pin(d->config, 1);
->      if (d->cap_present & QEMU_PCIE_CAP_CXL) {
->          pci_bridge_initfn(d, TYPE_CXL_BUS);
-> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-> index 907d5105b019..63f6baa615fd 100644
-> --- a/hw/pci-bridge/xio3130_downstream.c
-> +++ b/hw/pci-bridge/xio3130_downstream.c
-> @@ -69,6 +69,11 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
->      PCIESlot *s = PCIE_SLOT(d);
->      int rc;
+>      /* try to attach to an existing container in this space */
+>      QLIST_FOREACH(bcontainer, &space->containers, next) {
+>          container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> @@ -722,6 +728,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
 >  
-> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
-> +        return;
-> +    }
-> +
->      pci_bridge_initfn(d, TYPE_PCIE_BUS);
->      pcie_port_init_reg(d);
+>      hiod->name = g_strdup(vdev->name);
+>      caps->type = type;
+> +    caps->hw_caps = hw_caps;
 >  
-> -- 
-> 2.37.3
+>      return true;
+>  }
 
 
