@@ -4,99 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFD9C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AB8C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU4E1-0004R6-Ii; Wed, 17 Jul 2024 08:57:43 -0400
+	id 1sU4Fj-0001Zl-5Q; Wed, 17 Jul 2024 08:59:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sU4Dn-0004M5-2b
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:57:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sU4Dk-00080I-60
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:57:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721221041;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DU2B3z889cJ1vNbbXbKWWwQ2HNoooeVdo2/nDVmRJvQ=;
- b=FUDa6y5D/+0S8igByTkyKOzzEG/Z1ZJ1ZQpZScmvvNaGZ6nW3Pwj02iaQ8JuV0NEZVO8tC
- O6j6xNvuJ5v8XeyV3F40xgtyxhwIFdpcEKq2DQ8JXgpoksZ7mvxaHwKVIdfhPYv6QME6Uz
- BODi1g3HdfdUTnchnaQhTKvY3yErqWk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-GY4kr_EPOJiWmzbfe_HiHQ-1; Wed, 17 Jul 2024 08:57:20 -0400
-X-MC-Unique: GY4kr_EPOJiWmzbfe_HiHQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42794cb8251so44359735e9.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:57:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sU4Fg-0001Xy-UF
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:59:24 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sU4Fb-000891-N5
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:59:24 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58b966b41fbso8273443a12.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721221157; x=1721825957; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=idvDtEwZOQUpT0NLawRdOHb4ouT+t6TnY0ba6XL3flE=;
+ b=xpvzlPznk2dkQjRInxeKwFllXxX/OSU1YTC0VA657B+eOt5KUmAANTVQ/1ahAHCv2n
+ RCLHcnSDDGmlYn5D19ig7MGpcFNmvbh8uJ6PcbzTSk3GvkoMAfxHlp/dsLTqhayIlxuX
+ unQY/zMBv0xAcxf7C9bHCWTGbKsJjHq0XkAG1/6FYuw6e/96i0NL4xwjuIQaoWUVjWeC
+ d30dO/AT5NFWmb4lIvN/ozeLqiLC/yf+iPXGq8GldIYbC/dSrF5Tonj1xg5WCWaN7fUM
+ UotySLFncBcAeKv3qTPBYGi6StNZNXzR7E/bPG3loIH90LqlK5X7PsEMn/SHsQ4YZNzP
+ +YEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721221039; x=1721825839;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DU2B3z889cJ1vNbbXbKWWwQ2HNoooeVdo2/nDVmRJvQ=;
- b=Ck0BywflMQFPqegGGNvj2hpyjzc2Mx7clLGVtXQ9GJZ6bObMOgEUUfaQ6N41n1HRYl
- vbq2toKfumNFw8i0SmkSAD2E5HSL8eje2JSsIdn2x1zO1nObQgiAtQdj4ONa7/HEz8Me
- gFjk+hjdFK06p2PXTH4AHuH1AXJchhCmN3TIFyqsq6qY8duER2U5zikuoJlA41tQ5PRi
- U3feDEjudiUsyfEs5ukiSVVw/wduCPJK+BKi9kRi/n0tQ1FXZv4Y0GLVcdZrDt8dMaV8
- 5r/+B2uFp7TTYY5Sljze2MXa/gvE4c0xi/nVCbb52hpMKA/YRLDdVUl6F1i/AXbacbgs
- G7tg==
+ d=1e100.net; s=20230601; t=1721221157; x=1721825957;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=idvDtEwZOQUpT0NLawRdOHb4ouT+t6TnY0ba6XL3flE=;
+ b=BOkCKWDdWAmaDjMoW1M/qpU47c+TKOpNQfwnfS7uL0nL+vb5KsIFKuTJ3ye9rWh+p/
+ EWCYuOQbyHw++IpJb42O4UY11t0c0FpZERQPcG2tUoSk1c4/8l1fe7CnL8OVP1KbhLUn
+ jO4JwzoNbKmUFihRVOtZIYi5NXPJUjkt3r/KML2DwuolpOuM6nbEa5ANRtwXoQ42+3OG
+ RpPb6Sn1uCrgbZQCXMCgCDvF+A3LIatip/nAsuWCPfSc01GTBx5G4BV5KMY79SSy4GdN
+ Op59kiXcjPlcRrS2hNocPFL8yt5/z2ejDbrQEGeInexJ2q6/A73yn7rVelKnuJrJquI2
+ EFkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZ1loSC6IOzfcLqg3MKmNt9b+uXJ0gk+ES0O179B2lZKMJd6UyQ6xMjmaRLT9oVE6LhJd7qwUnPIOF2ujLpG8jQkPjQmQ=
-X-Gm-Message-State: AOJu0Yydr0wl8x2jD8ORfuwVAev4YK6l76GRHjmrMmnv9OJj04xMsrxB
- QhcaJaflw+WqVJ17exSpjOjb937t//vmS8wnDLCcQClaOR4WC6EJ7qLuOkS4ISUPh9q5+R2O0ef
- HiYqCASM/X/jLhlcf30s8WQcZrQBrmZelkIsyuiYmsSnZvUeejoER
-X-Received: by 2002:a05:600c:b8d:b0:426:62df:bdf0 with SMTP id
- 5b1f17b1804b1-427c2cb0186mr11282365e9.10.1721221038844; 
- Wed, 17 Jul 2024 05:57:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETD05g3ffEI9fz94XyDdTs8uxVfZmBeuH1fRj8nLo6GeBYiIC+5DZqdEaeMYS6sjmAVmw8Wg==
-X-Received: by 2002:a05:600c:b8d:b0:426:62df:bdf0 with SMTP id
- 5b1f17b1804b1-427c2cb0186mr11282245e9.10.1721221038537; 
- Wed, 17 Jul 2024 05:57:18 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f23999csm206538305e9.8.2024.07.17.05.57.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 05:57:17 -0700 (PDT)
-Message-ID: <a0bf8925-58fb-4acf-a53f-03b3b3c0494a@redhat.com>
-Date: Wed, 17 Jul 2024 14:57:15 +0200
+ AJvYcCW1TmlVUssutZCsbynSoLMNO/OgyFFzgaCzr0iFWHBO7elzlEptaEtVljhsmTjCvLdTg53qe6LuIWnP7VmbBQlR+fSczEM=
+X-Gm-Message-State: AOJu0YwgtCFBD/wiLRmpXA2Vf6mQesNchL3YEFPJcSHUAdSnNPs956bI
+ TE+ACR2O8LeYgmOxISDiA2865z8NtLgRntd+99y8yXte4aEwNt6C3qUOPMOgidlknlZA7zHvNEY
+ mXjOlBiEeKhhwqbp9y31bcJYXp7p7kVhk//2rdA==
+X-Google-Smtp-Source: AGHT+IFIUuXnEci4DiEIoFp6WIqY0KqFLP1+LkwPme9Rh2y3HQn+Xu9skocf2a45JCK74J5eI8CfO5CZHJxgCl4etdE=
+X-Received: by 2002:a05:6402:f24:b0:5a0:f7ca:5e97 with SMTP id
+ 4fb4d7f45d1cf-5a0f7ca60f3mr504964a12.12.1721221157012; Wed, 17 Jul 2024
+ 05:59:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/12] vfio/migration: Don't block migration device
- dirty tracking is unsupported
-Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-12-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240712114704.8708-12-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20240716114229.329355-1-alex.bennee@linaro.org>
+ <b9b178fc-04f5-49a6-992a-f6920408b41f@linaro.org>
+ <87cyndgtui.fsf@draig.linaro.org>
+ <afa432f7-ed06-4074-8849-796984be0bc5@linaro.org>
+In-Reply-To: <afa432f7-ed06-4074-8849-796984be0bc5@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 17 Jul 2024 13:59:05 +0100
+Message-ID: <CAFEAcA-huKegPEAUh==S0bkLPT2TA3FVNw=u03VagG5+nW7-Gw@mail.gmail.com>
+Subject: Re: [RFC PATCH] gdbstub: Re-factor gdb command extensions
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,46 +95,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/12/24 13:47, Joao Martins wrote:
-> By default VFIO migration is set to auto, which will support live
-> migration if the migration capability is set *and* also dirty page
-> tracking is supported.
+On Tue, 16 Jul 2024 at 22:53, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> For testing purposes one can force enable without dirty page tracking
-> via enable-migration=on, but that option is generally left for testing
-> purposes.
+> On 7/17/24 02:55, Alex Benn=C3=A9e wrote:
+> >> Are you expecting the same GdbCmdParseEntry object to be registered
+> >> multiple times?  Can we fix that at a higher level?
+> >
+> > Its basically a hack to deal with the fact everything is tied to the
+> > CPUObject so we register everything multiple times. We could do a if
+> > (!registerd) register() dance but I guess I'm thinking forward to a
+> > hydrogenous future but I guess we'd need to do more work then anyway.
 >
-> So starting with IOMMU dirty tracking it can use to acomodate the lack of
-accomodate
+> Any chance we could move it all to the CPUClass?
 
-Eric
-> VF dirty page tracking allowing us to minimize the VF requirements for
-> migration and thus enabling migration by default for those too.
->
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->  hw/vfio/migration.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 34d4be2ce1b1..ce3d1b6e9a25 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -1036,7 +1036,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
->          return !vfio_block_migration(vbasedev, err, errp);
->      }
->  
-> -    if (!vbasedev->dirty_pages_supported) {
-> +    if (!vbasedev->dirty_pages_supported &&
-> +        !vbasedev->bcontainer->dirty_pages_supported) {
->          if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
->              error_setg(&err,
->                         "%s: VFIO device doesn't support device dirty tracking",
+No, because different instances of the same CPUClass might
+have different feature sets. In this case, one CPU might have
+MTE and another not, or one be AArch64 and another not.
 
+The underlying problem here is that there's quite a lot here
+that potentially varies across different CPUs in the system,
+but the gdbstub layer has an assumption of heterogeneity.
+(cf also the stuff about system registers.)
+
+thanks
+-- PMM
 
