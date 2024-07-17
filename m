@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAD8C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 08:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 170B1C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 08:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU0SF-0000XI-No; Wed, 17 Jul 2024 04:56:07 -0400
+	id 1sU0Sz-0001P6-T1; Wed, 17 Jul 2024 04:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU0SE-0000WH-9E
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:56:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sU0Sj-0001Bl-Iq
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:56:38 -0400
+Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU0S8-00032C-Im
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:56:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721206559;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EQPLfe/NfZL1qKm7yMeQAE0d1PqrsGgEF7DivEi9I4g=;
- b=aevHnXG5D4bWVEu5ZwRH9WMite+bcr/XbaI6xvwOsJrwnuEs8sSG6/+lYoYKcaaAP6bFrP
- m4c5X4yCs8+Cl3twYd7Ek/ZaOQlcJyrwLX/kDKsEml3nN6mNmVppoh3NTdlko3G8Kedmjw
- 18EPBr84ixPj08eeEH3jc4vybL8tZhM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-gqq5Cn1bMxCShYy7jwOJsA-1; Wed, 17 Jul 2024 04:55:58 -0400
-X-MC-Unique: gqq5Cn1bMxCShYy7jwOJsA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3678fbf4aa7so3763675f8f.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 01:55:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721206557; x=1721811357;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EQPLfe/NfZL1qKm7yMeQAE0d1PqrsGgEF7DivEi9I4g=;
- b=it3WHIOA+Foec0noe/pe5Xz/iV/BHSCIyHHZe5o7pazNtyx2KAw77SiBxW20UbX4+Q
- LCACm1ctI29lGHTqFbx4eePsHzFb7GcoueNDruRl2I1hM2n9MElxRQ9Ey9fUdyje/+tc
- YTJKxRLjef9xsP8uxmDV31I8yjk2k8wp0t7ncyXRBDwBlKknzvPYLAcXA8NCfDurRslM
- Vy6mJ4mtkCC6bu+AvnXNNQI/XsyGSof6LRiWTeySdotAFN9hjje8YyWnelvnPUHLHGKL
- HdU3z4Gg9PJlt3awNbvp6abLg0GEnrRQKe/rdR/xFV2xGqvL5a0s/UWe59OZ6h0CEOla
- bu+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJPhvHKum6yBZC1xE018ZnCmGzyalK192gAX4EqFoLWVvkOmBGlju4RRG4qU6oCDw7Jk5B3Xo6n/kXwJPcpX3nJM+xPvo=
-X-Gm-Message-State: AOJu0YzlVk18vEawGkq/NFX+SZV74TzCv9lShDpL/teoCRAZ11yfNCI6
- orbs1cmL3bHFw0v3nRknY5XMwuuiWqI82y2YBnbPZetekh1xPz1ADqOEfxZAPgkN8GW5dCb3uPh
- LwYFueJNVi+HEuMZxZxxOjzT/KxSeR75ZZelkb3WH/xak6B+zH+0L
-X-Received: by 2002:a5d:56ce:0:b0:367:9877:750e with SMTP id
- ffacd0b85a97d-36831605880mr647105f8f.25.1721206556788; 
- Wed, 17 Jul 2024 01:55:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzP0b2mY/U5XAp+clNfhl2plxQwCYkiKwu4W/2uHqL7/ytR81ZMpnA4Xuu1laJCMUKaiPtGQ==
-X-Received: by 2002:a5d:56ce:0:b0:367:9877:750e with SMTP id
- ffacd0b85a97d-36831605880mr647092f8f.25.1721206556013; 
- Wed, 17 Jul 2024 01:55:56 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f6:360d:da73:bbf7:ba86:37fb])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dafbf29sm11163692f8f.70.2024.07.17.01.55.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 01:55:55 -0700 (PDT)
-Date: Wed, 17 Jul 2024 04:55:52 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>,
- mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
-Message-ID: <20240717045335-mutt-send-email-mst@kernel.org>
-References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
- <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
- <ZpUmrTrEnx0RcO2y@x1n>
- <CAE8KmOxY_LQ9vNjvmPyRgk_dcnEZFG6_M1q14473NQoBUSM4ow@mail.gmail.com>
- <ZpbuChi9QMIogmuS@x1n>
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sU0Sh-00035p-2H
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:56:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721206596; x=1752742596;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=sVI0RniNYi0W5BbxKf/SmIGPggwqI+jvDgAGkKB2HVk=;
+ b=Y57iWAFr9baElUGdBkwv4aOnjrsA/l9SIrCh4TiMrK7PlUJoyiW0Ccy4
+ 7TfUGuFlYF/hJaG1bGgQMvLq4z5JPe6oYB/J/gXm8bULA17H7MlNGftQ7
+ LgMJa2KJ2jItZfFU+JHmR6PUvlHCx5jcxa2GTU62cyJxzPuSZou2jnRCp
+ MhgN+wc6vXA03v8SJyPXzuuzKYCxlPEKWJcK7dRAvT9gaC3iLSX3DHTBF
+ qGP/dflP07Hs3QgqwNMeDc2Z0ip2tSFjVi/Zz6ikvEwwKVhXO12JGB5jI
+ kz6iJqNQo1e6LH1GPjkV7I2D/ev47nlT2ztIDWVPLrKigz6j4S2cAQnyM A==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="167551159"
+X-IronPort-AV: E=Sophos;i="6.09,214,1716217200"; d="scan'208";a="167551159"
+Received: from unknown (HELO yto-r3.gw.nic.fujitsu.com) ([218.44.52.219])
+ by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jul 2024 17:56:30 +0900
+Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
+ [192.168.83.65])
+ by yto-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 67EE0D4F56
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 17:56:27 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id A6507D50ED
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 17:56:26 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 2BC44E5E45
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 17:56:26 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 377B01A000A;
+ Wed, 17 Jul 2024 16:56:25 +0800 (CST)
+To: mst@redhat.com,
+	marcel.apfelbaum@gmail.com
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH v2] pci-bridge: avoid linking a single downstream port more
+ than once
+Date: Wed, 17 Jul 2024 04:56:21 -0400
+Message-Id: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZpbuChi9QMIogmuS@x1n>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28534.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28534.005
+X-TMASE-Result: 10--6.176500-10.000000
+X-TMASE-MatchedRID: Yt5+J3IIlN56bMYbioM9qazGfgakLdjaBGvINcfHqhcOabErRKSRvego
+ SvaKsl/kIvrftAIhWmLy9zcRSkKatWA1R1xiceE7s0T0PE+KHuVYjHef2XEWkQZZ8N3RvTMxo8W
+ MkQWv6iXBcIE78YqRWvcUt5lc1lLgOMB0shqXhHrEADU5fwfpWn1Whz8oylpkqoRmqV8XOn7SyQ
+ /OlZbotvkcX3eSdgyP
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.49; envelope-from=yaoxt.fnst@fujitsu.com;
+ helo=esa3.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +93,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 06:02:50PM -0400, Peter Xu wrote:
-> On Tue, Jul 16, 2024 at 03:44:54PM +0530, Prasad Pandit wrote:
-> > Hello Peter,
-> > 
-> > On Mon, 15 Jul 2024 at 19:10, Peter Xu <peterx@redhat.com> wrote:
-> > > IMHO it's better we debug and fix all the issues before merging this one,
-> > > otherwise we may overlook something.
-> > 
-> > * Well we don't know where the issue is, not sure where the fix may go
-> > in, ex. if the issue turns out to be how virsh(1) invokes
-> > migrate-postcopy, fix may go in virsh(1). Patches in this series
-> > anyway don't help to fix the migration convergence issue, so they
-> > could be reviewed independently I guess.
-> 
-> I still think we should find a complete solution before merging anything,
-> because I'm not 100% confident the issue to be further investigated is
-> irrelevant to this patch.
-> 
-> No strong opinions, I'll leave that to Michael to decide.
-> 
-> > 
-> > > You could pass over the patch to whoever going to debug this, so it will be included in the whole set to be
-> > > posted when the bug is completely fixed.
-> > 
-> > * Yes, this patch series is linked there.
-> > 
-> > > The protocol should have no restriction on the thread model of a front-end.
-> > > It only describes the wire protocol.
-> > >
-> > > IIUC the protocol was designed to be serialized by nature (where there's no
-> > > request ID, so we can't match reply to any of the previous response), then
-> > > the front-end can manage the threads well to serialize all the requests,
-> > > like using this rwlock.
-> > 
-> > * I see, okay. The simple protocol definition seems to indicate that
-> > it is meant for one front-end/back-end pair. If we are dividing the
-> > front-end across multiple threads, maybe we need a document to
-> > describe those threads and how they work, at least for the QEMU
-> > (front-end) side. Because the back-end could be a non-QEMU process, we
-> > can not do much there. (just thinking)
-> 
-> IMHO that's not part of the protocol but impl details, so the current doc
-> looks all fine to me.
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
+Since the downstream port is not checked, two slots can be linked to
+a single port. However, this can prevent the driver from detecting the
+device properly.
 
+It is necessary to ensure that a downstream port is not linked more than
+once.
 
-I just want to understand how we managed to have two threads
-talking in parallel. BQL is normally enough, which path
-manages to invoke vhost-user with BQL not taken?
-Just check BQL taken on each vhost user invocation and
-you will figure it out.
+Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 
+---
+V1[1] -> V2:
+ - Move downstream port check forward
 
+[1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
+---
+ hw/pci-bridge/cxl_downstream.c     | 5 +++++
+ hw/pci-bridge/pcie_root_port.c     | 5 +++++
+ hw/pci-bridge/xio3130_downstream.c | 5 +++++
+ 3 files changed, 15 insertions(+)
+
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index 742da07a015a..af81ddfeec13 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -142,6 +142,11 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
+     MemoryRegion *component_bar = &cregs->component_registers;
+     int rc;
+ 
++    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
++        error_setg(errp, "Can't link port, error %d", -EBUSY);
++        return;
++    }
++
+     pci_bridge_initfn(d, TYPE_PCIE_BUS);
+     pcie_port_init_reg(d);
+ 
+diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+index 09a34786bc62..a540204bda27 100644
+--- a/hw/pci-bridge/pcie_root_port.c
++++ b/hw/pci-bridge/pcie_root_port.c
+@@ -67,6 +67,11 @@ static void rp_realize(PCIDevice *d, Error **errp)
+     PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(d);
+     int rc;
+ 
++    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
++        error_setg(errp, "Can't link port, error %d", -EBUSY);
++        return;
++    }
++
+     pci_config_set_interrupt_pin(d->config, 1);
+     if (d->cap_present & QEMU_PCIE_CAP_CXL) {
+         pci_bridge_initfn(d, TYPE_CXL_BUS);
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index 907d5105b019..63f6baa615fd 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -69,6 +69,11 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
+     PCIESlot *s = PCIE_SLOT(d);
+     int rc;
+ 
++    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
++        error_setg(errp, "Can't link port, error %d", -EBUSY);
++        return;
++    }
++
+     pci_bridge_initfn(d, TYPE_PCIE_BUS);
+     pcie_port_init_reg(d);
+ 
 -- 
-MST
+2.37.3
 
 
