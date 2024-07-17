@@ -4,84 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D8CC3DA62
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505D1C3DA60
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU9zQ-0004u0-1d; Wed, 17 Jul 2024 15:07:00 -0400
+	id 1sUAGO-0005iC-Ax; Wed, 17 Jul 2024 15:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sU9zN-0004mV-EG
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:06:58 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sU9zJ-0000jM-EB
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:06:55 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba0468so1007671fa.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:06:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721243211; x=1721848011; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gmTyUPUh2TdjaS2kakIUu+zSdq0kzqZ8AQ2di4fhUkI=;
- b=oJ1oTNL0og8MQv8uYwZhYQBn+WlCKkvCmldwgKnVELDgM3u0l6pXo1AtTjqYoDao74
- ZkWY5Off2xQeuOok9xlBmDUqfrSGJL+q9qgQltqFLaz4XtP6G8j9/P9BSBQ89SrG5drF
- YqCfOozK0t/MS1QCfinn9XqU5JahBnLL2UTqvnR94l5Y5Bu5yPBm14dIBNTQtxuFBgda
- RfRsT3zeJ/eD1dXGRDMd4aAX9B8HWKh/y5IGC5t4XsMxaUtimAAYUmmFvW0rGYWIjMAX
- gepKtgD6w+olYVzcX2iGZCMtJx3A/VUkkAM0GWusoiYrxpTnfBgaOOr0TG6qxx4yptmG
- Q65A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUAGL-0005hL-Tc
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:24:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUAGI-0001fQ-SR
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:24:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721244265;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UfDqO5QDUfjaxADAITl7zzYhGnjVqqYIrR+bZVUltNo=;
+ b=JTtK678t38m9LaWEzaP5SAoVR6NkZXTKw28xNdvdNR+6+oQEOz+DF7ywLhJgCykTpHYOg4
+ JU8CleKaPLtEtcRuXIR3AjfLrkLczANNtTfPRRubp39E4rYWDAs0YyYHMznIXUtG6ecM9z
+ b6zbPAJrOKe7CMzZA8fxgUe6IvGFVmM=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-p07J1NqGO5-GJ29l1GP22Q-1; Wed, 17 Jul 2024 15:24:24 -0400
+X-MC-Unique: p07J1NqGO5-GJ29l1GP22Q-1
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-2502a80477bso16641fac.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:24:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721243211; x=1721848011;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gmTyUPUh2TdjaS2kakIUu+zSdq0kzqZ8AQ2di4fhUkI=;
- b=azxV9gi4SxxtJjWwKaf3B1cOYHEgWsOSlKo9weFrSFQEHYBhSE0jhbxLDzhud16GhU
- mGsNYeJ6xBu2Y2mVXYXitLkz9bgOpAl9pamSPyLnW1gg3aWk4raIAt/OkF6MV36/Qll1
- BUsqhLHsMQ3rrkMztJlJPazVkPlVlXcIBN+2VuDwL79NhYLsHruoZUn/wSol9TZbnWcW
- 0xMyclF9NGv68q5zd8TK6ziFGx7LFt3aqUTmQIzGJzCTnSi9u7vYkujakfop2a+VP7c5
- 4C5yOC8JJ4/EEWgDZOIfJ1vfBmCE8pldP+OasYC9DLM8Da98ZBVDWQG6AiOnCL7CHKnF
- lyTQ==
+ d=1e100.net; s=20230601; t=1721244263; x=1721849063;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UfDqO5QDUfjaxADAITl7zzYhGnjVqqYIrR+bZVUltNo=;
+ b=VBnZiFOi/DmA1548i35n9H07thoLVgKY0+Ti43q4/qLdqZu/iqgdHsPmP3PTqsJrnL
+ fu1FC9s63vhZzao5yIXVRAUykTC4AO2PKA/xC/C+rEqwOSodJfijz0FcCFcs8YphCZ7/
+ ZNUgSi6s7eJd3DMtSQSsiQ7894JEBYUgeaaBDFOg5OJB4XEXOqAKpUhzJqdJydHUCUn3
+ V/q3acaXnSUtU1MU0ChgjookBX0Vp9frb23w5qnSoWFC3CZhTxttTMqlKQfrbxpXGExY
+ Ou5PtbLye4CDxcgM7PjOXXwx4DoGqneo9cnFGRpkHk3OfGjzaqzXh5zM7sRRoTRJgtBd
+ Jc0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUA2PVQoYktgHZSVP6JpMN8Xmdxajl3a83GLO3z6gkTyfHkfS88V25zAt71I5W96TrCH0NDnvwuZV43sTggkN7rfEItffg=
-X-Gm-Message-State: AOJu0YwBN7vJwn/5rS36fLV2tZ6CBk/19u+7b4mR4fkMyXCZRahxQrB5
- yK6rRAxXHqBQrRurmcPNPb3BVyKv0MMGmuvnH6TIEvsormsN3ZUpmi3uhSe0h4YTnQGqISHJKcL
- qpQq4AUYxeU/Vw/b1bJws4gBK24gLNxoMUVXbYg==
-X-Google-Smtp-Source: AGHT+IGXxq60Nbxt/VLpXBWKiQuKAR94McjSn38xqdH99XBIjQBmd2SBUsMaV2HlB23vdXxYiDos22kvDEsmQCNytgw=
-X-Received: by 2002:a2e:9e02:0:b0:2ee:6b86:b0aa with SMTP id
- 38308e7fff4ca-2ef05c7143emr2087811fa.17.1721243211042; Wed, 17 Jul 2024
- 12:06:51 -0700 (PDT)
+ AJvYcCV5Lpl8CWoP5v652u+MQSZsQ7AYvi8fXAz9Azn8I3hIxhe4Xkx92LvIdx8PdxwP9RHP0DkBDRrHlqHzUdYtFEZRILErpjM=
+X-Gm-Message-State: AOJu0YyDmrLzYLW0DAD0Lm/UcKcpJUd9bm/onN4yZ3xFGLHXbMJNC5KZ
+ cOjU+5z7Eb4o1CrowYvAyTGrdACKWmtf7mDP3yzTYLyrijd5v/eszMTSZNEDATS85NaHJDBCoRj
+ QUFiXZLfKTphWrq/9A/DuS19BVIm0eTCy9KGxAS7MUT9w3E0SuTyZ
+X-Received: by 2002:a05:6870:d888:b0:260:23eb:5669 with SMTP id
+ 586e51a60fabf-260ee6278efmr308281fac.2.1721244263474; 
+ Wed, 17 Jul 2024 12:24:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH19Dq20+NleW9Az/Rnqg1yvRtVC50M3OPEr7oHMXP0ziHMbVNH1Fp/WoI7W/3QHg6Mkz97YA==
+X-Received: by 2002:a05:6870:d888:b0:260:23eb:5669 with SMTP id
+ 586e51a60fabf-260ee6278efmr308267fac.2.1721244263101; 
+ Wed, 17 Jul 2024 12:24:23 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a160bbe360sm439456785a.30.2024.07.17.12.24.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 12:24:22 -0700 (PDT)
+Date: Wed, 17 Jul 2024 15:24:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
+Message-ID: <ZpgaZPxKzwcVAYZn@x1n>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
+ <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-References: <20240715084519.1189624-1-smostafa@google.com>
- <20240717150931.GA3988597@myrica>
- <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
-In-Reply-To: <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 17 Jul 2024 20:06:39 +0100
-Message-ID: <CAFEAcA9e+NCFZ+Zhs0C-XxD++=33FV7Tnt8GzZmvUnpzMw2Yxg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/18] SMMUv3 nested translation support
-To: eric.auger@redhat.com
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org, 
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
- marcin.juszkiewicz@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,35 +108,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Jul 2024 at 18:44, Eric Auger <eric.auger@redhat.com> wrote:
->
-> Hi Peter, Richard,
->
-> On 7/17/24 17:09, Jean-Philippe Brucker wrote:
-> > On Mon, Jul 15, 2024 at 08:45:00AM +0000, Mostafa Saleh wrote:
-> >> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
-> >> but not nested instances.
-> >> This patch series adds support for nested translation in SMMUv3,
-> >> this is controlled by property =E2=80=9Carm-smmuv3.stage=3Dnested=E2=
-=80=9D, and
-> >> advertised to guests as (IDR0.S1P =3D=3D 1 && IDR0.S2P =3D=3D 2)
-> > For the whole series (3-9, 11, 12, 15, 16, 18):
-> >
-> > Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> >
-> > (and I think patch 16 is missing Eric's R-b)
->
-> Jean-Philippe and I have followed up the progress of this series,
-> Mostafa took into account all our comments and all the patches were
-> reviewed. It seems to be in a pretty decent state so if you don't have
-> any objection, please consider pulling it for 9.1.
+On Tue, Jul 16, 2024 at 11:19:55AM +0200, Igor Mammedov wrote:
+> On Sun, 30 Jun 2024 12:40:24 -0700
+> Steve Sistare <steven.sistare@oracle.com> wrote:
+> 
+> > Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
+> > on the value of the anon-alloc machine property.  This affects
+> > memory-backend-ram objects, guest RAM created with the global -m option
+> > but without an associated memory-backend object and without the -mem-path
+> > option
+> nowadays, all machines were converted to use memory backend for VM RAM.
+> so -m option implicitly creates memory-backend object,
+> which will be either MEMORY_BACKEND_FILE if -mem-path present
+> or MEMORY_BACKEND_RAM otherwise.
+> 
+> 
+> > To access the same memory in the old and new QEMU processes, the memory
+> > must be mapped shared.  Therefore, the implementation always sets
+> 
+> > RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
+> > user must explicitly specify the share option.  In lieu of defining a new
+> so statement at the top that memory-backend-ram is affected is not
+> really valid? 
+> 
+> > RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
+> > as the condition for calling memfd_create.
+> 
+> In general I do dislike adding yet another option that will affect
+> guest RAM allocation (memory-backends  should be sufficient).
 
-Yep, I've had this series on my radar since you said in a
-comment on the previous revision that it was close to
-being ready. Thanks to both you and Jean-Philippe for doing
-the heavy lifting on the code review here.
+I shared the same concern when reviewing the previous version, and I keep
+having so.
 
-Applied to target-arm.next for 9.1, thanks.
+> 
+> However I do see that you need memfd for device memory (vram, roms, ...).
+> Can we just use memfd/shared unconditionally for those and
+> avoid introducing a new confusing option?
 
--- PMM
+ROMs should be fine IIUC, as they shouldn't be large, and they can be
+migrated normally (because they're not DMA target from VFIO assigned
+devices).  IOW, per my understanding what must be shared via memfd is
+writable memories that can be DMAed from a VFIO device.
+
+I raised such question on whether / why vram can be a DMA target, but I
+didn't get a response.  So I would like to redo this comment: I think we
+should figure out what is missing when we switch all backends to use
+-object, rather than adding this flag easily.  When added, we should be
+crystal clear on which RAM region will be applicable by this flag.
+
+PS to Steve: and I think I left tons of other comments in previous version
+outside this patch too, but I don't think they're fully discussed when this
+series was sent.  I can re-read the series again, but I don't think it'll
+work out if we keep skipping discussions..
+
+Thanks,
+
+-- 
+Peter Xu
+
 
