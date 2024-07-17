@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3B0C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 05:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EB7C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 05:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTwpd-00013n-18; Wed, 17 Jul 2024 01:04:01 -0400
+	id 1sTwpv-0001zM-OH; Wed, 17 Jul 2024 01:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTwpZ-0000q2-P4
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:03:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sTwpo-0001mS-7D
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:04:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTwpY-0001yp-9i
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:03:57 -0400
+ id 1sTwpm-00022W-Mv
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:04:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721192635;
+ s=mimecast20190719; t=1721192650;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tYdvr4qiEpyG2gw0AyoyI4aNLrC174pqQVM5gsiHlBw=;
- b=IzruuN2XXRGFx0eOePFm1ijSGCWa9KfJPP5WaFrA4VgMKl8Z5XO4HNSSO9v37fo5b7cZxv
- CVvwXnTYf7BTjX64JNM0yAg/qN7px9SENXigPBGbcfeqxVZVe2xod8znf8v02tB/vSFPWR
- P32G1V/DQPvBs0B9h4C6zIE4BMrra/M=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NHF1gm359CBBwWB+U+NepPClCcmLSyfmhAFVt5pGW6Y=;
+ b=a+a6X/RBWIikZdpYHuwJ9eSSSS69Gr+ynK3x8MFDwS90+rG3W6DXty8oKvSCDPIAz8ZlXX
+ vmhP1GRZ7ZGTGdLg8YZcJdECgB51vDE1BrTXFJCPQB6UGBy3nTYlWUPKycvFdTlupF5a8o
+ fl/KxlO2RstQLOrdULHdAbNWw9inMpI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-DboOiFK8NV28eycv0kemmQ-1; Wed, 17 Jul 2024 01:03:53 -0400
-X-MC-Unique: DboOiFK8NV28eycv0kemmQ-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ee97349a5fso63506931fa.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 22:03:53 -0700 (PDT)
+ us-mta-227-5eqt7j0INRW4H9xh6ct6kA-1; Wed, 17 Jul 2024 01:04:07 -0400
+X-MC-Unique: 5eqt7j0INRW4H9xh6ct6kA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-426724679f0so1650625e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 22:04:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721192632; x=1721797432;
+ d=1e100.net; s=20230601; t=1721192645; x=1721797445;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tYdvr4qiEpyG2gw0AyoyI4aNLrC174pqQVM5gsiHlBw=;
- b=Y/x0keQbNDqFxHfs4ScYvxeFjhl7qPjUkzpRi3zP6qc5M+kQxNJIIz8FswScdC7Lhc
- MpM0VOiDcOL3vewCeWvGpMDUIb8ILCjG9FXOIJZ0lvAo87EcboAshamZfueWt9f8Fu14
- FWcJBTcxg7In2lZsUC+0qgRTlRhaZEwQ82AbfCg62L5QWp1aCu8LstopJYLzGi0JnJK3
- u2ksDTKGkKiVwz37/D/t0Nl1kXYKN5M+zYr3W7w420MYzHlK9rqxAA9NYlhNkhMzevNv
- ceI6h6pECEFr+BrQHm4imwl/bXXfhT3jKGzSRrVmX7Xu3dKO8NZyGIwZCKIpRWxYs9bc
- 90Tg==
-X-Gm-Message-State: AOJu0YzLt1Htru1jQldXx6iIjQwhfjuAy5O/ALnbpxEVNZU6ogw8cZE0
- rd7pGCGJlg3QUDLTeahopVIhYz8PfOP0lDHYJ+NMwwoo8x2GAbez0+FSvwPYwo/dYDk4XuDQXpN
- oyDeFcEFRAHh47EzWSf+nyn74Ru95HXIBgqvaopnCAezLOuF+j6UVmystiHK6FsXFHY1pPw3FN6
- 1QJ9k4LgKGp8GyMks0UaXBVXzL41ttwkI3dp13
-X-Received: by 2002:a05:651c:1992:b0:2ec:565f:ef56 with SMTP id
- 38308e7fff4ca-2eefd04f491mr4406211fa.7.1721192631907; 
- Tue, 16 Jul 2024 22:03:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFt/L5LAd88TY+69Z6aGmfcWsh8wIg3ukTbGNyw2A1QQPbyF0tR7GM1b7TQzBXdozVqmIDa9Q==
-X-Received: by 2002:a05:651c:1992:b0:2ec:565f:ef56 with SMTP id
- 38308e7fff4ca-2eefd04f491mr4406081fa.7.1721192631433; 
- Tue, 16 Jul 2024 22:03:51 -0700 (PDT)
+ bh=NHF1gm359CBBwWB+U+NepPClCcmLSyfmhAFVt5pGW6Y=;
+ b=l/7/iuA4E05NIsOifZOcoozlGNl2j5dzAj4JfCbXmTI1oymo7EW60qKh1MufusJKfU
+ DWwfrP5cCCAB2NJ3/eTI25PjrxAnKEtpsKrJyAu1RCJGlxFhYXDT90yYfswcwDIgGZod
+ +O+hRZiGx959woJyd+3AA84XDmbOmti+tDmTSuF5OtoIY0J2LIa+lnxjuI5m+dzTRI/Q
+ h7Gyf3s+lHTYN21bt11zwbPdTJp3GjcatzLvcaTIIYR7aD4sB+r+RmHvMhF2kXQa3ouP
+ GOhXvn4gRttBG375INl0NSFgr1WGFEVAi3JiP0BkKDKSEgEZCkkwQBkhTXpegrvuG7RK
+ 9PnQ==
+X-Gm-Message-State: AOJu0Yy1PuoFbI6bj/ZHZljzOwZFSdg8I9ZpyUujcQ9LLxHfmCPXgjjh
+ hKlcKYr7Kd6+k1gYN6tW9JyCHzC6Z12EW5UVed5e2rL90jEF2GxXKL3md30WxANx4EfJaOzwd/h
+ 0KdgVPXpupQujC0aC4ViIL1jDD41vFbe8ce9A7qggKGPkjq4HnIcjNG1mn2taZFGMAxD1cMNxQ2
+ JpOqY7y1OgtDWtgZKlm2XsPjrvar31Rj+2vzqW
+X-Received: by 2002:a05:600c:3501:b0:426:6252:61d9 with SMTP id
+ 5b1f17b1804b1-427bb6c3468mr25812915e9.11.1721192645699; 
+ Tue, 16 Jul 2024 22:04:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbxkbEvd4RtiGQkzRN+KjisgQ8KAV5NOWS34YQPAuPO7RBm6Pp8zYYZ3gfbsW5eTQmnyLgpQ==
+X-Received: by 2002:a05:600c:3501:b0:426:6252:61d9 with SMTP id
+ 5b1f17b1804b1-427bb6c3468mr25812825e9.11.1721192645386; 
+ Tue, 16 Jul 2024 22:04:05 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb525sm153463965e9.34.2024.07.16.22.03.48
+ ffacd0b85a97d-3680dafbe7csm10688685f8f.83.2024.07.16.22.04.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 22:03:48 -0700 (PDT)
+ Tue, 16 Jul 2024 22:04:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-Subject: [PULL 07/20] qemu/timer: Add host ticks function for LoongArch
-Date: Wed, 17 Jul 2024 07:03:17 +0200
-Message-ID: <20240717050331.295371-8-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 14/20] target/i386/tcg: use PUSHL/PUSHW for error code
+Date: Wed, 17 Jul 2024 07:03:24 +0200
+Message-ID: <20240717050331.295371-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240717050331.295371-1-pbonzini@redhat.com>
 References: <20240717050331.295371-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,35 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Song Gao <gaosong@loongson.cn>
+Do not pre-decrement esp, let the macros subtract the appropriate
+operand size.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Link: https://lore.kernel.org/r/20240716031500.4193498-1-gaosong@loongson.cn
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qemu/timer.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ target/i386/tcg/seg_helper.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index 5ce83c79112..fa56ec9481d 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -1016,6 +1016,15 @@ static inline int64_t cpu_get_host_ticks(void)
-     return val;
- }
- 
-+#elif defined(__loongarch64)
-+static inline int64_t cpu_get_host_ticks(void)
-+{
-+    uint64_t val;
-+
-+    asm volatile("rdtime.d %0, $zero" : "=r"(val));
-+    return val;
-+}
-+
- #else
- /* The host CPU doesn't have an easily accessible cycle counter.
-    Just return a monotonically increasing value.  This will be
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 224e73e9ed0..b985382d704 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -670,22 +670,20 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+         }
+         shift = switch_tss(env, intno * 8, e1, e2, SWITCH_TSS_CALL, old_eip);
+         if (has_error_code) {
+-            uint32_t mask;
+-
+             /* push the error code */
+             if (env->segs[R_SS].flags & DESC_B_MASK) {
+-                mask = 0xffffffff;
++                sp_mask = 0xffffffff;
+             } else {
+-                mask = 0xffff;
++                sp_mask = 0xffff;
+             }
+-            esp = (env->regs[R_ESP] - (2 << shift)) & mask;
+-            ssp = env->segs[R_SS].base + esp;
++            esp = env->regs[R_ESP];
++            ssp = env->segs[R_SS].base;
+             if (shift) {
+-                cpu_stl_kernel(env, ssp, error_code);
++                PUSHL(ssp, esp, sp_mask, error_code);
+             } else {
+-                cpu_stw_kernel(env, ssp, error_code);
++                PUSHW(ssp, esp, sp_mask, error_code);
+             }
+-            SET_ESP(esp, mask);
++            SET_ESP(esp, sp_mask);
+         }
+         return;
+     }
 -- 
 2.45.2
 
