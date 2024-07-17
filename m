@@ -4,139 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B4D9C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 09:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E050AC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 09:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU0px-0000P6-6O; Wed, 17 Jul 2024 05:20:37 -0400
+	id 1sU0sA-0005Q9-Lj; Wed, 17 Jul 2024 05:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sU0pv-0000HM-7x
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 05:20:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sU0ps-0004UH-SO
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 05:20:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721208027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LRd7uCMg/RUJTa07ZmClJ2/xZu/wAcCV4+C9kLTULy0=;
- b=MrjOnZhFqHbpa6IIw1iwc1l6OT2g97Jr9adCwLLxA/XWxqcDCAXzTVxNzYCwt1l6x3CUMl
- rmdd3HkzdYp0ywR1ClvEhewuMl0nkjJKYDWL8+Fc+C727hk1ThGybEc2+rb0BHQGfJtBDd
- e0sy7ZPD1wG0brM/y/9qkbQlua/8960=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-Z41DDm2vOSqdlfsWLEo9Tg-1; Wed, 17 Jul 2024 05:20:25 -0400
-X-MC-Unique: Z41DDm2vOSqdlfsWLEo9Tg-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ee9f58c858so63333821fa.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 02:20:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721208023; x=1721812823;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LRd7uCMg/RUJTa07ZmClJ2/xZu/wAcCV4+C9kLTULy0=;
- b=cmfhecJ0HpidXbHOyfGRxBrXd1xSwiq4ec7Iavs8+TKkxifKapeZqHncmItbwv35d2
- aQTL7CZ7ezQsFM6rdTZvXOjkGICS4n+rxjX6fQohh8mf6iU+oOTYa6SrHpmFmBzCYUus
- 3WILocb0T6z0T9YJzGHOlEedRbmHLdlbP0efW7+bDOwXLlOtf8dip8lAjplMUyuavNl+
- ph/j/1zEWBfU5soI99dj0KIAp66u8NqitLcJwpOvZRTQpXES/3JAgy7JHbq39zZnF9ap
- Kw4QgUDTf8ENjMNEI+ROWTpaAiFodcx6FbPQkr3pUUm5+PzeM+5yt518LXndjL9igHo+
- DGiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnagkQna5qePYcZ2PYarRqSDoUPLx1j+jMG9vMEpHvwdggr3Vr0fzY2Wa/BSBayxbgeeSwcWt+phQTPyTs387MGa52YQo=
-X-Gm-Message-State: AOJu0Yy5yl+uTzZmmMu9vuFSPwQ+OCGLchdUTv7yem/1CEr/aQWLdbZ4
- uOZCPGGHvqGGMbmsZ6C3zMZw6SD5sHifunORpVl4Z0+RRErE3J1VkDzm5SSKLRyQALzkiiICoyj
- XN4aXgq2VMQRRAx1KvFS3cAu5EqtiXObzqeCYgUN3s+Rb0gRshZ8+
-X-Received: by 2002:a2e:3614:0:b0:2ee:7a92:610 with SMTP id
- 38308e7fff4ca-2eefd1521bamr7484601fa.39.1721208023226; 
- Wed, 17 Jul 2024 02:20:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuLzh+eyWuCcNJf1XAyrGJ8f89N5RdYt7EOndJUfjY4DXtD9YfDpZtQWrwQjxaxTSabxX2PQ==
-X-Received: by 2002:a2e:3614:0:b0:2ee:7a92:610 with SMTP id
- 38308e7fff4ca-2eefd1521bamr7484101fa.39.1721208021284; 
- Wed, 17 Jul 2024 02:20:21 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
- [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f23984fsm198883295e9.7.2024.07.17.02.20.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 02:20:20 -0700 (PDT)
-Message-ID: <0da0a686-1331-4411-b19b-bc337f8f33a9@redhat.com>
-Date: Wed, 17 Jul 2024 11:20:19 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sU0s8-0005OH-03
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 05:22:52 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sU0s4-0004ll-Cu
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 05:22:51 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxnOpdjZdmcw8AAA--.359S3;
+ Wed, 17 Jul 2024 17:22:37 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxlsVZjZdm0k5MAA--.29785S3; 
+ Wed, 17 Jul 2024 17:22:35 +0800 (CST)
+Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240704033802.3838618-1-maobibo@loongson.cn>
+ <682d514b-1d49-4e23-9cb7-a6fd83cbd863@linaro.org>
+ <d26cf86a-2247-b5d9-3674-64cead2fa816@loongson.cn>
+ <b4a9e1e9-467c-2d50-0d24-174fc9e5c5fe@loongson.cn>
+ <4061a31e-1cd8-4cd7-96f3-3e5208e12a87@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <51574a26-9f62-e069-f8db-d7f243f89b44@loongson.cn>
+Date: Wed, 17 Jul 2024 17:22:33 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] tests/functional: Add python-based tests to the
- meson build system
-To: Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240716112614.1755692-1-thuth@redhat.com>
- <20240716112614.1755692-5-thuth@redhat.com> <87o76xcqrl.fsf@suse.de>
-From: Thomas Huth <thuth@redhat.com>
+In-Reply-To: <4061a31e-1cd8-4cd7-96f3-3e5208e12a87@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <87o76xcqrl.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxlsVZjZdm0k5MAA--.29785S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJF1rZrWrurWkZw18Zw1UArc_yoW8Kr4UpF
+ W8CayYgF4DJr15Jrsrtas0gFWqyr13JrZ2g3WFqr97CrZFqryFqw4IvrWUu3Z8Ar1fJ3Wj
+ vF409347Za4DAagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzZ2-
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.356,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,95 +87,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/07/2024 17.15, Fabiano Rosas wrote:
-> Thomas Huth <thuth@redhat.com> writes:
-> 
->> Integrate the new python-based test framework with the meson build
->> system. Since these tests now require the pycotap module, make
->> sure that it gets installed in the venv.
->>
->> The changes to the meson.build files are partly based on an earlier
->> patch by Ani Sinha (but heavily modified by Thomas Huth e.g. to use
->> pycotap for running the tests instead).
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> 
-> Just one touch-up below.
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> 
->> ---
->>   pythondeps.toml              |  3 +-
->>   tests/Makefile.include       | 18 ++++++++-
->>   tests/functional/meson.build | 75 ++++++++++++++++++++++++++++++++++++
->>   tests/meson.build            |  1 +
->>   4 files changed, 95 insertions(+), 2 deletions(-)
->>   create mode 100644 tests/functional/meson.build
->>
->> diff --git a/pythondeps.toml b/pythondeps.toml
->> index f6e590fdd8..c018b4d74a 100644
->> --- a/pythondeps.toml
->> +++ b/pythondeps.toml
->> @@ -26,9 +26,10 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
->>   sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
->>   sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
->>   
->> -[avocado]
->> +[tests]
->>   # Note that qemu.git/python/ is always implicitly installed.
->>   # Prefer an LTS version when updating the accepted versions of
->>   # avocado-framework, for example right now the limit is 92.x.
->>   avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
->>   pycdlib = { accepted = ">=1.11.0" }
->> +pycotap = { accepted = ">=1.1.0" }
->> diff --git a/tests/Makefile.include b/tests/Makefile.include
->> index d39d5dd6a4..2bdf607977 100644
->> --- a/tests/Makefile.include
->> +++ b/tests/Makefile.include
->> @@ -9,6 +9,8 @@ check-help:
->>   	@echo "Individual test suites:"
->>   	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
->>   	@echo " $(MAKE) check-qtest            Run qtest tests"
->> +	@echo " $(MAKE) check-functional       Run python-based functional tests"
->> +	@echo " $(MAKE) check-functional-TARG  Run functional tests for
->> a given target"
->>   	@echo " $(MAKE) check-unit             Run qobject tests"
->>   	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
->>   	@echo " $(MAKE) check-block            Run block tests"
->> @@ -111,7 +113,7 @@ quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
->>   
->>   $(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
->>   	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
->> -	$(MKVENV_ENSUREGROUP) $< avocado
->> +	$(MKVENV_ENSUREGROUP) $< tests
->>   	$(call quiet-command, touch $@)
->>   
->>   $(TESTS_RESULTS_DIR):
->> @@ -152,6 +154,20 @@ check-acceptance-deprecated-warning:
->>   
->>   check-acceptance: check-acceptance-deprecated-warning | check-avocado
->>   
->> +# Make sure that pycotap is installed before running any functional tests:
->> +ifneq ($(filter check-func%,$(MAKECMDGOALS))$(filter check,$(MAKECMDGOALS)),)
->> +do-meson-check: check-venv
->> +endif
->> +
->> +FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
->> +.PHONY: $(FUNCTIONAL_TARGETS)
->> +$(FUNCTIONAL_TARGETS):
->> +	@make SPEED=thorough $(subst -functional,-func,$@)
->> +
->> +.PHONY: check-functional
->> +check-functional:
->> +	@make SPEED=thorough check-func check-func-quick
-> 
-> I think these^ two should use $(MAKE) instead:
-> 
-> make[1]: warning: jobserver unavailable: using -j1.  Add '+' to parent
-> make rule.
 
-Right, thanks! I'll change it in the next version.
 
-  Thomas
+On 2024/7/16 下午2:40, Philippe Mathieu-Daudé wrote:
+> On 16/7/24 03:29, maobibo wrote:
+>>
+>>
+>> On 2024/7/16 上午9:04, maobibo wrote:
+>>>
+>>>
+>>> On 2024/7/15 下午11:17, Philippe Mathieu-Daudé wrote:
+>>>> On 4/7/24 05:37, Bibo Mao wrote:
+>>>>> Now loongson ipi and loongarch ipi share the same code with different
+>>>>> macro, loongson ipi has its separate function such mmio region,
+>>>>> loongarch ipi has other requirement such as irqchip in kernel.
+>>>>>
+>>>>> Interrupt irqchip has strong relationship with architecture, since
+>>>>> it sends irq to vcpu and interfaces to get irqchip register is also
+>>>>> architecture specific.
+>>>>>
+>>>>> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
+>>>>> is added, it comes from loongson ipi mostly. And it defined four 
+>>>>> abstract
+>>>>> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 
+>>>>> machine,
+>>>>> also can be used for 3A5000 irqchip in kernel mode soon.
+>>>>>
+>>>>> Also Loongarch ipi and loongson ipi device are added here, it inherits
+>>>>> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
+>>>>> loongson ipi device only passes to compile and make check, it is not
+>>>>> tested.
+>>>>>
+>>>>> Bibo Mao (4):
+>>>>>    hw/intc/loongson_ipi_common: Add loongson ipi common class
+>>>>>    hw/intc/loongarch_ipi: Add loongarch ipi support
+>>>>>    hw/loongarch/virt: Replace loongson ipi with loongarch ipi
+>>>>>    hw/intc/loongson_ipi: reconstruct driver inherit from common class
+>>>>
+>>>> I'll try to respin a clearer v3.
+>>> I am ok with it since it solve the problem, and it is suitable for 
+>>> 9.1 release. Only that in the long time we hope that intc emulation 
+>>> driver has common base class + tcg/kvm driver, similar with other 
+>>> architecture.
+>>>
+>> Sorry for the confusion, I had thought it was another topic.
+>>
+>> Thanks for pointing out the problem and welcome the v3 version.
+> 
+> Please do not post v3, let me post it.
+Hi Philippe,
+
+QEMU 9.1 is coming to soft frozen stage, do you have enough time working 
+on it?  Is it ok to use bugfix patch for 9.1 release version?
+https://lore.kernel.org/all/20240627125819.62779-2-philmd@linaro.org/
+
+After 9.1 is released, there will be enough time for patch v3.
+
+Regards
+Bibo, Mao
 
 
