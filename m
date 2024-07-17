@@ -4,45 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65613C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E2AC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2T5-0003L0-S9; Wed, 17 Jul 2024 07:05:09 -0400
+	id 1sU2a0-0005xl-6E; Wed, 17 Jul 2024 07:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
- id 1sU2SV-0000xX-EE
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:36 -0400
-Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
- helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <phil@intel-mbp.local>) id 1sU2SR-0006zN-5X
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:30 -0400
-Received: by intel-mbp.local (Postfix, from userid 501)
- id 269E0379628; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
- graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
- akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
-Subject: [PATCH 12/26] hw/display/apple-gfx: Task memory mapping cleanup
-Date: Mon, 15 Jul 2024 23:06:51 +0200
-Message-Id: <20240715210705.32365-13-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
-References: <20240715210705.32365-1-phil@philjordan.eu>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sU2Zi-0005Np-IY
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:12:03 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sU2Ze-000321-NL
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:11:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721214714; x=1752750714;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=OfSdfKwVT7TCXUf75AnKcWA+A254vwD/M0yrWJKuCO8=;
+ b=Pr1uq8JyZYgBH5r6M0FcWMxiT01LW8QQ5juIx0/RU20noXNERmtDXIQd
+ kiPCiyPmRZpy/Ij+L9g2503fu3ugZyfs3lW6F1kU6sw8RwnWFvdtC3ibb
+ 7Gq4VLA1QfMOdjd0ab6/j21FpC1hrsXV5oUfv9jhCCooH07wZ4ecFlNJR
+ QdYFiTfMnNbv88wdvn0cRIuRqmYk4mLLR4dxJsdfUZjepLis3P6jZtb79
+ 3z/3Qjk5kWyKFOAE+YpRn39l+JeC27XP6IJabF2Ki/z0wVg5kqawPySeX
+ IxXcBBUFjPSzaYOv11Kw0VIqcOaSjEiX3Mp9PB/vLLLTS46LEnzRp+hQl Q==;
+X-CSE-ConnectionGUID: u0hBMhzaQT2OHVVqAN66BQ==
+X-CSE-MsgGUID: cZkiPayHSFeUweugSNTtzQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="18847867"
+X-IronPort-AV: E=Sophos;i="6.09,214,1716274800"; d="scan'208";a="18847867"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jul 2024 04:11:48 -0700
+X-CSE-ConnectionGUID: NVc2gc/RQwCBEIOQI5JZHQ==
+X-CSE-MsgGUID: k1Bl7Ub2Spu0ycWscuyG7Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,214,1716274800"; d="scan'208";a="55492145"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa004.jf.intel.com with ESMTP; 17 Jul 2024 04:11:47 -0700
+Date: Wed, 17 Jul 2024 19:27:29 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD() in
+ nubus_virtio_mmio_realize()
+Message-ID: <ZpeqoZC02URH4847@intel.com>
+References: <20240715095939.72492-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
- helo=intel-mbp.local
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
- NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20240715095939.72492-1-zhao1.liu@intel.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,245 +83,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macOS' PV Graphics framework first requests a contiguous host-virtual
-address range ("PGTask"), and subsequently requests guest-physical
-memory ranges to be mapped into subranges of the tasks.
+Hi Philippe,
 
-It is easier (and less threading error prone) to use the host's Mach
-memory subsystem on the host to perform this subsequent remapping,
-rather than tracking the mapping state directly.
+If possible, can this one catch a ride with your PULL too?
 
-Additionally, there is absolutely no need to pick a magic number
-for a virtual memory base address - we can simply allocate some
-appropriate virtual memory pages and let the OS choose an available
-address range.
+Many thanks!
+Zhao
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
----
- hw/display/apple-gfx.m  | 106 +++++++++++++++-------------------------
- hw/display/trace-events |   2 +-
- 2 files changed, 40 insertions(+), 68 deletions(-)
-
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 6537e32806..a23f731ddc 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -26,6 +26,7 @@
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "migration/blocker.h"
-+#include <mach/mach_vm.h>
- #import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
- 
- #define TYPE_APPLE_GFX          "apple-gfx"
-@@ -35,13 +36,6 @@
-     { .x = 1280, .y = 1024 },
- };
- 
--/*
-- * We have to map PVG memory into our address space. Use the one below
-- * as base start address. In normal linker setups it points to a free
-- * memory range.
-- */
--#define APPLE_GFX_BASE_VA ((void *)(uintptr_t)0x500000000000UL)
--
- /*
-  * ParavirtualizedGraphics.Framework only ships header files for the x86
-  * variant which does not include IOSFC descriptors and host devices. We add
-@@ -68,18 +62,9 @@ -(uint32_t)mmioReadAtOffset:(size_t) offset;
- -(void)mmioWriteAtOffset:(size_t) offset value:(uint32_t)value;
- @end
- 
--typedef struct AppleGFXMR {
--    QTAILQ_ENTRY(AppleGFXMR) node;
--    hwaddr pa;
--    void *va;
--    uint64_t len;
--} AppleGFXMR;
--
--typedef QTAILQ_HEAD(, AppleGFXMR) AppleGFXMRList;
--
- typedef struct AppleGFXTask {
-     QTAILQ_ENTRY(AppleGFXTask) node;
--    void *mem;
-+    mach_vm_address_t address;
-     uint64_t len;
- } AppleGFXTask;
- 
-@@ -95,7 +80,6 @@ -(void)mmioWriteAtOffset:(size_t) offset value:(uint32_t)value;
-     id<PGDevice> pgdev;
-     id<PGDisplay> pgdisp;
-     PGIOSurfaceHostDevice *pgiosfc;
--    AppleGFXMRList mrs;
-     AppleGFXTaskList tasks;
-     QemuConsole *con;
-     void *vram;
-@@ -115,37 +99,24 @@ -(void)mmioWriteAtOffset:(size_t) offset value:(uint32_t)value;
- 
- static AppleGFXTask *apple_gfx_new_task(AppleGFXState *s, uint64_t len)
- {
--    void *base = APPLE_GFX_BASE_VA;
-+    mach_vm_address_t task_mem;
-     AppleGFXTask *task;
-+    kern_return_t r;
- 
--    QTAILQ_FOREACH(task, &s->tasks, node) {
--        if ((task->mem + task->len) > base) {
--            base = task->mem + task->len;
--        }
-+    r = mach_vm_allocate(mach_task_self(), &task_mem, len, VM_FLAGS_ANYWHERE);
-+    if (r != KERN_SUCCESS || task_mem == 0) {
-+        return NULL;
-     }
- 
-     task = g_new0(AppleGFXTask, 1);
- 
-+    task->address = task_mem;
-     task->len = len;
--    task->mem = base;
-     QTAILQ_INSERT_TAIL(&s->tasks, task, node);
- 
-     return task;
- }
- 
--static AppleGFXMR *apple_gfx_mapMemory(AppleGFXState *s, AppleGFXTask *task,
--                                       uint64_t voff, uint64_t phys, uint64_t len)
--{
--    AppleGFXMR *mr = g_new0(AppleGFXMR, 1);
--
--    mr->pa = phys;
--    mr->len = len;
--    mr->va = task->mem + voff;
--    QTAILQ_INSERT_TAIL(&s->mrs, mr, node);
--
--    return mr;
--}
--
- static uint64_t apple_gfx_read(void *opaque, hwaddr offset, unsigned size)
- {
-     AppleGFXState *s = opaque;
-@@ -411,7 +382,7 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
- 
-     desc.createTask = ^(uint64_t vmSize, void * _Nullable * _Nonnull baseAddress) {
-         AppleGFXTask *task = apple_gfx_new_task(s, vmSize);
--        *baseAddress = task->mem;
-+        *baseAddress = (void*)task->address;
-         trace_apple_gfx_create_task(vmSize, *baseAddress);
-         return (PGTask_t *)task;
-     };
-@@ -420,60 +391,62 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-         AppleGFXTask *task = (AppleGFXTask *)_task;
-         trace_apple_gfx_destroy_task(task);
-         QTAILQ_REMOVE(&s->tasks, task, node);
-+        mach_vm_deallocate(mach_task_self(), task->address, task->len);
-         g_free(task);
-     };
- 
-     desc.mapMemory = ^(PGTask_t * _Nonnull _task, uint32_t rangeCount, uint64_t virtualOffset, bool readOnly, PGPhysicalMemoryRange_t * _Nonnull ranges) {
-         AppleGFXTask *task = (AppleGFXTask*)_task;
--       mach_port_t mtask = mach_task_self();
-+        kern_return_t r;
-+        mach_vm_address_t target, source;
-         trace_apple_gfx_map_memory(task, rangeCount, virtualOffset, readOnly);
-         for (int i = 0; i < rangeCount; i++) {
-             PGPhysicalMemoryRange_t *range = &ranges[i];
-             MemoryRegion *tmp_mr;
-             /* TODO: Bounds checks? r/o? */
-             bql_lock();
--            AppleGFXMR *mr = apple_gfx_mapMemory(s, task, virtualOffset,
--                                                 range->physicalAddress,
--                                                 range->physicalLength);
- 
--            trace_apple_gfx_map_memory_range(i, range->physicalAddress, range->physicalLength, mr->va);
-+            trace_apple_gfx_map_memory_range(i, range->physicalAddress,
-+                                             range->physicalLength);
- 
--            vm_address_t target = (vm_address_t)mr->va;
--            uint64_t mask = 0;
--            bool anywhere = false;
--            vm_address_t source = (vm_address_t)gpa2hva(&tmp_mr, mr->pa, mr->len, NULL);
-+            target = task->address + virtualOffset;
-+            source = (mach_vm_address_t)gpa2hva(&tmp_mr,
-+                                                range->physicalAddress,
-+                                                range->physicalLength, NULL);
-             vm_prot_t cur_protection = 0;
-             vm_prot_t max_protection = 0;
--            kern_return_t retval = vm_remap(mtask, &target, mr->len, mask,
--                                            anywhere, mtask, source, false,
--                                            &cur_protection, &max_protection,
--                                            VM_INHERIT_DEFAULT);
--            trace_apple_gfx_remap(retval, source, target);
--            g_assert(retval == KERN_SUCCESS);
-+            // Map guest RAM at range->physicalAddress into PG task memory range
-+            r = mach_vm_remap(mach_task_self(),
-+                              &target, range->physicalLength, vm_page_size - 1,
-+                              VM_FLAGS_FIXED | VM_FLAGS_OVERWRITE,
-+                              mach_task_self(),
-+                              source, false /* shared mapping, no copy */,
-+                              &cur_protection, &max_protection,
-+                              VM_INHERIT_COPY);
-+            trace_apple_gfx_remap(r, source, target);
-+            g_assert(r == KERN_SUCCESS);
- 
-             bql_unlock();
- 
--            virtualOffset += mr->len;
-+            virtualOffset += range->physicalLength;
-         }
-         return (bool)true;
-     };
- 
-     desc.unmapMemory = ^(PGTask_t * _Nonnull _task, uint64_t virtualOffset, uint64_t length) {
-         AppleGFXTask *task = (AppleGFXTask *)_task;
--        AppleGFXMR *mr, *next;
-+        kern_return_t r;
-+        mach_vm_address_t range_address;
- 
-         trace_apple_gfx_unmap_memory(task, virtualOffset, length);
--        bql_lock();
--        QTAILQ_FOREACH_SAFE(mr, &s->mrs, node, next) {
--            if (mr->va >= (task->mem + virtualOffset) &&
--                (mr->va + mr->len) <= (task->mem + virtualOffset + length)) {
--                vm_address_t addr = (vm_address_t)mr->va;
--                vm_deallocate(mach_task_self(), addr, mr->len);
--                QTAILQ_REMOVE(&s->mrs, mr, node);
--                g_free(mr);
--            }
--        }
--        bql_unlock();
-+
-+        /* Replace task memory range with fresh pages, undoing the mapping
-+         * from guest RAM. */
-+        range_address = task->address + virtualOffset;
-+        r = mach_vm_allocate(mach_task_self(), &range_address, length,
-+                             VM_FLAGS_FIXED | VM_FLAGS_OVERWRITE);
-+        g_assert(r == KERN_SUCCESS);
-+
-         return (bool)true;
-     };
- 
-@@ -582,7 +555,6 @@ static void apple_gfx_realize(DeviceState *dev, Error **errp)
-         [[PGIOSurfaceHostDevice alloc] initWithDescriptor:iosfc_desc];
-     [iosfc_desc release];
- 
--    QTAILQ_INIT(&s->mrs);
-     QTAILQ_INIT(&s->tasks);
- 
-     create_fb(s);
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index 98e1a3a3a0..4b897554c9 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -198,7 +198,7 @@ apple_gfx_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx6
- apple_gfx_create_task(uint32_t vm_size, void *va) "vm_size=0x%x base_addr=%p"
- apple_gfx_destroy_task(void *task) "task=%p"
- apple_gfx_map_memory(void *task, uint32_t range_count, uint64_t virtual_offset, uint32_t read_only) "task=%p range_count=0x%x virtual_offset=0x%"PRIx64" read_only=%d"
--apple_gfx_map_memory_range(uint32_t i, uint64_t phys_addr, uint64_t phys_len, void *va) "[%d] phys_addr=0x%"PRIx64" phys_len=0x%"PRIx64" va=%p"
-+apple_gfx_map_memory_range(uint32_t i, uint64_t phys_addr, uint64_t phys_len) "[%d] phys_addr=0x%"PRIx64" phys_len=0x%"PRIx64
- apple_gfx_remap(uint64_t retval, uint64_t source, uint64_t target) "retval=%"PRId64" source=0x%"PRIx64" target=0x%"PRIx64
- apple_gfx_unmap_memory(void *task, uint64_t virtual_offset, uint64_t length) "task=%p virtual_offset=0x%"PRIx64" length=0x%"PRIx64
- apple_gfx_read_memory(uint64_t phys_address, uint64_t length, void *dst) "phys_addr=0x%"PRIx64" length=0x%"PRIx64" dest=%p"
--- 
-2.39.3 (Apple Git-146)
-
+On Mon, Jul 15, 2024 at 05:59:37PM +0800, Zhao Liu wrote:
+> Date: Mon, 15 Jul 2024 17:59:37 +0800
+> From: Zhao Liu <zhao1.liu@intel.com>
+> Subject: [PATCH] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD() in
+>  nubus_virtio_mmio_realize()
+> X-Mailer: git-send-email 2.34.1
+> 
+> As the comment in qapi/error, dereferencing @errp requires
+> ERRP_GUARD():
+> 
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> * - It must not be dereferenced, because it may be null.
+> ...
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> *
+> * Using it when it's not needed is safe, but please avoid cluttering
+> * the source with useless code.
+> 
+> But in nubus_virtio_mmio_realize(), @errp is dereferenced without
+> ERRP_GUARD().
+> 
+> Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
+> method - doesn't get the NULL @errp parameter, it hasn't triggered the
+> bug that dereferencing the NULL @errp. It's still necessary to follow
+> the requirement of @errp, so add missing ERRP_GUARD() in
+> nubus_virtio_mmio_realize().
+> 
+> Cc: Laurent Vivier <laurent@vivier.eu>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  hw/nubus/nubus-virtio-mmio.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/nubus/nubus-virtio-mmio.c b/hw/nubus/nubus-virtio-mmio.c
+> index 58a63c84d0be..a5558d3ec28b 100644
+> --- a/hw/nubus/nubus-virtio-mmio.c
+> +++ b/hw/nubus/nubus-virtio-mmio.c
+> @@ -23,6 +23,7 @@ static void nubus_virtio_mmio_set_input_irq(void *opaque, int n, int level)
+>  
+>  static void nubus_virtio_mmio_realize(DeviceState *dev, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      NubusVirtioMMIODeviceClass *nvmdc = NUBUS_VIRTIO_MMIO_GET_CLASS(dev);
+>      NubusVirtioMMIO *s = NUBUS_VIRTIO_MMIO(dev);
+>      NubusDevice *nd = NUBUS_DEVICE(dev);
+> -- 
+> 2.34.1
+> 
 
