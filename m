@@ -4,88 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B017CC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 21:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10948C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 23:58:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUCVt-0003H6-HK; Wed, 17 Jul 2024 17:48:41 -0400
+	id 1sUEVx-00039T-Hx; Wed, 17 Jul 2024 19:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVq-00033F-Rx
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:39 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVp-0002NL-6p
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:38 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3683329f787so92513f8f.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 14:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721252916; x=1721857716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ilScFmA5v9fzs5muI3HEIkUzwDEqqO456JgzUU0riEg=;
- b=d/xqvniiwCH2zvYQUJOl94Xequt+NnR2Z7inA01zVFRFhNPxXJ0Mp7rpzKoMyzpkCF
- teXePfMa695ky+kwfDViZ2MV/0CQKKL6H3L9LXz1Ky7JS070xoxRnEOGjBzvf3OsEjdq
- bTud1aFu57Ex8drBm/1L7kag0Ww8gg6mfvs/N6LjFisrLDEvbBrV61JQrEdi/XEOZyX8
- rAnhq6nd348jCPvUjFpFCUt3PiFd5zh0RTXCkRKtNDQ/+VZ44Lfcs+dLsVVfAdW/GXlx
- Y3TS9wfsZoZC8zJstNeOUiP+L3HceB3/fxw8LaU/jKEB0mMh6215oHr0ldfNj6mHFVyZ
- 5krA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721252916; x=1721857716;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ilScFmA5v9fzs5muI3HEIkUzwDEqqO456JgzUU0riEg=;
- b=IARbDcWXTS9j6o5QfTkd2UgGQbzv2rN19XnOmBto4NpNSN6YyM9URj3GuuNVz9X0oA
- yssXQSWhcHnOuffvcmlXwfMmnXXWe/NXAWAkmM6j7kS8XsGD8Jp7N5CmCyTr/w33LUQ3
- SGo4BetwnBxKRZcmYu+eyb6Jh9LkvXV2iflx2D+d8p1Bx1D8ZXy6Wvi5LSJm0TWFQvoP
- ZRf83BUCxEnkkb88h2OEICdvXDggc3/E9s34SX5MCBmbdz3qKFNyCeR3BxWPmTXus3NO
- hqrmP/0w0+ieFj66EcjMW5YvBF265srptaZJaBe9x0fgUd8pqCK0omhP1aPQEg1vqBjY
- bzUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHj89wI7qjurHezsFobShINGdv2AQyOkxq6qwkopT2PICDkrKAND74uZ79/uloMUkh9R2vBCT3HH57rHWU81VMK330/mk=
-X-Gm-Message-State: AOJu0YwouMYrHZY5tKDFEwl2k55OxZXqlMvtyp5TbcowCJ01646+bzcJ
- rJZ3SuuMwl+j33BNbwK8CNYWO6crqDwCKB5Oru+3+fXwSy9Ee6PM94YCQxoLJxV42WWRsuL32A1
- tTwc=
-X-Google-Smtp-Source: AGHT+IFlG61vTYx+vAy2HI5tjelCGcB0uiXk35Rz3j8K9Tk013pknoC87WPidEYBacmbZEC04o6HKQ==
-X-Received: by 2002:a5d:4f04:0:b0:367:8ff5:5858 with SMTP id
- ffacd0b85a97d-36831755822mr1750649f8f.56.1721252915765; 
- Wed, 17 Jul 2024 14:48:35 -0700 (PDT)
-Received: from localhost.localdomain ([176.187.208.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427c77d810dsm11683355e9.26.2024.07.17.14.48.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jul 2024 14:48:35 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PATCH v3 11/17] hw/intc/loongson_ipi: Add
- LoongsonIPICommonClass::cpu_by_arch_id handler
-Date: Wed, 17 Jul 2024 23:47:02 +0200
-Message-ID: <20240717214708.78403-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240717214708.78403-1-philmd@linaro.org>
-References: <20240717214708.78403-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sUEVv-00033H-BR
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 19:56:51 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
+ id 1sUEVp-0000JC-Ht
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 19:56:51 -0400
+Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20240717235633epoutp043f1f45fab13313277cdf1b4ea933b3a4~jJWPJUSpE1645016450epoutp04M
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 23:56:33 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20240717235633epoutp043f1f45fab13313277cdf1b4ea933b3a4~jJWPJUSpE1645016450epoutp04M
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1721260593;
+ bh=RY0bFu40fWQaJ4egn1MaH6pvoltH6zxBuTwbRmum7RY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=mucMDaDEw6tUEieUvhHL/WKMnStxNaLtOfQ2f53sM5AhCgmsH2L2aTsHFVSX51BLl
+ pO3iAfBnlx8ZH8g8tjOcKswPI8jHCOmqdB0qrL08DlGZdzgRrtst2yLKnz8AiaWLOj
+ RsplZf4hdseuehYPKB3RRDCUPcRdFNn/jOMHjOJw=
+Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
+ epcas2p2.samsung.com (KnoxPortal) with ESMTP id
+ 20240717235632epcas2p29c84339d502eb13c7048d73624e2c6a7~jJWO2byru2884528845epcas2p2X;
+ Wed, 17 Jul 2024 23:56:32 +0000 (GMT)
+Received: from epsmges2p1.samsung.com (unknown [182.195.36.92]) by
+ epsnrtp1.localdomain (Postfix) with ESMTP id 4WPXsD1DnDz4x9Py; Wed, 17 Jul
+ 2024 23:56:32 +0000 (GMT)
+Received: from epcas2p3.samsung.com ( [182.195.41.55]) by
+ epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 50.10.09848.F2A58966; Thu, 18 Jul 2024 08:56:32 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+ epcas2p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20240717235631epcas2p4fd8d616e3fb63ad69b12ee4476108e31~jJWN0EwPj1855318553epcas2p4g;
+ Wed, 17 Jul 2024 23:56:31 +0000 (GMT)
+Received: from epsmgms1p2new.samsung.com (unknown [182.195.42.42]) by
+ epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+ 20240717235631epsmtrp27d76d4ef0093e2b635c992a21d1486e0~jJWNzOwIc1951619516epsmtrp2T;
+ Wed, 17 Jul 2024 23:56:31 +0000 (GMT)
+X-AuditID: b6c32a45-447fe70000002678-75-66985a2f6fb7
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+ epsmgms1p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 1E.F8.19057.F2A58966; Thu, 18 Jul 2024 08:56:31 +0900 (KST)
+Received: from localhost (unknown [12.36.63.198]) by epsmtip1.samsung.com
+ (KnoxPortal) with ESMTPA id
+ 20240717235631epsmtip1e62a27edfc0cc4cad7adf55e714a32ee~jJWNlz-F51080210802epsmtip1V;
+ Wed, 17 Jul 2024 23:56:31 +0000 (GMT)
+Date: Thu, 18 Jul 2024 08:44:02 +0900
+From: Minwoo Im <minwoo.im@samsung.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, minwoo.im@samsung.com,
+ jongh2.jeong@samsung.com
+Subject: Re: [PATCH ats_vtd v5 20/22] pci: add a pci-level API for ATS
+Message-ID: <ZphXQjbDzezleP8R@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <a1d82288-a3a7-46f0-b6bd-bb636ecc147d@eviden.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEJsWRmVeSWpSXmKPExsWy7bCmua5B1Iw0g74OZos/axcyWyy79JnJ
+ 4sTzz0DWrwcsFkvfbmW3eHb6ALPF/1+vWC227P/GbnG8dweLxdyf11gsFt86z+jA7fFv3WMW
+ j8V7XjJ5PLm2mcnj49NbLB7v911l8+jbsooxgC0q2yYjNTEltUghNS85PyUzL91WyTs43jne
+ 1MzAUNfQ0sJcSSEvMTfVVsnFJ0DXLTMH6EAlhbLEnFKgUEBicbGSvp1NUX5pSapCRn5xia1S
+ akFKToF5gV5xYm5xaV66Xl5qiZWhgYGRKVBhQnbGu9uv2QummFcsX/6DrYHxpGYXIyeHhICJ
+ RHffNpYuRi4OIYEdjBKbH/WwQjifGCV2vpsGlfnGKLHm63E2mJbbVz4wQiT2Mko8e3kcquoZ
+ o8SM5WuYQKpYBFQlpl39yw5iswmoSzRMfcUCYosI2Eg0nd4B1s0ssJlZYufJFkaQhLCAm0TH
+ 7ulgRbwCGhLb1x1nhbAFJU7OfAIW5xSwk5jc9QWsWUJgKYfE5wXzgLZxADkuEi+mMUOcJyzx
+ 6vgWdghbSuLzu71QZ1dL/F9yiQmit4VRomvpSqiEvcS0jhNgC5gFMiSm7b0MNVNZ4sgtqDCf
+ RMdhkGdAwrwSHW1CEJ3KEh8PHYJaKymx/NJrqIkeEitefIKG42VmiQk/X7FMYJSbheSdWUi2
+ zQIayyygKbF+lz5EWF6ieetsZoiwtMTyfxxIKhYwsq1iFEstKM5NTy02KjCEx3Zyfu4mRnDi
+ 1XLdwTj57Qe9Q4xMHIyHGCU4mJVEeCcwTksT4k1JrKxKLcqPLyrNSS0+xGgKjKeJzFKiyfnA
+ 1J9XEm9oYmlgYmZmaG5kamCuJM57r3VuipBAemJJanZqakFqEUwfEwenVAOT3gXeHU5Jfc2X
+ VZmW+c06ueWs+uxjIQ0G0RVJZs9Y4/13XdjBur5DM6X9SkLCadc3f7UnhGQtZNJcIt++Wt/p
+ M/N37tlFUbKeVZe2W/DaNrlUH3DTsFf0173VuE6dc5e48/LZzV9/LV9/gC199auk5RuyFwc/
+ 2uhe+fhzdoD6x74ZOimT/x9rOWFvb1b5TjWHlTviomSKSu7vD29v7r1xkLfogVLJ2ZgZGl+V
+ GUx45quHv345v07yk38v7+qnEc2HXFxMV9jy2ggW9/8MOt68KuBjoHSlrMvH7fu5Obbay/ud
+ 6DHf/cOxX4T9MMtzccVWA+22GJF25dkFH68w9Obs7SlNva5R0Zt1Lm7mLiWW4oxEQy3mouJE
+ ADEC0jhFBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphkeLIzCtJLcpLzFFi42LZdlhJTlc/akaawYqLChZ/1i5ktlh26TOT
+ xYnnn4GsXw9YLJa+3cpu8ez0AWaL/79esVps2f+N3eJ47w4Wi7k/r7FYLL51ntGB2+Pfuscs
+ Hov3vGTyeHJtM5PHx6e3WDze77vK5tG3ZRVjAFsUl01Kak5mWWqRvl0CV0bvqnPMBdtMKt4+
+ fsDSwNiu3sXIySEhYCJx+8oHxi5GLg4hgd2MEkv2rWeHSEhK7Dt9kxXCFpa433IEzBYSeMIo
+ 8WZOJojNIqAqMe3qX7B6NgF1iYapr1hAbBEBG4mm0zvAhjILbGeW2Pz8F1hCWMBNomP3dDCb
+ V0BDYvu646wQmy8zS/zdtZMVIiEocXLmE7AiZqCpf+ZdYu5i5ACypSWW/+OACMtLNG+dzQxi
+ cwrYSUzu+sI4gVFwFpLuWUi6ZyF0z0LSvYCRZRWjZGpBcW56brFhgVFearlecWJucWleul5y
+ fu4mRnBEaWntYNyz6oPeIUYmDsZDjBIczEoivBMYp6UJ8aYkVlalFuXHF5XmpBYfYpTmYFES
+ 5/32ujdFSCA9sSQ1OzW1ILUIJsvEwSnVwGS5VvNnw+47red27Eh/VtVR9jVrf07s5nepTB/v
+ tbvGP3lXN+nlY6M/tu7HJoq7B8WKl7wvMXHUirm55djrqxzPP0ee2NBe2fyLK+7wyWPRRj5/
+ /p1YLafVty1HQkd/zrvsVh9+/osPU94ULXp8clbgX+MnB31uvw+70ePp1MioW/dyj2e1//sV
+ 7m1fXm3/6qm/aIuJmPqhj3fFuk5fZVsTt41TUvv3lh9ta877vJzQtLT+bMBOc8/f1nJpIsfE
+ b5/PuFa9KGOP+iGZxz3f9Zg2KsU++TEtMjgvoynMrr2Hd92XwrOrfH1vc8rUh7lH6acuDfPh
+ ePbhx62WT92LZxUXfdIW0Zd48PGJ2L3uB+VKLMUZiYZazEXFiQAxLwwiFwMAAA==
+X-CMS-MailID: 20240717235631epcas2p4fd8d616e3fb63ad69b12ee4476108e31
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----kPZdWw8JFmoxBkiMjQTVl4Kq1icPrupLjm_cU6Xxti33FlR-=_42e40_"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240702055502epcas2p2f54e3234f35d28e73513a5634a7cb03a
+References: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
+ <CGME20240702055502epcas2p2f54e3234f35d28e73513a5634a7cb03a@epcas2p2.samsung.com>
+ <20240702055221.1337035-21-clement.mathieu--drif@eviden.com>
+ <Zo0NpttNP8OkrOG8@localhost>
+ <929fc1df-0a19-4da0-8399-5d792dd25684@eviden.com>
+ <Zo2o6kkqpSgmj4yN@localhost>
+ <156af18e-255d-4149-be7b-bb93dc360da3@eviden.com>
+ <Zo+SHAPHSbaIOJ25@localhost>
+ <a1d82288-a3a7-46f0-b6bd-bb636ecc147d@eviden.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=minwoo.im@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,91 +148,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+------kPZdWw8JFmoxBkiMjQTVl4Kq1icPrupLjm_cU6Xxti33FlR-=_42e40_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 
-Allow Loongson IPI implementations to have their own cpu_by_arch_id()
-handler.
+On 24-07-11 19:00:58, CLEMENT MATHIEU--DRIF wrote:
+> 
+> 
+> On 11/07/2024 10:04, Minwoo Im wrote:
+> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> >
+> >
+> > On 24-07-10 05:17:42, CLEMENT MATHIEU--DRIF wrote:
+> >>
+> >> On 09/07/2024 23:17, Minwoo Im wrote:
+> >>> Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> >>>
+> >>>
+> >>> On 24-07-09 11:58:53, CLEMENT MATHIEU--DRIF wrote:
+> >>>> On 09/07/2024 12:15, Minwoo Im wrote:
+> >>>>> Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> >>>>>
+> >>>>>
+> >>>>> On 24-07-02 05:52:45, CLEMENT MATHIEU--DRIF wrote:
+> >>>>>> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >>>>>>
+> >>>>>> Devices implementing ATS can send translation requests using
+> >>>>>> pci_ats_request_translation_pasid.
+> >>>>>>
+> >>>>>> The invalidation events are sent back to the device using the iommu
+> >>>>>> notifier managed with pci_register_iommu_tlb_event_notifier and
+> >>>>>> pci_unregister_iommu_tlb_event_notifier
+> >>>>>>
+> >>>>>> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >>>>>> ---
+> >>>>>>     hw/pci/pci.c         | 44 +++++++++++++++++++++++++++++++++++++
+> >>>>>>     include/hw/pci/pci.h | 52 ++++++++++++++++++++++++++++++++++++++++++++
+> >>>>>>     2 files changed, 96 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> >>>>>> index 7a483dd05d..93b816aff2 100644
+> >>>>>> --- a/hw/pci/pci.c
+> >>>>>> +++ b/hw/pci/pci.c
+> >>>>>> @@ -2833,6 +2833,50 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
+> >>>>>>         }
+> >>>>>>     }
+> >>>>>>
+> >>>>>> +ssize_t pci_ats_request_translation_pasid(PCIDevice *dev, uint32_t pasid,
+> >>>>>> +                                          bool priv_req, bool exec_req,
+> >>>>>> +                                          hwaddr addr, size_t length,
+> >>>>>> +                                          bool no_write, IOMMUTLBEntry *result,
+> >>>>>> +                                          size_t result_length,
+> >>>>>> +                                          uint32_t *err_count)
+> >>>>>> +{
+> >>>>>> +    assert(result_length);
+> >>>>>> +    IOMMUMemoryRegion *iommu_mr = pci_device_iommu_memory_region_pasid(dev,
+> >>>>>> +                                                                        pasid);
+> >>>>>> +    if (!iommu_mr || !pcie_ats_enabled(dev)) {
+> >>>>>> +        return -EPERM;
+> >>>>>> +    }
+> >>>>>> +    return memory_region_iommu_ats_request_translation(iommu_mr, priv_req,
+> >>>>>> +                                                       exec_req, addr, length,
+> >>>>>> +                                                       no_write, result,
+> >>>>>> +                                                       result_length,
+> >>>>>> +                                                       err_count);
+> >>>>>> +}
+> >>>>> Can we use this function not from the endpoint PCI device, but inside of the pci
+> >>>>> subsystem (hw/pci/pci.c) to make transparent abstraction for ATS request from
+> >>>>> PCI endpoint device POV?  I guess it would be better to have PCI subsystem to
+> >>>>> issue ATS request if pcie_ats_enabled(dev) rather than calling from the endpoint
+> >>>>> side.
+> >>>> Hi,
+> >>>>
+> >>>> This series aims to bring support for SVM (we are trying to integrate
+> >>>> the patches bit by bit).
+> >>>>    From a spec point of view, I don't know if it would make sense to
+> >>>> implement the SVM logic at the PCI level
+> >>>> as it's supposed to be implemented by endpoint devices.
+> >>> Understood that this series is targeting the SVM usage.  But ATS feature is
+> >>> something general to PCI devices, not only just for SVM, so I guess it would be
+> >>> better to have caller to `pci_ats_request_translation_pasid()` in pci subsystem
+> >>> like pci_dma_rw() to avoid duplicated implementation in the future for the
+> >>> other PCI enpoint devices.
+> >> Would we store the ATC directly in the PCI subsytem?
+> > Yes, endpoint device (e.g., svm.c) should call pci_* helpers in PCI subsystem
+> > with `PCIDevice *pdev instance` which represents the endpoint device itself.
+> > By the instance, we can look up the IOTLB entry from the ATC in the PCI
+> > subsystem, not the current caller side.
+> >
+> >>>> However, we could consider providing a reference/reusable/encapsulated
+> >>>> implementation of SVM with a simplified API
+> >>>> that would call the pci_* functions under the hood.
+> >>> I would prefer that PCI devices which want to request ATS translation has no
+> >>> additional implementation for ATS, but only pcie_ats_init().
+> >> Hi,
+> >>
+> >> I think both strategies can coexist.
+> >> Keeping control can be interesting for people who use Qemu for hardware
+> >> prototyping and who generally want to experiment.
+> >> We can keep the current PCI-level API for devices that want to
+> >> reimplement the logic themselves
+> >> and add a kind of "DMA module"/"ATS+PRI module" that works out of the box.
+> > I think we should proivde hybrid mode on this.  One for a `generic` cache
+> > policy mode for every PCI endpoint devices which can be controlled in the PCI
+> > subsystem for ATC, the other one is that device-specific cache policy mode
+> > which let each device implement their own ATC lookup behaviors to optimize
+> > their own caching impact.
+> >
+> >> That module could be called "struct PciDmaModule" and expose a simple
+> >> set of functions like pci_dma_module_init, pci_dma_module_read,
+> >> pci_dma_module_write.
+> >> I think it's important to keep existing DMA API as is to allow devices
+> >> to do both "with ATS" and "without ATS" operations.
+> >>
+> >> Do you agree with that?
+> > Indeed.  Keeping the existing APIs is a good choice, but I would like to have
+> > endpoint devices code much more simpler for the generic usages :)
+> That's a good point, we will se what we can do once the current work is 
+> integrated.
+> Thanks for your comment :)
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-[PMD: Extracted from bigger commit, added commit description]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/intc/loongson_ipi_common.h |  1 +
- hw/intc/loongson_ipi.c                | 10 +++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+Do you have a plan to repost this series soon? I would like to apply your
+patches and review/test this series.  It looks like you've been through some of
+fix patches for VT-d, but I'm curious your further plan for the actual SVM
+feature :)
 
-diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
-index e49c156db3..5447e9f650 100644
---- a/include/hw/intc/loongson_ipi_common.h
-+++ b/include/hw/intc/loongson_ipi_common.h
-@@ -41,6 +41,7 @@ struct LoongsonIPICommonClass {
-     SysBusDeviceClass parent_class;
- 
-     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
-+    CPUState *(*cpu_by_arch_id)(int64_t id);
- };
- 
- /* Mainy used by iocsr read and write */
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 4a7a1fa38d..603a88356d 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -128,12 +128,13 @@ static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, CPUState *cpu,
- static MemTxResult mail_send(LoongsonIPICommonState *ipi,
-                              uint64_t val, MemTxAttrs attrs)
- {
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = cpu_by_arch_id(cpuid);
-+    cs = licc->cpu_by_arch_id(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-     }
-@@ -147,12 +148,13 @@ static MemTxResult mail_send(LoongsonIPICommonState *ipi,
- static MemTxResult any_send(LoongsonIPICommonState *ipi,
-                             uint64_t val, MemTxAttrs attrs)
- {
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
-     uint32_t cpuid;
-     hwaddr addr;
-     CPUState *cs;
- 
-     cpuid = extract32(val, 16, 10);
--    cs = cpu_by_arch_id(cpuid);
-+    cs = licc->cpu_by_arch_id(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-     }
-@@ -169,6 +171,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
- {
-     IPICore *s = opaque;
-     LoongsonIPICommonState *ipi = s->ipi;
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
-     int index = 0;
-     uint32_t cpuid;
-     uint8_t vector;
-@@ -203,7 +206,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
-         cpuid = extract32(val, 16, 10);
-         /* IPI status vector */
-         vector = extract8(val, 0, 5);
--        cs = cpu_by_arch_id(cpuid);
-+        cs = licc->cpu_by_arch_id(cpuid);
-         if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
-             return MEMTX_DECODE_ERROR;
-         }
-@@ -349,6 +352,7 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
-     device_class_set_parent_realize(dc, loongson_ipi_realize,
-                                     &lic->parent_realize);
-     licc->get_iocsr_as = get_iocsr_as;
-+    licc->cpu_by_arch_id = cpu_by_arch_id;
- }
- 
- static void loongson_ipi_finalize(Object *obj)
--- 
-2.41.0
+> >
+> >>>> Do you have a specific use case in mind?
+> >>> ATS/PRI is the actual use case, and it's not that different what you are
+> >>> targeting for :)
+> >>>
+> >>>>    >cmd
+> >>>>
+> >>>>>
 
+------kPZdWw8JFmoxBkiMjQTVl4Kq1icPrupLjm_cU6Xxti33FlR-=_42e40_
+Content-Type: text/plain; charset="utf-8"
+
+
+------kPZdWw8JFmoxBkiMjQTVl4Kq1icPrupLjm_cU6Xxti33FlR-=_42e40_--
 
