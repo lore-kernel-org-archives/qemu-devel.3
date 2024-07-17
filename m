@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF1EC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16329C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTyBZ-00058m-Kb; Wed, 17 Jul 2024 02:30:45 -0400
+	id 1sTyCF-0000YT-Lm; Wed, 17 Jul 2024 02:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyBX-00051B-24
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:30:43 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyCD-0000QE-HW
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyBU-0002vX-O4
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:30:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyCC-00033Z-1l
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721197838;
+ s=mimecast20190719; t=1721197882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=XCrYT2DWLbPKiuwikeICvix1QZ+k8mWPg9CvAuJyt64=;
- b=R3j27hySNOPY5JIIaIl9q/56wrJ1NyX4QBxE8fFfLqeXiqbj8p15LtnuhzNfZQ/4jzMaV5
- CYP3CsYzWTXMT8uB/L29PAFpD8g45fK8T5a04waSvmvddLe405bsGhMP8yS38excq8QHUK
- jTgMll+Brgz1LPG0EAogGT6ahIIMSOg=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9clbyjDOn00YOAzPCTfJCWH3c4J9HrQVmDKgoi/2IAI=;
+ b=IZB5EnYs4ToazuXP2QfLOx7pbNXhvL7a8BbGBf77K5AVv/OZQgvtbajAHIwHerh3JfAss5
+ VDSRJGO6bM+AA7LA6nxRmtbE/3m47trTb1jfilwuWwIhANLDLhOQeiUlcwjj0jHIff0DfA
+ 236KZ8f4wy0IlB+hxQBe/8/SFTPquEI=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-NUZvyxuMOoCCm3YIu0LoQw-1; Wed,
- 17 Jul 2024 02:30:35 -0400
-X-MC-Unique: NUZvyxuMOoCCm3YIu0LoQw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-UWncD72ZOu2GpoMvZZQpMg-1; Wed,
+ 17 Jul 2024 02:31:09 -0400
+X-MC-Unique: UWncD72ZOu2GpoMvZZQpMg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6CBA19560AD; Wed, 17 Jul 2024 06:30:30 +0000 (UTC)
+ id 70D0C19560B0; Wed, 17 Jul 2024 06:31:07 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.88])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8014F1955F68; Wed, 17 Jul 2024 06:30:24 +0000 (UTC)
+ id 4DC4F1955F68; Wed, 17 Jul 2024 06:31:04 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -51,10 +52,12 @@ Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
  Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 0/8] aspeed: Add boot from eMMC support (AST2600)
-Date: Wed, 17 Jul 2024 08:30:14 +0200
-Message-ID: <20240717063022.549849-1-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v2 7/8] aspeed: Introduce a 'hw_strap1' machine attribute
+Date: Wed, 17 Jul 2024 08:30:21 +0200
+Message-ID: <20240717063022.549849-8-clg@redhat.com>
+In-Reply-To: <20240717063022.549849-1-clg@redhat.com>
+References: <20240717063022.549849-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,44 +87,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+From: Cédric Le Goater <clg@kaod.org>
 
-This series enables boot from eMMC on the rainier-bmc machine, which
-is the default behavior and also on the AST2600 EVB using a machine
-option to change the default.
+To change default behavior of a machine and boot from eMMC, future
+changes will add a machine option to let the user configure the
+boot-from-eMMC HW strapping bit. Add a new machine attribute first.
 
-First 6 patches adjust the machine setup and HW strapping to boot from
-eMMC, the last 2 are for the AST2600 EVB and are optional.
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+---
+ hw/arm/aspeed.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Thanks,
-
-C.
-
-Changes since v1:
-
- - Rebased on upstream, now that the eMMC device model is available
- - Rephrased commit logs
- - Fixed SCU prefix of bit definitions
- - Tuned 'boot-config' and 'boot-partition-size' eMMC properties
-
-Cédric Le Goater (8):
-  aspeed: Change type of eMMC device
-  aspeed: Load eMMC first boot area as a boot rom
-  aspeed/scu: Add boot-from-eMMC HW strapping bit for AST2600 SoC
-  aspeed: Introduce a AspeedSoCClass 'boot_from_emmc' handler
-  aspeed: Tune eMMC device properties to reflect HW strapping
-  aspeed: Add boot-from-eMMC HW strapping bit to rainier-bmc machine
-  aspeed: Introduce a 'hw_strap1' machine attribute
-  aspeed: Introduce a 'boot-emmc' machine option
-
- docs/system/arm/aspeed.rst   |  2 ++
- include/hw/arm/aspeed_soc.h  |  1 +
- include/hw/misc/aspeed_scu.h |  4 +++
- hw/arm/aspeed.c              | 62 +++++++++++++++++++++++++++++++-----
- hw/arm/aspeed_ast2600.c      |  8 +++++
- hw/arm/aspeed_soc_common.c   |  7 ++++
- 6 files changed, 76 insertions(+), 8 deletions(-)
-
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index a8f5c14ae535..9939559f6dd0 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -46,6 +46,7 @@ struct AspeedMachineState {
+     uint32_t uart_chosen;
+     char *fmc_model;
+     char *spi_model;
++    uint32_t hw_strap1;
+ };
+ 
+ /* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
+@@ -393,7 +394,7 @@ static void aspeed_machine_init(MachineState *machine)
+         }
+     }
+ 
+-    object_property_set_int(OBJECT(bmc->soc), "hw-strap1", amc->hw_strap1,
++    object_property_set_int(OBJECT(bmc->soc), "hw-strap1", bmc->hw_strap1,
+                             &error_abort);
+     object_property_set_int(OBJECT(bmc->soc), "hw-strap2", amc->hw_strap2,
+                             &error_abort);
+@@ -1077,7 +1078,10 @@ static void aspeed_set_mmio_exec(Object *obj, bool value, Error **errp)
+ 
+ static void aspeed_machine_instance_init(Object *obj)
+ {
++    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(obj);
++
+     ASPEED_MACHINE(obj)->mmio_exec = false;
++    ASPEED_MACHINE(obj)->hw_strap1 = amc->hw_strap1;
+ }
+ 
+ static char *aspeed_get_fmc_model(Object *obj, Error **errp)
 -- 
 2.45.2
 
