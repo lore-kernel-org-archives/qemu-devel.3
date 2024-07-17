@@ -4,45 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB09C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A54C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2TL-0004ho-1Z; Wed, 17 Jul 2024 07:05:23 -0400
+	id 1sU2X9-0002Hb-O1; Wed, 17 Jul 2024 07:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
- id 1sU2SP-0000be-Ma
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:29 -0400
-Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
- helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <phil@intel-mbp.local>) id 1sU2SN-0006zq-Dw
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:25 -0400
-Received: by intel-mbp.local (Postfix, from userid 501)
- id 40836379637; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
- graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
- akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
-Subject: [PATCH 16/26] hw/display/apple-gfx: Asynchronous MMIO writes on x86-64
-Date: Mon, 15 Jul 2024 23:06:55 +0200
-Message-Id: <20240715210705.32365-17-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
-References: <20240715210705.32365-1-phil@philjordan.eu>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sU2VD-0001uU-Aj; Wed, 17 Jul 2024 07:07:19 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sU2VB-0007XQ-D7; Wed, 17 Jul 2024 07:07:19 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F4DC7B37E;
+ Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 01BD310B293;
+ Wed, 17 Jul 2024 14:06:41 +0300 (MSK)
+Received: (nullmailer pid 844419 invoked by uid 1000);
+ Wed, 17 Jul 2024 11:06:40 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 12/16] hw/vfio/container: Get rid of qemu_open_old()
+Date: Wed, 17 Jul 2024 14:06:36 +0300
+Message-Id: <20240717110640.844335-13-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
+References: <20240717110640.844335-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
- helo=intel-mbp.local
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
- NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,54 +63,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change ensures that the MMIO write calls into the PVG
-framework are performed asynchronously on a background dispatch
-queue. Without this, we rapidly run into re-entrant MMIO issues.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-This problem only seems to exist on x86-64 hosts. Conversely,
-doing it async on arm64/vmapple causes other issues, so we're
-left with 2 different implementations.
+For qemu_open_old(), osdep.h said:
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> Don't introduce new usage of this function, prefer the following
+> qemu_open/qemu_create that take an "Error **errp".
+
+So replace qemu_open_old() with qemu_open().
+
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: "Cédric Le Goater" <clg@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/display/apple-gfx.m | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ hw/vfio/container.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 806feb58fa..48463e5a1f 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -67,15 +67,28 @@ static uint64_t apple_gfx_read(void *opaque, hwaddr offset, unsigned size)
-     return res;
- }
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 425db1a14c..38a9df3496 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -600,9 +600,8 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+         }
+     }
  
--static void apple_gfx_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+static void apple_gfx_write(void *opaque, hwaddr offset, uint64_t val,
-+                            unsigned size)
- {
-     AppleGFXState *s = opaque;
+-    fd = qemu_open_old("/dev/vfio/vfio", O_RDWR);
++    fd = qemu_open("/dev/vfio/vfio", O_RDWR, errp);
+     if (fd < 0) {
+-        error_setg_errno(errp, errno, "failed to open /dev/vfio/vfio");
+         goto put_space_exit;
+     }
  
-     trace_apple_gfx_write(offset, val);
+@@ -743,9 +742,8 @@ static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
+     group = g_malloc0(sizeof(*group));
  
-+#ifdef __x86_64__
-+    id<PGDevice> dev = s->pgdev;
-+    dispatch_queue_t bg_queue = NULL;
-+
-+    bg_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-+    [dev retain];
-+    dispatch_async(bg_queue, ^{
-+        [dev mmioWriteAtOffset:offset value:val];
-+        [dev release];
-+    });
-+#else
-     bql_unlock();
-     [s->pgdev mmioWriteAtOffset:offset value:val];
-     bql_lock();
-+#endif
- }
+     snprintf(path, sizeof(path), "/dev/vfio/%d", groupid);
+-    group->fd = qemu_open_old(path, O_RDWR);
++    group->fd = qemu_open(path, O_RDWR, errp);
+     if (group->fd < 0) {
+-        error_setg_errno(errp, errno, "failed to open %s", path);
+         goto free_group_exit;
+     }
  
- static const MemoryRegionOps apple_gfx_ops = {
 -- 
-2.39.3 (Apple Git-146)
+2.39.2
 
 
