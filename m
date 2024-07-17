@@ -4,177 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 174BDC3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 02:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E9AC3DA59
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 02:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTuYz-0000KD-2v; Tue, 16 Jul 2024 22:38:42 -0400
+	id 1sTufa-0005Xf-Kt; Tue, 16 Jul 2024 22:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sTuYx-0000Jf-Ik
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:38:39 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTuf9-0005Uw-Qt
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:45:08 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sTuYu-0005aY-Q8
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:38:39 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sTuf2-0006yN-P2
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:45:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721183916; x=1752719916;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=3q6hhDYxbz105mM5SBQS1whu6dbBSRv6iAYCTwKZ5sU=;
- b=adencBrvkp9DhE0ELcqHacRxmqCzt3BBb3pcapbmHk3M3gsX3gxkCYm3
- XqmI3XxdY6pNmuuXsrCWMwZgn4wrMbmP8qH8LDBum/LQc0iQ8Id8rgCXn
- H89ivO3gMG0BHRXUYh+hEUd/fWt5uVhGHxnh5oGLMqglI6/IhdcqJuRXK
- XbD5Fo6o2O8bC+hFKznI8xl67yyBLU6VOKbNnBMjfmx+VLPR+VzuLebyW
- l78sTpV1ONXStjtrrMM1lo1JfSWIAdMLGA2WFW0QWWSvuGvjhOs+pnGnM
- YgZ4csxQPzS9rBNeRuolfMYynrSw5J2WDCwlMi8vhh7RIadILKnDxGZzr g==;
-X-CSE-ConnectionGUID: BOB2WJfcQ/+9WsKCJ6Lfdg==
-X-CSE-MsgGUID: 4KAL6uloTgySbJZPNGNFGg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="36102270"
-X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="36102270"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jul 2024 19:38:34 -0700
-X-CSE-ConnectionGUID: /DZ6gGz6SimkPCMtCTuZKw==
-X-CSE-MsgGUID: JpX81LURRraO5Kdu77i5mg==
+ t=1721184297; x=1752720297;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=54yN3ae3lMEpKYOwELZ3DCccXMBGiKaWluZ+q1Q7fao=;
+ b=mgB0sEBHtv4INmqc5Ns/3G3kYI52MEtk2OjnBqJi3zwR5JA/I1cy/ta1
+ wS6Lrni4w9pU1yuZAGdF4Qzfaa0nofxl6NgSxUJN9V+NRfY56P0qTjZf3
+ jK4wJX3vcufyCOPTb5wIZN0/OZvQQHIccp8iXkjBRFtFR1odofU9en5KZ
+ I0vGrkhVoLr/ZUGBt6FoXWxRIQ4npffh+FDXiY1fGRGEp5B1sWJQFOjXQ
+ JvjSNrV2zoOMU/RKtA+4hSmbDAo5pVzP/JGSew+/MIvk6WdVz6c3psXzb
+ hzGmnYVQvhhr4qs+uykW39Te4HF4GcyLvm3cFLYxX+o7nHx16CqYkAgDB Q==;
+X-CSE-ConnectionGUID: eF1Lu7yKTNqc+9RekZL6Kw==
+X-CSE-MsgGUID: BfUi61yWT92/PWp1KZBwuw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="29816527"
+X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="29816527"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jul 2024 19:44:54 -0700
+X-CSE-ConnectionGUID: jYhQZdsnT4qCKHwy62vs7g==
+X-CSE-MsgGUID: DX3LnU8wRTK1d8cbbSLJ+w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="50574653"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
- by orviesa006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 16 Jul 2024 19:38:34 -0700
-Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 16 Jul 2024 19:38:33 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 16 Jul 2024 19:38:33 -0700
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.168)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 16 Jul 2024 19:38:33 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NSaMkSE6Kysqw7KatjBGJEmYSn0XV6oIdncZjaetzzjJ6aAFht5kLSlF/Vb6Xt2QDTBB0tR9TsD9rSU2Fhm9BRTrhvAJLWuhPfIUraFVq7bSpIXceNHNUwB9tHKxrioNpj+hokcPIkl0k6roM3iOlNIEY8ZstEP1qfNsHibr634F/9veN16gwdEre2RrVrwkGBx4FEpX1X9v0Q92qQJmFq2vjP9XEfiL+aOG7JnFI5KTCHErAcUGig2xYmrYQ82cKNdz8cAcbxhLTwTIS8mKzDwwHkoJ2uubAEHLWlKHsYH1LEO4He6iqdKtT9DQaTzfyjFSDEPhlkw+U/QANuhAYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=k7AT1y4QuPr6JeGESwEnL/SQ8oG1YbAMw1qkQlm9/3s=;
- b=jqcFpAX5xmDX0dwcMc96AU1QiHj3qTfyEQm+be1HpTSg81KWV92f9rz6NIhkDnxo2EVKy0Wp0TxlQmy8r9rbEwqAVsMrp6CU51jhPiS0uBseLfr7aHHikUNps+amaOCgf2mMpkFUFnEE231C/z6YWGgT+zzK6zG1ef9V7U3jp08cXv1PFy4T7Q9/Wc/ummnr7SBmARVrHR+roQf7cBZZ8wtGNzpLUTszcM+DrKx8IVUyeCzqlFFFiYXy7LUyMG+3yItY6XDsCPf9FiwDWKvu3A/PTZa/xAUSautg4AUZZWGiC9h3vjrm2z4ab7E5K7qkwyf18GJvuZwvc8B20Bdtow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DS0PR11MB7577.namprd11.prod.outlook.com (2603:10b6:8:142::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.27; Wed, 17 Jul
- 2024 02:38:26 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7784.016; Wed, 17 Jul 2024
- 02:38:25 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Joao Martins <joao.m.martins@oracle.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>, Alex
- Williamson <alex.williamson@redhat.com>, Cedric Le Goater <clg@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: RE: [PATCH v4 11/12] vfio/migration: Don't block migration device
- dirty tracking is unsupported
-Thread-Topic: [PATCH v4 11/12] vfio/migration: Don't block migration device
- dirty tracking is unsupported
-Thread-Index: AQHa1FFf2/DG8eO1r0muhqTtcmW9tLH6O9Cw
-Date: Wed, 17 Jul 2024 02:38:25 +0000
-Message-ID: <SJ0PR11MB674456F8871EAC781732D0CD92A32@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-12-joao.m.martins@oracle.com>
-In-Reply-To: <20240712114704.8708-12-joao.m.martins@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB7577:EE_
-x-ms-office365-filtering-correlation-id: fea494e0-a9a2-4aa5-720a-08dca609888d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?LwcWKZfLPsMhF+HvayoVFOholVX0VoRT77A7AIFEALmrK6AqEDgCl3gluvTc?=
- =?us-ascii?Q?6/Su90CaSBAMIKqUB58+k7czMaR92LhQCK9/E33s3fqN+nOioSHzsoRGXYwM?=
- =?us-ascii?Q?XfpooNdfv7UNJ83b1EI7pSEmOkJoaF4DrB0M6LYV8+dPpIHF++pTwlYjjPc6?=
- =?us-ascii?Q?pj2B3omt/L+4LRnEbeiMwoqmmMT93tfCRX2sRWFDo3X68cV8Le1oWo0+tFEt?=
- =?us-ascii?Q?2mN8QvsX4zgsdYCsadv4yBFHHdGdVAzeZWEb2F0KEYlNkV+bmhQ98Wc7sbsH?=
- =?us-ascii?Q?qp63WCSRU2jyRjOqd4Fle/UkvbI1mG1USD2KO7pCFMR0lIbCukXEAhAA4sOZ?=
- =?us-ascii?Q?xM9L8IvJx3Fsn+fPMcxxaJggwc8OZcizyPC4Z0P46ib6W6AK29SJgA/xtw5Z?=
- =?us-ascii?Q?n5PBmuhuPJqQfoXQ17cqw4uimCd/vHiJn6hDdrS9YvqD5vFAx/Sis+ZDDEIG?=
- =?us-ascii?Q?nPbRZxh7t4kNg5LJcgEEASOnYwIBpHUMI7vnOJb3eCuC6IryVd/Qo86zIosA?=
- =?us-ascii?Q?LWrH3ktVe+zmhXyAZxf3NbpPkSk7f/6zaTSw0dl/n0B5xwaZ+glKOo9FiPnA?=
- =?us-ascii?Q?LO1+zBfUsuEZaBSv2CtJY0JFBUKRuFzYtLrrOEwz3ouE9hOsZCvztLenqny4?=
- =?us-ascii?Q?soRT8epjyowOf7DZX9rLVeMQtELB8hHzA2GXJOzDBB4p1wGLBECiTLIeBH70?=
- =?us-ascii?Q?mB9Rr4WWRjWieYhp+PUYPPes6tNdCLeBz7RAzwwkcXgRtsIsGuNwL9ymWz6Y?=
- =?us-ascii?Q?QnODbJAsZEKRDV0sgFcBXblWl60etcadtvxVy+oDKHsu7xoZlf6bQbQ+tl2m?=
- =?us-ascii?Q?om7k/D++Ii4DSZ54NsN2pqtguaSTGdI4CdBZQf4aCmESFt/5FlnsSadiXjQE?=
- =?us-ascii?Q?wcf1HsWtYzPT/C47Fb86X36AW2bcIl3uoBVsfQYDgWYgvP9tTmgChJd+pxFc?=
- =?us-ascii?Q?zauKlhwa00owkWRmOGzSfVYahbuu2BSAgwVhvr2/gT7w1x8r3sfU8LEYdj2+?=
- =?us-ascii?Q?SNSRo1GOMg799RDiPSbRrtJBxyxoDSdpxHYOW4pF8NdhKiuCUsffWCgLA08W?=
- =?us-ascii?Q?U1DWlAEu2L3QJOTYe2BO3JJhm35lFOF9c19XAKywe9dpYilvGS6HK4TmMkxL?=
- =?us-ascii?Q?F+4QLPdJ9TjGg0xr+Ghq+em/WiqzLZEyBobtAQ8cpT2fWwYlnZ90o4fS/R6P?=
- =?us-ascii?Q?cDAaP6yy+TNg8Co7q54De0bjoMfz4rKM2smSPYbBQAB3HrtDpllvAe+lfrlO?=
- =?us-ascii?Q?uB8dF9EG8711kDuG7Iy2FdFJTJVMlCUNirCU3Yd7Jj2abQY6WwdK2wb5Em0h?=
- =?us-ascii?Q?ZCgHMsiG17F6c4S9BKE74kO1oBrcC81mgZMu1YnaJ2Yd6ZJZ8CkPpXLidTDY?=
- =?us-ascii?Q?8ONL6Q3/uGR0AiI7YghGpRS3ZlV6ivwRyp/MdcuA1y+hWuU8zg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Bx5AW2IWZgB0/iO2K/blQq92OFx+CG+54YEQeUiogOCLwxr/p5nsYGdXuXU1?=
- =?us-ascii?Q?dc37ZorVkH1ThGJwmBhcLbJFhFfuLyfgXxtWrOFtjsO/IH1VWGLxxZABmkAD?=
- =?us-ascii?Q?qWpgykd9vF5uwFgHut5TN91DC3/Vr6axcgt3D+J+JtoNuxRGleMISw9Liwx+?=
- =?us-ascii?Q?you+r/FBFM7bD/GMhQAwGZ75l/5CHAbINYYZVd+OtrTtrzRwt7CfeHYfGPdU?=
- =?us-ascii?Q?xjwzeQBGfU6bnEInqX3P04pfEOEvdhyjySOJnXtx5xok1MgsCgxxFFOYKQOr?=
- =?us-ascii?Q?ZWCmxh8KE4Pibl3X9g/NffiN/c+WC0WJbu/Y49py8/A2F3YTou4dlyL3vDSp?=
- =?us-ascii?Q?v64mDZ7uIXyEs9lfdhf2sROti2/S5r+u4TIDyX6l6KJYV7wQNRV4G1tKUDkp?=
- =?us-ascii?Q?9ZjgzfcOqCcINy7JJNc1ZKTKAZ5LVD6SdKbJjMPg+5Li1jbeXDADGKAjTuYy?=
- =?us-ascii?Q?8QaBN49I4pfnKGBcXMavaxfQGir2DRCHNYwWkN5MPDfJGUoG3Wq3ontOVhU6?=
- =?us-ascii?Q?d9jNJVPN8PPf8KhkHxIGPNgU/zbVEWS5pcVU3Ca2c+Op3TAwdWhMfsH0FRMJ?=
- =?us-ascii?Q?dsy30atAbpiwNk676VDUNVe9WmtRIVdjNuehchNgVf2cJlDz/jpE6WkQdW9I?=
- =?us-ascii?Q?ot5RAIfVrqvuxCS8HwulFdmsb7OWtwKyiuBK32SMhtkrM3/UIAxGs8b+k1LX?=
- =?us-ascii?Q?ZTFE+/8HjPwyG5FwjZHUCInOr8elKvBxs25+fYmTeJXw8FPAuCnxG7w7k/u2?=
- =?us-ascii?Q?3mGiIQ9D5tMS8Kx8ZUWYx09LRr78vku5pJJrJbrNl4GqNVTqtoJcuaoCFxjS?=
- =?us-ascii?Q?vzucoMwfhDaOa6aPgfu3xNOZzwhd4uOKW3hIPS/cx5m6hn3wd97Djl+5Qf6o?=
- =?us-ascii?Q?LvWn66K2SCgINWeQuEy844jFhHGF8V+nA7EUN1Rds0LRcXNsenM+jc+P0Y7w?=
- =?us-ascii?Q?AcchuDY2Qhsvkp9jx6sYCskcHaVT5ZWTCVoyXYJz7MXzw1WHHf2a3Hv+VcT3?=
- =?us-ascii?Q?Te9DgobnS3CenLwWbw2K3i0dfZ/rx2ZZ7/Ah+nxE9MPGqxVQTBjb5nd2KzPF?=
- =?us-ascii?Q?ec8v/mmHCEYNkVZcUFiQh3fbDncTxCAmW2jpbdfAlT4e+iU0VXR31SOZvv4y?=
- =?us-ascii?Q?t2um3IJ9mzXPYKr5U0eukHGhOlhFgcDbnpD+DuedIsHKAw3VNUU6soE9tZR+?=
- =?us-ascii?Q?c8k48ra0m38uXW1U+miruicexMhfALV7mjCuVm8nV9IKQLFbMq2ySs3KcbmE?=
- =?us-ascii?Q?a9iwfK8qtDrb5y95RoIjwhXyFu6j7vGhKXFhaGbKv/3rOvi9kXWSCZbMsbOa?=
- =?us-ascii?Q?VGT/HwwxnUuRpo4z42R+viNWLVm1rtlwilUk9zAuvWw5PyK0aJfDs9X8RGza?=
- =?us-ascii?Q?Pc0NCEFJdB578EPa7fi8VM7pboyfZDNXFwB0azh4oT1M25DO1h2wKq1aKjGh?=
- =?us-ascii?Q?qb7GRrSgKViHcQIDWxM81IV/x1EQ57pcpPh57AGdJXOE4iQJEXTiilO9A+5T?=
- =?us-ascii?Q?PFeTTOvVgrKoDkyJfnhqWVxf8WLZGvWZPRGJQS62nWNQiooEAopLEbT4Vu7B?=
- =?us-ascii?Q?ru79of28PjXGNwrVd19W9A6tBQGwT+Mc5okxJOCl?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="50289499"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 16 Jul 2024 19:44:52 -0700
+Date: Wed, 17 Jul 2024 11:00:33 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.orgi,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] target/i386: do not crash if microvm guest uses SGX
+ CPUID leaves
+Message-ID: <Zpcz0cFjW8extm9T@intel.com>
+References: <20240716165530.288096-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fea494e0-a9a2-4aa5-720a-08dca609888d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2024 02:38:25.5531 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ccvl/Jc2xACqQrN5rqwOldAqZxOdUVoiQKWpXAVEi+DHP6aBxvPsdCgXUyLQjV25Hfwg4RSeU8HHWMCAPGHHtoV9Z+8gBMXkld8JzbJZukE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7577
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240716165530.288096-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -197,52 +83,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Paolo,
+
+On Tue, Jul 16, 2024 at 06:55:30PM +0200, Paolo Bonzini wrote:
+> Date: Tue, 16 Jul 2024 18:55:30 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH] target/i386: do not crash if microvm guest uses SGX CPUID
+>  leaves
+> X-Mailer: git-send-email 2.45.2
+> 
+> sgx_epc_get_section assumes a PC platform is in use:
+> 
+> bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+> {
+>     PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+> 
+> However, sgx_epc_get_section is called by CPUID regardless of whether
+> SGX state has been initialized or which platform is in use.  Check
+> whether the machine has the right QOM class and if not behave as if
+> there are no EPC sections.
+> 
+> Fixes: 1dec2e1f19f ("i386: Update SGX CPUID info according to hardware/KVM/user input", 2021-09-30)
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2142
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  hw/i386/sgx.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+> index de76397bcfb..25b2055d653 100644
+> --- a/hw/i386/sgx.c
+> +++ b/hw/i386/sgx.c
+> @@ -266,10 +266,12 @@ void hmp_info_sgx(Monitor *mon, const QDict *qdict)
+>  
+>  bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+>  {
+> -    PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+> +    PCMachineState *pcms =
+> +        (PCMachineState *)object_dynamic_cast(qdev_get_machine(),
+> +                                              TYPE_PC_MACHINE);
+>      SGXEPCDevice *epc;
+>  
+> -    if (pcms->sgx_epc.size == 0 || pcms->sgx_epc.nr_sections <= section_nr) {
+> +    if (!pcms || pcms->sgx_epc.size == 0 || pcms->sgx_epc.nr_sections <= section_nr) {
+>          return true;
+>      }
+>  
+
+The above change is necessary...
+
+...but it only avoids encoding sub-leafs CPUID.0x12.{0x2..N}, while
+subleafs CPUID.0x12.{0x0,0x1} still have valid SGX information.
+
+According to the error message in qmp_query_sgx(), sgx is only supported
+on PC machines. So how about simply taking it a step further and masking
+out the entire 0x12 leaf for microvm as well?
+
+for example:
+
+diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
+index 16b1dfd90bb5..38ff75e9f377 100644
+--- a/hw/i386/sgx-stub.c
++++ b/hw/i386/sgx-stub.c
+@@ -32,6 +32,11 @@ void pc_machine_init_sgx_epc(PCMachineState *pcms)
+     memset(&pcms->sgx_epc, 0, sizeof(SGXEPCState));
+ }
+
++bool check_sgx_support(void)
++{
++    return false;
++}
++
+ bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+ {
+     return true;
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index de76397bcfb3..dcf178b1e755 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -264,6 +264,14 @@ void hmp_info_sgx(Monitor *mon, const QDict *qdict)
+                    size);
+ }
+
++bool check_sgx_support(void)
++{
++    if(!object_dynamic_cast(qdev_get_machine(), TYPE_X86_MACHINE)) {
++        return false;
++    }
++    return true;
++}
++
+ bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+ {
+     PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+diff --git a/include/hw/i386/sgx-epc.h b/include/hw/i386/sgx-epc.h
+index 3e00efd870c9..41d55da47999 100644
+--- a/include/hw/i386/sgx-epc.h
++++ b/include/hw/i386/sgx-epc.h
+@@ -58,6 +58,7 @@ typedef struct SGXEPCState {
+     int nr_sections;
+ } SGXEPCState;
+
++bool check_sgx_support(void);
+ bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size);
+ void sgx_epc_build_srat(GArray *table_data);
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c05765eeafc8..f0b464f7ea79 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6702,7 +6702,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     case 0x12:
+ #ifndef CONFIG_USER_ONLY
+         if (!kvm_enabled() ||
+-            !(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX)) {
++            !(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) ||
++            !check_sgx_support()) {
+             *eax = *ebx = *ecx = *edx = 0;
+             break;
+         }
 
 
->-----Original Message-----
->From: Joao Martins <joao.m.martins@oracle.com>
->Subject: [PATCH v4 11/12] vfio/migration: Don't block migration device dir=
-ty
->tracking is unsupported
->
->By default VFIO migration is set to auto, which will support live
->migration if the migration capability is set *and* also dirty page
->tracking is supported.
->
->For testing purposes one can force enable without dirty page tracking
->via enable-migration=3Don, but that option is generally left for testing
->purposes.
->
->So starting with IOMMU dirty tracking it can use to acomodate the lack of
->VF dirty page tracking allowing us to minimize the VF requirements for
->migration and thus enabling migration by default for those too.
->
->Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->---
-> hw/vfio/migration.c | 3 ++-
-> 1 file changed, 2 insertions(+), 1 deletion(-)
->
->diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->index 34d4be2ce1b1..ce3d1b6e9a25 100644
->--- a/hw/vfio/migration.c
->+++ b/hw/vfio/migration.c
->@@ -1036,7 +1036,8 @@ bool vfio_migration_realize(VFIODevice
->*vbasedev, Error **errp)
->         return !vfio_block_migration(vbasedev, err, errp);
->     }
->
->-    if (!vbasedev->dirty_pages_supported) {
->+    if (!vbasedev->dirty_pages_supported &&
->+        !vbasedev->bcontainer->dirty_pages_supported) {
->         if (vbasedev->enable_migration =3D=3D ON_OFF_AUTO_AUTO) {
->             error_setg(&err,
->                        "%s: VFIO device doesn't support device dirty trac=
-king",
 
-I'm not sure if this message needs to be updated, " VFIO device doesn't sup=
-port device and IOMMU dirty tracking"
 
-Same for the below:
-
-warn_report("%s: VFIO device doesn't support device dirty tracking"
 
