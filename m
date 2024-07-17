@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BA1C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC83DC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU52N-0007vU-1w; Wed, 17 Jul 2024 09:49:43 -0400
+	id 1sU54x-0001in-6e; Wed, 17 Jul 2024 09:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU52M-0007tR-FQ
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:49:42 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU54o-0001FH-Ba
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:52:15 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU52J-0001Tm-DX
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:49:42 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-dff1ccdc17bso7004194276.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:49:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU54m-0004Xm-5V
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:52:14 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2eefc3d707dso9111781fa.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721224178; x=1721828978; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721224330; x=1721829130; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Sw7omQ2ctiNpNvargBrwJtkHN7AaLbnQMl4SA52N+40=;
- b=e3/Iy4YZmgDQx9boX66Ojf++9bJcGgvGPVqXoDVUm6xifrldW3tjVR0ZXWWtpfD6T5
- GH/6mvgC42d/HPL0MCY9/cYtmKHpaNEeztB1Vfwnmtkha0ZayagVezFdF6cWoXmV6jfq
- o5U3k1pdcutvtylmRl1XXhtVZyP4BGGUwBV8yckVZs36iyodms+bySOIzhEhNNvJOHY6
- S2jU9U9LCxmXBoByZ1rnD+lUlZoDaZaZGG+g3CeCnXpULRt7JcSipWXXQpKoqTjbHCEq
- H8VhwlbOVzQfrOM/U87fArs5vBkJ7kpMlXHBTh8qA91R6VsrdlvYKzbe2rtVsW5xCBd3
- 0hGg==
+ bh=o3prwc8i8KjPKTzImRLqp5LTDSxC5nsQLP1EJDs9kRI=;
+ b=l4vvT7lleG48pbyvbKnFBNA+iEbeMY2bbZkceLTsHr2okB5S/UD0f9QH/WqXAUl8sM
+ UleZpnHZU2WsjAIKU53ZccY5XD0U4804KQOPb6ioj2nMog56Vk4DL5B6bB1TwIqZkA39
+ 9lVjEUKyUl48s0a3nG5S2f3BXhydsx/iT/7jTnuXnKVK/t7WYCgqp7sParUMSoCJm256
+ BQfxkXM+TXsjiC3wGuiKIuF0nRoT+BzauQd7TbNghSKNd3FNfGfCcQBfdpO/frCJHpKd
+ T1+rSJoPLGC7JHAyoCoCRLyHwhrA2ookQpviuMcT/M4cTSsB8pnhUq/1ztaIXY13j4fc
+ ycRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721224178; x=1721828978;
+ d=1e100.net; s=20230601; t=1721224330; x=1721829130;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Sw7omQ2ctiNpNvargBrwJtkHN7AaLbnQMl4SA52N+40=;
- b=D+R/tV/zkzxaaLjwgkXvHjmNgnE7vzHerz853i+oETUSNEdLdSq9fvdgA967kMIZXg
- Xyu3xj76nH3UQhYIW4+3niGHCe7En+oG6GIqO2eg+tN4CuDr5066N2Mzyct1DRAxbjaf
- bcFV7WLoAOPAb3TZIehZ/jM4JMRpfhLRKNJun8Efp0n2FLZ6ch1bPtHjs5w1h84zyR3b
- fsDPMlQwz3/biBJjeFTvtrJDJBnSISI3Oollr5Vyf0aSyqMrYJUoOBln9qF31C6sT9Kb
- AT/cYuvb72w+81tcdNpOsLP0DOrO7C1ARUIfdDKUtaosA3WoAoItZZY9u2nl2PpUvsPu
- Yx9A==
+ bh=o3prwc8i8KjPKTzImRLqp5LTDSxC5nsQLP1EJDs9kRI=;
+ b=JEe9zwb2H0kj2MrHlGWB8+ss9wswWWT2UjHwSnd+BUHy22ems/dLGWBeX8E3nL8GaS
+ Nv9F+l9osJUI9ux782dLrixqSQidMQY+EACeDSF8IDOQNE7tCF9QWK4Maljg4lJGn1in
+ 86oldMUiLSczWvN91pISQj/D+MtzQYMI5ib4jwce3w/9u7LkY4qmxzMGkdi49i4p6nSD
+ jbAd8iPfTJkcao6Me8pQvcQaqJ9x7ACtx7PqVQY0jQwjpQyV1UusBaL6canPQDK5ZNBq
+ Zj4TLWWbHeYQ0IXPSEpFL8UeecUVVmM8g7IzZ9nvkUashOn353Po/RU3LMozv0K9XyhS
+ 9Wiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUx7ni5JMWuuQQq8Ee31DibppjGMUWjmWfHR3WFwzuuPQH3KjbBGZH7bhkmTF2HTX0xLnemgl1Ybl5pYClveTkZv1hMUu8=
-X-Gm-Message-State: AOJu0Yzyikbt2DXd0u3k4YQOBWJJlFRzR3MPlE2ie98ZoDEzYn/R1gg2
- KWh2zjwHeZyFQWzRntQLlcpSxh/xM3VDmf/MnTwudmCq/+HBvq92gczUpc70nMM=
-X-Google-Smtp-Source: AGHT+IEjeeDog77rsokL5fFl5LnZJg6IhWcmvhgr0x3IrjhoX3qTwkx43r9axKMA5h1UBy75lE+vPQ==
-X-Received: by 2002:a05:6902:120a:b0:e03:6020:4708 with SMTP id
- 3f1490d57ef6-e05ed538db4mr1953520276.0.1721224178240; 
- Wed, 17 Jul 2024 06:49:38 -0700 (PDT)
+ AJvYcCWt9Wp3ICs7gMo7Lr1/V1YEGz5iC8cejaM8tBvJlY9fL5iIw/0Y3qOt7b88Mjzzh1V8NEnPGez9zoo3qMxVgL+Hpoz+ZKw=
+X-Gm-Message-State: AOJu0YzjbPrpYDTmMvvAcK6Si0iO+Z0GIbIGoUZlyIi4kkk9aakP3QZQ
+ SC3wyIQZclT2swo5yuHKfzmYCKYrVvmAQhYiUqzsLd1dv7EUd5pYugwNnRkVWEw=
+X-Google-Smtp-Source: AGHT+IGZRjysXRm2iETp29EQpWRAhgGDcvUw/m+mxJztUrYV6VoSTRv5vbYqyPZM2m8rBCpe5ClbwQ==
+X-Received: by 2002:a2e:a4b7:0:b0:2ee:8407:2f58 with SMTP id
+ 38308e7fff4ca-2eefd09f9c9mr11735041fa.17.1721224329461; 
+ Wed, 17 Jul 2024 06:52:09 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.208.21])
  by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e05bb2fc696sm1127377276.31.2024.07.17.06.49.35
+ 5b1f17b1804b1-427a5edb41asm170699155e9.36.2024.07.17.06.52.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 06:49:37 -0700 (PDT)
-Message-ID: <e29093fb-d36f-4d77-ba1c-e277f2441d09@linaro.org>
-Date: Wed, 17 Jul 2024 15:49:33 +0200
+ Wed, 17 Jul 2024 06:52:09 -0700 (PDT)
+Message-ID: <55050833-24d4-47d1-af16-5033ff8ad4aa@linaro.org>
+Date: Wed, 17 Jul 2024 15:52:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tests/avocado/machine_aspeed.py: Add eMMC boot tests
@@ -75,8 +75,8 @@ From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20240717130657.648701-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=philmd@linaro.org; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,6 +108,11 @@ On 17/7/24 15:06, Cédric Le Goater wrote:
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
+
+BTW this patch is
+
+Based-on: <20240717063022.549849-1-clg@redhat.com>
+
 >   tests/avocado/machine_aspeed.py | 38 +++++++++++++++++++++++++++++++++
 >   1 file changed, 38 insertions(+)
 > 
@@ -132,30 +137,30 @@ On 17/7/24 15:06, Cédric Le Goater wrote:
 > +        """
 > +        :avocado: tags=arch:arm
 > +        :avocado: tags=machine:rainier-bmc
-
-           :avocado: tags=device:emmc
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 > +        """
-
-$ make check-avocado AVOCADO_TAGS=machine:rainier-bmc
-Fetching asset from 
-tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_ast2600_debian
-Fetching asset from 
-tests/avocado/machine_aspeed.py:AST2x00MachineMMC.test_arm_aspeed_emmc_boot
-JOB ID     : ed89ecf5e166e7f636cc731c0242ba6e714fea39
-JOB LOG    : build/tests/results/job-2024-07-17T14.45-ed89ecf/job.log
-  (1/2) 
-tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_ast2600_debian: 
-PASS (21.55 s)
-  (2/2) 
-tests/avocado/machine_aspeed.py:AST2x00MachineMMC.test_arm_aspeed_emmc_boot: 
-PASS (43.71 s)
-RESULTS    : PASS 2 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | 
-CANCEL 0
-JOB TIME   : 174.68 s
-
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +
+> +        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
+> +                     'mmc-p10bmc-20240617.qcow2')
+> +        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
+> +        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+> +                                      algorithm='sha256')
+> +
+> +        self.require_netdev('user')
+> +
+> +        self.vm.set_console()
+> +        self.vm.add_args('-drive',
+> +                         'file=' + image_path + ',if=sd,id=sd2,index=2',
+> +                         '-net', 'nic', '-net', 'user')
+> +        self.vm.launch()
+> +
+> +        self.wait_for_console_pattern('U-Boot SPL 2019.04')
+> +        self.wait_for_console_pattern('Trying to boot from MMC1')
+> +        self.wait_for_console_pattern('U-Boot 2019.04')
+> +        self.wait_for_console_pattern('eMMC 2nd Boot')
+> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
+> +        self.wait_for_console_pattern('Starting kernel ...')
+> +        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
+> +        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
+> +        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
 
 
