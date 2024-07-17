@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A54C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1028CC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2X9-0002Hb-O1; Wed, 17 Jul 2024 07:09:19 -0400
+	id 1sU2X6-0001xQ-Tp; Wed, 17 Jul 2024 07:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2VD-0001uU-Aj; Wed, 17 Jul 2024 07:07:19 -0400
+ id 1sU2V2-0001AQ-FD; Wed, 17 Jul 2024 07:07:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2VB-0007XQ-D7; Wed, 17 Jul 2024 07:07:19 -0400
+ id 1sU2V0-0007Ub-9Q; Wed, 17 Jul 2024 07:07:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F4DC7B37E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 660737B37B;
  Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 01BD310B293;
- Wed, 17 Jul 2024 14:06:41 +0300 (MSK)
-Received: (nullmailer pid 844419 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id C8ABE10B290;
+ Wed, 17 Jul 2024 14:06:40 +0300 (MSK)
+Received: (nullmailer pid 844409 invoked by uid 1000);
  Wed, 17 Jul 2024 11:06:40 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 12/16] hw/vfio/container: Get rid of qemu_open_old()
-Date: Wed, 17 Jul 2024 14:06:36 +0300
-Message-Id: <20240717110640.844335-13-mjt@tls.msk.ru>
+Subject: [PULL 09/16] hw/i386/sgx: Get rid of qemu_open_old()
+Date: Wed, 17 Jul 2024 14:06:33 +0300
+Message-Id: <20240717110640.844335-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
 References: <20240717110640.844335-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,43 +71,38 @@ For qemu_open_old(), osdep.h said:
 > Don't introduce new usage of this function, prefer the following
 > qemu_open/qemu_create that take an "Error **errp".
 
-So replace qemu_open_old() with qemu_open().
+So replace qemu_open_old() with qemu_open(). And considering the SGX
+enablement description is useful, convert it into a error message hint.
 
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: "Cédric Le Goater" <clg@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/vfio/container.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ hw/i386/sgx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 425db1a14c..38a9df3496 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -600,9 +600,8 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-         }
-     }
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index de76397bcf..a14a84bc6f 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -157,10 +157,12 @@ SGXInfo *qmp_query_sgx_capabilities(Error **errp)
+ {
+     SGXInfo *info = NULL;
+     uint32_t eax, ebx, ecx, edx;
++    Error *local_err = NULL;
  
--    fd = qemu_open_old("/dev/vfio/vfio", O_RDWR);
-+    fd = qemu_open("/dev/vfio/vfio", O_RDWR, errp);
+-    int fd = qemu_open_old("/dev/sgx_vepc", O_RDWR);
++    int fd = qemu_open("/dev/sgx_vepc", O_RDWR, &local_err);
      if (fd < 0) {
--        error_setg_errno(errp, errno, "failed to open /dev/vfio/vfio");
-         goto put_space_exit;
-     }
- 
-@@ -743,9 +742,8 @@ static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
-     group = g_malloc0(sizeof(*group));
- 
-     snprintf(path, sizeof(path), "/dev/vfio/%d", groupid);
--    group->fd = qemu_open_old(path, O_RDWR);
-+    group->fd = qemu_open(path, O_RDWR, errp);
-     if (group->fd < 0) {
--        error_setg_errno(errp, errno, "failed to open %s", path);
-         goto free_group_exit;
+-        error_setg(errp, "SGX is not enabled in KVM");
++        error_append_hint(&local_err, "SGX is not enabled in KVM");
++        error_propagate(errp, local_err);
+         return NULL;
      }
  
 -- 
