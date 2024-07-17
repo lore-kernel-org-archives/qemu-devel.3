@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BEFC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC95C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:32:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTyBw-0006n0-QP; Wed, 17 Jul 2024 02:31:08 -0400
+	id 1sTyC7-00085D-T1; Wed, 17 Jul 2024 02:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyBv-0006bb-61
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyC5-0007kp-7e
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyBt-0002ys-Je
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sTyC3-00032V-H5
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:31:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721197864;
+ s=mimecast20190719; t=1721197874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bRmL0OYaoeGHe5hCmTex3w/LL9vR1msP0rIYrY1NERE=;
- b=a+TfStcjmugY754djoifR1gF494i0IT9PJlTQGZiGqfwT7mXaf+fdOlyvptymqdZMFzkF7
- QyhSPngdpeGWQDhM5OtaUDxhM0PoGBJBMKOU+Ll2wxVDxVDRAbDj5sDLbz4olwlGD8zXxY
- Iw4jXZIF4hRirHPtFTNvClIzOw6vQ1E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=t7SchGpbHIGXvEUC0Jr//SmRY8gjbq3nFK63X4vHCrs=;
+ b=UfqpMHkLnS/+uriSmauubIS/zN6cX4wFDq0Iwu5bDcbe7vizblZiiR1memnERvXplDi7Fg
+ 3p9gJe15VdOEekOqVwTOmBYqB2KkeOuhT86J02ggzjHlha/nGo/6btE5X2z8hXN0wtU/TQ
+ 4lu3rVJ7mG/rwLUVIfahHLFcGLnvYj0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-kTTV2iIjNmihFa32piaE9A-1; Wed,
- 17 Jul 2024 02:30:59 -0400
-X-MC-Unique: kTTV2iIjNmihFa32piaE9A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-RxEGbl_dNFi2QCZmb4ljDQ-1; Wed,
+ 17 Jul 2024 02:31:12 -0400
+X-MC-Unique: RxEGbl_dNFi2QCZmb4ljDQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A40C19560B6; Wed, 17 Jul 2024 06:30:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9563E1956095; Wed, 17 Jul 2024 06:31:10 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.88])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63E3319560B2; Wed, 17 Jul 2024 06:30:53 +0000 (UTC)
+ id B21D219560B2; Wed, 17 Jul 2024 06:31:07 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -53,10 +53,9 @@ Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v2 4/8] aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
- handler
-Date: Wed, 17 Jul 2024 08:30:18 +0200
-Message-ID: <20240717063022.549849-5-clg@redhat.com>
+Subject: [PATCH v2 8/8] aspeed: Introduce a 'boot-emmc' machine option
+Date: Wed, 17 Jul 2024 08:30:22 +0200
+Message-ID: <20240717063022.549849-9-clg@redhat.com>
 In-Reply-To: <20240717063022.549849-1-clg@redhat.com>
 References: <20240717063022.549849-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -90,86 +89,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Cédric Le Goater <clg@kaod.org>
 
-Report support on the AST2600 SoC if the boot-from-eMMC HW strapping
-bit is set at the board level. AST2700 also has support but it is not
-yet ready in QEMU and others SoCs do not have support, so return false
-always for these.
+The default behavior of some Aspeed machines is to boot from the eMMC
+device, like the rainier-bmc. Others like ast2600-evb could also boot
+from eMMC if the HW strapping boot-from-eMMC bit was set. Add a
+property to set or unset this bit. This is useful to test boot images.
+
+For now, only activate this property on the ast2600-evb and rainier-bmc
+machines for which eMMC images are available or can be built.
 
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 ---
- include/hw/arm/aspeed_soc.h | 1 +
- hw/arm/aspeed_ast2600.c     | 8 ++++++++
- hw/arm/aspeed_soc_common.c  | 7 +++++++
- 3 files changed, 16 insertions(+)
+ docs/system/arm/aspeed.rst |  2 ++
+ hw/arm/aspeed.c            | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 849ba37f9524..624d489e0d63 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -164,6 +164,7 @@ struct AspeedSoCClass {
-     const hwaddr *memmap;
-     uint32_t num_cpus;
-     qemu_irq (*get_irq)(AspeedSoCState *s, int dev);
-+    bool (*boot_from_emmc)(AspeedSoCState *s);
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index cd9559e3e291..6733ffd2b941 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -123,6 +123,8 @@ To boot the machine from the flash image, use an MTD drive :
+ 
+ Options specific to Aspeed machines are :
+ 
++ * ``boot-emmc`` to set or unset boot from eMMC (AST2600).
++
+  * ``execute-in-place`` which emulates the boot from the CE0 flash
+    device by using the FMC controller to load the instructions, and
+    not simply from RAM. This takes a little longer.
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 9939559f6dd0..5cdef873a5fc 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1178,6 +1178,34 @@ static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+     mc->valid_cpu_types = sc->valid_cpu_types;
+ }
+ 
++static bool aspeed_machine_ast2600_get_boot_from_emmc(Object *obj, Error **errp)
++{
++    AspeedMachineState *bmc = ASPEED_MACHINE(obj);
++
++    return !!(bmc->hw_strap1 & SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC);
++}
++
++static void aspeed_machine_ast2600_set_boot_from_emmc(Object *obj, bool value,
++                                                      Error **errp)
++{
++    AspeedMachineState *bmc = ASPEED_MACHINE(obj);
++
++    if (value) {
++        bmc->hw_strap1 |= SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC;
++    } else {
++        bmc->hw_strap1 &= ~SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC;
++    }
++}
++
++static void aspeed_machine_ast2600_class_emmc_init(ObjectClass *oc)
++{
++    object_class_property_add_bool(oc, "boot-emmc",
++                                   aspeed_machine_ast2600_get_boot_from_emmc,
++                                   aspeed_machine_ast2600_set_boot_from_emmc);
++    object_class_property_set_description(oc, "boot-emmc",
++                                          "Set or unset boot from EMMC");
++}
++
+ static void aspeed_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1377,6 +1405,7 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
+     amc->i2c_init  = ast2600_evb_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
++    aspeed_machine_ast2600_class_emmc_init(oc);
  };
  
- const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 31713de74a5f..be3eb70cdd77 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -646,6 +646,13 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     }
- }
+ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
+@@ -1449,6 +1478,7 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
+     amc->i2c_init  = rainier_bmc_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
++    aspeed_machine_ast2600_class_emmc_init(oc);
+ };
  
-+static bool aspeed_soc_ast2600_boot_from_emmc(AspeedSoCState *s)
-+{
-+    uint32_t hw_strap1 = object_property_get_uint(OBJECT(&s->scu),
-+                                                  "hw-strap1", &error_abort);
-+    return !!(hw_strap1 & SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC);
-+}
-+
- static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
- {
-     static const char * const valid_cpu_types[] = {
-@@ -673,6 +680,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
-     sc->memmap       = aspeed_soc_ast2600_memmap;
-     sc->num_cpus     = 2;
-     sc->get_irq      = aspeed_soc_ast2600_get_irq;
-+    sc->boot_from_emmc = aspeed_soc_ast2600_boot_from_emmc;
- }
- 
- static const TypeInfo aspeed_soc_ast2600_types[] = {
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 1e8f2558fdc2..05551461aea0 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -134,6 +134,11 @@ static void aspeed_soc_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+static bool aspeed_soc_boot_from_emmc(AspeedSoCState *s)
-+{
-+    return false;
-+}
-+
- static Property aspeed_soc_properties[] = {
-     DEFINE_PROP_LINK("dram", AspeedSoCState, dram_mr, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-@@ -145,9 +150,11 @@ static Property aspeed_soc_properties[] = {
- static void aspeed_soc_class_init(ObjectClass *oc, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
-+    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
- 
-     dc->realize = aspeed_soc_realize;
-     device_class_set_props(dc, aspeed_soc_properties);
-+    sc->boot_from_emmc = aspeed_soc_boot_from_emmc;
- }
- 
- static const TypeInfo aspeed_soc_types[] = {
+ #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
 -- 
 2.45.2
 
