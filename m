@@ -4,68 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F998C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB11C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTxxL-0005zx-Kh; Wed, 17 Jul 2024 02:16:04 -0400
+	id 1sTy3D-0004TC-7c; Wed, 17 Jul 2024 02:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTxxF-0005dC-LI; Wed, 17 Jul 2024 02:15:58 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTy2w-0003u6-Hm
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:21:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sTxxC-0007YN-Sk; Wed, 17 Jul 2024 02:15:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721196955; x=1752732955;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=lxVTDdL+S0Cn0Lj0YQLBnh1gWlr2LWb/YRUTiBXoNuw=;
- b=UYN/cS1ZLrQHndV6afKVZFlLuSwyvPrMil/nj9xiTN+lr4EBQ/AyZNzs
- 4HzSGkJEzPyo/x42f+Zv2xymGWrp0PXrr5fFR6Bptebv07Qr03ZiCiSJb
- ogBKJ/EKum0TblJRooIPSdPmk6cBAPu64on9X7mKYq/d5CWImubo4uDfg
- Rqw3K8+hDXePBY9uF9SFqg6CHkqKtf8CoV7UlGwYiT8NGoo2eratDY47R
- WpyMd1OsYZeQFt5TZODxD4nytVIdcbjo8e36gn1dq4cnCykx7Rd0/2e0s
- IlYuDCWmr7I396oe/HtDHRYDduZUq0MbREiKFSx34OvsNrNatsgMNdfaF Q==;
-X-CSE-ConnectionGUID: B3Xt47jRTXeFD84gdK8OfQ==
-X-CSE-MsgGUID: nGLi1FLHQ6uyLA8MrGXTUg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="12582827"
-X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="12582827"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jul 2024 23:15:48 -0700
-X-CSE-ConnectionGUID: oYAqu01kQJuznZcfCRHKog==
-X-CSE-MsgGUID: 4nIPCdO/TTSTEXc+WvZw8A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="51009713"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 16 Jul 2024 23:15:46 -0700
-Date: Wed, 17 Jul 2024 14:31:28 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH] doc/net/l2tpv3: Update boolean fields' description to
- avoid short-form use
-Message-ID: <ZpdlQDIjGp4wR8aR@intel.com>
-References: <20240708092630.2596945-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sTy2s-0008Ui-Os
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:21:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721197304;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=SIobQkcNtH8oJernFOFUl4iP8rEQRWKxbXGxLNm8Xxc=;
+ b=EPtRJ+ipkuL1KeKKv+bvZt9Ivk1iXArIhiDNP/RD/aWy6IQZnaBSCDYTDrqiZfO2mIzU0U
+ 4IvDuKkbKEVAkYi+7LJtB0O61CBJW61A4dfVsVXxF9A8YBdkUU6aSQ9GxFDVNu1vm+LiTF
+ ekIgpgqIYCyUXB9XNzqxzSxzbgAN2bI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-414-nPJq8SOoOlqmfMPKLOd_sA-1; Wed, 17 Jul 2024 02:21:40 -0400
+X-MC-Unique: nPJq8SOoOlqmfMPKLOd_sA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42725d3ae3eso47137545e9.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:21:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721197299; x=1721802099;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SIobQkcNtH8oJernFOFUl4iP8rEQRWKxbXGxLNm8Xxc=;
+ b=wDQz8WncL63uj14fL8UqTbZgm31hYm0G1qwyOJCKjl2RFVsg86lblWByk/Ltlve8Vo
+ HsqGgfvx3z5V1r4FzZwpBXqYhQiGfM7X4Dt+m5o62/eP9u/7X3Cg3PNF7LaKTVoiC+kZ
+ 4jOpSPruQTnOsS1Fe1nHNIOsEHrUHnzsg25oR7uvc0TduqEEHVPoaFeyYthJl9Yc7Ouq
+ cUi8Y1O6jD1N4xF5f+H7wyLPzjonGwQRItffEosLpas0Xxf1lE2mixqjGk2p8QjMTjm5
+ 5d820Aq4y6aekHoVnlMtybgPlDEf4a+JlTya1FvUJrUY6YaJTTfEvWEAAdgiqxuzqD0j
+ vIEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1ri7w0+rZm1bSRODJrMmFs2XjXR1a3FEso7kZgg1oTT7vL1/fKTNnSEhIS6IyJ2hWxUAtlE6sz3ynD3mWqwTwuMCzUuI=
+X-Gm-Message-State: AOJu0YyoHCcUNnp8qY4nrU+2EEtroQ4WetZa5dZgntpQzM6nuiLTFUmH
+ /td9ZjwDPIa6JblRKpBdqZzxYhh9whGXyxXqqusXTwBKeERCEeR/2qBB4bilL/ymjmI8IZWjabT
+ fYjqLr8dX+dxukP2S78Hf5zMe1ZiIKWF4l+ELdqvKY9QA6pLo+4Zg
+X-Received: by 2002:a05:600c:46d0:b0:426:5b22:4d61 with SMTP id
+ 5b1f17b1804b1-427c2cd0f32mr3709275e9.22.1721197299303; 
+ Tue, 16 Jul 2024 23:21:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+02qaofCRkz48fi6p0OLmyZMclQ+DULac9JWRInJl1/XQvT5uMh+2ZCC32PDKB6kb/w1xIw==
+X-Received: by 2002:a05:600c:46d0:b0:426:5b22:4d61 with SMTP id
+ 5b1f17b1804b1-427c2cd0f32mr3709185e9.22.1721197298885; 
+ Tue, 16 Jul 2024 23:21:38 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
+ [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3680daccdffsm10879420f8f.54.2024.07.16.23.21.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jul 2024 23:21:38 -0700 (PDT)
+Message-ID: <2caf3193-52da-4bb2-955a-a44191fbd97e@redhat.com>
+Date: Wed, 17 Jul 2024 08:21:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240708092630.2596945-1-zhao1.liu@intel.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/8] Convert avocado tests to normal Python unittests
+To: John Snow <jsnow@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+References: <20240711115546.40859-1-thuth@redhat.com>
+ <CAFn=p-bMXm9qCD0hWiikyOmagFRryCZWrTx8xne9+x5j0QeNYQ@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFn=p-bMXm9qCD0hWiikyOmagFRryCZWrTx8xne9+x5j0QeNYQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,83 +152,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jason,
+On 16/07/2024 18.45, John Snow wrote:
+> On Thu, Jul 11, 2024, 7:55 AM Thomas Huth <thuth@redhat.com 
+> <mailto:thuth@redhat.com>> wrote:
+...
+>     - I haven't looked into logging yet ... this still needs some work
+>        so that you could e.g. inspect the console output of the guests
+>        somewhere
 
-Just a kind ping. Does this update satisfy you?
-Since the original example generates the warning.
+FWIW: This is now done in the next version of the patch series:
 
-Thanks,
-Zhao
+  https://lore.kernel.org/qemu-devel/20240716112614.1755692-10-thuth@redhat.com/
 
-On Mon, Jul 08, 2024 at 05:26:30PM +0800, Zhao Liu wrote:
-> Date: Mon, 8 Jul 2024 17:26:30 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: [PATCH] doc/net/l2tpv3: Update boolean fields' description to
->  avoid short-form use
-> X-Mailer: git-send-email 2.34.1
+> This has spilled the most developer blood of any other problem with the 
+> Python-based tests. Be very careful here.
+
+Apart from 1:1 copying the functions from one __init__.py file to the other, 
+and from setting up the logger so that it writes its output to a file, I 
+didn't have to change anything. It currently simply seems to work.
+
+> I still have a prototype for replacing QMPMachine with an asyncio variant 
+> that should have more robust logging features, but I put it on the back-burner.
 > 
-> The short-form boolean options has been deprecated since v6.0 (refer
-> to docs/about/deprecated.rst).
+> Avocado tests are the primary user of the QMP Machine interface I hate the 
+> very most, a multi-threaded buffer-reader that works only by the grace of 
+> god. If you do go down this path, I may want to take the opportunity to 
+> abolish that interface once and for all.
+>
+ > I think simplifying the console buffering will help ease debuggability.
+
+Feel free to do improvements on top! I think it should be easier now when 
+there are no more complicated mixtures with the avocado test runner.
+
+>     What's your thoughts? Is it worth to continue with this approach?
+>     Or shall I rather forget about it and wait for the Avocado version
+>     update?
 > 
-> Update the description and example of boolean fields in l2tpv3 option to
-> avoid deprecation warning.
 > 
-> Cc: Jason Wang <jasowang@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  qemu-options.hx | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index ad6521ef5e7e..edeaefe2c79a 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -3353,7 +3353,7 @@ SRST
->                           -device e1000,netdev=n1,mac=52:54:00:12:34:56 \\
->                           -netdev socket,id=n1,mcast=239.192.168.1:1102,localaddr=1.2.3.4
->  
-> -``-netdev l2tpv3,id=id,src=srcaddr,dst=dstaddr[,srcport=srcport][,dstport=dstport],txsession=txsession[,rxsession=rxsession][,ipv6=on|off][,udp=on|off][,cookie64][,counter][,pincounter][,txcookie=txcookie][,rxcookie=rxcookie][,offset=offset]``
-> +``-netdev l2tpv3,id=id,src=srcaddr,dst=dstaddr[,srcport=srcport][,dstport=dstport],txsession=txsession[,rxsession=rxsession][,ipv6=on|off][,udp=on|off][,cookie64=on|off][,counter=on|off][,pincounter=on|off][,txcookie=txcookie][,rxcookie=rxcookie][,offset=offset]``
->      Configure a L2TPv3 pseudowire host network backend. L2TPv3 (RFC3931)
->      is a popular protocol to transport Ethernet (and other Layer 2) data
->      frames between two systems. It is present in routers, firewalls and
-> @@ -3368,7 +3368,7 @@ SRST
->      ``dst=dstaddr``
->          destination address (mandatory)
->  
-> -    ``udp``
-> +    ``udp=on``
->          select udp encapsulation (default is ip).
->  
->      ``srcport=srcport``
-> @@ -3377,7 +3377,7 @@ SRST
->      ``dstport=dstport``
->          destination udp port.
->  
-> -    ``ipv6``
-> +    ``ipv6=on``
->          force v6, otherwise defaults to v4.
->  
->      ``rxcookie=rxcookie``; \ ``txcookie=txcookie``
-> @@ -3385,7 +3385,7 @@ SRST
->          Their function is mostly to prevent misconfiguration. By default
->          they are 32 bit.
->  
-> -    ``cookie64``
-> +    ``cookie64=on``
->          Set cookie size to 64 bit instead of the default 32
->  
->      ``counter=off``
-> @@ -3419,7 +3419,7 @@ SRST
->          # launch QEMU instance - if your network has reorder or is very lossy add ,pincounter
->  
->          |qemu_system| linux.img -device e1000,netdev=n1 \\
-> -            -netdev l2tpv3,id=n1,src=4.2.3.1,dst=1.2.3.4,udp,srcport=16384,dstport=16384,rxsession=0xffffffff,txsession=0xffffffff,counter
-> +            -netdev l2tpv3,id=n1,src=4.2.3.1,dst=1.2.3.4,udp=on,srcport=16384,dstport=16384,rxsession=0xffffffff,txsession=0xffffffff,counter=on
->  
->  ``-netdev vde,id=id[,sock=socketpath][,port=n][,group=groupname][,mode=octalmode]``
->      Configure VDE backend to connect to PORT n of a vde switch running
-> -- 
-> 2.34.1
-> 
+> I'm personally ambivalent on avocado; I use it for the python self-tests as 
+> dogfooding but I can likely switch back over to plain pytest if that's the 
+> direction we head. I don't think I use any crazy features except some 
+> asyncio helpers i advocated for. I'm not sure what pytest's asyncio support 
+> looks like, but I have to imagine as the premier testing framework that it 
+> has *something* for me to use.
+
+There's no more pytest harness in the next iteration of the patch series, 
+just the need for pycotap for TAP output. Console logging is completely 
+independent of the test runner, I'll simply do normal logging to files there.
+
+> My only ask is that we keep the tests running in the custom venv environment 
+> we set up at build time. We have some funky post-hoc initialization of 
+> avocado that allows us to use internet packages post-config for testing 
+> purposes. If we move to pytest, it's possible we can eliminate that 
+> funkiness, which would be a win.
+
+I still need a way for making sure that pycotap is installed, though, so the 
+venv is still there.
+
+> I'm also not so sure about recreating all of the framework that pulls vm 
+> images on demand, that sounds like it'd be a lot of work, but maybe I'm 
+> wrong about that.
+
+It likely does not make sense to rewrite the tests that use these cloud-init 
+images (i.e. the ones that depend on the LinuxTest class). But we could 
+likely simply continue to use avocado.utils for these, without using the 
+avocado test runner.
+
+> Tacit ACK from me on this project in general, provided we are still using 
+> the configure venv.
+
+  Thanks,
+   Thomas
+
 
