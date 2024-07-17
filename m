@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F113FC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 10:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C24FC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 10:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU1Zi-0001n3-MC; Wed, 17 Jul 2024 06:07:54 -0400
+	id 1sU1jR-00079M-R0; Wed, 17 Jul 2024 06:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1Zh-0001gz-4E
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:07:53 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1jQ-00078k-D4
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:17:56 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1Zf-0001TX-IF
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:07:52 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-368313809a4so241994f8f.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 03:07:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1jO-0003jx-Im
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:17:56 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52ed741fe46so3924825e87.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 03:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721210870; x=1721815670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721211472; x=1721816272; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QEXmQJgpZNe0qzeHejZ78j2XMC1F/Zpcp8sm1S9LZNQ=;
- b=MYVm6pOwdgS8XTq29fulEFX94MBI4yruAPoNcrlxUPWYcMyfCrGa7dtGcBRYlwQ7aP
- Fmasq+ZUC4VAU5QSFb4eFbIQ2JHG60MTC2ZNmFDmeo1mww0bVYNjgpJspPlj93wQ6FFu
- q9WtAC69EH1gYugqMEZ5hRT2me/H7/vNh0B90xsSTn6W4p3me5V7TI33B0fVOlAI3bkw
- W6Z4dN0tV5QSxNwarDVHmTRJTYmDlXec5bSBdSHmgUf/562tBobsd3NnWgRBxTTDWj2W
- GkuJJM+CvjH9l5HTTVe3a6AofIRdGRDsokfcietBAOudS/6Wz2Ys/LUUDFyxsivQ3Mbq
- 7NPA==
+ bh=0OVCQ7hPH/3bhdPYKZdar4hcfoDdohPJn5w5BoGoHfU=;
+ b=VRFu6HLhXqs5HcTC9h0Qe2oCazdN09UAvXh4mTbbvuX93q3Am0c8KXjKHq3bkOQJzQ
+ yIVvgd6bfFsoHYEj6vygUvwvfwd5gfxlXWWsvQhIIBfbPWYKo1oMX0On/NSxt88owOSy
+ 6+aGLIcnFt6o+HWSrg12Y2towx8xililUVr4QToGkWSjuf4x9wNGuDynYw2v3zIiClAw
+ cVNLL3i8uJQrUC+/2eLRmm1OUztscQ9Xpri751W1CQ0MJIWASK7jntC/kuFBq8IQB7PN
+ SPKtVydvxziILnr6swfM2KMolkj7q1qmgzXixPSyN4gRzJj5AkHnvMNdpTnsZfYbZtpT
+ NkZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721210870; x=1721815670;
+ d=1e100.net; s=20230601; t=1721211472; x=1721816272;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QEXmQJgpZNe0qzeHejZ78j2XMC1F/Zpcp8sm1S9LZNQ=;
- b=ktuhnBVighRTXgHZSOFductklqKFYsTrRGm2hX796XMTIEko7LHIv3aKnE9ejg4chY
- iismUymS8Ihi7l9YpM4MXD2GooTENFUw4xbnpYJJQcPtwVHJc4veNbJqFXSyKkKg4n6h
- WBer1wXaKKt0Q/wZyYoYkeqxKdjOc9kY5S2CtDFWI608b++GlklDihhBAP/Jx3hBj5OA
- qZUc7wwFlPACcx2ZXatojDnsMd/ix3/ng0dapNvKuKXGBXBLEcrW0Yt2ed9ZGEUr7qum
- yRwEPS29t/qBHXpAdmAVgwhDxta9Zuxd/uMjNSoW774PfdiBtp5f2d63La89VO+tnztw
- 1dAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWEhQd6kz323CWdQ+/xWF7C0vIdXIN891Of97cHm/4mp0Enndh4RpF8ecETlifTbxPt5BQhDavkGCl659wUsx3oDq4HWQ=
-X-Gm-Message-State: AOJu0Yzn6oS1orF0vmGa4Jog1EF5UwgPvFFIOECAFBImCuPPYDkuiKMk
- nA3sIx2wXr31RYYpAc7E+ZoLVDRjTRwntVloClQ1GizRrVIAKR5XTDVtSB7GvO8=
-X-Google-Smtp-Source: AGHT+IGVwwJSvenSEJaMP75V4ZM8iTU6+Ig+478HUZoJzjmJlApixWYBlVdSNvhT+mG6an1FqQkmgA==
-X-Received: by 2002:adf:ef08:0:b0:367:89ae:c204 with SMTP id
- ffacd0b85a97d-368273d6961mr2992482f8f.12.1721210869780; 
- Wed, 17 Jul 2024 03:07:49 -0700 (PDT)
+ bh=0OVCQ7hPH/3bhdPYKZdar4hcfoDdohPJn5w5BoGoHfU=;
+ b=AVWzn/xM6JbebX/y7JWRKNDr/nJFjxMkPbEY0mqz27vXmWEOYBgJaWtxbanuAU4CZN
+ c89rAKVyoS5YSveSR3+EgDbh1xK/qGDrx4Tdf0GtLNcKiCYgLWAngjdrZNwTwL3Y3js4
+ H9UO2wqh+R3bSNjY3Zosd9+o1gG4ZhU/HZabcd8dzccFhL+SF2vBTmJQ3Q4HOsIsGbU8
+ 4O1vBNj3r1Fg72cd7Bz1cUmufRUByVMjIrqJe+T3Og0oMzAYVy5jQXxizgSlnQc8LjB0
+ OjsBc0lOvqUH3XKR+ThvPY3ftRTK2Icw1f1AbTYFAdyyPdDLiMTAIAEhiIYGJ9r3i5Pm
+ xBNQ==
+X-Gm-Message-State: AOJu0Yz10jqLT69uZCvNp5H8kXKYa45KdAVEwESIGLZdeMMt8W1uzDvz
+ O3zcw557F0jj+OXqBiTi00XNshIZ535vHGJWRffgKZs837vzawRAWQUgRGMQVNI=
+X-Google-Smtp-Source: AGHT+IEjDxtQHQQWfcEDsbCETRQEa+SNXRCSeEuqTuqRrHwcA4RVaz2qUCkudd6oP2YSQhMigv7ZOw==
+X-Received: by 2002:a05:6512:b8b:b0:52c:dbc2:ea1 with SMTP id
+ 2adb3069b0e04-52ee53ac96dmr884592e87.6.1721211472047; 
+ Wed, 17 Jul 2024 03:17:52 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.208.21])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4279f2cc42esm200985315e9.32.2024.07.17.03.07.48
+ 5b1f17b1804b1-427a5e77b0bsm163730925e9.1.2024.07.17.03.17.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 03:07:49 -0700 (PDT)
-Message-ID: <1228cc4e-f8ba-4b1f-92ba-0b35c0aff9b0@linaro.org>
-Date: Wed, 17 Jul 2024 12:07:47 +0200
+ Wed, 17 Jul 2024 03:17:51 -0700 (PDT)
+Message-ID: <d9abd976-2e1f-4d08-a923-8fe983ff5c70@linaro.org>
+Date: Wed, 17 Jul 2024 12:17:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] aspeed: Tune eMMC device properties to reflect HW
- strapping
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
-References: <20240717063022.549849-1-clg@redhat.com>
- <20240717063022.549849-6-clg@redhat.com>
+Subject: Re: [PATCH v2] pci-bridge: avoid linking a single downstream port
+ more than once
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, mst@redhat.com,
+ marcel.apfelbaum@gmail.com
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com
+References: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240717063022.549849-6-clg@redhat.com>
+In-Reply-To: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,21 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/24 08:30, Cédric Le Goater wrote:
-> From: Cédric Le Goater <clg@kaod.org>
-> 
-> When the boot-from-eMMC HW strapping bit is set, use the 'boot-config'
-> property to set the boot config register to boot from the first boot
-> area partition of the eMMC device. Also set the boot partition size
-> of the device.
-> 
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-> Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-> ---
->   hw/arm/aspeed.c | 17 +++++++++++++----
->   1 file changed, 13 insertions(+), 4 deletions(-)
+Hi Yao,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 17/7/24 10:56, Yao Xingtao via wrote:
+> Since the downstream port is not checked, two slots can be linked to
+> a single port. However, this can prevent the driver from detecting the
+> device properly.
+> 
+> It is necessary to ensure that a downstream port is not linked more than
+> once.
+> 
+> Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> 
+> ---
+> V1[1] -> V2:
+>   - Move downstream port check forward
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
+> ---
+>   hw/pci-bridge/cxl_downstream.c     | 5 +++++
+>   hw/pci-bridge/pcie_root_port.c     | 5 +++++
+>   hw/pci-bridge/xio3130_downstream.c | 5 +++++
+>   3 files changed, 15 insertions(+)
+> 
+> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+> index 742da07a015a..af81ddfeec13 100644
+> --- a/hw/pci-bridge/cxl_downstream.c
+> +++ b/hw/pci-bridge/cxl_downstream.c
+> @@ -142,6 +142,11 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
+>       MemoryRegion *component_bar = &cregs->component_registers;
+>       int rc;
+>   
+> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
+> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
+> +        return;
+
+Could pcie_cap_slot_init() be a good place to check for that?
+
+Otherwise IMHO we should add a helper in "hw/pci/pcie.h" and
+call it here, not duplicate this code in each model.
+
+> +    }
+> +
+>       pci_bridge_initfn(d, TYPE_PCIE_BUS);
+>       pcie_port_init_reg(d);
 
 
