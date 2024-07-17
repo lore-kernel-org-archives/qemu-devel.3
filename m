@@ -4,95 +4,184 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6323C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 01:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D9EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 01:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTtTq-0006hR-A3; Tue, 16 Jul 2024 21:29:18 -0400
+	id 1sTtYx-0002pJ-DE; Tue, 16 Jul 2024 21:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sTtTp-0006gx-No
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 21:29:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sTtYu-0002oe-SH
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 21:34:33 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sTtTn-0004ls-49
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 21:29:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721179754;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=md0c4TJ6Is0ESco34VR3xPYXsBhfBrUN0m3Smkt5J7k=;
- b=JJoPEKqDMzDYctfYjGjyZ2KBWEwYVG1uXV4GRRVRqla28NZ+7lJm+XA+5fZE3JmfLH75Ct
- eCR7ydueIkp4yClbnI4FHHgGWwm2TPncJkGnulDgh+lFiDQqnjXXBPeIo89b6g2D6E8jec
- Bj+fmmJuZFrPkvFy5pXOOFRmQYW9OJ4=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-PRB94fMWMIa_EdvFHLMZCA-1; Tue, 16 Jul 2024 21:29:09 -0400
-X-MC-Unique: PRB94fMWMIa_EdvFHLMZCA-1
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-778702b9f8fso214840a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 18:29:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721179748; x=1721784548;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=md0c4TJ6Is0ESco34VR3xPYXsBhfBrUN0m3Smkt5J7k=;
- b=XUvA/v2KVaBidnuuiPiUKKGFnhY/AKvuGvEAc+qLRxs+KJSfa9z+e9HibT3t0s1oq3
- 4EZ753Sgd/D9M7cEuyR0WEoRVYLl9DZGSRXPqfQmYGjOez2xI0BGmYk//O3Wvr+HmIOc
- mNCJGMwikwbl4ag25mOu/Lge17th3fqnFCta7EdLgbkezpxLpWILegLonzYBfnVxiOec
- a3q3gFtwIFkxgtzQaZzp1ZvVF3C7CxeHIPX5sH3AzHoxf4P39nPVtWvW2+yCfhoOciSA
- aZGYyucj7VGTOk7/KJIvuJeCfAGTs3iDoSiPgXfI6WvNQHzrkv/4T0lQtHxt6C6yI53S
- SYKw==
-X-Gm-Message-State: AOJu0YzN+fj94oi73y3US+TpmINFZCcSU3+bNdeDv+jbiLBZhms/58TQ
- V7l4t9MPyupvUYtNRV0PEIQ9Jj4KexXRj9tjzBjSXFA1OxW0IGJFJiyfPHwapri4OaBIBzrLgC3
- 7B29iirmSPeJyY7CIzVnZW14k/sRZWDMOu1IkXpZh+HwhzeKUhQOSQpabq03J2aSa2M6vUB+tFP
- YTd58Y/BhvAjyxNAFvi+37lP0KM94=
-X-Received: by 2002:a17:90b:1495:b0:2cb:4b31:1c48 with SMTP id
- 98e67ed59e1d1-2cb4b311d23mr1239874a91.22.1721179748150; 
- Tue, 16 Jul 2024 18:29:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDoD6Q2LgfpXukioh6Hx5DK/NTxZ4YmuQdHi2siIFqFptEarA9nKW/5Y/6Nbd2aWqBVk/XNfhUSxJdUA5IDkk=
-X-Received: by 2002:a17:90b:1495:b0:2cb:4b31:1c48 with SMTP id
- 98e67ed59e1d1-2cb4b311d23mr1239847a91.22.1721179747536; Tue, 16 Jul 2024
- 18:29:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
- <CACGkMEuX+FxOtWD9YoMF-T_VsgMezCT5ff_5Wk5CwQ3kNu41Aw@mail.gmail.com>
- <CAK9dgmb0K_TfbUt-WsPubDVAA7tuJQkQtWaf95JOc0CYvgMQ8A@mail.gmail.com>
- <CACGkMEv23TZNexfKUJ8MMVeRz2+2g316UNAQvEK+91jo5PkpBw@mail.gmail.com>
- <CAK9dgmbqqD_LVWONdKm-Usj18cnxqbMo6VWpCAUqjS4VnTDxnw@mail.gmail.com>
- <CACGkMEt5bmg1eh8Tiurfzxb5a1GXECu_PmTQC5a_+sve2A2NUw@mail.gmail.com>
- <CAK9dgmaEs56fj4F_Bz+bBJNmoK4tXHd9WbmtHeeJj-Mu+kYtNQ@mail.gmail.com>
- <CACGkMEuuxSehLH8+1_P_CERwVm_C33FQXVjHpvBmy+uakP7uVA@mail.gmail.com>
- <CAK9dgmY2MVR8+LMG-skmdgiKGrzDMriDrEV_oYwY4kBqcp91kQ@mail.gmail.com>
- <CACGkMEuWjh6Vw_Qp49QM+tB=hH0=g1+2-XiLO+mHOfV5JNTQqQ@mail.gmail.com>
- <CAK9dgmYuq1HsEb70wN6Vsa+sPEsc7KVdKgFkpg9kmcNyigqXMQ@mail.gmail.com>
-In-Reply-To: <CAK9dgmYuq1HsEb70wN6Vsa+sPEsc7KVdKgFkpg9kmcNyigqXMQ@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 17 Jul 2024 09:28:56 +0800
-Message-ID: <CACGkMEt+7Epkf9ud_44CVqitmt6RBiUc8eNryGXMoiW2H+hx2w@mail.gmail.com>
-Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
- buffer is full
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sTtYs-0006yb-IN
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 21:34:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721180071; x=1752716071;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=xQr8Zm1UKu2RZUeSHko12TIvGST9P6J2q93xqoCYsyA=;
+ b=S5oDU9Z6arRc91BHFseQB1hW2vgB4ULbs/XG9zVb6PQ4ZaWmSu9BPCaK
+ oRCy9aDzm0xYmXJ/x5+Jiofq8YVME76Drwk2HWj6c3mSCjHwpWCYY3CVh
+ nNw0qngDp8u5tMn9IIwKzE82FXIpSDdfScuzKV3w59W6lEfLd6XdsiKEu
+ T3RPvu/gKq8sqgppb99zxq76NDNT8e3Wx1vLty79CRG5YwhNKgDTmVnzM
+ S7VW6Zq+Nqa/kfeaKqf7YrSehxd3YnsOTCxd1FlRGKiBirVzr054L13v+
+ pTqcI74jNi3QURkqmq4f59raxQYjsRTuBEdleCZP1AlVc59MPRaR3sswx w==;
+X-CSE-ConnectionGUID: HKhGYR7tTn+815Xq+XWTqA==
+X-CSE-MsgGUID: MzWz42FwT4aPDmpyhb4Kmg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="30071367"
+X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="30071367"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jul 2024 18:34:28 -0700
+X-CSE-ConnectionGUID: mgPbsjYQSOic5+f2TrIfrg==
+X-CSE-MsgGUID: bUE9xX5WQzO/P6dMZKd4Fg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,213,1716274800"; d="scan'208";a="50565648"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by orviesa006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 16 Jul 2024 18:34:28 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Tue, 16 Jul 2024 18:34:27 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Tue, 16 Jul 2024 18:34:27 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 16 Jul 2024 18:34:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LXpFPsEdJpQsFFAPk2S/WehcZ4aJPZgGOqZPgnLT75vWUFc1gYfjNaS/dV62j9X21YRL6NtZMJwpJHCH9mI1LmZNeR5nNDwC5akAVMgT2Os28nPFy+Q/kuOY4m2wdu/paKuioCGo5msYyapthz1B4jUIz4YzcUbwpKnSZNe4EDa9BTjXxyutW0FIoXfWKSEEW8eiWF8uAO6HjmB7FlJHrzJe6gTiHPSpIEyMcKdOAeJQK+ZErX542lHKkh7zbMJ/Kw9v3prIi5JpfP49YMuc4xO0RmVJSUz8SGtRwWx7l4/5J8bh0RYEloMw300nnayK4TZM2NpoH8DhRRYoklewUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s7EcUSlTU106vGLXHSt+jUTe1tibKaseSyg/KWIt458=;
+ b=o8olM8/1rb3z+pEOmPJJHhwK5pg3pfIl5r2bLHtH/3r26o3u1GUVrTd0HluMjai+UcCZEu/fpijBZxbYhMTH9+mONioCYfIOgsH0g0o9IKiko7JAWWSQT4SSHfcH/VydLiKB2ULd5vEagmXMF6qp/k45L5/jOD1m/0DYYFWKUkKlFDQ2PPd5Y+Qvf29v2to8xIf6rG8w5kP66zafYP0hnPo5z9N3xn7VBXTDjCUNnfh8W3ynFiAw1vlyNZqFCmWVTeezx60MVy7XHTtakZCNfLm0a995R5QEPYpgyMtbOFif1KXz+Az8WOPIXPrfQHZbtkT3/DiTEhSi51i/2BHXQA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by DS0PR11MB8136.namprd11.prod.outlook.com (2603:10b6:8:159::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.28; Wed, 17 Jul
+ 2024 01:34:25 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7784.016; Wed, 17 Jul 2024
+ 01:34:24 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Joao Martins <joao.m.martins@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>, Alex
+ Williamson <alex.williamson@redhat.com>, Cedric Le Goater <clg@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: RE: [PATCH v4 02/12] vfio/iommufd: Don't initialize nor set a
+ HOST_IOMMU_DEVICE with mdev
+Thread-Topic: [PATCH v4 02/12] vfio/iommufd: Don't initialize nor set a
+ HOST_IOMMU_DEVICE with mdev
+Thread-Index: AQHa1FFJxHSBrgPOr0eWHaMJio4I1rH6KcJA
+Date: Wed, 17 Jul 2024 01:34:24 +0000
+Message-ID: <SJ0PR11MB67444D2AD56771E3B973401B92A32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240712114704.8708-1-joao.m.martins@oracle.com>
+ <20240712114704.8708-3-joao.m.martins@oracle.com>
+In-Reply-To: <20240712114704.8708-3-joao.m.martins@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB8136:EE_
+x-ms-office365-filtering-correlation-id: 318b94f8-516f-4e0e-d47a-08dca600974b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?huos94rpGYbWOVw/0MxibC0Xa9MPPGJ2PsQN9yxB3h4P5jwGMaO54W7ICeZg?=
+ =?us-ascii?Q?1m+5/K3S9MScjBLaXuHg2mRhdpScluMwHAeBmjfMYbDsKzoNL3hQsQNus7Kg?=
+ =?us-ascii?Q?eu/Bwp2DVtMzh13ojwgzrUPCqjVgx/MLkwKW25TQ+SBf1fdELmbg9Ht+gLl9?=
+ =?us-ascii?Q?82ZGnwxHdPXsUQlalB6LtAWLBYNYX7sDeH6sbt2O3TjCWZN6nx2Cp+aqnfEs?=
+ =?us-ascii?Q?NSffUSB6qWIntv3vm5frikTS4wNEA6uVA2z4YBrS316bM1dr0UPp5qyCIlx3?=
+ =?us-ascii?Q?1Stl1brKsOVAZU1YtFjo4zH7MS31v4fdcCSijyVZF6c0/nqb9mvv4nQJfDOp?=
+ =?us-ascii?Q?uYLMV0t9yBXTf6ZZdciGrg+e4Mtc78DMAKjuMxqSBRbtEnCDUbt3k9WzorkF?=
+ =?us-ascii?Q?gdAJIqMLVPOcc47C1f8LoWecLsZsT1k91cwNNCbHX1Jb7L3Ak8fzbM3S+NjR?=
+ =?us-ascii?Q?X/bI8tiGYG/5zZ96C/rhXA1XAqkF+ExBL7Yu1wXXPSCU6WsxFUYHxuPJgy6K?=
+ =?us-ascii?Q?X3TvG/hqeRdFsW1XYenkIERPWaWws7Tq+AvSvsD6l/NsulevkguPnGdN61Px?=
+ =?us-ascii?Q?ErdQSBSibOrE68iTdbi87S1kDCBa26OEQkIzn7THaqbsC7mqHYi8Wmlbh01J?=
+ =?us-ascii?Q?x+HTlsrth1Aauwt+BTfy4aOX67HNTjEWVX+aosgikBA/wFsDNIMg2y4NdWVo?=
+ =?us-ascii?Q?eLlQ7om2rWTlmSsPsf4zFKdeJ7o6pW+8sio9bGXjuTQnQUUoO4zkl+mlOU4Q?=
+ =?us-ascii?Q?Gw6DhqHswILOurCLY+uaTWbDrvPWKEOzUnaKXndHrknPLfbLq4YrcINznWJk?=
+ =?us-ascii?Q?tBa1uuqCnofqd9/A7EDyWmhkut1Kop0YGsMWvK2jc8MHZ85JPIEXJLkAg9gl?=
+ =?us-ascii?Q?Gj2MECaiRbPtKo1U+OHt4LFyWdrj0jdWm+vrZcYtPtdpC/obE0IpQIEAF+f5?=
+ =?us-ascii?Q?Kydb1qPtzMCLSU+XvWj8CQpG8P1JTpiSYmQ2zAfrcUJPT+ysy1uYFQ0LVy7l?=
+ =?us-ascii?Q?iA6YPBQbODUg2dZ7Fpht1pDxwMGGDacdIzm3lSGcDoTEQYJviM0/20jRjjK5?=
+ =?us-ascii?Q?YrEgcjyMY+KcjjvM+Y3K/FcLFV+lHI6K9O+3Ryi0CpU54asa49HLsyyiqzjg?=
+ =?us-ascii?Q?7ijKHM6BVMGaBhWIKYYbI5m42Fe7aLyAAcZ8JfMig6R1rn56uMAr72lh6EU+?=
+ =?us-ascii?Q?lMjA9zWo/NfsD0LH1hn9D60crgP61rMMyb9RjI/GbGxv7BP0q3g3p/aOPIBQ?=
+ =?us-ascii?Q?r7Zbn4gfXiU8KvrxsyYrJUwp+bDzSx/RiYcIRcHSH7cjagTwk9i3N1rgCzda?=
+ =?us-ascii?Q?9j9HFawmleonRhzOGytVqG5Fd7wUNh5F9TdrCsHCO6wSUuJhejXZihUi8+rD?=
+ =?us-ascii?Q?J7w0kUYoChOP580tNzWZcH7HXeW0TFLwM3/kIMqIIeP+yqZWkA=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?uyTpZsiA2T8H9E818yRx76U0tT+sZNzWKlm4fC3AfHjywR257G5R5u+EXUsk?=
+ =?us-ascii?Q?9Ra2YfznDdTwKMF/lOmUvfMNzyKzjawWKvDns1tULZkBL5iZ1MQMxyHEw4ad?=
+ =?us-ascii?Q?ZhNo/2jpiYuOZ+vWAGP9jsxx6LkkDIIHMf3Ku+/X7yZisjZhCJ28NKxNQlrd?=
+ =?us-ascii?Q?B6J76KQiU6EXeeYAP/tcCypE0CxYjCnKFQ2YGeSWHWcFlwgVM3AU8/GrVqVB?=
+ =?us-ascii?Q?BUYtecnXJiX+AOU/Y9t8s/LYe/cri1Q3ZDe5+QQgI/hzfal03gc8fA+IXqGj?=
+ =?us-ascii?Q?B1f6UK8CGs8vcukPsAgZm4ZjnPHZLhQQ51m3oRRzSlsn8N6bhZtl3+FOh5ZM?=
+ =?us-ascii?Q?LWq4Yk2u42YLxhBArCySDjcIi1HUfvk8PiZgqC8jegrufhghT76GEW8G9yze?=
+ =?us-ascii?Q?bko/gLtJEclDt0+FCN2wwZN+Kizcm7y8Iz1o0m00mu9IgfoKypWhLneX2i1R?=
+ =?us-ascii?Q?vNxwOPZ8pic3+tshavErBxU8UjyvywB6KFDYzjmUGSCA8c8w0M23Rla0JTY6?=
+ =?us-ascii?Q?Db9GWyL2jujQD54660a0BOsq3+Bfe21M87ZSabVuh/KtnTXH2d7YXNO6KObb?=
+ =?us-ascii?Q?gjc83xdf+jRL4k1OISe0ln/fw6G8/F7tf6W6eI1XF/WPfAHVv0/5kBxOdv1f?=
+ =?us-ascii?Q?4dHnsWG/FngBNOb+Ik03blTAr3McvGTzR6bfxiyJHhbLzgGyoMWbqXGLYq6D?=
+ =?us-ascii?Q?0Uj0GM86/2SQGf73lkMGJnm/8sPiPY1um9xiA1eGT8TB4tmlzCEbE/oMovD4?=
+ =?us-ascii?Q?aZEBi7i0mcbs/AsrmrbYqoBJ4zJlwYQMz3cykca0H7vrP5V/XO16P0/aWRmf?=
+ =?us-ascii?Q?ZYa+NSVw5sWKR++lJZse1sKnV/HcPqf5QTFOAty7PCdNVJNIz6vGVW9+LXqq?=
+ =?us-ascii?Q?g8M/bGAV4/+j65iVP7RBZ3ZZOnf3uH0P4JhBLQaoy9M0wA6AH7Y4k0mn8OGM?=
+ =?us-ascii?Q?sSY0h1fuQoSGyS9LAfBdHxY8U2lB2wHdRCfL/gKEdiw4e5/+Yf0N46Wrniwo?=
+ =?us-ascii?Q?wElkG8ivTQLC52bn/K35mS8NrWOO4a5e1K6Qg0HDWzVB58NBkHwtFapVv3Ud?=
+ =?us-ascii?Q?tCG6qmM34zjfqOJkZlY/icZO/Szi1d8MnW7xaHZDpCPspP2wW0ca3+GdJ0xL?=
+ =?us-ascii?Q?8jBgryDOJGzMkGr9KsdvSzaD1W8Md7lUZKi/Tlx8xODG0LwuNevi767WucPf?=
+ =?us-ascii?Q?fVCYUanqM+wb1LH9SNHLcSfZ9mTTzlj82r8j/D4rvWT+HiQ0ul3fQkCjyu+q?=
+ =?us-ascii?Q?cky/GwnrUupuhj8fDiNYpn+daFs1UDIS5LQ4kbD4URl2I81lbaOA6nlb56SA?=
+ =?us-ascii?Q?BFqP5ZIko1NqsWYE4fuOiNEEP77LR5h47b2Byh+wCDPR0XNZjSOe+9EVgfwE?=
+ =?us-ascii?Q?rpoFFECJqLKYxO7axNOPHeMTkrAuuzw0CNOhCqIp5Un0YKtJu3jCV92Pfa2v?=
+ =?us-ascii?Q?SMfrA9Hl3o0nVzLXWH+Nw+R8iH+3XQgbGbKTVgonb6fwp3J7GvkS//QDKDnQ?=
+ =?us-ascii?Q?4fTMnR3VrETcwH+51fAP8WxmJ5psdmzemKrAN/TSJdviPbmUJYpW5iqEjFjB?=
+ =?us-ascii?Q?2o6TQrdHXISwdsSFooYaVlxVYaDgwuWokNb4yp+4?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 318b94f8-516f-4e0e-d47a-08dca600974b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2024 01:34:24.8080 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wlUlTxAeaIOOvELWtjjT9gyvi2Z4KcGfyosY2akT1GwrmfZgThL7CeXW7mgoX+F3gxUBEY1HTGqWRyK0fL9JbFdEfyedcGa6AZxmuosl/kI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8136
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,446 +197,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 17, 2024 at 9:24=E2=80=AFAM Yong Huang <yong.huang@smartx.com> =
-wrote:
->
->
->
-> On Fri, Jul 12, 2024 at 10:01=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
- wrote:
->>
->> On Wed, Jul 10, 2024 at 5:05=E2=80=AFPM Yong Huang <yong.huang@smartx.co=
-m> wrote:
->> >
->> >
->> >
->> > On Wed, Jul 10, 2024 at 3:36=E2=80=AFPM Jason Wang <jasowang@redhat.co=
-m> wrote:
->> >>
->> >> On Wed, Jul 10, 2024 at 2:26=E2=80=AFPM Yong Huang <yong.huang@smartx=
-.com> wrote:
->> >> >
->> >> >
->> >> >
->> >> > On Wed, Jul 10, 2024 at 11:44=E2=80=AFAM Jason Wang <jasowang@redha=
-t.com> wrote:
->> >> >>
->> >> >> On Tue, Jul 9, 2024 at 10:56=E2=80=AFAM Yong Huang <yong.huang@sma=
-rtx.com> wrote:
->> >> >> >
->> >> >> >
->> >> >> >
->> >> >> > On Tue, Jul 9, 2024 at 10:41=E2=80=AFAM Jason Wang <jasowang@red=
-hat.com> wrote:
->> >> >> >>
->> >> >> >> On Mon, Jul 8, 2024 at 1:17=E2=80=AFPM Yong Huang <yong.huang@s=
-martx.com> wrote:
->> >> >> >> >
->> >> >> >> >
->> >> >> >> >
->> >> >> >> > On Mon, Jul 8, 2024 at 11:21=E2=80=AFAM Jason Wang <jasowang@=
-redhat.com> wrote:
->> >> >> >> >>
->> >> >> >> >> On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.hua=
-ng@smartx.com> wrote:
->> >> >> >> >> >
->> >> >> >> >> > Unexpected work by certain Windows guests equipped with th=
-e e1000
->> >> >> >> >> > interface can cause the network to go down and never come =
-back up
->> >> >> >> >> > again unless the guest's interface is reset.
->> >> >> >> >> >
->> >> >> >> >> > To reproduce the failure:
->> >> >> >> >> > 1. Set up two guests with a Windows 2016 or 2019 server op=
-erating
->> >> >> >> >> >    system.
->> >> >> >> >>
->> >> >> >> >> I vaguely remember e1000 support for Windows has been deprec=
-ated for
->> >> >> >> >> several years...
->> >> >> >> >>
->> >> >> >> >> That's why e1000e or igb is implemented in Qemu.
->> >> >> >> >>
->> >> >> >> >> > 2. Set up the e1000 interface for the guests.
->> >> >> >> >> > 3. Pressurize the network slightly between two guests usin=
-g the iPerf tool.
->> >> >> >> >> >
->> >> >> >> >> > The network goes down after a few days (2-5days), and the =
-issue
->> >> >> >> >> > is the result of not adhering to the e1000 specification. =
-Refer
->> >> >> >> >> > to the details of the specification at the following link:
->> >> >> >> >> > https://www.intel.com/content/dam/doc/manual/pci-pci-x-fam=
-ily-gbe-controllers-software-dev-manual.pdf
->> >> >> >> >> >
->> >> >> >> >> > Chapter 3.2.6 describe the Receive Descriptor Tail registe=
-r(RDT)
->> >> >> >> >> > as following:
->> >> >> >> >> > This register holds a value that is an offset from the bas=
-e, and
->> >> >> >> >> > identifies the location beyond the last descriptor hardwar=
-e can
->> >> >> >> >> > process. Note that tail should still point to an area in t=
-he
->> >> >> >> >> > descriptor ring (somewhere between RDBA and RDBA + RDLEN).
->> >> >> >> >> > This is because tail points to the location where software=
- writes
->> >> >> >> >> > the first new descriptor.
->> >> >> >> >> >
->> >> >> >> >> > This means that if the provider=E2=80=94in this case, QEMU=
-=E2=80=94has not yet
->> >> >> >> >> > loaded the packet,
->> >> >> >> >>
->> >> >> >> >> What do you mean by "load" here?
->> >> >> >> >
->> >> >> >> >
->> >> >> >> > Sorry for failing to describe the details.
->> >> >> >> >
->> >> >> >> > The guest driver retrieves the packet from the receive ring b=
-uffer
->> >> >> >> > after QEMU forwards it from the tun/tap interface in the e100=
-0
->> >> >> >> > emulation.
->> >> >> >> >
->> >> >> >> > I used "load" to express "putting packets into the receive ri=
-ng buffer."
->> >> >> >> >
->> >> >> >> >>
->> >> >> >> >>
->> >> >> >> >> > RDT should never point to that place.
->> >> >> >> >>
->> >> >> >> >> And "that place"?
->> >> >> >> >
->> >> >> >> > If a descriptor in the receive ring buffer has not been fille=
-d with a
->> >> >> >> > packet address by QEMU, the descriptor therefore doesn't have=
- any
->> >> >> >> > available packets. The location of the descriptor should not =
-be referred
->> >> >> >> > to by RDT because the location is in the range that "hardware=
-" handles.
->> >> >> >> >
->> >> >> >> > "that place" means the location of the descriptor in the ring=
- buffer
->> >> >> >> > that QEMU hasn't set any available packets related to.
->> >> >> >> >
->> >> >> >> >>
->> >> >> >> >>
->> >> >> >> >> > When
->> >> >> >> >> > implementing the emulation of the e1000 interface, QEMU ev=
-aluates
->> >> >> >> >> > if the receive ring buffer is full once the RDT equals the=
- RDH,
->> >> >> >> >> > based on the assumption that guest drivers adhere to this
->> >> >> >> >> > criterion strictly.
->> >> >> >> >> >
->> >> >> >> >> > We applied the following log patch to assist in analyzing =
-the
->> >> >> >> >> > issue and eventually obtained the unexpected information.
->> >> >> >> >> >
->> >> >> >> >> > Log patch:
->> >> >> >> >> > ----------------------------------------------------------=
--------
->> >> >> >> >> > |--- a/hw/net/e1000.c
->> >> >> >> >> > |+++ b/hw/net/e1000.c
->> >> >> >> >> > |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState =
-*nc)
->> >> >> >> >> > | static bool e1000_has_rxbufs(E1000State *s, size_t total=
-_size)
->> >> >> >> >> > | {
->> >> >> >> >> > |     int bufs;
->> >> >> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D=
- %u, s->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[=
-RDH], s->mac_reg[RDT]);
->> >> >> >> >> > |+
->> >> >> >> >> > |     /* Fast-path short packets */
->> >> >> >> >> > |     if (total_size <=3D s->rxbuf_size) {
->> >> >> >> >> > |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s-=
->last_overrun)
->> >> >> >> >> > |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *n=
-c, const struct iovec *iov, int iovcnt)
->> >> >> >> >> > |         s->rxbuf_min_shift)
->> >> >> >> >> > |         n |=3D E1000_ICS_RXDMT0;
->> >> >> >> >> > |
->> >> >> >> >> > |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D=
- %u, s->mac_reg[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
->> >> >> >> >> > |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[=
-RDH], s->mac_reg[RDT]);
->> >> >> >> >> > |+
->> >> >> >> >> > ----------------------------------------------------------=
--------
->> >> >> >> >> >
->> >> >> >> >> > The last few logs of information when the network is down:
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[R=
-DLEN] =3D 16384, s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[=
-RDLEN] =3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- RDT stays the same, RDH updates to 898, and 1 descripto=
-r
->> >> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[R=
-DLEN] =3D 16384, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[=
-RDLEN] =3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- RDT stays the same, RDH updates to 899, and 1 descripto=
-r
->> >> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[R=
-DLEN] =3D 16384, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- the receive ring buffer is checked for fullness in the
->> >> >> >> >> > e1000_has_rxbufs function, not full.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[=
-RDLEN] =3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
->> >> >> >> >> > <- RDT stays the same, RDH updates to 900 , and 1 descript=
-or
->> >> >> >> >> > utilized after putting the packet to ring buffer.
->> >> >> >> >> >
->> >> >> >> >> > e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[R=
-DLEN] =3D 16384, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
->> >> >> >> >> > <- The ring is full, according to e1000_has_rxbufs, becaus=
-e
->> >> >> >> >> > of the RDT update to 900 and equals RDH !
->> >> >> >> >>
->> >> >> >> >> Just to make sure I understand this, RDT=3D=3DRDH means the =
-ring is empty I think?
->> >> >> >> >>
->> >> >> >> >>
->> >> >> >> >> See commit:
->> >> >> >> >>
->> >> >> >> >> commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
->> >> >> >> >> Author: Dmitry Fleytman <dmitry@daynix.com>
->> >> >> >> >> Date:   Fri Oct 19 07:56:55 2012 +0200
->> >> >> >> >>
->> >> >> >> >>     e1000: drop check_rxov, always treat RX ring with RDH =
-=3D=3D RDT as empty
->> >> >> >> >>
->> >> >> >> >>     Real HW always treats RX ring with RDH =3D=3D RDT as emp=
-ty.
->> >> >> >> >>     Emulation is supposed to behave the same.
->> >> >> >> >
->> >> >> >> >
->> >> >> >> > Indeed, I'm confused :(,  the description in the comment clai=
-ms that RX
->> >> >> >> > rings with RDH =3D=3D RDT as empty, but in implementation, it=
- treats that as
->> >> >> >> > overrun.
->> >> >> >> >
->> >> >> >> > See the following 2 contexts:
->> >> >> >> >
->> >> >> >> > 1. e1000_can_receive:
->> >> >> >> > static bool e1000_can_receive(NetClientState *nc)
->> >> >> >> > {
->> >> >> >> >     E1000State *s =3D qemu_get_nic_opaque(nc);
->> >> >> >> >     // e1000_has_rxbufs return true means ring buffer has
->> >> >> >> >     // available descriptors to use for QEMU.
->> >> >> >> >     // false means ring buffer overrun and QEMU should queue =
-the packet
->> >> >> >> >     // and wait for the RDT update and available descriptors =
-can be used.
->> >> >> >> >
->> >> >> >> >     return e1000x_rx_ready(&s->parent_obj, s->mac_reg) &&
->> >> >> >> >         e1000_has_rxbufs(s, 1) && !timer_pending(s->flush_que=
-ue_timer);
->> >> >> >> > }
->> >> >> >>
->> >> >> >> Well we had in e1000_has_rx_bufs
->> >> >> >>
->> >> >> >>     if (total_size <=3D s->rxbuf_size) {
->> >> >> >>         return s->mac_reg[RDH] !=3D s->mac_reg[RDT];
->> >> >> >>     }
->> >> >> >>
->> >> >> >> RDT!=3DRDH means RX ring has available descriptors for hardware=
-?
->> >> >> >
->> >> >> >
->> >> >> > IMHO, Yes.
->> >> >>
->> >> >> Just to make sure we are on the same page, so
->> >> >>
->> >> >> RDT!=3DRDH, descriptors available for hardware
->> >> >> RDT=3D=3DRDH, descriptor ring is empty for hardware
->> >> >>
->> >> >>
->> >> >> That is currently what the code did. Seems nothing wrong, or anyth=
-ing
->> >> >> I missed here?
->> >> >
->> >> >
->> >> > There are two cases for RDT =3D=3D RDH.
->> >> >
->> >> > 1. Hardware has filled all available descriptors and overrun.
->> >> >    In this case, hardware cannot add any new packets to the ring.
->> >> >
->> >> > 2. Software has consumed all descriptors, and all the descriptors
->> >> >     on the ring can be used by hardware. (Let's name this case "emp=
-ty.")
->> >> >    In this case, hardware should keep putting new packets to the ri=
-ng
->> >>
->> >> Well this seems not what spec said. See Figure 3-2, when RDT=3D=3DRDH=
-,
->> >> nothing is owned by hardware. And this is what Dmitry said in the
->> >> commit mentioned above.
->> >
->> >
->> > Yes, this is the main cause of network interruptions. Hardware should
->> > never touch the location of the descriptor that RDT points to. This is
->> > what the specification declares. IMHO, it also implies that the descri=
-ptor
->> > referred to by the RDT has available packets.
->> >
->> > In our case, hardware has not added any new packets to the descriptor,
->> > and the expected behavior is that software never updates the RDT to
->> > the location of that descriptor. But now, it does.
->> >
->> > If hardware and software both work as expected under the e1000
->> > specification, the issue does not exist. I have no objection that the =
-root
->> > cause is the Windows driver bug in e1000, and I'm not insisting that
->> > QEMU should take the responsibility for fixing that.
->> >
->> >>
->> >>
->> >> Which version of the driver did you use in the guest? (Or have you
->> >> tried to download the one from Intel website) I'm asking since e1000
->> >> support has been deprecated by Microsoft for years.
->> >
->> >
->> > I use Windows Server 2019 and the driver version is 8.4.13.0.
->>
->> Is this the one you download from the Intel website?
->
->
-> No, this one is the default driver of Windows Server 2019 if my
-> information is correct.
->
->>
->>
->> >
->> > Since Microsoft no longer supports e1000, as you already mentioned,
->> > this patch merely offers a workaround.
->>
->> Is there a chance to switch to use e1000e, it has been actively
->> maintained and supported.
->
->
-> Yes, this is another workaround, we'll try this in the end, thanks for
-> the advice.
->
->>
->>
->> > Since some users still use
->> > e1000 in production environments, it doesn't seem to have any side
->> > effects.
->>
->> We need to make sure it matches the hardware behaviour. Otherwise it
->> might break other operating systems. Looking at the history, we used
->> to break e1000 on various operating systems: windows, BSD, minix,
->> windriver ....
->
->
-> Yes, I absolutely agree with you. Determining if this patch will affect
-> other operating systems is therefore crucial.
->
->>
->>
->> >
->> > It would be really appreciated if the patch was given some thought.
->>
->> We would try to evaluate each patch carefully. Qemu is a function
->> emulator so we need to make sure the function matches hardware
->> behaviour before it can be merged.
->
->
-> Two solutions could be applied:
->
-> 1. fix the windows driver to ensure that RDT does not point to the locati=
-on
->   of the descriptors hardware doesn't put any packets into. Let's name th=
-is
->   state of descriptor as "invalid".
->
-> 2. modify the QEMU to handle this case while not breaking other OSes.
->
-> Since this patch only does a sanity check, it appears to adhere to the
-> second solution, in my opinion.
->
-> The patch's sole unintended consequence is that it prevents guests from
-> purposefully updating the RDT to link to the "invalid" description.
->
-> What do you think?
+Hello Joao,
 
-For 1), please try the e1000 driver from Intel (I remember it could be
-downloaded from the Intel website).
-For 2), it would be hard as it needs to be tested with a lot of
-operating systems (or we can have Intel Engineers involved).
+>-----Original Message-----
+>From: Joao Martins <joao.m.martins@oracle.com>
+>Subject: [PATCH v4 02/12] vfio/iommufd: Don't initialize nor set a
+>HOST_IOMMU_DEVICE with mdev
+>
+>mdevs aren't "physical" devices and when asking for backing IOMMU info, it
+>fails the entire provisioning of the guest. Fix that by skipping
+>HostIOMMUDevice initialization in the presence of mdevs, and skip setting
+>an iommu device when it is known to be an mdev.
+>
+>Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>Fixes: 930589520128 ("vfio/iommufd: Implement
+>HostIOMMUDeviceClass::realize() handler")
+>Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 
-And I really suggest you shift to e1000e (or igb) if it is possible.
+Thanks for fixing.
 
-Thanks
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
+ BRs.
+Zhenzhong
+
+>---
+> hw/vfio/common.c |  4 ++++
+> hw/vfio/pci.c    | 10 +++++++---
+> 2 files changed, 11 insertions(+), 3 deletions(-)
 >
-> Yong
+>diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>index 7cdb969fd396..b0beed44116e 100644
+>--- a/hw/vfio/common.c
+>+++ b/hw/vfio/common.c
+>@@ -1556,6 +1556,10 @@ bool vfio_attach_device(char *name,
+>VFIODevice *vbasedev,
+>         return false;
+>     }
 >
->>
->> One way is to test via real hardware or involve Intel Engineers.
->>
->>
->> Thanks
->>
->> >
->> > Thanks,
->> > Yong
->> >
->> >>
->> >>
->> >> Thanks
->> >>
->> >> >
->> >> > But at the moment, the logic of e1000_has_rx_bufs acts exactly like=
- it was
->> >> > the first case, unable to differentiate between the two scenarios.
->> >> >
->> >> >>
->> >> >>
->> >> >> Thanks
->> >> >>
->> >> >> >
->> >> >> >>
->> >> >> >> Adding more people.
->> >> >> >>
->> >> >> >> Thanks
->> >> >> >>
->> >> >> >
->> >> >> >
->> >> >> > --
->> >> >> > Best regards
->> >> >>
->> >> >
->> >> > Yong
->> >> >
->> >> > --
->> >> > Best regards
->> >>
->> >
->> >
->> > --
->> > Best regards
->>
+>+    if (vbasedev->mdev) {
+>+        return true;
+>+    }
+>+
+>     hiod =3D HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>     if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev,
+>errp)) {
+>         object_unref(hiod);
+>diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>index 585f23a18406..3fc72e898a25 100644
+>--- a/hw/vfio/pci.c
+>+++ b/hw/vfio/pci.c
+>@@ -3116,7 +3116,7 @@ static void vfio_realize(PCIDevice *pdev, Error
+>**errp)
 >
+>     vfio_bars_register(vdev);
 >
-> --
-> Best regards
+>-    if (!pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
+>+    if (!is_mdev && !pci_device_set_iommu_device(pdev, vbasedev->hiod,
+>errp)) {
+>         error_prepend(errp, "Failed to set iommu_device: ");
+>         goto out_teardown;
+>     }
+>@@ -3239,7 +3239,9 @@ out_deregister:
+>         timer_free(vdev->intx.mmap_timer);
+>     }
+> out_unset_idev:
+>-    pci_device_unset_iommu_device(pdev);
+>+    if (!is_mdev) {
+>+        pci_device_unset_iommu_device(pdev);
+>+    }
+> out_teardown:
+>     vfio_teardown_msi(vdev);
+>     vfio_bars_exit(vdev);
+>@@ -3284,7 +3286,9 @@ static void vfio_exitfn(PCIDevice *pdev)
+>     vfio_pci_disable_rp_atomics(vdev);
+>     vfio_bars_exit(vdev);
+>     vfio_migration_exit(vbasedev);
+>-    pci_device_unset_iommu_device(pdev);
+>+    if (!vbasedev->mdev) {
+>+        pci_device_unset_iommu_device(pdev);
+>+    }
+> }
+>
+> static void vfio_pci_reset(DeviceState *dev)
+>--
+>2.17.2
 
 
