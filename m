@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CE1C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE2AC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTxqx-0003xQ-Kr; Wed, 17 Jul 2024 02:09:27 -0400
+	id 1sTxrP-0005b1-CN; Wed, 17 Jul 2024 02:09:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxqs-0003gb-1I
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:22 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1sTxr5-0004NG-Kk
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:35 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxqq-00030z-B5
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:21 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7039e4a4a03so3787649a34.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:09:19 -0700 (PDT)
+ id 1sTxr3-00033M-SM
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:35 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70af4868d3dso4867690b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721196559; x=1721801359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721196571; x=1721801371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L50cMFgY8xp9UNkN7NVIRy+rY10HarTYUNyP2m/NWeU=;
- b=IsQp/wZDpu8zLgwZAb0SbFhmaMOsmMnQ4UKFX3/VppMXOjkux3SW+KDFI2N/Bp6+8F
- ASz2BDceSrwj4mD3ucP4rL9+nLKJTkVDj8Q9zRFwMI+EJ8/CbzG6FD+kXjggrbZVabzo
- fo322R/pORCFszttDv/1jBG8CO7ckXGFJKxOFdPTEy7rd4siYhCrm7kvnVUqvbC277PI
- N4sB5dJRhAMfP9/QkAaflm3J8pketNVs7IIPQIG7Q3G9WAknPlSKpf+49sqjvcQaY2bj
- DTmm3UYmjvDWlADzKiNNtBYuLHGoCDwkKf6MbHlQzEhf1TnPvc5DQuOBXQtKG3QdFxgn
- 0nXQ==
+ bh=puWWSP6upP4R/fjMKe0cqFEKfKot06skzqXFozehvXc=;
+ b=dJZH363KBT+F8cjqaHSSt+joanD0gt44JhNVrC8kS2oEkXqYShtRYpAWOZAoSq9ouO
+ V90/7mSlypR8Cy5qI/uKawsPGWd5aO0GivYOJjEVK9ocLpxuQ+rGTthnpuAt7z5OFn+5
+ WS+jd7haB8Fa8u3TxSFjdVe35E5sVcvG/XLcAllanGKGilgkTDrZpdQu1Ltn1Yet4kUJ
+ gys6bv5nkwWnXHqKhyXwt4nhDPErQY35dUWsaLtmF0jW9Di12ndkVYkIOwNZwh4K+TTg
+ fzTDgatOxsKUtXLfzOPclEXG+gWnMzKm2XDMnO6m5TRTOGuB0Ozb2+8MCm1/+0a+2q7Z
+ IJkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721196559; x=1721801359;
+ d=1e100.net; s=20230601; t=1721196571; x=1721801371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L50cMFgY8xp9UNkN7NVIRy+rY10HarTYUNyP2m/NWeU=;
- b=Y0IUojmIO8tPJpKgTtSWCnQdv7PaoXVL0YfdjmdxBCkLUYlbrAMOWrPPYfHt8LSwuR
- EfCbUqc/qSiLnpSR18aSSFJxljV6QMjBaIgvRKRx0IInKPiyPPScNceviqacAikrx4Ii
- JxcZ4Z1H+XmPCXLkunPgMFU812a2YW23OEj2+Ez/L3uASteh06Nq7NBK9F5WCcuCk/fI
- oJsI2u8Tw74gFuBnNPqkwVV8cQtyjWSX71z2GT3yF0SaWT+A3Y4RHW+pRfy7o8f8Yqtc
- K/XU6DfqQ9DOD/y6PXtN/IWGnm0FuMfG1aOAoFHVymJylOw0GR9chM3Gf4KFTPlUMqwF
- clMQ==
-X-Gm-Message-State: AOJu0Yz3b98uWiL6MpOHBQAZTT93qF4F5mleAalCBdycihH7DmGUphTf
- ux0NI6Rg0q6e3uuhvuUjkuTpusK5R2ab9ULJyidVK8RVWHSSFScgjUiQ3Q2THvulKBvc6Um7vj4
- CzDQ=
-X-Google-Smtp-Source: AGHT+IG7+VplK6yo0DmCdIg8IbahZjpS0D/QCL0K1cA3rpOPTn8ABDO8yWL2iFwj4GkDkpiXKru5aQ==
-X-Received: by 2002:a05:6830:4181:b0:703:ba24:7320 with SMTP id
- 46e09a7af769-708e378942fmr913594a34.10.1721196558470; 
- Tue, 16 Jul 2024 23:09:18 -0700 (PDT)
+ bh=puWWSP6upP4R/fjMKe0cqFEKfKot06skzqXFozehvXc=;
+ b=cz5J0AKM8J+I3TnXIDVPy5xiUifCZe+YDtckTtV7zIBZPZJW284VCeu4FpDSJ+ZKGJ
+ p4knm7zXfVdwLnvAGTtUoiWdgtXCxjDuHHtT4D5lgyetqcXarAfIj0AjWrF1fY3jsH3a
+ a5is62zvm0AD8kf96c/7XZ/rZou69PI1uJ+buOtJVZWdtDqhIT8VHkReJEo+b1yqE+1o
+ ItSgPuZdjj5TS64P1urR8MMbmcdKciD8o/t25L9w9Id1RS0dVQU5i7ymVlnYZfF3P0kH
+ JIetyoNAfEsgqj0Pm9+EtwmpUqwLMJp/lIsCW1YXxoglTehjrc/POVLpkS2JvCuT2Mpi
+ g1bQ==
+X-Gm-Message-State: AOJu0Yxd1gkgUaDeZhDgL6N6xGuK78OP/Q5NrsdJx5IOQwPrV6TarFGp
+ vdQwyP0ybNnutIHqe2uj73dIxrg/mEWJkPBBsZXNizFUKXfHBY51L25aowwg5nNXQXp1PpSxkmi
+ cgoo=
+X-Google-Smtp-Source: AGHT+IEYuNseG6riZO5WEmp4ZA5C2gDLXBmgCLJZO8MxqmQnWWUDbooRO/SkGpcobllKa4s9LnTUTw==
+X-Received: by 2002:a05:6a00:1402:b0:706:6af8:e088 with SMTP id
+ d2e1a72fcca58-70ce4f936a8mr783739b3a.3.1721196570998; 
+ Tue, 16 Jul 2024 23:09:30 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7ecd603bsm7330404b3a.219.2024.07.16.23.09.16
+ d2e1a72fcca58-70b7ecd603bsm7330404b3a.219.2024.07.16.23.09.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 23:09:18 -0700 (PDT)
+ Tue, 16 Jul 2024 23:09:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 03/17] target/arm: Convert TBL, TBX to decodetree
-Date: Wed, 17 Jul 2024 16:08:49 +1000
-Message-ID: <20240717060903.205098-4-richard.henderson@linaro.org>
+Subject: [PATCH 08/17] target/arm: Convert FMOVI (scalar,
+ immediate) to decodetree
+Date: Wed, 17 Jul 2024 16:08:54 +1000
+Message-ID: <20240717060903.205098-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240717060903.205098-1-richard.henderson@linaro.org>
 References: <20240717060903.205098-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,56 +96,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 47 ++++++++++------------------------
- target/arm/tcg/a64.decode      |  4 +++
- 2 files changed, 18 insertions(+), 33 deletions(-)
+ target/arm/tcg/translate-a64.c | 74 ++++++++++++----------------------
+ target/arm/tcg/a64.decode      |  4 ++
+ 2 files changed, 30 insertions(+), 48 deletions(-)
 
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 6ca24d9842..7e3bde93fe 100644
+index 2964279c00..6582816e4e 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -4657,6 +4657,20 @@ static bool trans_EXTR(DisasContext *s, arg_extract *a)
-     return true;
- }
+@@ -6847,6 +6847,31 @@ TRANS(FMINNMV_s, do_fp_reduction, a, gen_helper_vfp_minnums)
+ TRANS(FMAXV_s, do_fp_reduction, a, gen_helper_vfp_maxs)
+ TRANS(FMINV_s, do_fp_reduction, a, gen_helper_vfp_mins)
  
-+static bool trans_TBL_TBX(DisasContext *s, arg_TBL_TBX *a)
-+{
-+    if (fp_access_check(s)) {
-+        int len = (a->len + 1) * 16;
++/*
++ * Floating-point Immediate
++ */
 +
-+        tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, a->rd),
-+                           vec_full_reg_offset(s, a->rm), tcg_env,
-+                           a->q ? 16 : 8, vec_full_reg_size(s),
-+                           (len << 6) | (a->tbx << 5) | a->rn,
-+                           gen_helper_simd_tblx);
++static bool trans_FMOVI_s(DisasContext *s, arg_FMOVI_s *a)
++{
++    switch (a->esz) {
++    case MO_32:
++    case MO_64:
++        break;
++    case MO_16:
++        if (!dc_isar_feature(aa64_fp16, s)) {
++            return false;
++        }
++        break;
++    default:
++        return false;
++    }
++    if (fp_access_check(s)) {
++        uint64_t imm = vfp_expand_imm(a->esz, a->imm);
++        write_fp_dreg(s, a->rd, tcg_constant_i64(imm));
 +    }
 +    return true;
 +}
 +
- /*
-  * Cryptographic AES, SHA, SHA512
-  */
-@@ -8897,38 +8911,6 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -8584,53 +8609,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
      }
  }
  
--/* TBL/TBX
-- *   31  30 29         24 23 22  21 20  16 15  14 13  12  11 10 9    5 4    0
-- * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
-- * | 0 | Q | 0 0 1 1 1 0 | op2 | 0 |  Rm  | 0 | len | op | 0 0 |  Rn  |  Rd  |
-- * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
+-/* Floating point immediate
+- *   31  30  29 28       24 23  22  21 20        13 12   10 9    5 4    0
+- * +---+---+---+-----------+------+---+------------+-------+------+------+
+- * | M | 0 | S | 1 1 1 1 0 | type | 1 |    imm8    | 1 0 0 | imm5 |  Rd  |
+- * +---+---+---+-----------+------+---+------------+-------+------+------+
 - */
--static void disas_simd_tb(DisasContext *s, uint32_t insn)
+-static void disas_fp_imm(DisasContext *s, uint32_t insn)
 -{
--    int op2 = extract32(insn, 22, 2);
--    int is_q = extract32(insn, 30, 1);
--    int rm = extract32(insn, 16, 5);
--    int rn = extract32(insn, 5, 5);
 -    int rd = extract32(insn, 0, 5);
--    int is_tbx = extract32(insn, 12, 1);
--    int len = (extract32(insn, 13, 2) + 1) * 16;
+-    int imm5 = extract32(insn, 5, 5);
+-    int imm8 = extract32(insn, 13, 8);
+-    int type = extract32(insn, 22, 2);
+-    int mos = extract32(insn, 29, 3);
+-    uint64_t imm;
+-    MemOp sz;
 -
--    if (op2 != 0) {
+-    if (mos || imm5) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    switch (type) {
+-    case 0:
+-        sz = MO_32;
+-        break;
+-    case 1:
+-        sz = MO_64;
+-        break;
+-    case 3:
+-        sz = MO_16;
+-        if (dc_isar_feature(aa64_fp16, s)) {
+-            break;
+-        }
+-        /* fallthru */
+-    default:
 -        unallocated_encoding(s);
 -        return;
 -    }
@@ -153,36 +183,34 @@ index 6ca24d9842..7e3bde93fe 100644
 -        return;
 -    }
 -
--    tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, rd),
--                       vec_full_reg_offset(s, rm), tcg_env,
--                       is_q ? 16 : 8, vec_full_reg_size(s),
--                       (len << 6) | (is_tbx << 5) | rn,
--                       gen_helper_simd_tblx);
+-    imm = vfp_expand_imm(sz, imm8);
+-    write_fp_dreg(s, rd, tcg_constant_i64(imm));
 -}
 -
- /* ZIP/UZP/TRN
-  *   31  30 29         24 23  22  21 20   16 15 14 12 11 10 9    5 4    0
-  * +---+---+-------------+------+---+------+---+------------------+------+
-@@ -11792,7 +11774,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     /* simd_mod_imm decode is a subset of simd_shift_imm, so must precede it */
-     { 0x0f000400, 0x9ff80400, disas_simd_mod_imm },
-     { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
--    { 0x0e000000, 0xbf208c00, disas_simd_tb },
-     { 0x0e000800, 0xbf208c00, disas_simd_zip_trn },
-     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
+ /* Handle floating point <=> fixed point conversions. Note that we can
+  * also deal with fp <=> integer conversions as a special case (scale == 64)
+  * OPTME: consider handling that special case specially or at least skipping
+@@ -9050,7 +9028,7 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
+             switch (ctz32(extract32(insn, 12, 4))) {
+             case 0: /* [15:12] == xxx1 */
+                 /* Floating point immediate */
+-                disas_fp_imm(s, insn);
++                unallocated_encoding(s); /* in decodetree */
+                 break;
+             case 1: /* [15:12] == xx10 */
+                 /* Floating point compare */
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 05927fade6..45896902d5 100644
+index 117269803d..de763d3f12 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1141,3 +1141,7 @@ FNMSUB          0001 1111 .. 1 ..... 1 ..... ..... .....    @rrrr_hsd
+@@ -1180,3 +1180,7 @@ FMAXV_s         0110 1110 00 11000 01111 10 ..... .....     @rr_q1e2
  
- EXT_d           0010 1110 00 0 rm:5 00 imm:3 0 rn:5 rd:5
- EXT_q           0110 1110 00 0 rm:5 0  imm:4 0 rn:5 rd:5
+ FMINV_h         0.00 1110 10 11000 01111 10 ..... .....     @qrr_h
+ FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
 +
-+# Advanced SIMD Table Lookup
++# Floating-point Immediate
 +
-+TBL_TBX         0 q:1 00 1110 000 rm:5 0 len:2 tbx:1 00 rn:5 rd:5
++FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
 -- 
 2.43.0
 
