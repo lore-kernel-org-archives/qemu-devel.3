@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C486C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D384DC3DA60
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU4mT-00037F-Lk; Wed, 17 Jul 2024 09:33:17 -0400
+	id 1sU4nT-0005xs-OQ; Wed, 17 Jul 2024 09:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU4mN-00030F-Si
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:33:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU4mL-000636-D0
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:33:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721223186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JcL306DTYN6PZ4GqAGy2fodmbrbn5AcuAQz0YWNEALo=;
- b=aCaAEyq2WjpZA2JZxTebHn29ZMtPtejHk+XEcnkQLUWnemOaYvYEs3YvTFiW/zr3TtGE6c
- hlv27U7wO+vBPuLh7/UnvBxH+zQb0zXEUtCTdfIHGEzsFzyblQphHm68IYh0T6rXTkwx8K
- U9H5KhHU+YjP2LGGHPDts/ZrtBgk8Mo=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-259-TsbnHGaWMiyCGC25WuefuQ-1; Wed, 17 Jul 2024 09:33:04 -0400
-X-MC-Unique: TsbnHGaWMiyCGC25WuefuQ-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-448335bb53aso7630551cf.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:33:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU4nO-0005o8-PJ
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:34:14 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU4nN-0006EC-1B
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:34:14 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4266dc7591fso48057545e9.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721223251; x=1721828051; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AD2SS6ooVpxSZUiP4hpAIz0CKU1+jlNQrxb8VVVDooM=;
+ b=HFGfAzv4eKrFO0axOORGYxOzOvOcDMUnZs5/K9GuEDrAaIIgSQAhuCoGEWoey2sP7O
+ LOQk2q1Wr3J+W7QZEhEdvXCWNPvqEBVpbnsRZm2uq6IghXxr17SPcXeflG5xz6J+01Bw
+ pCU+tkFL2ukg32C7x8hDVo3h5ZFhmNkd4Aof2/tzWiDwu8ueVMwfCytAzyMIvwtFFEyK
+ qtcHtvuFelikq4+n3T0S3VCHShxCmAm39zpYgLTKL1DF+UyYyQQWb8hcCeew5HFKxKu8
+ ZXOjWSKEkBHVOLD4rR098QcE298ozO+fnQRPSSWKqCzzQsvDQXr54OrUbhxrTXxc0NTB
+ NP6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721223184; x=1721827984;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JcL306DTYN6PZ4GqAGy2fodmbrbn5AcuAQz0YWNEALo=;
- b=V5jizw8QFHQd5X81L00/9oFCXTEi28YjE3AWgFfliPYe641pGPmiV3VOH3aTamWlj0
- kbf8wTab/8BQr5KAiunkn362c7I9pA29Ji0TNzHst8ePoJj0uQynN96REZM27QMsNWm0
- WjFI1Hmhg9MPuiUVDMPB2W5CMos/LkCRN50mMhzqCTIIseW3gMZmppnVCEpeeLo4IpvG
- YB7dUcW4adYTl7Cy9/5xWORo0hntE6cpTOngvF7b7CS4Tl3MGO1fREfziSbllyOdgY2j
- YR9jl76n/YMfU1P574c9fhTApOCd8Q0VgYXCZWHrElj+rSAwr3YzT5OndCfB9z7muQ4x
- yykg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMywkFlAmZUefDhVsr0HQg+eqalDH/Pd6xpzSiS0TJwNRwEHLr0oiEjjp8deCFHgyyhSZVVEPmWH/TnfkfJasDyLNRsf0=
-X-Gm-Message-State: AOJu0YzzZS9LyJZIvXQROTZeUH1znuRH2IaXl1bsT8xnYhaaCfQ+Xq6o
- A5WOHdgwW/ymRNaBxDWZKH9xBEncHMsj2i8ppTK5tT7DF5Vaa/tb4715clPe6GCS07qcuvqc6iq
- td0M6zQ8mxkXR43pgVjG/kAtkWrmym5O6R5yo4dgKoQjQ0HmzTYcr
-X-Received: by 2002:a05:6214:4401:b0:6b5:4bf:e0b2 with SMTP id
- 6a1803df08f44-6b78e2b40b4mr12430346d6.6.1721223184088; 
- Wed, 17 Jul 2024 06:33:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1IEZayWuHe/zxz4MVlNRQw0O+4rkZ5wbqETr5odxARFgdLYYBqB5uQ+ujz6QuYLWGkWAvLg==
-X-Received: by 2002:a05:6214:4401:b0:6b5:4bf:e0b2 with SMTP id
- 6a1803df08f44-6b78e2b40b4mr12430156d6.6.1721223183564; 
- Wed, 17 Jul 2024 06:33:03 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b799a96ae1sm910316d6.21.2024.07.17.06.33.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 06:33:03 -0700 (PDT)
-Date: Wed, 17 Jul 2024 09:33:01 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>,
- mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
-Message-ID: <ZpfIDUwS9vawpzT5@x1n>
-References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
- <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
- <ZpUmrTrEnx0RcO2y@x1n>
- <CAE8KmOxY_LQ9vNjvmPyRgk_dcnEZFG6_M1q14473NQoBUSM4ow@mail.gmail.com>
- <ZpbuChi9QMIogmuS@x1n>
- <20240717045335-mutt-send-email-mst@kernel.org>
+ d=1e100.net; s=20230601; t=1721223251; x=1721828051;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AD2SS6ooVpxSZUiP4hpAIz0CKU1+jlNQrxb8VVVDooM=;
+ b=wcGpx1iWWKf1kWvs1QeKitPEsQpvJaqlP5gyXdKb3T8EHpjGbYwMD1EwcP6KCBp2PN
+ eI+O3vhEdhqVBJO3BQihbUPPaorkgHNAvf5bPwecoFe+iDvI5QZBQ95VF0EHe8q4sTIb
+ jp57pmOUy5YEayvfHt1cwFiXKXJKYwAiSgqFH9A85OCz1KHXcR9ml7McO91ANcSCU50W
+ ZUi9pwWBQJ1nDstRa+Rd2cJoMqvQN+AdUb5OWPFiWbI4OV4Ai6+KKRjZcehw27Ys/0PM
+ JwTSyfP0HshdXBZSPp1ZnfOVzpemNAwmmiM/t+28gdA7DmkftbezhwKb1YjVwLfZElbV
+ Wk6w==
+X-Gm-Message-State: AOJu0Yyz53/nwBYyN51Oe+nxucy2+KKr6OsqThVVLmonnM1G8zNW5Amo
+ ldDML3tculPH26yhWbExgjrdK0+M7wb8kfyy+uPrSgqT0FS4wD6j3b1SX4jFD5s=
+X-Google-Smtp-Source: AGHT+IGWqibKjsHS7epSYSdSi/RACr7tnfu9dfgokQTwN3GMW/GUWZVhbcVpeF4Vc6HIXTBsBUaKcQ==
+X-Received: by 2002:a05:600c:474c:b0:426:59aa:e2fe with SMTP id
+ 5b1f17b1804b1-427c2cc9686mr13096475e9.19.1721223250668; 
+ Wed, 17 Jul 2024 06:34:10 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.21])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427a0fa55afsm200595695e9.16.2024.07.17.06.34.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Jul 2024 06:34:09 -0700 (PDT)
+Message-ID: <d34473a1-5a79-472b-897f-99098edd49c4@linaro.org>
+Date: Wed, 17 Jul 2024 15:34:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240717045335-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-8.2 v4 09/10] hw/char/pl011: Add transmit FIFO to
+ PL011State
+To: quintela@redhat.com, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Gavin Shan <gshan@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Evgeny Iakovlev <eiakovlev@linux.microsoft.com>, qemu-arm@nongnu.org
+References: <20231109192814.95977-1-philmd@linaro.org>
+ <20231109192814.95977-10-philmd@linaro.org>
+ <45ef60fe-dcb6-461d-97e1-d19e5174075d@linaro.org>
+ <87o7fthf6x.fsf@secure.mitica>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87o7fthf6x.fsf@secure.mitica>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,36 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Michael,
+On 16/11/23 16:48, Juan Quintela wrote:
+> Richard Henderson <richard.henderson@linaro.org> wrote:
+>> On 11/9/23 11:28, Philippe Mathieu-Daudé wrote:
+>>> @@ -436,6 +438,24 @@ static const VMStateDescription vmstate_pl011_clock = {
+>>>        }
+>>>    };
+>>>    +static bool pl011_xmit_fifo_state_needed(void *opaque)
+>>> +{
+>>> +    PL011State* s = opaque;
+>>> +
+>>> +    return !fifo8_is_empty(&s->xmit_fifo);
+>>> +}
+>>> +
+>>> +static const VMStateDescription vmstate_pl011_xmit_fifo = {
+>>> +    .name = "pl011/xmit_fifo",
+>>> +    .version_id = 1,
+>>> +    .minimum_version_id = 1,
+>>> +    .needed = pl011_xmit_fifo_state_needed,
+>>> +    .fields = (VMStateField[]) {
+>>> +        VMSTATE_FIFO8(xmit_fifo, PL011State),
+>>> +        VMSTATE_END_OF_LIST()
+>>> +    }
+>>> +};
+>>> +
+>>>    static int pl011_post_load(void *opaque, int version_id)
+>>>    {
+>>>        PL011State* s = opaque;
+>>> @@ -487,7 +507,11 @@ static const VMStateDescription vmstate_pl011 = {
+>>>        .subsections = (const VMStateDescription * []) {
+>>>            &vmstate_pl011_clock,
+>>>            NULL
+>>> -    }
+>>> +    },
+>>> +    .subsections = (const VMStateDescription * []) {
+>>> +        &vmstate_pl011_xmit_fifo,
+>>> +        NULL
+>>> +    },
+>>>    };
+>>
+>> It just occurred to me that you may need a vmstate_pl011 pre_load() to
+>> empty the FIFO, which will then be filled if and only if the saved
+>> vmstate_pl011_xmit_fifo subsection is present.
+>>
+>> Juan, have I got this correct about how migration would or should handle a missing subsection?
+> 
+> I hav'nt looked about how the device is created. But if it is created
+> with the fifo empty you don't need the pre_load().
 
-On Wed, Jul 17, 2024 at 04:55:52AM -0400, Michael S. Tsirkin wrote:
-> I just want to understand how we managed to have two threads
-> talking in parallel. BQL is normally enough, which path
-> manages to invoke vhost-user with BQL not taken?
-> Just check BQL taken on each vhost user invocation and
-> you will figure it out.
-
-Prasad mentioned how the race happened in the cover letter:
-
-https://lore.kernel.org/r/20240711131424.181615-1-ppandit@redhat.com
-
-     Thread-1                                  Thread-2
-
-vhost_dev_start                        postcopy_ram_incoming_cleanup
- vhost_device_iotlb_miss                postcopy_notify
-  vhost_backend_update_device_iotlb      vhost_user_postcopy_notifier
-   vhost_user_send_device_iotlb_msg       vhost_user_postcopy_end
-    process_message_reply                  process_message_reply
-     vhost_user_read                        vhost_user_read
-      vhost_user_read_header                 vhost_user_read_header
-       "Fail to update device iotlb"          "Failed to receive reply to postcopy_end"
-
-The normal case should be that thread-2 is postcopy_ram_listen_thread(),
-and this happens when postcopy migration is close to the end.
-
-Thanks,
-
--- 
-Peter Xu
+This is indeed the case. Thank you Juan!
 
 
