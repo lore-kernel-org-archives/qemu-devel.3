@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C839FC3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 20:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBFFC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 20:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUB1x-0004u1-81; Wed, 17 Jul 2024 16:13:41 -0400
+	id 1sUB3z-000144-P9; Wed, 17 Jul 2024 16:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sUB1v-0004sr-RQ
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:13:39 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sUB3y-00012m-1h
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:15:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sUB1u-0008Su-Dt
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:13:39 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sUB3w-0000sm-Dt
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:15:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721247217;
+ s=mimecast20190719; t=1721247343;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=d+1dmBvNkj0l88BHTeVKjv+Qf1VqlPGOs5RJyAdzPB0=;
- b=ZtYWzn8FzyVMQvRSmxyJypj/Pi0TuR6459UUu/utH8gqLf4vj6qurb1JFG1DqhDdRimrX6
- GyQ6kSonSbw1nqTeWcoJs3CLn06vcepUuCWH6APRsefdPiIKmjSUBqJkfNQwRzPx1y50tt
- bdH/bsFuthnmZFpPave63wWeQkpd0rg=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G7pop8qL8fJOk/iBn8zRjLyuL6vDxs5lT+ZwYX1D3Kk=;
+ b=AqJ/D3sZjoYB96uBgi9Z9y8AkBDJ+/o+42J0lqp9WQ+gj6ywUPFeCyl+O5sWj6R3VL+/M7
+ q13+z1RY5Dj0d/kpD03Lu+3SC/Pf8HFOCvdravJaut5CE1gQDNfcJwLfdq5WEBzrE3SWW2
+ uZG/T3/jPQq+Ce4z7pIKpN+FhYN7w7k=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-5QBLN70NPYGamEj_IvOUwA-1; Wed, 17 Jul 2024 16:13:31 -0400
-X-MC-Unique: 5QBLN70NPYGamEj_IvOUwA-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-649731dd35bso31616a12.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 13:13:31 -0700 (PDT)
+ us-mta-110-AH-G2gcTO9O4By2gk--rvA-1; Wed, 17 Jul 2024 16:15:41 -0400
+X-MC-Unique: AH-G2gcTO9O4By2gk--rvA-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2cb656e4d97so98069a91.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 13:15:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721247210; x=1721852010;
+ d=1e100.net; s=20230601; t=1721247337; x=1721852137;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=d+1dmBvNkj0l88BHTeVKjv+Qf1VqlPGOs5RJyAdzPB0=;
- b=BJzYSBjL4zx73u9Qt2+LKJPGV+m3oDR6MdtxrTqWHlBptFDmwaEvNo7XwDUOwY1cTH
- Yg9KZX76C5v41oDmgJM9F7XghNq68Z4V+/4jytWlgwkTyMMiZ/RyxtlOpjwJ+e3iG3+1
- 48PVFcZTZ2WkG6UDiBJ0eRHvoLFoIXph2QN0Yhkp9cb5g0MOe8980uuN+JnB6wp+PnYd
- A/tx6tzqgCx+brz394hKFruNTgRaMqEjZxaCrxOtglEgWOAjy6pPoZ7dSRxfZHnj/Uj0
- s6S7BW10eSmn5HNmmyaxsANXFfeCEX4MZbJcnQuWxFosX3yXYYfPcUvmmmVbjMBHjs/a
- vyZw==
-X-Gm-Message-State: AOJu0YyuRtpYVS/IuGy/J/Rj5Ee/9ue3sG7AjjSJMdWAG6iECJeaD18P
- TgON+gh0GbT/KWqx1v7btkOPxpUObrgjMu0qXmebSrS75Fckgqd4mIFzfnDbGHx2x4TQogwMcVv
- NfSUE5Yh8ntuK8sczNkxRRzK6rmgyvp+DbsZPQsR4UbLAaWiet0CzY2xcqMVbvgXXdqpV+pfK62
- ad7V1kefwnFgoFsZG6s9y5LcvmsYM=
-X-Received: by 2002:a05:6a21:7896:b0:1c2:8a69:338c with SMTP id
- adf61e73a8af0-1c3fddb3df1mr3808920637.39.1721247210527; 
- Wed, 17 Jul 2024 13:13:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBbjkYK/lFQjfcZiFd8iJbOiFs06oBJwTU9XMay7Suk626m59+pmfX9eqfYjyyK+FJeFkhOeY59uFhmQk2cak=
-X-Received: by 2002:a05:6a21:7896:b0:1c2:8a69:338c with SMTP id
- adf61e73a8af0-1c3fddb3df1mr3808879637.39.1721247210163; Wed, 17 Jul 2024
- 13:13:30 -0700 (PDT)
+ bh=G7pop8qL8fJOk/iBn8zRjLyuL6vDxs5lT+ZwYX1D3Kk=;
+ b=wFu3kwAFNxP4NCzlkA8cXIJR9PZVshziIpzKJ6OUsVqn86tz0fktDPb5H3qiaWvO4X
+ UXcIcQpaJ2XY5ogV0jFsU1uXAD8HgqKx1j5KEFGsQ7927qjrfAHMKQ0bn7PBbqS/IQl7
+ nwgZ/nwmpLOOoxT8U+zzT2CBY3wn/Tx5igc/CyuOoTPzSxRxxcw60XSe/PsDueL8XLzn
+ HziaLZzGP9kkAB7IYKyqJlkWBBPnNlaPJn7qlgOv/t5CAPxaSHNoy8kQ2L3HNyJFZtiC
+ +V75eR+U4MiUbBANLoFSTyow+gBu/LEQANCTtLxLtDvxa4lOn/H6+RBTO38F+DfGNYCl
+ 0o6A==
+X-Gm-Message-State: AOJu0Ywx3eo8zrNHYoK0BOjjrN5Tyrm2LC6ANFe3jUEMmK8xYcKHAPfw
+ 6nIr1KU4peKJrSGT30isnU57tJ3/7davChDZ5sSjwHmzbhHxvRt0ZFzKDx9bO+6PJNu3i82zNXz
+ bdW2hIXhmMbFfW1v7+aohMvz+xKTrpKPE3edSapAZVmlI2s9cPmyTn17/RH95FpDesFvg1KQe2W
+ 14+sM/JQXSvHQNCTINKaoqtYZ7BdI=
+X-Received: by 2002:a17:90a:9a6:b0:2c9:7aea:2188 with SMTP id
+ 98e67ed59e1d1-2cb5246ec1cmr2179807a91.2.1721247337310; 
+ Wed, 17 Jul 2024 13:15:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8ojkOz1O0B9GSv7VZ5a5MbZSDamrxfWd6eVxp03RvZ9Rezq2nSQqDwZUuMlvFcwu6lojZWAhiS9TBvj75QJw=
+X-Received: by 2002:a17:90a:9a6:b0:2c9:7aea:2188 with SMTP id
+ 98e67ed59e1d1-2cb5246ec1cmr2179788a91.2.1721247336952; Wed, 17 Jul 2024
+ 13:15:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240717021312.606116-1-jsnow@redhat.com>
- <871q3sgus6.fsf@pond.sub.org>
-In-Reply-To: <871q3sgus6.fsf@pond.sub.org>
+ <20240717021312.606116-7-jsnow@redhat.com>
+ <87ttgoh39g.fsf@pond.sub.org>
+In-Reply-To: <87ttgoh39g.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Wed, 17 Jul 2024 16:13:17 -0400
-Message-ID: <CAFn=p-b7KQkd5W8N3mRopsXPogtsYg9RcvLF2Cb0UKYy0dpFaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] qapi: convert example sections to qmp-example rST
- directives
+Date: Wed, 17 Jul 2024 16:15:24 -0400
+Message-ID: <CAFn=p-b=+wRJP6fi-hshan1-UgfdvaJGTxPc5YtYZSx-r_ryYw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/9] qapi: convert "Example" sections without titles
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
@@ -86,7 +86,7 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,
  Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>, 
  Ani Sinha <anisinha@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000008867ac061d77182c"
+Content-Type: multipart/alternative; boundary="0000000000001714d9061d772047"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,47 +112,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008867ac061d77182c
+--0000000000001714d9061d772047
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 17, 2024, 6:47=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+On Wed, Jul 17, 2024, 3:44=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
  wrote:
 
 > John Snow <jsnow@redhat.com> writes:
 >
-> > This patchset focuses on converting example sections to rST directives
-> > using a new `.. qmp-example::` directive.
+> > Use the no-option form of ".. qmp-example::" to convert any Examples
+> > that do not have any form of caption or explanation whatsoever. Note
+> > that in a few cases, example sections are split into two or more
+> > separate example blocks. This is only done stylistically to create a
+> > delineation between two or more logically independent examples.
+> >
+> > See commit-3: "docs/qapidoc: create qmp-example directive", for a
+> >               detailed explanation of this custom directive syntax.
+> >
+> > See commit+3: "qapi: remove "Example" doc section" for a detailed
+> >               explanation of why.
+> >
+> > Note: an empty "TODO" line was added to announce-self to keep the
+> > example from floating up into the body; this will be addressed more
+> > rigorously in the new qapidoc generator.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
 >
-> Queued, thanks!
+> [...]
+>
+> > diff --git a/qapi/run-state.json b/qapi/run-state.json
+> > index 4d40c88876c..ab7116680b3 100644
+> > --- a/qapi/run-state.json
+> > +++ b/qapi/run-state.json
+>
+> [...]
+>
+> > @@ -469,7 +469,7 @@
+> >  #
+> >  # Since: 9.1
+> >  #
+> > -# Example:
+> > +# ..qmp-example::
+>
+> Lacks a space, output is messed up.  Can fix in my tree.
 >
 
-Yay!
+Whoops. Wish rST was a bit pickier sometimes...
 
+
+> >  #
+> >  #     <- { "event": "GUEST_PVSHUTDOWN",
+> >  #          "timestamp": { "seconds": 1648245259, "microseconds": 89377=
+1
+> } }
+>
+> [...]
+>
+> R-by stands.
+>
 >
 
---0000000000008867ac061d77182c
+--0000000000001714d9061d772047
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Jul 17, 2024, 6:47=E2=80=AFAM Markus Armbruste=
+class=3D"gmail_attr">On Wed, Jul 17, 2024, 3:44=E2=80=AFAM Markus Armbruste=
 r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
 <br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
 er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
 now@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&g=
 t; writes:<br>
 <br>
-&gt; This patchset focuses on converting example sections to rST directives=
+&gt; Use the no-option form of &quot;.. qmp-example::&quot; to convert any =
+Examples<br>
+&gt; that do not have any form of caption or explanation whatsoever. Note<b=
+r>
+&gt; that in a few cases, example sections are split into two or more<br>
+&gt; separate example blocks. This is only done stylistically to create a<b=
+r>
+&gt; delineation between two or more logically independent examples.<br>
+&gt;<br>
+&gt; See commit-3: &quot;docs/qapidoc: create qmp-example directive&quot;, =
+for a<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0detailed explana=
+tion of this custom directive syntax.<br>
+&gt;<br>
+&gt; See commit+3: &quot;qapi: remove &quot;Example&quot; doc section&quot;=
+ for a detailed<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0explanation of w=
+hy.<br>
+&gt;<br>
+&gt; Note: an empty &quot;TODO&quot; line was added to announce-self to kee=
+p the<br>
+&gt; example from floating up into the body; this will be addressed more<br=
+>
+&gt; rigorously in the new qapidoc generator.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
 <br>
-&gt; using a new `.. qmp-example::` directive.<br>
+[...]<br>
 <br>
-Queued, thanks!<br></blockquote></div></div><div dir=3D"auto"><br></div><di=
-v dir=3D"auto">Yay!</div><div dir=3D"auto"><div class=3D"gmail_quote"><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #cc=
-c solid;padding-left:1ex">
+&gt; diff --git a/qapi/run-state.json b/qapi/run-state.json<br>
+&gt; index 4d40c88876c..ab7116680b3 100644<br>
+&gt; --- a/qapi/run-state.json<br>
+&gt; +++ b/qapi/run-state.json<br>
+<br>
+[...]<br>
+<br>
+&gt; @@ -469,7 +469,7 @@<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Since: 9.1<br>
+&gt;=C2=A0 #<br>
+&gt; -# Example:<br>
+&gt; +# ..qmp-example::<br>
+<br>
+Lacks a space, output is messed up.=C2=A0 Can fix in my tree.<br></blockquo=
+te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Whoops. Wish r=
+ST was a bit pickier sometimes...</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0&lt;- { &quot;event&quot;: &quot;GUEST_PVSH=
+UTDOWN&quot;,<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;timestamp&quot;: { &qu=
+ot;seconds&quot;: 1648245259, &quot;microseconds&quot;: 893771 } }<br>
+<br>
+[...]<br>
+<br>
+R-by stands.<br>
+<br>
 </blockquote></div></div></div>
 
---0000000000008867ac061d77182c--
+--0000000000001714d9061d772047--
 
 
