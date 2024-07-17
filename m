@@ -4,77 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADF9C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5B5C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU4c3-0007G4-Vd; Wed, 17 Jul 2024 09:22:31 -0400
+	id 1sU4kE-00064v-25; Wed, 17 Jul 2024 09:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sU4c1-00077n-CC
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:22:29 -0400
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU4kB-00064P-Jq
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:30:55 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sU4by-0008O2-Uf
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:22:29 -0400
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-48fde151f25so337627137.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721222545; x=1721827345;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=F22l6JBK/tX/9RW4E/YLAAs8pwuYoWpwEpH5E2SPXw0=;
- b=ga+02MLnWJMrRAvS+Hfa5q3HTGVzkNqfkBJuqoqw4svRd7F2qr9ZBHnMeeACLglcgj
- FDNWoQ9+QckqdnCXHJv5BmVmuP/aBuIj2m2CUeJV2TEF8nQVUN0F0uEAmwRQTX0tS0Vd
- I0gnft3rvqnrkXSfdVosb7W7+CSeCda5ekWJkpv9E+HaaiUU+jAvidNAjTkxArDPTvGv
- nvabk29On32EtmsthJM9O8BW1f2uv1MMWDaf3ouWsHqhts1jLYkXIPIrqPJ6l0eSuzKw
- Ot5VWRAS0eN0LGR4+V1Dpy15RkaDUhWmKFwLHg5TisSOCVSHkh10c5ysykeajyhTbSY0
- XLIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721222545; x=1721827345;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=F22l6JBK/tX/9RW4E/YLAAs8pwuYoWpwEpH5E2SPXw0=;
- b=ZF5QrylTjbV/lHyo+1Xw+pTafmDtPuutlU0ZZUU1FMG77phag/pevswgf2AFHrbrP4
- tVWb2emS+Vlu4XbcHzyu1J4gEAv6Ih04Id/6t6asqYhQkNQIdkcwr+aPvJfZK086CUwU
- Mw+B9UwmRT/I5CSsz9njpG0z7eidTqHV53BQG63RDDgG7zLdbwWlwWZbg655xzSFeABN
- QDMVSh25nzp+M/btWv7fdtEBrLQj/6Pv1/kujYEr0ycTBX9+p3YDEcW4SG0lS1xe72Hv
- zKE/J4+JQ5lOIwwUnFGb9im7yqxKvd3gvDSmjPH+4kVMFPrN/6tZJMT4JJNq77sPmVWT
- Yc+w==
-X-Gm-Message-State: AOJu0YyeGvBrHmZYmB7MANA+1KUFR8PmPtOYeWIffAkXE2Ja6nCpUddf
- amh5yb6lcZsqbsShi19qknuHnFvTAD98AT/+lfHO3Cnz6BK5XIYyc/OdG05frWfobN59JxRVP0G
- aLAVN5KjLKzh5QUBo+dL3DhXSplkT+cr2c4/4
-X-Google-Smtp-Source: AGHT+IGLMVspYYwA3PPsQYSaHY43yNZWxyr79KDasotxAn4JzlehVO6UUb7LYJ05gzENiCliLcw0dvTshrXkMP0R8xA=
-X-Received: by 2002:a05:6122:1ad2:b0:4f2:f1f1:a9f2 with SMTP id
- 71dfb90a1353d-4f4df68801bmr2309894e0c.4.1721222543769; Wed, 17 Jul 2024
- 06:22:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU4k9-0005ic-49
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:30:55 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7BD7821AE5;
+ Wed, 17 Jul 2024 13:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721223051; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W92Uu5rpEr94fOjM7QD/w0fV1vy9xPZGCUVSJ7dCN+M=;
+ b=Ozmrojxak+FVhd4VMWfS/BvUpg8rayZC9S3CtQKdGKBy5bSBEK9H5gcPUVkm/cVenZlN/2
+ jZvSLC36zntmWb/Zyz5jkPj3ndULHITk2nY0HYg4oTIJnO8uOH1z0UuijJlt0qBw+TOp/D
+ UzqzxwwzKqBnN9qShb73ZaYJ0HZ9ciw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721223051;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W92Uu5rpEr94fOjM7QD/w0fV1vy9xPZGCUVSJ7dCN+M=;
+ b=1fkdSpjg8XMa9Ahk26H+7sa9pmMjuHP/CYTZSkyRplFz8WNrkVmwlkVPjwiO2uiyGbSi4e
+ 8Yx5V4Y3CEY/9SCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721223051; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W92Uu5rpEr94fOjM7QD/w0fV1vy9xPZGCUVSJ7dCN+M=;
+ b=Ozmrojxak+FVhd4VMWfS/BvUpg8rayZC9S3CtQKdGKBy5bSBEK9H5gcPUVkm/cVenZlN/2
+ jZvSLC36zntmWb/Zyz5jkPj3ndULHITk2nY0HYg4oTIJnO8uOH1z0UuijJlt0qBw+TOp/D
+ UzqzxwwzKqBnN9qShb73ZaYJ0HZ9ciw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721223051;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W92Uu5rpEr94fOjM7QD/w0fV1vy9xPZGCUVSJ7dCN+M=;
+ b=1fkdSpjg8XMa9Ahk26H+7sa9pmMjuHP/CYTZSkyRplFz8WNrkVmwlkVPjwiO2uiyGbSi4e
+ 8Yx5V4Y3CEY/9SCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB2D5136E5;
+ Wed, 17 Jul 2024 13:30:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CfPhK4rHl2a8cgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 17 Jul 2024 13:30:50 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>
+Subject: Re: [PATCH v5 08/13] migration/multifd: Add new migration option
+ for multifd DSA offloading.
+In-Reply-To: <20240711215244.19237-9-yichen.wang@bytedance.com>
+References: <20240711215244.19237-1-yichen.wang@bytedance.com>
+ <20240711215244.19237-9-yichen.wang@bytedance.com>
+Date: Wed, 17 Jul 2024 10:30:48 -0300
+Message-ID: <87v8142liv.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240624101040.82726-1-phil@philjordan.eu>
- <CAJ+F1CJMzyWr3y7kEGcj2hE8fogLqH_PBcHkXYK=N28+t96OsQ@mail.gmail.com>
- <CAAibmn3s-+_21sUVf9w9HKVysTM9xgxYBq9Vg0+9iNMC1K7=QQ@mail.gmail.com>
- <CAJ+F1CJn_pJoT-bn1NCWcMsOhQhW0Gf3ks9pFJ-3FRdkv1tp6A@mail.gmail.com>
-In-Reply-To: <CAJ+F1CJn_pJoT-bn1NCWcMsOhQhW0Gf3ks9pFJ-3FRdkv1tp6A@mail.gmail.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Wed, 17 Jul 2024 15:22:10 +0200
-Message-ID: <CAAibmn3TKny=DSHR_ZdLztdVZj_EoLzSSF5HGjCAy+vvTx3JpQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Cursor: 8 -> 1 bit alpha downsampling improvement
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, akihiko.odaki@daynix.com, lists@philjordan.eu
-Content-Type: multipart/alternative; boundary="0000000000004d1d4f061d715a67"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::e34;
- envelope-from=phil@philjordan.eu; helo=mail-vs1-xe34.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[17]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,111 +125,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004d1d4f061d715a67
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
-On Wed, 17 Jul 2024 at 15:20, Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmai=
-l.com>
-wrote:
-
-> Hi
+> From: Hao Xiang <hao.xiang@linux.dev>
 >
-> On Wed, Jul 17, 2024 at 5:11=E2=80=AFPM Phil Dennis-Jordan <phil@philjord=
-an.eu>
-> wrote:
+> Intel DSA offloading is an optional feature that turns on if
+> proper hardware and software stack is available. To turn on
+> DSA offloading in multifd live migration:
 >
->>
->> Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
->>>> turning alpha values of 255 into 1 and everything else into 0. This
->>>> means that mostly-opaque pixels ended up completely invisible.
->>>>
->>>> This patch changes the behaviour so that only pixels with less than 50=
-%
->>>> alpha (0-127) are treated as transparent when converted to 1-bit alpha=
-.
->>>>
->>>> This greatly improves the subjective appearance of anti-aliased mouse
->>>> cursors, such as those used by macOS, when using a front-end UI withou=
-t
->>>> support for alpha-blended cursors, such as some VNC clients.
->>>>
->>>> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
->>>>
->>>
->>> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->>>
->>
->> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>
->>
->> Thanks for the reviews folks! Is there anything I can do to move this
->> forward? Should I submit a v3 with the review tags included? The patch
->> continues to apply cleanly so it didn't seem necessary, but I admit I'm
->> still not 100% clear on whom I should badger (?) to get favourably recei=
-ved
->> patches actually pulled into staging/master.
->>
->> https://patchew.org/QEMU/20240624101040.82726-1-phil@philjordan.eu/
->>
->>
-> I'll include it in a UI-related PR.
+> dsa-accel-path="[dsa_dev_path1] [dsa_dev_path2] ... [dsa_dev_pathX]"
 >
-> thanks
+> This feature is turned off by default.
 >
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+> ---
+>  migration/migration-hmp-cmds.c | 15 ++++++++++-
+>  migration/options.c            | 47 ++++++++++++++++++++++++++++++++++
+>  migration/options.h            |  1 +
+>  qapi/migration.json            | 32 ++++++++++++++++++++---
+>  4 files changed, 90 insertions(+), 5 deletions(-)
+>
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 7d608d26e1..c422db4ecd 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -312,7 +312,16 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: '%s'\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+>              params->tls_authz);
+> -
+> +        if (params->has_dsa_accel_path) {
+> +            strList *dsa_accel_path = params->dsa_accel_path;
+> +            monitor_printf(mon, "%s:",
+> +                MigrationParameter_str(MIGRATION_PARAMETER_DSA_ACCEL_PATH));
+> +            while (dsa_accel_path) {
+> +                monitor_printf(mon, " %s", dsa_accel_path->value);
+> +                dsa_accel_path = dsa_accel_path->next;
+> +            }
+> +            monitor_printf(mon, "\n");
+> +        }
+>          if (params->has_block_bitmap_mapping) {
+>              const BitmapMigrationNodeAliasList *bmnal;
+>  
+> @@ -563,6 +572,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
+>          p->has_x_checkpoint_delay = true;
+>          visit_type_uint32(v, param, &p->x_checkpoint_delay, &err);
+>          break;
+> +    case MIGRATION_PARAMETER_DSA_ACCEL_PATH:
+> +        p->has_dsa_accel_path = true;
+> +        visit_type_strList(v, param, &p->dsa_accel_path, &err);
+> +        break;
+>      case MIGRATION_PARAMETER_MULTIFD_CHANNELS:
+>          p->has_multifd_channels = true;
+>          visit_type_uint8(v, param, &p->multifd_channels, &err);
+> diff --git a/migration/options.c b/migration/options.c
+> index 645f55003d..f839493016 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -29,6 +29,7 @@
+>  #include "ram.h"
+>  #include "options.h"
+>  #include "sysemu/kvm.h"
+> +#include <cpuid.h>
+>  
+>  /* Maximum migrate downtime set to 2000 seconds */
+>  #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
+> @@ -162,6 +163,10 @@ Property migration_properties[] = {
+>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
+>                         parameters.zero_page_detection,
+>                         ZERO_PAGE_DETECTION_MULTIFD),
+> +    /* DEFINE_PROP_ARRAY("dsa-accel-path", MigrationState, x, */
+> +    /*                    parameters.dsa_accel_path, qdev_prop_string, char *), */
+> +    /* DEFINE_PROP_STRING("dsa-accel-path", MigrationState, */
+> +    /*                    parameters.dsa_accel_path), */
+>  
+>      /* Migration capabilities */
+>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+> @@ -815,6 +820,13 @@ const char *migrate_tls_creds(void)
+>      return s->parameters.tls_creds;
+>  }
+>  
+> +const strList *migrate_dsa_accel_path(void)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +
+> +    return s->parameters.dsa_accel_path;
+> +}
+> +
+>  const char *migrate_tls_hostname(void)
+>  {
+>      MigrationState *s = migrate_get_current();
+> @@ -926,6 +938,7 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>      params->zero_page_detection = s->parameters.zero_page_detection;
+>      params->has_direct_io = true;
+>      params->direct_io = s->parameters.direct_io;
+> +    params->dsa_accel_path = QAPI_CLONE(strList, s->parameters.dsa_accel_path);
+>  
+>      return params;
+>  }
+> @@ -934,6 +947,7 @@ void migrate_params_init(MigrationParameters *params)
+>  {
+>      params->tls_hostname = g_strdup("");
+>      params->tls_creds = g_strdup("");
+> +    params->dsa_accel_path = NULL;
+>  
+>      /* Set has_* up only for parameter checks */
+>      params->has_throttle_trigger_threshold = true;
+> @@ -1137,6 +1151,22 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>          return false;
+>      }
+>  
+> +    if (params->has_zero_page_detection &&
+> +        params->zero_page_detection == ZERO_PAGE_DETECTION_DSA_ACCEL) {
+> +#ifdef CONFIG_DSA_OPT
+> +        unsigned int eax, ebx, ecx, edx;
+> +        /* ENQCMD is indicated by bit 29 of ecx in CPUID leaf 7, subleaf 0. */
+> +        if (!__get_cpuid_count(7, 0, &eax, &ebx, &ecx, &edx) ||
+> +            !(ecx & (1 << 29))) {
+> +            error_setg(errp, "DSA acceleration is not supported by CPU");
+> +            return false;
+> +        }
 
-Thank you!
+This should be a function along with the others in dsa.h, then you
+wouldn't need the ifdef here.
 
---0000000000004d1d4f061d715a67
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, 17 Jul 2024 at 15:20, Marc-An=
-dr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandre=
-.lureau@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex"><div dir=3D"ltr"><div><div dir=3D"ltr">Hi<br></div><br><di=
-v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 1=
-7, 2024 at 5:11=E2=80=AFPM Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@ph=
-iljordan.eu" target=3D"_blank">phil@philjordan.eu</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><br><div =
-class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
-v dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">Mouse cursors with 8 bit alpha were downsampled to 1-bit op=
-acity maps by<br>
-turning alpha values of 255 into 1 and everything else into 0. This<br>
-means that mostly-opaque pixels ended up completely invisible.<br>
-<br>
-This patch changes the behaviour so that only pixels with less than 50%<br>
-alpha (0-127) are treated as transparent when converted to 1-bit alpha.<br>
-<br>
-This greatly improves the subjective appearance of anti-aliased mouse<br>
-cursors, such as those used by macOS, when using a front-end UI without<br>
-support for alpha-blended cursors, such as some VNC clients.<br>
-<br>
-Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu"=
- target=3D"_blank">phil@philjordan.eu</a>&gt;<br></blockquote><div><br></di=
-v><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;</d=
-iv></div></div></blockquote><div><br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.=
-odaki@daynix.com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;</block=
-quote><div><br></div><div>Thanks for the reviews folks! Is there anything I=
- can do to move this forward? Should I submit a v3 with the review tags inc=
-luded? The patch continues to apply cleanly so it didn&#39;t seem necessary=
-, but I admit I&#39;m still not 100% clear on whom I should badger (?) to g=
-et favourably received patches actually pulled into staging/master.<br></di=
-v><div><br></div><div><a href=3D"https://patchew.org/QEMU/20240624101040.82=
-726-1-phil@philjordan.eu/" target=3D"_blank">https://patchew.org/QEMU/20240=
-624101040.82726-1-phil@philjordan.eu/</a>=C2=A0</div><br></div></div></bloc=
-kquote><div><br></div><div>I&#39;ll include it in a UI-related PR. <br></di=
-v></div><br clear=3D"all"></div><div>thanks</div></div></blockquote><div><b=
-r></div><div>Thank you! <br></div></div></div>
-
---0000000000004d1d4f061d715a67--
+> +#else
+> +        error_setg(errp, "DSA acceleration is not enabled");
+> +        return false;
+> +#endif
+> +    }
+> +
+>      return true;
+>  }
+>  
+> @@ -1247,6 +1277,11 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+>      if (params->has_direct_io) {
+>          dest->direct_io = params->direct_io;
+>      }
+> +
+> +    if (params->has_dsa_accel_path) {
+> +        dest->has_dsa_accel_path = true;
+> +        dest->dsa_accel_path = params->dsa_accel_path;
+> +    }
+>  }
+>  
+>  static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+> @@ -1376,6 +1411,12 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+>      if (params->has_direct_io) {
+>          s->parameters.direct_io = params->direct_io;
+>      }
+> +    if (params->has_dsa_accel_path) {
+> +        qapi_free_strList(s->parameters.dsa_accel_path);
+> +        s->parameters.has_dsa_accel_path = true;
+> +        s->parameters.dsa_accel_path =
+> +            QAPI_CLONE(strList, params->dsa_accel_path);
+> +    }
+>  }
+>  
+>  void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+> @@ -1401,6 +1442,12 @@ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+>          params->tls_authz->type = QTYPE_QSTRING;
+>          params->tls_authz->u.s = strdup("");
+>      }
+> +    /* if (params->dsa_accel_path */
+> +    /*     && params->dsa_accel_path->type == QTYPE_QNULL) { */
+> +    /*     qobject_unref(params->dsa_accel_path->u.n); */
+> +    /*     params->dsa_accel_path->type = QTYPE_QLIST; */
+> +    /*     params->dsa_accel_path->u.s = strdup(""); */
+> +    /* } */
+>  
+>      migrate_params_test_apply(params, &tmp);
+>  
+> diff --git a/migration/options.h b/migration/options.h
+> index a2397026db..78b9e4080b 100644
+> --- a/migration/options.h
+> +++ b/migration/options.h
+> @@ -85,6 +85,7 @@ const char *migrate_tls_creds(void);
+>  const char *migrate_tls_hostname(void);
+>  uint64_t migrate_xbzrle_cache_size(void);
+>  ZeroPageDetection migrate_zero_page_detection(void);
+> +const strList *migrate_dsa_accel_path(void);
+>  
+>  /* parameters helpers */
+>  
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 1234bef888..ff41780347 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -619,10 +619,14 @@
+>  #     multifd migration is enabled, else in the main migration thread
+>  #     as for @legacy.
+>  #
+> +# @dsa-accel: Perform zero page checking with the DSA accelerator
+> +#     offloading in multifd sender thread if multifd migration is
+> +#     enabled, else in the main migration thread as for @legacy.
+> +#
+>  # Since: 9.0
+>  ##
+>  { 'enum': 'ZeroPageDetection',
+> -  'data': [ 'none', 'legacy', 'multifd' ] }
+> +  'data': [ 'none', 'legacy', 'multifd', 'dsa-accel' ] }
+>  
+>  ##
+>  # @BitmapMigrationBitmapAliasTransform:
+> @@ -825,6 +829,12 @@
+>  #     See description in @ZeroPageDetection.  Default is 'multifd'.
+>  #     (since 9.0)
+>  #
+> +# @dsa-accel-path: If enabled, use DSA accelerator offloading for
+> +#     certain memory operations. Enable DSA accelerator for zero
+> +#     page detection offloading by setting the @zero-page-detection
+> +#     to dsa-accel. This parameter defines the dsa device path, and
+> +#     defaults to an empty list. (since 9.2)
+> +#
+>  # @direct-io: Open migration files with O_DIRECT when possible.  This
+>  #     only has effect if the @mapped-ram capability is enabled.
+>  #     (Since 9.1)
+> @@ -843,7 +853,7 @@
+>             'cpu-throttle-initial', 'cpu-throttle-increment',
+>             'cpu-throttle-tailslow',
+>             'tls-creds', 'tls-hostname', 'tls-authz', 'max-bandwidth',
+> -           'avail-switchover-bandwidth', 'downtime-limit',
+> +           'avail-switchover-bandwidth', 'downtime-limit', 'dsa-accel-path',
+>             { 'name': 'x-checkpoint-delay', 'features': [ 'unstable' ] },
+>             'multifd-channels',
+>             'xbzrle-cache-size', 'max-postcopy-bandwidth',
+> @@ -1000,6 +1010,12 @@
+>  #     See description in @ZeroPageDetection.  Default is 'multifd'.
+>  #     (since 9.0)
+>  #
+> +# @dsa-accel-path: If enabled, use DSA accelerator offloading for
+> +#     certain memory operations. Enable DSA accelerator for zero
+> +#     page detection offloading by setting the @zero-page-detection
+> +#     to dsa-accel. This parameter defines the dsa device path, and
+> +#     defaults to an empty list. (since 9.2)
+> +#
+>  # @direct-io: Open migration files with O_DIRECT when possible.  This
+>  #     only has effect if the @mapped-ram capability is enabled.
+>  #     (Since 9.1)
+> @@ -1044,7 +1060,8 @@
+>              '*vcpu-dirty-limit': 'uint64',
+>              '*mode': 'MigMode',
+>              '*zero-page-detection': 'ZeroPageDetection',
+> -            '*direct-io': 'bool' } }
+> +            '*direct-io': 'bool',
+> +            '*dsa-accel-path': ['str'] } }
+>  
+>  ##
+>  # @migrate-set-parameters:
+> @@ -1204,6 +1221,12 @@
+>  #     See description in @ZeroPageDetection.  Default is 'multifd'.
+>  #     (since 9.0)
+>  #
+> +# @dsa-accel-path: If enabled, use DSA accelerator offloading for
+> +#     certain memory operations. Enable DSA accelerator for zero
+> +#     page detection offloading by setting the @zero-page-detection
+> +#     to dsa-accel. This parameter defines the dsa device path, and
+> +#     defaults to an empty list. (since 9.2)
+> +#
+>  # @direct-io: Open migration files with O_DIRECT when possible.  This
+>  #     only has effect if the @mapped-ram capability is enabled.
+>  #     (Since 9.1)
+> @@ -1245,7 +1268,8 @@
+>              '*vcpu-dirty-limit': 'uint64',
+>              '*mode': 'MigMode',
+>              '*zero-page-detection': 'ZeroPageDetection',
+> -            '*direct-io': 'bool' } }
+> +            '*direct-io': 'bool',
+> +            '*dsa-accel-path': ['str'] } }
+>  
+>  ##
+>  # @query-migrate-parameters:
 
