@@ -4,71 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD95C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E124C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU4NL-0002rM-9t; Wed, 17 Jul 2024 09:07:20 -0400
+	id 1sU4Rl-0000c5-HG; Wed, 17 Jul 2024 09:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sU4NG-0002oP-9p
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:07:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sU4NE-0002K9-B1
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:07:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721221631;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=TERL9QAhtUG4HHVq40sa/WStYUmDn+xGXj3STvTa4QY=;
- b=En3zefRJwZLuGboQXzX8AqX57zH1l/MXwJQu2T8ycDPDxNFK1iAgA09gXUFu1xqIp6+65W
- BZkkaeTglD7I+9Vlz+++DPnos+8eFlML4mN8bP57eSfdp0i+X2RSi5Wi+WZQAmAOhbD5ks
- RC+b7NR7AUhjZr3t0w8nWrJO8QPJZo8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-mH0LygHLMMaZdlWB8WeBhw-1; Wed,
- 17 Jul 2024 09:07:08 -0400
-X-MC-Unique: mH0LygHLMMaZdlWB8WeBhw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB2A01955D4A; Wed, 17 Jul 2024 13:07:05 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.88])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C83C819560B2; Wed, 17 Jul 2024 13:06:59 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] tests/avocado/machine_aspeed.py: Add eMMC boot tests
-Date: Wed, 17 Jul 2024 15:06:57 +0200
-Message-ID: <20240717130657.648701-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sU4Rj-0000bb-Jp
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:11:51 -0400
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sU4Rh-0003jX-10
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:11:51 -0400
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e05e898f29bso982140276.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721221907; x=1721826707;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9fuLgzSiFqX6I/uO+t8D7fCBOMObKi3Ab4CVPYlTbqA=;
+ b=QlT2d6BPW4ve6g4GKgwMjhgrMu8/0iJIIMAJ1X/2kb+mx7rdjT3fF11U3p3syWtY0o
+ eutyTTP2bwPH4fyF0as/MA4dmZKs16+9mk2HPvdK4ie8JmTxxSGdwqwcQDz6MSUIgvuw
+ z19pwbIYGhXCv2fIU5dPd4eF/RHm2wL2UIlCV4c0FdfJTWpszNMT0D+4vM9+ovUPpTdG
+ wT6Dl6JT2xKNUHkBOh+2PJIfxApNtD1e1zmajxKkAsU0qwUYRIjtB2KtOjjWIhZs+LXm
+ 1Y4B7+7KIuYXas2BEWQqz6//+TlUF2k6Jh9skCpyfasCZyOBPO78u8QdHBwOjrJ/QdkL
+ LSNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721221907; x=1721826707;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9fuLgzSiFqX6I/uO+t8D7fCBOMObKi3Ab4CVPYlTbqA=;
+ b=qHll2ZDk8ipf36LLvLPP5bHMLCMEkPYEAv7hr2UqDfRPKLsEQphB6QUpVEN9mi/8fZ
+ sAcaP1T87oZ0LheS/bP0opzSYz2Bxl7gpAOMBXncyGi5F8kdpc66NCHKtoxuPib1zM85
+ 3SNkdNLnisbKzB7zHUpo9zRn/S2uckxlNkrYnnfampdfS6AWOLn2mF5jkfBYV56ig4AH
+ bx9WnADhNkWGO5mxeyL2lcvALp/EUBKQWjHGnVtKK3HmuIqRZeh/z3hw0oCbfsTsLIX1
+ OHFaV+ye+zS54Y/FQ+7BD9v0jXAuNRt5vbCajQTSwsMWfcZB+q2ju/evIIbbOF3E/F7D
+ c7Bg==
+X-Gm-Message-State: AOJu0Yz1US1BEeaWcDYZYmMCuUsTUyx+Bl1m/Xf0HHgFucXzwPdc5Nw0
+ VlKdnGAOj3sRuNdTzu3IvhWHTpMxhPycmvIhgNPr5QCoh5RBLXuzjN/qFE6aEgA+klKpMMxdRrJ
+ eZuNimTCFpdsFFpb3LCKeMbyh9YDmbePm/AxI
+X-Google-Smtp-Source: AGHT+IFnsYIzpCouEJpT1HMa0EBdmtgGSGdd+H2J6kVynAcH+smI2Bc+8ugBxFIB5+VPDALfvflkqqMadbSeKtrmdB4=
+X-Received: by 2002:a05:6902:168b:b0:e05:9f9c:5516 with SMTP id
+ 3f1490d57ef6-e05ed6fa4bcmr1957807276.19.1721221907333; Wed, 17 Jul 2024
+ 06:11:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240624101040.82726-1-phil@philjordan.eu>
+ <CAJ+F1CJMzyWr3y7kEGcj2hE8fogLqH_PBcHkXYK=N28+t96OsQ@mail.gmail.com>
+In-Reply-To: <CAJ+F1CJMzyWr3y7kEGcj2hE8fogLqH_PBcHkXYK=N28+t96OsQ@mail.gmail.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Wed, 17 Jul 2024 15:11:36 +0200
+Message-ID: <CAAibmn3s-+_21sUVf9w9HKVysTM9xgxYBq9Vg0+9iNMC1K7=QQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Cursor: 8 -> 1 bit alpha downsampling improvement
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, akihiko.odaki@daynix.com, lists@philjordan.eu
+Content-Type: multipart/alternative; boundary="0000000000005de084061d7134c8"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=phil@philjordan.eu; helo=mail-yb1-xb2a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,64 +88,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The image was built using the process described in commit c8cb19876d3e
-("hw/sd/sdcard: Support boot area in emmc image") with artefacts from
-the latest successful build of the IBM P10 BMC platform available on:
+--0000000000005de084061d7134c8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/lastSuccessfulBuild/
+> Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
+>> turning alpha values of 255 into 1 and everything else into 0. This
+>> means that mostly-opaque pixels ended up completely invisible.
+>>
+>> This patch changes the behaviour so that only pixels with less than 50%
+>> alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+>>
+>> This greatly improves the subjective appearance of anti-aliased mouse
+>> cursors, such as those used by macOS, when using a front-end UI without
+>> support for alpha-blended cursors, such as some VNC clients.
+>>
+>> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>>
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/avocado/machine_aspeed.py | 38 +++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
-index f66ad38d3503..1deb8472818f 100644
---- a/tests/avocado/machine_aspeed.py
-+++ b/tests/avocado/machine_aspeed.py
-@@ -439,3 +439,41 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
-         self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
-         self.ssh_connect('root', '0penBmc', False)
- 
-+class AST2x00MachineMMC(QemuSystemTest):
-+
-+    timeout = 240
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message,
-+                                 failure_message='Kernel panic - not syncing',
-+                                 vm=vm)
-+
-+    def test_arm_aspeed_emmc_boot(self):
-+        """
-+        :avocado: tags=arch:arm
-+        :avocado: tags=machine:rainier-bmc
-+        """
-+
-+        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
-+                     'mmc-p10bmc-20240617.qcow2')
-+        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
-+        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
-+                                      algorithm='sha256')
-+
-+        self.require_netdev('user')
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-drive',
-+                         'file=' + image_path + ',if=sd,id=sd2,index=2',
-+                         '-net', 'nic', '-net', 'user')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern('U-Boot SPL 2019.04')
-+        self.wait_for_console_pattern('Trying to boot from MMC1')
-+        self.wait_for_console_pattern('U-Boot 2019.04')
-+        self.wait_for_console_pattern('eMMC 2nd Boot')
-+        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
-+        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
-+        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
--- 
-2.45.2
 
+Thanks for the reviews folks! Is there anything I can do to move this
+forward? Should I submit a v3 with the review tags included? The patch
+continues to apply cleanly so it didn't seem necessary, but I admit I'm
+still not 100% clear on whom I should badger (?) to get favourably received
+patches actually pulled into staging/master.
+
+https://patchew.org/QEMU/20240624101040.82726-1-phil@philjordan.eu/
+
+Thanks!
+
+Kind regards,
+Phil
+
+--0000000000005de084061d7134c8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_quote"><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">Mouse cursors with 8 bit alpha we=
+re downsampled to 1-bit opacity maps by<br>
+turning alpha values of 255 into 1 and everything else into 0. This<br>
+means that mostly-opaque pixels ended up completely invisible.<br>
+<br>
+This patch changes the behaviour so that only pixels with less than 50%<br>
+alpha (0-127) are treated as transparent when converted to 1-bit alpha.<br>
+<br>
+This greatly improves the subjective appearance of anti-aliased mouse<br>
+cursors, such as those used by macOS, when using a front-end UI without<br>
+support for alpha-blended cursors, such as some VNC clients.<br>
+<br>
+Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu"=
+ target=3D"_blank">phil@philjordan.eu</a>&gt;<br></blockquote><div><br></di=
+v><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
+lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;</d=
+iv></div></div></blockquote><div><br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.=
+odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt;</blockquote><div><br></d=
+iv><div>Thanks for the reviews folks! Is there anything I can do to move th=
+is forward? Should I submit a v3 with the review tags included? The patch c=
+ontinues to apply cleanly so it didn&#39;t seem necessary, but I admit I&#3=
+9;m still not 100% clear on whom I should badger (?) to get favourably rece=
+ived patches actually pulled into staging/master.<br></div><div><br></div><=
+div><a href=3D"https://patchew.org/QEMU/20240624101040.82726-1-phil@philjor=
+dan.eu/">https://patchew.org/QEMU/20240624101040.82726-1-phil@philjordan.eu=
+/</a>=C2=A0</div><div><br></div><div>Thanks!</div><div><br></div><div>Kind =
+regards,</div><div>Phil</div><div><br></div></div></div>
+
+--0000000000005de084061d7134c8--
 
