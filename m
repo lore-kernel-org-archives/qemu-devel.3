@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A90C3DA42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4918C41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 15:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU6sp-0006Wd-Dm; Wed, 17 Jul 2024 11:47:59 -0400
+	id 1sU6sp-0006VS-3R; Wed, 17 Jul 2024 11:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1sU6fm-0004d1-Gk
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 11:34:31 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1sU6fN-00036f-3k
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 11:34:05 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
- id 1sU6fk-0004pA-Lc
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 11:34:30 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-367990aaef3so4022696f8f.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 08:34:28 -0700 (PDT)
+ id 1sU6fL-0004lv-3V
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 11:34:04 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso211185f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 08:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1721230467; x=1721835267; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=dBJVgoGbVEBWCKNsYWowDSG5FlAgb+PmFPWTiOzZRq8=;
- b=KpJWHlvIeDzjgigwjWrZW0APt/gx/REH+NbAf/fTxNBNK50lVVdqAJmZDw9Vu/Xw9r
- aB1W4NbP836H+Gu4feynR2G9mpBHKRalEdfNTRRcijzL5YkahT0v4RyVglpYZ2WosVXQ
- MsC1PHWner6Tnj0rZoE55Cv7tIlrHLA63Vr4DR50mX8NMThOP74CWgRo1v+sFy/6LINY
- QYamBR3CHT267wzmDaIsrjf0SPw+q6Lsg+/Q0clJdDyrpiW3At3IwAsnlzzlT0vedHcB
- S4brd1x54VtambrJ1taaGrhZPN5XK8k0j+NPscDg/tKcYbp1dUjqPeNOWCBbJuKF2oyd
- owmA==
+ d=embecosm.com; s=google; t=1721230441; x=1721835241; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N+ZTCTDtsPvM+z8F1C+LwAra8ZB+wrMRdsWgS+nPMOA=;
+ b=RgpFrWQP4W+LzsYwVUVCzcL/++lUCShRIhaF3QPqgolDm4e4+VsIkhbRQfXXtC2nh6
+ 4lIeQgLxkCZlhO959fBPV7/+DV09vZFKC0KGXAs1NU5ZDf6xVfBfxGdw2f5lFemGR+rd
+ BD61Uq25W4GY9lciHwA4e4Aqx0z1L+JSCE9fE021YMAGOUDtgGffqFLQ/zlLrwKVixID
+ du0V7kulsbXIaDlsxugAuVs1yaibeB16A5EVgd1TkfOrbCu2SeHzP5mbCQnua+dlN8GS
+ FiPVG13FKEbfrszUxzQQMgFBAXBTGbPuthMevscbXuqm6kmF4/U4ZbwGR2tJzBwvCEG4
+ lbQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721230467; x=1721835267;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dBJVgoGbVEBWCKNsYWowDSG5FlAgb+PmFPWTiOzZRq8=;
- b=SR9/ypMJLuy9UiY8O4jVMhiEFhGO67GUuvk2oHJh3vGHHwohNZzbOZJUgxoD2Vioj8
- takYa7ASWmPXVLhZUDtTxokeSqdaiB6EpPpPo2K1VxQC3vkpV1apFzY2Ku7XxkxBTHv5
- 5kBgS/9ZQeuGokWhOM15+QQzogvb3owILIXvwSPxyErw/TRF90xXIkWxlB83q/mAN5P8
- ih6eJumKDdjmnU0c8zIpK4+T7j5hgUFhooWNCXrUtjzpwTfcdinA23iEBwHoaAX/yeAe
- ro6YgdMJw6d3cN5ck9taiCsa8WzlwekuJjJ7g1ALQ35z3BtXiuvohFACyBNcOG1tZbuw
- Lf2w==
-X-Gm-Message-State: AOJu0YyWwxAqY4Dy/vWYO6tv+qIWOpprUEKyl+aNX3NKnc4GK9V5aiv1
- dJVa9mRRszBMYt7bWjAysi3wOt5z+gBTiNlvObnQw4moM+dEYAh4WeSgSpJYPwR+xQCrNFJuzRw
- W8IP9vA==
-X-Google-Smtp-Source: AGHT+IFZY/LMmxUFu5e7QOXL/isaeNSjq2sEVYQiXcwxYqZwkUV9XayT8RKL1nPF76r/y5EIw36+WQ==
-X-Received: by 2002:a05:6000:1449:b0:367:9224:9621 with SMTP id
- ffacd0b85a97d-36831652dbemr2032820f8f.31.1721230466778; 
- Wed, 17 Jul 2024 08:34:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721230441; x=1721835241;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N+ZTCTDtsPvM+z8F1C+LwAra8ZB+wrMRdsWgS+nPMOA=;
+ b=kSqHWCWsyDDxs0ZN/QUZmnHSC+Wg2nQtdIhA63zN8v1/ZEu7tR0u+nNZBXaWTzFipg
+ BBAVweKBvHuBeXZ1viphFmxAqWHvjJyCd3VQqjCH5utZuvKlvHsRBQ0euYPtBAPBVwiu
+ dmfwzsQV1B85ZStGrxKEz4Ydo+q9oMADlrYFAPo8PAm6XiCLhOXhe6sJx/3DdDdkdR92
+ PpU9IcLr/ZHERKawBOWujG6QunQ5C2+EscXdRUYOdWl9DghrG3YVEyvAJTOjxNxM8fwI
+ ksw1xSFS1nPsvVhd7GEGVri6r24D4za66EsOR3jcBHkZagG2Ch18z6LfDi2Dhgl6iz7/
+ t1uw==
+X-Gm-Message-State: AOJu0YxK0HiX9B6cSmsLJpZipgpWhmmExewTnF214dy3lJYmnUxyN6PL
+ YWRf0HlgzRp+0gQCcEQh3RAlmW1Qy+cjblsPXc4R3mkz9biSi83fRCof9A9eFl+pQBr+X/i3KqF
+ ZhgDjFw==
+X-Google-Smtp-Source: AGHT+IHlmlrvBECmCgQko/Z3tK7w4ct4kXB4pUFWvsoYAfOA6HmKLwKBhnwzMphNQh1JWP1GgJBdLw==
+X-Received: by 2002:a5d:6dad:0:b0:365:aec0:e191 with SMTP id
+ ffacd0b85a97d-3682753bd5dmr4877115f8f.21.1721230441002; 
+ Wed, 17 Jul 2024 08:34:01 -0700 (PDT)
 Received: from paolo-ThinkPad-T490.sou.embecosm-corp.com ([212.69.42.53])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427c779839bsm2369475e9.7.2024.07.17.08.34.26
+ 5b1f17b1804b1-427c779839bsm2369475e9.7.2024.07.17.08.34.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 08:34:26 -0700 (PDT)
+ Wed, 17 Jul 2024 08:34:00 -0700 (PDT)
 From: Paolo Savini <paolo.savini@embecosm.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -68,15 +68,12 @@ Cc: Paolo Savini <paolo.savini@embecosm.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
-Subject: [RFC 1/2] target/riscv: rvv: reduce the overhead for simple RISC-V
- vector unit-stride loads and stores
-Date: Wed, 17 Jul 2024 16:30:39 +0100
-Message-Id: <20240717153040.11073-2-paolo.savini@embecosm.com>
+Subject: [RFC 0/2] Improve the performance of unit-stride RVV ld/st on
+Date: Wed, 17 Jul 2024 16:30:38 +0100
+Message-Id: <20240717153040.11073-1-paolo.savini@embecosm.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240717153040.11073-1-paolo.savini@embecosm.com>
-References: <20240717153040.11073-1-paolo.savini@embecosm.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=paolo.savini@embecosm.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=paolo.savini@embecosm.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,84 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helene CHELIN <helene.chelin@embecosm.com>
+This series of patches builds on top of Max Chou's patches:
 
-This patch improves the performance of the emulation of the RVV unit-stride
-loads and stores in the following cases:
+https://lore.kernel.org/all/20240613175122.1299212-1-max.chou@sifive.com/
 
-- when the data being loaded/stored per iteration amounts to 8 bytes or less.
-- when the vector length is 16 bytes (VLEN=128) and there's no grouping of the
-  vector registers (LMUL=1).
+The aim of these patches is to improve the performance of QEMU emulation
+of RVV unit-stride load and store instructions in the following cases
 
-The optimization consists of avoiding the overhead of probing the RAM of the
-host machine and doing a loop load/store on the input data grouped in chunks
-of as many bytes as possible (8,4,2,1 bytes).
+1. when the data being loaded/stored per iteration amounts to 8 bytes or less.
+2. when the vector length is 16 bytes (VLEN=128) and there is no grouping of the
+   vector registers (LMUL=1).
+3. when the data being loaded/stored per iteration is more than 64 bytes.
 
-Co-authored-by: Helene CHELIN <helene.chelin@embecosm.com>
-Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
+In the first two cases the optimization consists of avoiding the
+overhead of probing the RAM of the host machine and perform a simple loop
+load/store on the data grouped in chunks of as many bytes as possible (8,4,2 or 1).
 
-Signed-off-by: Helene CHELIN <helene.chelin@embecosm.com>
----
- target/riscv/vector_helper.c | 46 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+The third case is optimized by calling the __builtin_memcpy function on
+data chuncks of 128 bytes and 256 bytes per time.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 29849a8b66..4b444c6bc5 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -633,6 +633,52 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
- 
-     VSTART_CHECK_EARLY_EXIT(env);
- 
-+    /* For data sizes <= 64 bits and for LMUL=1 with VLEN=128 bits we get a
-+     * better performance by doing a simple simulation of the load/store
-+     * without the overhead of prodding the host RAM */
-+    if ((nf == 1) && ((evl << log2_esz) <= 8 ||
-+	((vext_lmul(desc) == 0) && (simd_maxsz(desc) == 16)))) {
-+
-+	uint32_t evl_b = evl << log2_esz;
-+
-+        for (uint32_t j = env->vstart; j < evl_b;) {
-+	    addr = base + j;
-+            if ((evl_b - j) >= 8) {
-+                if (is_load)
-+                    lde_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                else
-+                    ste_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                j += 8;
-+            }
-+            else if ((evl_b - j) >= 4) {
-+                if (is_load)
-+                    lde_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                else
-+                    ste_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                j += 4;
-+            }
-+            else if ((evl_b - j) >= 2) {
-+                if (is_load)
-+                    lde_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                else
-+                    ste_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                j += 2;
-+            }
-+            else {
-+                if (is_load)
-+                    lde_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                else
-+                    ste_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
-+                j += 1;
-+            }
-+        }
-+
-+        env->vstart = 0;
-+        vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
-+        return;
-+    }
-+
-+
-     vext_cont_ldst_elements(&info, base, env->vreg, env->vstart, evl, desc,
-                             log2_esz, false);
-     /* Probe the page(s).  Exit with exception for any invalid page. */
+These patches on top of Max Chou's patches have been tested with SPEC
+CPU 2017 and achieve an average reduction of 13% of the time needed by
+QEMU for running the benchmarks compared with the master branch of QEMU.
+
+You can find the source code being developed here: https://github.com/embecosm/rise-rvv-tcg-qemu
+and regular updates and more statistics about the patch here: https://github.com/embecosm/rise-rvv-tcg-qemu-reports
+
+Changes:
+- patch 1:
+  - Modify vext_ldst_us to run the simple loop load/store if we
+    are in one of the two cases above.
+- patch 2:
+  - Modify vext_group_ldst_host to use __builtin_memcpy for data sizes
+    of 128 bits and above.
+
+Cc: Richard Handerson <richard.henderson@linaro.org>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Helene Chelin <helene.chelin@embecosm.com>
+Cc: Max Chou <max.chou@sifive.com>
+
+Helene CHELIN (1):
+  target/riscv: rvv: reduce the overhead for simple RISC-V vector
+    unit-stride loads and stores
+
+Paolo Savini (1):
+  target/riscv: rvv: improve performance of RISC-V vector loads and
+    stores on large amounts of data.
+
+ target/riscv/vector_helper.c | 63 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
+
 -- 
 2.17.1
 
