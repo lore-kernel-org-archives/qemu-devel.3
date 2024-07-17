@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8F8C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 07:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5E1C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 07:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTzY3-0000Zg-15; Wed, 17 Jul 2024 03:58:03 -0400
+	id 1sTzYQ-0002Ea-Vu; Wed, 17 Jul 2024 03:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sTzY1-0000Vb-Mj
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 03:58:01 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sTzYP-00028a-Fb
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 03:58:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1sTzXx-0002IB-KS
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 03:58:01 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:a52d:0:640:f75d:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D586060B81;
- Wed, 17 Jul 2024 10:57:49 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b5a6::1:22] (unknown
- [2a02:6b8:b081:b5a6::1:22])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id mvC5T72VniE0-MdCA536h; Wed, 17 Jul 2024 10:57:48 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1721203068;
- bh=ti7f3kYyLi56lyI30rQvsjTBNkZkwN27lwqIIhNz/BA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VXs73wfGs8utV0QPBdp069yGWtfouEI7YA+6DoflXyncb5jprLFE9qn6R8OCefccb
- Dl4m19LPT1on/CWBf656dUpvMxY/bYDz4Xrcr6k/V3KmpMLszhLKc7i2KEdI+0zUdZ
- O8X5ExPgAJaHmSqkQNWEulyWKn8AFBQ/6Ofoi1v0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a60edbc0-38ab-4f8b-85ca-6e476716fbca@yandex-team.ru>
-Date: Wed, 17 Jul 2024 10:57:48 +0300
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sTzYJ-0002Pa-CS
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 03:58:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721203097;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iCkJlmWrSesCrwKH6u57qUR/KXqhyEQ84J0GnoDPXlE=;
+ b=Q0ycHoWqJXiDA4fnW5zrSkcNCOK6uD0zH2A9KDGWu7Ozth/rCFtGJhXb0AUQ9w+STGTJaH
+ 3lVYjjM/Stw9VFbO49Q6KCWtuRsL6b8nLBlTNtOkOc/ocQ9O3AtXvlnWuxtBmHt8h6fd/3
+ o9P3MfMRnFGcYfiwGzNd56ChinGOVtQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-B9g7kWrlObaMTxEaCDaqBA-1; Wed,
+ 17 Jul 2024 03:58:09 -0400
+X-MC-Unique: B9g7kWrlObaMTxEaCDaqBA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C17A81955D48; Wed, 17 Jul 2024 07:58:07 +0000 (UTC)
+Received: from localhost (dhcp-192-176.str.redhat.com [10.33.192.176])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A1D31955F40; Wed, 17 Jul 2024 07:58:06 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ kvm@vger.kernel.org, Bibo Mao <maobibo@loongson.cn>
+Subject: Re: [RFC 0/4] Added Interrupt controller emulation for loongarch kvm
+In-Reply-To: <cover.1721186636.git.lixianglai@loongson.cn>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <cover.1721186636.git.lixianglai@loongson.cn>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Wed, 17 Jul 2024 09:58:03 +0200
+Message-ID: <87r0bsa1ro.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
- QMP
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
- <87mso8n7tw.fsf@pond.sub.org>
- <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
- <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
- <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
- <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
- <874jaglm9x.fsf@pond.sub.org>
- <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,147 +87,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/24 6:27 PM, Philippe Mathieu-Daudé wrote:
+On Wed, Jul 17 2024, Xianglai Li <lixianglai@loongson.cn> wrote:
 
-> On 29/5/24 16:34, Markus Armbruster wrote:
->> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>
->>> On 5/29/24 4:39 PM, Philippe Mathieu-Daudé wrote:
->>>
->>>> On 29/5/24 14:43, Daniil Tatianin wrote:
->>>>> On 5/29/24 3:36 PM, Philippe Mathieu-Daudé wrote:
->>>>>
->>>>>> On 29/5/24 14:03, Markus Armbruster wrote:
->>>>>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
->>>>>>>
->>>>>>>> This can be used to force-synchronize the time in guest after a 
->>>>>>>> long
->>>>>>>> stop-cont pause, which can be useful for serverless-type workload.
->>>>>>>>
->>>>>>>> Also add a comment to highlight the fact that this (and one 
->>>>>>>> other QMP
->>>>>>>> command) only works for the MC146818 RTC controller.
->>>>>>>>
->>>>>>>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->>>>>>>> ---
->>>>>>>>
->>>>>>>> Changes since v0:
->>>>>>>> - Rename to rtc-inject-irq to match other similar API
->>>>>>>> - Add a comment to highlight that this only works for the I386 RTC
->>>>>>>>
->>>>>>>> Changes since v1:
->>>>>>>> - Added a description below the QMP command to explain how it 
->>>>>>>> can be
->>>>>>>>     used and what it does.
->>>>>>>>
->>>>>>>> Changes since v2:
->>>>>>>> - Add a 'broadcast' suffix.
->>>>>>>> - Change the comments to explain the flags we're setting.
->>>>>>>> - Change the command description to fix styling & explain that 
->>>>>>>> it's a broadcast command.
->>>>>>>>
->>>>>>>> Changes since v3:
->>>>>>>> - Fix checkpatch complaints about usage of C99 comments
->>>>>>>>
->>>>>>>> ---
->>>>>>>>    hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
->>>>>>>>    include/hw/rtc/mc146818rtc.h |  1 +
->>>>>>>>    qapi/misc-target.json        | 19 +++++++++++++++++++
->>>>>>>>    3 files changed, 40 insertions(+)
->>>>
->>>>
->>>>>>>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
->>>>>>>> index 4e0a6492a9..7d388a3753 100644
->>>>>>>> --- a/qapi/misc-target.json
->>>>>>>> +++ b/qapi/misc-target.json
->>>>>>>> @@ -19,6 +19,25 @@
->>>>>>>>    { 'command': 'rtc-reset-reinjection',
->>>>>>>>      'if': 'TARGET_I386' }
->>>>>>>>    +##
->>>>>>>> +# @rtc-inject-irq-broadcast:
->>>>>>>> +#
->>>>>>>> +# Inject an RTC interrupt for all existing RTCs on the system.
->>>>>>>> +# The interrupt forces the guest to synchronize the time with 
->>>>>>>> RTC.
->>>>>>>> +# This is useful after a long stop-cont pause, which is common 
->>>>>>>> for
->>>>>>>> +# serverless-type workload.
->>>>>>
->>>>>> In previous version you said:
->>>>>>
->>>>>>    > This isn't really related to migration though. Serverless is 
->>>>>> based
->>>>>>    > on constantly stopping and resuming the VM on e.g. every HTTP
->>>>>>    > request to an endpoint.
->>>>>>
->>>>>> Which made some sense. Maybe mention HTTP? And point to that use 
->>>>>> case
->>>>>> (possibly with QMP commands) in the commit description?
->>>>>
->>>>> Hmm, maybe it would be helpful for people who don't know what 
->>>>> serverless means.
->>>>>
->>>>> How about:
->>>>>       This is useful after a long stop-const pause, which is 
->>>>> common for serverless-type workloads,
->>>>>       e.g. stopping/resuming the VM on every HTTP request to an 
->>>>> endpoint, which might involve
->>>>>       a long pause in between the requests, causing time drift in 
->>>>> the guest.
->>>>
->>>> Please help me understand your workflow. Your management layer call
->>>> @stop and @cont QMP commands, is that right?
->>>
->>> Yes, that is correct.
->>>
->>>> @cont will emit a @RESUME event.
->>>>
->>>> If we could listen to QAPI events from C code, we could have the
->>>> mc146818rtc device automatically sync on VM resume, and no need for
->>>> this async command.
->>>
->>> Perhaps? I'm not sure how that would be implemented, but let's see 
->>> what Markus has to say.
->>
->> You can't listen on an event in QEMU itself.  You can only hook into the
->> place that generates the event.
+> Before this, the interrupt controller simulation has been completed
+> in the user mode program. In order to reduce the loss caused by frequent
+> switching of the virtual machine monitor from kernel mode to user mode
+> when the guest accesses the interrupt controller, we add the interrupt
+> controller simulation in kvm.
 >
-> Apparently "qemu/notify.h" could be use for QAPI events (currently
-> only used by migration). Big change, to be discussed later.
+> In qemu side implementation is simple, just make a new IPI EXTIOI PCH KVM
+> related several classes, And the interface to access kvm related data is
+> implemented.
 >
->> The RESUME event is sent from vm_prepare_start() in system/cpus.c.
+> Most of the simulation work of the interrupt controller is done in kvm.
+> Because KVM the changes have not been the Linux community acceptance,
+> the patches of this series will have RFC label until KVM patch into the community.
 >
-> Good spot, it is where we call synchronize_pre_resume() for vCPUs,
-> which is exactly what Daniil wants for RTC devices.
+> For the implementation of kvm simulation, refer to the following documents.
 >
-> I'd rather we call here rtc_synchronize_pre_resume(), which would
-> mostly be qmp_rtc_inject_irq_broadcast() content, without using QMP
-> at all.
+> IPI simulation implementation reference:
+> https://github.com/loongson/LoongArch-Documentation/tree/main/docs/Loongson-3A5000-usermanual-EN/inter-processor-interrupts-and-communication
 >
-> But for back-compat we need some CLI option "sync-rtc-on-resume"
-> default to false. Preferably a mc146818rtc property to KISS.
+> EXTIOI simulation implementation reference:
+> https://github.com/loongson/LoongArch-Documentation/tree/main/docs/Loongson-3A5000-usermanual-EN/io-interrupts/extended-io-interrupts
 >
-> That would solve Daniil problem and make Markus/myself happier.
+> PCH-PIC simulation implementation reference:
+> https://github.com/loongson/LoongArch-Documentation/blob/main/docs/Loongson-7A1000-usermanual-EN/interrupt-controller.adoc
+>
+> For PCH-MSI, we used irqfd mechanism to send the interrupt signal
+> generated by user state to kernel state and then to EXTIOI without
+> maintaining PCH-MSI state in kernel state.
+>
+> You can easily get the code from the link below:
+> the kernel:
+> https://github.com/lixianglai/linux
+> the branch is: interrupt
+>
+> the qemu:
+> https://github.com/lixianglai/qemu
+> the branch is: interrupt
+>
+> Please note that the code above is regularly updated based on community
+> reviews.
+>
+> Cc: Paolo Bonzini <pbonzini@redhat.com> 
+> Cc: Song Gao <gaosong@loongson.cn> 
+> Cc: Huacai Chen <chenhuacai@kernel.org> 
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com> 
+> Cc: Cornelia Huck <cohuck@redhat.com> 
+> Cc: kvm@vger.kernel.org 
+> Cc: Bibo Mao <maobibo@loongson.cn> 
+>
+> Xianglai Li (4):
+>   hw/loongarch: Add KVM IPI device support
+>   hw/loongarch: Add KVM extioi device support
+>   hw/loongarch: Add KVM pch pic device support
+>   hw/loongarch: Add KVM pch msi device support
+>
+>  hw/intc/Kconfig                     |  12 ++
+>  hw/intc/loongarch_extioi_kvm.c      | 141 +++++++++++++++++++
+>  hw/intc/loongarch_ipi_kvm.c         | 207 ++++++++++++++++++++++++++++
+>  hw/intc/loongarch_pch_msi.c         |  42 ++++--
+>  hw/intc/loongarch_pch_pic.c         |  20 ++-
+>  hw/intc/loongarch_pch_pic_kvm.c     | 189 +++++++++++++++++++++++++
+>  hw/intc/meson.build                 |   3 +
+>  hw/loongarch/virt.c                 | 141 ++++++++++++-------
+>  include/hw/intc/loongarch_extioi.h  |  34 ++++-
+>  include/hw/intc/loongarch_pch_msi.h |   2 +-
+>  include/hw/intc/loongarch_pch_pic.h |  51 ++++++-
+>  include/hw/intc/loongson_ipi.h      |  22 +++
+>  include/hw/loongarch/virt.h         |  15 ++
+>  linux-headers/asm-loongarch/kvm.h   |   7 +
+>  linux-headers/linux/kvm.h           |   6 +
 
-So I started looking into this, and I'm a bit unsure about what we want 
-this API to look like. What I mean is there isn't a generic RTC 
-abstraction in QEMU, likewise there isn't an "RTC" global variable you 
-can easily use to hook up some sort of API or ops-like functions like 
-cpu_accel does.
+Please split out any headers changes into a separate patch -- just put
+them into a placeholder patch at the beginning of the series as long as
+the changes are not yet upstream (and replace that with a full headers
+sync later.)
 
-One simple solution I'm seeing is making an mc146818-specific API like 
-mc146818rtc_synchronize_pre_resume(), and call that directly wrapped 
-inside an ifdef CONFIG_MC146818RTC inside system/cpus.c. We can then 
-check the sync-on-resume property inside of that helper and optionally 
-just return from it if it's not set.
+>  15 files changed, 823 insertions(+), 69 deletions(-)
+>  create mode 100644 hw/intc/loongarch_extioi_kvm.c
+>  create mode 100644 hw/intc/loongarch_ipi_kvm.c
+>  create mode 100644 hw/intc/loongarch_pch_pic_kvm.c
 
-Any objections on this approach? Is there a better way to do this?
-
-Thanks!
-> Paolo, any objection?
->
-> Regards,
->
-> Phil.
 
