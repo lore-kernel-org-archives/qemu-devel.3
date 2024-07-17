@@ -4,83 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9EBCC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC38C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTxk3-00059l-LP; Wed, 17 Jul 2024 02:02:19 -0400
+	id 1sTxmp-0008QF-7m; Wed, 17 Jul 2024 02:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxk1-00052K-4l
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:02:17 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxjx-0001HO-Pt
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:02:16 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1fb3b7d0d3aso39540235ad.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721196129; x=1721800929; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KxWo2TuA/jQgHzkRVWBT3lPb6x2Kqd7zGBpsPQ9Mv9Y=;
- b=ziPiMi1aXwJK3mVfrJvKQyL3HdHFQTThqwpbQKFmv2LLfviU7yG+nBHQ20ll1FKxh5
- XOMM+RO6t1Cr6y8budq34nzkRW7vA+VzuwZI+xhC3m/dW8VSEhIsyBHEWPsilP3UjYiu
- 9spAbbbtuxBrN2QJAKCpuzqLxb0o9auCdy1gZpYceaeCiMiExXufVv1dDmI+2Abnl1I9
- 0cxBvyW3lhnOR5yaaLYulC61kqPmy8MpyOjV3xEDJ10o5+7MYT/0v15wE9H9zEKxy74l
- OM6R378neiBBfxHADINxmQ8oR1bmae8hScBCX7c6MjCS8IxPOSMnWTSRAC0vLx752lzf
- I31g==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTxmm-0008IL-Vt
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:05:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sTxmj-0001vC-8h
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:05:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721196302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7+H1GvKx983QaePpsNkoOb/6NKN1jQYpbi86GZ41aOY=;
+ b=U0lEaqRnhV2Ko0aCie7VAT1G5CE1qANolOGz88R729pMfpd5Cwc3LZMOcDOHiFIczP8Gee
+ XdFvlR//e6PbW+fin+UMLOeErxZqDbYzeMuDnUr4yFHoA/HtKolfQwODfE1Tgl6W4DUMsG
+ Sa3VlUEjJ+L9MKm9h1gAENke6a0TJSk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-16-rSUuU8JBOt2VhYihjehHuA-1; Wed, 17 Jul 2024 02:04:59 -0400
+X-MC-Unique: rSUuU8JBOt2VhYihjehHuA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4265464ddc9so2123305e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:04:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721196129; x=1721800929;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KxWo2TuA/jQgHzkRVWBT3lPb6x2Kqd7zGBpsPQ9Mv9Y=;
- b=gZciB6Xdz64ocCr8mqTwueuG+yoRTClFg1ftxmWTl9ZEnDWAtK9RxtmCOQtoyfXe3x
- bihvXkOGDQjHR25tLX2gAHAAkWaAVO5/19IMihTpr/ZOyv+33ahO1OA/PTizv4jEFf8u
- Qhc9VxAqzTzhZSEYZGOkILU66ZkDtbEj6C/5kqhoUdJdpXZRSjZxyIeBgULTRBSgNSMJ
- wzVoAONWQRD2UQJZeglbiHeOEJ6tgzoBg8fdDpbgMmcw2wop72XMG9aEkYicPZeG0f7R
- D0olRDuxOQKdfl7H6SBW0i5Sew0pMeVfKKNqP0EnD9vPcA3681568Gb/J2ID54wSvu+f
- 744g==
-X-Gm-Message-State: AOJu0Yx7cUkQDYx4gGtv29Odp4CDrO51QRljgdXcCxfe81ZLH+DkFKqS
- /7Dp65JzxXH9xEiAnEZqCMVCxxWg/fgYky6SpT5yGFtrTrz55FQ7ZPbXjzpFHag5ZJOesQIDUO9
- 2lUs=
-X-Google-Smtp-Source: AGHT+IGtj0tp3Xv5BTTlFpnugLzH1yn/SWjGsex1ndcvjNku3CUxDS9U4bSi7Miezx/Cksv5dJwGdA==
-X-Received: by 2002:a17:902:e54d:b0:1fb:80a3:5820 with SMTP id
- d9443c01a7336-1fc4e6b62a0mr4657955ad.40.1721196129115; 
- Tue, 16 Jul 2024 23:02:09 -0700 (PDT)
-Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bc27383sm68131575ad.140.2024.07.16.23.02.06
+ d=1e100.net; s=20230601; t=1721196298; x=1721801098;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7+H1GvKx983QaePpsNkoOb/6NKN1jQYpbi86GZ41aOY=;
+ b=upaZgfsO5mGK1mczaixQKNakYWNmcWVPvjQz40Iz2hiNlVEPGFBZyta/zN5fNwh2Q1
+ ds3QTRK9Q59IwI/xm42hDWRCQMzxBSvIc1jttl9u4traPq6qfe9nYrTn/28qt0zrHLS4
+ WkN4O5bY/MM5D/OG9/s7iV39EERtiqVEFZLCweuFcGuJX5I6a3ZLqEvlvG53URsuGGv+
+ iknAWlNaoKcp8euG7isPuNpbf9gvfKYIhuoNf5xM39oAT2I7Bp3RngAPGvB0TcbBpnCQ
+ D49VqRezqOuAdPEZzikLJBh9onDrBKTjMlxuImsjUCXy5+UVltdDYBokCdAkUSfJ2geH
+ zWiA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7+TeXvgAt1VVJ9R1X0A+2JrFY7Q5AGaDpvL/o7xyO3LqLAcpLiDBnWYfkt40qJz4x0vKdrkkUrqQX7b+ONBYwUA99Qho=
+X-Gm-Message-State: AOJu0YxDMFaDoUwBcWZ/66W/71q2CHyP366suS62RZPARq9FsIRf/Uyd
+ SV7zGgjPwwR3FMeL2mrPOhdsAeNwSTu2ROB3u+ofg9/+M78ckIOrm9hBMxnTrG6Rg0f/MW6Dl+C
+ 9CvfMwpzomD2gFXMwD+GrFsQXR9oSGN94ucj0UmiShg02JM+5JUJA
+X-Received: by 2002:a05:600c:4e8f:b0:427:aab7:976b with SMTP id
+ 5b1f17b1804b1-427bb687b1emr31739295e9.5.1721196298189; 
+ Tue, 16 Jul 2024 23:04:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6vVoyAC7/Og1YQSeBoilgle3lAzOpLxSzgPvmQ/2bZRcw7GfqUMRQwYiJYoXrg/f1ZnZQAQ==
+X-Received: by 2002:a05:600c:4e8f:b0:427:aab7:976b with SMTP id
+ 5b1f17b1804b1-427bb687b1emr31739015e9.5.1721196297555; 
+ Tue, 16 Jul 2024 23:04:57 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f6:360d:da73:bbf7:ba86:37fb])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4279f276b8dsm192287415e9.21.2024.07.16.23.04.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 23:02:08 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Daniyal Khan <danikhan632@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 3/3] tests/tcg/aarch64: Add test cases for SME FMOPA
- (widening)
-Date: Wed, 17 Jul 2024 16:01:49 +1000
-Message-ID: <20240717060149.204788-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240717060149.204788-1-richard.henderson@linaro.org>
-References: <20240717060149.204788-1-richard.henderson@linaro.org>
+ Tue, 16 Jul 2024 23:04:56 -0700 (PDT)
+Date: Wed, 17 Jul 2024 02:04:52 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: "Liu, Yi L" <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Peng, Chao P" <chao.p.peng@intel.com>,
+ Yu Zhang <yu.c.zhang@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by spec
+Message-ID: <20240717020445-mutt-send-email-mst@kernel.org>
+References: <SJ0PR11MB6744C340AAB1B786D3913F5D92EA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <CACGkMEsV05ujKNEL9JSAsfikWGW582yvfSOdHJgRxZC_1cxgEg@mail.gmail.com>
+ <SJ0PR11MB67445F7F8B79D2C2B982C1F692F52@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <CACGkMEuO6T-LqcZ=5oRR83LyhZ7oOtZvb70CUksZDAmC1KnsOA@mail.gmail.com>
+ <SJ0PR11MB6744135D8C08CEE42460CAF792F02@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <SJ0PR11MB67448F0D3CE487F125D274AF92F02@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240527025023-mutt-send-email-mst@kernel.org>
+ <CACGkMEuCqCNhVvXYN6jT5CDHbnt8sEHUk2UfwVaaOVLXfSfv3w@mail.gmail.com>
+ <a791e442-f5b5-4670-9394-876b041cfd62@intel.com>
+ <SJ0PR11MB6744F95EB6B6182D90DE8D8392A32@SJ0PR11MB6744.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <SJ0PR11MB6744F95EB6B6182D90DE8D8392A32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,240 +116,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniyal Khan <danikhan632@gmail.com>
+On Wed, Jul 17, 2024 at 03:30:03AM +0000, Duan, Zhenzhong wrote:
+> Hi Michael, Jason,
+> 
+> Based on Yi's analysis, is keeping current VERSION value acceptable for you?
 
-Signed-off-by: Daniyal Khan <danikhan632@gmail.com>
-Message-Id: 172090222034.13953.16888708708822922098-1@git.sr.ht
-[rth: Split test from a larger patch, tidy assembly]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/aarch64/sme-fmopa-1.c   | 63 +++++++++++++++++++++++++++++++
- tests/tcg/aarch64/sme-fmopa-2.c   | 56 +++++++++++++++++++++++++++
- tests/tcg/aarch64/sme-fmopa-3.c   | 63 +++++++++++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.target |  5 ++-
- 4 files changed, 185 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/aarch64/sme-fmopa-1.c
- create mode 100644 tests/tcg/aarch64/sme-fmopa-2.c
- create mode 100644 tests/tcg/aarch64/sme-fmopa-3.c
+I think it's fine.
 
-diff --git a/tests/tcg/aarch64/sme-fmopa-1.c b/tests/tcg/aarch64/sme-fmopa-1.c
-new file mode 100644
-index 0000000000..652c4ea090
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-1.c
-@@ -0,0 +1,63 @@
-+/*
-+ * SME outer product, 1 x 1.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdio.h>
-+
-+static void foo(float *dst)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"
-+        "ptrue p0.s, vl4\n\t"
-+        "fmov z0.s, #1.0\n\t"
-+        /*
-+         * An outer product of a vector of 1.0 by itself should be a matrix of 1.0.
-+         * Note that we are using tile 1 here (za1.s) rather than tile 0.
-+         */
-+        "zero {za}\n\t"
-+        "fmopa za1.s, p0/m, p0/m, z0.s, z0.s\n\t"
-+        /*
-+         * Read the first 4x4 sub-matrix of elements from tile 1:
-+         * Note that za1h should be interchangeable here.
-+         */
-+        "mov w12, #0\n\t"
-+        "mova z0.s, p0/m, za1v.s[w12, #0]\n\t"
-+        "mova z1.s, p0/m, za1v.s[w12, #1]\n\t"
-+        "mova z2.s, p0/m, za1v.s[w12, #2]\n\t"
-+        "mova z3.s, p0/m, za1v.s[w12, #3]\n\t"
-+        /*
-+         * And store them to the input pointer (dst in the C code):
-+         */
-+        "st1w {z0.s}, p0, [%0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z1.s}, p0, [x0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z2.s}, p0, [x0]\n\t"
-+        "add x0, x0, #16\n\t"
-+        "st1w {z3.s}, p0, [x0]\n\t"
-+        "smstop"
-+        : : "r"(dst)
-+        : "x12", "d0", "d1", "d2", "d3", "memory");
-+}
-+
-+int main()
-+{
-+    float dst[16] = { };
-+
-+    foo(dst);
-+
-+    for (int i = 0; i < 16; i++) {
-+        if (dst[i] != 1.0f) {
-+            goto failure;
-+        }
-+    }
-+    /* success */
-+    return 0;
-+
-+ failure:
-+    for (int i = 0; i < 16; i++) {
-+        printf("%f%c", dst[i], i % 4 == 3 ? '\n' : ' ');
-+    }
-+    return 1;
-+}
-diff --git a/tests/tcg/aarch64/sme-fmopa-2.c b/tests/tcg/aarch64/sme-fmopa-2.c
-new file mode 100644
-index 0000000000..15f0972d83
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-2.c
-@@ -0,0 +1,56 @@
-+/*
-+ * SME outer product, FZ vs FZ16
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdint.h>
-+#include <stdio.h>
-+
-+static void test_fmopa(uint32_t *result)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"               /* Z*, P* and ZArray cleared */
-+        "ptrue p2.b, vl16\n\t"      /* Limit vector length to 16 */
-+        "ptrue p5.b, vl16\n\t"
-+        "movi d0, #0x00ff\n\t"      /* fp16 denormal */
-+        "movi d16, #0x00ff\n\t"
-+        "mov w15, #0x0001000000\n\t" /* FZ=1, FZ16=0 */
-+        "msr fpcr, x15\n\t"
-+        "fmopa za3.s, p2/m, p5/m, z16.h, z0.h\n\t"
-+        "mov w15, #0\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "mov w15, #2\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "smstop"
-+        : "+r"(result) :
-+        : "x15", "x16", "p2", "p5", "d0", "d16", "memory");
-+}
-+
-+int main(void)
-+{
-+    uint32_t result[4 * 4] = { };
-+
-+    test_fmopa(result);
-+
-+    if (result[0] != 0x2f7e0100) {
-+        printf("Test failed: Incorrect output in first 4 bytes\n"
-+               "Expected: %08x\n"
-+               "Got:      %08x\n",
-+               0x2f7e0100, result[0]);
-+        return 1;
-+    }
-+
-+    for (int i = 1; i < 16; ++i) {
-+        if (result[i] != 0) {
-+            printf("Test failed: Non-zero word at position %d\n", i);
-+            return 1;
-+        }
-+    }
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/aarch64/sme-fmopa-3.c b/tests/tcg/aarch64/sme-fmopa-3.c
-new file mode 100644
-index 0000000000..3bfec34914
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-fmopa-3.c
-@@ -0,0 +1,63 @@
-+/*
-+ * SME outer product, [ 1 2 3 4 ] squared
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdio.h>
-+#include <stdint.h>
-+#include <string.h>
-+#include <math.h>
-+
-+static const float i_1234[4] = {
-+    1.0f, 2.0f, 3.0f, 4.0f
-+};
-+
-+static const float expected[4] = {
-+    4.515625f, 5.750000f, 6.984375f, 8.218750f
-+};
-+
-+static void test_fmopa(float *result)
-+{
-+    asm(".arch_extension sme\n\t"
-+        "smstart\n\t"               /* ZArray cleared */
-+        "ptrue p2.b, vl16\n\t"      /* Limit vector length to 16 */
-+        "ld1w {z0.s}, p2/z, [%1]\n\t"
-+        "mov w15, #0\n\t"
-+        "mov za3h.s[w15, 0], p2/m, z0.s\n\t"
-+        "mov za3h.s[w15, 1], p2/m, z0.s\n\t"
-+        "mov w15, #2\n\t"
-+        "mov za3h.s[w15, 0], p2/m, z0.s\n\t"
-+        "mov za3h.s[w15, 1], p2/m, z0.s\n\t"
-+        "msr fpcr, xzr\n\t"
-+        "fmopa za3.s, p2/m, p2/m, z0.h, z0.h\n\t"
-+        "mov w15, #0\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "mov w15, #2\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 0]}, p2, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w {za3h.s[w15, 1]}, p2, [%0]\n\t"
-+        "smstop"
-+        : "+r"(result) : "r"(i_1234)
-+        : "x15", "x16", "p2", "d0", "memory");
-+}
-+
-+int main(void)
-+{
-+    float result[4 * 4] = { };
-+    int ret = 0;
-+
-+    test_fmopa(result);
-+
-+    for (int i = 0; i < 4; i++) {
-+        float actual = result[i];
-+        if (fabsf(actual - expected[i]) > 0.001f) {
-+            printf("Test failed at element %d: Expected %f, got %f\n",
-+                   i, expected[i], actual);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index b53218e115..8cc62eb456 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -70,8 +70,9 @@ endif
- 
- # SME Tests
- ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
--AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
--sme-outprod1 sme-smopa-1 sme-smopa-2: CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
-+SME_TESTS = sme-outprod1 sme-smopa-1 sme-smopa-2 sme-fmopa-1 sme-fmopa-2 sme-fmopa-3
-+AARCH64_TESTS += $(SME_TESTS)
-+$(SME_TESTS): CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
- endif
- 
- # System Registers Tests
--- 
-2.43.0
+> Look forward to your comments, currently this open blocks us from sending the next version.
+> 
+> Thanks
+> Zhenzhong
+> 
+> >-----Original Message-----
+> >From: Liu, Yi L <yi.l.liu@intel.com>
+> >Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons defined by
+> >spec
+> >
+> >Hi Michael, Jason,
+> >
+> >On 2024/5/28 11:03, Jason Wang wrote:
+> >> On Mon, May 27, 2024 at 2:50 PM Michael S. Tsirkin <mst@redhat.com>
+> >wrote:
+> >>>
+> >>> On Mon, May 27, 2024 at 06:44:58AM +0000, Duan, Zhenzhong wrote:
+> >>>> Hi Jason,
+> >>>>
+> >>>>> -----Original Message-----
+> >>>>> From: Duan, Zhenzhong
+> >>>>> Subject: RE: [PATCH] intel_iommu: Use the latest fault reasons defined
+> >by
+> >>>>> spec
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>>> -----Original Message-----
+> >>>>>> From: Jason Wang <jasowang@redhat.com>
+> >>>>>> Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
+> >defined by
+> >>>>>> spec
+> >>>>>>
+> >>>>>> On Fri, May 24, 2024 at 4:41 PM Duan, Zhenzhong
+> >>>>>> <zhenzhong.duan@intel.com> wrote:
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>> -----Original Message-----
+> >>>>>>>> From: Jason Wang <jasowang@redhat.com>
+> >>>>>>>> Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
+> >defined
+> >>>>> by
+> >>>>>>>> spec
+> >>>>>>>>
+> >>>>>>>> On Tue, May 21, 2024 at 6:25 PM Duan, Zhenzhong
+> >>>>>>>> <zhenzhong.duan@intel.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>>> -----Original Message-----
+> >>>>>>>>>> From: Jason Wang <jasowang@redhat.com>
+> >>>>>>>>>> Subject: Re: [PATCH] intel_iommu: Use the latest fault reasons
+> >>>>> defined
+> >>>>>> by
+> >>>>>>>>>> spec
+> >>>>>>>>>>
+> >>>>>>>>>> On Mon, May 20, 2024 at 12:15 PM Liu, Yi L <yi.l.liu@intel.com>
+> >>>>>> wrote:
+> >>>>>>>>>>>
+> >>>>>>>>>>>> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> >>>>>>>>>>>> Sent: Monday, May 20, 2024 11:41 AM
+> >>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>>> -----Original Message-----
+> >>>>>>>>>>>>> From: Jason Wang <jasowang@redhat.com>
+> >>>>>>>>>>>>> Sent: Monday, May 20, 2024 8:44 AM
+> >>>>>>>>>>>>> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> >>>>>>>>>>>>> Cc: qemu-devel@nongnu.org; Liu, Yi L <yi.l.liu@intel.com>;
+> >Peng,
+> >>>>>>>> Chao
+> >>>>>>>>>> P
+> >>>>>>>>>>>>> <chao.p.peng@intel.com>; Yu Zhang
+> >>>>>> <yu.c.zhang@linux.intel.com>;
+> >>>>>>>>>> Michael
+> >>>>>>>>>>>>> S. Tsirkin <mst@redhat.com>; Paolo Bonzini
+> >>>>>>>> <pbonzini@redhat.com>;
+> >>>>>>>>>>>>> Richard Henderson <richard.henderson@linaro.org>;
+> >Eduardo
+> >>>>>>>> Habkost
+> >>>>>>>>>>>>> <eduardo@habkost.net>; Marcel Apfelbaum
+> >>>>>>>>>> <marcel.apfelbaum@gmail.com>
+> >>>>>>>>>>>>> Subject: Re: [PATCH] intel_iommu: Use the latest fault
+> >reasons
+> >>>>>>>> defined
+> >>>>>>>>>> by
+> >>>>>>>>>>>>> spec
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> On Fri, May 17, 2024 at 6:26 PM Zhenzhong Duan
+> >>>>>>>>>>>>> <zhenzhong.duan@intel.com> wrote:
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> From: Yu Zhang <yu.c.zhang@linux.intel.com>
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> Currently we use only VTD_FR_PASID_TABLE_INV as fault
+> >>>>>> reason.
+> >>>>>>>>>>>>>> Update with more detailed fault reasons listed in VT-d spec
+> >>>>>> 7.2.3.
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
+> >>>>>>>>>>>>>> Signed-off-by: Zhenzhong Duan
+> ><zhenzhong.duan@intel.com>
+> >>>>>>>>>>>>>> ---
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> I wonder if this could be noticed by the guest or not. If yes
+> >>>>> should
+> >>>>>>>>>>>>> we consider starting to add thing like version to vtd
+> >emulation
+> >>>>>> code?
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Kernel only dumps the reason like below:
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> DMAR: [DMA Write NO_PASID] Request device [20:00.0] fault
+> >>>>> addr
+> >>>>>>>>>> 0x1234600000
+> >>>>>>>>>>>> [fault reason 0x71] SM: Present bit in first-level paging entry
+> >is
+> >>>>>> clear
+> >>>>>>>>>>>
+> >>>>>>>>>>> Yes, guest kernel would notice it as the fault would be injected
+> >to
+> >>>>> vm.
+> >>>>>>>>>>>
+> >>>>>>>>>>>> Maybe bump 1.0 -> 1.1?
+> >>>>>>>>>>>> My understanding version number is only informational and
+> >is
+> >>>>> far
+> >>>>>>>> from
+> >>>>>>>>>>>> accurate to mark if a feature supported. Driver should check
+> >>>>>> cap/ecap
+> >>>>>>>>>>>> bits instead.
+> >>>>>>>>>>>
+> >>>>>>>>>>> Should the version ID here be aligned with VT-d spec?
+> >>>>>>>>>>
+> >>>>>>>>>> Probably, this might be something that could be noticed by the
+> >>>>>>>>>> management to migration compatibility.
+> >>>>>>>>>
+> >>>>>>>>> Could you elaborate what we need to do for migration
+> >compatibility?
+> >>>>>>>>> I see version is already exported so libvirt can query it, see:
+> >>>>>>>>>
+> >>>>>>>>>      DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
+> >>>>>>>>
+> >>>>>>>> It is the Qemu command line parameters not the version of the
+> >vmstate.
+> >>>>>>>>
+> >>>>>>>> For example -device intel-iommu,version=3.0
+> >>>>>>>>
+> >>>>>>>> Qemu then knows it should behave as 3.0.
+> >>>>>>>
+> >>>>>>> So you want to bump vtd_vmstate.version?
+> >>>>>>
+> >>>>>> Well, as I said, it's not a direct bumping.
+> >>>>>>
+> >>>>>>>
+> >>>>>>> In fact, this series change intel_iommu property from x-scalable-
+> >>>>>> mode=["on"|"off"]"
+> >>>>>>> to x-scalable-mode=["legacy"|"modern"|"off"]".
+> >>>>>>>
+> >>>>>>> My understanding management app should use same qemu cmdline
+> >>>>>>> in source and destination, so compatibility is already guaranteed
+> >even if
+> >>>>>>> we don't bump vtd_vmstate.version.
+> >>>>>>
+> >>>>>> Exactly, so the point is to
+> >>>>>>
+> >>>>>> vtd=3.0, the device works exactly as vtd spec 3.0.
+> >>>>>> vtd=3.3, the device works exactly as vtd spec 3.3.
+> >>>>
+> >>>> Yi just found version ID stored in VT-d VER_REG is not aligned with the
+> >VT-d spec version.
+> >>>> For example, we see a local hw with vtd version 6.0 which is beyond VT-
+> >d spec version.
+> >>>> We are asking VTD arch, will get back soon.
+> >>>>
+> >>>> Or will you plan qemu vVT-d having its own version policy?
+> >>>>
+> >>>> Thanks
+> >>>> Zhenzhong
+> >>>
+> >>> Not unless there's a good reason to do this.
+> >>
+> >> +1
+> >
+> >Had more studying in the spec. Bumping up to 3.0 might not be trivial. :(
+> >
+> >The VT-d spec has some requirements based on the version number. Below
+> >is a
+> >list of it. Although they are defined for hardware, but vVT-d may need to
+> >respect it as the same iommu driver runs for both the vVT-d and the hw
+> >VT-d. Per 1), if bumping up the major value to be 6 or higher, the vVT-d
+> >needs to ensure the register-based invalidation interface is not available.
+> >Per 2), if bump up the major version to be 2 or higher, the vVT-d needs to
+> >by default drain write and read requests no matter the software requests it
+> >or not.
+> >
+> >1) Chapter 6.5 Invalidation of Translation Caches
+> >
+> >For software to invalidate the various caching structures, the architecture
+> >supports the following two
+> >types of invalidation interfaces:
+> >• Register-based invalidation interface: A legacy invalidation interface
+> >with limited capabilities.
+> >This interface is supported by hardware implementations of this
+> >architecture with Major Version 5
+> >or lower (VER_REG). In all other hardware implementations, all requests are
+> >treated as invalid
+> >requests and will be ignored (for details see the CAIG field in the Context
+> >Command Register and
+> >the IAIG field in the IOTLB Invalidate Register).
+> >
+> >2) Chapter 6.5.2.3 IOTLB Invalidate
+> >• Drain Reads (DR): Software sets this flag to indicate hardware must drain
+> >read requests that are
+> >already processed by the remapping hardware, but queued within the
+> >Root-Complex to be
+> >completed. When the value of this flag is 1, hardware must drain the
+> >relevant reads before the
+> >next Invalidation Wait Descriptor (see Section 6.5.2.8) is completed.
+> >Section 6.5.4 describes
+> >hardware support for draining. Hardware implementations with Major
+> >Version
+> >2 or higher
+> >(VER_REG) will ignore this flag and always drain relevant reads before the
+> >next Invalidation Wait
+> >Descriptor is completed.
+> >• Drain Writes (DW): Software sets this flag to indicate hardware must
+> >drain relevant write
+> >requests that are already processed by the remapping hardware, but queued
+> >within the RootComplex to be completed. When the value of this flag is 1,
+> >hardware must drain the relevant
+> >writes before the next Invalidation Wait Descriptor is completed. Section
+> >6.5.4 describes
+> >hardware support for draining. Hardware implementations with Major
+> >Version
+> >2 or higher
+> >(VER_REG) will ignore this flag and always drain relevant writes before the
+> >next Invalidation Wait
+> >Descriptor is completed.
+> >
+> >3) Chapter 11.4.2 Capability Register
+> >Hardware implementations with Major Version 6 or higher
+> >(VER_REG) reporting the second-stage translation support (SSTS)
+> >field as Clear also report this field as 0.
+> >
+> >4) Chapter 11.4.8.1 Protected Memory Enable Register
+> >• Hardware implementations with Major Version 2 or higher
+> >(VER_REG) block all DMA requests accessing protected
+> >memory regions whether or not DMA remapping is
+> >enabled.
+> >
+> >Also, as replied in the prior email, the VT-d architecture reports
+> >capability via the cap/ecap registers. The new fault reasons in this
+> >patch is meaningful only when the ecap.SMTS bit is set. So bumping version
+> >does not mean too much about the introduction of new capabilities. @Jason,
+> >given the above statements, can we reconsider if it is necessary to bump
+> >up the version number?
+> >
+> >--
+> >Regards,
+> >Yi Liu
 
 
