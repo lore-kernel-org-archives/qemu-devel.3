@@ -4,95 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505D1C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1DBC3DA62
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUAGO-0005iC-Ax; Wed, 17 Jul 2024 15:24:32 -0400
+	id 1sUAZG-00064M-Jh; Wed, 17 Jul 2024 15:44:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUAGL-0005hL-Tc
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:24:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUAGI-0001fQ-SR
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:24:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721244265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUAZE-00063k-JC
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:44:00 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUAZB-0000rq-8d
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:43:59 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8429121A6C;
+ Wed, 17 Jul 2024 19:43:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721245435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UfDqO5QDUfjaxADAITl7zzYhGnjVqqYIrR+bZVUltNo=;
- b=JTtK678t38m9LaWEzaP5SAoVR6NkZXTKw28xNdvdNR+6+oQEOz+DF7ywLhJgCykTpHYOg4
- JU8CleKaPLtEtcRuXIR3AjfLrkLczANNtTfPRRubp39E4rYWDAs0YyYHMznIXUtG6ecM9z
- b6zbPAJrOKe7CMzZA8fxgUe6IvGFVmM=
-Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
- [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-p07J1NqGO5-GJ29l1GP22Q-1; Wed, 17 Jul 2024 15:24:24 -0400
-X-MC-Unique: p07J1NqGO5-GJ29l1GP22Q-1
-Received: by mail-oa1-f71.google.com with SMTP id
- 586e51a60fabf-2502a80477bso16641fac.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:24:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721244263; x=1721849063;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UfDqO5QDUfjaxADAITl7zzYhGnjVqqYIrR+bZVUltNo=;
- b=VBnZiFOi/DmA1548i35n9H07thoLVgKY0+Ti43q4/qLdqZu/iqgdHsPmP3PTqsJrnL
- fu1FC9s63vhZzao5yIXVRAUykTC4AO2PKA/xC/C+rEqwOSodJfijz0FcCFcs8YphCZ7/
- ZNUgSi6s7eJd3DMtSQSsiQ7894JEBYUgeaaBDFOg5OJB4XEXOqAKpUhzJqdJydHUCUn3
- V/q3acaXnSUtU1MU0ChgjookBX0Vp9frb23w5qnSoWFC3CZhTxttTMqlKQfrbxpXGExY
- Ou5PtbLye4CDxcgM7PjOXXwx4DoGqneo9cnFGRpkHk3OfGjzaqzXh5zM7sRRoTRJgtBd
- Jc0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5Lpl8CWoP5v652u+MQSZsQ7AYvi8fXAz9Azn8I3hIxhe4Xkx92LvIdx8PdxwP9RHP0DkBDRrHlqHzUdYtFEZRILErpjM=
-X-Gm-Message-State: AOJu0YyDmrLzYLW0DAD0Lm/UcKcpJUd9bm/onN4yZ3xFGLHXbMJNC5KZ
- cOjU+5z7Eb4o1CrowYvAyTGrdACKWmtf7mDP3yzTYLyrijd5v/eszMTSZNEDATS85NaHJDBCoRj
- QUFiXZLfKTphWrq/9A/DuS19BVIm0eTCy9KGxAS7MUT9w3E0SuTyZ
-X-Received: by 2002:a05:6870:d888:b0:260:23eb:5669 with SMTP id
- 586e51a60fabf-260ee6278efmr308281fac.2.1721244263474; 
- Wed, 17 Jul 2024 12:24:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH19Dq20+NleW9Az/Rnqg1yvRtVC50M3OPEr7oHMXP0ziHMbVNH1Fp/WoI7W/3QHg6Mkz97YA==
-X-Received: by 2002:a05:6870:d888:b0:260:23eb:5669 with SMTP id
- 586e51a60fabf-260ee6278efmr308267fac.2.1721244263101; 
- Wed, 17 Jul 2024 12:24:23 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a160bbe360sm439456785a.30.2024.07.17.12.24.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 12:24:22 -0700 (PDT)
-Date: Wed, 17 Jul 2024 15:24:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
-Message-ID: <ZpgaZPxKzwcVAYZn@x1n>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
- <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
+ bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
+ b=oX4+q8ookrINQI6zfUqgEMfx1h+wK/gtImYHZlJDnuqWjYOx0+GceYIswMNUp9DsRIQEJR
+ hrPwhGZ1w3OYCojF7yEWkL3nd255Q8VTklRwNIIidyeV7t5gPH4MgTQ5foFMeWhhL30tlm
+ 2u3XVEwQqGAE/jpgw02f31tOtHxEJuY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721245435;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
+ b=ZqZLumENBdUbzS9U/qoQGqLwWXwxWi6e3ZVqcKM9Lg/pzrsoYjd5yfQ1CyEzPzJQz5wndq
+ aSlfcoexNf/1l8Ag==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721245435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
+ b=oX4+q8ookrINQI6zfUqgEMfx1h+wK/gtImYHZlJDnuqWjYOx0+GceYIswMNUp9DsRIQEJR
+ hrPwhGZ1w3OYCojF7yEWkL3nd255Q8VTklRwNIIidyeV7t5gPH4MgTQ5foFMeWhhL30tlm
+ 2u3XVEwQqGAE/jpgw02f31tOtHxEJuY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721245435;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
+ b=ZqZLumENBdUbzS9U/qoQGqLwWXwxWi6e3ZVqcKM9Lg/pzrsoYjd5yfQ1CyEzPzJQz5wndq
+ aSlfcoexNf/1l8Ag==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 048FE136E5;
+ Wed, 17 Jul 2024 19:43:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id wnDPLvoemGbhXgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 17 Jul 2024 19:43:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>
+Subject: Re: [PATCH v5 08/13] migration/multifd: Add new migration option
+ for multifd DSA offloading.
+In-Reply-To: <87y1603n21.fsf@suse.de>
+References: <20240711215244.19237-1-yichen.wang@bytedance.com>
+ <20240711215244.19237-9-yichen.wang@bytedance.com>
+ <CAHObMVZ1rifLMe-6R_Lttu_aOWDPvqv29sa6p_gz_7HROn00Tg@mail.gmail.com>
+ <87y1603n21.fsf@suse.de>
+Date: Wed, 17 Jul 2024 16:43:52 -0300
+Message-ID: <87plrb2493.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.30 / 50.00];
+ NEURAL_HAM_SHORT(-0.20)[-0.995]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[16]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,62 +131,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 11:19:55AM +0200, Igor Mammedov wrote:
-> On Sun, 30 Jun 2024 12:40:24 -0700
-> Steve Sistare <steven.sistare@oracle.com> wrote:
-> 
-> > Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
-> > on the value of the anon-alloc machine property.  This affects
-> > memory-backend-ram objects, guest RAM created with the global -m option
-> > but without an associated memory-backend object and without the -mem-path
-> > option
-> nowadays, all machines were converted to use memory backend for VM RAM.
-> so -m option implicitly creates memory-backend object,
-> which will be either MEMORY_BACKEND_FILE if -mem-path present
-> or MEMORY_BACKEND_RAM otherwise.
-> 
-> 
-> > To access the same memory in the old and new QEMU processes, the memory
-> > must be mapped shared.  Therefore, the implementation always sets
-> 
-> > RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
-> > user must explicitly specify the share option.  In lieu of defining a new
-> so statement at the top that memory-backend-ram is affected is not
-> really valid? 
-> 
-> > RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
-> > as the condition for calling memfd_create.
-> 
-> In general I do dislike adding yet another option that will affect
-> guest RAM allocation (memory-backends  should be sufficient).
+Fabiano Rosas <farosas@suse.de> writes:
 
-I shared the same concern when reviewing the previous version, and I keep
-having so.
+> Yichen Wang <yichen.wang@bytedance.com> writes:
+>
+>> On Thu, Jul 11, 2024 at 2:53=E2=80=AFPM Yichen Wang <yichen.wang@bytedan=
+ce.com> wrote:
+>>
+>>> diff --git a/migration/options.c b/migration/options.c
+>>> index 645f55003d..f839493016 100644
+>>> --- a/migration/options.c
+>>> +++ b/migration/options.c
+>>> @@ -29,6 +29,7 @@
+>>>  #include "ram.h"
+>>>  #include "options.h"
+>>>  #include "sysemu/kvm.h"
+>>> +#include <cpuid.h>
+>>>
+>>>  /* Maximum migrate downtime set to 2000 seconds */
+>>>  #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
+>>> @@ -162,6 +163,10 @@ Property migration_properties[] =3D {
+>>>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationSt=
+ate,
+>>>                         parameters.zero_page_detection,
+>>>                         ZERO_PAGE_DETECTION_MULTIFD),
+>>> +    /* DEFINE_PROP_ARRAY("dsa-accel-path", MigrationState, x, */
+>>> +    /*                    parameters.dsa_accel_path, qdev_prop_string,=
+ char *), */
+>
+> This is mostly correct, I think, you just need to create a field in
+> MigrationState to keep the length (instead of x). However, I found out
+> just now that this only works with QMP. Let me ask for other's
+> opinions...
+>
+>>> +    /* DEFINE_PROP_STRING("dsa-accel-path", MigrationState, */
+>>> +    /*                    parameters.dsa_accel_path), */
+>>>
+>>>      /* Migration capabilities */
+>>>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+>>
+>> I changed the dsa-accel-path to be a ['str'], i.e. strList* in C.
+>> However, I am having a hard time about how to define the proper
+>> properties here. I don't know what MACRO to use and I can't find good
+>> examples... Need some guidance about how to proceed. Basically I will
+>> need this to pass something like '-global
+>> migration.dsa-accel-path=3D"/dev/dsa/wq0.0"' in cmdline, or
+>> "migrate_set_parameter dsa-accel-path" in QEMU CLI. Don't know how to
+>> pass strList there.
+>>
+>> Thanks very much!
+>
+> @Daniel, @Markus, any idea here?
+>
+> If I'm reading this commit[1] right, it seems we decided to disallow
+> passing of arrays without JSON, which affects -global on the
+> command-line and HMP.
+>
+> 1- b06f8b500d (qdev: Rework array properties based on list visitor,
+> 2023-11-09)
+>
+> QMP shell:
+> (QEMU) migrate-set-parameters dsa-accel-path=3D['a','b']
+> {"return": {}}
+>
+> HMP:
+> (qemu) migrate_set_parameter dsa-accel-path "['a','b']"
+> qemu-system-x86_64: ../qapi/string-input-visitor.c:343: parse_type_str:
+> Assertion `siv->lm =3D=3D LM_NONE' failed.
+>
+> Any recommendation? I believe all migration parameters so far can be set
+> via those means, I don't think we can allow only this one to be
+> QMP-only.
+>
+> Or am I just missing something?
 
-> 
-> However I do see that you need memfd for device memory (vram, roms, ...).
-> Can we just use memfd/shared unconditionally for those and
-> avoid introducing a new confusing option?
+I guess we could just skip adding property like Steve did here:
 
-ROMs should be fine IIUC, as they shouldn't be large, and they can be
-migrated normally (because they're not DMA target from VFIO assigned
-devices).  IOW, per my understanding what must be shared via memfd is
-writable memories that can be DMAed from a VFIO device.
-
-I raised such question on whether / why vram can be a DMA target, but I
-didn't get a response.  So I would like to redo this comment: I think we
-should figure out what is missing when we switch all backends to use
--object, rather than adding this flag easily.  When added, we should be
-crystal clear on which RAM region will be applicable by this flag.
-
-PS to Steve: and I think I left tons of other comments in previous version
-outside this patch too, but I don't think they're fully discussed when this
-series was sent.  I can re-read the series again, but I don't think it'll
-work out if we keep skipping discussions..
-
-Thanks,
-
--- 
-Peter Xu
-
+https://lore.kernel.org/r/1719776434-435013-10-git-send-email-steven.sistar=
+e@oracle.com
 
