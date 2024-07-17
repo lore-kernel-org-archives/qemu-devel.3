@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BE2C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 05:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CB9C3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 05:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTwpT-0000S1-Pf; Wed, 17 Jul 2024 01:03:51 -0400
+	id 1sTwqB-00030J-2j; Wed, 17 Jul 2024 01:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTwpS-0000L3-2Y
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:03:50 -0400
+ id 1sTwpm-0001ha-UO
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:04:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sTwpP-0001xc-1w
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:03:49 -0400
+ id 1sTwpj-00020b-8A
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 01:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721192626;
+ s=mimecast20190719; t=1721192645;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MiZsDxj20LLlzrMi2/7wvwlwKsAWITaw1ARYKEIkALs=;
- b=aMIBozwBpoMPiQWyEx0xcxOQo/5N40J66hk1hNt43FIlC9eP9bGhxBHl15cKxZ7FRKvplv
- R3hItdq4nwGjZL8vI3d8vuzrECxwxAna4vQSU0qeHJQd87EV6w7ua3oMDjiriPbxVUS7mI
- GAyiJZGJzcDz1rlGmfaquvQT6hvQpw0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zysmERLOD7LqFn2JG/XTo8hRSGrS1y0PB/cgSbGIed8=;
+ b=FxTUQAjZNwVigzM7Vxu6NRxzxhHbwtl3CpiZJVrLg4xMUD84hGEoLClvHLd6CXJjauYezr
+ Y6QdVD1dfmrdXrNuWy3TmZSoWvlF01KTSMMStWnr2pZG5ZGi63jAGWEroqBlZhiiyobiIj
+ 6pTldE5BEZ7IG/Vem9HaZH+heSAeQQg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-349-aq3PH_YnPIaxNUUrl5YLLA-1; Wed, 17 Jul 2024 01:03:44 -0400
-X-MC-Unique: aq3PH_YnPIaxNUUrl5YLLA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-36835f6ebdcso75958f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 22:03:44 -0700 (PDT)
+ us-mta-197-sZJdK71PNhGR5_K67R6Pbw-1; Wed, 17 Jul 2024 01:04:03 -0400
+X-MC-Unique: sZJdK71PNhGR5_K67R6Pbw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-426d0bead0aso46484945e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 22:04:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721192622; x=1721797422;
+ d=1e100.net; s=20230601; t=1721192642; x=1721797442;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MiZsDxj20LLlzrMi2/7wvwlwKsAWITaw1ARYKEIkALs=;
- b=G8dlro5P8aNg9upNtpPwzDgZ8KIBJMDXBI0irVI/inlE3NE6rPYtc+yetgiDTqLdtv
- MP3r2KrvCwwf9tiNeOrQp1ltHckIok+Wix67/6zBBDXH1bRZ27kyNwFa/EorjIi0ivoW
- Q6pVTvKQVj+9AnO+OCyQLxVC0OEcrtg7UMLdnDJ9jjTl46m3U/xvASft7Gy1J2eVOqrN
- P0qsI4PXS112ndVAtxd+AWYfOS5qfZbb06iqBF2hmDHDn4WvVWpZfqEmG4xcudnP2Fdo
- /c7FlNRq5DMU/RpzcejlKIEvhWWge6iTYnAuwFCBVUueSlWlPzeSbcThRcuyEjsELlh4
- QGkQ==
-X-Gm-Message-State: AOJu0Yw5GwOs6YPr9LYrMhxEAgIW5PlMHcEJHn0Whp/3SevU5JmCltkr
- GAwtiaXp84UvsAIhui+um9Kq9aUFRRrVzlE/kRFFxkuHQH8T1yvbjtqgMY4h5VxeQoWpdQJNgLm
- 2yTbwUnsIXWo3yvH9cHjS1pw7Gd5DyPQfAehbHcgS7u8aeFlHphYlUK7idTTG8sl3SfGOS+tB4F
- p+XEtrbaozctOGuYglIFj18xejA75c4zX0yBat
-X-Received: by 2002:a5d:526b:0:b0:367:9522:5e70 with SMTP id
- ffacd0b85a97d-3683170e342mr428168f8f.52.1721192622671; 
- Tue, 16 Jul 2024 22:03:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGg+xzseiguqIS0pY0p8S+8AYayez7L3kuE7gxLZP5LYWbQArHCdhyVRIp3UTLQEtD/M6nJcQ==
-X-Received: by 2002:a5d:526b:0:b0:367:9522:5e70 with SMTP id
- ffacd0b85a97d-3683170e342mr428153f8f.52.1721192622352; 
- Tue, 16 Jul 2024 22:03:42 -0700 (PDT)
+ bh=zysmERLOD7LqFn2JG/XTo8hRSGrS1y0PB/cgSbGIed8=;
+ b=ghUCFQNlZUqxFbi7YQw1pEYT8KE0Kk7b5F1l6WepDjS4VGPSUMkRmu/pg9g74UzwVu
+ GhQZNWe5ItV3B3YuIt58vv1xkt77oaTmq/U2v7JNftvkjFva2vQxDf5Fqmd8Lg5YhJJp
+ gxcVJdwxQUBHZX370zaXHYjnnNBCXzC/oCEz5Foq99JrytvOcCaG1xFAjVDK+nRoRt1F
+ E/0piJ/darAAKsgf8BqW1sBvPOtNoQ0Xy4NY/xLF1GRbwWajlUC7EVdJmrFNrq5WNSTg
+ dSjCYMoXV0TAp22ZLtMH/QO9KtRvQsa+aOpXAcliZIXV2BkEHkOV0nQu2WPYqbjdcFm3
+ Ko+A==
+X-Gm-Message-State: AOJu0YzeBgCTKYqX5PSSgOWgrmTrpZfLp32NJfJ7nlCbkKW6+Rc8MWKk
+ EHgmFuRYslJ/5+CphwS4NzfhCom+wVzdU7ouNYoorgDQFFD2urIFqaRPT5akbTmFsyMOrm8R0WW
+ mNZhSbgjGJ6IorcAkQedpSnJQgPpmjyzzXA2AIpXoqzRPt8tXQRMBgSDrn5xHiVK2Q6YFtUSWKg
+ Z4tHT88EW7Dabrkdys6rVArdF4++LkrK74onpC
+X-Received: by 2002:a05:600c:b8e:b0:426:6edf:6597 with SMTP id
+ 5b1f17b1804b1-427c2cb563bmr2989595e9.19.1721192642354; 
+ Tue, 16 Jul 2024 22:04:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8M2wlTqxVCxVolKnlhAe9gOdS0ZCl7n9PZPaMlm8ykk7/w7WhcFj4y4iCaR4irQpTJHZRgA==
+X-Received: by 2002:a05:600c:b8e:b0:426:6edf:6597 with SMTP id
+ 5b1f17b1804b1-427c2cb563bmr2989395e9.19.1721192641979; 
+ Tue, 16 Jul 2024 22:04:01 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680dabf539sm10677999f8f.47.2024.07.16.22.03.40
+ 5b1f17b1804b1-427bb99a23dsm37140505e9.1.2024.07.16.22.04.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 22:03:40 -0700 (PDT)
+ Tue, 16 Jul 2024 22:04:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/20] disas: Fix build against Capstone v6
-Date: Wed, 17 Jul 2024 07:03:14 +0200
-Message-ID: <20240717050331.295371-5-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 12/20] target/i386/tcg: Remove SEG_ADDL
+Date: Wed, 17 Jul 2024 07:03:22 +0200
+Message-ID: <20240717050331.295371-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240717050331.295371-1-pbonzini@redhat.com>
 References: <20240717050331.295371-1-pbonzini@redhat.com>
@@ -104,38 +102,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Capstone v6 made major changes, such as renaming for AArch64, which
-broke programs using the old headers, like QEMU. However, Capstone v6
-provides the CAPSTONE_AARCH64_COMPAT_HEADER compatibility definition
-allowing to build against v6 with the old definitions, so fix the QEMU
-build using it.
+This truncation is now handled by MMU_*32_IDX.  The introduction of
+MMU_*32_IDX in fact applied correct 32-bit wraparound to 16-bit accesses
+with a high segment base (e.g.  big real mode or vm86 mode), which did
+not use SEG_ADDL.
 
-We can lift that definition and switch to the new naming once our
-supported distros have Capstone v6 in place.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20240715213943.1210355-1-gustavo.romero@linaro.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240617161210.4639-3-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/disas/capstone.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/tcg/seg_helper.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index e29068dd977..a11985151d3 100644
---- a/include/disas/capstone.h
-+++ b/include/disas/capstone.h
-@@ -3,6 +3,7 @@
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index aee3d19f29b..19d6b41a589 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -579,10 +579,6 @@ int exception_has_error_code(int intno)
+     } while (0)
+ #endif
  
- #ifdef CONFIG_CAPSTONE
+-/* in 64-bit machines, this can overflow. So this segment addition macro
+- * can be used to trim the value to 32-bit whenever needed */
+-#define SEG_ADDL(ssp, sp, sp_mask) ((uint32_t)((ssp) + (sp & (sp_mask))))
+-
+ /* XXX: add a is_user flag to have proper security support */
+ #define PUSHW_RA(ssp, sp, sp_mask, val, ra)                      \
+     {                                                            \
+@@ -593,7 +589,7 @@ int exception_has_error_code(int intno)
+ #define PUSHL_RA(ssp, sp, sp_mask, val, ra)                             \
+     {                                                                   \
+         sp -= 4;                                                        \
+-        cpu_stl_kernel_ra(env, SEG_ADDL(ssp, sp, sp_mask), (uint32_t)(val), ra); \
++        cpu_stl_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
+     }
  
-+#define CAPSTONE_AARCH64_COMPAT_HEADER
- #include <capstone.h>
+ #define POPW_RA(ssp, sp, sp_mask, val, ra)                       \
+@@ -604,7 +600,7 @@ int exception_has_error_code(int intno)
  
- #else
+ #define POPL_RA(ssp, sp, sp_mask, val, ra)                              \
+     {                                                                   \
+-        val = (uint32_t)cpu_ldl_kernel_ra(env, SEG_ADDL(ssp, sp, sp_mask), ra); \
++        val = (uint32_t)cpu_ldl_kernel_ra(env, (ssp) + (sp & (sp_mask)), ra); \
+         sp += 4;                                                        \
+     }
+ 
 -- 
 2.45.2
 
