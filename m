@@ -4,107 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54308C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A289C3DA62
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU9sB-0002kW-FW; Wed, 17 Jul 2024 14:59:31 -0400
+	id 1sU9tM-0004CS-W9; Wed, 17 Jul 2024 15:00:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU9sA-0002ju-1j
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:59:30 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sU9s8-00079e-Cc
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 14:59:29 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id F26DD1FB95;
- Wed, 17 Jul 2024 18:59:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721242766; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9tD-0003vR-7U
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:00:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9t5-0007ds-QB
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:00:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721242821;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ncSEfsOJfx2E+4pcYlKkEddskH3Z2xRKZgUBWUzYmcU=;
- b=Aggg5LiabgxsvIeJVvOilc05VXWWEkrHjNy98XnK6M0vNV/PJXLoMpd3N/9S6+elhtvbLN
- 3v1cy6Rfh8mxBXGwgIkLLCcNto3uiEXxsBeXWsLjLGh4b9kOhebzEk8iaCxmZVRKKICAOW
- Dx/EqZmraii8zTySGYl+lawPIeKz8Ag=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721242766;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ncSEfsOJfx2E+4pcYlKkEddskH3Z2xRKZgUBWUzYmcU=;
- b=wB4K4x5Rvs1BKC0QScKXxGzJWUM1LOsDkY/AhQ+TQyllJlv3jL6X9+tkp4sA23oSA3m2bS
- Bpcr+tVxAGcwFMCQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721242766; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ncSEfsOJfx2E+4pcYlKkEddskH3Z2xRKZgUBWUzYmcU=;
- b=Aggg5LiabgxsvIeJVvOilc05VXWWEkrHjNy98XnK6M0vNV/PJXLoMpd3N/9S6+elhtvbLN
- 3v1cy6Rfh8mxBXGwgIkLLCcNto3uiEXxsBeXWsLjLGh4b9kOhebzEk8iaCxmZVRKKICAOW
- Dx/EqZmraii8zTySGYl+lawPIeKz8Ag=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721242766;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ncSEfsOJfx2E+4pcYlKkEddskH3Z2xRKZgUBWUzYmcU=;
- b=wB4K4x5Rvs1BKC0QScKXxGzJWUM1LOsDkY/AhQ+TQyllJlv3jL6X9+tkp4sA23oSA3m2bS
- Bpcr+tVxAGcwFMCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71A1E1368F;
- Wed, 17 Jul 2024 18:59:25 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sSLSDY0UmGbjUwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Jul 2024 18:59:25 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Steve Sistare
- <steven.sistare@oracle.com>
-Subject: Re: [PATCH V2 04/11] migration: stop vm earlier for cpr
-In-Reply-To: <1719776434-435013-5-git-send-email-steven.sistare@oracle.com>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-5-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 17 Jul 2024 15:59:22 -0300
-Message-ID: <87sew726b9.fsf@suse.de>
+ bh=WAbu6UELS1/Ok+sQOTByC2rzCuZxD9s0KMXpmPyD+MA=;
+ b=X0RDO+/5Wd3XAPXdrWKPEhYfEMdZM/6TyBYeZb6sP9KlnTEqiYefLDlEkeUwGStl/R4vU+
+ u4cBDM4ICoeRitgeWjmh0eMenzgzH1B+ANXrDd+XLIwrkeN031NGUWy450X6T1gypuBsbz
+ obPBhpusei0IC4YfK5S3uxLqwIl+tvI=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-ouRWPxyWNHKTEmKzM_fOWA-1; Wed, 17 Jul 2024 15:00:18 -0400
+X-MC-Unique: ouRWPxyWNHKTEmKzM_fOWA-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-25e6630f94fso7890fac.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:00:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721242818; x=1721847618;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WAbu6UELS1/Ok+sQOTByC2rzCuZxD9s0KMXpmPyD+MA=;
+ b=PG94Mj3+gyjrUtdOkeDoGNCzsWmX/T1bpEEpO4MYreHgd7fLruIe6flPadEA2UzWkk
+ aaTLAatRJIKEzlIUSxJnoAkuEbgQqxIV18jLMhYf5z9qr9+I+CvAZMALa3PaksbyMSGM
+ Ov4CLVIuSPLIww5455Cj+KMTjLpiJdVVBrkFzuQNbVKHRInuU4/KGgsCQM8aiUxMd3yw
+ D9Vs2CPuiaG6qVeXUXwHRUiqatH6JGyH7NNqZFEte3WBp3PTN2V8m6dY9Gta6is9UxDM
+ HbiW1Xdsx5RicT9e+hwrKd9DlWTsYW4RflpxOXsuAAPavkPOs9xvz+jFxTSHFuXMVmE7
+ L6zA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnWvhWajBOIcRVgFO0itw9ATCTzVE0m3Zt1IBlRmnTLZOZR2UCUiUaa9qLtSnYYEuIsAy5BGuj/gJBDven7pk9Su+FCzI=
+X-Gm-Message-State: AOJu0Yxy55CI3ZOa454uwUaD0mgrUF64v6RzSJrtm/Bq9Iivejsxmnhu
+ /QtRXvqc24FS3Ff7IQ4tH9nbCej+sFs5K2RyE8mC81L1Z3iULjqsoWEAsFoGjrOQyEK/Kl2KjF9
+ pzEod+lDlsrS8J87ipUgAg+nEbuNPMHMt2KduHx/3MXPT6IChaOBx
+X-Received: by 2002:a05:6870:f295:b0:25e:14d9:da27 with SMTP id
+ 586e51a60fabf-260ee1409f0mr208683fac.0.1721242817800; 
+ Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8PKYOaEymgW8c3/IPlT7vSogaB5vzdi30jW5kln79POc0gcyWlgZh3llNdBHDDUqAx+p4Vw==
+X-Received: by 2002:a05:6870:f295:b0:25e:14d9:da27 with SMTP id
+ 586e51a60fabf-260ee1409f0mr208669fac.0.1721242817414; 
+ Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a160c854f7sm432732485a.130.2024.07.17.12.00.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
+Date: Wed, 17 Jul 2024 15:00:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, "Wang, Lei" <lei4.wang@intel.com>,
+ qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>
+Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
+ the channel parameters
+Message-ID: <ZpgUvsiCB4oP3RLT@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <20240620212111.29319-7-farosas@suse.de>
+ <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com>
+ <Zn15y693g0AkDbYD@x1n> <877cdtfcsi.fsf@suse.de>
+ <Zo7cncqkxB89AUBe@x1n> <87y169dmu3.fsf@suse.de>
+ <53d0ddf0-07f7-430e-a424-b4fcc38a16d0@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCPT_COUNT_SEVEN(0.00)[11]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; TAGGED_RCPT(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org,oracle.com];
- MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <53d0ddf0-07f7-430e-a424-b4fcc38a16d0@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,82 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+On Tue, Jul 16, 2024 at 10:10:25PM +0200, Maciej S. Szmigiero wrote:
+> > > > > The comment I removed is slightly misleading to me too, because right now
+> > > > > active_slot contains the data hasn't yet been delivered to multifd, so
+> > > > > we're "putting it back to free list" not because of it's free, but because
+> > > > > we know it won't get used until the multifd send thread consumes it
+> > > > > (because before that the thread will be busy, and we won't use the buffer
+> > > > > if so in upcoming send()s).
+> > > > > 
+> > > > > And then when I'm looking at this again, I think maybe it's a slight
+> > > > > overkill, and maybe we can still keep the "opaque data" managed by multifd.
+> > > > > One reason might be that I don't expect the "opaque data" payload keep
+> > > > > growing at all: it should really be either RAM or device state as I
+> > > > > commented elsewhere in a relevant thread, after all it's a thread model
+> > > > > only for migration purpose to move vmstates..
+> > > > 
+> > > > Some amount of flexibility needs to be baked in. For instance, what
+> > > > about the handshake procedure? Don't we want to use multifd threads to
+> > > > put some information on the wire for that as well?
+> > > 
+> > > Is this an orthogonal question?
+> > 
+> > I don't think so. You say the payload data should be either RAM or
+> > device state. I'm asking what other types of data do we want the multifd
+> > channel to transmit and suggesting we need to allow room for the
+> > addition of that, whatever it is. One thing that comes to mind that is
+> > neither RAM or device state is some form of handshake or capabilities
+> > negotiation.
+> 
+> The RFC version of my multifd device state transfer patch set introduced
+> a new migration channel header (by Avihai) for clean and extensible
+> migration channel handshaking but people didn't like so it was removed in v1.
 
-> Stop the vm earlier for cpr, to guarantee consistent device state when
-> CPR state is saved.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  migration/migration.c | 22 +++++++++++++---------
->  1 file changed, 13 insertions(+), 9 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 0f47765..8a8e927 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2077,6 +2077,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->      MigrationState *s = migrate_get_current();
->      g_autoptr(MigrationChannel) channel = NULL;
->      MigrationAddress *addr = NULL;
-> +    bool stopped = false;
->  
->      /*
->       * Having preliminary checks for uri and channel
-> @@ -2120,6 +2121,15 @@ void qmp_migrate(const char *uri, bool has_channels,
->          }
->      }
->  
-> +    if (migrate_mode_is_cpr(s)) {
-> +        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-> +        if (ret < 0) {
-> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-> +            goto out;
-> +        }
-> +        stopped = true;
-> +    }
-> +
->      if (cpr_state_save(&local_err)) {
->          goto out;
->      }
-> @@ -2155,6 +2165,9 @@ out:
->          }
->          migrate_fd_error(s, local_err);
->          error_propagate(errp, local_err);
-> +        if (stopped && runstate_is_live(s->vm_old_state)) {
-> +            vm_start();
-> +        }
+Hmm, I'm not sure this is relevant to the context of discussion here, but I
+confess I didn't notice the per-channel header thing in the previous RFC
+series.  Link is here:
 
-What about non-live states? Shouldn't this be:
+https://lore.kernel.org/r/636cec92eb801f13ba893de79d4872f5d8342097.1713269378.git.maciej.szmigiero@oracle.com
 
-if (stopped) {
-   vm_resume();
-}
+Maciej, if you want, you can split that out of the seriess. So far it looks
+like a good thing with/without how VFIO tackles it.
 
->          return;
->      }
->  }
-> @@ -3738,7 +3751,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->      Error *local_err = NULL;
->      uint64_t rate_limit;
->      bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
-> -    int ret;
->  
->      /*
->       * If there's a previous error, free it and prepare for another one.
-> @@ -3810,14 +3822,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->          return;
->      }
->  
-> -    if (migrate_mode_is_cpr(s)) {
-> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-> -        if (ret < 0) {
-> -            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-> -            goto fail;
-> -        }
-> -    }
-> -
->      if (migrate_background_snapshot()) {
->          qemu_thread_create(&s->thread, "mig/snapshot",
->                  bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+Thanks,
+
+-- 
+Peter Xu
+
 
