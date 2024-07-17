@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD61C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E14C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU3dR-0008MA-Jf; Wed, 17 Jul 2024 08:19:53 -0400
+	id 1sU3kR-0004AD-Dy; Wed, 17 Jul 2024 08:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sU3dO-0008FW-Qy
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:19:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sU3kP-00043c-KU
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:27:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sU3dM-0000tz-LS
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:19:50 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sU3kN-0003IQ-T1
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:27:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721218786;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1721219222;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2wCUyz8MS1RSEczJaZkFxh9bu1fvYy48TPOGIcx9XLw=;
- b=aaIQUMzg81eCw9pKRQonmf+XkTT+4G/gvSILLaRUAGbAilR0m5XnBYab1AvjR+K57SRYdT
- iaGQCzC0QXIijnLSjcvgU9DfnZ82qIzD2akUkOJ7oLFaiaD+lvK4GChfNYtnl6nLUY8Pu/
- 5CLrMVEfviDLhpWuTnRVNn8SIMw3aOM=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K86ZMpd5K0+2elzuItPBwAI3hALdjVsTtctEQBSOwWI=;
+ b=SVbNV88XkRv/8JA404fvejKMxFb4PsnO34w7rXvmTFA28qp+nxPr/uu3aBuCqYmcnxnkVQ
+ ZZf3HGPSnTNaSURv2c/gqKPqWG69ebdezECktTmTM7JE/+qgxVrCAN0KMC4dhdNZEr2XSR
+ IYkhv8d6La0hnzFVtvMVDJQLyNbLe8I=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-wi_L3Bm_PdirCZvHRG8KOw-1; Wed, 17 Jul 2024 08:19:45 -0400
-X-MC-Unique: wi_L3Bm_PdirCZvHRG8KOw-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-447f84aadc1so85468891cf.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:19:45 -0700 (PDT)
+ us-mta-134-anojQxp7MFSAKgHs6PCsjQ-1; Wed, 17 Jul 2024 08:26:59 -0400
+X-MC-Unique: anojQxp7MFSAKgHs6PCsjQ-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a141e44419so969619185a.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:26:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721218785; x=1721823585;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2wCUyz8MS1RSEczJaZkFxh9bu1fvYy48TPOGIcx9XLw=;
- b=kbGy/yXXKo8weEcmGMRfdqrA4EJB1+sXel7qWaBuJ9QsVTrKYyCWqrKd1Vd/VW8JIv
- zJBqxBDJCD1MGxnL6poHASKC+06JsnGlInvy5u3WFxSd0l0w4FOrBHZdiXHTCCLOCLFy
- Q5/tMXe2NJ19MXD7dSqbakdlcgFWTTFqgOXXR7po03IZzZe25sdqzCrD1PhWn9M6r7MF
- GC17l1fzeUFjaoRXKCciElQ5d7U/jURiboA2J+W8FDZ4SNGJAnyVmjE4kj99QCh6FTzC
- tHl9H3ctC0x92Cwwx5M+C4cOgJ4ko1RWz8mltq2dHYn9sQ+ncM2szwESP8YuSB3vZA5+
- Yifg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwhMe/DMDYX6iXBREo3lGKuZWIk3doYeb/mBCDUOlHrWZ7MvFmxTPb7fwl7fvKL+DUpRev2hGw8wHQpjK10pDn6Bvm5ys=
-X-Gm-Message-State: AOJu0YxyHh+YRv8SQ9piUOejsi9v/Exp+lRMRprLrgavmHPfHRr5fAON
- URPo//viq5qL/gClGmge87321r8pZ0H5HntKUYYFzaVTJjGWYpm76k8us83FPGNpWFUOHkt1knu
- vAwsJ+wOZtBASQ83mRzcphM590yZkr46OgCHTipx/lsr+RdoEj7e7
-X-Received: by 2002:a05:622a:44b:b0:446:4730:f1a4 with SMTP id
- d75a77b69052e-44f86e6391dmr17782731cf.58.1721218785019; 
- Wed, 17 Jul 2024 05:19:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IECRl9xcGeiSiuWj/TF1FvnIbg5PKmLGMyo5e/35agR1oFo6k2Zqdpiywv1whqBkgAcfwtdMA==
-X-Received: by 2002:a05:622a:44b:b0:446:4730:f1a4 with SMTP id
- d75a77b69052e-44f86e6391dmr17782491cf.58.1721218784599; 
- Wed, 17 Jul 2024 05:19:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44f5b7e32ffsm46756711cf.24.2024.07.17.05.19.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 05:19:43 -0700 (PDT)
-Message-ID: <6b67c303-774a-44cb-bbe0-24df973ab889@redhat.com>
-Date: Wed, 17 Jul 2024 14:19:40 +0200
+ d=1e100.net; s=20230601; t=1721219219; x=1721824019;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K86ZMpd5K0+2elzuItPBwAI3hALdjVsTtctEQBSOwWI=;
+ b=OJrSNmlgOe7nkptPVS+EPSjL4iQ97R261ms+YIIxSiERDdQbsddfXnLDyYeuP9zj5r
+ WaadE+KUnWWE4lZsPspgJUpkHxWkfUoe6L4Dwz1Wgw+driIwEIVHWy5HOW8tvjRNPOXn
+ oKqXymc1YZjSqDR5gIMkORzJuFFiX9jMuEIWF+gkY8cTNym0aLRwtSF6hBe6/wmDM1J4
+ FbRKFHQ/T6Br3lJ1la08YIu4OYfhe19H8Jw/UzdQjyDjnmA74sst66AphB7yt1/I867x
+ +MCYAtUd8XRpgFNqJPPX5tihqomQudc6D2vkHhHa+2HwwIbDZ5oyw3COzH7sKTarkONY
+ FOXw==
+X-Gm-Message-State: AOJu0YwXRxmo57iAMLN9SGCnBwgac/5C9k8YtnlLEtxuzKN8OSYHrugO
+ 5xVD5RVE0kiXbtPb+zg6jpAsBjqIOxND64kFNtRei1ynNfRZNFShk8TWG8TPqEAnjC2fO+vEn7e
+ 8bBZcX9d3BCk2DvkzFQV5LxA7JWtlUXoRJAQwG7BhU34n/PmYJ8Mf
+X-Received: by 2002:a05:620a:2606:b0:79d:569a:6997 with SMTP id
+ af79cd13be357-7a18750bea9mr125695385a.70.1721219218813; 
+ Wed, 17 Jul 2024 05:26:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEy1QQXD+mLNdTDOeR0f30oTY8E3ivcme+UmOuGxoNVzH8w7noylJCgOUOdotBU5oxv8/qoaA==
+X-Received: by 2002:a05:620a:2606:b0:79d:569a:6997 with SMTP id
+ af79cd13be357-7a18750bea9mr125693385a.70.1721219218369; 
+ Wed, 17 Jul 2024 05:26:58 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-57-51-153.retail.telecomitalia.it.
+ [82.57.51.153]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a160c6dc8dsm396303585a.110.2024.07.17.05.26.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 05:26:57 -0700 (PDT)
+Date: Wed, 17 Jul 2024 14:26:52 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, cohuck@redhat.com
+Subject: Re: [PATCH] scripts/checkpatch: emit a warning if an imported file
+ is touched
+Message-ID: <nuvayvskkd2dkne66kfdhuuamofe5s5pykteddccwcuifvrmkv@4kzzdakpr7rd>
+References: <20240717093752.50595-1-sgarzare@redhat.com>
+ <ZpeT-85-AnNidaNC@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/12] vfio/{iommufd,container}: Initialize
- HostIOMMUDeviceCaps during attach_device()
-Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-8-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240712114704.8708-8-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <ZpeT-85-AnNidaNC@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,156 +100,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Joao,
-
-On 7/12/24 13:46, Joao Martins wrote:
-> Fetch IOMMU hw raw caps behind the device and thus move the
-what does mean "Fetch IOMMU hw raw caps behind the device'"
-> HostIOMMUDevice::realize() to be done during the attach of the device. It
-> allows it to cache the information obtained from IOMMU_GET_HW_INFO from
-what do you mean by " It allows it to cache the information obtained
-from IOMMU_GET_HW_INFO from iommufd early on"
-> iommufd early on. However, while legacy HostIOMMUDevice caps
-what does mean "legacy HostIOMMUDevice caps always return true"?
-> always return true and doesn't have dependency on other things, the IOMMUFD
-> backend requires the iommufd FD to be connected and having a devid to be
-> able to query capabilities. Hence when exactly is HostIOMMUDevice
-> initialized inside backend ::attach_device() implementation is backend
-> specific.
+On Wed, Jul 17, 2024 at 10:50:51AM GMT, Daniel P. Berrangé wrote:
+>On Wed, Jul 17, 2024 at 11:37:52AM +0200, Stefano Garzarella wrote:
+>> If a file imported from Linux is touched, emit a warning and suggest
+>> using scripts/update-linux-headers.sh
+>>
+>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>> ---
+>>  scripts/checkpatch.pl | 14 ++++++++++++--
+>>  1 file changed, 12 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+>> index ff373a7083..b0e8266fa2 100755
+>> --- a/scripts/checkpatch.pl
+>> +++ b/scripts/checkpatch.pl
+>> @@ -1374,6 +1374,7 @@ sub process {
+>>  	my $in_header_lines = $file ? 0 : 1;
+>>  	my $in_commit_log = 0;		#Scanning lines before patch
+>>  	my $reported_maintainer_file = 0;
+>> +	my $reported_imported_file = 0;
+>>  	my $non_utf8_charset = 0;
+>>
+>>  	our @report = ();
+>> @@ -1673,8 +1674,17 @@ sub process {
+>>  # ignore non-hunk lines and lines being removed
+>>  		next if (!$hunk_line || $line =~ /^-/);
+>>
+>> -# ignore files that are being periodically imported from Linux
+>> -		next if ($realfile =~ /^(linux-headers|include\/standard-headers)\//);
+>> +# ignore files that are being periodically imported from Linux and emit a warning
+>> +		if ($realfile =~ /^(linux-headers|include\/standard-headers)\//) {
+>> +			if (!$reported_imported_file) {
+>> +				$reported_imported_file = 1;
+>> +				WARN("added, moved or deleted file(s) " .
+>> +				     "imported from Linux, are you using " .
+>> +				     "scripts/update-linux-headers.sh?\n" .
+>> +				     $herecurr);
 >
-> This is in preparation to fetch parse hw capabilities and understand if
-fetch parse?
-> dirty tracking is supported by device backing IOMMU without necessarily
-> duplicating the amount of calls we do to IOMMU_GET_HW_INFO.
-But we move code from generic place to BE specific place?
+>This is a good hint, but can we add a further check that is a fatal error,
+>if the headers are changed in the same commit as non-header changes. When
+>importing headers, they should only ever be in a self-contained patch
+>with nothing else touched.
 
-Sorry I feel really hard to understand the commit msg in general
+Yep, good point! I'll add that check in v2.
 
-Eric
-
-
->
-> Suggested-by: CÃ©dric Le Goater <clg@redhat.com>
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->  include/sysemu/host_iommu_device.h |  1 +
->  hw/vfio/common.c                   | 16 ++++++----------
->  hw/vfio/container.c                |  6 ++++++
->  hw/vfio/iommufd.c                  |  7 +++++++
->  4 files changed, 20 insertions(+), 10 deletions(-)
->
-> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-> index 20e77cf54568..b1e5f4b8ac3e 100644
-> --- a/include/sysemu/host_iommu_device.h
-> +++ b/include/sysemu/host_iommu_device.h
-> @@ -24,6 +24,7 @@
->   */
->  typedef struct HostIOMMUDeviceCaps {
->      uint32_t type;
-> +    uint64_t hw_caps;
-please also update the doc comment
->  } HostIOMMUDeviceCaps;
->  
->  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index b0beed44116e..cc14f0e3fe24 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1544,7 +1544,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->  {
->      const VFIOIOMMUClass *ops =
->          VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-> -    HostIOMMUDevice *hiod;
-> +    HostIOMMUDevice *hiod = NULL;
->  
->      if (vbasedev->iommufd) {
->          ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
-> @@ -1552,21 +1552,17 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->  
->      assert(ops);
->  
-> -    if (!ops->attach_device(name, vbasedev, as, errp)) {
-> -        return false;
-> -    }
->  
-> -    if (vbasedev->mdev) {
-> -        return true;
-> +    if (!vbasedev->mdev) {
-> +        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-> +        vbasedev->hiod = hiod;
->      }
->  
-> -    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-> -    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
-> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
->          object_unref(hiod);
-> -        ops->detach_device(vbasedev);
-> +        vbasedev->hiod = NULL;
->          return false;
->      }
-> -    vbasedev->hiod = hiod;
->  
->      return true;
->  }
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index c27f448ba26e..29da261bbf3e 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -907,6 +907,7 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->                                        AddressSpace *as, Error **errp)
->  {
->      int groupid = vfio_device_groupid(vbasedev, errp);
-> +    HostIOMMUDevice *hiod = vbasedev->hiod;
->      VFIODevice *vbasedev_iter;
->      VFIOGroup *group;
->      VFIOContainerBase *bcontainer;
-> @@ -917,6 +918,11 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->  
->      trace_vfio_attach_device(vbasedev->name, groupid);
->  
-> +    if (hiod &&
-> +        !HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
-> +        return false;
-> +    }
-> +
->      group = vfio_get_group(groupid, as, errp);
->      if (!group) {
->          return false;
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 873c919e319c..d34dc88231ec 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -384,6 +384,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->      Error *err = NULL;
->      const VFIOIOMMUClass *iommufd_vioc =
->          VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
-> +    HostIOMMUDevice *hiod = vbasedev->hiod;
->  
->      if (vbasedev->fd < 0) {
->          devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
-> @@ -401,6 +402,11 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->  
->      space = vfio_get_address_space(as);
->  
-> +    if (hiod &&
-> +        !HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
-> +        return false;
-> +    }
-> +
->      /* try to attach to an existing container in this space */
->      QLIST_FOREACH(bcontainer, &space->containers, next) {
->          container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
-> @@ -722,6 +728,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->  
->      hiod->name = g_strdup(vdev->name);
->      caps->type = type;
-> +    caps->hw_caps = hw_caps;
->  
->      return true;
->  }
+Thanks,
+Stefano
 
 
