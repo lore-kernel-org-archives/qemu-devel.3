@@ -4,204 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA81C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C925C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU3yN-0004mM-ON; Wed, 17 Jul 2024 08:41:33 -0400
+	id 1sU435-0001f1-Iz; Wed, 17 Jul 2024 08:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sU3yJ-0004lW-EF
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:41:27 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sU3yH-0007Tm-HC
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:41:27 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46HCf3lH017995;
- Wed, 17 Jul 2024 12:41:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=h1c+7gU3qyMRHAHdzWXF2mg/UGgRH0y2q9QkTe657z8=; b=
- h0QCBe/L3dV5rWfQ+bouqJgLBFUZU029nXHlN8b89Hd515Gqd/eXSrDKWtTSuapW
- f+tCRL4j18k23gondzrePHpxGCK4dINm67YnpyTkasbaO0IOiHzRlimOMdibkA0p
- bif05gHOabptDovRYxCh1Xj7Gud7AAe8Y+sFyYF8s/gvH0xms1yWmotkQkT0nnY6
- 3t9PBWo1pNMT1XW9Io0NtWYJLfNwPsLa3Am6LS4c32T2HCQ15Q0skUL6lAiJI9CA
- p6wWIbWzy+7awTmbFMNq+8UOwNW6nPJ6lr685lYxFTeOfK6ITvVQxnMWZCBzoQKN
- PyC51GSj+D8B0Avr/apRdg==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40ee5q000u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jul 2024 12:41:21 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46HBsjIC006940; Wed, 17 Jul 2024 12:41:20 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2168.outbound.protection.outlook.com [104.47.56.168])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40dwexgv4r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jul 2024 12:41:20 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N0FmPEpJ+bGlbwrQkgVxGYbebDA2MKMjiq57SfV8/BEP9Hst+LioJoLSFPvNJcwE2JnOeAzTDZdJ5HU9B7OeybmTxyHqJTBsAHLKDCPOPMF6MAsJEzA5QQhI/HFHSIRD6ZQmFJHPhJCGauRTR0UISC9bSTOzon/I/+Y7NGn1a4v+Yyh4Nt7GW0eOQa2nowkJmXDVsSwNR2fNcgbW/gCxD+/stZX1wf8qtj/M8wkYC3BB3xfQSDTV2lXOnoJO3MHTEdhWibUZSuu5vz7S9EUjUol9KNcgnEoOZdzaE0R+TPuKDRj2MFnx8/txpW/SbDGVQLTCUWt5H0X2NG8Qk4T6ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h1c+7gU3qyMRHAHdzWXF2mg/UGgRH0y2q9QkTe657z8=;
- b=OgFqJCZVX+5DQDvE705AgTOtF77+jBff9skLAGdsBs/oP88wk2k1LqXi7L8VFLplnE89UTzz7Y1T2Hg4PXXqRx6l49pqsJA4SD1n+FaIT0rfC+Kct7CUja5pqpmDr1sCs2ZJ2pKOvnOk35YRv1EZwE1hJnFSYy/GwkXztYeEtWL4SfRPybZLbJSsoRFB6v+SWvb/FXofX+jPVbbi0tI1G19Mxq15hPI1UZOFcaCNBNoesrnU9OAiAOYvht0pywA5Xow2wHLqdh9/1CiXo7kCa7LreSpNIdMjjcvzgwlhsuMZoi+L9iTT0Qqx4/AshOqwS6TlGI64LbbRmQZUh+cb2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sU431-0001eH-57
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:46:19 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sU42t-0000A9-Ko
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:46:18 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2cb5a947b7dso25307a91.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h1c+7gU3qyMRHAHdzWXF2mg/UGgRH0y2q9QkTe657z8=;
- b=Mg1O/VaCutUkfHHQF4gmDA/b58RZUU20M0H7v4KwA6BBtb5TroqId+WXdxwPpVxoNKJcllRaCjGBRlMbvOf8xH02EE/2o0LexE3ojpwWUJO6chHY+UiOypt/grPn+fL0xHZF2fRhS9JRWAcaBPqZT2693ZqvkjSRahfT+8y/LKs=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by CH3PR10MB7493.namprd10.prod.outlook.com (2603:10b6:610:15d::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.14; Wed, 17 Jul
- 2024 12:41:18 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%3]) with mapi id 15.20.7762.025; Wed, 17 Jul 2024
- 12:41:18 +0000
-Message-ID: <bff9d18b-1286-414c-ad47-6898b55ae9dd@oracle.com>
-Date: Wed, 17 Jul 2024 13:41:12 +0100
-Subject: Re: [PATCH v4 09/12] vfio/iommufd: Implement
- VFIOIOMMUClass::set_dirty_tracking support
-To: eric.auger@redhat.com, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240712114704.8708-1-joao.m.martins@oracle.com>
- <20240712114704.8708-10-joao.m.martins@oracle.com>
- <bcac1f67-95de-41fb-ae34-9c479db29969@redhat.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <bcac1f67-95de-41fb-ae34-9c479db29969@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AS4P189CA0013.EURP189.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d7::16) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721220369; x=1721825169;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9cbRWhXFqbwOBxvuvH6p1KdKAwhdso/uhUue1nYFxkU=;
+ b=bd8PUQ2GG4ebX78eYSEzMACVU/hvGoBnrtXdbSUJi73uKW9rEAdLJjORBNHjVIEB6T
+ VvdtV63m4bGz/hS+QIAS7dBu5uZMOZUIMikyN+ipN6aOw+rBTCgY0bEO8TGajdLSl5tZ
+ JBQcj4+DztysGWkdd4b6teFrt/uRRYZ7N31zPZQNb8bZgfLzO5BNBec630Zg0gAxCkmf
+ WbvLNHZS2V1r68u1z9z66BxjSET0L9KclsL8wlZ6vFh99tNKwGp84ZKDaUiF5MqLTI37
+ 30XN+eNgczfhlYqEKdiXcW2Mm0T+y+t2rGmkXJj/+TPuQdkOeRudfIFe6sIVEfIIl+K/
+ 68OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721220369; x=1721825169;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9cbRWhXFqbwOBxvuvH6p1KdKAwhdso/uhUue1nYFxkU=;
+ b=KVVPzWNOh787BcI7MLfx2l8O3H14HP7BSvpMT83JSSmlZkgeOBEdAD8zZnqcjbyLaV
+ QaaOOB3cdcsRytGNw4Ghbb15J48gMIOswflXTB+CzTGx8eTzKLMdUgVa0vLGN4Qy/lO9
+ VMprri1bDRcXS47iQBQOQrKPEOOMSPvFYbCT4b/h/Bgyq9P6VvkZS+hH3ZDkd7U7avlE
+ ix39h9RqoVrJCeXEq1SqcMtdMvvRsM3Q3oUza0pDiJTP1Z4hftfpQxbyr3yYh1Nxi3up
+ UhrSoO+nUdBKBHL02IS6TLEGvr83NHkEftB3NczKkK53kPTkr1S85P5eQaGfwI8hKsyb
+ H5EQ==
+X-Gm-Message-State: AOJu0Yy/eM2mKyR72AODrEPRUb8ekwWfcIJ28XZOjN3uBX+Vo9ggtHZC
+ oNGRcpOrgE8Dq78WA2MMLk8ocloZ0vKSxalmEpAjuApkDakzlg/waSyWwxDVwWNSdRda12mhb2/
+ Zy1A=
+X-Google-Smtp-Source: AGHT+IGv+7YQS+ai24PsLudv2ZpdKVbONdqyWO57R9PuAmIsSSjzJDHdVlrJj91kMDdtQPW6/WS5uA==
+X-Received: by 2002:a05:6a21:4581:b0:1c3:c1cf:7b9a with SMTP id
+ adf61e73a8af0-1c3fde10f94mr1184260637.9.1721220368864; 
+ Wed, 17 Jul 2024 05:46:08 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2caf5809d8csm7656936a91.19.2024.07.17.05.46.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 05:46:08 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4] osdep: add a qemu_close_all_open_fd() helper
+Date: Wed, 17 Jul 2024 14:45:31 +0200
+Message-ID: <20240717124534.1200735-1-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|CH3PR10MB7493:EE_
-X-MS-Office365-Filtering-Correlation-Id: d00280a2-a360-4480-c90e-08dca65dc11c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aW5qK1BMMFdINDlOL2YrekI0aTQyMlFSTEk4WXQ2SWsrYms2OXgzV3ZnWjlN?=
- =?utf-8?B?Si9pUy94TGMyb3p1TExTaENMa1pwaEl2TkxKOC9uUjB0TjQzREQzZ0hDTktU?=
- =?utf-8?B?UDZ2R01YVndEeHFWdkNQd0dDTXlWc2txenNUOTYzdFhWUXN2WS9NM3piTEtq?=
- =?utf-8?B?bytlai9vbjhsWlNydDdzZmI4UnFxVmhwZTB3TkNRbTJSQ01uVndiNVVhYUhk?=
- =?utf-8?B?cVBEWGZ2RGV6aHJwV0ttQ2E2cUQ0Unl2STAzL0c5b2dQRkpQdjlUcmVKbFJC?=
- =?utf-8?B?U0FwSUhKdndYOHc0WURieWZXVEc0Y0xpKzFDSUZmSTZLSHFoYXVHazdJRE9m?=
- =?utf-8?B?YlUvSzl4clRST2piRmdJM1F2Y3Z5QUF0WDdPaDUvZFh5WmNxYk1iR3g3aThZ?=
- =?utf-8?B?bndGRFZRdWV6eTB1NkMxY3ZsVTlWd01hNG9IT1VsRHNyRVNkRGFla3dUcXEy?=
- =?utf-8?B?ZWQ4a1FJc0pNcVdSbTNWMXMvMWtJajNPdDFNTkpWNW41b3RpdHpibFBEcUZy?=
- =?utf-8?B?S2k3bXdWRjkwbmZVdjdVVWtLVFZMRjRXOWg0U2ZsM0dybkRNS25jNkVwNTVu?=
- =?utf-8?B?bk1LbmFpK1FsVlhNVFBuWDRTTGZ3Tll2Z0l6Y29IeTBFN1VpdDdVS2lBVEMz?=
- =?utf-8?B?M0J0SFVveGNWY01kQ2x5bzVFQ2hBMHI0am1QSFNDY1hNSTZmSkFJdjlDU3Rj?=
- =?utf-8?B?VDdQdDZtS3VKdnllOXZ1cXU1YUFwZ3hYVDhuakpPY3hUbFdJVC81dlFEOXpM?=
- =?utf-8?B?V3MrMUFGNThydzRSektKYzlCSWw0VXRuckZGcmFNNlpnajBRUXhYTlM5OXFm?=
- =?utf-8?B?dncrc2dET0tFaGtCWjg5K1BPbWVLVG5mQmp3Q2xkL3drNER4YzZ5SnBwc09K?=
- =?utf-8?B?RndJemFjeFBSV2lXekh4MXpGMmRLejljV1RGU2hnWitXMW5aMDZEcUFpdk9u?=
- =?utf-8?B?bkJoVkNBcnNMNHVLZUxzaDVrVGg4Rm42RUFxcEY5a09rMVIzODVtZGdBWEp3?=
- =?utf-8?B?SjdueWNIMjNTZmdVNDBkalhxMzQzU2RsZFNOT2pYMnZTNWVvdGpETWZKMzg3?=
- =?utf-8?B?TTRpcGdmcWNhRFNLZEc3OUE0UDFpUkt3QjRGbER2WU9yVGJyNFRBYW8zQjZW?=
- =?utf-8?B?M0Q5dWl1QUU3WmFWRUE2dEExVXlidTFxRkFTTkdBcUo0eGdqNnVNVU1MV216?=
- =?utf-8?B?L2NTM0I3K1o4bk1WbzZGUjFzRjVBbFhaN3BKK3FOZkRUQnMyamxEOUZwaGUr?=
- =?utf-8?B?Z3ZnUEszSkxWd3hNYWtyYU1MQ3ZkYU1jL3NENURpRUdwOWhCS0gwWXVBT0RB?=
- =?utf-8?B?S2FKbnczV2NTQWR1T2dRTGpkVFFHUWNHMWVVNlJlNTlodFM4VHl1cisyTzVp?=
- =?utf-8?B?Wm1Hd0tKQkdmQzVMNVU4ZEFZVXpub2JjbnBqV0trWXRvaml2aGxtbVNUamhz?=
- =?utf-8?B?dm9yTDh4cEdjYjY0YlNTRmR3UWVieUZ0TVVTY2ZyTGNWVXpEd2dwNmFiZXRB?=
- =?utf-8?B?Nm5YVWV4SFdQNkFXbCtBRlRnTGtvTmJMc2I5YzhWK1RMTGY1K002MU5IK1RY?=
- =?utf-8?B?amFmRjRIdWNxUit2K0QyTlpkWWJicmYvWW5mS1E5ZGFQRkcvaE5yU0lpTXIw?=
- =?utf-8?B?TUM2NFlvVmh0YkxEL251ZUdHSG81MWVWSmpndmttTW0vL2szY1NaRjR4OUlk?=
- =?utf-8?B?Y0lEamZURGw3VjBqZnhzQm5oSzRiSUdKanFDZ2JwNlAvK2F6K2hIeVQrT1pL?=
- =?utf-8?B?eGFiUmNpMUxDVXlPRjhZZUdMSlEzVG1FZFcvbzBWd1p0MW5IYTYvQy9NNGhN?=
- =?utf-8?B?Tm8yejYvWldFVmZLTmk1UT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L2VDMWQybko0dE9WdGpOZFp1RzRDYUdJdnVDdFhvZ29PN3hlSktRYkxCNTZj?=
- =?utf-8?B?RE5QQlJKSDc3cktQeXBlZjBSUnBwRHdJRGJLQnVYclhjZGIwZEw5ZXZZWlZo?=
- =?utf-8?B?aG1hU3ZWVThsNWFJbXRuWE0rMGF0ZHByTU9OK0dxQVQ4WEpOdjZNSkc0aFVo?=
- =?utf-8?B?NGtwTDRLTlJZT2x0aHBFMmp0aXM0dXdFelJJSUFNSysweE85WDJPRnIyZkZk?=
- =?utf-8?B?emJQeGxIK2NmczFGaEJvWHJyOVZVTnI4MFhzWWNtb0ZHOElSZGdTSnovN3FR?=
- =?utf-8?B?elZtVTBRZk5JV1poV2RrVGNNTzh4VXlJajRCOTZ6aWtYb01PWFBsZ2xOVWVh?=
- =?utf-8?B?RnNNZ3VtdSs0UEVFWmlUUk5iV2VDMnVJOFhGK0JORUFOeFI4SFp4aWpodEJy?=
- =?utf-8?B?RXZpL3Z5WFdWWFp2Z2R0NTZuY2VIOVQ3Z01ReG9ibHdkaklGeFlQZGE4elVk?=
- =?utf-8?B?NDlIZEJFdDA1c0RHRXpDV1YxVXdlY2s3U2JJNlh3RDNJU1NRclo1aWl0aG5G?=
- =?utf-8?B?U3V2QWdRdWQyRHVUSnhnZVU2WG0wd0JwYWVGOVUxL08xajZSZFZmaXlTYXVH?=
- =?utf-8?B?Y2xLSkkreEhZOXVsWmRpZEdtYUZyQzVQOGlnZGU1cE1neTFGV0h4UEI5c0U0?=
- =?utf-8?B?Y0pwaEtrYmZ4YVluV2xSdmJ5VVZmM3NsVW40OERDcU90NjF0T1FEUDloeThy?=
- =?utf-8?B?NHZueTFxaTFlWmpWODVYSTl6MkpBWXZ0a3N3TUdFYTZFMmN1SW1BeFlrQkty?=
- =?utf-8?B?UFljdy9zdTlFRnJaOVFHdDFHSi9WZmlENjhVMkRPcWdhRTJhV2Q0cjR1cUJz?=
- =?utf-8?B?QkRPK05nalFzeHFNK0s0aGdWS2hZcjViR2drTUpYdk5xelM1N2Y0YWZSNC9K?=
- =?utf-8?B?OEpzdENuOU4vZlpTQStLaGRXTnp5WUtmc3Npc3JycFNwNFVLYzlMYjI4MjVn?=
- =?utf-8?B?aXlOWEFXU2pxbGhJdmE0WWlSWkVOZVZra0RUT2xoMXBlbEpXK2xDdUwyRzJv?=
- =?utf-8?B?NUZiVU1Kdk9aeFZGc0pmb3drZUtLeEtEaUliRVVwUGUwZTNJNjZsQmRuUDJy?=
- =?utf-8?B?WnpGVUZLOUdYT1BxVE5HRWJYeTZ5U0lLZmUyc0w2SVRYM1RXcXRhNkVKcUpz?=
- =?utf-8?B?bHFBdEpQcVVkSFNJMW94YkpXT1h6bDVKWUlFaEVOYVZkSWxiNEdHY3Y0WW14?=
- =?utf-8?B?TkNPdkliTStBR3lCdVFIbVB3VGtGNG9IbHZEZkpRdFZLQmxMUGpoNUl3TFpT?=
- =?utf-8?B?K1VqaDlwRldTa1dqcHZLQ3grVEhsc0ROcjhBNnhIUkpFUHVhNWRuVEU0QnhD?=
- =?utf-8?B?TjhUZmQvUVVObGc3NUROT2hoME15dWdERTYwazhSZmIwK2ZjekR2SWZtUXhu?=
- =?utf-8?B?SVRJU1M0WmtXVDhnMEF5dDh4WmRjOG1oeGg3U01xaGlvdjdpaGRVeTZHdzNW?=
- =?utf-8?B?U1o1OWd6MjJmd0JiMmlzVzJxYVE4WXllWEowdXQyRXFGbWxWRUxnQVppalZj?=
- =?utf-8?B?QnE3dG5ETm9HQ0Nlb1NTZlVpNW1PWDd2aHdIRzN4bG03cENLNCtPemFSUGVX?=
- =?utf-8?B?Q01BM0VYVFhpZWZVYUhpL21YemV5YVI4bVRnN3ZJMzhkUEU4VUI5aU9ZTHJH?=
- =?utf-8?B?K0pmSGFWVDdNVUY4RHI1Wmh2K3VrQW81N0plMmpvNkpISnRCRnFab0o2MkVN?=
- =?utf-8?B?eDRjS2RvQ055WGJvOEVNVWJtNW5DOUFPRzdPdUJ0eHdDT0xSdFM4WUhzeVdF?=
- =?utf-8?B?RUpSL25TN2x1VnpCVEdSb3VlZmxhQ0x3QzlXSFZyeEVtZDE2TnhKL21wTHlw?=
- =?utf-8?B?dFRyZk5CRUdwL2t5eVZidmMvN1NsNEQxcTFHN3l5Z3duK1pyWTllMGRhb3Fr?=
- =?utf-8?B?TjRmRTdsMW52SW5LcHptUUlZcHpBdFVvSTdnWFRBQ29YQTl4RTNzdkd6Qmtk?=
- =?utf-8?B?dzY0U2ZSNC91dTdOL3p4eHFGLy9UV1AvV0ZKdjRDcUl1b28rVmVKdThkd1dD?=
- =?utf-8?B?QUZrUTBQdnljR3YraGVobDNlazNoRGp4M2RTQlpMNnFMMFVwNHhZRU5tc3lj?=
- =?utf-8?B?V1pFZUZxZCtsTzNseWpRdTZIRFJuY29yUEloWEFaU3lXczVjcTNBZG01N0xx?=
- =?utf-8?B?dHVhMlVNc3htT3J6NEtxanhkYjQ0TGRnQ2NGSW5idzZrc2M4WmxpMmE4b3Ay?=
- =?utf-8?B?WWc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: CPX/TjP1zBlgSOS1icozLT8AvlkkjVQkh0VAOyIUJ9Y3nsh/IS8E5eGtBm65k95bNHj7li1BQCa3spDCc4tvCGGSoslfPLEcG3YTVDOdioK9BspZ6lRBn3q2mCrm9XXfMz6ERtg5tNsTLNKn3VbWgGFpUQt90W/IK74uBxTKEOgyLOS2GNCzV+P+m5nskg7M5ZbzQCe5jU+RLXKCiznjmuFKEHkpHzgb/cMNXUqDDLnjCmIkYEEBWFiEPmK2c/+/WEkEz9QTO2qp6Cl/uh17A8kfOw1V0OQ+YYlb6aOB0XAaClGjavfPBnID8GOhYzgTfnVV9fas4sG/U1ZzUajvW8WQ1VkSle099eLy5NxNuaLMRk8u26u93cj5m9TuRMvdq1lo13DuWdmcIPRxxUYOnbwwYv4AtC3fPsGJQ5GCn4KlQkC1MpFJps3Y7pWUbJgCVE2LSHUUK+4VLudmRxmIgzRHPcPudHlmbZalhxtJtgRYHPlbh4peRkhNQqCvHYPhWpjYSGk9rhK95e3qit5Vauqs/O58igiCN3IrXQBFRxSfJ6g0GZC+JmAEXohcbnfPES/iMHt00rYISfHO+TImbxhV1inmH3NYtUIO75B6NFI=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d00280a2-a360-4480-c90e-08dca65dc11c
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2024 12:41:18.3797 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ocU9vrTYnwS1gtYv8Z4eZ9WryYkAObCty6lfhLQM87sGueeqH/4CL0VOc5Evy5C7o+p78mvnXMpILKUr0EqRT2zJMFAhFaZkd8N+7Em2Lk8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7493
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-17_08,2024-07-17_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- spamscore=0 mlxscore=0
- malwarescore=0 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407170097
-X-Proofpoint-GUID: sOEBfslSfZxPsYdbUIi8wOKouCDV4bKp
-X-Proofpoint-ORIG-GUID: sOEBfslSfZxPsYdbUIi8wOKouCDV4bKp
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=cleger@rivosinc.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -217,169 +96,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/07/2024 13:36, Eric Auger wrote:
-> 
-> 
-> On 7/12/24 13:47, Joao Martins wrote:
->> ioctl(iommufd, IOMMU_HWPT_SET_DIRTY_TRACKING, arg) is the UAPI that
->> enables or disables dirty page tracking. It is used if the hwpt
->> has been created with dirty tracking supported domain (stored in
->> hwpt::flags) and it is called on the whole list of iommu domains
->> it is are tracking. On failure it rolls it back.
-> 
-> it is are tracking ?
+Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+POSIX"), the maximum number of file descriptors that can be opened are
+raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+of 1073741816 file descriptors. Now, when forking to start
+qemu-bridge-helper, this actually calls close() on the full possible file
+descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+takes a considerable amount of time. In order to reduce that time,
+factorize existing code to close all open files descriptors in a new
+qemu_close_all_open_fd() function. This function uses various methods
+to close all the open file descriptors ranging from the most efficient
+one to the least one. It also accepts an ordered array of file
+descriptors that should not be closed since this is required by the
+callers that calls it after forking.
 
-*it is*
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+----
+v4:
+ - Add a comment saying that qemu_close_all_fds() can take a NULL skip
+   array and nskip == 0
+ - Added an assert in qemu_close_all_fds() to check for skip/nskip
+   parameters
+ - Fix spurious tabs instead of spaces
+ - Applied checkpatch
+ - v3: https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
 
-> also please clearly state what is "it"
->
+v3:
+ - Use STD*_FILENO defines instead of raw values
+ - Fix indentation of close_all_fds_after_fork()
+ - Check for nksip in fallback code
+ - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
+ - Use unsigned for cur_skip
+ - Move ifdefs inside close_fds functions rather than redefining them
+ - Remove uneeded 'if(nskip)' test
+ - Add comments to close_range version
+ - Reduce range of skip fd as we find them in
+ - v2: https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
 
-sure
+v2:
+ - Factorize async_teardown.c close_fds implementation as well as tap.c ones
+ - Apply checkpatch
+ - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
 
->>
->> The checking of hwpt::flags is introduced here as a second user
-> ?? -> introduce iommufd_hwpt_dirty_tracking() helper to avoid code dup?
+---
+ include/qemu/osdep.h    |   8 +++
+ net/tap.c               |  33 +++++-----
+ system/async-teardown.c |  37 +----------
+ util/osdep.c            | 132 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 160 insertions(+), 50 deletions(-)
 
-Right I am doing that already. Not sure what the problem is with this sentence?
-
-Or you meant to use yours as it's simpler/easier to understand.
-
->> and thus consolidate such check into a helper function
->> iommufd_hwpt_dirty_tracking().
->>
->> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->> ---
->>  include/sysemu/iommufd.h |  3 +++
->>  backends/iommufd.c       | 23 +++++++++++++++++++++++
->>  hw/vfio/iommufd.c        | 39 ++++++++++++++++++++++++++++++++++++++-
->>  backends/trace-events    |  1 +
->>  4 files changed, 65 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
->> index e917e7591d05..7416d9219703 100644
->> --- a/include/sysemu/iommufd.h
->> +++ b/include/sysemu/iommufd.h
->> @@ -55,6 +55,9 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->>                                  uint32_t data_type, uint32_t data_len,
->>                                  void *data_ptr, uint32_t *out_hwpt,
->>                                  Error **errp);
->> +bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
->> +                                        bool start, Error **errp);
->>  
->>  #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
->> +
-> spurious line change
-
-ok
-
->>  #endif
->> diff --git a/backends/iommufd.c b/backends/iommufd.c
->> index 41a9dec3b2c5..239f0976e0ad 100644
->> --- a/backends/iommufd.c
->> +++ b/backends/iommufd.c
->> @@ -239,6 +239,29 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
->>      return true;
->>  }
->>  
->> +bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
->> +                                        uint32_t hwpt_id, bool start,
->> +                                        Error **errp)
->> +{
->> +    int ret;
->> +    struct iommu_hwpt_set_dirty_tracking set_dirty = {
->> +            .size = sizeof(set_dirty),
->> +            .hwpt_id = hwpt_id,
->> +            .flags = !start ? 0 : IOMMU_HWPT_DIRTY_TRACKING_ENABLE,
->> +    };
->> +
->> +    ret = ioctl(be->fd, IOMMU_HWPT_SET_DIRTY_TRACKING, &set_dirty);
->> +    trace_iommufd_backend_set_dirty(be->fd, hwpt_id, start, ret ? errno : 0);
->> +    if (ret) {
->> +        error_setg_errno(errp, errno,
->> +                         "IOMMU_HWPT_SET_DIRTY_TRACKING(hwpt_id %u) failed",
->> +                         hwpt_id);
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>  bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->>                                       uint32_t *type, void *data, uint32_t len,
->>                                       uint64_t *caps, Error **errp)
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index edc8f97d8f3d..da678315faeb 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -110,6 +110,42 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
->>      iommufd_backend_disconnect(vbasedev->iommufd);
->>  }
->>  
->> +static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->> +{
->> +    return hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->> +}
->> +
->> +static int iommufd_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->> +                                           bool start, Error **errp)
->> +{
->> +    const VFIOIOMMUFDContainer *container =
->> +        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
->> +    VFIOIOASHwpt *hwpt;
->> +
->> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
->> +        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
->> +            continue;
->> +        }
->> +
->> +        if (!iommufd_backend_set_dirty_tracking(container->be,
->> +                                                hwpt->hwpt_id, start, errp)) {
->> +            goto err;
->> +        }
->> +    }
->> +
->> +    return 0;
->> +
->> +err:
->> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
->> +        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
->> +            continue;
->> +        }
->> +        iommufd_backend_set_dirty_tracking(container->be,
->> +                                           hwpt->hwpt_id, !start, NULL);
->> +    }
->> +    return -EINVAL;
->> +}
->> +
->>  static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->>  {
->>      ERRP_GUARD();
->> @@ -278,7 +314,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>      QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
->>      QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
->>      container->bcontainer.dirty_pages_supported |=
->> -                              (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING);
->> +                              iommufd_hwpt_dirty_tracking(hwpt);
->>      return true;
->>  }
->>  
->> @@ -717,6 +753,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
->>      vioc->attach_device = iommufd_cdev_attach;
->>      vioc->detach_device = iommufd_cdev_detach;
->>      vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
->> +    vioc->set_dirty_page_tracking = iommufd_set_dirty_page_tracking;
->>  };
->>  
->>  static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->> diff --git a/backends/trace-events b/backends/trace-events
->> index 4d8ac02fe7d6..28aca3b859d4 100644
->> --- a/backends/trace-events
->> +++ b/backends/trace-events
->> @@ -16,3 +16,4 @@ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t si
->>  iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
->>  iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
->>  iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
->> +iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
-> 
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 191916f38e..43a035d756 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -757,6 +757,14 @@ static inline void qemu_reset_optind(void)
+ 
+ int qemu_fdatasync(int fd);
+ 
++/**
++ * Close all open file descriptors except the ones supplied in the @skip array
++ *
++ * @skip: ordered array of distinct file descriptors that should not be closed
++ * @nskip: number of entries in the @skip array.
++ */
++void qemu_close_all_open_fd(const int *skip, unsigned int nskip);
++
+ /**
+  * Sync changes made to the memory mapped file back to the backing
+  * storage. For POSIX compliant systems this will fallback
+diff --git a/net/tap.c b/net/tap.c
+index 51f7aec39d..45cb963142 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -385,6 +385,23 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     return s;
+ }
+ 
++static void close_all_fds_after_fork(int excluded_fd)
++{
++    const int skip_fd[] = {STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO,
++                           excluded_fd};
++    unsigned int nskip = ARRAY_SIZE(skip_fd);
++
++    /*
++     * skip_fd must be an ordered array of distinct fds, exclude
++     * excluded_fd if already included in the [STDIN_FILENO - STDERR_FILENO]
++     * range
++     */
++    if (excluded_fd <= STDERR_FILENO) {
++        nskip--;
++    }
++    qemu_close_all_open_fd(skip_fd, nskip);
++}
++
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp)
+ {
+@@ -400,13 +417,7 @@ static void launch_script(const char *setup_script, const char *ifname,
+         return;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+-
+-        for (i = 3; i < open_max; i++) {
+-            if (i != fd) {
+-                close(i);
+-            }
+-        }
++        close_all_fds_after_fork(fd);
+         parg = args;
+         *parg++ = (char *)setup_script;
+         *parg++ = (char *)ifname;
+@@ -490,17 +501,11 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
+         return -1;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+         char *fd_buf = NULL;
+         char *br_buf = NULL;
+         char *helper_cmd = NULL;
+ 
+-        for (i = 3; i < open_max; i++) {
+-            if (i != sv[1]) {
+-                close(i);
+-            }
+-        }
+-
++        close_all_fds_after_fork(sv[1]);
+         fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
+ 
+         if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
+diff --git a/system/async-teardown.c b/system/async-teardown.c
+index 396963c091..9148ee8d04 100644
+--- a/system/async-teardown.c
++++ b/system/async-teardown.c
+@@ -26,40 +26,6 @@
+ 
+ static pid_t the_ppid;
+ 
+-/*
+- * Close all open file descriptors.
+- */
+-static void close_all_open_fd(void)
+-{
+-    struct dirent *de;
+-    int fd, dfd;
+-    DIR *dir;
+-
+-#ifdef CONFIG_CLOSE_RANGE
+-    int r = close_range(0, ~0U, 0);
+-    if (!r) {
+-        /* Success, no need to try other ways. */
+-        return;
+-    }
+-#endif
+-
+-    dir = opendir("/proc/self/fd");
+-    if (!dir) {
+-        /* If /proc is not mounted, there is nothing that can be done. */
+-        return;
+-    }
+-    /* Avoid closing the directory. */
+-    dfd = dirfd(dir);
+-
+-    for (de = readdir(dir); de; de = readdir(dir)) {
+-        fd = atoi(de->d_name);
+-        if (fd != dfd) {
+-            close(fd);
+-        }
+-    }
+-    closedir(dir);
+-}
+-
+ static void hup_handler(int signal)
+ {
+     /* Check every second if this process has been reparented. */
+@@ -85,9 +51,8 @@ static int async_teardown_fn(void *arg)
+     /*
+      * Close all file descriptors that might have been inherited from the
+      * main qemu process when doing clone, needed to make libvirt happy.
+-     * Not using close_range for increased compatibility with older kernels.
+      */
+-    close_all_open_fd();
++    qemu_close_all_open_fd(NULL, 0);
+ 
+     /* Set up a handler for SIGHUP and unblock SIGHUP. */
+     sigaction(SIGHUP, &sa, NULL);
+diff --git a/util/osdep.c b/util/osdep.c
+index 770369831b..2f95748a4a 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -613,3 +613,135 @@ int qemu_fdatasync(int fd)
+     return fsync(fd);
+ #endif
+ }
++
++static bool qemu_close_all_open_fd_proc(const int *skip, unsigned int nskip)
++{
++#ifdef CONFIG_LINUX
++    struct dirent *de;
++    int fd, dfd;
++    bool close_fd;
++    DIR *dir;
++    unsigned int i, skip_start = 0, skip_end = nskip;
++
++    dir = opendir("/proc/self/fd");
++    if (!dir) {
++        /* If /proc is not mounted, there is nothing that can be done. */
++        return false;
++    }
++    /* Avoid closing the directory. */
++    dfd = dirfd(dir);
++
++    for (de = readdir(dir); de; de = readdir(dir)) {
++        if (de->d_name[0] == '.') {
++            continue;
++        }
++        fd = atoi(de->d_name);
++        close_fd = true;
++        if (fd == dfd) {
++            close_fd = false;
++        } else {
++            for (i = skip_start; i < skip_end; i++) {
++                if (fd < skip[i]) {
++                    /* We are below the next skipped fd, break */
++                    break;
++                } else if (fd == skip[i]) {
++                    close_fd = false;
++                    /* Restrict the range as we found fds matching start/end */
++                    if (i == skip_start) {
++                        skip_start++;
++                    } else if (i == skip_end) {
++                        skip_end--;
++                    }
++                    break;
++                }
++            }
++        }
++        if (close_fd) {
++            close(fd);
++        }
++    }
++    closedir(dir);
++
++    return true;
++#else
++    return false;
++#endif
++}
++
++
++static bool qemu_close_all_open_fd_close_range(const int *skip,
++                                               unsigned int nskip)
++{
++#ifdef CONFIG_CLOSE_RANGE
++    int max_fd = sysconf(_SC_OPEN_MAX) - 1;
++    int first = 0, last = max_fd;
++    unsigned int cur_skip = 0;
++    int ret;
++
++    do {
++        /* Find the start boundary of the range to close */
++        while (cur_skip < nskip && first == skip[cur_skip]) {
++            cur_skip++;
++            first++;
++        }
++
++        /* Find the upper boundary of the range to close */
++        if (cur_skip < nskip) {
++            last = skip[cur_skip] - 1;
++        }
++        /*
++         * Adjust the maximum fd to close if it's above what the system
++         * supports
++         */
++        if (last > max_fd) {
++            last = max_fd;
++            /*
++             * We can directly skip the remaining skip fds since the current
++             * one is already above the maximum supported one.
++             */
++            cur_skip = nskip;
++        }
++        /* If last was adjusted, we might be > first, bail out */
++        if (first > last) {
++            break;
++        }
++
++        ret = close_range(first, last, 0);
++        if (ret < 0) {
++            return false;
++        }
++        first = last + 1;
++        last = max_fd;
++    } while (cur_skip < nskip);
++
++    return true;
++#else
++    return false;
++#endif
++}
++
++void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
++{
++    int open_max = sysconf(_SC_OPEN_MAX);
++    unsigned int cur_skip = 0;
++    int i;
++
++    assert(skip != NULL || nskip == 0);
++
++    if (qemu_close_all_open_fd_close_range(skip, nskip)) {
++        return;
++    }
++
++    if (qemu_close_all_open_fd_proc(skip, nskip)) {
++        return;
++    }
++
++    /* Fallback */
++    for (i = 0; i < open_max; i++) {
++        if (cur_skip < nskip && i == skip[cur_skip]) {
++            cur_skip++;
++            continue;
++        }
++        close(i);
++    }
++}
+-- 
+2.45.2
 
 
