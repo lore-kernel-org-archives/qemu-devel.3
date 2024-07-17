@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1028CC3DA42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3E3C3DA62
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2X6-0001xQ-Tp; Wed, 17 Jul 2024 07:09:17 -0400
+	id 1sU2TO-0005Gj-7y; Wed, 17 Jul 2024 07:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2V2-0001AQ-FD; Wed, 17 Jul 2024 07:07:09 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2V0-0007Ub-9Q; Wed, 17 Jul 2024 07:07:07 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 660737B37B;
- Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C8ABE10B290;
- Wed, 17 Jul 2024 14:06:40 +0300 (MSK)
-Received: (nullmailer pid 844409 invoked by uid 1000);
- Wed, 17 Jul 2024 11:06:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 09/16] hw/i386/sgx: Get rid of qemu_open_old()
-Date: Wed, 17 Jul 2024 14:06:33 +0300
-Message-Id: <20240717110640.844335-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
-References: <20240717110640.844335-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
+ id 1sU2Sd-0001UX-M1
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:43 -0400
+Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
+ helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <phil@intel-mbp.local>) id 1sU2Sa-000735-76
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:39 -0400
+Received: by intel-mbp.local (Postfix, from userid 501)
+ id A8AFE38F9CD; Wed, 17 Jul 2024 13:04:06 +0200 (CEST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org, agraf@csgraf.de, pbonzini@redhat.com,
+ phil@philjordan.eu, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, akihiko.odaki@daynix.com,
+ peter.maydell@linaro.org
+Subject: [PATCH v2 8/8] MAINTAINERS: Add myself as maintainer for apple-gfx,
+ reviewer for HVF
+Date: Wed, 17 Jul 2024 13:03:26 +0200
+Message-Id: <20240717110326.45230-9-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240717110326.45230-1-phil@philjordan.eu>
+References: <20240717110326.45230-1-phil@philjordan.eu>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
+ helo=intel-mbp.local
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, KHOP_HELO_FCRDNS=0.261,
+ NO_DNS_FOR_FROM=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,48 +60,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+I'm happy to take responsibility for the macOS PV graphics code. As
+HVF patches don't seem to get much attention at the moment, I'm also
+adding myself as designated reviewer for HVF and x86 HVF to try and
+improve that.
 
-For qemu_open_old(), osdep.h said:
+I anticipate that the resulting workload should be covered by the
+funding I'm receiving for improving Qemu in combination with macOS. As
+of right now this runs out at the end of 2024; I expect the workload on
+apple-gfx should be relatively minor and manageable in my spare time
+beyond that. I may have to remove myself from more general HVF duties
+once the contract runs out if it's more than I can manage.
 
-> Don't introduce new usage of this function, prefer the following
-> qemu_open/qemu_create that take an "Error **errp".
-
-So replace qemu_open_old() with qemu_open(). And considering the SGX
-enablement description is useful, convert it into a error message hint.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- hw/i386/sgx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index de76397bcf..a14a84bc6f 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -157,10 +157,12 @@ SGXInfo *qmp_query_sgx_capabilities(Error **errp)
- {
-     SGXInfo *info = NULL;
-     uint32_t eax, ebx, ecx, edx;
-+    Error *local_err = NULL;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d9811458c..b870bd6ad5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -511,6 +511,7 @@ F: target/arm/hvf/
+ X86 HVF CPUs
+ M: Cameron Esfahani <dirty@apple.com>
+ M: Roman Bolshakov <rbolshakov@ddn.com>
++R: Phil Dennis-Jordan <phil@philjordan.eu>
+ W: https://wiki.qemu.org/Features/HVF
+ S: Maintained
+ F: target/i386/hvf/
+@@ -518,6 +519,7 @@ F: target/i386/hvf/
+ HVF
+ M: Cameron Esfahani <dirty@apple.com>
+ M: Roman Bolshakov <rbolshakov@ddn.com>
++R: Phil Dennis-Jordan <phil@philjordan.eu>
+ W: https://wiki.qemu.org/Features/HVF
+ S: Maintained
+ F: accel/hvf/
+@@ -2624,6 +2626,11 @@ F: hw/display/edid*
+ F: include/hw/display/edid.h
+ F: qemu-edid.c
  
--    int fd = qemu_open_old("/dev/sgx_vepc", O_RDWR);
-+    int fd = qemu_open("/dev/sgx_vepc", O_RDWR, &local_err);
-     if (fd < 0) {
--        error_setg(errp, "SGX is not enabled in KVM");
-+        error_append_hint(&local_err, "SGX is not enabled in KVM");
-+        error_propagate(errp, local_err);
-         return NULL;
-     }
- 
++macOS PV Graphics (apple-gfx)
++M: Phil Dennis-Jordan <phil@philjordan.eu>
++S: Maintained
++F: hw/display/apple-gfx*
++
+ PIIX4 South Bridge (i82371AB)
+ M: Hervé Poussineau <hpoussin@reactos.org>
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
 -- 
-2.39.2
+2.39.3 (Apple Git-146)
 
 
