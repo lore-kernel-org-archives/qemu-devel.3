@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC83DC3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F465C3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU54x-0001in-6e; Wed, 17 Jul 2024 09:52:23 -0400
+	id 1sU56u-0000t7-Tf; Wed, 17 Jul 2024 09:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU54o-0001FH-Ba
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:52:15 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU54m-0004Xm-5V
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:52:14 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2eefc3d707dso9111781fa.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:52:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721224330; x=1721829130; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o3prwc8i8KjPKTzImRLqp5LTDSxC5nsQLP1EJDs9kRI=;
- b=l4vvT7lleG48pbyvbKnFBNA+iEbeMY2bbZkceLTsHr2okB5S/UD0f9QH/WqXAUl8sM
- UleZpnHZU2WsjAIKU53ZccY5XD0U4804KQOPb6ioj2nMog56Vk4DL5B6bB1TwIqZkA39
- 9lVjEUKyUl48s0a3nG5S2f3BXhydsx/iT/7jTnuXnKVK/t7WYCgqp7sParUMSoCJm256
- BQfxkXM+TXsjiC3wGuiKIuF0nRoT+BzauQd7TbNghSKNd3FNfGfCcQBfdpO/frCJHpKd
- T1+rSJoPLGC7JHAyoCoCRLyHwhrA2ookQpviuMcT/M4cTSsB8pnhUq/1ztaIXY13j4fc
- ycRQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sU56p-0000pj-W8
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:54:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sU56o-0006u7-Eg
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:54:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721224457;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iJS5fKvJD7ge9tWHf2BAvXO7kx289tm4UKkm0QMu0sI=;
+ b=jO4bvMwrxgbdcvJRgwaRgsIMo4NGTzE2oSCU8GIrEcgzNdP+HfR5aIis0zR9yxFyCcmvMZ
+ q8io6+xq/sDPLzNB2lqEE2oxkizMiwCKWufhyFLWiB1JYPZscojIxTay/+xWYSmEhhFNPz
+ m7IT/Tkgba4jsQsZrSmOrVOjTqWy+Bk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-157-D9DtLw4ZPj6Glmfb0TW3Ig-1; Wed, 17 Jul 2024 09:54:12 -0400
+X-MC-Unique: D9DtLw4ZPj6Glmfb0TW3Ig-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4265464ddc9so4731855e9.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:54:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721224330; x=1721829130;
+ d=1e100.net; s=20230601; t=1721224450; x=1721829250;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o3prwc8i8KjPKTzImRLqp5LTDSxC5nsQLP1EJDs9kRI=;
- b=JEe9zwb2H0kj2MrHlGWB8+ss9wswWWT2UjHwSnd+BUHy22ems/dLGWBeX8E3nL8GaS
- Nv9F+l9osJUI9ux782dLrixqSQidMQY+EACeDSF8IDOQNE7tCF9QWK4Maljg4lJGn1in
- 86oldMUiLSczWvN91pISQj/D+MtzQYMI5ib4jwce3w/9u7LkY4qmxzMGkdi49i4p6nSD
- jbAd8iPfTJkcao6Me8pQvcQaqJ9x7ACtx7PqVQY0jQwjpQyV1UusBaL6canPQDK5ZNBq
- Zj4TLWWbHeYQ0IXPSEpFL8UeecUVVmM8g7IzZ9nvkUashOn353Po/RU3LMozv0K9XyhS
- 9Wiw==
+ bh=iJS5fKvJD7ge9tWHf2BAvXO7kx289tm4UKkm0QMu0sI=;
+ b=KJkrymxTxcht3gG/d+cn6HcNzNgbm5ev/Qb9EqUhKIhFvYFy5a7AWbAsRuJL1WS1rX
+ SK3EY68HBVnVmqHDz8vEz6ffOCmOO3JNvcGqXmJRwOl2ydSo8ABz4yFYvXlQBUFOQ4aa
+ pv/g8awbLll40gwa1xIvLz6q2BUVXKTaq4PX21u1SJ5r1mBg8Ap14AfRjwWJalKwV7Ye
+ Tkk1fbOcPW5TEufm9YtCjXCYE+xyTg0OpPKEVvJaScXCMKrXB5pnYFcEOWwxFz9oqcw4
+ +v5c1KqC+mDCvCBd0FUH8jRoW89FP/QRV15nvKCFidYNdENNYOGfdPV06rs57zy2apa1
+ 8ooQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWt9Wp3ICs7gMo7Lr1/V1YEGz5iC8cejaM8tBvJlY9fL5iIw/0Y3qOt7b88Mjzzh1V8NEnPGez9zoo3qMxVgL+Hpoz+ZKw=
-X-Gm-Message-State: AOJu0YzjbPrpYDTmMvvAcK6Si0iO+Z0GIbIGoUZlyIi4kkk9aakP3QZQ
- SC3wyIQZclT2swo5yuHKfzmYCKYrVvmAQhYiUqzsLd1dv7EUd5pYugwNnRkVWEw=
-X-Google-Smtp-Source: AGHT+IGZRjysXRm2iETp29EQpWRAhgGDcvUw/m+mxJztUrYV6VoSTRv5vbYqyPZM2m8rBCpe5ClbwQ==
-X-Received: by 2002:a2e:a4b7:0:b0:2ee:8407:2f58 with SMTP id
- 38308e7fff4ca-2eefd09f9c9mr11735041fa.17.1721224329461; 
- Wed, 17 Jul 2024 06:52:09 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.21])
+ AJvYcCXpsLJKEsrgywaQZNf3RkmY8gV4quVyt75v/gX2kpBwMgkK5hHarL57E4Ws1mXM1tOd30idEU1iXRv788K+VvWGl3Og4sU=
+X-Gm-Message-State: AOJu0Yxi32GVBV2yXKPMVTqWbGTZhL4aYooaZC29zeLEMjCqLpCgWbxE
+ g3xfQ+s/OyvgBAhMFHKIJxfNfeEkpQInlmohTur36g7TyCylN1Y6Xj2Qb9WsRKQPpsmotMCHucI
+ AgkPv/c32lltPhpGVvDZQv8mvEVN+FX6a7wW3prdWnx55FP+mu0dK
+X-Received: by 2002:a05:600c:34d0:b0:426:67f9:a7d8 with SMTP id
+ 5b1f17b1804b1-427c290a187mr14452905e9.9.1721224449936; 
+ Wed, 17 Jul 2024 06:54:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOOHDEc80qg6PI0gocku6E8plFkaKo7rz8okbY90FRKZynXabUaNJY9Em3+8yymLlnOWpAXQ==
+X-Received: by 2002:a05:600c:34d0:b0:426:67f9:a7d8 with SMTP id
+ 5b1f17b1804b1-427c290a187mr14452715e9.9.1721224449588; 
+ Wed, 17 Jul 2024 06:54:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
+ ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427a5edb41asm170699155e9.36.2024.07.17.06.52.07
+ ffacd0b85a97d-3680daccbd2sm11787928f8f.49.2024.07.17.06.54.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 06:52:09 -0700 (PDT)
-Message-ID: <55050833-24d4-47d1-af16-5033ff8ad4aa@linaro.org>
-Date: Wed, 17 Jul 2024 15:52:06 +0200
+ Wed, 17 Jul 2024 06:54:09 -0700 (PDT)
+Message-ID: <9e0e1879-7859-44df-81a2-362323f9df01@redhat.com>
+Date: Wed, 17 Jul 2024 15:54:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tests/avocado/machine_aspeed.py: Add eMMC boot tests
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
  Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20240717130657.648701-1-clg@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240717130657.648701-1-clg@redhat.com>
+ <e29093fb-d36f-4d77-ba1c-e277f2441d09@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <e29093fb-d36f-4d77-ba1c-e277f2441d09@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,68 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/24 15:06, Cédric Le Goater wrote:
-> The image was built using the process described in commit c8cb19876d3e
-> ("hw/sd/sdcard: Support boot area in emmc image") with artefacts from
-> the latest successful build of the IBM P10 BMC platform available on:
+On 7/17/24 15:49, Philippe Mathieu-Daudé wrote:
+> On 17/7/24 15:06, Cédric Le Goater wrote:
+>> The image was built using the process described in commit c8cb19876d3e
+>> ("hw/sd/sdcard: Support boot area in emmc image") with artefacts from
+>> the latest successful build of the IBM P10 BMC platform available on:
+>>
+>>    https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/lastSuccessfulBuild/
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   tests/avocado/machine_aspeed.py | 38 +++++++++++++++++++++++++++++++++
+>>   1 file changed, 38 insertions(+)
+>>
+>> diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+>> index f66ad38d3503..1deb8472818f 100644
+>> --- a/tests/avocado/machine_aspeed.py
+>> +++ b/tests/avocado/machine_aspeed.py
+>> @@ -439,3 +439,41 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
+>>           self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
+>>           self.ssh_connect('root', '0penBmc', False)
+>> +class AST2x00MachineMMC(QemuSystemTest):
+>> +
+>> +    timeout = 240
+>> +
+>> +    def wait_for_console_pattern(self, success_message, vm=None):
+>> +        wait_for_console_pattern(self, success_message,
+>> +                                 failure_message='Kernel panic - not syncing',
+>> +                                 vm=vm)
+>> +
+>> +    def test_arm_aspeed_emmc_boot(self):
+>> +        """
+>> +        :avocado: tags=arch:arm
+>> +        :avocado: tags=machine:rainier-bmc
 > 
->    https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/lastSuccessfulBuild/
+>            :avocado: tags=device:emmc
+
+
+updated.
+
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
-
-BTW this patch is
-
-Based-on: <20240717063022.549849-1-clg@redhat.com>
-
->   tests/avocado/machine_aspeed.py | 38 +++++++++++++++++++++++++++++++++
->   1 file changed, 38 insertions(+)
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
-> index f66ad38d3503..1deb8472818f 100644
-> --- a/tests/avocado/machine_aspeed.py
-> +++ b/tests/avocado/machine_aspeed.py
-> @@ -439,3 +439,41 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
->           self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
->           self.ssh_connect('root', '0penBmc', False)
->   
-> +class AST2x00MachineMMC(QemuSystemTest):
-> +
-> +    timeout = 240
-> +
-> +    def wait_for_console_pattern(self, success_message, vm=None):
-> +        wait_for_console_pattern(self, success_message,
-> +                                 failure_message='Kernel panic - not syncing',
-> +                                 vm=vm)
-> +
-> +    def test_arm_aspeed_emmc_boot(self):
-> +        """
-> +        :avocado: tags=arch:arm
-> +        :avocado: tags=machine:rainier-bmc
-> +        """
-> +
-> +        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
-> +                     'mmc-p10bmc-20240617.qcow2')
-> +        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
-> +        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
-> +                                      algorithm='sha256')
-> +
-> +        self.require_netdev('user')
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-drive',
-> +                         'file=' + image_path + ',if=sd,id=sd2,index=2',
-> +                         '-net', 'nic', '-net', 'user')
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern('U-Boot SPL 2019.04')
-> +        self.wait_for_console_pattern('Trying to boot from MMC1')
-> +        self.wait_for_console_pattern('U-Boot 2019.04')
-> +        self.wait_for_console_pattern('eMMC 2nd Boot')
-> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-> +        self.wait_for_console_pattern('Starting kernel ...')
-> +        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
-> +        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
-> +        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
+>> +        """
+> 
+> $ make check-avocado AVOCADO_TAGS=machine:rainier-bmc
+> Fetching asset from tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_ast2600_debian
+> Fetching asset from tests/avocado/machine_aspeed.py:AST2x00MachineMMC.test_arm_aspeed_emmc_boot
+> JOB ID     : ed89ecf5e166e7f636cc731c0242ba6e714fea39
+> JOB LOG    : build/tests/results/job-2024-07-17T14.45-ed89ecf/job.log
+>   (1/2) tests/avocado/boot_linux_console.py:BootLinuxConsole.test_arm_ast2600_debian: PASS (21.55 s)
+>   (2/2) tests/avocado/machine_aspeed.py:AST2x00MachineMMC.test_arm_aspeed_emmc_boot: PASS (43.71 s)
+> RESULTS    : PASS 2 | ERROR 0 | FAIL 0 | SKIP 0 | WARN 0 | INTERRUPT 0 | CANCEL 0
+> JOB TIME   : 174.68 s
+> 
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+
+Thanks,
+
+C.
 
 
