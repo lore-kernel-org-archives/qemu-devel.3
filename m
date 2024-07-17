@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A289C3DA62
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D8CC3DA62
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU9tM-0004CS-W9; Wed, 17 Jul 2024 15:00:45 -0400
+	id 1sU9zQ-0004u0-1d; Wed, 17 Jul 2024 15:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9tD-0003vR-7U
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:00:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sU9t5-0007ds-QB
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:00:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721242821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WAbu6UELS1/Ok+sQOTByC2rzCuZxD9s0KMXpmPyD+MA=;
- b=X0RDO+/5Wd3XAPXdrWKPEhYfEMdZM/6TyBYeZb6sP9KlnTEqiYefLDlEkeUwGStl/R4vU+
- u4cBDM4ICoeRitgeWjmh0eMenzgzH1B+ANXrDd+XLIwrkeN031NGUWy450X6T1gypuBsbz
- obPBhpusei0IC4YfK5S3uxLqwIl+tvI=
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-ouRWPxyWNHKTEmKzM_fOWA-1; Wed, 17 Jul 2024 15:00:18 -0400
-X-MC-Unique: ouRWPxyWNHKTEmKzM_fOWA-1
-Received: by mail-oa1-f69.google.com with SMTP id
- 586e51a60fabf-25e6630f94fso7890fac.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:00:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721242818; x=1721847618;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sU9zN-0004mV-EG
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:06:58 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sU9zJ-0000jM-EB
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:06:55 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2eeb1ba0468so1007671fa.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 12:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721243211; x=1721848011; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WAbu6UELS1/Ok+sQOTByC2rzCuZxD9s0KMXpmPyD+MA=;
- b=PG94Mj3+gyjrUtdOkeDoGNCzsWmX/T1bpEEpO4MYreHgd7fLruIe6flPadEA2UzWkk
- aaTLAatRJIKEzlIUSxJnoAkuEbgQqxIV18jLMhYf5z9qr9+I+CvAZMALa3PaksbyMSGM
- Ov4CLVIuSPLIww5455Cj+KMTjLpiJdVVBrkFzuQNbVKHRInuU4/KGgsCQM8aiUxMd3yw
- D9Vs2CPuiaG6qVeXUXwHRUiqatH6JGyH7NNqZFEte3WBp3PTN2V8m6dY9Gta6is9UxDM
- HbiW1Xdsx5RicT9e+hwrKd9DlWTsYW4RflpxOXsuAAPavkPOs9xvz+jFxTSHFuXMVmE7
- L6zA==
+ bh=gmTyUPUh2TdjaS2kakIUu+zSdq0kzqZ8AQ2di4fhUkI=;
+ b=oJ1oTNL0og8MQv8uYwZhYQBn+WlCKkvCmldwgKnVELDgM3u0l6pXo1AtTjqYoDao74
+ ZkWY5Off2xQeuOok9xlBmDUqfrSGJL+q9qgQltqFLaz4XtP6G8j9/P9BSBQ89SrG5drF
+ YqCfOozK0t/MS1QCfinn9XqU5JahBnLL2UTqvnR94l5Y5Bu5yPBm14dIBNTQtxuFBgda
+ RfRsT3zeJ/eD1dXGRDMd4aAX9B8HWKh/y5IGC5t4XsMxaUtimAAYUmmFvW0rGYWIjMAX
+ gepKtgD6w+olYVzcX2iGZCMtJx3A/VUkkAM0GWusoiYrxpTnfBgaOOr0TG6qxx4yptmG
+ Q65A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721243211; x=1721848011;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gmTyUPUh2TdjaS2kakIUu+zSdq0kzqZ8AQ2di4fhUkI=;
+ b=azxV9gi4SxxtJjWwKaf3B1cOYHEgWsOSlKo9weFrSFQEHYBhSE0jhbxLDzhud16GhU
+ mGsNYeJ6xBu2Y2mVXYXitLkz9bgOpAl9pamSPyLnW1gg3aWk4raIAt/OkF6MV36/Qll1
+ BUsqhLHsMQ3rrkMztJlJPazVkPlVlXcIBN+2VuDwL79NhYLsHruoZUn/wSol9TZbnWcW
+ 0xMyclF9NGv68q5zd8TK6ziFGx7LFt3aqUTmQIzGJzCTnSi9u7vYkujakfop2a+VP7c5
+ 4C5yOC8JJ4/EEWgDZOIfJ1vfBmCE8pldP+OasYC9DLM8Da98ZBVDWQG6AiOnCL7CHKnF
+ lyTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnWvhWajBOIcRVgFO0itw9ATCTzVE0m3Zt1IBlRmnTLZOZR2UCUiUaa9qLtSnYYEuIsAy5BGuj/gJBDven7pk9Su+FCzI=
-X-Gm-Message-State: AOJu0Yxy55CI3ZOa454uwUaD0mgrUF64v6RzSJrtm/Bq9Iivejsxmnhu
- /QtRXvqc24FS3Ff7IQ4tH9nbCej+sFs5K2RyE8mC81L1Z3iULjqsoWEAsFoGjrOQyEK/Kl2KjF9
- pzEod+lDlsrS8J87ipUgAg+nEbuNPMHMt2KduHx/3MXPT6IChaOBx
-X-Received: by 2002:a05:6870:f295:b0:25e:14d9:da27 with SMTP id
- 586e51a60fabf-260ee1409f0mr208683fac.0.1721242817800; 
- Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8PKYOaEymgW8c3/IPlT7vSogaB5vzdi30jW5kln79POc0gcyWlgZh3llNdBHDDUqAx+p4Vw==
-X-Received: by 2002:a05:6870:f295:b0:25e:14d9:da27 with SMTP id
- 586e51a60fabf-260ee1409f0mr208669fac.0.1721242817414; 
- Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a160c854f7sm432732485a.130.2024.07.17.12.00.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 12:00:17 -0700 (PDT)
-Date: Wed, 17 Jul 2024 15:00:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, "Wang, Lei" <lei4.wang@intel.com>,
- qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>
-Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
- the channel parameters
-Message-ID: <ZpgUvsiCB4oP3RLT@x1n>
-References: <20240620212111.29319-1-farosas@suse.de>
- <20240620212111.29319-7-farosas@suse.de>
- <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com>
- <Zn15y693g0AkDbYD@x1n> <877cdtfcsi.fsf@suse.de>
- <Zo7cncqkxB89AUBe@x1n> <87y169dmu3.fsf@suse.de>
- <53d0ddf0-07f7-430e-a424-b4fcc38a16d0@maciej.szmigiero.name>
+ AJvYcCUA2PVQoYktgHZSVP6JpMN8Xmdxajl3a83GLO3z6gkTyfHkfS88V25zAt71I5W96TrCH0NDnvwuZV43sTggkN7rfEItffg=
+X-Gm-Message-State: AOJu0YwBN7vJwn/5rS36fLV2tZ6CBk/19u+7b4mR4fkMyXCZRahxQrB5
+ yK6rRAxXHqBQrRurmcPNPb3BVyKv0MMGmuvnH6TIEvsormsN3ZUpmi3uhSe0h4YTnQGqISHJKcL
+ qpQq4AUYxeU/Vw/b1bJws4gBK24gLNxoMUVXbYg==
+X-Google-Smtp-Source: AGHT+IGXxq60Nbxt/VLpXBWKiQuKAR94McjSn38xqdH99XBIjQBmd2SBUsMaV2HlB23vdXxYiDos22kvDEsmQCNytgw=
+X-Received: by 2002:a2e:9e02:0:b0:2ee:6b86:b0aa with SMTP id
+ 38308e7fff4ca-2ef05c7143emr2087811fa.17.1721243211042; Wed, 17 Jul 2024
+ 12:06:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <53d0ddf0-07f7-430e-a424-b4fcc38a16d0@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240715084519.1189624-1-smostafa@google.com>
+ <20240717150931.GA3988597@myrica>
+ <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
+In-Reply-To: <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 17 Jul 2024 20:06:39 +0100
+Message-ID: <CAFEAcA9e+NCFZ+Zhs0C-XxD++=33FV7Tnt8GzZmvUnpzMw2Yxg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/18] SMMUv3 nested translation support
+To: eric.auger@redhat.com
+Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org, 
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org, 
+ marcin.juszkiewicz@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,50 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 10:10:25PM +0200, Maciej S. Szmigiero wrote:
-> > > > > The comment I removed is slightly misleading to me too, because right now
-> > > > > active_slot contains the data hasn't yet been delivered to multifd, so
-> > > > > we're "putting it back to free list" not because of it's free, but because
-> > > > > we know it won't get used until the multifd send thread consumes it
-> > > > > (because before that the thread will be busy, and we won't use the buffer
-> > > > > if so in upcoming send()s).
-> > > > > 
-> > > > > And then when I'm looking at this again, I think maybe it's a slight
-> > > > > overkill, and maybe we can still keep the "opaque data" managed by multifd.
-> > > > > One reason might be that I don't expect the "opaque data" payload keep
-> > > > > growing at all: it should really be either RAM or device state as I
-> > > > > commented elsewhere in a relevant thread, after all it's a thread model
-> > > > > only for migration purpose to move vmstates..
-> > > > 
-> > > > Some amount of flexibility needs to be baked in. For instance, what
-> > > > about the handshake procedure? Don't we want to use multifd threads to
-> > > > put some information on the wire for that as well?
-> > > 
-> > > Is this an orthogonal question?
-> > 
-> > I don't think so. You say the payload data should be either RAM or
-> > device state. I'm asking what other types of data do we want the multifd
-> > channel to transmit and suggesting we need to allow room for the
-> > addition of that, whatever it is. One thing that comes to mind that is
-> > neither RAM or device state is some form of handshake or capabilities
-> > negotiation.
-> 
-> The RFC version of my multifd device state transfer patch set introduced
-> a new migration channel header (by Avihai) for clean and extensible
-> migration channel handshaking but people didn't like so it was removed in v1.
+On Wed, 17 Jul 2024 at 18:44, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> Hi Peter, Richard,
+>
+> On 7/17/24 17:09, Jean-Philippe Brucker wrote:
+> > On Mon, Jul 15, 2024 at 08:45:00AM +0000, Mostafa Saleh wrote:
+> >> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
+> >> but not nested instances.
+> >> This patch series adds support for nested translation in SMMUv3,
+> >> this is controlled by property =E2=80=9Carm-smmuv3.stage=3Dnested=E2=
+=80=9D, and
+> >> advertised to guests as (IDR0.S1P =3D=3D 1 && IDR0.S2P =3D=3D 2)
+> > For the whole series (3-9, 11, 12, 15, 16, 18):
+> >
+> > Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> >
+> > (and I think patch 16 is missing Eric's R-b)
+>
+> Jean-Philippe and I have followed up the progress of this series,
+> Mostafa took into account all our comments and all the patches were
+> reviewed. It seems to be in a pretty decent state so if you don't have
+> any objection, please consider pulling it for 9.1.
 
-Hmm, I'm not sure this is relevant to the context of discussion here, but I
-confess I didn't notice the per-channel header thing in the previous RFC
-series.  Link is here:
+Yep, I've had this series on my radar since you said in a
+comment on the previous revision that it was close to
+being ready. Thanks to both you and Jean-Philippe for doing
+the heavy lifting on the code review here.
 
-https://lore.kernel.org/r/636cec92eb801f13ba893de79d4872f5d8342097.1713269378.git.maciej.szmigiero@oracle.com
+Applied to target-arm.next for 9.1, thanks.
 
-Maciej, if you want, you can split that out of the seriess. So far it looks
-like a good thing with/without how VFIO tackles it.
-
-Thanks,
-
--- 
-Peter Xu
-
+-- PMM
 
