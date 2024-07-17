@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870F8C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 21:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031A4C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 21:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUCVh-0002Rx-NP; Wed, 17 Jul 2024 17:48:29 -0400
+	id 1sUCVO-0000ik-6P; Wed, 17 Jul 2024 17:48:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVe-000292-RE
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:26 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVM-0000YO-3o
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:08 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVd-0002MA-5M
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:26 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4267300145eso1125755e9.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 14:48:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUCVK-0002Jn-BS
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:48:07 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-36796d2e5a9so105022f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 14:48:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721252903; x=1721857703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721252885; x=1721857685; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kmy7cURki6nBytni2EwGHik2KgRQEv6ru/qUUAFzUoU=;
- b=brLHCxbdkxJaX68+HRvy14UMjbW4ZQVnl3lJl9V2wsXNMDIdyTO0BgfIs5UV9LEClW
- Rurur116KAW8FDhQIrOgStCqliR50bmX6x5VSpn4r4CWc0aAr3QHXoSGdixBUH5kcdBn
- EYqIDXhModh67sbDQvVzR41pQ9iKqpNTLniQkOKlby4jUXEysU//I095cNmON0dR0HGK
- riQlkos2hbtG9QL6VE56e1s1+WtA2gRAdLZr07KiC2UNd5jXpdfqhokWt1mIuBrrGfmm
- CX6ZzvpG6QrynOinFabkq6Y/yAbcmkv/p+ZSPb6PIdEfLWZlcIA/YiZb/shmM/9eE63P
- vKVg==
+ bh=NSJ3QaL4bkehVQYGGugiUngoSHHCTqishnt4sbK/vnE=;
+ b=etuKRgQgSd6xFmXrjBp0pcE62ickcb/Yb0RJgkn7smgpsTnVsZo4sYRObvJyc+dK7c
+ xjxedh5gzZNNAwuN5xg1jXcNvos6BGMEWjFZCFiBoZdfHmEzBKoQPR6I6mmMtKMPjmQH
+ 2CF2+m2jZY86yY5Osoq4JWwaA+fV4zMCI32R36OOR+FQ13xp5vQ+s7dN/Y/Qq/hiVwWY
+ zGiPlxHa76PXPu6zZ3S6wSDK+Q4ScBkctyxHwEYjmKuc6MmTrOmFlXoSTkL5xhgvF5zk
+ ZC1y0VgF5DaKApUi++QNPYkDHg6xqxMmU8WdYzGTKLkcyN4ukts2E2pLihUQHbKpo5dp
+ +KQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721252903; x=1721857703;
+ d=1e100.net; s=20230601; t=1721252885; x=1721857685;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kmy7cURki6nBytni2EwGHik2KgRQEv6ru/qUUAFzUoU=;
- b=oKF02EK4lWpdpp006eTrJdodz9EYFa4nKeosPhipRKOXryQFSvATFJV+HpwoEAOX9f
- hrzuCjwAlfFgT/g3dIchlCH5UNnsYUG+iq7AIVw2PK+5V0ZE7PfwKKPOTarpeuRTY9r0
- JWk6cZJgWVfrwSPfIVVexqlYDIpsm9+ePr4hVv5CAi3DT+fWivLNRwcKyLfTe2c1N963
- iss6tz9+qD2E9GXUkG/MZqNcCPUh94S8zLGZ8kmQ8h5yPPODE4zA8N8NOCcA9EP28UeS
- y/1WNYLuK0vqpse46tyoiWP2wtWUwufhkBGDXrM28049F5dv7wRBZ6SWFW7fxilK1Cc0
- Em5Q==
+ bh=NSJ3QaL4bkehVQYGGugiUngoSHHCTqishnt4sbK/vnE=;
+ b=ccWo6EFC+tF5jAXNo/ifTdtCbiRRs3vH8emfmHy/5GUv2q+M96aqiWgrcpeQrXDdpF
+ T5o5M+ak7EUKuWKnUWx13T0VQmAJyhNZQHNlJyOWZIw2IMlQ80zFfXi5u3p6tii8Ovmf
+ Jb2qUQImNjTzoY5GhWypTAViwym3lDS/FaqlybXjZSB/MbGeBSXU4bKanwJTQthZMJ63
+ 7GfaAY1QD5h0SLGkXk/r4HIPOkRTK2BHQPsMaif0m9QF3YSc5QLfctxpw/OWDe+Vl9u+
+ BqRMe5NJ/gR4cnq/W3X/1qokUY8r599oAQ7oZRxvEgH5G8oIoTYGJQOWetvpeggByeo+
+ A7uA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGcjQr8ch6zDlzSBe7Ux9F9q/nWwuDAPfylIAevP8/qZV2m0YDPhTw2BNLq0zXo6jPqzqLdSunrk/aEe/pXw6XbeV8PPo=
-X-Gm-Message-State: AOJu0Yxr3Uv1u84fYVEghjl0g/ZanSRNBcvCo+iHSLGEMpkHesH10ZFi
- ao8WutLl8hAT2YfULU+jxiVYCsRz6VJBTPTloCS7BVbwjOFlsIJdtFSKwrfO6d4=
-X-Google-Smtp-Source: AGHT+IEcm8/Q+oSidIfnZA6aaKTsyrxwIbLRXWbMJ+g92n3D2R4wi6pkUyHwPUYpgDpwpvcKz0kHGg==
-X-Received: by 2002:a05:600c:1547:b0:426:545b:ec00 with SMTP id
- 5b1f17b1804b1-427c2cc90dfmr26634995e9.19.1721252903529; 
- Wed, 17 Jul 2024 14:48:23 -0700 (PDT)
+ AJvYcCXqM0cM9OQ1+7iKxX2vk4P3FNY7JJm5y43kDDL6DcR+x1K2KKjFH9uJsYnz1VLrrWDAdb1MlhxnQffqvyOV5mdWYhlQfiE=
+X-Gm-Message-State: AOJu0YwdZSUrQImYt7ZI0cIgxeH8m4e2u0rvtlJwRAqVstPIuou+w2x4
+ kVxhhSMCRIj4KbFliT2StHFLvk4eEEq96+dNgMxUqUT4IPEtY+3qRjhExV1HirQ=
+X-Google-Smtp-Source: AGHT+IH3LQyrSq+d7CBMUmBNL4ECwh7idGLuSuEhJ9QZxxbM3cVCg5XaGV9rdzdKqd1kv0Qcs69New==
+X-Received: by 2002:adf:b647:0:b0:366:ed80:d040 with SMTP id
+ ffacd0b85a97d-36831789e61mr2035397f8f.67.1721252884647; 
+ Wed, 17 Jul 2024 14:48:04 -0700 (PDT)
 Received: from localhost.localdomain ([176.187.208.21])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427c7805253sm11478415e9.32.2024.07.17.14.48.21
+ 5b1f17b1804b1-427c778e049sm12098005e9.9.2024.07.17.14.48.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jul 2024 14:48:23 -0700 (PDT)
+ Wed, 17 Jul 2024 14:48:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  qemu-devel@nongnu.org
@@ -66,18 +66,18 @@ Cc: Xianglai Li <lixianglai@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  Xiaojuan Yang <yangxiaojuan@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Song Gao <gaosong@loongson.cn>
-Subject: [PATCH v3 09/17] hw/intc/loongson_ipi: Pass LoongsonIPICommonState to
- send_ipi_data()
-Date: Wed, 17 Jul 2024 23:47:00 +0200
-Message-ID: <20240717214708.78403-10-philmd@linaro.org>
+Subject: [PATCH v3 06/17] hw/intc/loongson_ipi: Move common definitions to
+ loongson_ipi_common.h
+Date: Wed, 17 Jul 2024 23:46:57 +0200
+Message-ID: <20240717214708.78403-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240717214708.78403-1-philmd@linaro.org>
 References: <20240717214708.78403-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +102,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-In order to get LoongsonIPICommonClass in send_ipi_data()
-in the next commit, propagate LoongsonIPICommonState.
-
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 [PMD: Extracted from bigger commit, added commit description]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/loongson_ipi.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ include/hw/intc/loongson_ipi.h        | 18 ------------------
+ include/hw/intc/loongson_ipi_common.h | 19 +++++++++++++++++++
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 5346bbb267..8acd563db9 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -88,8 +88,8 @@ static AddressSpace *get_cpu_iocsr_as(CPUState *cpu)
-     return NULL;
- }
+diff --git a/include/hw/intc/loongson_ipi.h b/include/hw/intc/loongson_ipi.h
+index 82cb64ca40..d53bd5dcfe 100644
+--- a/include/hw/intc/loongson_ipi.h
++++ b/include/hw/intc/loongson_ipi.h
+@@ -12,24 +12,6 @@
+ #include "hw/intc/loongson_ipi_common.h"
+ #include "hw/sysbus.h"
  
--static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
--                          MemTxAttrs attrs)
-+static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, CPUState *cpu,
-+                                 uint64_t val, hwaddr addr, MemTxAttrs attrs)
- {
-     int i, mask = 0, data = 0;
-     AddressSpace *iocsr_as = get_cpu_iocsr_as(cpu);
-@@ -119,7 +119,8 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
-     return MEMTX_OK;
- }
+-/* Mainy used by iocsr read and write */
+-#define SMP_IPI_MAILBOX      0x1000ULL
+-#define CORE_STATUS_OFF       0x0
+-#define CORE_EN_OFF           0x4
+-#define CORE_SET_OFF          0x8
+-#define CORE_CLEAR_OFF        0xc
+-#define CORE_BUF_20           0x20
+-#define CORE_BUF_28           0x28
+-#define CORE_BUF_30           0x30
+-#define CORE_BUF_38           0x38
+-#define IOCSR_IPI_SEND        0x40
+-#define IOCSR_MAIL_SEND       0x48
+-#define IOCSR_ANY_SEND        0x158
+-
+-#define MAIL_SEND_ADDR        (SMP_IPI_MAILBOX + IOCSR_MAIL_SEND)
+-#define MAIL_SEND_OFFSET      0
+-#define ANY_SEND_OFFSET       (IOCSR_ANY_SEND - IOCSR_MAIL_SEND)
+-
+ #define IPI_MBX_NUM           4
  
--static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-+static MemTxResult mail_send(LoongsonIPICommonState *ipi,
-+                             uint64_t val, MemTxAttrs attrs)
- {
-     uint32_t cpuid;
-     hwaddr addr;
-@@ -134,10 +135,11 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
-     attrs.requester_id = cs->cpu_index;
--    return send_ipi_data(cs, val, addr, attrs);
-+    return send_ipi_data(ipi, cs, val, addr, attrs);
- }
+ #define TYPE_LOONGSON_IPI "loongson_ipi"
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+index 70ac69d0ba..b43b77bda6 100644
+--- a/include/hw/intc/loongson_ipi_common.h
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -23,4 +23,23 @@ struct LoongsonIPICommonClass {
+     SysBusDeviceClass parent_class;
+ };
  
--static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-+static MemTxResult any_send(LoongsonIPICommonState *ipi,
-+                            uint64_t val, MemTxAttrs attrs)
- {
-     uint32_t cpuid;
-     hwaddr addr;
-@@ -152,7 +154,7 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = val & 0xffff;
-     attrs.requester_id = cs->cpu_index;
--    return send_ipi_data(cs, val, addr, attrs);
-+    return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
- static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
-@@ -249,15 +251,16 @@ static const MemoryRegionOps loongson_ipi_iocsr_ops = {
- static MemTxResult loongson_ipi_writeq(void *opaque, hwaddr addr, uint64_t val,
-                                         unsigned size, MemTxAttrs attrs)
- {
-+    LoongsonIPICommonState *ipi = opaque;
-     MemTxResult ret = MEMTX_OK;
- 
-     addr &= 0xfff;
-     switch (addr) {
-     case MAIL_SEND_OFFSET:
--        ret = mail_send(val, attrs);
-+        ret = mail_send(ipi, val, attrs);
-         break;
-     case ANY_SEND_OFFSET:
--        ret = any_send(val, attrs);
-+        ret = any_send(ipi, val, attrs);
-         break;
-     default:
-        break;
++/* Mainy used by iocsr read and write */
++#define SMP_IPI_MAILBOX         0x1000ULL
++
++#define CORE_STATUS_OFF         0x0
++#define CORE_EN_OFF             0x4
++#define CORE_SET_OFF            0x8
++#define CORE_CLEAR_OFF          0xc
++#define CORE_BUF_20             0x20
++#define CORE_BUF_28             0x28
++#define CORE_BUF_30             0x30
++#define CORE_BUF_38             0x38
++#define IOCSR_IPI_SEND          0x40
++#define IOCSR_MAIL_SEND         0x48
++#define IOCSR_ANY_SEND          0x158
++
++#define MAIL_SEND_ADDR          (SMP_IPI_MAILBOX + IOCSR_MAIL_SEND)
++#define MAIL_SEND_OFFSET        0
++#define ANY_SEND_OFFSET         (IOCSR_ANY_SEND - IOCSR_MAIL_SEND)
++
+ #endif
 -- 
 2.41.0
 
