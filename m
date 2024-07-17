@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E760C3DA59
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 02:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC50C3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 02:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTuB1-0008Fd-DM; Tue, 16 Jul 2024 22:13:55 -0400
+	id 1sTuBU-000255-1n; Tue, 16 Jul 2024 22:14:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTuAu-0007yU-3T
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:13:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTuBT-0001yd-5D
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:14:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTuAs-0003Uv-Co
- for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:13:47 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sTuBR-00045h-4U
+ for qemu-devel@nongnu.org; Tue, 16 Jul 2024 22:14:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721182424;
+ s=mimecast20190719; t=1721182460;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cK72dcimvSi3Yg3WciBVNzlipHpTmUZFliZYoEMaEOY=;
- b=gEfsi5fIQBYMZ2grfMHq28yl+0XxfQ1LPjL0gXyT0L+5dp779UAA/M9Bfm19VFtDeMT/s6
- kMi+Tv+3yDN5Wjx98OZ9EbiAqVfXxIZ6QxGcVOzB51TjU3E2XYB84KTUiXPbbXvQmJD9Qz
- 6ECrMTD9jb6hMog3zSlFawa4IjPi6dA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wCHkKDP4uIq74L/+JxR6WVjHX85ztrxXTytNuEUhmMU=;
+ b=hKh3Y9qpbp94OwfUjC38v7P+T+S0Vzy7qNnVhSYC8WrlzcQHtHgR9CEiizjMVkjsGsXCRm
+ zDzshEHVv2TSee2rderw7waX1X7qe4ze33wFu+I5RxQZEKzQneXnvaH3KxvAtv2se416xQ
+ Z4qTyYieAGkU8Zmixa+Yn9Yad2Ofbbo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-_JumL3G1O0yKIGgnaowjww-1; Tue,
- 16 Jul 2024 22:13:41 -0400
-X-MC-Unique: _JumL3G1O0yKIGgnaowjww-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-9Al7GCwnMCC2RH3oLx_LSQ-1; Tue,
+ 16 Jul 2024 22:14:15 -0400
+X-MC-Unique: 9Al7GCwnMCC2RH3oLx_LSQ-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98C441955D45; Wed, 17 Jul 2024 02:13:38 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29F8819560B4; Wed, 17 Jul 2024 02:14:13 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.65.127])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 33DD01955E80; Wed, 17 Jul 2024 02:13:32 +0000 (UTC)
+ id 1907B1955F40; Wed, 17 Jul 2024 02:14:05 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -66,9 +66,9 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 3/9] docs/qapidoc: create qmp-example directive
-Date: Tue, 16 Jul 2024 22:13:05 -0400
-Message-ID: <20240717021312.606116-4-jsnow@redhat.com>
+Subject: [PATCH v2 9/9] qapi: remove "Example" doc section
+Date: Tue, 16 Jul 2024 22:13:11 -0400
+Message-ID: <20240717021312.606116-10-jsnow@redhat.com>
 In-Reply-To: <20240717021312.606116-1-jsnow@redhat.com>
 References: <20240717021312.606116-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -99,180 +99,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a directive that creates a syntactic sugar for creating
-"Example" boxes very similar to the ones already used in the bitmaps.rst
-document, please see e.g.
-https://www.qemu.org/docs/master/interop/bitmaps.html#creation-block-dirty-bitmap-add
+Fully eliminate the "Example" sections in QAPI doc blocks now that they
+have all been converted to arbitrary rST syntax using the
+".. qmp-example::" directive. Update tests to match.
 
-In its simplest form, when a custom title is not needed or wanted, and
-the example body is *solely* a QMP example:
+Migrating to the new syntax
+---------------------------
 
-```
-.. qmp-example::
+The old "Example:" or "Examples:" section syntax is now caught as an
+error, but "Example::" is stil permitted as explicit rST syntax for an
+un-lexed, generic preformatted text block.
 
-   {body}
-```
+('Example' is not special in this case, any sentence that ends with "::"
+will start an indented code block in rST.)
 
-is syntactic sugar for:
+Arbitrary rST for Examples is now possible, but it's strongly
+recommended that documentation authors use the ".. qmp-example::"
+directive for consistent visual formatting in rendered HTML docs. The
+":title:" directive option may be used to add extra information into the
+title bar for the example. The ":annotated:" option can be used to write
+arbitrary rST instead, with nested "::" blocks applying QMP formatting
+where desired.
 
-```
-.. admonition:: Example:
+Other choices available are ".. code-block:: QMP" which will not create
+an "Example:" box, or the short-form "::" code-block syntax which will
+not apply QMP highlighting when used outside of the qmp-example
+directive.
 
-   .. code-block:: QMP
+Why?
+----
 
-      {body}
-```
+This patch has several benefits:
 
-When a custom, plaintext title that describes the example is desired,
-this form:
+1. Example sections can now be written more arbitrarily, mixing
+   explanatory paragraphs and code blocks however desired.
 
-```
-.. qmp-example::
-   :title: Defrobnification
+2. Example sections can now use fully arbitrary rST.
 
-   {body}
-```
+3. All code blocks are now lexed and validated as QMP; increasing
+   usability of the docs and ensuring validity of example snippets.
 
-Is syntactic sugar for:
+   (To some extent - This patch only gaurantees it lexes correctly, not
+   that it's valid under the JSON or QMP grammars. It will catch most
+   small mistakes, however.)
 
-```
-.. admonition:: Example: Defrobnification
+4. Each qmp-example can be titled or annotated independently without
+   bypassing the QMP lexer/validator.
 
-   .. code-block:: QMP
+   (i.e. code blocks are now for *code* only, so we don't have to
+   sacrifice exposition for having lexically valid examples.)
 
-      {body}
-```
-
-Lastly, when Examples are multi-step processes that require non-QMP
-exposition, have lengthy titles, or otherwise involve prose with rST
-markup (lists, cross-references, etc), the most complex form:
-
-```
-.. qmp-example::
-   :annotated:
-
-   This example shows how to use `foo-command`::
-
-     {body}
-
-   For more information, please see `frobnozz`.
-```
-
-Is desugared to:
-
-```
-.. admonition:: Example:
-
-   This example shows how to use `foo-command`::
-
-     {body}
-
-   For more information, please see `frobnozz`.
-```
-
-Note that :annotated: and :title: options can be combined together, if
-desired.
-
-The primary benefit here being documentation source consistently using
-the same directive for all forms of examples to ensure consistent visual
-styling, and ensuring all relevant prose is visually grouped alongside
-the code literal block.
-
-Note that as of this commit, the code-block rST syntax "::" does not
-apply QMP highlighting; you would need to use ".. code-block:: QMP". The
-very next commit changes this behavior to assume all "::" code blocks
-within this directive are QMP blocks.
+NOTE: As with the "Notes" conversion (d461c279737), this patch (and the
+      three preceding) may change the rendering order for Examples in
+      the current generator. The forthcoming qapidoc rewrite will fix
+      this by always generating documentation in source order.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 55 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ docs/devel/qapi-code-gen.rst    | 58 ++++++++++++++++++++++++++++-----
+ scripts/qapi/parser.py          | 10 +++++-
+ tests/qapi-schema/doc-good.json | 19 +++++++----
+ tests/qapi-schema/doc-good.out  | 26 ++++++++++-----
+ tests/qapi-schema/doc-good.txt  | 23 ++++++-------
+ 5 files changed, 98 insertions(+), 38 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index b3be82998a8..11defcfa3f6 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -27,6 +27,7 @@
- import os
- import re
- import textwrap
-+from typing import List
+diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+index ae97b335cbf..583207a8ec2 100644
+--- a/docs/devel/qapi-code-gen.rst
++++ b/docs/devel/qapi-code-gen.rst
+@@ -899,7 +899,7 @@ Documentation markup
+ ~~~~~~~~~~~~~~~~~~~~
  
- from docutils import nodes
- from docutils.parsers.rst import Directive, directives
-@@ -35,6 +36,7 @@
- from qapi.gen import QAPISchemaVisitor
- from qapi.schema import QAPISchema
+ Documentation comments can use most rST markup.  In particular,
+-a ``::`` literal block can be used for examples::
++a ``::`` literal block can be used for pre-formatted text::
  
-+from sphinx.directives.code import CodeBlock
- from sphinx.errors import ExtensionError
- from sphinx.util.docutils import switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
-@@ -538,10 +540,63 @@ def run(self):
-             raise ExtensionError(str(err)) from err
+     # ::
+     #
+@@ -995,8 +995,8 @@ line "Features:", like this::
+   # @feature: Description text
+ 
+ A tagged section begins with a paragraph that starts with one of the
+-following words: "Since:", "Example:"/"Examples:", "Returns:",
+-"Errors:", "TODO:".  It ends with the start of a new section.
++following words: "Since:", "Returns:", "Errors:", "TODO:".  It ends with
++the start of a new section.
+ 
+ The second and subsequent lines of tagged sections must be indented
+ like this::
+@@ -1020,13 +1020,53 @@ detailing a relevant error condition. For example::
+ A "Since: x.y.z" tagged section lists the release that introduced the
+ definition.
+ 
+-An "Example" or "Examples" section is rendered entirely
+-as literal fixed-width text.  "TODO" sections are not rendered at all
+-(they are for developers, not users of QMP).  In other sections, the
+-text is formatted, and rST markup can be used.
++"TODO" sections are not rendered (they are for developers, not users of
++QMP).  In other sections, the text is formatted, and rST markup can be
++used.
++
++QMP Examples can be added by using the ``.. qmp-example::``
++directive. In its simplest form, this can be used to contain a single
++QMP code block which accepts standard JSON syntax with additional server
++directionality indicators (``->`` and ``<-``), and elisions (``...``).
++
++Optionally, a plaintext title may be provided by using the ``:title:``
++directive option. If the title is omitted, the example title will
++default to "Example:".
++
++A simple QMP example::
++
++  # .. qmp-example::
++  #    :title: Using query-block
++  #
++  #    -> { "execute": "query-block" }
++  #    <- { ... }
++
++More complex or multi-step examples where exposition is needed before or
++between QMP code blocks can be created by using the ``:annotated:``
++directive option. When using this option, nested QMP code blocks must be
++entered explicitly with rST's ``::`` syntax.
++
++Highlighting in non-QMP languages can be accomplished by using the
++``.. code-block:: lang`` directive, and non-highlighted text can be
++achieved by omitting the language argument.
+ 
+ For example::
+ 
++  # .. qmp-example::
++  #    :annotated:
++  #    :title: A more complex demonstration
++  #
++  #    This is a more complex example that can use
++  #    ``arbitrary rST syntax`` in its exposition::
++  #
++  #      -> { "execute": "query-block" }
++  #      <- { ... }
++  #
++  #    Above, lengthy output has been omitted for brevity.
++
++
++Examples of complete definition documentation::
++
+  ##
+  # @BlockStats:
+  #
+@@ -1058,11 +1098,11 @@ For example::
+  #
+  # Since: 0.14
+  #
+- # Example:
++ # .. qmp-example::
+  #
+  #     -> { "execute": "query-blockstats" }
+  #     <- {
+- #          ... lots of output ...
++ #          ...
+  #        }
+  ##
+  { 'command': 'query-blockstats',
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 6ad5663e545..adc85b5b394 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -553,7 +553,7 @@ def get_doc(self) -> 'QAPIDoc':
+                     # Note: "sections" with two colons are left alone as
+                     # rST markup and not interpreted as a section heading.
+ 
+-                    # TODO: Remove this error sometime in 2025 or so
++                    # TODO: Remove these errors sometime in 2025 or so
+                     # after we've fully transitioned to the new qapidoc
+                     # generator.
+ 
+@@ -567,6 +567,14 @@ def get_doc(self) -> 'QAPIDoc':
+                         )
+                         raise QAPIParseError(self, emsg)
+ 
++                    if 'Example' in match.group(1):
++                        emsg = (
++                            f"The '{match.group(1)}' section is no longer "
++                            "supported. Please use the '.. qmp-example::' "
++                            "directive, or other suitable markup instead."
++                        )
++                        raise QAPIParseError(self, emsg)
++
+                     doc.new_tagged_section(self.info, match.group(1))
+                     text = line[match.end():]
+                     if text:
+diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
+index b5658958587..f64bf38d854 100644
+--- a/tests/qapi-schema/doc-good.json
++++ b/tests/qapi-schema/doc-good.json
+@@ -172,12 +172,17 @@
+ #
+ #  Duis aute irure dolor
+ #
+-# Example:
++# .. qmp-example::
++#    :title: Ideal fast-food burger situation
+ #
+-#  -> in
+-#  <- out
++#    -> "in"
++#    <- "out"
+ #
+-# Examples:
++# Examples::
++#
++#  - Not a QMP code block
++#  - Merely a preformatted code block literal
++#  It isn't even an rST list.
+ #  - *verbatim*
+ #  - {braces}
+ #
+@@ -199,11 +204,11 @@
+ # @cmd-feat1: a feature
+ # @cmd-feat2: another feature
+ #
+-# Example:
++# .. qmp-example::
+ #
+-#  -> in
++#    -> "this example"
+ #
+-#  <- out
++#    <- "has no title"
+ ##
+ { 'command': 'cmd-boxed', 'boxed': true,
+   'data': 'Object',
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index a8e9456f60d..6d24f1127b9 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -184,13 +184,21 @@ frobnicate
+  - Ut enim ad minim veniam
+ 
+  Duis aute irure dolor
+-    section=Example
+- -> in
+- <- out
+-    section=Examples
++
++.. qmp-example::
++   :title: Ideal fast-food burger situation
++
++   -> "in"
++   <- "out"
++
++Examples::
++
++ - Not a QMP code block
++ - Merely a preformatted code block literal
++ It isn't even an rST list.
+  - *verbatim*
+  - {braces}
+-    section=None
++
+ Note::
+     Ceci n'est pas une note
+     section=Since
+@@ -202,10 +210,12 @@ If you're bored enough to read this, go see a video of boxed cats
+ a feature
+     feature=cmd-feat2
+ another feature
+-    section=Example
+- -> in
++    section=None
++.. qmp-example::
+ 
+- <- out
++   -> "this example"
++
++   <- "has no title"
+ doc symbol=EVT_BOXED
+     body=
+ 
+diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
+index 30d457e5488..cb37db606a6 100644
+--- a/tests/qapi-schema/doc-good.txt
++++ b/tests/qapi-schema/doc-good.txt
+@@ -217,17 +217,16 @@ Notes:
+ 
+ Duis aute irure dolor
+ 
++Example: Ideal fast-food burger situation:
+ 
+-Example
+-~~~~~~~
++   -> "in"
++   <- "out"
+ 
+-   -> in
+-   <- out
+-
+-
+-Examples
+-~~~~~~~~
++Examples:
+ 
++   - Not a QMP code block
++   - Merely a preformatted code block literal
++   It isn't even an rST list.
+    - *verbatim*
+    - {braces}
+ 
+@@ -261,13 +260,11 @@ Features
+ "cmd-feat2"
+    another feature
+ 
++Example::
+ 
+-Example
+-~~~~~~~
++   -> "this example"
+ 
+-   -> in
+-
+-   <- out
++   <- "has no title"
  
  
-+class QMPExample(CodeBlock, NestedDirective):
-+    """
-+    Custom admonition for QMP code examples.
-+
-+    When the :annotated: option is present, the body of this directive
-+    is parsed as normal rST instead. Code blocks must be explicitly
-+    written by the user, but this allows for intermingling explanatory
-+    paragraphs with arbitrary rST syntax and code blocks for more
-+    involved examples.
-+
-+    When :annotated: is absent, the directive body is treated as a
-+    simple standalone QMP code block literal.
-+    """
-+
-+    required_argument = 0
-+    optional_arguments = 0
-+    has_content = True
-+    option_spec = {
-+        "annotated": directives.flag,
-+        "title": directives.unchanged,
-+    }
-+
-+    def admonition_wrap(self, *content) -> List[nodes.Node]:
-+        title = "Example:"
-+        if "title" in self.options:
-+            title = f"{title} {self.options['title']}"
-+
-+        admon = nodes.admonition(
-+            "",
-+            nodes.title("", title),
-+            *content,
-+            classes=["admonition", "admonition-example"],
-+        )
-+        return [admon]
-+
-+    def run_annotated(self) -> List[nodes.Node]:
-+        content_node: nodes.Element = nodes.section()
-+        self.do_parse(self.content, content_node)
-+        return content_node.children
-+
-+    def run(self) -> List[nodes.Node]:
-+        annotated = "annotated" in self.options
-+
-+        if annotated:
-+            content_nodes = self.run_annotated()
-+        else:
-+            self.arguments = ["QMP"]
-+            content_nodes = super().run()
-+
-+        return self.admonition_wrap(*content_nodes)
-+
-+
- def setup(app):
-     """Register qapi-doc directive with Sphinx"""
-     app.add_config_value("qapidoc_srctree", None, "env")
-     app.add_directive("qapi-doc", QAPIDocDirective)
-+    app.add_directive("qmp-example", QMPExample)
- 
-     return {
-         "version": __version__,
+ "EVT_BOXED" (Event)
 -- 
 2.45.0
 
