@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20242C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1EDC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 12:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU3F7-0004M9-JU; Wed, 17 Jul 2024 07:54:45 -0400
+	id 1sU3Of-0000mz-PU; Wed, 17 Jul 2024 08:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sU3F4-0004Ez-SC
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:54:42 -0400
-Received: from fhigh3-smtp.messagingengine.com ([103.168.172.154])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU3Oc-0000i7-Vn
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:04:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sU3El-0005fL-ED
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:54:39 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id B2EA111401D4;
- Wed, 17 Jul 2024 07:54:20 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute2.internal (MEProxy); Wed, 17 Jul 2024 07:54:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1721217260;
- x=1721303660; bh=saSUrcE0htd+ld2AIN6wzF70vaWYNlPFDN349Wottt0=; b=
- P5b4nZdCTb65EJuXyE0L2AQRMXOFu4RDp4XaS4y/HdF/0zDPc6/czFbpea2LXaqf
- 4IySfFzDkzb8rdr/jo/skuW20YIGXFJ/zFmQgCwj6QEqiVgp87ZOPxLkCTO72zlA
- HGRsjnQWBtmD4sYDxm1/4EKYvUXrTZEKHneA5/nbNRZNc1wwpOB34GEzMmgtpkM0
- zgCi80oxQIbI5igBPlm5qOZlPlDGkh2lvmcmiUgUTiSm3fyFTjctq80Qk+bDvi0H
- dt8AssZHCiS+i1jU4U8tgY2i2PAy2JE9gx6oT1yWpU3wrdnmi96bkscMbKUBsOUu
- 96MQndUiZA8DIO+gZ4Pn8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1721217260; x=
- 1721303660; bh=saSUrcE0htd+ld2AIN6wzF70vaWYNlPFDN349Wottt0=; b=k
- DPkKOSGTlWm0pBbqxlLkVLCbSvAYxqFB8Opoe7OFoud390xMt1/guNJFtSKUPMp5
- F37UPNz/yE+GzukOcgvVbi97g1FopNJ9B9TG44RJIsvb0BVaLsDlcd2LxWOnhhFv
- bGZp6fald4K3v1bYyyh0XRAgKF9DjcFrqhRuoft4b2kCZR0FOaNyp60TiGkY3qCJ
- wTULUEyHzfpJsGyXqyQfQNQwjLs1XTzs7trMjCiF89/xbtuEJ+6I56Hjx2xDlino
- s/o70NoJNp7hTKgUo2kZBXMLopmOHmUathXXAQaZxV/2STdRuONaoaJgVRgkwI4K
- 4g6levjuw3hVvSqd+y1Ng==
-X-ME-Sender: <xms:67CXZotNkJOmASihISJCQCqFZtn0IVRZxsQ1vanh3xAr6dD5n7I4YA>
- <xme:67CXZlcCNshW3WUEQNLwDyOpSsn3blcN8NWc2oAV4NXgYlMw-zIRPtE04Wowqp1mI
- kBgE2iYaiVDjLOnm7U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrgeeigdeghecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedflfhi
- rgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
- eqnecuggftrfgrthhtvghrnhepkeelveffhedtiefgkeefhffftdduffdvueevtdffteeh
- ueeihffgteelkeelkeejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigr
- nhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:67CXZjyBrVZfaVhlqDNNGBV-aeq99EKa12C849Y2Jae5ORsf1UUWdg>
- <xmx:67CXZrNaLzqUcl8LrEdeEOiKr4VQUV-GmiCw2nUNEs2zHZVQ08SAuQ>
- <xmx:67CXZo807mQNnRH-bIAi-AFvfYxQPY7QvwB_CgtYILxVPRAZ5Au7Dw>
- <xmx:67CXZjV3X_NA-_zNU8CAVtUFAAM9_o-c6TTxC0wRaviFWwwzVHnyRQ>
- <xmx:7LCXZsbrWM2hfSoZr0PJTySldyX3DHVGGkkKPZZZPzShXgPWopBX_bpg>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 3102C36A0074; Wed, 17 Jul 2024 07:54:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-568-g843fbadbe-fm-20240701.003-g843fbadb
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sU3OT-00035W-Ai
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 08:04:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721217864;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2pUE+T5kXt2vezvqzz45odUPwf1QNuMOfFNa515TT8Y=;
+ b=Z0/3PlwP7UhmCNdQxcfOIHssqMWjxli/JAPl83PDJjN9kw4LQZj5On33j/tUepcOI2po5+
+ BTJMod2ccdwKkxxbHkxihGvMOn+BFb/Zu53tq9DhdFJpJ3/QSyGzyMHfBPVLETurVLTviK
+ /WtXJk+eyvodNsR1UYBWsfSrZAjNFIk=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-rSQjBHF9MHenbw8FwLuykg-1; Wed, 17 Jul 2024 08:04:22 -0400
+X-MC-Unique: rSQjBHF9MHenbw8FwLuykg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-367963c4f52so4545979f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 05:04:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721217861; x=1721822661;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2pUE+T5kXt2vezvqzz45odUPwf1QNuMOfFNa515TT8Y=;
+ b=dB+Hyo074O8jDFuHLvdfgkUQQ0ov9TgpkkP3r/Qt8643/Z0ESxIMKhrr+iz2hoRzXb
+ TWDujD8FPs8HOynHxIwu4s4+d9hQiEuERUea2tzGvbJP8NO/HrW8AQsuc8KKiFtDVwo0
+ 7QtF6uzUKomce+chsdBXZm3NyNIHsx9ahE/bLXDRcBHDpk3GcoN0YMIJumaENibpkwSp
+ eAW7hmhdRiB0GcETX2upHu4wuWHwb0wVGVEGgaSUoQoAl+C4vQiE4MyfXT2PH1pPfpHL
+ pEx6yP4nIC157lnk7GpbhtofL9rl9ZfmE+mEPLRbsJr+D1ueJ0W88B5hMBs+c4t8F6zF
+ KV5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRRjkbizslVTtfeanl0wl2UqfzAEyoxtEfBkMgEBouvDRnpr/NCxlx25g5tuOs5gJXDn4eDUYxV8EO552MB2oi7s8zgew=
+X-Gm-Message-State: AOJu0Yx6Ryd/mV+wIQODKIvTtQ29tfHY6JtKqRbgCe1wcmcX1KUWEt3i
+ Y00KI/9BnYvVwEs9jqlZBI2o/EHgCRmzf1dgDHWY0Vk4go230d5zN8YV082+KWQafrDV6IWBlPI
+ xlTHxXWGgf5nSDwlEPcsDp0ydlYRyCB4nYVWlHIm/KJxVSqUL1cNQ
+X-Received: by 2002:adf:ee52:0:b0:367:9299:46dd with SMTP id
+ ffacd0b85a97d-36831605ac2mr942460f8f.24.1721217861212; 
+ Wed, 17 Jul 2024 05:04:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJfiWanD2O/xnWvOGnjGd5Jg6+V542aZojbyzuLVoqPFulTjxxmF5kY/e95GHHUXpBEYtOXw==
+X-Received: by 2002:adf:ee52:0:b0:367:9299:46dd with SMTP id
+ ffacd0b85a97d-36831605ac2mr942438f8f.24.1721217860425; 
+ Wed, 17 Jul 2024 05:04:20 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f2:c194:849d:f1e:3618:dc03])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3681c30a024sm7236655f8f.96.2024.07.17.05.04.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 05:04:19 -0700 (PDT)
+Date: Wed, 17 Jul 2024 08:04:16 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Cc: marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org,
+ jonathan.cameron@huawei.com
+Subject: Re: [PATCH v2] pci-bridge: avoid linking a single downstream port
+ more than once
+Message-ID: <20240717080308-mutt-send-email-mst@kernel.org>
+References: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
 MIME-Version: 1.0
-Message-Id: <80bdfa26-8638-4022-bbd4-e93b6132fc8a@app.fastmail.com>
-In-Reply-To: <51574a26-9f62-e069-f8db-d7f243f89b44@loongson.cn>
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
- <682d514b-1d49-4e23-9cb7-a6fd83cbd863@linaro.org>
- <d26cf86a-2247-b5d9-3674-64cead2fa816@loongson.cn>
- <b4a9e1e9-467c-2d50-0d24-174fc9e5c5fe@loongson.cn>
- <4061a31e-1cd8-4cd7-96f3-3e5208e12a87@linaro.org>
- <51574a26-9f62-e069-f8db-d7f243f89b44@loongson.cn>
-Date: Wed, 17 Jul 2024 19:53:56 +0800
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Bibo Mao" <maobibo@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Paolo Bonzini" <pbonzini@redhat.com>, "Song Gao" <gaosong@loongson.cn>
-Cc: "QEMU devel" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.154;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh3-smtp.messagingengine.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240717085621.55315-1-yaoxt.fnst@fujitsu.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,85 +101,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jul 17, 2024 at 04:56:21AM -0400, Yao Xingtao wrote:
+> Since the downstream port is not checked, two slots can be linked to
+> a single port. However, this can prevent the driver from detecting the
+> device properly.
+> 
+> It is necessary to ensure that a downstream port is not linked more than
+> once.
+> 
+> Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 
+You also need to take ARI into account.
+That can look like slot != 0.
 
-=E5=9C=A82024=E5=B9=B47=E6=9C=8817=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8B=E5=
-=8D=885:22=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
-> On 2024/7/16 =E4=B8=8B=E5=8D=882:40, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 16/7/24 03:29, maobibo wrote:
->>>
->>>
->>> On 2024/7/16 =E4=B8=8A=E5=8D=889:04, maobibo wrote:
->>>>
->>>>
->>>> On 2024/7/15 =E4=B8=8B=E5=8D=8811:17, Philippe Mathieu-Daud=C3=A9 w=
-rote:
->>>>> On 4/7/24 05:37, Bibo Mao wrote:
->>>>>> Now loongson ipi and loongarch ipi share the same code with diffe=
-rent
->>>>>> macro, loongson ipi has its separate function such mmio region,
->>>>>> loongarch ipi has other requirement such as irqchip in kernel.
->>>>>>
->>>>>> Interrupt irqchip has strong relationship with architecture, since
->>>>>> it sends irq to vcpu and interfaces to get irqchip register is al=
-so
->>>>>> architecture specific.
->>>>>>
->>>>>> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
->>>>>> is added, it comes from loongson ipi mostly. And it defined four=20
->>>>>> abstract
->>>>>> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000=20
->>>>>> machine,
->>>>>> also can be used for 3A5000 irqchip in kernel mode soon.
->>>>>>
->>>>>> Also Loongarch ipi and loongson ipi device are added here, it inh=
-erits
->>>>>> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
->>>>>> loongson ipi device only passes to compile and make check, it is =
-not
->>>>>> tested.
->>>>>>
->>>>>> Bibo Mao (4):
->>>>>> =C2=A0=C2=A0 hw/intc/loongson_ipi_common: Add loongson ipi common=
- class
->>>>>> =C2=A0=C2=A0 hw/intc/loongarch_ipi: Add loongarch ipi support
->>>>>> =C2=A0=C2=A0 hw/loongarch/virt: Replace loongson ipi with loongar=
-ch ipi
->>>>>> =C2=A0=C2=A0 hw/intc/loongson_ipi: reconstruct driver inherit fro=
-m common class
->>>>>
->>>>> I'll try to respin a clearer v3.
->>>> I am ok with it since it solve the problem, and it is suitable for=20
->>>> 9.1 release. Only that in the long time we hope that intc emulation=20
->>>> driver has common base class + tcg/kvm driver, similar with other=20
->>>> architecture.
->>>>
->>> Sorry for the confusion, I had thought it was another topic.
->>>
->>> Thanks for pointing out the problem and welcome the v3 version.
->>=20
->> Please do not post v3, let me post it.
-> Hi Philippe,
->
-> QEMU 9.1 is coming to soft frozen stage, do you have enough time worki=
-ng=20
-> on it?  Is it ok to use bugfix patch for 9.1 release version?
+> ---
+> V1[1] -> V2:
+>  - Move downstream port check forward
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
+> ---
+>  hw/pci-bridge/cxl_downstream.c     | 5 +++++
+>  hw/pci-bridge/pcie_root_port.c     | 5 +++++
+>  hw/pci-bridge/xio3130_downstream.c | 5 +++++
+>  3 files changed, 15 insertions(+)
+> 
+> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+> index 742da07a015a..af81ddfeec13 100644
+> --- a/hw/pci-bridge/cxl_downstream.c
+> +++ b/hw/pci-bridge/cxl_downstream.c
+> @@ -142,6 +142,11 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
+>      MemoryRegion *component_bar = &cregs->component_registers;
+>      int rc;
+>  
+> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
+> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
+> +        return;
+> +    }
+> +
+>      pci_bridge_initfn(d, TYPE_PCIE_BUS);
+>      pcie_port_init_reg(d);
+>  
+> diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+> index 09a34786bc62..a540204bda27 100644
+> --- a/hw/pci-bridge/pcie_root_port.c
+> +++ b/hw/pci-bridge/pcie_root_port.c
+> @@ -67,6 +67,11 @@ static void rp_realize(PCIDevice *d, Error **errp)
+>      PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(d);
+>      int rc;
+>  
+> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
+> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
+> +        return;
+> +    }
+> +
+>      pci_config_set_interrupt_pin(d->config, 1);
+>      if (d->cap_present & QEMU_PCIE_CAP_CXL) {
+>          pci_bridge_initfn(d, TYPE_CXL_BUS);
+> diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+> index 907d5105b019..63f6baa615fd 100644
+> --- a/hw/pci-bridge/xio3130_downstream.c
+> +++ b/hw/pci-bridge/xio3130_downstream.c
+> @@ -69,6 +69,11 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
+>      PCIESlot *s = PCIE_SLOT(d);
+>      int rc;
+>  
+> +    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
+> +        error_setg(errp, "Can't link port, error %d", -EBUSY);
+> +        return;
+> +    }
+> +
+>      pci_bridge_initfn(d, TYPE_PCIE_BUS);
+>      pcie_port_init_reg(d);
+>  
+> -- 
+> 2.37.3
 
-Bug fix is always qualified between soft freeze and release.
-
-I tested the series for MIPS yesterday and can confirm it do work.
-
-Will give my tags on v3.
-
-Thanks
-
-> https://lore.kernel.org/all/20240627125819.62779-2-philmd@linaro.org/
->
-> After 9.1 is released, there will be enough time for patch v3.
->
-> Regards
-> Bibo, Mao
-
---=20
-- Jiaxun
 
