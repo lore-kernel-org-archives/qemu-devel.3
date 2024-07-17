@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D230C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33413C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2TM-000579-Tg; Wed, 17 Jul 2024 07:05:25 -0400
+	id 1sU2TR-0005Rw-7e; Wed, 17 Jul 2024 07:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@intel-mbp.local>)
- id 1sU2SR-0000h8-3J
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:29 -0400
+ id 1sU2Sd-0001Th-EF
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:43 -0400
 Received: from 89-104-8-17.customer.bnet.at ([89.104.8.17]
  helo=intel-mbp.local) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <phil@intel-mbp.local>) id 1sU2SN-0006yr-Sk
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:26 -0400
+ (envelope-from <phil@intel-mbp.local>) id 1sU2SZ-00072n-KT
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 07:04:39 -0400
 Received: by intel-mbp.local (Postfix, from userid 501)
- id 4D97437963E; Mon, 15 Jul 2024 23:07:38 +0200 (CEST)
+ id A3BC938F9C8; Wed, 17 Jul 2024 13:04:06 +0200 (CEST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org, pbonzini@redhat.com, agraf@csgraf.de,
- graf@amazon.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, peter.maydell@linaro.org,
- akihiko.odaki@daynix.com, phil@philjordan.eu, lists@philjordan.eu
-Subject: [PATCH 18/26] hw/display/apple-gfx: Adds PCI implementation
-Date: Mon, 15 Jul 2024 23:06:57 +0200
-Message-Id: <20240715210705.32365-19-phil@philjordan.eu>
+To: qemu-devel@nongnu.org, agraf@csgraf.de, pbonzini@redhat.com,
+ phil@philjordan.eu, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, akihiko.odaki@daynix.com,
+ peter.maydell@linaro.org
+Subject: [PATCH v2 4/8] hw/display/apple-gfx: Implements texture syncing for
+ non-UMA GPUs
+Date: Wed, 17 Jul 2024 13:03:22 +0200
+Message-Id: <20240717110326.45230-5-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240715210705.32365-1-phil@philjordan.eu>
-References: <20240715210705.32365-1-phil@philjordan.eu>
+In-Reply-To: <20240717110326.45230-1-phil@philjordan.eu>
+References: <20240717110326.45230-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=89.104.8.17; envelope-from=phil@intel-mbp.local;
@@ -58,175 +59,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change wires up the PCI variant of the paravirtualised
-graphics device, mainly useful for x86-64 macOS guests, implemented
-by macOS's ParavirtualizedGraphics.framework. It builds on the shared
-code previously split from the vmapple MMIO variant of the device.
+Renderable Metal textures are handled differently depending on
+whether the GPU uses a unified memory architecture (no physical
+distinction between VRAM and system RAM, CPU and GPU share the
+memory bus) or not. (Traditional discrete GPU with its own VRAM)
+
+In the discrete GPU case, textures must be explicitly
+synchronised to the CPU or the GPU before use after being
+modified by the other. In this case, we sync after the PV
+graphics framework has rendered the next frame into the
+texture using the GPU so that we can read out its contents using
+the CPU. This fixes the issue where the guest screen stayed
+black on AMD Radeon GPUs.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- hw/display/Kconfig         |   5 ++
- hw/display/apple-gfx-pci.m | 125 +++++++++++++++++++++++++++++++++++++
- hw/display/meson.build     |   1 +
- 3 files changed, 131 insertions(+)
- create mode 100644 hw/display/apple-gfx-pci.m
+ hw/display/apple-gfx.h |  1 +
+ hw/display/apple-gfx.m | 10 +++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-index e3d10bf6ff..8a78a60670 100644
---- a/hw/display/Kconfig
-+++ b/hw/display/Kconfig
-@@ -151,3 +151,8 @@ config MAC_PVG
- config MAC_PVG_VMAPPLE
-     bool
-     depends on MAC_PVG
-+
-+config MAC_PVG_PCI
-+    bool
-+    depends on MAC_PVG && PCI
-+    default y if PCI_DEVICES
-diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
-new file mode 100644
-index 0000000000..bdbab35eed
---- /dev/null
-+++ b/hw/display/apple-gfx-pci.m
-@@ -0,0 +1,125 @@
-+#include "apple-gfx.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/pci/msi.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+#import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
-+
-+typedef struct AppleGFXPCIState {
-+    PCIDevice parent_obj;
-+
-+    AppleGFXState common;
-+} AppleGFXPCIState;
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(AppleGFXPCIState, APPLE_GFX_PCI)
-+
-+static const char* apple_gfx_pci_option_rom_path = NULL;
-+
-+static void apple_gfx_init_option_rom_path(void)
-+{
-+    NSURL *option_rom_url = PGCopyOptionROMURL();
-+    const char *option_rom_path = option_rom_url.fileSystemRepresentation;
-+    if (option_rom_url.fileURL && option_rom_path != NULL) {
-+        apple_gfx_pci_option_rom_path = g_strdup(option_rom_path);
+diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
+index 9d6d40795e..995ecf7f4a 100644
+--- a/hw/display/apple-gfx.h
++++ b/hw/display/apple-gfx.h
+@@ -43,6 +43,7 @@ struct AppleGFXState {
+     /* The following fields should only be accessed from render_queue: */
+     bool gfx_update_requested;
+     bool new_frame_ready;
++    bool using_managed_texture_storage;
+     int32_t pending_frames;
+     void *vram;
+     DisplaySurface *surface;
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index b1a8a9f649..3756a9e3ff 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -129,7 +129,12 @@ static void apple_gfx_render_new_frame(AppleGFXState *s)
+         return;
+     }
+     [texture retain];
+-
++    if (s->using_managed_texture_storage) {
++        /* "Managed" textures exist in both VRAM and RAM and must be synced. */
++        id<MTLBlitCommandEncoder> blit = [command_buffer blitCommandEncoder];
++        [blit synchronizeResource:texture];
++        [blit endEncoding];
 +    }
-+    [option_rom_url release];
-+}
-+
-+static void apple_gfx_pci_init(Object *obj)
-+{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(obj);
-+
-+    if (!apple_gfx_pci_option_rom_path) {
-+        /* Done on device not class init to avoid -daemonize ObjC fork crash */
-+        PCIDeviceClass *pci = PCI_DEVICE_CLASS(object_get_class(obj));
-+        apple_gfx_init_option_rom_path();
-+        pci->romfile = apple_gfx_pci_option_rom_path;
-+    }
-+
-+    apple_gfx_common_init(obj, &s->common, TYPE_APPLE_GFX_PCI);
-+}
-+
-+static void apple_gfx_pci_interrupt(PCIDevice *dev, AppleGFXPCIState *s,
-+                                    uint32_t vector)
-+{
-+    bool msi_ok;
-+    trace_apple_gfx_raise_irq(vector);
-+
-+    msi_ok = msi_enabled(dev);
-+    if (msi_ok) {
-+        msi_notify(dev, vector);
-+    }
-+}
-+
-+static void apple_gfx_pci_realize(PCIDevice *dev, Error **errp)
-+{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
-+    Error *err = NULL;
-+    int ret;
-+
-+    pci_register_bar(dev, PG_PCI_BAR_MMIO,
-+                     PCI_BASE_ADDRESS_SPACE_MEMORY, &s->common.iomem_gfx);
-+
-+    ret = msi_init(dev, 0x0 /* config offset; 0 = find space */,
-+                   PG_PCI_MAX_MSI_VECTORS, true /* msi64bit */,
-+                   false /*msi_per_vector_mask*/, &err);
-+    if (ret != 0) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    @autoreleasepool {
-+        PGDeviceDescriptor *desc = [PGDeviceDescriptor new];
-+        desc.raiseInterrupt = ^(uint32_t vector) {
-+            apple_gfx_pci_interrupt(dev, s, vector);
-+        };
-+
-+        apple_gfx_common_realize(&s->common, desc);
-+        [desc release];
-+        desc = nil;
-+    }
-+}
-+
-+static void apple_gfx_pci_reset(DeviceState *dev)
-+{
-+    AppleGFXPCIState *s = APPLE_GFX_PCI(dev);
-+    if (@available(macOS 12,*)) {
-+        [s->common.pgdev reset];
-+    } else {
-+        // TODO: tear down and bring back up
-+    }
-+}
-+
-+static void apple_gfx_pci_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *pci = PCI_DEVICE_CLASS(klass);
-+
-+    dc->reset = apple_gfx_pci_reset;
-+    dc->desc = "macOS Paravirtualized Graphics PCI Display Controller";
-+    dc->hotpluggable = false;
-+    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-+
-+    pci->vendor_id = PG_PCI_VENDOR_ID;
-+    pci->device_id = PG_PCI_DEVICE_ID;
-+    pci->class_id = PCI_CLASS_DISPLAY_OTHER;
-+    pci->realize = apple_gfx_pci_realize;
-+
-+    // TODO: Property for setting mode list
-+}
-+
-+static TypeInfo apple_gfx_pci_types[] = {
-+    {
-+        .name          = TYPE_APPLE_GFX_PCI,
-+        .parent        = TYPE_PCI_DEVICE,
-+        .instance_size = sizeof(AppleGFXPCIState),
-+        .class_init    = apple_gfx_pci_class_init,
-+        .instance_init = apple_gfx_pci_init,
-+        .interfaces = (InterfaceInfo[]) {
-+            { INTERFACE_PCIE_DEVICE },
-+            { },
-+        },
-+    }
-+};
-+DEFINE_TYPES(apple_gfx_pci_types)
-+
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 70d855749c..ceb7bb0761 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -67,6 +67,7 @@ system_ss.add(when: 'CONFIG_ATI_VGA', if_true: [files('ati.c', 'ati_2d.c', 'ati_
+     [command_buffer retain];
+     [command_buffer addCompletedHandler:
+         ^(id<MTLCommandBuffer> cb)
+@@ -248,6 +253,9 @@ static void set_mode(AppleGFXState *s, uint32_t width, uint32_t height)
+         texture = [s->mtl newTextureWithDescriptor:textureDescriptor];
+     }
  
- system_ss.add(when: 'CONFIG_MAC_PVG',         if_true: [files('apple-gfx.m'), pvg, metal])
- system_ss.add(when: 'CONFIG_MAC_PVG_VMAPPLE', if_true: [files('apple-gfx-vmapple.m'), pvg, metal])
-+system_ss.add(when: 'CONFIG_MAC_PVG_PCI',     if_true: [files('apple-gfx-pci.m'), pvg, metal])
- 
- if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
-   virtio_gpu_ss = ss.source_set()
++    s->using_managed_texture_storage =
++        (texture.storageMode == MTLStorageModeManaged);
++
+     dispatch_sync(s->render_queue,
+         ^{
+             id<MTLTexture> old_texture = nil;
 -- 
 2.39.3 (Apple Git-146)
 
