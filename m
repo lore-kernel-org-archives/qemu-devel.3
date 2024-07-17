@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD462C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 21:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C466C3DA60
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 21:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUC0n-0005wW-0k; Wed, 17 Jul 2024 17:16:33 -0400
+	id 1sUC60-0006mI-PE; Wed, 17 Jul 2024 17:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUC0i-0005vw-UV
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:16:29 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUC0h-0007Lq-An
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:16:28 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a77d9217e6fso7811266b.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 14:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721250985; x=1721855785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0D9CnvYgWR9Ly3mFaCmEKxH5HDJioJNYwziwQgKiMVQ=;
- b=BrUddAlVnQsN3/7yB2WNsJheJCSqWtetkky8T7lzC9t6r9kehZalTWmeOXsaFBmA7e
- HIJ1WNE7ZliIpJ4UG9Gn+Ks+br7eEetkbn8wS3CYQIDEXaQIL5qi8lAswM468tJRVIxB
- +e53a/PrPlR1q7UsBYBoDHCdIZ5qQbOwTPgi23ljsfW3U9SWHMf+PRutYg7CLkWKYSpW
- 4v+wo4LCNW9IseB8kZsEiGD9b4Nd0vm+cSgmPwtq5BJ2GEiyKlar/FiwrHqIffFnfWiH
- DFRSBCuYZsV79r5kKzNCeut+9HjopQcjoHyazkUq5v1TI9UBI+UT9xPXFcJbf17ja5nc
- ynjQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUC5z-0006lo-EL
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:21:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUC5x-0003CG-PX
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 17:21:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721251311;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=js3S84Z15ZhWXmeT7D/3iloxt/WDDBrpAqoTsdA+u6U=;
+ b=cmF/7S06rNTNHeJhIz4Vjn05IKOSqFvV+sai9w3hX7fGaNJiuIf3iKYqhcojvUwr+T3E3k
+ S0I6ahqBKJ1qJtlo55g0YtdjT8JpSlaXJ7HfJ/J/2uplC7V4iNHfH52obaUNz7dAi3deBA
+ TM8WKQHIFmmlIMSlrZHlLlhCK99d8vs=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-319-75jr3Tx7P4y3onq_mbLk3g-1; Wed, 17 Jul 2024 17:21:49 -0400
+X-MC-Unique: 75jr3Tx7P4y3onq_mbLk3g-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b60afbf5d1so476336d6.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 14:21:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721250985; x=1721855785;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0D9CnvYgWR9Ly3mFaCmEKxH5HDJioJNYwziwQgKiMVQ=;
- b=mtyLUbol6NF9xOa5wm4sZ1/2IDaTwdA8v49+7Eo39lI5eOzJrIkcTxcPb9U/ublldE
- AXcCnXdVe8NXREklioVWUFr3Moh59GAddTyTCK2NFzCev/lEvgq8+Ilur7YPM+71o9/o
- FWWPl4gSokBcdeBEi8vnM6X3772D3FGpY+L9uBB1QnlDKCyjNE8QblaNBnVhrBWYmr8E
- 8ZOPyMkbxxCi0frPC8PfPmVAxYR4h5kNSh7jfkQ6bL961KXeGt0uDPcfw3m0Nc81izLx
- Dj8FCSDWr0qpUhnG+iEZDwqeivIFUWNsUgMLARVGb6zuZmFGSiSYCfxXM+GE5wgW9ttS
- LKcg==
-X-Gm-Message-State: AOJu0YySmsDSPe17vvG1Ew6US6LFVqsLvYVSVvQaC/+5YGDJKdKmfUJM
- LpASq8oBu4pjSB48gm2JgMfsodF338fV2znTPa4FcLh1ZziG59Ty9kbrGWloKX4=
-X-Google-Smtp-Source: AGHT+IGogUHAq64exEX5jOYcZKR201KFLkXVhTkakOeosWHN4GYLG8EwE71Cp+lEy4HezgMS2+GsiA==
-X-Received: by 2002:a17:906:88d:b0:a72:8d2f:859c with SMTP id
- a640c23a62f3a-a7a011adc32mr194944666b.33.1721250984697; 
- Wed, 17 Jul 2024 14:16:24 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc5a3a30sm485852566b.2.2024.07.17.14.16.24
+ d=1e100.net; s=20230601; t=1721251308; x=1721856108;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=js3S84Z15ZhWXmeT7D/3iloxt/WDDBrpAqoTsdA+u6U=;
+ b=msNQpccn5r9qFalpDhFkUNt519r929TLh4gPLfGmLyNciurswEvp8CBrvaeJ5pekSr
+ ZbTlJzdhTaY72jx3ibFcH3Bm+ywgrUOYWy8yO/m9oQLX30fc8Na0wt2LQtFGZpOc3wl+
+ C5z7Aagjw+4ralp2t1JRSkyfj/O0SCh1sxu84xLHoE2KYOxVAUWU6BwFl3NDz+ChE1G7
+ Xt6Ot5yY1bLPU/p3tLEDCW5dR9/PPmjkfwCvFa4nQ/o426Cf+ZwWzgnrlYdS7oBny4jn
+ V2NUxy7pei5IgyED6zljvLVj3Pn9AJEzoSc1q9g0JFzFZ98NhsgPJC3bH2BJcAnfq04B
+ 4y+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5gWxmcaX9aLrJMvJVmrfQK7V4ws/juE6B9j5LEkbwVIhnq6yXaquP2Kh7luHCdFKm8aOyaTwTc9eJ2drW40ny1P/v+T0=
+X-Gm-Message-State: AOJu0YzkZIkBrwDQPVnSGaoaZBXHUTft1RtnOoPAuIypp/SugK0C/t+j
+ h6wS7CkRlC+6oJ/nGsELaUf7N8ls8R0K88ikZ28OhzGYkPFrrvHOhTBcYcoNW3v3/F63LVL8/qy
+ ehJwyLj5o50OnjfHTGSovQg6buQHzNYrc0H2DW2bHqr6CDdA3jvy9
+X-Received: by 2002:a05:6214:31a1:b0:6b7:64a2:3189 with SMTP id
+ 6a1803df08f44-6b79cb4f37cmr4312586d6.8.1721251308442; 
+ Wed, 17 Jul 2024 14:21:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsSuWm6s22xXbeqlanWS0ZCH3KNbqy9McSReE7csbZiiIQQsW8BfRM2tQBGalAAPVxWbMi/Q==
+X-Received: by 2002:a05:6214:31a1:b0:6b7:64a2:3189 with SMTP id
+ 6a1803df08f44-6b79cb4f37cmr4312466d6.8.1721251308063; 
+ Wed, 17 Jul 2024 14:21:48 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b79c606828sm2253276d6.101.2024.07.17.14.21.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 14:16:24 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 680C15F738;
- Wed, 17 Jul 2024 22:16:23 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
- <wangyanan55@huawei.com>
-Subject: Re: [RFC PATCH] hw/core/cpu.h: try and document CPU_FOREACH[_SAFE]
-In-Reply-To: <20240620163204.2213916-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Thu, 20 Jun 2024 17:32:04 +0100")
-References: <20240620163204.2213916-1-alex.bennee@linaro.org>
-Date: Wed, 17 Jul 2024 22:16:23 +0100
-Message-ID: <87sew7g1nc.fsf@draig.linaro.org>
+ Wed, 17 Jul 2024 14:21:47 -0700 (PDT)
+Date: Wed, 17 Jul 2024 17:21:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 00/13] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
+ device state transfer support with VFIO consumer
+Message-ID: <Zpg16Gik1RzynCb3@x1n>
+References: <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
+ <Znt0FQHJEtGxcLxj@x1n>
+ <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
+ <ZnxAZDcjlZ5oerq-@x1n>
+ <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
+ <Zn19kaeFiYuwwc4B@x1n>
+ <35969f33-f6f3-4c34-8b9d-8c1ebac3305e@maciej.szmigiero.name>
+ <ZpgSTCAGbKwWi_o8@x1n> <87msmf22m4.fsf@suse.de>
+ <2e0319ef-aba0-4a14-b49f-9e3c5724e438@maciej.szmigiero.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Content-Disposition: inline
+In-Reply-To: <2e0319ef-aba0-4a14-b49f-9e3c5724e438@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +114,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+On Wed, Jul 17, 2024 at 11:07:43PM +0200, Maciej S. Szmigiero wrote:
+> > Don't wait on me. I think I can make the changes Peter suggested without
+> > affecting too much the interfaces used by this series. If it comes to
+> > it, I can rebase this series "under" Maciej's.
+> 
+> So to be clear, I should base my series on top of your existing RFC patch set
+> and then we'll swap these RFC patches for the updated versions, correct?
 
-> There is some confusion about when you should use one over the other.
-> Lets try and address that by adding some kdoc comments.
->
-> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I'm not sure that's good.. since the VFIO series should depend heavily on
+that RFC series IIUC, and if the RFC is prone to major changes, maybe we
+should still work that out (or the next rebase can change a lot, void again
+most of VFIO tests to carry out)?
 
-ping?
+-- 
+Peter Xu
 
-> ---
->  include/hw/core/cpu.h | 19 ++++++++++++++++++-
->  1 file changed, 18 insertions(+), 1 deletion(-)
->
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index a2c8536943..7122f742c1 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -587,8 +587,25 @@ extern CPUTailQ cpus_queue;
->=20=20
->  #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
->  #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
-> +
-> +/**
-> + * CPU_FOREACH - Helper to iterate over all CPUs
-> + *
-> + * This macro iterates over all CPUs in the system. It must be used
-> + * under an RCU read protection, e.g. WITH_RCU_READ_LOCK_GUARD(). If
-> + * you don't want the CPU list to change while iterating use
-> + * CPU_FOREACH_SAFE under the cpu_list_lock().
-> + */
->  #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
-> -#define CPU_FOREACH_SAFE(cpu, next_cpu) \
-> +
-> +/**
-> + * CPU_FOREACH_SAFE - Helper to iterate over all CPUs, safe against CPU =
-changes
-> + *
-> + * This macro iterates over all CPUs in the system, and is safe
-> + * against CPU list changes. The target data structure must be
-> + * protected by cpu_list_lock(), and does not need RCU.
-> + */
-> +#define CPU_FOREACH_SAFE(cpu, next_cpu)                         \
->      QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
->=20=20
->  extern __thread CPUState *current_cpu;
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
