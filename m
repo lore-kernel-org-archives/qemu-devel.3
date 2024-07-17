@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD0FC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3155FC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 13:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU4Sy-00049X-Jb; Wed, 17 Jul 2024 09:13:08 -0400
+	id 1sU4aV-00031q-Jj; Wed, 17 Jul 2024 09:20:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sU4Su-0003z5-Nj
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:13:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sU4Ss-0004KT-0l
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:13:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721221979;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LZzB8lFug4oZknnn8pZAMzfSqdEwBUkNVttBYnRnrJ8=;
- b=AebQGyY0qsm2Il+4CvIPL2MqURddyJuz6vthprtR2FJEMTJ8WwIAURriFEtS7vzUuLObr+
- U6Txi9LyBBAGYqUe4BDQl+sQUib62dtVoFUASKoy/JWhwlggc3hYwsXXBcXenpx/63jUl2
- fr8hWXGSTq4+k49RsaXmQTlYcWHWtTs=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-0GoYXuSrOOquWbr084awug-1; Wed, 17 Jul 2024 09:12:57 -0400
-X-MC-Unique: 0GoYXuSrOOquWbr084awug-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-e035949cc4eso13000017276.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:12:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sU4aU-00031B-1h
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:20:54 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sU4aR-00081P-Oh
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 09:20:53 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-447f7c7c5fcso39052151cf.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 06:20:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721222449; x=1721827249; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=0JqeriNIHWExDMMdpLIdh51FNHUKTqdB0L8qsdmG1mc=;
+ b=HsAmV9HPNUEKtSNhR1EdLXeBE6ondHg1EOYgZ2a8htAoG3bcwbym14riHgyEq/cwUH
+ SVI6g1ELUF+kD+Q/Uf2zw7px8UIIETjth1qOOoE06SWNrEAE0q0bNMCWRrrcCqvkg95v
+ uGJEFdbNSZu61z22J9fDidV1VhRM0fQ842yJIqBSjF7lwsciC+AM8HUiWEW9o3zlcCtK
+ c6vl5PgoafrgE7+KLGxhJAa1aOaLFoqtlWkxogG6JpGoE7aL/3RE9JVCqW5UWNwPlsNK
+ bbsqPaVaYu+8GbhKj6mjiKlI71svHygt5oafTPQbbvL0Kws5JAFtLMjWZYt0z/UbJ66f
+ 1lNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721221977; x=1721826777;
+ d=1e100.net; s=20230601; t=1721222449; x=1721827249;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LZzB8lFug4oZknnn8pZAMzfSqdEwBUkNVttBYnRnrJ8=;
- b=H/5yW65U49GcKYyF6Se9ekCxy0EEvnmMK78H6qidNUy53j5UhfJyHIizEEUS85xr2d
- RlJQ41WUz0fikUTNY9QF+pZS4mltNFCYhJ9l7ggUDhKetkPIRHU+TNuSLUByGT0CI8Z/
- aFlKJNyZ1Si8qw34K7eeKLufE888gsFVFUQAgDUClAELCW+Lq7qHoMu0csTcUnFZY+n5
- 8sbqXdKt4JIvaqfwlUJ/rhCp4hPUnU5XQG6T5FvakRkinsLbvwaM9vWABmUKf6w9ZZaU
- 30SDrDo/0WRwt+qvfU6FNmoroai61jt4cRBqdFdm38YLFetlEilsna19Ia2gcxFiPulw
- Or8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUV3UCXmqt53u8R4DMe2A006uFQ1Mg7ff/iNHj9RY5+4/EVdr9sNXP9fn3sOKpa/KBQYudJ6V+R45dn33rKeQTZIcm9QU=
-X-Gm-Message-State: AOJu0Yz1wWtRaQzBqZYkz7eKs27LqXoS4nnXl7eAsSB5IL+w5q7IAHrG
- A3B1HPRDB3dPeMa6+uOotggenP2krA2Fw4qOxXouVoIdimLm/EL5UC6dgG/bPNeyAKYJ9uNV2hT
- J0wPiR+5YsJohu0dQ5NBcgRrg9/gz8i2KEJ58PXTpYAZFbPVz5lMUJQY4xA4l3xR9ONUEEflB1X
- 2yopDP6pyDAh08sPeAGZ1W3kX3lpc=
-X-Received: by 2002:a05:6902:a07:b0:e03:af3d:d4d1 with SMTP id
- 3f1490d57ef6-e05ed797f7emr1947512276.54.1721221977101; 
- Wed, 17 Jul 2024 06:12:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFD/mK5uHhaA1/BrrxOygaAOc3vS0jUN8ihkdZqBtyYLy23xwC473+JJaeo5ZlYib4+4OgyI6OU4mA72BAbtPo=
-X-Received: by 2002:a05:6902:a07:b0:e03:af3d:d4d1 with SMTP id
- 3f1490d57ef6-e05ed797f7emr1947493276.54.1721221976757; Wed, 17 Jul 2024
- 06:12:56 -0700 (PDT)
+ bh=0JqeriNIHWExDMMdpLIdh51FNHUKTqdB0L8qsdmG1mc=;
+ b=CNSWDh3cwsnXoDNW/uUDQc07PPXzOqPs6EZyDiophr1wWFSKNYRmkt9siS0sYDFD7d
+ ylyZyES9ksjbjwMOkIQygJ+m3Fep4P81o3sbU6fokg/Xv0ym1uo/bo8ggpGakGQJPWts
+ HEQ1zHvjVXxyGN74y3Nxi3CNHoSmzZOM/Qjxg3jjAETHo9HvFzfvLmVQX+QasmaAZpYz
+ jaItBDIqeMBGAUq3WA1MG3Qd8h1KJHBrrC6huMcOWI3RCrDguOGo5eEjO12ZVgElFRgN
+ c8yA9srcu3+CMrZvllRaCyc76Vhtf7eCa6Alak77VgTjXU9mhSyjCJu183dV7GCMCXfj
+ 43Lg==
+X-Gm-Message-State: AOJu0YyMUXr3M/zSDaO89Xger/lmegOitGXN8ddy5+6gZgJVVZD8fPk7
+ U2qPnETmwOh9s/YXxv0o/bzZcZQJCPXunzQDo6Xaf1ZipzqwRiXrK//Z3bRSQ/zK1/ZdIFs63/D
+ wDTzwMkO8ShUH3UuWOcCMc3dhk10=
+X-Google-Smtp-Source: AGHT+IHZAZg2NeHw4Ca8XJnXCnBZwgWrjbNXRAlsJMuE+8dtfyA+tyFPFjQx1e2T1nDnsBj6XfEKU9+374fTRMz5aZY=
+X-Received: by 2002:a05:622a:19a8:b0:447:e38c:59f with SMTP id
+ d75a77b69052e-44f866571c3mr17794351cf.47.1721222449242; Wed, 17 Jul 2024
+ 06:20:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240716162351.270095-1-zhao1.liu@intel.com>
- <a6d1f8a4-5c1f-4dcf-b0dc-c1a019e8ba78@linaro.org>
-In-Reply-To: <a6d1f8a4-5c1f-4dcf-b0dc-c1a019e8ba78@linaro.org>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 17 Jul 2024 16:12:45 +0300
-Message-ID: <CAPMcbCpHQj8qjYhEKHg=jPkUzEqph3NOws=rm2M1kVgsqk0Qug@mail.gmail.com>
-Subject: Re: [PATCH v2] qga/commands-posix: Make ga_wait_child() return boolean
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>,
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000081326c061d7138f0"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240624101040.82726-1-phil@philjordan.eu>
+ <CAJ+F1CJMzyWr3y7kEGcj2hE8fogLqH_PBcHkXYK=N28+t96OsQ@mail.gmail.com>
+ <CAAibmn3s-+_21sUVf9w9HKVysTM9xgxYBq9Vg0+9iNMC1K7=QQ@mail.gmail.com>
+In-Reply-To: <CAAibmn3s-+_21sUVf9w9HKVysTM9xgxYBq9Vg0+9iNMC1K7=QQ@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 17 Jul 2024 17:20:37 +0400
+Message-ID: <CAJ+F1CJn_pJoT-bn1NCWcMsOhQhW0Gf3ks9pFJ-3FRdkv1tp6A@mail.gmail.com>
+Subject: Re: [PATCH v2] Cursor: 8 -> 1 bit alpha downsampling improvement
+To: Phil Dennis-Jordan <phil@philjordan.eu>
+Cc: qemu-devel@nongnu.org, akihiko.odaki@daynix.com, lists@philjordan.eu
+Content-Type: multipart/alternative; boundary="000000000000aaaad7061d715477"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,181 +89,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000081326c061d7138f0
+--000000000000aaaad7061d715477
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Hi
 
-Hi Philippe,
-
-I plan to merge this with "Add new api 'guest-network-get-route'"
-https://patchwork.kernel.org/project/qemu-devel/cover/20240613092802.346246=
--1-demeng@redhat.com/
-Can I ask you to review the new GuestNetworkRoute struct with IPv6 support?
-
-
-On Wed, Jul 17, 2024 at 1:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
+On Wed, Jul 17, 2024 at 5:11=E2=80=AFPM Phil Dennis-Jordan <phil@philjordan=
+.eu>
 wrote:
 
-> Hi Konstantin,
 >
-> If there are no other patches on your guest-agent queue,
-> I can take this patch in my next pull request.
+> Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
+>>> turning alpha values of 255 into 1 and everything else into 0. This
+>>> means that mostly-opaque pixels ended up completely invisible.
+>>>
+>>> This patch changes the behaviour so that only pixels with less than 50%
+>>> alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+>>>
+>>> This greatly improves the subjective appearance of anti-aliased mouse
+>>> cursors, such as those used by macOS, when using a front-end UI without
+>>> support for alpha-blended cursors, such as some VNC clients.
+>>>
+>>> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>>>
+>>
+>> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>>
 >
-> Regards,
->
-> Phil.
->
-> On 16/7/24 18:23, Zhao Liu wrote:
-> > Make ga_wait_child() return boolean and check the returned boolean
-> > in ga_run_command() instead of dereferencing @errp.
-> >
-> > Cc: Michael Roth <michael.roth@amd.com>
-> > Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
-> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> > v2:
-> >   * Added Phil's r/b.
-> >   * Used Phil's polished words.
-> > ---
-> >   qga/commands-posix.c | 8 ++++----
-> >   1 file changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> > index 7f05996495a2..64bb0be94479 100644
-> > --- a/qga/commands-posix.c
-> > +++ b/qga/commands-posix.c
-> > @@ -59,7 +59,7 @@
-> >   #endif
-> >   #endif
-> >
-> > -static void ga_wait_child(pid_t pid, int *status, Error **errp)
-> > +static bool ga_wait_child(pid_t pid, int *status, Error **errp)
-> >   {
-> >       pid_t rpid;
-> >
-> > @@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status,
-> Error **errp)
-> >       if (rpid =3D=3D -1) {
-> >           error_setg_errno(errp, errno, "failed to wait for child (pid:
-> %d)",
-> >                            pid);
-> > -        return;
-> > +        return false;
-> >       }
-> >
-> >       g_assert(rpid =3D=3D pid);
-> > +    return true;
-> >   }
-> >
-> >   static ssize_t ga_pipe_read_str(int fd[2], char **str)
-> > @@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], const
-> char *in_str,
-> >           goto out;
-> >       }
-> >
-> > -    ga_wait_child(pid, &status, errp);
-> > -    if (*errp) {
-> > +    if (!ga_wait_child(pid, &status, errp)) {
-> >           goto out;
-> >       }
-> >
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 >
 >
+> Thanks for the reviews folks! Is there anything I can do to move this
+> forward? Should I submit a v3 with the review tags included? The patch
+> continues to apply cleanly so it didn't seem necessary, but I admit I'm
+> still not 100% clear on whom I should badger (?) to get favourably receiv=
+ed
+> patches actually pulled into staging/master.
+>
+> https://patchew.org/QEMU/20240624101040.82726-1-phil@philjordan.eu/
+>
+>
+I'll include it in a UI-related PR.
 
---00000000000081326c061d7138f0
+thanks
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000aaaad7061d715477
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;<div><div dir=
-=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
-dir=3D"ltr"><br></div><div dir=3D"ltr">Hi Philippe,</div><div dir=3D"ltr"><=
-br></div><div>I plan to merge this with &quot;Add new api &#39;guest-networ=
-k-get-route&#39;&quot;</div><div><a href=3D"https://patchwork.kernel.org/pr=
-oject/qemu-devel/cover/20240613092802.346246-1-demeng@redhat.com/">https://=
-patchwork.kernel.org/project/qemu-devel/cover/20240613092802.346246-1-demen=
-g@redhat.com/</a></div><div>Can I ask you to review the new GuestNetworkRou=
-te struct with IPv6 support? <br></div></div></div><br></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 17, 2024=
- at 1:25=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philm=
-d@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">Hi Konstantin,<br>
+<div dir=3D"ltr"><div><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 17, 2024 at 5:11=
+=E2=80=AFPM Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu">ph=
+il@philjordan.eu</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex"><div dir=3D"ltr"><br><div class=3D"gmail_quote"><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail=
+_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">Mouse cursors wit=
+h 8 bit alpha were downsampled to 1-bit opacity maps by<br>
+turning alpha values of 255 into 1 and everything else into 0. This<br>
+means that mostly-opaque pixels ended up completely invisible.<br>
 <br>
-If there are no other patches on your guest-agent queue,<br>
-I can take this patch in my next pull request.<br>
+This patch changes the behaviour so that only pixels with less than 50%<br>
+alpha (0-127) are treated as transparent when converted to 1-bit alpha.<br>
 <br>
-Regards,<br>
+This greatly improves the subjective appearance of anti-aliased mouse<br>
+cursors, such as those used by macOS, when using a front-end UI without<br>
+support for alpha-blended cursors, such as some VNC clients.<br>
 <br>
-Phil.<br>
-<br>
-On 16/7/24 18:23, Zhao Liu wrote:<br>
-&gt; Make ga_wait_child() return boolean and check the returned boolean<br>
-&gt; in ga_run_command() instead of dereferencing @errp.<br>
-&gt; <br>
-&gt; Cc: Michael Roth &lt;<a href=3D"mailto:michael.roth@amd.com" target=3D=
-"_blank">michael.roth@amd.com</a>&gt;<br>
-&gt; Cc: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" targ=
-et=3D"_blank">kkostiuk@redhat.com</a>&gt;<br>
-&gt; Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@=
-linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
-&gt; Signed-off-by: Zhao Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com" tar=
-get=3D"_blank">zhao1.liu@intel.com</a>&gt;<br>
-&gt; ---<br>
-&gt; v2:<br>
-&gt;=C2=A0 =C2=A0* Added Phil&#39;s r/b.<br>
-&gt;=C2=A0 =C2=A0* Used Phil&#39;s polished words.<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0qga/commands-posix.c | 8 ++++----<br>
-&gt;=C2=A0 =C2=A01 file changed, 4 insertions(+), 4 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-&gt; index 7f05996495a2..64bb0be94479 100644<br>
-&gt; --- a/qga/commands-posix.c<br>
-&gt; +++ b/qga/commands-posix.c<br>
-&gt; @@ -59,7 +59,7 @@<br>
-&gt;=C2=A0 =C2=A0#endif<br>
-&gt;=C2=A0 =C2=A0#endif<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -static void ga_wait_child(pid_t pid, int *status, Error **errp)<br>
-&gt; +static bool ga_wait_child(pid_t pid, int *status, Error **errp)<br>
-&gt;=C2=A0 =C2=A0{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0pid_t rpid;<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; @@ -70,10 +70,11 @@ static void ga_wait_child(pid_t pid, int *status, =
-Error **errp)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (rpid =3D=3D -1) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg_errno(errp, errno, =
-&quot;failed to wait for child (pid: %d)&quot;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 pid);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0g_assert(rpid =3D=3D pid);<br>
-&gt; +=C2=A0 =C2=A0 return true;<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0static ssize_t ga_pipe_read_str(int fd[2], char **str)<br>
-&gt; @@ -178,8 +179,7 @@ static int ga_run_command(const char *argv[], cons=
-t char *in_str,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -=C2=A0 =C2=A0 ga_wait_child(pid, &amp;status, errp);<br>
-&gt; -=C2=A0 =C2=A0 if (*errp) {<br>
-&gt; +=C2=A0 =C2=A0 if (!ga_wait_child(pid, &amp;status, errp)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-<br>
-</blockquote></div>
+Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu"=
+ target=3D"_blank">phil@philjordan.eu</a>&gt;<br></blockquote><div><br></di=
+v><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
+lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;</d=
+iv></div></div></blockquote><div><br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.=
+odaki@daynix.com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;</block=
+quote><div><br></div><div>Thanks for the reviews folks! Is there anything I=
+ can do to move this forward? Should I submit a v3 with the review tags inc=
+luded? The patch continues to apply cleanly so it didn&#39;t seem necessary=
+, but I admit I&#39;m still not 100% clear on whom I should badger (?) to g=
+et favourably received patches actually pulled into staging/master.<br></di=
+v><div><br></div><div><a href=3D"https://patchew.org/QEMU/20240624101040.82=
+726-1-phil@philjordan.eu/" target=3D"_blank">https://patchew.org/QEMU/20240=
+624101040.82726-1-phil@philjordan.eu/</a>=C2=A0</div><br></div></div></bloc=
+kquote><div><br></div><div>I&#39;ll include it in a UI-related PR. <br></di=
+v></div><br clear=3D"all"></div><div>thanks</div><div><br></div><div><span =
+class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gm=
+ail_signature">Marc-Andr=C3=A9 Lureau<br></div></div></div>
 
---00000000000081326c061d7138f0--
-
+--000000000000aaaad7061d715477--
 
