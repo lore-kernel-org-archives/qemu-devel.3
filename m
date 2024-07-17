@@ -4,44 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D194C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 08:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EA8C3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 08:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTzk3-0007fj-8H; Wed, 17 Jul 2024 04:10:27 -0400
+	id 1sTzoE-00021h-0P; Wed, 17 Jul 2024 04:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTzk2-0007c2-4J; Wed, 17 Jul 2024 04:10:26 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from
+ <BATV+4be170c9d8e2070cfe91+7633+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sTzoB-000211-Vw
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:14:44 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sTzju-00058B-2f; Wed, 17 Jul 2024 04:10:25 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5185C7B21B;
- Wed, 17 Jul 2024 11:10:02 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8C97310B136;
- Wed, 17 Jul 2024 11:10:06 +0300 (MSK)
-Received: (nullmailer pid 831465 invoked by uid 1000);
- Wed, 17 Jul 2024 08:10:06 -0000
-Subject: [ANNOUNCE] QEMU 8.2.6 Stable released
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
+ (Exim 4.90_1) (envelope-from
+ <BATV+4be170c9d8e2070cfe91+7633+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sTzo9-0006A3-Kk
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 04:14:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=/LcEwFo5dCKWN5CEl3wy88DX64OeviEY2d/0UK8NeII=; b=vrObCVMQhW5TWe/VVPfts+2eb+
+ /WbHpOnWe9I+xnapcSw/l+BT8Gkyn0vlWj5qE/Vx91iDgK5IVQCVN3gSy69+zgBu8kHceVDQHwnb9
+ 2MRxIK0MvL4VPSCIwGdslaQI3GgkacV36Xy7brsJCmZlilS6eDpIdHLlOJjrDhSdwPli2zJCKBQ8a
+ NM41F1fN1UbLHkvdJaInP14PMVW6tywY2sPLH9wAhf9U3WZXT3nH0t/ckmH21yd92xVJDkaqq7IIh
+ xzWwNVBaP4tCAVe2t0CpurAh3F2ktliX+bGWMiinp6auXyNr1RUX4L6Z7xkcHbE245FurCqw2Elfp
+ GmXgWXxQ==;
+Received: from 54-240-197-233.amazon.com ([54.240.197.233]
+ helo=freeip.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sTzng-00000000ZBV-2bcA; Wed, 17 Jul 2024 08:14:13 +0000
+Message-ID: <e90998e35275e1a53db4dc028d3f78eacb64a113.camel@infradead.org>
+Subject: Re: [RFC PATCH v4] ptp: Add vDSO-style vmclock support
+From: David Woodhouse <dwmw2@infradead.org>
+To: Peter Hilber <peter.hilber@opensynergy.com>,
+ linux-kernel@vger.kernel.org,  virtualization@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org,  linux-rtc@vger.kernel.org, "Ridoux,
+ Julien" <ridouxj@amazon.com>,  virtio-dev@lists.linux.dev, "Luu, Ryan"
+ <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>
+Cc: "Christopher S . Hall" <christopher.s.hall@intel.com>, Jason Wang
+ <jasowang@redhat.com>, John Stultz <jstultz@google.com>, "Michael S .
+ Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org, Richard Cochran
+ <richardcochran@gmail.com>, Stephen Boyd <sboyd@kernel.org>, Thomas
+ Gleixner <tglx@linutronix.de>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc
+ Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Daniel
+ Lezcano <daniel.lezcano@linaro.org>, Alessandro Zummo
+ <a.zummo@towertech.it>,  Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Date: Wed, 17 Jul 2024 09:14:10 +0100
+In-Reply-To: <2e875592-f6e7-4694-8f51-655d0b9a2988@opensynergy.com>
+References: <20240708092924.1473461-1-dwmw2@infradead.org>
+ <2e875592-f6e7-4694-8f51-655d0b9a2988@opensynergy.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-7aI71VoZ9P3azYLQFroL"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 17 Jul 2024 11:10:06 +0300
-Message-Id: <1721203806.547734.831464.nullmailer@tls.msk.ru>
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+4be170c9d8e2070cfe91+7633+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,80 +89,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi everyone,
 
-The QEMU v8.2.6 stable release is now available.
+--=-7aI71VoZ9P3azYLQFroL
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-You can grab the tarball from our download page here:
+T24gVHVlLCAyMDI0LTA3LTE2IGF0IDEzOjU0ICswMjAwLCBQZXRlciBIaWxiZXIgd3JvdGU6Cj4g
+T24gMDguMDcuMjQgMTE6MjcsIERhdmlkIFdvb2Rob3VzZSB3cm90ZToKPiA+ICsKPiA+ICvCoMKg
+wqDCoMKgwqDCoC8qCj4gPiArwqDCoMKgwqDCoMKgwqAgKiBUaW1lIGFjY29yZGluZyB0byB0aW1l
+X3R5cGUgZmllbGQgYWJvdmUuCj4gPiArwqDCoMKgwqDCoMKgwqAgKi8KPiA+ICvCoMKgwqDCoMKg
+wqDCoHVpbnQ2NF90IHRpbWVfc2VjO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKiBTZWNv
+bmRzIHNpbmNlIHRpbWVfdHlwZSBlcG9jaCAqLwo+ID4gK8KgwqDCoMKgwqDCoMKgdWludDY0X3Qg
+dGltZV9mcmFjX3NlYzvCoMKgwqDCoMKgwqDCoMKgwqAvKiAoc2Vjb25kcyA+PiA2NCkgKi8KPiA+
+ICvCoMKgwqDCoMKgwqDCoHVpbnQ2NF90IHRpbWVfZXN0ZXJyb3JfcGljb3NlYzvCoC8qICjCsSBw
+aWNvc2Vjb25kcykgKi8KPiA+ICvCoMKgwqDCoMKgwqDCoHVpbnQ2NF90IHRpbWVfbWF4ZXJyb3Jf
+cGljb3NlYzvCoC8qICjCsSBwaWNvc2Vjb25kcykgKi8KPiAKPiBJcyB0aGlzIHVuc2lnbmVkIG9y
+IHNpZ25lZD8KClRoZSBmaWVsZCBpdHNlbGYgaXMgdW5zaWduZWQsIGFzIGl0IHByb3ZpZGVzIHRo
+ZSBhYnNvbHV0ZSB2YWx1ZSBvZiB0aGUKZXJyb3IgKHdoaWNoIGNhbiBiZSBpbiBlaXRoZXIgZGly
+ZWN0aW9uKS4gUHJvYmFibHkgYmV0dGVyIGp1c3QgdG8gZHJvcAp0aGUgwrEgZnJvbSB0aGUgY29t
+bWVudC4KCkp1bGllbiBpcyBub3cgYmFjayBmcm9tIHZhY2F0aW9uIGFuZCBJJ20gZXhwZWN0aW5n
+IHRvIHNlZSBoaXMgb3BpbmlvbgpvbiB3aGV0aGVyIHdlIGNhbiBjaGFuZ2UgdGhhdCB0byBuYW5v
+c2Vjb25kcyBmb3IgY29uc2lzdGVuY3kuCg==
 
-  https://www.qemu.org/download/#source
 
-  https://download.qemu.org/qemu-8.2.6.tar.xz
-  https://download.qemu.org/qemu-8.2.6.tar.xz.sig (signature)
+--=-7aI71VoZ9P3azYLQFroL
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-v8.2.6 is now tagged in the official qemu.git repository, and the
-stable-8.2 branch has been updated accordingly:
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzE3MDgxNDEwWjAvBgkqhkiG9w0BCQQxIgQgpDLccVzy
+NFY6hIOp63c67afPeKRKJ8ikkSvzZe2e4Uswgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgA69SbbM8x3fiC47jFJp9nOMmwUNMe/LDfh
+ngQr8h8zfvHq0CmNUpy5WNFPBjIKzQ8vEPDqSaBVfqvPvOvoYgGch0QcbzSze0h6lSxJUMLz5vXt
+aDz+IfH+JCb57ITRS12CYc+xfHY648U82UAf+sxEqOIkYiDB9MsOlB4OhobTElvkUss8ScCB8tKD
+2wlmoeXBGS4T72cRHVneoC2XZYnBYIPYyLYa9MzSX42kS3fBrTVSkq0Jtjx0jbjgNeEkgbjLxTI1
+fyeTH2dygXvDRU/zIZfv9BaWPlX39G95STpPYpFA+8COoGSvdQ0RcIUjskiR0uv76Gok+NwZ110I
+bHgTsqE1/+4qIedRTe6IOqZ0L5WdBlmjjDbK6xs1xPilroIQJD40ecEH5krbERnwvEw/rc+UTUfG
+SprAP+uNYh5XMnpdRdB3eXGaLRSPtmwBM/vYOO1K+QUmwS/jMBHGf00qzPjf19HSY0OIsECssiJv
+t13wPfCmrLGm0aYJGBp+8IURrwemeaS/VAc93hjHCRAgApbLGpn+LuLSBrdCCucGHHlSxWlQK3mB
+/ASd6+N4PTfc+Zt6+ZqHGgFECZ3xfebOt3QtYMcqHR8EPVxf//1hpZmTwFbfTllYg5alYpruMJal
+FN2qql2QoLpYMV4RLbG3+KCn3iMdVh4zUR1VUridJwAAAAAAAA==
 
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-8.2
 
-There are 23 changes since the previous v8.2.5 release, including
-a fix for CVE-2024-4467 (qemu-img info command lack of input validation).
-This is supposed to be the last release in 8.2.x series.
-
-Thank you everyone who has been involved and helped with the stable series!
-
-/mjt
-
-Changelog (stable-8.2-hash master-hash Author Name: Commmit-Subject):
-
-46300ebc38 Michael Tokarev:
- Update version for 8.2.6 release
-57d9378af9 3936bbdf9a Vincent Fu:
- hw/nvme: fix number of PIDs for FDP RUH update
-55b151b6a6 e389929d19 Markus Armbruster:
- sphinx/qapidoc: Fix to generate doc for explicit, unboxed arguments
-8f7bb1266f a0124e333e Maxim Mikityanskiy:
- char-stdio: Restore blocking mode of stdout on exit
-b932f9fbd4 7aa6492401 Stefano Garzarella:
- virtio: remove virtio_tswap16s() call in vring_packed_event_read()
-0d2c267638 a113d041e8 Cindy Lu:
- virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
-aea89f4179 7ead946998 Kevin Wolf:
- block: Parse filenames only when explicitly requested
-46fdbe667d 7e1110664e Kevin Wolf:
- iotests/270: Don't store data-file with json: prefix in image
-6a2774e8ae 2eb42a728d Kevin Wolf:
- iotests/244: Don't store data-file with protocol in image
-d7e7f342c6 bd385a5298 Kevin Wolf:
- qcow2: Don't open data_file with BDRV_O_NO_IO
-38fb9d1edc 7619129f0d Richard Henderson:
- target/arm: Fix FJCVTZS vs flush-to-zero
-8c56d9f61a 76bccf3cb9 Richard Henderson:
- target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-40e04161b3 903916f0a0 Chuang Xu:
- i386/cpu: fixup number of addressable IDs for processor cores in the physi=
-=3D
-cal package
-df0e72dc86 641b1efe01 Thomas Huth:
- tests: Update our CI to use CentOS Stream 9 instead of 8
-5d9f2461b4 6d3279655a Fabiano Rosas:
- migration: Fix file migration with fdset
-1229d60714 521d7fb3eb Richard Henderson:
- tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
-f4564fc8d2 6b4965373e Cl=3DC3=3DA9ment Chigot:
- target/sparc: use signed denominator in sdiv helper
-1649e9559b 54b2792102 Ilya Leoshkevich:
- linux-user: Make TARGET_NR_setgroups affect only the current thread
-40682cfcea 3b279f73fa Anton Johansson:
- accel/tcg: Fix typo causing tb->page_addr[1] to not be recorded
-d08c1fd6db b1cf266c82 Gerd Hoffmann:
- stdvga: fix screen blanking
-1798f38242 a276ec8e26 Philippe Mathieu-Daud=3DC3=3DA9:
- hw/audio/virtio-snd: Always use little endian audio format
-fdbeeb454c 77bf310084 Dongwon Kim:
- ui/gtk: Draw guest frame at refresh cycle
-fa275f2211 2c3e4e2de6 Alexey Dobriyan:
- virtio-net: drop too short packets early
-3e09472893 3973615e7f Mark Cave-Ayland:
- target/i386: fix size of EBP writeback in gen_enter()
+--=-7aI71VoZ9P3azYLQFroL--
 
