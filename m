@@ -4,118 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1DBC3DA62
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 19:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73CEAC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 20:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUAZG-00064M-Jh; Wed, 17 Jul 2024 15:44:02 -0400
+	id 1sUAzu-0000Xu-8A; Wed, 17 Jul 2024 16:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUAZE-00063k-JC
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:44:00 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUAZB-0000rq-8d
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 15:43:59 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8429121A6C;
- Wed, 17 Jul 2024 19:43:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721245435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
- b=oX4+q8ookrINQI6zfUqgEMfx1h+wK/gtImYHZlJDnuqWjYOx0+GceYIswMNUp9DsRIQEJR
- hrPwhGZ1w3OYCojF7yEWkL3nd255Q8VTklRwNIIidyeV7t5gPH4MgTQ5foFMeWhhL30tlm
- 2u3XVEwQqGAE/jpgw02f31tOtHxEJuY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721245435;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
- b=ZqZLumENBdUbzS9U/qoQGqLwWXwxWi6e3ZVqcKM9Lg/pzrsoYjd5yfQ1CyEzPzJQz5wndq
- aSlfcoexNf/1l8Ag==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721245435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
- b=oX4+q8ookrINQI6zfUqgEMfx1h+wK/gtImYHZlJDnuqWjYOx0+GceYIswMNUp9DsRIQEJR
- hrPwhGZ1w3OYCojF7yEWkL3nd255Q8VTklRwNIIidyeV7t5gPH4MgTQ5foFMeWhhL30tlm
- 2u3XVEwQqGAE/jpgw02f31tOtHxEJuY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721245435;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/CtC/2/2ic6RZI/zAv8gG1i5Vc2hpIL9/y9CLvo5SpQ=;
- b=ZqZLumENBdUbzS9U/qoQGqLwWXwxWi6e3ZVqcKM9Lg/pzrsoYjd5yfQ1CyEzPzJQz5wndq
- aSlfcoexNf/1l8Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 048FE136E5;
- Wed, 17 Jul 2024 19:43:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wnDPLvoemGbhXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Jul 2024 19:43:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yichen Wang <yichen.wang@bytedance.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Thomas Huth
- <thuth@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Xu
- <peterx@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>
-Subject: Re: [PATCH v5 08/13] migration/multifd: Add new migration option
- for multifd DSA offloading.
-In-Reply-To: <87y1603n21.fsf@suse.de>
-References: <20240711215244.19237-1-yichen.wang@bytedance.com>
- <20240711215244.19237-9-yichen.wang@bytedance.com>
- <CAHObMVZ1rifLMe-6R_Lttu_aOWDPvqv29sa6p_gz_7HROn00Tg@mail.gmail.com>
- <87y1603n21.fsf@suse.de>
-Date: Wed, 17 Jul 2024 16:43:52 -0300
-Message-ID: <87plrb2493.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1sUAzs-0000XR-JT
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:11:32 -0400
+Received: from mailout04.t-online.de ([194.25.134.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1sUAzq-0008CP-I9
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 16:11:32 -0400
+Received: from fwd83.aul.t-online.de (fwd83.aul.t-online.de [10.223.144.109])
+ by mailout04.t-online.de (Postfix) with SMTP id 3E909237BB;
+ Wed, 17 Jul 2024 22:11:26 +0200 (CEST)
+Received: from linpower.localnet ([79.208.28.154]) by fwd83.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1sUAzj-0UUEBl0; Wed, 17 Jul 2024 22:11:23 +0200
+Received: by linpower.localnet (Postfix, from userid 1000)
+ id 7E8DA20024B; Wed, 17 Jul 2024 22:11:23 +0200 (CEST)
+From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: John Snow <jsnow@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] docs: fix the html docs search function
+Date: Wed, 17 Jul 2024 22:11:23 +0200
+Message-Id: <20240717201123.9742-1-vr_qemu@t-online.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.30 / 50.00];
- NEURAL_HAM_SHORT(-0.20)[-0.995]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[16]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1721247083-C67F6839-317F690F/0/0 CLEAN NORMAL
+X-TOI-MSGID: f7a00e3d-dbc5-4c4f-9b1c-16b2278cb475
+Received-SPF: pass client-ip=194.25.134.18;
+ envelope-from=volker.ruemelin@t-online.de; helo=mailout04.t-online.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,82 +64,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Fix the search function in Sphinx generated html docs when built
+with Sphinx >= 6.0.0.
 
-> Yichen Wang <yichen.wang@bytedance.com> writes:
->
->> On Thu, Jul 11, 2024 at 2:53=E2=80=AFPM Yichen Wang <yichen.wang@bytedan=
-ce.com> wrote:
->>
->>> diff --git a/migration/options.c b/migration/options.c
->>> index 645f55003d..f839493016 100644
->>> --- a/migration/options.c
->>> +++ b/migration/options.c
->>> @@ -29,6 +29,7 @@
->>>  #include "ram.h"
->>>  #include "options.h"
->>>  #include "sysemu/kvm.h"
->>> +#include <cpuid.h>
->>>
->>>  /* Maximum migrate downtime set to 2000 seconds */
->>>  #define MAX_MIGRATE_DOWNTIME_SECONDS 2000
->>> @@ -162,6 +163,10 @@ Property migration_properties[] =3D {
->>>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationSt=
-ate,
->>>                         parameters.zero_page_detection,
->>>                         ZERO_PAGE_DETECTION_MULTIFD),
->>> +    /* DEFINE_PROP_ARRAY("dsa-accel-path", MigrationState, x, */
->>> +    /*                    parameters.dsa_accel_path, qdev_prop_string,=
- char *), */
->
-> This is mostly correct, I think, you just need to create a field in
-> MigrationState to keep the length (instead of x). However, I found out
-> just now that this only works with QMP. Let me ask for other's
-> opinions...
->
->>> +    /* DEFINE_PROP_STRING("dsa-accel-path", MigrationState, */
->>> +    /*                    parameters.dsa_accel_path), */
->>>
->>>      /* Migration capabilities */
->>>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
->>
->> I changed the dsa-accel-path to be a ['str'], i.e. strList* in C.
->> However, I am having a hard time about how to define the proper
->> properties here. I don't know what MACRO to use and I can't find good
->> examples... Need some guidance about how to proceed. Basically I will
->> need this to pass something like '-global
->> migration.dsa-accel-path=3D"/dev/dsa/wq0.0"' in cmdline, or
->> "migrate_set_parameter dsa-accel-path" in QEMU CLI. Don't know how to
->> pass strList there.
->>
->> Thanks very much!
->
-> @Daniel, @Markus, any idea here?
->
-> If I'm reading this commit[1] right, it seems we decided to disallow
-> passing of arrays without JSON, which affects -global on the
-> command-line and HMP.
->
-> 1- b06f8b500d (qdev: Rework array properties based on list visitor,
-> 2023-11-09)
->
-> QMP shell:
-> (QEMU) migrate-set-parameters dsa-accel-path=3D['a','b']
-> {"return": {}}
->
-> HMP:
-> (qemu) migrate_set_parameter dsa-accel-path "['a','b']"
-> qemu-system-x86_64: ../qapi/string-input-visitor.c:343: parse_type_str:
-> Assertion `siv->lm =3D=3D LM_NONE' failed.
->
-> Any recommendation? I believe all migration parameters so far can be set
-> via those means, I don't think we can allow only this one to be
-> QMP-only.
->
-> Or am I just missing something?
+Quote from the Sphinx blog at
+https://blog.readthedocs.com/sphinx6-upgrade
 
-I guess we could just skip adding property like Steve did here:
+Sphinx 6 is out and has important breaking changes
 
-https://lore.kernel.org/r/1719776434-435013-10-git-send-email-steven.sistar=
-e@oracle.com
+Bundled jQuery is removed. The JavaScript asset is easily added
+back using the new extension sphinxcontrib-jquery. It is included
+automatically by sphinx-rtd-theme, so if you are using our theme,
+you will also continue to have jQuery available in your
+documentation.
+
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+---
+ docs/conf.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/docs/conf.py b/docs/conf.py
+index 876f676881..2aedd407a0 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -62,6 +62,9 @@
+ # ones.
+ extensions = ['kerneldoc', 'qmp_lexer', 'hxtool', 'depfile', 'qapidoc']
+ 
++if sphinx.version_info[:3] >= (6, 0, 0):
++    extensions += ['sphinxcontrib.jquery']
++
+ if sphinx.version_info[:3] > (4, 0, 0):
+     tags.add('sphinx4')
+     extensions += ['dbusdoc']
+-- 
+2.35.3
+
 
