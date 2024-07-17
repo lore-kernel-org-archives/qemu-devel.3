@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EB8C3DA4B
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 10:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66BBC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 10:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU1TT-0006Mv-6Z; Wed, 17 Jul 2024 06:01:27 -0400
+	id 1sU1Uh-0002RH-KJ; Wed, 17 Jul 2024 06:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1TR-0006Ki-46
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:01:25 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1Ue-00028E-8k
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:02:40 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1TB-0000MP-NP
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:01:24 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4267300145eso53057955e9.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 03:00:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sU1Ua-0000bN-I8
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 06:02:38 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-427b9dcbb09so14629885e9.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 03:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721210458; x=1721815258; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721210555; x=1721815355; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0D+xL7ZXgIiMqYUQST32m6wm2ferX/Fpi4YTaFNEpKM=;
- b=uKKAsIWT1Yqjp4TQRUvTYtTj7zplD7SX5jIpeDVi2d9hod2Q1YgiJPw92mKIhXax86
- 7fWyjS47M/X6YeEhaBZsjbkEvxCbKZTXumE420xI3VpmLK7JGirmEzIc70baniwqQKFo
- szh+YjpwrJrBVrNZfbh7xX04xj1RgEr27B5URg8J45h4s2l5/eexkMPdsy6MUdKgovxo
- 9SiTJvMhuNYli9xCdBcQ2wSLqvkSy8PQCEMfoA8JPF9qBxTp4E2yAjuVH6IiBhKQzNa6
- xUPLtb+ia1QwQM7QLkpvVkkt7GC9YubBqF7yeS0MtSu8rlZozBIUxS6FyAA8Z5P6nczp
- x5Vg==
+ bh=TsrYKh5Zg8n6P6g9dpI45osLWcbwS9f12XYwFuWiSzQ=;
+ b=htEnB7s2V7+zTzBXMIO2GZwgAg3rqjOewVel0cp/bKJ7ggm8vthlwiU44P6ibaTVID
+ p72X3aUsVz/9x5FZgPJTUBv8ioecbALJ0jOuhfHD7qRmHY+bI+IYieU2V2bl6x1X2VN/
+ UanFIEvWUp2558yQRniDx00hn9cKyDqTkPAxX7icvsVMpBSaTsxY3/7WVFbxkvUtPAlK
+ KKauXeqkjkXAbTsIQayVEgJcwrYue3gjG2nQ5gNP5oZGWap8bnLjDse2Nlw6mdVhdnF8
+ BwOuZCSJEcCwdm8V6MhUDIrZSWn6qnNSLReBsS7XXDAi28+aE+Tvl2kvn83kjKeB7b5p
+ BWVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721210458; x=1721815258;
+ d=1e100.net; s=20230601; t=1721210555; x=1721815355;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0D+xL7ZXgIiMqYUQST32m6wm2ferX/Fpi4YTaFNEpKM=;
- b=Q7ASDfYm6yDjTQQajXDBt6ApYmTznYaleD/mxli/YrMIUavPaAo2FR9OTest60gcGk
- wDxsVAwbui/DKpkt9RSuYUOTly888V3cMopIbbzCbs5Q4fabmhAL9cqChEMrb8YUmE/R
- 48FStk5zNi1dNBxCL9Gtl5cWoIviANkZd25Cz/bR0+qHMSmvGBbsvbdeMTvkEddR+orr
- ZO3g9yCZcqgnU4B1dQSOwDbQj6Fm0wFmKJ7y34/uTKCkFKAhXg6vCabYowlWnQj5rhzV
- kEtkjgfskH8aI6YbSv1mTHr2Bq8VnlR73p/wt10bJyRD0dSyvsoRmXN6zERdTOXuqajW
- SuGQ==
+ bh=TsrYKh5Zg8n6P6g9dpI45osLWcbwS9f12XYwFuWiSzQ=;
+ b=P7VdzmfeN6XaWNTOk7YQlouxOCGaqBBr05Plt4iJmwz7Bu6ItxdEpYYLTV7UQ7tlwz
+ f1fpNRvwIUj2yn6dOTLITka25Dm969C48e7TiMq5YHxTrkVIvFaFIWTy9AimRHDFbP/b
+ IiToT98+/ihE8dy+2VLRLZHgc+ft4CIjqAOJmhigOTdUejryCiWlCx+/jGaBjnln7GKw
+ ZuxOCltbxL3ker2YkqMtdhEOFFNfW9uV4nGt1cEdYAyvMF1Lc2Es65qfzNIRDYLG2OIH
+ JiUj5WZeH7Sv/rURwziAfrj4P5811myIbjy65UB9PIVdKEXk1TXw1CSwcte1bPh6r5OQ
+ 9SYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEUKYcPcovZBE5wwZ8kNE6E9k8ffaj2HqueGXyuRw+iNBSNRG7szzz4xnABEdos6IlK2I7FcI40xKvkDU/fjD+WZKfes4=
-X-Gm-Message-State: AOJu0YwHXh5pKzLmjOT24SLBQwYsdvWJ19cxGzCHOvi3VBrU+MWptGlq
- SyjTdrzL4qUV2/30K9PUXnqRMwmvdK3ReBB/MA7wNbbNOjpqnq3Yl3W0AxAwNpU=
-X-Google-Smtp-Source: AGHT+IH+kNwt66eUyQev4j0rU2GbwyJRXdeokfBu1QmX9mmoMkCXk+8KWRfWmn933cLhp2xvGIncOw==
-X-Received: by 2002:a05:600c:1912:b0:426:6f87:65fc with SMTP id
- 5b1f17b1804b1-427c2cc848emr10442635e9.17.1721210458732; 
- Wed, 17 Jul 2024 03:00:58 -0700 (PDT)
+ AJvYcCWNOOmHUXb4fYGlfWLwjiwF2nLgSZooqC89ZfUx8mLsajWg0ZhlruHkV0EuOdrmQGNXsUgW7wVpTSt3R4l0U7sI/JyRnpk=
+X-Gm-Message-State: AOJu0YyUyupav5PflIYLDLH+/R9/Z7LarTroA+DrzsJvHDoOUOK4cNRX
+ Zvev5ThAWdszxZYeYGZwuTNo8oc5oIP5CcHqG0Ih1Xk+a/KHz+3HYPTNpjpeXpo=
+X-Google-Smtp-Source: AGHT+IHvBaHP8TqB5wQKyMWm3DKzjsD5RqNrE9xHTRPR1mUdXyjq52Gtj7bh/CL8Kc8eq1Bn5OStXg==
+X-Received: by 2002:a05:600c:450d:b0:426:6157:7ad3 with SMTP id
+ 5b1f17b1804b1-427c2cd0c64mr8198125e9.19.1721210554734; 
+ Wed, 17 Jul 2024 03:02:34 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.208.21])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427ba20aaf8sm48491555e9.0.2024.07.17.03.00.57
+ 5b1f17b1804b1-4279f2cc32esm200739325e9.35.2024.07.17.03.02.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jul 2024 03:00:58 -0700 (PDT)
-Message-ID: <d86b4c48-dcb0-4651-92c4-8117f9f50543@linaro.org>
-Date: Wed, 17 Jul 2024 12:00:57 +0200
+ Wed, 17 Jul 2024 03:02:34 -0700 (PDT)
+Message-ID: <c3b1870a-6939-4470-92be-c9a4ba0c98b4@linaro.org>
+Date: Wed, 17 Jul 2024 12:02:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/17] target/arm: Fix whitespace near gen_srshr64_i64
+Subject: Re: [PATCH 17/17] target/arm: Push tcg_rnd into
+ handle_shri_with_rndacc
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20240717060903.205098-1-richard.henderson@linaro.org>
- <20240717060903.205098-12-richard.henderson@linaro.org>
+ <20240717060903.205098-18-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240717060903.205098-12-richard.henderson@linaro.org>
+In-Reply-To: <20240717060903.205098-18-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,11 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/24 08:08, Richard Henderson wrote:
+On 17/7/24 08:09, Richard Henderson wrote:
+> We always pass the same value for round; compute it
+> within common code.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/tcg/gengvec.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/arm/tcg/translate-a64.c | 32 ++++++--------------------------
+>   1 file changed, 6 insertions(+), 26 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
