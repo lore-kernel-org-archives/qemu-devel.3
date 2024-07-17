@@ -4,48 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10BFC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C978EC3DA4B
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 11:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sU2Uy-0000q1-U5; Wed, 17 Jul 2024 07:07:05 -0400
+	id 1sU2lJ-0000MA-Os; Wed, 17 Jul 2024 07:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Uo-0008UJ-KS; Wed, 17 Jul 2024 07:06:57 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sU2Uj-0007RY-9d; Wed, 17 Jul 2024 07:06:54 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0AF327B375;
- Wed, 17 Jul 2024 14:06:36 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 73C2210B28A;
- Wed, 17 Jul 2024 14:06:40 +0300 (MSK)
-Received: (nullmailer pid 844391 invoked by uid 1000);
- Wed, 17 Jul 2024 11:06:40 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 03/16] accel/kvm/kvm-all: Fix superfluous trailing semicolon
-Date: Wed, 17 Jul 2024 14:06:27 +0300
-Message-Id: <20240717110640.844335-4-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240717110640.844335-1-mjt@tls.msk.ru>
-References: <20240717110640.844335-1-mjt@tls.msk.ru>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sU2lH-0000Bh-Lv; Wed, 17 Jul 2024 07:23:55 -0400
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sU2lF-0006p5-Rf; Wed, 17 Jul 2024 07:23:55 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5b53bb4bebaso376372eaf.0; 
+ Wed, 17 Jul 2024 04:23:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721215431; x=1721820231; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wwI/SRj99yjPQr9rGqVr8fbwxRLWj9jJISoN9/IKrm4=;
+ b=gX4M84MQ1YiXixcTa1oouU0UlP/q5dMHwLd1g23+l2hVTz2i9XgfwJI1jsdFGDHlV3
+ fgQ0B/KgLTtD63oRNdFagVW/MsvpnN/LFVUjlrYYzIUfjLPC/hgaTdDnWIQMvio2iJcw
+ TAaIl0I7snIZb3qw706GWz5q2Tpq6VapgPjnGvD8dXKRlUMkWpz6BhNzF6Wc7B6kPBvZ
+ MahZPgAHSagI09tUcP95LJfzNg+cW8VJ+tAzNbUFMEVWM9i358+1n4DtBl8P6ud+9BMc
+ q2Qo+Blh334fxMNig2C9nsfKsYTRVbXlWiGO7p61+JPnaxhUagIHi8Jnz+ovuGZlRSvx
+ IUOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721215431; x=1721820231;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wwI/SRj99yjPQr9rGqVr8fbwxRLWj9jJISoN9/IKrm4=;
+ b=TtXdPxyNFjoB02062GMLiDMrzmxFSp4KWHNa/Qwa+I0H4Br/XhbMYWY+2WjBW82Cq2
+ 5zyMlXvrUhiQ3Oa373SHcu8s2NwWOoUG4ZWBoj/n+VCfMfQoVkr5j3vD7c07gNC2nfrV
+ SiJGCghYqmNDX/7zgSe8ijRkj+NLN7fev5RU8oftrZ60YsCVzs9osGLRcAvOyL8Oz9zl
+ 5PozAjuKc2yf71xMoSgAfoYMiacZU4WR/PzTAkC8TyySkG5Gpe+LL++4ZW+aRe6QwZHW
+ 0yNeHmexksLHLkIiRoKZu58su8hRMdeEGwo2s6q0RHXYEBNnLjRzMPQdSQT1r8+Z3nAQ
+ nfwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYQkxaoM5FcxVUfWnHwxUYbUa3mcB2Tx/hJXsZDkewYZlAeK6xJLg5/F4m/lOAnVpr1orvVZNmHSnZq6XJTfc5BnRhXB4=
+X-Gm-Message-State: AOJu0Yz5/mZY8Cd9DPTOoUeig0e+vn+LAd9LVecDD/65qDOpMg0Hpuzh
+ N3SVp7Hs8DtnVU9wWK4Bb5QtXLIkSofr3ZFlKXxRPtreME4A+Zq0
+X-Google-Smtp-Source: AGHT+IFtj4GewuV+D8emF9p27hbz/OzL6JyENLwnYgrqeFn3Epf7EkuTomUdSZPvRtS/L92LxjUAgw==
+X-Received: by 2002:a05:6870:9a25:b0:254:9501:db80 with SMTP id
+ 586e51a60fabf-260d91e0b99mr1186129fac.14.1721215430717; 
+ Wed, 17 Jul 2024 04:23:50 -0700 (PDT)
+Received: from localhost ([1.146.100.214]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7ecc9165sm7917982b3a.188.2024.07.17.04.23.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Jul 2024 04:23:50 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Wed, 17 Jul 2024 21:23:45 +1000
+Message-Id: <D2RRY2BN4FC0.2LGCOTO2JZVFY@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <balaton@eik.bme.hu>
+Subject: Re: [PATCH 2/4] target/ppc: Hoist dcbz_size out of dcbz_common
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.17.0
+References: <20240702234659.2106870-1-richard.henderson@linaro.org>
+ <20240702234659.2106870-3-richard.henderson@linaro.org>
+In-Reply-To: <20240702234659.2106870-3-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=npiggin@gmail.com; helo=mail-oo1-xc36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,31 +94,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On Wed Jul 3, 2024 at 9:46 AM AEST, Richard Henderson wrote:
+> The 970 logic does not apply to dcbzep, which is an e500 insn.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- accel/kvm/kvm-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 2b4ab89679..64bf47a033 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3878,7 +3878,7 @@ static StatsList *add_kvmstat_entry(struct kvm_stats_desc *pdesc,
-     /* Alloc and populate data list */
-     stats = g_new0(Stats, 1);
-     stats->name = g_strdup(pdesc->name);
--    stats->value = g_new0(StatsValue, 1);;
-+    stats->value = g_new0(StatsValue, 1);
- 
-     if ((pdesc->flags & KVM_STATS_UNIT_MASK) == KVM_STATS_UNIT_BOOLEAN) {
-         stats->value->u.boolean = *stats_data;
--- 
-2.39.2
+> ---
+>  target/ppc/mem_helper.c | 30 +++++++++++++++---------------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
+>
+> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+> index 361fd72226..5067919ff8 100644
+> --- a/target/ppc/mem_helper.c
+> +++ b/target/ppc/mem_helper.c
+> @@ -271,22 +271,12 @@ void helper_stsw(CPUPPCState *env, target_ulong add=
+r, uint32_t nb,
+>  }
+> =20
+>  static void dcbz_common(CPUPPCState *env, target_ulong addr,
+> -                        uint32_t opcode, int mmu_idx, uintptr_t retaddr)
+> +                        int dcbz_size, int mmu_idx, uintptr_t retaddr)
+>  {
+> -    target_ulong mask, dcbz_size =3D env->dcache_line_size;
+> -    uint32_t i;
+> +    target_ulong mask =3D ~(target_ulong)(dcbz_size - 1);
+>      void *haddr;
+> =20
+> -#if defined(TARGET_PPC64)
+> -    /* Check for dcbz vs dcbzl on 970 */
+> -    if (env->excp_model =3D=3D POWERPC_EXCP_970 &&
+> -        !(opcode & 0x00200000) && ((env->spr[SPR_970_HID5] >> 7) & 0x3) =
+=3D=3D 1) {
+> -        dcbz_size =3D 32;
+> -    }
+> -#endif
+> -
+>      /* Align address */
+> -    mask =3D ~(dcbz_size - 1);
+>      addr &=3D mask;
+> =20
+>      /* Check reservation */
+> @@ -300,7 +290,7 @@ static void dcbz_common(CPUPPCState *env, target_ulon=
+g addr,
+>          memset(haddr, 0, dcbz_size);
+>      } else {
+>          /* Slow path */
+> -        for (i =3D 0; i < dcbz_size; i +=3D 8) {
+> +        for (int i =3D 0; i < dcbz_size; i +=3D 8) {
+>              cpu_stq_mmuidx_ra(env, addr + i, 0, mmu_idx, retaddr);
+>          }
+>      }
+> @@ -308,12 +298,22 @@ static void dcbz_common(CPUPPCState *env, target_ul=
+ong addr,
+> =20
+>  void helper_dcbz(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+>  {
+> -    dcbz_common(env, addr, opcode, ppc_env_mmu_index(env, false), GETPC(=
+));
+> +    int dcbz_size =3D env->dcache_line_size;
+> +
+> +#if defined(TARGET_PPC64)
+> +    /* Check for dcbz vs dcbzl on 970 */
+> +    if (env->excp_model =3D=3D POWERPC_EXCP_970 &&
+> +        !(opcode & 0x00200000) && ((env->spr[SPR_970_HID5] >> 7) & 0x3) =
+=3D=3D 1) {
+> +        dcbz_size =3D 32;
+> +    }
+> +#endif
+> +
+> +    dcbz_common(env, addr, dcbz_size, ppc_env_mmu_index(env, false), GET=
+PC());
+>  }
+> =20
+>  void helper_dcbzep(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+>  {
+> -    dcbz_common(env, addr, opcode, PPC_TLB_EPID_STORE, GETPC());
+> +    dcbz_common(env, addr, env->dcache_line_size, PPC_TLB_EPID_STORE, GE=
+TPC());
+>  }
+> =20
+>  void helper_icbi(CPUPPCState *env, target_ulong addr)
 
 
