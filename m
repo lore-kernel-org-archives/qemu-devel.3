@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8C5C3DA60
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4A1C41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jul 2024 06:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sTxr4-0004AY-0c; Wed, 17 Jul 2024 02:09:34 -0400
+	id 1sTxrj-00079w-Vn; Wed, 17 Jul 2024 02:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxqp-0003ec-DN
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:20 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ id 1sTxrJ-0005M0-TI
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:49 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sTxqn-00030J-GM
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:19 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-3d92d1a5222so3818868b6e.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:09:16 -0700 (PDT)
+ id 1sTxrD-00034t-PW
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 02:09:46 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3d96365dc34so4851417b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jul 2024 23:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721196556; x=1721801356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721196578; x=1721801378; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f2RBO2LUzalMayDyUmUonTOmlQcuZjzRHo/lvECYNRo=;
- b=vWtC2H25NXyYECW+9mQtMomdlMIfNIsnNRxSNn3UNFrb8CQ+bWy0H7DqRNJBLbrW3I
- GQFPzFN3P2Nc+a7r/tbHJWVWhdW7sj2dNKGdo7qyg+nLd96jNYKN+UT2vGBnbMuKnMkU
- vPf8s/cTZhHploHIvm3OAr8wkOhyhm8oD19pxS/mCAFgKPJa21oo9dzCAAOQnAF5L5wm
- Ksw3/uGNcuQHto8GUW5Rxme04GwPMS3ESTmZXJjnzZi+gqRUDT9mLX9lsfmU+po5wUso
- uF4edj7BQSokc06jl9/OfeYB/Pcc84CI/+upTG2zyPaOtk/IPi7smB1z6adAgOQ1ebgW
- 8gew==
+ bh=R2XV0a88eGLbu1U/vWq9ttzcAxIlbjkNY5QMrMqYulc=;
+ b=i3yKvF8A5GRiSialPOKJEdvsbkG8FxW8uPQrzhQA5eFVX6+L8V8lpNwSEfWImBUcWF
+ nOT6koPsSTZfyEPu+R/2R3quDI5OK3+cUdLEK32i5WrYD4Og2jK/4isNjrXZbbgQBtOq
+ JoTiJ3dGOeoxl/Tt1HEUPsF4pSLiXqQRWf2F99plhqLMIMbmnHDbC+Y34S4jZh46YPH3
+ pK4VbFsYvMJZrWCTjbzJ63dtWRYQPZiUQ/vYYexswyIONv7gakvi0+1bdbiXrBMONA18
+ SRUoS2fylTHKFD/jTZh7hQVB+oUk6N0XCxHDMk1KJaV1JP1AWrKJeWUt0hDJd48XfRub
+ qxPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721196556; x=1721801356;
+ d=1e100.net; s=20230601; t=1721196578; x=1721801378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f2RBO2LUzalMayDyUmUonTOmlQcuZjzRHo/lvECYNRo=;
- b=D6MLVqWXEz9lusKhW4LSD+OM9/bK8eEvG2n7borPzekXEhdUzskGoZeT9tsZTqhJDa
- jr634xf4Imp4hA79YoQd9az1eSxlRwv3lzfwlLq+MzkfRwrZ6Ot8xTVjT6tOBMzEx3ZE
- KO8PCsLm5Rdf94bDReZ6Cha0WkZuqwHvhSgDvJms3v8frqmlayURFoq6hjC8TrCtPZVk
- DF76Yj6Aa490BPGPQ+MuDRCot+Zr46nRihaAUZ6ove9AFM/yZbmwgQMC5bUYjOEI7/8h
- 0/K8A4A9nb3/0OM9xqI2Nr3gV1Vdln2t3WQ8arFO4dSfVjsMZTdhllqQSlLLeYhYMEEy
- ARGw==
-X-Gm-Message-State: AOJu0Yz34lTN73GXki94U3lmg0aW92ay+Vuk9gC8hZbFfHH4wSeXQHBZ
- DFExJdj8Gl9Br8tpSuXDEgjIZQf9juLFXWwF1TS7BZoQCZYG8ATFTDgQI/5FYAhtqYNKnUSKDTD
- If8k=
-X-Google-Smtp-Source: AGHT+IErn86g8LvF0rU3MJBgaqD9phV1VMJgjdNToPQyboie7pkup7VciXN52y7llZs7uJDO5rqhCA==
-X-Received: by 2002:a05:6808:1509:b0:3d9:e1d1:1580 with SMTP id
- 5614622812f47-3dad1f494a2mr825077b6e.21.1721196556031; 
- Tue, 16 Jul 2024 23:09:16 -0700 (PDT)
+ bh=R2XV0a88eGLbu1U/vWq9ttzcAxIlbjkNY5QMrMqYulc=;
+ b=qChNBMmYfEd6pTn3SaUbEE3paQejZVLK9XPmOIf38g/mA3sk3jBDsthG69oKn9gcYt
+ plEcVlkVCtSlGpRdhoPDe/G3h8KMBFVenCvSKy0o3zKjSF58MERIRvdTjW/jlTBOFJpg
+ yzxrzvOhh9t2dQeeRP9gRyx/OBmM33beh/Nu58vlvj8kxsABIstPgVbESK2uNQzoTc1Z
+ AA6OpUPnOIeM/cuage985BGtPpJBAMq6ZK/r4f4qAWHmxym2j9IWkm6sarP5PcWc0seM
+ kwTxqlOok3mVpxnFp3oECxdJo2vbUewILcL6A+C02hFXmZLFzqvekxrVRGrVxikCB6AL
+ DF+w==
+X-Gm-Message-State: AOJu0YyH7KBbkPaFfRMbjH6FPjU44+YP2JPKyclSS7zpf8DigcKP2uTk
+ PtOk5elhUKgxDborQNpeJ7x9eiXbZYs1UlixbK8muu7fbiaRDTH6VAyxm4Lru/Z7eVlP74Va/DS
+ ucdY=
+X-Google-Smtp-Source: AGHT+IE/1+DMmI7kX5lfczf/8DxkkTZR0ZID09vzhY7UEkXGWXpvKLjjP4UGovF6H0SBpgRuC2tifw==
+X-Received: by 2002:a05:6808:1483:b0:3da:b3b3:191 with SMTP id
+ 5614622812f47-3dad1f7c512mr988315b6e.48.1721196578203; 
+ Tue, 16 Jul 2024 23:09:38 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b7ecd603bsm7330404b3a.219.2024.07.16.23.09.13
+ d2e1a72fcca58-70b7ecd603bsm7330404b3a.219.2024.07.16.23.09.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jul 2024 23:09:15 -0700 (PDT)
+ Tue, 16 Jul 2024 23:09:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 02/17] target/arm: Convert EXT to decodetree
-Date: Wed, 17 Jul 2024 16:08:48 +1000
-Message-ID: <20240717060903.205098-3-richard.henderson@linaro.org>
+Subject: [PATCH 11/17] target/arm: Fix whitespace near gen_srshr64_i64
+Date: Wed, 17 Jul 2024 16:08:57 +1000
+Message-ID: <20240717060903.205098-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240717060903.205098-1-richard.henderson@linaro.org>
 References: <20240717060903.205098-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -95,169 +95,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 121 +++++++++++++--------------------
- target/arm/tcg/a64.decode      |   5 ++
- 2 files changed, 53 insertions(+), 73 deletions(-)
+ target/arm/tcg/gengvec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index e4c8a20f39..6ca24d9842 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -6541,6 +6541,54 @@ static bool trans_FCSEL(DisasContext *s, arg_FCSEL *a)
-     return true;
+diff --git a/target/arm/tcg/gengvec.c b/target/arm/tcg/gengvec.c
+index 47ac2634ce..b6c0d86bad 100644
+--- a/target/arm/tcg/gengvec.c
++++ b/target/arm/tcg/gengvec.c
+@@ -304,7 +304,7 @@ void gen_srshr32_i32(TCGv_i32 d, TCGv_i32 a, int32_t sh)
+     tcg_gen_add_i32(d, d, t);
  }
  
-+/*
-+ * Advanced SIMD Extract
-+ */
-+
-+static bool trans_EXT_d(DisasContext *s, arg_EXT_d *a)
-+{
-+    if (fp_access_check(s)) {
-+        TCGv_i64 lo = read_fp_dreg(s, a->rn);
-+        if (a->imm != 0) {
-+            TCGv_i64 hi = read_fp_dreg(s, a->rm);
-+            tcg_gen_extract2_i64(lo, lo, hi, a->imm * 8);
-+        }
-+        write_fp_dreg(s, a->rd, lo);
-+    }
-+    return true;
-+}
-+
-+static bool trans_EXT_q(DisasContext *s, arg_EXT_q *a)
-+{
-+    TCGv_i64 lo, hi;
-+    int pos = (a->imm & 7) * 8;
-+    int elt = a->imm >> 3;
-+
-+    if (!fp_access_check(s)) {
-+        return true;
-+    }
-+
-+    lo = tcg_temp_new_i64();
-+    hi = tcg_temp_new_i64();
-+
-+    read_vec_element(s, lo, a->rn, elt, MO_64);
-+    elt++;
-+    read_vec_element(s, hi, elt & 2 ? a->rm : a->rn, elt & 1, MO_64);
-+    elt++;
-+
-+    if (pos != 0) {
-+        TCGv_i64 hh = tcg_temp_new_i64();
-+        tcg_gen_extract2_i64(lo, lo, hi, pos);
-+        read_vec_element(s, hh, a->rm, elt & 1, MO_64);
-+        tcg_gen_extract2_i64(hi, hi, hh, pos);
-+    }
-+
-+    write_vec_element(s, lo, a->rd, 0, MO_64);
-+    write_vec_element(s, hi, a->rd, 1, MO_64);
-+    clear_vec_high(s, true, a->rd);
-+    return true;
-+}
-+
- /*
-  * Floating-point data-processing (3 source)
-  */
-@@ -8849,78 +8897,6 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
-     }
- }
+- void gen_srshr64_i64(TCGv_i64 d, TCGv_i64 a, int64_t sh)
++void gen_srshr64_i64(TCGv_i64 d, TCGv_i64 a, int64_t sh)
+ {
+     TCGv_i64 t = tcg_temp_new_i64();
  
--/* EXT
-- *   31  30 29         24 23 22  21 20  16 15  14  11 10  9    5 4    0
-- * +---+---+-------------+-----+---+------+---+------+---+------+------+
-- * | 0 | Q | 1 0 1 1 1 0 | op2 | 0 |  Rm  | 0 | imm4 | 0 |  Rn  |  Rd  |
-- * +---+---+-------------+-----+---+------+---+------+---+------+------+
-- */
--static void disas_simd_ext(DisasContext *s, uint32_t insn)
--{
--    int is_q = extract32(insn, 30, 1);
--    int op2 = extract32(insn, 22, 2);
--    int imm4 = extract32(insn, 11, 4);
--    int rm = extract32(insn, 16, 5);
--    int rn = extract32(insn, 5, 5);
--    int rd = extract32(insn, 0, 5);
--    int pos = imm4 << 3;
--    TCGv_i64 tcg_resl, tcg_resh;
--
--    if (op2 != 0 || (!is_q && extract32(imm4, 3, 1))) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    tcg_resh = tcg_temp_new_i64();
--    tcg_resl = tcg_temp_new_i64();
--
--    /* Vd gets bits starting at pos bits into Vm:Vn. This is
--     * either extracting 128 bits from a 128:128 concatenation, or
--     * extracting 64 bits from a 64:64 concatenation.
--     */
--    if (!is_q) {
--        read_vec_element(s, tcg_resl, rn, 0, MO_64);
--        if (pos != 0) {
--            read_vec_element(s, tcg_resh, rm, 0, MO_64);
--            tcg_gen_extract2_i64(tcg_resl, tcg_resl, tcg_resh, pos);
--        }
--    } else {
--        TCGv_i64 tcg_hh;
--        typedef struct {
--            int reg;
--            int elt;
--        } EltPosns;
--        EltPosns eltposns[] = { {rn, 0}, {rn, 1}, {rm, 0}, {rm, 1} };
--        EltPosns *elt = eltposns;
--
--        if (pos >= 64) {
--            elt++;
--            pos -= 64;
--        }
--
--        read_vec_element(s, tcg_resl, elt->reg, elt->elt, MO_64);
--        elt++;
--        read_vec_element(s, tcg_resh, elt->reg, elt->elt, MO_64);
--        elt++;
--        if (pos != 0) {
--            tcg_gen_extract2_i64(tcg_resl, tcg_resl, tcg_resh, pos);
--            tcg_hh = tcg_temp_new_i64();
--            read_vec_element(s, tcg_hh, elt->reg, elt->elt, MO_64);
--            tcg_gen_extract2_i64(tcg_resh, tcg_resh, tcg_hh, pos);
--        }
--    }
--
--    write_vec_element(s, tcg_resl, rd, 0, MO_64);
--    if (is_q) {
--        write_vec_element(s, tcg_resh, rd, 1, MO_64);
--    }
--    clear_vec_high(s, is_q, rd);
--}
--
- /* TBL/TBX
-  *   31  30 29         24 23 22  21 20  16 15  14 13  12  11 10 9    5 4    0
-  * +---+---+-------------+-----+---+------+---+-----+----+-----+------+------+
-@@ -11818,7 +11794,6 @@ static const AArch64DecodeTable data_proc_simd[] = {
-     { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
-     { 0x0e000000, 0xbf208c00, disas_simd_tb },
-     { 0x0e000800, 0xbf208c00, disas_simd_zip_trn },
--    { 0x2e000000, 0xbf208400, disas_simd_ext },
-     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
-     { 0x5f000400, 0xdf800400, disas_simd_scalar_shift_imm },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 2922de700c..05927fade6 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1136,3 +1136,8 @@ FMADD           0001 1111 .. 0 ..... 0 ..... ..... .....    @rrrr_hsd
- FMSUB           0001 1111 .. 0 ..... 1 ..... ..... .....    @rrrr_hsd
- FNMADD          0001 1111 .. 1 ..... 0 ..... ..... .....    @rrrr_hsd
- FNMSUB          0001 1111 .. 1 ..... 1 ..... ..... .....    @rrrr_hsd
-+
-+# Advanced SIMD Extract
-+
-+EXT_d           0010 1110 00 0 rm:5 00 imm:3 0 rn:5 rd:5
-+EXT_q           0110 1110 00 0 rm:5 0  imm:4 0 rn:5 rd:5
 -- 
 2.43.0
 
