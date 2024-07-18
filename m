@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECCAC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 21:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC29C3DA61
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 21:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUYOL-0003Lw-P0; Thu, 18 Jul 2024 17:10:21 -0400
+	id 1sUYP2-00073e-Q2; Thu, 18 Jul 2024 17:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sUYOK-0003Im-1x
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:10:20 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1sUYOx-0006jO-6Z
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:10:59 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1sUYOH-0007c1-3E
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:10:19 -0400
+ id 1sUYOv-0007fs-39
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:10:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721337017; x=1752873017;
+ t=1721337057; x=1752873057;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=Mu/jPdIQGHsNBN8Hn15TYNmcUp3/Eqvt1Dx7g67c8FI=;
- b=Dt6MefQyWF2CftGzKAofriY+kG3NIp1Tg2Kps5FAGuqMRRNHcYIQDN1r
- 7ZZOLLeOnZzvqTqihxUZjD7ZOiFdZm/eYuOfBH6acOt832Kr6S7dW67PJ
- MEER23C8qRusTvFU3PqJJB/04TngzfD4APY82FOjsJBjZKjCqj9BgCmlx
- 4wQdsxkk9gSXR/Wte+E8bppvmF9+vcpTv2xy5++L2nzYO71EDZSaZRQka
- kUxqBkgcDcnD7DnWnxEH5j02qm+BMU3jf89ouebSBS2RDVHiFQL0zyWRF
- mq7+ygmfcYbBLaZJDYk5WwF6BKmuKdI8Mw47uv40UG96cEgDXSJMmFAvX w==;
-X-CSE-ConnectionGUID: a825Gh4RTW2vbCjhKgwSow==
-X-CSE-MsgGUID: k6DaMfnHSnCLxU5zWHDScQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="21831710"
-X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="21831710"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 14:10:15 -0700
-X-CSE-ConnectionGUID: aXW8prndTe2V2GTOZUC36A==
-X-CSE-MsgGUID: E6OJ4AytS2mYQBfS9lDnFA==
+ bh=m0/N8F93ymgUGd+cp9IcrwKS34MurLS7rkuJ++xQVwc=;
+ b=eVXKR1reQHlj/wm9W6WssIzW7edRkyMLTHnd8ZWSidRnS166EDGqqDGn
+ 6XOMHu/peNKySYXEXv2JpkpbvXTdtZVK5wmt6p36gMFF5tyg18v8THvo6
+ gJdNGmB1CgFfgYEx+NkkmB8ey6V1iveODe+i+4X/n9PlACavhmRQ1TQAr
+ GwSqi8WhZxKzoEGO3HBCmUzCvC3ZirWDyHMktejxTo+s++0NmG1xkaFjp
+ 6qH1ATuy/7gKH4hfp2/Auh9cNQe3anD7XNtunSCn63OTgxLSYEM5KyHEB
+ GUgDj7hJ6ITJhTKpWPmuD+kEJTdUU+0CRKwcT5GPxdTEiQnGvhqWZI4vK w==;
+X-CSE-ConnectionGUID: NKwMsDJyTiGWMCeSAOZI/w==
+X-CSE-MsgGUID: OqSrHqrvRo6A1rzhKpOtLA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="36370711"
+X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="36370711"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Jul 2024 14:10:56 -0700
+X-CSE-ConnectionGUID: SqqwjxawRF2m8oA+QFUVDg==
+X-CSE-MsgGUID: TffSMjvYTfeZCOkOneU1ew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="55179108"
+X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="81935053"
 Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.107]) ([10.24.10.107])
- by fmviesa005-auth.fm.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2024 14:10:15 -0700
-Message-ID: <13e03ddc-d6e3-47a6-bb1a-2b6cbd57e1a7@intel.com>
-Date: Thu, 18 Jul 2024 14:10:14 -0700
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Jul 2024 14:10:55 -0700
+Message-ID: <93cb9db8-80cb-424e-8b2b-3e9fd9e6010e@intel.com>
+Date: Thu, 18 Jul 2024 14:10:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/9] target/i386/kvm: Save/load MSRs of kvmclock2
- (KVM_FEATURE_CLOCKSOURCE2)
+Subject: Re: [PATCH v4 8/9] target/i386/kvm: Clean up error handling in
+ kvm_arch_init()
 To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
@@ -60,13 +60,13 @@ To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
 References: <20240716161015.263031-1-zhao1.liu@intel.com>
- <20240716161015.263031-5-zhao1.liu@intel.com>
+ <20240716161015.263031-9-zhao1.liu@intel.com>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20240716161015.263031-5-zhao1.liu@intel.com>
+In-Reply-To: <20240716161015.263031-9-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zide.chen@intel.com;
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zide.chen@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -93,72 +93,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 7/16/2024 9:10 AM, Zhao Liu wrote:
-> MSR_KVM_SYSTEM_TIME_NEW and MSR_KVM_WALL_CLOCK_NEW are bound to
-> kvmclock2 (KVM_FEATURE_CLOCKSOURCE2).
+> Currently, there're following incorrect error handling cases in
+> kvm_arch_init():
+> * Missed to handle failure of kvm_get_supported_feature_msrs().
+> * Missed to return when KVM_CAP_X86_DISABLE_EXITS enabling fails.
+> * MSR filter related cases called exit() directly instead of returning
+>   to kvm_init().
 > 
-> Add the save/load support for these 2 MSRs just like kvmclock MSRs.
+> Fix the above cases.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
 Reviewed-by: Zide Chen <zide.chen@intel.com>
 
+
 > ---
->  target/i386/cpu.h     |  2 ++
->  target/i386/kvm/kvm.c | 16 ++++++++++++++++
->  2 files changed, 18 insertions(+)
+> v3: new commit.
+> ---
+>  target/i386/kvm/kvm.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
 > 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index b59bdc1c9d9d..35dc68631989 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -1826,6 +1826,8 @@ typedef struct CPUArchState {
->  
->      uint64_t system_time_msr;
->      uint64_t wall_clock_msr;
-> +    uint64_t system_time_new_msr;
-> +    uint64_t wall_clock_new_msr;
->      uint64_t steal_time_msr;
->      uint64_t async_pf_en_msr;
->      uint64_t async_pf_int_msr;
 > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index ac434e83b64c..64e54beac7b3 100644
+> index f68be68eb411..d47476e96813 100644
 > --- a/target/i386/kvm/kvm.c
 > +++ b/target/i386/kvm/kvm.c
-> @@ -3423,6 +3423,12 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
->              kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, env->system_time_msr);
->              kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, env->wall_clock_msr);
->          }
-> +        if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
-> +            kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW,
-> +                              env->system_time_new_msr);
-> +            kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW,
-> +                              env->wall_clock_new_msr);
-> +        }
->          if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
->              kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, env->async_pf_int_msr);
->          }
-> @@ -3901,6 +3907,10 @@ static int kvm_get_msrs(X86CPU *cpu)
->          kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
->          kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK, 0);
+> @@ -2682,7 +2682,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>          return ret;
 >      }
-> +    if (env->features[FEAT_KVM] & CPUID_KVM_CLOCK2) {
-> +        kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME_NEW, 0);
-> +        kvm_msr_entry_add(cpu, MSR_KVM_WALL_CLOCK_NEW, 0);
+>  
+> -    kvm_get_supported_feature_msrs(s);
+> +    ret = kvm_get_supported_feature_msrs(s);
+> +    if (ret < 0) {
+> +        return ret;
 > +    }
->      if (env->features[FEAT_KVM] & CPUID_KVM_ASYNCPF_INT) {
->          kvm_msr_entry_add(cpu, MSR_KVM_ASYNC_PF_INT, 0);
+>  
+>      uname(&utsname);
+>      lm_capable_kernel = strcmp(utsname.machine, "x86_64") == 0;
+> @@ -2740,6 +2743,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>          if (ret < 0) {
+>              error_report("kvm: guest stopping CPU not supported: %s",
+>                           strerror(-ret));
+> +            return ret;
+>          }
 >      }
-> @@ -4167,6 +4177,12 @@ static int kvm_get_msrs(X86CPU *cpu)
->          case MSR_KVM_WALL_CLOCK:
->              env->wall_clock_msr = msrs[i].data;
->              break;
-> +        case MSR_KVM_SYSTEM_TIME_NEW:
-> +            env->system_time_new_msr = msrs[i].data;
-> +            break;
-> +        case MSR_KVM_WALL_CLOCK_NEW:
-> +            env->wall_clock_new_msr = msrs[i].data;
-> +            break;
->          case MSR_MCG_STATUS:
->              env->mcg_status = msrs[i].data;
->              break;
+>  
+> @@ -2785,7 +2789,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>          if (ret) {
+>              error_report("Could not enable user space MSRs: %s",
+>                           strerror(-ret));
+> -            exit(1);
+> +            return ret;
+>          }
+>  
+>          ret = kvm_filter_msr(s, MSR_CORE_THREAD_COUNT,
+> @@ -2793,7 +2797,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>          if (ret) {
+>              error_report("Could not install MSR_CORE_THREAD_COUNT handler: %s",
+>                           strerror(-ret));
+> -            exit(1);
+> +            return ret;
+>          }
+>      }
+>  
 
