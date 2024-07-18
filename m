@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014C3C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A696AC3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURHQ-000260-8N; Thu, 18 Jul 2024 09:34:44 -0400
+	id 1sURI1-0006Ba-F9; Thu, 18 Jul 2024 09:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHF-0001Yj-NV
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:33 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHo-00054s-2H
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:35:08 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHE-00006I-1F
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:33 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3684e8220f9so407110f8f.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHm-0000Ko-Dh
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:35:07 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4266fd395eeso2872425e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:35:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721309671; x=1721914471; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721309705; x=1721914505; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mHLT+v60vx98P/4HziJkcSe5PukgkqBtt1Cd3ZIp3go=;
- b=wCBkoQe3eAVtX3faaYHqCPtkY3voN8kx04ojrAR3QZ9jPhC2iKEHMOyJSX8o7oFHTq
- xZljE9Xb+1JbDN3b4aY1kheCU4HaTeMh9y3Q8Sz6ai/DfLPWDhRRX03p6gnoNRIxD/0P
- S+kq7Wot91+jQLppqFiTy3yoIGaT1YLW0d0oYrCaDyWVB9EZUbU46gacKVXaYQ4fq/VB
- 1Rn2Ja9wGDhTKHZ17fZKb4QcSm1mj8sIc6yeysmBXbY97DPn8MvLHdOHiJX26o7XEyIy
- CH3MSzKJ3opVs6Mig/OGgVhuitcH3GzLU9btpHghQ6SOf+WayQFNo6BsBKa7pdkXxVrx
- quFg==
+ bh=f+aYS0CmzIbyjKGvExYGEZFqxw8XdQ+/CcKYqmT4dqY=;
+ b=oXflXLyhSJgYocxDAZKKQTcFcC8vdvri+sXFYDuwraTt/NLci8+YUY/OPrLSSTJXmk
+ huXE/U26MqqiqIrkvUrsDkOAa+ubp4lv/e+wZ3BPN+w5PX6L3tMnoqMIH3N6dBT1brxV
+ zJonY4FQYRo0/drftzdtDOW7USWDmV1pqj9efuRjHcNPagCfwoyvE4Bq7kFoQYfbGpYZ
+ jEzoCw23TqYZVhRjV1YiSJyXIxamdEErJm0hC9r+5oJ6lseoCOimHtS1feUpFmqnGyOY
+ ZcPt/zI98KE5vdA6chD895bG/b4AAECMD7m3IrbcpL96PT/XRN2GxZeZh5Vpb7QtrhNl
+ kZVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721309671; x=1721914471;
+ d=1e100.net; s=20230601; t=1721309705; x=1721914505;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mHLT+v60vx98P/4HziJkcSe5PukgkqBtt1Cd3ZIp3go=;
- b=FsO862G+xDiRYiXcchcNybCFqYSlDjlEq7Nbp55hRnuN5YcaghgerfXZi0lPo+Xa/y
- WgSQWtmpE0kp+yX/+NbJVU8Ou9FByrmaLdBhjqFWpGYCKMMYFYjr0AgzYzkPZWiDyPv1
- jl2n9zEGDq/2BwB8uV0stkXxszjuFalu00qRpqlIR+c92OaQSrjLNSq8JkPfSfM2WKNj
- s77HLgrm80P6gghZo70v1ATkuFXLUhukbNQPH2X+Fi7EbeXdtwuUFaG9JsRgfbCi4blQ
- X9KFN3Jb/4aL8ZWEUJRxQ9dr+GGcXMIU5IG6pAT9CaJbeCYFB0I9MnFN6TUGeRgEeqFQ
- 2WVQ==
+ bh=f+aYS0CmzIbyjKGvExYGEZFqxw8XdQ+/CcKYqmT4dqY=;
+ b=ekYUw6ViQ83gEYg0BxbJ43Tt2clN+2anKAarevMA5W/+vQr8MdDUewnwROTCf5eZ11
+ Y8WxpblVISKWi0fJ+LHEBNHzuANiHWi6pQrAs75ovDKIqKX4P8ceZ5kn7O6LccAuYy59
+ hFWX4VTKbkxjVf4BZvmlDcOOyLeZIvuv0NpK8qFH36Khjzqcb64LcxKaxLxdj7xWrtsF
+ VlUV7yI+MIFcnU3yvWRmlPBQSYLJUljBAB+bieh5tSf/0u05APtprB3nr551qebr9apJ
+ 9KrkveFjrYUVzTM3yRVXzFsEb1TJRt/+x9Y0zcWS9hlUfkkG9q/c85HyQ2cR7SvB46QS
+ x3JA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU60FY/17aXTCS0d4ZA3Pb9ui+z/BF7xZd4Np2MisM37kjekI9aTfGEt7Q9JMvttFNSpVYnnrVbwf+bwJ95Q5N4yt8C3Do=
-X-Gm-Message-State: AOJu0YxBvIyjCLkdujCd/We9tqZyRj4dFmqi/G4Z7N6K1Wr80SZJ37sr
- d93XZPM5ySsKgnmwghuxclh222ontb26kGydYVOIje+6T7e8Lyf4lxonVPoJc84=
-X-Google-Smtp-Source: AGHT+IHKAba/raOzMdHPVjdztftHkHevLD3ON/x08ynOWuJfc/7fe9mPv4NSYS5fYXiC/Dy49jFIIw==
-X-Received: by 2002:adf:fe92:0:b0:367:940b:b662 with SMTP id
- ffacd0b85a97d-3684b3c82e8mr2297763f8f.31.1721309670558; 
- Thu, 18 Jul 2024 06:34:30 -0700 (PDT)
+ AJvYcCVkYtLlLYUTjTVnygBZ4pubk70t49snyyvoTgYw6ctR8LGCG7fzLxijod6JZ9coTYpx/6CnudzgsZVbFmzjU07E1dNUo7U=
+X-Gm-Message-State: AOJu0YwlZajddHBPQDEwnVu4jx3koMYf2NB5FQLs7H5tzoRAV+qX1M6z
+ vq9ZBigCOfJnHkhB2XwGGi1QfTl/3M9j63jf+/+aI3B/twft/cK0eRYo2JiN5Vk=
+X-Google-Smtp-Source: AGHT+IFAzrwFp5dERG2h81V/RI7HAd+FW2b4vo/XQ9++1CoTFl4ScJ3jg6nYyd3k5dZaxayJGLMCbQ==
+X-Received: by 2002:a05:600c:450c:b0:426:6416:aa7a with SMTP id
+ 5b1f17b1804b1-427c2d12992mr37507605e9.34.1721309704958; 
+ Thu, 18 Jul 2024 06:35:04 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.113])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680db0ee46sm14264104f8f.114.2024.07.18.06.34.29
+ 5b1f17b1804b1-427d2b2a11asm14390595e9.40.2024.07.18.06.35.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jul 2024 06:34:30 -0700 (PDT)
+ Thu, 18 Jul 2024 06:35:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -66,18 +66,17 @@ Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Xiaojuan Yang <yangxiaojuan@loongson.cn>,
  Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 13/19] hw/intc/loongson_ipi: Expose
- loongson_ipi_core_read/write helpers
-Date: Thu, 18 Jul 2024 15:33:05 +0200
-Message-ID: <20240718133312.10324-14-philmd@linaro.org>
+Subject: [PATCH v5 19/19] docs: Correct Loongarch -> LoongArch
+Date: Thu, 18 Jul 2024 15:33:11 +0200
+Message-ID: <20240718133312.10324-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240718133312.10324-1-philmd@linaro.org>
 References: <20240718133312.10324-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,76 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
-
-In order to access loongson_ipi_core_read/write helpers
-from loongson_ipi_common.c in the next commit, make their
-prototype declaration public.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-[PMD: Extracted from bigger commit, added commit description]
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/intc/loongson_ipi_common.h |  6 ++++++
- hw/intc/loongson_ipi.c                | 10 ++++------
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ docs/about/emulation.rst | 2 +-
+ hw/rtc/ls7a_rtc.c        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
-index 5447e9f650..a75882f775 100644
---- a/include/hw/intc/loongson_ipi_common.h
-+++ b/include/hw/intc/loongson_ipi_common.h
-@@ -10,6 +10,7 @@
- 
- #include "qom/object.h"
- #include "hw/sysbus.h"
-+#include "exec/memattrs.h"
- 
- #define IPI_MBX_NUM           4
- 
-@@ -44,6 +45,11 @@ struct LoongsonIPICommonClass {
-     CPUState *(*cpu_by_arch_id)(int64_t id);
- };
- 
-+MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
-+                                    unsigned size, MemTxAttrs attrs);
-+MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-+                                     unsigned size, MemTxAttrs attrs);
-+
- /* Mainy used by iocsr read and write */
- #define SMP_IPI_MAILBOX         0x1000ULL
- 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 39bcf0031d..a2db8bb2e2 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -24,9 +24,8 @@
- #endif
- #include "trace.h"
- 
--static MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr,
--                                           uint64_t *data,
--                                           unsigned size, MemTxAttrs attrs)
-+MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
-+                                    unsigned size, MemTxAttrs attrs)
- {
-     IPICore *s = opaque;
-     uint64_t ret = 0;
-@@ -165,9 +164,8 @@ static MemTxResult any_send(LoongsonIPICommonState *ipi,
-     return send_ipi_data(ipi, cs, val, addr, attrs);
- }
- 
--static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
--                                            uint64_t val, unsigned size,
--                                            MemTxAttrs attrs)
-+MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr, uint64_t val,
-+                                     unsigned size, MemTxAttrs attrs)
- {
-     IPICore *s = opaque;
-     LoongsonIPICommonState *ipi = s->ipi;
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index b5ff9c5f69..3bfe8cc14a 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -42,7 +42,7 @@ depending on the guest architecture.
+     - :ref:`Yes<QEMU-PC-System-emulator>`
+     - Yes
+     - The ubiquitous desktop PC CPU architecture, 32 and 64 bit.
+-  * - Loongarch
++  * - LoongArch
+     - Yes
+     - Yes
+     - A MIPS-like 64bit RISC architecture developed in China
+diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
+index 052201c2cd..3226b6105e 100644
+--- a/hw/rtc/ls7a_rtc.c
++++ b/hw/rtc/ls7a_rtc.c
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+ /*
+- * Loongarch LS7A Real Time Clock emulation
++ * LoongArch LS7A Real Time Clock emulation
+  *
+  * Copyright (C) 2021 Loongson Technology Corporation Limited
+  */
 -- 
 2.41.0
 
