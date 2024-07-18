@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE8FC3DA63
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90A0C3DA64
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUGbO-00058Y-Mn; Wed, 17 Jul 2024 22:10:39 -0400
+	id 1sUGbh-0005gF-PE; Wed, 17 Jul 2024 22:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGbL-00050z-Se
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:35 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sUGbe-0005Xc-D2
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:55 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGbJ-0003Kn-AQ
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:35 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1fb3cf78ff3so3045925ad.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:10:32 -0700 (PDT)
+ id 1sUGbc-0003Q1-Pn
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:54 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1fc5239faebso2876975ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721268631; x=1721873431; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721268651; x=1721873451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UMNx1WUxJIrc+DjxZZ+deqYjb0Rm41drdRBC2LVTxI8=;
- b=AqIsgLvJoa2XEy6SwUPp7irUyW3lRbM0VhRZAPCurtqwK7DT6iH6PZxUn5rhb3e8fg
- VAVFBpOgfVIWLa5JqBKYqsYN9isVM3u2zyMTWzfI8e7krGPu4bm6WBwGqF1i+xxS5EZF
- +OCSQTP9cquWdLvBnB3f6ijq6oT8FvcJwzeKqFnM4hqjd46wGbKpKaq2IgIoIt3fYkPG
- /NZenLlHWNLJF6wGl4HyuZjNQ8Eq7B4BrQ7zfrwrVa5gwJ/GPWzj80wz2C5jhPKlvpf1
- A0z/EIiCeKKxMqN1uFQu9Gbb7UL1V3CQZ3rS4HplLJaUhpUzYRBzPgQKUEXF9DeeIBW1
- m9zA==
+ bh=fXFqzJq5stYikqRA/h94ZxAeb2H3VZp1GZE0eqO7ouA=;
+ b=XccpcEFILGchVR2GQtXbhe0Y/HJ++k1wPjyN2CBiyMt6bRkyiVNbiv/XzMSNrz4mcC
+ gemMVmyEIJLEWh18cYRt7pdr8JVV8ykANRVQCVq9ERHtyXWcD4bJHmrFtIFeLE0EcHzk
+ i3CMn/l6WOWpncjSQuKGWCSEqT3iEpeg4unnhpKhStdGIBRBwlc5DqjxYjO3kdLpnl6+
+ bk2w15NLDsVRr9JcL7GxG4AZnCFcIOX+KFqMUa3D29LEyscjGxYchvnahOHpsWwd/YX2
+ q9saqzgUg0vIwwBnlQWdXdpDMOPzWCtuj5gMDrrdqaZYB8A3kOajMxL1F3HiSf3p6RL0
+ y6Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721268631; x=1721873431;
+ d=1e100.net; s=20230601; t=1721268651; x=1721873451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UMNx1WUxJIrc+DjxZZ+deqYjb0Rm41drdRBC2LVTxI8=;
- b=wr3awmDJLQK4HhYvzUtV7GZl2sQFmuRABmkO8ZVaDmEuGZCk1JVVtwfvVnUbQIS0TE
- x8wj9hUUPX2KrXnCfPkloMT7nbR2BkDCi52TgbkH2uqrK+LZATJz44F56Mz9XJUAYcWK
- fT30Rz/wh/UUH2sw/fJ94cboIY0bD0/2hrDmPBy0M//U2InNrVDBGSP0VPR+cIS7sWaU
- keagLSVSVpQ1JUrpuXb+wTUV4y7Qd5Pyisb+fHCCpmF8xEioZcmEzmwWJU6Z6fbfzi3a
- v0ikNoTABXB2vH1Zjj/tI5vYGu5q2gzMw4ChQICPsDoMZrNh8nD6C0x1JTFqOyUu//yn
- paMQ==
-X-Gm-Message-State: AOJu0YxQdM6qg8T/TJwyGfKhqorAWeXyhtc8wgzALF+64PUf3FH2XOOs
- yItCUhvyyqOffHX1LbsQnvM6lFLs6p3xrXYjo9YQ2McQxMwkkwcps+TZwWaW
-X-Google-Smtp-Source: AGHT+IGvnp9hJB7mYYL1IjHiullWHfFs6PQsnZqWqleFFUgkudIE+Mrlsvwmcs1V4zYCs1cB+y469g==
-X-Received: by 2002:a17:903:40c3:b0:1fc:5eac:9873 with SMTP id
- d9443c01a7336-1fc5eac99e4mr6029555ad.30.1721268631022; 
- Wed, 17 Jul 2024 19:10:31 -0700 (PDT)
+ bh=fXFqzJq5stYikqRA/h94ZxAeb2H3VZp1GZE0eqO7ouA=;
+ b=EzSC0yHxTl/vEbYPekJgdIgp9X3rn34OxiViWbclED3EFZxBvICIuZAZiWpyRaX0Z5
+ UrlVUlLLKtrGoVH31WpIHkvsMald6dorxGGGNKWKd2ECBQjR3jF2nYWI0bwWbOfunfm8
+ p7IKohSQHK6keUjXkWFLCfMiUHKZGYGcwbRF7rT09Nvn6ptk/4mZuqnE/cVu5mx/c+Mv
+ rU0TiHQkREM/5ysM6Qul5yXmVol2SG+EjX3ERp8nCXIh1lt0yO8ZQfrFWk3CjpcuBzqg
+ mvTGZlIzC0q9lkJCaZ+QLjHbu2qSZ/JQBB0kzjxz35gMcOAjHK4/lxfAYMFq4q+Wdsg+
+ 6vlA==
+X-Gm-Message-State: AOJu0Yw9822zXJds6Nzs9/aT86YzQu0a/GHEDmz36bxH96qspkMYQsHE
+ RUuxhMKipC7kcOWT3HSymaoL9m92XTVLZkyuA6bCi/mymik+tdQm4qSt7dHi
+X-Google-Smtp-Source: AGHT+IGYwkMAMIJoyCqjHStDY+A5ewrcjwBidCHzCEq+uvyuJc9yE06DvaJEpS8dlgUcEWSzoQdKZA==
+X-Received: by 2002:a17:902:ec8d:b0:1fb:7c7f:6458 with SMTP id
+ d9443c01a7336-1fc4e15a81bmr30839805ad.32.1721268651051; 
+ Wed, 17 Jul 2024 19:10:51 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.10.28
+ d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.10.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 19:10:30 -0700 (PDT)
+ Wed, 17 Jul 2024 19:10:50 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Deepak Gupta <debug@rivosinc.com>
-Subject: [PULL 02/30] disas/riscv: Support zimop disassemble
-Date: Thu, 18 Jul 2024 12:09:44 +1000
-Message-ID: <20240718021012.2057986-3-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 09/30] target/riscv: Add amocas.[b|h] for Zabha
+Date: Thu, 18 Jul 2024 12:09:51 +1000
+Message-ID: <20240718021012.2057986-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
 References: <20240718021012.2057986-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,137 +101,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Deepak Gupta <debug@rivosinc.com>
-Message-ID: <20240709113652.1239-3-zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240709113652.1239-10-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 98 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
+ target/riscv/insn32.decode                  |  2 ++
+ target/riscv/insn_trans/trans_rvzabha.c.inc | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 90d6b26de9..0b82ab2322 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -906,6 +906,46 @@ typedef enum {
-     rv_op_amocas_w = 875,
-     rv_op_amocas_d = 876,
-     rv_op_amocas_q = 877,
-+    rv_mop_r_0     = 878,
-+    rv_mop_r_1     = 879,
-+    rv_mop_r_2     = 880,
-+    rv_mop_r_3     = 881,
-+    rv_mop_r_4     = 882,
-+    rv_mop_r_5     = 883,
-+    rv_mop_r_6     = 884,
-+    rv_mop_r_7     = 885,
-+    rv_mop_r_8     = 886,
-+    rv_mop_r_9     = 887,
-+    rv_mop_r_10    = 888,
-+    rv_mop_r_11    = 889,
-+    rv_mop_r_12    = 890,
-+    rv_mop_r_13    = 891,
-+    rv_mop_r_14    = 892,
-+    rv_mop_r_15    = 893,
-+    rv_mop_r_16    = 894,
-+    rv_mop_r_17    = 895,
-+    rv_mop_r_18    = 896,
-+    rv_mop_r_19    = 897,
-+    rv_mop_r_20    = 898,
-+    rv_mop_r_21    = 899,
-+    rv_mop_r_22    = 900,
-+    rv_mop_r_23    = 901,
-+    rv_mop_r_24    = 902,
-+    rv_mop_r_25    = 903,
-+    rv_mop_r_26    = 904,
-+    rv_mop_r_27    = 905,
-+    rv_mop_r_28    = 906,
-+    rv_mop_r_29    = 907,
-+    rv_mop_r_30    = 908,
-+    rv_mop_r_31    = 909,
-+    rv_mop_rr_0    = 910,
-+    rv_mop_rr_1    = 911,
-+    rv_mop_rr_2    = 912,
-+    rv_mop_rr_3    = 913,
-+    rv_mop_rr_4    = 914,
-+    rv_mop_rr_5    = 915,
-+    rv_mop_rr_6    = 916,
-+    rv_mop_rr_7    = 917,
- } rv_op;
- 
- /* register names */
-@@ -2096,6 +2136,46 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-     { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-     { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-+    { "mop.r.0", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.1", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.2", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.3", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.4", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.5", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.6", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.7", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.8", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.9", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.10", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.11", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.12", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.13", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.14", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.15", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.16", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.17", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.18", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.19", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.20", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.21", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.22", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.23", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.24", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.25", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.26", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.27", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.28", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.29", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.30", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.r.31", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
-+    { "mop.rr.0", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.1", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.2", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.3", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.4", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -3855,6 +3935,24 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             case 1: op = rv_op_csrrw; break;
-             case 2: op = rv_op_csrrs; break;
-             case 3: op = rv_op_csrrc; break;
-+            case 4:
-+                if (dec->cfg->ext_zimop) {
-+                    int imm_mop5, imm_mop3;
-+                    if ((extract32(inst, 22, 10) & 0b1011001111)
-+                        == 0b1000000111) {
-+                        imm_mop5 = deposit32(deposit32(extract32(inst, 20, 2),
-+                                                       2, 2,
-+                                                       extract32(inst, 26, 2)),
-+                                             4, 1, extract32(inst, 30, 1));
-+                        op = rv_mop_r_0 + imm_mop5;
-+                    } else if ((extract32(inst, 25, 7) & 0b1011001)
-+                               == 0b1000001) {
-+                        imm_mop3 = deposit32(extract32(inst, 26, 2),
-+                                             2, 1, extract32(inst, 30, 1));
-+                        op = rv_mop_rr_0 + imm_mop3;
-+                    }
-+                }
-+                break;
-             case 5: op = rv_op_csrrwi; break;
-             case 6: op = rv_op_csrrsi; break;
-             case 7: op = rv_op_csrrci; break;
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 3bad6372f2..c45b8fa1d8 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -1041,3 +1041,5 @@ amomin_h   10000 . . ..... ..... 001 ..... 0101111 @atom_st
+ amomax_h   10100 . . ..... ..... 001 ..... 0101111 @atom_st
+ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
+ amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
++amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
++amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
+diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
+index 9093a1cfc1..ce8edcba62 100644
+--- a/target/riscv/insn_trans/trans_rvzabha.c.inc
++++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
+@@ -129,3 +129,17 @@ static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
+     REQUIRE_ZABHA(ctx);
+     return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESW);
+ }
++
++static bool trans_amocas_b(DisasContext *ctx, arg_amocas_b *a)
++{
++    REQUIRE_ZACAS(ctx);
++    REQUIRE_ZABHA(ctx);
++    return gen_cmpxchg(ctx, a, MO_SB);
++}
++
++static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
++{
++    REQUIRE_ZACAS(ctx);
++    REQUIRE_ZABHA(ctx);
++    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TESW);
++}
 -- 
 2.45.2
 
