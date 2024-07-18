@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C7BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430C4C3DA63
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUTfX-0002fw-P5; Thu, 18 Jul 2024 12:07:47 -0400
+	id 1sUTk7-0007hw-TO; Thu, 18 Jul 2024 12:12:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
- id 1sUTfW-0002dU-Gg
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:07:46 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
- id 1sUTfT-0004ZE-BB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:07:46 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-367b8a60b60so643397f8f.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 09:07:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721318861; x=1721923661;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9nAbe/02zA9mz1wYH+8wmMjMKPwaYzPtSWtf+2dkuv8=;
- b=GoST5e69kPK86pvfcFq/gajwZyQEHjgitjpy9Y3sWQjgow/T2GMGuafwUKcZv4BgUj
- 4c+pMDsbYm37RnOLOHcYZMp/s7lMa+mvjRmtrAnGMNyZCOpvilFChX29D3TElU1czIY4
- I1KutUT4L3JTXKPOHj/kp6i3YUsbRxyivT7N/GAFts4DO2qZFFFB/fEek65a8xm2g8zY
- Z6dZRaseTe0R0bdYoQAUcyVlpM7ya0H6p9IukbrUV3Nui/PpdlLcjOOzZOP7mSqGTrcs
- dZUBwF/ws1q9we3wH0SK+WsXI6y8xKBHXJArYoq6MPlVY70DBU54tawlXGqbYBtWtsKL
- Vg1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721318861; x=1721923661;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9nAbe/02zA9mz1wYH+8wmMjMKPwaYzPtSWtf+2dkuv8=;
- b=epEQBwOphVWdSft+52BEhcE/Djr/JFoLvJ0H2MlQiFEhzKp6kg2b5c6KM54eBW08WZ
- 1b3U/IDcRtB2dcIkhq0LeQSY7zbIEN3o/PC72MqwiJz+caH97nboF6iu/6fTEfHJx8mf
- tiJlnN34x2nNcpGpmxSjEZOMk1sW/3uQ+eIXg88cIZNRp0cDVFfOGsGPuMn9Ye7yIB7a
- NpltMmFdaERbmjmL/eTiJ4mqrsDiNvP3G4UlIxlBzH+Fz6xgGfQA6j+thhqn0MBD/k2B
- l0fAGzlxv081j5oCmqWHjNQlu5eOuVVVzoPz4m/Vz/NfyXTb208Jdf/AGPl5TYdtZ4C3
- BZXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4XyRxczche6Ma0PaZ4vCXEcL/14ZTQb0TXxVZqqp6sMED4RiMINhC1jrgbhvQQ6HH1trRuLTcS1/u3ormGzWUgEBfILw=
-X-Gm-Message-State: AOJu0YxSos95VugFLFzwF0CxlpRI26nfAzjFlf5mFfwP3y2IMd1wJahQ
- PR8I+uyPD18BQXa2hwA16494dN93wA6I8hvKhxLfENGhjRnHjhVpbSNxp7kKI+s=
-X-Google-Smtp-Source: AGHT+IHWkYUPYJO3hf5o4Dtt5vr2cpazEtJff75gHVbv1MeThDBmyW9PmbbEUc4IykzX8StdWpoTqA==
-X-Received: by 2002:a5d:47a2:0:b0:368:6f64:3072 with SMTP id
- ffacd0b85a97d-3686f643190mr368146f8f.7.1721318860939; 
- Thu, 18 Jul 2024 09:07:40 -0700 (PDT)
-Received: from localhost.localdomain
- (amontpellier-656-1-456-62.w92-145.abo.wanadoo.fr. [92.145.124.62])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368727f1d61sm4377f8f.54.2024.07.18.09.07.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 09:07:40 -0700 (PDT)
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
-Subject: [PATCH v2] target: riscv: Add Svvptc extension support
-Date: Thu, 18 Jul 2024 18:07:37 +0200
-Message-Id: <20240718160737.211285-1-alexghiti@rivosinc.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUTk5-0007fx-F6
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:12:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUTk3-0005iX-Ob
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:12:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721319147;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f2Ud0gHl4Mbtr9KId2Tohk+NnW7qrXEhvcFaA2i6Cu0=;
+ b=A64D26Wd6WS9MDNzfcDS2fdwNaKUen6Eg7fmyhfvrMgDY9r6kfI7TW/CO6ZsKOk6om5Otj
+ DqZyxgC++QOoZeq+6WtWkePLAmyxwgqrHWbJPFRUS5IFXCcpnMnouXQcmM8J15Klnfxgoc
+ R1oikRk4VGIzhYQYl+42Y2BjOcA0IG4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-CP9Ul1KeNlWLaHeCeqQBFw-1; Thu,
+ 18 Jul 2024 12:12:24 -0400
+X-MC-Unique: CP9Ul1KeNlWLaHeCeqQBFw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1EA21944B30; Thu, 18 Jul 2024 16:12:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9FB21955F40; Thu, 18 Jul 2024 16:12:19 +0000 (UTC)
+Date: Thu, 18 Jul 2024 17:12:15 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH v2] vnc: increase max display size
+Message-ID: <Zpk-31nhmIAj7P5N@redhat.com>
+References: <20240530111029.1726329-1-kraxel@redhat.com>
+ <CAFEAcA8ShMnj43QwhKZxPvqQ9ei3s6LBGgXHQwRvpKf98dvuBA@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alexghiti@rivosinc.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <CAFEAcA8ShMnj43QwhKZxPvqQ9ei3s6LBGgXHQwRvpKf98dvuBA@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,60 +86,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Svvptc extension describes a uarch that does not cache invalid TLB
-entries: that's the case for qemu so there is nothing particular to
-implement other than the introduction of this extension.
+On Thu, Jul 18, 2024 at 04:58:10PM +0100, Peter Maydell wrote:
+> On Thu, 30 May 2024 at 12:11, Gerd Hoffmann <kraxel@redhat.com> wrote:
+> >
+> > It's 2024.  4k display resolutions are a thing these days.
+> > Raise width and height limits of the qemu vnc server.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1596
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> > ---
+> >  ui/vnc.h | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/ui/vnc.h b/ui/vnc.h
+> > index 4521dc88f792..e5fa2efa3e5d 100644
+> > --- a/ui/vnc.h
+> > +++ b/ui/vnc.h
+> > @@ -81,8 +81,8 @@ typedef void VncSendHextileTile(VncState *vs,
+> >
+> >  /* VNC_MAX_WIDTH must be a multiple of VNC_DIRTY_PIXELS_PER_BIT. */
+> >
+> > -#define VNC_MAX_WIDTH ROUND_UP(2560, VNC_DIRTY_PIXELS_PER_BIT)
+> > -#define VNC_MAX_HEIGHT 2048
+> > +#define VNC_MAX_WIDTH ROUND_UP(5120, VNC_DIRTY_PIXELS_PER_BIT)
+> > +#define VNC_MAX_HEIGHT 2160
+> >
+> >  /* VNC_DIRTY_BITS is the number of bits in the dirty bitmap. */
+> >  #define VNC_DIRTY_BITS (VNC_MAX_WIDTH / VNC_DIRTY_PIXELS_PER_BIT)
+> 
+> Hi -- somebody on IRC pointed out that this simple patch
+> had been code-reviewed by Daniel but never made it into git.
+> Marc-André: you're listed maintainer for ui/ -- do you have
+> a pullreq planned?
+> 
+> Alternatively we could take it via qemu-trivial since it's
+> a pretty tiny patch (cc'd).
 
-Since qemu already exposes Svvptc behaviour, let's enable it by default
-since it allows to drastically reduce the number of sfence.vma emitted
-by S-mode.
+I'm working on a misc pull request, so I'll just include this
+patch
 
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
----
-Changes in v2:
-- Rebase on top of master
-- Enable Svvptc by default
-
- target/riscv/cpu.c     | 2 ++
- target/riscv/cpu_cfg.h | 1 +
- 2 files changed, 3 insertions(+)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c53b0d5b40..19421c8a45 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -192,6 +192,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-     ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
-     ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-+    ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_12_0, ext_svvptc),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-@@ -1499,6 +1500,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
-     MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-+    MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
- 
-     MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
-     MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index fb7eebde52..62612ae348 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -78,6 +78,7 @@ struct RISCVCPUConfig {
-     bool ext_svinval;
-     bool ext_svnapot;
-     bool ext_svpbmt;
-+    bool ext_svvptc;
-     bool ext_zdinx;
-     bool ext_zaamo;
-     bool ext_zacas;
+With regards,
+Daniel
 -- 
-2.39.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
