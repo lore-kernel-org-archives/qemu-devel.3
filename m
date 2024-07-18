@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B50EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA99C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMtn-00036v-SS; Thu, 18 Jul 2024 04:54:03 -0400
+	id 1sUMvm-0002u8-6F; Thu, 18 Jul 2024 04:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUMtm-00030i-8z; Thu, 18 Jul 2024 04:54:02 -0400
+ id 1sUMvk-0002nn-A7; Thu, 18 Jul 2024 04:56:04 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUMtk-0001oU-0g; Thu, 18 Jul 2024 04:54:01 -0400
+ id 1sUMvi-0002Oc-Dq; Thu, 18 Jul 2024 04:56:04 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPmnK2XCDz4x0C;
- Thu, 18 Jul 2024 18:53:57 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPmqg0pwrz4x04;
+ Thu, 18 Jul 2024 18:55:59 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPmnF1hKZz4x04;
- Thu, 18 Jul 2024 18:53:33 +1000 (AEST)
-Message-ID: <e610b6e1-9871-4b02-8596-2f2fb6b2c8b1@kaod.org>
-Date: Thu, 18 Jul 2024 10:53:30 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPmqZ486Kz4w2N;
+ Thu, 18 Jul 2024 18:55:54 +1000 (AEST)
+Message-ID: <25c98896-64ff-4cfc-9364-454b5a2501a5@kaod.org>
+Date: Thu, 18 Jul 2024 10:55:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 14/15] aspeed: fix coding style
+Subject: Re: [PATCH v1 15/15] aspeed: add tmp105 in i2c bus 0 for AST2700
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,10 +41,10 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-15-jamin_lin@aspeedtech.com>
+ <20240718064925.1846074-16-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240718064925.1846074-15-jamin_lin@aspeedtech.com>
+In-Reply-To: <20240718064925.1846074-16-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -71,13 +71,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/18/24 08:49, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl
+> ASPEED SDK add lm75 in i2c bus 0 for AST2700.
+> LM75 is compatible with TMP105 driver.
 > 
-> Test command:
-> ./scripts/checkpatch.pl --no-tree -f hw/arm/aspeed.c
+> Introduce a new i2c init function and
+> add tmp105 device model in i2c bus 0.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
+As a followup, you could modify test_aarch64_ast2700_evb_sdk_v09_02
+to read the sensor value.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -87,61 +90,36 @@ C.
 
 
 > ---
->   hw/arm/aspeed.c | 21 ++++++++++++++-------
->   1 file changed, 14 insertions(+), 7 deletions(-)
+>   hw/arm/aspeed.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 53a4f665d0..f8766ea462 100644
+> index f8766ea462..ed98758708 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -265,7 +265,8 @@ static void write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
->       g_autofree void *storage = NULL;
->       int64_t size;
->   
-> -    /* The block backend size should have already been 'validated' by
-> +    /*
-> +     * The block backend size should have already been 'validated' by
->        * the creation of the m25p80 object.
->        */
->       size = blk_getlength(blk);
-> @@ -463,8 +464,10 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
->       DeviceState *dev;
->       uint8_t *eeprom_buf = g_malloc0(32 * 1024);
->   
-> -    /* The palmetto platform expects a ds3231 RTC but a ds1338 is
-> -     * enough to provide basic RTC features. Alarms will be missing */
-> +    /*
-> +     * The palmetto platform expects a ds3231 RTC but a ds1338 is
-> +     * enough to provide basic RTC features. Alarms will be missing
-> +     */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
->   
->       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
-> @@ -555,8 +558,10 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
->   {
->       AspeedSoCState *soc = bmc->soc;
->   
-> -    /* The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
-> -     * good enough */
-> +    /*
-> +     * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
-> +     * good enough
-> +     */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+> @@ -1604,6 +1604,15 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
 >   }
 >   
-> @@ -664,8 +669,10 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
->                        0x4a);
->   
-> -    /* The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
-> -     * good enough */
-> +    /*
-> +     * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
-> +     * good enough
-> +     */
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
->   
->       smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
+>   #ifdef TARGET_AARCH64
+> +static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
+> +{
+> +    AspeedSoCState *soc = bmc->soc;
+> +
+> +    /* LM75 is compatible with TMP105 driver */
+> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
+> +                            TYPE_TMP105, 0x4d);
+> +}
+> +
+>   static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -1618,6 +1627,7 @@ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+>       amc->num_cs    = 2;
+>       amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+>       amc->uart_default = ASPEED_DEV_UART12;
+> +    amc->i2c_init  = ast2700_evb_i2c_init;
+>       mc->default_ram_size = 1 * GiB;
+>       aspeed_machine_class_init_cpus_defaults(mc);
+>   }
 
 
