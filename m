@@ -4,51 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF877C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9BFC3DA62
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 07:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKyd-0006jg-3w; Thu, 18 Jul 2024 02:50:55 -0400
+	id 1sULEI-0000ZK-RI; Thu, 18 Jul 2024 03:07:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyU-0006AY-MI; Thu, 18 Jul 2024 02:50:48 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyP-0004L5-2s; Thu, 18 Jul 2024 02:50:42 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
- 2024 14:50:17 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 18 Jul 2024 14:50:17 +0800
-To: Alistair Francis <alistair@alistair23.me>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:STM32F205" <qemu-arm@nongnu.org>, "open
- list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 08/15] hw/i2c/aspeed: introduce a new dma_dram_offset
- attribute in AspeedI2Cbus
-Date: Thu, 18 Jul 2024 14:49:18 +0800
-Message-ID: <20240718064925.1846074-9-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sULEF-0000M0-Bh
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 03:07:03 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sULED-0002iU-0m
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 03:07:03 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70af22a9c19so309409b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 00:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1721286415; x=1721891215; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dPEqvxtfgGgFrES4Ao0UX9lIcl0GQEr6PDMc2/65FIc=;
+ b=TjMTYaKeTixBL0VVyGsHb+xuHPgowmKBo5r1P2xfC+3JmDrY1tjQWM69koJoE7v5/G
+ 92mUHY1J5Njuiz5rOy2Zs2pqBu9JNxHHQJ7ZjYqpV6M6NtxjZyUr4/8DV/HPPfvDUUyJ
+ xVgQ6jmMDPVLtaCSWmoYzwgef5iD3cSF/dOIwuShIzcDZFVDZ0Hho32Ddca1HW/Ezqb0
+ WKgWCPqNz7CyfsLpdYvRmptxZ/wVZBHDtQQczVTcxpU9jL5Rz62zJW35rgyEZbDYmNfB
+ lT/DWkeop3nOYfiFdX/YxBu6ZtXkmaXWSvklATDfyTZx+smy3OuYX23R1/n3b8ID16Bb
+ 3Y4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721286415; x=1721891215;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dPEqvxtfgGgFrES4Ao0UX9lIcl0GQEr6PDMc2/65FIc=;
+ b=vKr0YJgx/N5AoT/MBBe838wZuSDgYQ/43CK9PLflVHD9cu0nB3j1scrQ/V8q9hl5wP
+ VVinFK+g91fmmvIv16BCmyWwZ5wwXUY5coCJc0OZo6JFxemBGB9JOCnuEAFxTFIQvUbY
+ /0VuEHayFFtiELbNYtYFIJhuOe4gk28t4zRz0S1WlGK2VFOwe8jOO75AQlJvuBqGSLgw
+ 0eslbDZHu4ZaEjhPrYmQOtnrtJ+uPbB1zyI/eCIDDkQODFSeuDCXnEodd2ZAqT50kNTp
+ Cn2cC+jTjPdm4KqZ0PX0Qqy4gBqVUK0Cv1N8xhBCJicoVy7xTMXOpiNu+9bC17r9L7uv
+ HjWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU61Fl0CM/tC4Rx+o2kImIIplWq0FyJlzGVbSwILUKWYITrz0iuA6ZjBDWDuOxszZmZ+YOj5hwVXjENwloKnAjqhd682IM=
+X-Gm-Message-State: AOJu0YzAZ0yNl7Y7aFXyvttCypcMlPVCZMXPF1Ofqk9PN+Gh2VvrW7vN
+ FYn+lK5Z3mACPmaxfJmX2rCieVY7FltSoiW8Rfjw6aaz9CHcPnIJKXmDxTMinoI=
+X-Google-Smtp-Source: AGHT+IELf1FZcm6fD9RiH00IlQEJx2gwsc1IRv3LXbEG7wAowoxtJ1gZ2qGeuMOTuwaVZL+fPLNXsQ==
+X-Received: by 2002:a05:6a00:22cc:b0:706:9030:895c with SMTP id
+ d2e1a72fcca58-70ce4f47ff6mr5104487b3a.3.1721286414333; 
+ Thu, 18 Jul 2024 00:06:54 -0700 (PDT)
+Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
+ [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b7ec7d90bsm9305971b3a.138.2024.07.18.00.06.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jul 2024 00:06:53 -0700 (PDT)
+Message-ID: <cc4f842c-e331-41a5-b9b5-8598c719ec2f@sifive.com>
+Date: Thu, 18 Jul 2024 15:06:49 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/13] hw/riscv: add riscv-iommu-pci reference device
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ frank.chang@sifive.com, tjeznach@rivosinc.com
+References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
+ <20240708173501.426225-6-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Jason Chien <jason.chien@sifive.com>
+In-Reply-To: <20240708173501.426225-6-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=jason.chien@sifive.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,210 +97,224 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "Current DMA Operating Address Status(0x50)" register of
-I2C new mode has been removed in AST2700.
-This register is used for debugging and it is a read only register.
+Hi Daniel,
 
-To support AST2700 DMA mode, introduce a new
-dma_dram_offset class attribute in AspeedI2Cbus to save the
-current DMA operating address.
-
-ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-And the base address of dram is "0x4 00000000" which
-is 64bits address.
-
-Set the dma_dram_offset data type to uint64_t for
-64 bits dram address DMA support.
-
-Both "DMA Mode Buffer Address Register(I2CD24 old mode)" and
-"DMA Operating Address Status (I2CC50 new mode)" are used for showing the
-low part dram offset bits [31:0], so change to read/write both register bits [31:0] in
-bus register read/write functions.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/i2c/aspeed_i2c.c         | 50 +++++++++++++++++++++++--------------
- include/hw/i2c/aspeed_i2c.h |  9 +------
- 2 files changed, 32 insertions(+), 27 deletions(-)
-
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index abcb1d5330..c0d3ac3867 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -114,7 +114,10 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
-         if (!aic->has_dma) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
-             value = -1;
-+            break;
-         }
-+
-+        value = extract64(bus->dma_dram_offset, 0, 32);
-         break;
-     case A_I2CD_DMA_LEN:
-         if (!aic->has_dma) {
-@@ -150,9 +153,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CM_DMA_TX_ADDR:
-     case A_I2CM_DMA_RX_ADDR:
-     case A_I2CM_DMA_LEN_STS:
--    case A_I2CC_DMA_ADDR:
-     case A_I2CC_DMA_LEN:
--
-     case A_I2CS_DEV_ADDR:
-     case A_I2CS_DMA_RX_ADDR:
-     case A_I2CS_DMA_LEN:
-@@ -161,6 +162,9 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CS_DMA_LEN_STS:
-         /* Value is already set, don't do anything. */
-         break;
-+    case A_I2CC_DMA_ADDR:
-+        value = extract64(bus->dma_dram_offset, 0, 32);
-+        break;
-     case A_I2CS_INTR_STS:
-         break;
-     case A_I2CM_CMD:
-@@ -210,18 +214,18 @@ static int aspeed_i2c_dma_read(AspeedI2CBus *bus, uint8_t *data)
- {
-     MemTxResult result;
-     AspeedI2CState *s = bus->controller;
--    uint32_t reg_dma_addr = aspeed_i2c_bus_dma_addr_offset(bus);
-     uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
- 
--    result = address_space_read(&s->dram_as, bus->regs[reg_dma_addr],
-+    result = address_space_read(&s->dram_as, bus->dma_dram_offset,
-                                 MEMTXATTRS_UNSPECIFIED, data, 1);
-     if (result != MEMTX_OK) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: DRAM read failed @%08x\n",
--                      __func__, bus->regs[reg_dma_addr]);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: DRAM read failed @%" PRIx64 "\n",
-+                      __func__, bus->dma_dram_offset);
-         return -1;
-     }
- 
--    bus->regs[reg_dma_addr]++;
-+    bus->dma_dram_offset++;
-     bus->regs[reg_dma_len]--;
-     return 0;
- }
-@@ -291,7 +295,6 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
-     uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
-     uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
-     uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
--    uint32_t reg_dma_addr = aspeed_i2c_bus_dma_addr_offset(bus);
-     int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
-                                                 RX_SIZE) + 1;
- 
-@@ -323,14 +326,17 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
-             data = i2c_recv(bus->bus);
-             trace_aspeed_i2c_bus_recv("DMA", bus->regs[reg_dma_len],
-                                       bus->regs[reg_dma_len], data);
--            result = address_space_write(&s->dram_as, bus->regs[reg_dma_addr],
-+
-+            result = address_space_write(&s->dram_as, bus->dma_dram_offset,
-                                          MEMTXATTRS_UNSPECIFIED, &data, 1);
-             if (result != MEMTX_OK) {
--                qemu_log_mask(LOG_GUEST_ERROR, "%s: DRAM write failed @%08x\n",
--                              __func__, bus->regs[reg_dma_addr]);
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: DRAM write failed @%" PRIx64 "\n",
-+                              __func__, bus->dma_dram_offset);
-                 return;
-             }
--            bus->regs[reg_dma_addr]++;
-+
-+            bus->dma_dram_offset++;
-             bus->regs[reg_dma_len]--;
-             /* In new mode, keep track of how many bytes we RXed */
-             if (aspeed_i2c_is_new_mode(bus->controller)) {
-@@ -636,14 +642,18 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CM_DMA_TX_ADDR:
-         bus->regs[R_I2CM_DMA_TX_ADDR] = FIELD_EX32(value, I2CM_DMA_TX_ADDR,
-                                                    ADDR);
--        bus->regs[R_I2CC_DMA_ADDR] = FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR);
-+        bus->dma_dram_offset =
-+            deposit64(bus->dma_dram_offset, 0, 32,
-+                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
-         bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
-                                                      TX_BUF_LEN) + 1;
-         break;
-     case A_I2CM_DMA_RX_ADDR:
-         bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
-                                                    ADDR);
--        bus->regs[R_I2CC_DMA_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR);
-+        bus->dma_dram_offset =
-+            deposit64(bus->dma_dram_offset, 0, 32,
-+                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
-         bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
-                                                      RX_BUF_LEN) + 1;
-         break;
-@@ -811,7 +821,8 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
-             break;
-         }
- 
--        bus->regs[R_I2CD_DMA_ADDR] = value & 0x3ffffffc;
-+        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 0, 32,
-+                                         value & 0x3ffffffc);
-         break;
- 
-     case A_I2CD_DMA_LEN:
-@@ -1188,8 +1199,9 @@ static int aspeed_i2c_bus_new_slave_event(AspeedI2CBus *bus,
-             return -1;
-         }
-         ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN, 0);
--        bus->regs[R_I2CC_DMA_ADDR] =
--            ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR);
-+        bus->dma_dram_offset =
-+            deposit64(bus->dma_dram_offset, 0, 32,
-+                      ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR));
-         bus->regs[R_I2CC_DMA_LEN] =
-             ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN, RX_BUF_LEN) + 1;
-         i2c_ack(bus->bus);
-@@ -1255,10 +1267,10 @@ static int aspeed_i2c_bus_slave_event(I2CSlave *slave, enum i2c_event event)
- static void aspeed_i2c_bus_new_slave_send_async(AspeedI2CBus *bus, uint8_t data)
- {
-     assert(address_space_write(&bus->controller->dram_as,
--                               bus->regs[R_I2CC_DMA_ADDR],
-+                               bus->dma_dram_offset,
-                                MEMTXATTRS_UNSPECIFIED, &data, 1) == MEMTX_OK);
- 
--    bus->regs[R_I2CC_DMA_ADDR]++;
-+    bus->dma_dram_offset++;
-     bus->regs[R_I2CC_DMA_LEN]--;
-     ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN,
-                      ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN) + 1);
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index b42c4dc584..bdaea3207d 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -248,6 +248,7 @@ struct AspeedI2CBus {
- 
-     uint32_t regs[ASPEED_I2C_NEW_NUM_REG];
-     uint8_t pool[ASPEED_I2C_BUS_POOL_SIZE];
-+    uint64_t dma_dram_offset;
- };
- 
- struct AspeedI2CState {
-@@ -369,14 +370,6 @@ static inline uint32_t aspeed_i2c_bus_dma_len_offset(AspeedI2CBus *bus)
-     return R_I2CD_DMA_LEN;
- }
- 
--static inline uint32_t aspeed_i2c_bus_dma_addr_offset(AspeedI2CBus *bus)
--{
--    if (aspeed_i2c_is_new_mode(bus->controller)) {
--        return R_I2CC_DMA_ADDR;
--    }
--    return R_I2CD_DMA_ADDR;
--}
--
- static inline bool aspeed_i2c_bus_is_master(AspeedI2CBus *bus)
- {
-     return SHARED_ARRAY_FIELD_EX32(bus->regs, aspeed_i2c_bus_ctrl_offset(bus),
--- 
-2.34.1
-
+On 2024/7/9 上午 01:34, Daniel Henrique Barboza wrote:
+> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>
+> The RISC-V IOMMU can be modelled as a PCIe device following the
+> guidelines of the RISC-V IOMMU spec, chapter 7.1, "Integrating an IOMMU
+> as a PCIe device".
+>
+> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> ---
+>   hw/riscv/meson.build       |   2 +-
+>   hw/riscv/riscv-iommu-pci.c | 178 +++++++++++++++++++++++++++++++++++++
+>   2 files changed, 179 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/riscv/riscv-iommu-pci.c
+>
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index cbc99c6e8e..adbef8a9b2 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -10,6 +10,6 @@ riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+>   riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
+>   riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
+>   riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+> -riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c'))
+> +riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c', 'riscv-iommu-pci.c'))
+>   
+>   hw_arch += {'riscv': riscv_ss}
+> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+> new file mode 100644
+> index 0000000000..7b82ce0645
+> --- /dev/null
+> +++ b/hw/riscv/riscv-iommu-pci.c
+> @@ -0,0 +1,178 @@
+> +/*
+> + * QEMU emulation of an RISC-V IOMMU
+> + *
+> + * Copyright (C) 2022-2023 Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/pci/msi.h"
+> +#include "hw/pci/msix.h"
+> +#include "hw/pci/pci_bus.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "migration/vmstate.h"
+> +#include "qapi/error.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/host-utils.h"
+> +#include "qom/object.h"
+> +
+> +#include "cpu_bits.h"
+> +#include "riscv-iommu.h"
+> +#include "riscv-iommu-bits.h"
+> +
+> +/* RISC-V IOMMU PCI Device Emulation */
+> +#define RISCV_PCI_CLASS_SYSTEM_IOMMU     0x0806
+> +
+> +typedef struct RISCVIOMMUStatePci {
+> +    PCIDevice        pci;     /* Parent PCIe device state */
+> +    uint16_t         vendor_id;
+> +    uint16_t         device_id;
+> +    uint8_t          revision;
+> +    MemoryRegion     bar0;    /* PCI BAR (including MSI-x config) */
+> +    RISCVIOMMUState  iommu;   /* common IOMMU state */
+> +} RISCVIOMMUStatePci;
+> +
+> +/* interrupt delivery callback */
+> +static void riscv_iommu_pci_notify(RISCVIOMMUState *iommu, unsigned vector)
+> +{
+> +    RISCVIOMMUStatePci *s = container_of(iommu, RISCVIOMMUStatePci, iommu);
+> +
+> +    if (msix_enabled(&(s->pci))) {
+> +        msix_notify(&(s->pci), vector);
+> +    }
+> +}
+> +
+> +static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
+> +{
+> +    RISCVIOMMUStatePci *s = DO_UPCAST(RISCVIOMMUStatePci, pci, dev);
+> +    RISCVIOMMUState *iommu = &s->iommu;
+> +    uint8_t *pci_conf = dev->config;
+> +    Error *err = NULL;
+> +
+> +    pci_set_word(pci_conf + PCI_VENDOR_ID, s->vendor_id);
+> +    pci_set_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID, s->vendor_id);
+> +    pci_set_word(pci_conf + PCI_DEVICE_ID, s->device_id);
+> +    pci_set_word(pci_conf + PCI_SUBSYSTEM_ID, s->device_id);
+> +    pci_set_byte(pci_conf + PCI_REVISION_ID, s->revision);
+> +
+> +    /* Set device id for trace / debug */
+> +    DEVICE(iommu)->id = g_strdup_printf("%02x:%02x.%01x",
+> +        pci_dev_bus_num(dev), PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
+> +    qdev_realize(DEVICE(iommu), NULL, errp);
+> +
+> +    memory_region_init(&s->bar0, OBJECT(s), "riscv-iommu-bar0",
+> +        QEMU_ALIGN_UP(memory_region_size(&iommu->regs_mr), TARGET_PAGE_SIZE));
+> +    memory_region_add_subregion(&s->bar0, 0, &iommu->regs_mr);
+> +
+> +    pcie_endpoint_cap_init(dev, 0);
+> +
+> +    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+> +                     PCI_BASE_ADDRESS_MEM_TYPE_64, &s->bar0);
+> +
+> +    int ret = msix_init(dev, RISCV_IOMMU_INTR_COUNT,
+> +                        &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG,
+> +                        &s->bar0, 0, RISCV_IOMMU_REG_MSI_CONFIG + 256, 0, &err);
+> +
+> +    if (ret == -ENOTSUP) {
+> +        /*
+> +         * MSI-x is not supported by the platform.
+> +         * Driver should use timer/polling based notification handlers.
+> +         */
+> +        warn_report_err(err);
+> +    } else if (ret < 0) {
+> +        error_propagate(errp, err);
+> +        return;
+> +    } else {
+> +        /* mark all allocated MSIx vectors as used. */
+> +        msix_vector_use(dev, RISCV_IOMMU_INTR_CQ);
+> +        msix_vector_use(dev, RISCV_IOMMU_INTR_FQ);
+> +        msix_vector_use(dev, RISCV_IOMMU_INTR_PM);
+> +        msix_vector_use(dev, RISCV_IOMMU_INTR_PQ);
+In ICVEC register, each interrupt cause has a 4-bit field, which can be 
+configured with values within 0 to 15. We only allow vector values being 
+0 to 3 here, but software may want to use other vector number.
+> +        iommu->notify = riscv_iommu_pci_notify;
+> +    }
+> +
+> +    PCIBus *bus = pci_device_root_bus(dev);
+> +    if (!bus) {
+> +        error_setg(errp, "can't find PCIe root port for %02x:%02x.%x",
+> +            pci_bus_num(pci_get_bus(dev)), PCI_SLOT(dev->devfn),
+> +            PCI_FUNC(dev->devfn));
+> +        return;
+> +    }
+> +
+> +    riscv_iommu_pci_setup_iommu(iommu, bus, errp);
+> +}
+> +
+> +static void riscv_iommu_pci_exit(PCIDevice *pci_dev)
+> +{
+> +    pci_setup_iommu(pci_device_root_bus(pci_dev), NULL, NULL);
+> +}
+> +
+> +static const VMStateDescription riscv_iommu_vmstate = {
+> +    .name = "riscv-iommu",
+> +    .unmigratable = 1
+> +};
+> +
+> +static void riscv_iommu_pci_init(Object *obj)
+> +{
+> +    RISCVIOMMUStatePci *s = RISCV_IOMMU_PCI(obj);
+> +    RISCVIOMMUState *iommu = &s->iommu;
+> +
+> +    object_initialize_child(obj, "iommu", iommu, TYPE_RISCV_IOMMU);
+> +    qdev_alias_all_properties(DEVICE(iommu), obj);
+> +}
+> +
+> +static Property riscv_iommu_pci_properties[] = {
+> +    DEFINE_PROP_UINT16("vendor-id", RISCVIOMMUStatePci, vendor_id,
+> +                       PCI_VENDOR_ID_REDHAT),
+> +    DEFINE_PROP_UINT16("device-id", RISCVIOMMUStatePci, device_id,
+> +                       PCI_DEVICE_ID_REDHAT_RISCV_IOMMU),
+> +    DEFINE_PROP_UINT8("revision", RISCVIOMMUStatePci, revision, 0x01),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+> +static void riscv_iommu_pci_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+> +
+> +    k->realize = riscv_iommu_pci_realize;
+> +    k->exit = riscv_iommu_pci_exit;
+> +    k->class_id = RISCV_PCI_CLASS_SYSTEM_IOMMU;
+> +    dc->desc = "RISCV-IOMMU DMA Remapping device";
+> +    dc->vmsd = &riscv_iommu_vmstate;
+> +    dc->hotpluggable = false;
+> +    dc->user_creatable = true;
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +    device_class_set_props(dc, riscv_iommu_pci_properties);
+> +}
+> +
+> +static const TypeInfo riscv_iommu_pci = {
+> +    .name = TYPE_RISCV_IOMMU_PCI,
+> +    .parent = TYPE_PCI_DEVICE,
+> +    .class_init = riscv_iommu_pci_class_init,
+> +    .instance_init = riscv_iommu_pci_init,
+> +    .instance_size = sizeof(RISCVIOMMUStatePci),
+> +    .interfaces = (InterfaceInfo[]) {
+> +        { INTERFACE_PCIE_DEVICE },
+> +        { },
+> +    },
+> +};
+> +
+> +static void riscv_iommu_register_pci_types(void)
+> +{
+> +    type_register_static(&riscv_iommu_pci);
+> +}
+> +
+> +type_init(riscv_iommu_register_pci_types);
 
