@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09840C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25E9C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUPvR-0002Ny-Ut; Thu, 18 Jul 2024 08:07:58 -0400
+	id 1sUPwe-0005Bb-5R; Thu, 18 Jul 2024 08:09:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUPvO-0002Mm-AB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:07:54 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1sUPwX-0004vJ-Hj
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:09:06 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUPvK-000092-7Q
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:07:53 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5a156557026so832211a12.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 05:07:47 -0700 (PDT)
+ id 1sUPwU-0000F2-Mg
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:09:05 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-368380828d6so489674f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 05:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721304466; x=1721909266; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721304523; x=1721909323; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QS+i/qWgg92JCDQnNoCb860uCH44CrJEZk7eK6ps8uI=;
- b=rwogVxkJY0v0ba1a76fLHXz+6XcuhKbCnOA43s4cbAapRUb4gsqIRWoFdFzcHvURrq
- AeR0mR9U1tGaV6+DzWpLWAm/+1CEaac+XFwCK8jg/QQXkRyBRtOT8zlS/rgQ7o5qmpZn
- s7CkaA6uOAfysWchWCj8BP+YUtwzfqcOpfBJfphAw3+BhqMv6iaKRt4k2AZ0432mzdvo
- 0RS0whKmYxqFaJuwiKTPY2CicYtnni+ht/b1XvtyCqMNEUMNOQbNkfPN9J/7ExE0KFhi
- hwl8NNlKp1KMPcgkt1j+Ty6gkgXpkGZ2af8W4JvFrnype/Vcl+1oDR1J5MyKzwXBM1zH
- SkmQ==
+ bh=GLztguu0/1A4o5v5HJNeEefOunzrp4ZbpPmNFDAgcPg=;
+ b=nWsQzqkhZIrqgzx6v/f3tpUREwcihXC/VXt4IE6otDDF5e3leMAQEsxt2ufdkFD+z+
+ SNrPmNe5nRnyCN061nGQE7y9XMX/wyPCHZFUePPG3PpaXQ/AEi43ejOTkABso8zgwrPG
+ 1jSSdVFU9votgGmw7H5Iydc3BOiBzs7o+Gb7rBwe3I0o12TCwCQqa+jnEiYGRbUHUhsX
+ E3kZNJ9tfFu0AIhc6E+Iyrc+VamecmU0wCr4qhSsVabf7zZRQpojQOpGqKQQLzn/LdQZ
+ HPS6yXkbOeK5HvaaYHocLw4I5zvOLPgVMdwYtP+8PzAXCtN3DbHUHOJaTiK4djGY86ef
+ vVQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721304466; x=1721909266;
+ d=1e100.net; s=20230601; t=1721304523; x=1721909323;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QS+i/qWgg92JCDQnNoCb860uCH44CrJEZk7eK6ps8uI=;
- b=ngr2j/qoja31dVWNPpenG8ZEohXhtb1WgH81/ZGHiKvD6Q5yqoSBqd5Xv+4xzI1dZn
- 2kO99Ot313NrUrXge9V7a0wvAnIC+J+v0C/mR6uQDAzPqxzF0cJl6/WfAyrR41PhuXeF
- bFsMQjWOhqdC9oIiXHTTgECoetqi7Aj+zCHgkolYBUkImTNPmMETxeFYSBRb3U55rJcq
- a0XoMzYSkVwBl/VfIXbVy062wfxNLS974AIdi/SmY0nMbfZAf21LIeVsmKvbSCBG3bt+
- BqzcvfETffp4aTDDDzLsiJoKcusZKWJ2McEI5CDU8+5WnUNuqULctvLG1OFrk2Jv52wH
- X8uQ==
+ bh=GLztguu0/1A4o5v5HJNeEefOunzrp4ZbpPmNFDAgcPg=;
+ b=rX1mqD1qAjhS487Xe2vGVEJ6xCQ81jU+CFh7naC/NvPr3dM64SGTHYRKOvHCGg7A8p
+ N5XRL5P/LolOEm7l94ulv89cZ7/2+YmYNGpWhHN4hXiZ1e6ezapDEUUs8YE+9z102EUe
+ HTI9fv83VGMWzosYc5I120t4RbSSoTrR/FIpn3ZBZmKbW6tQE8AeM1dLWwlf7raB/R5u
+ oE1xvz4YMTDpGz+iS4AUuNaZIlZEcDwTigqHVyS/+yg4YEHRhQrDmSUK/Bx5FJFyFNnt
+ HHHH1iddja4soTRxKU8X+Ox4BzHU1NMoMw5FyT+bpsr895FBVxQKFEhuaLTK9NYX1Ae+
+ mr1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuL1lvmHezpBDVMv6BtoU8QKYmiDmZfMipC3BqdFL4SF6AAxEghq+DGGi5DAYpCnGQAEPU3XmKBvwOwmPmJXmraQsgtDQ=
-X-Gm-Message-State: AOJu0Yy7cCeFBB3YpzADE6YkypteceRo7Q+XWnPLUFr7QlBiTyO96HkW
- LAxCG8lu9vGxPEYYoz0HAsL4OYzvQ0Vqu0QmLzDy+nlpaJZXjFxEEMP60B0f4coa8c0k47752wB
- KIgh8YTKbxqAzJWqtSSn3tOH6URG/KVUvqfFDoA==
-X-Google-Smtp-Source: AGHT+IHFGt0xHYBCKTNuSvjJPRvjtTalXNDkcWMmH3r0U3DrU1aS/tKuOudUHiM1VD3JpXP+axxgH3tmtyttyMWxLkQ=
-X-Received: by 2002:a05:6402:430a:b0:57c:a77d:a61e with SMTP id
- 4fb4d7f45d1cf-5a05b22a336mr4519482a12.7.1721304466515; Thu, 18 Jul 2024
- 05:07:46 -0700 (PDT)
+ AJvYcCWQy/YuSDuXrtL0vBVzO3Pjq6tr2IX6+rUuZXmM0HYsQnPqaxJw7S7Wj5tNVXFouHKAujRNobMEvgGziEXjaOwi3N3TMvU=
+X-Gm-Message-State: AOJu0YyPq2AQIP5IS5YEBnN9C7EKSb85kdOJkfuNgcwfas4UPh25YIUY
+ 0aprRlQTTh8bc78g7Mu6nuqp2K2fENVzvlYbkg+4jpCZ7oVB5CAzdflTGnRkJS17AhmR7KWTMp+
+ y6t8qhxPiVnuuGLaeU3r/Bk8H2EJVlV1jOvmg+g==
+X-Google-Smtp-Source: AGHT+IFZi/ClEd1999CMZYBhdXDHi2vXXiykQQ5Z65X5NS9p1qChrm7Xj9mXD3K9UBh7qPuKeG1NYWHBprbDW8HJ3DU=
+X-Received: by 2002:a5d:54d2:0:b0:367:8847:5bf4 with SMTP id
+ ffacd0b85a97d-368315f3197mr3207156f8f.10.1721304523412; Thu, 18 Jul 2024
+ 05:08:43 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
- <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
-In-Reply-To: <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
+ <20240716-pmu-v3-3-8c7c1858a227@daynix.com>
+In-Reply-To: <20240716-pmu-v3-3-8c7c1858a227@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Jul 2024 13:07:35 +0100
-Message-ID: <CAFEAcA8tFtdpCQobU9ytzxvf3_y3DiA1TwNq8fWgFUtCUYT4hQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] target/arm/kvm: Fix PMU feature bit early
+Date: Thu, 18 Jul 2024 13:08:32 +0100
+Message-ID: <CAFEAcA-5J-ra-gHTcC54eOP9qUFCtXzKhePhkRhjj=Q7HyFqVA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/5] target/arm: Always add pmu property for Armv8
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,63 +94,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 16 Jul 2024 at 13:50, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> kvm_arm_get_host_cpu_features() used to add the PMU feature
-> unconditionally, and kvm_arch_init_vcpu() removed it when it is actually
-> not available. Conditionally add the PMU feature in
-> kvm_arm_get_host_cpu_features() to save code.
+> kvm-steal-time and sve properties are added for KVM even if the
+> corresponding features are not available. Always add pmu property for
+> Armv8. Note that the property is added only for Armv8 as QEMU emulates
+> PMUv3, which is part of Armv8.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  target/arm/kvm.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
+>  target/arm/cpu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 70f79eda33cd..849e2e21b304 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -280,6 +280,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->      if (kvm_arm_pmu_supported()) {
->          init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->          pmu_supported = true;
-> +        features |= 1ULL << ARM_FEATURE_PMU;
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 14d4eca12740..64038e26b2a9 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1744,6 +1744,8 @@ void arm_cpu_post_init(Object *obj)
 >      }
 >
->      if (!kvm_arm_create_scratch_host_vcpu(cpus_to_try, fdarray, &init)) {
-> @@ -448,7 +449,6 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->      features |= 1ULL << ARM_FEATURE_V8;
->      features |= 1ULL << ARM_FEATURE_NEON;
->      features |= 1ULL << ARM_FEATURE_AARCH64;
-> -    features |= 1ULL << ARM_FEATURE_PMU;
->      features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
+>      if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
+> +        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+> +
+>          object_property_add_uint64_ptr(obj, "rvbar",
+>                                         &cpu->rvbar_prop,
+>                                         OBJ_PROP_FLAG_READWRITE);
+> @@ -1770,7 +1772,6 @@ void arm_cpu_post_init(Object *obj)
 >
->      ahcf->features = features;
-> @@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
->          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+>      if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+>          cpu->has_pmu = true;
+> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
 >      }
-> -    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
-> -        cpu->has_pmu = false;
-> -    }
->      if (cpu->has_pmu) {
->          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
-> -    } else {
-> -        env->features &= ~(1ULL << ARM_FEATURE_PMU);
->      }
->      if (cpu_isar_feature(aa64_sve, cpu)) {
->          assert(kvm_arm_sve_supported());
 
-Not every KVM CPU is necessarily the "host" CPU type.
-The "cortex-a57" and "cortex-a53" CPU types will work if you
-happen to be on a host of that CPU type, and they don't go
-through kvm_arm_get_host_cpu_features().
-
-(Also, at some point in the future we're probably going to
-want to support "tell the guest it has CPU type X via the
-ID registers even when the host is CPU type Y". It seems
-plausible that in that case also we'll end up wanting this
-there too. But I don't put much weight on this because there's
-probably a bunch of things we'll need to fix up if and when
-we eventually try to implement this.)
+This regresses the ability to disable the PMU emulation on
+CPUs like "cortex-a8", which are not v8 but still set
+ARM_FEATURE_PMU.
 
 thanks
 -- PMM
