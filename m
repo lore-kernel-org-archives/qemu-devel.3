@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9DB9C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09840C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUPpZ-0005YV-3n; Thu, 18 Jul 2024 08:01:53 -0400
+	id 1sUPvR-0002Ny-Ut; Thu, 18 Jul 2024 08:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUPot-0005Mi-JD
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:01:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUPop-0006cp-70
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:01:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721304063;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qkF3l/xAfqQZQqXJOdzLcM9wVOjQIOvygZURVhGWAx4=;
- b=Tyl2azZ8a1XYl6ai6yHuikDZwZ1H040bPFguyDHp6xdj7RINQwx0dAUlVSODxd6RtQqYgb
- t/vt0AXxiTdExexGAVPsmReMLHmsYX/8tTIeWwH5x4VqesEv8c1GEK5kTg/vC+b8J1wXsb
- M+/xWk1DdJBuFcDjxlXMpzoFBEQ18uw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-aiVnpjjXOhiSgOifhLgImQ-1; Thu,
- 18 Jul 2024 08:01:00 -0400
-X-MC-Unique: aiVnpjjXOhiSgOifhLgImQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 773AE1956064; Thu, 18 Jul 2024 12:00:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FB8519560AA; Thu, 18 Jul 2024 12:00:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5E91221E668E; Thu, 18 Jul 2024 14:00:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  pbonzini@redhat.com,
- eblake@redhat.com,  hreitz@redhat.com,  kwolf@redhat.com
-Subject: Re: [PATCH v9 4/7] qapi: add blockdev-replace command
-In-Reply-To: <20240626115350.405778-5-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 26 Jun 2024 14:53:47 +0300")
-References: <20240626115350.405778-1-vsementsov@yandex-team.ru>
- <20240626115350.405778-5-vsementsov@yandex-team.ru>
-Date: Thu, 18 Jul 2024 14:00:54 +0200
-Message-ID: <871q3qc3k9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUPvO-0002Mm-AB
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:07:54 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUPvK-000092-7Q
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:07:53 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5a156557026so832211a12.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 05:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721304466; x=1721909266; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QS+i/qWgg92JCDQnNoCb860uCH44CrJEZk7eK6ps8uI=;
+ b=rwogVxkJY0v0ba1a76fLHXz+6XcuhKbCnOA43s4cbAapRUb4gsqIRWoFdFzcHvURrq
+ AeR0mR9U1tGaV6+DzWpLWAm/+1CEaac+XFwCK8jg/QQXkRyBRtOT8zlS/rgQ7o5qmpZn
+ s7CkaA6uOAfysWchWCj8BP+YUtwzfqcOpfBJfphAw3+BhqMv6iaKRt4k2AZ0432mzdvo
+ 0RS0whKmYxqFaJuwiKTPY2CicYtnni+ht/b1XvtyCqMNEUMNOQbNkfPN9J/7ExE0KFhi
+ hwl8NNlKp1KMPcgkt1j+Ty6gkgXpkGZ2af8W4JvFrnype/Vcl+1oDR1J5MyKzwXBM1zH
+ SkmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721304466; x=1721909266;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QS+i/qWgg92JCDQnNoCb860uCH44CrJEZk7eK6ps8uI=;
+ b=ngr2j/qoja31dVWNPpenG8ZEohXhtb1WgH81/ZGHiKvD6Q5yqoSBqd5Xv+4xzI1dZn
+ 2kO99Ot313NrUrXge9V7a0wvAnIC+J+v0C/mR6uQDAzPqxzF0cJl6/WfAyrR41PhuXeF
+ bFsMQjWOhqdC9oIiXHTTgECoetqi7Aj+zCHgkolYBUkImTNPmMETxeFYSBRb3U55rJcq
+ a0XoMzYSkVwBl/VfIXbVy062wfxNLS974AIdi/SmY0nMbfZAf21LIeVsmKvbSCBG3bt+
+ BqzcvfETffp4aTDDDzLsiJoKcusZKWJ2McEI5CDU8+5WnUNuqULctvLG1OFrk2Jv52wH
+ X8uQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuL1lvmHezpBDVMv6BtoU8QKYmiDmZfMipC3BqdFL4SF6AAxEghq+DGGi5DAYpCnGQAEPU3XmKBvwOwmPmJXmraQsgtDQ=
+X-Gm-Message-State: AOJu0Yy7cCeFBB3YpzADE6YkypteceRo7Q+XWnPLUFr7QlBiTyO96HkW
+ LAxCG8lu9vGxPEYYoz0HAsL4OYzvQ0Vqu0QmLzDy+nlpaJZXjFxEEMP60B0f4coa8c0k47752wB
+ KIgh8YTKbxqAzJWqtSSn3tOH6URG/KVUvqfFDoA==
+X-Google-Smtp-Source: AGHT+IHFGt0xHYBCKTNuSvjJPRvjtTalXNDkcWMmH3r0U3DrU1aS/tKuOudUHiM1VD3JpXP+axxgH3tmtyttyMWxLkQ=
+X-Received: by 2002:a05:6402:430a:b0:57c:a77d:a61e with SMTP id
+ 4fb4d7f45d1cf-5a05b22a336mr4519482a12.7.1721304466515; Thu, 18 Jul 2024
+ 05:07:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
+ <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
+In-Reply-To: <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Jul 2024 13:07:35 +0100
+Message-ID: <CAFEAcA8tFtdpCQobU9ytzxvf3_y3DiA1TwNq8fWgFUtCUYT4hQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] target/arm/kvm: Fix PMU feature bit early
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,293 +92,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> Add a command that can replace bs in following BdrvChild structures:
+On Tue, 16 Jul 2024 at 13:50, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
->  - qdev blk root child
->  - block-export blk root child
->  - any child of BlockDriverState selected by child-name
+> kvm_arm_get_host_cpu_features() used to add the PMU feature
+> unconditionally, and kvm_arch_init_vcpu() removed it when it is actually
+> not available. Conditionally add the PMU feature in
+> kvm_arm_get_host_cpu_features() to save code.
 >
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  blockdev.c             | 56 +++++++++++++++++++++++++++
->  qapi/block-core.json   | 88 ++++++++++++++++++++++++++++++++++++++++++
->  stubs/blk-by-qdev-id.c | 13 +++++++
->  stubs/meson.build      |  1 +
->  4 files changed, 158 insertions(+)
->  create mode 100644 stubs/blk-by-qdev-id.c
+>  target/arm/kvm.c | 7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
 >
-> diff --git a/blockdev.c b/blockdev.c
-> index ba7e90b06e..2190467022 100644
-> --- a/blockdev.c
-> +++ b/blockdev.c
-> @@ -3559,6 +3559,62 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
->      bdrv_try_change_aio_context(bs, new_context, NULL, errp);
->  }
->  
-> +void qmp_blockdev_replace(BlockdevReplace *repl, Error **errp)
-> +{
-> +    BdrvChild *child = NULL;
-> +    BlockDriverState *new_child_bs;
-> +
-> +    if (repl->parent_type == BLOCK_PARENT_TYPE_DRIVER) {
-> +        BlockDriverState *parent_bs;
-> +
-> +        parent_bs = bdrv_find_node(repl->u.driver.node_name);
-> +        if (!parent_bs) {
-> +            error_setg(errp, "Block driver node with node-name '%s' not "
-> +                       "found", repl->u.driver.node_name);
-> +            return;
-> +        }
-> +
-> +        child = bdrv_find_child(parent_bs, repl->u.driver.child);
-> +        if (!child) {
-> +            error_setg(errp, "Block driver node '%s' doesn't have child "
-> +                       "named '%s'", repl->u.driver.node_name,
-> +                       repl->u.driver.child);
-> +            return;
-> +        }
-> +    } else {
-> +        /* Other types are similar, they work through blk */
-> +        BlockBackend *blk;
-> +        bool is_qdev = repl->parent_type == BLOCK_PARENT_TYPE_QDEV;
-> +        const char *id =
-> +            is_qdev ? repl->u.qdev.qdev_id : repl->u.export.export_id;
-> +
-> +        assert(is_qdev || repl->parent_type == BLOCK_PARENT_TYPE_EXPORT);
-> +
-> +        blk = is_qdev ? blk_by_qdev_id(id, errp) : blk_by_export_id(id, errp);
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 70f79eda33cd..849e2e21b304 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -280,6 +280,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      if (kvm_arm_pmu_supported()) {
+>          init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+>          pmu_supported = true;
+> +        features |= 1ULL << ARM_FEATURE_PMU;
+>      }
+>
+>      if (!kvm_arm_create_scratch_host_vcpu(cpus_to_try, fdarray, &init)) {
+> @@ -448,7 +449,6 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      features |= 1ULL << ARM_FEATURE_V8;
+>      features |= 1ULL << ARM_FEATURE_NEON;
+>      features |= 1ULL << ARM_FEATURE_AARCH64;
+> -    features |= 1ULL << ARM_FEATURE_PMU;
+>      features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
+>
+>      ahcf->features = features;
+> @@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+>      }
+> -    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
+> -        cpu->has_pmu = false;
+> -    }
+>      if (cpu->has_pmu) {
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+> -    } else {
+> -        env->features &= ~(1ULL << ARM_FEATURE_PMU);
+>      }
+>      if (cpu_isar_feature(aa64_sve, cpu)) {
+>          assert(kvm_arm_sve_supported());
 
-blk_by_export_id() finds export @exp, and returns the associated block
-backend exp->blk.  Fine.
+Not every KVM CPU is necessarily the "host" CPU type.
+The "cortex-a57" and "cortex-a53" CPU types will work if you
+happen to be on a host of that CPU type, and they don't go
+through kvm_arm_get_host_cpu_features().
 
-blk_by_qdev_id() finds the device, and then searches @block_backends for
-a blk with blk->dev == blk.  If a device has more than one block
-backend, you get the one first in @block_backends.  I figure that's the
-one created first.
+(Also, at some point in the future we're probably going to
+want to support "tell the guest it has CPU type X via the
+ID registers even when the host is CPU type Y". It seems
+plausible that in that case also we'll end up wanting this
+there too. But I don't put much weight on this because there's
+probably a bunch of things we'll need to fix up if and when
+we eventually try to implement this.)
 
-Interface issue: when a device has multiple block backends, only one of
-them can be replaced, and which one is kind of random.
-
-Do such devices exist?
-
-If no, could they exist?
-
-If yes, what should we do about it now?
-
-> +        if (!blk) {
-> +            return;
-> +        }
-> +
-> +        child = blk_root(blk);
-> +        if (!child) {
-> +            error_setg(errp, "%s '%s' is empty, nothing to replace",
-> +                       is_qdev ? "Device" : "Export", id);
-> +            return;
-> +        }
-> +    }
-> +
-> +    assert(child);
-> +    assert(child->bs);
-> +
-> +    new_child_bs = bdrv_find_node(repl->new_child);
-> +    if (!new_child_bs) {
-> +        error_setg(errp, "Node '%s' not found", repl->new_child);
-> +        return;
-> +    }
-> +
-> +    bdrv_replace_child_bs(child, new_child_bs, errp);
-> +}
-> +
->  QemuOptsList qemu_common_drive_opts = {
->      .name = "drive",
->      .head = QTAILQ_HEAD_INITIALIZER(qemu_common_drive_opts.head),
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index df5e07debd..0a6f08a6e0 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -6148,3 +6148,91 @@
->  ##
->  { 'struct': 'DummyBlockCoreForceArrays',
->    'data': { 'unused-block-graph-info': ['BlockGraphInfo'] } }
-> +
-> +##
-> +# @BlockParentType:
-> +#
-> +# @qdev: block device, such as created by device_add, and denoted by
-> +#     qdev-id
-> +#
-> +# @driver: block driver node, such as created by blockdev-add, and
-> +#     denoted by node-name
-
-node-name and child?
-
-> +#
-> +# @export: block export, such created by block-export-add, and
-> +#     denoted by export-id
-> +#
-> +# Since 9.1
-> +##
-
-I'm kind of unhappy with this doc comment.  I feel makes sense only in
-the context of its use.  Let me try to avoid that:
-
-   # @driver: the parent is a block node, the child is one of its
-   #     children.
-   #
-   # @export: the parent is a block export, the child is its block
-   #     backend.
-   #
-   # @qdev: the parent is a device, the child is its block backend.
-
-> +{ 'enum': 'BlockParentType',
-> +  'data': ['qdev', 'driver', 'export'] }
-
-If you take my comment, change the order here as well.
-
-> +
-> +##
-> +# @BdrvChildRefQdev:
-> +#
-> +# @qdev-id: the device's ID or QOM path
-> +#
-> +# Since 9.1
-> +##
-> +{ 'struct': 'BdrvChildRefQdev',
-> +  'data': { 'qdev-id': 'str' } }
-> +
-> +##
-> +# @BdrvChildRefExport:
-> +#
-> +# @export-id: block export identifier
-
-block-export.json calls this "block export id" in some places, and
-"block export identifier" in others.  *Sigh*
-
-Nothing to see here, move on!
-
-> +#
-> +# Since 9.1
-> +##
-> +{ 'struct': 'BdrvChildRefExport',
-> +  'data': { 'export-id': 'str' } }
-> +
-> +##
-> +# @BdrvChildRefDriver:
-> +#
-> +# @node-name: the node name of the parent block node
-> +#
-> +# @child: name of the child to be replaced, like "file" or "backing"
-> +#
-> +# Since 9.1
-> +##
-> +{ 'struct': 'BdrvChildRefDriver',
-> +  'data': { 'node-name': 'str', 'child': 'str' } }
-> +
-> +##
-> +# @BlockdevReplace:
-> +#
-> +# @parent-type: type of the parent, which child is to be replaced
-
-Suggest to scratch ", which child ..."
-
-> +#
-> +# @new-child: new child for replacement
-
-Suggest "the new child".
-
-> +#
-> +# Since 9.1
-> +##
-> +{ 'union': 'BlockdevReplace',
-> +  'base': {
-> +      'parent-type': 'BlockParentType',
-> +      'new-child': 'str'
-> +  },
-> +  'discriminator': 'parent-type',
-> +  'data': {
-> +      'qdev': 'BdrvChildRefQdev',
-> +      'export': 'BdrvChildRefExport',
-> +      'driver': 'BdrvChildRefDriver'
-> +  } }
-> +
-> +##
-> +# @blockdev-replace:
-> +#
-> +# Replace a block-node associated with device (selected by
-> +# @qdev-id) or with block-export (selected by @export-id) or
-> +# any child of block-node (selected by @node-name and @child)
-> +# with @new-child block-node.
-
-s/block-node/block node/ for consistency with existing usage.
-
-Likewise, s/block-export/block export/.
-
-> +#
-> +# Features:
-> +#
-> +# @unstable: This command is experimental.
-> +#
-> +# Since 9.1
-> +##
-> +{ 'command': 'blockdev-replace', 'boxed': true,
-> +  'features': [ 'unstable' ],
-> +  'data': 'BlockdevReplace' }
-> diff --git a/stubs/blk-by-qdev-id.c b/stubs/blk-by-qdev-id.c
-> new file mode 100644
-> index 0000000000..5ec9f755ee
-> --- /dev/null
-> +++ b/stubs/blk-by-qdev-id.c
-> @@ -0,0 +1,13 @@
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "sysemu/block-backend.h"
-> +
-> +BlockBackend *blk_by_qdev_id(const char *id, Error **errp)
-> +{
-> +    /*
-> +     * We expect this when blockdev-change is called with parent-type=qdev,
-> +     * but qdev-monitor is not linked in. So no blk_ API is not available.
-> +     */
-
-The last sentence is confusing.
-
-> +    error_setg(errp, "Parameter 'parent-type' does not accept value 'qdev'");
-
-I suggested this message.  I must have suffered from tunnel vision then.
-
-The error message is good when the caller is qmp_blockdev_replace().
-Then parameter @parent-type exists, and parameter value "qdev" cannot
-work for any value of parameter "qdev-id" (which is @id here).
-
-There are several more callers.  They don't use the stub now (or else
-they wouldn't link before this patch).  But future callers may well use
-it, and then the error message will likely be misleading.
-
-v8 had
-
-       error_setg(errp, "blk '%s' not found", id);
-
-instead.  No good, because @id is not a "blk" (whatever that may be),
-it's a qdev ID.  You offered "devices are not supported".  Less than
-ideal, since it doesn't point to the argument that's causing the error,
-but I figure it's the best we can do without refactoring.  Maybe
-"can't select block backend by device ID".  Up to you.
-
-> +    return NULL;
-> +}
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index 772a3e817d..068998c1a5 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -15,6 +15,7 @@ if have_block
->    stub_ss.add(files('bdrv-next-monitor-owned.c'))
->    stub_ss.add(files('blk-commit-all.c'))
->    stub_ss.add(files('blk-exp-close-all.c'))
-> +  stub_ss.add(files('blk-by-qdev-id.c'))
->    stub_ss.add(files('blockdev-close-all-bdrv-states.c'))
->    stub_ss.add(files('change-state-handler.c'))
->    stub_ss.add(files('get-vm-name.c'))
-
+thanks
+-- PMM
 
