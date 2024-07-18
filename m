@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8561EC3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 05:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996D0C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 05:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUJgV-0004iv-4e; Thu, 18 Jul 2024 01:28:07 -0400
+	id 1sUJh2-00055h-MC; Thu, 18 Jul 2024 01:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1sUJgR-0004hl-UM; Thu, 18 Jul 2024 01:28:03 -0400
+ id 1sUJh1-00054T-0q; Thu, 18 Jul 2024 01:28:39 -0400
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1sUJgP-0004dQ-4r; Thu, 18 Jul 2024 01:28:03 -0400
+ id 1sUJgy-0004kr-8u; Thu, 18 Jul 2024 01:28:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721280481; x=1752816481;
+ t=1721280516; x=1752816516;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=fKvaxuJ//hWg3zHTHWMN5cYxRmmbHxClJ8soYQl/J7g=;
- b=J6n8UiFbj9X7FLe6WXO5ayhlg4rCY7Q4bXDPut0QGxCJn+CyF8rc0aUN
- WABwvzwvmmy6vjSJKlHx8LQpbgSnQvZ9EhANia+i5J8Tc5WpCvaubeiS4
- cjkBhtAy450n4cdlcc7SXyYPEN1uXwJLTdrUfe337MdN4upxGk1iI9/lb
- Jc146DCwNCg+ovJ/j/Uh1piCbXlKrKzjCrAKTm+o6BswBbg14FZG6PG2y
- GkDM8Pza3hJR82Ol85vV9uBBhzQCI8OA2mirx1aaWI4mW7rxHlmWbd6YS
- xdRM2kmb+PFbut7uzHL6S6jlEsEXWPGyLDOmf4ho1BtcG95rKnNpnWj3O A==;
-X-CSE-ConnectionGUID: ey/07C/mSuqUXoKEcF6VqQ==
-X-CSE-MsgGUID: zjQSddZ7QViFsAPVAwoC8w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="18671262"
-X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="18671262"
+ bh=/n30pXRSaPg6/RNVS5KqTJU65apInj9L15dc5ZlOJWI=;
+ b=VycG8yNGVGSDzAPDmTF6MsK5Zqec6pIqe6m8mVgC6qum6ja6iRy2dTaz
+ c+tJlV6MaWRkcsdn2TwEwkxWp2ukp4fAa5ss0XPz1D+9lEM5tJtfzHSrp
+ kAguwTbwfK+CplkxCAih6q4FYajCvsXCURNpMVfWEWQO+CN9YRDY8v+1I
+ oZWBBje6DsoRwOPEKgKsmPfdvkV/CciAIW60MGApz05QrH/8x+HHOO191
+ IHQusCp4GZSplH0nZesIJybcQOLRT5lwK9iXk5yRF71v8De3uWkWz/iLM
+ 8rUTLMyKUB30f+oDGQKAoegNae8Iy0gEEgl6WtIjsdA0TLZ6z5Ouq5gZu g==;
+X-CSE-ConnectionGUID: rrdU6jkwRd6Pm6v7oNFdag==
+X-CSE-MsgGUID: llQ+u3j7T16/EGBDXqTOWw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="18671314"
+X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="18671314"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2024 22:27:56 -0700
-X-CSE-ConnectionGUID: kb13SDT1TdexH1fKmETPBw==
-X-CSE-MsgGUID: zSJ6MeJ0S+mpvolVUsRJVw==
+ 17 Jul 2024 22:28:33 -0700
+X-CSE-ConnectionGUID: 1d43GwztQwePSZ+OmH1dMg==
+X-CSE-MsgGUID: 3F6yikizQVyqX8j1PyIE4g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="55777816"
+X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="55777879"
 Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.225.1])
  ([10.124.225.1])
  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2024 22:27:51 -0700
-Message-ID: <738c5474-a568-4a48-8c8e-b0f11b17a187@linux.intel.com>
-Date: Thu, 18 Jul 2024 13:27:48 +0800
+ 17 Jul 2024 22:28:29 -0700
+Message-ID: <f18ab76c-abbe-4599-9631-603853bcfa0b@linux.intel.com>
+Date: Thu, 18 Jul 2024 13:28:25 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/5] accel/kvm: Support KVM PMU filter
+Subject: Re: [RFC 3/5] i386/kvm: Support event with select&umask format in KVM
+ PMU filter
 To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>,
@@ -64,9 +65,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
  Yuan Yao <yuan.yao@intel.com>, Xiong Zhang <xiong.y.zhang@intel.com>,
  Mingwei Zhang <mizhang@google.com>, Jim Mattson <jmattson@google.com>
 References: <20240710045117.3164577-1-zhao1.liu@intel.com>
+ <20240710045117.3164577-4-zhao1.liu@intel.com>
 Content-Language: en-US
 From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20240710045117.3164577-1-zhao1.liu@intel.com>
+In-Reply-To: <20240710045117.3164577-4-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: none client-ip=198.175.65.19;
@@ -94,158 +96,245 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 7/10/2024 12:51 PM, Zhao Liu wrote:
-> Hi QEMU maintainers, arm and PMU folks,
+> The select&umask is the common way for x86 to identify the PMU event,
+> so support this way as the "x86-default" format in kvm-pmu-filter
+> object.
 >
-> I picked up Shaoqing's previous work [1] on the KVM PMU filter for arm,
-> and now is trying to support this feature for x86 with a JSON-compatible
-> API.
->
-> While arm and x86 use different KVM ioctls to configure the PMU filter,
-> considering they all have similar inputs (PMU event + action), it is
-> still possible to abstract a generic, cross-architecture kvm-pmu-filter
-> object and provide users with a sufficiently generic or near-consistent
-> QAPI interface.
->
-> That's what I did in this series, a new kvm-pmu-filter object, with the
-> API like:
->
-> -object '{"qom-type":"kvm-pmu-filter","id":"f0","events":[{"action":"allow","format":"raw","code":"0xc4"}]}'
-
-I'm not sure why the action is defined to event scope instead of the entire
-filter scope. At least for x86 arch, the action is defined to filter scope
-in KVM. Do other archs support event scope's action? If the action can be
-defined to filter scope, the code could be simplified much.
-
-
->
-> For i386, this object is inserted into kvm accelerator and is extended
-> to support fixed-counter and more formats ("x86-default" and
-> "x86-masked-entry"):
->
-> -accel kvm,pmu-filter=f0 \
-> -object pmu='{"qom-type":"kvm-pmu-filter","id":"f0","x86-fixed-counter":{"action":"allow","bitmap":"0x0"},"events":[{"action":"allow","format":"x86-masked-entry","select":"0xc4","mask":"0xff","match":"0","exclude":true},{"action":"allow","format":"x86-masked-entry","select":"0xc5","mask":"0xff","match":"0","exclude":true}]}'
->
-> This object can still be added as the property to the arch CPU if it is
-> desired as a per CPU feature (as Shaoqin did for arm before).
->
-> Welcome your feedback and comments!
->
->
-> Introduction
-> ============
->
->
-> Formats supported in kvm-pmu-filter
-> -----------------------------------
->
-> This series supports 3 formats:
->
-> * raw format (general format).
->
->   This format indicates the code that has been encoded to be able to
->   index the PMU events, and which can be delivered directly to the KVM
->   ioctl. For arm, this means the event code, and for i386, this means
->   the raw event with the layout like:
->
->       select high bit | umask | select low bits
->
-> * x86-default format (i386 specific)
->
->   x86 commonly uses select&umask to identify PMU events, and this format
->   is used to support the select&umask. Then QEMU will encode select and
->   umask into a raw format code.
->
-> * x86-masked-entry (i386 specific)
->
->   This is a special format that x86's KVM_SET_PMU_EVENT_FILTER supports.
->
->
-> Hexadecimal value string
-> ------------------------
->
-> In practice, the values associated with PMU events (code for arm, select&
-> umask for x86) are often expressed in hexadecimal. Further, from linux
-> perf related information (tools/perf/pmu-events/arch/*/*/*.json), x86/
-> arm64/riscv/nds32/powerpc all prefer the hexadecimal numbers and only
-> s390 uses decimal value.
->
-> Therefore, it is necessary to support hexadecimal in order to honor PMU
-> conventions.
->
-> However, unfortunately, standard JSON (RFC 8259) does not support
-> hexadecimal numbers. So I can only consider using the numeric string in
-> the QAPI and then parsing it to a number.
->
-> To achieve this, I defined two versions of PMU-related structures in
-> kvm.json:
->  * a native version that accepts numeric values, which is used for
->    QEMU's internal code processing,
->
->  * and a variant version that accepts numeric string, which is used to
->    receive user input.
->
-> kvm-pmu-filter object will take care of converting the string version
-> of the event/counter information into the numeric version.
->
-> The related implementation can be found in patch 1.
->
->
-> CPU property v.s. KVM property
-> ------------------------------
->
-> In Shaoqin's previous implementation [1], KVM PMU filter is made as a
-> arm CPU property. This is because arm uses a per CPU ioctl
-> (KVM_SET_DEVICE_ATTR) to configure KVM PMU filter.
->
-> However, for x86, the dependent ioctl (KVM_SET_PMU_EVENT_FILTER) is per
-> VM. In the meantime, considering that for hybrid architecture, maybe in
-> the future there will be a new per vCPU ioctl, or there will be
-> practices to support filter fixed counter by configuring CPUIDs.
->
-> Based on the above thoughts, for x86, it is not appropriate to make the
-> current per-VM ioctl-based PMU filter a CPU property. Instead, I make it
-> a kvm property and configure it via "-accel kvm,pmu-filter=obj_id".
->
-> So in summary, it is feasible to use the KVM PMU filter as either a CPU
-> or a KVM property, depending on whether it is used as a CPU feature or a
-> VM feature.
->
-> The kvm-pmu-filter object, as an abstraction, is general enough to
-> support filter configurations for different scopes (per-CPU or per-VM).
-
-Per my understanding, the cpus sharing same uarch should share same perf
-events filter. Not sure if there is real requirement to support different
-filters on the CPUs with same arch.
-
-
->
->
-> [1]: https://lore.kernel.org/qemu-devel/20240409024940.180107-1-shahuang@redhat.com/
->
-> Thanks and Best Regards,
-> Zhao
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
-> Zhao Liu (5):
->   qapi/qom: Introduce kvm-pmu-filter object
->   i386/kvm: Support initial KVM PMU filter
->   i386/kvm: Support event with select&umask format in KVM PMU filter
->   i386/kvm: Support event with masked entry format in KVM PMU filter
->   i386/kvm: Support fixed counter in KVM PMU filter
+>  accel/kvm/kvm-pmu.c      | 62 ++++++++++++++++++++++++++++++++++++++++
+>  include/sysemu/kvm-pmu.h | 13 +++++++++
+>  qapi/kvm.json            | 46 +++++++++++++++++++++++++++--
+>  target/i386/kvm/kvm.c    |  5 ++++
+>  4 files changed, 123 insertions(+), 3 deletions(-)
 >
->  MAINTAINERS                |   1 +
->  accel/kvm/kvm-pmu.c        | 367 +++++++++++++++++++++++++++++++++++++
->  accel/kvm/meson.build      |   1 +
->  include/sysemu/kvm-pmu.h   |  43 +++++
->  include/sysemu/kvm_int.h   |   2 +
->  qapi/kvm.json              | 255 ++++++++++++++++++++++++++
->  qapi/meson.build           |   1 +
->  qapi/qapi-schema.json      |   1 +
->  qapi/qom.json              |   3 +
->  target/i386/kvm/kvm.c      | 211 +++++++++++++++++++++
->  target/i386/kvm/kvm_i386.h |   1 +
->  11 files changed, 886 insertions(+)
->  create mode 100644 accel/kvm/kvm-pmu.c
->  create mode 100644 include/sysemu/kvm-pmu.h
->  create mode 100644 qapi/kvm.json
->
+> diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
+> index 483d1bdf4807..51d3fba5a72a 100644
+> --- a/accel/kvm/kvm-pmu.c
+> +++ b/accel/kvm/kvm-pmu.c
+> @@ -17,6 +17,8 @@
+>  #include "qom/object_interfaces.h"
+>  #include "sysemu/kvm-pmu.h"
+>  
+> +#define UINT12_MAX (4095)
+> +
+>  static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
+>                                       void *opaque, Error **errp)
+>  {
+> @@ -38,6 +40,12 @@ static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
+>              str_event->u.raw.code = g_strdup_printf("0x%lx",
+>                                                      event->u.raw.code);
+>              break;
+> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
+> +            str_event->u.x86_default.select =
+> +                g_strdup_printf("0x%x", event->u.x86_default.select);
+> +            str_event->u.x86_default.umask =
+> +                g_strdup_printf("0x%x", event->u.x86_default.umask);
+> +            break;
+>          default:
+>              g_assert_not_reached();
+>          }
+> @@ -83,6 +91,60 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
+>                  goto fail;
+>              }
+>              break;
+> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT: {
+> +            uint64_t select, umask;
+> +
+> +            ret = qemu_strtou64(str_event->u.x86_default.select, NULL,
+> +                                0, &select);
+> +            if (ret < 0) {
+> +                error_setg(errp,
+> +                           "Invalid %s PMU event (select: %s): %s. "
+> +                           "The select must be a "
+> +                           "12-bit unsigned number string.",
+> +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> +                           str_event->u.x86_default.select,
+> +                           strerror(-ret));
+> +                g_free(event);
+> +                goto fail;
+> +            }
+> +            if (select > UINT12_MAX) {
+> +                error_setg(errp,
+> +                           "Invalid %s PMU event (select: %s): "
+> +                           "Numerical result out of range. "
+> +                           "The select must be a "
+> +                           "12-bit unsigned number string.",
+> +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> +                           str_event->u.x86_default.select);
+> +                g_free(event);
+> +                goto fail;
+> +            }
+> +            event->u.x86_default.select = select;
+> +
+> +            ret = qemu_strtou64(str_event->u.x86_default.umask, NULL,
+> +                                0, &umask);
+> +            if (ret < 0) {
+> +                error_setg(errp,
+> +                           "Invalid %s PMU event (umask: %s): %s. "
+> +                           "The umask must be a uint8 string.",
+> +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> +                           str_event->u.x86_default.umask,
+> +                           strerror(-ret));
+> +                g_free(event);
+> +                goto fail;
+> +            }
+> +            if (umask > UINT8_MAX) {
+
+umask is extended to 16 bits from Perfmon v6+. Please notice we need to
+upgrade this to 16 bits in the future. More details can be found here.
+[PATCH V3 00/13] Support Lunar Lake and Arrow Lake core PMU - kan.liang
+(kernel.org)
+<https://lore.kernel.org/all/20240626143545.480761-1-kan.liang@linux.intel.com/>
+
+
+> +                error_setg(errp,
+> +                           "Invalid %s PMU event (umask: %s): "
+> +                           "Numerical result out of range. "
+> +                           "The umask must be a uint8 string.",
+> +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> +                           str_event->u.x86_default.umask);
+> +                g_free(event);
+> +                goto fail;
+> +            }
+> +            event->u.x86_default.umask = umask;
+> +            break;
+> +        }
+>          default:
+>              g_assert_not_reached();
+>          }
+> diff --git a/include/sysemu/kvm-pmu.h b/include/sysemu/kvm-pmu.h
+> index 4707759761f1..707f33d604fd 100644
+> --- a/include/sysemu/kvm-pmu.h
+> +++ b/include/sysemu/kvm-pmu.h
+> @@ -26,4 +26,17 @@ struct KVMPMUFilter {
+>      KVMPMUFilterEventList *events;
+>  };
+>  
+> +/*
+> + * Stolen from Linux kernel (RAW_EVENT at tools/testing/selftests/kvm/include/
+> + * x86_64/pmu.h).
+> + *
+> + * Encode an eventsel+umask pair into event-select MSR format.  Note, this is
+> + * technically AMD's format, as Intel's format only supports 8 bits for the
+> + * event selector, i.e. doesn't use bits 24:16 for the selector.  But, OR-ing
+> + * in '0' is a nop and won't clobber the CMASK.
+> + */
+> +#define X86_PMU_RAW_EVENT(eventsel, umask) (((eventsel & 0xf00UL) << 24) | \
+> +                                            ((eventsel) & 0xff) | \
+> +                                            ((umask) & 0xff) << 8)
+> +
+>  #endif /* KVM_PMU_H */
+> diff --git a/qapi/kvm.json b/qapi/kvm.json
+> index 0619da83c123..0d759884c229 100644
+> --- a/qapi/kvm.json
+> +++ b/qapi/kvm.json
+> @@ -27,11 +27,13 @@
+>  #
+>  # @raw: the encoded event code that KVM can directly consume.
+>  #
+> +# @x86-default: standard x86 encoding format with select and umask.
+> +#
+>  # Since 9.1
+>  ##
+>  { 'enum': 'KVMPMUEventEncodeFmt',
+>    'prefix': 'KVM_PMU_EVENT_FMT',
+> -  'data': ['raw'] }
+> +  'data': ['raw', 'x86-default'] }
+>  
+>  ##
+>  # @KVMPMURawEvent:
+> @@ -46,6 +48,25 @@
+>  { 'struct': 'KVMPMURawEvent',
+>    'data': { 'code': 'uint64' } }
+>  
+> +##
+> +# @KVMPMUX86DefalutEvent:
+> +#
+> +# x86 PMU event encoding with select and umask.
+> +# raw_event = ((select & 0xf00UL) << 24) | \
+> +#              (select) & 0xff) | \
+> +#              ((umask) & 0xff) << 8)
+> +#
+> +# @select: x86 PMU event select field, which is a 12-bit unsigned
+> +#     number.
+> +#
+> +# @umask: x86 PMU event umask field.
+> +#
+> +# Since 9.1
+> +##
+> +{ 'struct': 'KVMPMUX86DefalutEvent',
+> +  'data': { 'select': 'uint16',
+> +            'umask': 'uint8' } }
+> +
+>  ##
+>  # @KVMPMUFilterEvent:
+>  #
+> @@ -61,7 +82,8 @@
+>    'base': { 'action': 'KVMPMUFilterAction',
+>              'format': 'KVMPMUEventEncodeFmt' },
+>    'discriminator': 'format',
+> -  'data': { 'raw': 'KVMPMURawEvent' } }
+> +  'data': { 'raw': 'KVMPMURawEvent',
+> +            'x86-default': 'KVMPMUX86DefalutEvent' } }
+>  
+>  ##
+>  # @KVMPMUFilterProperty:
+> @@ -89,6 +111,23 @@
+>  { 'struct': 'KVMPMURawEventVariant',
+>    'data': { 'code': 'str' } }
+>  
+> +##
+> +# @KVMPMUX86DefalutEventVariant:
+> +#
+> +# The variant of KVMPMUX86DefalutEvent with the string, rather than
+> +# the numeric value.
+> +#
+> +# @select: x86 PMU event select field.  This field is a 12-bit
+> +#     unsigned number string.
+> +#
+> +# @umask: x86 PMU event umask field. This field is a uint8 string.
+> +#
+> +# Since 9.1
+> +##
+> +{ 'struct': 'KVMPMUX86DefalutEventVariant',
+> +  'data': { 'select': 'str',
+> +            'umask': 'str' } }
+> +
+>  ##
+>  # @KVMPMUFilterEventVariant:
+>  #
+> @@ -104,7 +143,8 @@
+>    'base': { 'action': 'KVMPMUFilterAction',
+>              'format': 'KVMPMUEventEncodeFmt' },
+>    'discriminator': 'format',
+> -  'data': { 'raw': 'KVMPMURawEventVariant' } }
+> +  'data': { 'raw': 'KVMPMURawEventVariant',
+> +            'x86-default': 'KVMPMUX86DefalutEventVariant' } }
+>  
+>  ##
+>  # @KVMPMUFilterPropertyVariant:
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index e9bf79782316..391531c036a6 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -5393,6 +5393,10 @@ kvm_config_pmu_event(KVMPMUFilter *filter,
+>          case KVM_PMU_EVENT_FMT_RAW:
+>              code = event->u.raw.code;
+>              break;
+> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
+> +            code = X86_PMU_RAW_EVENT(event->u.x86_default.select,
+> +                                     event->u.x86_default.umask);
+> +            break;
+>          default:
+>              g_assert_not_reached();
+>          }
+> @@ -6073,6 +6077,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
+>  
+>          switch (event->format) {
+>          case KVM_PMU_EVENT_FMT_RAW:
+> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
+>              break;
+>          default:
+>              error_setg(errp,
 
