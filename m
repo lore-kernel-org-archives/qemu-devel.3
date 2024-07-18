@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E664C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB54C3DA49
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURHb-0003W3-ID; Thu, 18 Jul 2024 09:34:55 -0400
+	id 1sURHe-0003z3-I9; Thu, 18 Jul 2024 09:34:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHR-0002dN-SG
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:48 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHc-0003my-M5
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:56 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHP-00007F-VO
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4266f344091so2837445e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHb-00008C-0P
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:56 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4277a5ed48bso2815655e9.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721309682; x=1721914482; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721309693; x=1721914493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kccTi0ZFoJFLXkrpp7aedV5PRYpdvGGcofBCMl8r5k4=;
- b=ezM4RzB5wjGpMikxSaKOmyv7iZUmBCRMGXrwXuriIuMJ/20lycBxhLo2GihFg5SuwT
- 5w0nOhVtDO525Dj6+Dm3EwRcMiL55kpOWiM5xQs8IrAphFcKwFGUgKv6ZFPk11rYxxQa
- gmvD+MJ75SCHZ/bC02qZm507ihGkWHnJ0qz/nt/Yi5AUqJPkbFDK8Kd/u+O258p1tAFL
- CtAkwS8od7V2i5VVcP1D4XX1JD6BbtJxRbcQrQ2ohXMja1qa+kifQR83XEijOdq9ifSv
- osdP5ZiK9hb3TGpPNnL/dtMJjQDudeBFiR3JxcFfqJNSmjl0KnPIfXZnGG+9FVZ8ACTk
- RC1w==
+ bh=zsKSM3KuaB4chvTu0dhkMoqoWuPlYClNtw5MCTNrLns=;
+ b=IT22f//mn+jv422glk3PUvcelIBcOqxnZimujSA9fNiFgZgzJ2+78ogEcdw3TZKFXw
+ lGCUY4yx6zRknLLSP0o4pCriEaYesO8UjbqGsL//faaJ7H3CeF/Db6UwxTN+BLsxGgvM
+ MH52DVTUN788e3qhyR6NrNzqOTpcBoCxu02Clr721sjhsIRktLjMyshmipveHXxGp7s9
+ 3oVeOGfhh4OtPKYQpWuTabBaFvdG+z+MMKmNc75jnksvQtj3F6T6Ci+GCGcDtKPhgRAH
+ T/lMsTECanVZzaEHjpUjKe1NJklpraFbzhTehQB06BETMxWEo3RfP8DQwzOOa50mbiB6
+ h7gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721309682; x=1721914482;
+ d=1e100.net; s=20230601; t=1721309693; x=1721914493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kccTi0ZFoJFLXkrpp7aedV5PRYpdvGGcofBCMl8r5k4=;
- b=COu6VisSmJtt9RmnzlGpuTls0qz5xlAQPH0zK7MF6puFAgEjyoY3uprfhSdxXitxA/
- MTmjZ6RRH1NzxlSME+bQ7n4Wv4edeDwfSrIEYwKfAAbvl28dlL9OMXERNhEm7RLeGfFd
- K394WtZBxyeQ2LweQRfym+50lnP9yKOIHQiIVBRDnzaIeFPUZDued+4SbgBR/KpSIcQm
- 8aJZF+hAmj2E2V4JDvajgcN8JeIWS7W1Ebp4OCL80+Pbr6K791Bvxdot4gOprdxrgIJv
- AUH4ofTMGchK0ZbrEWdrby86kYN3Kni/4VFU9zyvABuib4SX88OBWYB6h4jCMhxYf8pH
- TKww==
+ bh=zsKSM3KuaB4chvTu0dhkMoqoWuPlYClNtw5MCTNrLns=;
+ b=fJQbn0jhfNZs4MzyhOdHYy8xogCg4+miB69Hqj1DhckVMuj2QdZUIAUjetz5VDAOmv
+ XQ/Z8NPfjxwoxc/6/8IBQfbugBnhE3UR87KK170PWG8dx2dKRZxkGvM98kGZ50DD2SHL
+ vx80BZPP9giATHTilPUD+rntb4SDDoQ3Fl0BXjGsr4Tw+ZMBiT1alQhkCGTx14NKiQ+7
+ MwjjIvTdn5Ml4PNuW9zsf0dVVTKAUjeeuuU2lN67zS5cYboc6f8S5Gauq+JDTsDH//dK
+ hGVJQlb+BOVZF7DuHH47dM0fPZ3yZ/Y3YM63Yf1+58r6P7uBRp4SsOOVEiSBYI+rz70m
+ 0nAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXE2l/TxH43szqoarf3dcwAF4yAPaVXwFclQyqOgq4GFU7iEcLYxzMP74t24zR/Ac3mc61jsrL/aOONCvBTjbRywjy2rmU=
-X-Gm-Message-State: AOJu0YwL7GpcDwrTNphtt7rzxPzTLBepsRS2GpBGG4E8xju0gtN+j3Zk
- njcKJRZRRTxkSUV61oMvJU+oHugNMgYpFZUCIo9gmkE47hbLilwIKAADzwlwTyo=
-X-Google-Smtp-Source: AGHT+IFOBybHuents0oOXDPA5tCz5I324tpOomQ11JBzSRe37TP5mxsbbu9bxiokep1nm7ZSuTxGPg==
-X-Received: by 2002:a05:600c:4e90:b0:426:6326:4cec with SMTP id
- 5b1f17b1804b1-427c2ce8d0emr35264935e9.29.1721309682223; 
- Thu, 18 Jul 2024 06:34:42 -0700 (PDT)
+ AJvYcCXbNfQAIaOCBp6ueUXwpwIL0T785sSfIk+NKR7tvTY/13A6frP35WE/ur7KvvcDbwd0BjI59/Ff6gI325W6CpuB2bxgVkE=
+X-Gm-Message-State: AOJu0YzGGn3BVhxRc3MOREbql4fnEGxWSPeP7z0ey+WvQNHF3i5cmpAB
+ c64HQauGUXySCVBR0PRymxFgkA0eTq+sAHsDG+SMLDoQYaonsWO5BtBBFhj9eOA=
+X-Google-Smtp-Source: AGHT+IH2VDi4d/oEoJxK4t7sz8wpEjKeqijZ66sDVY23BLtFYOF8E/xE8qDUEdZ971/zbWiltCLZPQ==
+X-Received: by 2002:a5d:64e6:0:b0:35e:6472:4390 with SMTP id
+ ffacd0b85a97d-3683160d165mr4356866f8f.27.1721309693635; 
+ Thu, 18 Jul 2024 06:34:53 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.113])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2b29342sm13216315e9.31.2024.07.18.06.34.40
+ ffacd0b85a97d-368584ddd6asm1540113f8f.91.2024.07.18.06.34.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jul 2024 06:34:41 -0700 (PDT)
+ Thu, 18 Jul 2024 06:34:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -66,17 +66,17 @@ Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Xiaojuan Yang <yangxiaojuan@loongson.cn>,
  Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 15/19] hw/intc/loongarch_ipi: Add loongarch IPI support
-Date: Thu, 18 Jul 2024 15:33:07 +0200
-Message-ID: <20240718133312.10324-16-philmd@linaro.org>
+Subject: [PATCH v5 17/19] hw/intc/loongson_ipi: Restrict to MIPS
+Date: Thu, 18 Jul 2024 15:33:09 +0200
+Message-ID: <20240718133312.10324-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240718133312.10324-1-philmd@linaro.org>
 References: <20240718133312.10324-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,159 +101,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Loongarch IPI is added here, it inherits from class
-TYPE_LOONGSON_IPI_COMMON, and two interfaces get_iocsr_as() and
-cpu_by_arch_id() are added for Loongarch 3A5000 machine. It can
-be used when ipi is emulated in userspace with KVM mode.
+Now than LoongArch target can use the TYPE_LOONGARCH_IPI
+model, restrict TYPE_LOONGSON_IPI to MIPS.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-[PMD: Rebased and simplified]
+[PMD: Extracted from bigger commit, added commit description]
 Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Tested-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/intc/loongarch_ipi.h | 25 ++++++++++++
- hw/intc/loongarch_ipi.c         | 68 +++++++++++++++++++++++++++++++++
- hw/intc/Kconfig                 |  4 ++
- hw/intc/meson.build             |  1 +
- 4 files changed, 98 insertions(+)
- create mode 100644 include/hw/intc/loongarch_ipi.h
- create mode 100644 hw/intc/loongarch_ipi.c
+ MAINTAINERS            |  2 --
+ hw/intc/loongson_ipi.c | 14 --------------
+ 2 files changed, 16 deletions(-)
 
-diff --git a/include/hw/intc/loongarch_ipi.h b/include/hw/intc/loongarch_ipi.h
-new file mode 100644
-index 0000000000..276b3040a3
---- /dev/null
-+++ b/include/hw/intc/loongarch_ipi.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch IPI interrupt header files
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef HW_LOONGARCH_IPI_H
-+#define HW_LOONGARCH_IPI_H
-+
-+#include "qom/object.h"
-+#include "hw/intc/loongson_ipi_common.h"
-+
-+#define TYPE_LOONGARCH_IPI  "loongarch_ipi"
-+OBJECT_DECLARE_TYPE(LoongarchIPIState, LoongarchIPIClass, LOONGARCH_IPI)
-+
-+struct LoongarchIPIState {
-+    LoongsonIPICommonState parent_obj;
-+};
-+
-+struct LoongarchIPIClass {
-+    LoongsonIPICommonClass parent_class;
-+};
-+
-+#endif
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-new file mode 100644
-index 0000000000..2ae1a42c46
---- /dev/null
-+++ b/hw/intc/loongarch_ipi.c
-@@ -0,0 +1,68 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch IPI interrupt support
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/boards.h"
-+#include "hw/intc/loongarch_ipi.h"
-+#include "target/loongarch/cpu.h"
-+
-+static AddressSpace *get_iocsr_as(CPUState *cpu)
-+{
-+    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
-+}
-+
-+static int archid_cmp(const void *a, const void *b)
-+{
-+   CPUArchId *archid_a = (CPUArchId *)a;
-+   CPUArchId *archid_b = (CPUArchId *)b;
-+
-+   return archid_a->arch_id - archid_b->arch_id;
-+}
-+
-+static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
-+{
-+    CPUArchId apic_id, *found_cpu;
-+
-+    apic_id.arch_id = id;
-+    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
-+                        ms->possible_cpus->len,
-+                        sizeof(*ms->possible_cpus->cpus),
-+                        archid_cmp);
-+
-+    return found_cpu;
-+}
-+
-+static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
-+{
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    CPUArchId *archid;
-+
-+    archid = find_cpu_by_archid(machine, arch_id);
-+    if (archid) {
-+        return CPU(archid->cpu);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
-+{
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
-+
-+    licc->get_iocsr_as = get_iocsr_as;
-+    licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
-+}
-+
-+static const TypeInfo loongarch_ipi_types[] = {
-+    {
-+        .name               = TYPE_LOONGARCH_IPI,
-+        .parent             = TYPE_LOONGSON_IPI_COMMON,
-+        .class_init         = loongarch_ipi_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(loongarch_ipi_types)
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index a2a0fdca85..dd405bdb5d 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -94,6 +94,10 @@ config LOONGSON_IPI
-     bool
-     select LOONGSON_IPI_COMMON
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a670c8ee67..c2d51b0158 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1250,10 +1250,8 @@ F: hw/loongarch/
+ F: include/hw/loongarch/virt.h
+ F: include/hw/intc/loongarch_*.h
+ F: include/hw/intc/loongson_ipi_common.h
+-F: include/hw/intc/loongson_ipi.h
+ F: hw/intc/loongarch_*.c
+ F: hw/intc/loongson_ipi_common.c
+-F: hw/intc/loongson_ipi.c
+ F: include/hw/pci-host/ls7a.h
+ F: hw/rtc/ls7a_rtc.c
+ F: gdb-xml/loongarch*.xml
+diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+index 86badb2972..051e910586 100644
+--- a/hw/intc/loongson_ipi.c
++++ b/hw/intc/loongson_ipi.c
+@@ -16,22 +16,9 @@
+ #include "exec/address-spaces.h"
+ #include "exec/memory.h"
+ #include "migration/vmstate.h"
+-#ifdef TARGET_LOONGARCH64
+-#include "target/loongarch/cpu.h"
+-#endif
+-#ifdef TARGET_MIPS
+ #include "target/mips/cpu.h"
+-#endif
+ #include "trace.h"
  
-+config LOONGARCH_IPI
-+    bool
-+    select LOONGSON_IPI_COMMON
-+
- config LOONGARCH_PCH_PIC
-     bool
-     select UNIMP
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index a09a527207..f4d81eb8e4 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -71,6 +71,7 @@ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_XIVE'],
- specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI_COMMON', if_true: files('loongson_ipi_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
+-#ifdef TARGET_LOONGARCH64
+-static AddressSpace *get_iocsr_as(CPUState *cpu)
+-{
+-    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
+-}
+-#endif
+-
+-#ifdef TARGET_MIPS
+ static AddressSpace *get_iocsr_as(CPUState *cpu)
+ {
+     if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
+@@ -40,7 +27,6 @@ static AddressSpace *get_iocsr_as(CPUState *cpu)
+ 
+     return NULL;
+ }
+-#endif
+ 
+ static const MemoryRegionOps loongson_ipi_core_ops = {
+     .read_with_attrs = loongson_ipi_core_readl,
 -- 
 2.41.0
 
