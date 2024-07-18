@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 384D6C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C156C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNhc-0003Ct-2q; Thu, 18 Jul 2024 05:45:32 -0400
+	id 1sUNhm-0003s3-6n; Thu, 18 Jul 2024 05:45:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNha-00037j-OB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:30 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ id 1sUNhg-0003Td-F7
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:36 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhY-0007bU-Jb
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:30 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-52eeae38f6aso187790e87.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:27 -0700 (PDT)
+ id 1sUNhb-0007cp-75
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:35 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5a1337cfbb5so734357a12.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721295926; x=1721900726; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VCcCdQ4di4T2/A7zb/8TQdnfq5IolIO6f3nIRIyu+ok=;
- b=OZYydzstDeFCgYCDTAuwDqadtJ7IM5F7i8RWHRtxKEcv+bpZEV5h1m+WeEHA4tpzIE
- m54uuzCWnPFmkjiAOqQf8k3axnyjXrpmkqaGaNxXy29z5ni1d5qhYquKwBg5EdrDjCXf
- 29VKAR2bpNpgJR0iTbUy7CXNasaVAkuZMfVF50oOtVr5QywrzyOBUIhtmN/JZP5vfSXF
- 2Zq1EstFA4Mf3jX8MToorVSfcH7C3m0El5pyyXj4eFwq0UHu18XKxktYqpDn7YA29eeu
- FejIyad4zTlcFi/I6EeZiLz82Zh2GOtyexKg0N+wjOgPtCe0suJLS7lPHHvAUa/vadAH
- AOng==
+ d=linaro.org; s=google; t=1721295930; x=1721900730; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cfJ7q+u8E5nRKTMFGfs4eIENy7w0T/uQLo6/QnXe36U=;
+ b=W/vqKplLhNsBKwOOa3PbyDmRJaAdSzEezRplQvU2CEc+29BBeT2Kp0GLSllcO19uLn
+ 17UjZeloh61oPoCIbNX65KnaQpwcZZLYGO1gmj3M22ncfQKXSW+bPalIios4ciSUM1LC
+ 6/DehDqNvnn8w4Fa4lAs8EzPxjXRCeKJkXjA1VCH2B0CXCUjxAyrMEI7KlgegxdZN9t9
+ iixuFOAPez7Wb9i6Fv/9VtUDeucN3DCF6WTD5usyVODB2y5pQXtyB+DkDA+jrGttUXvl
+ KkcSzfRmnrVldonpZpfxQKRTHIqfa/SE9Q5+g1Lk+PsMPpBFyi9oxO1GekV5klnZwJU/
+ iLvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721295926; x=1721900726;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VCcCdQ4di4T2/A7zb/8TQdnfq5IolIO6f3nIRIyu+ok=;
- b=oV2UfzlJPHijIjraC746e8eiDlIgWm3718/+iGx+XCPmTcHoCeiukFmws6YMZeF6E1
- jCLu8kwqP9OM+ZgQ1tDbiAR/WHEnU3twYNhPfyB6/NakxdoTrKABkEo/5U1WIwwGAxTP
- 2+nqHIq6aV4Bw169dBafvqSA18W6FapqAIO487H0wkpiTSuk9Pi/bh2HvIGJTp2BcZpx
- GP9ZnxuRQZEwTno9Xo51/FFusDG4yceWiGvIkv0DCuhhaPOQ60GMlsvWo6ZnHDlNvL4k
- L2KmyBvYp9CnZAfPRDPjQu4rH1syIrdVRtEz7ZuTz3j1teJisQPaOzzZBp2GIICmDKJd
- aLYQ==
-X-Gm-Message-State: AOJu0YzoUN0kxLJbruqd0//XlHgglXM21UjWrGhAu7agEKZc4fHUdujz
- ykXQ8dQhoCY1FiOkWtJV/lNN9ry8O8OlakhFDqN++ZqO2SYOd4/eUVT9PTTSVRk=
-X-Google-Smtp-Source: AGHT+IEZI5/ptCMtWnju0G4wF7V+k1fdGZWu8PsWsZqYpshInK0v8RdrO5S06QRXKMzxe+3qTZoeWA==
-X-Received: by 2002:a05:6512:3056:b0:52c:8024:1db with SMTP id
- 2adb3069b0e04-52ee544c90amr2837327e87.63.1721295925873; 
- Thu, 18 Jul 2024 02:45:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721295930; x=1721900730;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cfJ7q+u8E5nRKTMFGfs4eIENy7w0T/uQLo6/QnXe36U=;
+ b=P7K3bxDqq266tWJnmaysfBzwdKhspjErdpCkRtR/3hk4K9YRUEAuQVk1AJDHyJwbLM
+ yR7qzjlLXUD4CVsoPObvdxMk/ifIcVOXkxo5CEedDMNs4Oo07nY+7Lf+oSnA/G1hZKDg
+ 7BDF71QAssC4XRTRsQ0bIAOYxJ/O/ZZkTMAMlSsNVaHQzR6Et+UYw+kEkGf1IOXsyvTA
+ Us0xHSNYSoTzd3MwBGZB06VMODX9bhkVSba6QuLbEKqtg9yniNFllNbXhe/6YAXZ5QVF
+ YHv8SaVGgzwBlr5GxRNrM3Hf01FGQDQpZToYtf514r1dL6rkQWncr7auBJHmfpypCYYI
+ qN3g==
+X-Gm-Message-State: AOJu0YwPI1uFksX5pIV31nbv7pIyEArk6Ew5hE/lR0l/bq0Zo0w/hBX7
+ enBNO6A0x9PWh0UR3TgnxfM0DJal04V7b8LtnREJOIW42xEem81zTIKZp0VRjVM=
+X-Google-Smtp-Source: AGHT+IE84ge3x2N74MSoHAKh6IfW1/T4MtA93kOOhgODL8k3i8qoopsrNJnBjKb+dwRA89CyaDkltw==
+X-Received: by 2002:a17:906:e0ce:b0:a6f:dc17:500a with SMTP id
+ a640c23a62f3a-a7a0114c017mr296526366b.23.1721295929309; 
+ Thu, 18 Jul 2024 02:45:29 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc5b7ebfsm534274966b.67.2024.07.18.02.45.24
+ a640c23a62f3a-a79bc5a39fasm550343266b.10.2024.07.18.02.45.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 02:45:24 -0700 (PDT)
+ Thu, 18 Jul 2024 02:45:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EDBC25F762;
- Thu, 18 Jul 2024 10:45:23 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7AEE15FA15;
+ Thu, 18 Jul 2024 10:45:24 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -79,17 +80,18 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 00/15] Final bits for 9.1-rc0 (docker, plugins, gdbstub,
- semihosting)
-Date: Thu, 18 Jul 2024 10:45:08 +0100
-Message-Id: <20240718094523.1198645-1-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH 05/15] plugins: fix mem callback array size
+Date: Thu, 18 Jul 2024 10:45:13 +0100
+Message-Id: <20240718094523.1198645-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240718094523.1198645-1-alex.bennee@linaro.org>
+References: <20240718094523.1198645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,75 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm just flushing my various maintainer queues for the up-coming 9.1
-soft freeze. Mostly this is a collection of fixes and tweaks although
-there is a new plugin in contrib. We've also bumped the libvirt-ci for
-the BSD python updates.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The following still need review:
+data was correctly copied, but size of array was not set
+(g_array_sized_new only reserves memory, but does not set size).
 
-  tests/plugins: use qemu_plugin_outs for inline stats
-  testing: bump to latest libvirt-ci
+As a result, callbacks were not called for code path relying on
+plugin_register_vcpu_mem_cb().
 
-Alex Bennée (3):
-  testing: bump to latest libvirt-ci
-  gdbstub: Re-factor gdb command extensions
-  tests/plugins: use qemu_plugin_outs for inline stats
+Found when trying to trigger mem access callbacks for atomic
+instructions.
 
-Frédéric Pétrot (1):
-  plugins/execlog.c: correct dump of registers values
+Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240706191335.878142-2-pierrick.bouvier@linaro.org>
+---
+ accel/tcg/plugin-gen.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Philippe Mathieu-Daudé (8):
-  semihosting: Include missing 'gdbstub/syscalls.h' header
-  target/m68k: Add semihosting stub
-  target/mips: Add semihosting stub
-  target/m68k: Restrict semihosting to TCG
-  target/mips: Restrict semihosting to TCG
-  target/riscv: Restrict semihosting to TCG
-  target/xtensa: Restrict semihosting to TCG
-  semihosting: Restrict to TCG
-
-Pierrick Bouvier (1):
-  plugins: fix mem callback array size
-
-Simon Hamelin (1):
-  plugins/stoptrigger: TCG plugin to stop execution under conditions
-
-Thomas Huth (1):
-  tests/avocado: Remove non-working sparc leon3 test
-
- MAINTAINERS                               |   1 -
- docs/devel/tcg-plugins.rst                |  22 ++++
- include/gdbstub/commands.h                |  19 ++-
- include/semihosting/syscalls.h            |   2 +
- target/arm/internals.h                    |   4 +-
- accel/tcg/plugin-gen.c                    |   3 +-
- contrib/plugins/execlog.c                 |   2 +-
- contrib/plugins/stoptrigger.c             | 151 ++++++++++++++++++++++
- gdbstub/gdbstub.c                         | 142 +++++++++++---------
- target/arm/gdbstub.c                      |  16 +--
- target/arm/gdbstub64.c                    |  11 +-
- target/m68k/semihosting-stub.c            |  15 +++
- target/mips/tcg/sysemu/semihosting-stub.c |  15 +++
- tests/plugin/inline.c                     |  58 +++++----
- .gitlab-ci.d/cirrus/freebsd-13.vars       |   2 +-
- contrib/plugins/Makefile                  |   1 +
- semihosting/Kconfig                       |   1 +
- target/m68k/Kconfig                       |   2 +-
- target/m68k/meson.build                   |   5 +-
- target/mips/Kconfig                       |   2 +-
- target/mips/tcg/sysemu/meson.build        |   6 +-
- target/riscv/Kconfig                      |   4 +-
- target/xtensa/Kconfig                     |   2 +-
- tests/avocado/machine_sparc_leon3.py      |  37 ------
- tests/lcitool/libvirt-ci                  |   2 +-
- tests/vm/generated/freebsd.json           |  14 +-
- 26 files changed, 370 insertions(+), 169 deletions(-)
- create mode 100644 contrib/plugins/stoptrigger.c
- create mode 100644 target/m68k/semihosting-stub.c
- create mode 100644 target/mips/tcg/sysemu/semihosting-stub.c
- delete mode 100644 tests/avocado/machine_sparc_leon3.py
-
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index b6bae32b99..ec89a085b4 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -85,8 +85,7 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
+     len = insn->mem_cbs->len;
+     arr = g_array_sized_new(false, false,
+                             sizeof(struct qemu_plugin_dyn_cb), len);
+-    memcpy(arr->data, insn->mem_cbs->data,
+-           len * sizeof(struct qemu_plugin_dyn_cb));
++    g_array_append_vals(arr, insn->mem_cbs->data, len);
+     qemu_plugin_add_dyn_cb_arr(arr);
+ 
+     tcg_gen_st_ptr(tcg_constant_ptr((intptr_t)arr), tcg_env,
 -- 
 2.39.2
 
