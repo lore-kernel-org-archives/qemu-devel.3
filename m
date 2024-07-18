@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39D8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA93C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUOH4-0003Qy-6X; Thu, 18 Jul 2024 06:22:10 -0400
+	id 1sUOKW-0007yG-R7; Thu, 18 Jul 2024 06:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOH2-0003Q1-RR
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:22:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOH0-0001HQ-Qa
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:22:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721298124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ehb6jZNUCEuAZoXTEiZ5GkArIOHs6STjyNrlaIP1VOU=;
- b=bt9eVud1pV+tQVOczyGZ1RNQhUoQdwxk1OLqq808mWd3feItr85ICLRVTI7D9e59K/SVOc
- kMss82oWOvKtK9bC2vGSjS8fTntM+JmzRjnmKcqG92IdPKsnzOPVeT1fenFc7EsA4WEv0H
- YWwZ02mdLQls2DIdch1cwz42befspro=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-WjZfSW8UMp-q0FkaPc-P4A-1; Thu,
- 18 Jul 2024 06:22:01 -0400
-X-MC-Unique: WjZfSW8UMp-q0FkaPc-P4A-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2704C1955F69; Thu, 18 Jul 2024 10:22:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC22D1955D4A; Thu, 18 Jul 2024 10:21:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 91BD921E66A7; Thu, 18 Jul 2024 12:21:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Octavian Purdila <tavip@google.com>,  qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com,  eblake@redhat.com,
- peter.maydell@linaro.org,  Paulo Neves <ptsneves@gmail.com>
-Subject: Re: [PATCH v3] chardev: add path option for pty backend
-In-Reply-To: <ZpjhwFpnHK1d3yVZ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 18 Jul 2024 10:34:56 +0100")
-References: <20240605185050.1678102-1-tavip@google.com>
- <87r0br8bve.fsf@pond.sub.org> <ZpjhwFpnHK1d3yVZ@redhat.com>
-Date: Thu, 18 Jul 2024 12:21:56 +0200
-Message-ID: <87a5ifknjv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUOKJ-0007vi-6p
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:25:38 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUOKC-0002ac-KR
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:25:27 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c513aso570148a12.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 03:25:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721298312; x=1721903112; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=97Vy7Hi5cN2X5jPZhfznsQcmlKg7rZUAxFN0Y/iOUAU=;
+ b=dujDoo3MS2zFx4wzUqxEYIdu3mTHlh1jsrAxGUQHOqWRKS7CzsJA4zKUFSJyI9f/eg
+ ktwPuM1lw1021A3wlsaQKreRbfVM4c2yDe1mdkv8DNaELwffmf9CRgyzoiBkaOlAkC7R
+ v/qA5NLa2E4a6+B51lqOQuh+1OqInlDAH1QfpVX/sfN8J9OyMorJ9nCtld7JOEqkYK1I
+ Q9Lm4MBL3G4qd1aYTKalsAfdMXG/Rrz0KnyhZh8FAW4ddiqfP7QfcD+Bx2bfOdKOYGqr
+ 4ov7goNXHvRxP4hdJQaEhd2biB71H8hoENjQxeXcqD5770Yh1pkgdsUU0tiS97RXqpUh
+ H2pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721298312; x=1721903112;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=97Vy7Hi5cN2X5jPZhfznsQcmlKg7rZUAxFN0Y/iOUAU=;
+ b=ouFAFjw2XAT6o04hrO5DmjByeUVqxS7aT2WQpcdAjNZra5u+6ls6UsvtNDuBCevWqa
+ GlNqWyRMBoFb/R9phom+5VNT722TbtFelU3qTLEkYG8xE7gxUOJIlAHRCdXKqrLc8rwK
+ +pmmw2SWYDqiRhgi6MScxddCqRH0I8O3JKRIT5jmfQ45GQSBoJFUz2D20N1VTGBinKOn
+ u9oS8IYTMQssieK//L0ImmfC8+K+8ex1rKr3lCmsGrhYQrMNOQf81uC3WqIKwQA3XLYA
+ NbcifHAv09mBAex3ULfxvmdOSTY8R8JP6SJa3+EUv3llytkoIKKnC41WUjoefUNTXSGT
+ jJpg==
+X-Gm-Message-State: AOJu0YyN1JagyTkfVwwp7liPUKqXnQl4MZ5xE06+I1GKf76u1Xe8a69D
+ +YQsleCXbKbZ/I1EPPzASSfBlL4tv1XlnKE+VwU/Iw70uuQWoSBU0KIo+KS3jPt8+Yo5yUoFbrW
+ XXOZiathl5ebgxBPe78lbINv7NOD24fO9DkXIi0Wkq1cDN9Y9
+X-Google-Smtp-Source: AGHT+IGyu4Z4q2OzThn1qcAombimbUn1Kbb5locjvxqq3F7pIlZMIzMpZo/v01rkV8FHDfZmPJSq8IRKJvoKEtnRJk4=
+X-Received: by 2002:a05:6402:1ed4:b0:5a1:369b:bb61 with SMTP id
+ 4fb4d7f45d1cf-5a1369bbc22mr2282097a12.36.1721298312290; Thu, 18 Jul 2024
+ 03:25:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240717060149.204788-1-richard.henderson@linaro.org>
+In-Reply-To: <20240717060149.204788-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Jul 2024 11:25:00 +0100
+Message-ID: <CAFEAcA_v-BRoSuiQLx_97_jjfhVPjWEnB5ENbFz-XNsX=BUz3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] target/arm: Fixes for SME FMOPA (#2373)
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,144 +87,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Thu, Jul 18, 2024 at 08:15:01AM +0200, Markus Armbruster wrote:
->> Looks like this one fell through the cracks.
->>=20
->> Octavian Purdila <tavip@google.com> writes:
->>=20
->> > Add path option to the pty char backend which will create a symbolic
->> > link to the given path that points to the allocated PTY.
->> >
->> > This avoids having to make QMP or HMP monitor queries to find out what
->> > the new PTY device path is.
->>=20
->> QMP commands chardev-add and chardev-change return the information you
->> want:
->>=20
->>     # @pty: name of the slave pseudoterminal device, present if and only
->>     #     if a chardev of type 'pty' was created
->>=20
->> So does HMP command chardev-add.  HMP chardev apparently doesn't, but
->> that could be fixed.
+On Wed, 17 Jul 2024 at 07:02, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> It does print it:
+> Changes for v2:
+>   - Apply r-b.
+>   - Add license headers to two test cases.
 >
->   (qemu) chardev-add  pty,id=3Dbar
->   char device redirected to /dev/pts/12 (label bar)
-
-I fat-fingered "HMP chardev-change".
-
->> So, the use case is basically the command line, right?
+> r~
 >
-> Also cli prints it
+> Daniyal Khan (2):
+>   target/arm: Use float_status copy in sme_fmopa_s
+>   tests/tcg/aarch64: Add test cases for SME FMOPA (widening)
 >
->   $ qemu-system-x86_64 -chardev pty,id=3Dfoo -monitor stdio -display none
->   char device redirected to /dev/pts/10 (label foo)
-
-Good enough for ad hoc use by humans.
-
-Management applications should use QMP, which returns it.
-
-I guess there's scripts in between.
-
->> > Based on patch from Paulo Neves:
->> >
->> > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gm=
-ail.com/
->> >
->> > Tested with the following invocations that the link is created and
->> > removed when qemu stops:
->> >
->> >   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
->> >   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
->> >
->> >   qemu-system-x86_64 -nodefaults -monitor pty:test
->> >
->> > Also tested that when a link path is not passed invocations still work=
-, e.g.:
->> >
->> >   qemu-system-x86_64 -monitor pty
->> >
->> > Co-authored-by: Paulo Neves <ptsneves@gmail.com>
->> > Signed-off-by: Paulo Neves <ptsneves@gmail.com>
->> > [OP: rebase and address original patch review comments]
->> > Signed-off-by: Octavian Purdila <tavip@google.com>
->> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-[...]
-
->> > diff --git a/chardev/char-pty.c b/chardev/char-pty.c
->> > index cc2f7617fe..5c6172ddba 100644
->> > --- a/chardev/char-pty.c
->> > +++ b/chardev/char-pty.c
->> > @@ -29,6 +29,7 @@
->> >  #include "qemu/sockets.h"
->> >  #include "qemu/error-report.h"
->> >  #include "qemu/module.h"
->> > +#include "qemu/option.h"
->> >  #include "qemu/qemu-print.h"
->> >=20=20
->> >  #include "chardev/char-io.h"
->> > @@ -41,6 +42,7 @@ struct PtyChardev {
->> >=20=20
->> >      int connected;
->> >      GSource *timer_src;
->> > +    char *symlink_path;
->> >  };
->> >  typedef struct PtyChardev PtyChardev;
->> >=20=20
->> > @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
->> >      Chardev *chr =3D CHARDEV(obj);
->> >      PtyChardev *s =3D PTY_CHARDEV(obj);
->> >=20=20
->> > +    /* unlink symlink */
->> > +    if (s->symlink_path) {
->> > +        unlink(s->symlink_path);
->> > +        g_free(s->symlink_path);
->> > +    }
->>=20
->> Runs when the chardev object is finalized.
->>=20
->> Doesn't run when QEMU crashes.  Stale symlink left behind then.  Can't
->> see how you could avoid that at reasonable cost.  Troublesome all the
->> same.
+> Richard Henderson (1):
+>   target/arm: Use FPST_F16 for SME FMOPA (widening)
 >
-> Do we ever guarantee that the finalizer runs ?  eg dif we have
->
->   error_setg(&error_exit, ....
->
-> that's a clean exit, not a crash, but I don't think chardev finalizers
-> will run, as we don't do atexit() hooks for it.
 
-Point.
 
->> The feature feels rather doubtful to me, to be honest.
->
-> On the one hand I understand the pain - long ago libvirt had to deal
-> with parsing the console messages
->
->   char device redirected to /dev/pts/10 (label foo)
->
-> before we switched to using QMP to query this.
->
-> On the other hand, in retrospect libvirt should never have used the 'pty'
-> backend in the first place. The 'unix' socket backend is a  choice as it
-> has predictable filenames, and it has proper connection oriented semantic=
-s,
-> so QEMU can reliably detect when clients disconnect, which has always been
-> troublesome for the 'pty' backend.
->
-> So while I can understand the desire to add a 'path' option to 'pty'
-> to trigger symlink creation, I think we could choose to tell people
-> to use the 'unix' socket backend instead if they want a predictable
-> path. This would avoid us creating the difficult to fix bug for
-> symlink deletion in error conditions.
->
-> What's the key benefit of the 'pty' backend, that 'unix' doesn't
-> handle ?
 
-I think this is the question to answer.
+Applied to target-arm.next, thanks.
 
+-- PMM
 
