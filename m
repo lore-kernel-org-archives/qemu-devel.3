@@ -4,66 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B3DC3DA63
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447FAC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUUyj-0000xL-JY; Thu, 18 Jul 2024 13:31:41 -0400
+	id 1sUV1P-00031j-Vl; Thu, 18 Jul 2024 13:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUUyh-0000vG-EH
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <fan.ni@samsung.com>)
+ id 1sUV1F-0002V7-5U
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:34:18 -0400
+Received: from mailout1.w2.samsung.com ([211.189.100.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUUyf-0003ag-1m
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721323896;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ApzJgXp4Ao0KDomUrsLxBETfpfLJIZiuSWoWDUb+9lE=;
- b=RA+uEKC7s9yLfVompWcgtx6cM8aaVoepSzD8vQl+JEFEv8zutN6DOkL46gMrMVdJlNz++F
- eajNsJto3oBeESipBMup8PY9S6UAZbQjpji6K7xiNCxRfhT1awPb/tiV4aLF7Cvmf2i5sz
- 8aVRP1AxYZLJPJWT/xRg/4aunHHadQM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-isK9cMA6OKWNARIvSJ_wOg-1; Thu,
- 18 Jul 2024 13:31:32 -0400
-X-MC-Unique: isK9cMA6OKWNARIvSJ_wOg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CCCC81955D44; Thu, 18 Jul 2024 17:31:30 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.42])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0676E1955F40; Thu, 18 Jul 2024 17:31:26 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH] tests/avocado: Remove the remainders of the
- virtiofs_submounts test
-Date: Thu, 18 Jul 2024 19:31:25 +0200
-Message-ID: <20240718173125.489901-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <fan.ni@samsung.com>)
+ id 1sUV1B-0003wC-LW
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:34:16 -0400
+Received: from uscas1p2.samsung.com (unknown [182.198.245.207])
+ by mailout1.w2.samsung.com (KnoxPortal) with ESMTP id
+ 20240718173404usoutp01cd60dbd7f750fde7e6713eeba6d925e5~jXxkpvKTg2116121161usoutp01-;
+ Thu, 18 Jul 2024 17:34:04 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w2.samsung.com
+ 20240718173404usoutp01cd60dbd7f750fde7e6713eeba6d925e5~jXxkpvKTg2116121161usoutp01-
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1721324044;
+ bh=RFf+ZCbyKH7oITDp7dyx0vnR8jkJF4kzi2raDVIP/fM=;
+ h=From:To:CC:Subject:Date:In-Reply-To:References:From;
+ b=MFYX1bZxEslT6+eNamEozSNQzCnLQ0DFDmSyAxsXsZyv1Ir6Kg6zkpTXBYBioQnbu
+ 7CQzoX1BBi8uHfHRv5zzacuMbi6O/0vYhElUxzCP45zAZvhxW2sNmehUEijJ2RGuR/
+ DV3RhfyF1Yy2hDr3LxAsCnztzyup0qAvFXOqpVu4=
+Received: from ussmges3new.samsung.com (u112.gpu85.samsung.co.kr
+ [203.254.195.112]) by uscas1p1.samsung.com (KnoxPortal) with ESMTP id
+ 20240718173404uscas1p180d19606fec3bf94d28bb2ec20359ecb~jXxkj7Vy92943529435uscas1p11;
+ Thu, 18 Jul 2024 17:34:04 +0000 (GMT)
+Received: from uscas1p1.samsung.com ( [182.198.245.206]) by
+ ussmges3new.samsung.com (USCPEMTA) with SMTP id D6.00.09504.B0259966; Thu,
+ 18 Jul 2024 13:34:03 -0400 (EDT)
+Received: from ussmgxs3new.samsung.com (u92.gpu85.samsung.co.kr
+ [203.254.195.92]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
+ 20240718173403uscas1p25bc34557a1e7a564c5126a7d344bf5f6~jXxkOd8141011110111uscas1p2c;
+ Thu, 18 Jul 2024 17:34:03 +0000 (GMT)
+X-AuditID: cbfec370-143ff70000002520-7f-6699520b7d82
+Received: from SSI-EX1.ssi.samsung.com ( [105.128.3.67]) by
+ ussmgxs3new.samsung.com (USCPEXMTA) with SMTP id 5C.56.56602.B0259966; Thu,
+ 18 Jul 2024 13:34:03 -0400 (EDT)
+Received: from SSI-EX2.ssi.samsung.com (105.128.2.227) by
+ SSI-EX1.ssi.samsung.com (105.128.2.226) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.2507.35; Thu, 18 Jul 2024 10:34:02 -0700
+Received: from SSI-EX2.ssi.samsung.com ([105.128.2.227]) by
+ SSI-EX2.ssi.samsung.com ([105.128.2.227]) with mapi id 15.01.2507.035; Thu,
+ 18 Jul 2024 10:34:02 -0700
+From: Fan Ni <fan.ni@samsung.com>
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+CC: "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] mem/cxl_type3: Fix overlapping region validation error
+Thread-Topic: [PATCH] mem/cxl_type3: Fix overlapping region validation error
+Thread-Index: AQHa2PIEbJ0QNL+HAEW4CfcGQa+1P7H9NMsA
+Date: Thu, 18 Jul 2024 17:34:02 +0000
+Message-ID: <20240718173356.GA1629099@sjcvldevvm72>
+In-Reply-To: <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [105.128.2.176]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <1D5BE6ABCC0B55459A5994CE2C0217F8@ssi.samsung.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-CFilter-Loop: Reflected
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42LZduzrOV3uoJlpBlt+WVusWniNzeJ47w4W
+ i4N3L7E4MHtsaHrD5tFy5C2rx5Nrm5kCmKO4bFJSczLLUov07RK4Mn60TGcp+OdasfzaZ+YG
+ xhkuXYycHBICJhIb+zawdDFycQgJrGSUePLoNBtIQkiglUliyeFQmKKpb46yQMTXMErc6vCF
+ aPjEKHF57wk2CGcZo8TVCzOYQarYBBQl9nVtB5skIqAh8erMRVYQm1mgSGJy01agGg4OYQFv
+ iUlvAiFKfCQmPOpjgbCNJDrbe8BaWQRUJZ7evwfWyitgLNGw7zkTiM0pYCPxeNMUsBpGATGJ
+ 76fWMEGMF5e49WQ+E8TRghKLZu9hhrDFJP7tesgGYStK3P/+kh3kBGYBTYn1u/QhWu0kjnXv
+ ZISwFSWmdD9kh1grKHFy5hMWiFZJiYMrboADS0JgLYfE/l/XWSESLhINV75DFUlLTF9zmQVk
+ voRAssSqj1wQ4RyJ+Uu2QJVYSyz8s55pAqPKLCRXz0K4aBaSi2YhuWgWkosWMLKuYhQvLS7O
+ TU8tNs5LLdcrTswtLs1L10vOz93ECEwup/8dLtjBeOvWR71DjEwcjIcYJTiYlUR4JzBOSxPi
+ TUmsrEotyo8vKs1JLT7EKM3BoiTOa2h7MllIID2xJDU7NbUgtQgmy8TBKdXAxBFgkDLdPeme
+ xY/e+K28bxca+Al7nz6hJbPnaIRf1cmnmvs9A+/k3hEKNeKP3qZ8WPLTHjbr2qk33BXmrjVr
+ duM5eqnT5iwvo8/t2dnnOL4pPzr788TZv1qGv+a6ONqs38g3X1lu1cQMhsAWHo3KJD676e5e
+ Tz/+CNX82PTv+PY5q78YOUVrGEl+ubTjWO1vA4dInUr/hOV9TiEPU7/w6No6ZyRMKmk/e/ba
+ YsHXsyy4dVvrbSfVH3uU3TzTa18d22mZyXoWD5x593v+Ld6w+NHDf+59ZgpTRCzTsnt/9mWs
+ NPbnazPOVlFwsXvioLlwzpf3R6zWcO5rWrDr6/bVNpICbxduzFOtD+vlUElSYinOSDTUYi4q
+ TgQAEs/IyJ0DAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFIsWRmVeSWpSXmKPExsWS2cDsrMsdNDPN4MgdBYtVC6+xWRzv3cFi
+ cfDuJRYHZo8NTW/YPFqOvGX1eHJtM1MAcxSXTUpqTmZZapG+XQJXxo+W6SwF/1wrll/7zNzA
+ OMOli5GTQ0LARGLqm6MsILaQwCpGib3rNLsYuYDsT4wSKz/sYIFwljFKfOx5wAZSxSagKLGv
+ azuYLSKgIfHqzEVWEJtZoEhictNW5i5GDg5hAW+JSW8CIUp8JCY86mOBsI0kOtt7wFpZBFQl
+ nt6/B9bKK2As0bDvORPErn5GiR07FjKBJDgFbCQeb5oC1sAoICbx/dQaJohd4hK3nsxngvhA
+ QGLJnvPMELaoxMvH/1ghbEWJ+99fsoPcwyygKbF+lz5Eq53Ese6djBC2osSU7ofsEDcISpyc
+ +YQFolVS4uCKGywTGCVmIdk2C2HSLCSTZiGZNAvJpAWMrKsYxUuLi3PTK4qN81LL9YoTc4tL
+ 89L1kvNzNzECo/P0v8MxOxjv3fqod4iRiYPxEKMEB7OSCO8ExmlpQrwpiZVVqUX58UWlOanF
+ hxilOViUxHnvPtBIFRJITyxJzU5NLUgtgskycXBKNTAxPnnYYfRX27VPs+7rHtE1lyY9Wn3m
+ X2+Wa+tpC8PzP4/sXVix3qxFvqcgbvqJPD653Pjk5lTNfdL3Zm3h4A0rfvCq9FoBg+Sy/47a
+ lcWXuQqrrNwNbI47FxVK3AvYcNy6ZQ1jgFh8+6te8Yvzd65pdizeevK0i7iPvfZ6Y0aWcpvP
+ TBGRYUsP71yuyrtdre/vu29T3xVKbwlg2jJRqmWRsG6a4aZTF6d/N1jzU9ZX9HzmMZ0ez431
+ R8582d/46d5tNiGbPbsm8GgquV5OtHBZOk9s3vRCCR7Xbi+nSsswFdcJJpKXp7P2fHbY52Au
+ 5dPKIFs84WvOoc8PZm/eu/Jvs+gFV2vRc4FTjvy4P12JpTgj0VCLuag4EQAd/2mjPQMAAA==
+X-CMS-MailID: 20240718173403uscas1p25bc34557a1e7a564c5126a7d344bf5f6
+CMS-TYPE: 301P
+X-CMS-RootMailID: 20240718090810uscas1p17441e84b4594875648bf24e07549166f
+References: <CGME20240718090810uscas1p17441e84b4594875648bf24e07549166f@uscas1p1.samsung.com>
+ <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
+Received-SPF: pass client-ip=211.189.100.11; envelope-from=fan.ni@samsung.com;
+ helo=mailout1.w2.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,387 +134,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtiofs_submounts test has been removed in commit 5da7701e2a
-("virtiofsd: Remove test"), so we don't need this files anymore.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .../virtiofs_submounts.py.data/cleanup.sh     |  46 ------
- .../guest-cleanup.sh                          |  30 ----
- .../virtiofs_submounts.py.data/guest.sh       | 138 ------------------
- .../virtiofs_submounts.py.data/host.sh        | 127 ----------------
- 4 files changed, 341 deletions(-)
- delete mode 100644 tests/avocado/virtiofs_submounts.py.data/cleanup.sh
- delete mode 100644 tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
- delete mode 100644 tests/avocado/virtiofs_submounts.py.data/guest.sh
- delete mode 100644 tests/avocado/virtiofs_submounts.py.data/host.sh
-
-diff --git a/tests/avocado/virtiofs_submounts.py.data/cleanup.sh b/tests/avocado/virtiofs_submounts.py.data/cleanup.sh
-deleted file mode 100644
-index 2a6579a0fe..0000000000
---- a/tests/avocado/virtiofs_submounts.py.data/cleanup.sh
-+++ /dev/null
-@@ -1,46 +0,0 @@
--#!/bin/bash
--
--function print_usage()
--{
--    if [ -n "$2" ]; then
--        echo "Error: $2"
--        echo
--    fi
--    echo "Usage: $1 <scratch dir>"
--}
--
--scratch_dir=$1
--if [ -z "$scratch_dir" ]; then
--    print_usage "$0" 'Scratch dir not given' >&2
--    exit 1
--fi
--
--cd "$scratch_dir/share" || exit 1
--mps=(mnt*)
--mp_i=0
--for mp in "${mps[@]}"; do
--    mp_i=$((mp_i + 1))
--    printf "Unmounting %i/%i...\r" "$mp_i" "${#mps[@]}"
--
--    sudo umount -R "$mp"
--    rm -rf "$mp"
--done
--echo
--
--rm some-file
--cd ..
--rmdir share
--
--imgs=(fs*.img)
--img_i=0
--for img in "${imgs[@]}"; do
--    img_i=$((img_i + 1))
--    printf "Detaching and deleting %i/%i...\r" "$img_i" "${#imgs[@]}"
--
--    dev=$(losetup -j "$img" | sed -e 's/:.*//')
--    sudo losetup -d "$dev"
--    rm -f "$img"
--done
--echo
--
--echo 'Done.'
-diff --git a/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh b/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
-deleted file mode 100644
-index 729cb2d1a5..0000000000
---- a/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
-+++ /dev/null
-@@ -1,30 +0,0 @@
--#!/bin/bash
--
--function print_usage()
--{
--    if [ -n "$2" ]; then
--        echo "Error: $2"
--        echo
--    fi
--    echo "Usage: $1 <scratch dir>"
--}
--
--scratch_dir=$1
--if [ -z "$scratch_dir" ]; then
--    print_usage "$0" 'Scratch dir not given' >&2
--    exit 1
--fi
--
--cd "$scratch_dir/share" || exit 1
--
--mps=(mnt*)
--mp_i=0
--for mp in "${mps[@]}"; do
--    mp_i=$((mp_i + 1))
--    printf "Unmounting %i/%i...\r" "$mp_i" "${#mps[@]}"
--
--    sudo umount -R "$mp"
--done
--echo
--
--echo 'Done.'
-diff --git a/tests/avocado/virtiofs_submounts.py.data/guest.sh b/tests/avocado/virtiofs_submounts.py.data/guest.sh
-deleted file mode 100644
-index 59ba40fde1..0000000000
---- a/tests/avocado/virtiofs_submounts.py.data/guest.sh
-+++ /dev/null
-@@ -1,138 +0,0 @@
--#!/bin/bash
--
--function print_usage()
--{
--    if [ -n "$2" ]; then
--        echo "Error: $2"
--        echo
--    fi
--    echo "Usage: $1 <shared dir>"
--    echo '(The shared directory is the "share" directory in the scratch' \
--         'directory)'
--}
--
--shared_dir=$1
--if [ -z "$shared_dir" ]; then
--    print_usage "$0" 'Shared dir not given' >&2
--    exit 1
--fi
--
--cd "$shared_dir"
--
--# FIXME: This should not be necessary, but it is.  In order for all
--# submounts to be proper mount points, we need to visit them.
--# (Before we visit them, they will not be auto-mounted, and so just
--# appear as normal directories, with the catch that their st_ino will
--# be the st_ino of the filesystem they host, while the st_dev will
--# still be the st_dev of the parent.)
--# `find` does not work, because it will refuse to touch the mount
--# points as long as they are not mounted; their st_dev being shared
--# with the parent and st_ino just being the root node's inode ID
--# will practically ensure that this node exists elsewhere on the
--# filesystem, and `find` is required to recognize loops and not to
--# follow them.
--# Thus, we have to manually visit all nodes first.
--
--mnt_i=0
--
--function recursively_visit()
--{
--    pushd "$1" >/dev/null
--    for entry in *; do
--        if [[ "$entry" == mnt* ]]; then
--            mnt_i=$((mnt_i + 1))
--            printf "Triggering auto-mount $mnt_i...\r"
--        fi
--
--        if [ -d "$entry" ]; then
--            recursively_visit "$entry"
--        fi
--    done
--    popd >/dev/null
--}
--
--recursively_visit .
--echo
--
--
--if [ -n "$(find -name not-mounted)" ]; then
--    echo "Error: not-mounted files visible on mount points:" >&2
--    find -name not-mounted >&2
--    exit 1
--fi
--
--if [ ! -f some-file -o "$(cat some-file)" != 'root' ]; then
--    echo "Error: Bad file in the share root" >&2
--    exit 1
--fi
--
--shopt -s nullglob
--
--function check_submounts()
--{
--    local base_path=$1
--
--    for mp in mnt*; do
--        printf "Checking submount %i...\r" "$((${#devs[@]} + 1))"
--
--        mp_i=$(echo "$mp" | sed -e 's/mnt//')
--        dev=$(stat -c '%D' "$mp")
--
--        if [ -n "${devs[mp_i]}" ]; then
--            echo "Error: $mp encountered twice" >&2
--            exit 1
--        fi
--        devs[mp_i]=$dev
--
--        pushd "$mp" >/dev/null
--        path="$base_path$mp"
--        while true; do
--            expected_content="$(printf '%s\n%s\n' "$mp_i" "$path")"
--            if [ ! -f some-file ]; then
--                echo "Error: $PWD/some-file does not exist" >&2
--                exit 1
--            fi
--
--            if [ "$(cat some-file)" != "$expected_content" ]; then
--                echo "Error: Bad content in $PWD/some-file:" >&2
--                echo '--- found ---'
--                cat some-file
--                echo '--- expected ---'
--                echo "$expected_content"
--                exit 1
--            fi
--            if [ "$(stat -c '%D' some-file)" != "$dev" ]; then
--                echo "Error: $PWD/some-file has the wrong device ID" >&2
--                exit 1
--            fi
--
--            if [ -d sub ]; then
--                if [ "$(stat -c '%D' sub)" != "$dev" ]; then
--                    echo "Error: $PWD/some-file has the wrong device ID" >&2
--                    exit 1
--                fi
--                cd sub
--                path="$path/sub"
--            else
--                if [ -n "$(echo mnt*)" ]; then
--                    check_submounts "$path/"
--                fi
--                break
--            fi
--        done
--        popd >/dev/null
--    done
--}
--
--root_dev=$(stat -c '%D' some-file)
--devs=()
--check_submounts ''
--echo
--
--reused_devs=$(echo "$root_dev ${devs[@]}" | tr ' ' '\n' | sort | uniq -d)
--if [ -n "$reused_devs" ]; then
--    echo "Error: Reused device IDs: $reused_devs" >&2
--    exit 1
--fi
--
--echo "Test passed for ${#devs[@]} submounts."
-diff --git a/tests/avocado/virtiofs_submounts.py.data/host.sh b/tests/avocado/virtiofs_submounts.py.data/host.sh
-deleted file mode 100644
-index d8a9afebdb..0000000000
---- a/tests/avocado/virtiofs_submounts.py.data/host.sh
-+++ /dev/null
-@@ -1,127 +0,0 @@
--#!/bin/bash
--
--mount_count=128
--
--function print_usage()
--{
--    if [ -n "$2" ]; then
--        echo "Error: $2"
--        echo
--    fi
--    echo "Usage: $1 <scratch dir> [seed]"
--    echo "(If no seed is given, it will be randomly generated.)"
--}
--
--scratch_dir=$1
--if [ -z "$scratch_dir" ]; then
--    print_usage "$0" 'No scratch dir given' >&2
--    exit 1
--fi
--
--if [ ! -d "$scratch_dir" ]; then
--    print_usage "$0" "$scratch_dir is not a directory" >&2
--    exit 1
--fi
--
--seed=$2
--if [ -z "$seed" ]; then
--    seed=$RANDOM
--fi
--RANDOM=$seed
--
--echo "Seed: $seed"
--
--set -e
--shopt -s nullglob
--
--cd "$scratch_dir"
--if [ -d share ]; then
--    echo 'Error: This directory seems to be in use already' >&2
--    exit 1
--fi
--
--for ((i = 0; i < $mount_count; i++)); do
--    printf "Setting up fs %i/%i...\r" "$((i + 1))" "$mount_count"
--
--    rm -f fs$i.img
--    truncate -s 512M fs$i.img
--    mkfs.xfs -q fs$i.img
--    devs[i]=$(sudo losetup -f --show fs$i.img)
--done
--echo
--
--top_level_mounts=$((RANDOM % mount_count + 1))
--
--mkdir -p share
--echo 'root' > share/some-file
--
--for ((i = 0; i < $top_level_mounts; i++)); do
--    printf "Mounting fs %i/%i...\r" "$((i + 1))" "$mount_count"
--
--    mkdir -p share/mnt$i
--    touch share/mnt$i/not-mounted
--    sudo mount "${devs[i]}" share/mnt$i
--    sudo chown "$(id -u):$(id -g)" share/mnt$i
--
--    pushd share/mnt$i >/dev/null
--    path=mnt$i
--    nesting=$((RANDOM % 4))
--    for ((j = 0; j < $nesting; j++)); do
--        cat > some-file <<EOF
--$i
--$path
--EOF
--        mkdir sub
--        cd sub
--        path="$path/sub"
--    done
--cat > some-file <<EOF
--$i
--$path
--EOF
--    popd >/dev/null
--done
--
--for ((; i < $mount_count; i++)); do
--    printf "Mounting fs %i/%i...\r" "$((i + 1))" "$mount_count"
--
--    mp_i=$((i % top_level_mounts))
--
--    pushd share/mnt$mp_i >/dev/null
--    path=mnt$mp_i
--    while true; do
--        sub_mp="$(echo mnt*)"
--        if cd sub 2>/dev/null; then
--            path="$path/sub"
--        elif [ -n "$sub_mp" ] && cd "$sub_mp" 2>/dev/null; then
--            path="$path/$sub_mp"
--        else
--            break
--        fi
--    done
--    mkdir mnt$i
--    touch mnt$i/not-mounted
--    sudo mount "${devs[i]}" mnt$i
--    sudo chown "$(id -u):$(id -g)" mnt$i
--
--    cd mnt$i
--    path="$path/mnt$i"
--    nesting=$((RANDOM % 4))
--    for ((j = 0; j < $nesting; j++)); do
--        cat > some-file <<EOF
--$i
--$path
--EOF
--        mkdir sub
--        cd sub
--        path="$path/sub"
--    done
--    cat > some-file <<EOF
--$i
--$path
--EOF
--    popd >/dev/null
--done
--echo
--
--echo 'Done.'
--- 
-2.45.2
-
+T24gVGh1LCBKdWwgMTgsIDIwMjQgYXQgMDU6MDc6NTNBTSAtMDQwMCwgWWFvIFhpbmd0YW8gd3Jv
+dGU6DQo+IDwhRE9DVFlQRSBodG1sPjwhLS0gQmFObkVyQmxVckZsRS1Cb0R5LXN0YXJ0IC0tPjwh
+LS0gUHJlaGVhZGVyIFRleHQgOiBCRUdJTiAtLT48bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5
+cGUiIGNvbnRlbnQ9InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCI+PGRpdiBzdHlsZT0iZGlzcGxh
+eTpub25lICFpbXBvcnRhbnQ7ZGlzcGxheTpub25lO3Zpc2liaWxpdHk6aGlkZGVuO21zby1oaWRl
+OmFsbDtmb250LXNpemU6MXB4O2NvbG9yOiNmZmZmZmY7bGluZS1oZWlnaHQ6MXB4O2hlaWdodDow
+cHg7bWF4LWhlaWdodDowcHg7b3BhY2l0eTowO292ZXJmbG93OmhpZGRlbjsiPg0KPiAgV2hlbiBp
+bmplY3RpbmcgYSBuZXcgcG9pc29uZWQgcmVnaW9uIHRocm91Z2ggcW1wX2N4bF9pbmplY3RfcG9p
+c29uKCksIHRoZSBuZXdseSBpbmplY3RlZCByZWdpb24gc2hvdWxkIG5vdCBvdmVybGFwIHdpdGgg
+ZXhpc3RpbmcgcG9pc29uZWQgcmVnaW9ucy4gVGhlIGN1cnJlbnQgdmFsaWRhdGlvbiBtZXRob2Qg
+ZG9lcyBub3QgY29uc2lkZXIgdGhlIGZvbGxvd2luZyBvdmVybGFwcGluZyByZWdpb246IOKUjOKU
+gOKUgOKUgOKUrOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUrOKUgOKUgOKUgOKUkA0KPiA8L2Rpdj4N
+Cj4gPCEtLSBQcmVoZWFkZXIgVGV4dCA6IEVORCAtLT4NCj4gDQo+IDwhLS0gRW1haWwgQmFubmVy
+IDogQkVHSU4gLS0+DQo+IDxkaXYgc3R5bGU9ImRpc3BsYXk6bm9uZSAhaW1wb3J0YW50O2Rpc3Bs
+YXk6bm9uZTt2aXNpYmlsaXR5OmhpZGRlbjttc28taGlkZTphbGw7Zm9udC1zaXplOjFweDtjb2xv
+cjojZmZmZmZmO2xpbmUtaGVpZ2h0OjFweDtoZWlnaHQ6MHB4O21heC1oZWlnaHQ6MHB4O29wYWNp
+dHk6MDtvdmVyZmxvdzpoaWRkZW47Ij5aalFjbVFSWUZwZnB0QmFubmVyU3RhcnQ8L2Rpdj4NCj4g
+DQo+IDwhLS1baWYgKChpZSl8KG1zbykpXT4NCj4gICA8dGFibGUgYm9yZGVyPSIwIiBjZWxsc3Bh
+Y2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiIHdpZHRoPSIxMDAlIiBzdHlsZT0icGFkZGluZzogMTZw
+eCAwcHggMTZweCAwcHg7IGRpcmVjdGlvbjogbHRyIiA+PHRyPjx0ZD4NCj4gICAgIDx0YWJsZSBi
+b3JkZXI9IjAiIGNlbGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgc3R5bGU9InBhZGRpbmc6
+IDBweCAxMHB4IDVweCA2cHg7IHdpZHRoOiAxMDAlOyBib3JkZXItcmFkaXVzOjRweDsgYm9yZGVy
+LXRvcDo0cHggc29saWQgI2YzMjMyMztiYWNrZ3JvdW5kLWNvbG9yOiNGMDdCN0I7Ij48dHI+PHRk
+IHZhbGlnbj0idG9wIj4NCj4gICAgICAgPHRhYmxlIGFsaWduPSJsZWZ0IiBib3JkZXI9IjAiIGNl
+bGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgc3R5bGU9InBhZGRpbmc6IDRweCA4cHggNHB4
+IDhweCI+DQo+IAk8dHI+PHRkIHN0eWxlPSJjb2xvcjojMDAwMDAwOyBmb250LWZhbWlseTogJ0Fy
+aWFsJywgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6Ym9sZDsgZm9udC1zaXplOjE0cHg7IGRpcmVj
+dGlvbjogbHRyIj4NCj4gCSAgVGhpcyBNZXNzYWdlIElzIEZyb20gYW4gRXh0ZXJuYWwgU2VuZGVy
+DQo+IAk8L3RkPjwvdHI+DQo+IAk8dHI+PHRkIHN0eWxlPSJjb2xvcjojMDAwMDAwOyBmb250LXdl
+aWdodDpub3JtYWw7IGZvbnQtZmFtaWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmOyBmb250LXNpemU6
+MTJweDsgZGlyZWN0aW9uOiBsdHIiPg0KPiAgICAgICAgICAgVXNlIGNhdXRpb24gb3BlbmluZyBm
+aWxlcywgY2xpY2tpbmcgbGlua3Mgb3IgcmVzcG9uZGluZyB0byByZXF1ZXN0cy4NCj4gCTwvdGQ+
+PC90cj4NCj4gDQo+ICAgICAgIDwvdGFibGU+DQo+IA0KPiAgICAgPC90ZD48L3RyPjwvdGFibGU+
+DQo+ICAgPC90ZD48L3RyPjwvdGFibGU+DQo+IDwhW2VuZGlmXS0tPg0KPiANCj4gPCFbaWYgISgo
+aWUpfChtc28pKV0+DQo+ICAgPGRpdiBkaXI9Imx0ciIgaWQ9InBmcHRCYW5uZXJna2RjbWl1IiBz
+dHlsZT0iYWxsOiByZXZlcnQgIWltcG9ydGFudDsgZGlzcGxheTpibG9jayAhaW1wb3J0YW50OyB0
+ZXh0LWFsaWduOiBsZWZ0ICFpbXBvcnRhbnQ7IG1hcmdpbjoxNnB4IDBweCAxNnB4IDBweCAhaW1w
+b3J0YW50OyBwYWRkaW5nOjhweCAxNnB4IDhweCAxNnB4ICFpbXBvcnRhbnQ7IGJvcmRlci1yYWRp
+dXM6IDRweCAhaW1wb3J0YW50OyBtaW4td2lkdGg6IDIwMHB4ICFpbXBvcnRhbnQ7IGJhY2tncm91
+bmQtY29sb3I6ICNGMDdCN0IgIWltcG9ydGFudDsgYmFja2dyb3VuZC1jb2xvcjogI0YwN0I3Qjsg
+Ym9yZGVyLXRvcDogNHB4IHNvbGlkICNmMzIzMjMgIWltcG9ydGFudDsgYm9yZGVyLXRvcDogNHB4
+IHNvbGlkICNmMzIzMjM7Ij4NCj4gICAgIDxkaXYgaWQ9InBmcHRCYW5uZXJna2RjbWl1IiBzdHls
+ZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBmbG9hdDpsZWZ0ICFpbXBvcnRhbnQ7IGRpc3BsYXk6
+YmxvY2sgIWltcG9ydGFudDsgbWFyZ2luOiAwcHggMHB4IDFweCAwcHggIWltcG9ydGFudDsgbWF4
+LXdpZHRoOiA2MDBweCAhaW1wb3J0YW50OyI+DQo+ICAgICAgIDxkaXYgaWQ9InBmcHRCYW5uZXJn
+a2RjbWl1IiBzdHlsZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBkaXNwbGF5OmJsb2NrICFpbXBv
+cnRhbnQ7IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgYmFja2dyb3VuZC1jb2xvcjog
+I0YwN0I3QiAhaW1wb3J0YW50OyBjb2xvcjojMDAwMDAwICFpbXBvcnRhbnQ7IGNvbG9yOiMwMDAw
+MDA7IGZvbnQtZmFtaWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmICFpbXBvcnRhbnQ7IGZvbnQtZmFt
+aWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmOyBmb250LXdlaWdodDpib2xkICFpbXBvcnRhbnQ7IGZv
+bnQtd2VpZ2h0OmJvbGQ7IGZvbnQtc2l6ZToxNHB4ICFpbXBvcnRhbnQ7IGxpbmUtaGVpZ2h0OjE4
+cHggIWltcG9ydGFudDsgbGluZS1oZWlnaHQ6MThweCI+DQo+IAlUaGlzIE1lc3NhZ2UgSXMgRnJv
+bSBhbiBFeHRlcm5hbCBTZW5kZXINCj4gICAgICAgPC9kaXY+DQo+ICAgICAgIDxkaXYgaWQ9InBm
+cHRCYW5uZXJna2RjbWl1IiBzdHlsZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBkaXNwbGF5OmJs
+b2NrICFpbXBvcnRhbnQ7IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgYmFja2dyb3Vu
+ZC1jb2xvcjogI0YwN0I3QiAhaW1wb3J0YW50OyBjb2xvcjojMDAwMDAwICFpbXBvcnRhbnQ7IGNv
+bG9yOiMwMDAwMDA7IGZvbnQtd2VpZ2h0Om5vcm1hbDsgZm9udC1mYW1pbHk6ICdBcmlhbCcsIHNh
+bnMtc2VyaWYgIWltcG9ydGFudDsgZm9udC1mYW1pbHk6ICdBcmlhbCcsIHNhbnMtc2VyaWY7IGZv
+bnQtc2l6ZToxMnB4ICFpbXBvcnRhbnQ7IGxpbmUtaGVpZ2h0OjE4cHggIWltcG9ydGFudDsgbGlu
+ZS1oZWlnaHQ6MThweDsgbWFyZ2luLXRvcDoycHggIWltcG9ydGFudDsiPg0KPiBVc2UgY2F1dGlv
+biBvcGVuaW5nIGZpbGVzLCBjbGlja2luZyBsaW5rcyBvciByZXNwb25kaW5nIHRvIHJlcXVlc3Rz
+Lg0KPiAgICAgICA8L2Rpdj4NCj4gDQo+ICAgICA8L2Rpdj4NCj4gDQo+ICAgICA8ZGl2IHN0eWxl
+PSJjbGVhcjogYm90aCAhaW1wb3J0YW50OyBkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50OyB2aXNp
+YmlsaXR5OiBoaWRkZW4gIWltcG9ydGFudDsgbGluZS1oZWlnaHQ6IDAgIWltcG9ydGFudDsgZm9u
+dC1zaXplOiAwLjAxcHggIWltcG9ydGFudDsgaGVpZ2h0OiAwcHgiPiZuYnNwOzwvZGl2Pg0KPiAg
+IDwvZGl2Pg0KPiA8IVtlbmRpZl0+DQo+IA0KPiA8ZGl2IHN0eWxlPSJkaXNwbGF5Om5vbmUgIWlt
+cG9ydGFudDtkaXNwbGF5Om5vbmU7dmlzaWJpbGl0eTpoaWRkZW47bXNvLWhpZGU6YWxsO2ZvbnQt
+c2l6ZToxcHg7Y29sb3I6I2ZmZmZmZjtsaW5lLWhlaWdodDoxcHg7aGVpZ2h0OjBweDttYXgtaGVp
+Z2h0OjBweDtvcGFjaXR5OjA7b3ZlcmZsb3c6aGlkZGVuOyI+WmpRY21RUllGcGZwdEJhbm5lckVu
+ZDwvZGl2Pg0KPiA8IS0tIEVtYWlsIEJhbm5lciA6IEVORCAtLT4NCj4gDQo+IDwhLS0gQmFObkVy
+QmxVckZsRS1Cb0R5LWVuZCAtLT4NCj4gPGh0bWw+DQo+IDxoZWFkPjwhLS0gQmFObkVyQmxVckZs
+RS1IZUFkRXItc3RhcnQgLS0+DQo+IDxzdHlsZT4NCj4gICAjcGZwdEJhbm5lcmdrZGNtaXUgeyBh
+bGw6IHJldmVydCAhaW1wb3J0YW50OyBkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50OyANCj4gICAg
+IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgb3BhY2l0eTogMSAhaW1wb3J0YW50OyAN
+Cj4gICAgIGJhY2tncm91bmQtY29sb3I6ICNGMDdCN0IgIWltcG9ydGFudDsgDQo+ICAgICBtYXgt
+d2lkdGg6IG5vbmUgIWltcG9ydGFudDsgbWF4LWhlaWdodDogbm9uZSAhaW1wb3J0YW50IH0NCj4g
+ICAucGZwdFByaW1hcnlCdXR0b25na2RjbWl1OmhvdmVyLCAucGZwdFByaW1hcnlCdXR0b25na2Rj
+bWl1OmZvY3VzIHsNCj4gICAgIGJhY2tncm91bmQtY29sb3I6ICNlZjViNWIgIWltcG9ydGFudDsg
+fQ0KPiAgIC5wZnB0UHJpbWFyeUJ1dHRvbmdrZGNtaXU6YWN0aXZlIHsNCj4gICAgIGJhY2tncm91
+bmQtY29sb3I6ICNmMzIzMjMgIWltcG9ydGFudDsgfQ0KPiA8L3N0eWxlPg0KPiANCj4gPCEtLSBC
+YU5uRXJCbFVyRmxFLUhlQWRFci1lbmQgLS0+DQo+IDwvaGVhZD48Ym9keT48cHJlIHN0eWxlPSJm
+b250LWZhbWlseTogc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMDAlOyB3aGl0ZS1zcGFjZTogcHJl
+LXdyYXA7IHdvcmQtd3JhcDogYnJlYWstd29yZCI+V2hlbiBpbmplY3RpbmcgYSBuZXcgcG9pc29u
+ZWQgcmVnaW9uIHRocm91Z2ggcW1wX2N4bF9pbmplY3RfcG9pc29uKCksDQo+IHRoZSBuZXdseSBp
+bmplY3RlZCByZWdpb24gc2hvdWxkIG5vdCBvdmVybGFwIHdpdGggZXhpc3RpbmcgcG9pc29uZWQN
+Cj4gcmVnaW9ucy4NCj4gDQo+IFRoZSBjdXJyZW50IHZhbGlkYXRpb24gbWV0aG9kIGRvZXMgbm90
+IGNvbnNpZGVyIHRoZSBmb2xsb3dpbmcNCj4gb3ZlcmxhcHBpbmcgcmVnaW9uOg0KPiDilIzilIDi
+lIDilIDilKzilIDilIDilIDilIDilIDilIDilIDilKzilIDilIDilIDilJANCj4g4pSCYSAg4pSC
+ICBiKGEpIOKUgmEgIOKUgg0KPiDilJTilIDilIDilIDilLTilIDilIDilIDilIDilIDilIDilIDi
+lLTilIDilIDilIDilJgNCj4gKGEgaXMgYSBuZXdseSBhZGRlZCByZWdpb24sIGIgaXMgYW4gZXhp
+c3RpbmcgcmVnaW9uLCBhbmQgYiBpcyBhDQo+ICBzdWJyZWdpb24gb2YgYSkNCj4gDQo+IFNpZ25l
+ZC1vZmYtYnk6IFlhbyBYaW5ndGFvICZsdDt5YW94dC5mbnN0QGZ1aml0c3UuY29tJmd0Ow0KPiAt
+LS0NCj4gIGh3L21lbS9jeGxfdHlwZTMuYyB8IDQgJiM0MzstLS0NCj4gIDEgZmlsZSBjaGFuZ2Vk
+LCAxIGluc2VydGlvbigmIzQzOyksIDMgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEv
+aHcvbWVtL2N4bF90eXBlMy5jIGIvaHcvbWVtL2N4bF90eXBlMy5jDQo+IGluZGV4IDM1YWM1OTg4
+M2E1Yi4uOGUzMmRlMzI3OTA4IDEwMDY0NA0KPiAtLS0gYS9ody9tZW0vY3hsX3R5cGUzLmMNCj4g
+JiM0MzsmIzQzOyYjNDM7IGIvaHcvbWVtL2N4bF90eXBlMy5jDQo+IEBAIC0xMzMxLDkgJiM0Mzsx
+MzMxLDcgQEAgdm9pZCBxbXBfY3hsX2luamVjdF9wb2lzb24oY29uc3QgY2hhciAqcGF0aCwgdWlu
+dDY0X3Qgc3RhcnQsIHVpbnQ2NF90IGxlbmd0aCwNCj4gICAgICBjdDNkID0gQ1hMX1RZUEUzKG9i
+aik7DQo+ICANCj4gICAgICBRTElTVF9GT1JFQUNIKHAsICZhbXA7Y3QzZC0mZ3Q7cG9pc29uX2xp
+c3QsIG5vZGUpIHsNCj4gLSAgICAgICAgaWYgKCgoc3RhcnQgJmd0Oz0gcC0mZ3Q7c3RhcnQpICZh
+bXA7JmFtcDsgKHN0YXJ0ICZsdDsgcC0mZ3Q7c3RhcnQgJiM0MzsgcC0mZ3Q7bGVuZ3RoKSkgfHwN
+Cj4gLSAgICAgICAgICAgICgoc3RhcnQgJiM0MzsgbGVuZ3RoICZndDsgcC0mZ3Q7c3RhcnQpICZh
+bXA7JmFtcDsNCj4gLSAgICAgICAgICAgICAoc3RhcnQgJiM0MzsgbGVuZ3RoICZsdDs9IHAtJmd0
+O3N0YXJ0ICYjNDM7IHAtJmd0O2xlbmd0aCkpKSB7DQo+ICYjNDM7ICAgICAgICBpZiAoKHN0YXJ0
+ICZsdDsgcC0mZ3Q7c3RhcnQgJiM0MzsgcC0mZ3Q7bGVuZ3RoKSAmYW1wOyZhbXA7IChzdGFydCAm
+IzQzOyBsZW5ndGggJmd0OyBwLSZndDtzdGFydCkpIHsNCj4gICAgICAgICAgICAgIGVycm9yX3Nl
+dGcoZXJycCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgJnF1b3Q7T3ZlcmxhcCB3aXRoIGV4
+aXN0aW5nIHBvaXNvbmVkIHJlZ2lvbiBub3Qgc3VwcG9ydGVkJnF1b3Q7KTsNCj4gICAgICAgICAg
+ICAgIHJldHVybjsNCg0KQXMgbWVudGlvbmVkIGJ5IFBldGVyLCB3ZSBjYW4gdXNlIHJhbmdlc19v
+dmVybGFwKCkgdG8gaW1wcm92ZSB0aGUNCmNvZGUgcmVhZGFiaWxpdHkuIE90aGVyIHRoYW4gdGhh
+dCwgbG9va3MgZ29vZCB0IG1lLg0KDQpidHcsIG5vdCBzdXJlIG9ubHkgbWUgb3Igbm90LCBidXQg
+dGhlIG1lc3NhZ2UgZG9lcyBub3QgZGlzcGxheQ0KY29ycmVjdGx5IGluIG11dHQsIHNlZW1zIG5v
+dCBhIHBsYWluIHRleHQgbWVzc2FnZSwgYnV0IGxvb2tzIGZpbmUgaW4NCm91dGxvb2suDQoNCkZh
+bg0KPiAtLSANCj4gMi4zNy4zDQo+IA0KPiA8L3ByZT48L2JvZHk+PC9odG1sPg==
 
