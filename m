@@ -4,76 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D404AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4B5C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMN5-00089a-6F; Thu, 18 Jul 2024 04:20:15 -0400
+	id 1sUMNF-0000PZ-3D; Thu, 18 Jul 2024 04:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMz-00081y-CD
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:10 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMw-0008CX-ER
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721290806; x=1752826806;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=uhA1r9Rded90vwo+DCSZ0kUCPRkyxxhBrSFPHgI52S0=;
- b=OoUq/Q/e8vhi2s+JYuFR9+xQXJaE9Vo2iqgJLwYP3Ej+/3v/540pPCLK
- s+bfm3q3hlIjlo95ZR4hyOv7g/++m0q5CUzZdwBdg+n7N+1gcbkiad+Ds
- yrh1TIvW7g+bHOOXv/rocXSWqcClk+w17as3B9RHkQfI1kl7BF1lfnTNz
- Iv5Z7xfGDQc0m90Ynh+yfJH9H6tST4DpYjQmelBBSvBVgDV74cLj/Evux
- uRBs0un1pXK+3ZrVBUcLN43PVcQzaZUTsxCWrGNn6MRBLFJFif/MlzhW5
- 5ete8mAKxaj45iMxG9Ik1Hk9CdJqR+Fdj9ZarA4m57em0L5HPAtchVWEk Q==;
-X-CSE-ConnectionGUID: a3R9e3JFSkKZfogsugCzaQ==
-X-CSE-MsgGUID: k+/fr3C9RSaQw3vMjt4Ceg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996327"
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996327"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:05 -0700
-X-CSE-ConnectionGUID: jOjSYIZISeCLxsw/gnX75Q==
-X-CSE-MsgGUID: HznIbPiERVmGfm/JTE1DoA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717400"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:00 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v1 10/17] intel_iommu: Process PASID-based iotlb invalidation
-Date: Thu, 18 Jul 2024 16:16:29 +0800
-Message-Id: <20240718081636.879544-11-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240718081636.879544-1-zhenzhong.duan@intel.com>
-References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sUMND-0000MB-7c
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sUMN9-0008Ut-KL
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxTeg40Jhm6YEAAA--.1961S3;
+ Thu, 18 Jul 2024 16:20:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxWcY10JhmK49NAA--.42795S3; 
+ Thu, 18 Jul 2024 16:20:08 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch: Remove unimplemented extioi INT_encode mode
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20240718072557.724242-1-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <43ab5a4e-32b6-9068-7be7-0de3ca6d0dfe@loongson.cn>
+Date: Thu, 18 Jul 2024 16:20:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240718072557.724242-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8BxWcY10JhmK49NAA--.42795S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJrW7JrWUAw4rCw1ktF1DJwc_yoW8CF1kpF
+ nrCa4rGa1UKrWUCw4vg3sxXrnrGr93Wry2gF42gFy8JFn3Z34UZw15tas3JFWDA3ykK39a
+ qFyfua45Xa1qvrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
+ y3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.124,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,109 +81,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PASID-based iotlb (piotlb) is used during walking Intel
-VT-d stage-1 page table.
 
-This emulates the stage-1 page table iotlb invalidation requested
-by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu_internal.h |  3 +++
- hw/i386/intel_iommu.c          | 45 ++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+On 2024/7/18 下午3:25, Song Gao wrote:
+> Remove extioi INT_encode encode mode, because we don't emulate it.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/loongarch/virt.c                | 6 ------
+>   include/hw/intc/loongarch_extioi.h | 1 -
+>   2 files changed, 7 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index e592b1b6b7..2103a1069f 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -951,9 +951,6 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+>           if (val & BIT_ULL(IOCSRM_EXTIOI_EN)) {
+>               features |= BIT(EXTIOI_ENABLE);
+>           }
+> -        if (val & BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE)) {
+> -            features |= BIT(EXTIOI_ENABLE_INT_ENCODE);
+> -        }
+I do not think this modification is necessary.
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index cf0f176e06..7dd8176e86 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -470,6 +470,9 @@ typedef union VTDInvDesc VTDInvDesc;
- #define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
- #define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) & \
-                                              VTD_DOMAIN_ID_MASK)
-+#define VTD_INV_DESC_PIOTLB_ADDR(val)     ((val) & ~0xfffULL)
-+#define VTD_INV_DESC_PIOTLB_AM(val)       ((val) & 0x3fULL)
-+#define VTD_INV_DESC_PIOTLB_IH(val)       (((val) >> 6) & 0x1)
- 
- /* Information about page-selective IOTLB invalidate */
- struct VTDIOTLBPageInvInfo {
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 8d47e5ba78..8ebb6dbd7d 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -322,6 +322,28 @@ static gboolean vtd_hash_remove_by_page(gpointer key, gpointer value,
-     return (entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb;
- }
- 
-+static gboolean vtd_hash_remove_by_page_piotlb(gpointer key, gpointer value,
-+                                               gpointer user_data)
-+{
-+    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
-+    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
-+    uint64_t gfn = (info->addr >> VTD_PAGE_SHIFT_4K) & info->mask;
-+    uint64_t gfn_tlb = (info->addr & entry->mask) >> VTD_PAGE_SHIFT_4K;
-+
-+    /*
-+     * According to spec, PASID-based-IOTLB Invalidation in page granularity
-+     * doesn't invalidate IOTLB entries caching second-stage (PGTT=010b)
-+     * or pass-through (PGTT=100b) mappings. Nested isn't supported yet,
-+     * so only need to check first-stage (PGTT=001b) mappings.
-+     */
-+    if (entry->pgtt != VTD_SM_PASID_ENTRY_FLT) {
-+        return false;
-+    }
-+
-+    return entry->domain_id == info->domain_id && entry->pasid == info->pasid &&
-+           ((entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb);
-+}
-+
- /* Reset all the gen of VTDAddressSpace to zero and set the gen of
-  * IntelIOMMUState to 1.  Must be called with IOMMU lock held.
-  */
-@@ -2886,11 +2908,30 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-     }
- }
- 
-+static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-+                                       uint32_t pasid, hwaddr addr, uint8_t am,
-+                                       bool ih)
-+{
-+    VTDIOTLBPageInvInfo info;
-+
-+    info.domain_id = domain_id;
-+    info.pasid = pasid;
-+    info.addr = addr;
-+    info.mask = ~((1 << am) - 1);
-+
-+    vtd_iommu_lock(s);
-+    g_hash_table_foreach_remove(s->iotlb,
-+                                vtd_hash_remove_by_page_piotlb, &info);
-+    vtd_iommu_unlock(s);
-+}
-+
- static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-                                     VTDInvDesc *inv_desc)
- {
-     uint16_t domain_id;
-     uint32_t pasid;
-+    uint8_t am;
-+    hwaddr addr;
- 
-     if ((inv_desc->val[0] & VTD_INV_DESC_PIOTLB_RSVD_VAL0) ||
-         (inv_desc->val[1] & VTD_INV_DESC_PIOTLB_RSVD_VAL1)) {
-@@ -2907,6 +2948,10 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-         break;
- 
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-+        am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-+        addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
-+        vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
-+                                   VTD_INV_DESC_PIOTLB_IH(inv_desc->val[1]));
-         break;
- 
-     default:
--- 
-2.34.1
+>   
+>           address_space_stl(&lvms->as_iocsr,
+>                             EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+> @@ -1002,9 +999,6 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+>           if (features & BIT(EXTIOI_ENABLE)) {
+>               ret |= BIT_ULL(IOCSRM_EXTIOI_EN);
+>           }
+> -        if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+> -            ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+> -        }
+Ditto, I do not think this modification is necessary also.
+>           break;
+>       default:
+>           g_assert_not_reached();
+> diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+> index eccc2e0d18..626a37dfa1 100644
+> --- a/include/hw/intc/loongarch_extioi.h
+> +++ b/include/hw/intc/loongarch_extioi.h
+> @@ -50,7 +50,6 @@
+>   #define  EXTIOI_HAS_CPU_ENCODE       (3)
+>   #define  EXTIOI_VIRT_HAS_FEATURES    (BIT(EXTIOI_HAS_VIRT_EXTENSION)  \
+>                                         | BIT(EXTIOI_HAS_ENABLE_OPTION) \
+> -                                      | BIT(EXTIOI_HAS_INT_ENCODE)    \
+>                                         | BIT(EXTIOI_HAS_CPU_ENCODE))
+Only this modification will be ok.
+
+Regards
+Bibo Mao
+>   #define EXTIOI_VIRT_CONFIG           (0x4)
+>   #define  EXTIOI_ENABLE               (1)
+> 
 
 
