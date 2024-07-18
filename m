@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AAB6C3DA63
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 15:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994EDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 15:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUSwA-0004Rk-Qf; Thu, 18 Jul 2024 11:20:54 -0400
+	id 1sUT5q-0003sx-1f; Thu, 18 Jul 2024 11:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUSw8-0004Qk-U7
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 11:20:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUT5N-0003r1-UV
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 11:30:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUSw5-00076l-BY
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 11:20:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUT5K-0001Cj-A9
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 11:30:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721316046;
+ s=mimecast20190719; t=1721316620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dfk/ps4REpGUzBFcO/mjybkw26uJ7hbTETRjtXpB8LY=;
- b=HWqpVIg08YU+MxrJYQY7y2cknTFCJL8wfxeYc/mI+dj7yJQ3GrRcd2zVp5E76kJnzKrLbs
- E9gjMwGAZyvpUSVlN9/366nyxj4QqVb0HTb2RBEwCLui4fxNnH4+UGifADPmQIIH6mzXSr
- 4PtgTloHDcswZqWB9//HTMaKAbCQCRs=
+ bh=NUq3gMiXhEIDTFsyG9vU1HCksth0vtW1t12yWRL/cYM=;
+ b=C5f7hatHlq+KVRFwaTH60LARblGTaS3jcBnu9bwGfgFPVmO50kHZ7aKMoPwwXNRiRj+MME
+ +CvJv0nT6gopfz6WIoOFixUV/wRjc/6f6zz3GVV0zuGBfeKyW66Lmtr9qhjPqsYHvNpbdT
+ teh5b+4YoR5Dv8NVJSm91/jtPdLH5+g=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-zu0Daln2Ohya02GFXWauhA-1; Thu,
- 18 Jul 2024 11:20:44 -0400
-X-MC-Unique: zu0Daln2Ohya02GFXWauhA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-oOChC6XxOoWnYgAAiYAVHg-1; Thu,
+ 18 Jul 2024 11:30:17 -0400
+X-MC-Unique: oOChC6XxOoWnYgAAiYAVHg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 097651955D4A; Thu, 18 Jul 2024 15:20:42 +0000 (UTC)
+ id DEBF21954229; Thu, 18 Jul 2024 15:30:15 +0000 (UTC)
 Received: from redhat.com (unknown [10.39.193.0])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 537B01955F3B; Thu, 18 Jul 2024 15:20:39 +0000 (UTC)
-Date: Thu, 18 Jul 2024 17:20:36 +0200
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6472B19560AA; Thu, 18 Jul 2024 15:30:13 +0000 (UTC)
+Date: Thu, 18 Jul 2024 17:30:10 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: Amjad Alsharafi <amjadsharafi10@gmail.com>
 Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  "open list:vvfat" <qemu-block@nongnu.org>
-Subject: Re: [PATCH v5 4/5] vvfat: Fix reading files with non-continuous
- clusters
-Message-ID: <ZpkyxA3s_gzQE7gW@redhat.com>
+Subject: Re: [PATCH v5 5/5] iotests: Add `vvfat` tests
+Message-ID: <Zpk1AilffKAdSgGt@redhat.com>
 References: <cover.1718195956.git.amjadsharafi10@gmail.com>
- <9c0be954b608da7d47c6a0c120da332c16798d2a.1718195956.git.amjadsharafi10@gmail.com>
+ <0aa2f5704890e20e3dcb4f33ce68a8fb7393e2f2.1718195956.git.amjadsharafi10@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9c0be954b608da7d47c6a0c120da332c16798d2a.1718195956.git.amjadsharafi10@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+In-Reply-To: <0aa2f5704890e20e3dcb4f33ce68a8fb7393e2f2.1718195956.git.amjadsharafi10@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -84,78 +83,117 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Am 12.06.2024 um 14:43 hat Amjad Alsharafi geschrieben:
-> When reading with `read_cluster` we get the `mapping` with
-> `find_mapping_for_cluster` and then we call `open_file` for this
-> mapping.
-> The issue appear when its the same file, but a second cluster that is
-> not immediately after it, imagine clusters `500 -> 503`, this will give
-> us 2 mappings one has the range `500..501` and another `503..504`, both
-> point to the same file, but different offsets.
+> Added several tests to verify the implementation of the vvfat driver.
 > 
-> When we don't open the file since the path is the same, we won't assign
-> `s->current_mapping` and thus accessing way out of bound of the file.
+> We needed a way to interact with it, so created a basic `fat16.py` driver
+> that handled writing correct sectors for us.
 > 
-> From our example above, after `open_file` (that didn't open anything) we
-> will get the offset into the file with
-> `s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
-> give us `0x2000 * (504-500)`, which is out of bound for this mapping and
-> will produce some issues.
+> Added `vvfat` to the non-generic formats, as its not a normal image format.
 > 
 > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-> ---
->  block/vvfat.c | 23 ++++++++++++++++-------
->  1 file changed, 16 insertions(+), 7 deletions(-)
-> 
-> diff --git a/block/vvfat.c b/block/vvfat.c
-> index b63ac5d045..fc570d0610 100644
-> --- a/block/vvfat.c
-> +++ b/block/vvfat.c
-> @@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
->  {
->      if(!mapping)
->          return -1;
-> +    int new_path = 1;
->      if(!s->current_mapping ||
-> -            strcmp(s->current_mapping->path,mapping->path)) {
-> -        /* open file */
-> -        int fd = qemu_open_old(mapping->path,
-> +            s->current_mapping->info.file.offset
-> +                != mapping->info.file.offset ||
 
-I'm wondering if this couldn't just be s->current_mapping != mapping?
-
-> +            (new_path = strcmp(s->current_mapping->path, mapping->path))) {
-
-If both the path and the offset change, we still want to set new_path, I
-think. And if we didn't already have a mapping, we also need to open the
-file.
-
-Actually, setting a variable inside the condition makes it kind of hard
-to read, so if s->current_mapping != mapping works, we can do the check
-only in the conditon below:
-
-> +        if (new_path) {
-
-if (!s->current_mapping ||
-    strcmp(s->current_mapping->path, mapping->path))
-
-> +            /* open file */
-> +            int fd = qemu_open_old(mapping->path,
->                                 O_RDONLY | O_BINARY | O_LARGEFILE);
-> -        if(fd<0)
-> -            return -1;
-> -        vvfat_close_current_file(s);
-> -        s->current_fd = fd;
-> +            if (fd < 0) {
-> +                return -1;
-> +            }
-> +            vvfat_close_current_file(s);
+> +    def truncate_file(
+> +        self,
+> +        entry: FatDirectoryEntry,
+> +        new_size: int,
+> +        allocate_non_continuous: bool = False,
+> +    ):
+> +        """
+> +        Truncate the file at the given path to the new size.
+> +        """
+> +        if entry is None:
+> +            return Exception("entry is None")
+> +        if entry.attributes & 0x10 != 0:
+> +            raise Exception(f"{entry.whole_name()} is a directory")
 > +
-> +            s->current_fd = fd;
-> +        }
-> +        assert(s->current_fd);
->          s->current_mapping = mapping;
->      }
+> +        def clusters_from_size(size: int):
+> +            return (
+> +                size + self.boot_sector.cluster_bytes() - 1
+> +            ) // self.boot_sector.cluster_bytes()
+> +
+> +        # First, allocate new FATs if we need to
+> +        required_clusters = clusters_from_size(new_size)
+> +        current_clusters = clusters_from_size(entry.size_bytes)
+> +
+> +        affected_clusters = set()
+> +
+> +        # Keep at least one cluster, easier to manage this way
+> +        if required_clusters == 0:
+> +            required_clusters = 1
+> +        if current_clusters == 0:
+> +            current_clusters = 1
+> +
+> +        if required_clusters > current_clusters:
+> +            # Allocate new clusters
+> +            cluster = entry.cluster
+> +            to_add = required_clusters
+> +            for _ in range(current_clusters - 1):
+> +                to_add -= 1
+> +                cluster = self.next_cluster(cluster)
+> +            assert required_clusters > 0, "No new clusters to allocate"
+> +            assert cluster is not None, "Cluster is None"
+> +            assert (
+> +                self.next_cluster(cluster) is None
+> +            ), "Cluster is not the last cluster"
+> +
+> +            # Allocate new clusters
+> +            for _ in range(to_add - 1):
+> +                new_cluster = self.next_free_cluster()
+> +                if allocate_non_continuous:
+> +                    new_cluster = self.next_free_cluster_non_continuous()
+
+The normal self.next_free_cluster() could be in an else branch. No
+reason to search for a free cluster when you immediately overwrite it
+anyway.
+
+> +                self.write_fat_entry(cluster, new_cluster)
+> +                self.write_fat_entry(new_cluster, 0xFFFF)
+> +                cluster = new_cluster
+> +
+> +        elif required_clusters < current_clusters:
+> +            # Truncate the file
+> +            cluster = entry.cluster
+> +            for _ in range(required_clusters - 1):
+> +                cluster = self.next_cluster(cluster)
+> +            assert cluster is not None, "Cluster is None"
+> +
+> +            next_cluster = self.next_cluster(cluster)
+> +            # mark last as EOF
+> +            self.write_fat_entry(cluster, 0xFFFF)
+> +            # free the rest
+> +            while next_cluster is not None:
+> +                cluster = next_cluster
+> +                next_cluster = self.next_cluster(next_cluster)
+> +                self.write_fat_entry(cluster, 0)
+> +
+> +        self.flush_fats()
+> +
+> +        # verify number of clusters
+> +        cluster = entry.cluster
+> +        count = 0
+> +        while cluster is not None:
+> +            count += 1
+> +            affected_clusters.add(cluster)
+> +            cluster = self.next_cluster(cluster)
+> +        assert (
+> +            count == required_clusters
+> +        ), f"Expected {required_clusters} clusters, got {count}"
+> +
+> +        # update the size
+> +        entry.size_bytes = new_size
+> +        self.update_direntry(entry)
+> +
+> +        # trigger every affected cluster
+> +        for cluster in affected_clusters:
+> +            first_sector = self.boot_sector.first_sector_of_cluster(cluster)
+> +            first_sector_data = self.read_sectors(first_sector, 1)
+> +            self.write_sectors(first_sector, first_sector_data)
+
+Other than this, the patch looks good to me and we seem to test all the
+cases that are fixed by the previous patches.
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Tested-by: Kevin Wolf <kwolf@redhat.com>
 
 Kevin
 
