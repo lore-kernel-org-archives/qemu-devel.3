@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236DDC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A63FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURHv-00056l-2q; Thu, 18 Jul 2024 09:35:15 -0400
+	id 1sURHb-0003W7-HD; Thu, 18 Jul 2024 09:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHi-0004Tz-Nn
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:35:04 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHX-0002zj-8U
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:51 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHg-00008Q-ML
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:35:02 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-426636ef8c9so2755485e9.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:35:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHV-00007p-JV
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:50 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4266dc7591fso3024105e9.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721309699; x=1721914499; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721309688; x=1721914488; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HR1xIddw3GQAkekNAdVkZHeDlA8TRFDNATHX/fKoI7M=;
- b=vMKLqrX7xK9RvfqBUj0b8tRftMVs19mq87WkEhJ76zH8//wWcq/kMaH5b7SDtifh7u
- JzHrYRmt5Fg9nT7jUz/Jk/Tbyu9ZRYOhboALSUQYQ7ybfVEdhVy1HWiPARsOvgonUTOK
- lOfQQnGc2bW8Z4E6/I2/LSondddzvBwVp8vNB+Qt61tdyJLQwed9sURlzVETlsJ2Et8P
- WucV5tA/ZlZjicbGhNWgCGLQKdyeEgtfHzOMjmKQwuzcyxkg4Jlb4UjedIK/fxyFpI3f
- LO7tfXOJo22z1P5HqeLo3iWb4zEWKMk0e4VCLpYS17jiVMWx2KDIOG+RqMQdKSi8QnZj
- L8Fg==
+ bh=T0uj0dnWiKopOMNbBacKJZ22z85m6+wChhbexgzZrEw=;
+ b=h8sMqOdz5sjE8kRg5dfPIQk2AsX7XBoCYXVZ6TJDRSWJjNV8bZ/izLTJ1fMil3VtIb
+ xATJFe4bEy0bIuxKXIehumCcQL+j7kBo6RYqLoCoSbUJlQ4LdwJfiw6n+ZlWZW01jMC4
+ 5hF9PMHGsGVQEaUjco0DcWEReq+NGOZFKSlBkY0tsH6rxNK/VX/EIcYwgMFDD/RU8EPa
+ OgYwMKkbFTV+F5GZZfwUUVgGcCURjiXluRezJ1gz1b4C1oNRoy/8TQBPKd3KmjyDA0WI
+ HsId+QKgtjatw8Q1OXhqmfw0ieEI6iqKgusr0D5H/Mv6L/aU2/oNXJSpMgkwd8uwVXiN
+ 32Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721309699; x=1721914499;
+ d=1e100.net; s=20230601; t=1721309688; x=1721914488;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HR1xIddw3GQAkekNAdVkZHeDlA8TRFDNATHX/fKoI7M=;
- b=PvIdGPXwODuiNPKfjcfZxkZErYnZnsKjzCDmSp28uRqqAmkZJePLAL7xg4LZOetvA/
- WNwsiAJmZhQ4fNbhwxobqFby8GiaBubWg/yA/DoIe+fzMSiHk4s7ig/nDntM3HQEczxL
- 3ewxlDXqKHBUxL3PrB01eUbujei2tua84ZLXI+CqO0xsc3vG/lpsl/LnJS6aASN0Td4h
- 12Ga/fDzzG4PVJQO1z5DJwCw6m2uJXwVvjGvpHtO39rsn3LoPoWlUE2tSMyVRvadeDwr
- v1anQtGRzYi2ruOIHRV9tNf+Q/9G17bTYrU2TcKmg4tgw1iUtXXH17bGNixkwYHQ1u1N
- yPDA==
+ bh=T0uj0dnWiKopOMNbBacKJZ22z85m6+wChhbexgzZrEw=;
+ b=bgSZQqlktxTCOMrkbeIG+2KREK9dhpzbN0Fcl0yykX/fj+DQPvw6D5wy7t3jP3RHUn
+ 34BAJ5+FDUn04Kl8MBtkqjs/8K/xzBCaUYuOgDACWGVUvPBxk4dJZ664Hp+DLxuF4+wn
+ wUk82JARoX5U/JjcUemgmQAM8gwbK2NLvymBlDDU/sikbmE6xP/jQ7+UREH+FYhAloPD
+ Jr+TdhvKbqFYI6pIxY5JxvCtr3EesVr2pUOA7Klg+xmgBuzI6DLdyXx+/5BpeRw+2EWf
+ MVk/7FxmlwrntXCIemms0PNVRUCmhoh3DnojbMQfvf1gRn5BtdTZvfYopuWO/ho4Lm13
+ Wh6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMUhbnas5arQS5msQke646blTcMJ+L/Ht0gix3Whab2yZCgbHknB0FTN2ZETSARgOlNt7M+sSUbg/37vFkjooZHthUdGw=
-X-Gm-Message-State: AOJu0Ywyy2KucgtfCcGgxODka37VM/fWAyn5F2C0ypx8TABEUw2XkQc4
- NHFpiPaV30x5tAd6e7hOF9xlXNzSPFvsPPGYlQ//V8mkE8mDZnAXsUaUM8L1pn8=
-X-Google-Smtp-Source: AGHT+IEBuK9Wgl7v3Mb2ywXiYq6VH85EO8mCHaNnE6ZUF/gNrHIqrmwmN8BNf8sqgAnMdT11v2ZydA==
-X-Received: by 2002:a05:600c:4f89:b0:426:614b:1a72 with SMTP id
- 5b1f17b1804b1-427c2cbd7c2mr37102965e9.17.1721309699336; 
- Thu, 18 Jul 2024 06:34:59 -0700 (PDT)
+ AJvYcCWjS//bXg08Rk92x4qjbScvwLjxEqWNXi+oKG68ckdhkbf4wEhyS6RW0/J/SKE3OCVb6XEYeDuIpFssr3DHJaR7YYEgnPw=
+X-Gm-Message-State: AOJu0YxgsKwxM1aEp9+Yq8lKsIWflxSW5NyJYE6lGAku7ZepKtQczgg/
+ lyIHB7FdvqCvD9fl7itaCrMHyPjT6hXhhFSoOjUiIXdGv3tMIDJqZcZjsTxepx8=
+X-Google-Smtp-Source: AGHT+IGbhfT6rdqyGH0NNEZrN+jnmAXNB4XrqIAgr++4eOPvMabDDkrKyFuNrs2dZuyIqpC8Vc8BkA==
+X-Received: by 2002:a05:600c:1c02:b0:426:6eae:6596 with SMTP id
+ 5b1f17b1804b1-427c2d0227fmr37518395e9.25.1721309687921; 
+ Thu, 18 Jul 2024 06:34:47 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.113])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a94f50sm14311575e9.44.2024.07.18.06.34.57
+ 5b1f17b1804b1-427d2b1dfd8sm13891305e9.22.2024.07.18.06.34.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jul 2024 06:34:58 -0700 (PDT)
+ Thu, 18 Jul 2024 06:34:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -66,17 +66,18 @@ Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Xiaojuan Yang <yangxiaojuan@loongson.cn>,
  Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 18/19] hw/intc/loongson_ipi: Remove unused headers
-Date: Thu, 18 Jul 2024 15:33:10 +0200
-Message-ID: <20240718133312.10324-19-philmd@linaro.org>
+Subject: [PATCH v5 16/19] hw/loongarch/virt: Replace Loongson IPI with
+ LoongArch IPI
+Date: Thu, 18 Jul 2024 15:33:08 +0200
+Message-ID: <20240718133312.10324-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240718133312.10324-1-philmd@linaro.org>
 References: <20240718133312.10324-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Bibo Mao <maobibo@loongson.cn>
+
+Loongarch IPI inherits from class LoongsonIPICommonClass, and it
+only contains Loongarch 3A5000 virt machine specific interfaces,
+rather than mix different machine implementations together.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+[PMD: Rebased]
+Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Tested-by: Bibo Mao <maobibo@loongson.cn>
 Acked-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongson_ipi.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ include/hw/loongarch/virt.h | 1 -
+ hw/loongarch/virt.c         | 4 ++--
+ hw/loongarch/Kconfig        | 2 +-
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 051e910586..aa1b0a474c 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -6,18 +6,9 @@
-  */
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 8fdfacf268..91216418c8 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -11,7 +11,6 @@
+ #include "target/loongarch/cpu.h"
+ #include "hw/boards.h"
+ #include "qemu/queue.h"
+-#include "hw/intc/loongson_ipi.h"
+ #include "hw/block/flash.h"
+ #include "hw/loongarch/boot.h"
  
- #include "qemu/osdep.h"
--#include "hw/boards.h"
--#include "hw/sysbus.h"
- #include "hw/intc/loongson_ipi.h"
--#include "hw/irq.h"
--#include "hw/qdev-properties.h"
- #include "qapi/error.h"
--#include "qemu/log.h"
--#include "exec/address-spaces.h"
--#include "exec/memory.h"
--#include "migration/vmstate.h"
- #include "target/mips/cpu.h"
--#include "trace.h"
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index e592b1b6b7..29040422aa 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -23,7 +23,7 @@
+ #include "net/net.h"
+ #include "hw/loader.h"
+ #include "elf.h"
+-#include "hw/intc/loongson_ipi.h"
++#include "hw/intc/loongarch_ipi.h"
+ #include "hw/intc/loongarch_extioi.h"
+ #include "hw/intc/loongarch_pch_pic.h"
+ #include "hw/intc/loongarch_pch_msi.h"
+@@ -788,7 +788,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+      */
  
- static AddressSpace *get_iocsr_as(CPUState *cpu)
- {
+     /* Create IPI device */
+-    ipi = qdev_new(TYPE_LOONGSON_IPI);
++    ipi = qdev_new(TYPE_LOONGARCH_IPI);
+     qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+ 
+diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
+index 89be737726..0de713a439 100644
+--- a/hw/loongarch/Kconfig
++++ b/hw/loongarch/Kconfig
+@@ -12,7 +12,7 @@ config LOONGARCH_VIRT
+     select SERIAL
+     select VIRTIO_PCI
+     select PLATFORM_BUS
+-    select LOONGSON_IPI
++    select LOONGARCH_IPI
+     select LOONGARCH_PCH_PIC
+     select LOONGARCH_PCH_MSI
+     select LOONGARCH_EXTIOI
 -- 
 2.41.0
 
