@@ -4,60 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C52C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39D8C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUO0T-0003lw-Kr; Thu, 18 Jul 2024 06:05:01 -0400
+	id 1sUOH4-0003Qy-6X; Thu, 18 Jul 2024 06:22:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sUO0L-0003Ji-AG
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:04:57 -0400
-Received: from mail-4018.proton.ch ([185.70.40.18])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOH2-0003Q1-RR
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:22:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sUO0H-0004yP-Lw
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:04:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=myneves.com;
- s=protonmail; t=1721297085; x=1721556285;
- bh=ydZBiB+aMt+VK9g4schrw1wLOZ/oATe5sx2bD6nRMaA=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=MneBP7h095vrPbgAPVaBwMFUS48b/brhXfqG8xsXca602NTmeqOlzn7GEjaBTRe7A
- LGfjtBcY/z+t1y35QxFzfwcajJejipK+E0eNsdExe6cW8aWeEokX90OVJJTlXImD1R
- PgvvwdcIcqNdfdK6Kuu/S0OUm8OZMR62L18SES6vKcoIjwoJIJz6Sm2aVCPQOZxD0I
- NZXUj+H4iXLu0nKiFavHWUwLiI0nfbo5nRQWM4u0V4KARp27zfXaxw4b6AGf36ipXv
- lZdVN9GVNlQjIdjVKfwmK+4VUN7KnSWqRPSOvbTFoY9QZHYVImtQRL62WyE/VgR4K2
- 5otPJ1qL+7LlQ==
-Date: Thu, 18 Jul 2024 10:04:40 +0000
-To: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-From: Paulo Neves <paulo@myneves.com>
-Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com, eblake@redhat.com, berrange@redhat.com,
- Paulo Neves <ptsneves@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOH0-0001HQ-Qa
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:22:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721298124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ehb6jZNUCEuAZoXTEiZ5GkArIOHs6STjyNrlaIP1VOU=;
+ b=bt9eVud1pV+tQVOczyGZ1RNQhUoQdwxk1OLqq808mWd3feItr85ICLRVTI7D9e59K/SVOc
+ kMss82oWOvKtK9bC2vGSjS8fTntM+JmzRjnmKcqG92IdPKsnzOPVeT1fenFc7EsA4WEv0H
+ YWwZ02mdLQls2DIdch1cwz42befspro=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-WjZfSW8UMp-q0FkaPc-P4A-1; Thu,
+ 18 Jul 2024 06:22:01 -0400
+X-MC-Unique: WjZfSW8UMp-q0FkaPc-P4A-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2704C1955F69; Thu, 18 Jul 2024 10:22:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC22D1955D4A; Thu, 18 Jul 2024 10:21:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 91BD921E66A7; Thu, 18 Jul 2024 12:21:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Octavian Purdila <tavip@google.com>,  qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com,  eblake@redhat.com,
+ peter.maydell@linaro.org,  Paulo Neves <ptsneves@gmail.com>
 Subject: Re: [PATCH v3] chardev: add path option for pty backend
-Message-ID: <b8b0a49f-c2ef-421c-a03c-79b1e6d7d208@myneves.com>
-In-Reply-To: <87msmfkp57.fsf@pond.sub.org>
+In-Reply-To: <ZpjhwFpnHK1d3yVZ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 18 Jul 2024 10:34:56 +0100")
 References: <20240605185050.1678102-1-tavip@google.com>
- <87r0br8bve.fsf@pond.sub.org>
- <CAFEAcA8nFz_4M3s4NoWpfhJZ=pxRc92shSKfoL6iN=_Oqmc-tw@mail.gmail.com>
- <87msmfkp57.fsf@pond.sub.org>
-Feedback-ID: 59941854:user:proton
-X-Pm-Message-ID: 146c7adaea21e7df99aa190dbfede9a07c8159ca
+ <87r0br8bve.fsf@pond.sub.org> <ZpjhwFpnHK1d3yVZ@redhat.com>
+Date: Thu, 18 Jul 2024 12:21:56 +0200
+Message-ID: <87a5ifknjv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY"
-Received-SPF: pass client-ip=185.70.40.18; envelope-from=paulo@myneves.com;
- helo=mail-4018.proton.ch
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,116 +89,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
---b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+> On Thu, Jul 18, 2024 at 08:15:01AM +0200, Markus Armbruster wrote:
+>> Looks like this one fell through the cracks.
+>>=20
+>> Octavian Purdila <tavip@google.com> writes:
+>>=20
+>> > Add path option to the pty char backend which will create a symbolic
+>> > link to the given path that points to the allocated PTY.
+>> >
+>> > This avoids having to make QMP or HMP monitor queries to find out what
+>> > the new PTY device path is.
+>>=20
+>> QMP commands chardev-add and chardev-change return the information you
+>> want:
+>>=20
+>>     # @pty: name of the slave pseudoterminal device, present if and only
+>>     #     if a chardev of type 'pty' was created
+>>=20
+>> So does HMP command chardev-add.  HMP chardev apparently doesn't, but
+>> that could be fixed.
+>
+> It does print it:
+>
+>   (qemu) chardev-add  pty,id=3Dbar
+>   char device redirected to /dev/pts/12 (label bar)
 
-UGV0ZXIgTWF5ZGVsbCBbPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz5dKG1haWx0bzpwZXRlci5t
-YXlkZWxsQGxpbmFyby5vcmcpIHdyaXRlczoKCj4+IE9uIFRodSwgMTggSnVsIDIwMjQgYXQgMDc6
-MTUsIE1hcmt1cyBBcm1icnVzdGVyCj4+IFs8YXJtYnJ1QHJlZGhhdC5jb20+XShtYWlsdG86YXJt
-YnJ1QHJlZGhhdC5jb20pCj4+IHdyb3RlOgo+Pgo+Pj4gTG9va3MgbGlrZSB0aGlzIG9uZSBmZWxs
-IHRocm91Z2ggdGhlIGNyYWNrcy4KPj4+Cj4+PiBPY3RhdmlhbiBQdXJkaWxhCj4+PiBbPHRhdmlw
-QGdvb2dsZS5jb20+XShtYWlsdG86dGF2aXBAZ29vZ2xlLmNvbSkKPj4+IHdyaXRlczoKPj4+Cj4+
-Pj4gQWRkIHBhdGggb3B0aW9uIHRvIHRoZSBwdHkgY2hhciBiYWNrZW5kIHdoaWNoIHdpbGwgY3Jl
-YXRlIGEgc3ltYm9saWMKPj4+PiBsaW5rIHRvIHRoZSBnaXZlbiBwYXRoIHRoYXQgcG9pbnRzIHRv
-IHRoZSBhbGxvY2F0ZWQgUFRZLgo+Pj4+Cj4+Pj4gVGhpcyBhdm9pZHMgaGF2aW5nIHRvIG1ha2Ug
-UU1QIG9yIEhNUCBtb25pdG9yIHF1ZXJpZXMgdG8gZmluZCBvdXQgd2hhdAo+Pj4+IHRoZSBuZXcg
-UFRZIGRldmljZSBwYXRoIGlzLgo+Pj4KPj4+IFFNUCBjb21tYW5kcyBjaGFyZGV2LWFkZCBhbmQg
-Y2hhcmRldi1jaGFuZ2UgcmV0dXJuIHRoZSBpbmZvcm1hdGlvbiB5b3UKPj4+IHdhbnQ6Cj4+Pgo+
-Pj4gICAgICMgQHB0eTogbmFtZSBvZiB0aGUgc2xhdmUgcHNldWRvdGVybWluYWwgZGV2aWNlLCBw
-cmVzZW50IGlmIGFuZCBvbmx5Cj4+PiAgICAgIyAgICAgaWYgYSBjaGFyZGV2IG9mIHR5cGUgJ3B0
-eScgd2FzIGNyZWF0ZWQKPj4+Cj4+PiBTbyBkb2VzIEhNUCBjb21tYW5kIGNoYXJkZXYtYWRkLiAg
-SE1QIGNoYXJkZXYgYXBwYXJlbnRseSBkb2Vzbid0LCBidXQKPj4+IHRoYXQgY291bGQgYmUgZml4
-ZWQuCj4+Pgo+Pj4gU28sIHRoZSB1c2UgY2FzZSBpcyBiYXNpY2FsbHkgdGhlIGNvbW1hbmQgbGlu
-ZSwgcmlnaHQ/Cj4+Cj4+PiBUaGUgZmVhdHVyZSBmZWVscyByYXRoZXIgZG91YnRmdWwgdG8gbWUs
-IHRvIGJlIGhvbmVzdC4KPj4KPj4gVGhlIGNvbW1hbmQgbGluZSBpcyBhbiBpbXBvcnRhbnQgdXNl
-LWNhc2UsIHRob3VnaC4gTm90IGV2ZXJ5Cj4+IHVzZXIgb2YgUUVNVSBpcyBsaWJ2aXJ0IHdpdGgg
-YSBRTVAvSE1QIGNvbm5lY3Rpb24gcmVhZGlseQo+PiB0byBoYW5kIHRoYXQgdGhleSB3b3VsZCBw
-cmVmZXIgdG8gdXNlIGZvciBhbGwgY29uZmlndXJhdGlvbi4uLgo+Cj4gSW4gZ2VuZXJhbCB5ZXMu
-ICBCdXQgd2hhdCBhcmUgdGhlIHVzZSBjYXNlcyBmb3IgdGhpcyBvbmU/Cj4KPiBUbyBtZSwgc3Bl
-Y2lmeWluZyBwYXRoPS9tdW1ibGUvc3ltbGluayBwbHVzIHRoZSBib3RoZXIgb2YgY2xlYW5pbmcg
-dXAKPiBzdGFsZSBvbmVzIGRvZXNuJ3QgZmVlbCBsaWtlIG11Y2ggb2YgYW4gaW1wcm92ZW1lbnQg
-b3ZlciByZWFkaW5nIHRoZSBwdHkKPiBuYW1lIGZyb20gImluZm8gY2hhcmRldiIuICBJIGd1ZXNz
-IEknbSBtaXNzaW5nIHNvbWV0aGluZy4gIFRlbGwgbWUhCj4KPiBJZiB3ZSBkZWNpZGUgd2Ugd2Fu
-dCB0aGlzLCB0aGVuIHRoZSBRTVAgaW50ZXJmYWNlIG5lZWRzIHRvIGJlIGZpeGVkOgo+IENhbGwg
-dGhlIGFyZ3VtZW50IEBwYXRoIGZvciBjb25zaXN0ZW5jeSwgYW5kIGRvY3VtZW50IGl0IHByb3Bl
-cmx5Lgo+IEFjdHVhbGx5IHN0cmFpZ2h0Zm9yd2FyZCwganVzdCBjcmVhdGUgYSBuZXcgc3RydWN0
-IGluc3RlYWQgb2YgcHJlc3NpbmcKPiBDaGFyZGV2SG9zdGRldiBpbnRvIHNlcnZpY2UuCgpUaGUg
-b3JpZ2luYWwgdXNlIGNhc2Ugd2FzIG5vdCBhYm91dCByZWFkaW5nIHRoZSBwYXRoIGJ1dCBhbGxv
-d2luZyB0aGUgY2FsbGVyIHRvIHNldCB0aGUgc3ltbGluay4gVGhlIGNsZWFuaW5nIHVwIGFuZCBl
-cmdvbm9taWNzIG9mIGhhbmRsaW5nIHRoYXQgcGF0aCBhcmUgYmVzaWRlcyB0aGUgcG9pbnQgb2Yg
-dGhlIHBhdGNoLiBJbiBteSBjYXNlIGl0IHdhcyBhIHBhdGggSSBjb3VsZCBkZWZpbmUgaW4gY29u
-ZmlndXJhdGlvbiBhbmQgbGV0IG90aGVyIHNlcnZpY2VzIHVzZSB0aGF0IGNoYXJkZXYuIE90aGVy
-IHNlcnZpY2VzIHRoYXQgZGlkIG5vdCByZXF1aXJlIGtub3dsZWRnZSBvZiB3aGV0aGVyIHRoZSBQ
-VFkgd2FzIHJlYWwgb3IgZnJvbSBRRU1VIGFuZCB0aHVzIGRpZCBub3Qga25vdyBob3cgdG8gcXVl
-cnkgaXQu
+I fat-fingered "HMP chardev-change".
 
---b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+>> So, the use case is basically the command line, right?
+>
+> Also cli prints it
+>
+>   $ qemu-system-x86_64 -chardev pty,id=3Dfoo -monitor stdio -display none
+>   char device redirected to /dev/pts/10 (label foo)
 
-PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+DQogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVu
-dC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiLz4NCiAgPC9oZWFkPg0K
-ICA8Ym9keT4NCiAgICA8c3BhbiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZS13cmFwIj5QZXRlciBN
-YXlkZWxsIDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZjMjM5NkUiIGhyZWY9Im1haWx0bzpwZXRl
-ci5tYXlkZWxsQGxpbmFyby5vcmciPiZsdDtwZXRlci5tYXlkZWxsQGxpbmFyby5vcmcmZ3Q7PC9h
-PiB3cml0ZXM6PC9zcGFuPg0KICAgIDxibG9ja3F1b3RlIHR5cGU9ImNpdGUiIGNpdGU9Im1pZDo4
-N21zbWZrcDU3LmZzZkBwb25kLnN1Yi5vcmciPg0KICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3Rl
-LXByZSIgd3JhcD0iIj48L3ByZT4NCiAgICAgIDxibG9ja3F1b3RlIHR5cGU9ImNpdGUiPg0KICAg
-ICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPk9uIFRodSwgMTggSnVsIDIw
-MjQgYXQgMDc6MTUsIE1hcmt1cyBBcm1icnVzdGVyIDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZj
-MjM5NkUiIGhyZWY9Im1haWx0bzphcm1icnVAcmVkaGF0LmNvbSI+Jmx0O2FybWJydUByZWRoYXQu
-Y29tJmd0OzwvYT4gd3JvdGU6DQo8L3ByZT4NCiAgICAgICAgPGJsb2NrcXVvdGUgdHlwZT0iY2l0
-ZSI+DQogICAgICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5Mb29rcyBs
-aWtlIHRoaXMgb25lIGZlbGwgdGhyb3VnaCB0aGUgY3JhY2tzLg0KDQpPY3RhdmlhbiBQdXJkaWxh
-IDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZjMjM5NkUiIGhyZWY9Im1haWx0bzp0YXZpcEBnb29n
-bGUuY29tIj4mbHQ7dGF2aXBAZ29vZ2xlLmNvbSZndDs8L2E+IHdyaXRlczoNCg0KPC9wcmU+DQog
-ICAgICAgICAgPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+DQogICAgICAgICAgICA8cHJlIGNsYXNz
-PSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPkFkZCBwYXRoIG9wdGlvbiB0byB0aGUgcHR5IGNoYXIg
-YmFja2VuZCB3aGljaCB3aWxsIGNyZWF0ZSBhIHN5bWJvbGljDQpsaW5rIHRvIHRoZSBnaXZlbiBw
-YXRoIHRoYXQgcG9pbnRzIHRvIHRoZSBhbGxvY2F0ZWQgUFRZLg0KDQpUaGlzIGF2b2lkcyBoYXZp
-bmcgdG8gbWFrZSBRTVAgb3IgSE1QIG1vbml0b3IgcXVlcmllcyB0byBmaW5kIG91dCB3aGF0DQp0
-aGUgbmV3IFBUWSBkZXZpY2UgcGF0aCBpcy4NCjwvcHJlPg0KICAgICAgICAgIDwvYmxvY2txdW90
-ZT4NCiAgICAgICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPlFNUCBjb21t
-YW5kcyBjaGFyZGV2LWFkZCBhbmQgY2hhcmRldi1jaGFuZ2UgcmV0dXJuIHRoZSBpbmZvcm1hdGlv
-biB5b3UNCndhbnQ6DQoNCiAgICAjIEBwdHk6IG5hbWUgb2YgdGhlIHNsYXZlIHBzZXVkb3Rlcm1p
-bmFsIGRldmljZSwgcHJlc2VudCBpZiBhbmQgb25seQ0KICAgICMgICAgIGlmIGEgY2hhcmRldiBv
-ZiB0eXBlICYjMzk7cHR5JiMzOTsgd2FzIGNyZWF0ZWQNCg0KU28gZG9lcyBITVAgY29tbWFuZCBj
-aGFyZGV2LWFkZC4gIEhNUCBjaGFyZGV2IGFwcGFyZW50bHkgZG9lc24mIzM5O3QsIGJ1dA0KdGhh
-dCBjb3VsZCBiZSBmaXhlZC4NCg0KU28sIHRoZSB1c2UgY2FzZSBpcyBiYXNpY2FsbHkgdGhlIGNv
-bW1hbmQgbGluZSwgcmlnaHQ/DQo8L3ByZT4NCiAgICAgICAgPC9ibG9ja3F1b3RlPg0KICAgICAg
-ICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPjwvcHJlPg0KICAgICAgICA8Ymxv
-Y2txdW90ZSB0eXBlPSJjaXRlIj4NCiAgICAgICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJl
-IiB3cmFwPSIiPlRoZSBmZWF0dXJlIGZlZWxzIHJhdGhlciBkb3VidGZ1bCB0byBtZSwgdG8gYmUg
-aG9uZXN0Lg0KPC9wcmU+DQogICAgICAgIDwvYmxvY2txdW90ZT4NCiAgICAgICAgPHByZSBjbGFz
-cz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5UaGUgY29tbWFuZCBsaW5lIGlzIGFuIGltcG9ydGFu
-dCB1c2UtY2FzZSwgdGhvdWdoLiBOb3QgZXZlcnkNCnVzZXIgb2YgUUVNVSBpcyBsaWJ2aXJ0IHdp
-dGggYSBRTVAvSE1QIGNvbm5lY3Rpb24gcmVhZGlseQ0KdG8gaGFuZCB0aGF0IHRoZXkgd291bGQg
-cHJlZmVyIHRvIHVzZSBmb3IgYWxsIGNvbmZpZ3VyYXRpb24uLi4NCjwvcHJlPg0KICAgICAgPC9i
-bG9ja3F1b3RlPg0KICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5JbiBn
-ZW5lcmFsIHllcy4gIEJ1dCB3aGF0IGFyZSB0aGUgdXNlIGNhc2VzIGZvciB0aGlzIG9uZT8NCg0K
-VG8gbWUsIHNwZWNpZnlpbmcgcGF0aD0vbXVtYmxlL3N5bWxpbmsgcGx1cyB0aGUgYm90aGVyIG9m
-IGNsZWFuaW5nIHVwDQpzdGFsZSBvbmVzIGRvZXNuJiMzOTt0IGZlZWwgbGlrZSBtdWNoIG9mIGFu
-IGltcHJvdmVtZW50IG92ZXIgcmVhZGluZyB0aGUgcHR5DQpuYW1lIGZyb20gJiMzNDtpbmZvIGNo
-YXJkZXYmIzM0Oy4gIEkgZ3Vlc3MgSSYjMzk7bSBtaXNzaW5nIHNvbWV0aGluZy4gIFRlbGwgbWUh
-DQoNCklmIHdlIGRlY2lkZSB3ZSB3YW50IHRoaXMsIHRoZW4gdGhlIFFNUCBpbnRlcmZhY2UgbmVl
-ZHMgdG8gYmUgZml4ZWQ6DQpDYWxsIHRoZSBhcmd1bWVudCBAcGF0aCBmb3IgY29uc2lzdGVuY3ks
-IGFuZCBkb2N1bWVudCBpdCBwcm9wZXJseS4NCkFjdHVhbGx5IHN0cmFpZ2h0Zm9yd2FyZCwganVz
-dCBjcmVhdGUgYSBuZXcgc3RydWN0IGluc3RlYWQgb2YgcHJlc3NpbmcNCkNoYXJkZXZIb3N0ZGV2
-IGludG8gc2VydmljZS4NCjwvcHJlPg0KICAgIDwvYmxvY2txdW90ZT4NCiAgICA8cD5UaGUgb3Jp
-Z2luYWwgdXNlIGNhc2Ugd2FzIG5vdCBhYm91dCByZWFkaW5nIHRoZSBwYXRoIGJ1dCBhbGxvd2lu
-Zw0KICAgICAgdGhlIGNhbGxlciB0byBzZXQgdGhlIHN5bWxpbmsuIFRoZSBjbGVhbmluZyB1cCBh
-bmQgZXJnb25vbWljcyBvZg0KICAgICAgaGFuZGxpbmcgdGhhdCBwYXRoIGFyZSBiZXNpZGVzIHRo
-ZSBwb2ludCBvZiB0aGUgcGF0Y2guPHNwYW4gc3R5bGU9IndoaXRlLXNwYWNlOiBwcmUtd3JhcCI+
-IEluIG15IGNhc2UgaXQgd2FzIGEgcGF0aCBJIGNvdWxkIGRlZmluZSBpbiBjb25maWd1cmF0aW9u
-IGFuZCBsZXQgb3RoZXIgc2VydmljZXMgdXNlIHRoYXQgY2hhcmRldi4gT3RoZXIgc2VydmljZXMg
-dGhhdCBkaWQgbm90IHJlcXVpcmUga25vd2xlZGdlIG9mIHdoZXRoZXIgdGhlIFBUWSB3YXMgcmVh
-bCBvciBmcm9tIFFFTVUgYW5kIHRodXMgZGlkIG5vdCBrbm93IGhvdyB0byBxdWVyeSBpdC4NCjwv
-c3Bhbj48L3A+DQogIA0KDQo8L2JvZHk+PC9odG1sPg==
+Good enough for ad hoc use by humans.
 
+Management applications should use QMP, which returns it.
 
---b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY--
+I guess there's scripts in between.
+
+>> > Based on patch from Paulo Neves:
+>> >
+>> > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gm=
+ail.com/
+>> >
+>> > Tested with the following invocations that the link is created and
+>> > removed when qemu stops:
+>> >
+>> >   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+>> >   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+>> >
+>> >   qemu-system-x86_64 -nodefaults -monitor pty:test
+>> >
+>> > Also tested that when a link path is not passed invocations still work=
+, e.g.:
+>> >
+>> >   qemu-system-x86_64 -monitor pty
+>> >
+>> > Co-authored-by: Paulo Neves <ptsneves@gmail.com>
+>> > Signed-off-by: Paulo Neves <ptsneves@gmail.com>
+>> > [OP: rebase and address original patch review comments]
+>> > Signed-off-by: Octavian Purdila <tavip@google.com>
+>> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+[...]
+
+>> > diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+>> > index cc2f7617fe..5c6172ddba 100644
+>> > --- a/chardev/char-pty.c
+>> > +++ b/chardev/char-pty.c
+>> > @@ -29,6 +29,7 @@
+>> >  #include "qemu/sockets.h"
+>> >  #include "qemu/error-report.h"
+>> >  #include "qemu/module.h"
+>> > +#include "qemu/option.h"
+>> >  #include "qemu/qemu-print.h"
+>> >=20=20
+>> >  #include "chardev/char-io.h"
+>> > @@ -41,6 +42,7 @@ struct PtyChardev {
+>> >=20=20
+>> >      int connected;
+>> >      GSource *timer_src;
+>> > +    char *symlink_path;
+>> >  };
+>> >  typedef struct PtyChardev PtyChardev;
+>> >=20=20
+>> > @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
+>> >      Chardev *chr =3D CHARDEV(obj);
+>> >      PtyChardev *s =3D PTY_CHARDEV(obj);
+>> >=20=20
+>> > +    /* unlink symlink */
+>> > +    if (s->symlink_path) {
+>> > +        unlink(s->symlink_path);
+>> > +        g_free(s->symlink_path);
+>> > +    }
+>>=20
+>> Runs when the chardev object is finalized.
+>>=20
+>> Doesn't run when QEMU crashes.  Stale symlink left behind then.  Can't
+>> see how you could avoid that at reasonable cost.  Troublesome all the
+>> same.
+>
+> Do we ever guarantee that the finalizer runs ?  eg dif we have
+>
+>   error_setg(&error_exit, ....
+>
+> that's a clean exit, not a crash, but I don't think chardev finalizers
+> will run, as we don't do atexit() hooks for it.
+
+Point.
+
+>> The feature feels rather doubtful to me, to be honest.
+>
+> On the one hand I understand the pain - long ago libvirt had to deal
+> with parsing the console messages
+>
+>   char device redirected to /dev/pts/10 (label foo)
+>
+> before we switched to using QMP to query this.
+>
+> On the other hand, in retrospect libvirt should never have used the 'pty'
+> backend in the first place. The 'unix' socket backend is a  choice as it
+> has predictable filenames, and it has proper connection oriented semantic=
+s,
+> so QEMU can reliably detect when clients disconnect, which has always been
+> troublesome for the 'pty' backend.
+>
+> So while I can understand the desire to add a 'path' option to 'pty'
+> to trigger symlink creation, I think we could choose to tell people
+> to use the 'unix' socket backend instead if they want a predictable
+> path. This would avoid us creating the difficult to fix bug for
+> symlink deletion in error conditions.
+>
+> What's the key benefit of the 'pty' backend, that 'unix' doesn't
+> handle ?
+
+I think this is the question to answer.
 
 
