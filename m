@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A221FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 22:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F5EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 22:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUZjq-0002xZ-Tl; Thu, 18 Jul 2024 18:36:38 -0400
+	id 1sUZkD-0003lb-Uq; Thu, 18 Jul 2024 18:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUZjp-0002x5-GE
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:36:37 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sUZkA-0003Vk-CM
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:36:58 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUZjn-0003y6-US
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:36:37 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1fc6a017abdso7516695ad.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 15:36:35 -0700 (PDT)
+ id 1sUZk8-00041d-QF
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:36:58 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70afe18837cso235767b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 15:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721342194; x=1721946994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721342214; x=1721947014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Qf1WbBFc4eOnItdIjiDb3cgpQAswGxsWLLLNlVXLH28=;
- b=ATsP4plFokHZwZbwciR2poowb7gXNLtZBs4SzhI4r6TH3JqOh/K/VOiTUaPn8sWoC6
- Xbdu6ZEpaW9JjfetBWX3ZGHrQ1TYArRtanhHnCzteBerq/k2ShxTmjZkT9+FDolVJDAN
- 5Cxp/NT8jY6JxsdNI9uFyzh68x6qHr9+V5IFnICQ9defmApw3k7tM1cM0i5P7LHs9Q/f
- rLoGaUO2MUlauQbF7YxeizN0LRcZdNGUFegBNC1sD83dz/fDBfMNP6C15jYDe/idhOXW
- h7Jb39uXU+7EVAY7kaCJPQXHNV88M3MM0VpxAEZr7G/+CXkvYiZPtrG2GbGTQwIm2oS3
- f9Sw==
+ bh=E/+3/nglO1XsIU4xBdCOF004SvcfcKcYhBPxOUrDCwM=;
+ b=FZJI370JGw+D2hXTcxAU4uCf47VD5XI4MJfFiSaUvq8B6oDSfa3nBhGQrOA74GHOKQ
+ foizceNc8ZY9aDs1U9jl9JwgQAKEdXthcBtKwqZtT22++fJx+2nLIRsFXVtmcNIgv6KY
+ /kQ56Gb/bCme26AyJOzGEkGzyEfOA+NAWQhZXlYaHmooevzK+721XZE+mh/mvrx8z9vg
+ Y3WtEpiAVn7jZaSdH2YaMIjN36SAPjsjPCN+dY5QaC+2CcS05NNDN8NMLwhYxQI/of0m
+ 4CRukxHVLQQT5VaLgrEs3hxvDaOhVGnnL1w64Z7omM8PuEufpAqjcpKPCh5RAj+16VST
+ 4cCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721342194; x=1721946994;
+ d=1e100.net; s=20230601; t=1721342214; x=1721947014;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qf1WbBFc4eOnItdIjiDb3cgpQAswGxsWLLLNlVXLH28=;
- b=oNRtvJ86SVhKipeCmE2UIXOFvz+RAzazqGTNXqMJLHUJS3HqQw4V5VWCB3rFom682l
- kQrkqqD5j2N9GuhIX1OSKIgRMfgVJ971DM//lKSRwzXzRTGl6wLAAO+G8OQJie3t1cID
- /T1ERme0/4zHe9tMSJlcgoFiUBP0CeNADoGgKmWYzgLSMArV0Zq/5MosSh5Bb74BoW4Y
- rVsFmLOTIwtxhtE+1KMCwWdLCApfJ0YqOyxU+z6m76Hejb4c57U7oyZmRp016Z87tij+
- YdVi4IhhIBrilDpJXeDW/TSGJUos99OeJ0wBJs3H3bdbjhjcp7uIGvqRKbJUMJIwWx0E
- FqTQ==
+ bh=E/+3/nglO1XsIU4xBdCOF004SvcfcKcYhBPxOUrDCwM=;
+ b=CIIl/vlwn6LgzF3MaStk9TVtKersVJziTl0F34QUoErdt/Z/uLSh/Rk7O9ZhOMW7Gy
+ AlT3DpQ/daM+70GPHZUirTt9MmKYc3/xlas3yXiVIkx206Drn7LCHHFOJJ3Ez6f0wyCN
+ O6EkEsatH7ntHMHY9gDYzPUrlBXXMK4GMnmIfdgGNicHLWWDYKnzmfdgP1Arh6upn4lO
+ +yV4QIOzIpGebLfFeIxPz3PJHuTbszWIbm48QtbUlNpvK06iWWQ3QsQC4JWKKNH5bmVR
+ fABjL9ob6b21rzdsBoqI1Mr4cuiSjzPxx93k7kVZY2KCxXWsWv0D5snonXv3Q0Ru6WDm
+ KUbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUa9kZ2c4IeZGrrE7cV1CBSayrY0zbxamDjQXi30BN0BjYdnlKl9OJr8uHVb5XRND8qr24mPjNWpmZtQ4kx9Yqot6sIWE0=
-X-Gm-Message-State: AOJu0YzB39yHYWjtAB0ARjHIsCCj0XQLFmNT13+4JuJ5QqxDv3KS4D4x
- sqQBQqlRtHQlhskbLiAA85+lYmsTrml7YymBiNBZXh9F5jeqlTCl4SLNmDTWcvI=
-X-Google-Smtp-Source: AGHT+IHw0P2L2RwMmWdhKEZIda+Ae/V9sXZ/NgWEx6erf76DfJOPUMP6b8z3W++mRxnGUg4BYGslDg==
-X-Received: by 2002:a17:903:32c1:b0:1fc:3600:5ce7 with SMTP id
- d9443c01a7336-1fc4e134b59mr60055805ad.17.1721342193807; 
- Thu, 18 Jul 2024 15:36:33 -0700 (PDT)
+ AJvYcCXMDm+njK90uRsb+gY4/mI8W5o5sBGqUakylI9Agktg/7OMY06bTL28UH5IAjmbLsVjnBjlWRqBQ1ap+CM5epGAQzZfSv0=
+X-Gm-Message-State: AOJu0YwS/BtF99Ky99CWvqyrxxoCn6DLA0siBmZDfzyukvMsm35yej3U
+ b7/UfZuIgYvKjIXhAZO/mkFfBWS8ZcwA5+VhZZ4aFWOP3IQG2O0F2VEDOU85Ywk=
+X-Google-Smtp-Source: AGHT+IENfvFrmVnABEbGBGiSiZbxayE7/leoHzEXPYRBELXh9GvkMMYCCzjYD+2D6qY7p3P/OsJmtw==
+X-Received: by 2002:a05:6a20:cd93:b0:1c0:ed80:6e69 with SMTP id
+ adf61e73a8af0-1c3fdd355f7mr6745085637.39.1721342214386; 
+ Thu, 18 Jul 2024 15:36:54 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd64d207c5sm804405ad.222.2024.07.18.15.36.29
+ d9443c01a7336-1fd64d4d010sm794955ad.273.2024.07.18.15.36.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jul 2024 15:36:33 -0700 (PDT)
-Message-ID: <adb94029-20b5-4acf-b969-db97261c8b06@linaro.org>
-Date: Fri, 19 Jul 2024 08:36:25 +1000
+ Thu, 18 Jul 2024 15:36:54 -0700 (PDT)
+Message-ID: <43641744-ebc1-44be-b732-e709066a53d7@linaro.org>
+Date: Fri, 19 Jul 2024 08:36:47 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/18] hw/intc/loongson_ipi: Rename LoongsonIPI ->
- LoongsonIPIState
+Subject: Re: [PATCH v4 04/18] hw/intc/loongson_ipi: Extract
+ loongson_ipi_common_finalize()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -73,14 +73,14 @@ Cc: Song Gao <gaosong@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
  Huacai Chen <chenhuacai@kernel.org>, Xiaojuan Yang
  <yangxiaojuan@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240718083842.81199-1-philmd@linaro.org>
- <20240718083842.81199-4-philmd@linaro.org>
+ <20240718083842.81199-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240718083842.81199-4-philmd@linaro.org>
+In-Reply-To: <20240718083842.81199-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,8 +106,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/18/24 18:38, Philippe Mathieu-Daudé wrote:
 > From: Bibo Mao<maobibo@loongson.cn>
 > 
-> We'll have to add LoongsonIPIClass in few commits,
-> so rename LoongsonIPI as LoongsonIPIState for clarity.
+> In preparation to extract common IPI code in few commits,
+> extract loongson_ipi_common_finalize().
 > 
 > Signed-off-by: Bibo Mao<maobibo@loongson.cn>
 > [PMD: Extracted from bigger commit, added commit description]
@@ -116,9 +116,8 @@ On 7/18/24 18:38, Philippe Mathieu-Daudé wrote:
 > Reviewed-by: Bibo Mao<maobibo@loongson.cn>
 > Tested-by: Bibo Mao<maobibo@loongson.cn>
 > ---
->   include/hw/intc/loongson_ipi.h |  6 +++---
->   hw/intc/loongson_ipi.c         | 16 ++++++++--------
->   2 files changed, 11 insertions(+), 11 deletions(-)
+>   hw/intc/loongson_ipi.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
