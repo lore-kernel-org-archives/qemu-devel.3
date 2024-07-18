@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1127AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608BBC3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 11:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUOnS-0000fI-5o; Thu, 18 Jul 2024 06:55:38 -0400
+	id 1sUOrW-0004BX-LH; Thu, 18 Jul 2024 06:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOnQ-0000ZK-UR
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:55:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOrU-00047c-SK
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:59:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOnP-0003TJ-FB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:55:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUOrT-00048D-6E
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:59:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721300134;
+ s=mimecast20190719; t=1721300386;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CyG1Shf25B05px6KutuFhy/6kIx5Yb/Stz0KbvmQhLw=;
- b=QEicGUQOZrcYJI4jM675xhi3ixSnY8QDFnF3XaMQQjhb6tPuL9koK2P1uAKvTkTaDUakp9
- xCF65+9atT68SGTZz0IggTXIoJJS7ojERA7bG0L7KdEVV4Bg0AOjOo4U9/rVsp9xwq/yRh
- oKAMe4Hql8mMZnHxXZU/40KZLLb0LIA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=DtyBVnPcGZITyri8e7eWjfLZSfFXnHpy+jKDXi55qqk=;
+ b=c3AfFPXUhmkGcpN/UCf0Z1lYfPkNrRY+d3PpyrUSmqIPzNoOUmK7DQ8aa2DsadfCAjN4G3
+ NHn3GwA6nQLyMAhyY02gV9+SyR2s6J7pPfiwqg2EcBhbcRwLrFyVx81WG5im2Kqk2SFqIW
+ Urhmc7C/05kKshW6bd+CcIiugSr2UcA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-EtzDfluhOE6r72-dwyn3PQ-1; Thu,
- 18 Jul 2024 06:55:31 -0400
-X-MC-Unique: EtzDfluhOE6r72-dwyn3PQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-5Hvfmo-HOTK-uR50Qen91A-1; Thu,
+ 18 Jul 2024 06:59:43 -0400
+X-MC-Unique: 5Hvfmo-HOTK-uR50Qen91A-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE2691955D42; Thu, 18 Jul 2024 10:55:29 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0D3A1955BF9; Thu, 18 Jul 2024 10:59:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0A563000185; Thu, 18 Jul 2024 10:55:28 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D7E91955D47; Thu, 18 Jul 2024 10:59:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 94E4E21E668F; Thu, 18 Jul 2024 12:55:26 +0200 (CEST)
+ id E963221E668F; Thu, 18 Jul 2024 12:59:38 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  eblake@redhat.com,
- devel@lists.libvirt.org,  hreitz@redhat.com,  kwolf@redhat.com,
- jsnow@redhat.com,  pkrempa@redhat.com,  f.ebner@proxmox.com
-Subject: Re: [PATCH v2 3/7] qapi: block-job-change: make copy-mode parameter
- optional
-In-Reply-To: <20240626110124.374336-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 26 Jun 2024 14:01:20 +0300")
+Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  armbru@redhat.com,
+ eblake@redhat.com,  devel@lists.libvirt.org,  hreitz@redhat.com,
+ kwolf@redhat.com,  jsnow@redhat.com,  pkrempa@redhat.com,
+ f.ebner@proxmox.com
+Subject: Re: [PATCH v2 5/7] qapi: add job-change
+In-Reply-To: <20240626110124.374336-6-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 26 Jun 2024 14:01:22 +0300")
 References: <20240626110124.374336-1-vsementsov@yandex-team.ru>
- <20240626110124.374336-4-vsementsov@yandex-team.ru>
-Date: Thu, 18 Jul 2024 12:55:26 +0200
-Message-ID: <87plrbx941.fsf@pond.sub.org>
+ <20240626110124.374336-6-vsementsov@yandex-team.ru>
+Date: Thu, 18 Jul 2024 12:59:38 +0200
+Message-ID: <87le1zx8x1.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -89,50 +89,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> We are going to add more parameters to change. We want to make possible
-> to change only one or any subset of available options. So all the
-> options should be optional.
+> Add a new-style command job-change, doing same thing as
+> block-job-change. The aim is finally deprecate block-job-* APIs and
+> move to job-* APIs.
 >
+> We add a new command to qapi/block-core.json, not to
+> qapi/job.json to avoid resolving json file including loops for now.
+> This all would be a lot simple to refactor when we finally drop
+> deprecated block-job-* APIs.
+>
+> @type argument of the new command immediately becomes deprecated.
+
+Where?
+
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  block/mirror.c       | 4 ++++
->  qapi/block-core.json | 3 ++-
->  2 files changed, 6 insertions(+), 1 deletion(-)
+>  job-qmp.c            | 14 ++++++++++++++
+>  qapi/block-core.json | 10 ++++++++++
+>  2 files changed, 24 insertions(+)
 >
-> diff --git a/block/mirror.c b/block/mirror.c
-> index 2816bb1042..60e8d83e4f 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -1272,6 +1272,10 @@ static void mirror_change(BlockJob *job, JobChangeOptions *opts,
+> diff --git a/job-qmp.c b/job-qmp.c
+> index c764bd3801..248e68f554 100644
+> --- a/job-qmp.c
+> +++ b/job-qmp.c
+> @@ -139,6 +139,20 @@ void qmp_job_dismiss(const char *id, Error **errp)
+>      job_dismiss_locked(&job, errp);
+>  }
 >  
->      GLOBAL_STATE_CODE();
->  
-> +    if (!change_opts->has_copy_mode) {
+> +void qmp_job_change(JobChangeOptions *opts, Error **errp)
+> +{
+> +    Job *job;
+> +
+> +    JOB_LOCK_GUARD();
+> +    job = find_job_locked(opts->id, errp);
+> +
+> +    if (!job) {
 > +        return;
 > +    }
 > +
->      if (qatomic_read(&s->copy_mode) == change_opts->copy_mode) {
->          return;
->      }
+> +    job_change_locked(job, opts, errp);
+> +}
+> +
+>  /* Called with job_mutex held. */
+>  static JobInfo *job_query_single_locked(Job *job, Error **errp)
+>  {
 > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 4ec5632596..660c7f4a48 100644
+> index 660c7f4a48..9087ce300c 100644
 > --- a/qapi/block-core.json
 > +++ b/qapi/block-core.json
-> @@ -3071,11 +3071,12 @@
->  #
->  # @copy-mode: Switch to this copy mode.  Currently, only the switch
->  #     from 'background' to 'write-blocking' is implemented.
-> +#     If absent, copy mode remains the same.  (optional since 9.1)
->  #
->  # Since: 8.2
->  ##
->  { 'struct': 'JobChangeOptionsMirror',
-> -  'data': { 'copy-mode' : 'MirrorCopyMode' } }
-> +  'data': { '*copy-mode' : 'MirrorCopyMode' } }
+> @@ -3104,6 +3104,16 @@
+>  { 'command': 'block-job-change',
+>    'data': 'JobChangeOptions', 'boxed': true }
 >  
+> +##
+> +# @job-change:
+> +#
+> +# Change the block job's options.
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'command': 'job-change',
+> +  'data': 'JobChangeOptions', 'boxed': true }
+> +
 >  ##
->  # @JobChangeOptions:
-
-Acked-by: Markus Armbruster <armbru@redhat.com>
+>  # @BlockdevDiscardOptions:
+>  #
 
 
