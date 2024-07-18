@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549F5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51115C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMUc-0005Sj-60; Thu, 18 Jul 2024 04:28:02 -0400
+	id 1sUMWt-0007yw-6N; Thu, 18 Jul 2024 04:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUMUa-0005H0-5L
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:28:00 -0400
-Received: from galois.linutronix.de ([2a0a:51c0:0:12e:550::1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUMWn-0007fy-Rf
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUMUX-0002WG-NO
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:59 -0400
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1721291264;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUMWl-0003I3-PC
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721291414;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GmZB4XwFunCnoC/FQ6QnBDumKGSssPizQ8tHdXR/z08=;
- b=uzQEFA1s2ecoe80+G0wwKjdtzI4cqzxSBzj3F6/golaUoi/Sbs3tYBOsSk7XINcWdBaI5F
- auAfDUK2jdYA5Mldv6kR6gUXR5VHz2GaRys7MPKS2gXq5IvgSBgdh4tYJS/fsWNdzF5Saj
- 0nistxmOhfI35KOR0Ad6L75fb9tVliJUu9vf3Nt4barEswsgSs3KHXFHvz12P9EdTUOkN7
- hQ/UNLMyIDN3B2ap8RHtaIQTSvOsRJ7RmlrOgQvkrzVWWfO2PMqs45lWsul7ONM68w89y1
- F+eOoW6q2d4Ospzg/fUwNsrEuT8YQnMI+snNR/OkQxo+trnRELVKiR9OyTIhHw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1721291264;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GmZB4XwFunCnoC/FQ6QnBDumKGSssPizQ8tHdXR/z08=;
- b=Vl/YL37dtaNQ+HybLjcyAPVvZrcKYRQRr+tmMr9bHiy+Rfw90BTnRxvKJvCqzX5NcN24Iv
- OFIuCMcbtACcXaCA==
-Date: Thu, 18 Jul 2024 10:27:38 +0200
-Subject: [PATCH v4 1/3] docs/interop/firmware.json: add new enum FirmwareFormat
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240718-qapi-firmware-json-v4-1-449ce672db5c@linutronix.de>
+ bh=RStt/h0TVa29W3A6ePLP6aLkPjmcwqZxsvujCkuw51U=;
+ b=Z6yN1O83564hb3YCCWgzLfpsjxZ6iZee/RU6Ykrua+PnM7D1ecdqEI0RYQvktW9H1MCf4w
+ N9+5+2hwy7QGBLXpSELEocIs8+s3UdT//7fgqqBpKs8Op4K5EWf2If7VCJuSNGg3iop7Yi
+ EH4peG0XfTkf/jFM6VTvheBThdPRvKA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-HeLcppDXPGuW2l-x9UeWKg-1; Thu,
+ 18 Jul 2024 04:30:10 -0400
+X-MC-Unique: HeLcppDXPGuW2l-x9UeWKg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8DFB1955D4A; Thu, 18 Jul 2024 08:30:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3ED021955D48; Thu, 18 Jul 2024 08:30:06 +0000 (UTC)
+Date: Thu, 18 Jul 2024 09:30:03 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [PATCH v4 1/3] docs/interop/firmware.json: add new enum
+ FirmwareFormat
+Message-ID: <ZpjSi9a8pleWJjK-@redhat.com>
 References: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
-In-Reply-To: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Czenczek <hreitz@redhat.com>, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721291263; l=1407;
- i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=L4+B74F9a35lXUy1Ep2m0jTKC7wqqLH5EyNaxqvfb7s=;
- b=Plksh+QxCSIwzY54Z8hGbNp10cVshuXhaRvgM+cfa5oOk8IKkrV68gOcDi7cyi2pcloCXd2AP
- eZuXBJem6chDGzuvAm+ZOGKAJ/z+EDtdj0OL1YcyNC54Q47gwhzGrmS
-X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
- pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
-Received-SPF: pass client-ip=2a0a:51c0:0:12e:550::1;
- envelope-from=t-8ch@linutronix.de; helo=galois.linutronix.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20240718-qapi-firmware-json-v4-1-449ce672db5c@linutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240718-qapi-firmware-json-v4-1-449ce672db5c@linutronix.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,65 +87,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only a small subset of all blockdev drivers make sense for firmware
-images. Introduce and use a new enum to represent this.
+On Thu, Jul 18, 2024 at 10:27:38AM +0200, Thomas Weißschuh wrote:
+> Only a small subset of all blockdev drivers make sense for firmware
+> images. Introduce and use a new enum to represent this.
+> 
+> This also reduces the dependency on firmware.json from the global qapi
+> definitions.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+> ---
+>  docs/interop/firmware.json | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
 
-This also reduces the dependency on firmware.json from the global qapi
-definitions.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
----
- docs/interop/firmware.json | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 54a1fc6c1041..a26fe81bf2fe 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -15,7 +15,6 @@
- ##
- 
- { 'include' : 'machine.json' }
--{ 'include' : 'block-core.json' }
- 
- ##
- # @FirmwareOSInterface:
-@@ -200,6 +199,20 @@
-              'enrolled-keys', 'requires-smm', 'secure-boot',
-              'verbose-dynamic', 'verbose-static' ] }
- 
-+##
-+# @FirmwareFormat:
-+#
-+# Formats that are supported for firmware images.
-+#
-+# @raw: Raw disk image format.
-+#
-+# @qcow2: QEMU image format.
-+#
-+# Since: 9.1
-+##
-+{ 'enum': 'FirmwareFormat',
-+  'data': [ 'raw', 'qcow2' ] }
-+
- ##
- # @FirmwareFlashFile:
- #
-@@ -219,7 +232,7 @@
- ##
- { 'struct' : 'FirmwareFlashFile',
-   'data'   : { 'filename' : 'str',
--               'format'   : 'BlockdevDriver' } }
-+               'format'   : 'FirmwareFormat' } }
- 
- 
- ##
-
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
