@@ -4,55 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25E3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B55C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUU7R-0006hu-2A; Thu, 18 Jul 2024 12:36:37 -0400
+	id 1sUU8B-0007eA-Bx; Thu, 18 Jul 2024 12:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sUU7N-0006hJ-CV
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:36:34 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sUU7K-0004uB-Mm
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:36:33 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WPz080hr9z6K9fn;
- Fri, 19 Jul 2024 00:34:00 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 0CF201400D3;
- Fri, 19 Jul 2024 00:36:16 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 18 Jul
- 2024 17:36:15 +0100
-Date: Thu, 18 Jul 2024 17:36:14 +0100
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-CC: <fan.ni@samsung.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] mem/cxl_type3: Fix overlapping region validation error
-Message-ID: <20240718173614.00006d13@Huawei.com>
-In-Reply-To: <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
-References: <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sUU8A-0007bt-PY
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:37:22 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sUU88-00052G-Li
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 12:37:22 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70b5117ae06so20672b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 09:37:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721320638; x=1721925438; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eqdi2BHBpEuI4VyEbfEKSvh1dxk1gfu947ZuFjPUVH8=;
+ b=xIY5Iz2Ve3l/wETCXQOMd8IEwi5dCtJXt3ShxcRIZz+wj35JwrZcuteYB1Rwp3uwmF
+ uJoKIAbFOeMtcIMtOzdFzsw8I3jUSaN6+MQ4snEMqURF5zloDRI3k0/WboMzb8Cn+3b1
+ 8AmaMbursJ8AJyHmSavPftgTM6aexUxcghUmqHGR6SDMO3VJjwiRZewwWZ2cYMtb3SDa
+ B4r1qqugp4YOSu+7VfA0UIjZnl6ZXcwazNMhFc8Ihsr4x49JSwl65pGx0XI5ifSxvG67
+ X1juJ4Np2SpVGguHeoEI97tLxfKWw+xvVpvuOgJS2dLuQpKbbbfhSFlkq1uS3LqWVehl
+ Ad5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721320638; x=1721925438;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eqdi2BHBpEuI4VyEbfEKSvh1dxk1gfu947ZuFjPUVH8=;
+ b=Q/Opei7CzHqnYT1UWQn1a8AT6QssvkB+THzfxrtoKAeIi1/BeVFQEeyw2LYYhm5Rob
+ oZJkQZ3eMI0EUZ8dUkU+4kT63unjyUBv2//eZp2xc850c7eBlSVq6XfsaOClHDXaAkJx
+ l95owdjgmdFNqnf4va7wXb5HHI/0xbw8E/rLFE4XKU6fhcH+YpsBSA6aPziC7qnCL9Nb
+ ONfYDXex6AJ/gooRZgjCM43AxuTrUraD9o8/G/4Y9ZqZdg/JAl95EnR+gJTCzKA8HJR5
+ zdNsxbVmZR0EIKo6yo1W4YYNseRv4iiRo0P9REKPBPGsU0nxO4+EDPV699txPDih6GM7
+ K2Uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv+k94JYHszzdhdU9BrjAUvin7t/JENpyHXtBvCu0iwM12k8vJWVxl1Bm6krG54LS4MkVkKY0ou42kuPySpajs+RjdeoU=
+X-Gm-Message-State: AOJu0YzO76pyYeyWl9ObWpX8CuFgNETEq5fH2piCAt6y+JA8tYLQCnHr
+ uzzbVO3bxaqqI+lRE3lyhmrP4NbRraIlO3BwIhKEFu0y52x54JeR3r1jJ9WJxR8=
+X-Google-Smtp-Source: AGHT+IFJ+eZLrDTkGJvBiJm9OBAX0l1vKuJDb/lsh3rnxcuBr6/FV5EcJKeBL35tVlwgZh6InfgfsA==
+X-Received: by 2002:a05:6a20:8423:b0:1c0:f6d5:be9a with SMTP id
+ adf61e73a8af0-1c3fddc4176mr7580639637.36.1721320638318; 
+ Thu, 18 Jul 2024 09:37:18 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-790c3ac9811sm5693865a12.52.2024.07.18.09.37.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jul 2024 09:37:17 -0700 (PDT)
+Message-ID: <0d515c6c-c046-4704-b69a-4b3cf535577c@linaro.org>
+Date: Thu, 18 Jul 2024 09:37:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/15] tests/plugins: use qemu_plugin_outs for inline stats
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Thomas Huth <thuth@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>, qemu-riscv@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Beraldo Leal <bleal@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Ed Maste <emaste@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
+References: <20240718094523.1198645-1-alex.bennee@linaro.org>
+ <20240718094523.1198645-7-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240718094523.1198645-7-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,63 +112,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jul 2024 05:07:53 -0400
-Yao Xingtao <yaoxt.fnst@fujitsu.com> wrote:
-
-> When injecting a new poisoned region through qmp_cxl_inject_poison(),
-> the newly injected region should not overlap with existing poisoned
-> regions.
->=20
-> The current validation method does not consider the following
-> overlapping region:
-> =E2=94=8C=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=90
-> =E2=94=82a  =E2=94=82  b(a) =E2=94=82a  =E2=94=82
-> =E2=94=94=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=98
-> (a is a newly added region, b is an existing region, and b is a
->  subregion of a)
->=20
-> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Looks correct to me.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huwei.com>
-I've queued it on my local branch.
-I need to put together an updated public one.
-
-No huge rush to queue this up though I think as the effects
-are minor.
-
-Jonathan
-
-> ---
->  hw/mem/cxl_type3.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->=20
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 35ac59883a5b..8e32de327908 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1331,9 +1331,7 @@ void qmp_cxl_inject_poison(const char *path, uint64=
-_t start, uint64_t length,
->      ct3d =3D CXL_TYPE3(obj);
-> =20
->      QLIST_FOREACH(p, &ct3d->poison_list, node) {
-> -        if (((start >=3D p->start) && (start < p->start + p->length)) ||
-> -            ((start + length > p->start) &&
-> -             (start + length <=3D p->start + p->length))) {
-> +        if ((start < p->start + p->length) && (start + length > p->start=
-)) {
->              error_setg(errp,
->                         "Overlap with existing poisoned region not suppor=
-ted");
->              return;
-
+T24gNy8xOC8yNCAwMjo0NSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBVc2luZyBiYXJlIHBy
+aW50ZidzIGluIHBsdWdpbnMgaXMgcGVyZmVjdGx5IGFjY2VwdGFibGUgYnV0IHRoZXkgZG8N
+Cj4gcmF0aGVyIG1lc3MgdXAgdGhlIG91dHB1dCBvZiAibWFrZSBjaGVjay10Y2ciLiBDb252
+ZXJ0IHRoZSBwcmludGZzIHRvDQo+IHVzZSBnX3N0cmluZyBhbmQgdGhlbiBvdXRwdXQgd2l0
+aCB0aGUgcGx1Z2luIG91dHB1dCBoZWxwZXIgd2hpY2ggd2lsbA0KPiBhbHJlYWR5IGJlIGNh
+cHR1cmVkIHRvIC5wb3V0IGZpbGVzIGJ5IHRoZSB0ZXN0IGhhcm5lc3MuDQo+IA0KPiBTaWdu
+ZWQtb2ZmLWJ5OiBBbGV4IEJlbm7DqWUgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+IC0t
+LQ0KPiAgIHRlc3RzL3BsdWdpbi9pbmxpbmUuYyB8IDU4ICsrKysrKysrKysrKysrKysrKysr
+KysrKy0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gICAxIGZpbGUgY2hhbmdlZCwgMzMgaW5zZXJ0
+aW9ucygrKSwgMjUgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvdGVzdHMvcGx1
+Z2luL2lubGluZS5jIGIvdGVzdHMvcGx1Z2luL2lubGluZS5jDQo+IGluZGV4IGNkNjM4Mjdi
+N2QuLjczZGRlOTk1NzggMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL3BsdWdpbi9pbmxpbmUuYw0K
+PiArKysgYi90ZXN0cy9wbHVnaW4vaW5saW5lLmMNCj4gQEAgLTcxLDEwICs3MSwxMiBAQCBz
+dGF0aWMgdm9pZCBzdGF0c19pbnNuKHZvaWQpDQo+ICAgICAgIGNvbnN0IHVpbnQ2NF90IGNv
+bmRfdHJhY2tfbGVmdCA9IHFlbXVfcGx1Z2luX3U2NF9zdW0oaW5zbl9jb25kX3RyYWNrX2Nv
+dW50KTsNCj4gICAgICAgY29uc3QgdWludDY0X3QgY29uZGl0aW9uYWwgPQ0KPiAgICAgICAg
+ICAgY29uZF9udW1fdHJpZ2dlciAqIGNvbmRfdHJpZ2dlcl9saW1pdCArIGNvbmRfdHJhY2tf
+bGVmdDsNCj4gLSAgICBwcmludGYoImluc246ICUiIFBSSXU2NCAiXG4iLCBleHBlY3RlZCk7
+DQo+IC0gICAgcHJpbnRmKCJpbnNuOiAlIiBQUkl1NjQgIiAocGVyIHZjcHUpXG4iLCBwZXJf
+dmNwdSk7DQo+IC0gICAgcHJpbnRmKCJpbnNuOiAlIiBQUkl1NjQgIiAocGVyIHZjcHUgaW5s
+aW5lKVxuIiwgaW5sX3Blcl92Y3B1KTsNCj4gLSAgICBwcmludGYoImluc246ICUiIFBSSXU2
+NCAiIChjb25kIGNiKVxuIiwgY29uZGl0aW9uYWwpOw0KPiArICAgIGdfYXV0b3B0cihHU3Ry
+aW5nKSBzdGF0cyA9IGdfc3RyaW5nX25ldygiIik7DQo+ICsgICAgZ19zdHJpbmdfYXBwZW5k
+X3ByaW50ZihzdGF0cywgImluc246ICUiIFBSSXU2NCAiXG4iLCBleHBlY3RlZCk7DQo+ICsg
+ICAgZ19zdHJpbmdfYXBwZW5kX3ByaW50ZihzdGF0cywgImluc246ICUiIFBSSXU2NCAiIChw
+ZXIgdmNwdSlcbiIsIHBlcl92Y3B1KTsNCj4gKyAgICBnX3N0cmluZ19hcHBlbmRfcHJpbnRm
+KHN0YXRzLCAiaW5zbjogJSIgUFJJdTY0ICIgKHBlciB2Y3B1IGlubGluZSlcbiIsIGlubF9w
+ZXJfdmNwdSk7DQo+ICsgICAgZ19zdHJpbmdfYXBwZW5kX3ByaW50ZihzdGF0cywgImluc246
+ICUiIFBSSXU2NCAiIChjb25kIGNiKVxuIiwgY29uZGl0aW9uYWwpOw0KPiArICAgIHFlbXVf
+cGx1Z2luX291dHMoc3RhdHMtPnN0cik7DQo+ICAgICAgIGdfYXNzZXJ0KGV4cGVjdGVkID4g
+MCk7DQo+ICAgICAgIGdfYXNzZXJ0KHBlcl92Y3B1ID09IGV4cGVjdGVkKTsNCj4gICAgICAg
+Z19hc3NlcnQoaW5sX3Blcl92Y3B1ID09IGV4cGVjdGVkKTsNCj4gQEAgLTkxLDEwICs5Mywx
+MiBAQCBzdGF0aWMgdm9pZCBzdGF0c190Yih2b2lkKQ0KPiAgICAgICBjb25zdCB1aW50NjRf
+dCBjb25kX3RyYWNrX2xlZnQgPSBxZW11X3BsdWdpbl91NjRfc3VtKHRiX2NvbmRfdHJhY2tf
+Y291bnQpOw0KPiAgICAgICBjb25zdCB1aW50NjRfdCBjb25kaXRpb25hbCA9DQo+ICAgICAg
+ICAgICBjb25kX251bV90cmlnZ2VyICogY29uZF90cmlnZ2VyX2xpbWl0ICsgY29uZF90cmFj
+a19sZWZ0Ow0KPiAtICAgIHByaW50ZigidGI6ICUiIFBSSXU2NCAiXG4iLCBleHBlY3RlZCk7
+DQo+IC0gICAgcHJpbnRmKCJ0YjogJSIgUFJJdTY0ICIgKHBlciB2Y3B1KVxuIiwgcGVyX3Zj
+cHUpOw0KPiAtICAgIHByaW50ZigidGI6ICUiIFBSSXU2NCAiIChwZXIgdmNwdSBpbmxpbmUp
+XG4iLCBpbmxfcGVyX3ZjcHUpOw0KPiAtICAgIHByaW50ZigidGI6ICUiIFBSSXU2NCAiIChj
+b25kaXRpb25hbCBjYilcbiIsIGNvbmRpdGlvbmFsKTsNCj4gKyAgICBnX2F1dG9wdHIoR1N0
+cmluZykgc3RhdHMgPSBnX3N0cmluZ19uZXcoIiIpOw0KPiArICAgIGdfc3RyaW5nX2FwcGVu
+ZF9wcmludGYoc3RhdHMsICJ0YjogJSIgUFJJdTY0ICJcbiIsIGV4cGVjdGVkKTsNCj4gKyAg
+ICBnX3N0cmluZ19hcHBlbmRfcHJpbnRmKHN0YXRzLCAidGI6ICUiIFBSSXU2NCAiIChwZXIg
+dmNwdSlcbiIsIHBlcl92Y3B1KTsNCj4gKyAgICBnX3N0cmluZ19hcHBlbmRfcHJpbnRmKHN0
+YXRzLCAidGI6ICUiIFBSSXU2NCAiIChwZXIgdmNwdSBpbmxpbmUpXG4iLCBpbmxfcGVyX3Zj
+cHUpOw0KPiArICAgIGdfc3RyaW5nX2FwcGVuZF9wcmludGYoc3RhdHMsICJ0YjogJSIgUFJJ
+dTY0ICIgKGNvbmRpdGlvbmFsIGNiKVxuIiwgY29uZGl0aW9uYWwpOw0KPiArICAgIHFlbXVf
+cGx1Z2luX291dHMoc3RhdHMtPnN0cik7DQo+ICAgICAgIGdfYXNzZXJ0KGV4cGVjdGVkID4g
+MCk7DQo+ICAgICAgIGdfYXNzZXJ0KHBlcl92Y3B1ID09IGV4cGVjdGVkKTsNCj4gICAgICAg
+Z19hc3NlcnQoaW5sX3Blcl92Y3B1ID09IGV4cGVjdGVkKTsNCj4gQEAgLTEwNyw5ICsxMTEs
+MTEgQEAgc3RhdGljIHZvaWQgc3RhdHNfbWVtKHZvaWQpDQo+ICAgICAgIGNvbnN0IHVpbnQ2
+NF90IHBlcl92Y3B1ID0gcWVtdV9wbHVnaW5fdTY0X3N1bShjb3VudF9tZW0pOw0KPiAgICAg
+ICBjb25zdCB1aW50NjRfdCBpbmxfcGVyX3ZjcHUgPQ0KPiAgICAgICAgICAgcWVtdV9wbHVn
+aW5fdTY0X3N1bShjb3VudF9tZW1faW5saW5lKTsNCj4gLSAgICBwcmludGYoIm1lbTogJSIg
+UFJJdTY0ICJcbiIsIGV4cGVjdGVkKTsNCj4gLSAgICBwcmludGYoIm1lbTogJSIgUFJJdTY0
+ICIgKHBlciB2Y3B1KVxuIiwgcGVyX3ZjcHUpOw0KPiAtICAgIHByaW50ZigibWVtOiAlIiBQ
+Ukl1NjQgIiAocGVyIHZjcHUgaW5saW5lKVxuIiwgaW5sX3Blcl92Y3B1KTsNCj4gKyAgICBn
+X2F1dG9wdHIoR1N0cmluZykgc3RhdHMgPSBnX3N0cmluZ19uZXcoIiIpOw0KPiArICAgIGdf
+c3RyaW5nX2FwcGVuZF9wcmludGYoc3RhdHMsICJtZW06ICUiIFBSSXU2NCAiXG4iLCBleHBl
+Y3RlZCk7DQo+ICsgICAgZ19zdHJpbmdfYXBwZW5kX3ByaW50ZihzdGF0cywgIm1lbTogJSIg
+UFJJdTY0ICIgKHBlciB2Y3B1KVxuIiwgcGVyX3ZjcHUpOw0KPiArICAgIGdfc3RyaW5nX2Fw
+cGVuZF9wcmludGYoc3RhdHMsICJtZW06ICUiIFBSSXU2NCAiIChwZXIgdmNwdSBpbmxpbmUp
+XG4iLCBpbmxfcGVyX3ZjcHUpOw0KPiArICAgIHFlbXVfcGx1Z2luX291dHMoc3RhdHMtPnN0
+cik7DQo+ICAgICAgIGdfYXNzZXJ0KGV4cGVjdGVkID4gMCk7DQo+ICAgICAgIGdfYXNzZXJ0
+KHBlcl92Y3B1ID09IGV4cGVjdGVkKTsNCj4gICAgICAgZ19hc3NlcnQoaW5sX3Blcl92Y3B1
+ID09IGV4cGVjdGVkKTsNCj4gQEAgLTExOCw2ICsxMjQsNyBAQCBzdGF0aWMgdm9pZCBzdGF0
+c19tZW0odm9pZCkNCj4gICBzdGF0aWMgdm9pZCBwbHVnaW5fZXhpdChxZW11X3BsdWdpbl9p
+ZF90IGlkLCB2b2lkICp1ZGF0YSkNCj4gICB7DQo+ICAgICAgIGNvbnN0IHVuc2lnbmVkIGlu
+dCBudW1fY3B1cyA9IHFlbXVfcGx1Z2luX251bV92Y3B1cygpOw0KPiArICAgIGdfYXV0b3B0
+cihHU3RyaW5nKSBzdGF0cyA9IGdfc3RyaW5nX25ldygiIik7DQo+ICAgICAgIGdfYXNzZXJ0
+KG51bV9jcHVzID09IG1heF9jcHVfaW5kZXggKyAxKTsNCj4gICANCj4gICAgICAgZm9yIChp
+bnQgaSA9IDA7IGkgPCBudW1fY3B1cyA7ICsraSkgew0KPiBAQCAtMTM1LDIwICsxNDIsMjEg
+QEAgc3RhdGljIHZvaWQgcGx1Z2luX2V4aXQocWVtdV9wbHVnaW5faWRfdCBpZCwgdm9pZCAq
+dWRhdGEpDQo+ICAgICAgICAgICAgICAgcWVtdV9wbHVnaW5fdTY0X2dldChpbnNuX2NvbmRf
+bnVtX3RyaWdnZXIsIGkpOw0KPiAgICAgICAgICAgY29uc3QgdWludDY0X3QgaW5zbl9jb25k
+X2xlZnQgPQ0KPiAgICAgICAgICAgICAgIHFlbXVfcGx1Z2luX3U2NF9nZXQoaW5zbl9jb25k
+X3RyYWNrX2NvdW50LCBpKTsNCj4gLSAgICAgICAgcHJpbnRmKCJjcHUgJWQ6IHRiICglIiBQ
+Ukl1NjQgIiwgJSIgUFJJdTY0DQo+IC0gICAgICAgICAgICAgICAiLCAlIiBQUkl1NjQgIiAq
+ICUiIFBSSXU2NCAiICsgJSIgUFJJdTY0DQo+IC0gICAgICAgICAgICAgICAiKSB8ICINCj4g
+LSAgICAgICAgICAgICAgICJpbnNuICglIiBQUkl1NjQgIiwgJSIgUFJJdTY0DQo+IC0gICAg
+ICAgICAgICAgICAiLCAlIiBQUkl1NjQgIiAqICUiIFBSSXU2NCAiICsgJSIgUFJJdTY0DQo+
+IC0gICAgICAgICAgICAgICAiKSB8ICINCj4gLSAgICAgICAgICAgICAgICJtZW0gKCUiIFBS
+SXU2NCAiLCAlIiBQUkl1NjQgIikiDQo+IC0gICAgICAgICAgICAgICAiXG4iLA0KPiAtICAg
+ICAgICAgICAgICAgaSwNCj4gLSAgICAgICAgICAgICAgIHRiLCB0Yl9pbmxpbmUsDQo+IC0g
+ICAgICAgICAgICAgICB0Yl9jb25kX3RyaWdnZXIsIGNvbmRfdHJpZ2dlcl9saW1pdCwgdGJf
+Y29uZF9sZWZ0LA0KPiAtICAgICAgICAgICAgICAgaW5zbiwgaW5zbl9pbmxpbmUsDQo+IC0g
+ICAgICAgICAgICAgICBpbnNuX2NvbmRfdHJpZ2dlciwgY29uZF90cmlnZ2VyX2xpbWl0LCBp
+bnNuX2NvbmRfbGVmdCwNCj4gLSAgICAgICAgICAgICAgIG1lbSwgbWVtX2lubGluZSk7DQo+
+ICsgICAgICAgIGdfc3RyaW5nX3ByaW50ZihzdGF0cywgImNwdSAlZDogdGIgKCUiIFBSSXU2
+NCAiLCAlIiBQUkl1NjQNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICIsICUiIFBSSXU2
+NCAiICogJSIgUFJJdTY0ICIgKyAlIiBQUkl1NjQNCj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICIpIHwgIg0KPiArICAgICAgICAgICAgICAgICAgICAgICAgImluc24gKCUiIFBSSXU2
+NCAiLCAlIiBQUkl1NjQNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICIsICUiIFBSSXU2
+NCAiICogJSIgUFJJdTY0ICIgKyAlIiBQUkl1NjQNCj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICIpIHwgIg0KPiArICAgICAgICAgICAgICAgICAgICAgICAgIm1lbSAoJSIgUFJJdTY0
+ICIsICUiIFBSSXU2NCAiKSINCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICJcbiIsDQo+
+ICsgICAgICAgICAgICAgICAgICAgICAgICBpLA0KPiArICAgICAgICAgICAgICAgICAgICAg
+ICAgdGIsIHRiX2lubGluZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgIHRiX2NvbmRf
+dHJpZ2dlciwgY29uZF90cmlnZ2VyX2xpbWl0LCB0Yl9jb25kX2xlZnQsDQo+ICsgICAgICAg
+ICAgICAgICAgICAgICAgICBpbnNuLCBpbnNuX2lubGluZSwNCj4gKyAgICAgICAgICAgICAg
+ICAgICAgICAgIGluc25fY29uZF90cmlnZ2VyLCBjb25kX3RyaWdnZXJfbGltaXQsIGluc25f
+Y29uZF9sZWZ0LA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgbWVtLCBtZW1faW5saW5l
+KTsNCj4gKyAgICAgICAgcWVtdV9wbHVnaW5fb3V0cyhzdGF0cy0+c3RyKTsNCj4gICAgICAg
+ICAgIGdfYXNzZXJ0KHRiID09IHRiX2lubGluZSk7DQo+ICAgICAgICAgICBnX2Fzc2VydChp
+bnNuID09IGluc25faW5saW5lKTsNCj4gICAgICAgICAgIGdfYXNzZXJ0KG1lbSA9PSBtZW1f
+aW5saW5lKTsNCg0KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJv
+dXZpZXJAbGluYXJvLm9yZz4NCg==
 
