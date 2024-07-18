@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182C6C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91040C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNGz-0007Ks-5y; Thu, 18 Jul 2024 05:18:01 -0400
+	id 1sUNL7-0007Qm-Rt; Thu, 18 Jul 2024 05:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUNGw-0007ED-Hi
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:17:58 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sUNL5-0007J9-Sb
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:22:15 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUNGu-0007WN-K6
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:17:58 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-585e774fd3dso592371a12.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:17:56 -0700 (PDT)
+ id 1sUNL4-0000AT-2x
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:22:15 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5a10bb7bcd0so704465a12.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721294275; x=1721899075; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DJak8oBmdhUdXA3BmjAjSFXS8RT7kaQMoJzrFa3m4l4=;
- b=DUN0tdD4oeBg1ATigIZnnaKrIXhdDsma7cSVUtRbTdJHmUTOhYmFLnw218ViQxYaRX
- /znmoUciZpK8EH1bqCCx0n+tYS6kiA4+HMm/mQz+IBBswz8c0zX0IREagi605GYWK3sq
- Uf4FocVeBQ6jkEts10s12RX7caxGA5DNT0lS/+EeJICqt1c3plCeqjrxSDq7WsDQCN2k
- 6BUdEN0H4TKLCHZASTI7faes6Q++Tk65Mm5oQATvzknr5nAjQ/bvmBY5l0ivI6GkEA71
- gLrF0yVkll8q5JZggrjgutDzUZOdg6LxHMqm7AeYrd325W4ro9Cdj03fJV8oTmRK4oeG
- dnxg==
+ d=linaro.org; s=google; t=1721294532; x=1721899332; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lRw+8fZjUhePZr8Xo0VuYMGhUhJQp4YNgo+0DPUrJtw=;
+ b=NRzAQ84G21udCeU4yw2n/w2/gZrffr25HhFBr9vpwL+2SpKiCTINmi4AmVimHB+pAn
+ zYL0O4gZNBl+ib0XdlN0qdikPBQYqq2JvxZ6TSkXBQZyfoYo/kSydbuMKFGsEt96fmXv
+ BBIwNsZi60zq0l8l5hsNRwAyCU5pWni/1I51LRwmJAr1OEIhUOb15fwnQok0elcHTs7B
+ 47rf8MWPctWSRLLTEtyyxjC44aoasM+/KjliXdja7PojRYNoL1MFlUyd/KLwB2yIcr4R
+ Wk5Fi7NS4e8sEm+jQGlg7jymFtKrWCy9YykLbmZmUHbWs0TQGr5dRi4eBxMGDpufSDIc
+ 20xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721294275; x=1721899075;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DJak8oBmdhUdXA3BmjAjSFXS8RT7kaQMoJzrFa3m4l4=;
- b=USRhL4+KCQ6TgJVv+Co6xk0bPSByK1ufT6e7W3rc6s1ZKnTfH4HwcDONK2M0xwQeBB
- mKunHAwhYiPTex5Netvj+twQwiuu0ApvS3i+zw3djii1ncPL5OFTYiehhSnW1PxfNcdm
- RnpvS65MexpdCzC73ghhQL3Bpcxh8GH0mLXYf6nXAkSXIPHBlac5AY6zYWBbcRU9biVk
- 0xW4gjhKvI8QRmuNeas6n6BMjJQi0B3euZbHGsJ/M/gTp7hpznSfAaZxY23pofgfu/TE
- 8mRb6+x6hZ3lUjgXvNbaLtn5Z1JRbm5Wru7khjvewzCgJqId8e6ceEHCl5/bISyK+JKf
- mCqg==
+ d=1e100.net; s=20230601; t=1721294532; x=1721899332;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lRw+8fZjUhePZr8Xo0VuYMGhUhJQp4YNgo+0DPUrJtw=;
+ b=nczwEQMbQgu3mIdpjlQ37H2hE2umRakUNia57XmNZeHrehlkA62MF4pHpGuYoDcEuf
+ h2pWcTumoE/FI3pae5FcE37uq4T7QP6qTBqe62HHpXhf9Uxg7Tn9R1eGB82YApe8ohId
+ 1K5vpBn/w3VWvU4mm8J9Qg+/VU5boQ2TLh+ZkVWnbvaxKdeLch6qOPznKLjsqRVrD8h6
+ bZrIpdTLhllAMaJAPaWPckmTxDvsgl3tF0T3Yf0nSnsqI6eK4fHd2E9kQ6oR2cR1T/eu
+ mqbR4enthr4G35ehyJ9S3qEWKS29F/xDhHRcRo4rhjdSlDqYbmF/mbrGVvaxDuRTK+kd
+ JJkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhRo/1kRO2uy74zyqIm3MIZhHHwPjN2z+m1q2ZVrhX9tWcCg1N36bZnJF4NOuc/JccTh6EaEsYM3m0x7DrYgUG45Y6y40=
-X-Gm-Message-State: AOJu0YycfgF5RQzYhg09+ascPFH0EzIN7eF96Ka7jvZ4QqInzRWnc/VP
- v8Xc1a9z7S3JNvxtlyh7DVxayqmqGPPh2qzfzwqkifCea7zQd6rS3QL9P0vQ9J9Hgqt5PoP6oCR
- ea4ml4O6qznFLTFepyoUVk6Bg5yjfpg3Wa4Kzdw==
-X-Google-Smtp-Source: AGHT+IHBLJRKFF7Idw4GmwKc0c7kqgYWDz8qgSqjwYPrOIpxXW6XF2R7OaYZIr33HariEO04kzFVzC0EG/5fp9w2ZAg=
-X-Received: by 2002:a05:6402:5113:b0:58c:804a:6ee2 with SMTP id
- 4fb4d7f45d1cf-5a05bdc1004mr3147148a12.20.1721294274628; Thu, 18 Jul 2024
- 02:17:54 -0700 (PDT)
+ AJvYcCWneyevIaQ2BaFzxYVLbpsaNwhPuADUv+gXW8Gc3gnt8h+KP7+tKo2Mu6+U0tYJCeVET9eel/U2KDUeKv0GPnYsWJ38hO4=
+X-Gm-Message-State: AOJu0YzARN7kpCpIQjg/ygNU055UkPppKwn3WaMq5QajRlYUyRSJGIP/
+ HluXVE2qfy7dpcdireYKDblC5EwIeYz5mBhTM4qxqAudK91HaARSw+knCEFfcNaJ4oEenEJMnL6
+ 4yaUv5VtqshEJEzTsU78wPSPKOfnDyg1RD/f0NA==
+X-Google-Smtp-Source: AGHT+IFVNptriV/DS/52KkWH9NygV8av02pT/K37slAK2sIRAKuNSWf7tZFGdI+0FElCK0Sl0AGGlnlBIE0a143Lv+s=
+X-Received: by 2002:a05:6402:40c4:b0:5a1:c43:82bd with SMTP id
+ 4fb4d7f45d1cf-5a10c4386b3mr2303157a12.19.1721294532167; Thu, 18 Jul 2024
+ 02:22:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240717201123.9742-1-vr_qemu@t-online.de>
-In-Reply-To: <20240717201123.9742-1-vr_qemu@t-online.de>
+References: <20240605185050.1678102-1-tavip@google.com>
+ <87r0br8bve.fsf@pond.sub.org>
+In-Reply-To: <87r0br8bve.fsf@pond.sub.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Jul 2024 10:17:42 +0100
-Message-ID: <CAFEAcA_ODXCwNhdqTMBQhzNV60s=oWJfPeEARAx3XQRLbLGwPA@mail.gmail.com>
-Subject: Re: [PATCH] docs: fix the html docs search function
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Date: Thu, 18 Jul 2024 10:22:01 +0100
+Message-ID: <CAFEAcA8nFz_4M3s4NoWpfhJZ=pxRc92shSKfoL6iN=_Oqmc-tw@mail.gmail.com>
+Subject: Re: [PATCH v3] chardev: add path option for pty backend
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com, 
+ eblake@redhat.com, berrange@redhat.com, Paulo Neves <ptsneves@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,29 +92,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Jul 2024 at 21:11, Volker R=C3=BCmelin <vr_qemu@t-online.de> wro=
-te:
+On Thu, 18 Jul 2024 at 07:15, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> Fix the search function in Sphinx generated html docs when built
-> with Sphinx >=3D 6.0.0.
+> Looks like this one fell through the cracks.
 >
-> Quote from the Sphinx blog at
-> https://blog.readthedocs.com/sphinx6-upgrade
+> Octavian Purdila <tavip@google.com> writes:
 >
-> Sphinx 6 is out and has important breaking changes
+> > Add path option to the pty char backend which will create a symbolic
+> > link to the given path that points to the allocated PTY.
+> >
+> > This avoids having to make QMP or HMP monitor queries to find out what
+> > the new PTY device path is.
 >
-> Bundled jQuery is removed. The JavaScript asset is easily added
-> back using the new extension sphinxcontrib-jquery. It is included
-> automatically by sphinx-rtd-theme, so if you are using our theme,
-> you will also continue to have jQuery available in your
-> documentation.
+> QMP commands chardev-add and chardev-change return the information you
+> want:
+>
+>     # @pty: name of the slave pseudoterminal device, present if and only
+>     #     if a chardev of type 'pty' was created
+>
+> So does HMP command chardev-add.  HMP chardev apparently doesn't, but
+> that could be fixed.
+>
+> So, the use case is basically the command line, right?
 
-We do use the sphinx-rtd-theme, though:
- html_theme =3D 'sphinx_rtd_theme'
+> The feature feels rather doubtful to me, to be honest.
 
-so that release note suggests we shouldn't need to manually
-pull in sphinxcontrib-jquery ?
+The command line is an important use-case, though. Not every
+user of QEMU is libvirt with a QMP/HMP connection readily
+to hand that they would prefer to use for all configuration...
 
-thanks
 -- PMM
 
