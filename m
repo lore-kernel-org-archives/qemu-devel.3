@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2B6C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F77C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMMr-0007nN-6j; Thu, 18 Jul 2024 04:20:02 -0400
+	id 1sUMU4-0002hP-36; Thu, 18 Jul 2024 04:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMp-0007il-Km
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:59 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMU2-0002dd-PG
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMn-0008CX-74
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721290797; x=1752826797;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=niCzkGR1Tw3ATONOfsEVQDnH7lN7M2YH9yAYiT3e5s0=;
- b=WpSbm2cYbQHTe3hgVfr8W7dSfZt/HNwCAeFsx4iLuTI5ALx5TxKnndu0
- cOEXvPqc0t2thdyC/Wn5eg/VIiVZ9K3Thbvk9Hkzvo4+QFWKz8raG+/TO
- jTsBk3WA/T9QEXzt8w2IsR6G+zBxItQ/MoSKi0h5qag4Mp0pceF1yNMRI
- Qyc0Rj10+0V3FK2BOUfZVxLJSEyhHMoYJXkkpD2mBN8j/o9hvuzRqUkz6
- 6TAUyssOi1jmpGcU6AL1O1hMWEkwaQGhXPoEXFAOukU66UcDLKUB6jJjB
- TfJPgTpTaNxrCoEx0+8XIk4A+Oc77HbKdnsjm81KaBQXXByQRoHrTqbMo g==;
-X-CSE-ConnectionGUID: HkibuFL0SUO815dmzIKDJw==
-X-CSE-MsgGUID: 62NhtFBXSSmTTnzHBW/WfA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996259"
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996259"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:19:56 -0700
-X-CSE-ConnectionGUID: 7QUNIG2HQ7K+eWSKnl6QkQ==
-X-CSE-MsgGUID: ZeQkuc2aQimmTqP3g/ydzQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717300"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:19:53 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v1 08/17] intel_iommu: Set accessed and dirty bits during
- first stage translation
-Date: Thu, 18 Jul 2024 16:16:27 +0800
-Message-Id: <20240718081636.879544-9-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240718081636.879544-1-zhenzhong.duan@intel.com>
-References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMU0-0002Qc-LA
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721291242;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Csfv8UKwQNZgTU8Pypj1wPiCCQtN74A3k50hOXF1azE=;
+ b=O8v6mJa6iOQ9swiNmm6fYTFRXQPUBp4+e8MiE4v20WMMm0f/gU/os4EninndNlP42RUPb+
+ Nh6BcTHjdEC4dMMCE/A72SUZwXY1/vYuRCoLdJVsESPRUEbaGhOYBanai8mqaM3SzH/qAq
+ uAZPTQhOVSC+qafMJ9XuAyOxS61Vylk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-oTKwWBhwNrOPBT9g9iprlg-1; Thu,
+ 18 Jul 2024 04:27:20 -0400
+X-MC-Unique: oTKwWBhwNrOPBT9g9iprlg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F3391955D4D; Thu, 18 Jul 2024 08:27:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACC2C1955F40; Thu, 18 Jul 2024 08:27:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3E52321E668A; Thu, 18 Jul 2024 10:27:12 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
+ qemu-devel@nongnu.org,  eblake@redhat.com,  eduardo@habkost.net,
+ berrange@redhat.com,  pbonzini@redhat.com,  hreitz@redhat.com,
+ kwolf@redhat.com,  yc-core@yandex-team.ru
+Subject: Re: [PATCH v5 3/3] qapi: introduce device-sync-config
+In-Reply-To: <20240625121843.120035-4-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Tue, 25 Jun 2024 15:18:43 +0300")
+References: <20240625121843.120035-1-vsementsov@yandex-team.ru>
+ <20240625121843.120035-4-vsementsov@yandex-team.ru>
+Date: Thu, 18 Jul 2024 10:27:12 +0200
+Message-ID: <87cynbm7fj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,87 +87,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu_internal.h |  3 +++
- hw/i386/intel_iommu.c          | 24 ++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+> Add command to sync config from vhost-user backend to the device. It
+> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
+> triggered interrupt to the guest or just not available (not supported
+> by vhost-user server).
+>
+> Command result is racy if allow it during migration. Let's allow the
+> sync only in RUNNING state.
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 168185b850..cf0f176e06 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -326,6 +326,7 @@ typedef enum VTDFaultReason {
- 
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-+    VTD_FR_FS_BIT_UPDATE_FAILED = 0x91, /* SFS.10 */
-     VTD_FR_MAX,                 /* Guard */
- } VTDFaultReason;
- 
-@@ -560,6 +561,8 @@ typedef struct VTDRootEntry VTDRootEntry;
- /* Masks for First Level Paging Entry */
- #define VTD_FL_P                    1ULL
- #define VTD_FL_RW_MASK              (1ULL << 1)
-+#define VTD_FL_A                    0x20
-+#define VTD_FL_D                    0x40
- 
- /* Second Level Page Translation Pointer*/
- #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 495a41cf80..210df32f01 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1825,6 +1825,7 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_FS_NON_CANONICAL] = true,
-+    [VTD_FR_FS_BIT_UPDATE_FAILED] = true,
-     [VTD_FR_MAX] = false,
- };
- 
-@@ -1942,6 +1943,20 @@ static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
-             );
- }
- 
-+static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
-+                                       uint64_t pte, uint64_t flag)
-+{
-+    if (pte & flag) {
-+        return MEMTX_OK;
-+    }
-+    pte |= flag;
-+    pte = cpu_to_le64(pte);
-+    return dma_memory_write(&address_space_memory,
-+                            base_addr + index * sizeof(pte),
-+                            &pte, sizeof(pte),
-+                            MEMTXATTRS_UNSPECIFIED);
-+}
-+
- /*
-  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-  * of the translation, can be used for deciding the size of large page.
-@@ -1993,7 +2008,16 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-             return -VTD_FR_PAGING_ENTRY_RSVD;
-         }
- 
-+        if (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_A) != MEMTX_OK) {
-+            return -VTD_FR_FS_BIT_UPDATE_FAILED;
-+        }
-+
-         if (vtd_is_last_pte(flpte, level)) {
-+            if (is_write &&
-+                (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_D) !=
-+                                                                    MEMTX_OK)) {
-+                    return -VTD_FR_FS_BIT_UPDATE_FAILED;
-+            }
-             *flptep = flpte;
-             *flpte_level = level;
-             return 0;
--- 
-2.34.1
+Is this still accurate?  The runstate_is_running() check is gone in
+v4, the migration_is_running() check remains.
+
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+QAPI schema and QMP part:
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
 
