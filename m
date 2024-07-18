@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3ACC3DA62
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643C9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKyD-0005Vm-Ul; Thu, 18 Jul 2024 02:50:29 -0400
+	id 1sUKzB-0001k3-3I; Thu, 18 Jul 2024 02:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyB-0005NI-UQ; Thu, 18 Jul 2024 02:50:27 -0400
+ id 1sUKz9-0001OS-3z; Thu, 18 Jul 2024 02:51:27 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyA-0004L5-Cm; Thu, 18 Jul 2024 02:50:27 -0400
+ id 1sUKz7-0004VA-Fx; Thu, 18 Jul 2024 02:51:26 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
- 2024 14:50:16 +0800
+ 2024 14:50:18 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 18 Jul 2024 14:50:16 +0800
+ Transport; Thu, 18 Jul 2024 14:50:18 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,16 +33,15 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register memory
- region of I2C bus
-Date: Thu, 18 Jul 2024 14:49:14 +0800
-Message-ID: <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 15/15] aspeed: add tmp105 in i2c bus 0 for AST2700
+Date: Thu, 18 Jul 2024 14:49:25 +0800
+Message-ID: <20240718064925.1846074-16-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,70 +66,45 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It only support continuous register memory region for all I2C bus.
-However, the register address of all I2c bus are discontinuous
-for AST2700.
+ASPEED SDK add lm75 in i2c bus 0 for AST2700.
+LM75 is compatible with TMP105 driver.
 
-Ex: the register address of I2C bus for ast2700 as following.
-0x100 - 0x17F: Device 0
-0x200 - 0x27F: Device 1
-0x300 - 0x37F: Device 2
-0x400 - 0x47F: Device 3
-0x500 - 0x57F: Device 4
-0x600 - 0x67F: Device 5
-0x700 - 0x77F: Device 6
-0x800 - 0x87F: Device 7
-0x900 - 0x97F: Device 8
-0xA00 - 0xA7F: Device 9
-0xB00 - 0xB7F: Device 10
-0xC00 - 0xC7F: Device 11
-0xD00 - 0xD7F: Device 12
-0xE00 - 0xE7F: Device 13
-0xF00 – 0xF7F: Device 14
-0x1000 – 0x107F: Device 15
-
-Introduce a new class attribute to make user set each I2C bus gap size.
-Update formula to create all I2C bus register memory regions.
+Introduce a new i2c init function and
+add tmp105 device model in i2c bus 0.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/i2c/aspeed_i2c.c         | 3 ++-
- include/hw/i2c/aspeed_i2c.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ hw/arm/aspeed.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 7d5a53c4c0..462ad78a13 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1011,6 +1011,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     AspeedI2CState *s = ASPEED_I2C(dev);
-     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(s);
-+    uint32_t reg_offset = aic->reg_size + aic->reg_gap_size;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index f8766ea462..ed98758708 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1604,6 +1604,15 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+ }
  
-     sysbus_init_irq(sbd, &s->irq);
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_i2c_ctrl_ops, s,
-@@ -1033,7 +1034,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-             return;
-         }
- 
--        memory_region_add_subregion(&s->iomem, aic->reg_size * (i + offset),
-+        memory_region_add_subregion(&s->iomem, reg_offset * (i + offset),
-                                     &s->busses[i].mr);
-     }
- 
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index 065b636d29..422ee0e298 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -275,6 +275,7 @@ struct AspeedI2CClass {
- 
-     uint8_t num_busses;
-     uint8_t reg_size;
-+    uint32_t reg_gap_size;
-     uint8_t gap;
-     qemu_irq (*bus_get_irq)(AspeedI2CBus *);
- 
+ #ifdef TARGET_AARCH64
++static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++
++    /* LM75 is compatible with TMP105 driver */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
++                            TYPE_TMP105, 0x4d);
++}
++
+ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1618,6 +1627,7 @@ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+     amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
 -- 
 2.34.1
 
