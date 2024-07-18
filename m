@@ -4,121 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447FAC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B972C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUV1P-00031j-Vl; Thu, 18 Jul 2024 13:34:28 -0400
+	id 1sUV9x-0004RP-NP; Thu, 18 Jul 2024 13:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fan.ni@samsung.com>)
- id 1sUV1F-0002V7-5U
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:34:18 -0400
-Received: from mailout1.w2.samsung.com ([211.189.100.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fan.ni@samsung.com>)
- id 1sUV1B-0003wC-LW
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:34:16 -0400
-Received: from uscas1p2.samsung.com (unknown [182.198.245.207])
- by mailout1.w2.samsung.com (KnoxPortal) with ESMTP id
- 20240718173404usoutp01cd60dbd7f750fde7e6713eeba6d925e5~jXxkpvKTg2116121161usoutp01-;
- Thu, 18 Jul 2024 17:34:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w2.samsung.com
- 20240718173404usoutp01cd60dbd7f750fde7e6713eeba6d925e5~jXxkpvKTg2116121161usoutp01-
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1721324044;
- bh=RFf+ZCbyKH7oITDp7dyx0vnR8jkJF4kzi2raDVIP/fM=;
- h=From:To:CC:Subject:Date:In-Reply-To:References:From;
- b=MFYX1bZxEslT6+eNamEozSNQzCnLQ0DFDmSyAxsXsZyv1Ir6Kg6zkpTXBYBioQnbu
- 7CQzoX1BBi8uHfHRv5zzacuMbi6O/0vYhElUxzCP45zAZvhxW2sNmehUEijJ2RGuR/
- DV3RhfyF1Yy2hDr3LxAsCnztzyup0qAvFXOqpVu4=
-Received: from ussmges3new.samsung.com (u112.gpu85.samsung.co.kr
- [203.254.195.112]) by uscas1p1.samsung.com (KnoxPortal) with ESMTP id
- 20240718173404uscas1p180d19606fec3bf94d28bb2ec20359ecb~jXxkj7Vy92943529435uscas1p11;
- Thu, 18 Jul 2024 17:34:04 +0000 (GMT)
-Received: from uscas1p1.samsung.com ( [182.198.245.206]) by
- ussmges3new.samsung.com (USCPEMTA) with SMTP id D6.00.09504.B0259966; Thu,
- 18 Jul 2024 13:34:03 -0400 (EDT)
-Received: from ussmgxs3new.samsung.com (u92.gpu85.samsung.co.kr
- [203.254.195.92]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
- 20240718173403uscas1p25bc34557a1e7a564c5126a7d344bf5f6~jXxkOd8141011110111uscas1p2c;
- Thu, 18 Jul 2024 17:34:03 +0000 (GMT)
-X-AuditID: cbfec370-143ff70000002520-7f-6699520b7d82
-Received: from SSI-EX1.ssi.samsung.com ( [105.128.3.67]) by
- ussmgxs3new.samsung.com (USCPEXMTA) with SMTP id 5C.56.56602.B0259966; Thu,
- 18 Jul 2024 13:34:03 -0400 (EDT)
-Received: from SSI-EX2.ssi.samsung.com (105.128.2.227) by
- SSI-EX1.ssi.samsung.com (105.128.2.226) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.1.2507.35; Thu, 18 Jul 2024 10:34:02 -0700
-Received: from SSI-EX2.ssi.samsung.com ([105.128.2.227]) by
- SSI-EX2.ssi.samsung.com ([105.128.2.227]) with mapi id 15.01.2507.035; Thu,
- 18 Jul 2024 10:34:02 -0700
-From: Fan Ni <fan.ni@samsung.com>
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-CC: "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] mem/cxl_type3: Fix overlapping region validation error
-Thread-Topic: [PATCH] mem/cxl_type3: Fix overlapping region validation error
-Thread-Index: AQHa2PIEbJ0QNL+HAEW4CfcGQa+1P7H9NMsA
-Date: Thu, 18 Jul 2024 17:34:02 +0000
-Message-ID: <20240718173356.GA1629099@sjcvldevvm72>
-In-Reply-To: <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [105.128.2.176]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1D5BE6ABCC0B55459A5994CE2C0217F8@ssi.samsung.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sUV9u-0004OT-Ul
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:43:15 -0400
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sUV9t-00068r-6S
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:43:14 -0400
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3d9e13ef8edso680350b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 10:43:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721324590; x=1721929390; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cKlbO+77o2OvDnFq3MYtocWYHRN/qj83A4WUjQhzjHw=;
+ b=e07S7PQ2izIxpDFJsF3vmpFx77d7pQX6YZUcKvkhFxaIC2iVyqZdN5tky+ePGpdh03
+ SWnmLFPtqap2SOGi+yTumMuKizjR+XZVMzEPxBh0qk9BnL0lgl7KMVyYctna0oPL+dns
+ 6DqgXHprJeJxaeiMDpx7sSyFxNsBOzpIhGaEx1o0iQXjV/iTiGqjjgsvXNsIVCAUmHaP
+ dFMkDs2dDG0Wt3YlU6mva93O0mCnHeXDaIzBm687yFdFTjwLRqxQBOJ/NTfU/LjKyPgV
+ H1qdbLdkdARXzLKd8cFKAbigk9cpRWY8YOlWdyF/m8d6MCgEYbJdrES7kK7d7ULTbY8p
+ /9RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721324590; x=1721929390;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cKlbO+77o2OvDnFq3MYtocWYHRN/qj83A4WUjQhzjHw=;
+ b=jofaTZE/Q1xsK7FoHWelHU74/qummVHkuTcZacq3rg7Pt9krusgpQh2sAzn0Sm7Zsq
+ jrx9l2WxR0X9rnZ2+YlJNWjatxTHLGbX6WHphNURXOOPLQtk51oX89d3xn3aPrzzC24o
+ MnazfFr3azBpVnI0Hef8jEctGNN+wQ3Y4PmMvYHk07Z87C10b7WEn5zPIhltvRAOcIYu
+ AVwIVqnVlbuehhGzojQE931/8BjFesSqdFwNPWaTCvWDOnxfzu+b3v8vjA8isD7WgAxw
+ LvwQgUe2Lhz/Ie5UywV3yGgMdDkIwuIynZ+MqjaMzYyKRllwYFjuonJc5UTgzATvJUt+
+ Iw+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdsaolrWYkF1c70UclTqFh+z6EkMz+35hivA+2v+4wJwr7pIbpReVztB57hzeRghn1BKQYKBMyXWevm4U1OC8ExuAf0JY=
+X-Gm-Message-State: AOJu0YwZ2plmezHEZEJqUy9/TQcY+Zy/AnKWHk3NbjEq71cDONWnf0x2
+ qVqEZtdCxNOk+AThAvYQ/p0RCcot54AHY2TiSJQClNxRJAMX8L5Y9Uzu5omvCvU=
+X-Google-Smtp-Source: AGHT+IGv7pHNf5iBNadKevDtdZIudlG5mWWeEDUavrDRrhRk0iunXpUfXJJqcSNN84W8K72s7/V4Jg==
+X-Received: by 2002:a05:6808:f02:b0:3d9:245c:4224 with SMTP id
+ 5614622812f47-3dad1f889ccmr5899253b6e.40.1721324589722; 
+ Thu, 18 Jul 2024 10:43:09 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a1938ed08fsm48693485a.55.2024.07.18.10.43.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jul 2024 10:43:09 -0700 (PDT)
+Date: Thu, 18 Jul 2024 12:43:08 -0500
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alexandre Ghiti <alexghiti@rivosinc.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] target: riscv: Add Svvptc extension support
+Message-ID: <20240718-34d268f8591f6227d99b9f71@orel>
+References: <20240718160737.211285-1-alexghiti@rivosinc.com>
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42LZduzrOV3uoJlpBlt+WVusWniNzeJ47w4W
- i4N3L7E4MHtsaHrD5tFy5C2rx5Nrm5kCmKO4bFJSczLLUov07RK4Mn60TGcp+OdasfzaZ+YG
- xhkuXYycHBICJhIb+zawdDFycQgJrGSUePLoNBtIQkiglUliyeFQmKKpb46yQMTXMErc6vCF
- aPjEKHF57wk2CGcZo8TVCzOYQarYBBQl9nVtB5skIqAh8erMRVYQm1mgSGJy01agGg4OYQFv
- iUlvAiFKfCQmPOpjgbCNJDrbe8BaWQRUJZ7evwfWyitgLNGw7zkTiM0pYCPxeNMUsBpGATGJ
- 76fWMEGMF5e49WQ+E8TRghKLZu9hhrDFJP7tesgGYStK3P/+kh3kBGYBTYn1u/QhWu0kjnXv
- ZISwFSWmdD9kh1grKHFy5hMWiFZJiYMrboADS0JgLYfE/l/XWSESLhINV75DFUlLTF9zmQVk
- voRAssSqj1wQ4RyJ+Uu2QJVYSyz8s55pAqPKLCRXz0K4aBaSi2YhuWgWkosWMLKuYhQvLS7O
- TU8tNs5LLdcrTswtLs1L10vOz93ECEwup/8dLtjBeOvWR71DjEwcjIcYJTiYlUR4JzBOSxPi
- TUmsrEotyo8vKs1JLT7EKM3BoiTOa2h7MllIID2xJDU7NbUgtQgmy8TBKdXAxBFgkDLdPeme
- xY/e+K28bxca+Al7nz6hJbPnaIRf1cmnmvs9A+/k3hEKNeKP3qZ8WPLTHjbr2qk33BXmrjVr
- duM5eqnT5iwvo8/t2dnnOL4pPzr788TZv1qGv+a6ONqs38g3X1lu1cQMhsAWHo3KJD676e5e
- Tz/+CNX82PTv+PY5q78YOUVrGEl+ubTjWO1vA4dInUr/hOV9TiEPU7/w6No6ZyRMKmk/e/ba
- YsHXsyy4dVvrbSfVH3uU3TzTa18d22mZyXoWD5x593v+Ld6w+NHDf+59ZgpTRCzTsnt/9mWs
- NPbnazPOVlFwsXvioLlwzpf3R6zWcO5rWrDr6/bVNpICbxduzFOtD+vlUElSYinOSDTUYi4q
- TgQAEs/IyJ0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFIsWRmVeSWpSXmKPExsWS2cDsrMsdNDPN4MgdBYtVC6+xWRzv3cFi
- cfDuJRYHZo8NTW/YPFqOvGX1eHJtM1MAcxSXTUpqTmZZapG+XQJXxo+W6SwF/1wrll/7zNzA
- OMOli5GTQ0LARGLqm6MsILaQwCpGib3rNLsYuYDsT4wSKz/sYIFwljFKfOx5wAZSxSagKLGv
- azuYLSKgIfHqzEVWEJtZoEhictNW5i5GDg5hAW+JSW8CIUp8JCY86mOBsI0kOtt7wFpZBFQl
- nt6/B9bKK2As0bDvORPErn5GiR07FjKBJDgFbCQeb5oC1sAoICbx/dQaJohd4hK3nsxngvhA
- QGLJnvPMELaoxMvH/1ghbEWJ+99fsoPcwyygKbF+lz5Eq53Ese6djBC2osSU7ofsEDcISpyc
- +YQFolVS4uCKGywTGCVmIdk2C2HSLCSTZiGZNAvJpAWMrKsYxUuLi3PTK4qN81LL9YoTc4tL
- 89L1kvNzNzECo/P0v8MxOxjv3fqod4iRiYPxEKMEB7OSCO8ExmlpQrwpiZVVqUX58UWlOanF
- hxilOViUxHnvPtBIFRJITyxJzU5NLUgtgskycXBKNTAxPnnYYfRX27VPs+7rHtE1lyY9Wn3m
- X2+Wa+tpC8PzP4/sXVix3qxFvqcgbvqJPD653Pjk5lTNfdL3Zm3h4A0rfvCq9FoBg+Sy/47a
- lcWXuQqrrNwNbI47FxVK3AvYcNy6ZQ1jgFh8+6te8Yvzd65pdizeevK0i7iPvfZ6Y0aWcpvP
- TBGRYUsP71yuyrtdre/vu29T3xVKbwlg2jJRqmWRsG6a4aZTF6d/N1jzU9ZX9HzmMZ0ez431
- R8582d/46d5tNiGbPbsm8GgquV5OtHBZOk9s3vRCCR7Xbi+nSsswFdcJJpKXp7P2fHbY52Au
- 5dPKIFs84WvOoc8PZm/eu/Jvs+gFV2vRc4FTjvy4P12JpTgj0VCLuag4EQAd/2mjPQMAAA==
-X-CMS-MailID: 20240718173403uscas1p25bc34557a1e7a564c5126a7d344bf5f6
-CMS-TYPE: 301P
-X-CMS-RootMailID: 20240718090810uscas1p17441e84b4594875648bf24e07549166f
-References: <CGME20240718090810uscas1p17441e84b4594875648bf24e07549166f@uscas1p1.samsung.com>
- <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
-Received-SPF: pass client-ip=211.189.100.11; envelope-from=fan.ni@samsung.com;
- helo=mailout1.w2.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240718160737.211285-1-alexghiti@rivosinc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=ajones@ventanamicro.com; helo=mail-oi1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,119 +98,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCBKdWwgMTgsIDIwMjQgYXQgMDU6MDc6NTNBTSAtMDQwMCwgWWFvIFhpbmd0YW8gd3Jv
-dGU6DQo+IDwhRE9DVFlQRSBodG1sPjwhLS0gQmFObkVyQmxVckZsRS1Cb0R5LXN0YXJ0IC0tPjwh
-LS0gUHJlaGVhZGVyIFRleHQgOiBCRUdJTiAtLT48bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5
-cGUiIGNvbnRlbnQ9InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCI+PGRpdiBzdHlsZT0iZGlzcGxh
-eTpub25lICFpbXBvcnRhbnQ7ZGlzcGxheTpub25lO3Zpc2liaWxpdHk6aGlkZGVuO21zby1oaWRl
-OmFsbDtmb250LXNpemU6MXB4O2NvbG9yOiNmZmZmZmY7bGluZS1oZWlnaHQ6MXB4O2hlaWdodDow
-cHg7bWF4LWhlaWdodDowcHg7b3BhY2l0eTowO292ZXJmbG93OmhpZGRlbjsiPg0KPiAgV2hlbiBp
-bmplY3RpbmcgYSBuZXcgcG9pc29uZWQgcmVnaW9uIHRocm91Z2ggcW1wX2N4bF9pbmplY3RfcG9p
-c29uKCksIHRoZSBuZXdseSBpbmplY3RlZCByZWdpb24gc2hvdWxkIG5vdCBvdmVybGFwIHdpdGgg
-ZXhpc3RpbmcgcG9pc29uZWQgcmVnaW9ucy4gVGhlIGN1cnJlbnQgdmFsaWRhdGlvbiBtZXRob2Qg
-ZG9lcyBub3QgY29uc2lkZXIgdGhlIGZvbGxvd2luZyBvdmVybGFwcGluZyByZWdpb246IOKUjOKU
-gOKUgOKUgOKUrOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUrOKUgOKUgOKUgOKUkA0KPiA8L2Rpdj4N
-Cj4gPCEtLSBQcmVoZWFkZXIgVGV4dCA6IEVORCAtLT4NCj4gDQo+IDwhLS0gRW1haWwgQmFubmVy
-IDogQkVHSU4gLS0+DQo+IDxkaXYgc3R5bGU9ImRpc3BsYXk6bm9uZSAhaW1wb3J0YW50O2Rpc3Bs
-YXk6bm9uZTt2aXNpYmlsaXR5OmhpZGRlbjttc28taGlkZTphbGw7Zm9udC1zaXplOjFweDtjb2xv
-cjojZmZmZmZmO2xpbmUtaGVpZ2h0OjFweDtoZWlnaHQ6MHB4O21heC1oZWlnaHQ6MHB4O29wYWNp
-dHk6MDtvdmVyZmxvdzpoaWRkZW47Ij5aalFjbVFSWUZwZnB0QmFubmVyU3RhcnQ8L2Rpdj4NCj4g
-DQo+IDwhLS1baWYgKChpZSl8KG1zbykpXT4NCj4gICA8dGFibGUgYm9yZGVyPSIwIiBjZWxsc3Bh
-Y2luZz0iMCIgY2VsbHBhZGRpbmc9IjAiIHdpZHRoPSIxMDAlIiBzdHlsZT0icGFkZGluZzogMTZw
-eCAwcHggMTZweCAwcHg7IGRpcmVjdGlvbjogbHRyIiA+PHRyPjx0ZD4NCj4gICAgIDx0YWJsZSBi
-b3JkZXI9IjAiIGNlbGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgc3R5bGU9InBhZGRpbmc6
-IDBweCAxMHB4IDVweCA2cHg7IHdpZHRoOiAxMDAlOyBib3JkZXItcmFkaXVzOjRweDsgYm9yZGVy
-LXRvcDo0cHggc29saWQgI2YzMjMyMztiYWNrZ3JvdW5kLWNvbG9yOiNGMDdCN0I7Ij48dHI+PHRk
-IHZhbGlnbj0idG9wIj4NCj4gICAgICAgPHRhYmxlIGFsaWduPSJsZWZ0IiBib3JkZXI9IjAiIGNl
-bGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgc3R5bGU9InBhZGRpbmc6IDRweCA4cHggNHB4
-IDhweCI+DQo+IAk8dHI+PHRkIHN0eWxlPSJjb2xvcjojMDAwMDAwOyBmb250LWZhbWlseTogJ0Fy
-aWFsJywgc2Fucy1zZXJpZjsgZm9udC13ZWlnaHQ6Ym9sZDsgZm9udC1zaXplOjE0cHg7IGRpcmVj
-dGlvbjogbHRyIj4NCj4gCSAgVGhpcyBNZXNzYWdlIElzIEZyb20gYW4gRXh0ZXJuYWwgU2VuZGVy
-DQo+IAk8L3RkPjwvdHI+DQo+IAk8dHI+PHRkIHN0eWxlPSJjb2xvcjojMDAwMDAwOyBmb250LXdl
-aWdodDpub3JtYWw7IGZvbnQtZmFtaWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmOyBmb250LXNpemU6
-MTJweDsgZGlyZWN0aW9uOiBsdHIiPg0KPiAgICAgICAgICAgVXNlIGNhdXRpb24gb3BlbmluZyBm
-aWxlcywgY2xpY2tpbmcgbGlua3Mgb3IgcmVzcG9uZGluZyB0byByZXF1ZXN0cy4NCj4gCTwvdGQ+
-PC90cj4NCj4gDQo+ICAgICAgIDwvdGFibGU+DQo+IA0KPiAgICAgPC90ZD48L3RyPjwvdGFibGU+
-DQo+ICAgPC90ZD48L3RyPjwvdGFibGU+DQo+IDwhW2VuZGlmXS0tPg0KPiANCj4gPCFbaWYgISgo
-aWUpfChtc28pKV0+DQo+ICAgPGRpdiBkaXI9Imx0ciIgaWQ9InBmcHRCYW5uZXJna2RjbWl1IiBz
-dHlsZT0iYWxsOiByZXZlcnQgIWltcG9ydGFudDsgZGlzcGxheTpibG9jayAhaW1wb3J0YW50OyB0
-ZXh0LWFsaWduOiBsZWZ0ICFpbXBvcnRhbnQ7IG1hcmdpbjoxNnB4IDBweCAxNnB4IDBweCAhaW1w
-b3J0YW50OyBwYWRkaW5nOjhweCAxNnB4IDhweCAxNnB4ICFpbXBvcnRhbnQ7IGJvcmRlci1yYWRp
-dXM6IDRweCAhaW1wb3J0YW50OyBtaW4td2lkdGg6IDIwMHB4ICFpbXBvcnRhbnQ7IGJhY2tncm91
-bmQtY29sb3I6ICNGMDdCN0IgIWltcG9ydGFudDsgYmFja2dyb3VuZC1jb2xvcjogI0YwN0I3Qjsg
-Ym9yZGVyLXRvcDogNHB4IHNvbGlkICNmMzIzMjMgIWltcG9ydGFudDsgYm9yZGVyLXRvcDogNHB4
-IHNvbGlkICNmMzIzMjM7Ij4NCj4gICAgIDxkaXYgaWQ9InBmcHRCYW5uZXJna2RjbWl1IiBzdHls
-ZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBmbG9hdDpsZWZ0ICFpbXBvcnRhbnQ7IGRpc3BsYXk6
-YmxvY2sgIWltcG9ydGFudDsgbWFyZ2luOiAwcHggMHB4IDFweCAwcHggIWltcG9ydGFudDsgbWF4
-LXdpZHRoOiA2MDBweCAhaW1wb3J0YW50OyI+DQo+ICAgICAgIDxkaXYgaWQ9InBmcHRCYW5uZXJn
-a2RjbWl1IiBzdHlsZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBkaXNwbGF5OmJsb2NrICFpbXBv
-cnRhbnQ7IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgYmFja2dyb3VuZC1jb2xvcjog
-I0YwN0I3QiAhaW1wb3J0YW50OyBjb2xvcjojMDAwMDAwICFpbXBvcnRhbnQ7IGNvbG9yOiMwMDAw
-MDA7IGZvbnQtZmFtaWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmICFpbXBvcnRhbnQ7IGZvbnQtZmFt
-aWx5OiAnQXJpYWwnLCBzYW5zLXNlcmlmOyBmb250LXdlaWdodDpib2xkICFpbXBvcnRhbnQ7IGZv
-bnQtd2VpZ2h0OmJvbGQ7IGZvbnQtc2l6ZToxNHB4ICFpbXBvcnRhbnQ7IGxpbmUtaGVpZ2h0OjE4
-cHggIWltcG9ydGFudDsgbGluZS1oZWlnaHQ6MThweCI+DQo+IAlUaGlzIE1lc3NhZ2UgSXMgRnJv
-bSBhbiBFeHRlcm5hbCBTZW5kZXINCj4gICAgICAgPC9kaXY+DQo+ICAgICAgIDxkaXYgaWQ9InBm
-cHRCYW5uZXJna2RjbWl1IiBzdHlsZT0iYWxsOiB1bnNldCAhaW1wb3J0YW50OyBkaXNwbGF5OmJs
-b2NrICFpbXBvcnRhbnQ7IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgYmFja2dyb3Vu
-ZC1jb2xvcjogI0YwN0I3QiAhaW1wb3J0YW50OyBjb2xvcjojMDAwMDAwICFpbXBvcnRhbnQ7IGNv
-bG9yOiMwMDAwMDA7IGZvbnQtd2VpZ2h0Om5vcm1hbDsgZm9udC1mYW1pbHk6ICdBcmlhbCcsIHNh
-bnMtc2VyaWYgIWltcG9ydGFudDsgZm9udC1mYW1pbHk6ICdBcmlhbCcsIHNhbnMtc2VyaWY7IGZv
-bnQtc2l6ZToxMnB4ICFpbXBvcnRhbnQ7IGxpbmUtaGVpZ2h0OjE4cHggIWltcG9ydGFudDsgbGlu
-ZS1oZWlnaHQ6MThweDsgbWFyZ2luLXRvcDoycHggIWltcG9ydGFudDsiPg0KPiBVc2UgY2F1dGlv
-biBvcGVuaW5nIGZpbGVzLCBjbGlja2luZyBsaW5rcyBvciByZXNwb25kaW5nIHRvIHJlcXVlc3Rz
-Lg0KPiAgICAgICA8L2Rpdj4NCj4gDQo+ICAgICA8L2Rpdj4NCj4gDQo+ICAgICA8ZGl2IHN0eWxl
-PSJjbGVhcjogYm90aCAhaW1wb3J0YW50OyBkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50OyB2aXNp
-YmlsaXR5OiBoaWRkZW4gIWltcG9ydGFudDsgbGluZS1oZWlnaHQ6IDAgIWltcG9ydGFudDsgZm9u
-dC1zaXplOiAwLjAxcHggIWltcG9ydGFudDsgaGVpZ2h0OiAwcHgiPiZuYnNwOzwvZGl2Pg0KPiAg
-IDwvZGl2Pg0KPiA8IVtlbmRpZl0+DQo+IA0KPiA8ZGl2IHN0eWxlPSJkaXNwbGF5Om5vbmUgIWlt
-cG9ydGFudDtkaXNwbGF5Om5vbmU7dmlzaWJpbGl0eTpoaWRkZW47bXNvLWhpZGU6YWxsO2ZvbnQt
-c2l6ZToxcHg7Y29sb3I6I2ZmZmZmZjtsaW5lLWhlaWdodDoxcHg7aGVpZ2h0OjBweDttYXgtaGVp
-Z2h0OjBweDtvcGFjaXR5OjA7b3ZlcmZsb3c6aGlkZGVuOyI+WmpRY21RUllGcGZwdEJhbm5lckVu
-ZDwvZGl2Pg0KPiA8IS0tIEVtYWlsIEJhbm5lciA6IEVORCAtLT4NCj4gDQo+IDwhLS0gQmFObkVy
-QmxVckZsRS1Cb0R5LWVuZCAtLT4NCj4gPGh0bWw+DQo+IDxoZWFkPjwhLS0gQmFObkVyQmxVckZs
-RS1IZUFkRXItc3RhcnQgLS0+DQo+IDxzdHlsZT4NCj4gICAjcGZwdEJhbm5lcmdrZGNtaXUgeyBh
-bGw6IHJldmVydCAhaW1wb3J0YW50OyBkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50OyANCj4gICAg
-IHZpc2liaWxpdHk6IHZpc2libGUgIWltcG9ydGFudDsgb3BhY2l0eTogMSAhaW1wb3J0YW50OyAN
-Cj4gICAgIGJhY2tncm91bmQtY29sb3I6ICNGMDdCN0IgIWltcG9ydGFudDsgDQo+ICAgICBtYXgt
-d2lkdGg6IG5vbmUgIWltcG9ydGFudDsgbWF4LWhlaWdodDogbm9uZSAhaW1wb3J0YW50IH0NCj4g
-ICAucGZwdFByaW1hcnlCdXR0b25na2RjbWl1OmhvdmVyLCAucGZwdFByaW1hcnlCdXR0b25na2Rj
-bWl1OmZvY3VzIHsNCj4gICAgIGJhY2tncm91bmQtY29sb3I6ICNlZjViNWIgIWltcG9ydGFudDsg
-fQ0KPiAgIC5wZnB0UHJpbWFyeUJ1dHRvbmdrZGNtaXU6YWN0aXZlIHsNCj4gICAgIGJhY2tncm91
-bmQtY29sb3I6ICNmMzIzMjMgIWltcG9ydGFudDsgfQ0KPiA8L3N0eWxlPg0KPiANCj4gPCEtLSBC
-YU5uRXJCbFVyRmxFLUhlQWRFci1lbmQgLS0+DQo+IDwvaGVhZD48Ym9keT48cHJlIHN0eWxlPSJm
-b250LWZhbWlseTogc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMDAlOyB3aGl0ZS1zcGFjZTogcHJl
-LXdyYXA7IHdvcmQtd3JhcDogYnJlYWstd29yZCI+V2hlbiBpbmplY3RpbmcgYSBuZXcgcG9pc29u
-ZWQgcmVnaW9uIHRocm91Z2ggcW1wX2N4bF9pbmplY3RfcG9pc29uKCksDQo+IHRoZSBuZXdseSBp
-bmplY3RlZCByZWdpb24gc2hvdWxkIG5vdCBvdmVybGFwIHdpdGggZXhpc3RpbmcgcG9pc29uZWQN
-Cj4gcmVnaW9ucy4NCj4gDQo+IFRoZSBjdXJyZW50IHZhbGlkYXRpb24gbWV0aG9kIGRvZXMgbm90
-IGNvbnNpZGVyIHRoZSBmb2xsb3dpbmcNCj4gb3ZlcmxhcHBpbmcgcmVnaW9uOg0KPiDilIzilIDi
-lIDilIDilKzilIDilIDilIDilIDilIDilIDilIDilKzilIDilIDilIDilJANCj4g4pSCYSAg4pSC
-ICBiKGEpIOKUgmEgIOKUgg0KPiDilJTilIDilIDilIDilLTilIDilIDilIDilIDilIDilIDilIDi
-lLTilIDilIDilIDilJgNCj4gKGEgaXMgYSBuZXdseSBhZGRlZCByZWdpb24sIGIgaXMgYW4gZXhp
-c3RpbmcgcmVnaW9uLCBhbmQgYiBpcyBhDQo+ICBzdWJyZWdpb24gb2YgYSkNCj4gDQo+IFNpZ25l
-ZC1vZmYtYnk6IFlhbyBYaW5ndGFvICZsdDt5YW94dC5mbnN0QGZ1aml0c3UuY29tJmd0Ow0KPiAt
-LS0NCj4gIGh3L21lbS9jeGxfdHlwZTMuYyB8IDQgJiM0MzstLS0NCj4gIDEgZmlsZSBjaGFuZ2Vk
-LCAxIGluc2VydGlvbigmIzQzOyksIDMgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEv
-aHcvbWVtL2N4bF90eXBlMy5jIGIvaHcvbWVtL2N4bF90eXBlMy5jDQo+IGluZGV4IDM1YWM1OTg4
-M2E1Yi4uOGUzMmRlMzI3OTA4IDEwMDY0NA0KPiAtLS0gYS9ody9tZW0vY3hsX3R5cGUzLmMNCj4g
-JiM0MzsmIzQzOyYjNDM7IGIvaHcvbWVtL2N4bF90eXBlMy5jDQo+IEBAIC0xMzMxLDkgJiM0Mzsx
-MzMxLDcgQEAgdm9pZCBxbXBfY3hsX2luamVjdF9wb2lzb24oY29uc3QgY2hhciAqcGF0aCwgdWlu
-dDY0X3Qgc3RhcnQsIHVpbnQ2NF90IGxlbmd0aCwNCj4gICAgICBjdDNkID0gQ1hMX1RZUEUzKG9i
-aik7DQo+ICANCj4gICAgICBRTElTVF9GT1JFQUNIKHAsICZhbXA7Y3QzZC0mZ3Q7cG9pc29uX2xp
-c3QsIG5vZGUpIHsNCj4gLSAgICAgICAgaWYgKCgoc3RhcnQgJmd0Oz0gcC0mZ3Q7c3RhcnQpICZh
-bXA7JmFtcDsgKHN0YXJ0ICZsdDsgcC0mZ3Q7c3RhcnQgJiM0MzsgcC0mZ3Q7bGVuZ3RoKSkgfHwN
-Cj4gLSAgICAgICAgICAgICgoc3RhcnQgJiM0MzsgbGVuZ3RoICZndDsgcC0mZ3Q7c3RhcnQpICZh
-bXA7JmFtcDsNCj4gLSAgICAgICAgICAgICAoc3RhcnQgJiM0MzsgbGVuZ3RoICZsdDs9IHAtJmd0
-O3N0YXJ0ICYjNDM7IHAtJmd0O2xlbmd0aCkpKSB7DQo+ICYjNDM7ICAgICAgICBpZiAoKHN0YXJ0
-ICZsdDsgcC0mZ3Q7c3RhcnQgJiM0MzsgcC0mZ3Q7bGVuZ3RoKSAmYW1wOyZhbXA7IChzdGFydCAm
-IzQzOyBsZW5ndGggJmd0OyBwLSZndDtzdGFydCkpIHsNCj4gICAgICAgICAgICAgIGVycm9yX3Nl
-dGcoZXJycCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgJnF1b3Q7T3ZlcmxhcCB3aXRoIGV4
-aXN0aW5nIHBvaXNvbmVkIHJlZ2lvbiBub3Qgc3VwcG9ydGVkJnF1b3Q7KTsNCj4gICAgICAgICAg
-ICAgIHJldHVybjsNCg0KQXMgbWVudGlvbmVkIGJ5IFBldGVyLCB3ZSBjYW4gdXNlIHJhbmdlc19v
-dmVybGFwKCkgdG8gaW1wcm92ZSB0aGUNCmNvZGUgcmVhZGFiaWxpdHkuIE90aGVyIHRoYW4gdGhh
-dCwgbG9va3MgZ29vZCB0IG1lLg0KDQpidHcsIG5vdCBzdXJlIG9ubHkgbWUgb3Igbm90LCBidXQg
-dGhlIG1lc3NhZ2UgZG9lcyBub3QgZGlzcGxheQ0KY29ycmVjdGx5IGluIG11dHQsIHNlZW1zIG5v
-dCBhIHBsYWluIHRleHQgbWVzc2FnZSwgYnV0IGxvb2tzIGZpbmUgaW4NCm91dGxvb2suDQoNCkZh
-bg0KPiAtLSANCj4gMi4zNy4zDQo+IA0KPiA8L3ByZT48L2JvZHk+PC9odG1sPg==
+On Thu, Jul 18, 2024 at 06:07:37PM GMT, Alexandre Ghiti wrote:
+> The Svvptc extension describes a uarch that does not cache invalid TLB
+> entries: that's the case for qemu so there is nothing particular to
+> implement other than the introduction of this extension.
+> 
+> Since qemu already exposes Svvptc behaviour, let's enable it by default
+> since it allows to drastically reduce the number of sfence.vma emitted
+> by S-mode.
+> 
+> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> ---
+> Changes in v2:
+> - Rebase on top of master
+> - Enable Svvptc by default
+> 
+>  target/riscv/cpu.c     | 2 ++
+>  target/riscv/cpu_cfg.h | 1 +
+>  2 files changed, 3 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c53b0d5b40..19421c8a45 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -192,6 +192,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+>      ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
+>      ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
+> +    ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_12_0, ext_svvptc),
+
+Since Svvptc was just ratified then it isn't spec 1.12. We need another
+patch adding later versions first (there is at least one [1]).
+
+[1] https://lists.gnu.org/archive/html/qemu-riscv/2024-05/msg00045.html
+
+This version field is annoying to keep accurate... Maybe we should
+make it optional and only specify a version when there are wider
+spread changes, such as envcfg bits, which need to be present too.
+
+>      ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
+>      ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
+>      ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
+> @@ -1499,6 +1500,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+>      MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
+>      MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
+> +    MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
+>  
+>      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
+>      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index fb7eebde52..62612ae348 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -78,6 +78,7 @@ struct RISCVCPUConfig {
+>      bool ext_svinval;
+>      bool ext_svnapot;
+>      bool ext_svpbmt;
+> +    bool ext_svvptc;
+>      bool ext_zdinx;
+>      bool ext_zaamo;
+>      bool ext_zacas;
+> -- 
+> 2.39.2
+> 
+>
+
+Thanks,
+drew
 
