@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49243C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65AC5C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUR45-0001MN-Ay; Thu, 18 Jul 2024 09:20:57 -0400
+	id 1sUR45-0001My-Cp; Thu, 18 Jul 2024 09:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUR3t-00008Q-P2
+ id 1sUR3s-0008Rd-2V
  for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:20:46 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUR3r-0004X4-UE
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:20:45 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba040aso12347241fa.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:20:43 -0700 (PDT)
+ id 1sUR3p-0004Vl-NK
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:20:43 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4272738eb9eso2687695e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721308842; x=1721913642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721308840; x=1721913640; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=o7iLSHvSys+f0c7jEjjDGMSoZe/hp7+J3/pSi3SDPcI=;
- b=Gj5Ucd4rrTa3eO+4Sc5Ef3+Id6+FclLA3J/k5KVdZGu/tdUCMCYN4oUmnmi5gqlLqc
- bmpwueEIOxeJ5y5Rh2YSTCjFG2JQnfR9YfiuaPtgggNkHOEp4pF/HN9U1ulFq9uSCvPQ
- I3Q5927RA7h5o++RyjufVKpHj3xj3lMl8i446xfCtO2QbofOXpDEL/5g/7vDlTP3Cb2j
- fAfsK8wjxA4hmeehEkSXS4ZWVcPpUDb66ceNNcJ7GjXS8hXPSSUxj9RtLyQNIiEJRr7R
- FndcXu3pQD9DauOyY0o58xC0MrSp/0mCbBdi6XVFpMZxCHmZHffiHEk19ZPZZWNw4N9g
- cf0Q==
+ :reply-to; bh=PslsTW2CuNXZBgCWQhwf4uOsn1nScOUybIYhJNiQ/EI=;
+ b=Rm31zhUZMc7NKy0ZWXjXBgdpisKe8y/VXVB8Lp08dKb7ZjySs/POUaEVG3+cY2OhYR
+ fZMKtzazvulFzao8SqE5lUNU0JwviVAVfwLEEHLXgWH8xQlS0GPFsQkRhgZls7wfr672
+ jCDiWKwPbHec/jHrsBWlsiWmhFON8SRCEtsmqWB8HDIayJbsw6x0J3j1xmYCresg7raJ
+ CfRj63X3h9nM74wuDRgjqGxdwxNTouExUct5xj+BN0vNiAqZ42S54CJH/3wlNWzH1A6L
+ nec7VO82RQ3t/QJ3ynWfWHOlupcKIWkO0473Hf5xdtm3kWIfXwCB0rdCeDQmkn/jAEvF
+ U0bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721308842; x=1721913642;
+ d=1e100.net; s=20230601; t=1721308840; x=1721913640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o7iLSHvSys+f0c7jEjjDGMSoZe/hp7+J3/pSi3SDPcI=;
- b=vPz/epKA7W/MixwsdH9V0FbeGP7tv/Fqt6UOSFu5bOpct7FNOzigO0RJy0WTUBSmyz
- 4bbmATKwRIrytKhvnTzZshIHYbTQumC/78Ss2EUpUDaNn993ALEa3XZE2C5a8wN0/0yw
- 4WhYreEMirja1evInLPYdiq527Yf3QuYXgYPZlfac/zPmRvXMJkwgI7rKiJWt35LRHxV
- eC7c7AR8aiWnpAkp5znY3wHCwm3F84WQ/PQD2bRGoRm+4d8aHcFHU/tWg5L0Pyt/9++N
- kNQsM8t+XZKZDNPaCanZUD1FQ1duT5wVCKoWuTPpzStzuZUi83VjBmd2JVGOB8I6wXqa
- MZOQ==
-X-Gm-Message-State: AOJu0Yz+ZAy1N0/77rrN6+dDaiqEM3VqDglIjL8qofxcYUrr+JvwY0vH
- E7L9CKv3NelNIboorV2CHjtDwUR0YWZlzzrApiX3JRDKVBgPL7nMxU3GRTYjT8kHd7IrHJmwlQ2
- R
-X-Google-Smtp-Source: AGHT+IGHP8UHTqaSOPj8NzBnlXYUl4UmNeDIPJfKy96AoVYRJouK1aU7uD4DsnVSx3N5sv31RFQ0rA==
-X-Received: by 2002:a2e:96d1:0:b0:2e1:2169:a5cc with SMTP id
- 38308e7fff4ca-2ef05c79cb4mr18185591fa.15.1721308842245; 
- Thu, 18 Jul 2024 06:20:42 -0700 (PDT)
+ bh=PslsTW2CuNXZBgCWQhwf4uOsn1nScOUybIYhJNiQ/EI=;
+ b=MpcikM805iaa/itKHY9qt7C4iwW1zLvqZDCWAoY0VCO4xjdqdHtUDzIHsG0Qtg6+8i
+ XwvpFJe3H+wANh8UlmQvM83JYTcBCIVmluwFUWLx9BuMP8HwZwHZ5QxWyDmLJS/Ld/Tz
+ g1T8Haw9sXm5Usm38nrvXdU1Kkt3RIS5ZaY41++uiq0JLBfNQsca51rAJ4dswuIR06xE
+ sLIac6XbqjaN0cgfQp114LwNyix5KIFngnJdpQlnsmEpaEsNvDc310BDXu5OTKPTGDO5
+ 5kDpdmemZZbN7bzsEODX8C4g6t0aDv2L35XhnxJ7I2xsJa97zaOATEFpLaTnqYtU8IMv
+ 3n1w==
+X-Gm-Message-State: AOJu0YxiNCnDa89nnqDZjkmOr8jPg1AUmbG8dLssyOknbBOnTVd8vv5U
+ d110/8irqSec68tN7xU0envHCUF03d32muiZMCrSfIU/fpVQekSik28z5znHDHpA9wLBbsCeQ8Z
+ Q
+X-Google-Smtp-Source: AGHT+IHk5cvAO8Rusaph6UsGfDL+21K326TrHCgJjKGo8+3nYyRd/38/HKDhc/Q4G7FmsuClZpdUAg==
+X-Received: by 2002:a05:600c:4707:b0:426:5f7d:addc with SMTP id
+ 5b1f17b1804b1-427c2d107edmr32788725e9.37.1721308840025; 
+ Thu, 18 Jul 2024 06:20:40 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a8e420sm14059315e9.35.2024.07.18.06.20.41
+ 5b1f17b1804b1-427d2a8e420sm14059315e9.35.2024.07.18.06.20.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 06:20:42 -0700 (PDT)
+ Thu, 18 Jul 2024 06:20:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/26] tests/arm-cpu-features: Do not assume PMU availability
-Date: Thu, 18 Jul 2024 14:20:27 +0100
-Message-Id: <20240718132028.697927-26-peter.maydell@linaro.org>
+Subject: [PULL 20/26] hw/arm/smmuv3: Support and advertise nesting
+Date: Thu, 18 Jul 2024 14:20:22 +0100
+Message-Id: <20240718132028.697927-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240718132028.697927-1-peter.maydell@linaro.org>
 References: <20240718132028.697927-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,61 +94,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-Asahi Linux supports KVM but lacks PMU support.
+Everything is in place, consolidate parsing of STE cfg and setting
+translation stage.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240716-pmu-v3-1-8c7c1858a227@daynix.com
+Advertise nesting if stage requested is "nested".
+
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20240715084519.1189624-18-smostafa@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/arm-cpu-features.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ hw/arm/smmuv3.c | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
-index 966c65d5c3e..cfd6f773535 100644
---- a/tests/qtest/arm-cpu-features.c
-+++ b/tests/qtest/arm-cpu-features.c
-@@ -509,6 +509,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
-     assert_set_feature(qts, "host", "kvm-no-adjvtime", false);
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 2d61637aed5..3db6c7c1357 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -261,6 +261,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
+     /* Based on sys property, the stages supported in smmu will be advertised.*/
+     if (s->stage && !strcmp("2", s->stage)) {
+         s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
++    } else if (s->stage && !strcmp("nested", s->stage)) {
++        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
++        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
+     } else {
+         s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
+     }
+@@ -425,8 +428,6 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
  
-     if (g_str_equal(qtest_get_arch(), "aarch64")) {
-+        bool kvm_supports_pmu;
-         bool kvm_supports_steal_time;
-         bool kvm_supports_sve;
-         char max_name[8], name[8];
-@@ -537,11 +538,6 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
- 
-         assert_has_feature_enabled(qts, "host", "aarch64");
- 
--        /* Enabling and disabling pmu should always work. */
--        assert_has_feature_enabled(qts, "host", "pmu");
--        assert_set_feature(qts, "host", "pmu", false);
--        assert_set_feature(qts, "host", "pmu", true);
+ static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
+ {
+-    cfg->stage = SMMU_STAGE_2;
 -
-         /*
-          * Some features would be enabled by default, but they're disabled
-          * because this instance of KVM doesn't support them. Test that the
-@@ -551,11 +547,18 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
-         assert_has_feature(qts, "host", "sve");
+     if (STE_S2AA64(ste) == 0x0) {
+         qemu_log_mask(LOG_UNIMP,
+                       "SMMUv3 AArch32 tables not supported\n");
+@@ -509,6 +510,27 @@ bad_ste:
+     return -EINVAL;
+ }
  
-         resp = do_query_no_props(qts, "host");
-+        kvm_supports_pmu = resp_get_feature(resp, "pmu");
-         kvm_supports_steal_time = resp_get_feature(resp, "kvm-steal-time");
-         kvm_supports_sve = resp_get_feature(resp, "sve");
-         vls = resp_get_sve_vls(resp);
-         qobject_unref(resp);
- 
-+        if (kvm_supports_pmu) {
-+            /* If we have pmu then we should be able to toggle it. */
-+            assert_set_feature(qts, "host", "pmu", false);
-+            assert_set_feature(qts, "host", "pmu", true);
-+        }
++static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
++{
 +
-         if (kvm_supports_steal_time) {
-             /* If we have steal-time then we should be able to toggle it. */
-             assert_set_feature(qts, "host", "kvm-steal-time", false);
++    if (STE_CFG_ABORT(config)) {
++        cfg->aborted = true;
++        return;
++    }
++    if (STE_CFG_BYPASS(config)) {
++        cfg->bypassed = true;
++        return;
++    }
++
++    if (STE_CFG_S1_ENABLED(config)) {
++        cfg->stage = SMMU_STAGE_1;
++    }
++
++    if (STE_CFG_S2_ENABLED(config)) {
++        cfg->stage |= SMMU_STAGE_2;
++    }
++}
++
+ /* Returns < 0 in case of invalid STE, 0 otherwise */
+ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+                       STE *ste, SMMUEventInfo *event)
+@@ -525,13 +547,9 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+ 
+     config = STE_CONFIG(ste);
+ 
+-    if (STE_CFG_ABORT(config)) {
+-        cfg->aborted = true;
+-        return 0;
+-    }
++    decode_ste_config(cfg, config);
+ 
+-    if (STE_CFG_BYPASS(config)) {
+-        cfg->bypassed = true;
++    if (cfg->aborted || cfg->bypassed) {
+         return 0;
+     }
+ 
+@@ -704,7 +722,6 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+ 
+     /* we support only those at the moment */
+     cfg->aa64 = true;
+-    cfg->stage = SMMU_STAGE_1;
+ 
+     cfg->oas = oas2bits(CD_IPS(cd));
+     cfg->oas = MIN(oas2bits(SMMU_IDR5_OAS), cfg->oas);
 -- 
 2.34.1
 
