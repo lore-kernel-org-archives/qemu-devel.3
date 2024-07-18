@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA5FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127AEC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUQAA-0008Ih-P9; Thu, 18 Jul 2024 08:23:10 -0400
+	id 1sUQI2-0005dF-Tl; Thu, 18 Jul 2024 08:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUQA6-0008BH-7F
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:23:07 -0400
-Received: from galois.linutronix.de ([193.142.43.55])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUQI1-0005cj-Mg
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:31:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUQA1-0003ta-C5
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:23:04 -0400
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1721305379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUQHy-0006sI-Gl
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:31:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721305872;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xNYyK17bpiByBadadWuWAioNKspo33nsXME0A+tKcno=;
- b=wh288e4Ew8kzb+73LqPgh/txcPTh4KXf8wGjMqlkmy33Hv1zt3RS7wWsDerPy+FbHQh9Rr
- S5ltm4KtHAJqZu7l0n/TZlN1pKhh9kLu4q0FejVDlI2IP4S9dWcdlvrOLOi3KdsOvH1px2
- +uhl/7Vo1hzzPIg/mC3nxZnT2G4+nYcZL7eVM5j5CZhL6Eh8PymzhCHqsiJZplmYJOQiVC
- A+MdU/wnXnb0aShPXUm1tAtr7IgdRKm1ddlhjei9d4N/G1cPjVK/f7js4MnZOvk1E53HtP
- UGxJveQiv4ZuW6A5O8ATk7+NBT1gImH5Gm0F5ckVA3ULp0jrE1wlc/O1Wse40Q==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1721305379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xNYyK17bpiByBadadWuWAioNKspo33nsXME0A+tKcno=;
- b=3j89/tXDIM7mxyqTy71i4ZG5nBoFovKoO7wQGMkWKHSMhGL5DEleCacW2bZeJ/eHI00XN8
- T5ewe1Zy41WXYyCQ==
-Date: Thu, 18 Jul 2024 14:21:48 +0200
-Subject: [PATCH v5 4/4] docs: add test for firmware.json QAPI
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240718-qapi-firmware-json-v5-4-0dba12d7aaf5@linutronix.de>
+ bh=sdDlq1rssjOCE44pC54Czk9rgdQIg4oTqNDBrpdcBVY=;
+ b=PrUzCG/HE0o5AngoPVNo48Y2ucXyl+iP5Dkxg0Em3g8oSNOABX7XEyflcQr9Wf1SodH1op
+ YIy7k6bQOLL5AKCH24BepMZoWDhhgcAoWCz+8AMv+yuSx38jFMmwo0H6SQvcHu4Z6Qiqos
+ emKS9igqiLdC3t1JW5IlS74GOmGf+80=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-nVPQr0vFPtujZcuLs2eLbw-1; Thu,
+ 18 Jul 2024 08:31:09 -0400
+X-MC-Unique: nVPQr0vFPtujZcuLs2eLbw-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 265F118BFC4F; Thu, 18 Jul 2024 12:31:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE01F191C591; Thu, 18 Jul 2024 12:30:53 +0000 (UTC)
+Date: Thu, 18 Jul 2024 13:30:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [PATCH v5 3/4] docs/interop/firmware.json: convert "Example"
+ section
+Message-ID: <ZpkK-lnhjno-Ojeg@redhat.com>
 References: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
-In-Reply-To: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Czenczek <hreitz@redhat.com>, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721305377; l=948;
- i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=guiw85EHcqaiDUdDat61xnuzERnU9TaIhr+rl/h3ve4=;
- b=9/rk8lsYLIrsD7k3WeZ6/2+jfkpyO/KRzP7p5WV1svH/LjPPAxGRcKMdpFsIbb1d8+qAlfkLC
- 6N3zlO+eY6xAjeFKGbcf2ocg4N2ChVIFXAthK374YKCMYQk4Ehix63A
-X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
- pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
-Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
- helo=galois.linutronix.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20240718-qapi-firmware-json-v5-3-0dba12d7aaf5@linutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240718-qapi-firmware-json-v5-3-0dba12d7aaf5@linutronix.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,34 +87,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To make sure that the QAPI description stays valid add a testcase.
+On Thu, Jul 18, 2024 at 02:21:47PM +0200, Thomas Weißschuh wrote:
+> Since commit 3c5f6114d9ff ("qapi: remove "Example" doc section")
+> the "Example" section is not valid anymore.
+> It has been replaced by the "qmp-example" role.
+> 
+> This was not detected earlier as firmware.json was not validated.
+> As this validation is about to be added, adapt firmware.json.
+> 
+> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+> ---
+>  docs/interop/firmware.json | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/d9ce0234-4beb-4b90-b14c-76810d3b81d7@linaro.org/
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
----
- docs/meson.build | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/docs/meson.build b/docs/meson.build
-index 9040f860ae1a..bcca45a342a3 100644
---- a/docs/meson.build
-+++ b/docs/meson.build
-@@ -99,3 +99,8 @@ if build_docs
-   alias_target('html', sphinxdocs)
-   alias_target('man', sphinxmans)
- endif
-+
-+test('QAPI firmware.json regression tests', python,
-+     args: [qapi_gen.full_path(), '-o', meson.current_build_dir() / 'qapi',
-+            meson.current_source_dir() / 'interop/firmware.json'],
-+     env: test_env, suite: ['qapi-schema', 'qapi-interop'])
 
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
