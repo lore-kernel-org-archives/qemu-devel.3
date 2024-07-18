@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996D0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 05:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B3EC3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUJh2-00055h-MC; Thu, 18 Jul 2024 01:28:40 -0400
+	id 1sUKQC-00039D-At; Thu, 18 Jul 2024 02:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1sUJh1-00054T-0q; Thu, 18 Jul 2024 01:28:39 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUKQ8-000367-68
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 02:15:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1sUJgy-0004kr-8u; Thu, 18 Jul 2024 01:28:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721280516; x=1752816516;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=/n30pXRSaPg6/RNVS5KqTJU65apInj9L15dc5ZlOJWI=;
- b=VycG8yNGVGSDzAPDmTF6MsK5Zqec6pIqe6m8mVgC6qum6ja6iRy2dTaz
- c+tJlV6MaWRkcsdn2TwEwkxWp2ukp4fAa5ss0XPz1D+9lEM5tJtfzHSrp
- kAguwTbwfK+CplkxCAih6q4FYajCvsXCURNpMVfWEWQO+CN9YRDY8v+1I
- oZWBBje6DsoRwOPEKgKsmPfdvkV/CciAIW60MGApz05QrH/8x+HHOO191
- IHQusCp4GZSplH0nZesIJybcQOLRT5lwK9iXk5yRF71v8De3uWkWz/iLM
- 8rUTLMyKUB30f+oDGQKAoegNae8Iy0gEEgl6WtIjsdA0TLZ6z5Ouq5gZu g==;
-X-CSE-ConnectionGUID: rrdU6jkwRd6Pm6v7oNFdag==
-X-CSE-MsgGUID: llQ+u3j7T16/EGBDXqTOWw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="18671314"
-X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="18671314"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2024 22:28:33 -0700
-X-CSE-ConnectionGUID: 1d43GwztQwePSZ+OmH1dMg==
-X-CSE-MsgGUID: 3F6yikizQVyqX8j1PyIE4g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,216,1716274800"; d="scan'208";a="55777879"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.225.1])
- ([10.124.225.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2024 22:28:29 -0700
-Message-ID: <f18ab76c-abbe-4599-9631-603853bcfa0b@linux.intel.com>
-Date: Thu, 18 Jul 2024 13:28:25 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUKQ4-0004Mo-3q
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 02:15:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721283311;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZEVVQJSTY9HCtSlr1Q/xug+Em8nngDWrelzkU8eS0Bs=;
+ b=NXxTiifHtBTWbAwe5KrKl3UAuA7Rhs6GqW5QAsHUxsexSTsON/De6rFK7Z09cH1Z9NAA2/
+ eCFlYoKZZDGa07ms84OS7bqQzSbMFUmcmBV/dtAFEY+uz2ZKw/sm4gjkx+dO8TNcviJpzb
+ GOmCmuO/DA9MaUuSSGFM7GqfR1pJRBM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-rXTqjqB4Op-Y_rEaULqDvw-1; Thu,
+ 18 Jul 2024 02:15:05 -0400
+X-MC-Unique: rXTqjqB4Op-Y_rEaULqDvw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E7561955D52; Thu, 18 Jul 2024 06:15:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A354D19560AA; Thu, 18 Jul 2024 06:15:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5A85E21E668A; Thu, 18 Jul 2024 08:15:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Octavian Purdila <tavip@google.com>
+Cc: qemu-devel@nongnu.org,  marcandre.lureau@redhat.com,  eblake@redhat.com,
+ armbru@redhat.com,  peter.maydell@linaro.org,  berrange@redhat.com,
+ Paulo Neves <ptsneves@gmail.com>
+Subject: Re: [PATCH v3] chardev: add path option for pty backend
+In-Reply-To: <20240605185050.1678102-1-tavip@google.com> (Octavian Purdila's
+ message of "Wed, 5 Jun 2024 11:50:50 -0700")
+References: <20240605185050.1678102-1-tavip@google.com>
+Date: Thu, 18 Jul 2024 08:15:01 +0200
+Message-ID: <87r0br8bve.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 3/5] i386/kvm: Support event with select&umask format in KVM
- PMU filter
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti
- <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- Yuan Yao <yuan.yao@intel.com>, Xiong Zhang <xiong.y.zhang@intel.com>,
- Mingwei Zhang <mizhang@google.com>, Jim Mattson <jmattson@google.com>
-References: <20240710045117.3164577-1-zhao1.liu@intel.com>
- <20240710045117.3164577-4-zhao1.liu@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20240710045117.3164577-4-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=198.175.65.19;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,247 +87,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Looks like this one fell through the cracks.
 
-On 7/10/2024 12:51 PM, Zhao Liu wrote:
-> The select&umask is the common way for x86 to identify the PMU event,
-> so support this way as the "x86-default" format in kvm-pmu-filter
-> object.
+Octavian Purdila <tavip@google.com> writes:
+
+> Add path option to the pty char backend which will create a symbolic
+> link to the given path that points to the allocated PTY.
 >
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> This avoids having to make QMP or HMP monitor queries to find out what
+> the new PTY device path is.
+
+QMP commands chardev-add and chardev-change return the information you
+want:
+
+    # @pty: name of the slave pseudoterminal device, present if and only
+    #     if a chardev of type 'pty' was created
+
+So does HMP command chardev-add.  HMP chardev apparently doesn't, but
+that could be fixed.
+
+So, the use case is basically the command line, right?
+
+> Based on patch from Paulo Neves:
+>
+> https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail=
+.com/
+>
+> Tested with the following invocations that the link is created and
+> removed when qemu stops:
+>
+>   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+>   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+>
+>   qemu-system-x86_64 -nodefaults -monitor pty:test
+>
+> Also tested that when a link path is not passed invocations still work, e=
+.g.:
+>
+>   qemu-system-x86_64 -monitor pty
+>
+> Co-authored-by: Paulo Neves <ptsneves@gmail.com>
+> Signed-off-by: Paulo Neves <ptsneves@gmail.com>
+> [OP: rebase and address original patch review comments]
+> Signed-off-by: Octavian Purdila <tavip@google.com>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  accel/kvm/kvm-pmu.c      | 62 ++++++++++++++++++++++++++++++++++++++++
->  include/sysemu/kvm-pmu.h | 13 +++++++++
->  qapi/kvm.json            | 46 +++++++++++++++++++++++++++--
->  target/i386/kvm/kvm.c    |  5 ++++
->  4 files changed, 123 insertions(+), 3 deletions(-)
+> Changes since v2:
 >
-> diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
-> index 483d1bdf4807..51d3fba5a72a 100644
-> --- a/accel/kvm/kvm-pmu.c
-> +++ b/accel/kvm/kvm-pmu.c
-> @@ -17,6 +17,8 @@
->  #include "qom/object_interfaces.h"
->  #include "sysemu/kvm-pmu.h"
->  
-> +#define UINT12_MAX (4095)
-> +
->  static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
->                                       void *opaque, Error **errp)
->  {
-> @@ -38,6 +40,12 @@ static void kvm_pmu_filter_get_event(Object *obj, Visitor *v, const char *name,
->              str_event->u.raw.code = g_strdup_printf("0x%lx",
->                                                      event->u.raw.code);
->              break;
-> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
-> +            str_event->u.x86_default.select =
-> +                g_strdup_printf("0x%x", event->u.x86_default.select);
-> +            str_event->u.x86_default.umask =
-> +                g_strdup_printf("0x%x", event->u.x86_default.umask);
-> +            break;
->          default:
->              g_assert_not_reached();
->          }
-> @@ -83,6 +91,60 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
->                  goto fail;
->              }
->              break;
-> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT: {
-> +            uint64_t select, umask;
-> +
-> +            ret = qemu_strtou64(str_event->u.x86_default.select, NULL,
-> +                                0, &select);
-> +            if (ret < 0) {
-> +                error_setg(errp,
-> +                           "Invalid %s PMU event (select: %s): %s. "
-> +                           "The select must be a "
-> +                           "12-bit unsigned number string.",
-> +                           KVMPMUEventEncodeFmt_str(str_event->format),
-> +                           str_event->u.x86_default.select,
-> +                           strerror(-ret));
-> +                g_free(event);
-> +                goto fail;
-> +            }
-> +            if (select > UINT12_MAX) {
-> +                error_setg(errp,
-> +                           "Invalid %s PMU event (select: %s): "
-> +                           "Numerical result out of range. "
-> +                           "The select must be a "
-> +                           "12-bit unsigned number string.",
-> +                           KVMPMUEventEncodeFmt_str(str_event->format),
-> +                           str_event->u.x86_default.select);
-> +                g_free(event);
-> +                goto fail;
-> +            }
-> +            event->u.x86_default.select = select;
-> +
-> +            ret = qemu_strtou64(str_event->u.x86_default.umask, NULL,
-> +                                0, &umask);
-> +            if (ret < 0) {
-> +                error_setg(errp,
-> +                           "Invalid %s PMU event (umask: %s): %s. "
-> +                           "The umask must be a uint8 string.",
-> +                           KVMPMUEventEncodeFmt_str(str_event->format),
-> +                           str_event->u.x86_default.umask,
-> +                           strerror(-ret));
-> +                g_free(event);
-> +                goto fail;
-> +            }
-> +            if (umask > UINT8_MAX) {
-
-umask is extended to 16 bits from Perfmon v6+. Please notice we need to
-upgrade this to 16 bits in the future. More details can be found here.
-[PATCH V3 00/13] Support Lunar Lake and Arrow Lake core PMU - kan.liang
-(kernel.org)
-<https://lore.kernel.org/all/20240626143545.480761-1-kan.liang@linux.intel.com/>
-
-
-> +                error_setg(errp,
-> +                           "Invalid %s PMU event (umask: %s): "
-> +                           "Numerical result out of range. "
-> +                           "The umask must be a uint8 string.",
-> +                           KVMPMUEventEncodeFmt_str(str_event->format),
-> +                           str_event->u.x86_default.umask);
-> +                g_free(event);
-> +                goto fail;
-> +            }
-> +            event->u.x86_default.umask = umask;
-> +            break;
-> +        }
->          default:
->              g_assert_not_reached();
->          }
-> diff --git a/include/sysemu/kvm-pmu.h b/include/sysemu/kvm-pmu.h
-> index 4707759761f1..707f33d604fd 100644
-> --- a/include/sysemu/kvm-pmu.h
-> +++ b/include/sysemu/kvm-pmu.h
-> @@ -26,4 +26,17 @@ struct KVMPMUFilter {
->      KVMPMUFilterEventList *events;
+>  * remove NULL path check, g_strdup() allows NULL inputs=20=20
+>
+> Changes since v1:
+>
+>  * Keep the original Signed-off-by from Paulo and add one line
+>     description with further changes
+>
+>  * Update commit message with justification for why the new
+>     functionality is useful
+>
+>  * Don't close master_fd when symlink creation fails to avoid double
+>     close
+>
+>  * Update documentation for clarity
+>
+> chardev/char-pty.c | 33 +++++++++++++++++++++++++++++++++
+>  chardev/char.c     |  5 +++++
+>  qapi/char.json     |  4 ++--
+>  qemu-options.hx    | 24 ++++++++++++++++++------
+>  4 files changed, 58 insertions(+), 8 deletions(-)
+>
+> diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+> index cc2f7617fe..5c6172ddba 100644
+> --- a/chardev/char-pty.c
+> +++ b/chardev/char-pty.c
+> @@ -29,6 +29,7 @@
+>  #include "qemu/sockets.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/module.h"
+> +#include "qemu/option.h"
+>  #include "qemu/qemu-print.h"
+>=20=20
+>  #include "chardev/char-io.h"
+> @@ -41,6 +42,7 @@ struct PtyChardev {
+>=20=20
+>      int connected;
+>      GSource *timer_src;
+> +    char *symlink_path;
 >  };
->  
-> +/*
-> + * Stolen from Linux kernel (RAW_EVENT at tools/testing/selftests/kvm/include/
-> + * x86_64/pmu.h).
-> + *
-> + * Encode an eventsel+umask pair into event-select MSR format.  Note, this is
-> + * technically AMD's format, as Intel's format only supports 8 bits for the
-> + * event selector, i.e. doesn't use bits 24:16 for the selector.  But, OR-ing
-> + * in '0' is a nop and won't clobber the CMASK.
-> + */
-> +#define X86_PMU_RAW_EVENT(eventsel, umask) (((eventsel & 0xf00UL) << 24) | \
-> +                                            ((eventsel) & 0xff) | \
-> +                                            ((umask) & 0xff) << 8)
+>  typedef struct PtyChardev PtyChardev;
+>=20=20
+> @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
+>      Chardev *chr =3D CHARDEV(obj);
+>      PtyChardev *s =3D PTY_CHARDEV(obj);
+>=20=20
+> +    /* unlink symlink */
+> +    if (s->symlink_path) {
+> +        unlink(s->symlink_path);
+> +        g_free(s->symlink_path);
+> +    }
+
+Runs when the chardev object is finalized.
+
+Doesn't run when QEMU crashes.  Stale symlink left behind then.  Can't
+see how you could avoid that at reasonable cost.  Troublesome all the
+same.
+
 > +
->  #endif /* KVM_PMU_H */
-> diff --git a/qapi/kvm.json b/qapi/kvm.json
-> index 0619da83c123..0d759884c229 100644
-> --- a/qapi/kvm.json
-> +++ b/qapi/kvm.json
-> @@ -27,11 +27,13 @@
->  #
->  # @raw: the encoded event code that KVM can directly consume.
->  #
-> +# @x86-default: standard x86 encoding format with select and umask.
-> +#
->  # Since 9.1
->  ##
->  { 'enum': 'KVMPMUEventEncodeFmt',
->    'prefix': 'KVM_PMU_EVENT_FMT',
-> -  'data': ['raw'] }
-> +  'data': ['raw', 'x86-default'] }
->  
->  ##
->  # @KVMPMURawEvent:
-> @@ -46,6 +48,25 @@
->  { 'struct': 'KVMPMURawEvent',
->    'data': { 'code': 'uint64' } }
->  
-> +##
-> +# @KVMPMUX86DefalutEvent:
-> +#
-> +# x86 PMU event encoding with select and umask.
-> +# raw_event = ((select & 0xf00UL) << 24) | \
-> +#              (select) & 0xff) | \
-> +#              ((umask) & 0xff) << 8)
-> +#
-> +# @select: x86 PMU event select field, which is a 12-bit unsigned
-> +#     number.
-> +#
-> +# @umask: x86 PMU event umask field.
-> +#
-> +# Since 9.1
-> +##
-> +{ 'struct': 'KVMPMUX86DefalutEvent',
-> +  'data': { 'select': 'uint16',
-> +            'umask': 'uint8' } }
+>      pty_chr_state(chr, 0);
+>      object_unref(OBJECT(s->ioc));
+>      pty_chr_timer_cancel(s);
+> @@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
+>      int master_fd, slave_fd;
+>      char pty_name[PATH_MAX];
+>      char *name;
+> +    char *symlink_path =3D backend->u.pty.data->device;
+>=20=20
+>      master_fd =3D qemu_openpty_raw(&slave_fd, pty_name);
+>      if (master_fd < 0) {
+> @@ -354,12 +363,36 @@ static void char_pty_open(Chardev *chr,
+>      g_free(name);
+>      s->timer_src =3D NULL;
+>      *be_opened =3D false;
 > +
->  ##
->  # @KVMPMUFilterEvent:
->  #
-> @@ -61,7 +82,8 @@
->    'base': { 'action': 'KVMPMUFilterAction',
->              'format': 'KVMPMUEventEncodeFmt' },
->    'discriminator': 'format',
-> -  'data': { 'raw': 'KVMPMURawEvent' } }
-> +  'data': { 'raw': 'KVMPMURawEvent',
-> +            'x86-default': 'KVMPMUX86DefalutEvent' } }
->  
->  ##
->  # @KVMPMUFilterProperty:
-> @@ -89,6 +111,23 @@
->  { 'struct': 'KVMPMURawEventVariant',
->    'data': { 'code': 'str' } }
->  
-> +##
-> +# @KVMPMUX86DefalutEventVariant:
-> +#
-> +# The variant of KVMPMUX86DefalutEvent with the string, rather than
-> +# the numeric value.
-> +#
-> +# @select: x86 PMU event select field.  This field is a 12-bit
-> +#     unsigned number string.
-> +#
-> +# @umask: x86 PMU event umask field. This field is a uint8 string.
-> +#
-> +# Since 9.1
-> +##
-> +{ 'struct': 'KVMPMUX86DefalutEventVariant',
-> +  'data': { 'select': 'str',
-> +            'umask': 'str' } }
+> +    /* create symbolic link */
+> +    if (symlink_path) {
+> +        int res =3D symlink(pty_name, symlink_path);
 > +
+> +        if (res !=3D 0) {
+> +            error_setg_errno(errp, errno, "Failed to create PTY symlink"=
+);
+> +        } else {
+> +            s->symlink_path =3D g_strdup(symlink_path);
+> +        }
+> +    }
+> +}
+> +
+> +static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
+> +                           Error **errp)
+> +{
+> +    const char *path =3D qemu_opt_get(opts, "path");
+> +    ChardevHostdev *dev;
+> +
+> +    backend->type =3D CHARDEV_BACKEND_KIND_PTY;
+> +    dev =3D backend->u.pty.data =3D g_new0(ChardevHostdev, 1);
+> +    qemu_chr_parse_common(opts, qapi_ChardevHostdev_base(dev));
+> +    dev->device =3D g_strdup(path);
+
+Put a pin into this line.
+
+>  }
+>=20=20
+>  static void char_pty_class_init(ObjectClass *oc, void *data)
+>  {
+>      ChardevClass *cc =3D CHARDEV_CLASS(oc);
+>=20=20
+> +    cc->parse =3D char_pty_parse;
+>      cc->open =3D char_pty_open;
+>      cc->chr_write =3D char_pty_chr_write;
+>      cc->chr_update_read_handler =3D pty_chr_update_read_handler;
+> diff --git a/chardev/char.c b/chardev/char.c
+> index 3c43fb1278..404c6b8a4f 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, c=
+onst char *filename,
+>          qemu_opt_set(opts, "path", p, &error_abort);
+>          return opts;
+>      }
+> +    if (strstart(filename, "pty:", &p)) {
+> +        qemu_opt_set(opts, "backend", "pty", &error_abort);
+> +        qemu_opt_set(opts, "path", p, &error_abort);
+> +        return opts;
+> +    }
+>      if (strstart(filename, "tcp:", &p) ||
+>          strstart(filename, "telnet:", &p) ||
+>          strstart(filename, "tn3270:", &p) ||
+> diff --git a/qapi/char.json b/qapi/char.json
+> index 777dde55d9..4c74bfc437 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -509,7 +509,7 @@
 >  ##
->  # @KVMPMUFilterEventVariant:
+>  # @ChardevHostdevWrapper:
 >  #
-> @@ -104,7 +143,8 @@
->    'base': { 'action': 'KVMPMUFilterAction',
->              'format': 'KVMPMUEventEncodeFmt' },
->    'discriminator': 'format',
-> -  'data': { 'raw': 'KVMPMURawEventVariant' } }
-> +  'data': { 'raw': 'KVMPMURawEventVariant',
-> +            'x86-default': 'KVMPMUX86DefalutEventVariant' } }
->  
+> -# @data: Configuration info for device and pipe chardevs
+> +# @data: Configuration info for device, pty and pipe chardevs
+>  #
+>  # Since: 1.4
 >  ##
->  # @KVMPMUFilterPropertyVariant:
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index e9bf79782316..391531c036a6 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5393,6 +5393,10 @@ kvm_config_pmu_event(KVMPMUFilter *filter,
->          case KVM_PMU_EVENT_FMT_RAW:
->              code = event->u.raw.code;
->              break;
-> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
-> +            code = X86_PMU_RAW_EVENT(event->u.x86_default.select,
-> +                                     event->u.x86_default.umask);
-> +            break;
->          default:
->              g_assert_not_reached();
->          }
-> @@ -6073,6 +6077,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
->  
->          switch (event->format) {
->          case KVM_PMU_EVENT_FMT_RAW:
-> +        case KVM_PMU_EVENT_FMT_X86_DEFAULT:
->              break;
->          default:
->              error_setg(errp,
+   { 'struct': 'ChardevHostdev',
+     'data': { 'device': 'str' },
+     'base': 'ChardevCommon' }
+> @@ -650,7 +650,7 @@
+>              'pipe': 'ChardevHostdevWrapper',
+>              'socket': 'ChardevSocketWrapper',
+>              'udp': 'ChardevUdpWrapper',
+> -            'pty': 'ChardevCommonWrapper',
+> +            'pty': 'ChardevHostdevWrapper',
+
+This adds member @device.
+
+The fact that @device is since 9.1 remains undocumented.
+
+In HMP and CLI, the new option is called "path".
+
+In QMP, it's called "device".  Not only is this inconsistent (see the
+pin above), it's misleading: it's not a device name, it's the name of a
+symbolic link pointing to a slave PTY device file.
+
+>              'null': 'ChardevCommonWrapper',
+>              'mux': 'ChardevMuxWrapper',
+>              'msmouse': 'ChardevCommonWrapper',
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 8ca7f34ef0..94ffb1a605 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+>      "-chardev console,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=
+=3Don|off]\n"
+>      "-chardev serial,id=3Did,path=3Dpath[,mux=3Don|off][,logfile=3DPATH]=
+[,logappend=3Don|off]\n"
+>  #else
+> -    "-chardev pty,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=3Do=
+n|off]\n"
+> +    "-chardev pty,id=3Did[,path=3Dpath][,mux=3Don|off][,logfile=3DPATH][=
+,logappend=3Don|off]\n"
+>      "-chardev stdio,id=3Did[,mux=3Don|off][,signal=3Don|off][,logfile=3D=
+PATH][,logappend=3Don|off]\n"
+>  #endif
+>  #ifdef CONFIG_BRLAPI
+> @@ -3808,12 +3808,18 @@ The available backends are:
+>=20=20
+>      ``path`` specifies the name of the serial device to open.
+>=20=20
+> -``-chardev pty,id=3Did``
+> -    Create a new pseudo-terminal on the host and connect to it. ``pty``
+> -    does not take any options.
+> +``-chardev pty,id=3Did[,path=3Dpath]``
+> +    Create a new pseudo-terminal on the host and connect to it.
+>=20=20
+>      ``pty`` is not available on Windows hosts.
+>=20=20
+> +    If ``path`` is specified, QEMU will create a symbolic link at
+> +    that location which points to the new PTY device.
+> +
+> +    This avoids having to make QMP or HMP monitor queries to find out
+> +    what the new PTY device path is.
+> +
+> +
+>  ``-chardev stdio,id=3Did[,signal=3Don|off]``
+>      Connect to standard input and standard output of the QEMU process.
+>=20=20
+> @@ -4171,8 +4177,14 @@ SRST
+>=20=20
+>              vc:80Cx24C
+>=20=20
+> -    ``pty``
+> -        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
+> +    ``pty[:path]``
+> +        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
+> +
+> +        If ``path`` is specified, QEMU will create a symbolic link at
+> +        that location which points to the new PTY device.
+> +
+> +        This avoids having to make QMP or HMP monitor queries to find
+> +        out what the new PTY device path is.
+>=20=20
+>      ``none``
+>          No device is allocated. Note that for machine types which
+
+Sure we want to extend the old-style syntax?  I vaguely recall we
+already have certain configuration knobs that are unavailable there.
+
+
+The feature feels rather doubtful to me, to be honest.
+
 
