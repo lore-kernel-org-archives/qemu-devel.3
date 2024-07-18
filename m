@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25E9C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2367C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:11:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUPwe-0005Bb-5R; Thu, 18 Jul 2024 08:09:14 -0400
+	id 1sUPyC-0000Nv-EV; Thu, 18 Jul 2024 08:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUPwX-0004vJ-Hj
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:09:06 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUPwU-0000F2-Mg
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:09:05 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-368380828d6so489674f8f.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 05:08:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721304523; x=1721909323; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GLztguu0/1A4o5v5HJNeEefOunzrp4ZbpPmNFDAgcPg=;
- b=nWsQzqkhZIrqgzx6v/f3tpUREwcihXC/VXt4IE6otDDF5e3leMAQEsxt2ufdkFD+z+
- SNrPmNe5nRnyCN061nGQE7y9XMX/wyPCHZFUePPG3PpaXQ/AEi43ejOTkABso8zgwrPG
- 1jSSdVFU9votgGmw7H5Iydc3BOiBzs7o+Gb7rBwe3I0o12TCwCQqa+jnEiYGRbUHUhsX
- E3kZNJ9tfFu0AIhc6E+Iyrc+VamecmU0wCr4qhSsVabf7zZRQpojQOpGqKQQLzn/LdQZ
- HPS6yXkbOeK5HvaaYHocLw4I5zvOLPgVMdwYtP+8PzAXCtN3DbHUHOJaTiK4djGY86ef
- vVQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721304523; x=1721909323;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GLztguu0/1A4o5v5HJNeEefOunzrp4ZbpPmNFDAgcPg=;
- b=rX1mqD1qAjhS487Xe2vGVEJ6xCQ81jU+CFh7naC/NvPr3dM64SGTHYRKOvHCGg7A8p
- N5XRL5P/LolOEm7l94ulv89cZ7/2+YmYNGpWhHN4hXiZ1e6ezapDEUUs8YE+9z102EUe
- HTI9fv83VGMWzosYc5I120t4RbSSoTrR/FIpn3ZBZmKbW6tQE8AeM1dLWwlf7raB/R5u
- oE1xvz4YMTDpGz+iS4AUuNaZIlZEcDwTigqHVyS/+yg4YEHRhQrDmSUK/Bx5FJFyFNnt
- HHHH1iddja4soTRxKU8X+Ox4BzHU1NMoMw5FyT+bpsr895FBVxQKFEhuaLTK9NYX1Ae+
- mr1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQy/YuSDuXrtL0vBVzO3Pjq6tr2IX6+rUuZXmM0HYsQnPqaxJw7S7Wj5tNVXFouHKAujRNobMEvgGziEXjaOwi3N3TMvU=
-X-Gm-Message-State: AOJu0YyPq2AQIP5IS5YEBnN9C7EKSb85kdOJkfuNgcwfas4UPh25YIUY
- 0aprRlQTTh8bc78g7Mu6nuqp2K2fENVzvlYbkg+4jpCZ7oVB5CAzdflTGnRkJS17AhmR7KWTMp+
- y6t8qhxPiVnuuGLaeU3r/Bk8H2EJVlV1jOvmg+g==
-X-Google-Smtp-Source: AGHT+IFZi/ClEd1999CMZYBhdXDHi2vXXiykQQ5Z65X5NS9p1qChrm7Xj9mXD3K9UBh7qPuKeG1NYWHBprbDW8HJ3DU=
-X-Received: by 2002:a5d:54d2:0:b0:367:8847:5bf4 with SMTP id
- ffacd0b85a97d-368315f3197mr3207156f8f.10.1721304523412; Thu, 18 Jul 2024
- 05:08:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sUPxw-000067-Tn
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:10:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sUPxs-0000Zt-Tu
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:10:32 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxTOkuBplmLZQAAA--.2940S3;
+ Thu, 18 Jul 2024 20:10:22 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxUcQqBplmYM5NAA--.7444S3; 
+ Thu, 18 Jul 2024 20:10:21 +0800 (CST)
+Subject: Re: [PULL 0/9] loongarch-to-apply queue
+To: lixianglai <lixianglai@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20240711074829.3338879-1-gaosong@loongson.cn>
+ <78d9f6d3-9257-40a8-b9e1-6690b80e122b@linaro.org>
+ <14a28322-e803-d4e0-bdfe-461837d23c24@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <6f5e96d4-f9af-67d6-c2cc-fad82ef84ffc@loongson.cn>
+Date: Thu, 18 Jul 2024 20:10:32 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
- <20240716-pmu-v3-3-8c7c1858a227@daynix.com>
-In-Reply-To: <20240716-pmu-v3-3-8c7c1858a227@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Jul 2024 13:08:32 +0100
-Message-ID: <CAFEAcA-5J-ra-gHTcC54eOP9qUFCtXzKhePhkRhjj=Q7HyFqVA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] target/arm: Always add pmu property for Armv8
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <14a28322-e803-d4e0-bdfe-461837d23c24@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxUcQqBplmYM5NAA--.7444S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxur45Gr43Jry8uryruw1ktFc_yoW5AF4Upr
+ ZayF17trZ5Grn7Jr17tw15XFyjyr1xG3W7XF1UXFy8ZFs0yr1jqrnYqr1vgFy7J3yrJF18
+ ZF10yw17ZFsrZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8
+ sqAUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.205,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,42 +85,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jul 2024 at 13:50, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+在 2024/7/12 下午5:50, lixianglai 写道:
+> Hi Philippe:
+>> Hi Richard,
+>>
+>> On 11/7/24 09:48, Song Gao wrote:
+>>> The following changes since commit 
+>>> 59084feb256c617063e0dbe7e64821ae8852d7cf:
+>>>
+>>>    Merge tag 'pull-aspeed-20240709' of 
+>>> https://github.com/legoater/qemu into staging (2024-07-09 07:13:55 
+>>> -0700)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240711
+>>>
+>>> for you to fetch changes up to 
+>>> 78341408e705e1b8dc92eaae2071ae0023d586b0:
+>>>
+>>>    target/loongarch: Fix cpu_reset set wrong CSR_CRMD (2024-07-11 
+>>> 15:56:50 +0800)
+>>>
+>>> ----------------------------------------------------------------
+>>> pull-loongarch-20240711
+>>>
+>>> ----------------------------------------------------------------
+>>> Bibo Mao (2):
+>>>        hw/loongarch/virt: Remove unused assignment
+>>>        target/loongarch/kvm: Add software breakpoint support
+>>>
+>>> Dmitry Frolov (1):
+>>>        hw/loongarch/boot.c: fix out-of-bound reading
+>>>
+>>> Feiyang Chen (1):
+>>>        target/loongarch: Remove avail_64 in trans_srai_w() and 
+>>> simplify it
+>>>
+>>> Jiaxun Yang (1):
+>>>        MAINTAINERS: Add myself as a reviewer of LoongArch virt machine
+>>>
+>>> Song Gao (2):
+>>>        target/loongarch: Set CSR_PRCFG1 and CSR_PRCFG2 values
+>>>        target/loongarch: Fix cpu_reset set wrong CSR_CRMD
+>>>
+>>> Xianglai Li (2):
+>>>        hw/loongarch: Change the tpm support by default
+>>>        hw/loongarch: Modify flash block size to 256K
+>>
+>> Please hold on before merging, I'd like to check with
+>> the author for migration issue regarding the flash block size
+>> change.
+>>
+> I performed a live migration test on the local environment. The test 
+> steps are as follows:
 >
-> kvm-steal-time and sve properties are added for KVM even if the
-> corresponding features are not available. Always add pmu property for
-> Armv8. Note that the property is added only for Armv8 as QEMU emulates
-> PMUv3, which is part of Armv8.
+> 1.Create A network file system between PC A and PC B.
+> 2.Replace the qemu binary of PC B with the version with the modified 
+> flash block size.
+> 2.The network file system enables PC A and PC B to access the same 
+> test qcow2 file.
+> 3.Create a VM on PC A using the test qcow2 file.
+> 4.Add a boot item stored in the flash. Use the BIOS GUI to save the 
+> boot item, shut down the VM,
+>    restart the VM, and check whether the boot item exists
+> 5.The migration function of virt-manager is used to migrate VMS from 
+> PC A to PC B.
+>    After the migration is successful, stop the VM, restart the VM,
+>    and check whether the boot option exists and the VM can be started 
+> normally with the boot option.
+> 6.Perform the same test as Step 5 to migrate the VM from PC B to PC A
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  target/arm/cpu.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> After the test, data in the flash of the VM is not lost, and the VM 
+> can start normally.
+> Therefore, I believe that the current patch does not affect the 
+> migration function.
 >
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 14d4eca12740..64038e26b2a9 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1744,6 +1744,8 @@ void arm_cpu_post_init(Object *obj)
->      }
+> Thanks,
+> Xianglai.
 >
->      if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
-> +        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
-> +
->          object_property_add_uint64_ptr(obj, "rvbar",
->                                         &cpu->rvbar_prop,
->                                         OBJ_PROP_FLAG_READWRITE);
-> @@ -1770,7 +1772,6 @@ void arm_cpu_post_init(Object *obj)
->
->      if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
->          cpu->has_pmu = true;
-> -        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
->      }
+Hi Philippe:
 
-This regresses the ability to disable the PMU emulation on
-CPUs like "cortex-a8", which are not v8 but still set
-ARM_FEATURE_PMU.
+Can we push this patch this time?
 
-thanks
--- PMM
+Thanks.
+Song Gao
+>> Thanks,
+>>
+>> Phil.
+
 
