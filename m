@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B9F0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 21:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3960DC41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 21:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUYFd-0005uf-Va; Thu, 18 Jul 2024 17:01:22 -0400
+	id 1sUYLh-00039t-UZ; Thu, 18 Jul 2024 17:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUYFZ-0005s0-Vh
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:01:17 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUYFW-0005Re-48
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:01:16 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70ce3d66a8bso197551b3a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 14:01:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721336471; x=1721941271; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2sgYWmI3maIsQCVoK33B3b+oddvpKUkwbWnZ9+beUK0=;
- b=mZZXMrb6F2JLMyV/cM1hbzz6iOC8Gf3ZkM3B10OZLJsdKFalKcP/ACPUXMcWnfK8md
- 2oOggt1ZA9ybAZ2WYicTAQzZHLTXwV4vefPJ/9yFlSt8/2s7+ntBuf5Q4RQj9P+Tlq+b
- SuU0sAvakF0TdrMZmBdkSZ5qfwUt2ErrCW2S0PbCecN4JJwD17dBcir0H5jjb+tofoPz
- LG943xTPFiNtIiJKZalonaKKg/1tox0Vx6ohOCbQDtTJRnIqLnsattIdbiWHvnGF04Ws
- 5r2YaLSKII9N+hXF0MdyoBGFwZh1qljDK/54TrdhtkplNI8uSpMztEL45Gv8bxnMuj3t
- x5iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721336471; x=1721941271;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2sgYWmI3maIsQCVoK33B3b+oddvpKUkwbWnZ9+beUK0=;
- b=msWHONR+t5+hd/m9m9Yswa/E5ksJhPd3bZKMK71keu8F+nvrnZ79IV35acFkmneusp
- Rhs8FNaKegjYmMIzJnUJLGrIccJ3NKrx/8setQmZpxkeN3uVC47BXoluSrE1pa0EDvj7
- xes+AH1o89+bXyI2HLi1UbBGcLs2v3hn0FsmrBWIbKmAHZfBxUm7GIAUIU67+L9h4oBb
- oeeCx1f4WygBfQpWuNCXqwXPuuTFo0yPyy2Pnrvf0EFawTYxZrcaDv8LCXMHw6YKoT/G
- 9+rn8K2Z8lN17lmAssRcCNtXx63/V86UVW2gfk5JPdKASXn8xzruYcN8j6thml/p/pfe
- RJAA==
-X-Gm-Message-State: AOJu0YwWLpLC3LDnOTTKEnM9t7yDed3Mxn5x0q0NjCpUfGL+2a+Oh+9R
- meLaiUMU400On1lbWIgmWzElLEVn7dKgKEjq+3GbD6WFNZSBncx5skwk3AuQw7VZdj95/D07cvx
- 7oBgx4A==
-X-Google-Smtp-Source: AGHT+IF1bJncQ9yuRRbI/VHBNx3r+eS85I8eBddYsTb+bTvewi9KELCRgIGGEOj3DxNIHVDQ4WTPIw==
-X-Received: by 2002:a05:6a00:218b:b0:706:6bf8:bd7 with SMTP id
- d2e1a72fcca58-70cfc9a87edmr1019017b3a.21.1721336470196; 
- Thu, 18 Jul 2024 14:01:10 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70cfc83e926sm249589b3a.192.2024.07.18.14.01.08
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jul 2024 14:01:09 -0700 (PDT)
-Message-ID: <1827c97a-3036-44d7-a192-91bc41a5f56e@linaro.org>
-Date: Fri, 19 Jul 2024 07:01:05 +1000
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sUYLH-000375-AA
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:07:13 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1sUYLF-0006p5-Lj
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 17:07:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721336829; x=1752872829;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=6cVAc5ZQ+ZSn/WSm3lNXrMsM9aijcrjimTqBxDauiwg=;
+ b=GcxHrB5MWIdS0C9LOdZI5hir+9HQJwXHKxKbsgfhj/GKj3h+vv7ElekO
+ MVTQ6v/MB9kTRbtEnAd/FRBXGnevIfYqr9FDABxIoLT8TlkIQ6im0gaPh
+ 5gpGkXHKhiMuert5UfL9Qb2ItpHn7DCKZtzr/E95yVoYIdgJkV+Zw9qSg
+ Oj+XMoT14UmmWftV8w92Jgbx5j4DeH5tipMLHppW9Lqd9sXqrXqlgTBmu
+ LUYINRutFXRkNMy0I7r27JcjnjhWh6RVV1bBhGWwQ9ZSr1mWk3olQ/9BB
+ nhYjBFoeIzMgs2tTc97mpA+VvTo7DAkEKW7iPsFmGGfTX4RfaDN+I180A Q==;
+X-CSE-ConnectionGUID: G6tdLA3aTF+XFneC2m6oDQ==
+X-CSE-MsgGUID: bIHkveB7R52z6A95KzObRQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="21831327"
+X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="21831327"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Jul 2024 14:07:04 -0700
+X-CSE-ConnectionGUID: ITIjB/xtRYW0Rz8JfsIDzw==
+X-CSE-MsgGUID: DuMPHg2MSNuzWZ9IKhMS2w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; d="scan'208";a="55178725"
+Received: from soc-cp83kr3.jf.intel.com (HELO [10.24.10.107]) ([10.24.10.107])
+ by fmviesa005-auth.fm.intel.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2024 14:07:03 -0700
+Message-ID: <5540a8e3-7603-4b14-b7f3-4c0101deb930@intel.com>
+Date: Thu, 18 Jul 2024 14:07:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/30] riscv-to-apply queue
-To: qemu-devel@nongnu.org
-References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+Subject: Re: [PATCH v4 2/9] target/i386/kvm: Remove local MSR_KVM_WALL_CLOCK
+ and MSR_KVM_SYSTEM_TIME definitions
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20240716161015.263031-1-zhao1.liu@intel.com>
+ <20240716161015.263031-3-zhao1.liu@intel.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <20240716161015.263031-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,33 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 12:09, Alistair Francis wrote:
-> The following changes since commit 58ee924b97d1c0898555647a31820c5a20d55a73:
-> 
->    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2024-07-17 15:40:28 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240718-1
-> 
-> for you to fetch changes up to daff9f7f7a457f78ce455e6abf19c2a37dfe7630:
-> 
->    roms/opensbi: Update to v1.5 (2024-07-18 12:08:45 +1000)
-> 
-> ----------------------------------------------------------------
-> RISC-V PR for 9.1
-> 
-> * Support the zimop, zcmop, zama16b and zabha extensions
-> * Validate the mode when setting vstvec CSR
-> * Add decode support for Zawrs extension
-> * Update the KVM regs to Linux 6.10-rc5
-> * Add smcntrpmf extension support
-> * Raise an exception when CSRRS/CSRRC writes a read-only CSR
-> * Re-insert and deprecate 'riscv,delegate' in virt machine device tree
-> * roms/opensbi: Update to v1.5
-
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 
-r~
+On 7/16/2024 9:10 AM, Zhao Liu wrote:
+> These 2 MSRs have been already defined in kvm_para.h (standard-headers/
+> asm-x86/kvm_para.h).
+> 
+> Remove QEMU local definitions to avoid duplication.
+> 
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+
+
+Reviewed-by: zide.chen@intel.com
+
+> ---
+>  target/i386/kvm/kvm.c | 3 ---
+>  1 file changed, 3 deletions(-)
+> 
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 86e42beb78bf..6ad5a7dbf1fd 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -81,9 +81,6 @@
+>  #define KVM_APIC_BUS_CYCLE_NS       1
+>  #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+>  
+> -#define MSR_KVM_WALL_CLOCK  0x11
+> -#define MSR_KVM_SYSTEM_TIME 0x12
+> -
+>  /* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
+>   * 255 kvm_msr_entry structs */
+>  #define MSR_BUF_SIZE 4096
 
