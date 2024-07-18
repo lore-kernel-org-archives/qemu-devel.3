@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC88C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3302C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURH0-0007P2-M0; Thu, 18 Jul 2024 09:34:18 -0400
+	id 1sURHC-0001Bw-4v; Thu, 18 Jul 2024 09:34:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURGy-000729-1V
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:16 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURHA-00010k-5g
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:28 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURGw-0008UV-8B
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:15 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-36796d2e5a9so543759f8f.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sURH8-00005i-E4
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:34:27 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-367b8a60b60so526070f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:34:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721309653; x=1721914453; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721309665; x=1721914465; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G+d32bSTeFzLqie/ZHgjHuDft2M0Gh6Zwili0PkILqk=;
- b=B4jEpgXxmCIguxsABkkL8mrXmYXeZEC6vPRq+hH7I+r90/YGM/c55hIMvok6FIcFg2
- Iy3TTDUQFNV67o3bGER9j6TANaoBtDNKCvWkGpqc8B7mIMqDoJ6U+fvGJtWsG6IdL2up
- lzdBd53Yo+21YlDqfWdmS3x5F0a1LOsIdOBMEHGdp+kZiYQLyr4Ndyz8sx5VzS2CvbPY
- fFNsdUq6uTCCRmnubXzqcVrmf9gSqP3a5lenNZv5w46Ll+OeJhnnyJwo2xKUS5/GwHjc
- fUd/JpQIVkbn/71VKnWbBF9N6X6fduhtkGS60Eqp2GdU2XIqWm9ldnVg4+BlU/N57Wc1
- wlbQ==
+ bh=0+OxJiG+z3ssF/3QJZPn0rn/Ivu5hISnKA+KGQ086vg=;
+ b=hwDyVAfTKPofCaxYMKdnFC5+csFksV2A1cLZgt+QaOwseFktExvtWW7hIYKJFDqwD0
+ fzlOm7NKNU8J1Rj9bWemW7t4+rrWkRfjEBfsjdBQAmp7IG3YY4xO9AFCUPf+MyNMeHmi
+ nHqCJz+yqe/HLS+YwvB7nRXSUIuRPxssEvju97jeEYPQLFQsF3iXqM2tKaCRC5sgZQyt
+ JKUTnfdkq9cfF6xJF8RmWNLeTvAnVPbifESnON4Vo+5l+MD//Eyc3b4euqNieDWEUAP2
+ +XPFbKZOoOffKttAjrNfhRTebJLfnnBI4S06NRBmjKFo3sVj0+WFwSA9UrqmjM1SCDJU
+ ka4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721309653; x=1721914453;
+ d=1e100.net; s=20230601; t=1721309665; x=1721914465;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G+d32bSTeFzLqie/ZHgjHuDft2M0Gh6Zwili0PkILqk=;
- b=ZgFTfzQj0WyoaruthpTJivubFqMh7XKxyXRy9CfdJmLYpZqWufv71LyN6LescVSFjk
- 0jSFb39+pf6J9ik//jaPlKe0DrGGVR403z1B3unzchYnap+5+OogAyODkhDXbjOIA/SH
- wh5hWgSYAbdg2TApMYw6cqX7sNOjCGU0DPUNN6naNz6OIfaa1/WiUw0t1fe8vC/bsCpj
- TC7V1iAuOq0Ez++VtUvEr01Yf0NANa6vcqS1rGaDuBn3icSCA76SXU+B0MHeYosfCFrO
- C9/botqtl8Cm1e2P7VFE/lvMtOaEI29Z231t03gC4dv2bWqEfNnQss3WFWwl01SR1UMx
- GqAw==
+ bh=0+OxJiG+z3ssF/3QJZPn0rn/Ivu5hISnKA+KGQ086vg=;
+ b=IHwwJIlCi3TJNLmep1M2kDffjggjVl1BMSpT5h0NmtzZgM7fpgvBM9l3praZrwqdF1
+ FpRsV3VSrQ0ujBb/2MSEFvhgzh47s+ZX49yqRMjB04stA+RukW9Ik6JG9Jp8E4oMnUee
+ P9bZW9DbIr4b8qTCPJph0sCJWJe8ugAYYdPefN79Zmw9vuXXAzgwEAICGNbwz/SI8+tA
+ /5l006hTEQPLTwolE4gFTcBg7oP6Jjm+tMCP0iVi8dtobdfOlTsCUx7GQOzDnM0XlTer
+ c14MikYdWgycFNb75WJ1Ln5pvpp5CAM28ltRK/mHw5cNtov8VT/rj2S2NVv2T32zlRyc
+ uO2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCbYSo1SkR0w7DNbSe3eRXSeb0ZeHAFNpNcYslIq8d9zup/IjSii2fclgIOMek12I9Ic1Csf5GY9DvtsTQa3+YL8EiErU=
-X-Gm-Message-State: AOJu0Yxl5xPI0jmi4+w9cYYmz0xdnFD9GiRw0Sd2jh5yvL5+s9sEHlaR
- Ij/3xqh+WWYurKCOzTyVZXyrkKhX+YRKPQxDJdy4NgZmjQobqbSM/eWY1md20w4=
-X-Google-Smtp-Source: AGHT+IHsfPR0WkIlbe0R309Wblippz0SbQoqvtPiamllscMOG2I6hRicr9hI+xuU2Yg0Fxxo7e7q5A==
-X-Received: by 2002:a05:6000:1810:b0:367:89fc:bc11 with SMTP id
- ffacd0b85a97d-36831600383mr3798760f8f.10.1721309652749; 
- Thu, 18 Jul 2024 06:34:12 -0700 (PDT)
+ AJvYcCVgKqKbfeM5V2XF5Wus84TZ8LzLGNLmTKReINCF1kK8LE3utSJx+2f3RR7w2gP8EnOAGXosgxmql8KVWvHJn9mANboC5mM=
+X-Gm-Message-State: AOJu0Yz1KYBRw4Fc5rv7My4+CradJPoHFuaZZBDZIRMRy2z+u/eLQVFg
+ khCkkSrG4NkzHBVrLVINbtWEGI/MCjvuny4QjFyipQ7mlrN7Td/x3UWnCwNuP6E=
+X-Google-Smtp-Source: AGHT+IH/1j9YofXBjUd3Wg03tMNt97po48y7MUwHPTOPIYeX2Wc4PRa7vYqb9cS5A72xZ9U2T8ZlUA==
+X-Received: by 2002:a5d:6488:0:b0:367:f245:d847 with SMTP id
+ ffacd0b85a97d-368315edb49mr4725844f8f.2.1721309664766; 
+ Thu, 18 Jul 2024 06:34:24 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.113])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3680daccbe9sm14281390f8f.59.2024.07.18.06.34.11
+ ffacd0b85a97d-3680db047c4sm14339224f8f.108.2024.07.18.06.34.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jul 2024 06:34:12 -0700 (PDT)
+ Thu, 18 Jul 2024 06:34:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -66,18 +66,18 @@ Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Xiaojuan Yang <yangxiaojuan@loongson.cn>,
  Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v5 10/19] hw/intc/loongson_ipi: Pass LoongsonIPICommonState to
- send_ipi_data()
-Date: Thu, 18 Jul 2024 15:33:02 +0200
-Message-ID: <20240718133312.10324-11-philmd@linaro.org>
+Subject: [PATCH v5 12/19] hw/intc/loongson_ipi: Add
+ LoongsonIPICommonClass::cpu_by_arch_id handler
+Date: Thu, 18 Jul 2024 15:33:04 +0200
+Message-ID: <20240718133312.10324-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240718133312.10324-1-philmd@linaro.org>
 References: <20240718133312.10324-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,8 +102,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-In order to get LoongsonIPICommonClass in send_ipi_data()
-in the next commit, propagate LoongsonIPICommonState.
+Allow Loongson IPI implementations to have their own
+cpu_by_arch_id() handler.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 [PMD: Extracted from bigger commit, added commit description]
@@ -113,76 +113,81 @@ Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Tested-by: Bibo Mao <maobibo@loongson.cn>
 Acked-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongson_ipi.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ include/hw/intc/loongson_ipi_common.h |  1 +
+ hw/intc/loongson_ipi.c                | 10 +++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+index e49c156db3..5447e9f650 100644
+--- a/include/hw/intc/loongson_ipi_common.h
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -41,6 +41,7 @@ struct LoongsonIPICommonClass {
+     SysBusDeviceClass parent_class;
+ 
+     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
++    CPUState *(*cpu_by_arch_id)(int64_t id);
+ };
+ 
+ /* Mainy used by iocsr read and write */
 diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index f3d1f031bc..a54db87638 100644
+index 2c8829c3cc..39bcf0031d 100644
 --- a/hw/intc/loongson_ipi.c
 +++ b/hw/intc/loongson_ipi.c
-@@ -88,8 +88,8 @@ static AddressSpace *get_cpu_iocsr_as(CPUState *cpu)
-     return NULL;
- }
- 
--static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
--                          MemTxAttrs attrs)
-+static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, CPUState *cpu,
-+                                 uint64_t val, hwaddr addr, MemTxAttrs attrs)
+@@ -128,12 +128,13 @@ static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, CPUState *cpu,
+ static MemTxResult mail_send(LoongsonIPICommonState *ipi,
+                              uint64_t val, MemTxAttrs attrs)
  {
-     int i, mask = 0, data = 0;
-     AddressSpace *iocsr_as = get_cpu_iocsr_as(cpu);
-@@ -119,7 +119,8 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
-     return MEMTX_OK;
- }
- 
--static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-+static MemTxResult mail_send(LoongsonIPICommonState *ipi,
-+                             uint64_t val, MemTxAttrs attrs)
- {
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
      uint32_t cpuid;
      hwaddr addr;
-@@ -134,10 +135,11 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
-     attrs.requester_id = cs->cpu_index;
--    return send_ipi_data(cs, val, addr, attrs);
-+    return send_ipi_data(ipi, cs, val, addr, attrs);
- }
+     CPUState *cs;
  
--static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-+static MemTxResult any_send(LoongsonIPICommonState *ipi,
-+                            uint64_t val, MemTxAttrs attrs)
+     cpuid = extract32(val, 16, 10);
+-    cs = cpu_by_arch_id(cpuid);
++    cs = licc->cpu_by_arch_id(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+     }
+@@ -147,12 +148,13 @@ static MemTxResult mail_send(LoongsonIPICommonState *ipi,
+ static MemTxResult any_send(LoongsonIPICommonState *ipi,
+                             uint64_t val, MemTxAttrs attrs)
  {
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
      uint32_t cpuid;
      hwaddr addr;
-@@ -152,7 +154,7 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-     /* override requester_id */
-     addr = val & 0xffff;
-     attrs.requester_id = cs->cpu_index;
--    return send_ipi_data(cs, val, addr, attrs);
-+    return send_ipi_data(ipi, cs, val, addr, attrs);
+     CPUState *cs;
+ 
+     cpuid = extract32(val, 16, 10);
+-    cs = cpu_by_arch_id(cpuid);
++    cs = licc->cpu_by_arch_id(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+     }
+@@ -169,6 +171,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
+ {
+     IPICore *s = opaque;
+     LoongsonIPICommonState *ipi = s->ipi;
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
+     int index = 0;
+     uint32_t cpuid;
+     uint8_t vector;
+@@ -203,7 +206,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
+         cpuid = extract32(val, 16, 10);
+         /* IPI status vector */
+         vector = extract8(val, 0, 5);
+-        cs = cpu_by_arch_id(cpuid);
++        cs = licc->cpu_by_arch_id(cpuid);
+         if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
+             return MEMTX_DECODE_ERROR;
+         }
+@@ -349,6 +352,7 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
+     device_class_set_parent_realize(dc, loongson_ipi_realize,
+                                     &lic->parent_realize);
+     licc->get_iocsr_as = get_iocsr_as;
++    licc->cpu_by_arch_id = cpu_by_arch_id;
  }
  
- static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
-@@ -249,15 +251,16 @@ static const MemoryRegionOps loongson_ipi_iocsr_ops = {
- static MemTxResult loongson_ipi_writeq(void *opaque, hwaddr addr, uint64_t val,
-                                         unsigned size, MemTxAttrs attrs)
- {
-+    LoongsonIPICommonState *ipi = opaque;
-     MemTxResult ret = MEMTX_OK;
- 
-     addr &= 0xfff;
-     switch (addr) {
-     case MAIL_SEND_OFFSET:
--        ret = mail_send(val, attrs);
-+        ret = mail_send(ipi, val, attrs);
-         break;
-     case ANY_SEND_OFFSET:
--        ret = any_send(val, attrs);
-+        ret = any_send(ipi, val, attrs);
-         break;
-     default:
-        break;
+ static void loongson_ipi_finalize(Object *obj)
 -- 
 2.41.0
 
