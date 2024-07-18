@@ -4,55 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01EDEC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7503C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMXy-0004dO-Up; Thu, 18 Jul 2024 04:31:30 -0400
+	id 1sUMYV-0007WY-0D; Thu, 18 Jul 2024 04:32:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sUMXw-0004Wt-MB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:31:28 -0400
-Received: from va-2-39.ptr.blmpb.com ([209.127.231.39])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sUMXr-0003Ta-F8
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:31:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1721291471;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=Jpj4cApqlz/aKltcsLqRfycGk42ge3kpyUWn3mEGaTU=;
- b=fYs+fqGemFrF/AuKU2VZmL2IW212W1og+nwoUv290KGheUu/+jcS/WzHEYsZmm8RLHrPMv
- mErIqFe/Dq8WDJ9izfS6XWkqBVLX3YvbRbpA1jel7+5fURvysIi+v3fp+soGnxKnDeBoNz
- yE+DJpMgcULJ6wVhASAtZA8H0P+iDKxXqzVGA8rPwMF0vsi9hpEVEVlb2pYAWSTPWpKMPm
- omuJFTkCHtt1CI7IPeQLQVJA+N/AqgZD8KrkfAfeB8NhHF6NpeQvC9JoFuaXzVWCemxO19
- +N9tXXZuwr1n3H5l8UAQAcNFtXL2wO9RtzUylQVRs2tmxmTn7+mQbcmJSnU6nA==
-Message-Id: <20240718083103.56214-1-xiangwencheng@dayudpu.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: git-send-email 2.30.0
-Subject: [PATCH v2] vhsot-user: Do not wait for replay for not sent
- VHOST_USER_SET_LOG_BASE
-X-Lms-Return-Path: <lba+26698d2ce+9160f4+nongnu.org+xiangwencheng@dayudpu.com>
-X-Original-From: xiangwencheng@dayudpu.com
-Cc: <mst@redhat.com>, "BillXiang" <xiangwencheng@dayudpu.com>
-To: <qemu-devel@nongnu.org>
-From: "BillXiang" <xiangwencheng@dayudpu.com>
-Date: Thu, 18 Jul 2024 16:31:03 +0800
-Received: from localhost.localdomain ([221.216.117.177]) by smtp.feishu.cn
- with ESMTPS; Thu, 18 Jul 2024 16:31:09 +0800
-Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=209.127.231.39;
- envelope-from=xiangwencheng@dayudpu.com; helo=va-2-39.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUMYT-0007Gc-HA
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:32:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sUMYQ-0003W7-Bu
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:32:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721291517;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w5thOQiZm4284uMLBq0f2FT7JZNXzTrHp92kiTNn2yw=;
+ b=K0nIxr6Y0rBUz3h5O8AZrSwPr+q9tMvAK1bPEGEXxwd9ucRagKetV0g+ZzZbA/ShwVycqg
+ 5Oe1A5domiQgahh9o8nDdn7SXCTY3VJ7TRuaJBXXTh3bgrpWpotFgTRaJ3QYb38fDatbNc
+ RgXFuafUiSTfk0t73HdrU9Alw/RG6rU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-TChD_UkTNbaI98lPi0cbkA-1; Thu,
+ 18 Jul 2024 04:31:56 -0400
+X-MC-Unique: TChD_UkTNbaI98lPi0cbkA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 24E2A1955D54; Thu, 18 Jul 2024 08:31:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 697651955D42; Thu, 18 Jul 2024 08:31:52 +0000 (UTC)
+Date: Thu, 18 Jul 2024 09:31:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [PATCH v4 2/3] docs/interop/firmware.json: add new enum
+ FirmwareArchitecture
+Message-ID: <ZpjS9ClPAtnhTJS2@redhat.com>
+References: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
+ <20240718-qapi-firmware-json-v4-2-449ce672db5c@linutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240718-qapi-firmware-json-v4-2-449ce672db5c@linutronix.de>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,40 +87,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BillXiang <xiangwencheng@dayudpu.com>
+On Thu, Jul 18, 2024 at 10:27:39AM +0200, Thomas Weißschuh wrote:
+> Only a small subset of all architectures supported by qemu make use of
+> firmware files. Introduce and use a new enum to represent this.
+> 
+> This also removes the dependency to machine.json from the global qapi
+> definitions.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+> ---
+>  docs/interop/firmware.json | 29 +++++++++++++++++++++++++++--
+>  1 file changed, 27 insertions(+), 2 deletions(-)
 
-We have added VHOST_USER_SET_LOG_BASE to vhost_user_per_device_request
-in https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg02559.html
-and will send this message only for vq 0.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
----
-V1[1] -> V2:
- - Refrain from appending flags to messages that could 
-precipitate validation failures upon execution of the 
-`vhost_user_read_header` function. 
 
-[1]https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg01923.html
----
- hw/virtio/vhost-user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 00561daa06..fd12992d15 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
-         return ret;
-     }
- 
--    if (shmfd) {
-+    if (shmfd && (dev->vq_index == 0)) {
-         msg.hdr.size = 0;
-         ret = vhost_user_read(dev, &msg);
-         if (ret < 0) {
+With regards,
+Daniel
 -- 
-2.30.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
