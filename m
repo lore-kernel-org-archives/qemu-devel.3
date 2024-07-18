@@ -4,42 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5FABC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 14:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F73C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 14:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURkl-0001Ok-LY; Thu, 18 Jul 2024 10:05:03 -0400
+	id 1sURpo-0005Xx-KY; Thu, 18 Jul 2024 10:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1sURkU-0000UE-IX
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 10:04:48 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sURpn-0005RX-0r
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 10:10:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t.lamprecht@proxmox.com>)
- id 1sURkQ-0000Np-WB
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 10:04:46 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 2DCE845409;
- Thu, 18 Jul 2024 16:04:27 +0200 (CEST)
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sURpk-0002Gx-Uw
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 10:10:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721311811;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=BLttbOIdmlmv/wXZERc00NM5daOqUxCl4mdZest4MHw=;
+ b=YgB70SO2C//R9qSYDGM6I7v/i8CWe0GsFX/tY4lA2a8dIMwVynCje5yYUFIULKpi3Ri9vV
+ 5djHcM0yfJRe0G9OCiVoUEXmkEUnxTDOk4X5xzjECY7cYnZv0jF/Mmkz8XOgiDFDGY/ujd
+ V7MdW0SUxQ0LTOvLy1pnua77ogmxEuU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-T4oWkphRPMmPPaq2dtEKsg-1; Thu,
+ 18 Jul 2024 10:10:06 -0400
+X-MC-Unique: T4oWkphRPMmPPaq2dtEKsg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3620019776B4; Thu, 18 Jul 2024 14:10:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 217CA1956046; Thu, 18 Jul 2024 14:10:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 29D0E21E668F; Thu, 18 Jul 2024 16:10:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH] guest-agent: document allow-rpcs in config file section
-Date: Thu, 18 Jul 2024 16:04:07 +0200
-Message-Id: <20240718140407.444160-1-t.lamprecht@proxmox.com>
-X-Mailer: git-send-email 2.39.2
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, eblake@redhat.com, yangxiaojuan@loongson.cn,
+ gaosong@loongson.cn
+Subject: [PATCH] qapi/machine: Belatedly document target loongarch64 is since
+ 7.1
+Date: Thu, 18 Jul 2024 16:10:01 +0200
+Message-ID: <20240718141001.3077709-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106;
- envelope-from=t.lamprecht@proxmox.com; helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -55,34 +83,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the `allow-rpcs` option is documented in the CLI options
-section, it was missing in the section about the configuration file
-syntax.
-
-And while it's mentioned that "the list of keys follows the command line
-options", having `block-rpcs` there but not `allow-rpcs` seems like
-being a potential source of confusion; and as it's cheap to add let's
-just do so.
-
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Fixes: a8a506c39070 (hw/loongarch: Add support loongson3 virt machine type.)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/interop/qemu-ga.rst | 1 +
- 1 file changed, 1 insertion(+)
+ qapi/machine.json | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
-index 72fb75a6f5..dd4245ece8 100644
---- a/docs/interop/qemu-ga.rst
-+++ b/docs/interop/qemu-ga.rst
-@@ -131,6 +131,7 @@ fsfreeze-hook  string
- statedir       string
- verbose        boolean
- block-rpcs     string list
-+allow-rpcs     string list
- =============  ===========
- 
- See also
+diff --git a/qapi/machine.json b/qapi/machine.json
+index f9ea6b3e97..fcfd249e2d 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -24,6 +24,8 @@
+ #
+ # @avr: since 5.1
+ #
++# @loongarch64: since 7.1
++#
+ # .. note:: The resulting QMP strings can be appended to the
+ #    "qemu-system-" prefix to produce the corresponding QEMU executable
+ #    name.  This is true even for "qemu-system-x86_64".
 -- 
-2.39.2
-
+2.45.0
 
 
