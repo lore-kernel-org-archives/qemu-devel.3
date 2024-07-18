@@ -4,68 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D591C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8D3C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMMj-0007O6-73; Thu, 18 Jul 2024 04:19:53 -0400
+	id 1sUMNV-0002S5-NL; Thu, 18 Jul 2024 04:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMh-0007KS-38
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:51 -0400
+ id 1sUMNU-0002KE-8N
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:40 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMMe-0008CX-EH
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:50 -0400
+ id 1sUMNS-0000CX-1N
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721290788; x=1752826788;
+ t=1721290838; x=1752826838;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=tCtuq62Krk6xWa+KyRKqQWc0Xh4WZ/dgTqyo5nI3PH0=;
- b=XfqG7LqZBgamUL+0+rFJc3Jc0pgsbKVaMTcbh8W3+rQ1GV4rMktOKpV0
- orbCIjQ7/esfU4feMVZ9YHQk5FfiB64k8lvq325AI4scdliGtP0e+T1JL
- g7VOAZffwyb6LpzvokeVUpZ9HT9OWxzxUm3XvheS7FTngaMzr2w77fowE
- cevkDTn6TECeIJb8an9ZyCsTeF3dPxgoSv973JAEtkJ93DfmetAwrgYrC
- 1adpn0kZwqLkdc1bKcfQO1v31aSLKRp/ICgFlUp5+7CYXUTecRSOYN7k/
- 18T/9+qPulXs1xTKY8JKUoUkfz/KGJeBjUM2Pb2TZhBl0y5xRLktQo6/I A==;
-X-CSE-ConnectionGUID: pS3w1NwISgec/67Kk3V8vA==
-X-CSE-MsgGUID: HEPns3LnSsSbvceLwbHU3w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996195"
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996195"
+ bh=AoLX8HFE3w/BD0OMdXc1OoNCpqFuQPd3XHk/vD1Hxt8=;
+ b=EuQY0yUTjCTEm0D3lYw3745UCtrJ5vlWmw0MXo3JY7WX/GnGKzdvlB0c
+ Ke1U2/LH/RtmAlgEsQ5vNYkGcGZK9XKdpaAkrZLvMWal1WiYCHuisHUsu
+ wtvJAPcKKJKxgcIsrsUEriFmpdpgytwICYL+HkZXpjl1MfDWLXbm88rtu
+ GqdAdp6b7XVcp0DTKtTmsnXbyyxVjz4Io23qSe+Y8t7H7KkqwDVEWYI1P
+ 7RFveFrjfrOSJ9+MgIHj3uRzDbhs80wQo9NAlk7v4D4fDVWfxee6FrLrt
+ /Awc04NsVcDyf+Z7Z8tcCyyslM8dvhJQVHXMvijM0VL+8ZJs3YGkrkvli A==;
+X-CSE-ConnectionGUID: H0oO9eh4S/aT1fiQR75dog==
+X-CSE-MsgGUID: yJhZBMvrQu2TSIVxcHiXug==
+X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996430"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996430"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:19:47 -0700
-X-CSE-ConnectionGUID: wUIQvlNBSaC/T3nrC8j7Eg==
-X-CSE-MsgGUID: pYVM9T4aSd2D+QueasgZZQ==
+ 18 Jul 2024 01:20:37 -0700
+X-CSE-ConnectionGUID: m90X9qSMTCGkhDvmJxNxVA==
+X-CSE-MsgGUID: 98aWQuVbRZOM9R2AyuKvGQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717233"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717620"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:19:44 -0700
+ 18 Jul 2024 01:20:32 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v1 06/17] intel_iommu: Implement stage-1 translation
-Date: Thu, 18 Jul 2024 16:16:25 +0800
-Message-Id: <20240718081636.879544-7-zhenzhong.duan@intel.com>
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v1 17/17] tests/qtest: Add intel-iommu test
+Date: Thu, 18 Jul 2024 16:16:36 +0800
+Message-Id: <20240718081636.879544-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.13;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -91,271 +88,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+Add the framework to test the intel-iommu device.
 
-This adds stage-1 page table walking to support stage-1 only
-transltion in scalable modern mode.
+Currently only tested cap/ecap bits correctness in scalable
+modern mode. Also tested cap/ecap bits consistency before
+and after system reset.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Co-developed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  26 ++++++
- hw/i386/intel_iommu.c          | 146 ++++++++++++++++++++++++++++++++-
- 2 files changed, 168 insertions(+), 4 deletions(-)
+ MAINTAINERS                    |  1 +
+ include/hw/i386/intel_iommu.h  |  1 +
+ tests/qtest/intel-iommu-test.c | 71 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |  1 +
+ 4 files changed, 74 insertions(+)
+ create mode 100644 tests/qtest/intel-iommu-test.c
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 1875c2ddd6..36fcc6bb5e 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -440,6 +440,24 @@ typedef union VTDInvDesc VTDInvDesc;
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d9811458c..ec765bf3d3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3662,6 +3662,7 @@ S: Supported
+ F: hw/i386/intel_iommu.c
+ F: hw/i386/intel_iommu_internal.h
+ F: include/hw/i386/intel_iommu.h
++F: tests/qtest/intel-iommu-test.c
  
-+/* Rsvd field masks for fpte */
-+#define VTD_FS_UPPER_IGNORED 0xfff0000000000000ULL
-+#define VTD_FPTE_PAGE_L1_RSVD_MASK(aw) (~(VTD_HAW_MASK(aw)) & \
-+                                       (~VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L2_RSVD_MASK(aw) (~(VTD_HAW_MASK(aw)) & \
-+                                       (~VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L3_RSVD_MASK(aw) (~(VTD_HAW_MASK(aw)) & \
-+                                       (~VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L3_FS1GP_RSVD_MASK(aw) ((0x3fffe000ULL | \
-+                                                ~(VTD_HAW_MASK(aw))) \
-+                                              & (~VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L2_FS2MP_RSVD_MASK(aw) ((0x1fe000ULL | \
-+                                                ~(VTD_HAW_MASK(aw))) \
-+                                              & (~VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L4_RSVD_MASK(aw) ((0x80ULL | \
-+                                            ~(VTD_HAW_MASK(aw))) \
-+                                        & (~VTD_FS_UPPER_IGNORED))
-+
- #define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
- #define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
+ AMD-Vi Emulation
+ S: Orphan
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 650641544c..b1848dbec6 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -47,6 +47,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
+ #define VTD_HOST_AW_48BIT           48
+ #define VTD_HOST_AW_AUTO            0xff
+ #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
++#define VTD_MGAW_FROM_CAP(cap)      ((cap >> 16) & 0x3fULL)
  
-@@ -533,6 +551,14 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
- #define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
+ #define DMAR_REPORT_F_INTR          (1)
  
-+#define VTD_SM_PASID_ENTRY_FLPM          3ULL
-+#define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
-+
-+/* First Level Paging Structure */
-+/* Masks for First Level Paging Entry */
-+#define VTD_FL_P                    1ULL
-+#define VTD_FL_RW_MASK              (1ULL << 1)
-+
- /* Second Level Page Translation Pointer*/
- #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
- 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 94f6532935..287741b687 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -48,6 +48,8 @@
- 
- /* pe operations */
- #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
-+#define VTD_PE_GET_FL_LEVEL(pe) \
-+    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FLPM))
- #define VTD_PE_GET_SL_LEVEL(pe) \
-     (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
- 
-@@ -755,6 +757,11 @@ static inline bool vtd_is_sl_level_supported(IntelIOMMUState *s, uint32_t level)
-            (1ULL << (level - 2 + VTD_CAP_SAGAW_SHIFT));
- }
- 
-+static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t level)
-+{
-+    return level == VTD_PML4_LEVEL;
-+}
-+
- /* Return true if check passed, otherwise false */
- static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
- {
-@@ -841,6 +848,11 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-             return -VTD_FR_PASID_TABLE_ENTRY_INV;
-     }
- 
-+    if (pgtt == VTD_SM_PASID_ENTRY_FLT &&
-+        !vtd_is_fl_level_supported(s, VTD_PE_GET_FL_LEVEL(pe))) {
-+            return -VTD_FR_PASID_TABLE_ENTRY_INV;
-+    }
-+
-     return 0;
- }
- 
-@@ -976,7 +988,11 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return VTD_PE_GET_SL_LEVEL(&pe);
-+        if (s->scalable_modern) {
-+            return VTD_PE_GET_FL_LEVEL(&pe);
-+        } else {
-+            return VTD_PE_GET_SL_LEVEL(&pe);
-+        }
-     }
- 
-     return vtd_ce_get_level(ce);
-@@ -1063,7 +1079,11 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        if (s->scalable_modern) {
-+            return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
-+        } else {
-+            return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        }
-     }
- 
-     return vtd_ce_get_slpt_base(ce);
-@@ -1865,6 +1885,104 @@ out:
-     trace_vtd_pt_enable_fast_path(source_id, success);
- }
- 
+diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+new file mode 100644
+index 0000000000..8e07034f6f
+--- /dev/null
++++ b/tests/qtest/intel-iommu-test.c
+@@ -0,0 +1,71 @@
 +/*
-+ * Rsvd field masks for fpte:
-+ *     vtd_fpte_rsvd 4k pages
-+ *     vtd_fpte_rsvd_large large pages
++ * QTest testcase for intel-iommu
 + *
-+ * We support only 4-level page tables.
++ * Copyright (c) 2024 Intel, Inc.
++ *
++ * Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
-+#define VTD_FPTE_RSVD_LEN 5
-+static uint64_t vtd_fpte_rsvd[VTD_FPTE_RSVD_LEN];
-+static uint64_t vtd_fpte_rsvd_large[VTD_FPTE_RSVD_LEN];
 +
-+static bool vtd_flpte_nonzero_rsvd(uint64_t flpte, uint32_t level)
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "hw/i386/intel_iommu_internal.h"
++
++#define CAP_MODERN_FIXED1    (VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | \
++                              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS)
++#define ECAP_MODERN_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IRO | VTD_ECAP_MHMV | \
++                              VTD_ECAP_SMTS | VTD_ECAP_FLTS)
++
++static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
 +{
-+    uint64_t rsvd_mask;
-+
-+    /*
-+     * We should have caught a guest-mis-programmed level earlier,
-+     * via vtd_is_fl_level_supported.
-+     */
-+    assert(level < VTD_SPTE_RSVD_LEN);
-+    /*
-+     * Zero level doesn't exist. The smallest level is VTD_PT_LEVEL=1 and
-+     * checked by vtd_is_last_pte().
-+     */
-+    assert(level);
-+
-+    if ((level == VTD_PD_LEVEL || level == VTD_PDP_LEVEL) &&
-+        (flpte & VTD_PT_PAGE_SIZE_MASK)) {
-+        /* large page */
-+        rsvd_mask = vtd_fpte_rsvd_large[level];
-+    } else {
-+        rsvd_mask = vtd_fpte_rsvd[level];
-+    }
-+
-+    return flpte & rsvd_mask;
++    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
 +}
 +
-+static inline bool vtd_flpte_present(uint64_t flpte)
++static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
 +{
-+    return !!(flpte & VTD_FL_P);
++    return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
 +}
 +
-+/*
-+ * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-+ * of the translation, can be used for deciding the size of large page.
-+ */
-+static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-+                             uint64_t iova, bool is_write,
-+                             uint64_t *flptep, uint32_t *flpte_level,
-+                             bool *reads, bool *writes, uint8_t aw_bits,
-+                             uint32_t pasid)
++static void test_intel_iommu_modern(void)
 +{
-+    dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
-+    uint32_t level = vtd_get_iova_level(s, ce, pasid);
-+    uint32_t offset;
-+    uint64_t flpte;
++    uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
++    uint8_t post_reset_csr[DMAR_REG_SIZE];     /* register values */
++    uint64_t cap, ecap, tmp;
++    QTestState *s;
 +
-+    while (true) {
-+        offset = vtd_iova_level_offset(iova, level);
-+        flpte = vtd_get_pte(addr, offset);
++    s = qtest_init("-M q35 -device intel-iommu,x-scalable-mode=modern");
 +
-+        if (flpte == (uint64_t)-1) {
-+            if (level == vtd_get_iova_level(s, ce, pasid)) {
-+                /* Invalid programming of context-entry */
-+                return -VTD_FR_CONTEXT_ENTRY_INV;
-+            } else {
-+                return -VTD_FR_PAGING_ENTRY_INV;
-+            }
-+        }
-+        if (!vtd_flpte_present(flpte)) {
-+            *reads = false;
-+            *writes = false;
-+            return -VTD_FR_PAGING_ENTRY_INV;
-+        }
-+        *reads = true;
-+        *writes = (*writes) && (flpte & VTD_FL_RW_MASK);
-+        if (is_write && !(flpte & VTD_FL_RW_MASK)) {
-+            return -VTD_FR_WRITE;
-+        }
-+        if (vtd_flpte_nonzero_rsvd(flpte, level)) {
-+            error_report_once("%s: detected flpte reserved non-zero "
-+                              "iova=0x%" PRIx64 ", level=0x%" PRIx32
-+                              "flpte=0x%" PRIx64 ", pasid=0x%" PRIX32 ")",
-+                              __func__, iova, level, flpte, pasid);
-+            return -VTD_FR_PAGING_ENTRY_RSVD;
-+        }
++    cap = vtd_reg_readq(s, DMAR_CAP_REG);
++    g_assert((cap & CAP_MODERN_FIXED1) == CAP_MODERN_FIXED1);
 +
-+        if (vtd_is_last_pte(flpte, level)) {
-+            *flptep = flpte;
-+            *flpte_level = level;
-+            return 0;
-+        }
++    tmp = cap & VTD_CAP_SAGAW_MASK;
++    g_assert(tmp == (VTD_CAP_SAGAW_39bit | VTD_CAP_SAGAW_48bit));
 +
-+        addr = vtd_get_pte_addr(flpte, aw_bits);
-+        level--;
-+    }
++    tmp = VTD_MGAW_FROM_CAP(cap);
++    g_assert(tmp == VTD_HOST_AW_48BIT - 1);
++
++    ecap = vtd_reg_readq(s, DMAR_ECAP_REG);
++    g_assert((ecap & ECAP_MODERN_FIXED1) == ECAP_MODERN_FIXED1);
++    g_assert(ecap & VTD_ECAP_IR);
++
++    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, init_csr, DMAR_REG_SIZE);
++
++    qobject_unref(qtest_qmp(s, "{ 'execute': 'system_reset' }"));
++    qtest_qmp_eventwait(s, "RESET");
++
++    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, post_reset_csr, DMAR_REG_SIZE);
++    /* Ensure registers are consistent after hard reset */
++    g_assert(!memcmp(init_csr, post_reset_csr, DMAR_REG_SIZE));
++
++    qtest_quit(s);
 +}
 +
- static void vtd_report_fault(IntelIOMMUState *s,
-                              int err, bool is_fpd_set,
-                              uint16_t source_id,
-@@ -2013,8 +2131,13 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-         }
-     }
- 
--    ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
--                               &reads, &writes, s->aw_bits, pasid);
-+    if (s->scalable_modern && s->root_scalable) {
-+        ret_fr = vtd_iova_to_flpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
-+    } else {
-+        ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
-+    }
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-                          addr, is_write, pasid != PCI_NO_PASID, pasid);
-@@ -4231,6 +4354,21 @@ static void vtd_init(IntelIOMMUState *s)
-     vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
-                                                     x86_iommu->dt_supported);
- 
-+    /*
-+     * Rsvd field masks for fpte
-+     */
-+    vtd_fpte_rsvd[0] = ~0ULL;
-+    vtd_fpte_rsvd[1] = VTD_FPTE_PAGE_L1_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[2] = VTD_FPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[3] = VTD_FPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[4] = VTD_FPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/q35/intel-iommu/modern", test_intel_iommu_modern);
 +
-+    vtd_fpte_rsvd_large[0] = ~0ULL;
-+    vtd_fpte_rsvd_large[1] = ~0ULL;
-+    vtd_fpte_rsvd_large[2] = VTD_FPTE_PAGE_L2_FS2MP_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd_large[3] = VTD_FPTE_PAGE_L3_FS1GP_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd_large[4] = ~0ULL;
-+
-     if (s->scalable_mode || s->snoop_control) {
-         vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
-         vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 6508bfb1a2..20d05d471b 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -79,6 +79,7 @@ qtests_i386 = \
+   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
++  (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
+   (host_os != 'windows' and                                                                \
+    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
+   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
 -- 
 2.34.1
 
