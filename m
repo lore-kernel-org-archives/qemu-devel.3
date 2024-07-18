@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97046C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C998C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUTqm-0005JN-7H; Thu, 18 Jul 2024 12:19:24 -0400
+	id 1sUTqU-0004s8-8Y; Thu, 18 Jul 2024 12:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUTqk-0005Hk-11; Thu, 18 Jul 2024 12:19:22 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1sUTqM-0004iA-QN; Thu, 18 Jul 2024 12:18:59 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUTqi-00086c-99; Thu, 18 Jul 2024 12:19:21 -0400
+ id 1sUTqI-00083o-UC; Thu, 18 Jul 2024 12:18:58 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPyg84Cvpz4x3p;
- Fri, 19 Jul 2024 02:19:16 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPyfc32LMz4x3c;
+ Fri, 19 Jul 2024 02:18:48 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPyg51tSQz4x3J;
- Fri, 19 Jul 2024 02:19:12 +1000 (AEST)
-Message-ID: <e5d6df99-da45-40c4-b75c-cb6a1e9a57b6@kaod.org>
-Date: Thu, 18 Jul 2024 18:19:10 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPyfV4bYcz4x12;
+ Fri, 19 Jul 2024 02:18:22 +1000 (AEST)
+Message-ID: <df6ee32d-f404-4f24-9dae-e755e5566d5f@kaod.org>
+Date: Thu, 18 Jul 2024 18:18:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed/smc: Fix possible integer overflow
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
+Subject: Re: [PATCH v1 00/15] support ADC and I2C for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>
-References: <20240712163619.1734214-1-clg@redhat.com>
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240712163619.1734214-1-clg@redhat.com>
+In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=3riu=OS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
@@ -68,40 +69,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 18:36, Cédric Le Goater wrote:
-> Coverity reports a possible integer overflow because routine
-> aspeeed_smc_hclk_divisor() has a codepath returning 0, which could
-> lead to an integer overflow when computing variable 'hclk_shift' in
-> the caller aspeed_smc_dma_calibration().
+On 7/18/24 08:49, Jamin Lin wrote:
+> v1:
+> 1. support ADC for AST2700
+> 2. support I2C for AST2700
 > 
-> The value passed to aspeed_smc_hclk_divisor() is always between 0 and
-> 15 and, in this case, there is always a matching hclk divisor. Remove
-> the return 0 and use g_assert_not_reached() instead.
+> Jamin Lin (15):
+>    aspeed/adc: Add AST2700 support
+>    aspeed/soc: support ADC for AST2700
+>    hw/i2c/aspeed: support to set the different memory size
+>    hw/i2c/aspeed: support discontinuous register memory region of I2C bus
+>    hw/i2c/aspeed: rename the I2C class pool attribute to share_pool
+>    hw/i2c/aspeed: introduce a new bus pool buffer attribute in
+>      AspeedI2Cbus
+>    hw/i2c/aspeed: support discontinuous poll buffer memory region of I2C
+>      bus
+>    hw/i2c/aspeed: introduce a new dma_dram_offset attribute in
+>      AspeedI2Cbus
+>    hw/i2c/aspeed: Add AST2700 support
+>    hw/i2c/aspeed: support Tx/Rx buffer 64 bits address
+>    hw/i2c/aspeed: support high part dram offset for DMA 64 bits
+>    aspeed/soc: introduce a new API to get the INTC orgate information
+>    aspeed/soc: support I2C for AST2700
+>    aspeed: fix coding style
+>    aspeed: add tmp105 in i2c bus 0 for AST2700
 > 
-> Fixes: Coverity CID 1547822
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/ssi/aspeed_smc.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   hw/adc/aspeed_adc.c         |  16 ++
+>   hw/arm/aspeed.c             |  31 +++-
+>   hw/arm/aspeed_ast27x0.c     |  65 +++++++
+>   hw/i2c/aspeed_i2c.c         | 340 ++++++++++++++++++++++++++++++------
+>   include/hw/adc/aspeed_adc.h |   1 +
+>   include/hw/i2c/aspeed_i2c.h |  34 ++--
+>   6 files changed, 418 insertions(+), 69 deletions(-)
 > 
-> diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-> index b79815c2b8aa..7fd63669c10e 100644
-> --- a/hw/ssi/aspeed_smc.c
-> +++ b/hw/ssi/aspeed_smc.c
-> @@ -842,8 +842,7 @@ static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
->           }
->       }
->   
-> -    aspeed_smc_error("invalid HCLK mask %x", hclk_mask);
-> -    return 0;
-> +    g_assert_not_reached();
->   }
->   
->   /*
 
 
-Applied to aspeed-next.
+
+Applied 1-2 to aspeed-next.
 
 Thanks,
 
