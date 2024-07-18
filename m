@@ -4,61 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E852BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E81C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sURO5-0002Xb-D6; Thu, 18 Jul 2024 09:41:37 -0400
+	id 1sURTA-00069M-56; Thu, 18 Jul 2024 09:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sURNz-0002BR-LK; Thu, 18 Jul 2024 09:41:33 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sURT5-0005xy-VC
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:46:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sURNx-0002Nq-Be; Thu, 18 Jul 2024 09:41:31 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPv8y2RVgz4x04;
- Thu, 18 Jul 2024 23:41:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sURT2-0003gs-ST
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721310401;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YA6uFmR4pA0V5aM78IJtZVWjT0yyu91y3toKFa6JWG8=;
+ b=gqYncDPcERX9CnAyVLVxFitDHq9QFbqhrtisVRSYJWo1tnTUiUL4rDXn4i/8H9T63iJkTN
+ +a95pTBSQr49kvmFcjpBiKzwgVtIizWLz+NNIIrqJV4vpro9zC8umKt+Y53ACaiBBXhRiM
+ jmE1R2eZzL2WKuCBDf88KwBU2A5oieQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-MtGJkOmmNVa3-PcBQjFfHA-1; Thu,
+ 18 Jul 2024 09:46:37 -0400
+X-MC-Unique: MtGJkOmmNVa3-PcBQjFfHA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPv8s4Srmz4w2Q;
- Thu, 18 Jul 2024 23:41:17 +1000 (AEST)
-Message-ID: <c7d00701-cada-4ed8-856b-85249aa1ac0b@kaod.org>
-Date: Thu, 18 Jul 2024 15:41:15 +0200
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29F911955F6B; Thu, 18 Jul 2024 13:46:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C5A019560B2; Thu, 18 Jul 2024 13:46:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C19D821E66A3; Thu, 18 Jul 2024 15:46:23 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <t-8ch@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ qemu-devel@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Hanna Czenczek
+ <hreitz@redhat.com>
+Subject: Re: [PATCH v5 1/4] docs/interop/firmware.json: add new enum
+ FirmwareFormat
+In-Reply-To: <20240718152306-277d9707-6fb4-4707-ae1c-78927fa42a4f@linutronix.de>
+ ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Thu, 18 Jul 2024
+ 15:25:54 +0200")
+References: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
+ <20240718-qapi-firmware-json-v5-1-0dba12d7aaf5@linutronix.de>
+ <877cdionhq.fsf@pond.sub.org>
+ <20240718152306-277d9707-6fb4-4707-ae1c-78927fa42a4f@linutronix.de>
+Date: Thu, 18 Jul 2024 15:46:23 +0200
+Message-ID: <87cynan780.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
- memory region of I2C bus
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
- <de851b5c-5983-44f6-955a-6ba71f966c71@kaod.org>
- <SI2PR06MB5041E3D271FB5839B12E76D4FCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041E3D271FB5839B12E76D4FCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=3riu=OS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,59 +94,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 11:44, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
->> memory region of I2C bus
->>
->> On 7/18/24 08:49, Jamin Lin wrote:
->>> It only support continuous register memory region for all I2C bus.
->>> However, the register address of all I2c bus are discontinuous for
->>> AST2700.
->>>
->>> Ex: the register address of I2C bus for ast2700 as following.
->>> 0x100 - 0x17F: Device 0
->>> 0x200 - 0x27F: Device 1
->>> 0x300 - 0x37F: Device 2
->>> 0x400 - 0x47F: Device 3
->>> 0x500 - 0x57F: Device 4
->>> 0x600 - 0x67F: Device 5
->>> 0x700 - 0x77F: Device 6
->>> 0x800 - 0x87F: Device 7
->>> 0x900 - 0x97F: Device 8
->>> 0xA00 - 0xA7F: Device 9
->>> 0xB00 - 0xB7F: Device 10
->>> 0xC00 - 0xC7F: Device 11
->>> 0xD00 - 0xD7F: Device 12
->>> 0xE00 - 0xE7F: Device 13
->>> 0xF00 – 0xF7F: Device 14
->>> 0x1000 – 0x107F: Device 15
->>>
->>> Introduce a new class attribute to make user set each I2C bus gap size.
->>> Update formula to create all I2C bus register memory regions.
->>
->> I don't think this is necessary to model. Could we simply increase tge register
->> MMIO size for the AST2700 bus model and rely on the memops to catch
->> invalid register offsets ?
->>
-> Thanks for your review and suggestion.
-> 
-> Sorry, I am not very clearly understand your comments.
-> Could you please describe it more detail?
-> Thanks-Jamin
+Thomas Wei=C3=9Fschuh <t-8ch@linutronix.de> writes:
 
-I don't think you need to introduce a gap size class attribute.
+> On Thu, Jul 18, 2024 at 03:09:37PM GMT, Markus Armbruster wrote:
+>> Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
+>>=20
+>> > Only a small subset of all blockdev drivers make sense for firmware
+>> > images. Introduce and use a new enum to represent this.
+>> >
+>> > This also reduces the dependency on firmware.json from the global qapi
+>> > definitions.
+>> >
+>> > Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> > Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
+>> > ---
+>> >  docs/interop/firmware.json | 17 +++++++++++++++--
+>> >  1 file changed, 15 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+>> > index 54a1fc6c1041..a26fe81bf2fe 100644
+>> > --- a/docs/interop/firmware.json
+>> > +++ b/docs/interop/firmware.json
+>> > @@ -15,7 +15,6 @@
+>> >  ##
+>> >=20=20
+>> >  { 'include' : 'machine.json' }
+>> > -{ 'include' : 'block-core.json' }
+>> >=20=20
+>> >  ##
+>> >  # @FirmwareOSInterface:
+>> > @@ -200,6 +199,20 @@
+>> >               'enrolled-keys', 'requires-smm', 'secure-boot',
+>> >               'verbose-dynamic', 'verbose-static' ] }
+>> >=20=20
+>> > +##
+>> > +# @FirmwareFormat:
+>> > +#
+>> > +# Formats that are supported for firmware images.
+>> > +#
+>> > +# @raw: Raw disk image format.
+>> > +#
+>> > +# @qcow2: QEMU image format.
+>>=20
+>> It's not the only QEMU image format...  Maybe "The QCOW2 image format."
+>> Almost tautological, but I don't have better ideas.
+>
+> I used the wording from qemu-img(1).
 
-Setting :
+Interesting, wasn't aware.
 
-     aic->reg_size = 0x100; /* size + gap */
+> If you prefer "The QCOW2 image format", I'll switch to that.
 
-in aspeed_2700_i2c_class_init() should be enough.
+Up to you, unless Kevin or Hanna have a preference.
 
-Thanks,
+>> > +#
+>> > +# Since: 9.1
+>>=20
+>> The enum type is indeed since 9.1, but its two members are since 3.0,
+>> and that's what matters.
+>
+> Ack.
+>
+> So I change the Since: of the whole enum?
+> And not on the individual members?
 
-C.
+Whole enum is simpler, so that's what I'd do.  Perhaps with a brief
+explanation in the commit message.  Here's my try:
 
+    Claim "Since: 3.0" for the new enum, because that's correct for its
+    members, and the members are what matters in the interface.
+
+>> > +##
+>> > +{ 'enum': 'FirmwareFormat',
+>> > +  'data': [ 'raw', 'qcow2' ] }
+>> > +
+>> >  ##
+>> >  # @FirmwareFlashFile:
+>> >  #
+>> > @@ -219,7 +232,7 @@
+>> >  ##
+>> >  { 'struct' : 'FirmwareFlashFile',
+>> >    'data'   : { 'filename' : 'str',
+>> > -               'format'   : 'BlockdevDriver' } }
+>> > +               'format'   : 'FirmwareFormat' } }
+>> >=20=20
+>> >=20=20
+>> >  ##
+>>=20
 
 
