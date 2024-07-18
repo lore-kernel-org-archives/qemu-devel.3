@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91E6C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5705AC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUGd1-00032b-7i; Wed, 17 Jul 2024 22:12:19 -0400
+	id 1sUGbi-0005ia-8s; Wed, 17 Jul 2024 22:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sUGcb-0001O4-5R
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sUGcX-0003fE-N8
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:52 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxzOrfeZhmfGYAAA--.2258S3;
- Thu, 18 Jul 2024 10:11:43 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxLMfceZhm3jFNAA--.43210S3; 
- Thu, 18 Jul 2024 10:11:42 +0800 (CST)
-Subject: Re: [PATCH v3 04/17] hw/intc/loongson_ipi: Extract
- loongson_ipi_common_realize()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>, Paolo Bonzini
- <pbonzini@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, Song Gao <gaosong@loongson.cn>
-References: <20240717214708.78403-1-philmd@linaro.org>
- <20240717214708.78403-5-philmd@linaro.org>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <94592136-8e6b-0b99-07f3-e98ea0c4d658@loongson.cn>
-Date: Thu, 18 Jul 2024 10:11:40 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sUGbb-0005Vw-Hk
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:53 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sUGbZ-0003PZ-TO
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:51 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fb0d88fdc8so2066675ad.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721268648; x=1721873448; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VkUhjdCMVR9iGt2QFAMwHKiejIZAdYuuJCQxNaY/YDY=;
+ b=KJuOTVcr3Z8bccsJifKz+SXx7xbfruzreKNbZxUcdV/OZtdHRr/AootvrR1EOe1q7q
+ NhqJDfsqi3JXjoiuU1uII59qKwwxTjbMmyl5M/FN5rXv4bOPfkwpsLzwlvImqBE0/ljp
+ V6QNG4H/wMsOlFxx3fKOUnU5JhwkfJEJWqQzlX9/n6dBpRzuXsiyRdJvkKBtA14QU/CR
+ Mgw7a9H3H/sUL0KtCHAIjkaDwkiIAdcyVdb5cIa+zxhyIuC9dLl3Jc6tgy60XEu49Er7
+ cmyjXcmky6hYbt5+Cg5y5rxv+kNX4rxmY++tyafDntfnzi+YuwMtiJQI+tHv70uPDUb0
+ tYxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721268648; x=1721873448;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VkUhjdCMVR9iGt2QFAMwHKiejIZAdYuuJCQxNaY/YDY=;
+ b=LL9ga2PxDnVNApkZK5PeT+1hMUOOcPJ+OvqatKuJLUpkGglUkbySgvmSTi4x/vKJYV
+ owsTk//lBnQRlji6m1yomcrKVvaGq4P2FX5yE6/Ny/SW2OLzGVgEB4N+oNPqh3VdQiS6
+ l/1tTeiCdLjAulKZcGGOHxXUDpVBGjifmsAUsrcwhzGplhlfdH4sSH3jEGqDyzpwzMB+
+ BTvqHBPJJv+r68uWMK96Jh3SaJvRDzanAlCBnV69ykidqaJv9DWslL8XGAONcx3Eg9r0
+ Qk5Wte8Fl4PP1nnbbtrI3CIpWpuw90dE5ZxVk9SwdT0MPQxvkjbK9iDxSxSPrnUwCozG
+ +nuQ==
+X-Gm-Message-State: AOJu0YyG/UR+FSAMDuE8njRcG3Ok5Nq6VIkHsicV73A0rTSJUjafGNlT
+ 0rVDTctZhT9pZKBPsQMJz8EZkgLxZj88Hd5ZoVaWll1T75a7nMUuu+StoLW/
+X-Google-Smtp-Source: AGHT+IGDMsjA49BbaSClE+hGFa56vUJiU5J8V/cjI91rk5ni4z5xzbeYKXqXY3b0lAGio0mCsRL/Rg==
+X-Received: by 2002:a17:902:dacc:b0:1fb:de19:fefc with SMTP id
+ d9443c01a7336-1fc4e5667dbmr32989145ad.30.1721268648356; 
+ Wed, 17 Jul 2024 19:10:48 -0700 (PDT)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.10.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jul 2024 19:10:47 -0700 (PDT)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 08/30] target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
+Date: Thu, 18 Jul 2024 12:09:50 +1000
+Message-ID: <20240718021012.2057986-9-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
+References: <20240718021012.2057986-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-In-Reply-To: <20240717214708.78403-5-philmd@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxLMfceZhm3jFNAA--.43210S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxArWkGF4DJw4rKrWDGryDArc_yoW5XF47pF
- 4akan0gF1rXFyDAws3GF9rKFy5Zwn5Jw17WFsFka4rKr9xWw1vvw18K3Wakw17uFyFva1Y
- vF90kFW3Ka1UCrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.124,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240709113652.1239-9-zhiwei_liu@linux.alibaba.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/translate.c                    | 13 +++++++++++++
+ target/riscv/insn_trans/trans_rvzacas.c.inc | 13 -------------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
-On 2024/7/18 上午5:46, Philippe Mathieu-Daudé wrote:
-> From: Bibo Mao <maobibo@loongson.cn>
-> 
-> In preparation to extract common IPI code in few commits,
-> extract loongson_ipi_common_realize().
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> [PMD: Extracted from bigger commit, added commit description]
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/intc/loongson_ipi.c | 25 ++++++++++++++++++-------
->   1 file changed, 18 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-> index 3b3481c43e..40ac769aad 100644
-> --- a/hw/intc/loongson_ipi.c
-> +++ b/hw/intc/loongson_ipi.c
-> @@ -275,7 +275,7 @@ static const MemoryRegionOps loongson_ipi64_ops = {
->       .endianness = DEVICE_LITTLE_ENDIAN,
->   };
->   
-> -static void loongson_ipi_realize(DeviceState *dev, Error **errp)
-> +static void loongson_ipi_common_realize(DeviceState *dev, Error **errp)
->   {
->       LoongsonIPIState *s = LOONGSON_IPI(dev);
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> @@ -301,20 +301,31 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
->       sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
->   
->       s->cpu = g_new0(IPICore, s->num_cpu);
-> -    if (s->cpu == NULL) {
-> -        error_setg(errp, "Memory allocation for IPICore faile");
-Philippe,
-
-Thanks for the whole series, it looks to me. It is split into small 
-patches and adds new option CONFIG_LOONGSON_IPI_COMMON, it is easier to 
-review and compile for multiple targets.
-
-One small nit, do we need keep checking sentence for if (s->cpu == NULL)?
-
-Overall, for the whole series it is ok for me and works well on 
-LoongArch machine.
-
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
-
-> +    for (i = 0; i < s->num_cpu; i++) {
-> +        s->cpu[i].ipi = s;
-> +
-> +        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
-> +    }
-> +}
-> +
-> +static void loongson_ipi_realize(DeviceState *dev, Error **errp)
-> +{
-> +    LoongsonIPIState *s = LOONGSON_IPI(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    Error *local_err = NULL;
-> +
-> +    loongson_ipi_common_realize(dev, &local_err);
-> +    if (local_err) {
-> +        error_propagate(errp, local_err);
->           return;
->       }
->   
-> -    for (i = 0; i < s->num_cpu; i++) {
-> -        s->cpu[i].ipi = s;
-> +    for (unsigned i = 0; i < s->num_cpu; i++) {
->           s->cpu[i].ipi_mmio_mem = g_new0(MemoryRegion, 1);
->           g_autofree char *name = g_strdup_printf("loongson_ipi_cpu%d_mmio", i);
->           memory_region_init_io(s->cpu[i].ipi_mmio_mem, OBJECT(dev),
->                                 &loongson_ipi_core_ops, &s->cpu[i], name, 0x48);
->           sysbus_init_mmio(sbd, s->cpu[i].ipi_mmio_mem);
-> -
-> -        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
->       }
->   }
->   
-> 
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 4a3e786560..acba90f170 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1099,6 +1099,19 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+     return true;
+ }
+ 
++static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
++{
++    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
++    TCGv src1 = get_address(ctx, a->rs1, 0);
++    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
++
++    decode_save_opc(ctx);
++    tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
++
++    gen_set_gpr(ctx, a->rd, dest);
++    return true;
++}
++
+ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
+index 5d274d4c08..fcced99fc7 100644
+--- a/target/riscv/insn_trans/trans_rvzacas.c.inc
++++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
+@@ -22,19 +22,6 @@
+     }                                     \
+ } while (0)
+ 
+-static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
+-{
+-    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
+-    TCGv src1 = get_address(ctx, a->rs1, 0);
+-    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
+-
+-    decode_save_opc(ctx);
+-    tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
+-
+-    gen_set_gpr(ctx, a->rd, dest);
+-    return true;
+-}
+-
+ static bool trans_amocas_w(DisasContext *ctx, arg_amocas_w *a)
+ {
+     REQUIRE_ZACAS(ctx);
+-- 
+2.45.2
 
 
