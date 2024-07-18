@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC20DC3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5E3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 12:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUQ2F-0004Yv-UO; Thu, 18 Jul 2024 08:15:00 -0400
+	id 1sUQA8-0008BI-F7; Thu, 18 Jul 2024 08:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUQ2A-00040Y-7f
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:14:54 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sUQ24-0001g0-Ae
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:14:53 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-367963ea053so577064f8f.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 05:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721304884; x=1721909684; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9qsVsg1ViojjIwgSQ0F58P2aHMMy1cjG85swySoOl7M=;
- b=azSqQdyH+cENJeVbzu18sruL8A6KBfoCyFpAppbBOH5Ck9lH4Q2Jpyu+pUvxHVcaf2
- 1DXVkv1TuJdZedCh3tuzrsjyVTc756sIW4R8e8IB4aZXzvH0p5lHL5tiI7srMrzyoxop
- 0hH02k1N+vJUhrW/f3fOwxiQnYdLWPndbZdBHBVPDUiuVwZNDhBMdulkCTsgCIv9X7z8
- 1pB3qPYpKq9uguVkkI7J0IZWwSCnawqC1uTtlJE0EsFiOi8n17Z+vca5aE+ycCAcZqmx
- Ez0wbPfGe3ZRWGlUkwBqBygV+dyZC+mMUUHSdDGsAnx/BQDqudNC2Hd7uPkrbkJWg6U+
- bttA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721304884; x=1721909684;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9qsVsg1ViojjIwgSQ0F58P2aHMMy1cjG85swySoOl7M=;
- b=XB+Lf8mbzZz1Had4i7bWxwVyGF8e39aaJealOvtcZhERgkz54fO3omUUCfMI2RtIpN
- JuCSkpQ0g4UFqv9Heh78h7cgzB3nXrLUb4X0Y0Ug05H+1W4LCcEiHBkEWggZ0fZT8HnS
- N9jG/e+nRQHWtJSGOFIHiYYP49Z/h//3vbrXH/+lKgIIHhYcs8EIwqz4zPLrCsEBM7BZ
- ouMHui61clzagUdDZV4sGgfgmmdHdveJ/NjZ2m/ZpctG4U1Gvq3kMEw6wa3ztuHqRKkH
- 1ShJZJffIaUAJXfgKTJ56m5zzRmpHMjthzF9pgY3yZOnZCElDO2s+3nzfxV7x0UbwPeo
- Dg8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEh2lGMN+cuCWJM5/jEDZysOEPcNeKx7DitAmcDd0Z941Rkdd9UZDtWH7kkmGGO+hsFje0n8uvdhzvNvijuMN00yfivVo=
-X-Gm-Message-State: AOJu0YzIpSkPPU/2eg71ZxSqItgzJbmo86KieLfnz7cZ3dzaJgyH8F4r
- 0N/d7hh1+0MHr+Vd2hkFk4EruCs4MkLK7xdC/O0w2ko5CiemRe+72fDi8TdBSbQl81if3ft6TCy
- ChXWFA7kzbf3kxyEciUTcrli69DyeB66meGY3bw==
-X-Google-Smtp-Source: AGHT+IEMipb3SbK7ecswG8tKXL1R8ctTFurUtnHmwNCQTkbuz+DRKLXD8nr7YIIz7g8XnP6wpy2xuHCe+1bLjs7HiLs=
-X-Received: by 2002:a5d:5009:0:b0:368:319c:9a70 with SMTP id
- ffacd0b85a97d-368319c9b62mr3353986f8f.5.1721304884408; Thu, 18 Jul 2024
- 05:14:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
+ id 1sUQA4-0008AD-FJ
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:23:04 -0400
+Received: from galois.linutronix.de ([193.142.43.55])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
+ id 1sUQA1-0003tZ-Cw
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 08:23:03 -0400
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1721305379;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q1DDecY2CNs/KYlhESu+7Ks+xwCfoEqrer8QTqku9Jw=;
+ b=BH/MQ/5nM7KQPENOjMskr5NzC9/TyRRCcDjfO5fYKOV9pgwhzTqw+67Rb79uDSClqiWB+1
+ EX2N/tZJiR0s0DJZlKGuhL/rVsYr3TMvusDfhs5/jtHQmeYoVnCNKwN0T1dKSFtleTPxh/
+ kvMpA0TX8YppT0eYZCdA2TgDimj1gAr4j8m4LHad96EHamq/NMRtQeZo+44af1hmRUov6E
+ aetXD8xMuPMtKjYCj4CzdzKk2eZW0zml54GRyKDKEwn64jmm86/8ApNPWHit/WjLQu993Q
+ R5tMsbhY4YxbOTt4SSwZCdV5Tm7H+dlYUUdT0Hy4JniOlpfaYF/UVavNClcOPQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1721305379;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q1DDecY2CNs/KYlhESu+7Ks+xwCfoEqrer8QTqku9Jw=;
+ b=qlW7+JqbZjDFazV3ZUgxLROBJBEysxdimvW8RpHO75Fks5Q6CTu1+9+07ZxrOHGWLclBiN
+ lsYpzLxmGOEXSlDA==
+Date: Thu, 18 Jul 2024 14:21:47 +0200
+Subject: [PATCH v5 3/4] docs/interop/firmware.json: convert "Example" section
 MIME-Version: 1.0
-References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
-In-Reply-To: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Jul 2024 13:14:33 +0100
-Message-ID: <CAFEAcA92tB_Hf9AcYsnCSfzCu34RDOb1Mxf8QsQzV1Re9aGfDg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] target/arm/kvm: Report PMU unavailability
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- kvm@vger.kernel.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240718-qapi-firmware-json-v5-3-0dba12d7aaf5@linutronix.de>
+References: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
+In-Reply-To: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Czenczek <hreitz@redhat.com>, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721305377; l=778;
+ i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
+ bh=x/QTmRlQohiKwdha1V5OaaAH5ZGyY4FvEq648CpilwY=;
+ b=F0wznKeEpp5lsroSbGQZi0xJnMzbxVTcdFBQr2Ftjarkv6vrV9xEDfas1jNxIPt7y/WCtSzSB
+ kiVWhaWnLA5CaFcvqv4Md28khWIoIXSzRSAy0YNhV0kPt2+jVTDci4I
+X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
+ pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
+Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
+ helo=galois.linutronix.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jul 2024 at 13:50, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> target/arm/kvm.c checked PMU availability but claimed PMU is
-> available even if it is not. In fact, Asahi Linux supports KVM but lacks
-> PMU support. Only advertise PMU availability only when it is really
-> available.
->
-> Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v3:
-> - Dropped patch "target/arm: Do not allow setting 'pmu' for hvf".
-> - Dropped patch "target/arm: Allow setting 'pmu' only for host and max".
-> - Dropped patch "target/arm/kvm: Report PMU unavailability".
-> - Added patch "target/arm/kvm: Fix PMU feature bit early".
-> - Added patch "hvf: arm: Do not advance PC when raising an exception".
-> - Added patch "hvf: arm: Properly disable PMU".
-> - Changed to check for Armv8 before adding PMU property.
-> - Link to v2: https://lore.kernel.org/r/20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com
->
-> Changes in v2:
-> - Restricted writes to 'pmu' to host and max.
-> - Prohibited writes to 'pmu' for hvf.
-> - Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
->
-> ---
-> Akihiko Odaki (5):
->       tests/arm-cpu-features: Do not assume PMU availability
->       target/arm/kvm: Fix PMU feature bit early
->       target/arm: Always add pmu property for Armv8
->       hvf: arm: Do not advance PC when raising an exception
->       hvf: arm: Properly disable PMU
+Since commit 3c5f6114d9ff ("qapi: remove "Example" doc section")
+the "Example" section is not valid anymore.
+It has been replaced by the "qmp-example" role.
 
-Hi; I've left reviews for some of these patches. I'm going to
-apply "hvf: arm: Do not advance PC when raising an exception"
-to my target-arm queue since I'm about to do a pullreq for
-9.1 softfreeze.
+This was not detected earlier as firmware.json was not validated.
+As this validation is about to be added, adapt firmware.json.
 
-thanks
--- PMM
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+---
+ docs/interop/firmware.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index 2eb0be11d595..eea82eef3a07 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -471,7 +471,7 @@
+ #
+ # Since: 3.0
+ #
+-# Examples:
++# .. qmp-example::
+ #
+ #     {
+ #         "description": "SeaBIOS",
+
+-- 
+2.45.2
+
 
