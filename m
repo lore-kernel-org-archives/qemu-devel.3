@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643C9C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D5FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKzB-0001k3-3I; Thu, 18 Jul 2024 02:51:29 -0400
+	id 1sUKyx-0008WS-UR; Thu, 18 Jul 2024 02:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKz9-0001OS-3z; Thu, 18 Jul 2024 02:51:27 -0400
+ id 1sUKyg-00072E-OX; Thu, 18 Jul 2024 02:50:59 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKz7-0004VA-Fx; Thu, 18 Jul 2024 02:51:26 -0400
+ id 1sUKyf-0004VA-5Q; Thu, 18 Jul 2024 02:50:58 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
@@ -25,17 +25,18 @@ Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
  Transport; Thu, 18 Jul 2024 14:50:18 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+To: Alistair Francis <alistair@alistair23.me>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
+ Stanley" <joel@jms.id.au>, "open list:STM32F205" <qemu-arm@nongnu.org>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 15/15] aspeed: add tmp105 in i2c bus 0 for AST2700
-Date: Thu, 18 Jul 2024 14:49:25 +0800
-Message-ID: <20240718064925.1846074-16-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 12/15] aspeed/soc: introduce a new API to get the INTC
+ orgate information
+Date: Thu, 18 Jul 2024 14:49:22 +0800
+Message-ID: <20240718064925.1846074-13-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
@@ -66,45 +67,62 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASPEED SDK add lm75 in i2c bus 0 for AST2700.
-LM75 is compatible with TMP105 driver.
-
-Introduce a new i2c init function and
-add tmp105 device model in i2c bus 0.
+Currently, users can set the intc mapping table with
+enumerated device id and device irq to get the INTC orgate
+input pins. However, some devices use the continuous bits number in the
+same orgate. To reduce the enumerated device id definition,
+create a new API to get the INTC orgate index and source bit number
+if users only provide the start bus number of device.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index f8766ea462..ed98758708 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1604,6 +1604,15 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 4257b5e8af..0bbd66110b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -164,6 +164,11 @@ struct gic_intc_irq_info {
+     const int *ptr;
+ };
+ 
++struct gic_intc_orgate_info {
++    int index;
++    int int_num;
++};
++
+ static const struct gic_intc_irq_info aspeed_soc_ast2700_gic_intcmap[] = {
+     {128,  aspeed_soc_ast2700_gic128_intcmap},
+     {129,  NULL},
+@@ -193,6 +198,27 @@ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+     return qdev_get_gpio_in(DEVICE(&a->gic), sc->irqmap[dev]);
  }
  
- #ifdef TARGET_AARCH64
-+static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
++static void aspeed_soc_ast2700_get_intc_orgate(AspeedSoCState *s, int dev,
++    struct gic_intc_orgate_info *orgate_info)
 +{
-+    AspeedSoCState *soc = bmc->soc;
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int i;
 +
-+    /* LM75 is compatible with TMP105 driver */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
-+                            TYPE_TMP105, 0x4d);
++    for (i = 0; i < ARRAY_SIZE(aspeed_soc_ast2700_gic_intcmap); i++) {
++        if (sc->irqmap[dev] == aspeed_soc_ast2700_gic_intcmap[i].irq) {
++            assert(aspeed_soc_ast2700_gic_intcmap[i].ptr);
++            orgate_info->index = i;
++            orgate_info->int_num = aspeed_soc_ast2700_gic_intcmap[i].ptr[dev];
++            return;
++        }
++    }
++
++    /*
++     * Invalid orgate index, device irq should be 128 to 136.
++     */
++    g_assert_not_reached();
 +}
 +
- static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+ static uint64_t aspeed_ram_capacity_read(void *opaque, hwaddr addr,
+                                                     unsigned int size)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -1618,6 +1627,7 @@ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-     amc->uart_default = ASPEED_DEV_UART12;
-+    amc->i2c_init  = ast2700_evb_i2c_init;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
 -- 
 2.34.1
 
