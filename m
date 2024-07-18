@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D149C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C20C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMNI-0000gW-Pm; Thu, 18 Jul 2024 04:20:28 -0400
+	id 1sUMMn-0007dP-3b; Thu, 18 Jul 2024 04:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMNG-0000Yg-Dw
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:26 -0400
+ id 1sUMMk-0007TL-JT
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:54 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMNE-00004t-KE
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:26 -0400
+ id 1sUMMi-0008CX-Pv
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:19:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721290825; x=1752826825;
+ t=1721290793; x=1752826793;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1REM4hDnglxLml0FWZ70ufSi/Q7DJqRcsAjSpIA4GCk=;
- b=hAF5b1gfc6mztqly5Pns267+oZIzgALvD7iCJvmvDMNIgYDQIiw2wCLw
- gcbeYLPKLLdSoknh8s7SolG6fQKJmjnxqqvNWRhX3VoLpDYUjIau8NYRT
- kouuyoxtExaDaLhDiMPAENdedk1D8IYgGbRT17Dh9enFdczBcJ6ylfmra
- ybC+TyRJv/HG0C1Amt2C3a1fcWRTUll+W52LP+LgSSf5Nub263I+dWhzO
- 2/63nKRHUAKSXLS0Ysn/uvWPmPt2rmM0SdtYh+vT5Vk6e/lIksOGh2AfV
- 7ZHoO3Kb8DO8HfLoQMHl/nUAmEX68SPBTu5RJ3XOLLCToGd61Odc3AP4T Q==;
-X-CSE-ConnectionGUID: CLjzwT7WRK2QIG1ovN28RQ==
-X-CSE-MsgGUID: 6w4P7GJhTZKHzwFU/iPz1w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996395"
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996395"
+ bh=ZYl78wwbaucMc39qo5E055J8BZCJyFbzW3WekrKYT90=;
+ b=hk8XpNWgCMcqWjM3u0SwROlZEit1BaY1AXCU8DbHvDVoT/OpCxUfx6lG
+ H2MXNgGyloDgWJKvVB3R3xmfS8M7dYcDfUt3UizL2QwD3Y4+rpqupiDc6
+ x1aQrcjU5VGlRBGhaPUYYc8tombwwops6cRoLjhl7ZfuMQKSp0bxMhB4I
+ bH1r7EmgIEbJLmASa6noglRA6T8P84A4/aCMnC2rsVXu515v2Zr4ptUAx
+ Qd1Ik3z4/HqpVeq1ufR2RQZfaBj/IBs4dKJHVTlmVerQP1wbOY/ap9dkE
+ 2hfR357KrmZp+49L3kko8poOBqKKuwE00sd/UvQUfeLI9HKCmTirF2Zuu w==;
+X-CSE-ConnectionGUID: +azIJVQqSuqN7wb0uGarog==
+X-CSE-MsgGUID: T6sDwFv8SWG87Cstz0Wj8Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996221"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996221"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:23 -0700
-X-CSE-ConnectionGUID: EN2qi5DNQGGRdSHjZJPW8w==
-X-CSE-MsgGUID: ezsDpr69TTyLnlYMHVrA7g==
+ 18 Jul 2024 01:19:52 -0700
+X-CSE-ConnectionGUID: P+wvWxUqTQKupKtFMgw8lA==
+X-CSE-MsgGUID: EfmSh1c1Qnyo/qLLYWWShQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717514"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717265"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:18 -0700
+ 18 Jul 2024 01:19:48 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,18 +53,18 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v1 14/17] intel_iommu: piotlb invalidation should notify unmap
-Date: Thu, 18 Jul 2024 16:16:33 +0800
-Message-Id: <20240718081636.879544-15-zhenzhong.duan@intel.com>
+Subject: [PATCH v1 07/17] intel_iommu: Check if the input address is canonical
+Date: Thu, 18 Jul 2024 16:16:26 +0800
+Message-Id: <20240718081636.879544-8-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.13;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -90,76 +90,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is used by some emulated devices which caches address
-translation result. When piotlb invalidation issued in guest,
-those caches should be refreshed.
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+First stage translation must fail if the address to translate is
+not canonical.
+
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ hw/i386/intel_iommu_internal.h |  2 ++
+ hw/i386/intel_iommu.c          | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 36fcc6bb5e..168185b850 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -322,6 +322,8 @@ typedef enum VTDFaultReason {
+     VTD_FR_PASID_ENTRY_P = 0x59,
+     VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+ 
++    VTD_FR_FS_NON_CANONICAL = 0x80, /* SNG.1 : Address for FS not canonical.*/
++
+     /* Output address in the interrupt address range for scalable mode */
+     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
+     VTD_FR_MAX,                 /* Guard */
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 8b66d6cfa5..c0116497b1 100644
+index 287741b687..495a41cf80 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -2910,7 +2910,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-                 continue;
-             }
+@@ -1824,6 +1824,7 @@ static const bool vtd_qualified_faults[] = {
+     [VTD_FR_PASID_ENTRY_P] = true,
+     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
+     [VTD_FR_SM_INTERRUPT_ADDR] = true,
++    [VTD_FR_FS_NON_CANONICAL] = true,
+     [VTD_FR_MAX] = false,
+ };
  
--            if (!s->scalable_modern) {
-+            if (!s->scalable_modern || !vtd_as_has_map_notifier(vtd_as)) {
-                 vtd_address_space_sync(vtd_as);
-             }
-         }
-@@ -2922,6 +2922,9 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-                                        bool ih)
- {
-     VTDIOTLBPageInvInfo info;
-+    VTDAddressSpace *vtd_as;
-+    VTDContextEntry ce;
-+    hwaddr size = (1 << am) * VTD_PAGE_SIZE;
- 
-     info.domain_id = domain_id;
-     info.pasid = pasid;
-@@ -2932,6 +2935,36 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-     g_hash_table_foreach_remove(s->iotlb,
-                                 vtd_hash_remove_by_page_piotlb, &info);
-     vtd_iommu_unlock(s);
-+
-+    QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
-+        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-+                                      vtd_as->devfn, &ce) &&
-+            domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-+            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-+            IOMMUTLBEvent event;
-+
-+            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
-+                vtd_as->pasid != pasid) {
-+                continue;
-+            }
-+
-+            /*
-+             * Page-Selective-within-PASID PASID-based-IOTLB Invalidation
-+             * does not flush stage-2 entries. See spec section 6.5.2.4
-+             */
-+            if (!s->scalable_modern) {
-+                continue;
-+            }
-+
-+            event.type = IOMMU_NOTIFIER_UNMAP;
-+            event.entry.target_as = &address_space_memory;
-+            event.entry.iova = addr;
-+            event.entry.perm = IOMMU_NONE;
-+            event.entry.addr_mask = size - 1;
-+            event.entry.translated_addr = 0;
-+            memory_region_notify_iommu(&vtd_as->iommu, 0, event);
-+        }
-+    }
+@@ -1927,6 +1928,20 @@ static inline bool vtd_flpte_present(uint64_t flpte)
+     return !!(flpte & VTD_FL_P);
  }
  
- static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
++/* Return true if IOVA is canonical, otherwise false. */
++static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
++                                        VTDContextEntry *ce, uint32_t pasid)
++{
++    uint64_t iova_limit = vtd_iova_limit(s, ce, s->aw_bits, pasid);
++    uint64_t upper_bits_mask = ~(iova_limit - 1);
++    uint64_t upper_bits = iova & upper_bits_mask;
++    bool msb = ((iova & (iova_limit >> 1)) != 0);
++    return !(
++             (!msb && (upper_bits != 0)) ||
++             (msb && (upper_bits != upper_bits_mask))
++            );
++}
++
+ /*
+  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
+  * of the translation, can be used for deciding the size of large page.
+@@ -1942,6 +1957,12 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
+     uint32_t offset;
+     uint64_t flpte;
+ 
++    if (!vtd_iova_fl_check_canonical(s, iova, ce, pasid)) {
++        error_report_once("%s: detected non canonical IOVA (iova=0x%" PRIx64 ","
++                          "pasid=0x%" PRIx32 ")", __func__, iova, pasid);
++        return -VTD_FR_FS_NON_CANONICAL;
++    }
++
+     while (true) {
+         offset = vtd_iova_level_offset(iova, level);
+         flpte = vtd_get_pte(addr, offset);
 -- 
 2.34.1
 
