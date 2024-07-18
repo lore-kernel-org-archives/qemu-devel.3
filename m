@@ -4,76 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EC1C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F0EC3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNea-0005ow-0u; Thu, 18 Jul 2024 05:42:24 -0400
+	id 1sUNfV-0001n1-A8; Thu, 18 Jul 2024 05:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUNeY-0005mG-Gl
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:42:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <julien@xen.org>)
+ id 1sUNfS-0001Y9-SH; Thu, 18 Jul 2024 05:43:18 -0400
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUNeW-00074M-9E
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:42:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721295739;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WgIN9hExsuVHHdZ/NLr3ShiBLXrkTWms839H08lxu9g=;
- b=b48j8IsKnza/5FTWt+CiEhtJh0pf+7nrJRqpE8pAl+IzYDdsMDsxjkafpk3R3FYtFUl0qK
- Cr5kctF6nSQxlRzpJjYdB8Z1/fm46QK2NXYoWq3fu+miYeTFKAiNCWCEJqPP9a2MTKyOPs
- nSV584tldyteM7G/7k7N7tcj0f5N6bo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-3c3PDdKANDCuH26sJ52R7g-1; Thu,
- 18 Jul 2024 05:42:14 -0400
-X-MC-Unique: 3c3PDdKANDCuH26sJ52R7g-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 679621955D4D; Thu, 18 Jul 2024 09:42:13 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.62])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 974D71955E80; Thu, 18 Jul 2024 09:42:09 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Ed Maste <emaste@freebsd.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/2] ci: refresh package lists with lcitool
-Date: Thu, 18 Jul 2024 10:41:59 +0100
-Message-ID: <20240718094159.902024-3-berrange@redhat.com>
-In-Reply-To: <20240718094159.902024-1-berrange@redhat.com>
-References: <20240718094159.902024-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <julien@xen.org>)
+ id 1sUNfQ-00078y-D9; Thu, 18 Jul 2024 05:43:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+ s=20200302mail; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+ References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+ bh=ur27+PZ4q+21qbdQxHpKSV98KfAioDOHdSymytlbitU=; b=eHIk97kkIoSk2Ev7eX5AHo2Om7
+ r0c3pTq1ALdf6E478tuVWNCDZDPglGPwEEfaZ8cyzvRb7bwISv64NVjxVeF6ssNtvCJ2YsSR6hU3X
+ 6pz1U4wj4Wq7REgLKYPKaqXV9eKpxIg63deWFfrwiE+R32nKwj/3jMuyKwixQWkrrgZQ=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.92)
+ (envelope-from <julien@xen.org>)
+ id 1sUNfK-0005NE-Ai; Thu, 18 Jul 2024 09:43:10 +0000
+Received: from gw1.octic.net ([88.97.20.152] helo=[10.0.0.211])
+ by xenbits.xenproject.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <julien@xen.org>)
+ id 1sUNfK-0006Br-0n; Thu, 18 Jul 2024 09:43:10 +0000
+Message-ID: <5684927d-d890-42be-841c-ece681502503@xen.org>
+Date: Thu, 18 Jul 2024 10:43:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/18] SMMUv3 nested translation support
+Content-Language: en-GB
+To: eric.auger@redhat.com, Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, maz@kernel.org, nicolinc@nvidia.com,
+ richard.henderson@linaro.org, marcin.juszkiewicz@linaro.org
+References: <20240715084519.1189624-1-smostafa@google.com>
+ <20240717150931.GA3988597@myrica>
+ <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
+From: Julien Grall <julien@xen.org>
+In-Reply-To: <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=104.130.215.37; envelope-from=julien@xen.org;
+ helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,286 +75,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refresh with the newly added gtk-vnc package
+Hi Eric,
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- .gitlab-ci.d/cirrus/freebsd-13.vars                   | 2 +-
- .gitlab-ci.d/cirrus/macos-13.vars                     | 2 +-
- .gitlab-ci.d/cirrus/macos-14.vars                     | 2 +-
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 1 +
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 1 +
- tests/docker/dockerfiles/alpine.docker                | 1 +
- tests/docker/dockerfiles/debian-amd64-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-arm64-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-armel-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-armhf-cross.docker    | 1 +
- tests/docker/dockerfiles/debian-i686-cross.docker     | 1 +
- tests/docker/dockerfiles/debian-mips64el-cross.docker | 1 +
- tests/docker/dockerfiles/debian-mipsel-cross.docker   | 1 +
- tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 1 +
- tests/docker/dockerfiles/debian-s390x-cross.docker    | 1 +
- tests/docker/dockerfiles/debian.docker                | 1 +
- tests/docker/dockerfiles/fedora-win64-cross.docker    | 1 +
- tests/docker/dockerfiles/fedora.docker                | 1 +
- tests/docker/dockerfiles/opensuse-leap.docker         | 1 +
- tests/docker/dockerfiles/ubuntu2204.docker            | 1 +
- tests/vm/generated/freebsd.json                       | 1 +
- 21 files changed, 21 insertions(+), 3 deletions(-)
+On 17/07/2024 18:43, Eric Auger wrote:
+> Hi Peter, Richard,
+> 
+> On 7/17/24 17:09, Jean-Philippe Brucker wrote:
+>> On Mon, Jul 15, 2024 at 08:45:00AM +0000, Mostafa Saleh wrote:
+>>> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
+>>> but not nested instances.
+>>> This patch series adds support for nested translation in SMMUv3,
+>>> this is controlled by property “arm-smmuv3.stage=nested”, and
+>>> advertised to guests as (IDR0.S1P == 1 && IDR0.S2P == 2)
+>> For the whole series (3-9, 11, 12, 15, 16, 18):
+>>
+>> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>>
+>> (and I think patch 16 is missing Eric's R-b)
+> 
+> Jean-Philippe and I have followed up the progress of this series,
+> Mostafa took into account all our comments and all the patches were
+> reviewed. It seems to be in a pretty decent state so if you don't have
+> any objection, please consider pulling it for 9.1.
+> 
+> On my end I did some testing in non nesting mode with virtio-net/vhost
+> and I have not noticed any regression.
+> Would be nice if someone could send his T-b for the nested part though
+> (Julien?).
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-13.vars b/.gitlab-ci.d/cirrus/freebsd-13.vars
-index 3785afca36..81f44a782c 100644
---- a/.gitlab-ci.d/cirrus/freebsd-13.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-13.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip-3.8'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-13.vars b/.gitlab-ci.d/cirrus/macos-13.vars
-index 534f029956..ac3fa3a847 100644
---- a/.gitlab-ci.d/cirrus/macos-13.vars
-+++ b/.gitlab-ci.d/cirrus/macos-13.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
-index 43070f4a26..24cfec3b89 100644
---- a/.gitlab-ci.d/cirrus/macos-14.vars
-+++ b/.gitlab-ci.d/cirrus/macos-14.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-index fd5489cd82..71a0f0c433 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-@@ -49,6 +49,7 @@ packages:
-   - libglusterfs-dev
-   - libgnutls28-dev
-   - libgtk-3-dev
-+  - libgtk-vnc-2.0-dev
-   - libibverbs-dev
-   - libiscsi-dev
-   - libjemalloc-dev
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-index afa04502cf..d8de967b18 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-@@ -49,6 +49,7 @@ packages:
-   - libglusterfs-dev
-   - libgnutls28-dev
-   - libgtk-3-dev
-+  - libgtk-vnc-2.0-dev
-   - libibverbs-dev
-   - libiscsi-dev
-   - libjemalloc-dev
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index b079a83fe2..54b9721997 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -40,6 +40,7 @@ RUN apk update && \
-         glib-static \
-         gnutls-dev \
-         gtk+3.0-dev \
-+        gtk-vnc-dev \
-         json-c-dev \
-         libaio-dev \
-         libbpf-dev \
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 8058695979..136c3a79a1 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 15457d7657..233f6ee1de 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-armel-cross.docker b/tests/docker/dockerfiles/debian-armel-cross.docker
-index c26ffc2e9e..8476fc8cce 100644
---- a/tests/docker/dockerfiles/debian-armel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armel-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index 8f87656d89..f26385e0b9 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f4ef054a2e..3fe8ee623d 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index 59c4c68dce..2862785692 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 880c774f1c..0d559ae4ba 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 1d55b9514c..8c1dcec9cf 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 62ccda6ab1..72668e0315 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -30,6 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       git \
-                       hostname \
-                       libglib2.0-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libpcre2-dev \
-                       libsndio-dev \
-                       libspice-protocol-dev \
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 0d1d401eb8..42bd0067d1 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -55,6 +55,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libglusterfs-dev \
-                       libgnutls28-dev \
-                       libgtk-3-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libibverbs-dev \
-                       libiscsi-dev \
-                       libjemalloc-dev \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 007e1574bd..6b264d901f 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -34,6 +34,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                git \
-                glib2-devel \
-                glibc-langpack-en \
-+               gtk-vnc2-devel \
-                hostname \
-                llvm \
-                make \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 44f239c088..ecdefaff1a 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -50,6 +50,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                glibc-static \
-                glusterfs-api-devel \
-                gnutls-devel \
-+               gtk-vnc2-devel \
-                gtk3-devel \
-                hostname \
-                jemalloc-devel \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 836f531ac1..66143621fe 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -33,6 +33,7 @@ RUN zypper update -y && \
-            glibc-locale \
-            glibc-static \
-            glusterfs-devel \
-+           gtk-vnc-devel \
-            gtk3-devel \
-            hostname \
-            jemalloc-devel \
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index beeb44fc28..3a7de6a318 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -55,6 +55,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libglusterfs-dev \
-                       libgnutls28-dev \
-                       libgtk-3-dev \
-+                      libgtk-vnc-2.0-dev \
-                       libibverbs-dev \
-                       libiscsi-dev \
-                       libjemalloc-dev \
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 2d5895ebed..7e05e06bd6 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -29,6 +29,7 @@
-     "gmake",
-     "gnutls",
-     "gsed",
-+    "gtk-vnc",
-     "gtk3",
-     "json-c",
-     "libepoxy",
+I haven't yet tried the latest version. I will do that in the next 
+couple of days.
+
+Cheers,
+
 -- 
-2.45.2
-
+Julien Grall
 
