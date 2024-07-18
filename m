@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BECAC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AC8C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMNN-0001IV-LX; Thu, 18 Jul 2024 04:20:33 -0400
+	id 1sUMNB-0000G7-Tz; Thu, 18 Jul 2024 04:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMNL-0000vH-30
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:31 -0400
+ id 1sUMNA-00006d-62
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:20 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sUMNJ-000083-An
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:30 -0400
+ id 1sUMN7-0008CX-NS
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:20:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721290829; x=1752826829;
+ t=1721290818; x=1752826818;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=iYPP71c4U2gJ0eTAvL01niOiqrSLIGzpyXppg4sxyTU=;
- b=C/lZGOdFGAMXw5PJn72lE/VudAOFnpK1yXujPXHri0Iss7WVU1WXgpna
- PofhxH0o2Q6L7WsF2E9fqpB8ZfWct9wnHlnqiVRA/lYlJ/w+MOOCI2i/e
- ivatts0DCgFqcoRyTM7VmkQXQUNrzuIPpcEqgO7/30m7aP2tkQCoqj9/Y
- EYa5HcqbCscyuk1jmwfHoq06yok2jC2Zq8/L/qjqHm+6WNSkAgQRXE8X0
- ShftnZocblF3v2Gi2U676yrZ/lLSnwsf+Wlj8nGyxgynKGGRY2x2zo0mD
- p6nuftotB4p93M/pAihzC05R/yvpruqf/OqgjLcH99BW9MYyVUzt+UuSb Q==;
-X-CSE-ConnectionGUID: QpBDSyvRR/uD8ehePXpbFw==
-X-CSE-MsgGUID: CXHW6FMZR6Gd3cQ7/acrXw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996408"
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996408"
+ bh=mRNgSK+lvPVIQ5ohj2ofuEHvUoQzLamIns1ZSquOD7Y=;
+ b=Kscl3OcWq8bJUbkFYIaRag4OKUJk2vF15tV7ihQdwHzHnGy8JTQjq5pv
+ 43frU+v2Bk34mOssZLk4BRrADVZ+FXAY72734mr6G3l1wrpi6DHexKHkH
+ HBF/aOnU2vUaK9QpZ5TodIPgEZg7yBHAfLCT8kykrZUS2SvFxSw0cqKC6
+ EiftoRP2mcH+OKJYWGZE/gRU7MR5zih6o93AWM6ICo6QhQnjJvI16AhAj
+ QAkmLZSHOmOZr3YxvGCtN7a534DEmO+/IAYWOxBuTvhI2l+j9U883jMWi
+ lrg5aeAPp0Tx9bPk+2hDZ7XZMz+nkrl1Di9Z+FEy5LGfosesT1ZjEp7ng w==;
+X-CSE-ConnectionGUID: bb8vW+X5T9qYVyrkEeQipA==
+X-CSE-MsgGUID: 32HLydaLQXiU2ZGUczD9Xw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11136"; a="29996363"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="29996363"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:27 -0700
-X-CSE-ConnectionGUID: +JAKjvN4SJW1kbaGJ5zlyA==
-X-CSE-MsgGUID: wXDASGxoTSq5U7qpeTKrVw==
+ 18 Jul 2024 01:20:14 -0700
+X-CSE-ConnectionGUID: akdQARxoQgqm5tBu8Zqhyw==
+X-CSE-MsgGUID: FUUfwgZTTXSckWYJtHGlwQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717547"
+X-IronPort-AV: E=Sophos;i="6.09,217,1716274800"; d="scan'208";a="81717463"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2024 01:20:22 -0700
+ 18 Jul 2024 01:20:09 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,18 +53,19 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v1 15/17] intel_iommu: Set default aw_bits to 48 in scalable
- modren mode
-Date: Thu, 18 Jul 2024 16:16:34 +0800
-Message-Id: <20240718081636.879544-16-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v1 12/17] intel_iommu: Add an internal API to find an address
+ space with PASID
+Date: Thu, 18 Jul 2024 16:16:31 +0800
+Message-Id: <20240718081636.879544-13-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.13;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -90,78 +91,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to VTD spec, stage-1 page table could support 4-level and
-5-level paging.
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-However, 5-level paging translation emulation is unsupported yet.
-That means the only supported value for aw_bits is 48.
+This will be used to implement the device IOTLB invalidation
 
-So default aw_bits to 48 in scalable modern mode. In other cases,
-it is still default to 39 for compatibility.
-
-Add a check to ensure user specified value is 48 in modern mode
-for now.
-
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/i386/intel_iommu.h |  2 +-
- hw/i386/intel_iommu.c         | 16 +++++++++++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu.c | 39 ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index b843d069cc..48134bda11 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -45,7 +45,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
- #define DMAR_REG_SIZE               0x230
- #define VTD_HOST_AW_39BIT           39
- #define VTD_HOST_AW_48BIT           48
--#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
-+#define VTD_HOST_AW_AUTO            0xff
- #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
- 
- #define DMAR_REPORT_F_INTR          (1)
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index c0116497b1..2804c3628a 100644
+index 4d5a457f92..a17ce2b1f1 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -3768,7 +3768,7 @@ static Property vtd_properties[] = {
-                             ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
--                      VTD_HOST_ADDRESS_WIDTH),
-+                      VTD_HOST_AW_AUTO),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
-@@ -4686,6 +4686,14 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         }
-     }
+@@ -70,6 +70,11 @@ struct vtd_hiod_key {
+     uint8_t devfn;
+ };
  
-+    if (s->aw_bits == VTD_HOST_AW_AUTO) {
-+        if (s->scalable_modern) {
-+            s->aw_bits = VTD_HOST_AW_48BIT;
-+        } else {
-+            s->aw_bits = VTD_HOST_AW_39BIT;
-+        }
-+    }
++struct vtd_as_raw_key {
++    uint16_t sid;
++    uint32_t pasid;
++};
 +
-     if ((s->aw_bits != VTD_HOST_AW_39BIT) &&
-         (s->aw_bits != VTD_HOST_AW_48BIT) &&
-         !s->scalable_modern) {
-@@ -4694,6 +4702,12 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         return false;
-     }
+ struct vtd_iotlb_key {
+     uint64_t gfn;
+     uint32_t pasid;
+@@ -1878,29 +1883,33 @@ static inline bool vtd_is_interrupt_addr(hwaddr addr)
+     return VTD_INTERRUPT_ADDR_FIRST <= addr && addr <= VTD_INTERRUPT_ADDR_LAST;
+ }
  
-+    if ((s->aw_bits != VTD_HOST_AW_48BIT) && s->scalable_modern) {
-+        error_setg(errp, "Supported values for aw-bits are: %d",
-+                   VTD_HOST_AW_48BIT);
-+        return false;
-+    }
+-static gboolean vtd_find_as_by_sid(gpointer key, gpointer value,
+-                                   gpointer user_data)
++static gboolean vtd_find_as_by_sid_and_pasid(gpointer key, gpointer value,
++                                             gpointer user_data)
+ {
+     struct vtd_as_key *as_key = (struct vtd_as_key *)key;
+-    uint16_t target_sid = *(uint16_t *)user_data;
++    struct vtd_as_raw_key target = *(struct vtd_as_raw_key *)user_data;
+     uint16_t sid = PCI_BUILD_BDF(pci_bus_num(as_key->bus), as_key->devfn);
+-    return sid == target_sid;
 +
-     if (s->scalable_mode && !s->dma_drain) {
-         error_setg(errp, "Need to set dma_drain for scalable mode");
-         return false;
++    return (as_key->pasid == target.pasid) &&
++           (sid == target.sid);
+ }
+ 
+-static VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
++static VTDAddressSpace *vtd_get_as_by_sid_and_pasid(IntelIOMMUState *s,
++                                                    uint16_t sid,
++                                                    uint32_t pasid)
+ {
+-    uint8_t bus_num = PCI_BUS_NUM(sid);
+-    VTDAddressSpace *vtd_as = s->vtd_as_cache[bus_num];
+-
+-    if (vtd_as &&
+-        (sid == PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn))) {
+-        return vtd_as;
+-    }
++    struct vtd_as_raw_key key = {
++        .sid = sid,
++        .pasid = pasid
++    };
+ 
+-    vtd_as = g_hash_table_find(s->vtd_address_spaces, vtd_find_as_by_sid, &sid);
+-    s->vtd_as_cache[bus_num] = vtd_as;
++    return g_hash_table_find(s->vtd_address_spaces,
++                             vtd_find_as_by_sid_and_pasid, &key);
++}
+ 
+-    return vtd_as;
++static VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
++{
++    return vtd_get_as_by_sid_and_pasid(s, sid, PCI_NO_PASID);
+ }
+ 
+ static void vtd_pt_enable_fast_path(IntelIOMMUState *s, uint16_t source_id)
 -- 
 2.34.1
 
