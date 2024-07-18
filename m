@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FD8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 22:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA49BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 22:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUZsm-0008Hi-M5; Thu, 18 Jul 2024 18:45:52 -0400
+	id 1sUZv9-00019t-RZ; Thu, 18 Jul 2024 18:48:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUZsk-0008B1-UZ
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:45:51 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1sUZv5-0000um-O0
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:48:17 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUZsj-0006Oj-BG
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:45:50 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-70b703eda27so264582b3a.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 15:45:48 -0700 (PDT)
+ id 1sUZv4-0006rn-1D
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 18:48:15 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2cb566d528aso638143a91.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 15:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721342747; x=1721947547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721342892; x=1721947692; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=M5POmAzSHJWd3LsxdfZ6p2jXOAVgjxAnj8lvlyZIEkM=;
- b=Mz3I7C7NNOGdMpghEpDDCXFYGkaN5aqhQVqWtdSWuMGxqjNUzfQZcMziEQxZcBrUnl
- coc4wGlSNNfJBemeC8Ht3blEo9xSq+O6tRcIZmcGLQcOPuWHDyhzKW06GqIjw6MGCmCA
- mu0GNjYfBbIlBsf/CF537ODm8Zn5T5bYOvvxcsA+IcS+R9527tE6d0KWXKw2DDclSpH3
- x/hbHS9RVoMJIoCfoESQJWuxsWumyrzG/fyxhHuAgVzZmcKtdyH9/x7HmgUWSmLgLjRu
- P/2pPr1BZjTa6W/NpXZPO07aKGDgMrWf53dfBoyTKyKECxb7aeQLqv2TQhU5T+j23zjx
- QgIg==
+ bh=ZOsDHqkfTa1mH1pV0S5Cul7DFfwCdggrCV2X9KJzaZA=;
+ b=mSygL1XugwsoXI6YuDAfPGyCiaTsZQt+h30EtbrZXnFx+filMUEPRtqHWiHY2TDxS5
+ KGU0LoP7rGRohOuvziu7nyu94I8crlI8H97vD7HYBvFS2skf8GUhDHtkCZpWd9an4D2E
+ edb3FOOGrqXPyLioJWPnrtwpXq519TVqsPDDFig/DTPVa0PYXaBb6CjVwmrYqFRZp2e/
+ eiGXWy09YTvC3SCjgB6mjgb5qHx01u7oPr/vagkMeCKc1e3KAGLxZrFsTMEK+8bteuyH
+ qBhHhj9h37B0XLYlvmz3sdLDCkklualsrI4ceRXrD4RVMrFa03/1tXqzC6HzxUVqES9Q
+ MCWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721342747; x=1721947547;
+ d=1e100.net; s=20230601; t=1721342892; x=1721947692;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M5POmAzSHJWd3LsxdfZ6p2jXOAVgjxAnj8lvlyZIEkM=;
- b=KRRPwiwpiQaQJ5l135J/4O51UrztPVqADQ6f+IlfsvzOPIoPjcDoa0wV964ANzE8tT
- d7bCX52HmtrIHXjaM2si83oU71hhMIwUG4jLQ5xvyRFFeecdUakanBF/croGLuGoTFx4
- 2wqvl39xxM61skauxY+fqVkwzFTWQor1I0zySfezJD2ojJlD4fCUcLIuUcIdQLRRJqzl
- pW35pzS6wWwqMwGD9EVXH9LlizTn7qqHgmg7UX3HVW3SmIw30VayNIoADOC5t5Ou5Sdw
- MtfUK3CToVwY6Rt+GiqE/2PXfkJeY+SH5XrXLGOblqr0zc/bo2dF05sGwaiGZaRZhr8G
- o5Mw==
+ bh=ZOsDHqkfTa1mH1pV0S5Cul7DFfwCdggrCV2X9KJzaZA=;
+ b=nTEJbkoWa5be3/NyArOGxo6i+WfPNaeJQswC8AGxdIq7xSjaiPAEg+XR9D0E5zxZKN
+ MbLJZlPq79+oN9Zgyjkd7YZ7BwA3IMTY0j8dQZ2Qpq7EAb4Zbw7ozbxAOmwHGw1kq0kX
+ O6mzcSWF69HOThTGX9oTIzULtrfqRUau7kzIJhujqbqSBMGjh3ar8a5hXP4Q9y8Jmoss
+ +hAm7sIdt7ikzyP9UBQJriMSfqtQ3cZbBIKNXT6vkIyR7ED9Jx+98zpMOEVgS3kEpSG8
+ r19am5DrrzTNfS1Z1Q2/t7k/BdozRCCTUFTballUENJrV8oowfXBdYon+PpsUFY/eHxr
+ je5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWI7sF+hRo7KrmYJ0+FxfAVamM4Frwc392iJ7I2k2ir/SZTh+xR2wPGp+oj4c2OnTr9C8MflxfKFelqGwmZkQUoJfDv9ms=
-X-Gm-Message-State: AOJu0YyAdMEVagbAFmvJDmUICDxWSxvBtFyXg6U1fLVGI2YjZPUmMVtA
- nu4XdQ9biy+1pB/xIV9/BjgMNXBh9gegsqv8EiDBlfwCS4VWjg6QcO2LhbHgMbc=
-X-Google-Smtp-Source: AGHT+IGJS2iPaFTK6H7BKRl24sAyJNPZ+2bsa7DVgv98endTAY1EKmo/OHXbL++cAFpUzl/hYLZD7A==
-X-Received: by 2002:a05:6a20:c99a:b0:1c3:b231:33f3 with SMTP id
- adf61e73a8af0-1c3fdd3c152mr6860187637.38.1721342747202; 
- Thu, 18 Jul 2024 15:45:47 -0700 (PDT)
+ AJvYcCUm9VTxaeKkPADTYORDm1lOVzp69hzFcuo1DsgwqPzQaCByNCIKw26sV98Sor0tdCsu4tv8FUCTHZY7jAg4I+qhm7ku4pY=
+X-Gm-Message-State: AOJu0YySuATDA66kJRxoVRvj83pg1CJ6rUFfB55WLA70g6g3d8H7nu4F
+ p2vmQmHdS0wdGEHaUNxycG9EgEwpXRjtqsGMaVEEGo83pvzOx/n9IHJfFWWUSqA=
+X-Google-Smtp-Source: AGHT+IHx+0XfDvDa6hTKuvwPU5b8i8L8Zl+8WrBxuzD5ANAEoMEK3p/pPu7++JttwSdSfQsVCfwwcA==
+X-Received: by 2002:a17:90b:ed5:b0:2c9:7fba:d895 with SMTP id
+ 98e67ed59e1d1-2cb529510dfmr5120481a91.38.1721342892269; 
+ Thu, 18 Jul 2024 15:48:12 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cb775416fasm1279006a91.53.2024.07.18.15.45.43
+ 98e67ed59e1d1-2cb77540a6esm1273628a91.54.2024.07.18.15.48.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jul 2024 15:45:46 -0700 (PDT)
-Message-ID: <02fa9779-10bb-43bb-92b8-5db7fc40ca69@linaro.org>
-Date: Fri, 19 Jul 2024 08:45:39 +1000
+ Thu, 18 Jul 2024 15:48:11 -0700 (PDT)
+Message-ID: <48135af0-9135-4d21-9821-ba22ee49374a@linaro.org>
+Date: Fri, 19 Jul 2024 08:48:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/18] hw/intc/loongson_ipi: Move common code to
- loongson_ipi_common.c
+Subject: Re: [PATCH v4 17/18] hw/intc/loongson_ipi: Restrict to MIPS
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
@@ -73,14 +72,14 @@ Cc: Song Gao <gaosong@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
  Huacai Chen <chenhuacai@kernel.org>, Xiaojuan Yang
  <yangxiaojuan@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240718083842.81199-1-philmd@linaro.org>
- <20240718083842.81199-15-philmd@linaro.org>
+ <20240718083842.81199-18-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240718083842.81199-15-philmd@linaro.org>
+In-Reply-To: <20240718083842.81199-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,9 +105,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/18/24 18:38, Philippe Mathieu-Daudé wrote:
 > From: Bibo Mao<maobibo@loongson.cn>
 > 
-> Move the common code from loongson_ipi.c to loongson_ipi_common.c,
-> call parent_realize() instead of loongson_ipi_common_realize() in
-> loongson_ipi_realize().
+> Now than LoongArch target can use the TYPE_LOONGARCH_IPI
+> model, restrict TYPE_LOONGSON_IPI to MIPS.
 > 
 > Signed-off-by: Bibo Mao<maobibo@loongson.cn>
 > [PMD: Extracted from bigger commit, added commit description]
@@ -117,9 +115,10 @@ On 7/18/24 18:38, Philippe Mathieu-Daudé wrote:
 > Reviewed-by: Bibo Mao<maobibo@loongson.cn>
 > Tested-by: Bibo Mao<maobibo@loongson.cn>
 > ---
->   hw/intc/loongson_ipi.c        | 269 +--------------------------------
->   hw/intc/loongson_ipi_common.c | 272 ++++++++++++++++++++++++++++++++++
->   2 files changed, 274 insertions(+), 267 deletions(-)
+>   MAINTAINERS            |  2 --
+>   hw/intc/loongson_ipi.c | 14 --------------
+>   2 files changed, 16 deletions(-)
+
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
