@@ -4,61 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F8CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5275C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUR3K-0005YN-Cc; Thu, 18 Jul 2024 09:20:10 -0400
+	id 1sUR3q-0008F5-Oa; Thu, 18 Jul 2024 09:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUR3I-0005Qq-M4; Thu, 18 Jul 2024 09:20:08 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
- id 1sUR3E-00043P-WA; Thu, 18 Jul 2024 09:20:08 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPthD6WrRz4x1V;
- Thu, 18 Jul 2024 23:19:56 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPth74BGGz4x0C;
- Thu, 18 Jul 2024 23:19:51 +1000 (AEST)
-Message-ID: <5f6efa7b-0ed9-4cf3-b8e5-b6b0656394fd@kaod.org>
-Date: Thu, 18 Jul 2024 15:19:48 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUR3l-0007td-4l
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:20:38 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUR3i-0004Sw-O2
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:20:36 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2eefc3d707dso10106351fa.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 06:20:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721308832; x=1721913632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=yCmmBscXHr7DP5v15ZBTuTVPUGJ3/3t6QvO+9hat3Zg=;
+ b=ZXzWSJwmIXu4ps812/7Zlkt10i+g9PzqVVi66timp6scgeqeoEAARK14HUg1o5aMme
+ 2DmLEJ/ekfpXmsJNPtWMx5TXQhfStM9bjlgNO8y6Bigox4NRH12Mrmlquejv7+N2NZgu
+ KAvebyV02Cg0+49/YiJNDz/KgiTbLo9lNPWTIpbeOEbTIfkR3NCTBQwNEBmbLdbgbCOu
+ gOsKOW3MKQSnauVVn2iXdESSS2ApziWYakhwCx1Bb+btmYeG3SAw+mWF5UDlHWI7IEwV
+ lCPXoL0tEH0IUizLdxmV4OMPN9HXzcbzImqmQloMvxo2K6KH/iNp/uDUygLfJlY99bQH
+ Rv8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721308832; x=1721913632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yCmmBscXHr7DP5v15ZBTuTVPUGJ3/3t6QvO+9hat3Zg=;
+ b=Lg3pYg4zqSxGO0/EPLdJ7uOG6dKZTXaEHdYBlP3j0psp/2PAwKdIEMoDxKMJS2zvzs
+ ntytLZO9+7ui6omTxTjdAvBiOhX+iYq2JEr5BN9qLCwTvISb3BIZOD8v+etq/m8hb2Jt
+ kzC12XhURQ7dGQvBIYtUCLboH88v/SRglXP9KrEE0ylLxCAbQOqhzFKnfmEoP3qyWolo
+ MQG7QPvXiOxCvZW60uPFFxU6mDzG6rGWgSzyV20svRQiGW7aGT7nJKV/M2JbVAdSMnry
+ h7/xDOX4OQw2vnok47NYl66zYfi1lxIjF3efj4avTQyq/6dn7jfiJrNutZMl2lSuRL7J
+ odbA==
+X-Gm-Message-State: AOJu0YwyitLTObNa0EeFNAsa7tm4pYn7xRpg5K3m2FXoAQJXNDeUFIVG
+ n5XGskD7Wu+a5rCPLgAA+QSydJl7zPg17RcQLYKHO6qLsjAC3apnW1ObNg8eHmdtuyIMqhdDu1L
+ C
+X-Google-Smtp-Source: AGHT+IGXHxxehFhsnAbj/v7cuJHva1NVc/GuH2A/0X/pXU8X7lqr4E6BEnfn0LdDAA/p5t0ytO/+/A==
+X-Received: by 2002:a2e:7314:0:b0:2ee:bd1b:84c with SMTP id
+ 38308e7fff4ca-2ef05996013mr16963951fa.0.1721308831557; 
+ Thu, 18 Jul 2024 06:20:31 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d2a8e420sm14059315e9.35.2024.07.18.06.20.31
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jul 2024 06:20:31 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/26] hw/display/bcm2835_fb: fix fb_use_offsets condition
+Date: Thu, 18 Jul 2024 14:20:05 +0100
+Message-Id: <20240718132028.697927-4-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240718132028.697927-1-peter.maydell@linaro.org>
+References: <20240718132028.697927-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/15] hw/i2c/aspeed: support to set the different
- memory size
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:STM32F205" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- Yunlin Tang <yunlin.tang@aspeedtech.com>
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-4-jamin_lin@aspeedtech.com>
- <311c3893-4e27-4472-8356-889fdaaade6f@kaod.org>
- <SI2PR06MB5041287D9E64F7D0E25968EEFCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <SI2PR06MB5041287D9E64F7D0E25968EEFCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=3riu=OS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,94 +94,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 11:42, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> Subject: Re: [PATCH v1 03/15] hw/i2c/aspeed: support to set the different
->> memory size
->>
->> On 7/18/24 08:49, Jamin Lin wrote:
->>> According to the datasheet of ASPEED SOCs, an I2C controller owns 8KB
->>> of register space for AST2700, owns 4KB of register space for AST2600,
->>> AST2500 and AST2400, and owns 64KB of register space for AST1030.
->>>
->>> It set the memory region size 4KB by default and it does not
->>> compatible register space for AST2700.
->>>
->>> Introduce a new class attribute to set the I2C controller memory size
->>> for different ASPEED SOCs.
->>>
->>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>> ---
->>>    hw/i2c/aspeed_i2c.c         | 6 +++++-
->>>    include/hw/i2c/aspeed_i2c.h | 2 +-
->>>    2 files changed, 6 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c index
->>> b43afd250d..7d5a53c4c0 100644
->>> --- a/hw/i2c/aspeed_i2c.c
->>> +++ b/hw/i2c/aspeed_i2c.c
->>> @@ -1014,7 +1014,7 @@ static void aspeed_i2c_realize(DeviceState *dev,
->>> Error **errp)
->>>
->>>        sysbus_init_irq(sbd, &s->irq);
->>>        memory_region_init_io(&s->iomem, OBJECT(s),
->> &aspeed_i2c_ctrl_ops, s,
->>> -                          "aspeed.i2c", 0x1000);
->>> +                          "aspeed.i2c", aic->mem_size);
->>>        sysbus_init_mmio(sbd, &s->iomem);
->>>
->>>        for (i = 0; i < aic->num_busses; i++) { @@ -1286,6 +1286,7 @@
->>> static void aspeed_2400_i2c_class_init(ObjectClass *klass, void *data)
->>>        aic->pool_size = 0x800;
->>>        aic->pool_base = 0x800;
->>>        aic->bus_pool_base = aspeed_2400_i2c_bus_pool_base;
->>> +    aic->mem_size = 0x1000;
->>>    }
->>>
->>>    static const TypeInfo aspeed_2400_i2c_info = { @@ -1320,6 +1321,7 @@
->>> static void aspeed_2500_i2c_class_init(ObjectClass *klass, void *data)
->>>        aic->bus_pool_base = aspeed_2500_i2c_bus_pool_base;
->>>        aic->check_sram = true;
->>>        aic->has_dma = true;
->>> +    aic->mem_size = 0x1000;
->>>    }
->>>
->>>    static const TypeInfo aspeed_2500_i2c_info = { @@ -1353,6 +1355,7 @@
->>> static void aspeed_2600_i2c_class_init(ObjectClass *klass, void *data)
->>>        aic->pool_base = 0xC00;
->>>        aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
->>>        aic->has_dma = true;
->>> +    aic->mem_size = 0x1000;
->>>    }
->>>
->>>    static const TypeInfo aspeed_2600_i2c_info = { @@ -1376,6 +1379,7 @@
->>> static void aspeed_1030_i2c_class_init(ObjectClass *klass, void *data)
->>>        aic->pool_base = 0xC00;
->>>        aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
->>>        aic->has_dma = true;
->>> +    aic->mem_size = 0x10000;
->>
-> Thanks for review.
-> 
-> According to the datasheet of AST1030 in chapter 7 (Memory Space Allocation Table)
-> , the register address space of I2C Controller range is start from 7E7B0000 to
-> 7E7BFFFF and its register address space is 64KB(0x10000).
+From: SamJakob <me@samjakob.com>
 
-OK.
-  
-> The firmware only use 4KB address space. We can change mem_size either 4KB or 64KB.
-> Could you tell me which size you prefer?
+It is common practice when implementing double-buffering on VideoCore
+to do so by multiplying the height of the virtual buffer by the
+number of virtual screens desired (i.e., two - in the case of
+double-bufferring).
 
-I would keep the larger value for the model and let FW decide to resize or not.
+At present, this won't work in QEMU because the logic in
+fb_use_offsets require that both the virtual width and height exceed
+their physical counterparts.
 
-Thanks,
+This appears to be unintentional/a typo and indeed the comment
+states; "Experimentally, the hardware seems to do this only if the
+viewport size is larger than the physical screen".  The
+viewport/virtual size would be larger than the physical size if
+either virtual dimension were larger than their physical counterparts
+and not necessarily both.
 
-C.
+Signed-off-by: SamJakob <me@samjakob.com>
+Message-id: 20240713160353.62410-1-me@samjakob.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/display/bcm2835_fb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-
-
-
+diff --git a/hw/display/bcm2835_fb.c b/hw/display/bcm2835_fb.c
+index e40ed2d2e18..650db3da82c 100644
+--- a/hw/display/bcm2835_fb.c
++++ b/hw/display/bcm2835_fb.c
+@@ -145,7 +145,7 @@ static bool fb_use_offsets(BCM2835FBConfig *config)
+      * viewport size is larger than the physical screen. (It doesn't
+      * prevent the guest setting this silly viewport setting, though...)
+      */
+-    return config->xres_virtual > config->xres &&
++    return config->xres_virtual > config->xres ||
+         config->yres_virtual > config->yres;
+ }
+ 
+-- 
+2.34.1
 
 
