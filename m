@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9BDC3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608BBC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKyu-00088i-3r; Thu, 18 Jul 2024 02:51:12 -0400
+	id 1sUKyx-00008c-VJ; Thu, 18 Jul 2024 02:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKye-0006s8-Ac; Thu, 18 Jul 2024 02:50:57 -0400
+ id 1sUKym-0007Vb-E6; Thu, 18 Jul 2024 02:51:05 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyc-0004VA-Lb; Thu, 18 Jul 2024 02:50:56 -0400
+ id 1sUKyk-0004VA-NN; Thu, 18 Jul 2024 02:51:04 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
- 2024 14:50:17 +0800
+ 2024 14:50:18 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 18 Jul 2024 14:50:17 +0800
+ Transport; Thu, 18 Jul 2024 14:50:18 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,16 +33,15 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 11/15] hw/i2c/aspeed: support high part dram offset for DMA
- 64 bits
-Date: Thu, 18 Jul 2024 14:49:21 +0800
-Message-ID: <20240718064925.1846074-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 14/15] aspeed: fix coding style
+Date: Thu, 18 Jul 2024 14:49:24 +0800
+Message-ID: <20240718064925.1846074-15-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,75 +66,69 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-And the base address of dram is "0x4 00000000" which
-is 64bits address.
+Fix coding style issues from checkpatch.pl
 
-The AST2700 support the maximum DRAM size is 8 GB.
-The DRAM physical address range is from "0x4_0000_0000" to
-"0x5_FFFF_FFFF".
-
-The DRAM offset range is from "0x0_0000_0000" to
-"0x1_FFFF_FFFF" and it is enough to use bits [33:0]
-saving the dram offset.
-
-Therefore, save the high part physical address bit[1:0]
-of Tx/Rx buffer address as dma_dram_offset bit[33:32].
-It does not need to decrease the dram physical
-high part address for DMA operation.
-(high part physical address bit[7:0] – 4)
+Test command:
+./scripts/checkpatch.pl --no-tree -f hw/arm/aspeed.c
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/i2c/aspeed_i2c.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ hw/arm/aspeed.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index b48f250e08..e28deadcfc 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -743,6 +743,14 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-                       __func__);
-         break;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 53a4f665d0..f8766ea462 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -265,7 +265,8 @@ static void write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+     g_autofree void *storage = NULL;
+     int64_t size;
  
+-    /* The block backend size should have already been 'validated' by
 +    /*
-+     * The AST2700 support the maximum DRAM size is 8 GB.
-+     * The DRAM offset range is from 0x0_0000_0000 to
-+     * 0x1_FFFF_FFFF and it is enough to use bits [33:0]
-+     * saving the dram offset.
-+     * Therefore, save the high part physical address bit[1:0]
-+     * of Tx/Rx buffer address as dma_dram_offset bit[33:32].
++     * The block backend size should have already been 'validated' by
+      * the creation of the m25p80 object.
+      */
+     size = blk_getlength(blk);
+@@ -463,8 +464,10 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
+     DeviceState *dev;
+     uint8_t *eeprom_buf = g_malloc0(32 * 1024);
+ 
+-    /* The palmetto platform expects a ds3231 RTC but a ds1338 is
+-     * enough to provide basic RTC features. Alarms will be missing */
++    /*
++     * The palmetto platform expects a ds3231 RTC but a ds1338 is
++     * enough to provide basic RTC features. Alarms will be missing
 +     */
-     case A_I2CM_DMA_TX_ADDR_HI:
-         if (!aic->has_dma64) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
-@@ -752,6 +760,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->regs[R_I2CM_DMA_TX_ADDR_HI] = FIELD_EX32(value,
-                                                       I2CM_DMA_TX_ADDR_HI,
-                                                       ADDR_HI);
-+        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-+                                         extract32(value, 0, 2));
-         break;
-     case A_I2CM_DMA_RX_ADDR_HI:
-         if (!aic->has_dma64) {
-@@ -762,6 +772,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->regs[R_I2CM_DMA_RX_ADDR_HI] = FIELD_EX32(value,
-                                                       I2CM_DMA_RX_ADDR_HI,
-                                                       ADDR_HI);
-+        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-+                                         extract32(value, 0, 2));
-         break;
-     case A_I2CS_DMA_TX_ADDR_HI:
-         qemu_log_mask(LOG_UNIMP,
-@@ -777,6 +789,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
-         bus->regs[R_I2CS_DMA_RX_ADDR_HI] = FIELD_EX32(value,
-                                                       I2CS_DMA_RX_ADDR_HI,
-                                                       ADDR_HI);
-+        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 32, 32,
-+                                         extract32(value, 0, 2));
-         break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+@@ -555,8 +558,10 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
+ {
+     AspeedSoCState *soc = bmc->soc;
+ 
+-    /* The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
+-     * good enough */
++    /*
++     * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
++     * good enough
++     */
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+ }
+ 
+@@ -664,8 +669,10 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
+                      0x4a);
+ 
+-    /* The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
+-     * good enough */
++    /*
++     * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
++     * good enough
++     */
+     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
 -- 
 2.34.1
 
