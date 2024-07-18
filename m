@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E27C3DA61
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 19:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E26DC3DA61
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 19:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUWXi-00026C-Ov; Thu, 18 Jul 2024 15:11:54 -0400
+	id 1sUWiT-0007nT-8M; Thu, 18 Jul 2024 15:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUWXg-000259-Tr
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 15:11:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUWiS-0007mU-Bu
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 15:23:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUWXe-00041H-LV
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 15:11:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUWiQ-0006lT-RE
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 15:23:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721329905;
+ s=mimecast20190719; t=1721330577;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=u3/HAB7VrbBG4fVlwiwO+f6njVjS4HoRYtdO6yfuuQY=;
- b=TWWjCT6VtyIIIS2XnEuThS4obhVFP4hS5unVMhz/8w7dFgnqTpmuUIrDHmH6OpUVeL8chF
- l/mHs7bCf3lu9vJNO6NafKkydsi1f2P8qbVdXqSvSOYnHIksoE6FQo7+bkRkbOJHLGRkQi
- sk2f6ywKYHsSxDviUb6ujbBu8Oz5ic4=
+ bh=sQt5kiHKWeruSjts7n5/Yj5um/u6El07ldaIC7ze2pk=;
+ b=QZh3udQAoX4KHbDHdjtTDJx72k2xnh1XXPewsPHyQ2Z/kHhCxiezVQik/SwxFHH06uX2mG
+ OT1YeNVw94dd0dA7ssA12SMJh422Mfsm0LWQbyL0m6tZ9mfrHT/2FyKXUiGauZmui89rPv
+ d84ShoHX2PX0NSRdTczZfxtWjpLSGgk=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-CEiMmlpSM--PpBbgR3h2Vg-1; Thu,
- 18 Jul 2024 15:11:42 -0400
-X-MC-Unique: CEiMmlpSM--PpBbgR3h2Vg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-xY1tqYsiN0SBIWsftcuskA-1; Thu,
+ 18 Jul 2024 15:22:53 -0400
+X-MC-Unique: xY1tqYsiN0SBIWsftcuskA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 652351955D4C; Thu, 18 Jul 2024 19:11:40 +0000 (UTC)
+ id 9A1EE1955D45; Thu, 18 Jul 2024 19:22:51 +0000 (UTC)
 Received: from redhat.com (unknown [10.39.193.0])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4AD31955F40; Thu, 18 Jul 2024 19:11:35 +0000 (UTC)
-Date: Thu, 18 Jul 2024 21:11:33 +0200
+ id 48B001955F3B; Thu, 18 Jul 2024 19:22:48 +0000 (UTC)
+Date: Thu, 18 Jul 2024 21:22:46 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, eblake@redhat.com,
- hreitz@redhat.com, armbru@redhat.com, zeil@yandex-team.ru,
- yc-core@yandex-team.ru, dave@treblig.org,
- Leonid Kaplan <xeor@yandex-team.ru>
-Subject: Re: [PATCH v2] block-backend: per-device throttling of
- BLOCK_IO_ERROR reports
-Message-ID: <Zplo5VsG-q-e643H@redhat.com>
-References: <20240109131308.455371-1-vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ jsnow@redhat.com, den@openvz.org, f.ebner@proxmox.com
+Subject: Re: [PATCH v2 1/3] block/commit: implement final flush
+Message-ID: <ZplrhoVskeiK0R4c@redhat.com>
+References: <20240626145038.458709-1-vsementsov@yandex-team.ru>
+ <20240626145038.458709-2-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240109131308.455371-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20240626145038.458709-2-vsementsov@yandex-team.ru>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -84,78 +82,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.01.2024 um 14:13 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> From: Leonid Kaplan <xeor@yandex-team.ru>
+Am 26.06.2024 um 16:50 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> Actually block job is not completed without the final flush. It's
+> rather unexpected to have broken target when job was successfully
+> completed long ago and now we fail to flush or process just
+> crashed/killed.
 > 
-> BLOCK_IO_ERROR events comes from guest, so we must throttle them.
-> We still want per-device throttling, so let's use device id as a key.
+> Mirror job already has mirror_flush() for this. So, it's OK.
 > 
-> Signed-off-by: Leonid Kaplan <xeor@yandex-team.ru>
+> Do this for commit job too.
+> 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
+>  block/commit.c | 41 +++++++++++++++++++++++++++--------------
+>  1 file changed, 27 insertions(+), 14 deletions(-)
 > 
-> v2: add Note: to QAPI doc
-> 
->  monitor/monitor.c    | 10 ++++++++++
->  qapi/block-core.json |  2 ++
->  2 files changed, 12 insertions(+)
-> 
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 01ede1babd..ad0243e9d7 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -309,6 +309,7 @@ int error_printf_unless_qmp(const char *fmt, ...)
->  static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
->      /* Limit guest-triggerable events to 1 per second */
->      [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-> +    [QAPI_EVENT_BLOCK_IO_ERROR]    = { 1000 * SCALE_MS },
->      [QAPI_EVENT_WATCHDOG]          = { 1000 * SCALE_MS },
->      [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
->      [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
-> @@ -498,6 +499,10 @@ static unsigned int qapi_event_throttle_hash(const void *key)
->          hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
->      }
+> diff --git a/block/commit.c b/block/commit.c
+> index 7c3fdcb0ca..81971692a2 100644
+> --- a/block/commit.c
+> +++ b/block/commit.c
+> @@ -134,6 +134,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>      int64_t n = 0; /* bytes */
+>      QEMU_AUTO_VFREE void *buf = NULL;
+>      int64_t len, base_len;
+> +    bool need_final_flush = true;
 >  
-> +    if (evstate->event == QAPI_EVENT_BLOCK_IO_ERROR) {
-> +        hash += g_str_hash(qdict_get_str(evstate->data, "device"));
-> +    }
+>      len = blk_co_getlength(s->top);
+>      if (len < 0) {
+> @@ -155,8 +156,8 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>  
+>      buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
+>  
+> -    for (offset = 0; offset < len; offset += n) {
+> -        bool copy;
+> +    for (offset = 0; offset < len || need_final_flush; offset += n) {
 
-Using "device" only works with -drive, i.e. when the BlockBackend
-actually has a name. In modern configurations with a -blockdev
-referenced by -device, the BlockBackend doesn't have a name any more.
+In general, the control flow would be nicer to read if the final flush
+weren't integrated into the loop, but just added after it.
 
-Maybe we should be using the qdev id (or more generally, QOM path) here,
-but that's something the event doesn't even contain yet.
+But I assume this is pretty much required for pausing the job during
+error handling in the final flush if you don't want to duplicate a lot
+of the logic into a second loop?
 
+> +        bool copy = false;
+>          bool error_in_source = true;
+>  
+>          /* Note that even when no rate limit is applied we need to yield
+> @@ -166,22 +167,34 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>          if (job_is_cancelled(&s->common.job)) {
+>              break;
+>          }
+> -        /* Copy if allocated above the base */
+> -        ret = blk_co_is_allocated_above(s->top, s->base_overlay, true,
+> -                                        offset, COMMIT_BUFFER_SIZE, &n);
+> -        copy = (ret > 0);
+> -        trace_commit_one_iteration(s, offset, n, ret);
+> -        if (copy) {
+> -            assert(n < SIZE_MAX);
+>  
+> -            ret = blk_co_pread(s->top, offset, n, buf, 0);
+> -            if (ret >= 0) {
+> -                ret = blk_co_pwrite(s->base, offset, n, buf, 0);
+> -                if (ret < 0) {
+> -                    error_in_source = false;
+> +        if (offset < len) {
+> +            /* Copy if allocated above the base */
+> +            ret = blk_co_is_allocated_above(s->top, s->base_overlay, true,
+> +                                            offset, COMMIT_BUFFER_SIZE, &n);
+> +            copy = (ret > 0);
+> +            trace_commit_one_iteration(s, offset, n, ret);
+> +            if (copy) {
+> +                assert(n < SIZE_MAX);
 > +
->      return hash;
->  }
->  
-> @@ -525,6 +530,11 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
->                         qdict_get_str(evb->data, "qom-path"));
->      }
->  
-> +    if (eva->event == QAPI_EVENT_BLOCK_IO_ERROR) {
-> +        return !strcmp(qdict_get_str(eva->data, "device"),
-> +                       qdict_get_str(evb->data, "device"));
-> +    }
+> +                ret = blk_co_pread(s->top, offset, n, buf, 0);
+> +                if (ret >= 0) {
+> +                    ret = blk_co_pwrite(s->base, offset, n, buf, 0);
+> +                    if (ret < 0) {
+> +                        error_in_source = false;
+> +                    }
+>                  }
+>              }
+> +        } else {
+> +            assert(need_final_flush);
+> +            ret = blk_co_flush(s->base);
+> +            if (ret < 0) {
+> +                error_in_source = false;
+> +            } else {
+> +                need_final_flush = false;
+> +            }
+
+Should we set n = 0 in this block to avoid counting the last chunk twice
+for the progress?
+
+>          }
 > +
->      return TRUE;
->  }
->  
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index ca390c5700..32c2c2f030 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -5559,6 +5559,8 @@
->  # Note: If action is "stop", a STOP event will eventually follow the
->  #     BLOCK_IO_ERROR event
->  #
-> +# Note: This event is rate-limited.
-> +#
->  # Since: 0.13
->  #
->  # Example:
+>          if (ret < 0) {
+>              BlockErrorAction action =
+>                  block_job_error_action(&s->common, s->on_error,
 
 Kevin
 
