@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FA1C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91E6C3DA60
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUGbi-0005il-D9; Wed, 17 Jul 2024 22:10:58 -0400
+	id 1sUGd1-00032b-7i; Wed, 17 Jul 2024 22:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGbZ-0005Vs-HD
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:51 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGbX-0003PE-AR
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:49 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70aec66c936so230594b3a.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721268645; x=1721873445; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VbcGfVlcPRccLSn7cW2XGxYbsQ71fb9UaUPwLrj6Rew=;
- b=NmQ49BesJc5mfzMT/BXKDuEkC6JaGVTL8RrtnF2Y/whMl4fpYZKI8pkY9Tl7fI24zx
- tk+8/AB5CHDrwIFhghCdh9N7srhdvkm9zBFtJEgHbM4psWXXtMTL8t8m5RsoqmnVJ+Y4
- Dh/fzMzAvWQSqACWRpxRfGfe9AP//GQyhsi+BPbzbNWf1wXrpWZYwq2v/R3+YbN/EP9f
- KkV8p5rxNWEI3cwZUR11eC97JvN5pPYKjmOArPYCFTJnvKZ3sUVuEDErUhbq4TBbml12
- rHZa7ygbfuPpisOk6m7TxrfIq3/eZa9duJFyxx6CRjE8oaNANktrWvTDN6Tzqrzi1YCM
- pC5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721268645; x=1721873445;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VbcGfVlcPRccLSn7cW2XGxYbsQ71fb9UaUPwLrj6Rew=;
- b=sY83pm2g/8XvojOUwaRziwePh2Xla6jFLfh/HBHGFLwIba+QVYlMVSGKxLcrOQuUT6
- HwejHO5whLeVDTmsmU+1KSYOsYq8IBlishLXlgnJ429tYRGc/3Al+XH50zEA6GzJuXj6
- z3SGyQfyS0qP2vBEvJArrXg5XOsG1lI8E9vpXElZj1JODsCcHYZRUsT2st9X5BXAlX0T
- 0AEVbqgNrBaMG41OSgutLrxRFeQAEbzXvvVSijXAghTMSOdWTLuXTAknW3+TbriO5IV9
- aPWwwEfWjmP8W8GX0QmfXZ35lI/BBsp3M41nOEjEKVJWmIvJ34Oye7ZduAvvOuH93BHX
- 9d8A==
-X-Gm-Message-State: AOJu0YzjfWOwVguYyv9VDNcnO1ih8SS9jqfElDdQkNKUBOLRhGINEaAj
- Q7bfoIYN8fBdPnr1T7xjNzkwHaGBVRw/EzI5p/RdGEF3pd/eqf45yfSdKP/v
-X-Google-Smtp-Source: AGHT+IFmOXxiSL1X/WCh6uRJp8RSkKboVafbohR81AtrcaldDXsu51Capm/1TwJNgtdZkMArql9GBA==
-X-Received: by 2002:a05:6a20:258d:b0:1be:c753:dc65 with SMTP id
- adf61e73a8af0-1c3fdc976camr4593963637.18.1721268645539; 
- Wed, 17 Jul 2024 19:10:45 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.10.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 19:10:45 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/30] target/riscv: Add AMO instructions for Zabha
-Date: Thu, 18 Jul 2024 12:09:49 +1000
-Message-ID: <20240718021012.2057986-8-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
-References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sUGcb-0001O4-5R
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sUGcX-0003fE-N8
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:52 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxzOrfeZhmfGYAAA--.2258S3;
+ Thu, 18 Jul 2024 10:11:43 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxLMfceZhm3jFNAA--.43210S3; 
+ Thu, 18 Jul 2024 10:11:42 +0800 (CST)
+Subject: Re: [PATCH v3 04/17] hw/intc/loongson_ipi: Extract
+ loongson_ipi_common_realize()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Xianglai Li <lixianglai@loongson.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Xiaojuan Yang <yangxiaojuan@loongson.cn>, Song Gao <gaosong@loongson.cn>
+References: <20240717214708.78403-1-philmd@linaro.org>
+ <20240717214708.78403-5-philmd@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <94592136-8e6b-0b99-07f3-e98ea0c4d658@loongson.cn>
+Date: Thu, 18 Jul 2024 10:11:40 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240717214708.78403-5-philmd@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8CxLMfceZhm3jFNAA--.43210S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxArWkGF4DJw4rKrWDGryDArc_yoW5XF47pF
+ 4akan0gF1rXFyDAws3GF9rKFy5Zwn5Jw17WFsFka4rKr9xWw1vvw18K3Wakw17uFyFva1Y
+ vF90kFW3Ka1UCrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.124,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,221 +86,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240709113652.1239-8-zhiwei_liu@linux.alibaba.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu_cfg.h                      |   1 +
- target/riscv/insn32.decode                  |  20 +++
- target/riscv/translate.c                    |   4 +-
- target/riscv/insn_trans/trans_rvzabha.c.inc | 131 ++++++++++++++++++++
- 4 files changed, 155 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index ddbfae37e5..120905a254 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -84,6 +84,7 @@ struct RISCVCPUConfig {
-     bool ext_zaamo;
-     bool ext_zacas;
-     bool ext_zama16b;
-+    bool ext_zabha;
-     bool ext_zalrsc;
-     bool ext_zawrs;
-     bool ext_zfa;
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 60da673153..3bad6372f2 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1021,3 +1021,23 @@ amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
- # *** Zimop may-be-operation extension ***
- mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 1110011 @mop5
- mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 1110011 @mop3
-+
-+# *** Zabhb Standard Extension ***
-+amoswap_b  00001 . . ..... ..... 000 ..... 0101111 @atom_st
-+amoadd_b   00000 . . ..... ..... 000 ..... 0101111 @atom_st
-+amoxor_b   00100 . . ..... ..... 000 ..... 0101111 @atom_st
-+amoand_b   01100 . . ..... ..... 000 ..... 0101111 @atom_st
-+amoor_b    01000 . . ..... ..... 000 ..... 0101111 @atom_st
-+amomin_b   10000 . . ..... ..... 000 ..... 0101111 @atom_st
-+amomax_b   10100 . . ..... ..... 000 ..... 0101111 @atom_st
-+amominu_b  11000 . . ..... ..... 000 ..... 0101111 @atom_st
-+amomaxu_b  11100 . . ..... ..... 000 ..... 0101111 @atom_st
-+amoswap_h  00001 . . ..... ..... 001 ..... 0101111 @atom_st
-+amoadd_h   00000 . . ..... ..... 001 ..... 0101111 @atom_st
-+amoxor_h   00100 . . ..... ..... 001 ..... 0101111 @atom_st
-+amoand_h   01100 . . ..... ..... 001 ..... 0101111 @atom_st
-+amoor_h    01000 . . ..... ..... 001 ..... 0101111 @atom_st
-+amomin_h   10000 . . ..... ..... 001 ..... 0101111 @atom_st
-+amomax_h   10100 . . ..... ..... 001 ..... 0101111 @atom_st
-+amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
-+amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 133550d6e2..4a3e786560 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1083,8 +1083,9 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
- {
-     TCGv dest = dest_gpr(ctx, a->rd);
-     TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
-+    MemOp size = mop & MO_SIZE;
- 
--    if (ctx->cfg_ptr->ext_zama16b) {
-+    if (ctx->cfg_ptr->ext_zama16b && size >= MO_32) {
-         mop |= MO_ATOM_WITHIN16;
-     } else {
-         mop |= MO_ALIGN;
-@@ -1118,6 +1119,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvb.c.inc"
- #include "insn_trans/trans_rvzicond.c.inc"
- #include "insn_trans/trans_rvzacas.c.inc"
-+#include "insn_trans/trans_rvzabha.c.inc"
- #include "insn_trans/trans_rvzawrs.c.inc"
- #include "insn_trans/trans_rvzicbo.c.inc"
- #include "insn_trans/trans_rvzimop.c.inc"
-diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
-new file mode 100644
-index 0000000000..9093a1cfc1
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
-@@ -0,0 +1,131 @@
-+/*
-+ * RISC-V translation routines for the Zabha Standard Extension.
-+ *
-+ * Copyright (c) 2024 Alibaba Group
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#define REQUIRE_ZABHA(ctx) do {           \
-+    if (!ctx->cfg_ptr->ext_zabha) {       \
-+        return false;                     \
-+    }                                     \
-+} while (0)
-+
-+static bool trans_amoswap_b(DisasContext *ctx, arg_amoswap_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_SB);
-+}
-+
-+static bool trans_amoadd_b(DisasContext *ctx, arg_amoadd_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_SB);
-+}
-+
-+static bool trans_amoxor_b(DisasContext *ctx, arg_amoxor_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_SB);
-+}
-+
-+static bool trans_amoand_b(DisasContext *ctx, arg_amoand_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_SB);
-+}
-+
-+static bool trans_amoor_b(DisasContext *ctx, arg_amoor_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_SB);
-+}
-+
-+static bool trans_amomin_b(DisasContext *ctx, arg_amomin_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_SB);
-+}
-+
-+static bool trans_amomax_b(DisasContext *ctx, arg_amomax_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_SB);
-+}
-+
-+static bool trans_amominu_b(DisasContext *ctx, arg_amominu_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_SB);
-+}
-+
-+static bool trans_amomaxu_b(DisasContext *ctx, arg_amomaxu_b *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_SB);
-+}
-+
-+static bool trans_amoswap_h(DisasContext *ctx, arg_amoswap_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TESW);
-+}
-+
-+static bool trans_amoadd_h(DisasContext *ctx, arg_amoadd_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TESW);
-+}
-+
-+static bool trans_amoxor_h(DisasContext *ctx, arg_amoxor_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TESW);
-+}
-+
-+static bool trans_amoand_h(DisasContext *ctx, arg_amoand_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TESW);
-+}
-+
-+static bool trans_amoor_h(DisasContext *ctx, arg_amoor_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TESW);
-+}
-+
-+static bool trans_amomin_h(DisasContext *ctx, arg_amomin_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TESW);
-+}
-+
-+static bool trans_amomax_h(DisasContext *ctx, arg_amomax_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TESW);
-+}
-+
-+static bool trans_amominu_h(DisasContext *ctx, arg_amominu_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TESW);
-+}
-+
-+static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
-+{
-+    REQUIRE_ZABHA(ctx);
-+    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESW);
-+}
--- 
-2.45.2
+On 2024/7/18 上午5:46, Philippe Mathieu-Daudé wrote:
+> From: Bibo Mao <maobibo@loongson.cn>
+> 
+> In preparation to extract common IPI code in few commits,
+> extract loongson_ipi_common_realize().
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> [PMD: Extracted from bigger commit, added commit description]
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/intc/loongson_ipi.c | 25 ++++++++++++++++++-------
+>   1 file changed, 18 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+> index 3b3481c43e..40ac769aad 100644
+> --- a/hw/intc/loongson_ipi.c
+> +++ b/hw/intc/loongson_ipi.c
+> @@ -275,7 +275,7 @@ static const MemoryRegionOps loongson_ipi64_ops = {
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>   };
+>   
+> -static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+> +static void loongson_ipi_common_realize(DeviceState *dev, Error **errp)
+>   {
+>       LoongsonIPIState *s = LOONGSON_IPI(dev);
+>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> @@ -301,20 +301,31 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+>       sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
+>   
+>       s->cpu = g_new0(IPICore, s->num_cpu);
+> -    if (s->cpu == NULL) {
+> -        error_setg(errp, "Memory allocation for IPICore faile");
+Philippe,
+
+Thanks for the whole series, it looks to me. It is split into small 
+patches and adds new option CONFIG_LOONGSON_IPI_COMMON, it is easier to 
+review and compile for multiple targets.
+
+One small nit, do we need keep checking sentence for if (s->cpu == NULL)?
+
+Overall, for the whole series it is ok for me and works well on 
+LoongArch machine.
+
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Tested-by: Bibo Mao <maobibo@loongson.cn>
+
+> +    for (i = 0; i < s->num_cpu; i++) {
+> +        s->cpu[i].ipi = s;
+> +
+> +        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
+> +    }
+> +}
+> +
+> +static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+> +{
+> +    LoongsonIPIState *s = LOONGSON_IPI(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    Error *local_err = NULL;
+> +
+> +    loongson_ipi_common_realize(dev, &local_err);
+> +    if (local_err) {
+> +        error_propagate(errp, local_err);
+>           return;
+>       }
+>   
+> -    for (i = 0; i < s->num_cpu; i++) {
+> -        s->cpu[i].ipi = s;
+> +    for (unsigned i = 0; i < s->num_cpu; i++) {
+>           s->cpu[i].ipi_mmio_mem = g_new0(MemoryRegion, 1);
+>           g_autofree char *name = g_strdup_printf("loongson_ipi_cpu%d_mmio", i);
+>           memory_region_init_io(s->cpu[i].ipi_mmio_mem, OBJECT(dev),
+>                                 &loongson_ipi_core_ops, &s->cpu[i], name, 0x48);
+>           sysbus_init_mmio(sbd, s->cpu[i].ipi_mmio_mem);
+> -
+> -        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
+>       }
+>   }
+>   
+> 
 
 
