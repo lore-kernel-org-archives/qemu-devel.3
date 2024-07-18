@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF26C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73962C3DA61
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNhf-0003Qm-SG; Thu, 18 Jul 2024 05:45:36 -0400
+	id 1sUNhq-0004I8-VM; Thu, 18 Jul 2024 05:45:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhe-0003Lu-FO
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:34 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sUNhn-0003wU-1n
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:43 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhY-0007bj-MI
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:34 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-58c947a6692so617816a12.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:28 -0700 (PDT)
+ id 1sUNhg-0007fn-K8
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:42 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52e97e5a84bso163593e87.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721295927; x=1721900727; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721295935; x=1721900735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cy5Sl4WXq4QMVwT3rabklASKFIpoNgNRc1QNcX2+dVk=;
- b=rOB/PXfqox2Xr7qbdRnSV5XUqXINt7jUdD2nYiM1JR94HDZGlERlTZ5H+HpgC4efla
- WRs6it3Z3oPdgGqPin2FzMtbRgvJ13p64w9OUJC50OD/KNlpNoKSKPm/Hrpevuf9pNLU
- mD1vqNukSijmX+CUNvghL1HC9OzVjvHc0wtH8QG0kP08g7k+QW0gcgQacnHaM4B8Q8e6
- zRwIuD4YOF/0PHGFhRG1j70rGrUsnuY/amzhnHNInLrNHTrmycEoAcUVUDLg5SiKutB9
- 567sFBmwQF9mhO8XsCvIwQXUw2jb2H72/74LXJ6jkIG9N4vFecYohK0P8geWs17kFLNu
- L4ow==
+ bh=zvJgiNwmcThWcFCTBkYzV1Mv+ko91ZQ+foVJXf+2J8s=;
+ b=yKZ7xzVVA3zz+w0bz3Kq6b6nvV7swgD/M7uETtYxSRWz5maB8D4tN9R9AuOGeTa8Gh
+ EksKpUKOJKFWVUx1HYfd6yh19KFG2M8X27bbl7gSBeRd9PlKouWcrsnSc7GoS/DGdBZn
+ KD1ppXsfTkalRGclOwX0NFdpZIJLJOIQptML4S5mUrhdh9fLPk+0HK/vI2Fx5CJPnRvR
+ FQfO88e8f096mxrurl7jLYMgCDRG4m3aTlmy+1hljc4Xy4VFJcbriAAn8hLCCUmOj069
+ kRaQ/mlXI0OiBKb2WoyEjU8rrhXoxRHj+qHgIOzQaOfzw4Z6jB9HEtGfCXsQ2mhZ+mu4
+ 7eMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721295927; x=1721900727;
+ d=1e100.net; s=20230601; t=1721295935; x=1721900735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Cy5Sl4WXq4QMVwT3rabklASKFIpoNgNRc1QNcX2+dVk=;
- b=B1dgX2HCDVj1CrB+NDTip3C4oEgpJgs7ICBbKROSp2M7onk+6ZUcHb9UWI5BPELZZo
- ZNczXrMql4SN2eCnrTJbB0rPwN3qDCCu2QgUodSGJKwt3aeRJr4C6BzhXc4/fhlLsqJb
- Fu73h/gHylWU3qeXmA5HV6xIGA5YDTD9y8lRhyDm39KYFMuIIGUfqjq43YnzwH4Gs9jV
- xo2sa7YpkYetidsWMMTn5lAGWV06lzIGmTpQVRznKaSu/xjIB3HHDY3KqWkyHNdaEue6
- l0kOzjuZXGoeNPHK3oa/vPPrPbYP+X1AR9I0IqVkz61S5ZAceWJDyaUOOKZ3tU4MQiCr
- Hwqg==
-X-Gm-Message-State: AOJu0YwE4+z6xQVIcRuadyqYclzD+lNyQJgKMpeBhsbU5WIMCENuDuXf
- dC3lmNrglrg9irN2Ckh8RPaFTKtYfVgLwduatD5E/WP4Qo4L04KfLBlAc/DDDkI=
-X-Google-Smtp-Source: AGHT+IFLNQqQuEjHyS9ulRMD4m3n/4XCql0unLNVcal5XdH1H8S46BPFW5w0bovQuENPm+8VSIbkOQ==
-X-Received: by 2002:a17:906:a3cc:b0:a77:e2e3:3557 with SMTP id
- a640c23a62f3a-a7a013386b1mr339357566b.57.1721295926809; 
- Thu, 18 Jul 2024 02:45:26 -0700 (PDT)
+ bh=zvJgiNwmcThWcFCTBkYzV1Mv+ko91ZQ+foVJXf+2J8s=;
+ b=AlD27aZhAwt302L7mowj4RtUydQvqhZ7Vh4xH1T0zWfWQAhQSMn4s7FJaV+ogbextM
+ +h8HRdUk2RUzv6zMjSBG9ixREjXVUypnGuZU1nqDtxJblV5YggdntCeefFvhXL2j8f8w
+ AtSVpz/LjpO7Txoe3U15xfJNsb5Fc+L/L4/ihOA38ISfEoC9m3+VyfwUtGVAxYCtPXbb
+ kqkFdGtqSELlpPpR1PIWGrFK1ej8OHKk9WvAlkBbLuRBm83o+7KNsz1KjOhgFWUXru4j
+ maufS13K+8aLy7H0hnw+CmVlC7yMVTimMjHn8KaWCfVLejAXDEl4P43vxNjIbBieyUKS
+ nR8A==
+X-Gm-Message-State: AOJu0YyXfDCODQuv0iUjbaAZbDnex8LSuF6IfN/oKN/APefWkjdVR397
+ K9BlGgyCX1187wo4aLxv93MSg/bgnRvi1SnfV0ryzjZc14c/y3TbzlwP+Pf/fos=
+X-Google-Smtp-Source: AGHT+IGkDnpofRCqEyh9TQ1ep1d6k+xGyj6O5wmjWpiYgxWieKAmCW2Ju6zOzJf897q1BkALLYh68w==
+X-Received: by 2002:ac2:4e0b:0:b0:52e:d0f8:2d43 with SMTP id
+ 2adb3069b0e04-52ee53b6f01mr3409785e87.17.1721295934626; 
+ Thu, 18 Jul 2024 02:45:34 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc7ff89esm539861466b.158.2024.07.18.02.45.24
+ a640c23a62f3a-a79bc5a38d9sm541521566b.25.2024.07.18.02.45.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 02:45:25 -0700 (PDT)
+ Thu, 18 Jul 2024 02:45:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 62C205FA12;
- Thu, 18 Jul 2024 10:45:24 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 2DF765FC6F;
+ Thu, 18 Jul 2024 10:45:25 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -81,26 +81,25 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Simon Hamelin <simon.hamelin@grenoble-inp.org>
-Subject: [PATCH 04/15] plugins/stoptrigger: TCG plugin to stop execution under
- conditions
-Date: Thu, 18 Jul 2024 10:45:12 +0100
-Message-Id: <20240718094523.1198645-5-alex.bennee@linaro.org>
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH 12/15] target/mips: Restrict semihosting to TCG
+Date: Thu, 18 Jul 2024 10:45:20 +0100
+Message-Id: <20240718094523.1198645-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240718094523.1198645-1-alex.bennee@linaro.org>
 References: <20240718094523.1198645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,232 +115,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Hamelin <simon.hamelin@grenoble-inp.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This new plugin allows to stop emulation using conditions on the
-emulation state. By setting this plugin arguments, it is possible
-to set an instruction count limit and/or trigger address(es) to stop at.
-The code returned at emulation exit can be customized.
+Semihosting currently uses the TCG probe_access API. To prepare for
+encoding the TCG dependency in Kconfig, do not enable it unless TCG
+is available.
 
-This plugin demonstrates how someone could stop QEMU execution.
-It could be used for research purposes to launch some code and
-deterministically stop it and understand where its execution flow went.
-
-Co-authored-by: Alexandre Iooss <erdnaxe@crans.org>
-Signed-off-by: Simon Hamelin <simon.hamelin@grenoble-inp.org>
-Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240715081521.19122-2-simon.hamelin@grenoble-inp.org>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240717105723.58965-6-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/tcg-plugins.rst    |  22 +++++
- contrib/plugins/stoptrigger.c | 151 ++++++++++++++++++++++++++++++++++
- contrib/plugins/Makefile      |   1 +
- 3 files changed, 174 insertions(+)
- create mode 100644 contrib/plugins/stoptrigger.c
+ target/mips/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index f7d7b9e3a4..954623f9bf 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -642,6 +642,28 @@ The plugin has a number of arguments, all of them are optional:
-   configuration arguments implies ``l2=on``.
-   (default: N = 2097152 (2MB), B = 64, A = 16)
+diff --git a/target/mips/Kconfig b/target/mips/Kconfig
+index eb19c94c7d..876048b150 100644
+--- a/target/mips/Kconfig
++++ b/target/mips/Kconfig
+@@ -1,6 +1,6 @@
+ config MIPS
+     bool
+-    select SEMIHOSTING
++    imply SEMIHOSTING if TCG
  
-+- contrib/plugins/stoptrigger.c
-+
-+The stoptrigger plugin allows to setup triggers to stop emulation.
-+It can be used for research purposes to launch some code and precisely stop it
-+and understand where its execution flow went.
-+
-+Two types of triggers can be configured: a count of instructions to stop at,
-+or an address to stop at. Multiple triggers can be set at once.
-+
-+By default, QEMU will exit with return code 0. A custom return code can be
-+configured for each trigger using ``:CODE`` syntax.
-+
-+For example, to stop at the 20-th instruction with return code 41, at address
-+0xd4 with return code 0 or at address 0xd8 with return code 42::
-+
-+  $ qemu-system-aarch64 $(QEMU_ARGS) \
-+    -plugin ./contrib/plugins/libstoptrigger.so,icount=20:41,addr=0xd4,addr=0xd8:42 -d plugin
-+
-+The plugin will log the reason of exit, for example::
-+
-+  0xd4 reached, exiting
-+
- Plugin API
- ==========
- 
-diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
-new file mode 100644
-index 0000000000..03ee22f4c6
---- /dev/null
-+++ b/contrib/plugins/stoptrigger.c
-@@ -0,0 +1,151 @@
-+/*
-+ * Copyright (C) 2024, Simon Hamelin <simon.hamelin@grenoble-inp.org>
-+ *
-+ * Stop execution once a given address is reached or if the
-+ * count of executed instructions reached a specified limit
-+ *
-+ * License: GNU GPL, version 2 or later.
-+ *   See the COPYING file in the top-level directory.
-+ */
-+
-+#include <assert.h>
-+#include <glib.h>
-+#include <inttypes.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/* Scoreboard to track executed instructions count */
-+typedef struct {
-+    uint64_t insn_count;
-+} InstructionsCount;
-+static struct qemu_plugin_scoreboard *insn_count_sb;
-+static qemu_plugin_u64 insn_count;
-+
-+static uint64_t icount;
-+static int icount_exit_code;
-+
-+static bool exit_on_icount;
-+static bool exit_on_address;
-+
-+/* Map trigger addresses to exit code */
-+static GHashTable *addrs_ht;
-+
-+static void exit_emulation(int return_code, char *message)
-+{
-+    qemu_plugin_outs(message);
-+    g_free(message);
-+    exit(return_code);
-+}
-+
-+static void exit_icount_reached(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-+    char *msg = g_strdup_printf("icount reached at 0x%" PRIx64 ", exiting\n",
-+                                insn_vaddr);
-+
-+    exit_emulation(icount_exit_code, msg);
-+}
-+
-+static void exit_address_reached(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t insn_vaddr = GPOINTER_TO_UINT(udata);
-+    char *msg = g_strdup_printf("0x%" PRIx64 " reached, exiting\n", insn_vaddr);
-+    int exit_code;
-+
-+    exit_code = GPOINTER_TO_INT(
-+        g_hash_table_lookup(addrs_ht, GUINT_TO_POINTER(insn_vaddr)));
-+
-+    exit_emulation(exit_code, msg);
-+}
-+
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    size_t tb_n = qemu_plugin_tb_n_insns(tb);
-+    for (size_t i = 0; i < tb_n; i++) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-+        gpointer insn_vaddr = GUINT_TO_POINTER(qemu_plugin_insn_vaddr(insn));
-+
-+        if (exit_on_icount) {
-+            /* Increment and check scoreboard for each instruction */
-+            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+            qemu_plugin_register_vcpu_insn_exec_cond_cb(
-+                insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
-+                QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, insn_vaddr);
-+        }
-+
-+        if (exit_on_address) {
-+            if (g_hash_table_contains(addrs_ht, insn_vaddr)) {
-+                /* Exit triggered by address */
-+                qemu_plugin_register_vcpu_insn_exec_cb(
-+                    insn, exit_address_reached, QEMU_PLUGIN_CB_NO_REGS,
-+                    insn_vaddr);
-+            }
-+        }
-+    }
-+}
-+
-+static void plugin_exit(qemu_plugin_id_t id, void *p)
-+{
-+    g_hash_table_destroy(addrs_ht);
-+    qemu_plugin_scoreboard_free(insn_count_sb);
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info, int argc,
-+                                           char **argv)
-+{
-+    addrs_ht = g_hash_table_new(NULL, g_direct_equal);
-+
-+    insn_count_sb = qemu_plugin_scoreboard_new(sizeof(InstructionsCount));
-+    insn_count = qemu_plugin_scoreboard_u64_in_struct(
-+        insn_count_sb, InstructionsCount, insn_count);
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "icount") == 0) {
-+            g_auto(GStrv) icount_tokens = g_strsplit(tokens[1], ":", 2);
-+            icount = g_ascii_strtoull(icount_tokens[0], NULL, 0);
-+            if (icount < 1 || g_strrstr(icount_tokens[0], "-") != NULL) {
-+                fprintf(stderr,
-+                        "icount parsing failed: '%s' must be a positive "
-+                        "integer\n",
-+                        icount_tokens[0]);
-+                return -1;
-+            }
-+            if (icount_tokens[1]) {
-+                icount_exit_code = g_ascii_strtoull(icount_tokens[1], NULL, 0);
-+            }
-+            exit_on_icount = true;
-+        } else if (g_strcmp0(tokens[0], "addr") == 0) {
-+            g_auto(GStrv) addr_tokens = g_strsplit(tokens[1], ":", 2);
-+            uint64_t exit_addr = g_ascii_strtoull(addr_tokens[0], NULL, 0);
-+            int exit_code = 0;
-+            if (addr_tokens[1]) {
-+                exit_code = g_ascii_strtoull(addr_tokens[1], NULL, 0);
-+            }
-+            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
-+                                GINT_TO_POINTER(exit_code));
-+            exit_on_address = true;
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    if (!exit_on_icount && !exit_on_address) {
-+        fprintf(stderr, "'icount' or 'addr' argument missing\n");
-+        return -1;
-+    }
-+
-+    /* Register translation block and exit callbacks */
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-index 449ead1130..98a89d5c40 100644
---- a/contrib/plugins/Makefile
-+++ b/contrib/plugins/Makefile
-@@ -28,6 +28,7 @@ NAMES += hwprofile
- NAMES += cache
- NAMES += drcov
- NAMES += ips
-+NAMES += stoptrigger
- 
- ifeq ($(CONFIG_WIN32),y)
- SO_SUFFIX := .dll
+ config MIPS64
+     bool
 -- 
 2.39.2
 
