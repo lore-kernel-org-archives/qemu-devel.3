@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7476EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 11:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C93C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 11:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUPLc-0002aA-Po; Thu, 18 Jul 2024 07:30:56 -0400
+	id 1sUPNK-0008Ve-Hz; Thu, 18 Jul 2024 07:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUPLa-0002T7-Ft
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 07:30:54 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUPN4-00083g-1c
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 07:32:32 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUPLY-0004Gk-NQ
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 07:30:54 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-36786081ac8so444042f8f.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 04:30:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUPN2-0004Rt-6B
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 07:32:25 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-59f9f59b827so865065a12.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 04:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721302250; x=1721907050; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721302342; x=1721907142; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GC6B5R1pfzY359nD27E0dLm5dNs9vPh+QFw1Nt6VMiE=;
- b=OQrcwxJ86NVX1NDCEaxRLdUTXW7+ZqOuVkXGS/yVDj3mLYrU1ZrFWbhfaVmEXpAK66
- peA2h6jrczXdF8IYv36H3m4LKolmO6KOu1NhyEDpT2zq7eHV9Hfb3gqoYptj//UDPaLG
- Yhz45DEyVqTZkg5Roxmjie/+CWfcXh7yrAIiNrw0UUBvvxYvfvh0BVIW3k8TlIYJIRQt
- H7y9RsKyj4yPAZ2CjGCJRRTA2Q2uR69cWx0QCj7BXgM2sevasFdxT2N8mlJ5Wwdn6iHe
- UZ9JO8JS6FL8zbeKKVdBGMcZrXGh5UmFQIT9axf1L0LS+MeQ8GdfqjoymoA16mIzuMSm
- ioPQ==
+ bh=ryIKyPb7RjkROR33Ga1OGU7ygAznzAr+5J1u0kZSIeU=;
+ b=YbZwzAXgGf+UNyBfWu9CiY1O/Te8UDaqWkcEG+g35UGgC1G1thP0kEVXQ1EuXUEW86
+ SwrQLAhJhcjTXzBWv6OKml2dqk4RhGkIjauFLOVr8KHvSA5jUlWl/rXwDY4MZ40K/IW2
+ LU4rsc6yBpGJ4knZOvHTejipCdMRj/CCVo8He+tDGej05woEUu07csyun3rTd8ciQaZj
+ aj0SJXWBCstCUCIZsEWjOp712+voyXEGwCwBjZSXC/howWYjHH/U6zMrxNCITic3t7At
+ QKRprxaOLjX59H34M+jxokCNkpMsrm3L6aTPWL+qGoYpSn9LhuSe6WrQXLKJXjjvayYS
+ l9Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721302250; x=1721907050;
+ d=1e100.net; s=20230601; t=1721302342; x=1721907142;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GC6B5R1pfzY359nD27E0dLm5dNs9vPh+QFw1Nt6VMiE=;
- b=FDlghVtX7Xq8SwzzSSTNMfpv1cfoeQQvwR9szoTSCj4clBNaLWjLp4U35nS+B0tk8c
- nj7VjyWviYef8XrCIx3aCIuFbCX+hpONh+zhM9sasbvw/eYBgSM1B0D5o4Zl75fIvTGn
- wdao06bcGK0onkUIPpZL5FpOIK/RveBx6rh8t/6oHuR5iSVMQi2wfPIP7/KS5gg/fmNo
- bice7Y5CA/2zlUxXMy8vEXk9/yfoacV4nzDMRt/hDnhN4kWvwwAwj+xkViirNq4k/0PN
- RoTZySfRBtthHXIk93lD3r+iC8Kv8IzMLz9c/BzcbwkW2pVtzytX3YZPG1X/bIzFlBn3
- JKhQ==
+ bh=ryIKyPb7RjkROR33Ga1OGU7ygAznzAr+5J1u0kZSIeU=;
+ b=hcGYzp/xvKMyGP6SKutYASJ5usDoROdnmzbmx70hD6arGr6cFl6zJXAZ0s/NYYvD9m
+ vIR94O1jr6dNvsdeM5nqkhr19pgyXZxx+a3y9rNJBjGcI5miy5owFDH5ubuughma0IDZ
+ zLrktgHyGM6NQh5Rzq6k5T2oI8jY7WfeVPlpv4Vhp1O1f+cHul6COQT14rhG+O4LX2Hc
+ 9plVD/epKwUTyJXoYG6r4cO+xEOFpdzxXO5tUYN7R0jjmmXhp84GeFqQPCjgKc2LQaUp
+ rH8Vh/WAuEiY4WOPm5XoH4BgtmWygOoFlnDN57U4lMcQyrNqSykQZXcAGd4a+NgaJi4u
+ QURg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeUfreh8LXwb8qxJxUHMMyX2hPH4tFCr3BTq+zoQnKCOLrUQoYHpYa3yaeb07r4amkYjaKodA/E7UPCdvygp+eW/Akjls=
-X-Gm-Message-State: AOJu0Yw0wZG7/Bdbd/5zTLkCQXLGIDjMkYMtK91ddCWCImVsKuhWyt3J
- uWU6uu4wlOYm87MYxcec+TIXZntAmmUYTZjo/BWoy1GVjvkRgnJMEtOPG8yOS7v4hQu7+6yksNk
- i
-X-Google-Smtp-Source: AGHT+IHnaweuNNOtyRL96PoI9YJ2x6G7utTh+oysypBnhG9oHH3Jv1lCYu0RAEnJ8nw34bz7/GfNBw==
-X-Received: by 2002:a05:6000:184f:b0:368:334e:2d2a with SMTP id
- ffacd0b85a97d-368334e2e94mr4371298f8f.18.1721302250489; 
- Thu, 18 Jul 2024 04:30:50 -0700 (PDT)
+ AJvYcCX2xL4XJHh0uxXoObRgxif54CLkrp1soqFoB5pQPJ32LVUZXi2FMOm99By4zsmm4AIuvhNBhAJV33L+U4Ut1PpBweWlkuE=
+X-Gm-Message-State: AOJu0YzkgpmiCFQCt4eMvzTde0HKq9VHTcF2q8hdl86kpb4tSCJ6HzTP
+ hP5OPSvLuXBLaKPgem1JVfVice6Bid3aNQp5yYuhK122tfie+jSKFbNRaDMwDgM=
+X-Google-Smtp-Source: AGHT+IG3IJ/43HLG6tMGubR4equSkkgvVKLiD1V1GQijfzXIvwg2UMnDOAvQBKco/yPgxQAYPKw8Mw==
+X-Received: by 2002:a17:906:705:b0:a77:d0a0:ea6d with SMTP id
+ a640c23a62f3a-a7a01145908mr306994966b.24.1721302340856; 
+ Thu, 18 Jul 2024 04:32:20 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.173.113])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368447b4b1esm2478804f8f.107.2024.07.18.04.30.47
+ a640c23a62f3a-a79bc7ff9f0sm548113066b.160.2024.07.18.04.32.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jul 2024 04:30:50 -0700 (PDT)
-Message-ID: <392413e8-dfc7-422e-ae9d-a5ee55c02a08@linaro.org>
-Date: Thu, 18 Jul 2024 13:30:45 +0200
+ Thu, 18 Jul 2024 04:32:20 -0700 (PDT)
+Message-ID: <b9851909-5b68-4dab-9231-044ccd138f80@linaro.org>
+Date: Thu, 18 Jul 2024 13:32:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/15] testing: bump to latest libvirt-ci
+Subject: Re: [PATCH 06/15] tests/plugins: use qemu_plugin_outs for inline stats
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -84,21 +83,21 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
 References: <20240718094523.1198645-1-alex.bennee@linaro.org>
- <20240718094523.1198645-2-alex.bennee@linaro.org>
+ <20240718094523.1198645-7-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240718094523.1198645-2-alex.bennee@linaro.org>
+In-Reply-To: <20240718094523.1198645-7-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,14 +114,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/7/24 11:45, Alex Bennée wrote:
-> This brings in the latest python mappings for the BSD updates.
+> Using bare printf's in plugins is perfectly acceptable but they do
+> rather mess up the output of "make check-tcg". Convert the printfs to
+> use g_string and then output with the plugin output helper which will
+> already be captured to .pout files by the test harness.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   .gitlab-ci.d/cirrus/freebsd-13.vars |  2 +-
->   tests/lcitool/libvirt-ci            |  2 +-
->   tests/vm/generated/freebsd.json     | 14 +++++++-------
->   3 files changed, 9 insertions(+), 9 deletions(-)
+>   tests/plugin/inline.c | 58 ++++++++++++++++++++++++-------------------
+>   1 file changed, 33 insertions(+), 25 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
