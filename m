@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F77C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DC1C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMU4-0002hP-36; Thu, 18 Jul 2024 04:27:28 -0400
+	id 1sUMUa-0005Eq-82; Thu, 18 Jul 2024 04:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMU2-0002dd-PG
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
+ id 1sUMUY-00054K-Jw
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:58 -0400
+Received: from galois.linutronix.de ([193.142.43.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMU0-0002Qc-LA
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721291242;
+ (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
+ id 1sUMUW-0002WC-OD
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:27:58 -0400
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1721291264;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Csfv8UKwQNZgTU8Pypj1wPiCCQtN74A3k50hOXF1azE=;
- b=O8v6mJa6iOQ9swiNmm6fYTFRXQPUBp4+e8MiE4v20WMMm0f/gU/os4EninndNlP42RUPb+
- Nh6BcTHjdEC4dMMCE/A72SUZwXY1/vYuRCoLdJVsESPRUEbaGhOYBanai8mqaM3SzH/qAq
- uAZPTQhOVSC+qafMJ9XuAyOxS61Vylk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-oTKwWBhwNrOPBT9g9iprlg-1; Thu,
- 18 Jul 2024 04:27:20 -0400
-X-MC-Unique: oTKwWBhwNrOPBT9g9iprlg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F3391955D4D; Thu, 18 Jul 2024 08:27:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACC2C1955F40; Thu, 18 Jul 2024 08:27:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3E52321E668A; Thu, 18 Jul 2024 10:27:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
- qemu-devel@nongnu.org,  eblake@redhat.com,  eduardo@habkost.net,
- berrange@redhat.com,  pbonzini@redhat.com,  hreitz@redhat.com,
- kwolf@redhat.com,  yc-core@yandex-team.ru
-Subject: Re: [PATCH v5 3/3] qapi: introduce device-sync-config
-In-Reply-To: <20240625121843.120035-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 25 Jun 2024 15:18:43 +0300")
-References: <20240625121843.120035-1-vsementsov@yandex-team.ru>
- <20240625121843.120035-4-vsementsov@yandex-team.ru>
-Date: Thu, 18 Jul 2024 10:27:12 +0200
-Message-ID: <87cynbm7fj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=JZq3IhRbauWHu6szJR9OYc5OJgdDZeWUwH4DxCktR0M=;
+ b=AhcL29ALkZvGY2d77l2SLgVuZO1ePkQTz2DQFg58mNm5u3EVcT/qwSjsCEIfn/RyyApxvR
+ v3OBP93LF2RBXHV5sZNGX47uoDlWRRSeVloXJbO4SZGXXLjN723mg7NdbIZufGRfQZoMJH
+ oIHEX2K5Ns0WxMsQxIMfdJzF00o0jlBAqMSMW7/ZYSX7SckWv9On4Zm3IH8mgOOT1hLi94
+ ax1PX5i+hMX0S0yi0XqzNfly62SgR8Op/DzWWyUkxe6DSJ4A0rdTyISPywzwQnT0eAXKI/
+ LIsABnpn3jdDygNS2VMThhLehpDlAqQvlHJ1epXqPC0CoCHdBexTIa5LD14abQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1721291264;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JZq3IhRbauWHu6szJR9OYc5OJgdDZeWUwH4DxCktR0M=;
+ b=uvtJQuVarq/S1SwwBRY8dQ7l7rWU6uO9Q9AYxxrCMdPCpvuuCoiGs8GCSoMuxR6csrp42r
+ 8CKJXez5+6GnapDg==
+Date: Thu, 18 Jul 2024 10:27:39 +0200
+Subject: [PATCH v4 2/3] docs/interop/firmware.json: add new enum
+ FirmwareArchitecture
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240718-qapi-firmware-json-v4-2-449ce672db5c@linutronix.de>
+References: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
+In-Reply-To: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Czenczek <hreitz@redhat.com>, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721291263; l=1708;
+ i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
+ bh=Tgea5UFMchTgIegHd+6uSGpAuKHpdth+Ngd2mO6Tpjo=;
+ b=pWy0emCUQngrUYlQEiSM5lqzHZmnEqxJ/DFeEv7fHvnwXLaLJOZkYDV6wHtSFxFnPwB44vHyF
+ ba408KzvTrqCwAxP/soWW7aCmyKqr9nx4xgY8ENeFy9ovtE6nzhPy8p
+X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
+ pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
+Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
+ helo=galois.linutronix.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,22 +88,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Only a small subset of all architectures supported by qemu make use of
+firmware files. Introduce and use a new enum to represent this.
 
-> Add command to sync config from vhost-user backend to the device. It
-> may be helpful when VHOST_USER_SLAVE_CONFIG_CHANGE_MSG failed or not
-> triggered interrupt to the guest or just not available (not supported
-> by vhost-user server).
->
-> Command result is racy if allow it during migration. Let's allow the
-> sync only in RUNNING state.
+This also removes the dependency to machine.json from the global qapi
+definitions.
 
-Is this still accurate?  The runstate_is_running() check is gone in
-v4, the migration_is_running() check remains.
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+---
+ docs/interop/firmware.json | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index a26fe81bf2fe..2eb0be11d595 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -14,7 +14,10 @@
+ # = Firmware
+ ##
+ 
+-{ 'include' : 'machine.json' }
++{ 'pragma': {
++    'member-name-exceptions': [
++        'FirmwareArchitecture' # x86_64
++    ] } }
+ 
+ ##
+ # @FirmwareOSInterface:
+@@ -59,6 +62,28 @@
+ { 'enum' : 'FirmwareDevice',
+   'data' : [ 'flash', 'kernel', 'memory' ] }
+ 
++##
++# @FirmwareArchitecture:
++#
++# Enumerations of architectures for which Qemu uses additional firmware files.
++# The values are a subset of the enum SysEmuTarget.
++#
++# @aarch64: 64-bit Arm.
++#
++# @arm: 32-bit Arm.
++#
++# @i386: 32-bit x86.
++#
++# @loongarch64: 64-bit LoongArch.
++#
++# @x86_64: 64-bit x86.
++#
++# Since: 9.1
++##
++{ 'enum' : 'FirmwareArchitecture',
++  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
++
++
+ ##
+ # @FirmwareTarget:
+ #
+@@ -80,7 +105,7 @@
+ # Since: 3.0
+ ##
+ { 'struct' : 'FirmwareTarget',
+-  'data'   : { 'architecture' : 'SysEmuTarget',
++  'data'   : { 'architecture' : 'FirmwareArchitecture',
+                'machines'     : [ 'str' ] } }
+ 
+ ##
 
-QAPI schema and QMP part:
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+-- 
+2.45.2
 
 
