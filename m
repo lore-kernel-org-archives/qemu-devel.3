@@ -4,72 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14139C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C52C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 10:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNwH-0004Vv-5a; Thu, 18 Jul 2024 06:00:41 -0400
+	id 1sUO0T-0003lw-Kr; Thu, 18 Jul 2024 06:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sUNvr-0003CY-UI
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:00:17 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sUNvo-0003qC-5t
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:00:15 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxTOmo55hmlIoAAA--.2763S3;
- Thu, 18 Jul 2024 18:00:08 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxMMSl55hmYKlNAA--.6729S3; 
- Thu, 18 Jul 2024 18:00:07 +0800 (CST)
-Subject: Re: [PATCH v4 00/18] Reconstruct loongson ipi driver
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>, Huacai Chen
- <chenhuacai@kernel.org>, Xiaojuan Yang <yangxiaojuan@loongson.cn>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240718083842.81199-1-philmd@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <70323100-002b-803f-8f85-23f1bf32c885@loongson.cn>
-Date: Thu, 18 Jul 2024 18:00:18 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sUO0L-0003Ji-AG
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:04:57 -0400
+Received: from mail-4018.proton.ch ([185.70.40.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sUO0H-0004yP-Lw
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 06:04:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=myneves.com;
+ s=protonmail; t=1721297085; x=1721556285;
+ bh=ydZBiB+aMt+VK9g4schrw1wLOZ/oATe5sx2bD6nRMaA=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=MneBP7h095vrPbgAPVaBwMFUS48b/brhXfqG8xsXca602NTmeqOlzn7GEjaBTRe7A
+ LGfjtBcY/z+t1y35QxFzfwcajJejipK+E0eNsdExe6cW8aWeEokX90OVJJTlXImD1R
+ PgvvwdcIcqNdfdK6Kuu/S0OUm8OZMR62L18SES6vKcoIjwoJIJz6Sm2aVCPQOZxD0I
+ NZXUj+H4iXLu0nKiFavHWUwLiI0nfbo5nRQWM4u0V4KARp27zfXaxw4b6AGf36ipXv
+ lZdVN9GVNlQjIdjVKfwmK+4VUN7KnSWqRPSOvbTFoY9QZHYVImtQRL62WyE/VgR4K2
+ 5otPJ1qL+7LlQ==
+Date: Thu, 18 Jul 2024 10:04:40 +0000
+To: Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+From: Paulo Neves <paulo@myneves.com>
+Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com, eblake@redhat.com, berrange@redhat.com,
+ Paulo Neves <ptsneves@gmail.com>
+Subject: Re: [PATCH v3] chardev: add path option for pty backend
+Message-ID: <b8b0a49f-c2ef-421c-a03c-79b1e6d7d208@myneves.com>
+In-Reply-To: <87msmfkp57.fsf@pond.sub.org>
+References: <20240605185050.1678102-1-tavip@google.com>
+ <87r0br8bve.fsf@pond.sub.org>
+ <CAFEAcA8nFz_4M3s4NoWpfhJZ=pxRc92shSKfoL6iN=_Oqmc-tw@mail.gmail.com>
+ <87msmfkp57.fsf@pond.sub.org>
+Feedback-ID: 59941854:user:proton
+X-Pm-Message-ID: 146c7adaea21e7df99aa190dbfede9a07c8159ca
 MIME-Version: 1.0
-In-Reply-To: <20240718083842.81199-1-philmd@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxMMSl55hmYKlNAA--.6729S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZr45CrW5Kr4UJr4rtw13Awc_yoW5GryDpF
- 1akw1a9r43ury7Crn3KrZ8XFW3CF95ua42vF4aka48ur9xXF10v348GFy5Xay7C345Xryq
- qFyrGryUKF17JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
- AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
- tVWrXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
- 8JMxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
- Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
- xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0
- cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
- AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
- 14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jz2NtUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.124,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/alternative;
+ boundary="b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY"
+Received-SPF: pass client-ip=185.70.40.18; envelope-from=paulo@myneves.com;
+ helo=mail-4018.proton.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,69 +73,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/7/18 下午4:38, Philippe Mathieu-Daudé 写道:
-> Since v3:
-> - Use DEFINE_TYPES() macro (unreviewed patch #1)
-> - Update MAINTAINERS
-> - Added Bibo's tags
->
-> Song, since Bibo reviewed/tested, if you provide your
-> Acked-by I can queue that to my next hw-misc PR (pending
-> Jiaxun testing).
->
-> Thanks,
->
-> Phil.
->
-> Bibo Mao (16):
->    hw/intc/loongson_ipi: Access memory in little endian
->    hw/intc/loongson_ipi: Rename LoongsonIPI -> LoongsonIPIState
->    hw/intc/loongson_ipi: Extract loongson_ipi_common_finalize()
->    hw/intc/loongson_ipi: Extract loongson_ipi_common_realize()
->    hw/intc/loongson_ipi: Add TYPE_LOONGSON_IPI_COMMON stub
->    hw/intc/loongson_ipi: Move common definitions to loongson_ipi_common.h
->    hw/intc/loongson_ipi: Move IPICore::mmio_mem to LoongsonIPIState
->    hw/intc/loongson_ipi: Move IPICore structure to loongson_ipi_common.h
->    hw/intc/loongson_ipi: Pass LoongsonIPICommonState to send_ipi_data()
->    hw/intc/loongson_ipi: Add LoongsonIPICommonClass::get_iocsr_as handler
->    hw/intc/loongson_ipi: Add LoongsonIPICommonClass::cpu_by_arch_id
->      handler
->    hw/intc/loongson_ipi: Expose loongson_ipi_core_read/write helpers
->    hw/intc/loongson_ipi: Move common code to loongson_ipi_common.c
->    hw/intc/loongarch_ipi: Add loongarch IPI support
->    hw/loongarch/virt: Replace loongson IPI with loongarch IPI
->    hw/intc/loongson_ipi: Restrict to MIPS
->
-> Philippe Mathieu-Daudé (2):
->    hw/intc/loongson_ipi: Declare QOM types using DEFINE_TYPES() macro
->    hw/intc/loongson_ipi: Remove unused headers
->
->   MAINTAINERS                           |   6 +-
->   include/hw/intc/loongarch_ipi.h       |  25 ++
->   include/hw/intc/loongson_ipi.h        |  50 +---
->   include/hw/intc/loongson_ipi_common.h |  72 ++++++
->   include/hw/loongarch/virt.h           |   1 -
->   hw/intc/loongarch_ipi.c               |  68 +++++
->   hw/intc/loongson_ipi.c                | 355 +++-----------------------
->   hw/intc/loongson_ipi_common.c         | 344 +++++++++++++++++++++++++
->   hw/loongarch/virt.c                   |   4 +-
->   hw/intc/Kconfig                       |   8 +
->   hw/intc/meson.build                   |   2 +
->   hw/loongarch/Kconfig                  |   2 +-
->   12 files changed, 568 insertions(+), 369 deletions(-)
->   create mode 100644 include/hw/intc/loongarch_ipi.h
->   create mode 100644 include/hw/intc/loongson_ipi_common.h
->   create mode 100644 hw/intc/loongarch_ipi.c
->   create mode 100644 hw/intc/loongson_ipi_common.c
->
-A build error occurred with patch 15.
+This is a multi-part message in MIME format.
 
-sed -i  g/Loongarch/LoongArch/g   *.c and *.h
+--b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-For this series:
-Acked-by: Song Gao <gaosong@loongson.cn>
+UGV0ZXIgTWF5ZGVsbCBbPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz5dKG1haWx0bzpwZXRlci5t
+YXlkZWxsQGxpbmFyby5vcmcpIHdyaXRlczoKCj4+IE9uIFRodSwgMTggSnVsIDIwMjQgYXQgMDc6
+MTUsIE1hcmt1cyBBcm1icnVzdGVyCj4+IFs8YXJtYnJ1QHJlZGhhdC5jb20+XShtYWlsdG86YXJt
+YnJ1QHJlZGhhdC5jb20pCj4+IHdyb3RlOgo+Pgo+Pj4gTG9va3MgbGlrZSB0aGlzIG9uZSBmZWxs
+IHRocm91Z2ggdGhlIGNyYWNrcy4KPj4+Cj4+PiBPY3RhdmlhbiBQdXJkaWxhCj4+PiBbPHRhdmlw
+QGdvb2dsZS5jb20+XShtYWlsdG86dGF2aXBAZ29vZ2xlLmNvbSkKPj4+IHdyaXRlczoKPj4+Cj4+
+Pj4gQWRkIHBhdGggb3B0aW9uIHRvIHRoZSBwdHkgY2hhciBiYWNrZW5kIHdoaWNoIHdpbGwgY3Jl
+YXRlIGEgc3ltYm9saWMKPj4+PiBsaW5rIHRvIHRoZSBnaXZlbiBwYXRoIHRoYXQgcG9pbnRzIHRv
+IHRoZSBhbGxvY2F0ZWQgUFRZLgo+Pj4+Cj4+Pj4gVGhpcyBhdm9pZHMgaGF2aW5nIHRvIG1ha2Ug
+UU1QIG9yIEhNUCBtb25pdG9yIHF1ZXJpZXMgdG8gZmluZCBvdXQgd2hhdAo+Pj4+IHRoZSBuZXcg
+UFRZIGRldmljZSBwYXRoIGlzLgo+Pj4KPj4+IFFNUCBjb21tYW5kcyBjaGFyZGV2LWFkZCBhbmQg
+Y2hhcmRldi1jaGFuZ2UgcmV0dXJuIHRoZSBpbmZvcm1hdGlvbiB5b3UKPj4+IHdhbnQ6Cj4+Pgo+
+Pj4gICAgICMgQHB0eTogbmFtZSBvZiB0aGUgc2xhdmUgcHNldWRvdGVybWluYWwgZGV2aWNlLCBw
+cmVzZW50IGlmIGFuZCBvbmx5Cj4+PiAgICAgIyAgICAgaWYgYSBjaGFyZGV2IG9mIHR5cGUgJ3B0
+eScgd2FzIGNyZWF0ZWQKPj4+Cj4+PiBTbyBkb2VzIEhNUCBjb21tYW5kIGNoYXJkZXYtYWRkLiAg
+SE1QIGNoYXJkZXYgYXBwYXJlbnRseSBkb2Vzbid0LCBidXQKPj4+IHRoYXQgY291bGQgYmUgZml4
+ZWQuCj4+Pgo+Pj4gU28sIHRoZSB1c2UgY2FzZSBpcyBiYXNpY2FsbHkgdGhlIGNvbW1hbmQgbGlu
+ZSwgcmlnaHQ/Cj4+Cj4+PiBUaGUgZmVhdHVyZSBmZWVscyByYXRoZXIgZG91YnRmdWwgdG8gbWUs
+IHRvIGJlIGhvbmVzdC4KPj4KPj4gVGhlIGNvbW1hbmQgbGluZSBpcyBhbiBpbXBvcnRhbnQgdXNl
+LWNhc2UsIHRob3VnaC4gTm90IGV2ZXJ5Cj4+IHVzZXIgb2YgUUVNVSBpcyBsaWJ2aXJ0IHdpdGgg
+YSBRTVAvSE1QIGNvbm5lY3Rpb24gcmVhZGlseQo+PiB0byBoYW5kIHRoYXQgdGhleSB3b3VsZCBw
+cmVmZXIgdG8gdXNlIGZvciBhbGwgY29uZmlndXJhdGlvbi4uLgo+Cj4gSW4gZ2VuZXJhbCB5ZXMu
+ICBCdXQgd2hhdCBhcmUgdGhlIHVzZSBjYXNlcyBmb3IgdGhpcyBvbmU/Cj4KPiBUbyBtZSwgc3Bl
+Y2lmeWluZyBwYXRoPS9tdW1ibGUvc3ltbGluayBwbHVzIHRoZSBib3RoZXIgb2YgY2xlYW5pbmcg
+dXAKPiBzdGFsZSBvbmVzIGRvZXNuJ3QgZmVlbCBsaWtlIG11Y2ggb2YgYW4gaW1wcm92ZW1lbnQg
+b3ZlciByZWFkaW5nIHRoZSBwdHkKPiBuYW1lIGZyb20gImluZm8gY2hhcmRldiIuICBJIGd1ZXNz
+IEknbSBtaXNzaW5nIHNvbWV0aGluZy4gIFRlbGwgbWUhCj4KPiBJZiB3ZSBkZWNpZGUgd2Ugd2Fu
+dCB0aGlzLCB0aGVuIHRoZSBRTVAgaW50ZXJmYWNlIG5lZWRzIHRvIGJlIGZpeGVkOgo+IENhbGwg
+dGhlIGFyZ3VtZW50IEBwYXRoIGZvciBjb25zaXN0ZW5jeSwgYW5kIGRvY3VtZW50IGl0IHByb3Bl
+cmx5Lgo+IEFjdHVhbGx5IHN0cmFpZ2h0Zm9yd2FyZCwganVzdCBjcmVhdGUgYSBuZXcgc3RydWN0
+IGluc3RlYWQgb2YgcHJlc3NpbmcKPiBDaGFyZGV2SG9zdGRldiBpbnRvIHNlcnZpY2UuCgpUaGUg
+b3JpZ2luYWwgdXNlIGNhc2Ugd2FzIG5vdCBhYm91dCByZWFkaW5nIHRoZSBwYXRoIGJ1dCBhbGxv
+d2luZyB0aGUgY2FsbGVyIHRvIHNldCB0aGUgc3ltbGluay4gVGhlIGNsZWFuaW5nIHVwIGFuZCBl
+cmdvbm9taWNzIG9mIGhhbmRsaW5nIHRoYXQgcGF0aCBhcmUgYmVzaWRlcyB0aGUgcG9pbnQgb2Yg
+dGhlIHBhdGNoLiBJbiBteSBjYXNlIGl0IHdhcyBhIHBhdGggSSBjb3VsZCBkZWZpbmUgaW4gY29u
+ZmlndXJhdGlvbiBhbmQgbGV0IG90aGVyIHNlcnZpY2VzIHVzZSB0aGF0IGNoYXJkZXYuIE90aGVy
+IHNlcnZpY2VzIHRoYXQgZGlkIG5vdCByZXF1aXJlIGtub3dsZWRnZSBvZiB3aGV0aGVyIHRoZSBQ
+VFkgd2FzIHJlYWwgb3IgZnJvbSBRRU1VIGFuZCB0aHVzIGRpZCBub3Qga25vdyBob3cgdG8gcXVl
+cnkgaXQu
 
-Thanks.
-Song Gao
+--b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+DQogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVu
+dC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiLz4NCiAgPC9oZWFkPg0K
+ICA8Ym9keT4NCiAgICA8c3BhbiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZS13cmFwIj5QZXRlciBN
+YXlkZWxsIDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZjMjM5NkUiIGhyZWY9Im1haWx0bzpwZXRl
+ci5tYXlkZWxsQGxpbmFyby5vcmciPiZsdDtwZXRlci5tYXlkZWxsQGxpbmFyby5vcmcmZ3Q7PC9h
+PiB3cml0ZXM6PC9zcGFuPg0KICAgIDxibG9ja3F1b3RlIHR5cGU9ImNpdGUiIGNpdGU9Im1pZDo4
+N21zbWZrcDU3LmZzZkBwb25kLnN1Yi5vcmciPg0KICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3Rl
+LXByZSIgd3JhcD0iIj48L3ByZT4NCiAgICAgIDxibG9ja3F1b3RlIHR5cGU9ImNpdGUiPg0KICAg
+ICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPk9uIFRodSwgMTggSnVsIDIw
+MjQgYXQgMDc6MTUsIE1hcmt1cyBBcm1icnVzdGVyIDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZj
+MjM5NkUiIGhyZWY9Im1haWx0bzphcm1icnVAcmVkaGF0LmNvbSI+Jmx0O2FybWJydUByZWRoYXQu
+Y29tJmd0OzwvYT4gd3JvdGU6DQo8L3ByZT4NCiAgICAgICAgPGJsb2NrcXVvdGUgdHlwZT0iY2l0
+ZSI+DQogICAgICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5Mb29rcyBs
+aWtlIHRoaXMgb25lIGZlbGwgdGhyb3VnaCB0aGUgY3JhY2tzLg0KDQpPY3RhdmlhbiBQdXJkaWxh
+IDxhIGNsYXNzPSJtb3otdHh0LWxpbmstcmZjMjM5NkUiIGhyZWY9Im1haWx0bzp0YXZpcEBnb29n
+bGUuY29tIj4mbHQ7dGF2aXBAZ29vZ2xlLmNvbSZndDs8L2E+IHdyaXRlczoNCg0KPC9wcmU+DQog
+ICAgICAgICAgPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+DQogICAgICAgICAgICA8cHJlIGNsYXNz
+PSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPkFkZCBwYXRoIG9wdGlvbiB0byB0aGUgcHR5IGNoYXIg
+YmFja2VuZCB3aGljaCB3aWxsIGNyZWF0ZSBhIHN5bWJvbGljDQpsaW5rIHRvIHRoZSBnaXZlbiBw
+YXRoIHRoYXQgcG9pbnRzIHRvIHRoZSBhbGxvY2F0ZWQgUFRZLg0KDQpUaGlzIGF2b2lkcyBoYXZp
+bmcgdG8gbWFrZSBRTVAgb3IgSE1QIG1vbml0b3IgcXVlcmllcyB0byBmaW5kIG91dCB3aGF0DQp0
+aGUgbmV3IFBUWSBkZXZpY2UgcGF0aCBpcy4NCjwvcHJlPg0KICAgICAgICAgIDwvYmxvY2txdW90
+ZT4NCiAgICAgICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPlFNUCBjb21t
+YW5kcyBjaGFyZGV2LWFkZCBhbmQgY2hhcmRldi1jaGFuZ2UgcmV0dXJuIHRoZSBpbmZvcm1hdGlv
+biB5b3UNCndhbnQ6DQoNCiAgICAjIEBwdHk6IG5hbWUgb2YgdGhlIHNsYXZlIHBzZXVkb3Rlcm1p
+bmFsIGRldmljZSwgcHJlc2VudCBpZiBhbmQgb25seQ0KICAgICMgICAgIGlmIGEgY2hhcmRldiBv
+ZiB0eXBlICYjMzk7cHR5JiMzOTsgd2FzIGNyZWF0ZWQNCg0KU28gZG9lcyBITVAgY29tbWFuZCBj
+aGFyZGV2LWFkZC4gIEhNUCBjaGFyZGV2IGFwcGFyZW50bHkgZG9lc24mIzM5O3QsIGJ1dA0KdGhh
+dCBjb3VsZCBiZSBmaXhlZC4NCg0KU28sIHRoZSB1c2UgY2FzZSBpcyBiYXNpY2FsbHkgdGhlIGNv
+bW1hbmQgbGluZSwgcmlnaHQ/DQo8L3ByZT4NCiAgICAgICAgPC9ibG9ja3F1b3RlPg0KICAgICAg
+ICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJlIiB3cmFwPSIiPjwvcHJlPg0KICAgICAgICA8Ymxv
+Y2txdW90ZSB0eXBlPSJjaXRlIj4NCiAgICAgICAgICA8cHJlIGNsYXNzPSJtb3otcXVvdGUtcHJl
+IiB3cmFwPSIiPlRoZSBmZWF0dXJlIGZlZWxzIHJhdGhlciBkb3VidGZ1bCB0byBtZSwgdG8gYmUg
+aG9uZXN0Lg0KPC9wcmU+DQogICAgICAgIDwvYmxvY2txdW90ZT4NCiAgICAgICAgPHByZSBjbGFz
+cz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5UaGUgY29tbWFuZCBsaW5lIGlzIGFuIGltcG9ydGFu
+dCB1c2UtY2FzZSwgdGhvdWdoLiBOb3QgZXZlcnkNCnVzZXIgb2YgUUVNVSBpcyBsaWJ2aXJ0IHdp
+dGggYSBRTVAvSE1QIGNvbm5lY3Rpb24gcmVhZGlseQ0KdG8gaGFuZCB0aGF0IHRoZXkgd291bGQg
+cHJlZmVyIHRvIHVzZSBmb3IgYWxsIGNvbmZpZ3VyYXRpb24uLi4NCjwvcHJlPg0KICAgICAgPC9i
+bG9ja3F1b3RlPg0KICAgICAgPHByZSBjbGFzcz0ibW96LXF1b3RlLXByZSIgd3JhcD0iIj5JbiBn
+ZW5lcmFsIHllcy4gIEJ1dCB3aGF0IGFyZSB0aGUgdXNlIGNhc2VzIGZvciB0aGlzIG9uZT8NCg0K
+VG8gbWUsIHNwZWNpZnlpbmcgcGF0aD0vbXVtYmxlL3N5bWxpbmsgcGx1cyB0aGUgYm90aGVyIG9m
+IGNsZWFuaW5nIHVwDQpzdGFsZSBvbmVzIGRvZXNuJiMzOTt0IGZlZWwgbGlrZSBtdWNoIG9mIGFu
+IGltcHJvdmVtZW50IG92ZXIgcmVhZGluZyB0aGUgcHR5DQpuYW1lIGZyb20gJiMzNDtpbmZvIGNo
+YXJkZXYmIzM0Oy4gIEkgZ3Vlc3MgSSYjMzk7bSBtaXNzaW5nIHNvbWV0aGluZy4gIFRlbGwgbWUh
+DQoNCklmIHdlIGRlY2lkZSB3ZSB3YW50IHRoaXMsIHRoZW4gdGhlIFFNUCBpbnRlcmZhY2UgbmVl
+ZHMgdG8gYmUgZml4ZWQ6DQpDYWxsIHRoZSBhcmd1bWVudCBAcGF0aCBmb3IgY29uc2lzdGVuY3ks
+IGFuZCBkb2N1bWVudCBpdCBwcm9wZXJseS4NCkFjdHVhbGx5IHN0cmFpZ2h0Zm9yd2FyZCwganVz
+dCBjcmVhdGUgYSBuZXcgc3RydWN0IGluc3RlYWQgb2YgcHJlc3NpbmcNCkNoYXJkZXZIb3N0ZGV2
+IGludG8gc2VydmljZS4NCjwvcHJlPg0KICAgIDwvYmxvY2txdW90ZT4NCiAgICA8cD5UaGUgb3Jp
+Z2luYWwgdXNlIGNhc2Ugd2FzIG5vdCBhYm91dCByZWFkaW5nIHRoZSBwYXRoIGJ1dCBhbGxvd2lu
+Zw0KICAgICAgdGhlIGNhbGxlciB0byBzZXQgdGhlIHN5bWxpbmsuIFRoZSBjbGVhbmluZyB1cCBh
+bmQgZXJnb25vbWljcyBvZg0KICAgICAgaGFuZGxpbmcgdGhhdCBwYXRoIGFyZSBiZXNpZGVzIHRo
+ZSBwb2ludCBvZiB0aGUgcGF0Y2guPHNwYW4gc3R5bGU9IndoaXRlLXNwYWNlOiBwcmUtd3JhcCI+
+IEluIG15IGNhc2UgaXQgd2FzIGEgcGF0aCBJIGNvdWxkIGRlZmluZSBpbiBjb25maWd1cmF0aW9u
+IGFuZCBsZXQgb3RoZXIgc2VydmljZXMgdXNlIHRoYXQgY2hhcmRldi4gT3RoZXIgc2VydmljZXMg
+dGhhdCBkaWQgbm90IHJlcXVpcmUga25vd2xlZGdlIG9mIHdoZXRoZXIgdGhlIFBUWSB3YXMgcmVh
+bCBvciBmcm9tIFFFTVUgYW5kIHRodXMgZGlkIG5vdCBrbm93IGhvdyB0byBxdWVyeSBpdC4NCjwv
+c3Bhbj48L3A+DQogIA0KDQo8L2JvZHk+PC9odG1sPg==
+
+
+--b1_xDaT7OcR1Pkv2u02sTkWMTyWpHIgZW2x9NFSrzHZGY--
 
 
