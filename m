@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51115C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AB5C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMWt-0007yw-6N; Thu, 18 Jul 2024 04:30:23 -0400
+	id 1sUMXB-0000ip-Aj; Thu, 18 Jul 2024 04:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUMWn-0007fy-Rf
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMXA-0000fi-FP
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUMWl-0003I3-PC
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUMX9-0003OZ-3d
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:30:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721291414;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1721291438;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RStt/h0TVa29W3A6ePLP6aLkPjmcwqZxsvujCkuw51U=;
- b=Z6yN1O83564hb3YCCWgzLfpsjxZ6iZee/RU6Ykrua+PnM7D1ecdqEI0RYQvktW9H1MCf4w
- N9+5+2hwy7QGBLXpSELEocIs8+s3UdT//7fgqqBpKs8Op4K5EWf2If7VCJuSNGg3iop7Yi
- EH4peG0XfTkf/jFM6VTvheBThdPRvKA=
+ bh=0vjwG1JkGckzMDWyDQPKrhQhAHERlAi00mY6ATMa5Zc=;
+ b=bLa9ZiJspzQCKer847Fj8TnI9vb+aJiFiYJeixxRJdbeuy7T6nqhf6D8E8UEBTBhXO1/N5
+ PIHqG/+2m3mLirry2u6snmnp6IW+ai6fQnY6E9N7ApI9v5ccf3O3GKe+Sm13PZpkMtF085
+ uX1ufzv9xZRnylRmE29/wglxWIQoY5c=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-HeLcppDXPGuW2l-x9UeWKg-1; Thu,
- 18 Jul 2024 04:30:10 -0400
-X-MC-Unique: HeLcppDXPGuW2l-x9UeWKg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-WozhPETtPSqDuWd0ZrcouQ-1; Thu,
+ 18 Jul 2024 04:30:32 -0400
+X-MC-Unique: WozhPETtPSqDuWd0ZrcouQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8DFB1955D4A; Thu, 18 Jul 2024 08:30:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.62])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3ED021955D48; Thu, 18 Jul 2024 08:30:06 +0000 (UTC)
-Date: Thu, 18 Jul 2024 09:30:03 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [PATCH v4 1/3] docs/interop/firmware.json: add new enum
- FirmwareFormat
-Message-ID: <ZpjSi9a8pleWJjK-@redhat.com>
-References: <20240718-qapi-firmware-json-v4-0-449ce672db5c@linutronix.de>
- <20240718-qapi-firmware-json-v4-1-449ce672db5c@linutronix.de>
+ id 799E21955F3D; Thu, 18 Jul 2024 08:30:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 971321955D42; Thu, 18 Jul 2024 08:30:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 512B521E6757; Thu, 18 Jul 2024 10:30:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
+ qemu-devel@nongnu.org,  armbru@redhat.com,  eblake@redhat.com,
+ eduardo@habkost.net,  berrange@redhat.com,  pbonzini@redhat.com,
+ hreitz@redhat.com,  kwolf@redhat.com,  yc-core@yandex-team.ru
+Subject: Re: [PATCH v5 1/3] qdev-monitor: add option to report GenericError
+ from find_device_state
+In-Reply-To: <20240625121843.120035-2-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Tue, 25 Jun 2024 15:18:41 +0300")
+References: <20240625121843.120035-1-vsementsov@yandex-team.ru>
+ <20240625121843.120035-2-vsementsov@yandex-team.ru>
+Date: Thu, 18 Jul 2024 10:30:26 +0200
+Message-ID: <878qxzm7a5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240718-qapi-firmware-json-v4-1-449ce672db5c@linutronix.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -87,31 +85,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 18, 2024 at 10:27:38AM +0200, Thomas Weißschuh wrote:
-> Only a small subset of all blockdev drivers make sense for firmware
-> images. Introduce and use a new enum to represent this.
-> 
-> This also reduces the dependency on firmware.json from the global qapi
-> definitions.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-> ---
->  docs/interop/firmware.json | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Here we just prepare for the following patch, making possible to report
+> GenericError as recommended.
+>
+> This patch doesn't aim to prevent further use of DeviceNotFound by
+> future interfaces:
+>
+>  - find_device_state() is used in blk_by_qdev_id() and qmp_get_blk()
+>    functions, which may lead to spread of DeviceNotFound anyway
+>  - also, nothing prevent simply copy-pasting find_device_state() calls
+>    with false argument
 
+A possible way to reduce the likelihood of further spread:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+1. Rename find_device_state() to find_device_state_legacy().
+
+2. New find_device_state() that reports GenericError.
+
+Could also be done in a follow-up.
+
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+The patch does what it says on the tin, so
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
