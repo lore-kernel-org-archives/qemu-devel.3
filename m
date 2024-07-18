@@ -4,85 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95FC3C3DA61
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA44C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 08:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUMgy-0002bB-69; Thu, 18 Jul 2024 04:40:48 -0400
+	id 1sUMlF-0000nZ-0y; Thu, 18 Jul 2024 04:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUMgt-0002DA-N5
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:40:45 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUMgr-0005QJ-Tf
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 04:40:43 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42793fc0a6dso514615e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 01:40:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721292040; x=1721896840; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oEa6I7jq4J7xWIwW3IaLiJFVerOaIlf2VUVJqiCeS8k=;
- b=EkI3TNYND4ouXxWIcfA3hO6/7EmPQlts1LdzJhvs79/y06GLrUJ3m1j+nFOAmcTcvk
- hkAaUeSGcxiBDIjlml+lvjDuHvy5PoiLSN6T3fQxNrhsvjGZ0FIZG+cyWIGyDWeuiY/7
- Hn2bHMV3TBlA2Ba3xFx0Mv0BbaZ1M+BqK3355qE6kM6EhrKFJQzpaq/Mr2xwqWKcPZtG
- GSf41GGUtsQjXsHD1yBfSmymXlqQRbI/fRHMk4l3dNbyh9ebmt2LQtn01myRG26hABBV
- bwFKNmmiXMLakKFTY+AU3H8DgeuxeFYwz0zG8m0iwq2QfQPsK/Y3Zv4pYWF3hUpegyaV
- 5nVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721292040; x=1721896840;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oEa6I7jq4J7xWIwW3IaLiJFVerOaIlf2VUVJqiCeS8k=;
- b=jLRkAtZnpFGe319M9AtKenCDrYe/bvs25eXxFTjL1a/77mHAvu25YHIHxKUO5AsDHD
- nNFzT2+TyUKuQjv+EWaefvYIfoSfBMYWga0m85Fv5lmMQWxuwcijsIDMF99WVCl5EFRH
- fLCXQoTx0KAzGXpwDxQVInNi/+kwl8fyfC8Jm/wqOSIUz4/5MXM04zjDPfWHSFVkpQAV
- MPvpHt9xtJqG0XV4QeN8hiPPwrNreOkKLTLR2D2mmDwMMVy8OQpPsOaph0PRW/1a3XyS
- nk6eN/jWi/0q7PKyGBikfTaydY5Nsnp0iEUMwEykksDf8ajeBn79JGqq7AHhHX+/61+T
- wJDg==
-X-Gm-Message-State: AOJu0YzzOPmyOecO6XSBIJBZafWBXN3MU4CgPu4LxkFI2CJ4MYCO2SA5
- HaWg03X2IyBPs1UTKwnISxQFTVFKZ0Lm6Dbjq83Xhm+9bmY4rYKrmgNYpYZZOKQs3etkgG6O7rX
- 6X/w=
-X-Google-Smtp-Source: AGHT+IHqdu89LC4jYBEm7QjMK2h/JBqZPIrVzfS9uMRerRAnonUE9JhnXudmdS0h+XAS19yQsWFBiA==
-X-Received: by 2002:a05:600c:3845:b0:426:62a0:eb6b with SMTP id
- 5b1f17b1804b1-427c2cb3bcdmr32992315e9.13.1721292039780; 
- Thu, 18 Jul 2024 01:40:39 -0700 (PDT)
-Received: from localhost.localdomain ([176.187.208.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a6fd5fsm2470165e9.22.2024.07.18.01.40.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jul 2024 01:40:39 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Song Gao <gaosong@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
- Huacai Chen <chenhuacai@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 15/18] hw/intc/loongarch_ipi: Add loongarch IPI support
-Date: Thu, 18 Jul 2024 10:38:39 +0200
-Message-ID: <20240718083842.81199-16-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240718083842.81199-1-philmd@linaro.org>
-References: <20240718083842.81199-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
+ id 1sUMlA-0000Zg-SM; Thu, 18 Jul 2024 04:45:08 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
+ id 1sUMl8-0006Mf-FU; Thu, 18 Jul 2024 04:45:08 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPmb33tplz4w2Q;
+ Thu, 18 Jul 2024 18:45:03 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPmZz30z8z4wxk;
+ Thu, 18 Jul 2024 18:44:59 +1000 (AEST)
+Message-ID: <de851b5c-5983-44f6-955a-6ba71f966c71@kaod.org>
+Date: Thu, 18 Jul 2024 10:44:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
+ memory region of I2C bus
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
+ <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=3riu=OS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,161 +71,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+On 7/18/24 08:49, Jamin Lin wrote:
+> It only support continuous register memory region for all I2C bus.
+> However, the register address of all I2c bus are discontinuous
+> for AST2700.
+> 
+> Ex: the register address of I2C bus for ast2700 as following.
+> 0x100 - 0x17F: Device 0
+> 0x200 - 0x27F: Device 1
+> 0x300 - 0x37F: Device 2
+> 0x400 - 0x47F: Device 3
+> 0x500 - 0x57F: Device 4
+> 0x600 - 0x67F: Device 5
+> 0x700 - 0x77F: Device 6
+> 0x800 - 0x87F: Device 7
+> 0x900 - 0x97F: Device 8
+> 0xA00 - 0xA7F: Device 9
+> 0xB00 - 0xB7F: Device 10
+> 0xC00 - 0xC7F: Device 11
+> 0xD00 - 0xD7F: Device 12
+> 0xE00 - 0xE7F: Device 13
+> 0xF00 – 0xF7F: Device 14
+> 0x1000 – 0x107F: Device 15
+> 
+> Introduce a new class attribute to make user set each I2C bus gap size.
+> Update formula to create all I2C bus register memory regions.
 
-Loongarch IPI is added here, it inherits from class
-TYPE_LOONGSON_IPI_COMMON, and two interfaces get_iocsr_as() and
-cpu_by_arch_id() are added for Loongarch 3A5000 machine. It can
-be used when ipi is emulated in userspace with KVM mode.
+I don't think this is necessary to model. Could we simply increase
+tge register MMIO size for the AST2700 bus model and rely on the
+memops to catch invalid register offsets ?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-[PMD: Rebased and simplified]
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
----
- include/hw/intc/loongarch_ipi.h | 25 ++++++++++++
- hw/intc/loongarch_ipi.c         | 68 +++++++++++++++++++++++++++++++++
- hw/intc/Kconfig                 |  4 ++
- hw/intc/meson.build             |  1 +
- 4 files changed, 98 insertions(+)
- create mode 100644 include/hw/intc/loongarch_ipi.h
- create mode 100644 hw/intc/loongarch_ipi.c
 
-diff --git a/include/hw/intc/loongarch_ipi.h b/include/hw/intc/loongarch_ipi.h
-new file mode 100644
-index 0000000000..d134c9d0c7
---- /dev/null
-+++ b/include/hw/intc/loongarch_ipi.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Loongarch ipi interrupt header files
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef HW_LOONGARCH_IPI_H
-+#define HW_LOONGARCH_IPI_H
-+
-+#include "qom/object.h"
-+#include "hw/intc/loongson_ipi_common.h"
-+
-+#define TYPE_LOONGARCH_IPI  "loongarch_ipi"
-+OBJECT_DECLARE_TYPE(LoongarchIPIState, LoongarchIPIClass, LOONGARCH_IPI)
-+
-+struct LoongarchIPIState {
-+    LoongsonIPICommonState parent_obj;
-+};
-+
-+struct LoongarchIPIClass {
-+    LoongsonIPICommonClass parent_class;
-+};
-+
-+#endif
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-new file mode 100644
-index 0000000000..ccbfad07b7
---- /dev/null
-+++ b/hw/intc/loongarch_ipi.c
-@@ -0,0 +1,68 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Loongarch ipi interrupt support
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/boards.h"
-+#include "hw/intc/loongarch_ipi.h"
-+#include "target/loongarch/cpu.h"
-+
-+static AddressSpace *get_iocsr_as(CPUState *cpu)
-+{
-+    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
-+}
-+
-+static int archid_cmp(const void *a, const void *b)
-+{
-+   CPUArchId *archid_a = (CPUArchId *)a;
-+   CPUArchId *archid_b = (CPUArchId *)b;
-+
-+   return archid_a->arch_id - archid_b->arch_id;
-+}
-+
-+static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
-+{
-+    CPUArchId apic_id, *found_cpu;
-+
-+    apic_id.arch_id = id;
-+    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
-+                        ms->possible_cpus->len,
-+                        sizeof(*ms->possible_cpus->cpus),
-+                        archid_cmp);
-+
-+    return found_cpu;
-+}
-+
-+static CPUState *loongarch_cpu_by_arch_id(int64_t arch_id)
-+{
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    CPUArchId *archid;
-+
-+    archid = find_cpu_by_archid(machine, arch_id);
-+    if (archid) {
-+        return CPU(archid->cpu);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
-+{
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
-+
-+    licc->get_iocsr_as = get_iocsr_as;
-+    licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
-+}
-+
-+static const TypeInfo loongarch_ipi_types[] = {
-+    {
-+        .name               = TYPE_LOONGARCH_IPI,
-+        .parent             = TYPE_LOONGSON_IPI_COMMON,
-+        .class_init         = loongson_ipi_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(loongarch_ipi_types)
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index a2a0fdca85..dd405bdb5d 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -94,6 +94,10 @@ config LOONGSON_IPI
-     bool
-     select LOONGSON_IPI_COMMON
- 
-+config LOONGARCH_IPI
-+    bool
-+    select LOONGSON_IPI_COMMON
-+
- config LOONGARCH_PCH_PIC
-     bool
-     select UNIMP
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index a09a527207..f4d81eb8e4 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -71,6 +71,7 @@ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_XIVE'],
- specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI_COMMON', if_true: files('loongson_ipi_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
--- 
-2.41.0
+Thanks,
+
+C.
+
+
+
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/i2c/aspeed_i2c.c         | 3 ++-
+>   include/hw/i2c/aspeed_i2c.h | 1 +
+>   2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 7d5a53c4c0..462ad78a13 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1011,6 +1011,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+>       AspeedI2CState *s = ASPEED_I2C(dev);
+>       AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(s);
+> +    uint32_t reg_offset = aic->reg_size + aic->reg_gap_size;
+>   
+>       sysbus_init_irq(sbd, &s->irq);
+>       memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_i2c_ctrl_ops, s,
+> @@ -1033,7 +1034,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>               return;
+>           }
+>   
+> -        memory_region_add_subregion(&s->iomem, aic->reg_size * (i + offset),
+> +        memory_region_add_subregion(&s->iomem, reg_offset * (i + offset),
+>                                       &s->busses[i].mr);
+>       }
+>   
+> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+> index 065b636d29..422ee0e298 100644
+> --- a/include/hw/i2c/aspeed_i2c.h
+> +++ b/include/hw/i2c/aspeed_i2c.h
+> @@ -275,6 +275,7 @@ struct AspeedI2CClass {
+>   
+>       uint8_t num_busses;
+>       uint8_t reg_size;
+> +    uint32_t reg_gap_size;
+>       uint8_t gap;
+>       qemu_irq (*bus_get_irq)(AspeedI2CBus *);
+>   
 
 
