@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF45C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AAE3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:47:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNhk-0003n1-Td; Thu, 18 Jul 2024 05:45:40 -0400
+	id 1sUNhn-0003wR-2f; Thu, 18 Jul 2024 05:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhi-0003e5-PK
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:38 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1sUNhh-0003Wk-82
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:37 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhd-0007dx-Fz
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:38 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e38027so504739a12.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:32 -0700 (PDT)
+ id 1sUNhb-0007dA-Ko
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:37 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a77c1658c68so62453066b.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721295932; x=1721900732; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721295930; x=1721900730; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/y96L2Gm/13AJ5RhhShqLNnx0hUTQIR5fDVZBbdIxXM=;
- b=yOgMT/ZjMuDtH1ZTaQF/WMemtnEGu8H7XJaJsSq7C0ScksGdA4WmNu/EjxhJCQTYH9
- DgOSjzemBeb3A670wuHSBZZyVIof11L60BQ8keSGCBzwLk6XpQkhdcMHAvIlvAWSdGD5
- r6cVWJ49NIshYiFPXld2n+eV1dVV1zbTc0HBj+RHZ69ycfAQ0p/a9RdL/yoPvipy63Oq
- 5nPTRgHKTLmZcSSa3JPQJTNDoE3rlLIVDarBy2HE7I1zX7SD33ZE/lLBP5AkjRvrRRcC
- IKNK3p4pEGf0IqiKsnPyXNwLXK/Zb9YjnjsxIYJmBlCDBelbGqHog7b/kYNNH2EGtGdz
- 7P2Q==
+ bh=2cfYyhSqeU6lh61PrlYddSdndv7Xezjj0qPHaR6Sb3o=;
+ b=dMAHTH8xBY2EHU2pf2H0Y3UDAFhH+mmoc4LWBCoD5uaIX2u82EerR+l2OLNW7a7PzD
+ XNz7XPSvfTuF5GEzbkFamRjon/rBu0tsnhbFszqN1O+BKsT+E5iz6pdqiPd16J+RjgS6
+ u8XUHhQo8fEzFpj6Be2M7PBu3BabKF2Y2fJrdz/Y0vHgxpbGytRdBii0PL2p2FGpXPrk
+ RTO9zEBn7G7ozP6rHb5A5l+M48/vw/Yoyv4v4HqjYs7zTYsyQ5+LU23aPHoFJhCDycFn
+ rTOE/uLSFzjXlJUUGIZZF2+4VUCGXfyIZaHG/pU0VjTXJ1L/P5jZZzFyzbMWQp9uJpLO
+ eMdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721295932; x=1721900732;
+ d=1e100.net; s=20230601; t=1721295930; x=1721900730;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/y96L2Gm/13AJ5RhhShqLNnx0hUTQIR5fDVZBbdIxXM=;
- b=ueIj6TlYJEKoEHoWTnTlHIy3SFCspm8Mq7Majf/oyByUDsbNCSwQ542b1jLUfsPeBs
- kp8J3QEpEbDFydkf0xEkru6y7uFlQChgLuws2xjqrFKokioEX98RGSA9gWL9TdsWnMy0
- pSwtDWKnEiOF3uKzDMLzgOdC//jNorQ6mJRKVystBWGdkm2F8eAO86ZqMEeSeyjY4VSE
- IaeusiRgthPnAIe0gHvpPsdq9s+zJxIsPJUeEabzvVaWOxKqlUFzBvn2funoeObfi1Dq
- 185WGgo41qBP2+IFOpZNq0vxK48xk1O6GVapOf7G8AuNsCsWucJ1acCDsAzJx5EF+pL2
- 0jqg==
-X-Gm-Message-State: AOJu0YxGh6F0gY9vojt0ug58/5mD2+uGTWAQiOueyJg/ZxALW8ihw1vA
- djaDnQ5WuyMWHWGTO0p/kF3bdG1h9dC8dH3SGYEquOlnw1K3L7wHrclafKVDNjw=
-X-Google-Smtp-Source: AGHT+IEMtgQWa2SWM8LGmU7v2S283Kd75ZJnOHlBnAjVQMBqZRp26CAKLl31k2ZBNLXywoJsS8YIvw==
-X-Received: by 2002:a17:906:5fd7:b0:a77:d8c9:ae23 with SMTP id
- a640c23a62f3a-a7a013bf072mr309693766b.59.1721295931807; 
- Thu, 18 Jul 2024 02:45:31 -0700 (PDT)
+ bh=2cfYyhSqeU6lh61PrlYddSdndv7Xezjj0qPHaR6Sb3o=;
+ b=ZLcQWS7h8esotnh3WVM6Q5IPymf7C879Rj3bCnk+lOvcPS/MOu+0x1C+vPSTD1+6FO
+ 5zfQlfDbRXcN6vsFkvhsBd0SFSjRGBNVsi0Ng2+oLDAeh6zUvJVxyEUEZn6siwVYbrcF
+ N1BzDWpYTPsxXyy9o0POZeZG4YRj1ycb2fFyuoyhQqYskKrAvh0bUwR5CUuuvXSBlKLP
+ axiEJUOJARVVUKX7lgmfQqGidXgdp6PGMgBKezlXiyr71N4vMHiE0hD3m+pgbY6jtFVl
+ j0LUdTjUru0j/QqG77gY0lJZ3zpM5f/qyskv++kZKPmFYuB6QCjecy9zzsARbzcs9VZE
+ B8Zg==
+X-Gm-Message-State: AOJu0Yz4THDfUqJrgTaol2cbsLpPDMWpXrNgK44yBf74LatG0pvkDmrI
+ 1sDtbfBni8gbBJQWJGugBVItYUG3dB8ZPyLZxxA+tT+qYiRih3CxFc1mQqrtgK8=
+X-Google-Smtp-Source: AGHT+IEz+wd0NIA66sJzZOQgn+jHutMe3W/oA0yxyNS/fVUDbi7YoClWPrtzZCWXVj50rxlTpbhQhw==
+X-Received: by 2002:a17:906:fd8b:b0:a77:a630:cf89 with SMTP id
+ a640c23a62f3a-a7a00ef47a6mr364181766b.0.1721295929671; 
+ Thu, 18 Jul 2024 02:45:29 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a79bc5b7f28sm535903766b.70.2024.07.18.02.45.26
+ a640c23a62f3a-a79bc5b7e50sm537503566b.69.2024.07.18.02.45.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 18 Jul 2024 02:45:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9404F5FA39;
+ by draig.lan (Postfix) with ESMTP id AB4EC5FA3B;
  Thu, 18 Jul 2024 10:45:24 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,18 +80,20 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 06/15] tests/plugins: use qemu_plugin_outs for inline stats
-Date: Thu, 18 Jul 2024 10:45:14 +0100
-Message-Id: <20240718094523.1198645-7-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 07/15] plugins/execlog.c: correct dump of registers values
+Date: Thu, 18 Jul 2024 10:45:15 +0100
+Message-Id: <20240718094523.1198645-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240718094523.1198645-1-alex.bennee@linaro.org>
 References: <20240718094523.1198645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,113 +116,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using bare printf's in plugins is perfectly acceptable but they do
-rather mess up the output of "make check-tcg". Convert the printfs to
-use g_string and then output with the plugin output helper which will
-already be captured to .pout files by the test harness.
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
+Register values are dumped as 'sz' chunks of two nibbles in the execlog
+plugin, sz was 1 too big.
+
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240620083805.73603-1-frederic.petrot@univ-grenoble-alpes.fr>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/plugin/inline.c | 58 ++++++++++++++++++++++++-------------------
- 1 file changed, 33 insertions(+), 25 deletions(-)
+ contrib/plugins/execlog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/plugin/inline.c b/tests/plugin/inline.c
-index cd63827b7d..73dde99578 100644
---- a/tests/plugin/inline.c
-+++ b/tests/plugin/inline.c
-@@ -71,10 +71,12 @@ static void stats_insn(void)
-     const uint64_t cond_track_left = qemu_plugin_u64_sum(insn_cond_track_count);
-     const uint64_t conditional =
-         cond_num_trigger * cond_trigger_limit + cond_track_left;
--    printf("insn: %" PRIu64 "\n", expected);
--    printf("insn: %" PRIu64 " (per vcpu)\n", per_vcpu);
--    printf("insn: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
--    printf("insn: %" PRIu64 " (cond cb)\n", conditional);
-+    g_autoptr(GString) stats = g_string_new("");
-+    g_string_append_printf(stats, "insn: %" PRIu64 "\n", expected);
-+    g_string_append_printf(stats, "insn: %" PRIu64 " (per vcpu)\n", per_vcpu);
-+    g_string_append_printf(stats, "insn: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    g_string_append_printf(stats, "insn: %" PRIu64 " (cond cb)\n", conditional);
-+    qemu_plugin_outs(stats->str);
-     g_assert(expected > 0);
-     g_assert(per_vcpu == expected);
-     g_assert(inl_per_vcpu == expected);
-@@ -91,10 +93,12 @@ static void stats_tb(void)
-     const uint64_t cond_track_left = qemu_plugin_u64_sum(tb_cond_track_count);
-     const uint64_t conditional =
-         cond_num_trigger * cond_trigger_limit + cond_track_left;
--    printf("tb: %" PRIu64 "\n", expected);
--    printf("tb: %" PRIu64 " (per vcpu)\n", per_vcpu);
--    printf("tb: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
--    printf("tb: %" PRIu64 " (conditional cb)\n", conditional);
-+    g_autoptr(GString) stats = g_string_new("");
-+    g_string_append_printf(stats, "tb: %" PRIu64 "\n", expected);
-+    g_string_append_printf(stats, "tb: %" PRIu64 " (per vcpu)\n", per_vcpu);
-+    g_string_append_printf(stats, "tb: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    g_string_append_printf(stats, "tb: %" PRIu64 " (conditional cb)\n", conditional);
-+    qemu_plugin_outs(stats->str);
-     g_assert(expected > 0);
-     g_assert(per_vcpu == expected);
-     g_assert(inl_per_vcpu == expected);
-@@ -107,9 +111,11 @@ static void stats_mem(void)
-     const uint64_t per_vcpu = qemu_plugin_u64_sum(count_mem);
-     const uint64_t inl_per_vcpu =
-         qemu_plugin_u64_sum(count_mem_inline);
--    printf("mem: %" PRIu64 "\n", expected);
--    printf("mem: %" PRIu64 " (per vcpu)\n", per_vcpu);
--    printf("mem: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    g_autoptr(GString) stats = g_string_new("");
-+    g_string_append_printf(stats, "mem: %" PRIu64 "\n", expected);
-+    g_string_append_printf(stats, "mem: %" PRIu64 " (per vcpu)\n", per_vcpu);
-+    g_string_append_printf(stats, "mem: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
-+    qemu_plugin_outs(stats->str);
-     g_assert(expected > 0);
-     g_assert(per_vcpu == expected);
-     g_assert(inl_per_vcpu == expected);
-@@ -118,6 +124,7 @@ static void stats_mem(void)
- static void plugin_exit(qemu_plugin_id_t id, void *udata)
- {
-     const unsigned int num_cpus = qemu_plugin_num_vcpus();
-+    g_autoptr(GString) stats = g_string_new("");
-     g_assert(num_cpus == max_cpu_index + 1);
- 
-     for (int i = 0; i < num_cpus ; ++i) {
-@@ -135,20 +142,21 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
-             qemu_plugin_u64_get(insn_cond_num_trigger, i);
-         const uint64_t insn_cond_left =
-             qemu_plugin_u64_get(insn_cond_track_count, i);
--        printf("cpu %d: tb (%" PRIu64 ", %" PRIu64
--               ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
--               ") | "
--               "insn (%" PRIu64 ", %" PRIu64
--               ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
--               ") | "
--               "mem (%" PRIu64 ", %" PRIu64 ")"
--               "\n",
--               i,
--               tb, tb_inline,
--               tb_cond_trigger, cond_trigger_limit, tb_cond_left,
--               insn, insn_inline,
--               insn_cond_trigger, cond_trigger_limit, insn_cond_left,
--               mem, mem_inline);
-+        g_string_printf(stats, "cpu %d: tb (%" PRIu64 ", %" PRIu64
-+                        ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
-+                        ") | "
-+                        "insn (%" PRIu64 ", %" PRIu64
-+                        ", %" PRIu64 " * %" PRIu64 " + %" PRIu64
-+                        ") | "
-+                        "mem (%" PRIu64 ", %" PRIu64 ")"
-+                        "\n",
-+                        i,
-+                        tb, tb_inline,
-+                        tb_cond_trigger, cond_trigger_limit, tb_cond_left,
-+                        insn, insn_inline,
-+                        insn_cond_trigger, cond_trigger_limit, insn_cond_left,
-+                        mem, mem_inline);
-+        qemu_plugin_outs(stats->str);
-         g_assert(tb == tb_inline);
-         g_assert(insn == insn_inline);
-         g_assert(mem == mem_inline);
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 371db97eb1..1c1601cc0b 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -101,7 +101,7 @@ static void insn_check_regs(CPU *cpu)
+             GByteArray *temp = reg->last;
+             g_string_append_printf(cpu->last_exec, ", %s -> 0x", reg->name);
+             /* TODO: handle BE properly */
+-            for (int i = sz; i >= 0; i--) {
++            for (int i = sz - 1; i >= 0; i--) {
+                 g_string_append_printf(cpu->last_exec, "%02x",
+                                        reg->new->data[i]);
+             }
 -- 
 2.39.2
 
