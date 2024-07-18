@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142FDC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD209C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKyz-0000Ng-3C; Thu, 18 Jul 2024 02:51:17 -0400
+	id 1sUKyd-0006nW-Ik; Thu, 18 Jul 2024 02:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyj-0007He-R1; Thu, 18 Jul 2024 02:51:03 -0400
+ id 1sUKyb-0006cE-Tm; Thu, 18 Jul 2024 02:50:53 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyh-0004VA-Kq; Thu, 18 Jul 2024 02:51:00 -0400
+ id 1sUKyZ-0004VA-VG; Thu, 18 Jul 2024 02:50:53 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
- 2024 14:50:18 +0800
+ 2024 14:50:17 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 18 Jul 2024 14:50:18 +0800
+ Transport; Thu, 18 Jul 2024 14:50:17 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,9 +33,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 13/15] aspeed/soc: support I2C for AST2700
-Date: Thu, 18 Jul 2024 14:49:23 +0800
-Message-ID: <20240718064925.1846074-14-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 10/15] hw/i2c/aspeed: support Tx/Rx buffer 64 bits address
+Date: Thu, 18 Jul 2024 14:49:20 +0800
+Message-ID: <20240718064925.1846074-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
@@ -66,80 +66,155 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add I2C model for AST2700 I2C support.
-The I2C controller registers base address is start at
-0x14C0_F000 and its address space is 0x2000.
+ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
+And the base address of dram is "0x4 00000000" which
+is 64bits address.
 
-The AST2700 I2C controller has one source INTC per bus.
-I2C buses interrupt are connected to GICINT130_INTC
-from bit 0 to bit 15.
-I2C bus 0 is connected to GICINT130_INTC at bit 0.
-I2C bus 15 is connected to GICINT130_INTC at bit 15.
+It have "Master DMA Mode Tx Buffer Base Address[39:32](0x60)"
+and "Master DMA Mode Rx Buffer Base Address[39:32](0x64)"
+to save the high part physical address of Tx/Rx buffer address
+for master mode.
+
+It have "Slave DMA Mode Tx Buffer Base Address[39:32](0x68)" and
+"Slave DMA Mode Rx Buffer Base Address[39:32](0x6C)" to
+save the high part physical address of Tx/Rx buffer address
+for slave mode.
+
+Ex: Tx buffer address for master mode [39:0]
+The "Master DMA Mode Tx Buffer Base Address[39:32](0x60)"
+bits [7:0] which corresponds the bits [39:32] of the 64 bits address of
+the Tx buffer address.
+The "Master DMA Mode Tx Buffer Base Address(0x30)" bits [31:0]
+which corresponds the bits [31:0] of the 64 bits address
+of the Tx buffer address.
+
+Introduce a new has_dma64 class attribute and new registers of
+new mode to support DMA 64 bits dram address.
+Update new mode register number to 28.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ hw/i2c/aspeed_i2c.c         | 48 +++++++++++++++++++++++++++++++++++++
+ include/hw/i2c/aspeed_i2c.h | 12 +++++++++-
+ 2 files changed, 59 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 0bbd66110b..e84141c13b 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -61,6 +61,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_GIC_DIST]      =  0x12200000,
-     [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_ADC]       =  0x14C00000,
-+    [ASPEED_DEV_I2C]       =  0x14C0F000,
- };
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index 29d400ac93..b48f250e08 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -140,6 +140,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
+ {
++    AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+     uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
  
- #define AST2700_MAX_IRQ 288
-@@ -374,6 +375,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
-     object_initialize_child(obj, "adc", &s->adc, typename);
+     switch (offset) {
+@@ -170,6 +171,16 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CM_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+         break;
++    case A_I2CM_DMA_TX_ADDR_HI:
++    case A_I2CM_DMA_RX_ADDR_HI:
++    case A_I2CS_DMA_TX_ADDR_HI:
++    case A_I2CS_DMA_RX_ADDR_HI:
++        if (!aic->has_dma64) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
++            __func__);
++            value = -1;
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+@@ -731,6 +742,42 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
+         qemu_log_mask(LOG_UNIMP, "%s: Slave mode DMA TX is not implemented\n",
+                       __func__);
+         break;
 +
-+    snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
-+    object_initialize_child(obj, "i2c", &s->i2c, typename);
++    case A_I2CM_DMA_TX_ADDR_HI:
++        if (!aic->has_dma64) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
++                          __func__);
++            break;
++        }
++        bus->regs[R_I2CM_DMA_TX_ADDR_HI] = FIELD_EX32(value,
++                                                      I2CM_DMA_TX_ADDR_HI,
++                                                      ADDR_HI);
++        break;
++    case A_I2CM_DMA_RX_ADDR_HI:
++        if (!aic->has_dma64) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
++                          __func__);
++            break;
++        }
++        bus->regs[R_I2CM_DMA_RX_ADDR_HI] = FIELD_EX32(value,
++                                                      I2CM_DMA_RX_ADDR_HI,
++                                                      ADDR_HI);
++        break;
++    case A_I2CS_DMA_TX_ADDR_HI:
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: Slave mode DMA TX Addr high is not implemented\n",
++                      __func__);
++        break;
++    case A_I2CS_DMA_RX_ADDR_HI:
++        if (!aic->has_dma64) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
++                          __func__);
++            break;
++        }
++        bus->regs[R_I2CS_DMA_RX_ADDR_HI] = FIELD_EX32(value,
++                                                      I2CS_DMA_RX_ADDR_HI,
++                                                      ADDR_HI);
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
+                       __func__, offset);
+@@ -1553,6 +1600,7 @@ static void aspeed_2700_i2c_class_init(ObjectClass *klass, void *data)
+     aic->bus_pool_base = aspeed_2500_i2c_bus_pool_base;
+     aic->has_dma = true;
+     aic->mem_size = 0x10000;
++    aic->has_dma64 = true;
  }
  
- /*
-@@ -457,6 +461,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc);
-     g_autofree char *sram_name = NULL;
-+    qemu_irq irq;
-+    struct gic_intc_orgate_info orgate_info;
+ static const TypeInfo aspeed_2700_i2c_info = {
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+index 4f23dc10c3..2c4c81bd20 100644
+--- a/include/hw/i2c/aspeed_i2c.h
++++ b/include/hw/i2c/aspeed_i2c.h
+@@ -38,7 +38,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+ #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
+ #define ASPEED_I2C_BUS_POOL_SIZE 0x20
+ #define ASPEED_I2C_OLD_NUM_REG 11
+-#define ASPEED_I2C_NEW_NUM_REG 22
++#define ASPEED_I2C_NEW_NUM_REG 28
  
-     /* Default boot region (SPI memory or ROMs) */
-     memory_region_init(&s->spi_boot_container, OBJECT(s),
-@@ -639,6 +645,27 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
+ #define A_I2CD_M_STOP_CMD       BIT(5)
+ #define A_I2CD_M_RX_CMD         BIT(3)
+@@ -227,6 +227,15 @@ REG32(I2CS_DMA_LEN_STS, 0x4c)
+     FIELD(I2CS_DMA_LEN_STS, TX_LEN, 0, 13)
+ REG32(I2CC_DMA_ADDR, 0x50)
+ REG32(I2CC_DMA_LEN, 0x54)
++/* DMA 64bits */
++REG32(I2CM_DMA_TX_ADDR_HI, 0x60)
++    FIELD(I2CM_DMA_TX_ADDR_HI, ADDR_HI, 0, 7)
++REG32(I2CM_DMA_RX_ADDR_HI, 0x64)
++    FIELD(I2CM_DMA_RX_ADDR_HI, ADDR_HI, 0, 7)
++REG32(I2CS_DMA_TX_ADDR_HI, 0x68)
++    FIELD(I2CS_DMA_TX_ADDR_HI, ADDR_HI, 0, 7)
++REG32(I2CS_DMA_RX_ADDR_HI, 0x6c)
++    FIELD(I2CS_DMA_RX_ADDR_HI, ADDR_HI, 0, 7)
  
-+    /* I2C */
-+    object_property_set_link(OBJECT(&s->i2c), "dram", OBJECT(s->dram_mr),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
-+    aspeed_soc_ast2700_get_intc_orgate(s, ASPEED_DEV_I2C, &orgate_info);
-+    for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
-+        /*
-+         * The AST2700 I2C controller has one source INTC per bus.
-+         * I2C buses interrupt are connected to GICINT130_INTC
-+         * from bit 0 to bit 15.
-+         * I2C bus 0 is connected to GICINT130_INTC at bit 0.
-+         * I2C bus 15 is connected to GICINT130_INTC at bit 15.
-+         */
-+        irq = qdev_get_gpio_in(DEVICE(&a->intc.orgates[orgate_info.index]),
-+                               orgate_info.int_num + i);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
-+    }
-+
-     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
-     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
-     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+ struct AspeedI2CState;
+ 
+@@ -292,6 +301,7 @@ struct AspeedI2CClass {
+     bool has_dma;
+     bool has_share_pool;
+     uint64_t mem_size;
++    bool has_dma64;
+ };
+ 
+ static inline bool aspeed_i2c_is_new_mode(AspeedI2CState *s)
 -- 
 2.34.1
 
