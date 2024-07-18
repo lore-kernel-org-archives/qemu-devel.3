@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F513C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A1B9C3DA6A
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 09:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUNhi-0003dD-Ms; Thu, 18 Jul 2024 05:45:38 -0400
+	id 1sUNht-0004Ur-M2; Thu, 18 Jul 2024 05:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhe-0003Mq-Mx
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:34 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ id 1sUNhp-00046n-39
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:45 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUNhY-0007bP-L5
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:34 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2eefc3d707dso7507161fa.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:28 -0700 (PDT)
+ id 1sUNhj-0007hG-FM
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 05:45:44 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-52ea929ea56so253290e87.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 02:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721295926; x=1721900726; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721295937; x=1721900737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9fK9wM/QALdoRYcPahbnEbwp8pC6VCEMrlhDYV6cnZU=;
- b=Hw+4REFP/OjxJaxIzK6Boh0wq06h91sCJ27Zr5FZ4e2QQvw64ZIUlTdztQD7KZQuzp
- zqoK8/ZDd4QlbPOL32VE5lfTCyAoP9xd+CWkGuoC5VJNbho7p9wkbO12PgI3e2e6KNl2
- uMSvX7OPehv6O2p44BNpDQdzkk4xKDrxOOiBgeoRgM43XeFAkWlNESSZMGGrWsmHS54j
- bQCkxdUkrz5f3E51O6Zwf+LCJWR1p5auwPM/1iMFT9pZOeSf8GfShbe+UT32+95exK3T
- p2EH/vOmKcuLfDcUjeQX70Dv9sVvXFJm/uHDxXUBOmUv5HCRm/PMO5i7EUg7swa8e+pz
- sOFg==
+ bh=ylkt+dork9PKLTjjXHJbOq2whhnT3rDmt5DUEGl1o4o=;
+ b=ipfBhn7cBlC500LwXpTMDBzFYLz/lG0mLuRRqk3rxLWPaIR9M0ioHd4jjsqIBAk4o9
+ hQwuTI2XZway+WXMNTOwTMQI/WOmP4YpKkE6NAd14XEMrIBgDuC/61ce2omVk9YXhMsJ
+ 6n/1kxjTi9pntef73FcGKSKmq/smY7XTnnw5jW40yUsikV82kSauibqrXarg+hV5pH5d
+ dnsQktlelQjZl6HWtt9ARFuBrjHnG8AKcQVtfALCO1vQe4T37mR355AePJRYctYCdD07
+ 611Gze+KXMqueQ+uKCaJ0MS2x228Xuc+X0K2wR+11hf5tPn2xmLQDvXX+79C3QHXxhvz
+ JCRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721295926; x=1721900726;
+ d=1e100.net; s=20230601; t=1721295937; x=1721900737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9fK9wM/QALdoRYcPahbnEbwp8pC6VCEMrlhDYV6cnZU=;
- b=lDjALLVwkJOnvYUo6ntPqQU9Q6roaEriSEMftEMeYOxMOmqxuqDiy98ztYGmVuAhal
- IyZAETCguW6OkDq+slnW0Z1O6ZSNxB4ceYQ4ZC1iek2UFUIZUhr80ivo5Jwgqg7MkB5k
- edBOtPMCJMaCWLGUlbuJGuCfdE54UhxSFXVk3oE4Cy2+ZvgYtGmTJUGaWozeDLYGZuAb
- 1Lis7lA6IoPbcCUXVblZwO2ofJwG2ZoKK43GS1VwLhF61RztGQMac+adEI8gMY31f+wU
- u8DmhUPQgdQ2+73CaQDikNa7nn1ic3iA4e1bYDeR7QOHd2oRtGz/vl8pzkAxY2+6yuDx
- UO4g==
-X-Gm-Message-State: AOJu0YyrP0e6z5PxOvHsSNOp1C8AxZBjyGnweOVQGV42YTdD7VQrU87q
- k4rwv0RogAJQ+kM0gMG5IQxhKWSPNk2OvUPheP+6ujjLyeKO3u3pK1Qb5XXWRyo=
-X-Google-Smtp-Source: AGHT+IF/+XQmkK9rfUbjAIlD8dfodmMqLckxl++yXE+/1wVTorCVEWh9kUHOhGAaNQK0v9ej3uyFXw==
-X-Received: by 2002:a2e:3502:0:b0:2ee:7a71:6e3b with SMTP id
- 38308e7fff4ca-2ef05c99152mr12055521fa.27.1721295925742; 
- Thu, 18 Jul 2024 02:45:25 -0700 (PDT)
+ bh=ylkt+dork9PKLTjjXHJbOq2whhnT3rDmt5DUEGl1o4o=;
+ b=gDkRlvvZvU5jqFuq90jfKNvWDmHsdurfTQoBxFvy0QfqEtAcf62u5KlTp7HoYaoJi0
+ FWStn4kaAF5Y5ja5CO3BDf1RH22pEv7GPf1wzQlDS8ORcZZA6ur0kKXvVdRJZg5h3200
+ 4w0IFz9Splwrrs9QY/MphjceYKGJQg5vpEB0KAlSGnYRXB/U3rRdNbVUHIgmZWC8/qJB
+ Y7j+6I67G67XBuZ8h9kC7sBy+i0tICeeI941W0qy7SsoEk+QVP69qWwsHvRq1WanOYhg
+ NMRVAhe7UERAzvtP5B7K7bJaz/jHeaGaMf/mojnr1gSRhemKMS6nOSSpWf8lYv1caQhS
+ NZSQ==
+X-Gm-Message-State: AOJu0YyBtKpsKsEh5dHgvD+LkaECF6ja9i0sKDYnVpwXIWpPQYDeOWCV
+ T/HJvhaD3y/leZzC+Bw/jpbw8EP2mryGraezyo8i7na4HeqbPWkGTwlnPFa2zKs=
+X-Google-Smtp-Source: AGHT+IFYR7suPnUMmr6prBjb756y5egUzEjTRbRx/2xnnFB+/+Zbmh1gGUfvplTvIoD5cVL2krCpIQ==
+X-Received: by 2002:a05:6512:a8d:b0:52c:d5ac:d42 with SMTP id
+ 2adb3069b0e04-52ee53a76a1mr4011463e87.9.1721295937215; 
+ Thu, 18 Jul 2024 02:45:37 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5a21662e2f3sm295410a12.40.2024.07.18.02.45.24
+ a640c23a62f3a-a79bc5a3584sm539375166b.45.2024.07.18.02.45.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 02:45:24 -0700 (PDT)
+ Thu, 18 Jul 2024 02:45:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2BD625F929;
- Thu, 18 Jul 2024 10:45:24 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6D0865FDDA;
+ Thu, 18 Jul 2024 10:45:25 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -80,19 +80,18 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH 02/15] tests/avocado: Remove non-working sparc leon3 test
-Date: Thu, 18 Jul 2024 10:45:10 +0100
-Message-Id: <20240718094523.1198645-3-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH 15/15] semihosting: Restrict to TCG
+Date: Thu, 18 Jul 2024 10:45:23 +0100
+Message-Id: <20240718094523.1198645-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240718094523.1198645-1-alex.bennee@linaro.org>
 References: <20240718094523.1198645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,80 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The test has been marked as broken more than 4 years ago, and
-so far nobody ever cared to fix it. Thus let's simply remove it
-now ... if somebody ever needs it again, they can restore the
-file from an older version of QEMU.
+Semihosting currently uses the TCG probe_access API.
+It is pointless to have it in the binary when TCG isn't.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Clément Chigot <chigot@adacore.com>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240710111755.60584-1-thuth@redhat.com>
-[AJB: fix MAINTAINERS]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240717105723.58965-9-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS                          |  1 -
- tests/avocado/machine_sparc_leon3.py | 37 ----------------------------
- 2 files changed, 38 deletions(-)
- delete mode 100644 tests/avocado/machine_sparc_leon3.py
+ semihosting/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d9811458c..d5ff6c2498 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1727,7 +1727,6 @@ S: Maintained
- F: hw/sparc/leon3.c
- F: hw/*/grlib*
- F: include/hw/*/grlib*
--F: tests/avocado/machine_sparc_leon3.py
+diff --git a/semihosting/Kconfig b/semihosting/Kconfig
+index eaf3a20ef5..fbe6ac87f9 100644
+--- a/semihosting/Kconfig
++++ b/semihosting/Kconfig
+@@ -1,6 +1,7 @@
  
- S390 Machines
- -------------
-diff --git a/tests/avocado/machine_sparc_leon3.py b/tests/avocado/machine_sparc_leon3.py
-deleted file mode 100644
-index e61b223185..0000000000
---- a/tests/avocado/machine_sparc_leon3.py
-+++ /dev/null
-@@ -1,37 +0,0 @@
--# Functional test that boots a Leon3 machine and checks its serial console.
--#
--# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later. See the COPYING file in the top-level directory.
--
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado import skip
--
--
--class Leon3Machine(QemuSystemTest):
--
--    timeout = 60
--
--    @skip("Test currently broken")
--    # A Window Underflow exception occurs before booting the kernel,
--    # and QEMU exit calling cpu_abort(), which makes this test to fail.
--    def test_leon3_helenos_uimage(self):
--        """
--        :avocado: tags=arch:sparc
--        :avocado: tags=machine:leon3_generic
--        :avocado: tags=binfmt:uimage
--        """
--        kernel_url = ('http://www.helenos.org/releases/'
--                      'HelenOS-0.6.0-sparc32-leon3.bin')
--        kernel_hash = 'a88c9cfdb8430c66650e5290a08765f9bf049a30'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        self.vm.set_console()
--        self.vm.add_args('-kernel', kernel_path)
--
--        self.vm.launch()
--
--        wait_for_console_pattern(self, 'Copyright (c) 2001-2014 HelenOS project')
--        wait_for_console_pattern(self, 'Booting the kernel ...')
+ config SEMIHOSTING
+        bool
++       depends on TCG
+ 
+ config ARM_COMPATIBLE_SEMIHOSTING
+        bool
 -- 
 2.39.2
 
