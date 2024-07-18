@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639F8C41513
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD75C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUGd4-000422-LS; Wed, 17 Jul 2024 22:12:22 -0400
+	id 1sUGd1-0003DU-FP; Wed, 17 Jul 2024 22:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGcc-0001WE-I1
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:55 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sUGcN-0000S6-Og
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:43 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGca-0003gB-KL
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:54 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1fbda48631cso10510785ad.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:11:52 -0700 (PDT)
+ id 1sUGcL-0003Y2-LY
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:39 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1fc49c1f3e5so3127705ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721268711; x=1721873511; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721268696; x=1721873496; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qlNSgnVZ4HEEVn2121aI1NCT2/j02sjH6kZ9iFY5oL4=;
- b=QwNdppPEzT/HqzGzxrZKzt85MurMwGi0djYwaU5NVKJXb4p5rAAgUCp5aMJyhl3GcH
- zV0d6yWAxQsQO8QkQ2rJxGaAO9AJaG/XD98UfWb38i5RDYQUw1APs2uJWJWKKD+X7Uls
- DqIDbGIVBZx7OgE3tHqzPEmRvLpeuxCyKOo4cv7kPGFDFhcYqYc4Albv0YZIV98wl674
- bdD59yYfHtt0XSOHoRiegFbCFIi1aGTpQT+8I1mvrl32869DZ09Nl639ODdRprNg8ArU
- wEW+MpwwWig002dVecbJWaPI/wt95YoAsl4ecwrdjjBOE+Ndzq8q9nU6AFYxsFDkrfPE
- glOg==
+ bh=E8cWbKkT7M84MGGAu2FLVm64KRcLw5vpyDYslYBj4tE=;
+ b=NnCYTEu4pSC9X2bicFdYNo6ShW8jpKuDbGhTe6wj89L2Q05M7m5W/z4F8Lm/QS0LUU
+ o07viCfjeyJzo5e9Ak1wLGWhzkB+8Zah0VwzELSMrSMhiJlhVSW17z6HSNgulhPA2nEy
+ nRqkbrnlnQITcHWAOSZ61wyMY75yXsv888rD3mnc8U+hER4p7hujhxjQGLVX7bVnhQAj
+ Pdhn7Ml+CaTgIKSGhxrzz+kxMyzF88RBdoIYDDaGY78FSThWCTclu5siCt2n8Q33A1Te
+ Tryj8MPZvYOgL3Zr3bqg/5wVs+b/Zocf+SujfuKFZxADjbsgubqYw2ZvVq7e6jtHSisJ
+ 8xYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721268711; x=1721873511;
+ d=1e100.net; s=20230601; t=1721268696; x=1721873496;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qlNSgnVZ4HEEVn2121aI1NCT2/j02sjH6kZ9iFY5oL4=;
- b=BYTlOBwLROgFXVaJL0pNeu/ga0GRw3phq8Axc7lrHG8Oi5pjEOeaCjNyPmMd7u4aAH
- k2yhBmA6n4a4NE+4TE43Mg4ff0VMvz0+ClSxoZAnJznZiK1CDB9EjARrAdLZ4RuNH97f
- dF5x39E7TBJmeHG0uvnIuCivX6o59hgV87gcWZ7KN0Ga7WoFGhs+hZ2UnImaoT6b5lev
- 7XSXxTY1Fc6QVZAkkLGGX4s7zkasUTpBUMaH+XxOEJEjagIZGx4aBtuNQWefBWA2U6MZ
- DZ3y3waLM0Vf1wiWJwjDXMJtPJQuYC4MwwuZqEy8OIOO11/RqpbCQjkq7e1CMnlT+uei
- 6TVw==
-X-Gm-Message-State: AOJu0YxdM6RypaU4CbOS8EtUFK8ucncmR3h2KTzc1ZnGhy01233TDavz
- ojBnF1HHnvYRWnQFwQRkzirUSoKsNtvjXJUP2LkyHRfXmgRO08ul/taadTJc
-X-Google-Smtp-Source: AGHT+IHJyN/ElwxSILR/gr97mjo2ja2gSSkpsotPzAWT/AfeFvN7U+KLTrNSmEbxjj9E3XXO7qMyww==
-X-Received: by 2002:a17:902:cec2:b0:1fb:24ea:fe29 with SMTP id
- d9443c01a7336-1fc5b62125emr23484105ad.15.1721268710800; 
- Wed, 17 Jul 2024 19:11:50 -0700 (PDT)
+ bh=E8cWbKkT7M84MGGAu2FLVm64KRcLw5vpyDYslYBj4tE=;
+ b=djRI3MkmOGLuLi2OuX1y9hMJAB9vz1pr8IqoCoWhteQLxwOXGOY3VQCnIxeCltoAvR
+ cssAUF1CnRFb/E8rUzEFCM7uBd4W8UtMzJtLuUKTikJ/lpbPYaCpgLeV3O/ntpd5G2jk
+ jUwu+fPDq6hpbcrbE9FS+zt3iCfi30GhK1RX73oORpDXdqFys7J3yxbl9+eETVfuuDuv
+ bRQBi60GhSfmtSkRD0Ftpl/XqLf8KP7N87+ed3hgfPldYcUu/q4FpeRmseYHxtinDQqS
+ K968zUXnkaDiKuI54pbx8alsR6xEIzgIr1wgMnCrxqD5eC4BZ3hdOG7G/vzL/f6RaGsE
+ gMxw==
+X-Gm-Message-State: AOJu0YzN+3pK1b5ZGKUdphtNpRcYc3nAECaCohaNo+AZ5WqEthomd4Qm
+ cQkPDf1Xl+RundTQYBUjLHEBy5YHy5AYMtj33hqfr+wpBQOhlzEDqSn6NUU8
+X-Google-Smtp-Source: AGHT+IGmSpFJZhzDezMU4xo0dalYdR5wapFOpxhZFivPHcluNSXFNOyCNdNvXtuPt893/eHHULcO2A==
+X-Received: by 2002:a17:902:ea04:b0:1fb:9a83:4496 with SMTP id
+ d9443c01a7336-1fc4e11f2e5mr31108875ad.2.1721268695773; 
+ Wed, 17 Jul 2024 19:11:35 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.11.47
+ d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.11.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 19:11:50 -0700 (PDT)
+ Wed, 17 Jul 2024 19:11:35 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Conor Dooley <conor@kernel.org>, Anup Patel <apatel@ventanamicro.com>,
+Cc: alistair23@gmail.com, Rajnesh Kanwal <rkanwal@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 29/30] hw/riscv/virt.c: re-insert and deprecate 'riscv,
- delegate'
-Date: Thu, 18 Jul 2024 12:10:11 +1000
-Message-ID: <20240718021012.2057986-30-alistair.francis@wdc.com>
+Subject: [PULL 24/30] target/riscv: Start counters from both mhpmcounter and
+ mcountinhibit
+Date: Thu, 18 Jul 2024 12:10:06 +1000
+Message-ID: <20240718021012.2057986-25-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
 References: <20240718021012.2057986-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,78 +100,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-Commit b1f1e9dcfa renamed 'riscv,delegate' to 'riscv,delegation' since
-it is the correct name as per dt-bindings, and the absence of the
-correct name will result in validation fails when dumping the dtb and
-using dt-validate.
+Currently we start timer counter from write_mhpmcounter path only
+without checking for mcountinhibit bit. This changes adds mcountinhibit
+check and also programs the counter from write_mcountinhibit as well.
 
-But this change has a side-effect: every other firmware available that
-is AIA capable is using 'riscv,delegate', and it will fault/misbehave if
-this property isn't present. The property was added back in QEMU 7.0,
-meaning we have 2 years of firmware development using the wrong
-property.
+When a counter is stopped using mcountinhibit we simply update
+the value of the counter based on current host ticks and save
+it for future reads.
 
-Re-introducing 'riscv,delegate' while keeping 'riscv,delegation' allows
-older firmwares to keep booting with the 'virt' machine.
-'riscv,delegate' is then marked for future deprecation with its use
-being discouraged from now on.
+We don't need to disable running timer as pmu_timer_trigger_irq
+will discard the interrupt if the counter has been inhibited.
 
-Cc: Conor Dooley <conor@kernel.org>
-Cc: Anup Patel <apatel@ventanamicro.com>
-Fixes: b1f1e9dcfa ("hw/riscv/virt.c: aplic DT: rename prop to 'riscv, delegation'")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240715090455.145888-1-dbarboza@ventanamicro.com>
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240711-smcntrpmf_v7-v8-10-b7c38ae7b263@rivosinc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/about/deprecated.rst | 11 +++++++++++
- hw/riscv/virt.c           |  9 +++++++++
- 2 files changed, 20 insertions(+)
+ target/riscv/csr.c | 75 ++++++++++++++++++++++++++++++++--------------
+ target/riscv/pmu.c |  3 +-
+ 2 files changed, 54 insertions(+), 24 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 20b7a17cf0..88f0f03786 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -479,6 +479,17 @@ versions, aliases will point to newer CPU model versions
- depending on the machine type, so management software must
- resolve CPU model aliases before starting a virtual machine.
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index d6c5b73afd..bb6ac33ac2 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1077,8 +1077,9 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+     uint64_t mhpmctr_val = val;
  
-+RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-+the AIA APLIC support.  The property changed name during the review
-+process in Linux and the correct name ended up being
-+"riscv,delegation".  Changing the DT property name will break all
-+available firmwares that are using the current (wrong) name.  The
-+property is kept as is in 9.1, together with "riscv,delegation", to
-+give more time for firmware developers to change their code.
-+
- Migration
- ---------
+     counter->mhpmcounter_val = val;
+-    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+-        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
++    if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
++        (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
++         riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
+         counter->mhpmcounter_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
+                                                                 ctr_idx, false);
+         if (ctr_idx > 2) {
+@@ -1106,8 +1107,9 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
  
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index bc0893e087..9981e0f6c9 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -651,6 +651,15 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
-         qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
-                                aplic_child_phandle, 0x1,
-                                VIRT_IRQCHIP_NUM_SOURCES);
-+        /*
-+         * DEPRECATED_9.1: Compat property kept temporarily
-+         * to allow old firmwares to work with AIA. Do *not*
-+         * use 'riscv,delegate' in new code: use
-+         * 'riscv,delegation' instead.
-+         */
-+        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
-+                               aplic_child_phandle, 0x1,
-+                               VIRT_IRQCHIP_NUM_SOURCES);
+     counter->mhpmcounterh_val = val;
+     mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
+-    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+-        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
++    if (!get_field(env->mcountinhibit, BIT(ctr_idx)) &&
++        (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
++         riscv_pmu_ctr_monitor_instructions(env, ctr_idx))) {
+         counter->mhpmcounterh_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
+                                                                  ctr_idx, true);
+         if (ctr_idx > 2) {
+@@ -2170,31 +2172,60 @@ static RISCVException write_mcountinhibit(CPURISCVState *env, int csrno,
+     int cidx;
+     PMUCTRState *counter;
+     RISCVCPU *cpu = env_archcpu(env);
++    uint32_t present_ctrs = cpu->pmu_avail_ctrs | COUNTEREN_CY | COUNTEREN_IR;
++    target_ulong updated_ctrs = (env->mcountinhibit ^ val) & present_ctrs;
++    uint64_t mhpmctr_val, prev_count, curr_count;
+ 
+     /* WARL register - disable unavailable counters; TM bit is always 0 */
+-    env->mcountinhibit =
+-        val & (cpu->pmu_avail_ctrs | COUNTEREN_CY | COUNTEREN_IR);
++    env->mcountinhibit = val & present_ctrs;
+ 
+     /* Check if any other counter is also monitoring cycles/instructions */
+     for (cidx = 0; cidx < RV_MAX_MHPMCOUNTERS; cidx++) {
+-            counter = &env->pmu_ctrs[cidx];
+-        if (get_field(env->mcountinhibit, BIT(cidx)) && (val & BIT(cidx))) {
+-            /*
+-             * Update the counter value for cycle/instret as we can't stop the
+-             * host ticks. But we should show the current value at this moment.
+-             */
+-            if (riscv_pmu_ctr_monitor_cycles(env, cidx) ||
+-                riscv_pmu_ctr_monitor_instructions(env, cidx)) {
+-                counter->mhpmcounter_val =
+-                    riscv_pmu_ctr_get_fixed_counters_val(env, cidx, false) -
+-                                           counter->mhpmcounter_prev +
+-                                           counter->mhpmcounter_val;
++        if (!(updated_ctrs & BIT(cidx)) ||
++            (!riscv_pmu_ctr_monitor_cycles(env, cidx) &&
++            !riscv_pmu_ctr_monitor_instructions(env, cidx))) {
++            continue;
++        }
++
++        counter = &env->pmu_ctrs[cidx];
++
++        if (!get_field(env->mcountinhibit, BIT(cidx))) {
++            counter->mhpmcounter_prev =
++                riscv_pmu_ctr_get_fixed_counters_val(env, cidx, false);
++            if (riscv_cpu_mxl(env) == MXL_RV32) {
++                counter->mhpmcounterh_prev =
++                    riscv_pmu_ctr_get_fixed_counters_val(env, cidx, true);
++            }
++
++            if (cidx > 2) {
++                mhpmctr_val = counter->mhpmcounter_val;
+                 if (riscv_cpu_mxl(env) == MXL_RV32) {
+-                    counter->mhpmcounterh_val =
+-                        riscv_pmu_ctr_get_fixed_counters_val(env, cidx, true) -
+-                                                counter->mhpmcounterh_prev +
+-                                                counter->mhpmcounterh_val;
++                    mhpmctr_val = mhpmctr_val |
++                            ((uint64_t)counter->mhpmcounterh_val << 32);
+                 }
++                riscv_pmu_setup_timer(env, mhpmctr_val, cidx);
++            }
++        } else {
++            curr_count = riscv_pmu_ctr_get_fixed_counters_val(env, cidx, false);
++
++            mhpmctr_val = counter->mhpmcounter_val;
++            prev_count = counter->mhpmcounter_prev;
++            if (riscv_cpu_mxl(env) == MXL_RV32) {
++                uint64_t tmp =
++                    riscv_pmu_ctr_get_fixed_counters_val(env, cidx, true);
++
++                curr_count = curr_count | (tmp << 32);
++                mhpmctr_val = mhpmctr_val |
++                    ((uint64_t)counter->mhpmcounterh_val << 32);
++                prev_count = prev_count |
++                    ((uint64_t)counter->mhpmcounterh_prev << 32);
++            }
++
++            /* Adjust the counter for later reads. */
++            mhpmctr_val = curr_count - prev_count + mhpmctr_val;
++            counter->mhpmcounter_val = mhpmctr_val;
++            if (riscv_cpu_mxl(env) == MXL_RV32) {
++                counter->mhpmcounterh_val = mhpmctr_val >> 32;
+             }
+         }
+     }
+diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+index ac648cff8d..63420d9f36 100644
+--- a/target/riscv/pmu.c
++++ b/target/riscv/pmu.c
+@@ -285,8 +285,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
      }
  
-     riscv_socket_fdt_write_id(ms, aplic_name, socket);
+     ctr_idx = GPOINTER_TO_UINT(value);
+-    if (!riscv_pmu_counter_enabled(cpu, ctr_idx) ||
+-        get_field(env->mcountinhibit, BIT(ctr_idx))) {
++    if (!riscv_pmu_counter_enabled(cpu, ctr_idx)) {
+         return -1;
+     }
+ 
 -- 
 2.45.2
 
