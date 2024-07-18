@@ -4,104 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1FBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 16:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E05DC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUUA3-0007Y0-FT; Thu, 18 Jul 2024 12:39:19 -0400
+	id 1sUUfU-0003iM-QU; Thu, 18 Jul 2024 13:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sUUA0-0007Py-U0; Thu, 18 Jul 2024 12:39:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sUU9y-0005Lt-Iy; Thu, 18 Jul 2024 12:39:16 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46IFQhGx008958;
- Thu, 18 Jul 2024 16:38:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=m
- PtCw3ld4PLHJyeYccLdHjF+2yvusU/yXuwSSgmBbl4=; b=L0auPZ0hoick+LYGt
- M5yYXasb+NAcr6ulJQD2tNiJY8LAcXlHlW7cMiwCdVFKtnvlInVsvSFTUC3MUhk9
- cvcZVYUWG+NVApetg8VoTKa6cp2NSsl64xTiy5VRapByf3SEHQ6B964UogCT+aEx
- K3yDvgcFS3BhuyuIrspsPIXO0sVEv9cXkgZ3iyy7Wowqjr3n6c3VtUO9MRK2/TKd
- Umsh1P1dzpcJJ1+jG7H6xM6zreuFnY2KTrGh3lJJfJW6yplo1s5XyiigxLKjtZjo
- wmGHlg87fzIBxnmmKHdpdYF0Y/zDLcGpO0Cu+hwhLh3jeXC2jNHAAFNI6Igl+nWa
- 5Ibkg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40f3y9gf3c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Jul 2024 16:38:25 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46IGcONb020354;
- Thu, 18 Jul 2024 16:38:24 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40f3y9gf3b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Jul 2024 16:38:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46IGKtmE006082; Thu, 18 Jul 2024 16:38:24 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40dwkmjmyk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Jul 2024 16:38:24 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46IGcKZW28639598
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Jul 2024 16:38:22 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E1E058063;
- Thu, 18 Jul 2024 16:38:20 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BA4558057;
- Thu, 18 Jul 2024 16:38:20 +0000 (GMT)
-Received: from [9.10.80.165] (unknown [9.10.80.165])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Jul 2024 16:38:20 +0000 (GMT)
-Message-ID: <4d5b20b4-7c78-40d4-9844-fa013e0eb8ec@linux.ibm.com>
-Date: Thu, 18 Jul 2024 11:38:19 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUUfS-0003hd-7l
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:11:46 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sUUfP-00066Q-Q0
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:11:45 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-52ea7bdde68so685254e87.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 10:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721322701; x=1721927501; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G/OBOfPbk42kH7Hu611jiPMGjP4hY2WibEGi6Y5Hr08=;
+ b=JXCLV2rSFuIhMDs8Y//F6yWcyObRr10GDeov3+9rb4OzYhG3d3ISnq3QL04GjFHveh
+ TPlD1pSPuju8Lckutcb0gHzdazmrVCDEqx/BsdDIINh6FGExQ0vTHesqu+b3RKOC7fqT
+ Njwv6p2N3pnEubxkjj0Thv98fnsUHrqKzY3BRwXNPWobSxuNXqmmwbY7w0yshJl7ZYWr
+ rnvQJQyJP3lJm3DkAu/rOtYs2CgJ3b7uUXGRJ8hKICKDYQ/sF1As8feVvJ4kcWqOWg6L
+ tHeK/6+J87WnOOp6Un3aXoPw/3XjvtEBoRGF4O7P6IsU/139aeiW/c1jlrJKP7LSSYce
+ N7tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721322701; x=1721927501;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=G/OBOfPbk42kH7Hu611jiPMGjP4hY2WibEGi6Y5Hr08=;
+ b=mtMe32QHLXFIggj6jyyii9KmRiKPbtBCgVogAnpR5xH19zjt9jAVY5uuB5eRD8mOMJ
+ +V9dOAvsaRl4M5rKKZLqOPMp+cO/ExZBS7jG/BrVZpfcFE3fcr+g2J7H7rh6Yo133AMs
+ gTEWqNwlK6YtIFB0TcXrgh2HvTG87sgprq1nelDQv/jb4TyPknsLzYGh+17yEIBs1Ow2
+ NfucVoBPUOwmMkp1qQkNs/AaEq6ms3kZvYQmpIt8iMdXTgw2m4P4irqpu9LuGRsuqe6m
+ Mx5f2qDyd9fKM/77zHciCkiaUukX2n7MCrO8fb+/lDOFauSjsUG49o+4h7W9hE7sWMxX
+ QiOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTmBZtOTyUarUg11EvrqnyafKq3Qy6b54oXFtxPk4b6jytHCaLL4/yaxD05ANFzM42fi0a3mWDlg/cAZU4nl73gA8xavk=
+X-Gm-Message-State: AOJu0YyJCfKZCrQBY3IvDvKoinaQL4NzNWUd0WP5wVsxKHdYnfuEvTF7
+ i2kMwlMvd5TLhRdF3yDtXnw6f/0fGwTfJ4il0CdZw2d8Tr9NTCuMhIX9vJaFGBPqErlP4sC0NjE
+ kxa35ZDUkGawN7WGSIFKeN+So0eTd6eXZZGZ5PA==
+X-Google-Smtp-Source: AGHT+IGncAufWjxouR3n9kEnq5+BKNUsFJbhBJt4K3RZSwztet0D42CN6swpBvPJ3gl6mypO4b/FBTr4e0J+oZIAF34=
+X-Received: by 2002:a05:6512:1281:b0:52c:dd0c:4c57 with SMTP id
+ 2adb3069b0e04-52ee53f6901mr4029576e87.27.1721322700996; Thu, 18 Jul 2024
+ 10:11:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] XIVE changes for Cache Watch, VSTs, STT and info
- pic
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Michael Kowal <kowal@linux.vnet.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240716195633.12679-1-kowal@linux.vnet.ibm.com>
- <4b72c7b9-a812-43c6-b735-43eac8709fc6@kaod.org>
-Content-Language: en-US
-From: Mike Kowal <kowal@linux.ibm.com>
-In-Reply-To: <4b72c7b9-a812-43c6-b735-43eac8709fc6@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Ox6MWJHpISvEU_gL8mdynHbsIrb2l4HZ
-X-Proofpoint-ORIG-GUID: Ys7qY6vKpuvWIV9r6XsUgCgMrguwMI3o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-18_11,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- lowpriorityscore=0 phishscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- impostorscore=0 spamscore=0 adultscore=0 suspectscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407180106
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20240718090753.59163-1-yaoxt.fnst@fujitsu.com>
+ <20240718173614.00006d13@Huawei.com>
+In-Reply-To: <20240718173614.00006d13@Huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Jul 2024 18:11:30 +0100
+Message-ID: <CAFEAcA8UOwr6tuvPLZSPn8vzwpEnUrOW-2x184K2O281H7J07Q@mail.gmail.com>
+Subject: Re: [PATCH] mem/cxl_type3: Fix overlapping region validation error
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>, fan.ni@samsung.com,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,121 +93,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 18 Jul 2024 at 17:37, Jonathan Cameron via
+<qemu-devel@nongnu.org> wrote:
+>
+> On Thu, 18 Jul 2024 05:07:53 -0400
+> Yao Xingtao <yaoxt.fnst@fujitsu.com> wrote:
+>
+> > When injecting a new poisoned region through qmp_cxl_inject_poison(),
+> > the newly injected region should not overlap with existing poisoned
+> > regions.
+> >
+> > The current validation method does not consider the following
+> > overlapping region:
+> > =E2=94=8C=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=80=E2=94=80=E2=94=80=
+=E2=94=90
+> > =E2=94=82a  =E2=94=82  b(a) =E2=94=82a  =E2=94=82
+> > =E2=94=94=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=80=E2=94=80=E2=94=
+=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=80=E2=94=80=E2=94=80=
+=E2=94=98
+> > (a is a newly added region, b is an existing region, and b is a
+> >  subregion of a)
+> >
+> > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> Looks correct to me.
+>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huwei.com>
+> I've queued it on my local branch.
+> I need to put together an updated public one.
+>
+> No huge rush to queue this up though I think as the effects
+> are minor.
 
-On 7/16/2024 3:18 PM, Cédric Le Goater wrote:
-> Hello Mike,
->
-> On 7/16/24 21:56, Michael Kowal wrote:
->> These changes provide enhanced support of the External Interrupt 
->> Virtualization
->> Engine.  The changes are focused on the following areas:
->>   - Cache Watch, Cache Flush and Sync Injection
->>   - Virtual Structure Tables
->>   - Set Translation Table
->>   - 'info pic' command data that is dumped
->>
->> Frederic Barrat (7):
->>    pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync Injection support
->>    pnv/xive2: Add NVG and NVC to cache watch facility
->>    pnv/xive2: Configure Virtualization Structure Tables through the PC
->>    pnv/xive2: Enable VST NVG and NVC index compression
->>    pnv/xive2: Set Translation Table for the NVC port space
->>    pnv/xive2: Fail VST entry address computation if table has no VSD
->>    pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
->>
->> Michael Kowal (1):
->>    pnv/xive2: Structure/define alignment changes
->>
->> Nicholas Piggin (1):
->>    pnv/xive: Support cache flush and queue sync inject with 
->> notifications
->>
->>   hw/intc/pnv_xive2_regs.h    | 108 +++++++
->>   include/hw/ppc/pnv_chip.h   |   1 +
->>   include/hw/ppc/xive2_regs.h |   9 +
->>   hw/intc/pnv_xive2.c         | 566 ++++++++++++++++++++++++++++++------
->>   hw/intc/xive.c              |  12 +-
->>   hw/intc/xive2.c             |  33 ++-
->>   6 files changed, 633 insertions(+), 96 deletions(-)
->>
->> -- 
->> 2.43.0
->>
->
-> Hello Mike,
->
-> When you respin a series, it is useful to update the individual
-> patches with the given R-b tags. To keep track of them, you can use
-> the b4 command :
->     $ b4 am 20240715183332.27287-1-kowal@linux.vnet.ibm.com
->   Grabbing thread from 
-> lore.kernel.org/all/20240715183332.27287-1-kowal@linux.vnet.ibm.com/t.mbox.gz
->   Analyzing 23 messages in the thread
->   Looking for additional code-review trailers on lore.kernel.org
->   Checking attestation on all messages, may take a moment...
->   ---
->     ✓ [PATCH v2 1/9] pnv/xive2: XIVE2 Cache Watch, Cache Flush and 
-> Sync Injection support
->     ✓ [PATCH v2 2/9] pnv/xive2: Structure/define alignment changes
->       + Reviewed-by: Cédric Le Goater <clg@redhat.com>
->     ✓ [PATCH v2 3/9] pnv/xive: Support cache flush and queue sync 
-> inject with notifications
->     ✓ [PATCH v2 4/9] pnv/xive2: Add NVG and NVC to cache watch facility
->     ✓ [PATCH v2 5/9] pnv/xive2: Configure Virtualization Structure 
-> Tables through the PC
->       + Reviewed-by: Cédric Le Goater <clg@redhat.com>
->     ✓ [PATCH v2 6/9] pnv/xive2: Enable VST NVG and NVC index compression
->       + Reviewed-by: Cédric Le Goater <clg@redhat.com>
->     ✓ [PATCH v2 7/9] pnv/xive2: Set Translation Table for the NVC port 
-> space
->       + Reviewed-by: Cédric Le Goater <clg@redhat.com>
->       + Reviewed-by: Cédric Le Goater <clg@kaod.org>
->     ✓ [PATCH v2 8/9] pnv/xive2: Fail VST entry address computation if 
-> table has no VSD
->       + Reviewed-by: Cédric Le Goater <clg@redhat.com>
->       + Reviewed-by: Cédric Le Goater <clg@kaod.org>
->     ✓ [PATCH v2 9/9] pnv/xive2: Move xive2_nvp_pic_print_info() to 
-> xive2.c
->     ---
->     ✓ Signed: DKIM/ibm.com (From: kowal@linux.vnet.ibm.com)
->
-Thank you for the suggestion Cedric.  I can get `b4 am` to run but the 
-attestation (signature checking?) fails.  In the future I will post the 
-following, along with revision comments in the cover letter.  Following 
-is the output for v3:
+I think you can probably write this as
+   ranges_overlap(start, len, p->start, p->length)
+using the utility function in include/qemu/ranges.h, which is
+a bit more readable than open-coding the overlap test.
 
-   [PATCH v3 1/9] pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync 
-Injection support
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 2/9] pnv/xive2: Structure/define alignment changes
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 3/9] pnv/xive: Support cache flush and queue sync inject 
-with notifications
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 4/9] pnv/xive2: Add NVG and NVC to cache watch facility
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 5/9] pnv/xive2: Configure Virtualization Structure Tables 
-through the PC
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 6/9] pnv/xive2: Enable VST NVG and NVC index compression
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-   [PATCH v3 7/9] pnv/xive2: Set Translation Table for the NVC port space
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-     + Reviewed-by: Cédric Le Goater <clg@kaod.org>
-   [PATCH v3 8/9] pnv/xive2: Fail VST entry address computation if table 
-has no VSD
-     + Reviewed-by: Cédric Le Goater <clg@redhat.com>
-     + Reviewed-by: Cédric Le Goater <clg@kaod.org>
-   [PATCH v3 9/9] pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
----
-Total patches: 9
+(There's another couple of open-coded overlap tests in
+cxl-mailbox-utils.c.)
 
-Thanks, Mike...
-
-
-> Thanks,
->
-> C.
->
->
+thanks
+-- PMM
 
