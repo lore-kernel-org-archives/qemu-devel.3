@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DF7C3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECD9C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 02:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUGc6-0007GS-4F; Wed, 17 Jul 2024 22:11:22 -0400
+	id 1sUGbl-0005wg-Mb; Wed, 17 Jul 2024 22:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGc4-0007C8-UK
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1sUGbj-0005or-Ps
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:59 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUGc3-0003Uy-8a
- for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:11:20 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fb8781ef1bso3424175ad.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:11:18 -0700 (PDT)
+ id 1sUGbi-0003Qd-0R
+ for qemu-devel@nongnu.org; Wed, 17 Jul 2024 22:10:59 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1fc5549788eso2955125ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jul 2024 19:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721268678; x=1721873478; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721268656; x=1721873456; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZftNb9Dewpwh1KYSeiCjlGoZxiCjuc1tjwT0QlvrE20=;
- b=O7kq5XITLunacjtmxa+SRfbdsSL1S/4TKh13MsEHe+cLHl8SxFXGZGfT6FsX4jvScP
- hqqy0HhrzqCUIYnC48e2waORN7kjQTXV78Bhs4eGBnkwhMIOB63vq2zt306ELVY/Zwsd
- eRlmssvM5wbTLpXCZkPn/YNMCIWgUBBgjb0DJjW3BjH1u4IQ+sMZS6p3x0b1AnUVZNBp
- 2mrfqKQfIvVbighf62EML9ivdxKDNgRq9RkD/feqLuzpxKkdfAJolTNhNmHG1Azb1KL8
- qE20sMtTFLGD8ZZ8PqUgOjT0Ht+SdEuwyB2jgIo3bRSUtTvZmtO/EXkgk2CXmPj5WsLF
- dWAQ==
+ bh=mpi5fzkajuLIxq+xc/MjDRsGYOnn0Yt14lPOvh9/gK8=;
+ b=RUlpg6wsjS9cIhBqOBv6F3vy8kFKwMNPYV85oujZsoQLhXd+J0UzgTyxxEOc29qJIL
+ 9epAKF6dE6YDaXrIczWxLKcMyyMf5kOQmoClZ9O14hH1O+vDTwB6Ao3qu+HMs5zGvuHg
+ wZilWeOv7ImaU+b3bWSNJ2Q6FYba9+C/344dINIpcyFTsLKBnsZfA3biSTuEPp3lWZ1d
+ 5l88r2n+RZKi8KJcRTCz5s3DNf9n3KRKaCmCvSyazCiUk3/2bfY/D0MErwH9+5mGy0sJ
+ WSocX9JJylqPtwzIpEBdK66HCC1uRxR9w0ES2AL2KM5/5WAlSxgnn+dXbl3H0dXnFVSp
+ uMlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721268678; x=1721873478;
+ d=1e100.net; s=20230601; t=1721268656; x=1721873456;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZftNb9Dewpwh1KYSeiCjlGoZxiCjuc1tjwT0QlvrE20=;
- b=LaxbkJblDyTuImHrcVJZnflO1+/Aa1+psUNfmUtv+AgaGI9Ehgy2EOnc5EkbrLocHo
- t0OoTUxCyt0XDwCmpISZM81/mFLHC2uokqADsZqCx8kuCH9c+WtUiCw3UzNby6n1MqQI
- KSFOkacDDXpnwxOi5SX+5kk3/Jpd1HmpFSdjjJcxejBofpPbI+knwjFvtE3pztPWRVVD
- 7s39mw56SwbiqgYp/DzBG/LzLzO15BYDYA9XsvfpWN9+qslVBIW9F7aoxFEuBixh2XZG
- yFGMVAQbsFthiz30fupJth/GHb0bwgGq4aNbrnDaCHlk5ldWWi3i03DRjXvMEkSp3u5b
- T8wA==
-X-Gm-Message-State: AOJu0YzaqNhZrLSLuYAiyZyFgBYHo00P5hCBa9e8hLE3cgrD5NrcQOU7
- 9hGrKpFhdzf+4bP2JyFa1sDlUF1VwBDll1D885xTBdVFwlpHPESulbOXWq+Q
-X-Google-Smtp-Source: AGHT+IFakuotPegRdjXgtmG8pxMb+6/d0z4gt72gXRgJe+nv8igZhgUhpOugdhdscYN87S8kl/Y39g==
-X-Received: by 2002:a17:902:f54f:b0:1f7:11c8:bdd3 with SMTP id
- d9443c01a7336-1fc4e16b2e8mr32914615ad.29.1721268677590; 
- Wed, 17 Jul 2024 19:11:17 -0700 (PDT)
+ bh=mpi5fzkajuLIxq+xc/MjDRsGYOnn0Yt14lPOvh9/gK8=;
+ b=L+4o5xoVQnFKd/jCU23gvGLs4LHusz2W11P9y3djh/qaXhpKPkYN5t7OfsGuSj2Cwg
+ Eqx75nsuP3+st+1UIDQBm1myh/xvbsRESjoVFeQMupzmZ3ZfMMcIvjlOYJmcIeHiCu2I
+ xU+L7WI8Szp/n/z+AA2+r7xkk+kQRv/HtCZCqPNDxCMgMcd0IDe5gB0kapXTti76oaaV
+ JDrymwAh9rLhiptt8535siH741UTr/QjDErP1M5HSjPRs/I1YZPISvk5jwz8/3mCrYYy
+ Lk2uhlZsxxAmrnlfHZVnonxNZvusklEJ0Imz/0myDPg6YF+NtyHHDIHI4K6qaXZvUWpi
+ Uqig==
+X-Gm-Message-State: AOJu0YzaPeigUs8LCZ0vOuamnUl/n1sP3sRAb2bGukKlkdlSYLvHeBti
+ Mk5lmviCKE5EVBoVNrtg/GtvRCUf0fcbsvOx2QfCnPRm1HjoLK/suYQC67X7
+X-Google-Smtp-Source: AGHT+IF5C1mtYXxywScJQKYKUVMOcxwAlnBJnJJaim+gdhedoSJe6W5tn3qe4goLuFjC9zCOXSWO3g==
+X-Received: by 2002:a17:902:c412:b0:1fa:9c04:946a with SMTP id
+ d9443c01a7336-1fc4e105abemr33805055ad.1.1721268656422; 
+ Wed, 17 Jul 2024 19:10:56 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.11.14
+ d9443c01a7336-1fc0bba949bsm81999385ad.69.2024.07.17.19.10.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jul 2024 19:11:17 -0700 (PDT)
+ Wed, 17 Jul 2024 19:10:55 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Kaiwen Xue <kaiwenx@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Atish Patra <atishp@rivosinc.com>
-Subject: [PULL 18/30] target/riscv: Add cycle & instret privilege mode
- filtering definitions
-Date: Thu, 18 Jul 2024 12:10:00 +1000
-Message-ID: <20240718021012.2057986-19-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 11/30] disas/riscv: Support zabha disassemble
+Date: Thu, 18 Jul 2024 12:09:53 +1000
+Message-ID: <20240718021012.2057986-12-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240718021012.2057986-1-alistair.francis@wdc.com>
 References: <20240718021012.2057986-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,92 +98,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kaiwen Xue <kaiwenx@rivosinc.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-This adds the definitions for ISA extension smcntrpmf.
-
-Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Message-ID: <20240711-smcntrpmf_v7-v8-4-b7c38ae7b263@rivosinc.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240709113652.1239-12-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h      |  6 ++++++
- target/riscv/cpu_bits.h | 29 +++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+ disas/riscv.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6520e0f5d5..980e2154cd 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -362,6 +362,12 @@ struct CPUArchState {
+diff --git a/disas/riscv.c b/disas/riscv.c
+index d29cb1ff7d..c8364c2b07 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -954,6 +954,26 @@ typedef enum {
+     rv_c_mop_11    = 923,
+     rv_c_mop_13    = 924,
+     rv_c_mop_15    = 925,
++    rv_op_amoswap_b = 926,
++    rv_op_amoadd_b  = 927,
++    rv_op_amoxor_b  = 928,
++    rv_op_amoor_b   = 929,
++    rv_op_amoand_b  = 930,
++    rv_op_amomin_b  = 931,
++    rv_op_amomax_b  = 932,
++    rv_op_amominu_b = 933,
++    rv_op_amomaxu_b = 934,
++    rv_op_amoswap_h = 935,
++    rv_op_amoadd_h  = 936,
++    rv_op_amoxor_h  = 937,
++    rv_op_amoor_h   = 938,
++    rv_op_amoand_h  = 939,
++    rv_op_amomin_h  = 940,
++    rv_op_amomax_h  = 941,
++    rv_op_amominu_h = 942,
++    rv_op_amomaxu_h = 943,
++    rv_op_amocas_b  = 944,
++    rv_op_amocas_h  = 945,
+ } rv_op;
  
-     uint32_t mcountinhibit;
+ /* register names */
+@@ -2192,6 +2212,26 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
+     { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
++    { "amoswap.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoadd.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoxor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoand.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomin.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomax.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amominu.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomaxu.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoswap.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoadd.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoxor.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoor.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amoand.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomin.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomax.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amominu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amomaxu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amocas.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
++    { "amocas.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+ };
  
-+    /* PMU cycle & instret privilege mode filtering */
-+    target_ulong mcyclecfg;
-+    target_ulong mcyclecfgh;
-+    target_ulong minstretcfg;
-+    target_ulong minstretcfgh;
-+
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
- 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index c257c5ed7d..5faa817453 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -397,6 +397,10 @@
- /* Machine counter-inhibit register */
- #define CSR_MCOUNTINHIBIT   0x320
- 
-+/* Machine counter configuration registers */
-+#define CSR_MCYCLECFG       0x321
-+#define CSR_MINSTRETCFG     0x322
-+
- #define CSR_MHPMEVENT3      0x323
- #define CSR_MHPMEVENT4      0x324
- #define CSR_MHPMEVENT5      0x325
-@@ -427,6 +431,9 @@
- #define CSR_MHPMEVENT30     0x33e
- #define CSR_MHPMEVENT31     0x33f
- 
-+#define CSR_MCYCLECFGH      0x721
-+#define CSR_MINSTRETCFGH    0x722
-+
- #define CSR_MHPMEVENT3H     0x723
- #define CSR_MHPMEVENT4H     0x724
- #define CSR_MHPMEVENT5H     0x725
-@@ -884,6 +891,28 @@ typedef enum RISCVException {
- /* PMU related bits */
- #define MIE_LCOFIE                         (1 << IRQ_PMU_OVF)
- 
-+#define MCYCLECFG_BIT_MINH                 BIT_ULL(62)
-+#define MCYCLECFGH_BIT_MINH                BIT(30)
-+#define MCYCLECFG_BIT_SINH                 BIT_ULL(61)
-+#define MCYCLECFGH_BIT_SINH                BIT(29)
-+#define MCYCLECFG_BIT_UINH                 BIT_ULL(60)
-+#define MCYCLECFGH_BIT_UINH                BIT(28)
-+#define MCYCLECFG_BIT_VSINH                BIT_ULL(59)
-+#define MCYCLECFGH_BIT_VSINH               BIT(27)
-+#define MCYCLECFG_BIT_VUINH                BIT_ULL(58)
-+#define MCYCLECFGH_BIT_VUINH               BIT(26)
-+
-+#define MINSTRETCFG_BIT_MINH               BIT_ULL(62)
-+#define MINSTRETCFGH_BIT_MINH              BIT(30)
-+#define MINSTRETCFG_BIT_SINH               BIT_ULL(61)
-+#define MINSTRETCFGH_BIT_SINH              BIT(29)
-+#define MINSTRETCFG_BIT_UINH               BIT_ULL(60)
-+#define MINSTRETCFGH_BIT_UINH              BIT(28)
-+#define MINSTRETCFG_BIT_VSINH              BIT_ULL(59)
-+#define MINSTRETCFGH_BIT_VSINH             BIT(27)
-+#define MINSTRETCFG_BIT_VUINH              BIT_ULL(58)
-+#define MINSTRETCFGH_BIT_VUINH             BIT(26)
-+
- #define MHPMEVENT_BIT_OF                   BIT_ULL(63)
- #define MHPMEVENTH_BIT_OF                  BIT(31)
- #define MHPMEVENT_BIT_MINH                 BIT_ULL(62)
+ /* CSR names */
+@@ -2986,9 +3026,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+         case 11:
+             switch (((inst >> 24) & 0b11111000) |
+                     ((inst >> 12) & 0b00000111)) {
++            case 0: op = rv_op_amoadd_b; break;
++            case 1: op = rv_op_amoadd_h; break;
+             case 2: op = rv_op_amoadd_w; break;
+             case 3: op = rv_op_amoadd_d; break;
+             case 4: op = rv_op_amoadd_q; break;
++            case 8: op = rv_op_amoswap_b; break;
++            case 9: op = rv_op_amoswap_h; break;
+             case 10: op = rv_op_amoswap_w; break;
+             case 11: op = rv_op_amoswap_d; break;
+             case 12: op = rv_op_amoswap_q; break;
+@@ -3010,27 +3054,43 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             case 26: op = rv_op_sc_w; break;
+             case 27: op = rv_op_sc_d; break;
+             case 28: op = rv_op_sc_q; break;
++            case 32: op = rv_op_amoxor_b; break;
++            case 33: op = rv_op_amoxor_h; break;
+             case 34: op = rv_op_amoxor_w; break;
+             case 35: op = rv_op_amoxor_d; break;
+             case 36: op = rv_op_amoxor_q; break;
++            case 40: op = rv_op_amocas_b; break;
++            case 41: op = rv_op_amocas_h; break;
+             case 42: op = rv_op_amocas_w; break;
+             case 43: op = rv_op_amocas_d; break;
+             case 44: op = rv_op_amocas_q; break;
++            case 64: op = rv_op_amoor_b; break;
++            case 65: op = rv_op_amoor_h; break;
+             case 66: op = rv_op_amoor_w; break;
+             case 67: op = rv_op_amoor_d; break;
+             case 68: op = rv_op_amoor_q; break;
++            case 96: op = rv_op_amoand_b; break;
++            case 97: op = rv_op_amoand_h; break;
+             case 98: op = rv_op_amoand_w; break;
+             case 99: op = rv_op_amoand_d; break;
+             case 100: op = rv_op_amoand_q; break;
++            case 128: op = rv_op_amomin_b; break;
++            case 129: op = rv_op_amomin_h; break;
+             case 130: op = rv_op_amomin_w; break;
+             case 131: op = rv_op_amomin_d; break;
+             case 132: op = rv_op_amomin_q; break;
++            case 160: op = rv_op_amomax_b; break;
++            case 161: op = rv_op_amomax_h; break;
+             case 162: op = rv_op_amomax_w; break;
+             case 163: op = rv_op_amomax_d; break;
+             case 164: op = rv_op_amomax_q; break;
++            case 192: op = rv_op_amominu_b; break;
++            case 193: op = rv_op_amominu_h; break;
+             case 194: op = rv_op_amominu_w; break;
+             case 195: op = rv_op_amominu_d; break;
+             case 196: op = rv_op_amominu_q; break;
++            case 224: op = rv_op_amomaxu_b; break;
++            case 225: op = rv_op_amomaxu_h; break;
+             case 226: op = rv_op_amomaxu_w; break;
+             case 227: op = rv_op_amomaxu_d; break;
+             case 228: op = rv_op_amomaxu_q; break;
 -- 
 2.45.2
 
