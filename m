@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608BBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142FDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 06:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUKyx-00008c-VJ; Thu, 18 Jul 2024 02:51:15 -0400
+	id 1sUKyz-0000Ng-3C; Thu, 18 Jul 2024 02:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKym-0007Vb-E6; Thu, 18 Jul 2024 02:51:05 -0400
+ id 1sUKyj-0007He-R1; Thu, 18 Jul 2024 02:51:03 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sUKyk-0004VA-NN; Thu, 18 Jul 2024 02:51:04 -0400
+ id 1sUKyh-0004VA-Kq; Thu, 18 Jul 2024 02:51:00 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 18 Jul
@@ -33,9 +33,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 14/15] aspeed: fix coding style
-Date: Thu, 18 Jul 2024 14:49:24 +0800
-Message-ID: <20240718064925.1846074-15-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 13/15] aspeed/soc: support I2C for AST2700
+Date: Thu, 18 Jul 2024 14:49:23 +0800
+Message-ID: <20240718064925.1846074-14-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
 References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
@@ -66,69 +66,80 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style issues from checkpatch.pl
+Add I2C model for AST2700 I2C support.
+The I2C controller registers base address is start at
+0x14C0_F000 and its address space is 0x2000.
 
-Test command:
-./scripts/checkpatch.pl --no-tree -f hw/arm/aspeed.c
+The AST2700 I2C controller has one source INTC per bus.
+I2C buses interrupt are connected to GICINT130_INTC
+from bit 0 to bit 15.
+I2C bus 0 is connected to GICINT130_INTC at bit 0.
+I2C bus 15 is connected to GICINT130_INTC at bit 15.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 53a4f665d0..f8766ea462 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -265,7 +265,8 @@ static void write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
-     g_autofree void *storage = NULL;
-     int64_t size;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 0bbd66110b..e84141c13b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -61,6 +61,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_GIC_DIST]      =  0x12200000,
+     [ASPEED_GIC_REDIST]    =  0x12280000,
+     [ASPEED_DEV_ADC]       =  0x14C00000,
++    [ASPEED_DEV_I2C]       =  0x14C0F000,
+ };
  
--    /* The block backend size should have already been 'validated' by
-+    /*
-+     * The block backend size should have already been 'validated' by
-      * the creation of the m25p80 object.
-      */
-     size = blk_getlength(blk);
-@@ -463,8 +464,10 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
-     DeviceState *dev;
-     uint8_t *eeprom_buf = g_malloc0(32 * 1024);
+ #define AST2700_MAX_IRQ 288
+@@ -374,6 +375,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
  
--    /* The palmetto platform expects a ds3231 RTC but a ds1338 is
--     * enough to provide basic RTC features. Alarms will be missing */
-+    /*
-+     * The palmetto platform expects a ds3231 RTC but a ds1338 is
-+     * enough to provide basic RTC features. Alarms will be missing
-+     */
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
- 
-     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
-@@ -555,8 +558,10 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     AspeedSoCState *soc = bmc->soc;
- 
--    /* The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
--     * good enough */
-+    /*
-+     * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
-+     * good enough
-+     */
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+     snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
+     object_initialize_child(obj, "adc", &s->adc, typename);
++
++    snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
++    object_initialize_child(obj, "i2c", &s->i2c, typename);
  }
  
-@@ -664,8 +669,10 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
-                      0x4a);
+ /*
+@@ -457,6 +461,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+     AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc);
+     g_autofree char *sram_name = NULL;
++    qemu_irq irq;
++    struct gic_intc_orgate_info orgate_info;
  
--    /* The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
--     * good enough */
-+    /*
-+     * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
-+     * good enough
-+     */
-     i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+     /* Default boot region (SPI memory or ROMs) */
+     memory_region_init(&s->spi_boot_container, OBJECT(s),
+@@ -639,6 +645,27 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
  
-     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
++    /* I2C */
++    object_property_set_link(OBJECT(&s->i2c), "dram", OBJECT(s->dram_mr),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->i2c), 0, sc->memmap[ASPEED_DEV_I2C]);
++    aspeed_soc_ast2700_get_intc_orgate(s, ASPEED_DEV_I2C, &orgate_info);
++    for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
++        /*
++         * The AST2700 I2C controller has one source INTC per bus.
++         * I2C buses interrupt are connected to GICINT130_INTC
++         * from bit 0 to bit 15.
++         * I2C bus 0 is connected to GICINT130_INTC at bit 0.
++         * I2C bus 15 is connected to GICINT130_INTC at bit 15.
++         */
++        irq = qdev_get_gpio_in(DEVICE(&a->intc.orgates[orgate_info.index]),
++                               orgate_info.int_num + i);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
++    }
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
 2.34.1
 
