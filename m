@@ -4,81 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BA8C3DA63
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B3DC3DA63
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 17:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUUyD-0000aM-O0; Thu, 18 Jul 2024 13:31:09 -0400
+	id 1sUUyj-0000xL-JY; Thu, 18 Jul 2024 13:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sUUyB-0000ZZ-MO
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:08 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sUUy9-0003VJ-2y
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:07 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-368584f9e36so52033f8f.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 10:31:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1721323862; x=1721928662; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZJzIyQJMK6X/dofHlCmvePnLt9wPeiJirjt9S+2u/zU=;
- b=yNrcP0K+qOAmKf5moqmN81gRCkmRmfVH0iDSgbdoQr0KIKjvOy6wQdHqYyhnXC3v55
- CBjUjO8l+EbZscooNzk8EQxB/TtHQpB6UZGQTf6+iuTgUQIdFf4Bmm8Q5mB/2zVgtdPC
- WRH8Otq2n9F3sOANcdusKu2Lg1Ct2DIJ9RFU9gN2VoPSuEmm1/q8A7vn7emoovZJNcom
- gv4/Aj5HjyNspQ9lqYLSYC3q1ZHjyd8DQWz8firi/3RJJju1nApeSYV5AmsQzks/dGmu
- VX9XM5S+SocW9manrh1z8+Tg8m87BoJRT+30VDFrNBG3SdzETG/sMkoeLiy5zrD6CSIM
- kNww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721323862; x=1721928662;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZJzIyQJMK6X/dofHlCmvePnLt9wPeiJirjt9S+2u/zU=;
- b=hcDbe8G5/0Nw1kPlmNwIM8XnWIkhDqLoi/XzB8409sJyK9500L0h3FuqeQ++FCui2s
- SpVi0g1Nnq7fduPbz6p+nyd2joq4MtPIgMPT3x0OKfj41xUOM3HmuuUwImMQSYV3F4UQ
- s2z2UnmqWYDME4RzUp8XOOmcPMlAn9j6XbtxhrygNRvUEdRLJd4a5nM/hW6vV+Ua9WSW
- 7NcXU13aFubXXrRcjBlS1D+lETiqWtnladYAvvl8VEpN1f9u1Znhs28btlwkV895y1nt
- D2yBKsLWwFmPLfP3P4c1fF4Q6dQEmpCvQ9+InFAzJ0BHkqRaDxHk4y4lSKQ2t+Muuvd4
- S4Gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxwhiQmTtYiFTuPGRKwZjgDn9xqOYnuV2pKDJb793wygIM1+BFQ5Jr2wt35Jcvf3KGWkvU22I+MIvKYN84Q6JJ3M24b9M=
-X-Gm-Message-State: AOJu0YwIc0lRUXfJMdRgdZqW/ayfSuvsSMhkMx83Im9mTJwvzaoMqloj
- nEYaLhuFW2uD64K+0gnwIheG3RgKoTj2uyqQfz2i5+KufaqB6yyZZCePmH2wDqwkc46EWcn3T4Y
- njzbOzP2E3U79kRtNX5Q5ZPxAavT6Oo9rZD7q
-X-Google-Smtp-Source: AGHT+IHkul1Y7f3ZFTle9yUJ7WjDQck26SYyNF8A4g6UwLym0F7pDO6+FbJdZa1GVFjZvQpSCpigj8bGJaQEgmy1r5A=
-X-Received: by 2002:a05:6000:1a45:b0:368:36e6:b248 with SMTP id
- ffacd0b85a97d-36836e6b450mr3966741f8f.23.1721323861453; Thu, 18 Jul 2024
- 10:31:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUUyh-0000vG-EH
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUUyf-0003ag-1m
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 13:31:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721323896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ApzJgXp4Ao0KDomUrsLxBETfpfLJIZiuSWoWDUb+9lE=;
+ b=RA+uEKC7s9yLfVompWcgtx6cM8aaVoepSzD8vQl+JEFEv8zutN6DOkL46gMrMVdJlNz++F
+ eajNsJto3oBeESipBMup8PY9S6UAZbQjpji6K7xiNCxRfhT1awPb/tiV4aLF7Cvmf2i5sz
+ 8aVRP1AxYZLJPJWT/xRg/4aunHHadQM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-isK9cMA6OKWNARIvSJ_wOg-1; Thu,
+ 18 Jul 2024 13:31:32 -0400
+X-MC-Unique: isK9cMA6OKWNARIvSJ_wOg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCCC81955D44; Thu, 18 Jul 2024 17:31:30 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.42])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0676E1955F40; Thu, 18 Jul 2024 17:31:26 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH] tests/avocado: Remove the remainders of the
+ virtiofs_submounts test
+Date: Thu, 18 Jul 2024 19:31:25 +0200
+Message-ID: <20240718173125.489901-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20240605185050.1678102-1-tavip@google.com>
- <87r0br8bve.fsf@pond.sub.org>
- <ZpjhwFpnHK1d3yVZ@redhat.com> <87a5ifknjv.fsf@pond.sub.org>
-In-Reply-To: <87a5ifknjv.fsf@pond.sub.org>
-From: Octavian Purdila <tavip@google.com>
-Date: Thu, 18 Jul 2024 10:30:50 -0700
-Message-ID: <CAGWr4cS4AMfLCZBV=8TSrbk-OVc=cX17ku=6UC0vKXQGeq4hvw@mail.gmail.com>
-Subject: Re: [PATCH v3] chardev: add path option for pty backend
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, marcandre.lureau@redhat.com, eblake@redhat.com, 
- peter.maydell@linaro.org, Paulo Neves <ptsneves@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=tavip@google.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,159 +79,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 18, 2024 at 3:22=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->
-> > On Thu, Jul 18, 2024 at 08:15:01AM +0200, Markus Armbruster wrote:
-> >> Looks like this one fell through the cracks.
-> >>
-> >> Octavian Purdila <tavip@google.com> writes:
-> >>
-> >> > Add path option to the pty char backend which will create a symbolic
-> >> > link to the given path that points to the allocated PTY.
-> >> >
-> >> > This avoids having to make QMP or HMP monitor queries to find out wh=
-at
-> >> > the new PTY device path is.
-> >>
-> >> QMP commands chardev-add and chardev-change return the information you
-> >> want:
-> >>
-> >>     # @pty: name of the slave pseudoterminal device, present if and on=
-ly
-> >>     #     if a chardev of type 'pty' was created
-> >>
-> >> So does HMP command chardev-add.  HMP chardev apparently doesn't, but
-> >> that could be fixed.
-> >
-> > It does print it:
-> >
-> >   (qemu) chardev-add  pty,id=3Dbar
-> >   char device redirected to /dev/pts/12 (label bar)
->
-> I fat-fingered "HMP chardev-change".
->
-> >> So, the use case is basically the command line, right?
-> >
-> > Also cli prints it
-> >
-> >   $ qemu-system-x86_64 -chardev pty,id=3Dfoo -monitor stdio -display no=
-ne
-> >   char device redirected to /dev/pts/10 (label foo)
->
-> Good enough for ad hoc use by humans.
->
-> Management applications should use QMP, which returns it.
->
-> I guess there's scripts in between.
->
-> >> > Based on patch from Paulo Neves:
-> >> >
-> >> > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@=
-gmail.com/
-> >> >
-> >> > Tested with the following invocations that the link is created and
-> >> > removed when qemu stops:
-> >> >
-> >> >   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
-> >> >   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
-> >> >
-> >> >   qemu-system-x86_64 -nodefaults -monitor pty:test
-> >> >
-> >> > Also tested that when a link path is not passed invocations still wo=
-rk, e.g.:
-> >> >
-> >> >   qemu-system-x86_64 -monitor pty
-> >> >
-> >> > Co-authored-by: Paulo Neves <ptsneves@gmail.com>
-> >> > Signed-off-by: Paulo Neves <ptsneves@gmail.com>
-> >> > [OP: rebase and address original patch review comments]
-> >> > Signed-off-by: Octavian Purdila <tavip@google.com>
-> >> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> [...]
->
-> >> > diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-> >> > index cc2f7617fe..5c6172ddba 100644
-> >> > --- a/chardev/char-pty.c
-> >> > +++ b/chardev/char-pty.c
-> >> > @@ -29,6 +29,7 @@
-> >> >  #include "qemu/sockets.h"
-> >> >  #include "qemu/error-report.h"
-> >> >  #include "qemu/module.h"
-> >> > +#include "qemu/option.h"
-> >> >  #include "qemu/qemu-print.h"
-> >> >
-> >> >  #include "chardev/char-io.h"
-> >> > @@ -41,6 +42,7 @@ struct PtyChardev {
-> >> >
-> >> >      int connected;
-> >> >      GSource *timer_src;
-> >> > +    char *symlink_path;
-> >> >  };
-> >> >  typedef struct PtyChardev PtyChardev;
-> >> >
-> >> > @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
-> >> >      Chardev *chr =3D CHARDEV(obj);
-> >> >      PtyChardev *s =3D PTY_CHARDEV(obj);
-> >> >
-> >> > +    /* unlink symlink */
-> >> > +    if (s->symlink_path) {
-> >> > +        unlink(s->symlink_path);
-> >> > +        g_free(s->symlink_path);
-> >> > +    }
-> >>
-> >> Runs when the chardev object is finalized.
-> >>
-> >> Doesn't run when QEMU crashes.  Stale symlink left behind then.  Can't
-> >> see how you could avoid that at reasonable cost.  Troublesome all the
-> >> same.
-> >
-> > Do we ever guarantee that the finalizer runs ?  eg dif we have
-> >
-> >   error_setg(&error_exit, ....
-> >
-> > that's a clean exit, not a crash, but I don't think chardev finalizers
-> > will run, as we don't do atexit() hooks for it.
->
-> Point.
->
+The virtiofs_submounts test has been removed in commit 5da7701e2a
+("virtiofsd: Remove test"), so we don't need this files anymore.
 
-I agree this is a shortcoming. But this can easily be fixed externally
-at the invocation path.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .../virtiofs_submounts.py.data/cleanup.sh     |  46 ------
+ .../guest-cleanup.sh                          |  30 ----
+ .../virtiofs_submounts.py.data/guest.sh       | 138 ------------------
+ .../virtiofs_submounts.py.data/host.sh        | 127 ----------------
+ 4 files changed, 341 deletions(-)
+ delete mode 100644 tests/avocado/virtiofs_submounts.py.data/cleanup.sh
+ delete mode 100644 tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
+ delete mode 100644 tests/avocado/virtiofs_submounts.py.data/guest.sh
+ delete mode 100644 tests/avocado/virtiofs_submounts.py.data/host.sh
 
-> >> The feature feels rather doubtful to me, to be honest.
-> >
-> > On the one hand I understand the pain - long ago libvirt had to deal
-> > with parsing the console messages
-> >
-> >   char device redirected to /dev/pts/10 (label foo)
-> >
-> > before we switched to using QMP to query this.
-> >
-> > On the other hand, in retrospect libvirt should never have used the 'pt=
-y'
-> > backend in the first place. The 'unix' socket backend is a  choice as i=
-t
-> > has predictable filenames, and it has proper connection oriented semant=
-ics,
-> > so QEMU can reliably detect when clients disconnect, which has always b=
-een
-> > troublesome for the 'pty' backend.
-> >
-> > So while I can understand the desire to add a 'path' option to 'pty'
-> > to trigger symlink creation, I think we could choose to tell people
-> > to use the 'unix' socket backend instead if they want a predictable
-> > path. This would avoid us creating the difficult to fix bug for
-> > symlink deletion in error conditions.
-> >
-> > What's the key benefit of the 'pty' backend, that 'unix' doesn't
-> > handle ?
->
-> I think this is the question to answer.
->
+diff --git a/tests/avocado/virtiofs_submounts.py.data/cleanup.sh b/tests/avocado/virtiofs_submounts.py.data/cleanup.sh
+deleted file mode 100644
+index 2a6579a0fe..0000000000
+--- a/tests/avocado/virtiofs_submounts.py.data/cleanup.sh
++++ /dev/null
+@@ -1,46 +0,0 @@
+-#!/bin/bash
+-
+-function print_usage()
+-{
+-    if [ -n "$2" ]; then
+-        echo "Error: $2"
+-        echo
+-    fi
+-    echo "Usage: $1 <scratch dir>"
+-}
+-
+-scratch_dir=$1
+-if [ -z "$scratch_dir" ]; then
+-    print_usage "$0" 'Scratch dir not given' >&2
+-    exit 1
+-fi
+-
+-cd "$scratch_dir/share" || exit 1
+-mps=(mnt*)
+-mp_i=0
+-for mp in "${mps[@]}"; do
+-    mp_i=$((mp_i + 1))
+-    printf "Unmounting %i/%i...\r" "$mp_i" "${#mps[@]}"
+-
+-    sudo umount -R "$mp"
+-    rm -rf "$mp"
+-done
+-echo
+-
+-rm some-file
+-cd ..
+-rmdir share
+-
+-imgs=(fs*.img)
+-img_i=0
+-for img in "${imgs[@]}"; do
+-    img_i=$((img_i + 1))
+-    printf "Detaching and deleting %i/%i...\r" "$img_i" "${#imgs[@]}"
+-
+-    dev=$(losetup -j "$img" | sed -e 's/:.*//')
+-    sudo losetup -d "$dev"
+-    rm -f "$img"
+-done
+-echo
+-
+-echo 'Done.'
+diff --git a/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh b/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
+deleted file mode 100644
+index 729cb2d1a5..0000000000
+--- a/tests/avocado/virtiofs_submounts.py.data/guest-cleanup.sh
++++ /dev/null
+@@ -1,30 +0,0 @@
+-#!/bin/bash
+-
+-function print_usage()
+-{
+-    if [ -n "$2" ]; then
+-        echo "Error: $2"
+-        echo
+-    fi
+-    echo "Usage: $1 <scratch dir>"
+-}
+-
+-scratch_dir=$1
+-if [ -z "$scratch_dir" ]; then
+-    print_usage "$0" 'Scratch dir not given' >&2
+-    exit 1
+-fi
+-
+-cd "$scratch_dir/share" || exit 1
+-
+-mps=(mnt*)
+-mp_i=0
+-for mp in "${mps[@]}"; do
+-    mp_i=$((mp_i + 1))
+-    printf "Unmounting %i/%i...\r" "$mp_i" "${#mps[@]}"
+-
+-    sudo umount -R "$mp"
+-done
+-echo
+-
+-echo 'Done.'
+diff --git a/tests/avocado/virtiofs_submounts.py.data/guest.sh b/tests/avocado/virtiofs_submounts.py.data/guest.sh
+deleted file mode 100644
+index 59ba40fde1..0000000000
+--- a/tests/avocado/virtiofs_submounts.py.data/guest.sh
++++ /dev/null
+@@ -1,138 +0,0 @@
+-#!/bin/bash
+-
+-function print_usage()
+-{
+-    if [ -n "$2" ]; then
+-        echo "Error: $2"
+-        echo
+-    fi
+-    echo "Usage: $1 <shared dir>"
+-    echo '(The shared directory is the "share" directory in the scratch' \
+-         'directory)'
+-}
+-
+-shared_dir=$1
+-if [ -z "$shared_dir" ]; then
+-    print_usage "$0" 'Shared dir not given' >&2
+-    exit 1
+-fi
+-
+-cd "$shared_dir"
+-
+-# FIXME: This should not be necessary, but it is.  In order for all
+-# submounts to be proper mount points, we need to visit them.
+-# (Before we visit them, they will not be auto-mounted, and so just
+-# appear as normal directories, with the catch that their st_ino will
+-# be the st_ino of the filesystem they host, while the st_dev will
+-# still be the st_dev of the parent.)
+-# `find` does not work, because it will refuse to touch the mount
+-# points as long as they are not mounted; their st_dev being shared
+-# with the parent and st_ino just being the root node's inode ID
+-# will practically ensure that this node exists elsewhere on the
+-# filesystem, and `find` is required to recognize loops and not to
+-# follow them.
+-# Thus, we have to manually visit all nodes first.
+-
+-mnt_i=0
+-
+-function recursively_visit()
+-{
+-    pushd "$1" >/dev/null
+-    for entry in *; do
+-        if [[ "$entry" == mnt* ]]; then
+-            mnt_i=$((mnt_i + 1))
+-            printf "Triggering auto-mount $mnt_i...\r"
+-        fi
+-
+-        if [ -d "$entry" ]; then
+-            recursively_visit "$entry"
+-        fi
+-    done
+-    popd >/dev/null
+-}
+-
+-recursively_visit .
+-echo
+-
+-
+-if [ -n "$(find -name not-mounted)" ]; then
+-    echo "Error: not-mounted files visible on mount points:" >&2
+-    find -name not-mounted >&2
+-    exit 1
+-fi
+-
+-if [ ! -f some-file -o "$(cat some-file)" != 'root' ]; then
+-    echo "Error: Bad file in the share root" >&2
+-    exit 1
+-fi
+-
+-shopt -s nullglob
+-
+-function check_submounts()
+-{
+-    local base_path=$1
+-
+-    for mp in mnt*; do
+-        printf "Checking submount %i...\r" "$((${#devs[@]} + 1))"
+-
+-        mp_i=$(echo "$mp" | sed -e 's/mnt//')
+-        dev=$(stat -c '%D' "$mp")
+-
+-        if [ -n "${devs[mp_i]}" ]; then
+-            echo "Error: $mp encountered twice" >&2
+-            exit 1
+-        fi
+-        devs[mp_i]=$dev
+-
+-        pushd "$mp" >/dev/null
+-        path="$base_path$mp"
+-        while true; do
+-            expected_content="$(printf '%s\n%s\n' "$mp_i" "$path")"
+-            if [ ! -f some-file ]; then
+-                echo "Error: $PWD/some-file does not exist" >&2
+-                exit 1
+-            fi
+-
+-            if [ "$(cat some-file)" != "$expected_content" ]; then
+-                echo "Error: Bad content in $PWD/some-file:" >&2
+-                echo '--- found ---'
+-                cat some-file
+-                echo '--- expected ---'
+-                echo "$expected_content"
+-                exit 1
+-            fi
+-            if [ "$(stat -c '%D' some-file)" != "$dev" ]; then
+-                echo "Error: $PWD/some-file has the wrong device ID" >&2
+-                exit 1
+-            fi
+-
+-            if [ -d sub ]; then
+-                if [ "$(stat -c '%D' sub)" != "$dev" ]; then
+-                    echo "Error: $PWD/some-file has the wrong device ID" >&2
+-                    exit 1
+-                fi
+-                cd sub
+-                path="$path/sub"
+-            else
+-                if [ -n "$(echo mnt*)" ]; then
+-                    check_submounts "$path/"
+-                fi
+-                break
+-            fi
+-        done
+-        popd >/dev/null
+-    done
+-}
+-
+-root_dev=$(stat -c '%D' some-file)
+-devs=()
+-check_submounts ''
+-echo
+-
+-reused_devs=$(echo "$root_dev ${devs[@]}" | tr ' ' '\n' | sort | uniq -d)
+-if [ -n "$reused_devs" ]; then
+-    echo "Error: Reused device IDs: $reused_devs" >&2
+-    exit 1
+-fi
+-
+-echo "Test passed for ${#devs[@]} submounts."
+diff --git a/tests/avocado/virtiofs_submounts.py.data/host.sh b/tests/avocado/virtiofs_submounts.py.data/host.sh
+deleted file mode 100644
+index d8a9afebdb..0000000000
+--- a/tests/avocado/virtiofs_submounts.py.data/host.sh
++++ /dev/null
+@@ -1,127 +0,0 @@
+-#!/bin/bash
+-
+-mount_count=128
+-
+-function print_usage()
+-{
+-    if [ -n "$2" ]; then
+-        echo "Error: $2"
+-        echo
+-    fi
+-    echo "Usage: $1 <scratch dir> [seed]"
+-    echo "(If no seed is given, it will be randomly generated.)"
+-}
+-
+-scratch_dir=$1
+-if [ -z "$scratch_dir" ]; then
+-    print_usage "$0" 'No scratch dir given' >&2
+-    exit 1
+-fi
+-
+-if [ ! -d "$scratch_dir" ]; then
+-    print_usage "$0" "$scratch_dir is not a directory" >&2
+-    exit 1
+-fi
+-
+-seed=$2
+-if [ -z "$seed" ]; then
+-    seed=$RANDOM
+-fi
+-RANDOM=$seed
+-
+-echo "Seed: $seed"
+-
+-set -e
+-shopt -s nullglob
+-
+-cd "$scratch_dir"
+-if [ -d share ]; then
+-    echo 'Error: This directory seems to be in use already' >&2
+-    exit 1
+-fi
+-
+-for ((i = 0; i < $mount_count; i++)); do
+-    printf "Setting up fs %i/%i...\r" "$((i + 1))" "$mount_count"
+-
+-    rm -f fs$i.img
+-    truncate -s 512M fs$i.img
+-    mkfs.xfs -q fs$i.img
+-    devs[i]=$(sudo losetup -f --show fs$i.img)
+-done
+-echo
+-
+-top_level_mounts=$((RANDOM % mount_count + 1))
+-
+-mkdir -p share
+-echo 'root' > share/some-file
+-
+-for ((i = 0; i < $top_level_mounts; i++)); do
+-    printf "Mounting fs %i/%i...\r" "$((i + 1))" "$mount_count"
+-
+-    mkdir -p share/mnt$i
+-    touch share/mnt$i/not-mounted
+-    sudo mount "${devs[i]}" share/mnt$i
+-    sudo chown "$(id -u):$(id -g)" share/mnt$i
+-
+-    pushd share/mnt$i >/dev/null
+-    path=mnt$i
+-    nesting=$((RANDOM % 4))
+-    for ((j = 0; j < $nesting; j++)); do
+-        cat > some-file <<EOF
+-$i
+-$path
+-EOF
+-        mkdir sub
+-        cd sub
+-        path="$path/sub"
+-    done
+-cat > some-file <<EOF
+-$i
+-$path
+-EOF
+-    popd >/dev/null
+-done
+-
+-for ((; i < $mount_count; i++)); do
+-    printf "Mounting fs %i/%i...\r" "$((i + 1))" "$mount_count"
+-
+-    mp_i=$((i % top_level_mounts))
+-
+-    pushd share/mnt$mp_i >/dev/null
+-    path=mnt$mp_i
+-    while true; do
+-        sub_mp="$(echo mnt*)"
+-        if cd sub 2>/dev/null; then
+-            path="$path/sub"
+-        elif [ -n "$sub_mp" ] && cd "$sub_mp" 2>/dev/null; then
+-            path="$path/$sub_mp"
+-        else
+-            break
+-        fi
+-    done
+-    mkdir mnt$i
+-    touch mnt$i/not-mounted
+-    sudo mount "${devs[i]}" mnt$i
+-    sudo chown "$(id -u):$(id -g)" mnt$i
+-
+-    cd mnt$i
+-    path="$path/mnt$i"
+-    nesting=$((RANDOM % 4))
+-    for ((j = 0; j < $nesting; j++)); do
+-        cat > some-file <<EOF
+-$i
+-$path
+-EOF
+-        mkdir sub
+-        cd sub
+-        path="$path/sub"
+-    done
+-    cat > some-file <<EOF
+-$i
+-$path
+-EOF
+-    popd >/dev/null
+-done
+-echo
+-
+-echo 'Done.'
+-- 
+2.45.2
 
-In my case the user of the serial device does not support unix sockets.
 
