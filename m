@@ -4,79 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D3AC3DA60
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F8CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 13:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUR2g-0002dc-To; Thu, 18 Jul 2024 09:19:30 -0400
+	id 1sUR3K-0005YN-Cc; Thu, 18 Jul 2024 09:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUR2e-0002Rx-1k
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:19:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
+ id 1sUR3I-0005Qq-M4; Thu, 18 Jul 2024 09:20:08 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUR2b-00040K-8Z
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 09:19:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721308763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yxa0aHeKa1o9eLvLuNzZ/elfNALZLKEUDo2xeZWI1GM=;
- b=iqHKCvFmm62MHe9pf7FVPQbLIOgaidDUw5ZbvWVgdUezK8X1pRILuDV05COBiJlJveF7A6
- mnMoU+9rOqBS+K4DiftJXlf19tbgJFvisZ3/66tN14WDAC+pPOytZ43etN29YBieBZYlL2
- DHA1V7YI2GOojxWUuvizBrJAIWy+yZ4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-ADG-YLWPMUuuxVpBZhj-xQ-1; Thu,
- 18 Jul 2024 09:19:17 -0400
-X-MC-Unique: ADG-YLWPMUuuxVpBZhj-xQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <SRS0=3riu=OS=kaod.org=clg@ozlabs.org>)
+ id 1sUR3E-00043P-WA; Thu, 18 Jul 2024 09:20:08 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WPthD6WrRz4x1V;
+ Thu, 18 Jul 2024 23:19:56 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CCF21955D45; Thu, 18 Jul 2024 13:19:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A89B1955D42; Thu, 18 Jul 2024 13:19:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0A8F921E668F; Thu, 18 Jul 2024 15:19:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,
- qemu-devel@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Hanna Czenczek
- <hreitz@redhat.com>
-Subject: Re: [PATCH v5 3/4] docs/interop/firmware.json: convert "Example"
- section
-In-Reply-To: <20240718-qapi-firmware-json-v5-3-0dba12d7aaf5@linutronix.de>
- ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Thu, 18 Jul 2024
- 14:21:47 +0200")
-References: <20240718-qapi-firmware-json-v5-0-0dba12d7aaf5@linutronix.de>
- <20240718-qapi-firmware-json-v5-3-0dba12d7aaf5@linutronix.de>
-Date: Thu, 18 Jul 2024 15:19:13 +0200
-Message-ID: <87wmlin8ha.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WPth74BGGz4x0C;
+ Thu, 18 Jul 2024 23:19:51 +1000 (AEST)
+Message-ID: <5f6efa7b-0ed9-4cf3-b8e5-b6b0656394fd@kaod.org>
+Date: Thu, 18 Jul 2024 15:19:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 03/15] hw/i2c/aspeed: support to set the different
+ memory size
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:STM32F205" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
+ <20240718064925.1846074-4-jamin_lin@aspeedtech.com>
+ <311c3893-4e27-4472-8356-889fdaaade6f@kaod.org>
+ <SI2PR06MB5041287D9E64F7D0E25968EEFCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB5041287D9E64F7D0E25968EEFCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3riu=OS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,39 +74,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
+On 7/18/24 11:42, Jamin Lin wrote:
+> Hi Cedric,
+> 
+>> Subject: Re: [PATCH v1 03/15] hw/i2c/aspeed: support to set the different
+>> memory size
+>>
+>> On 7/18/24 08:49, Jamin Lin wrote:
+>>> According to the datasheet of ASPEED SOCs, an I2C controller owns 8KB
+>>> of register space for AST2700, owns 4KB of register space for AST2600,
+>>> AST2500 and AST2400, and owns 64KB of register space for AST1030.
+>>>
+>>> It set the memory region size 4KB by default and it does not
+>>> compatible register space for AST2700.
+>>>
+>>> Introduce a new class attribute to set the I2C controller memory size
+>>> for different ASPEED SOCs.
+>>>
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>> ---
+>>>    hw/i2c/aspeed_i2c.c         | 6 +++++-
+>>>    include/hw/i2c/aspeed_i2c.h | 2 +-
+>>>    2 files changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c index
+>>> b43afd250d..7d5a53c4c0 100644
+>>> --- a/hw/i2c/aspeed_i2c.c
+>>> +++ b/hw/i2c/aspeed_i2c.c
+>>> @@ -1014,7 +1014,7 @@ static void aspeed_i2c_realize(DeviceState *dev,
+>>> Error **errp)
+>>>
+>>>        sysbus_init_irq(sbd, &s->irq);
+>>>        memory_region_init_io(&s->iomem, OBJECT(s),
+>> &aspeed_i2c_ctrl_ops, s,
+>>> -                          "aspeed.i2c", 0x1000);
+>>> +                          "aspeed.i2c", aic->mem_size);
+>>>        sysbus_init_mmio(sbd, &s->iomem);
+>>>
+>>>        for (i = 0; i < aic->num_busses; i++) { @@ -1286,6 +1286,7 @@
+>>> static void aspeed_2400_i2c_class_init(ObjectClass *klass, void *data)
+>>>        aic->pool_size = 0x800;
+>>>        aic->pool_base = 0x800;
+>>>        aic->bus_pool_base = aspeed_2400_i2c_bus_pool_base;
+>>> +    aic->mem_size = 0x1000;
+>>>    }
+>>>
+>>>    static const TypeInfo aspeed_2400_i2c_info = { @@ -1320,6 +1321,7 @@
+>>> static void aspeed_2500_i2c_class_init(ObjectClass *klass, void *data)
+>>>        aic->bus_pool_base = aspeed_2500_i2c_bus_pool_base;
+>>>        aic->check_sram = true;
+>>>        aic->has_dma = true;
+>>> +    aic->mem_size = 0x1000;
+>>>    }
+>>>
+>>>    static const TypeInfo aspeed_2500_i2c_info = { @@ -1353,6 +1355,7 @@
+>>> static void aspeed_2600_i2c_class_init(ObjectClass *klass, void *data)
+>>>        aic->pool_base = 0xC00;
+>>>        aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
+>>>        aic->has_dma = true;
+>>> +    aic->mem_size = 0x1000;
+>>>    }
+>>>
+>>>    static const TypeInfo aspeed_2600_i2c_info = { @@ -1376,6 +1379,7 @@
+>>> static void aspeed_1030_i2c_class_init(ObjectClass *klass, void *data)
+>>>        aic->pool_base = 0xC00;
+>>>        aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
+>>>        aic->has_dma = true;
+>>> +    aic->mem_size = 0x10000;
+>>
+> Thanks for review.
+> 
+> According to the datasheet of AST1030 in chapter 7 (Memory Space Allocation Table)
+> , the register address space of I2C Controller range is start from 7E7B0000 to
+> 7E7BFFFF and its register address space is 64KB(0x10000).
 
-> Since commit 3c5f6114d9ff ("qapi: remove "Example" doc section")
-> the "Example" section is not valid anymore.
-> It has been replaced by the "qmp-example" role.
+OK.
+  
+> The firmware only use 4KB address space. We can change mem_size either 4KB or 64KB.
+> Could you tell me which size you prefer?
 
-Make that "directive" instead of role.
+I would keep the larger value for the model and let FW decide to resize or not.
 
-> This was not detected earlier as firmware.json was not validated.
+Thanks,
 
-Sorry about that!
+C.
 
-> As this validation is about to be added, adapt firmware.json.
->
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
-> ---
->  docs/interop/firmware.json | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-> index 2eb0be11d595..eea82eef3a07 100644
-> --- a/docs/interop/firmware.json
-> +++ b/docs/interop/firmware.json
-> @@ -471,7 +471,7 @@
->  #
->  # Since: 3.0
->  #
-> -# Examples:
-> +# .. qmp-example::
->  #
->  #     {
->  #         "description": "SeaBIOS",
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+
+
 
 
