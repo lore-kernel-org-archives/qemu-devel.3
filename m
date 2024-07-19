@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FEAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C095C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUjKr-0001RK-Mn; Fri, 19 Jul 2024 04:51:30 -0400
+	id 1sUjP4-00062f-NL; Fri, 19 Jul 2024 04:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sUjKj-0001QI-MZ
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:51:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sUjKg-0005R0-IV
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:51:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721379074;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dBBvtq2bNJL/D/HJgGmKF05OiPvc5WAN++pieVKvg+Y=;
- b=gS3g8o3wqYbx4cqUstq00v/bhkVpxkPr0rML5m7ntsPlja5RYiS/jR6J4BoCymeBVDaZon
- jF3iTnWewMnd/5yjAmrvKE+CP/CJh6mUQV8wjmKG7WROH3xktJ5jib5UGtI9ThuOXQqz3H
- rdUNDw97YDy5hJ0xyv++/Srkp05V09A=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-WMkmMqW0PIiGaxQqQqm58A-1; Fri, 19 Jul 2024 04:51:11 -0400
-X-MC-Unique: WMkmMqW0PIiGaxQqQqm58A-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-664bc570740so28413737b3.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 01:51:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sUjP3-000626-JN
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:55:49 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sUjP1-0001Nu-TV
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:55:49 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2eea8ea8c06so24133651fa.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 01:55:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721379344; x=1721984144; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ka3A+ThXKvmFjZZIuNPGK8CeHsT/qqUifGsW5ABgHVY=;
+ b=X0WdJvghbnKQQ8F/LxZ+OIKeSk094UCrYCw5fDYWkYxTwJy+WX+kpMHmrSWSMByxEq
+ 5C+Cm0V7B/JXJobA394PSogoKWcvs9z1wytrQ2blSK8aasPMyXDwfD9KHJhi5D8Y8PW8
+ d6/dfJUa6+1qyDAx6/AWA7Zh3mA4E3zMBHHZmqoeZFb2GEfaKJLqac2Nj/0OXjrgIGf+
+ Hzmv7HEZvZv2SpuELlxhHRM9yEnRlS2yjeok3FvXnnW4Xn0OKpisOV1AeJ45uWFVCmml
+ hEIjmMz7AWs/UO8demMP2UIvvQbNj3asa6XR0UQUnySdxHe7TKV2u4dGGqwVjcQaP1TB
+ o89Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721379071; x=1721983871;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dBBvtq2bNJL/D/HJgGmKF05OiPvc5WAN++pieVKvg+Y=;
- b=P6hZu9Dcphu61Wn8O7y0gLgAGIIhJm5kwH/FiaVoc1mGZPyk9PTJo/Be8Bf6JFo4Gc
- LupDESZQjuZCC/ww8dljWuYhmA8gWhrV+JtbRxW7JhpbUDeYxqliMjhjtGo0jYMB9ZFs
- mQTZ04GBtFExWxs7y7QJ3XXGjDwmUrkD4HAV1U5nS8+0jigZySuqn0hXkgG4vFSar1Vi
- WatGIbm736JhLmTA2Zi9ucekqYS3xABp5e35HPb4CoBLFj6yyx1r8dv/jdkJBLkeheV7
- Tuh3rMYmLW+9Dnazi3i+9vUaU6F6D2ilcEjKbp+avwENIeJ7QJ54an6P0WyQ+zVGlO/C
- K50Q==
-X-Gm-Message-State: AOJu0YzYj7RJUR0SP7Bxy3DQVjw432Ub0LqxlxBWvC4JNueF7DMH/Inj
- S5EHbB/Czk7714Vz3ZcVp2RxHAnD3wriuVGXYj0f4fzEVCt/lRpjB937d5848mPWsO3KwIRsmUi
- 5OaWa4p4IvvGC/JzHJPptHQy31e8v75W4ElfQa5qgSHsk8afw5JXxqEJClEGOht+X0K0j5NPqK/
- gRU5czQLifFIbndwwQpydv0Bqsk0Y=
-X-Received: by 2002:a81:9e0d:0:b0:631:3cea:4f02 with SMTP id
- 00721157ae682-66609d6a777mr40098297b3.17.1721379071099; 
- Fri, 19 Jul 2024 01:51:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEA5SzbWCLw+WGE166BajXZ+qrH0jEcWgJBdMdl8+YZM0ltdvCdy8NISpIhzp9xtSB3839gfphlWUut1tABJLw=
-X-Received: by 2002:a81:9e0d:0:b0:631:3cea:4f02 with SMTP id
- 00721157ae682-66609d6a777mr40098257b3.17.1721379070813; Fri, 19 Jul 2024
- 01:51:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721379344; x=1721984144;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ka3A+ThXKvmFjZZIuNPGK8CeHsT/qqUifGsW5ABgHVY=;
+ b=PA22gBICZoNp4tqWf83JSDWR8zo8n6YIWUPfAsTSzn7oI/nf0Qq96iKafGz17uWKLr
+ R5i8uZ9ZfwVPk0rI5zM8LHVtn0N11bVYKnhWQyIGIqEtokQdFMFm2uKqwx0aDhns4nTD
+ pje233UwqAIgHx40JyBOHmQCO7R1ex1tqtUWFY0FVSTmkYSsNwYu4t121Ps3Kt2aJhZL
+ A3SLRR5+3h0JRgjhbnXs+9aVer70K12TzZQKEFC5b5m8hZriIsLxtWBcxKMnBLcYpkC1
+ 4PrjRdMYidFLN9fLS02brAh0QudqltTKNgFdeP7TInAmvM9GlRN3eWo80r4wTUw25Wgo
+ UXCA==
+X-Gm-Message-State: AOJu0Yxgrg+GMa3BCUxRzxUSlY6ZO7NUdsGk9o78c81sgCJ+POEEbNNk
+ Yba96+bhLho3E0UP09wXGAGdoRej0cH8jUIVD8nTaxk5Pu1YdTMua1A1Kq8dRhc=
+X-Google-Smtp-Source: AGHT+IEYR7lx6jyzBpew6ueYdXie8/tFYn90pH4u+hWrWYR7p4F632euBBwB//G+5sdwpWYF7yks4g==
+X-Received: by 2002:a2e:7d01:0:b0:2ec:53fb:39cb with SMTP id
+ 38308e7fff4ca-2ef05c503bamr32978951fa.6.1721379343709; 
+ Fri, 19 Jul 2024 01:55:43 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d692ad0fsm16488385e9.30.2024.07.19.01.55.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jul 2024 01:55:42 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 34C915F880;
+ Fri, 19 Jul 2024 09:55:42 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  gustavo.romero@linaro.org
+Subject: Re: [PATCH] tests/tcg/aarch64: Fix test-mte.py
+In-Reply-To: <20240719004143.1319260-1-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Fri, 19 Jul 2024 10:41:43 +1000")
+References: <20240719004143.1319260-1-richard.henderson@linaro.org>
+Date: Fri, 19 Jul 2024 09:55:42 +0100
+Message-ID: <87jzhhg3qp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240718140407.444160-1-t.lamprecht@proxmox.com>
-In-Reply-To: <20240718140407.444160-1-t.lamprecht@proxmox.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Fri, 19 Jul 2024 11:51:00 +0300
-Message-ID: <CAPMcbCrcSBNN7fiP7ga0kZLbB+0Ucb9H5Q7Fd1yx0oM5U29mFg@mail.gmail.com>
-Subject: Re: [PATCH] guest-agent: document allow-rpcs in config file section
-To: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000000a4165061d95cc00"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,99 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000a4165061d95cc00
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+> Python 3.12 warns:
+>
+>   TEST    gdbstub MTE support on aarch64
+> /home/rth/qemu/src/tests/tcg/aarch64/gdbstub/test-mte.py:21: SyntaxWarnin=
+g: invalid escape sequence '\('
+>   PATTERN_0 =3D "Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\=
+)."
+>
+> Double up the \ to pass one through to the pattern.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Thu, Jul 18, 2024 at 5:05=E2=80=AFPM Thomas Lamprecht <t.lamprecht@proxm=
-ox.com>
-wrote:
+Queued to maintainer/for-9.1-rc0, thanks.
 
-> While the `allow-rpcs` option is documented in the CLI options
-> section, it was missing in the section about the configuration file
-> syntax.
->
-> And while it's mentioned that "the list of keys follows the command line
-> options", having `block-rpcs` there but not `allow-rpcs` seems like
-> being a potential source of confusion; and as it's cheap to add let's
-> just do so.
->
-> Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-> ---
->  docs/interop/qemu-ga.rst | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
-> index 72fb75a6f5..dd4245ece8 100644
-> --- a/docs/interop/qemu-ga.rst
-> +++ b/docs/interop/qemu-ga.rst
-> @@ -131,6 +131,7 @@ fsfreeze-hook  string
->  statedir       string
->  verbose        boolean
->  block-rpcs     string list
-> +allow-rpcs     string list
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->
->  See also
-> --
-> 2.39.2
->
->
->
->
-
---0000000000000a4165061d95cc00
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jul 18, 2024 at 5:05=E2=
-=80=AFPM Thomas Lamprecht &lt;<a href=3D"mailto:t.lamprecht@proxmox.com">t.=
-lamprecht@proxmox.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">While the `allow-rpcs` option is documented in the CLI=
- options<br>
-section, it was missing in the section about the configuration file<br>
-syntax.<br>
-<br>
-And while it&#39;s mentioned that &quot;the list of keys follows the comman=
-d line<br>
-options&quot;, having `block-rpcs` there but not `allow-rpcs` seems like<br=
->
-being a potential source of confusion; and as it&#39;s cheap to add let&#39=
-;s<br>
-just do so.<br>
-<br>
-Signed-off-by: Thomas Lamprecht &lt;<a href=3D"mailto:t.lamprecht@proxmox.c=
-om" target=3D"_blank">t.lamprecht@proxmox.com</a>&gt;<br>
----<br>
-=C2=A0docs/interop/qemu-ga.rst | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst<br>
-index 72fb75a6f5..dd4245ece8 100644<br>
---- a/docs/interop/qemu-ga.rst<br>
-+++ b/docs/interop/qemu-ga.rst<br>
-@@ -131,6 +131,7 @@ fsfreeze-hook=C2=A0 string<br>
-=C2=A0statedir=C2=A0 =C2=A0 =C2=A0 =C2=A0string<br>
-=C2=A0verbose=C2=A0 =C2=A0 =C2=A0 =C2=A0 boolean<br>
-=C2=A0block-rpcs=C2=A0 =C2=A0 =C2=A0string list<br>
-+allow-rpcs=C2=A0 =C2=A0 =C2=A0string list<br>
-=C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=C2=A0 =3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D<br>
-<br>
-=C2=A0See also<br>
--- <br>
-2.39.2<br>
-<br>
-<br>
-<br>
-</blockquote></div>
-
---0000000000000a4165061d95cc00--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
