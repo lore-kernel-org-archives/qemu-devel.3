@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F82DC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 20:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18170C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 20:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUu45-0006Bb-Hv; Fri, 19 Jul 2024 16:18:53 -0400
+	id 1sUu4z-0007Vt-Ax; Fri, 19 Jul 2024 16:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu44-0006AU-Dt
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:18:52 -0400
+ id 1sUu4w-0007VN-0N
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:19:46 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu42-0005ya-V6
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:18:52 -0400
+ id 1sUu4u-000622-Hx
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:19:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=+Hj/45MiinYM3J8e1mQ4BS22AnBP1ycNL8cKxp4narU=; b=iibEH6GShym68OED700RomdgUc
- bSithJ8GlpRDb8Nt9AJLvXkaj445ryLSGvQiejuk8dKoo7Vnj4STkOHH4XFVhEDoN7yFNqSHvj2FI
- 2SjnQGgAhK4OeF6/n8+ByG19A2GEncwIBK8WWCpOaypljOg+BqKbVBgJujQdglPwfkhnWiDJue8kH
- 4OtJCJaZ2M0xY1PHOsZMGyIWBv9wiG0BSanFpN1FdrPrs5WpWC/uodaQdK9n2RovK2eevBFpfCMxN
- +Gaa7yGFtDfUGU8CAgJ9DZv54WxT31EPy+K71pybpZZP2BnC1H/XOgZHTm7exuslvY8FPOnPtnAKn
- KwfGX0A8pQeLcqjBYhef7Hyw+gnzFWDls70mErgBgPYGL4CF84RO4rIdhesUqOK+LuABzT0shkzfH
- iZtixt874rYJj6doUrSUoMRciybrgmKXolEUnHkHnjGV6woz9L4mSFUyd8RuVCIh021jdh5lVJ2f9
- oJ3E2FbxKDA5dUmHYhTUzAAe5eINzFWYYKMvNHxceO1sokvoVWREbPo40TsLXLzWceMDjwX+LLk7E
- kQ2dS5aGiOXfMYBous7OsIpC3v0shgjzQwRjQPu3X68qPaF5K6uSY+IpuPGMs7A2fabzRcjr1gk19
- /m0OORTnWPqHtIkvOP64Qvev6rCyVBYi80kiu1iko=;
+ bh=3L0dkNm45gsfpqDbtzg+yonm/lDqizePEg2Y0Y3e1q0=; b=BOpMT4tE9sSPl6+MMKBgioT8CR
+ cOxhxnhaP9OC0bzlvphLtJQ5iWXX2PD4T53fPhYh2/xA4vWfekAzIlhC7t2Ds17BWwWFgoTH9iaFD
+ FRw4/HMuXPBH6+Obhn/Jx6OQWqokvLxIBcNZRJ0CjIX2b0eLrGcZ2jh+5nJXJuisgcYcqchxpjHG2
+ +z/qkwTFIv51QeH8gJffs1lEPEgFvmZtLtrGQOs6seFnKou33RNs05lSkvpcoONQL6jRVzRNctcea
+ RrSGC/iV1bDTPfCbGKOUXfYPl4UohussORjp+zPW9h+FdRHY1aOG2VshnS8Ge16gntbTPfIwaCEgO
+ Ddw/HpAN+IOL1RNXwu+tFOzMd4O/PE9VJDed/PUt0BUOcsBhk26SGXhqRC1AAU/v26px8T05Zdq8b
+ qXfJNal7MU7O94JTBbActsM/ECgzcmrUE/9snO0TYTPi/u4jhXhNwH2XPGPbOUmj4P54Z+O1XZxFW
+ i0u6Ll/JEOm2niMwYrAxgSvDk22AUiLmxb/JjBMXysJp/aaDfN3Ca6oJTGkNz2pB9SXupq50849gO
+ JtdAl7likofH+HC+x2VAbPayMaKU1D6IBDJq53N2DdQqt4yjAD3vWHn7n/hAgJTXNprgsqaG7CB6U
+ VMKILsue1323PHlFoQr4fVZACDqNne+xUM1CtNX38=;
 Received: from [2a00:23c4:8bb4:4000:502:30b7:7825:e35a]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu2T-0002PF-4a; Fri, 19 Jul 2024 21:17:17 +0100
-Message-ID: <0ef01db1-dcf0-4ee1-a153-6e4d227ec66a@ilande.co.uk>
-Date: Fri, 19 Jul 2024 21:18:41 +0100
+ id 1sUu3M-0002Pi-9Q; Fri, 19 Jul 2024 21:18:12 +0100
+Message-ID: <2e057092-e244-4194-bef3-5f3465a737c3@ilande.co.uk>
+Date: Fri, 19 Jul 2024 21:19:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -49,7 +49,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@redhat.com>
 References: <20240719151628.46253-1-philmd@linaro.org>
- <20240719151628.46253-2-philmd@linaro.org>
+ <20240719151628.46253-3-philmd@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -76,12 +76,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240719151628.46253-2-philmd@linaro.org>
+In-Reply-To: <20240719151628.46253-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:502:30b7:7825:e35a
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/3] chardev/char-fe: Document returned value on error
+Subject: Re: [PATCH 2/3] util/fifo8: Use fifo8_reset() in fifo8_create()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,41 +109,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/07/2024 16:16, Philippe Mathieu-Daudé wrote:
 
-> qemu_chr_fe_add_watch() and qemu_chr_fe_write[_all]()
-> return -1 on error. Mention it in the documentation.
+> Avoid open-coding fifo8_reset() in fifo8_create().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/chardev/char-fe.h | 3 +++
->   1 file changed, 3 insertions(+)
+>   util/fifo8.c | 15 +++++++--------
+>   1 file changed, 7 insertions(+), 8 deletions(-)
 > 
-> diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
-> index ecef182835..3310449eaf 100644
-> --- a/include/chardev/char-fe.h
-> +++ b/include/chardev/char-fe.h
-> @@ -228,6 +228,7 @@ guint qemu_chr_fe_add_watch(CharBackend *be, GIOCondition cond,
->    * is thread-safe.
->    *
->    * Returns: the number of bytes consumed (0 if no associated Chardev)
-> + *          or -1 on error.
->    */
->   int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
+> diff --git a/util/fifo8.c b/util/fifo8.c
+> index 4e01b532d9..2925fe5611 100644
+> --- a/util/fifo8.c
+> +++ b/util/fifo8.c
+> @@ -16,12 +16,17 @@
+>   #include "migration/vmstate.h"
+>   #include "qemu/fifo8.h"
 >   
-> @@ -242,6 +243,7 @@ int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
->    * attempted to be written.  This function is thread-safe.
->    *
->    * Returns: the number of bytes consumed (0 if no associated Chardev)
-> + *          or -1 on error.
->    */
->   int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
+> +void fifo8_reset(Fifo8 *fifo)
+> +{
+> +    fifo->num = 0;
+> +    fifo->head = 0;
+> +}
+> +
+>   void fifo8_create(Fifo8 *fifo, uint32_t capacity)
+>   {
+>       fifo->data = g_new(uint8_t, capacity);
+>       fifo->capacity = capacity;
+> -    fifo->head = 0;
+> -    fifo->num = 0;
+> +    fifo8_reset(fifo);
+>   }
 >   
-> @@ -253,6 +255,7 @@ int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
->    * Read data to a buffer from the back end.
->    *
->    * Returns: the number of bytes read (0 if no associated Chardev)
-> + *          or -1 on error.
->    */
->   int qemu_chr_fe_read_all(CharBackend *be, uint8_t *buf, int len);
+>   void fifo8_destroy(Fifo8 *fifo)
+> @@ -97,12 +102,6 @@ const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+>       return fifo8_peekpop_buf(fifo, max, numptr, true);
+>   }
+>   
+> -void fifo8_reset(Fifo8 *fifo)
+> -{
+> -    fifo->num = 0;
+> -    fifo->head = 0;
+> -}
+> -
+>   bool fifo8_is_empty(Fifo8 *fifo)
+>   {
+>       return (fifo->num == 0);
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
