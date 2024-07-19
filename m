@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B25E4C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 12:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC462C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 12:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUmRO-0001Jg-RH; Fri, 19 Jul 2024 08:10:26 -0400
+	id 1sUmRb-0002Br-7X; Fri, 19 Jul 2024 08:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sUmRL-0001BR-NS
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:10:23 -0400
+ id 1sUmRY-00023M-91
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:10:36 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sUmRI-0007Ss-Vg
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:10:23 -0400
+ id 1sUmRW-0007cy-7X
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:10:35 -0400
 Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JC5YYi024688;
- Fri, 19 Jul 2024 12:10:18 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JC5237023764;
+ Fri, 19 Jul 2024 12:10:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=j
- cYPgfWkBn8MMQBcYZoHevBxGrKwDvGxmhBu+f1ftPI=; b=H3Rm5rqo8xzNTP/ga
- 5uSrytL0HYnwAfpizQKr/6x4pUHMPY/9RPPKdD/BrvpiY5NZ1m/4EcQbjT7JieW3
- ts8BDCzPuyLojOaZXGo2acalkU/df4v7YsD+ScPk3dw+iPrshQCxciU9K48I8XF7
- hqggZE39AV44dBYVMFauEi2bNNhCS6H0z3rTBfICPSCk5Cq4KNBCH5ZtJeCIjsvz
- wiKIIwTeOJbLffnoMZGOYZS3E9S9Q3RWaQ5i5Cf50cQ7B/RQRutWwyju8LwPrniX
- /mAfbYMMRWbJvLzXynApyggeRDB0KsC5bS6NWd8QtdoewGxxbxmGQj/sFEK9LTRg
- 7mvkQ==
+ :mime-version:content-type:content-transfer-encoding; s=
+ corp-2023-11-20; bh=L/G9uMwc0YSoGwlm1Z6ybB4I4mDpVBY+YfuCc799dF0=; b=
+ CDTbAuKKHhKBLXOR1CSCy3BRbCqe79A+vfzfuHW7rqTxpCNqspUhA3JB2U4qZUGj
+ NQPWWQPi134VCC4Ha5Tp6PgT+gyGxdYUioiqbnB5u3LRdZSnjg6P/KQR6rBTA3N2
+ RYT8X1fC70wJ07QbiGkyQXLkEBZMT+0NjJ3vQECDPwRAmZHDi9aUSATNALu2Bu1X
+ zs+QYVCHr/ndtShPvKVj4+KtztVi+3YrbgJGbW5Wlp4n4+y6G8oImSyglpoF+I9A
+ xB288EHM98lDDmcu6js5cNvrOyXn0Bxk3SWBJXyOmsWVxH8fbDVaGaNd+ktUbjFN
+ vzUzLUmGL7CxFEokTfxU/g==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40fqub80mp-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40fqub80p7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jul 2024 12:10:18 +0000 (GMT)
+ Fri, 19 Jul 2024 12:10:32 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46JBIhOY039597; Fri, 19 Jul 2024 12:05:17 GMT
+ with ESMTP id 46JAiKxJ039623; Fri, 19 Jul 2024 12:05:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 40dwexk386-1
+ 40dwexk3hc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jul 2024 12:05:17 +0000
+ Fri, 19 Jul 2024 12:05:30 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46JC5DMD011010;
- Fri, 19 Jul 2024 12:05:16 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46JC5DMN011010;
+ Fri, 19 Jul 2024 12:05:30 GMT
 Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-12-11.vpn.oracle.com
  [10.175.12.11])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 40dwexk34j-2; Fri, 19 Jul 2024 12:05:16 +0000
+ 40dwexk34j-7; Fri, 19 Jul 2024 12:05:30 +0000
 From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -62,23 +62,24 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v5 01/13] vfio/pci: Extract mdev check into an helper
-Date: Fri, 19 Jul 2024 13:04:49 +0100
-Message-Id: <20240719120501.81279-2-joao.m.martins@oracle.com>
+Subject: [PATCH v5 06/13] vfio/{iommufd,container}: Remove caps::aw_bits
+Date: Fri, 19 Jul 2024 13:04:54 +0100
+Message-Id: <20240719120501.81279-7-joao.m.martins@oracle.com>
 In-Reply-To: <20240719120501.81279-1-joao.m.martins@oracle.com>
 References: <20240719120501.81279-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-19_06,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=964
  malwarescore=0
  suspectscore=0 spamscore=0 bulkscore=0 mlxscore=0 adultscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2407110000 definitions=main-2407190093
-X-Proofpoint-ORIG-GUID: EbFKeW5yHANiEe92mZE5lxQA1iNdcnId
-X-Proofpoint-GUID: EbFKeW5yHANiEe92mZE5lxQA1iNdcnId
+X-Proofpoint-ORIG-GUID: w1TPXE9-fz3KWxxyujuTVmL5RfPlvIWT
+X-Proofpoint-GUID: w1TPXE9-fz3KWxxyujuTVmL5RfPlvIWT
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -103,96 +104,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation to skip initialization of the HostIOMMUDevice for mdev,
-extract the checks that validate if a device is an mdev into helpers.
+Remove caps::aw_bits which requires the bcontainer::iova_ranges being
+initialized after device is actually attached. Instead defer that to
+.get_cap() and call vfio_device_get_aw_bits() directly.
 
-A vfio_device_is_mdev() is created, and subsystems consult VFIODevice::mdev
-to check if it's mdev or not.
+This is in preparation for HostIOMMUDevice::realize() being called early
+during attach_device().
 
+Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com
 ---
- include/hw/vfio/vfio-common.h |  2 ++
- hw/vfio/helpers.c             | 14 ++++++++++++++
- hw/vfio/pci.c                 | 12 +++---------
- 3 files changed, 19 insertions(+), 9 deletions(-)
+ include/sysemu/host_iommu_device.h | 3 ---
+ backends/iommufd.c                 | 3 ++-
+ hw/vfio/container.c                | 5 +----
+ hw/vfio/iommufd.c                  | 1 -
+ 4 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index e8ddf92bb185..98acae8c1c97 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -116,6 +116,7 @@ typedef struct VFIODevice {
-     DeviceState *dev;
-     int fd;
-     int type;
-+    bool mdev;
-     bool reset_works;
-     bool needs_reset;
-     bool no_mmap;
-@@ -231,6 +232,7 @@ void vfio_region_exit(VFIORegion *region);
- void vfio_region_finalize(VFIORegion *region);
- void vfio_reset_handler(void *opaque);
- struct vfio_device_info *vfio_get_device_info(int fd);
-+bool vfio_device_is_mdev(VFIODevice *vbasedev);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp);
- void vfio_detach_device(VFIODevice *vbasedev);
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index b14edd46edc9..7e23e9080c9d 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -675,3 +675,17 @@ int vfio_device_get_aw_bits(VFIODevice *vdev)
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+index ee6c813c8b22..cdeeccec7671 100644
+--- a/include/sysemu/host_iommu_device.h
++++ b/include/sysemu/host_iommu_device.h
+@@ -19,12 +19,9 @@
+  * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
+  *
+  * @type: host platform IOMMU type.
+- *
+- * @aw_bits: host IOMMU address width. 0xff if no limitation.
+  */
+ typedef struct HostIOMMUDeviceCaps {
+     uint32_t type;
+-    uint8_t aw_bits;
+ } HostIOMMUDeviceCaps;
  
-     return HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX;
+ #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index a94d3b90c05c..58032e588f49 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -18,6 +18,7 @@
+ #include "qemu/error-report.h"
+ #include "monitor/monitor.h"
+ #include "trace.h"
++#include "hw/vfio/vfio-common.h"
+ #include <sys/ioctl.h>
+ #include <linux/iommufd.h>
+ 
+@@ -270,7 +271,7 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+     case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
+         return caps->type;
+     case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+-        return caps->aw_bits;
++        return vfio_device_get_aw_bits(hiod->agent);
+     default:
+         error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+         return -EINVAL;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 88ede913d6f7..c27f448ba26e 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -1144,7 +1144,6 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     VFIODevice *vdev = opaque;
+ 
+     hiod->name = g_strdup(vdev->name);
+-    hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
+     hiod->agent = opaque;
+ 
+     return true;
+@@ -1153,11 +1152,9 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+                                     Error **errp)
+ {
+-    HostIOMMUDeviceCaps *caps = &hiod->caps;
+-
+     switch (cap) {
+     case HOST_IOMMU_DEVICE_CAP_AW_BITS:
+-        return caps->aw_bits;
++        return vfio_device_get_aw_bits(hiod->agent);
+     default:
+         error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+         return -EINVAL;
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 545f4a404125..028533bc39b9 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -724,7 +724,6 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+ 
+     hiod->name = g_strdup(vdev->name);
+     caps->type = type;
+-    caps->aw_bits = vfio_device_get_aw_bits(vdev);
+ 
+     return true;
  }
-+
-+bool vfio_device_is_mdev(VFIODevice *vbasedev)
-+{
-+    g_autofree char *subsys = NULL;
-+    g_autofree char *tmp = NULL;
-+
-+    if (!vbasedev->sysfsdev) {
-+        return false;
-+    }
-+
-+    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
-+    subsys = realpath(tmp, NULL);
-+    return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
-+}
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e03d9f3ba546..b34e91468a53 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2963,12 +2963,9 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-     ERRP_GUARD();
-     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    char *subsys;
-     int i, ret;
--    bool is_mdev;
-     char uuid[UUID_STR_LEN];
-     g_autofree char *name = NULL;
--    g_autofree char *tmp = NULL;
- 
-     if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
-         if (!(~vdev->host.domain || ~vdev->host.bus ||
-@@ -2997,14 +2994,11 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-      * stays in sync with the active working set of the guest driver.  Prevent
-      * the x-balloon-allowed option unless this is minimally an mdev device.
-      */
--    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
--    subsys = realpath(tmp, NULL);
--    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
--    free(subsys);
-+    vbasedev->mdev = vfio_device_is_mdev(vbasedev);
- 
--    trace_vfio_mdev(vbasedev->name, is_mdev);
-+    trace_vfio_mdev(vbasedev->name, vbasedev->mdev);
- 
--    if (vbasedev->ram_block_discard_allowed && !is_mdev) {
-+    if (vbasedev->ram_block_discard_allowed && !vbasedev->mdev) {
-         error_setg(errp, "x-balloon-allowed only potentially compatible "
-                    "with mdev devices");
-         goto error;
 -- 
 2.17.2
 
