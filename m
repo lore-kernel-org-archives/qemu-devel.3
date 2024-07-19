@@ -4,85 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B268EC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 10:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A6CC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 10:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUkWU-0005Qj-2j; Fri, 19 Jul 2024 06:07:34 -0400
+	id 1sUkez-0001hJ-ON; Fri, 19 Jul 2024 06:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUkWS-0005Pk-Ad
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:07:32 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sUkWP-0007NK-Un
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:07:31 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4266b1f1b21so11882205e9.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 03:07:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721383648; x=1721988448; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IFOLi8NXOCMWyDvg1hIo0JGInqxwDebjjy5EYeDkZmw=;
- b=hngnIeNuOsOIsvJZZUMr+5o7ApuBw1pJUJ3f5oThFrvTNu6+sDQXis9RslExHYP1g2
- 9Dwrqz9Tp2zzBmnW6CeRFo7mNkFILPFd3sOAxuRXd6AkkvWauJxwGnbKAkpisv+cpVGr
- jLOMfvcNQaOisAly+rGDOZtpmKnyV3H1Ms7SFFAevr779TTOd9wnxLLwISILvtnoVTbQ
- Jrjz7KlU0mYRaR78JsmgoDv0EJexHJTc2SN2tqs9VyOazdKP9PA2dZgNEVnvY+KwK3TU
- ArnB3oz3STaFH0POKRhDleZ5FOOTFX33p+0S4aBDUYU1cI9Qs/FXXluwiuAP7DYl0X/C
- O0Qg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUkew-0001fI-R0
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:16:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sUkeu-0001fG-3R
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:16:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721384174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=k2ouxdVDC1rHN/Qr0qzDIV3r7AVoitIcwtn5Up6vdhc=;
+ b=Q0ZbPaAWF0BWSdWN/naJyj18T+wp8p6eR6vWjOWWxrOnmfiofz7L9+AnAVJGjE/glPpHKn
+ N/4k6RFDiI+yb11Y+l70TetdTPL8rXwA1ZE6FEHLm6oO3GWslMhal1nX/Ott71f1i6Eanc
+ vcYaUeyR5yLKK85F9Emou85J0PeUXGw=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-19-QzLdU8DTM5ehukQAPYriqg-1; Fri, 19 Jul 2024 06:16:12 -0400
+X-MC-Unique: QzLdU8DTM5ehukQAPYriqg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ee8b7eafffso19853891fa.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 03:16:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721383648; x=1721988448;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IFOLi8NXOCMWyDvg1hIo0JGInqxwDebjjy5EYeDkZmw=;
- b=GUg3Rm/wSIaljDSNRCOpF32PzIhq5H9xV2+z4QMy8I49KS0ml4jWOskSwisO26cqzl
- arPB7+uapgyRXMM8J0a39+ab1WwQxXZ9nu5f8FLk4RJxdNqAaz26fuVrhliHenj77sg/
- qFp4o8Vr6lNFpFQI7xm5Mb29ILJhpZ0YO/R8H2WLe0DBfIZQiutvN5gSe8TZWFBw+mzK
- wmOqYwBeRWg4Wbkt/uY9euSl19jxeDGWCf9Qg6x3xjwZ66919qG/ygQJuRBT99if4sX9
- 19HpdFuM0BjE6liL2eup2yb7qMhHmflhoxDavfwLgn5sdKYuwBxFLqdOKBgFU20rK7xI
- zcBw==
-X-Gm-Message-State: AOJu0YxY09DbC4v/Cu0JzMpK+iHiGR5LFbMUVabDl33wuS6bARLjnCTA
- dnnWGx8WexN0LGNlEfNCP0eFQjZxmYCztNs73Gtl21SjyPZsmZ5ldCYhmZ4E/Ng=
-X-Google-Smtp-Source: AGHT+IEDs5CtbnkSXnF4xCBPfkAQDcsIYfVn0mVu3zduMsoo5RZdyuFwG5ZFHJmn6Xg46QL8+xXDpQ==
-X-Received: by 2002:a05:600c:4ec6:b0:427:9dad:8063 with SMTP id
- 5b1f17b1804b1-427c2cc3000mr53448875e9.12.1721383647632; 
- Fri, 19 Jul 2024 03:07:27 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68f789csm18907515e9.6.2024.07.19.03.07.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jul 2024 03:07:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 256955F880;
- Fri, 19 Jul 2024 11:07:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Gustavo Romero <gustavo.romero@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>
-Subject: Re: [RFC PATCH v3] contrib/plugins: control flow plugin
-In-Reply-To: <604e16a4-a316-4a18-a9f2-f7c8a77be17c@linaro.org> (Pierrick
- Bouvier's message of "Thu, 18 Jul 2024 10:17:38 -0700")
-References: <20240718145958.1315270-1-alex.bennee@linaro.org>
- <604e16a4-a316-4a18-a9f2-f7c8a77be17c@linaro.org>
-Date: Fri, 19 Jul 2024 11:07:26 +0100
-Message-ID: <87frs5g0f5.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1721384171; x=1721988971;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k2ouxdVDC1rHN/Qr0qzDIV3r7AVoitIcwtn5Up6vdhc=;
+ b=Re+YWTLn+Gfe7BL0mDfTP/S2WLq8tWkhh6ty12WGJixeT0TxVE5CeT+HXl7lNxtYkq
+ CdU9KJLH61PhKS1XGFue0rh5iUkRMxXF3mphH5y6LAjDgDu1E0cuBNNMeOEFfvTvMzWU
+ l0P2W+Ib7kpw0ls5k/2gLti8iXEdVTwP3RCW9gels97HS6aGJJhaJ5WDCskPnID08QmM
+ MaYojs//Z9UojhlN3WhXGfbvTSicCv1XyqSdQn+GJfPUY2JL45igpmkG1fxRTaXMgbnK
+ QAAYBVSTFib9+7+/wDDGiRfzdM43Fjq71Qd+C90R/3Ujjm3U8D5l7nMWCKNWRmlB9Yp/
+ nnaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWiKP9V5f3Wn+rYOpqUebMznmD4SMULPNYHs/FquvtH3QGYQVW6bu3AkEB6xeBp1nzwIvnDTf0fMr0imriuBfNLfZ6tMbY=
+X-Gm-Message-State: AOJu0Yz7YS895HdNVr0NakNHYDFbcTsc3iJ4oh0sDmNbhXXVLzH+nS50
+ /LBShJb/Xt3d2+OzkJorbTMyD3J1lBHfxej00idfu8H13dmPskcqkBCysIAxGtQieHNhj2Z34l2
+ E7du1z3nVUJPJHCAzLges447n0Bh1s+AdssrlJXSruTLzCO2JdBj/
+X-Received: by 2002:a2e:7d01:0:b0:2ec:53fb:39cb with SMTP id
+ 38308e7fff4ca-2ef05c503bamr34459731fa.6.1721384171330; 
+ Fri, 19 Jul 2024 03:16:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUW6ww3IdhoFOKZJ3/vaObAXVQzR1RmlpoGw/jLbZKeDv3hc46VkIP8hk8ZDZrZDoZZcAxqg==
+X-Received: by 2002:a2e:7d01:0:b0:2ec:53fb:39cb with SMTP id
+ 38308e7fff4ca-2ef05c503bamr34459561fa.6.1721384170876; 
+ Fri, 19 Jul 2024 03:16:10 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
+ [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d6937fc7sm18940525e9.46.2024.07.19.03.16.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 03:16:10 -0700 (PDT)
+Message-ID: <16c9703c-79b9-4e52-bc40-2857c0c06672@redhat.com>
+Date: Fri, 19 Jul 2024 12:16:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/s390x: filter deprecated properties based on
+ model expansion type
+To: Collin Walling <walling@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, david@redhat.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, Jiri Denemark <jdenemar@redhat.com>
+References: <20240716173253.28533-1-walling@linux.ibm.com>
+ <87le1yn7jy.fsf@pond.sub.org>
+ <32379d4f-9b6f-4673-9b87-1db4a8ada649@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <32379d4f-9b6f-4673-9b87-1db4a8ada649@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,248 +151,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 18/07/2024 20.22, Collin Walling wrote:
+> On 7/18/24 9:39 AM, Markus Armbruster wrote:
+>> Collin Walling <walling@linux.ibm.com> writes:
+>>
+>>> As s390 CPU models progress and deprecated properties are dropped
+>>> outright, it will be cumbersome for management apps to query the host
+>>> for a comprehensive list of deprecated properties that will need to be
+>>> disabled on older models. To remedy this, the query-cpu-model-expansion
+>>> output now behaves by filtering deprecated properties based on the
+>>> expansion type instead of filtering based off of the model's full set
+>>> of features:
+>>>
+>>> When reporting a static CPU model, only show deprecated properties that
+>>> are a subset of the model's enabled features.
+>>>
+>>> When reporting a full CPU model, show the entire list of deprecated
+>>> properties regardless if they are supported on the model.
+>>>
+>>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>> ---
+>>>
+>>> Changelog:
+>>>
+>>>      v2
+>>>      - Changed commit message
+>>>      - Added documentation reflecting this change
+>>>      - Made code changes that more accurately filter the deprecated
+>>>          properties based on expansion type.  This change makes it
+>>>          so that the deprecated-properties reported for a static model
+>>>          expansion are a subset of the model's properties instead of
+>>>          the model's full-definition properties.
+>>>
+>>>          For example:
+>>>
+>>>          Previously, the z900 static model would report 'bpb' in the
+>>>          list of deprecated-properties.  However, this prop is *not*
+>>>          a part of the model's feature set, leading to some inaccuracy
+>>>          (albeit harmless).
+>>>
+>>>          Now, this feature will not show during a static expansion.
+>>>          It will, however, show up in a full expansion (along with
+>>>          the rest of the list: 'csske', 'te', 'cte').
+>>>
+>>> @David, I've elected to respectully forgo adding your ack-by on this
+>>> iteration since I have changed the code (and therefore the behavior)
+>>> between this version and the previous in case you do not agree with
+>>> these adjustments.
+>>>
+>>> ---
+>>>   qapi/machine-target.json         |  8 ++++++--
+>>>   target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
+>>>   2 files changed, 15 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>> index a8d9ec87f5..d151504f25 100644
+>>> --- a/qapi/machine-target.json
+>>> +++ b/qapi/machine-target.json
+>>> @@ -21,8 +21,12 @@
+>>>   # @props: a dictionary of QOM properties to be applied
+>>>   #
+>>>   # @deprecated-props: a list of properties that are flagged as deprecated
+>>> -#     by the CPU vendor.  These props are a subset of the full model's
+>>> -#     definition list of properties. (since 9.1)
+>>> +#     by the CPU vendor.  (since 9.1).
+>>> +#
+>>> +# .. note:: Since 9.1, the list of deprecated props were always a subset
+>>> +#    of the model's full-definition list of properites. Now, this list is
+>>> +#    populated with the model's enabled property set when delta changes
+>>> +#    are applied. All deprecated properties are reported otherwise.
+>>
+>> I'm confused.
+>>
+>> "Since 9.1, the list of deprecated props were ..." and "Now, this list
+>> is" sounds like you're explaining behavior before and after a change.
+>> What change?  Since only released behavior matters, and
+>> @deprecated-props is new, there is no old behavior to document, isn't
+>> it?
+> 
+> I admittedly had some difficulty articulating the change introduced by
+> this patch.  The @deprecated-props array, as well as a way for s390x to
+> populate it, was introduced in release 9.1.  Prior to this patch, the
+> deprecated-props list was filtered by the CPU model's full feature set.
+> I attempted to explain this with:
+> 
+> "Since 9.1, the list of deprecated props were always a subset of the
+> model's full-definition list of properties."
 
-> On 7/18/24 07:59, Alex Benn=C3=A9e wrote:
->> This is a simple control flow tracking plugin that uses the latest
->> inline and conditional operations to detect and track control flow
->> changes. It is currently an exercise at seeing how useful the changes
->> are.
->> Based-on: <20240312075428.244210-1-pierrick.bouvier@linaro.org>
->> Cc: Gustavo Romero <gustavo.romero@linaro.org>
->> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Message-Id: <20240311153432.1395190-1-alex.bennee@linaro.org>
-<snip>
->> +/*
->> + * Called when we detect a non-linear execution (pc !=3D
->> + * pc_after_block). This could be due to a fault causing some sort of
->> + * exit exception (if last_pc !=3D block_end) or just a taken branch.
->> + */
->> +static void vcpu_tb_branched_exec(unsigned int cpu_index, void *udata)
->> +{
->> +    uint64_t lpc =3D qemu_plugin_u64_get(last_pc, cpu_index);
->> +    uint64_t ebpc =3D qemu_plugin_u64_get(end_block, cpu_index);
->> +    uint64_t npc =3D qemu_plugin_u64_get(pc_after_block, cpu_index);
->> +    uint64_t pc =3D GPOINTER_TO_UINT(udata);
->> +
->> +    /* return early for address 0 */
->> +    if (!lpc) {
->> +        return;
->> +    }
->> +
->> +    NodeData *node =3D fetch_node(lpc, true);
->
-> I would suggest a different approach here.
->
-> This plugin keeps data as a graph between instructions.
-> Another possibility would be to use a *per vcpu* hashtable, which
-> simply associates the key (source_addr, dest_addr), to a number of
-> hits.
-> (uint64, uint64) -> uint64. This is all we really need at exec time,
-> the rest can be reconstructed for data gathered at translation time.
+Version 9.1 has not been released yet (see 
+https://wiki.qemu.org/Planning/9.1), so I agree with Markus, this sounds 
+confusing/wrong to me, too.
 
-Hmm I'm not sure how to deal with 128 bit keys with glib's hash table
-implementation. I think the gpointer can be an opaque pointer though
-with GEqualFunc to compare - but adding multiple records to a hash table
-seems wrong.
+  Thomas
 
-> This way, you can do all the work in vcpu_tb_branched_exec without
-> needing a single lock. (here, we lock twice, once globally to fetch
-> all the nodes, and once for the node itself).
->
-> Then, at exit, you can merge hashtables from all vcpu, and do the work
-> to rebuild the full graph from all transitions collected.
 
-Well a lot of transitions are just continuations (although maybe not I
-guess I need to check that hunch).
-
-> As a bonus, you can get the true list of hottest branches, when now,
-> it's the hottest insn only you have.
-
-I'm not sure I follow. Are you saying there are control flow changes I
-don't detect? The fall-through cases?
-
-> The Node structure would simply becomes Insn, as you want to keep the
-> pc, symbols and disassembly of every instruction.
-> And you need to keep track of all tb too, with length and pointing to
-> the list of instructions.
-
-What would I do with the TB information that I couldn't encode in Insn
-at translation time?
-
->
-> It's a different paradigm from what is doing here, but I think it
-> would scale much better, especially with multithreaded programs.
->
->> +    DestData *data =3D NULL;
->> +    bool early_exit =3D (lpc !=3D ebpc);
->> +    GArray *dests;
->> +
->> +    /* the condition should never hit */
->> +    g_assert(pc !=3D npc);
->> +
->> +    g_mutex_lock(&node->lock);
->> +
->> +    if (early_exit) {
->> +        fprintf(stderr, "%s: pc=3D%"PRIx64", epbc=3D%"PRIx64
->> +                " npc=3D%"PRIx64", lpc=3D%"PRIx64", \n",
->> +                __func__, pc, ebpc, npc, lpc);
->> +        node->early_exit++;
->> +        if (!node->mid_count) {
->> +            /* count now as we've only just allocated */
->> +            node->mid_count++;
->> +        }
->> +    }
->> +
->> +    dests =3D node->dests;
->> +    for (int i =3D 0; i < dests->len; i++) {
->> +        if (g_array_index(dests, DestData, i).daddr =3D=3D pc) {
->> +            data =3D &g_array_index(dests, DestData, i);
->> +        }
->> +    }
->> +
->> +    /* we've never seen this before, allocate a new entry */
->> +    if (!data) {
->> +        DestData new_entry =3D { .daddr =3D pc };
->> +        g_array_append_val(dests, new_entry);
->> +        data =3D &g_array_index(dests, DestData, dests->len - 1);
->> +        g_assert(data->daddr =3D=3D pc);
->> +    }
->> +
->> +    data->dcount++;
->> +    node->dest_count++;
->> +
->> +    g_mutex_unlock(&node->lock);
->> +}
->> +
->> +/*
->> + * At the start of each block we need to resolve two things:
->> + *
->> + *  - is last_pc =3D=3D block_end, if not we had an early exit
->> + *  - is start of block last_pc + insn width, if not we jumped
->> + *
->> + * Once those are dealt with we can instrument the rest of the
->> + * instructions for their execution.
->> + *
->> + */
->> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *t=
-b)
->> +{
->> +    uint64_t pc =3D qemu_plugin_tb_vaddr(tb);
->> +    size_t insns =3D qemu_plugin_tb_n_insns(tb);
->> +    struct qemu_plugin_insn *first_insn =3D qemu_plugin_tb_get_insn(tb,=
- 0);
->> +    struct qemu_plugin_insn *last_insn =3D qemu_plugin_tb_get_insn(tb, =
-insns - 1);
->> +
->> +    /*
->> +     * check if we are executing linearly after the last block. We can
->> +     * handle both early block exits and normal branches in the
->> +     * callback if we hit it.
->> +     */
->> +    gpointer udata =3D GUINT_TO_POINTER(pc);
->> +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
->> +        tb, vcpu_tb_branched_exec, QEMU_PLUGIN_CB_NO_REGS,
->> +        QEMU_PLUGIN_COND_NE, pc_after_block, pc, udata);
->> +
->> +    /*
->> +     * Now we can set start/end for this block so the next block can
->> +     * check where we are at. Do this on the first instruction and not
->> +     * the TB so we don't get mixed up with above.
->> +     */
->> +    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
->> +                                                      QEMU_PLUGIN_INLIN=
-E_STORE_U64,
->> +                                                      end_block, qemu_p=
-lugin_insn_vaddr(last_insn));
->> +    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
->> +                                                      QEMU_PLUGIN_INLIN=
-E_STORE_U64,
->> +                                                      pc_after_block,
->> +                                                      qemu_plugin_insn_=
-vaddr(last_insn) +
->> +                                                      qemu_plugin_insn_=
-size(last_insn));
->> +
->> +    for (int idx =3D 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
->> +        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i=
-dx);
->> +        uint64_t ipc =3D qemu_plugin_insn_vaddr(insn);
->> +        /*
->> +         * If this is a potential branch point check if we could grab
->> +         * the disassembly for it. If it is the last instruction
->> +         * always create an entry.
->> +         */
->> +        NodeData *node =3D fetch_node(ipc, last_insn);
->> +        if (node) {
->> +            g_mutex_lock(&node->lock);
->> +            if (!node->insn_disas) {
->> +                node->insn_disas =3D qemu_plugin_insn_disas(insn);
->> +            }
->> +            if (!node->symbol) {
->> +                node->symbol =3D qemu_plugin_insn_symbol(insn);
->> +            }
->> +            if (last_insn =3D=3D insn) {
->> +                node->last_count++;
->> +            } else {
->> +                node->mid_count++;
->> +            }
->> +            g_mutex_unlock(&node->lock);
->> +        }
->> +
->> +        /* Store the PC of what we are about to execute */
->> +        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
->> +                                                            QEMU_PLUGIN=
-_INLINE_STORE_U64,
->> +                                                            last_pc, ip=
-c);
->> +    }
->> +}
->> +
->> +QEMU_PLUGIN_EXPORT
->> +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
->> +                        int argc, char **argv)
->> +{
->> +    for (int i =3D 0; i < argc; i++) {
->> +        char *opt =3D argv[i];
->> +        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
->> +        if (g_strcmp0(tokens[0], "sort") =3D=3D 0) {
->> +            if (g_strcmp0(tokens[1], "hottest") =3D=3D 0) {
->> +                report =3D SORT_HOTDEST;
->> +            } else if (g_strcmp0(tokens[1], "early") =3D=3D 0) {
->> +                report =3D SORT_EARLY;
->> +            } else if (g_strcmp0(tokens[1], "popular") =3D=3D 0) {
->> +                report =3D SORT_POPDEST;
->> +            } else {
->> +                fprintf(stderr, "failed to parse: %s\n", tokens[1]);
->> +                return -1;
->> +            }
->> +        } else {
->> +            fprintf(stderr, "option parsing failed: %s\n", opt);
->> +            return -1;
->> +        }
->> +    }
->> +
->> +    plugin_init();
->> +
->> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->> +    return 0;
->> +}
->> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
->> index 98a89d5c40..ea81fde2b5 100644
->> --- a/contrib/plugins/Makefile
->> +++ b/contrib/plugins/Makefile
->> @@ -29,6 +29,7 @@ NAMES +=3D cache
->>   NAMES +=3D drcov
->>   NAMES +=3D ips
->>   NAMES +=3D stoptrigger
->> +NAMES +=3D cflow
->>     ifeq ($(CONFIG_WIN32),y)
->>   SO_SUFFIX :=3D .dll
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
