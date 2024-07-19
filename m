@@ -4,57 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28F7C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 06:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB11C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 07:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUh2u-0002Gb-Rm; Fri, 19 Jul 2024 02:24:48 -0400
+	id 1sUhpC-0007gk-Ag; Fri, 19 Jul 2024 03:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUh2t-0002Al-Du; Fri, 19 Jul 2024 02:24:47 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUh2r-0002Ig-Mm; Fri, 19 Jul 2024 02:24:47 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WQKQc72XKz4x04;
- Fri, 19 Jul 2024 16:24:40 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WQKQY0DVGz4w2K;
- Fri, 19 Jul 2024 16:24:36 +1000 (AEST)
-Message-ID: <128fad78-75a0-405d-9d5c-350064167573@kaod.org>
-Date: Fri, 19 Jul 2024 08:24:34 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUhpA-0007fW-NA
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:14:40 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUhp9-0004Jh-5z
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:14:40 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso366741f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 00:14:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721373275; x=1721978075; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=q94KaaPd+AG6VtEhQmybQC3quzrJQbJCHNqATWTTd4w=;
+ b=oH3C3f2qoSi1gwu7YnkoIDAYnF9MNFHjke0vy7OFAWir24lVqkax4vJQhcTZ0ki3hi
+ O96j5kt4I9gq8/kZLM4SYdkCpQN1iaPOF7jaGI5Yd74hmvAJFZ7fnHtCzFkgIwK8Dth/
+ BUT2g8Dd3Q6tkkzUHjKFY3DAZWy46pbCQuYYNAEsGOBbB4NKx5g6qBhKzdveBaiHf4/h
+ mRAORbyKoY22NtRKFNYJnH7LtntiS3vuMukzXS1TuBQJdqgEc/f9HOZExXBKTEjbh1WA
+ kFruqC0HJF5+p69dgWVxSB5WCZZDZHa8CIX87r78Fe1R01nKx3n2g2QddNmMPPmVSWRL
+ hMhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721373275; x=1721978075;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=q94KaaPd+AG6VtEhQmybQC3quzrJQbJCHNqATWTTd4w=;
+ b=vSLlD2NrWT2JoGKkNSPZRdTLuyb6bjmTl4ycaqmZ0Q58VlGyMdx/BFHNiN1VJclFNm
+ CLQ3zieW3ysdIyzkjddOJzAEdNwG3orgn39ozydj78wI4OSv812fJpLJjCOofvP6vEnR
+ gVRFXHUDvbgJ+nFic1nYyFPzqdCx8RA4FTbgh1vO4TSirQAs58SusLqoCotfB8ZhRNmO
+ xBTUmVM2rAq6x5SRxxQwwzVoNASs8SjAZI0+NAhvyPFaQRNuDEqw5XHb5D68S5GxyMiv
+ jd2Z3E1m5G7iWqMezo5DVo6wEtZLNJTxYz21i24lbiT9hJhyKu20vTDZZLZxM2IalUB3
+ uDzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIKZfxTe4YrOGyc0Fvug8E7esn3bvtn3wIMI9LM1FyJcgIuim53bZVKtwYTPtQYLDDgEXqvgS5fw6zrKV8WHamP7RKlHI=
+X-Gm-Message-State: AOJu0YzRVFnwDyXARZjlhi7TVvpIjgLgcaTb2rLHGY2Pj1CIdtXXngN9
+ sZJHRmaz0ID9b0lZhpocccCvGqNlIU5ioJt/Bi9gS4aloy19UrrCrWe9TTp376A=
+X-Google-Smtp-Source: AGHT+IGvZD6HcwpgTrFUcBdDdkSFOBBtRjw87wSiF2QAh2sItyBMXpRNXanwqBVV2xp5rZVsngLTlg==
+X-Received: by 2002:a5d:64a7:0:b0:365:aec0:e191 with SMTP id
+ ffacd0b85a97d-36873f1810fmr1250644f8f.21.1721373275263; 
+ Fri, 19 Jul 2024 00:14:35 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.113])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787ed7c3sm777377f8f.111.2024.07.19.00.14.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 00:14:34 -0700 (PDT)
+Message-ID: <a278f3d5-28d6-4e73-94aa-1b1c53d3e26a@linaro.org>
+Date: Fri, 19 Jul 2024 09:14:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 00/15] support ADC and I2C for AST2700
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <df6ee32d-f404-4f24-9dae-e755e5566d5f@kaod.org>
-Content-Language: en-US, fr
-In-Reply-To: <df6ee32d-f404-4f24-9dae-e755e5566d5f@kaod.org>
+Subject: Re: [PATCH] tests/tcg/aarch64: Fix test-mte.py
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: gustavo.romero@linaro.org, alex.bennee@linaro.org
+References: <20240719004143.1319260-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240719004143.1319260-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=vGMz=OT=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,51 +95,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 18:18, Cédric Le Goater wrote:
-> On 7/18/24 08:49, Jamin Lin wrote:
->> v1:
->> 1. support ADC for AST2700
->> 2. support I2C for AST2700
->>
->> Jamin Lin (15):
->>    aspeed/adc: Add AST2700 support
->>    aspeed/soc: support ADC for AST2700
->>    hw/i2c/aspeed: support to set the different memory size
->>    hw/i2c/aspeed: support discontinuous register memory region of I2C bus
->>    hw/i2c/aspeed: rename the I2C class pool attribute to share_pool
->>    hw/i2c/aspeed: introduce a new bus pool buffer attribute in
->>      AspeedI2Cbus
->>    hw/i2c/aspeed: support discontinuous poll buffer memory region of I2C
->>      bus
->>    hw/i2c/aspeed: introduce a new dma_dram_offset attribute in
->>      AspeedI2Cbus
->>    hw/i2c/aspeed: Add AST2700 support
->>    hw/i2c/aspeed: support Tx/Rx buffer 64 bits address
->>    hw/i2c/aspeed: support high part dram offset for DMA 64 bits
->>    aspeed/soc: introduce a new API to get the INTC orgate information
->>    aspeed/soc: support I2C for AST2700
->>    aspeed: fix coding style
->>    aspeed: add tmp105 in i2c bus 0 for AST2700
->>
->>   hw/adc/aspeed_adc.c         |  16 ++
->>   hw/arm/aspeed.c             |  31 +++-
->>   hw/arm/aspeed_ast27x0.c     |  65 +++++++
->>   hw/i2c/aspeed_i2c.c         | 340 ++++++++++++++++++++++++++++++------
->>   include/hw/adc/aspeed_adc.h |   1 +
->>   include/hw/i2c/aspeed_i2c.h |  34 ++--
->>   6 files changed, 418 insertions(+), 69 deletions(-)
->>
+On 19/7/24 02:41, Richard Henderson wrote:
+> Python 3.12 warns:
 > 
+>    TEST    gdbstub MTE support on aarch64
+> /home/rth/qemu/src/tests/tcg/aarch64/gdbstub/test-mte.py:21: SyntaxWarning: invalid escape sequence '\('
+>    PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\)."
 > 
+> Double up the \ to pass one through to the pattern.
 > 
-> Applied 1-2 to aspeed-next.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tests/tcg/aarch64/gdbstub/test-mte.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Applied 3,5,6,14 to aspeed-next.
-
-Thanks,
-
-C.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
