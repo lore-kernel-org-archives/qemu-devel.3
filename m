@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D860C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF1B8C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUrvz-0003YY-66; Fri, 19 Jul 2024 14:02:23 -0400
+	id 1sUs4C-00011B-7R; Fri, 19 Jul 2024 14:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUrvy-0003Y0-9f
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:02:22 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs4A-000106-IE
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:10:50 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUrvw-0001gH-Kb
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:02:22 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4266f344091so14803505e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:02:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs47-0003dc-Ic
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:10:49 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-367ab76d5e1so681508f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721412134; x=1722016934; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721412645; x=1722017445; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=q3BFRcvZPpvowrLbpkNo3GnPVjILgIvCnujVvjQOW4Q=;
- b=WjP5vzlgY8KjaST3NAjnQPqLMi9jzUJx6OOoNn1N7zxcGIuQIAJiz8DDs2JsOA77nV
- VaDpfjCOuvqBCvgooC4xTV1GZPGLIKAs3ukGSd56Y9tLE+FjDK2K5vfqA6qqL0lCt/5x
- XLbZ8ntp8YcIPb5Y4kgQH97iAsWeBJHywAObs8HxrekB/HErnjeQl9pbRHM8Dh4fFVC6
- uWlSI7efTtdbUADjHjR5Vjm8USyDd/QkNDJGkiVc5oFE6wlCsVSbNAAbSvWT/HNTFYQT
- OzKot4RvoQhlIbQfdsCzLUUHGZpnyriLjE5wAlFc5FINrBXxSEWahgCENOtDviUsUtnP
- WAbw==
+ bh=tJQVf3BbDguAsYpbzIbV3goR+q4yFrTTHvQYqXEoamQ=;
+ b=jC6/yBRSXp2UpJ9G7yrgoeKAB/Yfswv/Yz4qrphuObVxkkJecfp/cAH2LNqBObI7sh
+ DY496lwwnu5HMbmlHV6lRSAK0u8AqKkz/8BILuIkbNMiuM180tTHa14Q/Oz6J9cX0Jgs
+ 9q0ON+KQavyxnZVBN/5eoIkT3tLjFv2xfxFi2haPZ4oLfrMt47tdyAPIo1PDeLsgnk0z
+ zPyJiCVvHkD6stufq4cjngDD0A9A0U9uKuFPdAxLUf9PPsWE3eAy60qwU5QS+VT9JdZn
+ vfHvoIsbX48JdFp1mR+QBkksvMXrvWACHTb6499MTNQWJEwDC+2XlzJuEo7tIiXFvibY
+ 0upQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721412134; x=1722016934;
+ d=1e100.net; s=20230601; t=1721412645; x=1722017445;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=q3BFRcvZPpvowrLbpkNo3GnPVjILgIvCnujVvjQOW4Q=;
- b=ocfqn6Sx86TUZ8wVN3TU8NSikRr9n88txcjmZNcbeyP+nzT6PmGwhOlkq4CAP6WVHn
- mtrsr0aNiFkwkdazxl7BSwfeISCxOu5VI8d9Oot9fyhpZ7p9Z3mmpKl3rsSd3r73y4IA
- r6v16GZmEaVigd6fpxNDdAoSHlwut0HwzjG5f9OcNE6p7GB7XA0dxLrm+dgLD9YInDNL
- tvIvwI2zDPEXrhWPSjlOGuuK3OFWo4rursk14nA5KLOJWMcjyTbcCqA5ujEf4V0USk+c
- RhMFDdHVsEgsubFR3hbReRDGsNDY80gHLYmLcIiwpz2JrbPlQ/eQlhbXXTKQT1+MSHgi
- fJig==
-X-Gm-Message-State: AOJu0Yx9FLC4WtdNcecrNFdfCeGzdTIF05fUT3ZrSpig/Nn/L5fVgbBu
- F4yoIM+iBYLxh5CFz5Zo+j+vCi8ABWt0tdULAh/HrtlzOT6upiEB/iI1BpfgWSdjC1m7SBSJVfE
- /
-X-Google-Smtp-Source: AGHT+IGvUjtcLELSWbb8hLxKEOBP+BcAaIFpxlqeI4+l1NQiFYGtlycFKKiT3eR+fqkq2HjhePOFzw==
-X-Received: by 2002:a05:6000:1841:b0:368:48b2:95f0 with SMTP id
- ffacd0b85a97d-36848b29f6bmr4967588f8f.13.1721412134326; 
- Fri, 19 Jul 2024 11:02:14 -0700 (PDT)
+ bh=tJQVf3BbDguAsYpbzIbV3goR+q4yFrTTHvQYqXEoamQ=;
+ b=jgwVcmzZw51u8L8i83UPNVYOH7Kkdc3P74+nCAGB2WAk7qC4WFtcTBsAVt6FfPoTr4
+ 27A7SxYR/Z7g7QjsbM2G2xiwI56dqzMzxuytRk8dMVC6X5rvU4xcz0WR2CReKmp3ytAI
+ xEqAztCra3q6Zsw/emnziHaZcWSSN+PZ6aF87WRrcTonSaCBc8o3bC4tMksH1DnRdFU9
+ tb4FKrobx7+kDOn08reFztrHJB2ADfXBmBmWKgkgIO3qqiNxYpEdSnTuyzz3gGkt6vC1
+ fwsC7k9Jau4nXW3O6EJ9hFLU7ZshwZCep3++RVhNtbpCEgP/yyN/2uN54NjEcgV18+Hx
+ 91Vg==
+X-Gm-Message-State: AOJu0YylIBXhw6Pc+GawDnWADkuhAaBiQquohm4V0pzQK1bzZYRqmzT4
+ ZVL2PDGkmzBNyDxVJKy0rSfiV3tJYVg1cjY4tEVntvyym/6b/OdFsnNqz+iq5aNIL/EokaMQKXh
+ 6
+X-Google-Smtp-Source: AGHT+IG8E8Crd22Mc4FAZy6qunBhAOnUZaKi+d46fEq8Tu+0dOO8BEjD5R/IpPnPiMKOzP1yJ8FS8g==
+X-Received: by 2002:adf:e34c:0:b0:367:9279:c401 with SMTP id
+ ffacd0b85a97d-3683165c8cfmr5506717f8f.34.1721412645178; 
+ Fri, 19 Jul 2024 11:10:45 -0700 (PDT)
 Received: from localhost.localdomain (52.170.88.92.rev.sfr.net. [92.88.170.52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d8f1cf7esm21827895e9.39.2024.07.19.11.02.13
+ ffacd0b85a97d-368787cece3sm2224012f8f.69.2024.07.19.11.10.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Jul 2024 11:02:13 -0700 (PDT)
+ Fri, 19 Jul 2024 11:10:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/avocado: Allow overwritting AVOCADO_SHOW env variable
-Date: Fri, 19 Jul 2024 20:02:11 +0200
-Message-ID: <20240719180211.48073-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Tong Ho <tong.ho@amd.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 00/16] hw/char/pl011: Implement TX (async) FIFO to avoid
+ blocking the main loop
+Date: Fri, 19 Jul 2024 20:10:25 +0200
+Message-ID: <20240719181041.49545-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,31 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'app' level logging is useful, but sometimes we want
-more, for example QEMU leverages the 'console' logging.
+Hi,
 
-Allow overwritting AVOCADO_SHOW from environment, i.e.:
+This series add support for (async) FIFO on the transmit path
+of the PL011 UART.
 
-  $ make check-avocado AVOCADO_SHOW='app,console'
+Last patch still broken (chars are emitted async),
+still patches 1-11 could be merged for this release...
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/Makefile.include | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Since v4:
+- Rebased (loopback)
+- Addressed Richard & Juan migration comments
+- Split in smaller patches
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index d39d5dd6a4..6618bfed70 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -97,7 +97,7 @@ endif
- # Controls the output generated by Avocado when running tests.
- # Any number of command separated loggers are accepted.  For more
- # information please refer to "avocado --help".
--AVOCADO_SHOW=app
-+AVOCADO_SHOW?=app
- ifndef AVOCADO_TAGS
- 	AVOCADO_CMDLINE_TAGS=$(patsubst %-softmmu,-t arch:%, \
- 						 $(filter %-softmmu,$(TARGETS)))
+Since v3:
+- Document migration bits (Alex, Richard)
+- Just check FIFO is not empty in pl011_xmit_fifo_state_needed (rth)
+- In pl011_xmit check TX enabled first, and ignore < 8-bit TX (rth)
+
+Since v2:
+- Added R-b tags
+- Addressed Richard comments on migration
+
+Since v1:
+- Restrict pl011_ops[] impl access_size,
+- Do not check transmitter is enabled (Peter),
+- Addressed Alex's review comments,
+- Simplified migration trying to care about backward compat,
+  but still unsure...
+
+Philippe Mathieu-Daudé (16):
+  tests/avocado: Add 'device:pl011' tag to tests exercising PL011 UART
+  hw/char/pl011: Remove unused 'readbuff' field
+  hw/char/pl011: Move pl011_put_fifo() earlier
+  hw/char/pl011: Move pl011_loopback_enabled|tx() around
+  hw/char/pl011: Split RX/TX path of pl011_reset_fifo()
+  hw/char/pl011: Extract pl011_write_txdata() from pl011_write()
+  hw/char/pl011: Extract pl011_read_rxdata() from pl011_read()
+  hw/char/pl011: Warn when using disabled transmitter
+  tests/qtest: Update tests using PL011 UART
+  hw/char/pl011: Check if receiver is enabled
+  hw/char/pl011: Rename RX FIFO methods
+  hw/char/pl011: Add transmit FIFO to PL011State
+  hw/char/pl011: Introduce pl011_xmit() as GSource
+  hw/char/pl011: Consider TX FIFO overrun error
+  hw/char/pl011: Drain TX FIFO when no backend connected
+  hw/char/pl011: Implement TX FIFO
+
+ include/hw/char/pl011.h                  |   3 +-
+ hw/char/pl011.c                          | 339 ++++++++++++++++-------
+ tests/qtest/boot-serial-test.c           |  15 +-
+ hw/char/trace-events                     |   9 +-
+ tests/avocado/boot_linux.py              |   1 +
+ tests/avocado/boot_linux_console.py      |   2 +
+ tests/avocado/boot_xen.py                |   1 +
+ tests/avocado/machine_aarch64_sbsaref.py |   1 +
+ tests/avocado/machine_aarch64_virt.py    |   1 +
+ tests/avocado/smmu.py                    |   1 +
+ tests/avocado/tuxrun_baselines.py        |   5 +
+ 11 files changed, 277 insertions(+), 101 deletions(-)
+
 -- 
 2.41.0
 
