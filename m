@@ -4,80 +4,201 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DE0C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 03:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F5CC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 04:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUeXH-0005Su-7T; Thu, 18 Jul 2024 23:43:59 -0400
+	id 1sUf87-0005BK-5F; Fri, 19 Jul 2024 00:22:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUeXF-0005Rz-OC; Thu, 18 Jul 2024 23:43:57 -0400
-Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sUeXD-0007dg-F8; Thu, 18 Jul 2024 23:43:57 -0400
-Received: by mail-vs1-xe36.google.com with SMTP id
- ada2fe7eead31-48ffd139a9cso520997137.0; 
- Thu, 18 Jul 2024 20:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721360633; x=1721965433; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2kemxsTPZuQnABFcfnbyURn/jkxS4w92EdaZ+3AVyrU=;
- b=D/1VtGcuhR1aQDTwIHqaRAxwO7VDObn7hiIKp64ZbeulQF+CHRt0gD6djbrxaViJe3
- JgyM2pT9+6O3j3GoVFchYmxlLdurb0WQERh0HaHELELFEHvdpcrTfasvHQH9vYDhkWv6
- SUZ3xq8vYea3wkKMk2ODz9EN/az13tF/DQEYa3gIzpZXThK3CaCNe14ZNCJA9uYU/d2Y
- MVs/R88HPF8cH5qZwOP9dwIZudk5/4gusVkEMGWGgKfYQtkj2iQlflhGPh5/GOZxpgl1
- mHQb7qipxscBNCjIA0MB96hCkn9q8nDUskzT6S2H6etq6ZtfEMpo+my/JfdumNxUvNuB
- aowg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721360633; x=1721965433;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2kemxsTPZuQnABFcfnbyURn/jkxS4w92EdaZ+3AVyrU=;
- b=iqaZH+UvfAGcbje38DiJ7dqijCHTxx9tpyu4xMqN6jtWDUgb1khSoscXpvb4ToI6r5
- H4JdAaytvzpB62/lnyFPgypOJmpoYID3gZAbb6Tq+B6dd7+6O5w1rjsx0nyM43v8VD9H
- InRdVAnM6oeBdIekPNcvTXwN71D6FmPjq7jgGm7XwEiIF4Gj+WJgI/XH+jLtVz5qGMyf
- AUlCxKQZZM45GlMMuVHvwsknIe+SI5GLMlA+ZDPO67R2zFUzAb9eUzb74+mcWde/Nwh+
- pUxoYKHl/WRN06eBRarA+ecs1M48SdmbvD4QCv0B6Bg5txQdrqk4KvKnAM1i0lz9UlQC
- brmg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVFSFQG2u5N64MxNoWKGQT4nSblOIMpirIc8W9ni4Dyj7AgnTn6Cv24+KQRCnqS4WMOsg1TjixT1ZqCpSO4RN8S7likW4c=
-X-Gm-Message-State: AOJu0Yx+geOjoPkuVfCIQCiuQkhdNhVqsEb1EAijuE1arB4Df1QwFkMr
- sBqKsk9TVtvOYqg9fhNBX0qmyF2sUjme36fXOMQx/o3DtZvOO9CWNBQm/tGEpL9rc1B5lqRvRm7
- NpQxwVBfI65Cj1yeMgMdjzs8TpJY=
-X-Google-Smtp-Source: AGHT+IEIZkWzKDRyXNbbxK7irHu+QISyZ6HKvAnaH0FI2WWTr9kR5Xa9+bLwKcJsf4DoSOmv3CKHwqG2Wf6/nr+4Qsc=
-X-Received: by 2002:a05:6102:3404:b0:48f:a75a:278c with SMTP id
- ada2fe7eead31-49159a3bbb7mr6304968137.27.1721360633499; Thu, 18 Jul 2024
- 20:43:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sUf85-0005AC-Bs
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 00:22:01 -0400
+Received: from smarthost2.eviden.com ([80.78.11.83])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sUf80-0000I7-Me
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 00:21:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1721362916; x=1752898916;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=UA3eBAaXZYTYFwFsf1g2QbXlGgfNaE5TOC3r2xi7iO4=;
+ b=IGOegm2MHF58yPZox5WWNbJvqEHAy4c2saDHeZSAK0YfqIgQ3OWNqgUW
+ VyaU+88C/RL3VnzI3Qv2ZwUbZeMPGTPxuSaPgaRmpOzgCUXFxkcVW9IrY
+ ceG4OpTbCGcQdhBEh4BdQuJSezp5K9vcu875Suw11T8oftjVkiAHNR2+7
+ RtFgfyY8kgYvwxBGPzr7PJmz3gHSuWhozie8PqUCdYmLlx784YVmN/vfu
+ b5ksZZTeux3+FpsGUFlt895msRXUjlSWbhMXM8u7JMYibRk0rRhzAfCEV
+ mDSpNAoPTNhvg+tF4NVraJcAezy/pB3UIP73HC8jMQ8PwVGtZVE7pBMT6 g==;
+X-IronPort-AV: E=Sophos;i="6.09,219,1716242400"; d="scan'208";a="16789399"
+X-MGA-submission: =?us-ascii?q?MDGVKrDCV0RgtkhL1C1CYiWn8Bx0NL1c3CD2OT?=
+ =?us-ascii?q?mZJymE+PnqDrpy8VaW4WdM9k/Fy/523m2ROGN05PzBVlzZys37LK2K3J?=
+ =?us-ascii?q?X62t3hVC8zSZ/cwivuCdxz+oczmrIYFvXE1fszq3d6y9acqDCIpGfz0s?=
+ =?us-ascii?q?kJOmEetdZfxthtdwpMrY4jtQ=3D=3D?=
+Received: from mail-vi1eur05lp2168.outbound.protection.outlook.com (HELO
+ EUR05-VI1-obe.outbound.protection.outlook.com) ([104.47.17.168])
+ by smarthost2.eviden.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jul 2024 06:21:51 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=D0vYZxCvLttY72yLLkVaZf0hMIdROHk7bl8WasZ53l+7u/grihWplAgeYEjnlV75S9abbuognHQJpqfoaV6A0W1b9OgI0CCnHiz4kWsd/rnfLjT9awn2nM0bLMQsBQ+QWi5OfKbR9OD3xrb75AC5bIdYXWTNilkdGOQlueDNUPyZGIQbGmTmgKv6o33/U8G45igb8AezrBa641I4OlT5IZF+51ROB56JVhJLjApz6jmYsjnUvfGE34MFFxvKuDXXtNkd4PCKSWI0yaVVkB03tbAheGjlW+51mgJn4LSLcO/XQWnhk7GJvel65cUIyttOK1Y3Ei2Bbe8Q9tqwaPZ7JA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UA3eBAaXZYTYFwFsf1g2QbXlGgfNaE5TOC3r2xi7iO4=;
+ b=XcyCGqrDau5f/ApS2zMN3rHRq3G5+sRj0NJJClU9VAqEZfzlGtxYHMxdOJ5SZJcasZRUm30z8g5yJpVI7PzXv4xQkTehK2Ozcm5+QSp7MEmSYYo84gjQGr3V8clKSQ1ObfO0SFoWbK1BorA336g9QYzjYhWi2eHhKZNmWUnfEhGVADQHrGtEk3V+dvyAk2Fo5PHDoh5aQTpVMHnq7VLOn3a1TQFsZ7FB2cEggdA4YpaJrDb2VJB+lqXseKJj2L0ZM7Dt9LdCUqvymmUCmIq2jp4f/Cm8yx1ysFE3dPEpDCPrFULUQnPLfLdTJI/kYQWIFaK4N9uclSkMsxETcwIUtw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UA3eBAaXZYTYFwFsf1g2QbXlGgfNaE5TOC3r2xi7iO4=;
+ b=SBg0N06a10RBiGbG3F/Kfw2zZmQ7A1DgUmtmdEp2HrEYtuQjTnGzO2eclvBCaRjD1MhZLtiMF2Ys6CoEW5Ob9MRsZiLtxPLH4QEUSEKCVrXjhBqWAucTsJLwqLxBgqqhtZ3juPoRe21XLWhrTbVm/FTIayusurKCTFNvI2nQXZ//6rnlHQceEqib/ojuvymQNjX288VW/7dovxLCqWXDQCK0VE+HmeTulo/KmKPJX0/Xu0+ZJ31JGdSgTQiPeKu/NRwtbUxWSTbPdgpQOcPR6TWL/XCW2PalmHe9XRFslILs6l1FsDAXcsyc4cme7RCOp/5RUyECLSEhzN6GqQk7AQ==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by PA1PR07MB10161.eurprd07.prod.outlook.com (2603:10a6:102:480::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.16; Fri, 19 Jul
+ 2024 04:21:50 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%6]) with mapi id 15.20.7784.016; Fri, 19 Jul 2024
+ 04:21:49 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v1 03/17] intel_iommu: Add a placeholder variable for
+ scalable modern mode
+Thread-Topic: [PATCH v1 03/17] intel_iommu: Add a placeholder variable for
+ scalable modern mode
+Thread-Index: AQHa2Os6jI53vxLunUO9e0sZTiatjrH8MI6AgAEpkACAABpjAA==
+Date: Fri, 19 Jul 2024 04:21:49 +0000
+Message-ID: <5ccdc1b5-8d77-4aa7-b1fc-3f03320e57d7@eviden.com>
+References: <20240718081636.879544-1-zhenzhong.duan@intel.com>
+ <20240718081636.879544-4-zhenzhong.duan@intel.com>
+ <e41c8b79-1b86-42de-b1d5-dce7ed29d422@eviden.com>
+ <SJ0PR11MB6744F86F44C2C32C4B79C80A92AD2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB6744F86F44C2C32C4B79C80A92AD2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PA1PR07MB10161:EE_
+x-ms-office365-filtering-correlation-id: f0249bcb-2049-4ad7-65ef-08dca7aa4f72
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|1800799024|376014|366016|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?bzc0VGphTTlPZVJ1ZWV5QzgzeHdpZjJrb0ZKU1hTdEtubzN4NjRESS8vWXdS?=
+ =?utf-8?B?YnM3WldwSFdGdHJWdXUzVGpvQ1JLQXFQdi81RXVpSVk1UStnb3VqcDQySmky?=
+ =?utf-8?B?Y2RTK0t1eDRGQzVHelNNdmVXMUtJNE5weHNRcVJpMU1uQkJHRXNKa25KTjZ4?=
+ =?utf-8?B?UVF0Tmx0Ykd3Y0w4UnB0c0dzS0NtZFFNZ0RGTWpXSkVrMlNucFEyUmw0bWZK?=
+ =?utf-8?B?bXUxUzBQV1JmTHNjaVR1Z3FnRUJBQ0RuK1RKMUxHN29UUVlYOVVPbG5MQ25O?=
+ =?utf-8?B?dFdFK3RoMVBjZnFVenhOT3R6ZVU1cjdPNUJiQUp4RU1QN0M3d0xFKzRFZUk2?=
+ =?utf-8?B?VFZVUFQrKzEzVDBqWWlBVjRXc2tZNE1aeXJTM2pvQXNVaDFzeDF4S3JzWXpQ?=
+ =?utf-8?B?VG05RE5SNDREMHVhY3ltSjRTdzBxRlowbU9vdEJHdzNTbXRVTnpIbEYwMHYr?=
+ =?utf-8?B?dVZ0azRYUkNobjE2YW9odWJ4cHVUOW41WWVZd2lUb1VxQkZBeThWQzZZNE1F?=
+ =?utf-8?B?NkNyaUUwNGYyZG0vSHkyOXA2RXpRVW1CZ21VRnRjVmVGait5eEpNeXpTMzRP?=
+ =?utf-8?B?bksxUFNjTlkraEdZYVFvR2tSc0hqa2RqRkZVak9meUw4d1h5Mms5YWswcXRr?=
+ =?utf-8?B?UzcySW53T2M0V3lTR3VqRE9hNnZ1NHFrRjRFQ1RSWm1rM3QwU1NrZ3NMR1gr?=
+ =?utf-8?B?SW9nZGJsM1NEL1dUNjF0czBaUm9WZTFEc2MySmczTFZIQ1JObVVjYTQzd3BF?=
+ =?utf-8?B?eGp4K0NuUjd6WHpSME9aWFo5ZE8vc3c4eU85QXFrWGpLL3Z3QUM2SHkwVVJw?=
+ =?utf-8?B?UmR5bC9LYkYvWnJ2cHV1SGxlTHJmMWZuMWkraVMzSS8rYVMyRVVYOFMyNTFj?=
+ =?utf-8?B?UTJBTXQ0TE5DMWFUbkIvWFVUS2gwaWo0LzJUMHR0L1lRZ09EdVlxakdMOFRC?=
+ =?utf-8?B?UnJoZCt6clNIWWtHUVo5Sk52dkJLK2swa0d6UEJHbmFUb2JiYldBUHZ0MHVp?=
+ =?utf-8?B?MDY5MzlrQ3BvOFVmSWpaMFJjTlFRQ0Q3YkltSXJKbE5JcWJFQjY4N1BFMk4v?=
+ =?utf-8?B?ajdlZG1YQWlUSnAvWWZYeWx0ZG5rQWVxSjBvWkwzWWdUQjh4SENwMDNDTFVO?=
+ =?utf-8?B?dWJMZGh5dFIxSkZSaHN1dUFsSWpDT0EyUjR3dmNkWnBITkxzWW14MkJiVjVs?=
+ =?utf-8?B?YUJnZnRlK0xHSWE5ZEt0ZjZ6dnpoOW0zL1dtelVIdXdUY25BcWY5L1lIUzVB?=
+ =?utf-8?B?RVBVcStRekdsTzl5MkZ6OU9tTmN6Vm1oQWxpdzNzNHh6cTdWaTJSVXk5cktS?=
+ =?utf-8?B?ckhGeXowUG5ZTzlWRC9iWG5uSEhHcG5kS2dEMVpzQW1pOUVBUVRYa0FnRTBR?=
+ =?utf-8?B?WG5kU1lXSlZURDFmTGhZN2FSY0Mra2VtcmxjNW1mTmp3Ui9UM1VxUFZXVkpk?=
+ =?utf-8?B?OUV2dU41RWlHclVrK216Mm00ZHFXMlpySlFvcW1qQXJNMXg0YWxyQk1zbVVz?=
+ =?utf-8?B?OWZYdVRqZmxiS3RHTHZuN1FxTHVOVEtoUHNBb2NNTU01QjhDRVlDb0Q0ZTZH?=
+ =?utf-8?B?bGt5UU9iTG9TNm9xeWhpTUFEQ2RYeVdMR2ZVbTdYb3REcGozUkg5MFN4VFZG?=
+ =?utf-8?B?TkthV1N3eitrWk9NYWF1Y25ENUhweWxYY3lueUlNbGZmYjJQYXBQOUkvODU1?=
+ =?utf-8?B?ZzFwTURSd1NyaWV0OGE2MWk2dnRjcml5TVQ0MWpHZGRUREFxdjZXQy9QQlNJ?=
+ =?utf-8?B?M210REF0clhQdnNzd0s2K2hKOHUxYzJmTVlESUtGVk1lK0gzaUtqZ0RreUcx?=
+ =?utf-8?B?Zm12WStTb3hxY1B5ZkpIZ2JRQys5UGpTeCtGQ1lGOTRGeTNoTnBQOC9ZQUsx?=
+ =?utf-8?B?eWNuSlRMQ0YwY0tyN0ZlcW5WaGhPR3FVRmF0NHBoT242L3c9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(376014)(366016)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NDk2S2hjenRTZU1pSzBTbnl3a2cvSXFNTmpjR0twdDBhNE1za2UwZk5zeW5i?=
+ =?utf-8?B?QW1pcmtrNnJlSlZkOUhJYXoyMGdNYVgvS3FTT1FiZFVjWUlmL014Q0prV1M4?=
+ =?utf-8?B?STd6WjlYb1FvVURHU25qUWxmYkZjYnpuWkV3VUpxTU1MUGkrMkwzZXE3ZDVM?=
+ =?utf-8?B?cTcwUW5BQXk0cTdNMWFqWVhwaERiM0M0R2hXUmNvRmluZXVzK0l0L2xXemJy?=
+ =?utf-8?B?RFl2bFJRb1J0M1ExdzVYTUVqaHpBR3QrV1pOTHdFaVl5SmlxaGFXaEtYOVVF?=
+ =?utf-8?B?cG9URTkzb2FKSVV2eFlMRFlzVzNEWmpVeUJMVjJDbnNEVGE2SkhEK3hOay9u?=
+ =?utf-8?B?LzFjR0NOck9GNjM0VTI0THA0NksvY0RQb29uV0hBdm8vWnNwdi9ISWdodTlz?=
+ =?utf-8?B?Q2ZsSG5kTS95SlFXUFd4WnNFdk5MbEVoYTE3K3ZUa0d4eEpiSzByUVlVRnpZ?=
+ =?utf-8?B?Rk14SjNLWEZPbzd0dzZrZ1MzaTBOZ25DUE9KNTZkaGRoTG1tL2IvdWNwalZs?=
+ =?utf-8?B?L2pIL1YzWmZub1BBQ3hGaTgyMEhFTGlCSTd1RnVvU2tVMFlIYmZaaHR6Q1VJ?=
+ =?utf-8?B?U1FOT1JsZXh0SW0ybjFwdHg2S2hJUlNKYXllZU1uS0s0OXovenlEcFhyVWYw?=
+ =?utf-8?B?WkhDTDArZmpYVVhLMXU1WTI5K2ZPa0RIM0NmVzlIWVpZTFEyNFZOMjFadGFJ?=
+ =?utf-8?B?N242aW9Zd1dJa1J0V20xUStWY1pJRVVqc0RiL2ROWTlQSUFYV2k4MmZ5TTNE?=
+ =?utf-8?B?YWVIZFFONllIZHhzbzQ2aFNkY3pnbVlqaWVrdjRJeXJDTXNaWmZCd2g3N0Q3?=
+ =?utf-8?B?U0hOSi9nV3RwYytpcDUrZm1HVUh3Z0R6WTdCempkYXI4YzgwY09tUXY1NVV5?=
+ =?utf-8?B?THhIOVZkOG1IVHRwTWovNnM1MTh4amFZbm5IYUlPQndlakppbzhsVEw1T0Ju?=
+ =?utf-8?B?ZysrQ2tFaEpKdUJUU3hmaWwrRTM5RjFjN1dlR3hPSmhFeC8rR3JiZFBDQkd5?=
+ =?utf-8?B?Sys4SkZ3ZHJMQmlNMnd5SVB0QzFJd1Axd290S1RrUU1jZWlhZEtqZlNNSE11?=
+ =?utf-8?B?blhFUDMrUmRCQ29MYXRCOC9td0NxeDd6L0o0ckpjbGNKVVRQcm1VM0NaeEJz?=
+ =?utf-8?B?WGNkR1JOWHBMMWVtY0ltZ3U2cWFTVzNrZXZhcXpMZk9RcTk0T3NoZjNyNktH?=
+ =?utf-8?B?Qmo3Mzc4eEI5NkloOGhGVGxpQTBRYjl2ODJqL0VpeEU2YVo2UE8xZmNUR1Ny?=
+ =?utf-8?B?bmk4cXpCVGxWZjJReUVWNXU1NWFFZFE5ZzBkMTgxL296TmlOK2FmdWd6c0dN?=
+ =?utf-8?B?QzdYM091dHAwekZWcEE0NGFERUxPWWQ2TGJDQVFXU1h5emQva29oTlBqbVdj?=
+ =?utf-8?B?aG9lNTFPbnp0YzJPaE5GRS9Da25ZZjRwaXN3YkovUEJHNzJrSk4vcUpGWTZ5?=
+ =?utf-8?B?S0c4cGZnNS9EbCtSeTdBd3pNOFdiUjBNMXlyekdBUU1xQ2QrU2dadDFMdVdr?=
+ =?utf-8?B?TFByOTdZczdEMk5UTXY1dDZXNTdJSzg5MFVGRkJ4Tjc1S285Y1pwLzNRS29M?=
+ =?utf-8?B?aFdmbStDY0YzMkpoVjFpWHpCa3FXVTlHSTNQN2FqcTc3TnVZTCtDVXBpNWto?=
+ =?utf-8?B?NjJDRFVOVWU2QTM4TTVZSEt5KzZZYnRRS0lEa3FsNFIvR2dCbms2WndzOGdm?=
+ =?utf-8?B?SDVhMzg5OC85NmNlSytTWG1TZ0pQTkNGMWhHeHM3aU9EQ0JIalBjeEZjeG9J?=
+ =?utf-8?B?ZndHT3Zwa1ZxUHliUVFQUWZNdURGeUI0UCs5cDQvUzJEa0lkSlV0TzRFNkF4?=
+ =?utf-8?B?ZkRmS0dJSEl0ZUVNV0dKejJLU2Jtd2JHSDQ1Mm5mY2creHI0c3htTnQyb1o0?=
+ =?utf-8?B?ZVIyWjMrYlQvQTQyUjFIMitMOGVLc2wzb1ZPeUY3ZElFM2tXSDJmMnNNZDBL?=
+ =?utf-8?B?Y2l3SEhib2JHbEFIV1ltbzNualNvYUNaSmVteUJXWFkvbHg4d3NEQ2locVAx?=
+ =?utf-8?B?bG9NUjk3cDd3UURkUC95VDFMdm1DWlBPT0FXdFM1aElrTXI4c3ZuK1lLN0ps?=
+ =?utf-8?B?dDNSSmVLbndxU1QwUlprcGxxL3JHcnpqNHFKTmVETGtGUjRudGJ3UUdhWGxG?=
+ =?utf-8?B?RTZDZGtqYS9NcUI2bjdXY3NsVnZLbkloVUk1dmVSdDdDT2I4TjRweHpNREZr?=
+ =?utf-8?Q?/WFh3Wz9moSm4p0ANoeM+mQ=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C4D914FDA10AA54D80ABFCBA089C2609@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
- <20240708173501.426225-10-dbarboza@ventanamicro.com>
-In-Reply-To: <20240708173501.426225-10-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 19 Jul 2024 13:43:27 +1000
-Message-ID: <CAKmqyKO_m7rjpe6ez5YSiAkKKTLUf2-GjrxJcsccDTMd13DcfA@mail.gmail.com>
-Subject: Re: [PATCH v5 09/13] hw/riscv/riscv-iommu: add ATS support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, frank.chang@sifive.com, tjeznach@rivosinc.com, 
- jason.chien@sifive.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f0249bcb-2049-4ad7-65ef-08dca7aa4f72
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jul 2024 04:21:49.8576 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: R9UjzCKaPwWRqm3CiF+JRKXuHH9+xY6GpLt2kIGmMHSbPuUyqzttDvRCiSbJxkAI1TEGAc+kP3xuVWoJK8lPpB5kjYjH5yKG0V/1Lx74Eba5oYlwRJTGZB7iKnRMaTBn
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR07MB10161
+Received-SPF: pass client-ip=80.78.11.83;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,346 +215,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 9, 2024 at 3:37=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->
-> Add PCIe Address Translation Services (ATS) capabilities to the IOMMU.
-> This will add support for ATS translation requests in Fault/Event
-> queues, Page-request queue and IOATC invalidations.
->
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
->  hw/riscv/riscv-iommu-bits.h |  43 +++++++++++-
->  hw/riscv/riscv-iommu.c      | 129 +++++++++++++++++++++++++++++++++++-
->  hw/riscv/riscv-iommu.h      |   1 +
->  hw/riscv/trace-events       |   3 +
->  4 files changed, 173 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> index 1dd2e2c7d6..b1546d3669 100644
-> --- a/hw/riscv/riscv-iommu-bits.h
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -79,6 +79,7 @@ struct riscv_iommu_pq_record {
->  #define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
->  #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
->  #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
-> +#define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
->  #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
->  #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
->  #define RISCV_IOMMU_CAP_PAS             GENMASK_ULL(37, 32)
-> @@ -208,6 +209,7 @@ struct riscv_iommu_dc {
->
->  /* Translation control fields */
->  #define RISCV_IOMMU_DC_TC_V             BIT_ULL(0)
-> +#define RISCV_IOMMU_DC_TC_EN_ATS        BIT_ULL(1)
->  #define RISCV_IOMMU_DC_TC_EN_PRI        BIT_ULL(2)
->  #define RISCV_IOMMU_DC_TC_T2GPA         BIT_ULL(3)
->  #define RISCV_IOMMU_DC_TC_DTF           BIT_ULL(4)
-> @@ -269,6 +271,20 @@ struct riscv_iommu_command {
->  #define RISCV_IOMMU_CMD_IODIR_DV        BIT_ULL(33)
->  #define RISCV_IOMMU_CMD_IODIR_DID       GENMASK_ULL(63, 40)
->
-> +/* 3.1.4 I/O MMU PCIe ATS */
-> +#define RISCV_IOMMU_CMD_ATS_OPCODE              4
-> +#define RISCV_IOMMU_CMD_ATS_FUNC_INVAL          0
-> +#define RISCV_IOMMU_CMD_ATS_FUNC_PRGR           1
-> +#define RISCV_IOMMU_CMD_ATS_PID         GENMASK_ULL(31, 12)
-> +#define RISCV_IOMMU_CMD_ATS_PV          BIT_ULL(32)
-> +#define RISCV_IOMMU_CMD_ATS_DSV         BIT_ULL(33)
-> +#define RISCV_IOMMU_CMD_ATS_RID         GENMASK_ULL(55, 40)
-> +#define RISCV_IOMMU_CMD_ATS_DSEG        GENMASK_ULL(63, 56)
-> +/* dword1 is the ATS payload, two different payload types for INVAL and =
-PRGR */
-> +
-> +/* ATS.PRGR payload */
-> +#define RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE      GENMASK_ULL(47, 44)
-> +
->  enum riscv_iommu_dc_fsc_atp_modes {
->      RISCV_IOMMU_DC_FSC_MODE_BARE =3D 0,
->      RISCV_IOMMU_DC_FSC_IOSATP_MODE_SV32 =3D 8,
-> @@ -335,7 +351,32 @@ enum riscv_iommu_fq_ttypes {
->      RISCV_IOMMU_FQ_TTYPE_TADDR_INST_FETCH =3D 5,
->      RISCV_IOMMU_FQ_TTYPE_TADDR_RD =3D 6,
->      RISCV_IOMMU_FQ_TTYPE_TADDR_WR =3D 7,
-> -    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ =3D 8,
-> +    RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ =3D 8,
-> +    RISCV_IOMMU_FW_TTYPE_PCIE_MSG_REQ =3D 9,
-> +};
-> +
-> +/* Header fields */
-> +#define RISCV_IOMMU_PREQ_HDR_PID        GENMASK_ULL(31, 12)
-> +#define RISCV_IOMMU_PREQ_HDR_PV         BIT_ULL(32)
-> +#define RISCV_IOMMU_PREQ_HDR_PRIV       BIT_ULL(33)
-> +#define RISCV_IOMMU_PREQ_HDR_EXEC       BIT_ULL(34)
-> +#define RISCV_IOMMU_PREQ_HDR_DID        GENMASK_ULL(63, 40)
-> +
-> +/* Payload fields */
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_R      BIT_ULL(0)
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_W      BIT_ULL(1)
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_L      BIT_ULL(2)
-> +#define RISCV_IOMMU_PREQ_PAYLOAD_M      GENMASK_ULL(2, 0)
-> +#define RISCV_IOMMU_PREQ_PRG_INDEX      GENMASK_ULL(11, 3)
-> +#define RISCV_IOMMU_PREQ_UADDR          GENMASK_ULL(63, 12)
-> +
-> +
-> +/*
-> + * struct riscv_iommu_msi_pte - MSI Page Table Entry
-> + */
-> +struct riscv_iommu_msi_pte {
-> +      uint64_t pte;
-> +      uint64_t mrif_info;
->  };
->
->  /* Fields on pte */
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 76728baa77..78058a49ae 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -639,6 +639,20 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOM=
-MUState *s,
->                                              RISCVIOMMUContext *ctx)
->  {
->      uint32_t fsc_mode, msi_mode;
-> +    uint64_t gatp;
-> +
-> +    if (!(s->cap & RISCV_IOMMU_CAP_ATS) &&
-> +        (ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS ||
-> +         ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI ||
-> +         ctx->tc & RISCV_IOMMU_DC_TC_PRPR)) {
-> +        return false;
-> +    }
-> +
-> +    if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS) &&
-> +        (ctx->tc & RISCV_IOMMU_DC_TC_T2GPA ||
-> +         ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI)) {
-> +        return false;
-> +    }
->
->      if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI) &&
->          ctx->tc & RISCV_IOMMU_DC_TC_PRPR) {
-> @@ -659,6 +673,12 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOM=
-MUState *s,
->          }
->      }
->
-> +    gatp =3D get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> +    if (ctx->tc & RISCV_IOMMU_DC_TC_T2GPA &&
-> +        gatp =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
-> +        return false;
-> +    }
-> +
->      fsc_mode =3D get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
->
->      if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
-> @@ -809,7 +829,12 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s,=
- RISCVIOMMUContext *ctx)
->              RISCV_IOMMU_DC_IOHGATP_MODE_BARE);
->          ctx->satp =3D set_field(0, RISCV_IOMMU_ATP_MODE_FIELD,
->              RISCV_IOMMU_DC_FSC_MODE_BARE);
-> +
->          ctx->tc =3D RISCV_IOMMU_DC_TC_V;
-> +        if (s->enable_ats) {
-> +            ctx->tc |=3D RISCV_IOMMU_DC_TC_EN_ATS;
-> +        }
-> +
->          ctx->ta =3D 0;
->          ctx->msiptp =3D 0;
->          return 0;
-> @@ -1271,6 +1296,16 @@ static int riscv_iommu_translate(RISCVIOMMUState *=
-s, RISCVIOMMUContext *ctx,
->      enable_pri =3D (iotlb->perm =3D=3D IOMMU_NONE) && (ctx->tc & BIT_ULL=
-(32));
->      enable_pid =3D (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
->
-> +    /* Check for ATS request. */
-> +    if (iotlb->perm =3D=3D IOMMU_NONE) {
-> +        /* Check if ATS is disabled. */
-> +        if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_ATS)) {
-> +            enable_pri =3D false;
-> +            fault =3D RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
-> +            goto done;
-> +        }
-> +    }
-> +
->      qemu_mutex_lock(&s->iot_lock);
->      iot =3D riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
->      qemu_mutex_unlock(&s->iot_lock);
-> @@ -1318,11 +1353,11 @@ done:
->      }
->
->      if (fault) {
-> -        unsigned ttype;
-> +        unsigned ttype =3D RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
->
->          if (iotlb->perm & IOMMU_RW) {
->              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
-> -        } else {
-> +        } else if (iotlb->perm & IOMMU_RO) {
->              ttype =3D RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
->          }
->
-> @@ -1350,6 +1385,73 @@ static MemTxResult riscv_iommu_iofence(RISCVIOMMUS=
-tate *s, bool notify,
->          MEMTXATTRS_UNSPECIFIED);
->  }
->
-> +static void riscv_iommu_ats(RISCVIOMMUState *s,
-> +    struct riscv_iommu_command *cmd, IOMMUNotifierFlag flag,
-> +    IOMMUAccessFlags perm,
-> +    void (*trace_fn)(const char *id))
-> +{
-> +    RISCVIOMMUSpace *as =3D NULL;
-> +    IOMMUNotifier *n;
-> +    IOMMUTLBEvent event;
-> +    uint32_t pid;
-> +    uint32_t devid;
-> +    const bool pv =3D cmd->dword0 & RISCV_IOMMU_CMD_ATS_PV;
-> +
-> +    if (cmd->dword0 & RISCV_IOMMU_CMD_ATS_DSV) {
-> +        /* Use device segment and requester id */
-> +        devid =3D get_field(cmd->dword0,
-> +            RISCV_IOMMU_CMD_ATS_DSEG | RISCV_IOMMU_CMD_ATS_RID);
-> +    } else {
-> +        devid =3D get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_RID);
-> +    }
-> +
-> +    pid =3D get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
-> +
-> +    qemu_mutex_lock(&s->core_lock);
-> +    QLIST_FOREACH(as, &s->spaces, list) {
-> +        if (as->devid =3D=3D devid) {
-> +            break;
-> +        }
-> +    }
-> +    qemu_mutex_unlock(&s->core_lock);
-> +
-> +    if (!as || !as->notifier) {
-> +        return;
-> +    }
-> +
-> +    event.type =3D flag;
-> +    event.entry.perm =3D perm;
-> +    event.entry.target_as =3D s->target_as;
-> +
-> +    IOMMU_NOTIFIER_FOREACH(n, &as->iova_mr) {
-> +        if (!pv || n->iommu_idx =3D=3D pid) {
-> +            event.entry.iova =3D n->start;
-> +            event.entry.addr_mask =3D n->end - n->start;
-> +            trace_fn(as->iova_mr.parent_obj.name);
-> +            memory_region_notify_iommu_one(n, &event);
-> +        }
-> +    }
-> +}
-> +
-> +static void riscv_iommu_ats_inval(RISCVIOMMUState *s,
-> +    struct riscv_iommu_command *cmd)
-> +{
-> +    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_DEVIOTLB_UNMAP, IOMMU_=
-NONE,
-> +                           trace_riscv_iommu_ats_inval);
-> +}
-> +
-> +static void riscv_iommu_ats_prgr(RISCVIOMMUState *s,
-> +    struct riscv_iommu_command *cmd)
-> +{
-> +    unsigned resp_code =3D get_field(cmd->dword1,
-> +                                   RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE);
-> +
-> +    /* Using the access flag to carry response code information */
-> +    IOMMUAccessFlags perm =3D resp_code ? IOMMU_NONE : IOMMU_RW;
-> +    return riscv_iommu_ats(s, cmd, IOMMU_NOTIFIER_MAP, perm,
-> +                           trace_riscv_iommu_ats_prgr);
-> +}
-> +
->  static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
->  {
->      uint64_t old_ddtp =3D s->ddtp;
-> @@ -1505,6 +1607,25 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMU=
-State *s)
->                  get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
->              break;
->
-> +        /* ATS commands */
-> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_INVAL,
-> +                             RISCV_IOMMU_CMD_ATS_OPCODE):
-> +            if (!s->enable_ats) {
-> +                goto cmd_ill;
-> +            }
-> +
-> +            riscv_iommu_ats_inval(s, &cmd);
-> +            break;
-> +
-> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_ATS_FUNC_PRGR,
-> +                             RISCV_IOMMU_CMD_ATS_OPCODE):
-> +            if (!s->enable_ats) {
-> +                goto cmd_ill;
-> +            }
-> +
-> +            riscv_iommu_ats_prgr(s, &cmd);
-> +            break;
-> +
->          default:
->          cmd_ill:
->              /* Invalid instruction, do not advance instruction index. */
-> @@ -1900,6 +2021,9 @@ static void riscv_iommu_realize(DeviceState *dev, E=
-rror **errp)
->      if (s->enable_msi) {
->          s->cap |=3D RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
->      }
-> +    if (s->enable_ats) {
-> +        s->cap |=3D RISCV_IOMMU_CAP_ATS;
-> +    }
->      if (s->enable_s_stage) {
->          s->cap |=3D RISCV_IOMMU_CAP_SV32 | RISCV_IOMMU_CAP_SV39 |
->                    RISCV_IOMMU_CAP_SV48 | RISCV_IOMMU_CAP_SV57;
-> @@ -2012,6 +2136,7 @@ static Property riscv_iommu_properties[] =3D {
->      DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
->          LIMIT_CACHE_IOT),
->      DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
-> +    DEFINE_PROP_BOOL("ats", RISCVIOMMUState, enable_ats, TRUE),
->      DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
->      DEFINE_PROP_BOOL("s-stage", RISCVIOMMUState, enable_s_stage, TRUE),
->      DEFINE_PROP_BOOL("g-stage", RISCVIOMMUState, enable_g_stage, TRUE),
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index 0594e654f9..3a1bd5b5dc 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -38,6 +38,7 @@ struct RISCVIOMMUState {
->
->      bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled)=
- */
->      bool enable_msi;      /* Enable MSI remapping */
-> +    bool enable_ats;      /* Enable ATS support */
->      bool enable_s_stage;  /* Enable S/VS-Stage translation */
->      bool enable_g_stage;  /* Enable G-Stage translation */
->
-> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-> index 42a97caffa..4b486b6420 100644
-> --- a/hw/riscv/trace-events
-> +++ b/hw/riscv/trace-events
-> @@ -9,3 +9,6 @@ riscv_iommu_msi(const char *id, unsigned b, unsigned d, u=
-nsigned f, uint64_t iov
->  riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%=
-"PRIx64" 0x%"PRIx64
->  riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
->  riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed=
-"
-> +riscv_iommu_ats(const char *id, unsigned b, unsigned d, unsigned f, uint=
-64_t iova) "%s: translate request %04x:%02x.%u iova: 0x%"PRIx64
-> +riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb invalidate"
-> +riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group r=
-esponse"
-> --
-> 2.45.2
->
->
+DQoNCk9uIDE5LzA3LzIwMjQgMDQ6NDcsIER1YW4sIFpoZW56aG9uZyB3cm90ZToNCj4gQ2F1dGlv
+bjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRzIG9yIGNsaWNrIGxpbmtz
+LCB1bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2VuZGVyIGFuZCB5b3Uga25v
+dyB0aGUgY29udGVudCBpcyBzYWZlLg0KPg0KPg0KPj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0t
+LS0NCj4+IEZyb206IENMRU1FTlQgTUFUSElFVS0tRFJJRiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlm
+QGV2aWRlbi5jb20+DQo+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDAzLzE3XSBpbnRlbF9pb21t
+dTogQWRkIGEgcGxhY2Vob2xkZXIgdmFyaWFibGUgZm9yDQo+PiBzY2FsYWJsZSBtb2Rlcm4gbW9k
+ZQ0KPj4NCj4+DQo+Pg0KPj4gT24gMTgvMDcvMjAyNCAxMDoxNiwgWmhlbnpob25nIER1YW4gd3Jv
+dGU6DQo+Pj4gQ2F1dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRz
+IG9yIGNsaWNrIGxpbmtzLCB1bmxlc3MgdGhpcw0KPj4gZW1haWwgY29tZXMgZnJvbSBhIGtub3du
+IHNlbmRlciBhbmQgeW91IGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4NCj4+Pg0KPj4+IEFkZCBh
+biBuZXcgZWxlbWVudCBzY2FsYWJsZV9tb2RlIGluIEludGVsSU9NTVVTdGF0ZSB0byBtYXJrIHNj
+YWxhYmxlDQo+Pj4gbW9kZXJuIG1vZGUsIHRoaXMgZWxlbWVudCB3aWxsIGJlIGV4cG9zZWQgYXMg
+YW4gaW50ZWxfaW9tbXUgcHJvcGVydHkNCj4+PiBmaW5hbGx5Lg0KPj4+DQo+Pj4gRm9yIG5vdywg
+aXQncyBvbmx5IGEgcGxhY2VoaG9sZGVyIGFuZCB1c2VkIGZvciBjYXAvZWNhcCBpbml0aWFsaXph
+dGlvbiwNCj4+PiBjb21wYXRpYmlsaXR5IGNoZWNrIGFuZCBibG9jayBob3N0IGRldmljZSBwYXNz
+dGhyb3VnaCB1bnRpbCBuZXN0aW5nDQo+Pj4gaXMgc3VwcG9ydGVkLg0KPj4+DQo+Pj4gU2lnbmVk
+LW9mZi1ieTogWWkgTGl1IDx5aS5sLmxpdUBpbnRlbC5jb20+DQo+Pj4gU2lnbmVkLW9mZi1ieTog
+Wmhlbnpob25nIER1YW4gPHpoZW56aG9uZy5kdWFuQGludGVsLmNvbT4NCj4+PiAtLS0NCj4+PiAg
+ICBody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAgMiArKw0KPj4+ICAgIGluY2x1ZGUv
+aHcvaTM4Ni9pbnRlbF9pb21tdS5oICB8ICAxICsNCj4+PiAgICBody9pMzg2L2ludGVsX2lvbW11
+LmMgICAgICAgICAgfCAzNCArKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tDQo+Pj4g
+ICAgMyBmaWxlcyBjaGFuZ2VkLCAyNiBpbnNlcnRpb25zKCspLCAxMSBkZWxldGlvbnMoLSkNCj4+
+Pg0KPj4+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+IGIv
+aHcvaTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oDQo+Pj4gaW5kZXggYzBjYTdiMzcyZi4uNGUw
+MzMxY2FiYSAxMDA2NDQNCj4+PiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgN
+Cj4+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCj4+PiBAQCAtMTk1LDYg
+KzE5NSw3IEBADQo+Pj4gICAgI2RlZmluZSBWVERfRUNBUF9QQVNJRCAgICAgICAgICAgICAgKDFV
+TEwgPDwgNDApDQo+Pj4gICAgI2RlZmluZSBWVERfRUNBUF9TTVRTICAgICAgICAgICAgICAgKDFV
+TEwgPDwgNDMpDQo+Pj4gICAgI2RlZmluZSBWVERfRUNBUF9TTFRTICAgICAgICAgICAgICAgKDFV
+TEwgPDwgNDYpDQo+Pj4gKyNkZWZpbmUgVlREX0VDQVBfRkxUUyAgICAgICAgICAgICAgICgxVUxM
+IDw8IDQ3KQ0KPj4+DQo+Pj4gICAgLyogQ0FQX1JFRyAqLw0KPj4+ICAgIC8qIChvZmZzZXQgPj4g
+NCkgPDwgMjQgKi8NCj4+PiBAQCAtMjExLDYgKzIxMiw3IEBADQo+Pj4gICAgI2RlZmluZSBWVERf
+Q0FQX1NMTFBTICAgICAgICAgICAgICAgKCgxVUxMIDw8IDM0KSB8ICgxVUxMIDw8IDM1KSkNCj4+
+PiAgICAjZGVmaW5lIFZURF9DQVBfRFJBSU5fV1JJVEUgICAgICAgICAoMVVMTCA8PCA1NCkNCj4+
+PiAgICAjZGVmaW5lIFZURF9DQVBfRFJBSU5fUkVBRCAgICAgICAgICAoMVVMTCA8PCA1NSkNCj4+
+PiArI2RlZmluZSBWVERfQ0FQX0ZTMUdQICAgICAgICAgICAgICAgKDFVTEwgPDwgNTYpDQo+Pj4g
+ICAgI2RlZmluZSBWVERfQ0FQX0RSQUlOICAgICAgICAgICAgICAgKFZURF9DQVBfRFJBSU5fUkVB
+RCB8DQo+PiBWVERfQ0FQX0RSQUlOX1dSSVRFKQ0KPj4+ICAgICNkZWZpbmUgVlREX0NBUF9DTSAg
+ICAgICAgICAgICAgICAgICgxVUxMIDw8IDcpDQo+Pj4gICAgI2RlZmluZSBWVERfUEFTSURfSURf
+U0hJRlQgICAgICAgICAgMjANCj4+PiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9pMzg2L2ludGVs
+X2lvbW11LmgNCj4+IGIvaW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmgNCj4+PiBpbmRleCAx
+ZWIwNWMyOWZjLi43ODhlZDQyNDc3IDEwMDY0NA0KPj4+IC0tLSBhL2luY2x1ZGUvaHcvaTM4Ni9p
+bnRlbF9pb21tdS5oDQo+Pj4gKysrIGIvaW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmgNCj4+
+PiBAQCAtMjYyLDYgKzI2Miw3IEBAIHN0cnVjdCBJbnRlbElPTU1VU3RhdGUgew0KPj4+DQo+Pj4g
+ICAgICAgIGJvb2wgY2FjaGluZ19tb2RlOyAgICAgICAgICAgICAgLyogUk8gLSBpcyBjYXAgQ00g
+ZW5hYmxlZD8gKi8NCj4+PiAgICAgICAgYm9vbCBzY2FsYWJsZV9tb2RlOyAgICAgICAgICAgICAv
+KiBSTyAtIGlzIFNjYWxhYmxlIE1vZGUgc3VwcG9ydGVkPyAqLw0KPj4+ICsgICAgYm9vbCBzY2Fs
+YWJsZV9tb2Rlcm47ICAgICAgICAgICAvKiBSTyAtIGlzIG1vZGVybiBTTSBzdXBwb3J0ZWQ/ICov
+DQo+Pj4gICAgICAgIGJvb2wgc25vb3BfY29udHJvbDsgICAgICAgICAgICAgLyogUk8gLSBpcyBT
+TlAgZmlsZWQgc3VwcG9ydGVkPyAqLw0KPj4+DQo+Pj4gICAgICAgIGRtYV9hZGRyX3Qgcm9vdDsg
+ICAgICAgICAgICAgICAgLyogQ3VycmVudCByb290IHRhYmxlIHBvaW50ZXIgKi8NCj4+PiBkaWZm
+IC0tZ2l0IGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+
+Pj4gaW5kZXggMWNmZjhiMDBhZS4uNDBjYmQ0YTBmNCAxMDA2NDQNCj4+PiAtLS0gYS9ody9pMzg2
+L2ludGVsX2lvbW11LmMNCj4+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+PiBAQCAt
+NzU1LDE2ICs3NTUsMjAgQEAgc3RhdGljIGlubGluZSBib29sDQo+PiB2dGRfaXNfbGV2ZWxfc3Vw
+cG9ydGVkKEludGVsSU9NTVVTdGF0ZSAqcywgdWludDMyX3QgbGV2ZWwpDQo+Pj4gICAgfQ0KPj4+
+DQo+Pj4gICAgLyogUmV0dXJuIHRydWUgaWYgY2hlY2sgcGFzc2VkLCBvdGhlcndpc2UgZmFsc2Ug
+Ki8NCj4+PiAtc3RhdGljIGlubGluZSBib29sIHZ0ZF9wZV90eXBlX2NoZWNrKFg4NklPTU1VU3Rh
+dGUgKng4Nl9pb21tdSwNCj4+PiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IFZURFBBU0lERW50cnkgKnBlKQ0KPj4+ICtzdGF0aWMgaW5saW5lIGJvb2wgdnRkX3BlX3R5cGVf
+Y2hlY2soSW50ZWxJT01NVVN0YXRlICpzLA0KPj4gVlREUEFTSURFbnRyeSAqcGUpDQo+Pj4gICAg
+ew0KPj4gV2hhdCBhYm91dCB1c2luZyB0aGUgY2FwL2VjYXAgcmVnaXN0ZXJzIHRvIGtub3cgaWYg
+dGhlIHRyYW5zbGF0aW9uIHR5cGVzDQo+PiBhcmUgc3VwcG9ydGVkIG9yIG5vdC4NCj4+IE90aGVy
+d2lzZSwgd2UgY291bGQgYWRkIGEgY29tbWVudCB0byBleHBsYWluIHdoeSB3ZSBleHBlY3QNCj4+
+IHMtPnNjYWxhYmxlX21vZGVybiB0byBnaXZlIHVzIGVub3VnaCBpbmZvcm1hdGlvbi4NCj4gV2hh
+dCBhYm91dCBiZWxvdzoNCj4NCj4gLyoNCj4gICAqVlREX0VDQVBfRkxUUyBpbiBlY2FwIGlzIHNl
+dCBpZiBzLT5zY2FsYWJsZV9tb2Rlcm4gaXMgdHJ1ZSwgb3IgZWxzZSBWVERfRUNBUF9TTFRTIGNh
+biBiZSBzZXQgb3Igbm90IGRlcGVuZGluZyBvbiBzLT5zY2FsYWJsZV9tb2RlLg0KPiAgICpTbyBp
+dCdzIHNpbXBsZXIgdG8gY2hlY2sgcy0+c2NhbGFibGVfbW9kZXJuIGRpcmVjdGx5IGZvciBhIFBB
+U0lEIGVudHJ5IHR5cGUgaW5zdGVhZCBlY2FwIGJpdHMuDQo+ICAgKi8NCkZpbmUgOykNCj4NCj4g
+VGhhbmtzDQo+IFpoZW56aG9uZw0KPg0KPj4+ICsgICAgWDg2SU9NTVVTdGF0ZSAqeDg2X2lvbW11
+ID0gWDg2X0lPTU1VX0RFVklDRShzKTsNCj4+PiArDQo+Pj4gICAgICAgIHN3aXRjaCAoVlREX1BF
+X0dFVF9UWVBFKHBlKSkgew0KPj4+ICsgICAgY2FzZSBWVERfU01fUEFTSURfRU5UUllfRkxUOg0K
+Pj4+ICsgICAgICAgIHJldHVybiBzLT5zY2FsYWJsZV9tb2Rlcm47DQo+Pj4gICAgICAgIGNhc2Ug
+VlREX1NNX1BBU0lEX0VOVFJZX1NMVDoNCj4+PiAtICAgICAgICByZXR1cm4gdHJ1ZTsNCj4+PiAr
+ICAgICAgICByZXR1cm4gIXMtPnNjYWxhYmxlX21vZGVybjsNCj4+PiArICAgIGNhc2UgVlREX1NN
+X1BBU0lEX0VOVFJZX05FU1RFRDoNCj4+PiArICAgICAgICAvKiBOb3Qgc3VwcG9ydCBORVNURUQg
+cGFnZSB0YWJsZSB0eXBlIHlldCAqLw0KPj4+ICsgICAgICAgIHJldHVybiBmYWxzZTsNCj4+PiAg
+ICAgICAgY2FzZSBWVERfU01fUEFTSURfRU5UUllfUFQ6DQo+Pj4gICAgICAgICAgICByZXR1cm4g
+eDg2X2lvbW11LT5wdF9zdXBwb3J0ZWQ7DQo+Pj4gLSAgICBjYXNlIFZURF9TTV9QQVNJRF9FTlRS
+WV9GTFQ6DQo+Pj4gLSAgICBjYXNlIFZURF9TTV9QQVNJRF9FTlRSWV9ORVNURUQ6DQo+Pj4gICAg
+ICAgIGRlZmF1bHQ6DQo+Pj4gICAgICAgICAgICAvKiBVbmtub3duIHR5cGUgKi8NCj4+PiAgICAg
+ICAgICAgIHJldHVybiBmYWxzZTsNCj4+PiBAQCAtODEzLDcgKzgxNyw2IEBAIHN0YXRpYyBpbnQN
+Cj4+IHZ0ZF9nZXRfcGVfaW5fcGFzaWRfbGVhZl90YWJsZShJbnRlbElPTU1VU3RhdGUgKnMsDQo+
+Pj4gICAgICAgIHVpbnQ4X3QgcGd0dDsNCj4+PiAgICAgICAgdWludDMyX3QgaW5kZXg7DQo+Pj4g
+ICAgICAgIGRtYV9hZGRyX3QgZW50cnlfc2l6ZTsNCj4+PiAtICAgIFg4NklPTU1VU3RhdGUgKng4
+Nl9pb21tdSA9IFg4Nl9JT01NVV9ERVZJQ0Uocyk7DQo+Pj4NCj4+PiAgICAgICAgaW5kZXggPSBW
+VERfUEFTSURfVEFCTEVfSU5ERVgocGFzaWQpOw0KPj4+ICAgICAgICBlbnRyeV9zaXplID0gVlRE
+X1BBU0lEX0VOVFJZX1NJWkU7DQo+Pj4gQEAgLTgyNyw3ICs4MzAsNyBAQCBzdGF0aWMgaW50DQo+
+PiB2dGRfZ2V0X3BlX2luX3Bhc2lkX2xlYWZfdGFibGUoSW50ZWxJT01NVVN0YXRlICpzLA0KPj4+
+ICAgICAgICB9DQo+Pj4NCj4+PiAgICAgICAgLyogRG8gdHJhbnNsYXRpb24gdHlwZSBjaGVjayAq
+Lw0KPj4+IC0gICAgaWYgKCF2dGRfcGVfdHlwZV9jaGVjayh4ODZfaW9tbXUsIHBlKSkgew0KPj4+
+ICsgICAgaWYgKCF2dGRfcGVfdHlwZV9jaGVjayhzLCBwZSkpIHsNCj4+PiAgICAgICAgICAgIHJl
+dHVybiAtVlREX0ZSX1BBU0lEX1RBQkxFX0VOVFJZX0lOVjsNCj4+PiAgICAgICAgfQ0KPj4+DQo+
+Pj4gQEAgLTM4NjEsNyArMzg2NCwxMyBAQCBzdGF0aWMgYm9vbCB2dGRfY2hlY2tfaGlvZChJbnRl
+bElPTU1VU3RhdGUNCj4+ICpzLCBIb3N0SU9NTVVEZXZpY2UgKmhpb2QsDQo+Pj4gICAgICAgICAg
+ICByZXR1cm4gZmFsc2U7DQo+Pj4gICAgICAgIH0NCj4+Pg0KPj4+IC0gICAgcmV0dXJuIHRydWU7
+DQo+Pj4gKyAgICBpZiAoIXMtPnNjYWxhYmxlX21vZGVybikgew0KPj4+ICsgICAgICAgIC8qIEFs
+bCBjaGVja3MgcmVxdWVzdGVkIGJ5IFZURCBub24tbW9kZXJuIG1vZGUgcGFzcyAqLw0KPj4+ICsg
+ICAgICAgIHJldHVybiB0cnVlOw0KPj4+ICsgICAgfQ0KPj4+ICsNCj4+PiArICAgIGVycm9yX3Nl
+dGcoZXJycCwgImhvc3QgZGV2aWNlIGlzIHVuc3VwcG9ydGVkIGluIHNjYWxhYmxlIG1vZGVybiBt
+b2RlDQo+PiB5ZXQiKTsNCj4+PiArICAgIHJldHVybiBmYWxzZTsNCj4+PiAgICB9DQo+Pj4NCj4+
+PiAgICBzdGF0aWMgYm9vbCB2dGRfZGV2X3NldF9pb21tdV9kZXZpY2UoUENJQnVzICpidXMsIHZv
+aWQgKm9wYXF1ZSwgaW50DQo+PiBkZXZmbiwNCj4+PiBAQCAtNDA4NCw3ICs0MDkzLDEwIEBAIHN0
+YXRpYyB2b2lkIHZ0ZF9jYXBfaW5pdChJbnRlbElPTU1VU3RhdGUgKnMpDQo+Pj4gICAgICAgIH0N
+Cj4+Pg0KPj4+ICAgICAgICAvKiBUT0RPOiByZWFkIGNhcC9lY2FwIGZyb20gaG9zdCB0byBkZWNp
+ZGUgd2hpY2ggY2FwIHRvIGJlIGV4cG9zZWQuDQo+PiAqLw0KPj4+IC0gICAgaWYgKHMtPnNjYWxh
+YmxlX21vZGUpIHsNCj4+PiArICAgIGlmIChzLT5zY2FsYWJsZV9tb2Rlcm4pIHsNCj4+PiArICAg
+ICAgICBzLT5lY2FwIHw9IFZURF9FQ0FQX1NNVFMgfCBWVERfRUNBUF9GTFRTOw0KPj4+ICsgICAg
+ICAgIHMtPmNhcCB8PSBWVERfQ0FQX0ZTMUdQOw0KPj4+ICsgICAgfSBlbHNlIGlmIChzLT5zY2Fs
+YWJsZV9tb2RlKSB7DQo+Pj4gICAgICAgICAgICBzLT5lY2FwIHw9IFZURF9FQ0FQX1NNVFMgfCBW
+VERfRUNBUF9TUlMgfCBWVERfRUNBUF9TTFRTOw0KPj4+ICAgICAgICB9DQo+Pj4NCj4+PiBAQCAt
+NDI1MSw5ICs0MjYzLDkgQEAgc3RhdGljIGJvb2wgdnRkX2RlY2lkZV9jb25maWcoSW50ZWxJT01N
+VVN0YXRlDQo+PiAqcywgRXJyb3IgKiplcnJwKQ0KPj4+ICAgICAgICAgICAgfQ0KPj4+ICAgICAg
+ICB9DQo+Pj4NCj4+PiAtICAgIC8qIEN1cnJlbnRseSBvbmx5IGFkZHJlc3Mgd2lkdGhzIHN1cHBv
+cnRlZCBhcmUgMzkgYW5kIDQ4IGJpdHMgKi8NCj4+PiAgICAgICAgaWYgKChzLT5hd19iaXRzICE9
+IFZURF9IT1NUX0FXXzM5QklUKSAmJg0KPj4+IC0gICAgICAgIChzLT5hd19iaXRzICE9IFZURF9I
+T1NUX0FXXzQ4QklUKSkgew0KPj4+ICsgICAgICAgIChzLT5hd19iaXRzICE9IFZURF9IT1NUX0FX
+XzQ4QklUKSAmJg0KPj4+ICsgICAgICAgICFzLT5zY2FsYWJsZV9tb2Rlcm4pIHsNCj4+PiAgICAg
+ICAgICAgIGVycm9yX3NldGcoZXJycCwgIlN1cHBvcnRlZCB2YWx1ZXMgZm9yIGF3LWJpdHMgYXJl
+OiAlZCwgJWQiLA0KPj4+ICAgICAgICAgICAgICAgICAgICAgICBWVERfSE9TVF9BV18zOUJJVCwg
+VlREX0hPU1RfQVdfNDhCSVQpOw0KPj4+ICAgICAgICAgICAgcmV0dXJuIGZhbHNlOw0KPj4+IC0t
+DQo+Pj4gMi4zNC4xDQo+Pj4NCg==
 
