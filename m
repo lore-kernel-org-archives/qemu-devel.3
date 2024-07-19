@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36266C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4ADC3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUiox-0000bk-Qw; Fri, 19 Jul 2024 04:18:31 -0400
+	id 1sUit1-0005Cz-SA; Fri, 19 Jul 2024 04:22:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUioq-0000ap-4H
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:18:24 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUit0-0005BR-QL
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:22:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sUioo-0000NB-6d
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:18:23 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUisz-0005Oz-0p
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:22:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721377101;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1721377360;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VOiIw1/dHx5iW+f2GUL8l7aZigI+L8JmU3pmcVv1VXc=;
- b=E5/1BmgKp16rZSFyGNYHbCcNrw7mHG8dFsO9GM5PQTGw4XRV1n0wfz/P6z6J3f5JjDLddl
- NVN+0BaxkqTf3gXGpzsmjz2YGHpRt4fsXQ65n0yT2UVlt94QsEYHKnuxqOPaPCjEMN348X
- diDwgW/1bH5Fudt4iScL0p853DmlEfE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gaomhL4k3MtH8gL6Mwt12r5Mwqj78Yxa4XCOYF34fgY=;
+ b=NdoNWr5fwo7BzqrBL1YLov9Y68T5PPfhy3EaH53suPA+K1msGz5IKfgjAREB6oyG1rXzFi
+ fCImM5Q4zO14ta74pd71f1P/BGu/MoQSaP8DHB7NsO+qUtVYRtjkqsUzSRZ29FglmJMJIY
+ ic8/8kNc8gDN1vC2DEc05YlC1BeuV8o=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-Ha_Av6ZDOXuP3kgwwGdUvg-1; Fri,
- 19 Jul 2024 04:18:14 -0400
-X-MC-Unique: Ha_Av6ZDOXuP3kgwwGdUvg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-XAx2Wu5AMKekSMzpgPWJ3A-1; Fri,
+ 19 Jul 2024 04:22:36 -0400
+X-MC-Unique: XAx2Wu5AMKekSMzpgPWJ3A-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1C491955BEF; Fri, 19 Jul 2024 08:18:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.37])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73EC31955F40; Fri, 19 Jul 2024 08:18:08 +0000 (UTC)
-Date: Fri, 19 Jul 2024 09:18:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, Xianglai Li <lixianglai@loongson.cn>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PULL 3/3] hw/loongarch: Modify flash block size to 256K
-Message-ID: <ZpohPHRh7gOeTV4o@redhat.com>
-References: <20240719022604.781608-1-gaosong@loongson.cn>
- <20240719022604.781608-4-gaosong@loongson.cn>
- <a143257f-62c0-4c3a-9031-5f3e510f430d@linaro.org>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B3601955F40; Fri, 19 Jul 2024 08:22:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.130])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03ABE3000188; Fri, 19 Jul 2024 08:22:32 +0000 (UTC)
+Date: Fri, 19 Jul 2024 10:22:30 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:vvfat" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v5 4/5] vvfat: Fix reading files with non-continuous
+ clusters
+Message-ID: <ZpoiRiCgACkh5REh@redhat.com>
+References: <ZpmxMEj5qZDUhj_h@amjad-pc>
+ <117AB0D4-B3AC-4A8B-84AA-C4085A78B9FE@getmailspring.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a143257f-62c0-4c3a-9031-5f3e510f430d@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <117AB0D4-B3AC-4A8B-84AA-C4085A78B9FE@getmailspring.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,52 +79,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 19, 2024 at 10:12:20AM +0200, Philippe Mathieu-Daudé wrote:
-> On 19/7/24 04:26, Song Gao wrote:
-> > From: Xianglai Li <lixianglai@loongson.cn>
-> > 
-> > loongarch added a common library for edk2 to
-> > parse flash base addresses through fdt.
-> > For compatibility with other architectures,
-> > the flash block size in qemu is now changed to 256k.
-> > 
-> > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> > Reviewed-by: Song Gao <gaosong@loongson.cn>
-> > Message-Id: <20240624033319.999631-1-lixianglai@loongson.cn>
-> > Signed-off-by: Song Gao <gaosong@loongson.cn>
-> > ---
-> >   include/hw/loongarch/virt.h | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> > index 8fdfacf268..603c1cebdb 100644
-> > --- a/include/hw/loongarch/virt.h
-> > +++ b/include/hw/loongarch/virt.h
-> > @@ -20,7 +20,7 @@
-> >   #define VIRT_FWCFG_BASE         0x1e020000UL
-> >   #define VIRT_BIOS_BASE          0x1c000000UL
-> >   #define VIRT_BIOS_SIZE          (16 * MiB)
-> > -#define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
-> > +#define VIRT_FLASH_SECTOR_SIZE  (256 * KiB)
+Am 19.07.2024 um 02:29 hat Amjad Alsharafi geschrieben:
 > 
-> Again, I believe this breaks machine migration. See the recent
-> example Daniel explained to me:
-> https://lore.kernel.org/qemu-devel/Zn6EQ39Q57KtmKPU@redhat.com/
+> 
+> On Jul 19 2024, at 8:20 am, Amjad Alsharafi <amjadsharafi10@gmail.com> wrote:
+> 
+> > On Thu, Jul 18, 2024 at 05:20:36PM +0200, Kevin Wolf wrote:
+> >> Am 12.06.2024 um 14:43 hat Amjad Alsharafi geschrieben:
+> >> > When reading with `read_cluster` we get the `mapping` with
+> >> > `find_mapping_for_cluster` and then we call `open_file` for this
+> >> > mapping.
+> >> > The issue appear when its the same file, but a second cluster that is
+> >> > not immediately after it, imagine clusters `500 -> 503`, this will give
+> >> > us 2 mappings one has the range `500..501` and another `503..504`, both
+> >> > point to the same file, but different offsets.
+> >> > 
+> >> > When we don't open the file since the path is the same, we won't assign
+> >> > `s->current_mapping` and thus accessing way out of bound of the file.
+> >> > 
+> >> > From our example above, after `open_file` (that didn't open
+> >> anything) we
+> >> > will get the offset into the file with
+> >> > `s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
+> >> > give us `0x2000 * (504-500)`, which is out of bound for this
+> >> mapping and
+> >> > will produce some issues.
+> >> > 
+> >> > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+> >> > ---
+> >> >  block/vvfat.c | 23 ++++++++++++++++-------
+> >> >  1 file changed, 16 insertions(+), 7 deletions(-)
+> >> > 
+> >> > diff --git a/block/vvfat.c b/block/vvfat.c
+> >> > index b63ac5d045..fc570d0610 100644
+> >> > --- a/block/vvfat.c
+> >> > +++ b/block/vvfat.c
+> >> > @@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState*
+> >> s,mapping_t* mapping)
+> >> >  {
+> >> >      if(!mapping)
+> >> >          return -1;
+> >> > +    int new_path = 1;
+> >> >      if(!s->current_mapping ||
+> >> > -            strcmp(s->current_mapping->path,mapping->path)) {
+> >> > -        /* open file */
+> >> > -        int fd = qemu_open_old(mapping->path,
+> >> > +            s->current_mapping->info.file.offset
+> >> > +                != mapping->info.file.offset ||
+> >> 
+> >> I'm wondering if this couldn't just be s->current_mapping != mapping?
+> > 
+> > Actually, you are totally right. Not sure what made me go for this.
+> > 
+> > I tried also to test with only checking if the path changed, but it
+> > fails on some tests. So the offset is important.
+> > For that reason, checking just the mapping ptr is better since we won't
+> > have 2 mappings with same file and offset.
+> > 
+> > I'll then use this change. Thanks
+> 
+> Should I send a new patch? since most commits are reviewed now
 
-Yes, changing flash size breaks migration compat, but note that loongarch
-does not have any versioned machine types, so it has zero migration compat
-right now regardles of this change. IOW, now is the right time to make the
-change, before someone asks for versioned machines with loongarch.
+Yes, please do. I think I reviewed the whole series.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Kevin
+
+> > 
+> >> 
+> >> > +            (new_path = strcmp(s->current_mapping->path,
+> >> mapping->path))) {
+> >> 
+> >> If both the path and the offset change, we still want to set
+> >> new_path, I
+> >> think. And if we didn't already have a mapping, we also need to open the
+> >> file.
+> >> 
+> >> Actually, setting a variable inside the condition makes it kind of hard
+> >> to read, so if s->current_mapping != mapping works, we can do the check
+> >> only in the conditon below:
+> >> 
+> >> > +        if (new_path) {
+> >> 
+> >> if (!s->current_mapping ||
+> >>     strcmp(s->current_mapping->path, mapping->path))
+> >> 
+> >> > +            /* open file */
+> >> > +            int fd = qemu_open_old(mapping->path,
+> >> >                                 O_RDONLY | O_BINARY | O_LARGEFILE);
+> >> > -        if(fd<0)
+> >> > -            return -1;
+> >> > -        vvfat_close_current_file(s);
+> >> > -        s->current_fd = fd;
+> >> > +            if (fd < 0) {
+> >> > +                return -1;
+> >> > +            }
+> >> > +            vvfat_close_current_file(s);
+> >> > +
+> >> > +            s->current_fd = fd;
+> >> > +        }
+> >> > +        assert(s->current_fd);
+> >> >          s->current_mapping = mapping;
+> >> >      }
+> >> 
+> >> Kevin
+> >> 
+> > 
+> 
 
 
