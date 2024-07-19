@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C68C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 13:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBC0C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 13:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUnI1-0007l5-3v; Fri, 19 Jul 2024 09:04:49 -0400
+	id 1sUnJh-0004HJ-Ai; Fri, 19 Jul 2024 09:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUnHz-0007jz-0b
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 09:04:47 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUnJf-0004AF-Qs
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 09:06:31 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUnHx-0000hM-H3
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 09:04:46 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-367963ea053so798050f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 06:04:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUnJc-0002gS-62
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 09:06:31 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4279ca8af51so12707475e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 06:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721394283; x=1721999083; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721394386; x=1721999186; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5VD3dGcqFmyXvHy0rEUbGoNvnEXenK4+enbudCfSgsQ=;
- b=L+bql7oezhkQaqHB7AmXYeYoPiYDpFccP+xpCOr2q6T3z7frlST23tlK61U7epBNfB
- fJqFQUY3SxGitUO5M+HX95j+vUI2NnHKBS4VjaF/2LMjfAKiQhAw+Z31Fa39gxK1Byjp
- seyr4iwiePtVXRttcLm4gnPA/q8pH2DFdnCR87Nb6vy9bAwKF6FcU//Y5oHyO6fWvCZk
- EWAChmawbu/15eCl3f6+qmpL+SB34e4tVxLcdFLcZu4UXhA8rCUOQzKxxt2UYrUYba1N
- ObMb5tkHhqbHPDX+uxXn7+BnWsxgYdCQmyjGq7A/IP4+LNlHHhg6nxmLm9xNrJxyEJNo
- mhgA==
+ bh=EQ9NrS5uvl6hxfJV7Mcnt+ZMhNb7UVI+j7+b20P37lQ=;
+ b=JUbbNefwHBr9rLM1atB0jmSoeW/d8kdnXwmmLLQkgJ/Lp8Z4xEoqAQCC592nJtYf9F
+ KzwxFO2G8j81VmLGy7Rr9tQsosGLroxPrA3Yyt6PVkpHoyApvkEE+7DyI/1zcisc9XLr
+ gtdKmvs0OFEO12b9Z5r8WcV6CNs0+kzmVal+9IIZE6trY0Ey/qVcek7agom7lp2wO8BW
+ URV6SSR0W28znBNQ038sfopE6YzbZSn01rkx76jBn/lpe97iPJzbBLfzhtE5bP3ap+QA
+ 8V5c7WoRSmcwMfDiOPXAptTxuEn9In1E2Epw6jPnzuxypVEbSIaMIczv3NGkhhOCHciK
+ jTtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721394283; x=1721999083;
+ d=1e100.net; s=20230601; t=1721394386; x=1721999186;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5VD3dGcqFmyXvHy0rEUbGoNvnEXenK4+enbudCfSgsQ=;
- b=hUrNYaEmsO+OisfgxxINEnZvFuVEEz/rCYi1O5JktuHF+NAkaOiSm98HZRHl7eeD8L
- XI3ZcwMx6kJMIPeqeYhJXktopkBgCEpWE8Xo1k4vBtiCYG9criohDzCvYvBw2bKzLhJd
- ETGcxrzErbI1d28toFU8Skc3AhCOkiKuOpTajGioVUasnENnbvAq7+zbZ8ef4C5w1ql3
- N+tos4lCN/dmg589cstc2qhZoDWnAG7v2DDLDX0a6C+Ft0jzgoiYhf6nfnoI7ijXqvGd
- nCqQeI8rZWealLG4ow18+1zNYnkoX88OCx71/7ZLdT7gW+ddOwK6PUkolXtMM0UKNwL5
- 8Fqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwH5X2oBEgPZglc/5WCy74yEPtu4jdzE074Pp60l80j+5q5lNvnvHk3rCVmVlWEDk5KKRkhD5OHhki6zRq0aytklyVUyM=
-X-Gm-Message-State: AOJu0YwTJJL7fNi7YCe7fxaNRsKt7S5U9OI2i6YRxLN9Jw9son02Eou8
- cQCDK0dQtEfFLqFu/XI+9QtG/ic439++80pqWEk4/LjnG/aZGTJajpSNr2wEDO4=
-X-Google-Smtp-Source: AGHT+IFHV4xyHbG2WVWePfPq4WAmpegYbdvWCJUnRFGHy5t3xyT7js6ZpsBCUIH6pIyRLu5EmNoI5g==
-X-Received: by 2002:adf:f149:0:b0:367:9020:51ef with SMTP id
- ffacd0b85a97d-3683176ed2bmr5787612f8f.64.1721394282680; 
- Fri, 19 Jul 2024 06:04:42 -0700 (PDT)
+ bh=EQ9NrS5uvl6hxfJV7Mcnt+ZMhNb7UVI+j7+b20P37lQ=;
+ b=m6WvOFlCt8ASHS+cWwPBxpS9S4xzqa+gyxxTu/pZo8KCHGztg62YWgHRRYor0sKfco
+ UEFZhVMosWikPSPoijD9hig9eEhRuhD73pLjylMQHy60pYeq/EakPMANyz1PoGP9Br6y
+ Knlj/rCAp2ADrHt+M+70xkz99R+gjzZ0AjFbVDSJxVaCw3UfetVbSiZ/8AD0IOkzJ/jB
+ Li+PSKuPCYpM0U939Q3DqkfZqMT8BIcfjqGFPRgLvLq1da1LYk+wTcbiOU81gBWXmDQo
+ 9lv26zPAebxGJewfVZVE3atpr831niq/KNWXrrNxGK/6huNJ/2tnoYPTtxGOixH3Uj77
+ vt2w==
+X-Gm-Message-State: AOJu0YwgUN00xanmbsnsa5LToT5RlTWU8FuQL4FryWk874wMuaKnba0Y
+ HCQoKnJ7nulVDE2tXv3Taxl+8osVpGG8uGT1+T6MuFN2/kMsG8+PcczlmadaOFg=
+X-Google-Smtp-Source: AGHT+IEGFn5FDEEr74akEl5y8Q+NdWA8czQkz7K5yNvH8HWqmGll2UJBnaEE5zdOQtHibXX/BYB1vA==
+X-Received: by 2002:a05:600c:3152:b0:426:6e86:f82 with SMTP id
+ 5b1f17b1804b1-427c2ce7bedmr54385575e9.22.1721394386388; 
+ Fri, 19 Jul 2024 06:06:26 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.209.227])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368786848basm1590808f8f.15.2024.07.19.06.04.41
+ 5b1f17b1804b1-427d2a721b7sm49917835e9.27.2024.07.19.06.06.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Jul 2024 06:04:41 -0700 (PDT)
-Message-ID: <7c2c14e9-d6eb-4a8d-bb87-57ec289756d4@linaro.org>
-Date: Fri, 19 Jul 2024 15:04:39 +0200
+ Fri, 19 Jul 2024 06:06:25 -0700 (PDT)
+Message-ID: <92cb9c6b-a3bf-42c1-aa4d-b49b78379666@linaro.org>
+Date: Fri, 19 Jul 2024 15:06:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/19] Reconstruct loongson ipi driver
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Bibo Mao <maobibo@loongson.cn>,
- QEMU devel <qemu-devel@nongnu.org>
-Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Xiaojuan Yang
- <yangxiaojuan@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>
-References: <20240718133312.10324-1-philmd@linaro.org>
- <c7e11721-812f-4ca5-9115-1ae060b4ff25@app.fastmail.com>
+Subject: Re: [PATCH v6 0/4] docs/interop/firmware.json: scripts/qapi-gen.py
+ compatibility
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c7e11721-812f-4ca5-9115-1ae060b4ff25@app.fastmail.com>
+In-Reply-To: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,32 +98,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/7/24 14:56, Jiaxun Yang wrote:
-> 
-> 
-> 在2024年7月18日七月 下午9:32，Philippe Mathieu-Daudé写道：
->> Since v4:
->> - Fix build failure due to rebase (Song)
->> - Loongarch -> LoongArch (Song)
->> - Added Song's tags
->>
->> Since v3:
->> - Use DEFINE_TYPES() macro (unreviewed patch #1)
->> - Update MAINTAINERS
->> - Added Bibo's tags
-> 
-> For the whole series:
-> 
-> Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+On 19/7/24 09:37, Thomas Weißschuh wrote:
 
-Yeah!
+> Thomas Weißschuh (4):
+>        docs/interop/firmware.json: add new enum FirmwareFormat
+>        docs/interop/firmware.json: add new enum FirmwareArchitecture
+>        docs/interop/firmware.json: convert "Example" section
+>        docs: add test for firmware.json QAPI
 
-> Thanks! Tested on MIPS loongson3-virt with 2, 4 CPUs, all working fine.
-> 
-> I'll get this covered by CI later.
+Thanks, series queued!
 
-Thanks,
-
-I'm queuing this series.
 
