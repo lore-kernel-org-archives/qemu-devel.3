@@ -4,52 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB1FC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 17:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291B6C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 17:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUrVP-00042X-VU; Fri, 19 Jul 2024 13:34:55 -0400
+	id 1sUrVO-0003zT-5g; Fri, 19 Jul 2024 13:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1sUkjy-0006Wb-FC
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:21:30 -0400
-Received: from mail.dprinz.de ([178.254.36.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@dprinz.de>) id 1sUkjw-0004wr-Ct
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 06:21:30 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id BA92D53F5E; Fri, 19 Jul 2024 12:20:54 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dprinz.de; s=dkim;
- t=1721384470; h=from:subject:date:message-id:to:cc:mime-version:
- content-transfer-encoding; bh=Zj+NsUuippeeV5laSyD2Ag/Bok9UvAdnb8j6RDSAy9I=;
- b=VzPisevMon4Aflw2zhk4n4P9iEewQ1UAWUDuZ4BU1p9GER2us6DTVprlaYN16HcJNWveRl
- aHtUqu4tkUUaYS6lmMM8wQOcu4LLTzYcfzTTWg/2pS9lw93Wcb7anIRoIimZ7ZeBuuskol
- 2nPanfUixYWusxEGwWBqVpuvpo6LeuFI1Xg51O5eEiIduqw05byNzLwbUiC/GbfKH/2+Fn
- 2PNVhcbK9pkq9HfO1SrdUZynj3F/Eb8ImmyoHb/WtZYWSoaqXpU4Vx0s3qJQSN3cOxXK0L
- KG2hnxPijbme62L/GtgfvpWa0kpjWS1rVSHevtEqvqvNiN8/uNJcn4UJWSy7eQ==
-From: Dominic Prinz <git@dprinz.de>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Dominic Prinz <git@dprinz.de>
-Subject: [PATCH] hw/acpi/ich9: Add periodic and swsmi timer
-Date: Fri, 19 Jul 2024 12:20:53 +0200
-Message-Id: <20240719102053.316744-1-git@dprinz.de>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-Received-SPF: pass client-ip=178.254.36.89; envelope-from=git@dprinz.de;
- helo=mail.dprinz.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3bpSaZggKCj0vgdmcqhjfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--whendrik.bounces.google.com>)
+ id 1sUqUH-0002Hn-1X
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:41 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3bpSaZggKCj0vgdmcqhjfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--whendrik.bounces.google.com>)
+ id 1sUqUE-000477-Ig
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:40 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6688b5b40faso48852437b3.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 09:29:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1721406575; x=1722011375; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=EaJqw2mJRSkYe7MyJyOAWeV6rAh6lGabGEXsQDwDp2E=;
+ b=r+RqHDYMU/ZxW+pnQvV06ShPHQLvdMqbCBDy04eDHetGTPIonlfiSH3shbNR9aIOdp
+ 9T4HmWhGBqDqxddr/cFADOij50fJcpvEEgz8qQ6EFs4sPG6IU0t3SsNoeNgFSHIuiphX
+ ErgNN8pOtfreQFoZWrpBa3ApTKVKxPl5AkN3LUPnHzkEshPgqG+rQJZknXmCbo2cVfis
+ mpBb5i01hkxviugBgy2zBhMKafoZ9XeZg2KaMjyxD+YcN0D1SbMfAjXXynv2soHVRg0a
+ nL6LWldpZK8ovEKIqLyjL9bEK3yaYbQ7/Cg/0KxpCVLMcTDLTnBRhrKY4HxFaHpI+cqU
+ NFIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721406575; x=1722011375;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EaJqw2mJRSkYe7MyJyOAWeV6rAh6lGabGEXsQDwDp2E=;
+ b=SsB25rnU9fVQjxm8sNfC/N+NB2+EOZI42hYyeKEEZuuX8xoEnIzGhGREKTujLRHAyu
+ dWKnJ10esZ2caRRgs3X2aiR/Pfmh7MhF9+tfyHnhF9rP0YjNVHpiLahAstxeY/iH/4En
+ bYXLFrm8azq7iTCIkG0tn3vOK9DjRhsWwyJbIbMrywnw6oSh9N6hgdIWc4Vc4St+PElI
+ 2EqV67Sf2S1P1qMRP+z6tA2+UEbta6V2UEm8jFcblTTmuDLKGfEzXA9DPhh2gWRw0EAn
+ jARR4zxbPHyKV0LY4p9THKtIVpaOXhygLD4ke7A5uh+ACf/hFd0xWHcOv7EhdgdX+6/B
+ tEDA==
+X-Gm-Message-State: AOJu0YwJBJCWVXpAUbOzPVz9guSDRuMkVDSkupihgaNzVz3vWgHORO2y
+ jQsa8CwbjnjGDgK+9kuIHH53srgOhti48GLIGQXXGwdetMghHryqSrvqee6Eq0EBH7QnU4wkkUX
+ 5LLON7uDyvbMF0el+4616NcrqFfjdmZSwCp0Kgr2E8K73B+ZCYm1jHdIAoPgGTC7gZOOQv+xXDf
+ Rf8AC2g/m7Hq/UCtlYqRpLTrVI+xhKcOaDce0/TCSeKA==
+X-Google-Smtp-Source: AGHT+IEExF9VHEpqkn+TXNjRAu8yv4NeugenWosKZDwMXaCa9Hhf+Jv8wg+Ww4ydxzb15VDBHCUs/cskYGuFyA==
+X-Received: from whendrik-specialist-workstation.c.googlers.com
+ ([fda3:e722:ac3:cc00:28:9cb1:c0a8:967]) (user=whendrik job=sendgmr) by
+ 2002:a05:6902:1003:b0:e03:a22c:df5 with SMTP id
+ 3f1490d57ef6-e087042cc79mr864276.7.1721406574746; 
+ Fri, 19 Jul 2024 09:29:34 -0700 (PDT)
+Date: Fri, 19 Jul 2024 16:29:20 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.45.2.1089.g2a221341d9-goog
+Message-ID: <20240719162929.1197154-1-whendrik@google.com>
+Subject: [PATCH v1 0/9] target:386/ Emulate Intel RDT features needed to mount
+ ResCtrl in Linux
+From: Hendrik Wuethrich <whendrik@google.com>
+To: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
+ marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com
+Cc: peternewman@google.com, 
+ "=?UTF-8?q?Hendrik=20W=C3=BCthrich?=" <whendrik@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3bpSaZggKCj0vgdmcqhjfnnfkd.bnlpdlt-cdudkmnmfmt.nqf@flex--whendrik.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 19 Jul 2024 13:34:51 -0400
+X-Mailman-Approved-At: Fri, 19 Jul 2024 13:34:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,249 +97,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements the periodic and the swsmi ICH9 chipset timer. They are
-especially useful when prototyping UEFI firmware (e.g. with EDK2's OVMF)
-with QEMU.
+From: Hendrik W=C3=BCthrich <whendrik@google.com>
 
-This includes that writes to the SMI_STS register are enabled for the
-corresponding two bits.
+The aim of this patch series is to emulate Intel RDT features in order
+to make testing of the linux Resctrl subsystem possible with Qemu.
 
-Signed-off-by: Dominic Prinz <git@dprinz.de>
----
- hw/acpi/ich9.c                | 15 +++++++
- hw/acpi/ich9_timer.c          | 79 +++++++++++++++++++++++++++++++++++
- hw/acpi/meson.build           |  2 +-
- hw/isa/lpc_ich9.c             |  6 +++
- include/hw/acpi/ich9.h        |  3 ++
- include/hw/acpi/ich9_timer.h  | 23 ++++++++++
- include/hw/southbridge/ich9.h |  4 ++
- 7 files changed, 131 insertions(+), 1 deletion(-)
- create mode 100644 hw/acpi/ich9_timer.c
- create mode 100644 include/hw/acpi/ich9_timer.h
+A branch with the patches applied can be found at:
+https://github.com/Gray-Colors/Intel_RDT_patches_applied
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 02d8546bd3..97d645b750 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -35,6 +35,7 @@
- #include "sysemu/runstate.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ich9_tco.h"
-+#include "hw/acpi/ich9_timer.h"
- 
- #include "hw/southbridge/ich9.h"
- #include "hw/mem/pc-dimm.h"
-@@ -108,6 +109,16 @@ static void ich9_smi_writel(void *opaque, hwaddr addr, uint64_t val,
-         }
-         pm->smi_en &= ~pm->smi_en_wmask;
-         pm->smi_en |= (val & pm->smi_en_wmask);
-+        ich9_pm_update_swsmi_timer(pm, pm->smi_en &
-+                                           ICH9_PMIO_SMI_EN_SWSMI_EN);
-+        ich9_pm_update_periodic_timer(pm, pm->smi_en &
-+                                              ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+        break;
-+    case 4:
-+        pm->smi_sts &= ~(ICH9_PMIO_SMI_STS_SWSMI_STS |
-+                         ICH9_PMIO_SMI_STS_PERIODIC_STS);
-+        pm->smi_sts |= val & (ICH9_PMIO_SMI_STS_SWSMI_STS |
-+                              ICH9_PMIO_SMI_STS_PERIODIC_STS);
-         break;
-     }
- }
-@@ -305,6 +316,10 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-                           "acpi-smi", 8);
-     memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
- 
-+    pm->swsmi_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_swsmi_timer, pm);
-+
-+    pm->periodic_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_periodic_timer, pm);
-+
-     if (pm->enable_tco) {
-         acpi_pm_tco_init(&pm->tco_regs, &pm->io);
-     }
-diff --git a/hw/acpi/ich9_timer.c b/hw/acpi/ich9_timer.c
-new file mode 100644
-index 0000000000..2e6b68f0fb
---- /dev/null
-+++ b/hw/acpi/ich9_timer.c
-@@ -0,0 +1,79 @@
-+/*
-+ * QEMU ICH9 Timer emulation
-+ *
-+ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/cpu.h"
-+#include "hw/pci/pci.h"
-+#include "hw/southbridge/ich9.h"
-+#include "qemu/timer.h"
-+
-+#include "hw/acpi/ich9_timer.h"
-+
-+void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable)
-+{
-+    uint16_t swsmi_rate_sel;
-+    int64_t expire_time;
-+    ICH9LPCState *lpc;
-+
-+    if (enable) {
-+        lpc = container_of(pm, ICH9LPCState, pm);
-+        swsmi_rate_sel =
-+            (pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_3) & 0xc0) >> 6;
-+
-+        if (swsmi_rate_sel == 0) {
-+            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 1500000LL;
-+        } else {
-+            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                          8 * (1 << swsmi_rate_sel) * 1000000LL;
-+        }
-+
-+        timer_mod(pm->swsmi_timer, expire_time);
-+    } else {
-+        timer_del(pm->swsmi_timer);
-+    }
-+}
-+
-+void ich9_swsmi_timer(void *opaque)
-+{
-+    ICH9LPCPMRegs *pm = opaque;
-+
-+    pm->smi_sts |= ICH9_PMIO_SMI_STS_SWSMI_STS;
-+    ich9_generate_smi();
-+
-+    ich9_pm_update_swsmi_timer(pm, pm->smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
-+}
-+
-+void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable)
-+{
-+    uint16_t per_smi_sel;
-+    int64_t expire_time;
-+    ICH9LPCState *lpc;
-+
-+    if (enable) {
-+        lpc = container_of(pm, ICH9LPCState, pm);
-+        per_smi_sel = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1) & 3;
-+        expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                      8 * (1 << (3 - per_smi_sel)) * NANOSECONDS_PER_SECOND;
-+
-+        timer_mod(pm->periodic_timer, expire_time);
-+    } else {
-+        timer_del(pm->periodic_timer);
-+    }
-+}
-+
-+void ich9_periodic_timer(void *opaque)
-+{
-+    ICH9LPCPMRegs *pm = opaque;
-+
-+    pm->smi_sts = ICH9_PMIO_SMI_STS_PERIODIC_STS;
-+    ich9_generate_smi();
-+
-+    ich9_pm_update_periodic_timer(pm,
-+                                  pm->smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+}
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index fa5c07db90..7f8ccc9b7a 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
--acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c'))
-+acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
- acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
- acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
- acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index bd727b2320..56daeeedbf 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -43,6 +43,7 @@
- #include "hw/southbridge/ich9.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ich9.h"
-+#include "hw/acpi/ich9_timer.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/qdev-properties.h"
- #include "sysemu/runstate.h"
-@@ -531,6 +532,11 @@ ich9_lpc_pmcon_update(ICH9LPCState *lpc)
-     uint16_t gen_pmcon_1 = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1);
-     uint16_t wmask;
- 
-+    ich9_pm_update_swsmi_timer(&lpc->pm, lpc->pm.smi_en &
-+                                             ICH9_PMIO_SMI_EN_SWSMI_EN);
-+    ich9_pm_update_periodic_timer(&lpc->pm, lpc->pm.smi_en &
-+                                                ICH9_PMIO_SMI_EN_PERIODIC_EN);
-+
-     if (gen_pmcon_1 & ICH9_LPC_GEN_PMCON_1_SMI_LOCK) {
-         wmask = pci_get_word(lpc->d.wmask + ICH9_LPC_GEN_PMCON_1);
-         wmask &= ~ICH9_LPC_GEN_PMCON_1_SMI_LOCK;
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 2faf7f0cae..940a3d795f 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -68,6 +68,9 @@ typedef struct ICH9LPCPMRegs {
-     bool smm_compat;
-     bool enable_tco;
-     TCOIORegs tco_regs;
-+
-+    QEMUTimer *swsmi_timer;
-+    QEMUTimer *periodic_timer;
- } ICH9LPCPMRegs;
- 
- #define ACPI_PM_PROP_TCO_ENABLED "enable_tco"
-diff --git a/include/hw/acpi/ich9_timer.h b/include/hw/acpi/ich9_timer.h
-new file mode 100644
-index 0000000000..e48f9918d8
---- /dev/null
-+++ b/include/hw/acpi/ich9_timer.h
-@@ -0,0 +1,23 @@
-+/*
-+ * QEMU ICH9 Timer emulation
-+ *
-+ * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_ACPI_ICH9_TIMER_H
-+#define HW_ACPI_ICH9_TIMER_H
-+
-+#include "hw/acpi/ich9.h"
-+
-+void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable);
-+
-+void ich9_swsmi_timer(void *opaque);
-+
-+void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable);
-+
-+void ich9_periodic_timer(void *opaque);
-+
-+#endif
-diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-index fd01649d04..6c60017024 100644
---- a/include/hw/southbridge/ich9.h
-+++ b/include/hw/southbridge/ich9.h
-@@ -196,8 +196,12 @@ struct ICH9LPCState {
- #define ICH9_PMIO_GPE0_LEN                      16
- #define ICH9_PMIO_SMI_EN                        0x30
- #define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
-+#define ICH9_PMIO_SMI_EN_SWSMI_EN               (1 << 6)
- #define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
-+#define ICH9_PMIO_SMI_EN_PERIODIC_EN            (1 << 14)
- #define ICH9_PMIO_SMI_STS                       0x34
-+#define ICH9_PMIO_SMI_STS_SWSMI_STS             (1 << 6)
-+#define ICH9_PMIO_SMI_STS_PERIODIC_STS          (1 << 14)
- #define ICH9_PMIO_TCO_RLD                       0x60
- #define ICH9_PMIO_TCO_LEN                       32
- 
--- 
-2.34.1
+The changes made introduce the following features:
+
+* Feature enumeration for Intel RDT allocation.
+* Feature enumeration for Intel RDT monitoring.
+* Intel RDT monitoring system interface.
+* Intel RDT allocation system interface.
+
+By adding these features, a barebones implementation most of the RDT
+state and MSRs is introduced, which can be enabled through qemu
+command line flags.
+The features missing for a faithful recreation of RDT are CDP and
+non-linear MBA throttle, as well as the possibility to configure
+various values through the command line, as some properties can be
+different across different machines. For increased ease of use, the
+correct features should be automatically enabled on machines that
+support RDT functionality.
+The missing features mentioned above will be implemented in the
+following order:
+
+* Expand feature set for RDT allocation to include CDP and non-linear
+ MBA throttle
+* Allow for command line configuration of some values, such as the L3
+ CBM length
+* Automatically enable RDT on machines that officially support it.
+
+Will NOT be implemented
+* Tests to simulate interaction with the host by the guest
+
+Command line examples assuming entire patch series is applied (This
+requires a kernel with Resctrl enabled):
+
+To emulate Intel RDT features:
+
+Currently, it is necessary to force the RDT options on in qemu, as it is
+not automatically enabled for any machines. An example would be the
+following:
+- Skylake-Server,+l3-cmt,+rdt-m,+rdt-a,+mba,+l3-cat,+l2-cat
+
+Just enabling RDT in qemu won't really help, though. The following
+option allows resctrl in the kernel:
+- Kernel options: rdt=3Dmbmlocal,mbmtotal,cmt,mba,l2cat,l3cat
+
+To use Resctrl in the Qemu, please refer to:
+https://docs.kernel.org/arch/x86/resctrl.html
+
+=E2=80=AAHendrik W=C3=BCthrich (9):
+  Add Intel RDT device to config.
+  Add state for RDT device.
+  Add init and realize funciontality for RDT device.
+  Add RDT functionality
+  Add RDT device interface through MSRs
+  Add CPUID enumeration for RDT
+  Add RDT feature flags.
+  Adjust CPUID level for RDT features
+  Adjust level for RDT on full_cpuid_auto_level
+
+ hw/i386/Kconfig                      |   4 +
+ hw/i386/meson.build                  |   1 +
+ hw/i386/rdt.c                        | 271 +++++++++++++++++++++++++++
+ include/hw/i386/rdt.h                |  60 ++++++
+ target/i386/cpu.c                    | 134 ++++++++++++-
+ target/i386/cpu.h                    |  26 +++
+ target/i386/tcg/sysemu/misc_helper.c |  80 ++++++++
+ 7 files changed, 574 insertions(+), 2 deletions(-)
+ create mode 100644 hw/i386/rdt.c
+ create mode 100644 include/hw/i386/rdt.h
+
+--=20
+2.45.2.1089.g2a221341d9-goog
 
 
