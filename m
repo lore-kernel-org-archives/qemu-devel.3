@@ -4,58 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A73C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 09:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F13C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 09:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUjlq-0002JU-4I; Fri, 19 Jul 2024 05:19:22 -0400
+	id 1sUjpO-0007oW-6n; Fri, 19 Jul 2024 05:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUjlo-0002IQ-3o; Fri, 19 Jul 2024 05:19:20 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUjlm-0004XJ-0W; Fri, 19 Jul 2024 05:19:19 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WQPJ03pLPz4x04;
- Fri, 19 Jul 2024 19:19:12 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WQPHw1w3Qz4w2K;
- Fri, 19 Jul 2024 19:19:07 +1000 (AEST)
-Message-ID: <f70ae091-151b-476c-a8ef-312952163fac@kaod.org>
-Date: Fri, 19 Jul 2024 11:19:05 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUjpM-0007mw-8i
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 05:23:00 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUjpK-0006TX-HM
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 05:23:00 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-367990aaef3so477908f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 02:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721380977; x=1721985777; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/jpJmlnJGxMqLM2gozvaX6vYmM5VG8aEvMAmikZSNPw=;
+ b=FmcKsEClPF/c2aO67/hG1eXZ1aG3rDs4haFFI54eAykao5hrQVIQ/12GpqgIf24yEk
+ 8BvjYDFZt7NMXOb9D0geA2g5+vVLKPWiqr1JVYBYtFkTrSz39Atf65GXSbu0IwnkNvV5
+ GT4zl4XgTg0BuaGjZs5/zoQH6hNgPVb8/xbtPckqMZQSp68MjHJn/rat9z+QSVWau7IC
+ aeU4H9LGcRX8Ah2fN3SmePK5orrwYcRQb1Rz5TkRNjY/rmywf1FX4CcArwWYwEpbCeWg
+ xNG6H6bDQoZdU0nIgDUKNX78M723HpZaOrL8TxCBiLG+SD/qt5jQ6Hd7vS+v4vqcZUFT
+ Es0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721380977; x=1721985777;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/jpJmlnJGxMqLM2gozvaX6vYmM5VG8aEvMAmikZSNPw=;
+ b=afQi/K1NVBsUF7z+cd1LD+hR6SkPuiJm5Ef7y+f5jj9Zit6JhKbpGgde9T2l+HhuuX
+ yh37WXdDT3i7VtH5LY2LeoGGyp6l4LTT7YPCAn3JK8IBhlyvvnsxaLy272GaEl0yK0MI
+ 7FOaBpw8nxWpI5BH/QtwN8HVhY6uSro/Y/ZvGKDoemABa+pb5DJY/JKyceHZjCL2Z+jB
+ Jq7s+NRVHNfctpWHPISzTa/sb6wpJ2FI2i6zTowxzRsdgCepmGh8qRUD4lIrXb+IbvIw
+ Gv9+XM6MPBd33RULo+A3h8YEs3BmUKiOMY2eWHAk2snqw0B/9VdrR8v7f8khs+dFcOg4
+ T/9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/lsNCUHYikXoHotEuzHfBcbZEcYZ9z4dLKOYXi+cPz3dYJ5gKH0WADrm7AWPlWNskNdu/7VG+Q7RSPBlRD6lgg1eCLpQ=
+X-Gm-Message-State: AOJu0Yy+Vw/dp2yX5z99fN8hVh3PbFK4oJb6ZPTEc7GCbIkEEgKo7ez1
+ IgJBwP3mu91qvHlrKQDr8Qh82g1q/eCLCagByITP3cV89V9T8qH2bBV8gYjU6eo=
+X-Google-Smtp-Source: AGHT+IGY5HBhMIZijdje9H2k9zJ2+mdZyWPNWb/purRbdOKpIBsFXIi+20H9fhnyW6DxD4en+8BFhQ==
+X-Received: by 2002:adf:ee4f:0:b0:368:5b01:32e3 with SMTP id
+ ffacd0b85a97d-3685b0137c8mr2748490f8f.23.1721380976702; 
+ Fri, 19 Jul 2024 02:22:56 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.113])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787cecbfsm1063109f8f.85.2024.07.19.02.22.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 02:22:56 -0700 (PDT)
+Message-ID: <f92a1c5e-c9fe-4062-bbb5-a42432504d0f@linaro.org>
+Date: Fri, 19 Jul 2024 11:22:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 12/15] aspeed/soc: introduce a new API to get the INTC
- orgate information
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:STM32F205" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-13-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240718064925.1846074-13-jamin_lin@aspeedtech.com>
+Subject: Re: [PULL 3/3] hw/loongarch: Modify flash block size to 256K
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, Xianglai Li <lixianglai@loongson.cn>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20240719022604.781608-1-gaosong@loongson.cn>
+ <20240719022604.781608-4-gaosong@loongson.cn>
+ <a143257f-62c0-4c3a-9031-5f3e510f430d@linaro.org>
+ <ZpohPHRh7gOeTV4o@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZpohPHRh7gOeTV4o@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=vGMz=OT=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,73 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 08:49, Jamin Lin wrote:
-> Currently, users can set the intc mapping table with
-> enumerated device id and device irq to get the INTC orgate
-> input pins. However, some devices use the continuous bits number in the
-> same orgate. To reduce the enumerated device id definition,
-> create a new API to get the INTC orgate index and source bit number
-> if users only provide the start bus number of device.
+On 19/7/24 10:18, Daniel P. Berrangé wrote:
+> On Fri, Jul 19, 2024 at 10:12:20AM +0200, Philippe Mathieu-Daudé wrote:
+>> On 19/7/24 04:26, Song Gao wrote:
+>>> From: Xianglai Li <lixianglai@loongson.cn>
+>>>
+>>> loongarch added a common library for edk2 to
+>>> parse flash base addresses through fdt.
+>>> For compatibility with other architectures,
+>>> the flash block size in qemu is now changed to 256k.
+>>>
+>>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>>> Reviewed-by: Song Gao <gaosong@loongson.cn>
+>>> Message-Id: <20240624033319.999631-1-lixianglai@loongson.cn>
+>>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>>> ---
+>>>    include/hw/loongarch/virt.h | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>>> index 8fdfacf268..603c1cebdb 100644
+>>> --- a/include/hw/loongarch/virt.h
+>>> +++ b/include/hw/loongarch/virt.h
+>>> @@ -20,7 +20,7 @@
+>>>    #define VIRT_FWCFG_BASE         0x1e020000UL
+>>>    #define VIRT_BIOS_BASE          0x1c000000UL
+>>>    #define VIRT_BIOS_SIZE          (16 * MiB)
+>>> -#define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
+>>> +#define VIRT_FLASH_SECTOR_SIZE  (256 * KiB)
+>>
+>> Again, I believe this breaks machine migration. See the recent
+>> example Daniel explained to me:
+>> https://lore.kernel.org/qemu-devel/Zn6EQ39Q57KtmKPU@redhat.com/
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/aspeed_ast27x0.c | 26 ++++++++++++++++++++++++++
->   1 file changed, 26 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 4257b5e8af..0bbd66110b 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -164,6 +164,11 @@ struct gic_intc_irq_info {
->       const int *ptr;
->   };
->   
-> +struct gic_intc_orgate_info {
-> +    int index;
-> +    int int_num;
-> +};
-> +
->   static const struct gic_intc_irq_info aspeed_soc_ast2700_gic_intcmap[] = {
->       {128,  aspeed_soc_ast2700_gic128_intcmap},
->       {129,  NULL},
-> @@ -193,6 +198,27 @@ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
->       return qdev_get_gpio_in(DEVICE(&a->gic), sc->irqmap[dev]);
->   }
->   
-> +static void aspeed_soc_ast2700_get_intc_orgate(AspeedSoCState *s, int dev,
-> +    struct gic_intc_orgate_info *orgate_info)
-> +{
-> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-> +    int i;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(aspeed_soc_ast2700_gic_intcmap); i++) {
-> +        if (sc->irqmap[dev] == aspeed_soc_ast2700_gic_intcmap[i].irq) {
-> +            assert(aspeed_soc_ast2700_gic_intcmap[i].ptr);
-> +            orgate_info->index = i;
-> +            orgate_info->int_num = aspeed_soc_ast2700_gic_intcmap[i].ptr[dev];
-> +            return;
-> +        }
-> +    }
-> +
-> +    /*
-> +     * Invalid orgate index, device irq should be 128 to 136.
-> +     */
-> +    g_assert_not_reached();
-> +}
+> Yes, changing flash size breaks migration compat, but note that loongarch
+> does not have any versioned machine types, so it has zero migration compat
+> right now regardles of this change. IOW, now is the right time to make the
+> change, before someone asks for versioned machines with loongarch.
 
+Oh I see now, thanks for clarifying!
 
-This looks redundant. Couldn't we extend aspeed_soc_ast2700_get_irq() with an
-index parameter instead ?
+It would have been nice to mention that in the commit description,
+but too late so I don't mind.
 
-Thanks,
+Regards,
 
-C.
-
-
-
-
->   static uint64_t aspeed_ram_capacity_read(void *opaque, hwaddr addr,
->                                                       unsigned int size)
->   {
+Phil.
 
 
