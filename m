@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7EA0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jul 2024 23:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5184BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 00:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUadC-0007eO-GR; Thu, 18 Jul 2024 19:33:50 -0400
+	id 1sUbM6-0000rb-G4; Thu, 18 Jul 2024 20:20:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1sUaEv-0004GA-Uz
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 19:08:46 -0400
-Received: from ma-mailsvcp-mx-lapp02.apple.com ([17.32.222.23])
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sUbM4-0000qU-HJ; Thu, 18 Jul 2024 20:20:12 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1sUaEs-0003P5-CJ
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 19:08:45 -0400
-Received: from rn-mailsvcp-mta-lapp03.rno.apple.com
- (rn-mailsvcp-mta-lapp03.rno.apple.com [10.225.203.151])
- by ma-mailsvcp-mx-lapp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SGU00E0PDE2OQ20@ma-mailsvcp-mx-lapp02.apple.com> for
- qemu-devel@nongnu.org; Thu, 18 Jul 2024 16:03:40 -0700 (PDT)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-18_16,2024-07-18_01,2024-05-17_01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=cc :
- content-transfer-encoding : date : from : message-id : mime-version : subject
- : to; s=20180706; bh=xM2My2CpFSpxpZ8xvzGeWwjdqDBHcSSM+ehVHuofNi8=;
- b=Q08Et3u0R/qcObOWYhisRvJz0zSAosUWQMHT4KJeE3gi7WB6sHvbrohQazU9RxoOT/gg
- EI67e72cDdVtK6SAgZ4q7/3JrE8Hz6xO/He6t/IDqKRW767dseSFL7H8esJU3zKEiyIb
- HxbgdY1ewbL1w0UjJGMPMthHONFv0x2+HZObHHefl2UuCXZvtQboBwD3ovjOGwlGlnGu
- JdMqOYyhgg3do9HCmETdHeO9tnmJJ1iZ8WW+BocNNj/fKA4uJ3IHcjEs5do7eJDowhe+
- WXRkG7QQi3QXrcxSdcQFnhoFv+EMknOhvmddRSKx1zldHdgc9wEX6n69dQUFm8qii8Ux +A==
-Received: from mr55p01nt-mmpp08.apple.com
- (mr55p01nt-mmpp08.apple.com [10.170.185.194])
- by rn-mailsvcp-mta-lapp03.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SGU00Q6PDDX8K30@rn-mailsvcp-mta-lapp03.rno.apple.com>; 
- Thu, 18 Jul 2024 16:03:33 -0700 (PDT)
-Received: from process_milters-daemon.mr55p01nt-mmpp08.apple.com by
- mr55p01nt-mmpp08.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) id <0SGU29L00DAGGW00@mr55p01nt-mmpp08.apple.com>; Thu,
- 18 Jul 2024 23:03:33 +0000 (GMT)
-X-Va-A: 
-X-Va-T-CD: 18a8a04ab20a1763aa377ff80017b310
-X-Va-E-CD: 2613b8c8034cb5a61a04b6c668a29090
-X-Va-R-CD: e78074632ef6ef6a13b96867e0c41d26
-X-Va-ID: c30033a0-e304-4701-abfe-32522f9c9d6e
-X-Va-CD: 0
-X-V-A: 
-X-V-T-CD: 18a8a04ab20a1763aa377ff80017b310
-X-V-E-CD: 2613b8c8034cb5a61a04b6c668a29090
-X-V-R-CD: e78074632ef6ef6a13b96867e0c41d26
-X-V-ID: 3fbefbe6-9f83-4afe-b146-4b6a6fb34716
-X-V-CD: 0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-18_16,2024-07-18_01,2024-05-17_01
-Received: from mr41p01nt-relayp01.apple.com ([17.115.0.71])
- by mr55p01nt-mmpp08.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPSA id <0SGU28Q88DDWK200@mr55p01nt-mmpp08.apple.com>; Thu,
- 18 Jul 2024 23:03:33 +0000 (GMT)
-From: Danny Canter <danny_canter@apple.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: dirty@apple.com, rbolshakov@ddn.com, agraf@csgraf.de,
- peter.maydell@linaro.org
-Subject: [PATCH] hvf: arm: Allow creating VMs with > 63GB of RAM on macOS 15+
-Date: Thu, 18 Jul 2024 16:00:31 -0700
-Message-id: <20240718230031.69641-1-danny_canter@apple.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-151)
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Received-SPF: pass client-ip=17.32.222.23; envelope-from=danny_canter@apple.com;
- helo=ma-mailsvcp-mx-lapp02.apple.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sUbM1-0003Mh-1K; Thu, 18 Jul 2024 20:20:10 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-78cc22902dcso928318a12.0; 
+ Thu, 18 Jul 2024 17:20:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721348406; x=1721953206; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=k6XY/3VCsCDoU9nIkkcXb6sX0Dl0Xw4+fGSeIemQqq4=;
+ b=GdZDx4Mik/Lfsupu7QjFs4cfnecpH2pIfPt6l3lxhly9oRRHp7iltyFaWzOjHpjK+R
+ qe3b7aEQwVqRXogdSJ4+SpK1GsASknqO2w59PFHqcRgeN1hYXXRf/GIlYk/P/7J/lbwo
+ bruJpTCZxXABdHMUKLz/jAxtgkyqY91SgAQPh6z+2AacZxpjT8oUGmoDUolRwPYD6ifc
+ rJTruQjCDaU9fc+Swmelqzla3SyNF3sMaJoDAV7zRtxjGrDibzacI2HFEXjRXSz9Kw7J
+ 1iu1j0c8da4RCP20QDYLXHiMqSuZLg/8TVdXMJmauKcKlhDDR/WtGjOH1kjy4g34lgd0
+ TNzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721348406; x=1721953206;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k6XY/3VCsCDoU9nIkkcXb6sX0Dl0Xw4+fGSeIemQqq4=;
+ b=vvwNhs6w713pAOueKyrkQpxBtLDPOacLPEG0YcmRpH8RgQjD1udw/QF9+CBKwzmOPM
+ j8CQQmJ53T2/cB1dUdNDiXfSe1SMgkM2uRBFCyDcvNNRHocsa6SOFsog1HhV7QG4l9Bz
+ a8WHBxtjLrLB2uit9u7qR5hwrATHf/A+b8hqNS4tgIATzbxBCXQYVjRR7v3Do+OYODLa
+ lI+FAWHJIRA/Pj+3/djFeX6F5laMKwOUvz5n3EW+5WU0fRQA9zOoZQKpP+L+MAqhuu7U
+ qvyTzxcLW/A+LrShkEvV5wKMrlg/AqhIm9C6xMqbjfssd5bwLTjEVInVvbRhlyx7lUxr
+ ETmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPPx5I5EHrVw7BDzCOZ3UG5XTUxCoNhFNqV36DgNdKGcpekJwykcMviRXPXT+38ZS1gcYYtpYBgNPEjOZ2Vk1LyEto4cc=
+X-Gm-Message-State: AOJu0YyvvqNgkTDhuftRq8Bja7vt9mo+Bcl2RqjVnTVCUT5+fNLu8KFo
+ rZIBxGzjaSXQ0QEJG3hFhuR/NepTGnG/mdKdsF1dwW9aJempwLPg
+X-Google-Smtp-Source: AGHT+IG1E9lqYuT6EbK5w5cXS5x3LBeJgmjHCZhRuFyeWsUIXQgvHsmDbsZrizN/8fDpfAvzcCXFVA==
+X-Received: by 2002:a05:6a20:729a:b0:1c2:8cf4:766c with SMTP id
+ adf61e73a8af0-1c3fdcafebcmr7939326637.33.1721348405600; 
+ Thu, 18 Jul 2024 17:20:05 -0700 (PDT)
+Received: from amjad-pc ([202.185.212.207]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70cff552708sm117515b3a.129.2024.07.18.17.20.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jul 2024 17:20:04 -0700 (PDT)
+Date: Fri, 19 Jul 2024 08:20:00 +0800
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ "open list:vvfat" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v5 4/5] vvfat: Fix reading files with non-continuous
+ clusters
+Message-ID: <ZpmxMEj5qZDUhj_h@amjad-pc>
+References: <cover.1718195956.git.amjadsharafi10@gmail.com>
+ <9c0be954b608da7d47c6a0c120da332c16798d2a.1718195956.git.amjadsharafi10@gmail.com>
+ <ZpkyxA3s_gzQE7gW@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZpkyxA3s_gzQE7gW@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 18 Jul 2024 19:33:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,343 +96,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch's main focus is to enable creating VMs with > 63GB
-of RAM on Apple Silicon machines by using some new HVF APIs. In
-pursuit of this a couple of things related to how we handle the
-physical address range we expose to guests were altered:
+On Thu, Jul 18, 2024 at 05:20:36PM +0200, Kevin Wolf wrote:
+> Am 12.06.2024 um 14:43 hat Amjad Alsharafi geschrieben:
+> > When reading with `read_cluster` we get the `mapping` with
+> > `find_mapping_for_cluster` and then we call `open_file` for this
+> > mapping.
+> > The issue appear when its the same file, but a second cluster that is
+> > not immediately after it, imagine clusters `500 -> 503`, this will give
+> > us 2 mappings one has the range `500..501` and another `503..504`, both
+> > point to the same file, but different offsets.
+> > 
+> > When we don't open the file since the path is the same, we won't assign
+> > `s->current_mapping` and thus accessing way out of bound of the file.
+> > 
+> > From our example above, after `open_file` (that didn't open anything) we
+> > will get the offset into the file with
+> > `s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
+> > give us `0x2000 * (504-500)`, which is out of bound for this mapping and
+> > will produce some issues.
+> > 
+> > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+> > ---
+> >  block/vvfat.c | 23 ++++++++++++++++-------
+> >  1 file changed, 16 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/block/vvfat.c b/block/vvfat.c
+> > index b63ac5d045..fc570d0610 100644
+> > --- a/block/vvfat.c
+> > +++ b/block/vvfat.c
+> > @@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
+> >  {
+> >      if(!mapping)
+> >          return -1;
+> > +    int new_path = 1;
+> >      if(!s->current_mapping ||
+> > -            strcmp(s->current_mapping->path,mapping->path)) {
+> > -        /* open file */
+> > -        int fd = qemu_open_old(mapping->path,
+> > +            s->current_mapping->info.file.offset
+> > +                != mapping->info.file.offset ||
+> 
+> I'm wondering if this couldn't just be s->current_mapping != mapping?
 
-The default IPA size on all Apple Silicon machines for HVF is
-currently 36 bits. This bars making a VM with > 63GB (as RAM
-starts at 1GB in the memory map) of RAM. Currently, to get the
-IPA size we were reading id_aa64mmfr0_el1's PARange field
-from a newly made vcpu. Unfortunately HVF just returns the
-hosts PARange directly for the initial value and not the IPA
-size that will actually back the VM, so we believe we have much
-more address space than we actually do today it seems.
+Actually, you are totally right. Not sure what made me go for this.
 
-Starting in macOS 13.0 some APIs were introduced to be able to
-query the maximum IPA size the kernel supports, and to set the IPA
-size for a given VM. However, this still has a couple of issues
-on < macOS 15. Up until macOS 15 (and if the hardware supported
-it) the max IPA size was 39 bits which is not a valid PARange
-value, so we can't clamp down what we advertise in the vcpu's
-id_aa64mmfr0_el1 to our IPA size. Starting in macOS 15 however,
-the maximum IPA size is 40 bits (if it's supported in the hardware
-as well) which is also a valid PARange value, so we can set our IPA
-size to the maximum as well as clamp down the PARange we advertise
-to the guest. This allows VMs with 63+ GB of ram and should fix the
-oddness of the PARange situation as well.
+I tried also to test with only checking if the path changed, but it
+fails on some tests. So the offset is important.
+For that reason, checking just the mapping ptr is better since we won't
+have 2 mappings with same file and offset.
 
-For the implementation of this I've decided to only bump the IPA
-size if the amount of RAM requested is encroaching on the default IPA
-size of 36 bits, as at 40 bits of IPA space we have to have one extra
-level of stage2 page tables.
+I'll then use this change. Thanks
 
-Signed-off-by: Danny Canter <danny_canter@apple.com>
-Reviewed-by: Cameron Esfahani <dirty@apple.com>
----
- accel/hvf/hvf-accel-ops.c |   6 +-
- include/sysemu/hvf_int.h  |   1 +
- target/arm/hvf/hvf.c      | 113 ++++++++++++++++++++++++++++++++++++++
- target/arm/internals.h    |  19 +++++++
- target/arm/ptw.c          |  20 +++++++
- target/i386/hvf/hvf.c     |   5 ++
- 6 files changed, 159 insertions(+), 5 deletions(-)
-
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index ac08cfb9f3..aa9ea4489b 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -61,10 +61,6 @@
- 
- HVFState *hvf_state;
- 
--#ifdef __aarch64__
--#define HV_VM_DEFAULT NULL
--#endif
--
- /* Memory slots */
- 
- hvf_slot *hvf_find_overlap_slot(uint64_t start, uint64_t size)
-@@ -324,7 +320,7 @@ static int hvf_accel_init(MachineState *ms)
-     hv_return_t ret;
-     HVFState *s;
- 
--    ret = hv_vm_create(HV_VM_DEFAULT);
-+    ret = hvf_arch_vm_create(ms);
-     assert_hvf_ok(ret);
- 
-     s = g_new0(HVFState, 1);
-diff --git a/include/sysemu/hvf_int.h b/include/sysemu/hvf_int.h
-index 5b28d17ba1..4a4bb4c768 100644
---- a/include/sysemu/hvf_int.h
-+++ b/include/sysemu/hvf_int.h
-@@ -65,6 +65,7 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
- #define assert_hvf_ok(EX) assert_hvf_ok_impl((EX), __FILE__, __LINE__, #EX)
- const char *hvf_return_string(hv_return_t ret);
- int hvf_arch_init(void);
-+hv_return_t hvf_arch_vm_create(MachineState *ms);
- int hvf_arch_init_vcpu(CPUState *cpu);
- void hvf_arch_vcpu_destroy(CPUState *cpu);
- int hvf_vcpu_exec(CPUState *);
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index ef9bc42738..1d7f4750d4 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include "qemu/error-report.h"
- 
- #include "sysemu/runstate.h"
-@@ -23,6 +24,7 @@
- 
- #include "exec/address-spaces.h"
- #include "hw/irq.h"
-+#include "hw/boards.h"
- #include "qemu/main-loop.h"
- #include "sysemu/cpus.h"
- #include "arm-powerctl.h"
-@@ -30,6 +32,7 @@
- #include "target/arm/internals.h"
- #include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/internals.h"
- #include "trace/trace-target_arm_hvf.h"
- #include "migration/vmstate.h"
- 
-@@ -295,6 +298,8 @@ void hvf_arm_init_debug(void)
- #define TMR_CTL_IMASK   (1 << 1)
- #define TMR_CTL_ISTATUS (1 << 2)
- 
-+#define FIRST_HIGHMEM_PARANGE 40
-+
- static void hvf_wfi(CPUState *cpu);
- 
- typedef struct HVFVTimer {
-@@ -319,6 +324,8 @@ struct hvf_reg_match {
-     uint64_t offset;
- };
- 
-+static uint32_t chosen_ipa_bit_size;
-+
- static const struct hvf_reg_match hvf_reg_match[] = {
-     { HV_REG_X0,   offsetof(CPUARMState, xregs[0]) },
-     { HV_REG_X1,   offsetof(CPUARMState, xregs[1]) },
-@@ -839,6 +846,45 @@ static uint64_t hvf_get_reg(CPUState *cpu, int rt)
-     return val;
- }
- 
-+static uint32_t hvf_get_default_ipa_bit_size(void)
-+{
-+    uint32_t default_ipa_size = 36;
-+#if defined(MAC_OS_VERSION_13_0) && \
-+    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_13_0
-+    hv_return_t ret = hv_vm_config_get_default_ipa_size(&default_ipa_size);
-+    assert_hvf_ok(ret);
-+#endif
-+    return default_ipa_size;
-+}
-+
-+static uint32_t hvf_get_max_ipa_bit_size(void)
-+{
-+    uint32_t max_ipa_size = hvf_get_default_ipa_bit_size();
-+#if defined(MAC_OS_VERSION_13_0) && \
-+    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_13_0
-+    hv_return_t ret = hv_vm_config_get_max_ipa_size(&max_ipa_size);
-+    assert_hvf_ok(ret);
-+
-+    /*
-+     * We clamp any IPA size we want to back the VM with to a valid PARange
-+     * value so the guest doesn't try and map memory outside of the valid range.
-+     * This logic just clamps the passed in IPA bit size to the first valid
-+     * PARange value <= to it.
-+     */
-+    max_ipa_size = round_down_to_parange_bit_size(max_ipa_size);
-+#endif
-+    return max_ipa_size;
-+}
-+
-+static void clamp_id_aa64mmfr0_parange_to_ipa_size(uint64_t *id_aa64mmfr0)
-+{
-+    uint32_t ipa_size = chosen_ipa_bit_size ?
-+            chosen_ipa_bit_size : hvf_get_max_ipa_bit_size();
-+    /* Clamp down id_aa64mmfr0's PARange to the IPA size the kernel supports. */
-+    uint8_t index = round_down_to_parange_index(ipa_size);
-+    *id_aa64mmfr0 = (*id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
-+}
-+
- static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     ARMISARegisters host_isar = {};
-@@ -882,6 +928,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     r |= hv_vcpu_get_sys_reg(fd, HV_SYS_REG_MIDR_EL1, &ahcf->midr);
-     r |= hv_vcpu_destroy(fd);
- 
-+    clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar.id_aa64mmfr0);
-+
-     ahcf->isar = host_isar;
- 
-     /*
-@@ -929,6 +977,66 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
- {
- }
- 
-+hv_return_t hvf_arch_vm_create(MachineState *ms)
-+{
-+    uint32_t default_ipa_size = hvf_get_default_ipa_bit_size();
-+    uint32_t max_ipa_size = hvf_get_max_ipa_bit_size();
-+    hv_return_t ret;
-+
-+    chosen_ipa_bit_size = default_ipa_size;
-+
-+    /*
-+     * Set the IPA size for the VM:
-+     *
-+     * Starting from macOS 13 a new set of APIs were introduced that allow you
-+     * to query for the maximum IPA size that is supported on your system. macOS
-+     * 13 and 14's kernel both return a value less than 40 bits (typically 39,
-+     * but depends on hardware), however starting in macOS 15 and up the IPA
-+     * size supported (in the kernel at least) is up to 40 bits. A common scheme
-+     * for attempting to get the IPA size prior to the introduction of these new
-+     * APIs was to read ID_AA64MMFR0.PARange from a vcpu in the hopes that HVF
-+     * was returning the maximum IPA size in that. However, this was not the
-+     * case. HVF would return the host's PARange value directly which is
-+     * generally larger than 40 bits.
-+     *
-+     * Using that value we could set up our memory map with regions much outside
-+     * the actually supported IPA size, and also advertise a much larger
-+     * physical address space to the guest. On the hardware+OS combos where
-+     * the IPA size is less than 40 bits, but greater than 36, we also don't
-+     * have a valid PARange value to round down to before 36 bits which is
-+     * already the default.
-+     *
-+     * With that in mind, before we make the VM lets grab the maximum supported
-+     * IPA size and clamp it down to the first valid PARange value so we can
-+     * advertise the correct address size for the guest later on. Then if it's
-+     * >= 40 set this as the IPA size for the VM using the new APIs. There's a
-+     * small heuristic for actually altering the IPA size for the VM which is
-+     * if our requested RAM is encroaching on the top of our default IPA size.
-+     * This is just an optimization, as at 40 bits we need to create one more
-+     * level of stage2 page tables.
-+     */
-+#if defined(MAC_OS_VERSION_13_0) && \
-+    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_13_0
-+    hv_vm_config_t config = hv_vm_config_create();
-+
-+    /* In our memory map RAM starts at 1GB. */
-+    uint64_t threshold = (1ull << default_ipa_size) - (1 * GiB);
-+    if (ms->ram_size >= threshold && max_ipa_size >= FIRST_HIGHMEM_PARANGE) {
-+        ret = hv_vm_config_set_ipa_size(config, max_ipa_size);
-+        assert_hvf_ok(ret);
-+
-+        chosen_ipa_bit_size = max_ipa_size;
-+    }
-+
-+    ret = hv_vm_create(config);
-+    os_release(config);
-+#else
-+    ret = hv_vm_create(NULL);
-+#endif
-+
-+    return ret;
-+}
-+
- int hvf_arch_init_vcpu(CPUState *cpu)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-@@ -995,6 +1103,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-                               &arm_cpu->isar.id_aa64mmfr0);
-     assert_hvf_ok(ret);
- 
-+    clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar.id_aa64mmfr0);
-+    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64MMFR0_EL1,
-+                              arm_cpu->isar.id_aa64mmfr0);
-+    assert_hvf_ok(ret);
-+
-     return 0;
- }
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index da22d04121..3aa804bfe8 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -436,6 +436,25 @@ static inline void update_spsel(CPUARMState *env, uint32_t imm)
-  */
- unsigned int arm_pamax(ARMCPU *cpu);
- 
-+/*
-+ * round_down_to_parange_index
-+ * @bit_size: uint8_t
-+ *
-+ * Rounds down the bit_size supplied to the first supported ARM physical
-+ * address range and returns the index for this. The index is intended to
-+ * be used to set ID_AA64MMFR0_EL1's PARANGE bits.
-+ */
-+uint8_t round_down_to_parange_index(uint8_t bit_size);
-+
-+/*
-+ * round_down_to_parange_bit_size
-+ * @bit_size: uint8_t
-+ *
-+ * Rounds down the bit_size supplied to the first supported ARM physical
-+ * address range bit size and returns this.
-+ */
-+uint8_t round_down_to_parange_bit_size(uint8_t bit_size);
-+
- /* Return true if extended addresses are enabled.
-  * This is always the case if our translation regime is 64 bit,
-  * but depends on TTBCR.EAE for 32 bit.
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 4476b32ff5..c4abbe5c3d 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -96,6 +96,26 @@ static const uint8_t pamax_map[] = {
-     [6] = 52,
- };
- 
-+uint8_t round_down_to_parange_index(uint8_t bit_size)
-+{
-+    for (int i = ARRAY_SIZE(pamax_map) - 1; i >= 0; i--) {
-+        if (pamax_map[i] <= bit_size) {
-+            return i;
-+        }
-+    }
-+    g_assert_not_reached();
-+}
-+
-+uint8_t round_down_to_parange_bit_size(uint8_t bit_size)
-+{
-+    for (int i = ARRAY_SIZE(pamax_map) - 1; i >= 0; i--) {
-+        if (pamax_map[i] <= bit_size) {
-+            return pamax_map[i];
-+        }
-+    }
-+    g_assert_not_reached();
-+}
-+
- /*
-  * The cpu-specific constant value of PAMax; also used by hw/arm/virt.
-  * Note that machvirt_init calls this on a CPU that is inited but not realized!
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index c9c64e2978..99e1915efa 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -223,6 +223,11 @@ int hvf_arch_init(void)
-     return 0;
- }
- 
-+hv_return_t hvf_arch_vm_create(MachineState *ms)
-+{
-+    return hv_vm_create(HV_VM_DEFAULT);
-+}
-+
- int hvf_arch_init_vcpu(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
--- 
-2.39.5 (Apple Git-151)
-
+> 
+> > +            (new_path = strcmp(s->current_mapping->path, mapping->path))) {
+> 
+> If both the path and the offset change, we still want to set new_path, I
+> think. And if we didn't already have a mapping, we also need to open the
+> file.
+> 
+> Actually, setting a variable inside the condition makes it kind of hard
+> to read, so if s->current_mapping != mapping works, we can do the check
+> only in the conditon below:
+> 
+> > +        if (new_path) {
+> 
+> if (!s->current_mapping ||
+>     strcmp(s->current_mapping->path, mapping->path))
+> 
+> > +            /* open file */
+> > +            int fd = qemu_open_old(mapping->path,
+> >                                 O_RDONLY | O_BINARY | O_LARGEFILE);
+> > -        if(fd<0)
+> > -            return -1;
+> > -        vvfat_close_current_file(s);
+> > -        s->current_fd = fd;
+> > +            if (fd < 0) {
+> > +                return -1;
+> > +            }
+> > +            vvfat_close_current_file(s);
+> > +
+> > +            s->current_fd = fd;
+> > +        }
+> > +        assert(s->current_fd);
+> >          s->current_mapping = mapping;
+> >      }
+> 
+> Kevin
+> 
 
