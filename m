@@ -4,204 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2889EC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 14:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080F8C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 14:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUoXK-0001Kd-HL; Fri, 19 Jul 2024 10:24:42 -0400
+	id 1sUoml-00075f-E4; Fri, 19 Jul 2024 10:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sUoXI-0001K2-GL
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:24:40 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sUoXF-0006PL-PA
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:24:40 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JEAeJX013597;
- Fri, 19 Jul 2024 14:24:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=rY4mm795ehhEjfDLOwXDkgCZYDnlIgOvJFB+qDlxLKo=; b=
- ab0wZmdsAh+pX+rxVM7NLiIaxjsATnaXjmAc4wBOep+hRaVmfPruO6EVBf9JnXBJ
- gj4zIGiw1QbkDuYREWQZ9F0NFz3/kCsbpG0osVwwWcfnLfD08bcvhFGJGJkZERvU
- JnstTvN07cJ4hFoRddGxIh0aeLgN/NprniFRmFOjH8ElsfcOgkNAliDUf2g/MNSE
- dfrqNlZpedFPlT9XQ7PvAIkFrjqHHYCx++wUiJMXUBYr5sojRQdiEZ8Bt2RNvk08
- 1yQJvRyMEs4iuUwSLNnDAq4HKDxEanMDTHNCsER3UonuooZirBPvT7Qt/rWrp5+f
- evDIAvEdBEBW01itrNZ7ag==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40fsnwg115-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jul 2024 14:24:32 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46JDPQ4Y006859; Fri, 19 Jul 2024 14:24:31 GMT
-Received: from nam04-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam04lp2170.outbound.protection.outlook.com [104.47.73.170])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40dwf1an57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jul 2024 14:24:31 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Qv0x+ozkux6MmYg2iUa0sH3LG+U1jY83D9xqLyUgyTENsdHxb4O8IyQwaierkp7zJ3Fo3jpunoowQGTn3VvVO+3uwsjNGO+YPjsObzZXoIc9H+1gwmQs+OsZsarET2t4BzrO8DFO2awAObwAL3aUAd+CXwqjK7d5QUjwiQYHP5RdhCzB7Bt4HSVEBSMcLl8R2Z2adyTl5AhDHqP2FZup/HLb70N/1tM+2i6IULEtrkBmlR+H768gSN9OADuNUyFY/V9pM9BcepZgF26b/XIi4Ii8LQoNmO5CHPgiBVejCc82vr6UwX6eytcXeWg45pA8UvwgQIuG4KKCp3ZjXiY3Vw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rY4mm795ehhEjfDLOwXDkgCZYDnlIgOvJFB+qDlxLKo=;
- b=ljmpnLohATl7WNU/Tj/p1uUa2l4nuaR626CmgJH9gIpC+bQ6345Z931vHtIMrhg3V/krFP0jHmSyq6vld3/ckEgzAb8JaOMjVXWlDWwitVAXleJpwAr8DUE18G4EuxZkFm0x30ZPQUlhEy9KmCcwThXMxjkxZ8aSnYfJpqR8l+71zuvHerDSRPFSfSSQmysQeqQYmOihsD8jY12I9KXhmHCoxhU1n5UXGJ/x/QlSXags/CfHGiXBvF6uku8mmONOJ2/M3+AyhUffofItSgxuolGtlBN9tSKVB/FiRyP6u/isy3IhLvl4Fkzu0iaxqFds9ZnyrkYxcBbTIrkvkDJ2DA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rY4mm795ehhEjfDLOwXDkgCZYDnlIgOvJFB+qDlxLKo=;
- b=vV55DLiMRk0xC7hKc4rkhm6tPfUrrn4VLWQmWkkk0AGNpPumHteqzRDelommmYLC6+lmXodizkVMaWdhYf+akqm0twqm3eNA1dX1IfUlNky8bXicJUgKxNqjMABmjZ6YMeHoFwseisuSu3oJitiBmd6yn3LsSZ6L2MJbG6NDgf8=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by SJ2PR10MB7039.namprd10.prod.outlook.com (2603:10b6:a03:4c4::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.17; Fri, 19 Jul
- 2024 14:24:29 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%3]) with mapi id 15.20.7762.025; Fri, 19 Jul 2024
- 14:24:29 +0000
-Message-ID: <f5d64358-70e3-4217-8376-356c8aaac8ea@oracle.com>
-Date: Fri, 19 Jul 2024 15:24:18 +0100
-Subject: Re: [PATCH v5 12/13] vfio/migration: Don't block migration device
- dirty tracking is unsupported
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240719120501.81279-1-joao.m.martins@oracle.com>
- <20240719120501.81279-13-joao.m.martins@oracle.com>
- <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM0PR01CA0148.eurprd01.prod.exchangelabs.com
- (2603:10a6:208:aa::17) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUomj-000758-Mf
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:40:37 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUomh-0007CP-0E
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:40:37 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E2D0C1F7B3;
+ Fri, 19 Jul 2024 14:40:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721400033; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dqCE8VzQPIgrJ0SVAqJK4htKwo877e31dCR/fHcDr3Q=;
+ b=erKHJG2pHqk2ATivKD03EmXi4Qd2x2kvzWgYr6TKVk6XiN5RQfMQWqGz0RS699Im1kICPG
+ 3l0xq+v4bxihwvBVSGOQkOt8xXup876uwY27pr1elt+rWB5gk0WHLo1cNL80RiI+6kO///
+ mJ9IQfvJ9wUiaYG32dhnRtErF5jU21U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721400033;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dqCE8VzQPIgrJ0SVAqJK4htKwo877e31dCR/fHcDr3Q=;
+ b=9g4ueRmZLMNlvTTnABc6NR5WQNecmIk7x1uP9G2QKQfbDUYS6uZC7+wqBFYe3mYmrBWo+6
+ XzYdaq19KeYR1YDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721400032; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dqCE8VzQPIgrJ0SVAqJK4htKwo877e31dCR/fHcDr3Q=;
+ b=QOBN9M1vrQ8wpVpOVSlgqqpjYRCkH8gU0NAxwksmR+GnLvOIVQ5ZhhvVz2Te7y2Cuo6JiT
+ kho7SwP4F19G7KPNxDfPERqPM9Vi/l0AXgAMya/weJtDwcrjSyn5ubDrr0RIx4KMmYKzWY
+ eHdGl/cLo1AbEJmUD5+uVRcom5FS0JQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721400032;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dqCE8VzQPIgrJ0SVAqJK4htKwo877e31dCR/fHcDr3Q=;
+ b=HfoY7FP5PGOyUwEwQR7S9ZII2vigJ8R1siENSkM6ZfDwV4EdsTdDjDqVI2stsmuk8ZMkzX
+ HvP1U+EGK8eoSyDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6B46F132CB;
+ Fri, 19 Jul 2024 14:40:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Y0fEDOB6mmZJJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 19 Jul 2024 14:40:32 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, "Maciej S . Szmigiero"
+ <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 5/7] migration/multifd: Isolate ram pages packet data
+In-Reply-To: <20240620212111.29319-6-farosas@suse.de>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <20240620212111.29319-6-farosas@suse.de>
+Date: Fri, 19 Jul 2024 11:40:29 -0300
+Message-ID: <87a5id1m3m.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|SJ2PR10MB7039:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee2124cc-ea7a-4c2d-3696-08dca7fe7fd4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VGlZNCtrZk44NStzRGYzQjZSZkluaU8vdFBEMG5sTjhnOEhpUGxnY0hySTBT?=
- =?utf-8?B?RzVjSUswanE4N1dIeFRxZHJyWENNSFpTTUdxajFYdWVvSWs3RFp1OFdzVkMx?=
- =?utf-8?B?a3Y4V016QVplT3BtRmtxQzNWNXAyRUVzenp6YU1BR2xLWi9uQURZZHIwNGho?=
- =?utf-8?B?TU5sR2NSU3NwVlpDWUxVeTVoYis5bGtTVXRtNmVQREVsNkxYeGVmUGx0TGRP?=
- =?utf-8?B?alpCR0h2ME1JWGdKV0JRNnN4RHRLWm15cXBiTVFQeUZCVTM3di8wR1FVYTdF?=
- =?utf-8?B?dTBvSkNNcjZ3ZncvRWtHZzM0SDdaajZZWHIyUDVXcFVpNkJwWHBXaU9ncGJX?=
- =?utf-8?B?SzRGYW0xSitzemJZeFkxYWxXRnFpQWI0OTNUaFVhdGl0dDlUWmZVamk3eDRz?=
- =?utf-8?B?d2p4bitlTFY4RGJuMitLak9TOUs4eXc0VEozWUY5dGx0cXdoU3pLZWF1bmNR?=
- =?utf-8?B?UitNcjU2U0hKbnpMbWY2VWZIUDhJaXk0ckpxUEczUW8wT0Iwd0tJb0paRnBN?=
- =?utf-8?B?V2VSbjRacmdJcGJVZjZWQXBLZFE5TFhrVG1lcno0RTE3bjllNFdvZno0VlhF?=
- =?utf-8?B?WCtDNXNFM1BJSWsrNDViTHBjUzlDSUJBUkxJbldTeFFMaTJlTDlrd1oydVYw?=
- =?utf-8?B?R2tMMndCd0R1TlpGckdWSTUva0JTREtuRVZvVG1PaTBBMU5TcUhlQkJBakxJ?=
- =?utf-8?B?UENuRWNMQ0lkampWNVYyQ0xjQzU4S0Rad1BiL0hMY3NtU0w1QjBJSE1FUHdq?=
- =?utf-8?B?ZU5LTER2Vzh0dGRpWUJqbXd3Yk5LV0owTHVIcXFnbE5zc2kzSkUwWmFvQmVN?=
- =?utf-8?B?RCt4M3VwYlEvN1E3RkNzN2l5bVNLb3RyRXhIUDFrZ3J6YW55WFRuWm9kYnRQ?=
- =?utf-8?B?b1Y0aEprcnUzT0d1Q1FqTGlVUml2QTZ0QmprVUhsQ3d1dDducXh6cDFETER0?=
- =?utf-8?B?c1ljcmRHdWQreFhxeC90dHkrNDBRVWNMTDRLdE0vb3VTWkVTeUNoZmVEVCtW?=
- =?utf-8?B?ZXZ3SGR0d0FsWWFWcFNMSFhWZUptaVpwQjhJQ1hpSldqZ2FoT29tcE1zeGR6?=
- =?utf-8?B?ZENIOFZ3Tm9xTHdTbElHR09IOGdoM1VzQXg1OTVlY1NEeWdqb0xBRFFqd09w?=
- =?utf-8?B?ZFVFSjBtdjJrTmxmS3pSRGJsNzFnWUliajBCWjFsTjdKdFBNQTdyNWpkQXVm?=
- =?utf-8?B?clN1a2NYcThBN2NObnZaSngvbW5vNE9BZDQ5bVBmUytXeTRjbkpMYUUwNmMr?=
- =?utf-8?B?V1VxRkUxZDl3SW5meXZzWlBGQ3d6WHpLNjNxSmY4Wm83STVsUkY0UlI3c2xG?=
- =?utf-8?B?OC9NRWJNUklCOUdZU29zRnIzd3NzMTM3Ukl6L0JpN0l6TUNyemRIRkRkWita?=
- =?utf-8?B?WWhFSnh3eG96bHN1c0d5Q3BPMGNDSWVNRHNwdnBoUStsNlR2TjluZnlvWUcv?=
- =?utf-8?B?ZEp4R0l2Y0xPS0x6cDFUOVhqcllFT3VTMmlmM2N1OU5vaER6YWxtQTJyYndW?=
- =?utf-8?B?RmtEYkFKb1U5Rm9oNS9Leko5d1lOYTFuWlBsSzQ4SWVXak5yazR2R2tGb0VM?=
- =?utf-8?B?NEM0ZGQwcEdTT0VDbFdueVhiMzhVakkwUGNPV2xZdW9Pbko3dVZid2YwTzRt?=
- =?utf-8?B?ZC9aT3hGUkdUU05OdmRvejJTR2dFOElLN01sOXBFTlU2T1JaZXhCYVo5ZCt1?=
- =?utf-8?B?dTRXL29YUlVtY0dOS1NYQndTbmxvdHk5ekczSkxOWTBueFJjby96VzR2QnZy?=
- =?utf-8?B?cGE0WTBnOU5UcExBZ3p3OUxLYlRwVTdFaTIwalFyVHc0RzJmTkM0ZDJRVEpv?=
- =?utf-8?B?Z3FHVFlrTm4zbER3MjRtQT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bmhWYzVUbUJDMXNERnJBUk5Dd1Badm41dUYvV0lwbERDYzZiaHR2M1lwbGFG?=
- =?utf-8?B?bzVSdFYzaFMwa2JoVjZlejhDWHVNMUoxNnFsUytNWTdiYjF6M011ODNvVURm?=
- =?utf-8?B?dFJrdUlZTlFibzFVV1ZFYmpENDFoRkVUSnRxcmc2elhOejZUbWg4ZmRTdmVm?=
- =?utf-8?B?VTdDcDQ1Z3pWeEYvbHQ4ODBQdUVRdEgwSnFOZEx4QW1XbFJFU2M2NitHMS9u?=
- =?utf-8?B?by9MV01lUzg5OHRxYlo0dFQ1VEdpanhUM01tN2wrdTBtSytoRVBQSTdHWXo0?=
- =?utf-8?B?cnIrOHNBbU8zR2gvVEtJRHhpTThIbWF1d3M5M3ZkM3hRdXFFTk5RNStHeXhh?=
- =?utf-8?B?Z1FOaXpzZ0dCVFNyS01wRVhWVTJBVU0zTmRRVnpFWjhhSngzc1pQRGJVNXQx?=
- =?utf-8?B?Q2FGbVkvNFcrN0xZdi8vMTVZWGIwL0Zxb2JRekVZdHMyQWQ3cEdjZm95NjI2?=
- =?utf-8?B?dml2RWw4dldPdEROOE1aZWsvc2l2MHZRVEpSQjVlS3I0YnNWYXU0T1g0K0NX?=
- =?utf-8?B?bld1TjJ4T1BaQlFNZHM1MFl0K3hpSGR0QUpjWlpaQnJiU3NxdU0wenNtbUxE?=
- =?utf-8?B?eVlsTWxJdEx3eDh1Y01ZQ3VJbGNXL3BKWjNmRmNjaEFOWWw5OVlFUTdjdjVC?=
- =?utf-8?B?Q1dtWm84OEh2VXJINU9SZU1FaEZnU1pxTGEyWjRrQmEzRFQvVXY1a2JWT1VC?=
- =?utf-8?B?R1RKR25JQTVFQlJNSmc5bndwcGd3RFQ5Y2xUUzVFOGwyVVcyMmZNSGQwdWVZ?=
- =?utf-8?B?VUF5ODJaVmxuNDE4SWFUVUtQelpvdWVPdWYvZDRJczR2anNBRE1nTzlONGl3?=
- =?utf-8?B?QVRENGoyalJqbENFczY5ZE40eWZIQ0FLeDY0b0VyWmNDeEVRNEJrRWxZWEFa?=
- =?utf-8?B?QmdPdmtjdGR2Sjh5aDl1eStoYi82eFUweUV2VDJoazdacEp4d2lKMlBRMFF1?=
- =?utf-8?B?U1d2dWlRUE5ob2JDL2VFSGhFdFdMU2N5S1J2R2F2SXZjcjYyZHJVMElCOG1t?=
- =?utf-8?B?aWZSa0dPVHhzZlJBSjh3Ny8vbFZJQzZibUdueGE0dWNZYUZ6SzJmVUxRWGtM?=
- =?utf-8?B?aVRZZytTSTRmRC96VHZxS0lyd0F5ckFWbjZKam1zRUZWTFVaZWpVQUVxcnRX?=
- =?utf-8?B?RmoxbE5FV1lPMk1YUzN6b1phNzZVVWdTOXRzNmlGd3pBakpFd1NpL2lWRnhZ?=
- =?utf-8?B?b0NBUVk5bFQxdlUzcGN3SEJxTjhRbFlYeHVwTGNWc3VpakVETWU3K0ViSks3?=
- =?utf-8?B?MVNYOHhZSzJ5TzlJaWhvVHhPVG15TDBMREJkUis1TjJGeFlrTlhrUFNYVXFy?=
- =?utf-8?B?RjhPaHhrOTl4SGMxNzgwWHJod3h3VUJORzhFeTlmQWZ1L21XYTg1R2tYRUVl?=
- =?utf-8?B?Rk9TejZvQlkzMTdUQXhmM1ZOYWNPckNRSHJRYkhWRGlzRHdLWGlFUzV3ODBS?=
- =?utf-8?B?QUQ3dHBjTW5qRFZPQ044OCtvYS84K0tTdWt2MHRHeE1CRHFSYkdESHNTZjhG?=
- =?utf-8?B?WEhIUXBoZU0wM3pnVm1JcnM5Z3hXMkRMTlJia0FYNkkwaUVaTmZaMkNnM0p1?=
- =?utf-8?B?VGltcS9pS0syQWJXK2paZHlGdEI3WjBLYWJXU3RNQVhhdmozc2tEcVBGZjZq?=
- =?utf-8?B?OUhwQ3FTcWRzUXpyT3JwWFlDTFVLQjQ0MHMvSjlhbDhlcDJESjBCSHpCWTg1?=
- =?utf-8?B?WEhxcDhXYXh5REpuYXZXdzNTZ2EzUS9CUStzVkhnTmpiTHE0YytUU3pZdlcw?=
- =?utf-8?B?TXpoc0tWS0UyMTFUUURHQzZseDBPTHozNHJzbk8yOWswTXBkdjVmMCt5Y1Np?=
- =?utf-8?B?a0dNbzBPUXFVbUprdTJVcDdCUEJxNUN3MUFLMTRwY3ZCSjZ1aG1ycGR0aStM?=
- =?utf-8?B?bzZ4WTVoOTdhYzRxdVFPU1ltVThpc0xQTmxPcXpjVEpPWG42Nld1L3k1U3BB?=
- =?utf-8?B?alJKL2hDMVBnTklSeGU3bDhPNmFYYXZvdU9PV3ExYjZqRmJPKzcvakxGOEIy?=
- =?utf-8?B?ZzlwVmgva1h5UVFuaTh0bzRxKzlES1FyOHU1dVpJL25sb2JrTDVUby9JVUYw?=
- =?utf-8?B?REYxUUV5ZEE0WVQxRHl4RFBvOVhBRmYrZGp1SDBFR3ZXUWUzd0RWL3p3N005?=
- =?utf-8?B?NmdUTGo2MVRGWGJ4RGNaKzFLckNMRnZ0UFUxajRBeDdNUkpWc3pOYnN6eFZY?=
- =?utf-8?B?NkE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ckpb7JsIYecntVd1nbxsEYHi+Cq9vCpqcpjfx8sS0oNSXaemWnEbvEg84kmx1a9rI7xxjhf1iWzC9pzKGdVr890vnRc9Va2+Ns05bWeRbgtyAlFLR4+cj0GPXLeQBsAk6fkUtSBQXS3ySQ7AM+VZfXgSsURQBeVlfvkJFoW9qhu/pkn+11/M3cbzvWCTItQYMYm+VEwvbzD2hZGYzpLdTFjPMVDZn16HAC0UyYQKKNaIbFeoXESiDmsNklPTmYqkViAL2iJWDXbpbmw4xi+BF7LVrwzoAn6ypBsMrIvNWhzWj5LyWx2zv8Lmx/hckikQ015oDix4AM7eHHhR6f8b+KCHc8PtjMg8ZSAzEe7kNGxrCvmFGSq0GltYEa7/UEeko1oWUahMgAfVDFR8D3kYmDaxkke7XgYTt2m6wxirn9TCqHALv10nQSx1MrFhUKEUSeINScelbdyBUHDCcnWJaxmaZ8jiecV2V8X1+4VEU0JJScV0tmxrdMv8IHxSc8uLv2q3UwUUTgnW2HMIqVnX087KEDniRdnwmaifCWuf/2Z0RXNsgY0yVyoRRsgRj0N7tWPNIMJjTEAcmqIUFdhM1rtNIYuCLDbm84BpLOqfYjQ=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee2124cc-ea7a-4c2d-3696-08dca7fe7fd4
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jul 2024 14:24:29.0101 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1pZMumr/p1op/MNZFAnbIP7EC2gMy4QozV86V+T6/NfpkAgnEap9H+z2Xg1pUODjJ2lC+FbBsI84L5uMlXLvHCEJuyFi6Iyhme+I3coQXIE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7039
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-19_06,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- spamscore=0 mlxscore=0
- malwarescore=0 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407190110
-X-Proofpoint-GUID: VuqsWINrjowTsjvbSJBjBUyzz1DL4Rvm
-X-Proofpoint-ORIG-GUID: VuqsWINrjowTsjvbSJBjBUyzz1DL4Rvm
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-0.30 / 50.00];
+ NEURAL_HAM_SHORT(-0.20)[-0.994]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_THREE(0.00)[3]; MID_RHS_MATCH_FROM(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -217,99 +114,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/07/2024 15:17, Cédric Le Goater wrote:
-> On 7/19/24 14:05, Joao Martins wrote:
->> By default VFIO migration is set to auto, which will support live
->> migration if the migration capability is set *and* also dirty page
->> tracking is supported.
->>
->> For testing purposes one can force enable without dirty page tracking
->> via enable-migration=on, but that option is generally left for testing
->> purposes.
->>
->> So starting with IOMMU dirty tracking it can use to accomodate the lack of
->> VF dirty page tracking allowing us to minimize the VF requirements for
->> migration and thus enabling migration by default for those too.
->>
->> While at it change the error messages to mention IOMMU dirty tracking as
->> well.
->>
->> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->> ---
->>   include/hw/vfio/vfio-common.h |  1 +
->>   hw/vfio/iommufd.c             |  2 +-
->>   hw/vfio/migration.c           | 11 ++++++-----
->>   3 files changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->> index 7e530c7869dc..00b9e933449e 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -299,6 +299,7 @@ int vfio_devices_query_dirty_bitmap(const
->> VFIOContainerBase *bcontainer,
->>                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
->>   int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->>                             uint64_t size, ram_addr_t ram_addr, Error **errp);
->> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
->>     /* Returns 0 on success, or a negative errno. */
->>   bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index 7dd5d43ce06a..a998e8578552 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -111,7 +111,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice
->> *vbasedev)
->>       iommufd_backend_disconnect(vbasedev->iommufd);
->>   }
->>   -static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->>   {
->>       return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>   }
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 34d4be2ce1b1..63ffa46c9652 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -1036,16 +1036,17 @@ bool vfio_migration_realize(VFIODevice *vbasedev,
->> Error **errp)
->>           return !vfio_block_migration(vbasedev, err, errp);
->>       }
->>   -    if (!vbasedev->dirty_pages_supported) {
->> +    if (!vbasedev->dirty_pages_supported &&
->> +        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
-> 
-> 
-> Some platforms do not have IOMMUFD support and this call will need
-> some kind of abstract wrapper to reflect dirty tracking support in
-> the IOMMU backend.
-> 
+Fabiano Rosas <farosas@suse.de> writes:
 
-This was actually on purpose because only IOMMUFD presents a view of hardware
-whereas type1 supporting dirty page tracking is not used as means to 'migration
-is supported'.
+> While we cannot yet disentangle the multifd packet from page data, we
+> can make the code a bit cleaner by setting the page-related fields in
+> a separate function.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/multifd.c | 104 +++++++++++++++++++++++++++++---------------
+>  1 file changed, 68 insertions(+), 36 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index c4a952576d..6fe339b378 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -407,65 +407,64 @@ static void multifd_pages_clear(MultiFDPages_t *pages)
+>      g_free(pages);
+>  }
+>  
+> -void multifd_send_fill_packet(MultiFDSendParams *p)
+> +static void multifd_ram_fill_packet(MultiFDSendParams *p)
+>  {
+>      MultiFDPacket_t *packet = p->packet;
+>      MultiFDPages_t *pages = p->data->opaque;
+> -    uint64_t packet_num;
+>      uint32_t zero_num = pages->num - pages->normal_num;
+> -    int i;
+>  
+> -    packet->flags = cpu_to_be32(p->flags);
+>      packet->pages_alloc = cpu_to_be32(pages->allocated);
+>      packet->normal_pages = cpu_to_be32(pages->normal_num);
+>      packet->zero_pages = cpu_to_be32(zero_num);
+> -    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+> -
+> -    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+> -    packet->packet_num = cpu_to_be64(packet_num);
+>  
+>      if (pages->block) {
+>          strncpy(packet->ramblock, pages->block->idstr, 256);
+>      }
+>  
+> -    for (i = 0; i < pages->num; i++) {
+> +    for (int i = 0; i < pages->num; i++) {
+>          /* there are architectures where ram_addr_t is 32 bit */
+>          uint64_t temp = pages->offset[i];
+>  
+>          packet->offset[i] = cpu_to_be64(temp);
+>      }
+>  
+> -    p->packets_sent++;
+>      p->total_normal_pages += pages->normal_num;
+>      p->total_zero_pages += zero_num;
+> +}
+>  
+> -    trace_multifd_send(p->id, packet_num, pages->normal_num, zero_num,
+> +void multifd_send_fill_packet(MultiFDSendParams *p)
+> +{
+> +    MultiFDPacket_t *packet = p->packet;
+> +    uint64_t packet_num;
+> +
+> +    memset(packet, 0, p->packet_len);
+> +
+> +    packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+> +    packet->version = cpu_to_be32(MULTIFD_VERSION);
+> +
+> +    packet->flags = cpu_to_be32(p->flags);
+> +    packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+> +
+> +    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+> +    packet->packet_num = cpu_to_be64(packet_num);
+> +
+> +    p->packets_sent++;
+> +
+> +    if (p->data) {
 
-The hwpt is nil in type1 and the helper checks that, so it should return false.
+This needs to be !(p->flags & MULTIFD_SYNC). In v2 I'll add it in a
+separate patch to make it clear:
 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
->>           if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
->>               error_setg(&err,
->> -                       "%s: VFIO device doesn't support device dirty tracking",
->> -                       vbasedev->name);
->> +                       "%s: VFIO device doesn't support device and "
->> +                       "IOMMU dirty tracking", vbasedev->name);
->>               goto add_blocker;
->>           }
->>   -        warn_report("%s: VFIO device doesn't support device dirty tracking",
->> -                    vbasedev->name);
->> +        warn_report("%s: VFIO device doesn't support device and "
->> +                    "IOMMU dirty tracking", vbasedev->name);
->>       }
->>         ret = vfio_block_multiple_devices_migration(vbasedev, errp);
-> 
+-->8--
+From e0dd1e0f10b6adb5d419ff68c1ef3b76d2fcf1d4 Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Fri, 19 Jul 2024 11:28:33 -0300
+Subject: [PATCH] migration/multifd: Don't send ram data during SYNC
+
+Skip saving and loading any ram data in the packet in the case of a
+SYNC. This fixes a shortcoming of the current code which requires a
+reset of the MultiFDPages_t fields right after the previous
+pending_job finishes, otherwise the very next job might be a SYNC and
+multifd_send_fill_packet() will put the stale values in the packet.
+
+By not calling multifd_ram_fill_packet(), we can stop resetting
+MultiFDPages_t in the multifd core and leave that to the client code.
+
+Actually moving the reset function is not yet done because
+pages->num==0 is used by the client code to determine whether the
+MultiFDPages_t needs to be flushed. The subsequent patches will
+replace that with a generic flag that is not dependent on
+MultiFDPages_t.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/multifd.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 3809890082..6e6e62d352 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -431,6 +431,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+ {
+     MultiFDPacket_t *packet = p->packet;
+     uint64_t packet_num;
++    bool sync_packet = p->flags & MULTIFD_FLAG_SYNC;
+ 
+     memset(packet, 0, p->packet_len);
+ 
+@@ -445,7 +446,9 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+ 
+     p->packets_sent++;
+ 
+-    multifd_ram_fill_packet(p);
++    if (!sync_packet) {
++        multifd_ram_fill_packet(p);
++    }
+ 
+     trace_multifd_send(p->id, packet_num,
+                        be32_to_cpu(packet->normal_pages),
+@@ -556,7 +559,12 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+     p->packet_num = be64_to_cpu(packet->packet_num);
+     p->packets_recved++;
+ 
+-    ret = multifd_ram_unfill_packet(p, errp);
++    if (p->flags & MULTIFD_FLAG_SYNC) {
++        p->normal_num = 0;
++        p->zero_num = 0;
++    } else {
++        ret = multifd_ram_unfill_packet(p, errp);
++    }
+ 
+     trace_multifd_recv(p->id, p->packet_num, p->normal_num, p->zero_num,
+                        p->flags, p->next_packet_size);
+-- 
+2.35.3
 
 
