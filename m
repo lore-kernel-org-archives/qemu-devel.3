@@ -4,81 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0084C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 15:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87801C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 15:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUpIN-0001e9-Bp; Fri, 19 Jul 2024 11:13:19 -0400
+	id 1sUpLl-0007F7-Vz; Fri, 19 Jul 2024 11:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUpIM-0001dA-6u
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:13:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUpIJ-0005QQ-SD
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:13:17 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-427d8f1f363so3976475e9.2
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 08:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721401994; x=1722006794; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gZJPW/lvXGtYKm7JzNSmEVgcUOEegBQAD673Jp3vZ2I=;
- b=dNNfDLX/3wQaOwjhKBiFMWN1HOHAqHQ/sE/u9zowhZkUT5yo4asdy4LiKEF97QkTo4
- RGhNCU/d/Eh2cYt1peEVTQWWZoso9VGdcE9xHf4pgJQwl8AU853iqFhoydk9sqcclKDE
- nvO7W7kBx8W3Rv4MYuImH2LI5/JZ/k4RYV2ZHE7o+9/+9MpS3tZavQcLivj5e/sQIQ40
- SYblEwMXzUt3RF+bjleH5HijG0lR4nSzY1d21woPp1ggJEvWzeodnuZ6gh51+6eaBKP2
- RnCXD09NvpRKoFEIuRfejK1j3O307RulIrtyWs3iGhPndjUQDPyTDMfjzWCvo+8TlTtO
- 9PbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721401994; x=1722006794;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gZJPW/lvXGtYKm7JzNSmEVgcUOEegBQAD673Jp3vZ2I=;
- b=p9MJiLZwH8Hn9XdVmPRM/WGmzoD+HBu9aFflxrEMRjX9Get5TI2gHhfsxbHk0/Lwq9
- dAIdLBykBlVbnVqkODagNkdCtwYEyjC//VwP110zE5cwpFX/Z2rA08QGrFBzURabhaWc
- glNrARenr1wljyTelcuDaDaOs5E7hg8V0fWiwDQodS0yXs4xpdLYT6IYxfyZHt1mu/ea
- h4dsp8bZ7nk/CjIsbvCDp8QzW38isfJVpuiSBd0ZQsmBgm0MwjRaFGBE2Tcr2zVqnJqz
- ofk03ou5t4r1Pum40jULGHtBxEiaaEqoXbIjcAs+QrxNea3EZ46LWeZZ3pbga3etV+9S
- d3Nw==
-X-Gm-Message-State: AOJu0Yw2Y2t5BH7TCJpKMr9mR3VMUgsrR4zYCxjNoRP7yrA4e6abYRtA
- KktMYT75R63fgYjwDMoKRgpgoPjrHrfdxZYYuKZbUuvPJgyvPaYIyKNG4JuXJSHxwMmhZJKJwgw
- k
-X-Google-Smtp-Source: AGHT+IESeXH/Mh0Ju9h79sZHOOcqzY9meTEXV8chKrcyDp9BhTXOoy81d7jNHDyeSrG6KxrFTxZZqw==
-X-Received: by 2002:adf:eb46:0:b0:35f:2030:d42c with SMTP id
- ffacd0b85a97d-36831608a1cmr5276461f8f.17.1721401993942; 
- Fri, 19 Jul 2024 08:13:13 -0700 (PDT)
-Received: from localhost.localdomain ([176.187.209.227])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868b26dsm1830017f8f.34.2024.07.19.08.13.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Jul 2024 08:13:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Beraldo Leal <bleal@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] tests/avocado: Move common Avocado tags to class
-Date: Fri, 19 Jul 2024 17:13:10 +0200
-Message-ID: <20240719151310.45927-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sUpLk-000796-3B; Fri, 19 Jul 2024 11:16:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sUpLh-0005wN-QG; Fri, 19 Jul 2024 11:16:47 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JEoiOq031575;
+ Fri, 19 Jul 2024 15:16:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ vaedzC0vh3G+9LdMnaRjuOD08oZIz3/Sy/JA9wl/VXE=; b=lU5CPUsCWP1A73Nc
+ wp0QNBVVJvfUDt098XNQdcuMXQZrb3SP59aT6MZL+UJfJAYdp4GnmmfpeB+iAaCi
+ ARB8LEqxTy+9ggaK/GADJYGAfZ2mIIFB2+KRYI4K+ErJc1/ooQaiFG20z5psGzZm
+ cBj5LJS2gf6WPWEw1PQ13HKxmlEcwJbn6rdoObJEhj1bZicw1+nTTZAS/yzNPUaE
+ Kfcqe8MOJFTyb1Gy6s41N59yoH5WZsYxEEGiCp20uvjAsyFx+bjrX05CVHDPiyL/
+ t7FFT0WOmN2aLh1vjxVIrVVkxqjfLftFY5m8FWgazSCmuEEiUlocmKJYVPkcnRlv
+ +XHCJA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40fs2908gf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Jul 2024 15:16:30 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46JFGU3w003276;
+ Fri, 19 Jul 2024 15:16:30 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40fs2908gb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Jul 2024 15:16:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46JC0Eba006082; Fri, 19 Jul 2024 15:16:29 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40dwkmqs71-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Jul 2024 15:16:29 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46JFGQMa28967556
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Jul 2024 15:16:28 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2E6B85805A;
+ Fri, 19 Jul 2024 15:16:26 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6A6565806A;
+ Fri, 19 Jul 2024 15:16:25 +0000 (GMT)
+Received: from [9.67.171.109] (unknown [9.67.171.109])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 19 Jul 2024 15:16:25 +0000 (GMT)
+Message-ID: <64b0b74b-6e5e-4538-bb73-d03b36975ec0@linux.ibm.com>
+Date: Fri, 19 Jul 2024 11:16:24 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/s390x: filter deprecated properties based on
+ model expansion type
+To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, david@redhat.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, Jiri Denemark <jdenemar@redhat.com>
+References: <20240716173253.28533-1-walling@linux.ibm.com>
+ <87le1yn7jy.fsf@pond.sub.org>
+ <32379d4f-9b6f-4673-9b87-1db4a8ada649@linux.ibm.com>
+ <16c9703c-79b9-4e52-bc40-2857c0c06672@redhat.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <16c9703c-79b9-4e52-bc40-2857c0c06672@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: T2D__zA2tTd35zx2t0WZ-UGS2dQem6Nq
+X-Proofpoint-ORIG-GUID: AnoQFtel7owjZYrw753STo8jkF3wjwV2
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-19_06,2024-07-18_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407190113
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,127 +121,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When Avocado tags apply to all tests in a class,
-we can define them once in the class: they will
-be applied to all test methods.
+On 7/19/24 6:16 AM, Thomas Huth wrote:
+> On 18/07/2024 20.22, Collin Walling wrote:
+>> On 7/18/24 9:39 AM, Markus Armbruster wrote:
+>>> Collin Walling <walling@linux.ibm.com> writes:
+>>>
+>>>> As s390 CPU models progress and deprecated properties are dropped
+>>>> outright, it will be cumbersome for management apps to query the host
+>>>> for a comprehensive list of deprecated properties that will need to be
+>>>> disabled on older models. To remedy this, the query-cpu-model-expansion
+>>>> output now behaves by filtering deprecated properties based on the
+>>>> expansion type instead of filtering based off of the model's full set
+>>>> of features:
+>>>>
+>>>> When reporting a static CPU model, only show deprecated properties that
+>>>> are a subset of the model's enabled features.
+>>>>
+>>>> When reporting a full CPU model, show the entire list of deprecated
+>>>> properties regardless if they are supported on the model.
+>>>>
+>>>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+>>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>>> ---
+>>>>
+>>>> Changelog:
+>>>>
+>>>>      v2
+>>>>      - Changed commit message
+>>>>      - Added documentation reflecting this change
+>>>>      - Made code changes that more accurately filter the deprecated
+>>>>          properties based on expansion type.  This change makes it
+>>>>          so that the deprecated-properties reported for a static model
+>>>>          expansion are a subset of the model's properties instead of
+>>>>          the model's full-definition properties.
+>>>>
+>>>>          For example:
+>>>>
+>>>>          Previously, the z900 static model would report 'bpb' in the
+>>>>          list of deprecated-properties.  However, this prop is *not*
+>>>>          a part of the model's feature set, leading to some inaccuracy
+>>>>          (albeit harmless).
+>>>>
+>>>>          Now, this feature will not show during a static expansion.
+>>>>          It will, however, show up in a full expansion (along with
+>>>>          the rest of the list: 'csske', 'te', 'cte').
+>>>>
+>>>> @David, I've elected to respectully forgo adding your ack-by on this
+>>>> iteration since I have changed the code (and therefore the behavior)
+>>>> between this version and the previous in case you do not agree with
+>>>> these adjustments.
+>>>>
+>>>> ---
+>>>>   qapi/machine-target.json         |  8 ++++++--
+>>>>   target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
+>>>>   2 files changed, 15 insertions(+), 9 deletions(-)
+>>>>
+>>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>>> index a8d9ec87f5..d151504f25 100644
+>>>> --- a/qapi/machine-target.json
+>>>> +++ b/qapi/machine-target.json
+>>>> @@ -21,8 +21,12 @@
+>>>>   # @props: a dictionary of QOM properties to be applied
+>>>>   #
+>>>>   # @deprecated-props: a list of properties that are flagged as deprecated
+>>>> -#     by the CPU vendor.  These props are a subset of the full model's
+>>>> -#     definition list of properties. (since 9.1)
+>>>> +#     by the CPU vendor.  (since 9.1).
+>>>> +#
+>>>> +# .. note:: Since 9.1, the list of deprecated props were always a subset
+>>>> +#    of the model's full-definition list of properites. Now, this list is
+>>>> +#    populated with the model's enabled property set when delta changes
+>>>> +#    are applied. All deprecated properties are reported otherwise.
+>>>
+>>> I'm confused.
+>>>
+>>> "Since 9.1, the list of deprecated props were ..." and "Now, this list
+>>> is" sounds like you're explaining behavior before and after a change.
+>>> What change?  Since only released behavior matters, and
+>>> @deprecated-props is new, there is no old behavior to document, isn't
+>>> it?
+>>
+>> I admittedly had some difficulty articulating the change introduced by
+>> this patch.  The @deprecated-props array, as well as a way for s390x to
+>> populate it, was introduced in release 9.1.  Prior to this patch, the
+>> deprecated-props list was filtered by the CPU model's full feature set.
+>> I attempted to explain this with:
+>>
+>> "Since 9.1, the list of deprecated props were always a subset of the
+>> model's full-definition list of properties."
+> 
+> Version 9.1 has not been released yet (see 
+> https://wiki.qemu.org/Planning/9.1), so I agree with Markus, this sounds 
+> confusing/wrong to me, too.
+> 
+>   Thomas
+> 
+> 
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/avocado/boot_linux.py           |  2 +-
- tests/avocado/boot_xen.py             | 17 +----------------
- tests/avocado/machine_aarch64_virt.py | 10 ++++------
- 3 files changed, 6 insertions(+), 23 deletions(-)
+Ah, well then pardon my ignorance of the release schedule.  With that
+said my `note` makes 0 sense to keep here.
 
-diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
-index cdce4cbcba..df6cf209ef 100644
---- a/tests/avocado/boot_linux.py
-+++ b/tests/avocado/boot_linux.py
-@@ -64,12 +64,12 @@ def test_pc_q35_kvm(self):
- class BootLinuxAarch64(LinuxTest):
-     """
-     :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
-     """
-     timeout = 720
- 
-     def test_virt_kvm(self):
-         """
-+        :avocado: tags=machine:virt
-         :avocado: tags=accel:kvm
-         :avocado: tags=cpu:host
-         """
-diff --git a/tests/avocado/boot_xen.py b/tests/avocado/boot_xen.py
-index fc2faeedb5..93bfb0c161 100644
---- a/tests/avocado/boot_xen.py
-+++ b/tests/avocado/boot_xen.py
-@@ -61,8 +61,6 @@ def launch_xen(self, xen_path):
- 
- 
- class BootXen(BootXenBase):
--
--    def test_arm64_xen_411_and_dom0(self):
-         """
-         :avocado: tags=arch:aarch64
-         :avocado: tags=accel:tcg
-@@ -70,6 +68,7 @@ def test_arm64_xen_411_and_dom0(self):
-         :avocado: tags=machine:virt
-         """
- 
-+    def test_arm64_xen_411_and_dom0(self):
-         # archive of file from https://deb.debian.org/debian/pool/main/x/xen/
-         xen_url = ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
-                    'download?path=%2F&files='
-@@ -81,13 +80,6 @@ def test_arm64_xen_411_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     def test_arm64_xen_414_and_dom0(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=accel:tcg
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        """
--
-         # archive of file from https://deb.debian.org/debian/pool/main/x/xen/
-         xen_url = ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
-                    'download?path=%2F&files='
-@@ -99,13 +91,6 @@ def test_arm64_xen_414_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     def test_arm64_xen_415_and_dom0(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=accel:tcg
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        """
--
-         xen_url = ('https://fileserver.linaro.org/'
-                    's/JSsewXGZ6mqxPr5/download'
-                    '?path=%2F&files=xen-upstream-4.15-unstable.deb')
-diff --git a/tests/avocado/machine_aarch64_virt.py b/tests/avocado/machine_aarch64_virt.py
-index a90dc6ff4b..0ef6df4b0d 100644
---- a/tests/avocado/machine_aarch64_virt.py
-+++ b/tests/avocado/machine_aarch64_virt.py
-@@ -20,6 +20,10 @@
- from avocado.utils.path import find_command
- 
- class Aarch64VirtMachine(QemuSystemTest):
-+    """
-+    :avocado: tags=arch:aarch64
-+    :avocado: tags=machine:virt
-+    """
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-     timeout = 360
- 
-@@ -33,8 +37,6 @@ def wait_for_console_pattern(self, success_message, vm=None):
-     # Other test profiles should use more minimal boots
-     def test_alpine_virt_tcg_gic_max(self):
-         """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:virt
-         :avocado: tags=accel:tcg
-         """
-         iso_url = ('https://dl-cdn.alpinelinux.org/'
-@@ -129,8 +131,6 @@ def common_aarch64_virt(self, machine):
- 
-     def test_aarch64_virt_gicv3(self):
-         """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:virt
-         :avocado: tags=accel:tcg
-         :avocado: tags=cpu:max
-         """
-@@ -138,8 +138,6 @@ def test_aarch64_virt_gicv3(self):
- 
-     def test_aarch64_virt_gicv2(self):
-         """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=machine:virt
-         :avocado: tags=accel:tcg
-         :avocado: tags=cpu:max
-         """
 -- 
-2.41.0
+Regards,
+  Collin
 
 
