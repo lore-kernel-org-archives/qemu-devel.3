@@ -4,58 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFE3C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 09:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82DD0C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 09:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUjXf-0007Ft-IZ; Fri, 19 Jul 2024 05:04:43 -0400
+	id 1sUjcT-0001Kz-4q; Fri, 19 Jul 2024 05:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUjXS-00076c-H3; Fri, 19 Jul 2024 05:04:30 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUjcR-0001Hx-6Y
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 05:09:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=vGMz=OT=kaod.org=clg@ozlabs.org>)
- id 1sUjXP-0001LQ-Q7; Fri, 19 Jul 2024 05:04:30 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WQNyt3Mcpz4x3d;
- Fri, 19 Jul 2024 19:04:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUjcO-0004st-R3
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 05:09:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721380175;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2PUJk/0MkZcaZCDrEgB01nwWkVPstR0jttRuGV8mw84=;
+ b=OZ4CYdRh0DS6QwSknsBs8VaYphcPhn0w5DWOapHIiRi5OPYl20w9gmWIKvfsw0v4qk9w2F
+ d1fck7JjrOEvmEnkY58ltF+LppOIjOcACfOwN6xUj763w/b+hP6Y7XEmxW9X7FHRpxltL9
+ 5EY6lB6XATXuhHEWeGPPbFdb1tKxPu8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-uCDvJZCYP-elC5V1ogGT-A-1; Fri,
+ 19 Jul 2024 05:09:29 -0400
+X-MC-Unique: uCDvJZCYP-elC5V1ogGT-A-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WQNyp14lnz4w2K;
- Fri, 19 Jul 2024 19:03:58 +1000 (AEST)
-Message-ID: <c0544679-eb8c-4f23-81bb-919442cbdcfe@kaod.org>
-Date: Fri, 19 Jul 2024 11:03:54 +0200
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BF081955D4F; Fri, 19 Jul 2024 09:09:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B3BF195605A; Fri, 19 Jul 2024 09:09:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6349E21E668A; Fri, 19 Jul 2024 11:09:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org,  qemu-devel@nongnu.org,  eblake@redhat.com,
+ hreitz@redhat.com,  zeil@yandex-team.ru,  yc-core@yandex-team.ru,
+ dave@treblig.org,  Leonid Kaplan <xeor@yandex-team.ru>
+Subject: Re: [PATCH v2] block-backend: per-device throttling of
+ BLOCK_IO_ERROR reports
+In-Reply-To: <ZpogyBq9yKoQOoLW@redhat.com> (Kevin Wolf's message of "Fri, 19
+ Jul 2024 10:16:08 +0200")
+References: <20240109131308.455371-1-vsementsov@yandex-team.ru>
+ <Zplo5VsG-q-e643H@redhat.com> <87ikx2j81u.fsf@pond.sub.org>
+ <ZpogyBq9yKoQOoLW@redhat.com>
+Date: Fri, 19 Jul 2024 11:09:24 +0200
+Message-ID: <87cyn9vjcr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 08/15] hw/i2c/aspeed: introduce a new dma_dram_offset
- attribute in AspeedI2Cbus
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:STM32F205" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-9-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240718064925.1846074-9-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=vGMz=OT=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,213 +88,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 08:49, Jamin Lin wrote:
-> The "Current DMA Operating Address Status(0x50)" register of
-> I2C new mode has been removed in AST2700.
-> This register is used for debugging and it is a read only register.
-> 
-> To support AST2700 DMA mode, introduce a new
-> dma_dram_offset class attribute in AspeedI2Cbus to save the
-> current DMA operating address.
-> 
-> ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-> And the base address of dram is "0x4 00000000" which
-> is 64bits address.
-> 
-> Set the dma_dram_offset data type to uint64_t for
-> 64 bits dram address DMA support.
-> 
-> Both "DMA Mode Buffer Address Register(I2CD24 old mode)" and
-> "DMA Operating Address Status (I2CC50 new mode)" are used for showing the
-> low part dram offset bits [31:0], so change to read/write both register bits [31:0] in
-> bus register read/write functions.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/i2c/aspeed_i2c.c         | 50 +++++++++++++++++++++++--------------
->   include/hw/i2c/aspeed_i2c.h |  9 +------
->   2 files changed, 32 insertions(+), 27 deletions(-)
-> 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index abcb1d5330..c0d3ac3867 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -114,7 +114,10 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
->           if (!aic->has_dma) {
->               qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
->               value = -1;
-> +            break;
->           }
-> +
-> +        value = extract64(bus->dma_dram_offset, 0, 32);
->           break;
->       case A_I2CD_DMA_LEN:
->           if (!aic->has_dma) {
-> @@ -150,9 +153,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
->       case A_I2CM_DMA_TX_ADDR:
->       case A_I2CM_DMA_RX_ADDR:
->       case A_I2CM_DMA_LEN_STS:
-> -    case A_I2CC_DMA_ADDR:
->       case A_I2CC_DMA_LEN:
-> -
->       case A_I2CS_DEV_ADDR:
->       case A_I2CS_DMA_RX_ADDR:
->       case A_I2CS_DMA_LEN:
-> @@ -161,6 +162,9 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
->       case A_I2CS_DMA_LEN_STS:
->           /* Value is already set, don't do anything. */
->           break;
-> +    case A_I2CC_DMA_ADDR:
-> +        value = extract64(bus->dma_dram_offset, 0, 32);
-> +        break;
->       case A_I2CS_INTR_STS:
->           break;
->       case A_I2CM_CMD:
-> @@ -210,18 +214,18 @@ static int aspeed_i2c_dma_read(AspeedI2CBus *bus, uint8_t *data)
->   {
->       MemTxResult result;
->       AspeedI2CState *s = bus->controller;
-> -    uint32_t reg_dma_addr = aspeed_i2c_bus_dma_addr_offset(bus);
->       uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
->   
-> -    result = address_space_read(&s->dram_as, bus->regs[reg_dma_addr],
-> +    result = address_space_read(&s->dram_as, bus->dma_dram_offset,
->                                   MEMTXATTRS_UNSPECIFIED, data, 1);
->       if (result != MEMTX_OK) {
-> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: DRAM read failed @%08x\n",
-> -                      __func__, bus->regs[reg_dma_addr]);
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: DRAM read failed @%" PRIx64 "\n",
-> +                      __func__, bus->dma_dram_offset);
->           return -1;
->       }
->   
-> -    bus->regs[reg_dma_addr]++;
-> +    bus->dma_dram_offset++;
->       bus->regs[reg_dma_len]--;
->       return 0;
->   }
-> @@ -291,7 +295,6 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
->       uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
->       uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
->       uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
-> -    uint32_t reg_dma_addr = aspeed_i2c_bus_dma_addr_offset(bus);
->       int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
->                                                   RX_SIZE) + 1;
->   
-> @@ -323,14 +326,17 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
->               data = i2c_recv(bus->bus);
->               trace_aspeed_i2c_bus_recv("DMA", bus->regs[reg_dma_len],
->                                         bus->regs[reg_dma_len], data);
-> -            result = address_space_write(&s->dram_as, bus->regs[reg_dma_addr],
-> +
-> +            result = address_space_write(&s->dram_as, bus->dma_dram_offset,
->                                            MEMTXATTRS_UNSPECIFIED, &data, 1);
->               if (result != MEMTX_OK) {
-> -                qemu_log_mask(LOG_GUEST_ERROR, "%s: DRAM write failed @%08x\n",
-> -                              __func__, bus->regs[reg_dma_addr]);
-> +                qemu_log_mask(LOG_GUEST_ERROR,
-> +                              "%s: DRAM write failed @%" PRIx64 "\n",
-> +                              __func__, bus->dma_dram_offset);
->                   return;
->               }
-> -            bus->regs[reg_dma_addr]++;
-> +
-> +            bus->dma_dram_offset++;
->               bus->regs[reg_dma_len]--;
->               /* In new mode, keep track of how many bytes we RXed */
->               if (aspeed_i2c_is_new_mode(bus->controller)) {
-> @@ -636,14 +642,18 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->       case A_I2CM_DMA_TX_ADDR:
->           bus->regs[R_I2CM_DMA_TX_ADDR] = FIELD_EX32(value, I2CM_DMA_TX_ADDR,
->                                                      ADDR);
-> -        bus->regs[R_I2CC_DMA_ADDR] = FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR);
-> +        bus->dma_dram_offset =
-> +            deposit64(bus->dma_dram_offset, 0, 32,
-> +                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
->           bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
->                                                        TX_BUF_LEN) + 1;
->           break;
->       case A_I2CM_DMA_RX_ADDR:
->           bus->regs[R_I2CM_DMA_RX_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR,
->                                                      ADDR);
-> -        bus->regs[R_I2CC_DMA_ADDR] = FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR);
-> +        bus->dma_dram_offset =
-> +            deposit64(bus->dma_dram_offset, 0, 32,
-> +                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
->           bus->regs[R_I2CC_DMA_LEN] = ARRAY_FIELD_EX32(bus->regs, I2CM_DMA_LEN,
->                                                        RX_BUF_LEN) + 1;
->           break;
-> @@ -811,7 +821,8 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
->               break;
->           }
->   
-> -        bus->regs[R_I2CD_DMA_ADDR] = value & 0x3ffffffc;
-> +        bus->dma_dram_offset = deposit64(bus->dma_dram_offset, 0, 32,
-> +                                         value & 0x3ffffffc);
->           break;
->   
->       case A_I2CD_DMA_LEN:
-> @@ -1188,8 +1199,9 @@ static int aspeed_i2c_bus_new_slave_event(AspeedI2CBus *bus,
->               return -1;
->           }
->           ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN, 0);
-> -        bus->regs[R_I2CC_DMA_ADDR] =
-> -            ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR);
-> +        bus->dma_dram_offset =
-> +            deposit64(bus->dma_dram_offset, 0, 32,
-> +                      ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR));
->           bus->regs[R_I2CC_DMA_LEN] =
->               ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN, RX_BUF_LEN) + 1;
->           i2c_ack(bus->bus);
-> @@ -1255,10 +1267,10 @@ static int aspeed_i2c_bus_slave_event(I2CSlave *slave, enum i2c_event event)
->   static void aspeed_i2c_bus_new_slave_send_async(AspeedI2CBus *bus, uint8_t data)
->   {
->       assert(address_space_write(&bus->controller->dram_as,
-> -                               bus->regs[R_I2CC_DMA_ADDR],
-> +                               bus->dma_dram_offset,
->                                  MEMTXATTRS_UNSPECIFIED, &data, 1) == MEMTX_OK);
->   
-> -    bus->regs[R_I2CC_DMA_ADDR]++;
-> +    bus->dma_dram_offset++;
->       bus->regs[R_I2CC_DMA_LEN]--;
->       ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN,
->                        ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN) + 1);
-> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-> index b42c4dc584..bdaea3207d 100644
-> --- a/include/hw/i2c/aspeed_i2c.h
-> +++ b/include/hw/i2c/aspeed_i2c.h
-> @@ -248,6 +248,7 @@ struct AspeedI2CBus {
->   
->       uint32_t regs[ASPEED_I2C_NEW_NUM_REG];
->       uint8_t pool[ASPEED_I2C_BUS_POOL_SIZE];
-> +    uint64_t dma_dram_offset;
+Kevin Wolf <kwolf@redhat.com> writes:
 
+> Am 19.07.2024 um 06:54 hat Markus Armbruster geschrieben:
+>> Kevin Wolf <kwolf@redhat.com> writes:
+>> 
+>> > Am 09.01.2024 um 14:13 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> >> From: Leonid Kaplan <xeor@yandex-team.ru>
+>> >> 
+>> >> BLOCK_IO_ERROR events comes from guest, so we must throttle them.
+>> >> We still want per-device throttling, so let's use device id as a key.
+>> >> 
+>> >> Signed-off-by: Leonid Kaplan <xeor@yandex-team.ru>
+>> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> >> ---
+>> >> 
+>> >> v2: add Note: to QAPI doc
+>> >> 
+>> >>  monitor/monitor.c    | 10 ++++++++++
+>> >>  qapi/block-core.json |  2 ++
+>> >>  2 files changed, 12 insertions(+)
+>> >> 
+>> >> diff --git a/monitor/monitor.c b/monitor/monitor.c
+>> >> index 01ede1babd..ad0243e9d7 100644
+>> >> --- a/monitor/monitor.c
+>> >> +++ b/monitor/monitor.c
+>> >> @@ -309,6 +309,7 @@ int error_printf_unless_qmp(const char *fmt, ...)
+>> >>  static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+>> >>      /* Limit guest-triggerable events to 1 per second */
+>> >>      [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
+>> >> +    [QAPI_EVENT_BLOCK_IO_ERROR]    = { 1000 * SCALE_MS },
+>> >>      [QAPI_EVENT_WATCHDOG]          = { 1000 * SCALE_MS },
+>> >>      [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
+>> >>      [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
+>> >> @@ -498,6 +499,10 @@ static unsigned int qapi_event_throttle_hash(const void *key)
+>> >>          hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
+>> >>      }
+>> >>  
+>> >> +    if (evstate->event == QAPI_EVENT_BLOCK_IO_ERROR) {
+>> >> +        hash += g_str_hash(qdict_get_str(evstate->data, "device"));
+>> >> +    }
+>> >
+>> > Using "device" only works with -drive, i.e. when the BlockBackend
+>> > actually has a name. In modern configurations with a -blockdev
+>> > referenced by -device, the BlockBackend doesn't have a name any more.
+>> >
+>> > Maybe we should be using the qdev id (or more generally, QOM path) here,
+>> > but that's something the event doesn't even contain yet.
+>> 
+>> Uh, does the event reliably identify the I/O error's node or not?  If
+>> not, then that's a serious design defect.
+>> 
+>> There's @node-name.  Several commands use "either @device or @node-name"
+>> to identify a node.  Is that sufficient here?
+>
+> Possibly. The QAPI event is sent by a device, not by the backend, and
+> the commit message claims per-device throttling. That's what made me
+> think that we should base it on the device id.
 
-aspeed_i2c_bus_vmstate needs an update. No need to increment again the
-vmstate version if all patches are merged in the same release cycle.
+This is an argument for having the event point at the device.  Events
+that already point at the device carry a mandatory @qom-path, and some
+also carry an optional qdev @id for backward compatibility.
 
-Thanks,
+As far as I can tell, not all devices implement this event.  If that's
+true, then documentation should spell it out.
 
-C.
+> But it's true that the error does originate in the backend (and it's
+> unlikely that two devices are attached to the same node anyway), so the
+> node-name could be good enough if we don't have a BlockBackend name. We
+> should claim per-block-node rather then per-device throttling then.
 
->   };
->   
->   struct AspeedI2CState {
-> @@ -369,14 +370,6 @@ static inline uint32_t aspeed_i2c_bus_dma_len_offset(AspeedI2CBus *bus)
->       return R_I2CD_DMA_LEN;
->   }
->   
-> -static inline uint32_t aspeed_i2c_bus_dma_addr_offset(AspeedI2CBus *bus)
-> -{
-> -    if (aspeed_i2c_is_new_mode(bus->controller)) {
-> -        return R_I2CC_DMA_ADDR;
-> -    }
-> -    return R_I2CD_DMA_ADDR;
-> -}
-> -
->   static inline bool aspeed_i2c_bus_is_master(AspeedI2CBus *bus)
->   {
->       return SHARED_ARRAY_FIELD_EX32(bus->regs, aspeed_i2c_bus_ctrl_offset(bus),
+Yes.
 
 
