@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34DAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 20:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFB3C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 20:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUu6W-0005zV-FP; Fri, 19 Jul 2024 16:21:25 -0400
+	id 1sUuOl-0000kO-8y; Fri, 19 Jul 2024 16:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu6T-0005pF-L7
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:21:22 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu6S-0006M6-6r
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:21:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=+t7NOpBDN7BgjUycaq/PV6SW8mYfm2V8xfxmV549UGA=; b=is7fwzivGViwlCfG/9choelaUW
- JRWz+DPOUSsjOM12kbm4g3RfLc8C85a1DfwCv9qmROmFLMjmoiFtFeCJuvhVX12xsuraPjAMnhvoy
- 7W4AU7N2lIuyBl/14DBpgUEgG77cdDQTwCDoojGEvamM8eQfMYKTnBA5u1haSyxMxEEEnfZyX9zB9
- p2St+zg3P62ik7Mva3t08vlzy9YByJOfVE/7CkLmZBfVpDHXVzTE40bAedP7Qxtyton3IUZob1n5X
- nJLBGkslS2much+WBxV1OcwH+49Tsbmgg9yUop2N9qXIxM1lBMHLX7mAPHURpIF61dJc4kP1fmY/X
- HjghxPfgZ2XnIFuTFt9VV68t4HsCWhSM31rjsuK3G64CZ5DIv+2Vq2/uxErDV6nPV1zHxJzJb3a28
- WO0P6s291cK/xe5MVdkW4G75ep6CydzTeebPTIYVc7/6ajkO+g5qFD6E5Md82wOwIVMr8dkZPtneK
- MLrDpq0FnQ8EOSl4EqixwlpMtET1u+UQjEZnyAZVN2L7tVxOWeuVcYWPItOP7NJF84+K0iatN6rzR
- nTy+IwmltlBogUf1Yq9OP2dslxLFclJCisWQagm9lgWwPCsFDBE5AcmEtxkClrafTGyp0Q3cX2JpU
- LrJxCrb4amIorxHw1AdqRLnkTP7BFaDXl5Bvs6zSA=;
-Received: from [2a00:23c4:8bb4:4000:502:30b7:7825:e35a]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUu4u-0002QJ-ST; Fri, 19 Jul 2024 21:19:48 +0100
-Message-ID: <e49735e8-1c33-42cb-9181-662a0c010b97@ilande.co.uk>
-Date: Fri, 19 Jul 2024 21:21:12 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sUuOj-0000jq-D0
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:40:13 -0400
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sUuOh-0001gw-PA
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 16:40:13 -0400
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5ca9835db95so1205372eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 13:40:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721421610; x=1722026410; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sN/v9R3dnYzIWekbesxwcSLmHODk81oJFLxH50uyO1c=;
+ b=ZUnwSbKM2+SJ1K0qgcyKLF7V2QZjEsH80nWVQiQXnx9IhVfLZHkh31MWII2hcFgFD/
+ DN9WvP/8Sj7z0dep9XjKIDJ4PehJALI8R7RaSqH2yLijoeHmkmVnJny8ZhzumrsWiAVT
+ nzJpjXvXF8re8INYaA7TN+8wNx3aep+DRH72vL1PT+8PQrVoBn9EsaQ9Z/3SkNGAaLRT
+ ulhlpMwaKWC6aNGGhaiYySw6hRaN3jZKRV0kyrD9O+pSukCRt9OpmuVguTz6end3NqN+
+ SDeCrGEeausZBWYuq0QJF9FdCaJT5IgIycABVCHygTyGRbwP6PvqwYLxRIPqRoaAUe7g
+ AbNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721421610; x=1722026410;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sN/v9R3dnYzIWekbesxwcSLmHODk81oJFLxH50uyO1c=;
+ b=n9w2FeJ9Q2T/yJ3nwivZLNEyYO1s60oKW2EwtZJBwJjQMpAKeQKLZABALmwZoIk3X8
+ wngtHO8lyjMRJZIX5MAaRUw7CcT/AOI+iCPmakOY1UiiiD50oxo12mf7PntpfFXwEZQZ
+ ZS5Pqck9W9UpH9UQf7ga1pDQF4LYl+z9LgMT2nE1pNT2fvWwFjecSvwN9nKvRaxEUVuT
+ V9jAJQgxYC64uWN7XKlz+h7wAfydmZ349nJSV5eHobXNrNmV4oVcAKJ4i2KBoME65zQ7
+ Mup2UEEDGOCDWeZV1vTMKWds2+JTf+5mvu5CMDSv6hgvWGWHpxysTxTcHno+k6GAiX3Z
+ fXew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUI0wlf2D6irgGdglDMl18aSuuZWJCaIlt+G2nGg6Ts2oZ034+2QM/ODc2IivDskwL4pl9Mz9uLRVpKOtK28Wmm8FJ8n8I=
+X-Gm-Message-State: AOJu0Yz4qsnvBGvcjX8WguckNVmnPdBQfDYkeFUKfuKShURdZxxDQ3GT
+ PqM5sW2ro8Ed1v4QmXyaveOmDp0xX7cewx+UVhiYffejBFpuCnzJ57CJjyyeOQgXVxANbJezLCS
+ qPL1ieA==
+X-Google-Smtp-Source: AGHT+IFu8qN+3b+3v/Y0Lt5Qx7vexvlzdubwlyt3IjFZRnr1EM/lScw1Q5xR5AOXPy1km134Ph+k9g==
+X-Received: by 2002:a05:6870:968b:b0:25e:eab:6d32 with SMTP id
+ 586e51a60fabf-261212fcdb6mr852018fac.5.1721421609925; 
+ Fri, 19 Jul 2024 13:40:09 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70cff59e2d7sm1630313b3a.170.2024.07.19.13.40.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 13:40:09 -0700 (PDT)
+Message-ID: <2ac62489-2735-4631-a95b-ee312d56264f@linaro.org>
+Date: Sat, 20 Jul 2024 06:39:55 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20240719151628.46253-1-philmd@linaro.org>
- <20240719151628.46253-4-philmd@linaro.org>
+Subject: Re: [PULL 0/3] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20240719022604.781608-1-gaosong@loongson.cn>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240719151628.46253-4-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240719022604.781608-1-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:502:30b7:7825:e35a
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 3/3] util/fifo8: Introduce fifo8_change_capacity()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,65 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/07/2024 16:16, Philippe Mathieu-Daudé wrote:
-
-> FIFOs can be resized at runtime. Introduce the
-> fifo8_change_capacity() method to do that.
-> When capacity is changed, the FIFO must be reset.
+On 7/19/24 12:26, Song Gao wrote:
+>    Merge tag 'pull-target-arm-20240718' ofhttps://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-19 07:02:17 +1000)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/qemu/fifo8.h | 10 ++++++++++
->   util/fifo8.c         |  7 +++++++
->   2 files changed, 17 insertions(+)
+> are available in the Git repository at:
 > 
-> diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-> index c6295c6ff0..9fe0555a24 100644
-> --- a/include/qemu/fifo8.h
-> +++ b/include/qemu/fifo8.h
-> @@ -31,6 +31,16 @@ void fifo8_create(Fifo8 *fifo, uint32_t capacity);
->   
->   void fifo8_destroy(Fifo8 *fifo);
->   
-> +/**
-> + * fifo8_change_capacity:
-> + * @fifo: struct Fifo8 to change the capacity
-> + * @capacity: new capacity of the FIFO
-> + *
-> + * Change a FIFO capacity to the specified size. The FIFO is reset.
-> + */
-> +
-> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity);
-> +
->   /**
->    * fifo8_push:
->    * @fifo: FIFO to push to
-> diff --git a/util/fifo8.c b/util/fifo8.c
-> index 2925fe5611..c453afd774 100644
-> --- a/util/fifo8.c
-> +++ b/util/fifo8.c
-> @@ -34,6 +34,13 @@ void fifo8_destroy(Fifo8 *fifo)
->       g_free(fifo->data);
->   }
->   
-> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity)
-> +{
-> +    fifo->data = g_renew(uint8_t, fifo->data, capacity);
-> +    fifo->capacity = capacity;
-> +    fifo8_reset(fifo);
-> +}
-> +
->   void fifo8_push(Fifo8 *fifo, uint8_t data)
->   {
->       assert(fifo->num < fifo->capacity);
+>    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240719
+> 
+> for you to fetch changes up to 3ed016f525c8010e66be62d3ca6829eaa9b7cfb5:
+> 
+>    hw/loongarch: Modify flash block size to 256K (2024-07-19 10:40:04 +0800)
+> 
+> ----------------------------------------------------------------
+> pull-loongarch-20240719
 
-The changes look okay, however I'm a little confused as to why this is needed as 
-generally hardware FIFOs are a fixed size? Presumably this is related to the PL011 
-series?
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-
-ATB,
-
-Mark.
-
+r~
 
