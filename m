@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B231AC3DA61
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 01:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFCBC3DA61
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 01:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUcO1-0002mW-0Z; Thu, 18 Jul 2024 21:26:17 -0400
+	id 1sUcQ1-0000Ef-Vx; Thu, 18 Jul 2024 21:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUcNz-0002ia-Ek
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:26:15 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUcNx-0007KA-PM
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:26:15 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1fc49c1f3e5so13861615ad.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 18:26:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721352372; x=1721957172; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Zmj9pMO3Ucq+mGI2rmRIXB720/2tej18O0M2DBlX76o=;
- b=UYEdhBjG1GXcEDBi/vnK3AxZAr7Mti+h8RNIINyuS/V4G6JWgPjzPA74EkfJA5JZ3G
- bEioZEjXB4HY0rXWvq32p/qcUhMAgUbPWSsZiCubIK+LbkHMg0nh8eUFeQwmGF0/h9B5
- 5Lfztt5AxUzdffYdXNsmGAi9KmMhj+zvKyWjUTwVV3O7s+AlyU298NZYKSUmoA/LAu2N
- swF07bJtr7sBwwHl6z05XPes7EfiA03GmBvEzN+uwSIzhydKK9fBr4iuf30Lu3SfFLLg
- Vc2+jLko9tDsw/jvGU5PEbZ1J8GmN8F1PwlBu/P7vQv/ZP6UGnrwMeqQV4k3y+2z4pkW
- FoDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721352372; x=1721957172;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zmj9pMO3Ucq+mGI2rmRIXB720/2tej18O0M2DBlX76o=;
- b=F+2ai3anzqe8xKm7BbnmNvAYsMB6O8jX7+a3/krpTAoOEBtt9zc0w1vx9RFQ0XliqC
- AV5vFQan+soVSeB/fkDKMB+kIGu43umYu6Cq0mkK5ssyYyhKBBMq8E+mUdArcO4PdN4t
- XudlNGtlJFCzO97OU0rsC8dG1byZJDYhjYn8Lq/mrnjWiIIdI0LoaUS3RKGJS0/PYpmh
- 2g682zSJEV1BPrFl/r1UXi9rTBCZKxk1DXERkVdsAICUftFGklqdUPgKhFegD46vb2vs
- PSKt95BNKOgdUeDy5jQfOfEbAevn9Ut8c8C8w4Zrd0+dzCFMBUxRUTe6N95Hfqhjl123
- v8DA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURZhzkj8ZRYZ8CKy99yyfls+DqcCLIlW4BZSqoWN+LWY3tyn5nvDj273Yc4n4mIGEgUR6gY2USE38fGqLmZaoNUksKuIQ=
-X-Gm-Message-State: AOJu0YzvtYizuJOKmZLMCL8NyCuyuV12ZFHcXdgSCoieC3RfFwbhOo9p
- P3ZxMPRMZ66KBt8s//msUNjMFpwRjS6mOAur/xOqpVOg/Rif+d+kalpr5122DJkeC4sV1BzIP6i
- lgzlwTg==
-X-Google-Smtp-Source: AGHT+IFkg6HcUXSiIBuK6eInFM3KJt5qtSvdIK+EVMdpBB+2KBNatPE/fW9BDhaU0JhDlsHi7mtksQ==
-X-Received: by 2002:a05:6a21:3514:b0:1c0:defa:b68e with SMTP id
- adf61e73a8af0-1c3fdd99bc4mr8120661637.39.1721352371873; 
- Thu, 18 Jul 2024 18:26:11 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ccf80a9b0csm289349a91.57.2024.07.18.18.26.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jul 2024 18:26:11 -0700 (PDT)
-Message-ID: <0ac3f760-c105-4bb1-a397-3ee4570941db@linaro.org>
-Date: Fri, 19 Jul 2024 11:26:07 +1000
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sUcQ0-0000E2-4Z
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:28:20 -0400
+Received: from esa12.hc1455-7.c3s2.iphmx.com ([139.138.37.100])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sUcPx-00082K-UV
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:28:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721352497; x=1752888497;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=QxejN7Ryx8FcdgGMpFvpkWis4gu0dubWD5AR2lgNLk4=;
+ b=AWKcfu50ZO5lFdrV4kATflpoEYewLYLgTWVfo4XOl4sLPbYYn9zHR3Vu
+ S0LAwgKyf9QXv31FNjKP08XQq9MpUMfQsJSetGT43q3pKMVLzSaheFofU
+ Wy6kBj7tH/Lr/MuWS60SnTjjmDeM+cWMCwo32Ozu+f1/dLzILS4y60nfl
+ 3z/jFiiUjc8vUP1O6iH0qWgym/UpD6mKUYOVXZEsskx5AiY6Wku6hC4U3
+ 8WVrh5OMD4j+AemcwZ2n+L9dOstqHAFIlfZEVR2lujjrzwN+TbMXBk7T/
+ qf98VmRI550UqALtn2JAx3xUHK/o14hAWDo65VXd8RcmbRfi0+IRYTaZ4 A==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="146840686"
+X-IronPort-AV: E=Sophos;i="6.09,219,1716217200"; d="scan'208";a="146840686"
+Received: from unknown (HELO yto-r1.gw.nic.fujitsu.com) ([218.44.52.217])
+ by esa12.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jul 2024 10:28:13 +0900
+Received: from yto-m3.gw.nic.fujitsu.com (yto-nat-yto-m3.gw.nic.fujitsu.com
+ [192.168.83.66])
+ by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id 646A3DB3C3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 10:28:11 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id B364CD21D9
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 10:28:10 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 39AD2227A8A
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 10:28:10 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 745601A0002;
+ Fri, 19 Jul 2024 09:28:09 +0800 (CST)
+To: jonathan.cameron@huawei.com,
+	fan.ni@samsung.com
+Cc: qemu-devel@nongnu.org, Yao Xingtao <yaoxt.fnst@fujitsu.com>,
+ Jonathan Cameron <Jonathan.Cameron@huwei.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2] mem/cxl_type3: Fix overlapping region validation error
+Date: Thu, 18 Jul 2024 21:28:07 -0400
+Message-Id: <20240719012807.70715-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/26] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240718132028.697927-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240718132028.697927-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28538.002
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28538.002
+X-TMASE-Result: 10--2.496400-10.000000
+X-TMASE-MatchedRID: BlFNdihulab/R1NSMc2qCUz7FUUjXG1jaU4+utsGZqAR34ro7k23nT13
+ GoPFA1HFIvrftAIhWmLy9zcRSkKatb7wtKKw5QU3ngIgpj8eDcBpkajQR5gb3lQwtQm7iV5jKra
+ uXd3MZDUMFsa+1wyh/CyiErhmmuHL1BEngT04oiB5fHFSiasHxtRJ3rUDwULCb3C0R+B8BRjHp9
+ j5FeOHAzozN6l4R1b+/qonAaaQ0YB24AN5YdP/mxXBt/mUREyAj/ZFF9Wfm7hNy7ppG0IjcFQqk
+ 0j7vLVUewMSBDreIdk=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.37.100;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa12.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,42 +94,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 23:20, Peter Maydell wrote:
-> Hi; hopefully this is the last arm pullreq before softfreeze.
-> There's a handful of miscellaneous bug fixes here, but the
-> bulk of the pullreq is Mostafa's implementation of 2-stage
-> translation in the SMMUv3.
-> 
-> thanks
-> -- PMM
-> 
-> The following changes since commit d74ec4d7dda6322bcc51d1b13ccbd993d3574795:
-> 
->    Merge tag 'pull-trivial-patches' ofhttps://gitlab.com/mjt0k/qemu into staging (2024-07-18 10:07:23 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240718
-> 
-> for you to fetch changes up to 30a1690f2402e6c1582d5b3ebcf7940bfe2fad4b:
-> 
->    hvf: arm: Do not advance PC when raising an exception (2024-07-18 13:49:30 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * Fix handling of LDAPR/STLR with negative offset
->   * LDAPR should honour SCTLR_ELx.nAA
->   * Use float_status copy in sme_fmopa_s
->   * hw/display/bcm2835_fb: fix fb_use_offsets condition
->   * hw/arm/smmuv3: Support and advertise nesting
->   * Use FPST_F16 for SME FMOPA (widening)
->   * tests/arm-cpu-features: Do not assume PMU availability
->   * hvf: arm: Do not advance PC when raising an exception
+When injecting a new poisoned region through qmp_cxl_inject_poison(),
+the newly injected region should not overlap with existing poisoned
+regions.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+The current validation method does not consider the following
+overlapping region:
++---+-------+---+
+| a | b(a)  | a |
++---+-------+---+
 
-r~
+(a is a newly added region, b is an existing region, and b is a
+ subregion of a)
+
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huwei.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+
+---
+V1[1] -> V2:
+ - Use ranges_overlap() to improve code readability
+ - Replace the ASCII extended graph to ASCII basic in comment.
+
+[1] https://lore.kernel.org/qemu-devel/20240718090753.59163-1-yaoxt.fnst@fujitsu.com
+---
+ hw/mem/cxl_type3.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 35ac59883a5b..b2f3e2090b57 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1331,9 +1331,7 @@ void qmp_cxl_inject_poison(const char *path, uint64_t start, uint64_t length,
+     ct3d = CXL_TYPE3(obj);
+ 
+     QLIST_FOREACH(p, &ct3d->poison_list, node) {
+-        if (((start >= p->start) && (start < p->start + p->length)) ||
+-            ((start + length > p->start) &&
+-             (start + length <= p->start + p->length))) {
++        if (ranges_overlap(start, length, p->start, p->length)) {
+             error_setg(errp,
+                        "Overlap with existing poisoned region not supported");
+             return;
+-- 
+2.37.3
+
 
