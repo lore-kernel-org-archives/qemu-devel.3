@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4ADC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A937C3DA59
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 08:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUit1-0005Cz-SA; Fri, 19 Jul 2024 04:22:43 -0400
+	id 1sUivl-0001SQ-2g; Fri, 19 Jul 2024 04:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUit0-0005BR-QL
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:22:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sUivi-0001OA-A6; Fri, 19 Jul 2024 04:25:30 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sUisz-0005Oz-0p
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 04:22:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721377360;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gaomhL4k3MtH8gL6Mwt12r5Mwqj78Yxa4XCOYF34fgY=;
- b=NdoNWr5fwo7BzqrBL1YLov9Y68T5PPfhy3EaH53suPA+K1msGz5IKfgjAREB6oyG1rXzFi
- fCImM5Q4zO14ta74pd71f1P/BGu/MoQSaP8DHB7NsO+qUtVYRtjkqsUzSRZ29FglmJMJIY
- ic8/8kNc8gDN1vC2DEc05YlC1BeuV8o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-XAx2Wu5AMKekSMzpgPWJ3A-1; Fri,
- 19 Jul 2024 04:22:36 -0400
-X-MC-Unique: XAx2Wu5AMKekSMzpgPWJ3A-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B3601955F40; Fri, 19 Jul 2024 08:22:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.130])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03ABE3000188; Fri, 19 Jul 2024 08:22:32 +0000 (UTC)
-Date: Fri, 19 Jul 2024 10:22:30 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Amjad Alsharafi <amjadsharafi10@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Hanna Reitz <hreitz@redhat.com>, "open list:vvfat" <qemu-block@nongnu.org>
-Subject: Re: [PATCH v5 4/5] vvfat: Fix reading files with non-continuous
- clusters
-Message-ID: <ZpoiRiCgACkh5REh@redhat.com>
-References: <ZpmxMEj5qZDUhj_h@amjad-pc>
- <117AB0D4-B3AC-4A8B-84AA-C4085A78B9FE@getmailspring.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sUivf-0005L2-7q; Fri, 19 Jul 2024 04:25:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721377527; x=1752913527;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Cbq1XzEG/Z5bPHmoZpGA9EqItTHH1azGryyZCO1RmSk=;
+ b=KR0Lh/ebrmxNsvE+kPOeX/zm5Uxpd4V+GTohKJAdnXQgG6oN7skhfRaY
+ wjmAFXbtOLNl4956dONxRK94/vfaxxZXyPusSNjKQ3VJlE9skZBb4RpNW
+ Fm8fZt72hwF7fw6IF5EcW2L/4kTogWGNc29AdgVOtJyggV8vgQJpXYE4S
+ HXt3f7uAEoTG7BW3PvBzAN8OHKdFATWrw1lpDNg+FkeC+EleSDDzi/wJi
+ 8pjfysjW8aj0/kZGM9ke/EnvG5WXraFo+4dzEA/cIq7hMysg3CeVQ5A/X
+ M+rp5uk68R46lVIGYgUor3EDKlWNNl/htPOZ89cQtNmQXVnimzAaZ41WU g==;
+X-CSE-ConnectionGUID: hp6U6GPWS3W/FoAjDusF5Q==
+X-CSE-MsgGUID: Rvm21ovETTubbxgfm1mwMQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="19114661"
+X-IronPort-AV: E=Sophos;i="6.09,220,1716274800"; d="scan'208";a="19114661"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jul 2024 01:25:23 -0700
+X-CSE-ConnectionGUID: FEQBshkLRX6+VaqwSaN65w==
+X-CSE-MsgGUID: c8dJjs78SHitlazWSzRUWQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,220,1716274800"; d="scan'208";a="50784003"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 19 Jul 2024 01:25:16 -0700
+Date: Fri, 19 Jul 2024 16:40:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yuan Yao <yuan.yao@intel.com>,
+ Xiong Zhang <xiong.y.zhang@intel.com>, Mingwei Zhang <mizhang@google.com>,
+ Jim Mattson <jmattson@google.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 3/5] i386/kvm: Support event with select&umask format in
+ KVM PMU filter
+Message-ID: <Zpomm3hLhSM5O6em@intel.com>
+References: <20240710045117.3164577-1-zhao1.liu@intel.com>
+ <20240710045117.3164577-4-zhao1.liu@intel.com>
+ <f18ab76c-abbe-4599-9631-603853bcfa0b@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <117AB0D4-B3AC-4A8B-84AA-C4085A78B9FE@getmailspring.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <f18ab76c-abbe-4599-9631-603853bcfa0b@linux.intel.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,111 +95,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19.07.2024 um 02:29 hat Amjad Alsharafi geschrieben:
-> 
-> 
-> On Jul 19 2024, at 8:20 am, Amjad Alsharafi <amjadsharafi10@gmail.com> wrote:
-> 
-> > On Thu, Jul 18, 2024 at 05:20:36PM +0200, Kevin Wolf wrote:
-> >> Am 12.06.2024 um 14:43 hat Amjad Alsharafi geschrieben:
-> >> > When reading with `read_cluster` we get the `mapping` with
-> >> > `find_mapping_for_cluster` and then we call `open_file` for this
-> >> > mapping.
-> >> > The issue appear when its the same file, but a second cluster that is
-> >> > not immediately after it, imagine clusters `500 -> 503`, this will give
-> >> > us 2 mappings one has the range `500..501` and another `503..504`, both
-> >> > point to the same file, but different offsets.
-> >> > 
-> >> > When we don't open the file since the path is the same, we won't assign
-> >> > `s->current_mapping` and thus accessing way out of bound of the file.
-> >> > 
-> >> > From our example above, after `open_file` (that didn't open
-> >> anything) we
-> >> > will get the offset into the file with
-> >> > `s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
-> >> > give us `0x2000 * (504-500)`, which is out of bound for this
-> >> mapping and
-> >> > will produce some issues.
-> >> > 
-> >> > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-> >> > ---
-> >> >  block/vvfat.c | 23 ++++++++++++++++-------
-> >> >  1 file changed, 16 insertions(+), 7 deletions(-)
-> >> > 
-> >> > diff --git a/block/vvfat.c b/block/vvfat.c
-> >> > index b63ac5d045..fc570d0610 100644
-> >> > --- a/block/vvfat.c
-> >> > +++ b/block/vvfat.c
-> >> > @@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState*
-> >> s,mapping_t* mapping)
-> >> >  {
-> >> >      if(!mapping)
-> >> >          return -1;
-> >> > +    int new_path = 1;
-> >> >      if(!s->current_mapping ||
-> >> > -            strcmp(s->current_mapping->path,mapping->path)) {
-> >> > -        /* open file */
-> >> > -        int fd = qemu_open_old(mapping->path,
-> >> > +            s->current_mapping->info.file.offset
-> >> > +                != mapping->info.file.offset ||
-> >> 
-> >> I'm wondering if this couldn't just be s->current_mapping != mapping?
-> > 
-> > Actually, you are totally right. Not sure what made me go for this.
-> > 
-> > I tried also to test with only checking if the path changed, but it
-> > fails on some tests. So the offset is important.
-> > For that reason, checking just the mapping ptr is better since we won't
-> > have 2 mappings with same file and offset.
-> > 
-> > I'll then use this change. Thanks
-> 
-> Should I send a new patch? since most commits are reviewed now
+Hi Dapeng,
 
-Yes, please do. I think I reviewed the whole series.
+On Thu, Jul 18, 2024 at 01:28:25PM +0800, Mi, Dapeng wrote:
 
-Kevin
+[snip]
 
-> > 
-> >> 
-> >> > +            (new_path = strcmp(s->current_mapping->path,
-> >> mapping->path))) {
-> >> 
-> >> If both the path and the offset change, we still want to set
-> >> new_path, I
-> >> think. And if we didn't already have a mapping, we also need to open the
-> >> file.
-> >> 
-> >> Actually, setting a variable inside the condition makes it kind of hard
-> >> to read, so if s->current_mapping != mapping works, we can do the check
-> >> only in the conditon below:
-> >> 
-> >> > +        if (new_path) {
-> >> 
-> >> if (!s->current_mapping ||
-> >>     strcmp(s->current_mapping->path, mapping->path))
-> >> 
-> >> > +            /* open file */
-> >> > +            int fd = qemu_open_old(mapping->path,
-> >> >                                 O_RDONLY | O_BINARY | O_LARGEFILE);
-> >> > -        if(fd<0)
-> >> > -            return -1;
-> >> > -        vvfat_close_current_file(s);
-> >> > -        s->current_fd = fd;
-> >> > +            if (fd < 0) {
-> >> > +                return -1;
-> >> > +            }
-> >> > +            vvfat_close_current_file(s);
-> >> > +
-> >> > +            s->current_fd = fd;
-> >> > +        }
-> >> > +        assert(s->current_fd);
-> >> >          s->current_mapping = mapping;
-> >> >      }
-> >> 
-> >> Kevin
-> >> 
-> > 
+> > +        case KVM_PMU_EVENT_FMT_X86_DEFAULT: {
+> > +            uint64_t select, umask;
+> > +
+> > +            ret = qemu_strtou64(str_event->u.x86_default.select, NULL,
+> > +                                0, &select);
+> > +            if (ret < 0) {
+> > +                error_setg(errp,
+> > +                           "Invalid %s PMU event (select: %s): %s. "
+> > +                           "The select must be a "
+> > +                           "12-bit unsigned number string.",
+> > +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> > +                           str_event->u.x86_default.select,
+> > +                           strerror(-ret));
+> > +                g_free(event);
+> > +                goto fail;
+> > +            }
+> > +            if (select > UINT12_MAX) {
+> > +                error_setg(errp,
+> > +                           "Invalid %s PMU event (select: %s): "
+> > +                           "Numerical result out of range. "
+> > +                           "The select must be a "
+> > +                           "12-bit unsigned number string.",
+> > +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> > +                           str_event->u.x86_default.select);
+> > +                g_free(event);
+> > +                goto fail;
+> > +            }
+> > +            event->u.x86_default.select = select;
+> > +
+> > +            ret = qemu_strtou64(str_event->u.x86_default.umask, NULL,
+> > +                                0, &umask);
+> > +            if (ret < 0) {
+> > +                error_setg(errp,
+> > +                           "Invalid %s PMU event (umask: %s): %s. "
+> > +                           "The umask must be a uint8 string.",
+> > +                           KVMPMUEventEncodeFmt_str(str_event->format),
+> > +                           str_event->u.x86_default.umask,
+> > +                           strerror(-ret));
+> > +                g_free(event);
+> > +                goto fail;
+> > +            }
+> > +            if (umask > UINT8_MAX) {
 > 
+> umask is extended to 16 bits from Perfmon v6+. Please notice we need to
+> upgrade this to 16 bits in the future. More details can be found here.
+> [PATCH V3 00/13] Support Lunar Lake and Arrow Lake core PMU - kan.liang
+> (kernel.org)
+> <https://lore.kernel.org/all/20240626143545.480761-1-kan.liang@linux.intel.com/>
+
+It's tricky...now I referred the RAW_EVENT format in tools/testing/
+selftests/kvm/include/x86_64/pmu.h, which is used in KVM PMU and is
+compatible with AMD and Intel.
+
+The current KVM PMU filter for raw code doesn't define the layout in
+the standard API like masked entries (KVM_PMU_ENCODE_MASKED_ENTRY), but
+actually uses the RAW_EVENT format. So I even plan to move RAW_EVENT
+macro into arch/x86/include/uapi/asm/kvm.h...
+
+For the changes you mentioned, I think it would be better for the raw
+code layout design not to break RAW_EVENT, so that AMD and Intel can
+equally use the same macro to encode. Is it possible for a unified
+layout macro?
+
+What about extending RAW_EVENT as the following example? I understand
+the umask2 is at bit 40-47.
+
+#define X86_PMU_RAW_EVENT(eventsel, umask) (((eventsel & 0xf00UL) << 24) | \
+                                            ((eventsel) & 0xff) | \
+                                            ((umask) & 0xff) << 8) | \
+					    ((umask & 0xff00UL << 32)
+
+Thanks,
+Zhao
 
 
