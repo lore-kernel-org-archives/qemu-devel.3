@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFD2C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 02:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CDDC3DA61
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 02:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUdau-0002rd-TN; Thu, 18 Jul 2024 22:43:40 -0400
+	id 1sUdat-0002k1-7u; Thu, 18 Jul 2024 22:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sUdas-0002jh-28
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:38 -0400
+ id 1sUdaq-0002ik-OU
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:36 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sUdao-0003Ly-Am
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:37 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sUdan-0003Lw-UH
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:36 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxnOrT0plmQuAAAA--.4543S3;
- Fri, 19 Jul 2024 10:43:31 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxrOrS0plmQeAAAA--.4531S3;
+ Fri, 19 Jul 2024 10:43:30 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxhsXO0plm5uxOAA--.35480S5; 
+ AQAAf8AxhsXO0plm5uxOAA--.35480S4; 
  Fri, 19 Jul 2024 10:43:30 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
-	Xianglai Li <lixianglai@loongson.cn>
-Subject: [PULL 3/3] hw/loongarch: Modify flash block size to 256K
-Date: Fri, 19 Jul 2024 10:26:04 +0800
-Message-Id: <20240719022604.781608-4-gaosong@loongson.cn>
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 2/3] hw/loongarch: Remove unimplemented extioi INT_encode mode
+Date: Fri, 19 Jul 2024 10:26:03 +0800
+Message-Id: <20240719022604.781608-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240719022604.781608-1-gaosong@loongson.cn>
 References: <20240719022604.781608-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxhsXO0plm5uxOAA--.35480S5
+X-CM-TRANSID: AQAAf8AxhsXO0plm5uxOAA--.35480S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,34 +65,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xianglai Li <lixianglai@loongson.cn>
+Remove extioi INT_encode encode mode, because we don't emulate it.
 
-loongarch added a common library for edk2 to
-parse flash base addresses through fdt.
-For compatibility with other architectures,
-the flash block size in qemu is now changed to 256k.
-
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240624033319.999631-1-lixianglai@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20240718083254.748179-1-gaosong@loongson.cn>
 ---
- include/hw/loongarch/virt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/intc/loongarch_extioi.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 8fdfacf268..603c1cebdb 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -20,7 +20,7 @@
- #define VIRT_FWCFG_BASE         0x1e020000UL
- #define VIRT_BIOS_BASE          0x1c000000UL
- #define VIRT_BIOS_SIZE          (16 * MiB)
--#define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
-+#define VIRT_FLASH_SECTOR_SIZE  (256 * KiB)
- #define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
- #define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
- #define VIRT_FLASH1_BASE        0x1d000000UL
+diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+index eccc2e0d18..626a37dfa1 100644
+--- a/include/hw/intc/loongarch_extioi.h
++++ b/include/hw/intc/loongarch_extioi.h
+@@ -50,7 +50,6 @@
+ #define  EXTIOI_HAS_CPU_ENCODE       (3)
+ #define  EXTIOI_VIRT_HAS_FEATURES    (BIT(EXTIOI_HAS_VIRT_EXTENSION)  \
+                                       | BIT(EXTIOI_HAS_ENABLE_OPTION) \
+-                                      | BIT(EXTIOI_HAS_INT_ENCODE)    \
+                                       | BIT(EXTIOI_HAS_CPU_ENCODE))
+ #define EXTIOI_VIRT_CONFIG           (0x4)
+ #define  EXTIOI_ENABLE               (1)
 -- 
 2.34.1
 
