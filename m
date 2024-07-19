@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2D3C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D016DC3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUs5b-0005p8-P9; Fri, 19 Jul 2024 14:12:25 -0400
+	id 1sUs4L-0001qt-S6; Fri, 19 Jul 2024 14:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs5D-0004oL-Pd
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs4K-0001mm-D8
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:00 -0400
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs59-0003vh-QJ
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:54 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs4I-0003j9-Rs
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:00 -0400
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4277a5ed48bso14848395e9.2
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:11:48 -0700 (PDT)
+ 5b1f17b1804b1-4266edee10cso13003745e9.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721412707; x=1722017507; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721412657; x=1722017457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=grsGKEIQC5JMZTvNvSN/qnaW61vNteYTEI5sYVegySE=;
- b=rSZEVosbJZE0iEj3ZcpATu6RmNENH2lcc3RRV1yZ026+vxKQdVsTffeAjTqDmwrq/c
- m+NLZz7Nc+i7ChbtiMBWfa7fRvygtn8oKm5R6EpggYoAgbYr/r/MQx7/zSh6sTb3VODm
- 4y9R8HL7sssqOjuWnHwCtcgH4+IBQgT4o9ZRiBcqLqVuvIJV2wckjJma/IOsBRgwbYod
- /ImD1KzefSI8vAQMJUJtSY3LfBQ2hCEfsKve0qQG3tKOjtckXhBfEd8a2O6/b2pjvajs
- bXWRYhum7j5CRlk2dhZcPojt5a5nOJLhM8plJMhtWpLxu/khacWuiXqyNr5+09ZW5+j3
- P6Pg==
+ bh=q1/EHJXKlUMSicfL7BY9ywX9D2Y7SpR4mdCel9zTlhc=;
+ b=glagd9JJPvlW0574i9+zBvBeHneb6LLGuuFol6VVmx3tdmqlgnqy2K0HplpHqvztru
+ 3X3AWinFxb5CYgEbCZGxuazu3SQZ6pJQzH9E9UjVKEbktNaSiR1Xh0WAaoJB6+PNrOEK
+ Dm6UP7I5BlZ8MlX4gUsRUSXy/oSzcPcldTqMnmQhkJebIuOaoeqXRFMsGdrQSfOcp8hv
+ WiZAuV0xYBB8SD0t++Q2FJz65DQ3OUHuOa4WBmIWZXe9MrxWRKfnLhznWpB0Ri9v3VNX
+ jti6yM7AXWE2/K9YC1Hpn+0jRXLca6i0fCo5kXfLyGPmyrR2h5vnNKvs4JfdJCnJ8zRo
+ Oivw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721412707; x=1722017507;
+ d=1e100.net; s=20230601; t=1721412657; x=1722017457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=grsGKEIQC5JMZTvNvSN/qnaW61vNteYTEI5sYVegySE=;
- b=jSzJONYc5jYgXNuk/ZimapJ15cOoby8y4TY08iuVeSd2PjnkLgcTf2nIeseHGF1Tn+
- SqYBBGddHB0vBlwGy9VZ40b2TuzyHeKMzdvTMKPU+BlGIAMNzJ41uWzqmAtiXW21qtzh
- Wqh7ib6bb5zTNzciLPunLc/AGWLC5WJQMKqvenLzlQpUgPS8nndWRKh6yDzq9GdyKsFy
- Qyk41sfPt5uJ5qJmt0vzRAjN7HyVRj8QTPqUQ/hIwZMQ1NW57AEUPY+C2GXnMljoYqDx
- dvQwkV05VDTpUVv9aUwYydWXKTti/e9ExDi+iIzOXNy7WwE3Vqom9nvovII742dpEyHQ
- j/Ew==
-X-Gm-Message-State: AOJu0YxmqindwNsj7QuGBLBEnapP/poIttex/S1AFzrqCWK6QwLZ2p6W
- b11nVLdmuQnsNcGKot3WIANZGpzQ+Hde8dYd86GUE1kCOzQ+d02I+XgXlR3lBO7fM2+fmB6O4zF
- R
-X-Google-Smtp-Source: AGHT+IEAoXaf0/G2fVClsxjzD1Mv14qrcJ+tc6r5Tl38cqGiH3clJ3oMaSvWDUTbYP/j+Dred5O2Pg==
-X-Received: by 2002:a05:600c:3d9a:b0:426:6ed2:6130 with SMTP id
- 5b1f17b1804b1-427c2cb6a6bmr54800415e9.14.1721412707456; 
- Fri, 19 Jul 2024 11:11:47 -0700 (PDT)
+ bh=q1/EHJXKlUMSicfL7BY9ywX9D2Y7SpR4mdCel9zTlhc=;
+ b=Y7kmqOGEcmfIAydVdLStVfmO/dLkvyMtywLVgbubnDf9zhFaSlHolAJt4IGUJ3DuVk
+ xcOXkyg2w86jn2PBs1Yy5Bd7b4K2LsDolYfeiq6w8fIMBHOocGQ8xTIDicit+khjMhjt
+ KZK+YfAI7mB9sKuadi5FRTFtIyyoNooC6JCiE7n8y4DTm0Q5FSDKhpGfbW3LbnUjuNWa
+ H1cLvlUeD8gUq4Z72BDv5y9OtoTN7sGR69R7Ah7jEEohW6sVdpq5hLz4yKVcgPt1MlPX
+ WeM60MvOTf2VRpxEn+UDxSIALh299rJc6B00KbxQ7O2v5pRAPF1SYp7SESfvv0eLsbW+
+ 1pqA==
+X-Gm-Message-State: AOJu0YxNCPO1/Z50EQE6H9pdrCTAkkPRWQM4w2jK5pE4Vkhh7Nhz4oWy
+ v6DvsWyzWK4TKFnMKkhq9Fgs5AdRb+wvh9N0lOIrOsd8bv/YFVg29Ncqja/3aDb/McHeRCxh6fj
+ +
+X-Google-Smtp-Source: AGHT+IHU/u6YJi7xFP2CXTlMYwlMrPXaJ2sZ+VYd7hMLWoS0b2ILTUd8zWUwWmYXUVLaC3BIp/l84w==
+X-Received: by 2002:adf:fa03:0:b0:367:8876:68e6 with SMTP id
+ ffacd0b85a97d-3683175b8aamr6577658f8f.48.1721412657188; 
+ Fri, 19 Jul 2024 11:10:57 -0700 (PDT)
 Received: from localhost.localdomain (52.170.88.92.rev.sfr.net. [92.88.170.52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d6906a96sm34009935e9.22.2024.07.19.11.11.44
+ ffacd0b85a97d-36878684801sm2258633f8f.11.2024.07.19.11.10.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Jul 2024 11:11:47 -0700 (PDT)
+ Fri, 19 Jul 2024 11:10:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -65,11 +65,10 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Tong Ho <tong.ho@amd.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 10/16] hw/char/pl011: Check if receiver is enabled
-Date: Fri, 19 Jul 2024 20:10:35 +0200
-Message-ID: <20240719181041.49545-11-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 02/16] hw/char/pl011: Remove unused 'readbuff' field
+Date: Fri, 19 Jul 2024 20:10:27 +0200
+Message-ID: <20240719181041.49545-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240719181041.49545-1-philmd@linaro.org>
 References: <20240719181041.49545-1-philmd@linaro.org>
@@ -100,40 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not receive characters when UART or receiver are disabled.
+Since its introduction in commit cdbdb648b7 ("ARM Versatile
+Platform Baseboard emulation.") PL011State::readbuff as never
+been used. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/char/pl011.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/hw/char/pl011.h | 1 -
+ hw/char/pl011.c         | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/include/hw/char/pl011.h b/include/hw/char/pl011.h
+index d853802132..4fcaf3d7d3 100644
+--- a/include/hw/char/pl011.h
++++ b/include/hw/char/pl011.h
+@@ -32,7 +32,6 @@ struct PL011State {
+     SysBusDevice parent_obj;
+ 
+     MemoryRegion iomem;
+-    uint32_t readbuff;
+     uint32_t flags;
+     uint32_t lcr;
+     uint32_t rsr;
 diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index c76283dccf..0ce91c13d3 100644
+index f8078aa216..260f5fc0bc 100644
 --- a/hw/char/pl011.c
 +++ b/hw/char/pl011.c
-@@ -85,6 +85,7 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
- #define CR_OUT1     (1 << 12)
- #define CR_RTS      (1 << 11)
- #define CR_DTR      (1 << 10)
-+#define CR_RXE      (1 << 9)
- #define CR_TXE      (1 << 8)
- #define CR_LBE      (1 << 7)
- #define CR_UARTEN   (1 << 0)
-@@ -481,9 +482,11 @@ static void pl011_write(void *opaque, hwaddr offset,
- static int pl011_can_receive(void *opaque)
- {
-     PL011State *s = (PL011State *)opaque;
--    int r;
-+    int r = 0;
- 
--    r = s->read_count < pl011_get_fifo_depth(s);
-+    if ((s->cr & CR_UARTEN) && (s->cr & CR_RXE)) {
-+        r = s->read_count < pl011_get_fifo_depth(s);
-+    }
-     trace_pl011_can_receive(s->lcr, s->read_count, r);
-     return r;
- }
+@@ -549,7 +549,7 @@ static const VMStateDescription vmstate_pl011 = {
+     .minimum_version_id = 2,
+     .post_load = pl011_post_load,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(readbuff, PL011State),
++        VMSTATE_UNUSED(sizeof(uint32_t)),
+         VMSTATE_UINT32(flags, PL011State),
+         VMSTATE_UINT32(lcr, PL011State),
+         VMSTATE_UINT32(rsr, PL011State),
 -- 
 2.41.0
 
