@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201D0C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 14:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1822C3DA63
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 14:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUoJg-0004VQ-5o; Fri, 19 Jul 2024 10:10:36 -0400
+	id 1sUoQr-0004Wd-6d; Fri, 19 Jul 2024 10:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sUoJe-0004H3-56
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:10:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sUoQp-0004VP-7Y
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:17:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sUoJc-00036M-Bj
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:10:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sUoQm-0001eK-OH
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 10:17:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721398231;
+ s=mimecast20190719; t=1721398675;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3dJRLuUKQMvWYfGrEmj7BDaUhPYwA1pTISr1KCVr/W8=;
- b=L6HK7bWAgdoGmjNUbUr0K/OR6rjqQdmvuKRGCtqxRB2PhLo6M9jjvfDKotMNXwFaCsnroV
- j70ZH1Z35BZzFK23DtD8NS13uFx64CYJdiwLQ4qPWS+WOu/4lL5scu0SHRwi/EPoDjTNFP
- 3N3nRoq29emZ4oQ+GBwVzmWZ2bHbFrU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9yeBpZaS94ybF2PH1ZmlxttvXJ8BWqEFKSoy94zBX08=;
+ b=T7gEjSO/7UxoMj8fPQYBX148WG5tH6e4/QH1q/0O+U+tWJ+mwAJb9PhW0laNVZwLYicm+w
+ 1SmHoybIZUwx/iq4FDgF/U74OQ0QKbiEC5FBtqSjdwsTqWPluYEgHuCH2q1OY0RuB0Hpdx
+ Pe7ppWtik0kKY/TFX7581UknXhATkeo=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-AuilgoxQNeG7fWksLgi7TA-1; Fri, 19 Jul 2024 10:10:26 -0400
-X-MC-Unique: AuilgoxQNeG7fWksLgi7TA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42725ec6e0aso11061215e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 07:10:26 -0700 (PDT)
+ us-mta-62-sHpfHPvVMtaazI9t80tWRg-1; Fri, 19 Jul 2024 10:17:53 -0400
+X-MC-Unique: sHpfHPvVMtaazI9t80tWRg-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-79ef9c44d3eso200330185a.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 07:17:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721398225; x=1722003025;
+ d=1e100.net; s=20230601; t=1721398673; x=1722003473;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3dJRLuUKQMvWYfGrEmj7BDaUhPYwA1pTISr1KCVr/W8=;
- b=qitgd1psOGbW1VB7cpwX8AGQLtek3lj27IfXh3NvM9cvxXCfwuf1JqwwYzKhdVdOTT
- D+0ctUpp08B2HhlrOUlTZSTp4aBe0R3uc/qQh0x28KblIHHYnvDBl1UOH3SMkvaKmKVn
- mp/RycmVHj6rG+Kht1s4iUhd5ym73aMrr5iz4uW07Z8mOg+HOzWjnHP72trXHPE6LkON
- q9VZcIkXLjiNy2VJaj9UEFnPPWNYFr1Nab6mN+78PZuIvt2OvWsYUDeRQ+bx3PchO+I8
- CzDJLsHobg82XFWCfF2TLCZYvULvXcyw86D5S7SHaZjts1LDrprHngAH6ixhiDXX11UT
- ZQOg==
+ bh=9yeBpZaS94ybF2PH1ZmlxttvXJ8BWqEFKSoy94zBX08=;
+ b=PhwAURg8EV5smtXA/StqAEvMKrPAiQ58Wl7GWWPGmHZE6oKO9J30vg+Fn5MGtUyHCl
+ eWd3mnsUKkDnZmhAUfVc29QCyauLFnG9sRYi/3Bc7VO6XpKaTMI7BPjhp48wYaJq0Fps
+ KUjQvaGqFMjE4/Nhj9typBJXIW9LUiG0iDV6M4zNyLLd1/49GWpsFHqZhFATrSIQ4TiW
+ SXSBmnQ5BDT1j8dRkalXd+2q9o8uwjca2g+nnr2jl8ODfj3mJa6f7wv7YDGhe+DInLdk
+ aIwWeXtiQLu72uCrd3uSmLHL355pfJ/URkWm4QIQ9w5nhUADa4yyXBPGHwjXQO8HPPnn
+ kmCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSXhm+UHjtOleBsgnK20iGYXeBtvn0HbujB8JaqeZ1lmJ9+TF5l+Q3s6/85IICc+0QwruVqv8yU3bHCzbXl6aARwncUbc=
-X-Gm-Message-State: AOJu0Yw258p5lqoD5YRIyPmp80bL0/3peQRiBD1IVPZucxcOHMsJEL4d
- maw16raG2jiArp24C/icFa+SY9oXT6mPYgI872TB/8gfLIvfQhjb9vHy60DpqxiHQ9cM8NB9sho
- oog+1v5qsg4zWo3RnhXXhmBwu2EyIcSMchJyY5QJWvXKpnag2B4px
-X-Received: by 2002:a5d:5231:0:b0:367:9522:5e6b with SMTP id
- ffacd0b85a97d-368316faebemr5145267f8f.45.1721398225696; 
- Fri, 19 Jul 2024 07:10:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAD/LX9xZVOlhQpCdIWAfHok/0HA5nq77WA0W6KcdqzutvbjDMcrC0gfhszemE59szGZZhdA==
-X-Received: by 2002:a5d:5231:0:b0:367:9522:5e6b with SMTP id
- ffacd0b85a97d-368316faebemr5145250f8f.45.1721398225251; 
- Fri, 19 Jul 2024 07:10:25 -0700 (PDT)
+ AJvYcCXHaouHcXaZ9YDdNKHXNqIEEREANvGXKn0Y95xywho2i5NDBzJqgOt58sChazzop5cTDUnh4+LolCx1bwmi6RBk1/ogYns=
+X-Gm-Message-State: AOJu0YwG+NKATcgmr5lHpoXAhby5wCeSTyWx4ED4YQeQbP3TLlerp2yD
+ hnkdqF7dUYxO6x+9v6ElJWe4mCmygiU1z4VxckkebvLvDnjQOcOMU0cPtxyb6IDx1P9+F20/uyK
+ MxSSh2qX4ykP26uwX1MGl/pUHJcB9cxsiovg//7oLdiYwAOl6tDsL
+X-Received: by 2002:a05:620a:404a:b0:79f:4fe:9e24 with SMTP id
+ af79cd13be357-7a18745c595mr900188385a.16.1721398672755; 
+ Fri, 19 Jul 2024 07:17:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMuPDn+GP45XV29eh1+iJIYijVIg9FUcJ1TCnE1s+EDcIuqfMVPnYMnZ5iIXFCS8Bep6+qlQ==
+X-Received: by 2002:a05:620a:404a:b0:79f:4fe:9e24 with SMTP id
+ af79cd13be357-7a18745c595mr900185485a.16.1721398672379; 
+ Fri, 19 Jul 2024 07:17:52 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:9e2:9000:26c5:842:8baa:576b?
  ([2a01:e0a:9e2:9000:26c5:842:8baa:576b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a6efc5sm53895135e9.21.2024.07.19.07.10.24
+ af79cd13be357-7a198fab30fsm85636385a.26.2024.07.19.07.17.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Jul 2024 07:10:24 -0700 (PDT)
-Message-ID: <31418d2a-7c81-4a9c-9aec-72cfac938091@redhat.com>
-Date: Fri, 19 Jul 2024 16:10:23 +0200
+ Fri, 19 Jul 2024 07:17:51 -0700 (PDT)
+Message-ID: <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
+Date: Fri, 19 Jul 2024 16:17:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/13] vfio/{iommufd,container}: Invoke
- HostIOMMUDevice::realize() during attach_device()
+Subject: Re: [PATCH v5 12/13] vfio/migration: Don't block migration device
+ dirty tracking is unsupported
 To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
 References: <20240719120501.81279-1-joao.m.martins@oracle.com>
- <20240719120501.81279-9-joao.m.martins@oracle.com>
+ <20240719120501.81279-13-joao.m.martins@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240719120501.81279-9-joao.m.martins@oracle.com>
+In-Reply-To: <20240719120501.81279-13-joao.m.martins@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -108,138 +108,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/19/24 14:04, Joao Martins wrote:
-> Move the HostIOMMUDevice::realize() to be invoked during the attach of the device
-> before we allocate IOMMUFD hardware pagetable objects (HWPT). This allows the use
-> of the hw_caps obtained by IOMMU_GET_HW_INFO that essentially tell if the IOMMU
-> behind the device supports dirty tracking.
+On 7/19/24 14:05, Joao Martins wrote:
+> By default VFIO migration is set to auto, which will support live
+> migration if the migration capability is set *and* also dirty page
+> tracking is supported.
 > 
-> Note: The HostIOMMUDevice data from legacy backend is static and doesn't
-> need any information from the (type1-iommu) backend to be initialized.
-> In contrast however, the IOMMUFD HostIOMMUDevice data requires the
-> iommufd FD to be connected and having a devid to be able to successfully
-> GET_HW_INFO. This means vfio_device_hiod_realize() is called in
-> different places within the backend .attach_device() implementation.
+> For testing purposes one can force enable without dirty page tracking
+> via enable-migration=on, but that option is generally left for testing
+> purposes.
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.cm>
+> So starting with IOMMU dirty tracking it can use to accomodate the lack of
+> VF dirty page tracking allowing us to minimize the VF requirements for
+> migration and thus enabling migration by default for those too.
+> 
+> While at it change the error messages to mention IOMMU dirty tracking as
+> well.
+> 
 > Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>   include/hw/vfio/vfio-common.h |  1 +
+>   hw/vfio/iommufd.c             |  2 +-
+>   hw/vfio/migration.c           | 11 ++++++-----
+>   3 files changed, 8 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index 7e530c7869dc..00b9e933449e 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -299,6 +299,7 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+>   int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+>                             uint64_t size, ram_addr_t ram_addr, Error **errp);
+> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
+>   
+>   /* Returns 0 on success, or a negative errno. */
+>   bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 7dd5d43ce06a..a998e8578552 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -111,7 +111,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+>       iommufd_backend_disconnect(vbasedev->iommufd);
+>   }
+>   
+> -static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>   {
+>       return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>   }
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 34d4be2ce1b1..63ffa46c9652 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -1036,16 +1036,17 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
+>           return !vfio_block_migration(vbasedev, err, errp);
+>       }
+>   
+> -    if (!vbasedev->dirty_pages_supported) {
+> +    if (!vbasedev->dirty_pages_supported &&
+> +        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Some platforms do not have IOMMUFD support and this call will need
+some kind of abstract wrapper to reflect dirty tracking support in
+the IOMMU backend.
 
 Thanks,
 
 C.
 
 
-> ---
->   include/hw/vfio/vfio-common.h |  1 +
->   hw/vfio/common.c              | 16 ++++++----------
->   hw/vfio/container.c           |  4 ++++
->   hw/vfio/helpers.c             | 11 +++++++++++
->   hw/vfio/iommufd.c             |  4 ++++
->   5 files changed, 26 insertions(+), 10 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 1a96678f8c38..4e44b26d3c45 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -242,6 +242,7 @@ void vfio_region_finalize(VFIORegion *region);
->   void vfio_reset_handler(void *opaque);
->   struct vfio_device_info *vfio_get_device_info(int fd);
->   bool vfio_device_is_mdev(VFIODevice *vbasedev);
-> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
->   bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->                           AddressSpace *as, Error **errp);
->   void vfio_detach_device(VFIODevice *vbasedev);
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index b0beed44116e..cc14f0e3fe24 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1544,7 +1544,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->   {
->       const VFIOIOMMUClass *ops =
->           VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-> -    HostIOMMUDevice *hiod;
-> +    HostIOMMUDevice *hiod = NULL;
+
+>           if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
+>               error_setg(&err,
+> -                       "%s: VFIO device doesn't support device dirty tracking",
+> -                       vbasedev->name);
+> +                       "%s: VFIO device doesn't support device and "
+> +                       "IOMMU dirty tracking", vbasedev->name);
+>               goto add_blocker;
+>           }
 >   
->       if (vbasedev->iommufd) {
->           ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
-> @@ -1552,21 +1552,17 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->   
->       assert(ops);
->   
-> -    if (!ops->attach_device(name, vbasedev, as, errp)) {
-> -        return false;
-> -    }
->   
-> -    if (vbasedev->mdev) {
-> -        return true;
-> +    if (!vbasedev->mdev) {
-> +        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-> +        vbasedev->hiod = hiod;
+> -        warn_report("%s: VFIO device doesn't support device dirty tracking",
+> -                    vbasedev->name);
+> +        warn_report("%s: VFIO device doesn't support device and "
+> +                    "IOMMU dirty tracking", vbasedev->name);
 >       }
 >   
-> -    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-> -    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
-> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
->           object_unref(hiod);
-> -        ops->detach_device(vbasedev);
-> +        vbasedev->hiod = NULL;
->           return false;
->       }
-> -    vbasedev->hiod = hiod;
->   
->       return true;
->   }
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index c27f448ba26e..adb302216e23 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -917,6 +917,10 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
->   
->       trace_vfio_attach_device(vbasedev->name, groupid);
->   
-> +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
-> +        return false;
-> +    }
-> +
->       group = vfio_get_group(groupid, as, errp);
->       if (!group) {
->           return false;
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index 7e23e9080c9d..ea15c79db0a3 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -689,3 +689,14 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev)
->       subsys = realpath(tmp, NULL);
->       return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
->   }
-> +
-> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
-> +{
-> +    HostIOMMUDevice *hiod = vbasedev->hiod;
-> +
-> +    if (!hiod) {
-> +        return true;
-> +    }
-> +
-> +    return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp);
-> +}
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 7a10b1e90a6f..bb44d948c735 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -403,6 +403,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
->   
->       space = vfio_get_address_space(as);
->   
-> +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
-> +        return false;
-> +    }
-> +
->       /* try to attach to an existing container in this space */
->       QLIST_FOREACH(bcontainer, &space->containers, next) {
->           container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+>       ret = vfio_block_multiple_devices_migration(vbasedev, errp);
 
 
