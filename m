@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF2CC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 16:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB92EC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 16:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUq6T-0005nw-Cl; Fri, 19 Jul 2024 12:05:05 -0400
+	id 1sUqT1-0007xK-Jp; Fri, 19 Jul 2024 12:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1sUq6S-0005n7-9p
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:05:04 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUqSz-0007wV-Uf
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:28:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1sUq6O-0005g7-O1
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:05:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721405101; x=1752941101;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=kYt4UDBdOF6BsVwzu2b5IEEajWkfjXkFEJSvTAgkhSA=;
- b=hiL8lm3zxeBAWXF7sHHrzL+VF9uhTblx2E39yW08UrJZkw41KPk3qOHb
- /xuuUxKDZERKb2FQIlJSaQUn+cZk1OtnBVYBTg0UYQoZLNJi3wRtyBgme
- KZLXrmdxozUFKrnv1PN0olC6V63U3nWDnPQFi44n8CtPba8KY5cbvh55L
- Yu3adGteEF5MX1P3B3cR5cVIiPwCmWw/9JrOET72OCCkTuE0ygCbZWOiH
- F7PBHzGhsLEfo1c7uNgzF2zTLq27VtqWREtoBWEie5tkx5sw64RS+oPuf
- XuOOd3DV0rOcmYeogkC5VIqWub8/WgW+xxy2HpG9QQHtzQLx2LU94pu84 w==;
-X-CSE-ConnectionGUID: l2xBwSOcRvW6lB/utiU7Ag==
-X-CSE-MsgGUID: ovm0AKqjQSumDo75PVH6RQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11138"; a="41548714"
-X-IronPort-AV: E=Sophos;i="6.09,221,1716274800"; d="scan'208";a="41548714"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Jul 2024 09:04:52 -0700
-X-CSE-ConnectionGUID: 67IU+5wqQlK14ipapRYxvg==
-X-CSE-MsgGUID: xaZ7BVu5TseJHcJomKBn4w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,221,1716274800"; d="scan'208";a="50896205"
-Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.125.109.46])
- ([10.125.109.46])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Jul 2024 09:04:51 -0700
-Message-ID: <ec0f2e8d-e783-4211-8d41-2b9a6df67049@intel.com>
-Date: Fri, 19 Jul 2024 09:04:50 -0700
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUqSx-0002ds-JE
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:28:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721406497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9UuX42X/yKsA5znO4k3OK1xGFvZoJshl5haW9XBx7iQ=;
+ b=DWe8zYlyhtgx+EZ0YRhjO37lURNaOD3aU/luCOrMj5/9mQJvCXfSqxPOmwfqc6TRcNitlN
+ VSDSrHj+Ftd36m1X7t2I20lwDwULNt971NLaSl6U5ZPuoMUnOuv2TAO2gr9cMhiEpbwI1C
+ 5+sjK3lvZ+9I3Jx+s9un0bXtjzA7J3o=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-343-48LfaK06NwyVdOeoFctUDw-1; Fri, 19 Jul 2024 12:28:12 -0400
+X-MC-Unique: 48LfaK06NwyVdOeoFctUDw-1
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-8064498eb84so29261839f.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 09:28:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721406492; x=1722011292;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9UuX42X/yKsA5znO4k3OK1xGFvZoJshl5haW9XBx7iQ=;
+ b=Bq/fL9spgAGRpmnYi5iVVEvdcZmuCP3DDrwMJrC9RnY7jVw+80Pe8hYaFlcB+ykFOm
+ ylGnxChN47Svkmf27tcIoZGUBWjpaD/EyIrYYx1ntngUV38vEESEC0XNnyQetmUsjupU
+ KoQJm4B38nH4gTNUg+EzIZ6kivQ8OUy3uVOkWecib+1nlbsj5kf+BMd3kSzXP5MyxWmI
+ 1NRarOhebOF2ktbgFMabGwHwNpzGyLa4KBebgKG7YAG9ClJbwwo8tWtY1v+4lUbdiyAi
+ RdZnZ+RO843657Q50WGTwM8jjCHbcF0ad2FAkhkm+4XnOXjEUmOLnnNM1uQgV9CvTaVF
+ zFaQ==
+X-Gm-Message-State: AOJu0YxTbKvcU+q5EJvjtNNVXqgusUSHUo3Uz6nEJlf86DmchFIO+v/k
+ xqMbVdKxzpeyjytLjIMujIfrlwWkOEV9yyuXCbJFBCXevJ0Z4pXMbpbi5JFHnfAnf2zhpme1HZ/
+ /KfR3L85IYiaJnVJ3pevEL/rLbr8kPd15xKIf9Qt0hJ2XTCGr9Wu7
+X-Received: by 2002:a05:6602:304a:b0:7f9:3fd9:cbb with SMTP id
+ ca18e2360f4ac-81aa4bd5cd5mr29559839f.1.1721406491984; 
+ Fri, 19 Jul 2024 09:28:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkwogKD9mmrsCtsJNwFtA5+x+w7doEbErwVU8cygMPAigT1iyGptwxtC74tQeumw3gTVeGPQ==
+X-Received: by 2002:a05:6602:304a:b0:7f9:3fd9:cbb with SMTP id
+ ca18e2360f4ac-81aa4bd5cd5mr29558539f.1.1721406491616; 
+ Fri, 19 Jul 2024 09:28:11 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4c234407d49sm379734173.179.2024.07.19.09.28.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jul 2024 09:28:11 -0700 (PDT)
+Date: Fri, 19 Jul 2024 12:28:09 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 06/11] migration: fix mismatched GPAs during cpr
+Message-ID: <ZpqUGYclrONQEuc7@x1n>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-7-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>,
- Dan Williams <dan.j.williams@intel.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-Cc: jonathan.cameron@huawei.com, dave@stgolabs.net, ira.weiny@intel.com,
- alison.schofield@intel.com, vishal.l.verma@intel.com
-References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
- <6675bd86ea005_57ac29411@dwillia2-xfh.jf.intel.com.notmuch>
- <965e2c27-6147-4237-b4b6-6aaf74363aa2@fujitsu.com>
- <1fab087b-eb6c-485e-a2ed-f86e8dfacc5d@fujitsu.com>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <1fab087b-eb6c-485e-a2ed-f86e8dfacc5d@fujitsu.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=dave.jiang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1719776434-435013-7-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,157 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sun, Jun 30, 2024 at 12:40:29PM -0700, Steve Sistare wrote:
+> For new cpr modes, ramblock_is_ignored will always be true, because the
+> memory is preserved in place rather than copied.  However, for an ignored
+> block, parse_ramblock currently requires that the received address of the
+> block must match the address of the statically initialized region on the
+> target.  This fails for a PCI rom block, because the memory region address
+> is set when the guest writes to a BAR on the source, which does not occur
+> on the target, causing a "Mismatched GPAs" error during cpr migration.
 
+Is this a common fix with/without cpr mode?
 
-On 7/1/24 7:12 PM, Shiyang Ruan wrote:
-> 
-> 
-> 在 2024/6/25 21:56, Shiyang Ruan 写道:
->>
->>
->> 在 2024/6/22 1:51, Dan Williams 写道:
->>> Shiyang Ruan wrote:
->>>> Background:
->>>> Since CXL device is a memory device, while CPU consumes a poison page of
->>>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
->>>> which-First path is configured.  This is the first report.  Then
->>>> currently, in FW-First path, the poison event is transferred according
->>>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
->>>>   -> CPER -> trace report.  This is the second one.  These two reports
->>>> are indicating the same poisoning page, which is the so-called "duplicate
->>>> report"[1].  And the memory_failure() handling I'm trying to add in
->>>> OS-First path could also be another duplicate report.
->>>>
->>>> Hope the flow below could make it easier to understand:
->>>> CPU accesses bad memory on CXL device, then
->>>>   -> MCE (INT18), *always* report (1)
->>>>   -> * FW-First (implemented now)
->>>>        -> CXL device -> FW
->>>>           -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
->>>>      * OS-First (not implemented yet, I'm working on it)
->>>>        -> CXL device -> MSI
->>>>           -> OS:CXL driver -> memory_failure() (2.b)
->>>> so, the (1) and (2.a/b) are duplicated.
->>>>
->>>> (I didn't get response in my reply for [1] while I have to make patch to
->>>> solve this problem, so please correct me if my understanding is wrong.)
->>>
->>> The CPU MCE may not be in the loop. Consider the case of patrol scrub,
->>> or device-DMA accessing poison. In that case the device will signal a
->>> component event and the CPU may never issue the MCE.
->>
->> My other patch: "cxl/core: add poison creation event handler", adds calling memory_failure() when an event is received form device, which checks the poison record (insert if not exists) to make sure poison would be reported/handled, but not twice, no matter CPU issues the MCE later or earlier.  And the lock of poison record makes sure that it's fine even in race condition.
->>
->>>
->>> What is missing for me from this description is *why* does the duplicate
->>> report matter in practice? If all that happens is that the kernel
->>> repeats the lookup to offline the page and set the HWPoison bit, is that
->>> duplicated work worth adding more tracking?
->>
->> Besides setting the HWPoison bit for the poison page, memory_failure() also finds and notifies those processes who are accessing the poison page, and tries to recovery the page.  And there seems no lock to prevent the 2nd memory_failure() and clearing poison operation from being called in race, then the HWPoison bit could be unsure.  I think that's the problem.
->>
->>  > So, I think all CXL poison notification events should trigger an
->>  > action optional memory_failure(). I expect this needs to make sure
->>  > that duplicates re not a problem. I.e. in the case of CPU consumption
->>  > of CXL poison, that causes a synchronous MF_ACTION_REQUIRED event via
->>  > the MCE path *and* it may trigger the device to send an error record
->>  > for the same page. As far as I can see, duplicate reports (MCE + CXL
->>  > device) are unavoidable.
->>
->> As you mentioned in my other patch, this problem should be solved at first.  My patch adds the poison record (tracking, which might not become very large) to prevent duplicating report.
-> 
-> Ping~
-> 
-> And I had some problems when using xarray, please see below.
-> 
->>
->>>
->>>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
->>>> to check whether the current poison page has been reported (if yes,
->>>> stop the notifier chain, won't call the following memory_failure()
->>>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
->>>> page already handled(recorded and reported) in (1) or (2), the other one
->>>> won't duplicate the report.  The record could be clear when
->>>> cxl_clear_poison() is called.
->>>>
->>>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
->>>>
->>>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
->>>> ---
->>>>   arch/x86/include/asm/mce.h |   1 +
->>>>   drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
->>>>   drivers/cxl/core/memdev.c  |   6 +-
->>>>   drivers/cxl/cxlmem.h       |   3 +
->>>>   4 files changed, 139 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
->>>> index dfd2e9699bd7..d8109c48e7d9 100644
->>>> --- a/arch/x86/include/asm/mce.h
->>>> +++ b/arch/x86/include/asm/mce.h
->>>> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
->>>>       MCE_PRIO_NFIT,
->>>>       MCE_PRIO_EXTLOG,
->>>>       MCE_PRIO_UC,
->>>> +    MCE_PRIO_CXL,
->>>>       MCE_PRIO_EARLY,
->>>>       MCE_PRIO_CEC,
->>>>       MCE_PRIO_HIGHEST = MCE_PRIO_CEC
->>>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
->>>> index 2626f3fff201..0eb3c5401e81 100644
->>>> --- a/drivers/cxl/core/mbox.c
->>>> +++ b/drivers/cxl/core/mbox.c
->>>> @@ -4,6 +4,8 @@
->>>>   #include <linux/debugfs.h>
->>>>   #include <linux/ktime.h>
->>>>   #include <linux/mutex.h>
->>>> +#include <linux/notifier.h>
->>>> +#include <asm/mce.h>
->>>>   #include <asm/unaligned.h>
->>>>   #include <cxlpci.h>
->>>>   #include <cxlmem.h>
->>>> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
->>>>           if (cxlr)
->>>>               hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
->>>> +        if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
->>>> +            return;
->>>> +
->>>>           if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
->>>>               trace_cxl_general_media(cxlmd, type, cxlr, hpa,
->>>>                           &evt->gen_media);
->>>> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
->>>>   }
->>>>   EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
->>>> +struct cxl_mce_record {
->>>> +    struct list_head node;
->>>> +    u64 hpa;
->>>> +};
->>>> +LIST_HEAD(cxl_mce_records);
->>>> +DEFINE_MUTEX(cxl_mce_mutex);
->>>
->>> I would recommend an xarray for this use case as that already has its
->>> own internal locking and efficient memory allocation for new nodes.
->>>
->>> However, the "why" question needs to be answered first.
->>
->> xarray does look better.  I didn't think of it befre.  Thanks for suggestion.
-> 
-> I'm trying using xarray but but I'm running into two problems.
-> 
-> The first one is: xarray stores an entry with a specified index, but here we only need to store the PFN.  I'm not sure how to specific an index for a PFN.  So I think xarray might not suitable for my case.
-> The second one: because we only need to store/search PFN, the list node only contains a list_head and a PFN. But xarray seems to require more memory for each node, which causes more overhead.
+It looks to me mr->addr (for these ROMs) should only be set in PCI config
+region updates as you mentioned.  But then I didn't figure out when they're
+updated on dest in live migration: the ramblock info was sent at the
+beginning of migration, so it doesn't even have PCI config space migrated;
+I thought the real mr->addr should be in there.
 
-Use PFN as the index of the xarray since it's unique. And that makes finding the entry easy with xarray because you just pass in the PFN as the key. You can store an xarray entry with no data. At this point you are just detecting whether the entry has been stored (valid) or not. Hope that helps.  
+I also failed to understand yet on why the mr->addr check needs to be done
+by ignore-shared only.  Some explanation would be greatly helpful around
+this area..
 
-> 
-> Maybe I'm overthinking this?
-> 
-> 
-> -- 
-> Thanks
-> Ruan.
-> 
->>
->> -- 
->> Thanks
->> Ruan.
+Thanks,
+
+-- 
+Peter Xu
+
 
