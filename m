@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92F7C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D96C4C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 18:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUs54-0003sS-99; Fri, 19 Jul 2024 14:11:46 -0400
+	id 1sUs52-0003ej-7Y; Fri, 19 Jul 2024 14:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs52-0003gb-I7
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:44 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs4x-0003G4-9O
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:40 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs50-0003uI-Cw
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:44 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42660b8dd27so13652825e9.3
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:11:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUs4u-0003sc-IM
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 14:11:39 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-427db004e36so248275e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 11:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721412700; x=1722017500; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721412694; x=1722017494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g8wjXx2GxaXvhCmT3K/sKVDQtxch9aqIxPKOi+RY35s=;
- b=Izxs50haudGCc2YV2T/tqmBa/fy+QhBkgPFUssAGU4kgTAw7S/vwFstBJm5Mealdxx
- 5ol8W/ozfkMK9eEXE1RUFmzsVpWrtjX0TPjqovzOVdZZs5vAPH/RqO2WZs0di6VacaYr
- da51phfxhcLPvQxOer3tf9QoxgUxJD4C9fRiVgWaC453RerVT2b+NjpptIC+nUhTev0k
- uJhXnGePt9Z4vxkKF7n5uUurpYQxKOrDsg/wsDH02/8LHHSIniJKQq9DyZlMnt3Zisaa
- vvC5F2lNZELkRiikBxY0/CazCWF8e3SlgxZnIKzOFasXIcgcSvsv8n6JIJwvn3aA96gi
- jpNA==
+ bh=k2XEnhFM3nuD2qGNt8O7aO/xmQeeA1+fM2YLyMtjpsg=;
+ b=viZsthjWLt1sOM9/zWtp6qw4w6uBYfCHHCU6A5TmK+Pv4Cs608fLDMdtlBqqvzAgIY
+ iqpOuJ0DoGZz4lbuCehZBo+oQq1DahlxqS2I7Wyz5lgWdaBzmhqWtGTbNKOTxwXsvHcn
+ r5hWH//RA3i4fgnKgMMDMtg9K8VhGKoXQB6sPx23PXgua3wvqcZiV2JI2X8kEdajMqBS
+ V/8IEDnLIHwSYV3WKO+8g9sDQldDMyfsOSENRALuJSAHOt7MaalVXAUe+sjtSE8bnhU2
+ BvS3DI1lCs2r0+4kkfykj3iGrmqYJSm/iW8zesF/Dm1NCfGI6x8GF2Sqmttvfxm+CLzT
+ yGtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721412700; x=1722017500;
+ d=1e100.net; s=20230601; t=1721412694; x=1722017494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g8wjXx2GxaXvhCmT3K/sKVDQtxch9aqIxPKOi+RY35s=;
- b=GQVKEuuH0JNq0cvsZm8d4VB4HdeLma4LPNWosyePji0sVvDyhEX5EmNNAQZ+9sfm1E
- uUsAUa8upLrX36e/dEeXXUxsP25YAtjgTJz3ls42wpvvMSk6njmDtHEhIO69yXVaZtQg
- pkGeLNiXMNsXOnsc5q995MwzP8C0TWZVUjc/aSpuSgJE9HmmyRhgT5gYT49ObkcKec47
- ZixC0mfaq+Kw3k9/HPEIDGPS+N4yzgWytKXYeGNoeHyFCuk9WbYVNF1JGQ6OAmn16wTC
- FaLi68zzXgen3klMVyej+FH6D/F6SyVbLTZiEcWR1hdAA5kurW9XlH7Kxy64OFI/m7eS
- GrPA==
-X-Gm-Message-State: AOJu0YyKzDH+RHj5Y5kFgxYUljUHi+AFOnSOMbMtJfPZZrf+cYWy2s1v
- LTsmtYRPu3okIYljnj3l4SM0FMUnaoaLDZ+u4Y1KWKVmcu2yPiudXqv7RyF9iIGH7XGSLKFYNxA
- 1
-X-Google-Smtp-Source: AGHT+IEQVsRzjCNWPuwRgcSt5N92vn8toj1j0Vw3yyreHnS3jvRH2VUU2YVFQeZXLjFBymNif10exQ==
-X-Received: by 2002:a05:600c:1550:b0:426:68f2:4d7b with SMTP id
- 5b1f17b1804b1-427c2ca57admr55957355e9.3.1721412700009; 
- Fri, 19 Jul 2024 11:11:40 -0700 (PDT)
+ bh=k2XEnhFM3nuD2qGNt8O7aO/xmQeeA1+fM2YLyMtjpsg=;
+ b=ojFtWrN/uB8/hQNrJB8i8UG8mZvG9J2eqos8ih/9+OiGXBi/6+ekm7ENoUDfumf+LZ
+ eQu8Gi6pVS902FSgKkiHi3nBmMK3FZ9h+EsaBJQXAzYD3x2qY9qvuRnj38PgcVUzsoey
+ GtE5eq9NRBvSbLMaDCwUg60xQ7VfLZ+cqGPqzeoR67mB2TFFYH8+Ii1vfMPAwxocpNhJ
+ ejngXI7qsUQg2shpvakotCDkphx+sSghMg1xKzG2BOf2fkyAzvfECzoThC/YEE3WZleP
+ KFmPYFMsTDk7MIh4JLh5+RrA98hcJWCjGNKMlU4V4Z4eZh2rzh6aEBdOVeGYLQJT/mtX
+ BHfA==
+X-Gm-Message-State: AOJu0YyLxeFpnzNq9CkgSjwp5JLICeEpbDMhXhRvnRiqYudYegquOmcR
+ TMENNoh9ZFbRn6O6W2xXCdRogW0UnvZ7Tmg82WEYXTcvDwIE9w5SZX7/1gzMbxuYcJc+hUhcV49
+ M
+X-Google-Smtp-Source: AGHT+IEr89MmK4OUZpr7c5pFLvBB8jJPGvUyda7rkXtYo6bxb/wIkpX5bKrrajVZmNqvyxZbn1T21Q==
+X-Received: by 2002:a05:600c:1c21:b0:426:5d0d:a2c9 with SMTP id
+ 5b1f17b1804b1-427c2cd36d1mr63774875e9.10.1721412694282; 
+ Fri, 19 Jul 2024 11:11:34 -0700 (PDT)
 Received: from localhost.localdomain (52.170.88.92.rev.sfr.net. [92.88.170.52])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868420fsm2232641f8f.3.2024.07.19.11.11.38
+ 5b1f17b1804b1-427d2a7257esm59439785e9.28.2024.07.19.11.11.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 19 Jul 2024 11:11:39 -0700 (PDT)
+ Fri, 19 Jul 2024 11:11:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -65,18 +65,19 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Tong Ho <tong.ho@amd.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 09/16] tests/qtest: Update tests using PL011 UART
-Date: Fri, 19 Jul 2024 20:10:34 +0200
-Message-ID: <20240719181041.49545-10-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v5 08/16] hw/char/pl011: Warn when using disabled transmitter
+Date: Fri, 19 Jul 2024 20:10:33 +0200
+Message-ID: <20240719181041.49545-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240719181041.49545-1-philmd@linaro.org>
 References: <20240719181041.49545-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,56 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We weren't enabling the PL011 TX UART before using it
-on the raspi and virt machines. Update the ASM code
-prefixing:
-
-  *UART_CTRL = UART_ENABLE | TX_ENABLE;
-
-to:
-
-  while (true) {
-      *UART_DATA = 'T';
-  }
+We shouldn't transmit characters when the full UART or its
+transmitter is disabled. However we don't want to break the
+possibly incomplete "my first bare metal assembly program"s,
+so we choose to simply display a warning when this occurs.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/qtest/boot-serial-test.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ hw/char/pl011.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 3b92fa5d50..5cb309ccf0 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -70,18 +70,23 @@ static const uint8_t kernel_plml605[] = {
- };
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 5e44837206..c76283dccf 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -85,7 +85,9 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Chardev *chr)
+ #define CR_OUT1     (1 << 12)
+ #define CR_RTS      (1 << 11)
+ #define CR_DTR      (1 << 10)
++#define CR_TXE      (1 << 8)
+ #define CR_LBE      (1 << 7)
++#define CR_UARTEN   (1 << 0)
  
- static const uint8_t bios_raspi2[] = {
--    0x08, 0x30, 0x9f, 0xe5,                 /* ldr   r3,[pc,#8]    Get base */
-+    0x10, 0x30, 0x9f, 0xe5,                 /* ldr     r3,[pc,#8]    Get base */
-+    0x10, 0x20, 0x9f, 0xe5,                 /* ldr     r2,[pc,#8]    Get CR */
-+    0xb0, 0x23, 0xc3, 0xe1,                 /* strh    r2,[r3, #48]  Set CR */
-     0x54, 0x20, 0xa0, 0xe3,                 /* mov     r2,#'T' */
--    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3] */
--    0xfb, 0xff, 0xff, 0xea,                 /* b       loop */
-+    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3]       loop: */
-+    0xfd, 0xff, 0xff, 0xea,                 /* b       loop */
-     0x00, 0x10, 0x20, 0x3f,                 /* 0x3f201000 = UART0 base addr */
-+    0x01, 0x01, 0x00, 0x00,                 /* 0x101      = CR UARTEN|TXE */
- };
+ /* Integer Baud Rate Divider, UARTIBRD */
+ #define IBRD_MASK 0x3f
+@@ -223,7 +225,12 @@ static void pl011_loopback_tx(PL011State *s, uint32_t value)
  
- static const uint8_t kernel_aarch64[] = {
--    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
-     0x02, 0x20, 0xa1, 0xd2,                 /* mov     x2, #0x9000000 */
-+    0x21, 0x20, 0x80, 0x52,                 /* mov     w1, #0x101 */
-+    0x41, 0x60, 0x00, 0x79,                 /* strh    w1, [x2, #48] */
-+    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
-     0x41, 0x00, 0x00, 0x39,                 /* strb    w1, [x2] */
--    0xfd, 0xff, 0xff, 0x17,                 /* b       -12 (loop) */
-+    0xff, 0xff, 0xff, 0x17,                 /* b       -4 (loop) */
- };
+ static void pl011_write_txdata(PL011State *s, uint8_t data)
+ {
+-    /* ??? Check if transmitter is enabled.  */
++    if (!(s->cr & CR_UARTEN)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "PL011 data written to disabled UART\n");
++    }
++    if (!(s->cr & CR_TXE)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "PL011 data written to disabled TX UART\n");
++    }
  
- static const uint8_t kernel_nrf51[] = {
+     /* XXX this blocks entire thread. Rewrite to use
+      * qemu_chr_fe_write and background I/O callbacks */
 -- 
 2.41.0
 
