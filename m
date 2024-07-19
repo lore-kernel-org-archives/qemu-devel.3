@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60713C3DA61
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 01:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FB3C3DA61
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 01:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUc66-0003Um-AL; Thu, 18 Jul 2024 21:07:47 -0400
+	id 1sUc6r-0006jk-K1; Thu, 18 Jul 2024 21:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUc5i-0002oV-8f
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:07:23 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sUc6M-0004FZ-Hx
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:08:05 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sUc5f-0000iO-Pl
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:07:21 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70b4267ccfcso337600b3a.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 18:07:19 -0700 (PDT)
+ id 1sUc6J-0000wG-KI
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 21:08:01 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-78512d44a13so847489a12.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jul 2024 18:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721351238; x=1721956038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721351277; x=1721956077; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=afR5Mh7AuJ+l97gjVcHTy2tuYfmOnsauTdcz7zi2zaI=;
- b=G3tdhOtNah+qVrGYaT8h6SC2Kj/UFyjRvVJbmESmHs4vtAq0uXh1OKPBUw3my3tKPn
- gJI6OP4KBrXxcUeqdBVnyzq0LAVE3UQ0EpYf/xdfohB8EmAKGkoBWEzMYVg1nlwm1SJ4
- MRsP43a94jhFSP5PQztMlIG17RrWAsJMMRKiwHhlDwl3BfqritYC7Uwtg1OCqU9VPVqD
- iMDEvL1RocXmdEuk3EEtUOkVC84/nAqChzYc48AeaS4mC2+goDPlWtuYQxnOtp1tnT+X
- DfJZ9E5s12hc810FcFP7umTaBn8dXhPPN0Kos0H74uSx2OB9MMU8uUyRnvd4pjb1zZ2p
- rGvA==
+ bh=wN2PEtP+rz1MoCCGhce/mKwLbs1GmxS63nYc3i7jjaE=;
+ b=GIS28H9gxYaJWBJymaxkuh1fOecsIoYL7Dl83TWmR8h1ntX059QDEKjAv4R9euVO9L
+ 6I0figjFdEWQrkOExWHM/qxVkhUBcTVkXaVkD0BKTA1oa08XqAy6mIzQiRJKUu1JLmq3
+ ry7nEs1DUwactNHxoT98P6Wvi3PSp0oF4E4mdtma1eb0yT84d2Zm1heG44Cs9P88PHap
+ oreeVqHVSeFR+AS/UbFjpl7vodxP75hkfetUt9WSPdDdkGd6g2JaJoU8C3RQMHXMojLo
+ Q0IeJ7T7HDDHnuzHD31Lr8A+UjNWHE+9ByrhYyn92IuwO3f1nsACi8MX3SmnG6kYHzNZ
+ jDlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721351238; x=1721956038;
+ d=1e100.net; s=20230601; t=1721351277; x=1721956077;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=afR5Mh7AuJ+l97gjVcHTy2tuYfmOnsauTdcz7zi2zaI=;
- b=rFHOqQZDW7sWqmnnQ8ROJ07dTbv/Mqjp+PJaoeoJuQWbh+5jzQD1XQXHqXeYlA8nK1
- FWdt2KbuTQXazAezT6GY+ZT14x1BFjipTV08KEAFpadFvhXKm5Kzuzg5Lw3NYnW4Vk6d
- MHKZv3OdjwE5IikF2gZ4pJP4LXSo6hgi9NfvzQNhO7UvvrsMgI0diXsZIiLgY5N4ZuA1
- RFNvaPWBmaN/0o8xlEigVVPDpOEXjZjewxCF5TFEFINx2GYa/XWrbbLzpd8ZTl1YpvyJ
- pmfb3ewBBW6kEXdcz3CIgLLJUmssBO46Zi9TOa46tixT88TIzgP4INHP/VKah1q7ur4f
- xbOg==
-X-Gm-Message-State: AOJu0Yw7nbAR/Cm/cDN9hbWPOPksMUbi5CqKJPbKU0lr1Iw9L8ZnJcvB
- ifTGXmByWTPQaQiTRYeHxAfEkcVBBFz4MTzd2s/ksgM4VE+ylEEoQVgZlW1VlD78dPhOLs1EB4G
- QNeX3zg==
-X-Google-Smtp-Source: AGHT+IEN8c8ycEDlgr59LbvMcJDMUbZM15uorvPF9CFw5qQGTbXo+Q6cI7SQ5JeKHUzsWBQerzDTLQ==
-X-Received: by 2002:a05:6a21:4d8a:b0:1c3:cfc2:2b1f with SMTP id
- adf61e73a8af0-1c3fdd4d424mr6815533637.37.1721351237977; 
- Thu, 18 Jul 2024 18:07:17 -0700 (PDT)
+ bh=wN2PEtP+rz1MoCCGhce/mKwLbs1GmxS63nYc3i7jjaE=;
+ b=xONqIMvodZ59UtJ23l0QNj7otJ64tQEWriwdkY+YLPdFunD2AzJwGiUaIlZdHtO0FJ
+ OcOlBgI10+OjvR5ULKi5XB6URSPSZfYQWhr5YjDH+Ae3Is7T8EYuQ5yRkywiUG5q3bKz
+ 32hvDfvc9tG1MEjWPHQwK38CQIq8jOSWYzJ6HV2+Jh3Rwg6Tz/m5H9TVhEoqirbYhf35
+ wxabcLKv4zu5ZRpn6fSBnTzGRnt4fWzOBR1/cSto++KTPM5IYRo/6UBVL9McM16RDecL
+ EHOIpT6lvWLG1S662w+nVvLnGPAmChZ8JtesSGE+t5bYHl5XhLVy4WcMRIfrNANgyZX7
+ ybyg==
+X-Gm-Message-State: AOJu0Ywhhu5Ug2XPFBpTzo5JAe/csdYF5pRngWP12JhgyqUIAhYS5DpM
+ YzBOk96X2I/I5ixc2hfBBCjW6pyRIT4X7bMR7jj9lHCBY28XFYAIzR8s2AKIr7YHeohdCCEJXDX
+ Ked5MfA==
+X-Google-Smtp-Source: AGHT+IGhPxajhxgOVWiFmtLIIONpvdhohDePDWcIIWw5XK3xyb7NGQNt6fxO3hE1cGBghDFH+OynBQ==
+X-Received: by 2002:a05:6a21:6da3:b0:1c3:a760:9757 with SMTP id
+ adf61e73a8af0-1c3fddf4e40mr9104790637.49.1721351276741; 
+ Thu, 18 Jul 2024 18:07:56 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd64d07ad9sm2067415ad.177.2024.07.18.18.07.14
+ d9443c01a7336-1fd64d07ad9sm2067415ad.177.2024.07.18.18.07.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jul 2024 18:07:17 -0700 (PDT)
+ Thu, 18 Jul 2024 18:07:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongu.org, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 01/12] accel/tcg: Move {set,
- clear}_helper_retaddr to cpu_ldst.h
-Date: Fri, 19 Jul 2024 11:06:56 +1000
-Message-ID: <20240719010707.1319675-2-richard.henderson@linaro.org>
+ qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v3 12/12] target/riscv: Simplify probing in vext_ldff
+Date: Fri, 19 Jul 2024 11:07:07 +1000
+Message-ID: <20240719010707.1319675-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240719010707.1319675-1-richard.henderson@linaro.org>
 References: <20240719010707.1319675-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: 37
 X-Spam_score: 3.7
 X-Spam_bar: +++
@@ -95,122 +94,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use of these in helpers goes hand-in-hand with tlb_vaddr_to_host
-and other probing functions.
+The current pairing of tlb_vaddr_to_host with extra is either
+inefficient (user-only, with page_check_range) or incorrect
+(system, with probe_pages).
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+For proper non-fault behaviour, use probe_access_flags with
+its nonfault parameter set to true.
+
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/user-retaddr.h | 28 ----------------------------
- include/exec/cpu_ldst.h  | 34 ++++++++++++++++++++++++++++++++++
- accel/tcg/cpu-exec.c     |  3 ---
- accel/tcg/user-exec.c    |  1 -
- 4 files changed, 34 insertions(+), 32 deletions(-)
- delete mode 100644 accel/tcg/user-retaddr.h
+ target/riscv/vector_helper.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/accel/tcg/user-retaddr.h b/accel/tcg/user-retaddr.h
-deleted file mode 100644
-index e0f57e1994..0000000000
---- a/accel/tcg/user-retaddr.h
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#ifndef ACCEL_TCG_USER_RETADDR_H
--#define ACCEL_TCG_USER_RETADDR_H
--
--#include "qemu/atomic.h"
--
--extern __thread uintptr_t helper_retaddr;
--
--static inline void set_helper_retaddr(uintptr_t ra)
--{
--    helper_retaddr = ra;
--    /*
--     * Ensure that this write is visible to the SIGSEGV handler that
--     * may be invoked due to a subsequent invalid memory operation.
--     */
--    signal_barrier();
--}
--
--static inline void clear_helper_retaddr(void)
--{
--    /*
--     * Ensure that previous memory operations have succeeded before
--     * removing the data visible to the signal handler.
--     */
--    signal_barrier();
--    helper_retaddr = 0;
--}
--
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 1b4d5a8e37..10a52ceb5b 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -474,7 +474,6 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+           vext_ldst_elem_fn *ldst_elem,
+           uint32_t log2_esz, uintptr_t ra)
+ {
+-    void *host;
+     uint32_t i, k, vl = 0;
+     uint32_t nf = vext_nf(desc);
+     uint32_t vm = vext_vm(desc);
+@@ -493,27 +492,31 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+         }
+         addr = adjust_addr(env, base + i * (nf << log2_esz));
+         if (i == 0) {
++            /* Allow fault on first element. */
+             probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
+         } else {
+-            /* if it triggers an exception, no need to check watchpoint */
+             remain = nf << log2_esz;
+             while (remain > 0) {
++                void *host;
++                int flags;
++
+                 offset = -(addr | TARGET_PAGE_MASK);
+-                host = tlb_vaddr_to_host(env, addr, MMU_DATA_LOAD, mmu_index);
+-                if (host) {
+-#ifdef CONFIG_USER_ONLY
+-                    if (!page_check_range(addr, offset, PAGE_READ)) {
+-                        vl = i;
+-                        goto ProbeSuccess;
+-                    }
+-#else
+-                    probe_pages(env, addr, offset, ra, MMU_DATA_LOAD);
 -#endif
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 71009f84f5..dac12bd8eb 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -379,4 +379,38 @@ void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
-                         MMUAccessType access_type, int mmu_idx);
- #endif
- 
-+/*
-+ * For user-only, helpers that use guest to host address translation
-+ * must protect the actual host memory access by recording 'retaddr'
-+ * for the signal handler.  This is required for a race condition in
-+ * which another thread unmaps the page between a probe and the
-+ * actual access.
-+ */
-+#ifdef CONFIG_USER_ONLY
-+extern __thread uintptr_t helper_retaddr;
+-                } else {
 +
-+static inline void set_helper_retaddr(uintptr_t ra)
-+{
-+    helper_retaddr = ra;
-+    /*
-+     * Ensure that this write is visible to the SIGSEGV handler that
-+     * may be invoked due to a subsequent invalid memory operation.
-+     */
-+    signal_barrier();
-+}
++                /* Probe nonfault on subsequent elements. */
++                flags = probe_access_flags(env, addr, offset, MMU_DATA_LOAD,
++                                           mmu_index, true, &host, 0);
 +
-+static inline void clear_helper_retaddr(void)
-+{
-+    /*
-+     * Ensure that previous memory operations have succeeded before
-+     * removing the data visible to the signal handler.
-+     */
-+    signal_barrier();
-+    helper_retaddr = 0;
-+}
-+#else
-+#define set_helper_retaddr(ra)   do { } while (0)
-+#define clear_helper_retaddr()   do { } while (0)
-+#endif
-+
- #endif /* CPU_LDST_H */
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 9010dad073..8163295f34 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -41,9 +41,6 @@
- #include "tb-context.h"
- #include "internal-common.h"
- #include "internal-target.h"
--#if defined(CONFIG_USER_ONLY)
--#include "user-retaddr.h"
--#endif
- 
- /* -icount align implementation. */
- 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 80d24540ed..7ddc47b0ba 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -33,7 +33,6 @@
- #include "tcg/tcg-ldst.h"
- #include "internal-common.h"
- #include "internal-target.h"
--#include "user-retaddr.h"
- 
- __thread uintptr_t helper_retaddr;
- 
++                /*
++                 * Stop if invalid (unmapped) or mmio (transaction may fail).
++                 * Do not stop if watchpoint, as the spec says that
++                 * first-fault should continue to access the same
++                 * elements regardless of any watchpoint.
++                 */
++                if (flags & ~TLB_WATCHPOINT) {
+                     vl = i;
+                     goto ProbeSuccess;
+                 }
+-                if (remain <=  offset) {
++                if (remain <= offset) {
+                     break;
+                 }
+                 remain -= offset;
 -- 
 2.43.0
 
