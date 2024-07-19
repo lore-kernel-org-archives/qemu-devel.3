@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3124CC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 21:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBB7C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 21:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUv6i-0005lF-Fr; Fri, 19 Jul 2024 17:25:40 -0400
+	id 1sUvC7-00064l-Qs; Fri, 19 Jul 2024 17:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUv6g-0005gY-Dj; Fri, 19 Jul 2024 17:25:38 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUv6e-0001fO-D2; Fri, 19 Jul 2024 17:25:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=8XYBJwUoqgclEuv4hcBZLNekYaOfrq+MlZwBxidzTao=; b=JCdiH8DMzWFV6KzpcbG9T+xcTe
- 7ITGVFtzrtgK8n7/giGU9bsWjrnLIB8TjodwLeo8vVIz953ZSSB9t+5zwwSSmfPt2Wn0gXdPajg90
- ENEb/ihfGcZ7vA4FuCGXFgTctl+0hY+RkFAlwCcWRDXSYmKcKpwO6immAP8TbX/xJozDyvRtoRJ1P
- C5Da2BpuWbcqAq8C+9uKyR2pNZg8FG0eVeBSeijz9to2jynMB3W8UbpUfwuDK0C3SIEigoDLVTlt2
- SucEl5Z3SlRuAQDd64tClJhoEPi+frTi8xxIy4dael50Ks6WpiLAqQfPuhF9YSE8lGH27Gw+L3b3L
- ATgariPGuNtbUergHex+SzChAeFtW8Dq3kSVwYofXzuSV4C9J0Ei4Obqb5eLteRa+SPealSCUThJf
- JkduQBJjF6nP2dEgIetFxPn/Zhk4hAG74aVdwMhxM9tVe1Ti/+4OW4G3pRXGcus3BWPQ82+tacrAa
- hLFqFD84t3mHmk57SwDxIIYBIMZsZLhg0vtZvV2apVJLGlW9vlAY29SbivOjAWzFKQcwNuBxHGnhn
- 9XiSX5uAEvekbrtF8h7a8ZGx9YiuIHivyU6s2Utc+7zGmSauXnUOqyZgkJyS7yueJyJIOc5Tb/PAY
- TNiLdJQUesVca00XL5n1mGy3jjwV+5FgisK1Qh2F4=;
-Received: from [2a00:23c4:8bb4:4000:502:30b7:7825:e35a]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sUv53-0002yI-AW; Fri, 19 Jul 2024 22:24:01 +0100
-Message-ID: <4e6b616f-3acc-4130-9b92-1af7fed540da@ilande.co.uk>
-Date: Fri, 19 Jul 2024 22:25:25 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUvC3-00063a-VQ
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 17:31:12 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sUvBy-0002VN-3k
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 17:31:11 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E2F9E21AC6;
+ Fri, 19 Jul 2024 21:31:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721424662; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Eig/d6eML9ExfrLkGgKZKczJYzGuJmk8L9q7Tf24FEM=;
+ b=kObDE6o3PHfyJrvM+7KiLQni14RvsFuiZyG0A8aPjIoNAOGFcgycClt6pxJcPYWk5unRpJ
+ t7MSAcI/9/p7kSilRwZB+0xDsLHlKJoJrqZdY9eQJbjEzyYzTKW3pJzqtZ7dj1xDLY5j/8
+ sqKgH3htLX5gj33eQN0vQ2KXK+HdgKU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721424662;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Eig/d6eML9ExfrLkGgKZKczJYzGuJmk8L9q7Tf24FEM=;
+ b=4f2zy8pv73TYY5rtnHxX32NeuoiOgwRh0AXJAyL0j5/1SQQrm7f5syjdaujAc+EhJCm00N
+ rZq7VOeFxvbnPRBg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721424661; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Eig/d6eML9ExfrLkGgKZKczJYzGuJmk8L9q7Tf24FEM=;
+ b=cj2rd0rfjdoMfd2nhxk472rRzsRy/oc43DbF+7EWnB+E4MmysLtkaQ2avPOsbrcYh9DIDb
+ xLvx9J9oJRYIATCpD7AuV8gZqx8SDLQJdomfkXyi4DO4XcGO0p3rHufPJcD5XDcx/M1ige
+ qEqHU1ED7tHH3Od02ckZexWkjTl0nV4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721424661;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Eig/d6eML9ExfrLkGgKZKczJYzGuJmk8L9q7Tf24FEM=;
+ b=qtrlNzCysahHvctPD1ZnMpW2lpaSnIjU/B1w9+WJXk7v3UhY1ZgD17+5JMzYtcrp/fP7vG
+ jNr3Q/IBMJeOGIAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 66D51132CB;
+ Fri, 19 Jul 2024 21:31:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UiQMCxXbmmbKWgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 19 Jul 2024 21:31:01 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org, "Maciej S .
+ Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
+ the channel parameters
+In-Reply-To: <ZpqpVDnVROeHg9Bn@x1n>
+References: <Zo8DaHbWlrNe3RXL@x1n> <87msmodnly.fsf@suse.de>
+ <ZpAEIvbNr-ANuASV@x1n> <87jzhi1odn.fsf@suse.de> <ZpmFT9O-UN30i1F1@x1n>
+ <87frs61jcr.fsf@suse.de> <ZpmOmXS2G3f_65xK@x1n> <87cyna1gd6.fsf@suse.de>
+ <ZppyVt0LZanF4lIq@x1n> <875xt11fw2.fsf@suse.de> <ZpqpVDnVROeHg9Bn@x1n>
+Date: Fri, 19 Jul 2024 18:30:58 -0300
+Message-ID: <8734o5133h.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org,
- Tong Ho <tong.ho@amd.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mikko Rapeli <mikko.rapeli@linaro.org>
-References: <20240719181041.49545-1-philmd@linaro.org>
- <20240719181041.49545-17-philmd@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240719181041.49545-17-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:502:30b7:7825:e35a
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [RFC PATCH v5 16/16] hw/char/pl011: Implement TX FIFO
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain
+X-Spamd-Result: default: False [-0.10 / 50.00]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,gnu.org:url]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,189 +116,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/07/2024 19:10, Philippe Mathieu-Daudé wrote:
+Peter Xu <peterx@redhat.com> writes:
 
-> If the UART back-end chardev doesn't drain data as fast as stdout
-> does or blocks, buffer in the TX FIFO to try again later.
-> 
-> This avoids having the IO-thread busy waiting on chardev back-ends,
-> reported recently when testing the Trusted Reference Stack and
-> using the socket backend.
-> 
-> Implement registering a front-end 'watch' callback on back-end
-> events, so we can resume transmitting when the back-end is writable
-> again, not blocking the main loop.
-> 
-> Similarly to the RX FIFO path, FIFO level selection is not
-> implemented (interrupt is triggered when a single byte is available
-> in the FIFO).
-> 
-> Reported-by: Mikko Rapeli <mikko.rapeli@linaro.org>
-> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> RFC: Something is still broken, some characters are emitted async...
-> ---
->   hw/char/pl011.c      | 60 ++++++++++++++++++++++++++++++++++++--------
->   hw/char/trace-events |  1 +
->   2 files changed, 51 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index cfa3fd3da4..9f72b6a765 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -240,7 +240,9 @@ static gboolean pl011_xmit(void *do_not_use, GIOCondition cond, void *opaque)
->   {
->       PL011State *s = opaque;
->       int bytes_consumed;
-> -    uint8_t data;
-> +    const uint8_t *buf;
-> +    uint32_t buflen;
-> +    uint32_t count;
->   
->       if (!(s->cr & CR_UARTEN)) {
->           qemu_log_mask(LOG_GUEST_ERROR, "PL011 data written to disabled UART\n");
-> @@ -249,25 +251,40 @@ static gboolean pl011_xmit(void *do_not_use, GIOCondition cond, void *opaque)
->           qemu_log_mask(LOG_GUEST_ERROR, "PL011 data written to disabled TX UART\n");
->       }
->   
-> +    count = fifo8_num_used(&s->xmit_fifo);
-> +    if (count < 1) {
-> +        /* FIFO empty */
-> +        return G_SOURCE_REMOVE;
-> +    }
-> +
->       if (!qemu_chr_fe_backend_connected(&s->chr)) {
->           /* Instant drain the fifo when there's no back-end. */
->           pl011_drain_tx(s);
->           return G_SOURCE_REMOVE;
->       }
->   
-> -    data = fifo8_pop(&s->xmit_fifo);
-> -    bytes_consumed = 1;
-> +    buf = fifo8_peek_buf(&s->xmit_fifo, count, &buflen);
->   
-> -    /*
-> -     * XXX this blocks entire thread. Rewrite to use
-> -     * qemu_chr_fe_write and background I/O callbacks
-> -     */
-> -    qemu_chr_fe_write_all(&s->chr, &data, bytes_consumed);
-> +    /* Transmit as much data as we can. */
-> +    bytes_consumed = qemu_chr_fe_write(&s->chr, buf, buflen);
->       trace_pl011_fifo_tx_xmit(bytes_consumed);
-> +    if (bytes_consumed < 0) {
-> +        /* Error in back-end: drain the fifo. */
-> +        pl011_drain_tx(s);
-> +        return G_SOURCE_REMOVE;
-> +    }
-> +
-> +    /* Pop the data we could transmit. */
-> +    fifo8_pop_buf(&s->xmit_fifo, bytes_consumed, NULL);
->       s->int_level |= INT_TX;
->   
->       pl011_update(s);
+> On Fri, Jul 19, 2024 at 01:54:37PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Thu, Jul 18, 2024 at 07:32:05PM -0300, Fabiano Rosas wrote:
+>> >> Peter Xu <peterx@redhat.com> writes:
+>> >> 
+>> >> > On Thu, Jul 18, 2024 at 06:27:32PM -0300, Fabiano Rosas wrote:
+>> >> >> Peter Xu <peterx@redhat.com> writes:
+>> >> >> 
+>> >> >> > On Thu, Jul 18, 2024 at 04:39:00PM -0300, Fabiano Rosas wrote:
+>> >> >> >> v2 is ready, but unfortunately this approach doesn't work. When client A
+>> >> >> >> takes the payload, it fills it with it's data, which may include
+>> >> >> >> allocating memory. MultiFDPages_t does that for the offset. This means
+>> >> >> >> we need a round of free/malloc at every packet sent. For every client
+>> >> >> >> and every allocation they decide to do.
+>> >> >> >
+>> >> >> > Shouldn't be a blocker?  E.g. one option is:
+>> >> >> >
+>> >> >> >     /* Allocate both the pages + offset[] */
+>> >> >> >     MultiFDPages_t *pages = g_malloc0(sizeof(MultiFDPages_t) +
+>> >> >> >                                       sizeof(ram_addr_t) * n, 1);
+>> >> >> >     pages->allocated = n;
+>> >> >> >     pages->offset = &pages[1];
+>> >> >> >
+>> >> >> > Or.. we can also make offset[] dynamic size, if that looks less tricky:
+>> >> >> >
+>> >> >> > typedef struct {
+>> >> >> >     /* number of used pages */
+>> >> >> >     uint32_t num;
+>> >> >> >     /* number of normal pages */
+>> >> >> >     uint32_t normal_num;
+>> >> >> >     /* number of allocated pages */
+>> >> >> >     uint32_t allocated;
+>> >> >> >     RAMBlock *block;
+>> >> >> >     /* offset of each page */
+>> >> >> >     ram_addr_t offset[0];
+>> >> >> > } MultiFDPages_t;
+>> >> >> 
+>> >> >> I think you missed the point. If we hold a pointer inside the payload,
+>> >> >> we lose the reference when the other client takes the structure and puts
+>> >> >> its own data there. So we'll need to alloc/free everytime we send a
+>> >> >> packet.
+>> >> >
+>> >> > For option 1: when the buffer switch happens, MultiFDPages_t will switch as
+>> >> > a whole, including its offset[], because its offset[] always belong to this
+>> >> > MultiFDPages_t.  So yes, we want to lose that *offset reference together
+>> >> > with MultiFDPages_t here, so the offset[] always belongs to one single
+>> >> > MultiFDPages_t object for its lifetime.
+>> >> 
+>> >> MultiFDPages_t is part of MultiFDSendData, it doesn't get allocated
+>> >> individually:
+>> >> 
+>> >> struct MultiFDSendData {
+>> >>     MultiFDPayloadType type;
+>> >>     union {
+>> >>         MultiFDPages_t ram_payload;
+>> >>     } u;
+>> >> };
+>> >> 
+>> >> (and even if it did, then we'd lose the pointer to ram_payload anyway -
+>> >> or require multiple free/alloc)
+>> >
+>> > IMHO it's the same.
+>> >
+>> > The core idea is we allocate a buffer to put MultiFDSendData which may
+>> > contain either Pages_t or DeviceState_t, and the size of the buffer should
+>> > be MAX(A, B).
+>> >
+>> 
+>> Right, but with your zero-length array proposals we need to have a
+>> separate allocation for MultiFDPages_t because to expand the array we
+>> need to include the number of pages.
+>
+> We need to fetch the max size we need and allocate one object covers all
+> the sizes we need.  I sincerely don't understand why it's an issue..
+>
 
-One of the gotchas with Fifo8 is that whilst fifo8_push(), fifo8_pop() and 
-fifo8_push_all() will wrap the FIFO buffer, fifo8_{peek,pop}_buf() do not. For 
-example fifo8_num_used() could return 15, but if xmit_fifo->head is set to 15 then 
-fifo8_{peek_pop}_buf() would return 1 leaving 14 characters in the FIFO at the end of 
-pl011_xmit().
+What you describe is this:
 
-Possible solutions could be to use a loop to send one character at a time similar to:
+p->data = g_malloc(sizeof(MultiFDPayloadType) +
+                   max(sizeof(MultiFDPages_t) + sizeof(ram_addr_t) * page_count,
+                       sizeof(MultiFDDevice_t)));
 
-     while (fifo8_num_used(&s->xmit_fifo)) {
-         uint8_t c = fifo8_pop(&s->xmit_fifo);
+This pushes the payload specific information into multifd_send_setup()
+which is against what we've been doing, namely isolating payload
+information out of multifd main code.
 
-         if (qemu_chr_fe_write(&s->chr, &c, 1) == -1) {
-             fifo8_push(&s->xmit_fifo, c);
-             break;
-         }
-     }
+>> 
+>> Also, don't think only about MultiFDPages_t. With this approach we
+>> cannot have pointers to memory allocated by the client at all anywhere
+>> inside the union. Every pointer needs to have another reference
+>> somewhere else to ensure we don't leak it. That's an unnecessary
+>> restriction.
+>
+> So even if there can be multiple pointers we can definitely play the same
+> trick that we allocate object A+B+C+D in the same chunk and let A->b points
+> to B, A->c points to C, and so on.
+>
+> Before that, my question is do we really need that.
+>
+> For device states, AFAIU it'll always be an opaque buffer..  VFIO needs
+> that, vDPA probably the same, and for VMSDs it'll be a temp buffer to put
+> the VMSD dump.
+>
+> For multifd, I used offset[0] just to make sure things like "dynamic sized
+> multifd buffers" will easily work without much changes.  Or even we could
+> have this, afaict:
+>
+> #define MULTIFD_PAGES_PER_PACKET (128)
+>
+> typedef struct {
+>     /* number of used pages */
+>     uint32_t num;
+>     /* number of normal pages */
+>     uint32_t normal_num;
+>     /* number of allocated pages */
+>     uint32_t allocated;
+>     RAMBlock *block;
+>     /* offset of each page */
+>     ram_addr_t offset[MULTIFD_PAGES_PER_PACKET];
+> } MultiFDPages_t;
 
-Or else use a solution similar to the one I used for ESP at 
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/scsi/esp.c?ref_type=heads#L200. 
-I did think about whether it was worth adding a function similar to the one used for 
-ESP to the Fifo8 API, but wasn't sure it was worth it at the time.
+I think this is off the table, we're looking into allowing multifd
+packet size to change. Page size can change as well.
 
-> +    if (!fifo8_is_empty(&s->xmit_fifo)) {
-> +        /* Reschedule another transmission if we couldn't transmit all. */
-> +        return G_SOURCE_CONTINUE;
-> +    }
-> +
->       return G_SOURCE_REMOVE;
->   }
->   
-> @@ -290,6 +307,10 @@ static void pl011_write_txdata(PL011State *s, uint8_t data)
->       trace_pl011_fifo_tx_put(data);
->       pl011_loopback_tx(s, data);
->       fifo8_push(&s->xmit_fifo, data);
-> +    if (fifo8_is_full(&s->xmit_fifo)) {
-> +        s->flags |= PL011_FLAG_TXFF;
-> +    }
-> +
->       pl011_xmit(NULL, G_IO_OUT, s);
->   }
->   
-> @@ -488,10 +509,24 @@ static void pl011_write(void *opaque, hwaddr offset,
->           pl011_trace_baudrate_change(s);
->           break;
->       case 11: /* UARTLCR_H */
-> -        /* Reset the FIFO state on FIFO enable or disable */
->           if ((s->lcr ^ value) & LCR_FEN) {
-> -            pl011_reset_rx_fifo(s);
-> +            bool fifo_enabled = value & LCR_FEN;
-> +
-> +            trace_pl011_fifo_enable(fifo_enabled);
-> +            if (fifo_enabled) {
-> +                /* Transmit and receive FIFO buffers are enabled (FIFO mode). */
-> +                fifo8_change_capacity(&s->xmit_fifo, PL011_FIFO_DEPTH);
-> +            } else {
-> +                /*
-> +                 * FIFOs are disabled (character mode) that is, the FIFOs
-> +                 * become 1-byte-deep holding registers.
-> +                 */
-> +                pl011_drain_tx(s);
-> +                fifo8_change_capacity(&s->xmit_fifo, 1);
-> +            }
+Also future payload types might need to add dynamically allocated data
+to the payload. Although it might be ok if we have a rule that
+everything in the payload needs to be static, it just seems unnecessary.
 
-Presumably this is the part where fifo8_change_capacity() is required: what does 
-changing the FIFO size to 1 do here? Is it possible to move the fifo_enabled check 
-into pl011_read() and pop/clear the buffer there instead of changing the FIFO size?
+>
+> It might change perf on a few archs where psize is not 4K, but I don't see
+> it a huge deal, personally.
+>
+> Then everything will have no pointers, and it can be even slightly faster
+> because we use 64B cachelines in most systems nowadays, and one indirect
+> pointer may always need a load on a new cacheline otherwise..
+>
+> This whole cacheline thing is trivial.  What I worried that you worry too
+> much on that flexibility that we may never need.
+>
+> And even with that flexibilty I don't understand why you don't like
+> allocating an object that's larger than how the union is defined: I really
 
-> +            /* Reset the FIFO state on FIFO enable or disable */
->               pl011_reset_tx_fifo(s);
-> +            pl011_reset_rx_fifo(s);
->           }
->           if ((s->lcr ^ value) & LCR_BRK) {
->               int break_enable = value & LCR_BRK;
-> @@ -636,6 +671,11 @@ static int pl011_post_load(void *opaque, int version_id)
->           s->read_pos = 0;
->       }
->   
-> +    if (!fifo8_is_empty(&s->xmit_fifo)) {
-> +        /* Reschedule another transmission */
-> +        qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP, pl011_xmit, s);
-> +    }
-> +
->       s->ibrd &= IBRD_MASK;
->       s->fbrd &= FBRD_MASK;
->   
-> diff --git a/hw/char/trace-events b/hw/char/trace-events
-> index bf586ba664..2405819812 100644
-> --- a/hw/char/trace-events
-> +++ b/hw/char/trace-events
-> @@ -58,6 +58,7 @@ pl011_read(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x valu
->   pl011_read_fifo(int read_count) "FIFO read, read_count now %d"
->   pl011_write(uint32_t addr, uint32_t value, const char *regname) "addr 0x%03x value 0x%08x reg %s"
->   pl011_can_receive(uint32_t lcr, int read_count, int r) "LCR 0x%08x read_count %d returning %d"
-> +pl011_fifo_enable(bool enable) "enable:%u"
->   pl011_fifo_rx_put(uint32_t c, int read_count) "new char 0x%02x read_count now %d"
->   pl011_fifo_rx_full(void) "RX FIFO now full, RXFF set"
->   pl011_fifo_tx_put(uint8_t byte) "TX FIFO push char [0x%02x]"
+The object being larger than the union is not the point. The point is we
+don't know what size that array will have, because that's
+client-specific data. Say RAM code wants an array of X size, vmstate
+might need another of Y size, etc.
 
+> don't see it a problem..  It'll need care on alloc/free, true, but it
+> should be pretty manageable in this case to me.
+>
+>> 
+>> >> 
+>> >> >
+>> >> > For option 2: I meant MultiFDPages_t will have no offset[] pointer anymore,
+>> >> > but make it part of the struct (MultiFDPages_t.offset[]).  Logically it's
+>> >> > the same as option 1 but maybe slight cleaner.  We just need to make it
+>> >> > sized 0 so as to be dynamic in size.
+>> >> 
+>> >> Seems like an undefined behavior magnet. If I sent this as the first
+>> >> version, you'd NACK me right away.
+>> >> 
+>> >> Besides, it's an unnecessary restriction to impose in the client
+>> >> code. And like above, we don't allocate the struct directly, it's part
+>> >> of MultiFDSendData, that's an advantage of using the union.
+>> >> 
+>> >> I think we've reached the point where I'd like to hear more concrete
+>> >> reasons for not going with the current proposal, except for the
+>> >> simplicity argument you already put. I like the union idea, but OTOH we
+>> >> already have a working solution right here.
+>> >
+>> > I think the issue with current proposal is each client will need to
+>> > allocate (N+1)*buffer, so more user using it the more buffers we'll need (M
+>> > users, then M*(N+1)*buffer).  Currently it seems to me we will have 3 users
+>> > at least: RAM, VFIO, and some other VMSD devices TBD in mid-long futures;
+>> > the latter two will share the same DeviceState_t.  Maybe vDPA as well at
+>> > some point?  Then 4.
+>> 
+>> You used the opposite argument earlier in this thread to argue in favor
+>> of the union: We'll only have 2 clients. I'm confused.
+>
+> Maybe I meant "2 types of clients"?  VDPA will also use the same device
+> state buffer.
+>
+>> 
+>> Although, granted, this RFC does use more memory.
+>
+> IMHO it's also easier to understand, where any user always has a free
+> SendData buffer to manipulate, and multifd always has one buffer for each
+> channel (free or busy).
+>
+> That is compared to each client needs to allocate
+> N buffers and we're actually at least leaking "number of multifd channels"
+> into the client which may not be wanted.
 
-ATB,
+That's a stretch. multifd-channels is a migration parameter, it's fine
+if any code has access to it.
 
-Mark.
+>
+> IOW, I wonder whether you're happy with below to drop the union idea:
+>
+>      struct MultiFDSendData {
+>          MultiFDPayloadType type;
+>          MultiFDPages_t ram_payload;
+>          MultiFDDeviceState_t device_payload;
+>      };
+>
+> Then we keep the "(M+N)" usage model, but don't use union and simply forget
+> about the memory consumption (similar to your original memory consumption
+> with this, but will be better as long as anything else joins, e.g. vDPA,
+> because then vDPA will at least share that same buffer with VFIO).
+>
+> Do you think you would accept this?
 
+I'm not sure. I'll try some alternatives first. Maybe the a[] approach
+is not so bad. More below...
+
+>
+>> 
+>> > I'd agree with this approach only if multifd is flexible enough to not even
+>> > know what's the buffers, but it's not the case, and we seem only care about
+>> > two:
+>> >
+>> >   if (type==RAM)
+>> >      ...
+>> >   else
+>> >      assert(type==DEVICE);
+>> >      ...
+>> 
+>> I don't understand: "not even know what's the buffers" is exactly what
+>> this series is about. It doesn't have any such conditional on "type".
+>> 
+>> >
+>> > In this case I think it's easier we have multifd manage all the buffers
+>> > (after all, it knows them well...).  Then the consumption is not
+>> > M*(N+1)*buffer, but (M+N)*buffer.
+>> 
+>> Fine. As I said, I like the union approach. It's just that it doesn't
+>> work if the client wants to have a pointer in there.
+>> 
+>> Again, this is client data that multifd holds, it's not multifd
+>> data. MultiFDPages_t or DeviceState_t have nothing to do with
+>> multifd. It should be ok to have:
+>> 
+>> DeviceState_t *devstate = &p->data->u.device;
+>> devstate->foo = g_new0(...);
+>> devstate->bar = g_new0(...);
+>> 
+>> just like we have:
+>> 
+>> MultiFDPages_t *pages = &p->data->u.ram;
+>> pages->offset = g_new0(ram_addr_t, page_count);
+>> 
+>> >
+>> > Perhaps push your tree somewhere so we can have a quick look?
+>> 
+>> https://gitlab.com/farosas/qemu/-/commits/multifd-pages-decouple
+>> 
+>> > I'm totally
+>> > lost when you said I'll nack it.. so maybe I didn't really get what you
+>> > meant.  Codes may clarify that.
+>> 
+>> I'm conjecturing that any contributor adding a zero-length array (a[0])
+>> would probably be given a hard time on the mailing list. There's 10
+>> instances of it in the code base. The proper way to grow an array is to
+>> use a flexible array (a[]) instead.
+>
+> I'm not familiar with flexible array.  What's the difference between:
+>
+> struct {
+>     int a[];
+> };
+>
+> v.s.
+>
+> struct {
+>     int a[0];
+> };
+
+Both are ways of making a dynamically sized structure. We allocate them
+with:
+
+s = malloc(sizeof(struct) + n * sizeof(int));
+
+a[0] is the older way and full of issues:
+
+ - sizeof might return 0 or 1 depending on compiler extensions
+ 
+ - the compiler can't tell when the array is not at the end of the struct
+ 
+ - I'm not sure putting this inside an usion is well defined. gcc docs
+   mention:
+ 
+   "Declaring zero-length arrays in other contexts, including as interior
+   members of structure objects or as non-member objects, is
+   discouraged. Accessing elements of zero-length arrays declared in such
+   contexts is undefined and may be diagnosed." --
+   https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+ 
+ - the kernel has deprecated this usage entirely:
+ 
+  "...this led to other problems ... like not being able to detect when
+  such an array is accidentally being used _not_ at the end of a
+  structure (which could happen directly, or when such a struct was in
+  unions, structs of structs, etc)." --
+  https://www.kernel.org/doc/html/v5.16/process/deprecated.html#zero-length-and-one-element-arrays
+
+a[] is the modern way and doesn't have the issues above, but it's still
+not a perfect solution for us:
+
+- note above how allocation doesn't reference "a" directly, which means
+  we need to know "n" at the time of allocating p->data. This requires
+  the sizeof mess I mentioned at the beginning.
+
+- the array needs to be at the end of the structure, so we can only have
+  one of them per payload.
+
+- I have no idea how this would work if more than one payload needed an
+  array like that.
+
+I'll give this one a shot and see how it looks. I'm getting tired of
+looking at this code.
 
