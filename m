@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026A7C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 17:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFF2C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 17:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUrVS-0004Fs-Na; Fri, 19 Jul 2024 13:34:58 -0400
+	id 1sUrVP-00041Q-OK; Fri, 19 Jul 2024 13:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3eZSaZggKCkg6roxn1suqyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--whendrik.bounces.google.com>)
- id 1sUqUR-0002xy-1j
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:57 -0400
-Received: from mail-wm1-x34a.google.com ([2a00:1450:4864:20::34a])
+ <3c5SaZggKCkI0lirhvmoksskpi.gsquiqy-hiziprsrkry.svk@flex--whendrik.bounces.google.com>)
+ id 1sUqUK-0002XA-SC
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:45 -0400
+Received: from mail-wr1-x44a.google.com ([2a00:1450:4864:20::44a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3eZSaZggKCkg6roxn1suqyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--whendrik.bounces.google.com>)
- id 1sUqUO-0004UB-AQ
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:50 -0400
-Received: by mail-wm1-x34a.google.com with SMTP id
- 5b1f17b1804b1-4265464ddc9so8431185e9.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 09:29:47 -0700 (PDT)
+ <3c5SaZggKCkI0lirhvmoksskpi.gsquiqy-hiziprsrkry.svk@flex--whendrik.bounces.google.com>)
+ id 1sUqUI-0004Ho-53
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 12:29:44 -0400
+Received: by mail-wr1-x44a.google.com with SMTP id
+ ffacd0b85a97d-36871eb0a8eso829269f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 09:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1721406586; x=1722011386; darn=nongnu.org;
+ d=google.com; s=20230601; t=1721406579; x=1722011379; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=Trplm99Z1aULDWhzH5q5aD7aoAQd1PPsWcyH21okhHs=;
- b=aScLeyn4ICl3wlvBAFqhLpcg8SHpdqlNixLFhreL22M+5rc/f98c1RN1yuTOraMJWy
- ZwBDuEwrMFf1ci/cw9XF/TnJ/crPd7yAUU5buw8r8Z7fS0yvTMlnV2LPmUht8Mdqmeqp
- RbxZASzRywbU6BnWR7jYGp5a9BEW1uaer4mEW7z1rIgW6HXot2Lh9QGK7ZiOpcuqiRr8
- +lwd5PZSxJDRjqOQdT/wbDhpXd2M+MjZEUdTOIDTcjqlBlnmGX0Yj2QBYhTjqSLsWmuU
- KFJmxNNQgCeJxVRr0pBSt/UqG1QXuSWG3GNCNGaUH7NuOZoZqAcdTpWvfeTguDc2v8Lq
- kMSQ==
+ :reply-to; bh=ZW/1TRXl7m0ZA5No/Rpuot8W2YBPnMu73Yf0ZI7truY=;
+ b=vx1xH4s+/e763oZxceJNjjAhJP6s3jr0NWhDx8Ssw3kMQTaQQ69uiPRfFeSBV3AxHb
+ n/N3JECNa5Wii6ASBng9XQ8TID9jCOGWWysKIUTzx3sTlIrJqlh4rHZ89FZ8yFXlWNk1
+ u8Ww032RCTXfYYnVQ7sd8AkhuN6kgsvgQL+u5XRcyCrN/w5AO9YqjZHQt8nQsFhmCXau
+ VQG7qOqAH4FWCCgGCSVN94ZtBDvD/MPAs5Wfv02/9/7grcYmIJZCOi2bLhTinw+eNYIi
+ r+IjBgPwPqH+BuqLdKiY7V31S3UxfnWSukydi/ZHfZa/Me3wQDBDzG4d4Z2xbh7hVkp5
+ JsZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721406586; x=1722011386;
+ d=1e100.net; s=20230601; t=1721406579; x=1722011379;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=Trplm99Z1aULDWhzH5q5aD7aoAQd1PPsWcyH21okhHs=;
- b=W8tKBmtNjipPugpjXkr/GaOmWYE19QmSDq4GtZmTpnmYwIFKpdKupAzljKIvAtRgwA
- yU5h/OU4BDfXi9XY9rU+8bPkVm65zmWhmp37MArWi4b64j/fiLIT8UxHTsHJ9hu1WyDW
- aSGWCS824km/j51iBw+iOXa6zeXcHaCoGNxY1B+D8u60gVVg4u51Qcn853x2I1HgTOs5
- +WZ3W9SWu5vSroAXwnd4VhYKj3TEt0kmHHFSUCZtulzxNh1xQ+14QtaD116FvRSReaNs
- trH8fyAZ3nFLBkY4DsGwCAbE1pAPSOxbI7ng0/ndykmMYG9A4gDISEfQQGNjukR2d/FV
- kMpw==
-X-Gm-Message-State: AOJu0YxYE+3l+abFs7G86DrKLpAFuSZKCxaJBT87wQ+5/D/wHRGC/bjS
- v8fxsqnkP1TJlAKeedau4bEAGytOl09Hx6mKGksiN47xnTUjGn2ilBK494JklSOKbIFLk2Xcofb
- T/hkfjs9Ccx2AaHWcPyhP78dPG3a2QwPzorPxB9lB+sbX/aAGmPzf6D9pEQg3nzG6VtXDZCD2Qj
- U2TQKtOobkTtFr0PcoerY8hDLedaqdHf8XyhDZ6HuQww==
-X-Google-Smtp-Source: AGHT+IFCv+YVMM4ND7PfSuzkzJpeNK4OFi4OY06S8sH/6TRIjE5ggmufRHZWg5wMkZBhKdOa0TS4MoQv7HHRCw==
+ bh=ZW/1TRXl7m0ZA5No/Rpuot8W2YBPnMu73Yf0ZI7truY=;
+ b=Dw+sya2Hb0Rle3nGbXZszRP1XiibbFkgEacqyZcDTC/pAZwL8I9X+BxTPhMVsDQA6b
+ 4YuMIh18jKymMZyrMDnsasf4XNUmqxOpp7Oagxhy31snJHKUgn0XAVDrVt+pt7HOGn65
+ R4iA/04UHNSsaO4UJaP0rhy75jVJ5hY46DZmdiIk8MaTeno3zCz4jj2dIGTygrtAA7TX
+ 4qLup6qnL7XodvlPM7ZnvjLRra0aLdeSGzjyQgnLXpaDpYM7V74MDqDR3+VL13c8eL0O
+ Oors2s/iDJrgbsRL6GDIkeIgBWynjhKgoQjQIlPg6/n6fzBkbAhaAoC3drf1NKhOfbUh
+ F9ew==
+X-Gm-Message-State: AOJu0YxhGwQmtUAAKiNAZRX/FH7OXkyHcL39Mlra1Zd39t9sXkuPxFrN
+ lEG812r10J6Eiw/IbUQptRFPWO3Tghq9QooN48qgZsmWqVf5fYQqdEGV5hlXb9URWz/2egWXhL/
+ Kn63vPGgp177VXdWFTcnAE3oatj3P0mFCLL2/mmmfYvkfb2YCKtmr53+ZAjA1IlilH/jiwBeqys
+ aknLJUvhCj2Kmid812anpwmDDuSHTXqaeb2lJnIDhqNw==
+X-Google-Smtp-Source: AGHT+IGQ7kObEYSbIaHxjCqWvS9YyvimJB1dV3hKVxmB/fVqBU15KuvEC7QzOnmZ8mE7sUg7x7vCGjCyjODQ/g==
 X-Received: from whendrik-specialist-workstation.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:967]) (user=whendrik job=sendgmr) by
- 2002:a05:600c:1e2a:b0:426:6771:f768 with SMTP id
- 5b1f17b1804b1-427da8b0fbdmr3605e9.2.1721406585797; 
- Fri, 19 Jul 2024 09:29:45 -0700 (PDT)
-Date: Fri, 19 Jul 2024 16:29:25 +0000
+ 2002:a5d:6942:0:b0:367:4e17:3ec6 with SMTP id
+ ffacd0b85a97d-369b674fe1cmr195f8f.2.1721406579302; 
+ Fri, 19 Jul 2024 09:29:39 -0700 (PDT)
+Date: Fri, 19 Jul 2024 16:29:22 +0000
 In-Reply-To: <20240719162929.1197154-1-whendrik@google.com>
 Mime-Version: 1.0
 References: <20240719162929.1197154-1-whendrik@google.com>
 X-Mailer: git-send-email 2.45.2.1089.g2a221341d9-goog
-Message-ID: <20240719162929.1197154-6-whendrik@google.com>
-Subject: [PATCH v1 5/9] Add RDT device interface through MSRs
+Message-ID: <20240719162929.1197154-3-whendrik@google.com>
+Subject: [PATCH v1 2/9] Add state for RDT device.
 From: Hendrik Wuethrich <whendrik@google.com>
 To: qemu-devel@nongnu.org, eduardo@habkost.net, richard.henderson@linaro.org, 
  marcel.apfelbaum@gmail.com, mst@redhat.com, pbonzini@redhat.com
@@ -72,9 +72,9 @@ Cc: peternewman@google.com,
  "=?UTF-8?q?=E2=80=AAHendrik=20W=C3=BCthrich?=" <whendrik@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::34a;
- envelope-from=3eZSaZggKCkg6roxn1suqyyqvo.myw0ow4-no5ovxyxqx4.y1q@flex--whendrik.bounces.google.com;
- helo=mail-wm1-x34a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::44a;
+ envelope-from=3c5SaZggKCkI0lirhvmoksskpi.gsquiqy-hiziprsrkry.svk@flex--whendrik.bounces.google.com;
+ helo=mail-wr1-x44a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -83,7 +83,7 @@ X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 19 Jul 2024 13:34:50 -0400
+X-Mailman-Approved-At: Fri, 19 Jul 2024 13:34:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,232 +100,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
 
-Implement rdmsr and wrmsr for the following MSRs:
-* MSR_IA32_PQR_ASSOC
-* MSR_IA32_QM_EVTSEL
-* MSR_IA32_QM_CTR
-* IA32_L3_QOS_Mask_n
-* IA32_L2_QOS_Mask_n
-* IA32_L2_QoS_Ext_BW_Thrtl_n
-
-This allows for the guest to call RDT-internal functions to
-associate an RMID with a CLOSID / set an active RMID for
-monitoring, read monitoring data, and set classes of service.
+Add structures and variables needed to emulate Intel RDT, including
+module-internal sturctures and state in ArchCPU. No functionality yet.
 
 Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
 ---
- hw/i386/rdt.c                        |  8 +++
- include/hw/i386/rdt.h                |  8 ++-
- target/i386/cpu.h                    | 14 +++++
- target/i386/tcg/sysemu/misc_helper.c | 80 ++++++++++++++++++++++++++++
- 4 files changed, 109 insertions(+), 1 deletion(-)
+ hw/i386/rdt.c     | 33 +++++++++++++++++++++++++++++++++
+ target/i386/cpu.h |  5 +++++
+ 2 files changed, 38 insertions(+)
 
 diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
-index 77b7b4f2d4..0d0e5751fc 100644
+index 0a5e95606b..cf246ab835 100644
 --- a/hw/i386/rdt.c
 +++ b/hw/i386/rdt.c
-@@ -17,6 +17,10 @@
- #define MAX_L2_MASK_COUNT      48
- #define MAX_MBA_THRTL_COUNT    31
+@@ -7,12 +7,44 @@
+ #include "target/i386/cpu.h"
+ #include "hw/isa/isa.h"
 =20
-+#define CPUID_10_1_EDX_COS_MAX          MAX_L3_MASK_COUNT
-+#define CPUID_10_2_EDX_COS_MAX          MAX_L2_MASK_COUNT
-+#define CPUID_10_3_EDX_COS_MAX          MAX_MBA_THRTL_COUNT
++/* Max counts for allocation masks or CBMs. In other words, the size of re=
+spective MSRs*/
++#define MAX_L3_MASK_COUNT      128
++#define MAX_L2_MASK_COUNT      48
++#define MAX_MBA_THRTL_COUNT    31
 +
  #define TYPE_RDT "rdt"
- #define RDT_NUM_RMID_PROP "rmids"
++#define RDT_NUM_RMID_PROP "rmids"
 =20
-@@ -57,6 +61,10 @@ struct RDTState {
+ OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
+=20
++struct RDTMonitor {
++    uint64_t count_local;
++    uint64_t count_remote;
++    uint64_t count_l3;
++};
++
++struct RDTAllocation {
++    uint32_t active_cos;
++};
++
++struct RDTStateInstance {
++    uint32_t active_rmid;
++    GArray *monitors;
++
++    RDTState *rdtstate;
++};
++
+ struct RDTState {
+     ISADevice parent;
++
++    uint32_t rmids;
++
++    GArray *rdtInstances;
++    GArray *allocations;
++
++    uint32_t msr_L3_ia32_mask_n[MAX_L3_MASK_COUNT];
++    uint32_t msr_L2_ia32_mask_n[MAX_L2_MASK_COUNT];
++    uint32_t ia32_L2_qos_ext_bw_thrtl_n[MAX_MBA_THRTL_COUNT];
+ };
 =20
  struct RDTStateClass { };
+@@ -20,6 +52,7 @@ struct RDTStateClass { };
+ OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
 =20
-+uint32_t rdt_get_cpuid_10_1_edx_cos_max(void) { return CPUID_10_1_EDX_COS_=
-MAX; }
-+uint32_t rdt_get_cpuid_10_2_edx_cos_max(void) { return CPUID_10_2_EDX_COS_=
-MAX; }
-+uint32_t rdt_get_cpuid_10_3_edx_cos_max(void) { return CPUID_10_3_EDX_COS_=
-MAX; }
-+
- bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc) {
-     X86CPU *cpu =3D X86_CPU(current_cpu);
-     RDTStateInstance *rdt =3D cpu->rdt;
-diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
-index 8092c5f290..51d36822f0 100644
---- a/include/hw/i386/rdt.h
-+++ b/include/hw/i386/rdt.h
-@@ -9,7 +9,12 @@ typedef struct RDTStateInstance RDTStateInstance;
- typedef struct RDTMonitor RDTMonitor;
- typedef struct RDTAllocation RDTAllocation;
+ static Property rdt_properties[] =3D {
++    DEFINE_PROP_UINT32(RDT_NUM_RMID_PROP, RDTState, rmids, 256),
+     DEFINE_PROP_END_OF_LIST(),
+ };
 =20
--#endif
-+uint32_t rdt_get_cpuid_10_1_edx_cos_max(void);
-+
-+uint32_t rdt_get_cpuid_10_2_edx_cos_max(void);
-+
-+uint32_t rdt_get_cpuid_10_3_edx_cos_max(void);
-+
- bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc);
-=20
- void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val);
-@@ -23,3 +28,4 @@ uint32_t rdt_read_mba_thrtl(uint32_t pos);
- uint64_t rdt_read_event_count(RDTStateInstance *rdt, uint32_t rmid, uint32=
-_t event_id);
- uint32_t rdt_max_rmid(RDTStateInstance *rdt);
-=20
-+#endif
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index bd0bbb75f2..0b3aca2d02 100644
+index 1e121acef5..bd0bbb75f2 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -574,6 +574,17 @@ typedef enum X86Seg {
- #define MSR_IA32_VMX_TRUE_ENTRY_CTLS     0x00000490
- #define MSR_IA32_VMX_VMFUNC             0x00000491
+@@ -1987,6 +1987,8 @@ typedef struct CPUArchState {
 =20
-+#define MSR_IA32_QM_EVTSEL                  0x0c8d
-+#define MSR_IA32_QM_CTR                     0x0c8e
-+#define MSR_IA32_PQR_ASSOC                  0x0c8f
+ struct kvm_msrs;
+=20
++struct RDTState;
++struct rdtStateInstance;
+ /**
+  * X86CPU:
+  * @env: #CPUX86State
+@@ -2143,6 +2145,9 @@ struct ArchCPU {
+     struct MemoryRegion *cpu_as_root, *cpu_as_mem, *smram;
+     Notifier machine_done;
+=20
++    /* Help the RDT MSRs find the RDT device */
++    struct RDTStateInstance *rdt;
 +
-+#define MSR_IA32_L3_CBM_BASE                0x0c90
-+#define MSR_IA32_L3_MASKS_END               0x0d0f
-+#define MSR_IA32_L2_CBM_BASE                0x0d10
-+#define MSR_IA32_L2_CBM_END                 0x0d4f
-+#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE   0xd50
-+#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_END    0xd80
-+
- #define MSR_APIC_START                  0x00000800
- #define MSR_APIC_END                    0x000008ff
+     struct kvm_msrs *kvm_msr_buf;
 =20
-@@ -1778,6 +1789,9 @@ typedef struct CPUArchState {
-     uint64_t msr_ia32_feature_control;
-     uint64_t msr_ia32_sgxlepubkeyhash[4];
-=20
-+    uint64_t msr_ia32_qm_evtsel;
-+    uint64_t msr_ia32_pqr_assoc;
-+
-     uint64_t msr_fixed_ctr_ctrl;
-     uint64_t msr_global_ctrl;
-     uint64_t msr_global_status;
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/=
-misc_helper.c
-index 094aa56a20..e48e6b0da1 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/address-spaces.h"
- #include "exec/exec-all.h"
- #include "tcg/helper-tcg.h"
-+#include "hw/i386/rdt.h"
- #include "hw/i386/apic.h"
-=20
- void helper_outb(CPUX86State *env, uint32_t port, uint32_t data)
-@@ -293,6 +294,44 @@ void helper_wrmsr(CPUX86State *env)
-         env->msr_bndcfgs =3D val;
-         cpu_sync_bndcs_hflags(env);
-         break;
-+    case MSR_IA32_QM_EVTSEL:
-+        env->msr_ia32_qm_evtsel =3D val;
-+        break;
-+    case MSR_IA32_PQR_ASSOC:
-+    {
-+        env->msr_ia32_pqr_assoc =3D val;
-+        bool res =3D rdt_associate_rmid_cos(val);
-+        if (!res)
-+            goto error;
-+        break;
-+    }
-+    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BASE=
-;
-+        if (pos >=3D rdt_get_cpuid_10_1_edx_cos_max()) {
-+            goto error;
-+        }
-+        rdt_write_msr_l3_mask(pos, val);
-+        break;
-+    }
-+    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BASE=
-;
-+        if (pos >=3D rdt_get_cpuid_10_2_edx_cos_max()) {
-+            goto error;
-+        }
-+        rdt_write_msr_l2_mask(pos, val);
-+        break;
-+    }
-+    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Thrt=
-l_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ext_=
-BW_Thrtl_BASE;
-+        if (pos >=3D rdt_get_cpuid_10_3_edx_cos_max()) {
-+            goto error;
-+        }
-+        rdt_write_mba_thrtl(pos, val);
-+        break;
-+    }
-     case MSR_APIC_START ... MSR_APIC_END: {
-         int ret;
-         int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-@@ -472,6 +511,44 @@ void helper_rdmsr(CPUX86State *env)
-         val =3D (cs->nr_threads * cs->nr_cores) | (cs->nr_cores << 16);
-         break;
-     }
-+    case MSR_IA32_QM_CTR:
-+        val =3D rdt_read_event_count(x86_cpu->rdt,
-+                                   (env->msr_ia32_qm_evtsel >> 32) & 0xff,
-+                                   env->msr_ia32_qm_evtsel & 0xff);
-+        break;
-+    case MSR_IA32_QM_EVTSEL:
-+        val =3D env->msr_ia32_qm_evtsel;
-+        break;
-+    case MSR_IA32_PQR_ASSOC:
-+        val =3D env->msr_ia32_pqr_assoc;
-+        break;
-+    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BASE=
-;
-+        if (pos >=3D rdt_get_cpuid_10_1_edx_cos_max()) {
-+            goto error;
-+        }
-+        val =3D rdt_read_l3_mask(pos);
-+        break;
-+    }
-+    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BASE=
-;
-+        if (pos >=3D rdt_get_cpuid_10_2_edx_cos_max()) {
-+            goto error;
-+        }
-+        val =3D rdt_read_l2_mask(pos);
-+        break;
-+    }
-+    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Thrt=
-l_END:
-+    {
-+        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ext_=
-BW_Thrtl_BASE;
-+        if (pos >=3D rdt_get_cpuid_10_3_edx_cos_max()) {
-+            goto error;
-+        }
-+        val =3D rdt_read_mba_thrtl(pos);
-+        break;
-+    }
-     case MSR_APIC_START ... MSR_APIC_END: {
-         int ret;
-         int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-@@ -499,6 +576,9 @@ void helper_rdmsr(CPUX86State *env)
-     }
-     env->regs[R_EAX] =3D (uint32_t)(val);
-     env->regs[R_EDX] =3D (uint32_t)(val >> 32);
-+return;
-+error:
-+    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
- }
-=20
- void helper_flush_page(CPUX86State *env, target_ulong addr)
+     int32_t node_id; /* NUMA node this CPU belongs to */
 --=20
 2.45.2.1089.g2a221341d9-goog
 
