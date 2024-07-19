@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC48DC3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 12:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2765C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 12:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUmbx-00038v-La; Fri, 19 Jul 2024 08:21:21 -0400
+	id 1sUmnJ-0002eU-8Y; Fri, 19 Jul 2024 08:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sUmbt-00030J-Ke
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:21:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUmnH-0002do-Nf
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:33:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sUmbr-0000p5-KY
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:21:17 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUmnF-0006c4-OX
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:33:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721391674;
+ s=mimecast20190719; t=1721392380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8wdb8H9B7dXAjwpES2ljjfqGjFTVH3+0R9NofJlGwv4=;
- b=Hnpja8SMcJh5j+f0UupD0V/slIWBTC6ObgAYXWspoqKS6ds7TjPNAiaUcjRCb/SE0QdeC3
- jKxua86RiuRVVpSJP45cG+s/RV1r+/VBg1B0yUFOaBZ1pM87N1RiOlY3r/xnY/uRyrtU4U
- AGxSCSoRFApcA0AOnNl2/hTeiSNQgHo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VScXzdsHXLQdUHdJzn9COIity7kk1bE64nGkQW+ewkE=;
+ b=FZnoAm73tWakL715EvqVRWEsRiPuwHoa38wqOJ+Tsh0vfBAPjEIMZ7s7OaNHZdIsQaL/0s
+ mPiH/ulBleQrSEjyPXu7AzGs0NIAdoZTy1UNNLy3gbal79bDkg01rESFLCSIg/uOWnbmX5
+ NiIeLvmYV63Ubg5jEUAP1YPq/u5ZkcE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-jEakaNN7NLKDTBuLuijVgA-1; Fri,
- 19 Jul 2024 08:21:10 -0400
-X-MC-Unique: jEakaNN7NLKDTBuLuijVgA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-JKFYiAl1PLCEL-ED8txpMg-1; Fri,
+ 19 Jul 2024 08:32:56 -0400
+X-MC-Unique: JKFYiAl1PLCEL-ED8txpMg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4DAE1955F66; Fri, 19 Jul 2024 12:21:07 +0000 (UTC)
-Received: from localhost (unknown [10.22.8.77])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDDBE1955D4D; Fri, 19 Jul 2024 12:21:06 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Peter Maydell
- <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] target/arm/kvm: Fix PMU feature bit early
-In-Reply-To: <f9cf0616-34df-42c3-a753-4dec8e2d25b5@daynix.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20240716-pmu-v3-0-8c7c1858a227@daynix.com>
- <20240716-pmu-v3-2-8c7c1858a227@daynix.com>
- <CAFEAcA8tFtdpCQobU9ytzxvf3_y3DiA1TwNq8fWgFUtCUYT4hQ@mail.gmail.com>
- <f9cf0616-34df-42c3-a753-4dec8e2d25b5@daynix.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 19 Jul 2024 14:21:04 +0200
-Message-ID: <87cyn9a7yn.fsf@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ECCD1955BF2; Fri, 19 Jul 2024 12:32:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C612E1955F40; Fri, 19 Jul 2024 12:32:53 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7DD6F21E6757; Fri, 19 Jul 2024 14:32:51 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,  Markus
+ Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [PATCH v6 2/4] docs/interop/firmware.json: add new enum
+ FirmwareArchitecture
+In-Reply-To: <20240719-qapi-firmware-json-v6-2-c2e3de390b58@linutronix.de>
+ ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Fri, 19 Jul 2024
+ 09:37:23 +0200")
+References: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
+ <20240719-qapi-firmware-json-v6-2-c2e3de390b58@linutronix.de>
+Date: Fri, 19 Jul 2024 14:32:51 +0200
+Message-ID: <87o76ttvd8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,67 +91,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 19 2024, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
 
-> On 2024/07/18 21:07, Peter Maydell wrote:
->> On Tue, 16 Jul 2024 at 13:50, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>
->>> kvm_arm_get_host_cpu_features() used to add the PMU feature
->>> unconditionally, and kvm_arch_init_vcpu() removed it when it is actually
->>> not available. Conditionally add the PMU feature in
->>> kvm_arm_get_host_cpu_features() to save code.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   target/arm/kvm.c | 7 +------
->>>   1 file changed, 1 insertion(+), 6 deletions(-)
->>>
->>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->>> index 70f79eda33cd..849e2e21b304 100644
->>> --- a/target/arm/kvm.c
->>> +++ b/target/arm/kvm.c
->>> @@ -280,6 +280,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->>>       if (kvm_arm_pmu_supported()) {
->>>           init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->>>           pmu_supported = true;
->>> +        features |= 1ULL << ARM_FEATURE_PMU;
->>>       }
->>>
->>>       if (!kvm_arm_create_scratch_host_vcpu(cpus_to_try, fdarray, &init)) {
->>> @@ -448,7 +449,6 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->>>       features |= 1ULL << ARM_FEATURE_V8;
->>>       features |= 1ULL << ARM_FEATURE_NEON;
->>>       features |= 1ULL << ARM_FEATURE_AARCH64;
->>> -    features |= 1ULL << ARM_FEATURE_PMU;
->>>       features |= 1ULL << ARM_FEATURE_GENERIC_TIMER;
->>>
->>>       ahcf->features = features;
->>> @@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>>       if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
->>>           cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
->>>       }
->>> -    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
->>> -        cpu->has_pmu = false;
->>> -    }
->>>       if (cpu->has_pmu) {
->>>           cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->>> -    } else {
->>> -        env->features &= ~(1ULL << ARM_FEATURE_PMU);
->>>       }
->>>       if (cpu_isar_feature(aa64_sve, cpu)) {
->>>           assert(kvm_arm_sve_supported());
->> 
->> Not every KVM CPU is necessarily the "host" CPU type.
->> The "cortex-a57" and "cortex-a53" CPU types will work if you
->> happen to be on a host of that CPU type, and they don't go
->> through kvm_arm_get_host_cpu_features().
+> Only a small subset of all architectures supported by qemu make use of
+> firmware files. Introduce and use a new enum to represent this.
 >
-> kvm_arm_vcpu_init() will emit an error in such a situation and I think 
-> it's better than silently removing a feature that the requested CPU type 
-> has. A user can still disable the feature if desired.
+> This also removes the dependency to machine.json from the global qapi
+> definitions.
+>
+> Claim "Since: 3.0" for the new enum, because that's correct for most of
+> its members, and the members are what matters in the interface.
+>
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
+> ---
+>  docs/interop/firmware.json | 28 ++++++++++++++++++++++++++--
+>  1 file changed, 26 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index d5d4c17f230b..ae4179994479 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -14,7 +14,10 @@
+>  # =3D Firmware
+>  ##
+>=20=20
+> -{ 'include' : 'machine.json' }
+> +{ 'pragma': {
+> +    'member-name-exceptions': [
+> +        'FirmwareArchitecture' # x86_64
+> +    ] } }
+>=20=20
+>  ##
+>  # @FirmwareOSInterface:
+> @@ -59,6 +62,27 @@
+>  { 'enum' : 'FirmwareDevice',
+>    'data' : [ 'flash', 'kernel', 'memory' ] }
+>=20=20
+> +##
+> +# @FirmwareArchitecture:
+> +#
+> +# Enumeration of architectures for which Qemu uses additional
 
-OTOH, if we fail for the named cpu models if the kernel does not provide
-the cap, but silently disable for the host cpu model in that case, that
-also seems inconsistent. I'd rather keep it as it is now.
+QEMU
+
+> +# firmware files.
+> +#
+> +# @aarch64: 64-bit Arm.
+> +#
+> +# @arm: 32-bit Arm.
+> +#
+> +# @i386: 32-bit x86.
+> +#
+> +# @loongarch64: 64-bit LoongArch. (since: 7.1)
+> +#
+> +# @x86_64: 64-bit x86.
+> +#
+> +# Since: 3.0
+> +##
+> +{ 'enum' : 'FirmwareArchitecture',
+> +  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
+> +
+>  ##
+>  # @FirmwareTarget:
+>  #
+> @@ -80,7 +104,7 @@
+>  # Since: 3.0
+>  ##
+>  { 'struct' : 'FirmwareTarget',
+> -  'data'   : { 'architecture' : 'SysEmuTarget',
+> +  'data'   : { 'architecture' : 'FirmwareArchitecture',
+>                 'machines'     : [ 'str' ] } }
+>=20=20
+>  ##
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
