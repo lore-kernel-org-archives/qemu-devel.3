@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CDDC3DA61
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 02:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3495C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 02:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUdat-0002k1-7u; Thu, 18 Jul 2024 22:43:39 -0400
+	id 1sUdat-0002kq-8S; Thu, 18 Jul 2024 22:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sUdaq-0002ik-OU
- for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:36 -0400
+ id 1sUdar-0002j7-3z
+ for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:37 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sUdan-0003Lw-UH
+ (envelope-from <gaosong@loongson.cn>) id 1sUdao-0003Lu-3N
  for qemu-devel@nongnu.org; Thu, 18 Jul 2024 22:43:36 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxrOrS0plmQeAAAA--.4531S3;
- Fri, 19 Jul 2024 10:43:30 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxdOjQ0plmPeAAAA--.4359S3;
+ Fri, 19 Jul 2024 10:43:28 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxhsXO0plm5uxOAA--.35480S4; 
- Fri, 19 Jul 2024 10:43:30 +0800 (CST)
+ AQAAf8AxhsXO0plm5uxOAA--.35480S2; 
+ Fri, 19 Jul 2024 10:43:26 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 2/3] hw/loongarch: Remove unimplemented extioi INT_encode mode
-Date: Fri, 19 Jul 2024 10:26:03 +0800
-Message-Id: <20240719022604.781608-3-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org
+Subject: [PULL 0/3] loongarch-to-apply queue
+Date: Fri, 19 Jul 2024 10:26:01 +0800
+Message-Id: <20240719022604.781608-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240719022604.781608-1-gaosong@loongson.cn>
-References: <20240719022604.781608-1-gaosong@loongson.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxhsXO0plm5uxOAA--.35480S4
+X-CM-TRANSID: AQAAf8AxhsXO0plm5uxOAA--.35480S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,28 +63,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove extioi INT_encode encode mode, because we don't emulate it.
+The following changes since commit 23fa74974d8c96bc95cbecc0d4e2d90f984939f6:
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20240718083254.748179-1-gaosong@loongson.cn>
----
- include/hw/intc/loongarch_extioi.h | 1 -
- 1 file changed, 1 deletion(-)
+  Merge tag 'pull-target-arm-20240718' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-19 07:02:17 +1000)
 
-diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-index eccc2e0d18..626a37dfa1 100644
---- a/include/hw/intc/loongarch_extioi.h
-+++ b/include/hw/intc/loongarch_extioi.h
-@@ -50,7 +50,6 @@
- #define  EXTIOI_HAS_CPU_ENCODE       (3)
- #define  EXTIOI_VIRT_HAS_FEATURES    (BIT(EXTIOI_HAS_VIRT_EXTENSION)  \
-                                       | BIT(EXTIOI_HAS_ENABLE_OPTION) \
--                                      | BIT(EXTIOI_HAS_INT_ENCODE)    \
-                                       | BIT(EXTIOI_HAS_CPU_ENCODE))
- #define EXTIOI_VIRT_CONFIG           (0x4)
- #define  EXTIOI_ENABLE               (1)
--- 
-2.34.1
+are available in the Git repository at:
+
+  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240719
+
+for you to fetch changes up to 3ed016f525c8010e66be62d3ca6829eaa9b7cfb5:
+
+  hw/loongarch: Modify flash block size to 256K (2024-07-19 10:40:04 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20240719
+
+----------------------------------------------------------------
+Song Gao (2):
+      target/loongarch/gdbstub: Add vector registers support
+      hw/loongarch: Remove unimplemented extioi INT_encode mode
+
+Xianglai Li (1):
+      hw/loongarch: Modify flash block size to 256K
+
+ configs/targets/loongarch64-linux-user.mak |  2 +-
+ configs/targets/loongarch64-softmmu.mak    |  2 +-
+ gdb-xml/loongarch-lasx.xml                 | 60 ++++++++++++++++++++++++
+ gdb-xml/loongarch-lsx.xml                  | 59 ++++++++++++++++++++++++
+ include/hw/intc/loongarch_extioi.h         |  1 -
+ include/hw/loongarch/virt.h                |  2 +-
+ target/loongarch/gdbstub.c                 | 73 +++++++++++++++++++++++++++++-
+ 7 files changed, 193 insertions(+), 6 deletions(-)
+ create mode 100644 gdb-xml/loongarch-lasx.xml
+ create mode 100644 gdb-xml/loongarch-lsx.xml
 
 
