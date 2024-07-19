@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44908C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 07:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE70C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 07:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUiBL-00005w-95; Fri, 19 Jul 2024 03:37:35 -0400
+	id 1sUiBO-0000KK-Gt; Fri, 19 Jul 2024 03:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUiBJ-0008TB-KE
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:37:33 -0400
-Received: from galois.linutronix.de ([193.142.43.55])
+ id 1sUiBK-00006b-QM
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:37:35 -0400
+Received: from galois.linutronix.de ([2a0a:51c0:0:12e:550::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1sUiBG-0002jy-Dp
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:37:33 -0400
+ id 1sUiBJ-0002iK-1a
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 03:37:34 -0400
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1721374648;
+ s=2020; t=1721374647;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XECesZ7DByLgWIc7w1r9c4McfNivtaSHbdOqaxbWuSk=;
- b=hwXpoQ407Oz+6RNilkbOf/556GVFQBUQMN2WLLujw2FN9POlKdl3x7CHWvT80HFH4FiY8J
- 0n5EXrQsrzjF50TLy6cZM7y7iMaHzdW732pg9OR3mFt9SHWaSmiBPNLY3SSnHnbGmsfiDv
- veVzchwpo+bvTN7grjiRoumUL+FamhvxxDH1kXPUnWH6MbRHN3nBYOZzG0xz1NXCtAqk7S
- LirMPX0IsZIHto3KNmDy9bYu6N7VK4rFwKlJ2BmNf0IXSai+QYfVlmvlkutXMiaL2AMj4X
- vGfSfD94PywNFL1VlsOZMdQPMWkGznqeqX7QeAtrz4W2AXkLcnuNb+k4lZ7PCg==
+ bh=MMGl9jqa2JX2JXlzmVzHZvDEzGMjndqRdkBkMf/NXW0=;
+ b=IqV9zlETyGsY61Pj9xDlGH4FBcflIezCaae9wHFTDAIcYLi7Z1dcnWOzVNFXIRyF9JTb+t
+ am/8Q2jBFGsoJsWV1oHjfa4JzMit3be0mjqY9hNoVA5jN0bRjg6IL84BbXnmUmM3VXYzxr
+ J30bC8yq/XHmJZlilHX7EyGyt1KK7kDtpTUkdN+vTkBSizREzAHdlaZ/mcyB/hkfTSg5q/
+ XRf4OYxRrTi4X+wM7ixVg0Ac2+tgcWYMafjGtvMQpTB1eU3Hsp98uq4dXVxgQhtnZ7TYZA
+ fgzftQiu31+kkzWVZqBFYJGR01NKGenHpCV5h8ykSrbAtaUK55mtSA2yw0dcDg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1721374648;
+ s=2020e; t=1721374647;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XECesZ7DByLgWIc7w1r9c4McfNivtaSHbdOqaxbWuSk=;
- b=79B2ZanTBnXFayu9ixtmLf6v3UUXloo8P29Pzl1f6sxYeFvrnNSnEED4/HUN9PNt9jwN3w
- /DhIXTS2KJBmdVAA==
-Date: Fri, 19 Jul 2024 09:37:24 +0200
-Subject: [PATCH v6 3/4] docs/interop/firmware.json: convert "Example" section
+ bh=MMGl9jqa2JX2JXlzmVzHZvDEzGMjndqRdkBkMf/NXW0=;
+ b=1hamqpNdxtiIsWqWFjc8QfvxpRqQe2ehqz57i+Y6KxSroWx+RLN8xI8EB2AXf2UfSHgYm3
+ uawPFyT957qjNgAA==
+Date: Fri, 19 Jul 2024 09:37:22 +0200
+Subject: [PATCH v6 1/4] docs/interop/firmware.json: add new enum FirmwareFormat
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240719-qapi-firmware-json-v6-3-c2e3de390b58@linutronix.de>
+Message-Id: <20240719-qapi-firmware-json-v6-1-c2e3de390b58@linutronix.de>
 References: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
 In-Reply-To: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -57,21 +57,21 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
  Hanna Czenczek <hreitz@redhat.com>, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721374646; l=835;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721374646; l=1600;
  i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=M9V+m3AdmPGhAZNpMoYKV6vdkIe/MC+Bq+LGRyceM6Q=;
- b=B7XjsY4EdDYWHX1KggR9RKYg7TWie4jPEBFDFfQhZz9m8rnauFvzy2g8fKOXJPdcLR68gUutC
- /SQBATcibCtAlDGODCcLhkWwQACF+maLLUPkKva0/a46Ej5W8Wvhfj/
+ bh=vMBCf78tFJlMpxrrXcs5qdQiSATuySGI8Q19NujvRDo=;
+ b=OuYFr3zNUax2scvsGYhsEqxx/ODpgUi2aM0U+yU6ERGqFqf/pIMxxn1kca89X48VLk4KATZfX
+ /TbwJjAifaxDnoY/IdCqUNepQVQKw+jZ7LXuATfwhrhwppOZk8GmBTW
 X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
  pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
-Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
- helo=galois.linutronix.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a0a:51c0:0:12e:550::1;
+ envelope-from=t-8ch@linutronix.de; helo=galois.linutronix.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,32 +88,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 3c5f6114d9ff ("qapi: remove "Example" doc section")
-the "Example" section is not valid anymore.
-It has been replaced by the "qmp-example" directive.
+Only a small subset of all blockdev drivers make sense for firmware
+images. Introduce and use a new enum to represent this.
 
-This was not detected earlier as firmware.json was not validated.
-As this validation is about to be added, adapt firmware.json.
+This also reduces the dependency on firmware.json from the global qapi
+definitions.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Claim "Since: 3.0" for the new enum, because that's correct for its
+members, and the members are what matters in the interface.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 ---
- docs/interop/firmware.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/interop/firmware.json | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index ae4179994479..57f55f6c5455 100644
+index 54a1fc6c1041..d5d4c17f230b 100644
 --- a/docs/interop/firmware.json
 +++ b/docs/interop/firmware.json
-@@ -470,7 +470,7 @@
+@@ -15,7 +15,6 @@
+ ##
+ 
+ { 'include' : 'machine.json' }
+-{ 'include' : 'block-core.json' }
+ 
+ ##
+ # @FirmwareOSInterface:
+@@ -200,6 +199,20 @@
+              'enrolled-keys', 'requires-smm', 'secure-boot',
+              'verbose-dynamic', 'verbose-static' ] }
+ 
++##
++# @FirmwareFormat:
++#
++# Formats that are supported for firmware images.
++#
++# @raw: Raw disk image format.
++#
++# @qcow2: The QCOW2 image format.
++#
++# Since: 3.0
++##
++{ 'enum': 'FirmwareFormat',
++  'data': [ 'raw', 'qcow2' ] }
++
+ ##
+ # @FirmwareFlashFile:
  #
- # Since: 3.0
- #
--# Examples:
-+# .. qmp-example::
- #
- #     {
- #         "description": "SeaBIOS",
+@@ -219,7 +232,7 @@
+ ##
+ { 'struct' : 'FirmwareFlashFile',
+   'data'   : { 'filename' : 'str',
+-               'format'   : 'BlockdevDriver' } }
++               'format'   : 'FirmwareFormat' } }
+ 
+ 
+ ##
 
 -- 
 2.45.2
