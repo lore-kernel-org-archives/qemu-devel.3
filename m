@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06B2C3DA59
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 15:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBB6C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 15:10:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUp97-0008EG-V4; Fri, 19 Jul 2024 11:03:45 -0400
+	id 1sUpF6-00058S-9Z; Fri, 19 Jul 2024 11:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUp96-0008Bb-Sd
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:03:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sUp93-0002gC-Fp
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:03:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721401417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mpDZ98Hp3N7v83Rqg3uNWUZ5Xb13/ZkZk0nie4mxpII=;
- b=E0VTSw92v7Va/L/ofM0mi7sChA60QczR6EBzMG/JzxodO1Ei/i0st8clhU9Ul/iWXFdDpM
- pRCg0uRFKBpEjapMNnl1uXhgVfUyEndHdZVthIMPIgPony4kAbGPMi083wjyhwTvCqQRFI
- RL7RDq/Qn3wTBfh95iFsp1JFeCFatkQ=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-b_nNQcg0MgOH3Vj2FORu5A-1; Fri, 19 Jul 2024 11:03:34 -0400
-X-MC-Unique: b_nNQcg0MgOH3Vj2FORu5A-1
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-814fead45f2so55176239f.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 08:03:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUpF2-00054a-IJ
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:09:52 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sUpEy-0004uP-Mt
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 11:09:52 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-368f92df172so189255f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 08:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721401784; x=1722006584; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=whNo2DLVeiwZMXGrjrW6VfVwrvZjjABKDqH5F3p3R7k=;
+ b=DEexS+Uw6sVNH8TZKh/8S0cDMcIvon4rNJVmjr8uANjKJ493u1IQkods0jDRsAbnRR
+ I8WH2dwWqZZEphMLmFI3mAY69H/p0IQl+hg2l9WLBphy35cB0FHQxTBJFKMYop76bbAk
+ /w4iRvnumvgGcZ48IGu+1WzBmPGMfBD8f4Pt1/d0V8TCv5PoEUkmcbVt3pNGvoxVUXeh
+ N8T99pQ0z0GgkYBT/gVxYVIMBXpJ5RvpbFPshVzLjqo+jW/rUxpAR0FxxVzoNxn6voQX
+ c/ThKqThRkrBl3zadMd/tAC9yyGzA4wiqLqUzimo6s+IGSwKkhQAHxTM5MxkYnp452B0
+ TsBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721401414; x=1722006214;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mpDZ98Hp3N7v83Rqg3uNWUZ5Xb13/ZkZk0nie4mxpII=;
- b=SHpBAkodRvlhe/uolU7mZSk1HRdHr24Bi2ho5tFLMwTde9Rk/GLblZimKMsbWERPM/
- nHqifMnl9oqFoK71FiCKKUZl33yyJq+6RfFVTm92dEFaKKL2vubS5SXmTV6jjhNqqpjl
- wgAwzWZ6Zi9gpUZVduJicI7Fa7DpKn9m8/YIfBkYXY+DiWRw6hnDBWULN+iB99wPhL10
- P9820FGZOVVUJVPTfwBmOd0mHBybmr5Za+EIsFF/SBFmEEZaQToRUON6ES/eQEVYKY6z
- e+bjeVV8j3np8LfgTtMhN5aLOhuUFIWCBu+AAr64NqOXUzcrPQHozZzhbel/kOnJVyrx
- R97w==
-X-Gm-Message-State: AOJu0YxZ+igzujbjnFNIQQBWCIgGLmOOdt3O9IWKYfTiNk4PSJYX7I4G
- z5QAMDuynt4Aw4TxxaR9de+Ni6N0gXYQ0ciwHRdZJCJkyVyd/szf0LPFeCCWWSAo7EYGMWo9nOt
- U0GyZ8jv5frC/+jAF/kzBuvCGKQBLNubovGwGekbukVNjUKJFhRC+
-X-Received: by 2002:a05:6e02:154b:b0:383:297a:bdfb with SMTP id
- e9e14a558f8ab-398e5d23d65mr206045ab.2.1721401413715; 
- Fri, 19 Jul 2024 08:03:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmh4xaoA1F/L0XwSemwfkQhVOLYC+LK5hxlflfQPmQRaYvlEiy0kGWXC98l2QJc4gMn37uKw==
-X-Received: by 2002:a05:6e02:154b:b0:383:297a:bdfb with SMTP id
- e9e14a558f8ab-398e5d23d65mr205555ab.2.1721401413001; 
- Fri, 19 Jul 2024 08:03:33 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-397f7a283c8sm4791495ab.67.2024.07.19.08.03.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jul 2024 08:03:32 -0700 (PDT)
-Date: Fri, 19 Jul 2024 11:03:31 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 02/11] migration: cpr-state
-Message-ID: <ZpqAQ6L6XtIyLREq@x1n>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <1719776434-435013-3-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1721401784; x=1722006584;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=whNo2DLVeiwZMXGrjrW6VfVwrvZjjABKDqH5F3p3R7k=;
+ b=tJ48j9q2yoS8MF6Zg4EM+zfiynTIoBMVgyZjuGqMXVoZEgD9o8oxJ6ExfqlqdVf+aJ
+ Sn/51DsMYNiWxEPXgckS58x5t4ipFsHSm1AVWE9i1ptlNJgGm4cVCIVLSCDVV66UPh8S
+ EVK/PLpgsUEKpcj9tHEqsmyNq9vdUwX2stfhEeLxfwUtg/F78sBkShPX+ZauVTUot/tm
+ cQJtmbKK71vTY2GquX1IGlmSzb3ExzQ0kG9f6s/JGPNF6p4kO0WrpXGO71mjkpvJkcWd
+ 6bwy+kgT041F35uCDZGmSZ1wm6bdNGWtxGgBq0F6LEAXDP5oLIKPXPm3IzwD/5nohFQp
+ rjEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3vu2ku71GO9pEoNhZJeciAdokHVfRTTSGduyOitGPPwNqytLAyhV1bIM+zykuH/qj/EqDQ8qGeAU4UKwUEajiQkIXqqY=
+X-Gm-Message-State: AOJu0YwnoK41ruSdLyI7axvUI3bmjnyFTvWnhvz0R5Gj9HhVn/HsAkTD
+ bnqSSpwKEveUnJELPouMtApO/B0ILskEHH9BCXlpw+6ytOnue7P9oVrFTiiXvyY=
+X-Google-Smtp-Source: AGHT+IERL9lQThWcYD0JzPVj8qVchh/ZgrkaW0WQNxvN14NVmip/FwXsHmvBYW4QMw0Pbgl95xdM6w==
+X-Received: by 2002:adf:fa03:0:b0:367:8876:68e6 with SMTP id
+ ffacd0b85a97d-3683175b8aamr6264356f8f.48.1721401783565; 
+ Fri, 19 Jul 2024 08:09:43 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.227])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36878694833sm1850456f8f.55.2024.07.19.08.09.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 08:09:43 -0700 (PDT)
+Message-ID: <172eaa4a-ba4f-45e0-8dfb-f8035d553707@linaro.org>
+Date: Fri, 19 Jul 2024 17:09:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1719776434-435013-3-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/avocado: Move LinuxTest related code into a
+ separate file
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ qemu-arm@nongnu.org
+References: <20240719095031.32814-1-thuth@redhat.com>
+ <02b2eb32-abbc-481c-8b5d-e6b835d81005@linaro.org>
+Content-Language: en-US
+In-Reply-To: <02b2eb32-abbc-481c-8b5d-e6b835d81005@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,369 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jun 30, 2024 at 12:40:25PM -0700, Steve Sistare wrote:
-> CPR must save state that is needed after QEMU is restarted, when devices
-> are realized.  Thus the extra state cannot be saved in the migration stream,
-> as objects must already exist before that stream can be loaded.  Instead,
-> define auxilliary state structures and vmstate descriptions, not associated
-> with any registered object, and serialize the aux state to a cpr-specific
-> stream in cpr_state_save.  Deserialize in cpr_state_load after QEMU
-> restarts, before devices are realized.
+On 19/7/24 14:49, Philippe Mathieu-Daudé wrote:
+> On 19/7/24 11:50, Thomas Huth wrote:
+>> Only some few tests are using the LinuxTest class. Move the related
+>> code into a separate file so that this does not pollute the main
+>> namespace.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/avocado/avocado_qemu/__init__.py  | 239 +---------------------
+>>   tests/avocado/avocado_qemu/linuxtest.py | 253 ++++++++++++++++++++++++
+>>   tests/avocado/boot_linux.py             |   3 +-
+>>   tests/avocado/hotplug_blk.py            |   2 +-
+>>   tests/avocado/hotplug_cpu.py            |   2 +-
+>>   tests/avocado/intel_iommu.py            |   2 +-
+>>   tests/avocado/replay_linux.py           |   2 +-
+>>   tests/avocado/smmu.py                   |   3 +-
+>>   8 files changed, 262 insertions(+), 244 deletions(-)
+>>   create mode 100644 tests/avocado/avocado_qemu/linuxtest.py
 > 
-> Provide accessors for clients to register file descriptors for saving.
-> The mechanism for passing the fd's to the new process will be specific
-> to each migration mode, and added in subsequent patches.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/migration/cpr.h |  21 ++++++
->  migration/cpr.c         | 188 ++++++++++++++++++++++++++++++++++++++++++++++++
->  migration/meson.build   |   1 +
->  migration/migration.c   |   6 ++
->  migration/trace-events  |   5 ++
->  system/vl.c             |   3 +
->  6 files changed, 224 insertions(+)
->  create mode 100644 include/migration/cpr.h
->  create mode 100644 migration/cpr.c
-> 
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> new file mode 100644
-> index 0000000..8e7e705
-> --- /dev/null
-> +++ b/include/migration/cpr.h
-> @@ -0,0 +1,21 @@
-> +/*
-> + * Copyright (c) 2021, 2024 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#ifndef MIGRATION_CPR_H
-> +#define MIGRATION_CPR_H
-> +
-> +typedef int (*cpr_walk_fd_cb)(int fd);
-> +void cpr_save_fd(const char *name, int id, int fd);
-> +void cpr_delete_fd(const char *name, int id);
-> +int cpr_find_fd(const char *name, int id);
-> +int cpr_walk_fd(cpr_walk_fd_cb cb);
-> +void cpr_resave_fd(const char *name, int id, int fd);
-> +
-> +int cpr_state_save(Error **errp);
-> +int cpr_state_load(Error **errp);
-> +
-> +#endif
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> new file mode 100644
-> index 0000000..313e74e
-> --- /dev/null
-> +++ b/migration/cpr.c
-> @@ -0,0 +1,188 @@
-> +/*
-> + * Copyright (c) 2021-2024 Oracle and/or its affiliates.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "migration/cpr.h"
-> +#include "migration/misc.h"
-> +#include "migration/qemu-file.h"
-> +#include "migration/savevm.h"
-> +#include "migration/vmstate.h"
-> +#include "sysemu/runstate.h"
-> +#include "trace.h"
-> +
-> +/*************************************************************************/
-> +/* cpr state container for all information to be saved. */
-> +
-> +typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
-> +
-> +typedef struct CprState {
-> +    CprFdList fds;
-> +} CprState;
-> +
-> +static CprState cpr_state;
-> +
-> +/****************************************************************************/
-> +
-> +typedef struct CprFd {
-> +    char *name;
-> +    unsigned int namelen;
-> +    int id;
-> +    int fd;
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-[1]
-
-> +    QLIST_ENTRY(CprFd) next;
-> +} CprFd;
-> +
-> +static const VMStateDescription vmstate_cpr_fd = {
-> +    .name = "cpr fd",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT32(namelen, CprFd),
-> +        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
-> +        VMSTATE_INT32(id, CprFd),
-> +        VMSTATE_INT32(fd, CprFd),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +void cpr_save_fd(const char *name, int id, int fd)
-> +{
-> +    CprFd *elem = g_new0(CprFd, 1);
-> +
-> +    trace_cpr_save_fd(name, id, fd);
-> +    elem->name = g_strdup(name);
-> +    elem->namelen = strlen(name) + 1;
-> +    elem->id = id;
-> +    elem->fd = fd;
-> +    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
-> +}
-> +
-> +static CprFd *find_fd(CprFdList *head, const char *name, int id)
-> +{
-> +    CprFd *elem;
-> +
-> +    QLIST_FOREACH(elem, head, next) {
-> +        if (!strcmp(elem->name, name) && elem->id == id) {
-> +            return elem;
-> +        }
-> +    }
-> +    return NULL;
-> +}
-> +
-> +void cpr_delete_fd(const char *name, int id)
-> +{
-> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-> +
-> +    if (elem) {
-> +        QLIST_REMOVE(elem, next);
-> +        g_free(elem->name);
-> +        g_free(elem);
-> +    }
-> +
-> +    trace_cpr_delete_fd(name, id);
-> +}
-> +
-> +int cpr_find_fd(const char *name, int id)
-> +{
-> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-> +    int fd = elem ? elem->fd : -1;
-> +
-> +    trace_cpr_find_fd(name, id, fd);
-> +    return fd;
-> +}
-> +
-> +int cpr_walk_fd(cpr_walk_fd_cb cb)
-> +{
-> +    CprFd *elem;
-> +
-> +    QLIST_FOREACH(elem, &cpr_state.fds, next) {
-> +        if (elem->fd >= 0 && cb(elem->fd)) {
-> +            return 1;
-> +        }
-> +    }
-> +    return 0;
-> +}
-> +
-> +void cpr_resave_fd(const char *name, int id, int fd)
-> +{
-> +    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-> +    int old_fd = elem ? elem->fd : -1;
-> +
-> +    if (old_fd < 0) {
-> +        cpr_save_fd(name, id, fd);
-
-I don't think I know well on when old_fd<0 would happen yet, as this series
-doesn't look like to use this function at all.  From that POV, maybe nice
-to add a comment above [1] for "fd" field.
-
-Meanwhile, do we need to remove the old_fd<0 element here, or is it
-intended to keep that and the new CprFD?
-
-> +    } else if (old_fd != fd) {
-> +        error_setg(&error_fatal,
-> +                   "internal error: cpr fd '%s' id %d value %d "
-> +                   "already saved with a different value %d",
-> +                   name, id, fd, old_fd);
-> +    }
-> +}
-> +/*************************************************************************/
-> +#define CPR_STATE "CprState"
-> +
-> +static const VMStateDescription vmstate_cpr_state = {
-> +    .name = CPR_STATE,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +/*************************************************************************/
-> +
-> +int cpr_state_save(Error **errp)
-> +{
-> +    int ret;
-> +    QEMUFile *f;
-> +
-> +    /* set f based on mode in a later patch in this series */
-> +    return 0;
-> +
-> +    qemu_put_be32(f, QEMU_VM_FILE_MAGIC);
-> +    qemu_put_be32(f, QEMU_VM_FILE_VERSION);
-
-Having magic/version makes sense to me, though I'd suggest we use CPR new
-magic/versions, so that if we see an binary dump we know what it is, and we
-don't mixup a CPR image against a migration stream image.
-
-> +
-> +    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0);
-
-s/0/NULL/
-
-> +    if (ret) {
-> +        error_setg(errp, "vmstate_save_state error %d", ret);
-> +    }
-
-Can consider using vmstate_save_state_with_err().
-
-> +
-> +    qemu_fclose(f);
-> +    return ret;
-> +}
-> +
-> +int cpr_state_load(Error **errp)
-> +{
-> +    int ret;
-> +    uint32_t v;
-> +    QEMUFile *f;
-> +
-> +    /* set f based on mode in a later patch in this series */
-> +    return 0;
-> +
-> +    v = qemu_get_be32(f);
-> +    if (v != QEMU_VM_FILE_MAGIC) {
-> +        error_setg(errp, "Not a migration stream (bad magic %x)", v);
-> +        qemu_fclose(f);
-> +        return -EINVAL;
-> +    }
-> +    v = qemu_get_be32(f);
-> +    if (v != QEMU_VM_FILE_VERSION) {
-> +        error_setg(errp, "Unsupported migration stream version %d", v);
-> +        qemu_fclose(f);
-> +        return -ENOTSUP;
-> +    }
-> +
-> +    ret = vmstate_load_state(f, &vmstate_cpr_state, &cpr_state, 1);
-> +    if (ret) {
-> +        error_setg(errp, "vmstate_load_state error %d", ret);
-> +    }
-
-Simiarly, can use vmstate_save_state_with_err().
-
-> +
-> +    qemu_fclose(f);
-> +    return ret;
-> +}
-> +
-> diff --git a/migration/meson.build b/migration/meson.build
-> index 5ce2acb4..87feb4c 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -13,6 +13,7 @@ system_ss.add(files(
->    'block-dirty-bitmap.c',
->    'channel.c',
->    'channel-block.c',
-> +  'cpr.c',
->    'dirtyrate.c',
->    'exec.c',
->    'fd.c',
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 3dea06d..e394ad7 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -27,6 +27,7 @@
->  #include "sysemu/cpu-throttle.h"
->  #include "rdma.h"
->  #include "ram.h"
-> +#include "migration/cpr.h"
->  #include "migration/global_state.h"
->  #include "migration/misc.h"
->  #include "migration.h"
-> @@ -2118,6 +2119,10 @@ void qmp_migrate(const char *uri, bool has_channels,
->          }
->      }
->  
-> +    if (cpr_state_save(&local_err)) {
-> +        goto out;
-> +    }
-> +
->      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
->          SocketAddress *saddr = &addr->u.socket;
->          if (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
-> @@ -2142,6 +2147,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->                            MIGRATION_STATUS_FAILED);
->      }
->  
-> +out:
->      if (local_err) {
->          if (!resume_requested) {
->              yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> diff --git a/migration/trace-events b/migration/trace-events
-> index 0b7c332..173f2c0 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -340,6 +340,11 @@ colo_receive_message(const char *msg) "Receive '%s' message"
->  # colo-failover.c
->  colo_failover_set_state(const char *new_state) "new state %s"
->  
-> +# cpr.c
-> +cpr_save_fd(const char *name, int id, int fd) "%s, id %d, fd %d"
-> +cpr_delete_fd(const char *name, int id) "%s, id %d"
-> +cpr_find_fd(const char *name, int id, int fd) "%s, id %d returns %d"
-> +
->  # block-dirty-bitmap.c
->  send_bitmap_header_enter(void) ""
->  send_bitmap_bits(uint32_t flags, uint64_t start_sector, uint32_t nr_sectors, uint64_t data_size) "flags: 0x%x, start_sector: %" PRIu64 ", nr_sectors: %" PRIu32 ", data_size: %" PRIu64
-> diff --git a/system/vl.c b/system/vl.c
-> index 03951be..6521ee3 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -77,6 +77,7 @@
->  #include "hw/block/block.h"
->  #include "hw/i386/x86.h"
->  #include "hw/i386/pc.h"
-> +#include "migration/cpr.h"
->  #include "migration/misc.h"
->  #include "migration/snapshot.h"
->  #include "sysemu/tpm.h"
-> @@ -3713,6 +3714,8 @@ void qemu_init(int argc, char **argv)
->  
->      qemu_create_machine(machine_opts_dict);
->  
-> +    cpr_state_load(&error_fatal);
-
-Might be good to add a rich comment here explaining the decision on why
-loading here; I think most of the tricks lie here.  E.g., it needs to be
-before XXX and it needs to be after YYY.
-
-Thanks,
-
-> +
->      suspend_mux_open();
->  
->      qemu_disable_default_devices();
-> -- 
-> 1.8.3.1
-> 
-
--- 
-Peter Xu
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
