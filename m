@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF757C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 11:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB1AAC3DA64
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jul 2024 12:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sUlWj-0005Ds-MB; Fri, 19 Jul 2024 07:11:53 -0400
+	id 1sUmNS-00039Q-4g; Fri, 19 Jul 2024 08:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUlWi-0005B9-Gv
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 07:11:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1sUmMw-0002BG-7h
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:05:51 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sUlWg-0003PR-AD
- for qemu-devel@nongnu.org; Fri, 19 Jul 2024 07:11:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721387509;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WAuKk7VUG2HCRN8LVoybAg4IOU1GprDIQeiHU0aWM/4=;
- b=IXqEFMJ9bc3Q6wLUsDLTcZFwNpGn5+uFpDUxZQboJNnW8BcsP9mOZpX3LGKLtbeDJddBxY
- nzDU2wvBbAThzj+1egP8ZETB3JBzkZ9kiRhwCjA92Q0gBGKJr9Gr8XaDK/nMqcSyKBhonN
- olAtSN3Lhp3+7MsUeCDGGPJFTEvb+m8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-eSGI7aBROrSBlNiDdN2Ujw-1; Fri,
- 19 Jul 2024 07:11:45 -0400
-X-MC-Unique: eSGI7aBROrSBlNiDdN2Ujw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7B4AC1955D4C; Fri, 19 Jul 2024 11:11:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88043195605A; Fri, 19 Jul 2024 11:11:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4623021E668F; Fri, 19 Jul 2024 13:11:39 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Collin Walling <walling@linux.ibm.com>,  qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org,  david@redhat.com,  wangyanan55@huawei.com,
- philmd@linaro.org,  marcel.apfelbaum@gmail.com,  eduardo@habkost.net,
- Jiri Denemark <jdenemar@redhat.com>
-Subject: Re: [PATCH v2] target/s390x: filter deprecated properties based on
- model expansion type
-In-Reply-To: <16c9703c-79b9-4e52-bc40-2857c0c06672@redhat.com> (Thomas Huth's
- message of "Fri, 19 Jul 2024 12:16:08 +0200")
-References: <20240716173253.28533-1-walling@linux.ibm.com>
- <87le1yn7jy.fsf@pond.sub.org>
- <32379d4f-9b6f-4673-9b87-1db4a8ada649@linux.ibm.com>
- <16c9703c-79b9-4e52-bc40-2857c0c06672@redhat.com>
-Date: Fri, 19 Jul 2024 13:11:39 +0200
-Message-ID: <87wmlhtz4k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1sUmMr-0005Kc-K5
+ for qemu-devel@nongnu.org; Fri, 19 Jul 2024 08:05:48 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JC5bIi024705;
+ Fri, 19 Jul 2024 12:05:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=2
+ 0mG0DVqwzF8SyLSUEy1KDxTuzcTedIrj43yEO2v/dU=; b=kCAaE8GYkycLVW7Y+
+ mxHjffP1MfU0o1GCAUtSDlEuuD3njgULvMY56Wa7ZjDg+ZegmIyhIGHNW6a8KRZH
+ 0cg23UYQkYiXH/wFr5sq0UJ+P4mneHBYW843BlrU3/DN9E9sWnhI8dZmvqjgLCMv
+ iXaZtht9X451OKMmEWaDN+HWFEYcqxZduBDxCp6BpUD+Fh/RqcFBenNg0W1Y72XA
+ 2bquMaMg5J4/WyJlE8VY+UJHXqDFOFxq8IZptaSAzfCACUh/j9iL0M8cOiN9w0X4
+ JxsfRvGl9IrGB+8/VGp4jCUp7mSmfLukqpE1GZ+/x7Yw1PpHfmw9naS7jJtrQAoX
+ XpeQA==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40fqub800h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Jul 2024 12:05:43 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 46JB7Ub8039559; Fri, 19 Jul 2024 12:05:42 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 40dwexk3sm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Jul 2024 12:05:42 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46JC5DMV011010;
+ Fri, 19 Jul 2024 12:05:41 GMT
+Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-12-11.vpn.oracle.com
+ [10.175.12.11])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 40dwexk34j-11; Fri, 19 Jul 2024 12:05:41 +0000
+From: Joao Martins <joao.m.martins@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
+Subject: [PATCH v5 10/13] vfio/iommufd: Implement
+ VFIOIOMMUClass::set_dirty_tracking support
+Date: Fri, 19 Jul 2024 13:04:58 +0100
+Message-Id: <20240719120501.81279-11-joao.m.martins@oracle.com>
+In-Reply-To: <20240719120501.81279-1-joao.m.martins@oracle.com>
+References: <20240719120501.81279-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-19_06,2024-07-18_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=966
+ malwarescore=0
+ suspectscore=0 spamscore=0 bulkscore=0 mlxscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2407110000 definitions=main-2407190093
+X-Proofpoint-ORIG-GUID: JhDLmSetA9tIHXVHdSxu7nmG7jFiV9Mq
+X-Proofpoint-GUID: JhDLmSetA9tIHXVHdSxu7nmG7jFiV9Mq
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,79 +104,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+ioctl(iommufd, IOMMU_HWPT_SET_DIRTY_TRACKING, arg) is the UAPI that
+enables or disables dirty page tracking. The ioctl is used if the hwpt
+has been created with dirty tracking supported domain (stored in
+hwpt::flags) and it is called on the whole list of iommu domains.
 
-> On 18/07/2024 20.22, Collin Walling wrote:
->> On 7/18/24 9:39 AM, Markus Armbruster wrote:
->>> Collin Walling <walling@linux.ibm.com> writes:
->>>
->>>> As s390 CPU models progress and deprecated properties are dropped
->>>> outright, it will be cumbersome for management apps to query the host
->>>> for a comprehensive list of deprecated properties that will need to be
->>>> disabled on older models. To remedy this, the query-cpu-model-expansion
->>>> output now behaves by filtering deprecated properties based on the
->>>> expansion type instead of filtering based off of the model's full set
->>>> of features:
->>>>
->>>> When reporting a static CPU model, only show deprecated properties that
->>>> are a subset of the model's enabled features.
->>>>
->>>> When reporting a full CPU model, show the entire list of deprecated
->>>> properties regardless if they are supported on the model.
->>>>
->>>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
->>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+---
+ include/sysemu/iommufd.h |  2 ++
+ backends/iommufd.c       | 23 +++++++++++++++++++++++
+ hw/vfio/iommufd.c        | 32 ++++++++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ 4 files changed, 58 insertions(+)
 
-[...]
-
->>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->>>> index a8d9ec87f5..d151504f25 100644
->>>> --- a/qapi/machine-target.json
->>>> +++ b/qapi/machine-target.json
->>>> @@ -21,8 +21,12 @@
->>>>   # @props: a dictionary of QOM properties to be applied
->>>>   #
->>>>   # @deprecated-props: a list of properties that are flagged as deprecated
->>>> -#     by the CPU vendor.  These props are a subset of the full model's
->>>> -#     definition list of properties. (since 9.1)
->>>> +#     by the CPU vendor.  (since 9.1).
->>>> +#
->>>> +# .. note:: Since 9.1, the list of deprecated props were always a subset
->>>> +#    of the model's full-definition list of properites. Now, this list is
->>>> +#    populated with the model's enabled property set when delta changes
->>>> +#    are applied. All deprecated properties are reported otherwise.
->>>
->>> I'm confused.
->>>
->>> "Since 9.1, the list of deprecated props were ..." and "Now, this list
->>> is" sounds like you're explaining behavior before and after a change.
->>> What change?  Since only released behavior matters, and
->>> @deprecated-props is new, there is no old behavior to document, isn't
->>> it?
->>
->> I admittedly had some difficulty articulating the change introduced by
->> this patch.  The @deprecated-props array, as well as a way for s390x to
->> populate it, was introduced in release 9.1.  Prior to this patch, the
->> deprecated-props list was filtered by the CPU model's full feature set.
->> I attempted to explain this with:
->> "Since 9.1, the list of deprecated props were always a subset of the
->> model's full-definition list of properties."
->
-> Version 9.1 has not been released yet (see https://wiki.qemu.org/Planning/9.1), so I agree with Markus, this sounds confusing/wrong to me, too.
-
-User-visible changes between releases need to be documented in release
-notes and the manual.  Don't for changes within a release, instead
-update documentation to reflect the new state of things.
-
-Regardless, do explain the change in the commit message.
-
-Specifics are more helpful than such generalities, so let me try despite
-my relative ignorance of the subject matter.
-
-1. Update the description of @deprecated-props to match the new code.
-Ask yourself what people need to know to use this interface.
-
-2. Explain in the commit message how semantics of @deprecated-props
-change in this patch.
+diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+index e917e7591d05..6fb412f61144 100644
+--- a/include/sysemu/iommufd.h
++++ b/include/sysemu/iommufd.h
+@@ -55,6 +55,8 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 uint32_t data_type, uint32_t data_len,
+                                 void *data_ptr, uint32_t *out_hwpt,
+                                 Error **errp);
++bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
++                                        bool start, Error **errp);
+ 
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 58032e588f49..1ae4751a1b2c 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -239,6 +239,29 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+     return true;
+ }
+ 
++bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be,
++                                        uint32_t hwpt_id, bool start,
++                                        Error **errp)
++{
++    int ret;
++    struct iommu_hwpt_set_dirty_tracking set_dirty = {
++            .size = sizeof(set_dirty),
++            .hwpt_id = hwpt_id,
++            .flags = start ? IOMMU_HWPT_DIRTY_TRACKING_ENABLE : 0,
++    };
++
++    ret = ioctl(be->fd, IOMMU_HWPT_SET_DIRTY_TRACKING, &set_dirty);
++    trace_iommufd_backend_set_dirty(be->fd, hwpt_id, start, ret ? errno : 0);
++    if (ret) {
++        error_setg_errno(errp, errno,
++                         "IOMMU_HWPT_SET_DIRTY_TRACKING(hwpt_id %u) failed",
++                         hwpt_id);
++        return false;
++    }
++
++    return true;
++}
++
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+                                      uint64_t *caps, Error **errp)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 2e5c207bbca0..7137faaf4540 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -115,6 +115,37 @@ static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+     return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ }
+ 
++static int iommufd_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
++                                           bool start, Error **errp)
++{
++    const VFIOIOMMUFDContainer *container =
++        container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
++    VFIOIOASHwpt *hwpt;
++
++    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
++        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
++            continue;
++        }
++
++        if (!iommufd_backend_set_dirty_tracking(container->be,
++                                                hwpt->hwpt_id, start, errp)) {
++            goto err;
++        }
++    }
++
++    return 0;
++
++err:
++    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
++        if (!iommufd_hwpt_dirty_tracking(hwpt)) {
++            continue;
++        }
++        iommufd_backend_set_dirty_tracking(container->be,
++                                           hwpt->hwpt_id, !start, NULL);
++    }
++    return -EINVAL;
++}
++
+ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -724,6 +755,7 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+     vioc->attach_device = iommufd_cdev_attach;
+     vioc->detach_device = iommufd_cdev_detach;
+     vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
++    vioc->set_dirty_page_tracking = iommufd_set_dirty_page_tracking;
+ };
+ 
+ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+diff --git a/backends/trace-events b/backends/trace-events
+index 4d8ac02fe7d6..28aca3b859d4 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -16,3 +16,4 @@ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t si
+ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
+ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
++iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+-- 
+2.17.2
 
 
