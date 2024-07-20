@@ -4,102 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D3BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E80C1C3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVFUm-0005IP-KI; Sat, 20 Jul 2024 15:11:52 -0400
+	id 1sVFWs-0002ll-QY; Sat, 20 Jul 2024 15:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFUl-0005Hc-02
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:11:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFWm-0002kq-Sa
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:13:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFUi-0000Pp-VV
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:11:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFWl-0000YY-IU
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:13:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721502708;
+ s=mimecast20190719; t=1721502834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ldJMC8NcumbuP8G4YKa690DYMLQmR7H6WPhBQu85Cuc=;
- b=XIycvuqhy3bXX4ur6OW6+zh2IzifeUBX61g57PVmI6JSxlJYFbT8IMzoxzquwdzWjEejQz
- ET0POHjICdA/P3L5EDF5XCK2TuL06fzrNafEMu0SghfSWOagHrHWEYAyAs6a/9sL1ojRTJ
- R9Os7TCsqVnw+SHev/Hpd0+GE+4EEqY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jao95MfY9a/cb4YeucJJNMxFdgAkrK2Ta+MAO64ibeU=;
+ b=UFU3iem81XqTSQc2M2N/r3LEIjdqceuAj4zXBY9gnjBbB6V2ns4Xk3lQBW/REdQcQJWNHe
+ N6xTHYLV3A7Hdm/BQVOt6CRiq6Flz5Jdm7IaJ+IM0PZKiweH1jtVYv+QHrST9qcHcLKovf
+ nhUPXJavnO+4V3JXPj3X2eMoTVbQXdw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199--BguolCeMbClA87_MRvuQQ-1; Sat, 20 Jul 2024 15:11:46 -0400
-X-MC-Unique: -BguolCeMbClA87_MRvuQQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42490ae735dso28806385e9.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 12:11:46 -0700 (PDT)
+ us-mta-634-91VOzHXzMXeTRak64dRlqA-1; Sat, 20 Jul 2024 15:13:53 -0400
+X-MC-Unique: 91VOzHXzMXeTRak64dRlqA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-426624f4ce3so19569555e9.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 12:13:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721502705; x=1722107505;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ldJMC8NcumbuP8G4YKa690DYMLQmR7H6WPhBQu85Cuc=;
- b=onBzBrd0rTFxM3mtPv2RKIHN+YZkMicjC3pPbNt+bJ//BnBttXBGwy/BMOhf0roUpO
- p5LatnD6mR24nuA5tdqKI5FczZMK9J+IzfXEqO2D7t3npwsmf0H9fCWCI3xk/wzKUW4W
- QkNw2WMU6FTNfxjqROKbFJnGbJyKjGPhW1rsILWjIEQvh4JA67jtBGvEhQsQRAXEHG++
- FxawvO7PvMfOLSrGaqRdJeYGc4M0bTXLf0QIUHBvBDX5hT3L5zTAVLlZaTj+ddAZAY8h
- pot8oD5SjPwAKiL/Vs/k372MVF8sbrYcnEuTekIrpJnxP5WETG1XpualtPfRgvCUasNJ
- CIwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW84Qt0uplDwXBI6sR4KhbQiS/0zBxhR0D1EvOCxf2OgrXhxFXP6uokHKNHTzUurJYxo1KHSYXsFGXNALEw91JrCAkQhvQ=
-X-Gm-Message-State: AOJu0YxRV4Uds+PWRe6dHKkYBeJQTMVo1H6KYg1fQud837ylMBt7iW84
- 2kjgJuejYJRUpfTmU59keIGbWYtvQmhOal9h1dHpwSq1evutgiKS4RYzj+prJ5934XNu1WDbabj
- VCOmhJo1Ye8rbiIJhexyD4SkGGITktbVOvmluvcB2eIj8Q2TmG3C4
-X-Received: by 2002:a05:600c:3109:b0:426:6857:3156 with SMTP id
- 5b1f17b1804b1-427dc55bc49mr17672805e9.27.1721502705505; 
- Sat, 20 Jul 2024 12:11:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9xdVRSRVD2Wbn9C7ViCmqDwkXLWIusGsN9OyYWIh8QHBSRCW4lE/gXZJfc0rdhhfZR4P2/g==
-X-Received: by 2002:a05:600c:3109:b0:426:6857:3156 with SMTP id
- 5b1f17b1804b1-427dc55bc49mr17672505e9.27.1721502704866; 
- Sat, 20 Jul 2024 12:11:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721502831; x=1722107631;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jao95MfY9a/cb4YeucJJNMxFdgAkrK2Ta+MAO64ibeU=;
+ b=BtHqsShhYbu/iKhWvv/rz8PzzXlCfH1ujSfbUTZ5cVCE6/aT+0StMnc53rcwTcPZwB
+ ICHnUqHQsPFlxC3dcAVd3ZzosE0uzLHr+D29sUjOIK7ZMFwSrKpVLBUW+O/IkMgqIC8W
+ xQg5hgVFs6ToiwXRFLze5c5vOjuToDBfcTDRGqfE/uxFsyA/yZaEFnQqH9NQ5qIAueSt
+ 61R8w0tjYUV8ONM6LmpTUQEvXaZabUcEVflAXGAezIy4Hsq6Y8T7gHNGNnivBo7U9mRd
+ 8gcY2EIKgbOQDy0LYXzFAUWUQxC4R5/THnZnv9AgnrTxWPt5eJqPib3rhlMhd8+K+lLt
+ prgQ==
+X-Gm-Message-State: AOJu0Yy4z/+1bhcSgN2kJEpsZH6lv9tHtiN1EwnTVZsISB2rpGIGuZL+
+ D2XoBP4st9ZYPmBNRcXg8smVqg82qdE7NNQXotZawWVQc8W+8aFHTgzWu5IvfDnaD7x81jKdz0N
+ E5Xrrg/Aa0rv9k/UTiJf+26iq74zBzqQq5S4/LpdyFpTLZXvorl50mfMtItyVexs=
+X-Received: by 2002:a05:600c:1e11:b0:426:5b84:86d2 with SMTP id
+ 5b1f17b1804b1-427dc52808cmr16469065e9.20.1721502831518; 
+ Sat, 20 Jul 2024 12:13:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4ObbLgaW1BjUPl5Q75yL9od6RZkJSjhe/HakFe8TQB1/njOR75HqzWuDAZuqSO+5T8gRTcQ==
+X-Received: by 2002:a05:600c:1e11:b0:426:5b84:86d2 with SMTP id
+ 5b1f17b1804b1-427dc52808cmr16468905e9.20.1721502830895; 
+ Sat, 20 Jul 2024 12:13:50 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d6929981sm65301955e9.36.2024.07.20.12.11.42
+ 5b1f17b1804b1-427d69071c5sm66717225e9.27.2024.07.20.12.13.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jul 2024 12:11:44 -0700 (PDT)
-Date: Sat, 20 Jul 2024 15:11:41 -0400
+ Sat, 20 Jul 2024 12:13:50 -0700 (PDT)
+Date: Sat, 20 Jul 2024 15:13:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v10 06/12] pcie_sriov: Reuse SR-IOV VF device instances
-Message-ID: <20240720151022-mutt-send-email-mst@kernel.org>
-References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
- <20240627-reuse-v10-6-7ca0b8ed3d9f@daynix.com>
- <75cbc7d9-b48e-4235-85cf-49dacf3c7483@redhat.com>
- <20240710065145-mutt-send-email-mst@kernel.org>
- <97c6ac3e-d099-4cc5-9672-1c1658f0cbc6@daynix.com>
+To: BillXiang <xiangwencheng@dayudpu.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org
+Subject: Re: [PATCH] vhsot-user: Remove redundant judgment
+Message-ID: <20240720151228-mutt-send-email-mst@kernel.org>
+References: <20240710074041.85984-1-xiangwencheng@dayudpu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <97c6ac3e-d099-4cc5-9672-1c1658f0cbc6@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240710074041.85984-1-xiangwencheng@dayudpu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,64 +97,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 13, 2024 at 09:45:07PM +0900, Akihiko Odaki wrote:
-> On 2024/07/10 19:52, Michael S. Tsirkin wrote:
-> > On Wed, Jul 10, 2024 at 08:37:27AM +0200, Cédric Le Goater wrote:
-> > > Hello,
-> > > 
-> > > This change introduced a regression on s390x. I could have spotted it
-> > > earlier. Sorry about that. Here is the scenario,
-> > > 
-> > > QEMU now creates automatically the PCI device objects representing the
-> > > VFs when the PF device is realized in pcie_sriov_pf_init(). This is
-> > > good to report errors early but it has an important drawback.
-> > > 
-> > > On s390x, PCI devices have a dual S390PCIBusDevice object. This device
-> > > model has 'uid' and 'fid' properties which can be either set by the VMM
-> > > or, if not, auto-generated by the S390PCIBusDevice realize handler. In
-> > > the VF case, these ids are auto-generated by QEMU and they can possibly
-> > > conflict with the uid number space of libvirt. The conflict is detected
-> > > when the machine is created and the start is aborted with a message :
-> > > 
-> > >    2024-07-08T12:51:42.876883Z qemu-system-s390x: -device {"driver":"zpci","uid":17,"fid":16,"target":"hostdev0","id":"zpci17"}: uid 17 already in use
-> > > 
-> > > This problem can occur today with a s390x VM using an IGB device.
-> > > 
-> > > It worked fine when the VFs were created at OS runtime because the initial
-> > > topology of the machine was in place. Adding VFs was more or less like
-> > > hotplug. AIUI, libvirt should have full control on the machine topology
-> > > and so, creating VFs in QEMU at init time in the back of libvirt seems
-> > > like a violation of this rule.
-> > > 
-> > > That said, the s390x case is specific and could perhaps be handled in a
-> > > special way.
-> > > 
-> > > Thanks,
-> > > 
-> > > C.
-> > 
-> > 
-> > Thanks for reporting this Cédric. Akihiko what's your
-> > plan to handle this? Do you have the time to address this issue?
+On Wed, Jul 10, 2024 at 03:40:41PM +0800, BillXiang wrote:
+> From: BillXiang <xiangwencheng@dayudpu.com>
 > 
-> Creating VFs at initialization time only makes problems apparent early. Even
-> without this change, hot-plugging another PCI device after realizing a VF
-> results in a similar situation.
+> Send only once has been supported in vhost_user_write by vhost_user_per_device_request
 > 
-> A proper way to handle this is to add new properties to igb and nvme to let
-> libvirt specify the VF ids. However I wonder if it is a worthwhile addition
-> (i.e., if igb and nvme's SR-IOV emulation will be used with s390x and
-> libvirt).
+> Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+
+I am confused by all the patches. Is it on top of your
+other patch or instead of? Because that one added
+the vq index check.
+If we are going to check vq index it's likely cleaner to
+always check it.
+
+And again, typos do not inspire confidence. How was this tested?
+
+> ---
+>  hw/virtio/vhost-user.c | 5 -----
+>  1 file changed, 5 deletions(-)
 > 
-> Regards,
-> Akihiko Odaki
-
-
-Well okay but libvirt will not update overnight.
-If we need time to discuss the design, I can revert for the
-release and reapply after we have a fix.
-
--- 
-MST
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index 00561daa06..04e3568b7e 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -446,11 +446,6 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
+>          .hdr.size = sizeof(msg.payload.log),
+>      };
+>  
+> -    /* Send only once with first queue pair */
+> -    if (dev->vq_index != 0) {
+> -        return 0;
+> -    }
+> -
+>      if (shmfd && log->fd != -1) {
+>          fds[fd_num++] = log->fd;
+>      }
+> -- 
+> 2.30.0
 
 
