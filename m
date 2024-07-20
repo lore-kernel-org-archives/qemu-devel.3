@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B3BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 15:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1496FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 15:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVBem-00048w-33; Sat, 20 Jul 2024 11:05:56 -0400
+	id 1sVBpY-00037n-Dk; Sat, 20 Jul 2024 11:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVBel-00048T-8m
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:05:55 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sVBpU-00037H-Fa
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:17:02 -0400
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVBej-0004VP-Jb
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:05:55 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5a156557026so2068543a12.2
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 08:05:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sVBpS-0006PF-Cc
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:17:00 -0400
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-49294575ad8so107426137.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 08:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721487952; x=1722092752; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RFkQFABEHMPsF0yeK38TFcv0Y5VICfmj1GCAN/YKJ4I=;
- b=pqVdgID4ZpUzEnjwH8+IDSBJFj5MMymk/CzhgP51i+AZM6++/ZGvAWMdHfjYx6mIqs
- oX9SpUiq6I34DHiRQhwS9cEbVSk+JnNA4XwM16ICUDnV6KPL/Okh77K5puIzi/FhbZmn
- hAVjfP19LGUpqTJOUJOh6O0VPwVsRMx8yXp1ZOfQC4OgodGuEU+MahBOfW/eSsUq6N8w
- qbEdrDe9rP2Yda54QER9iKRN+b7wli1rp6F0zln36BbuhlaVWhKE93Z7a7p8zx5FXwXQ
- ej3+If8lT6zr3/YcuE+EfJA19NcYEMgiMy4u7HKKVgf4bBVHzua0+qw0UJX6+rWexiBg
- y5/Q==
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721488616; x=1722093416;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rkBII/dmjhvafbnUah5DYm3F2M5Rvfzyr+ZXcNJRmy0=;
+ b=SgE7dwHSCXYDvMemjpH9e1IhRJrVLsRKtQQTW3QiszAb9eCxQ772ESRvjMt/oSv0Vq
+ 3xNAqbzMvuCDgKTTgfEtaAIQyFQ9xKRkGj81iwAtwyyVX1KhmSd/sRm1Mg5/8TNdL+hZ
+ 10auyWXdh2R3bNhES0Z0OrEbkZMlTfZhtBQrAYjINvi/cEs6haE1NoIKWFKynMFvD9m/
+ j074zT6dk1nWhRXSs7JE3exHt1HvN8n3rQg3qXi5HJyJMqCf7olF0bVZeSUljzgslMVl
+ 3LGublONPd27nsAXg2QkXAl2ag6KZF9k6Bg424Q3E8QE0/HWFJpEeYqJBwhX8KjKDgZX
+ +mGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721487952; x=1722092752;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RFkQFABEHMPsF0yeK38TFcv0Y5VICfmj1GCAN/YKJ4I=;
- b=Ybs9pfE5XTdYgoOokkHP6Cxc4CgrVyvxePQWDqIPHbK2L9idf0U0sqQjMdh7HNtqHv
- F0oNVox63GAB7jKJngy8rvpqA8awPhLHJbLZTgeiG0lf3NEfbth9A5YKigcYl44f0lqB
- QBEqn42th5+6kpeFntGqcxtr+cFsePJeSukJOdijkntEvf0p9zZwAaFUmzwqSdGTi7VS
- GNPWHxISFdWQJW7m88KpDmBsQ2UOzl/OnhcoIPtl1JW8F1sFtCOeC0b8YcJ63QEnVz7u
- PRshQv5w+SA7/Pey5rQ2wnDxABYiutN5c36yWO8kGSKHEUqbjXNwJR7ACsjpSmzUpSXh
- D4/Q==
-X-Gm-Message-State: AOJu0YzfPQSpUIdwL+N5T4fkvz3F5JusuGP0W76o2hXJjyrjIegXH4bY
- uhSkAAgT7kqgvljav9zUagy6R0XKlaiIBylvR7NirIgzHzYFoj3OpdejZSdv9I+i9l3bUTE+PPC
- ixHF2zUAqKcHY7L1oEHudpfLtDOgRXvM7VYvON8+e/JCUVeFMIUY=
-X-Google-Smtp-Source: AGHT+IF+RGeZh46vn44O22ONiFZTyJgDfwe5PdhzZw+ZakZODiutUSgr5v74DSJCw+J0JSC62siWps0KPPjiUzxAg10=
-X-Received: by 2002:a50:cc8a:0:b0:5a1:1:27a9 with SMTP id
- 4fb4d7f45d1cf-5a4798755f1mr1179894a12.18.1721487951183; 
- Sat, 20 Jul 2024 08:05:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721488616; x=1722093416;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rkBII/dmjhvafbnUah5DYm3F2M5Rvfzyr+ZXcNJRmy0=;
+ b=N4KXiaTYyVTBMr16HQv2Ux29SgQjLUkzTTJ4p3VmxcMIkUx2UP0B6hCBZZHvaxM099
+ vMci8JjMTBDciPtKFypeE85lGzn18ZrcxAr8MQoU84HC6ZuwRaUTb//1fO+PuQC7SFjw
+ IWRqupttZRMbalviAr1z2hveiy6epEkxjY6NY1yS5cTwsqyGgr3/hRMrYYNqnMuhAzCp
+ SsVWlKpYlct4U6+uX22eNvLrwrLXhGLJwyjcFFd8RzWLeX6vIHN45AEdDRW4bM+BoZGx
+ ySAiPERXajXHRhN5WPLjvegNn6c60CbX36gd2VqLb86rRuSd+XHRb6u74srzBqnKRsna
+ czuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVROv5Mm3Cgrk7egWORZ+deXXgCJrI3RC4/ZjAYEjBzUdfOTtxqHuBnI6Fzh2wkFBxhsjpZlNKdcYfYk3Yu+pBGKdre5FQ=
+X-Gm-Message-State: AOJu0YyKTZyd1y+3Ui86qurNi3DrMJ1Uof1LWt++QSmbnk1ih4AooHZ3
+ EnP4H8eSmbd7yStjlHK1bvT4KPBEkDbf+FT9JdF6cJNwPqCUKe/7HVQuipS4kFMyJJhfzpKRrS3
+ oNKLxm6AaYR0peOcJuVb8/pJ3w974e9cUCVo7
+X-Google-Smtp-Source: AGHT+IEhuDUkmzOrj5p3mVEeoUyt43JIAO2i9iqQs6GWxIS+AJYPBrHlxCkDLr5MDKc9YdBjNUUuDfKUGrydY8twknk=
+X-Received: by 2002:a05:6102:955:b0:48f:62bb:357c with SMTP id
+ ada2fe7eead31-4925c19f256mr7383232137.3.1721488615630; Sat, 20 Jul 2024
+ 08:16:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240718132028.697927-1-peter.maydell@linaro.org>
- <20240718132028.697927-22-peter.maydell@linaro.org>
-In-Reply-To: <20240718132028.697927-22-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 20 Jul 2024 16:05:40 +0100
-Message-ID: <CAFEAcA-H=n-3mHC+eL6YjfL1m+x+b+Fk3mkgZbN74WNxifFVow@mail.gmail.com>
-Subject: Re: [PULL 21/26] hw/arm/smmu: Refactor SMMU OAS
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240717110326.45230-1-phil@philjordan.eu>
+ <7c545db7-1899-49a9-82ba-967f9e0a9000@daynix.com>
+In-Reply-To: <7c545db7-1899-49a9-82ba-967f9e0a9000@daynix.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Sat, 20 Jul 2024 17:16:44 +0200
+Message-ID: <CAAibmn2NuXWkqVVR6-gZLGr6dNRY3YmR5AQ3v9i8pifOkdL_BA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] hw/display/apple-gfx: New macOS PV Graphics device
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: agraf@csgraf.de, berrange@redhat.com, marcandre.lureau@redhat.com, 
+ pbonzini@redhat.com, peter.maydell@linaro.org, philmd@linaro.org, 
+ qemu-devel@nongnu.org, thuth@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000006b8158061daf4d46"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=phil@philjordan.eu; helo=mail-vs1-xe2a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,62 +92,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jul 2024 at 14:20, Peter Maydell <peter.maydell@linaro.org> wrote:
+--0000000000006b8158061daf4d46
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sat 20. Jul 2024 at 16:42, Akihiko Odaki <akihiko.odaki@daynix.com>
+wrote:
+
 >
-> From: Mostafa Saleh <smostafa@google.com>
+> > It also became clear in out-of-band communication that Alexander would
+> > probably not end up having the time to see the patch through to
+> inclusion,
+> > and was happy for me to start making changes and to integrate my PCI
+> code.
 >
-> SMMUv3 OAS is currently hardcoded in the code to 44 bits, for nested
-> configurations that can be a problem, as stage-2 might be shared with
-> the CPU which might have different PARANGE, and according to SMMU manual
-> ARM IHI 0070F.b:
->     6.3.6 SMMU_IDR5, OAS must match the system physical address size.
+> I think you also need to take over the base vmapple change because PVG
+> cannot be tested without it; Only macOS can use PVG, and macOS requires
+> vmapple in my understanding.
+
+
+The PCI device variant works fine with x86-64 macOS as the guest system.
+(Or technically any UEFI based guest as the bootrom comes with a UEFI frame
+buffer driver; it just won=E2=80=99t have any acceleration features unless =
+you boot
+macOS.)
+
+If preferable I can leave out the vmapple/MMIO device variant (the
+-vmapple.m file) until the rest of the vmapple machine type modifications
+are ready. There still appears to be some kind of interrupt delivery issue
+with some devices on vmapple, so USB HID events are very slow. Or I can
+submit it as is if that=E2=80=99s not a dealbreaker. (How do I handle Alex=
+=E2=80=99
+unmodified patches though, as git send-email tries to send them from the
+patch author=E2=80=99s email address, which means the email rapidly gets sh=
+ot down
+by DKIM mismatch or whatever?)
+
+Thanks,
+Phil
+
+--0000000000006b8158061daf4d46
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div><br></div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Sat 20. Jul 2024 at 16:42, Akihiko Odaki &lt;<a href=3D"=
+mailto:akihiko.odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
+left:1px #ccc solid;padding-left:1ex"><br>
+&gt; It also became clear in out-of-band communication that Alexander would=
+<br>
+&gt; probably not end up having the time to see the patch through to inclus=
+ion,<br>
+&gt; and was happy for me to start making changes and to integrate my PCI c=
+ode.<br>
+<br>
+I think you also need to take over the base vmapple change because PVG <br>
+cannot be tested without it; Only macOS can use PVG, and macOS requires <br=
 >
-> This patch doesn't change the SMMU OAS, but refactors the code to
-> make it easier to do that:
-> - Rely everywhere on IDR5 for reading OAS instead of using the
->   SMMU_IDR5_OAS macro, so, it is easier just to change IDR5 and
->   it propagages correctly.
-> - Add additional checks when OAS is greater than 48bits.
-> - Remove unused functions/macros: pa_range/MAX_PA.
+vmapple in my understanding.</blockquote><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">The PCI device variant works fine with x86-64 macOS as the gues=
+t system. (Or technically any UEFI based guest as the bootrom comes with a =
+UEFI frame buffer driver; it just won=E2=80=99t have any acceleration featu=
+res unless you boot macOS.)</div><div dir=3D"auto"><br></div><div dir=3D"au=
+to">If preferable I can leave out the vmapple/MMIO device variant (the -vma=
+pple.m file) until the rest of the vmapple machine type modifications are r=
+eady. There still appears to be some kind of interrupt delivery issue with =
+some devices on vmapple, so USB HID events are very slow. Or I can submit i=
+t as is if that=E2=80=99s not a dealbreaker. (How do I handle Alex=E2=80=99=
+ unmodified patches though, as git send-email tries to send them from the p=
+atch author=E2=80=99s email address, which means the email rapidly gets sho=
+t down by DKIM mismatch or whatever?)</div><div dir=3D"auto"><br></div><div=
+ dir=3D"auto">Thanks,</div><div dir=3D"auto">Phil</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto"><br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex" dir=3D"a=
+uto"></blockquote></div></div>
 
-Hi; Coverity has spotted a possible problem with the OAS handling
-in this code (CID 1558464). I'm not sure if that's directly because of
-this patch or if it's just that the code change has caused Coverity to
-flag up a preexisting problem.
-
-It's quite possible this is a false-positive because Coverity hasn't
-noticed that the situation can't happen; but if so I think it's also
-sufficiently unclear to a human reader to be worth addressing anyway.
-
-> -static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
-> +static int decode_ste_s2_cfg(SMMUv3State *s, SMMUTransCfg *cfg,
-> +                             STE *ste)
->  {
-> +    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
-> +
->      if (STE_S2AA64(ste) == 0x0) {
->          qemu_log_mask(LOG_UNIMP,
->                        "SMMUv3 AArch32 tables not supported\n");
-> @@ -460,7 +463,15 @@ static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
->      }
->
->      /* For AA64, The effective S2PS size is capped to the OAS. */
-> -    cfg->s2cfg.eff_ps = oas2bits(MIN(STE_S2PS(ste), SMMU_IDR5_OAS));
-> +    cfg->s2cfg.eff_ps = oas2bits(MIN(STE_S2PS(ste), oas));
-
-oas2bits() is implemented as a function that returns -1 if the input
-isn't a valid OAS. But we don't check for that failure here, so we put
-the result into a uint8_t, which ends up as 255. Then later in
-the function we will do
-  MAKE_64BIT_MASK(0, cfg->s2cfg.eff_ps)
-which will do an undefined-behaviour shift by a negative number
-if eff_ps is 255.
-
-If the invalid-OAS case is impossible we should assert rather
-than returning -1; if it's not impossible we should handle it.
-
-Mostafa, could you have a look at this, please?
-
-thanks
--- PMM
+--0000000000006b8158061daf4d46--
 
