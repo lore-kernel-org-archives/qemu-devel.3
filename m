@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C85C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90AFBC3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sV6Kd-0005PN-Ky; Sat, 20 Jul 2024 05:24:51 -0400
+	id 1sV6Qv-00087a-22; Sat, 20 Jul 2024 05:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sV6KW-0005M1-86
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:24:41 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sV6Qs-00085f-MK
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:14 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sV6KT-0005ZS-39
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:24:38 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3d9dfc7c5f6so1227372b6e.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:24:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sV6Qq-0006rN-52
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:14 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-80557928673so112563639f.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721467476; x=1722072276; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8xY51Jb5ypiUobSDVwSxPdVHyTf6zg+N/h3nUWpPq6o=;
- b=TJ40tHCSLSsy4EfgwXa1WIxVwH8Ifqy6+zN0AUBEBOQTQA55jtEYI3Y6ziZ29ZQ/hi
- SvU5b76RQ95LTxheqUfiiqyPp4xiCc900ouMgm4duQOPwNDH50VpLFuoOz8tLYm6X287
- va6IDeSa4qjKubEV0iE/LZ4kAc74fvNUFgypU9oPjkqhJ4KO6bXQZeMCnHlP/70+DGxX
- SJs5g2nNPyIhsPyc4uLgi7znyJFAVCDHxMRtadH6Bsfl+K98202nRlKcmZaiDxmfKB3E
- 2nsTo4fXWjf3CwvpBZV+rAuLCrCvsNw3OeThMLJuFXx6f6ZLpBq68+LYH5PgCUtcDd58
- HH7g==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721467871; x=1722072671;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LDU2Zt8gZBQKmgVee2JKdgi66cDuvrO7hSjjib8H/lk=;
+ b=gDLxedGJRL2mp0zXQyMrOKjo209VOlpagT4KGP/XikVCQfaOdubnSrJYxFb/4QbKlo
+ LycQHosjSk+oybFMQwDBnU+HUozaTY2/4GbQkpNdZ0OdTO+lagoy59Phu7bMJYoCmOZO
+ XuxdTWPSDOF7RGudknS4k5AEIUbromOVPZlUgjB6bf75QTHaaXNGAvcyTvta0NfdLsDI
+ JBG1qZZ1CASeEgbrtFOKRDCN2dgY9ujh5BHv7aoDe1BQvzlXlp7IKpzq4kmHKqiR5g7H
+ gYKNCdTsH12qFbXn7vmL8EAp/tyWaXwJGL1b+X/vw1Z6DRHX+aLCsmJCDd5Zq+VTH7Zz
+ 84yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721467476; x=1722072276;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8xY51Jb5ypiUobSDVwSxPdVHyTf6zg+N/h3nUWpPq6o=;
- b=n7+/3/J8xubCWnSScbm5itkYrpusVkFeT9K3KcoGcL+Ink7Nz6EMgQuHlbOjkwvURq
- jQoyR8QT4oYkseY7lW8rVEMgOMUQ8XBBv6efR0smMxVEryp0vVMO1iEVNABtIpXzsn2+
- ufyxF3SO6UCIqeQqI8vHApSQd2dfjd8nZ62AmyQyS3NvPTk9L6X/4z5hg6a62y6aDZ5c
- JFMXX/Un8bbrKMY2MKNLouqvUW2wh7bUwRUIXjttNxgB/7A36K5MJTZLnpNCYv40vLjd
- 7sgw8Trl8f8sumaYTchOKmUczCt6BPNfbgtIOVBcAiJ/Xr6qVvqB1yhQ2H82hVBrosfx
- cEhg==
+ d=1e100.net; s=20230601; t=1721467871; x=1722072671;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LDU2Zt8gZBQKmgVee2JKdgi66cDuvrO7hSjjib8H/lk=;
+ b=NayZpw/2ffWqjGu097oSyzXdz1vl1azKgDiLXX6pcxp0Y1k4u8uh0ySLFCCZezMGiY
+ fCrCaL4EqDlccJOTuLOayVtaNYkiU5z2T/4nGX8PtbdlBfJKC3ViOwCTwGtL77kOSApe
+ NOSc0Va25NpQpQuZrkuO59KMgchkcobvM/wr9i+uKe1B++91/6e/WWSmZzO34aRbD4mF
+ nTGSUka5kYoAyLZkMpz/4OeIZtVPeVQWIPHRrlhybYNeOQZus9qWpPynKVnuGNtz8t7L
+ 5rNX8A0J3egufcvpfFMtU4VblW2qW3sGxtTIf02zXZWrB0j0QYSZ2tBhy0OuJDlPatuV
+ S49g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDnKr96PJcykvr2YVb2h3VgGEdmtSBOTImYRaHKHvYA//3RcTyQKoMNar0rJJ2rPKg+ZvVRQNBYAKCDG2qQdhkLgnGpys=
-X-Gm-Message-State: AOJu0YxBjSb5451pwM4ma5TukDkelwdrT92X6NVSal8DqX3Gnvc8pAJG
- 5jyByaWZ0qynqRU8yzgVfIedFlYct2ZHvxH/dl1dan4hcPgGs6sLZCYlUNuORKI=
-X-Google-Smtp-Source: AGHT+IFJQqaOVeiLgadNOuRqIzShX+BflcMndgm3s1IBgbROdGWXxyu/xrw2+gDjWuyZtSEAL8dnVA==
-X-Received: by 2002:a05:6808:138c:b0:3d6:30c4:de30 with SMTP id
- 5614622812f47-3dae5ffa48cmr2693476b6e.22.1721467475813; 
- Sat, 20 Jul 2024 02:24:35 -0700 (PDT)
-Received: from [192.168.68.110] ([179.193.8.144])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70cff4c2278sm2336001b3a.88.2024.07.20.02.24.33
+ AJvYcCWSQvLGWIwAcjcMPxx/ja3/kFRZdHsuSKmBlZit4hs3CSSoRLy/zT800kk7S4O/C+Z98Hb3cFd7F5ab5y2T84Sm9tGcmwU=
+X-Gm-Message-State: AOJu0YwSR8qn0xmb199bTIl2QR8Q0VKHTwS0nM/dc7bqoDSnH5zhu7Jn
+ zkQefvG5ARTlkdtIjvi4vyUUGkf8o5aU0b7IFsrOS4klPbyn3mGObhxMWUwUCtHfRomp55zcB12
+ gD1s=
+X-Google-Smtp-Source: AGHT+IHVPm8t/2gzpEDM1KgANQdKw0h2OLMQUsUVee8JWg0S2UQKWLWHEfSx+ctre7NQWEHi+VEghg==
+X-Received: by 2002:a05:6e02:180e:b0:397:584d:9b73 with SMTP id
+ e9e14a558f8ab-398e47ef554mr27226765ab.7.1721467870772; 
+ Sat, 20 Jul 2024 02:31:10 -0700 (PDT)
+Received: from localhost ([157.82.204.122])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-70d0fa125acsm538989b3a.190.2024.07.20.02.31.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Jul 2024 02:24:35 -0700 (PDT)
-Message-ID: <29e10101-3504-4cb8-a397-b6832c518b21@ventanamicro.com>
-Date: Sat, 20 Jul 2024 06:24:32 -0300
+ Sat, 20 Jul 2024 02:31:10 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH v4 0/6] target/arm/kvm: Report PMU unavailability
+Date: Sat, 20 Jul 2024 18:30:48 +0900
+Message-Id: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 8/8] tests/avocado: Boot Linux for RV32 cpu on RV64 QEMU
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, bmeng.cn@gmail.com, philmd@linaro.org,
- alex.bennee@linaro.org
-References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
- <20240719231149.1364-9-zhiwei_liu@linux.alibaba.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240719231149.1364-9-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIAMiDm2YC/23MSw6DIBSF4a0YxqWBizzsqPtoOkDAysBHoCUa4
+ 96LdtCYdnhu7vcvKLrgXUSXYkHBJR/90OdRngpkWt0/HPY2bwQESiKgwmP3wtryRkgHhluC8uc
+ YXOOnvXK75936+BzCvEcT3a5HnygmWIKoKLBaKV1erZ57P53N0KEtkOCLJBUfBBk1zDFX1mCZ5
+ T+I/UEsI2WkoYorDSAPaF3XNzZ7TOABAQAA
+To: Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-io1-xd32.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,46 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+target/arm/kvm.c checked PMU availability but claimed PMU is
+available even if it is not. In fact, Asahi Linux supports KVM but lacks
+PMU support. Only advertise PMU availability only when it is really
+available.
 
+Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
 
-On 7/19/24 8:11 PM, LIU Zhiwei wrote:
-> make check-avocado AVOCADO_TESTS=tests/avocado/tuxrun_baselines.py: \
-> TuxRunBaselineTest:test_riscv64_rv32
-> 
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Suggested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+Changes in v4:
+- Split patch "target/arm/kvm: Fix PMU feature bit early" into
+  "target/arm/kvm: Set PMU for host only when available" and
+  "target/arm/kvm: Do not silently remove PMU".
+- Changed to define PMU also for Armv7.
+- Changed not to define PMU for M.
+- Extracted patch "hvf: arm: Raise an exception for sysreg by default"
+  from "hvf: arm: Properly disable PMU".
+- Rebased.
+- Link to v3: https://lore.kernel.org/r/20240716-pmu-v3-0-8c7c1858a227@daynix.com
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Changes in v3:
+- Dropped patch "target/arm: Do not allow setting 'pmu' for hvf".
+- Dropped patch "target/arm: Allow setting 'pmu' only for host and max".
+- Dropped patch "target/arm/kvm: Report PMU unavailability".
+- Added patch "target/arm/kvm: Fix PMU feature bit early".
+- Added patch "hvf: arm: Do not advance PC when raising an exception".
+- Added patch "hvf: arm: Properly disable PMU".
+- Changed to check for Armv8 before adding PMU property.
+- Link to v2: https://lore.kernel.org/r/20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com
 
->   tests/avocado/tuxrun_baselines.py | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-> index 736e4aa289..589c7f254b 100644
-> --- a/tests/avocado/tuxrun_baselines.py
-> +++ b/tests/avocado/tuxrun_baselines.py
-> @@ -533,6 +533,22 @@ def test_riscv64_maxcpu(self):
->   
->           self.common_tuxrun(csums=sums)
->   
-> +    def test_riscv64_rv32(self):
-> +        """
-> +        :avocado: tags=arch:riscv64
-> +        :avocado: tags=machine:virt
-> +        :avocado: tags=tuxboot:riscv32
-> +        :avocado: tags=cpu:rv32
-> +        """
-> +        sums = { "Image" :
-> +                 "89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5",
-> +                 "fw_jump.elf" :
-> +                 "f2ef28a0b77826f79d085d3e4aa686f1159b315eff9099a37046b18936676985",
-> +                 "rootfs.ext4.zst" :
-> +                 "7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba" }
-> +
-> +        self.common_tuxrun(csums=sums)
-> +
->       def test_s390(self):
->           """
->           :avocado: tags=arch:s390x
+Changes in v2:
+- Restricted writes to 'pmu' to host and max.
+- Prohibited writes to 'pmu' for hvf.
+- Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
+
+---
+Akihiko Odaki (6):
+      target/arm/kvm: Set PMU for host only when available
+      target/arm/kvm: Do not silently remove PMU
+      target/arm: Always add pmu property for Armv7-A/R+
+      hvf: arm: Raise an exception for sysreg by default
+      hvf: arm: Properly disable PMU
+      hvf: arm: Do not advance PC when raising an exception
+
+ target/arm/cpu.c     |   5 +-
+ target/arm/hvf/hvf.c | 302 ++++++++++++++++++++++++++-------------------------
+ target/arm/kvm.c     |   7 +-
+ 3 files changed, 159 insertions(+), 155 deletions(-)
+---
+base-commit: a87a7c449e532130d4fa8faa391ff7e1f04ed660
+change-id: 20240629-pmu-ad5f67e2c5d0
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
+
 
