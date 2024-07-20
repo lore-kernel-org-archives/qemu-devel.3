@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092D3C3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1337C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sV6R0-0008SQ-5k; Sat, 20 Jul 2024 05:31:22 -0400
+	id 1sV6R5-0000PR-Ms; Sat, 20 Jul 2024 05:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV6Qz-0008On-9L
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:21 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sV6R3-0000FP-Kl
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:25 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV6Qx-00070c-RX
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:21 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fb3b7d0d56so16514935ad.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:31:19 -0700 (PDT)
+ id 1sV6R2-00071j-4g
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:25 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1fd66cddd4dso12049095ad.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721467878; x=1722072678;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721467883; x=1722072683;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uuvru8O1Lbu3d3+4LM3J/KSbEI4f7QyyvTpp+vjJrRQ=;
- b=DTW6cWRjBbUYf5kp13Lj7TfQaP349PQcy1ZQGchvj8ls+TPc/nT6SJtgtP4BbkRpWF
- 7C+j3QNrhzLEo0EQuXUt0WYtDG27Rg42n9HEr/yLmAma1yXo29uU5u49kAOXUK7dIKF1
- /4ekceTvv8Q9AlK6w+91zcrpMXEnPP6OauW/oYaFHKW8DSU6WBMfED0+o+6E+XY9DB/1
- jMgC110bTy01z6hX1T8QGTX1aGzf67s84YW3ymCWyYX1/vBpGmnlrla1FkAxHSYRbRm9
- hCHUkYGpZDTEy2CjL2mRtk7Z0mgN8CR1MQh6T1u/ThivVGsGLIQhIfbc9i4axpPpk0Mw
- Zb0A==
+ :reply-to; bh=r7Pn/awe7YFbUwLON8GOovUdtzCktNX5WHOGmuP4ywM=;
+ b=CvlG0FrRD4PexjVmtliQMD5FslA62oaUO4eRSzscruNztd9aMynY4eNtddCnQOKkZP
+ 0uXR4eClo6u55jOQ6JLggszE3QCtx5TsCdE44yH0657Kqd63sSDrZvTeZxSKNAyvY3yS
+ mPgRZzVr30ouSV8xzSTwBfTS+6bUVR+Q7yozPElAAZnpex9SQ5Ro2N7KUm9aVSzTX2aU
+ WenW4DnDk0q12YPkasVoutS1T0qqaSrn5DxDQ5PrvaIjHQu1Qne3OzcEz4joRAA6wcIm
+ sR6OEQ55svHGA0Z7992PlGsIlL/CTjPre87TD0zXbSD17BAO4sEeonkr379A6QWG75or
+ Xwlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721467878; x=1722072678;
+ d=1e100.net; s=20230601; t=1721467883; x=1722072683;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uuvru8O1Lbu3d3+4LM3J/KSbEI4f7QyyvTpp+vjJrRQ=;
- b=nGyPfPTog7ZDR9EXSS+gObP1FI8vcC9yrOmLAqCaUJdjAGatuyHAiR3TAw2DmPQDtr
- hW1P8cUUAVbpODr89PD4EWQyg5OMwq/HR1SxdFoAdaYPoMbMa2y2Ic1BQK978d7trF/M
- yGfbXGGNbZKcx+iW1jFr/rrzIcp2b+nrjCfUJSN2knqxs7K1IhAY6pN5bnyKuDV9hXeR
- ebDxLqeExEUJCOaej1w+/d4FWjsLR14OqqBFNJThyblUdCH2butNE9Pk5Ygc874yQibd
- xKOmswt2RSiYgrvitNszzIxeLaPaWaTN3FUrSFYgdJLmsVmFaOH61nspnsEcCBZbnR2i
- VsYQ==
+ bh=r7Pn/awe7YFbUwLON8GOovUdtzCktNX5WHOGmuP4ywM=;
+ b=U4bKR5YGW43G/j6Ag/4feWWw+DZtEHEtn22Y6AeCRpSTeroKSrx1RiyS1E+BuynecQ
+ pf/R9CCvSTsYts5PNkfneunZxtovgjtLrxd5eG9zl5lht33+9dX2SBkLvzD2vSI+Y+IV
+ WFcqbOSkkIV4kED8lKqUTVxhlcTWVV3TPeGXcjD+4VKKFxsE0R0Nm7mBatIQXUedYAKc
+ n3g75E9eYKQSBcwHfHpDfBk7raCDuu1WMajeSQxN4HjZpHbuMx3B+dfhaOwCCnQ8iSna
+ Hv06VNgMnNmCfe9HrAY88QvCjtMFP6Bo5IwxmsgGLp7g2qLvFLx7TP9fXgzrVQcO8Cfk
+ zSjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUeLNw+itdtguxUJ+64bBZgla9g4qW/kN0Qfc1Ej4KKX1TBLAgfMpPAQQt0igGfbnYbOeyWD3Rf+YfW56pUEEHqbeq0Pqs=
-X-Gm-Message-State: AOJu0YyO9K91VxIFYW6FH1Skk1rjjoAJgZvRkcw9DY3zqXSki8Grmthu
- EyEQ8R0+a3OArZdYeGFBFxgw4689EVubwD29eNcsjJE06We7kofqkldsY0lNQalCUesJOVwWwlg
- 8aa4=
-X-Google-Smtp-Source: AGHT+IGDxYBQ+UI3zCis37W9PvPyH5SIE5p+oC1cjVEarHMW9QkebJPnPHpAqlSz9NjhoUTUJSYbFQ==
-X-Received: by 2002:a17:902:c405:b0:1fd:73e6:83b8 with SMTP id
- d9443c01a7336-1fd745977bamr21122635ad.14.1721467878255; 
- Sat, 20 Jul 2024 02:31:18 -0700 (PDT)
+ AJvYcCVujOoFOvHEpL0SAmfbG/EijXskKDk12dAeB3osNAAxqFIGK+Ehwf8d+KjNzO1qovAYLYp6D2BETA+hPNUkuCn5xJ3EnRg=
+X-Gm-Message-State: AOJu0YwZOCy0hATKRtlW29g59vR/cTPIBHWtgOx6DBu1ur+TZapFZb9+
+ rPjTFfjbgjdMZJvBPveZ5YL/BvpaZtkY46vIcRBg4iAXzTdpu/S6y6oZpxMXWcBevnPm7QSGBBb
+ UU7s=
+X-Google-Smtp-Source: AGHT+IFuUHFAzQo566bTzAMkFSDEqpnCRbmcEzn8TLq/DlebkV9YSGugyGdb6Hgs68lyvmeUqWCK3A==
+X-Received: by 2002:a17:902:f682:b0:1fb:9cb0:3e2f with SMTP id
+ d9443c01a7336-1fd74573c4bmr20335395ad.27.1721467882736; 
+ Sat, 20 Jul 2024 02:31:22 -0700 (PDT)
 Received: from localhost ([157.82.204.122])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fd6f28f518sm18251415ad.69.2024.07.20.02.31.16
+ d9443c01a7336-1fd6f3181desm18119545ad.128.2024.07.20.02.31.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Jul 2024 02:31:17 -0700 (PDT)
+ Sat, 20 Jul 2024 02:31:22 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 20 Jul 2024 18:30:50 +0900
-Subject: [PATCH v4 2/6] target/arm/kvm: Do not silently remove PMU
+Date: Sat, 20 Jul 2024 18:30:51 +0900
+Subject: [PATCH v4 3/6] target/arm: Always add pmu property for Armv7-A/R+
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240720-pmu-v4-2-2a2b28f6b08f@daynix.com>
+Message-Id: <20240720-pmu-v4-3-2a2b28f6b08f@daynix.com>
 References: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
 In-Reply-To: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -76,8 +76,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,36 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm_arch_init_vcpu() used to remove PMU when it is not available even
-if the CPU model needs one. It is semantically incorrect, and may
-continue execution on a misbehaving host that advertises a CPU model
-while lacking its PMU. Keep the PMU when the CPU model needs one, and
-let kvm_arm_vcpu_init() fail if the KVM implementation mismatches with
-our expectation.
+kvm-steal-time and sve properties are added for KVM even if the
+corresponding features are not available. Always add pmu property for
+Armv8. Note that the property is added only for Armv7-A/R+ as QEMU
+currently emulates PMU only for such versions, and a different
+version may have a different definition of PMU or may not have one at
+all.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- target/arm/kvm.c | 5 -----
- 1 file changed, 5 deletions(-)
+ target/arm/cpu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index b20a35052f41..849e2e21b304 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 19191c239181..c1955a82fb3c 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1741,6 +1741,10 @@ void arm_cpu_post_init(Object *obj)
+ 
+     if (!arm_feature(&cpu->env, ARM_FEATURE_M)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_hivecs_property);
++
++        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++            object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
++        }
      }
--    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
--        cpu->has_pmu = false;
--    }
-     if (cpu->has_pmu) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
--    } else {
--        env->features &= ~(1ULL << ARM_FEATURE_PMU);
+ 
+     if (arm_feature(&cpu->env, ARM_FEATURE_V8)) {
+@@ -1770,7 +1774,6 @@ void arm_cpu_post_init(Object *obj)
+ 
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+         cpu->has_pmu = true;
+-        object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
      }
-     if (cpu_isar_feature(aa64_sve, cpu)) {
-         assert(kvm_arm_sve_supported());
+ 
+     /*
 
 -- 
 2.45.2
