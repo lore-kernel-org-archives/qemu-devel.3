@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1496FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 15:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DBFC3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 15:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVBpY-00037n-Dk; Sat, 20 Jul 2024 11:17:04 -0400
+	id 1sVBrp-0007OA-45; Sat, 20 Jul 2024 11:19:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sVBpU-00037H-Fa
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:17:02 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sVBrn-0007N0-S8
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:19:23 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sVBpS-0006PF-Cc
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:17:00 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-49294575ad8so107426137.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 08:16:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sVBrm-0006js-5Q
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 11:19:23 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2ffc3447fso1866789a12.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 08:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721488616; x=1722093416;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1721488760; x=1722093560; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rkBII/dmjhvafbnUah5DYm3F2M5Rvfzyr+ZXcNJRmy0=;
- b=SgE7dwHSCXYDvMemjpH9e1IhRJrVLsRKtQQTW3QiszAb9eCxQ772ESRvjMt/oSv0Vq
- 3xNAqbzMvuCDgKTTgfEtaAIQyFQ9xKRkGj81iwAtwyyVX1KhmSd/sRm1Mg5/8TNdL+hZ
- 10auyWXdh2R3bNhES0Z0OrEbkZMlTfZhtBQrAYjINvi/cEs6haE1NoIKWFKynMFvD9m/
- j074zT6dk1nWhRXSs7JE3exHt1HvN8n3rQg3qXi5HJyJMqCf7olF0bVZeSUljzgslMVl
- 3LGublONPd27nsAXg2QkXAl2ag6KZF9k6Bg424Q3E8QE0/HWFJpEeYqJBwhX8KjKDgZX
- +mGg==
+ bh=bGuakzEDT3A6sVjBDDWj9Q5Jw5tOU9PNvuR9CtPoQe4=;
+ b=BchZUkb+zhB3H7rCQ7aEzt4vxNqO9AxVzmuz9rERlTHL3qMpFYpC04+t+UlWU9VYRB
+ hloNgbsObO2AX4lmJHVQTJqAsQGy9KKr21cRzFHjpj4r6uE2nTm1/FptdKb5IKtoLOAo
+ 1k/fU/p/rUo4YDT+HiLQFK7OMplE4DOe9RWsmdKx5cpa0OsfV+ZaksvMZtetVg3pSkrp
+ +tRAe6EFTW9T3LWZtCoXde/M5CobRheM+ksk8rRw7tNjqS3Io4yPmtZOnmgp/P1RcpY2
+ nIKQWgdBu5JaN0Zsr3wd0bqBPoTvs1Ei2JZpp6RSi+P9Uk1X5bsA4IGM9nFAQf/B/1e5
+ qKbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721488616; x=1722093416;
+ d=1e100.net; s=20230601; t=1721488760; x=1722093560;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rkBII/dmjhvafbnUah5DYm3F2M5Rvfzyr+ZXcNJRmy0=;
- b=N4KXiaTYyVTBMr16HQv2Ux29SgQjLUkzTTJ4p3VmxcMIkUx2UP0B6hCBZZHvaxM099
- vMci8JjMTBDciPtKFypeE85lGzn18ZrcxAr8MQoU84HC6ZuwRaUTb//1fO+PuQC7SFjw
- IWRqupttZRMbalviAr1z2hveiy6epEkxjY6NY1yS5cTwsqyGgr3/hRMrYYNqnMuhAzCp
- SsVWlKpYlct4U6+uX22eNvLrwrLXhGLJwyjcFFd8RzWLeX6vIHN45AEdDRW4bM+BoZGx
- ySAiPERXajXHRhN5WPLjvegNn6c60CbX36gd2VqLb86rRuSd+XHRb6u74srzBqnKRsna
- czuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVROv5Mm3Cgrk7egWORZ+deXXgCJrI3RC4/ZjAYEjBzUdfOTtxqHuBnI6Fzh2wkFBxhsjpZlNKdcYfYk3Yu+pBGKdre5FQ=
-X-Gm-Message-State: AOJu0YyKTZyd1y+3Ui86qurNi3DrMJ1Uof1LWt++QSmbnk1ih4AooHZ3
- EnP4H8eSmbd7yStjlHK1bvT4KPBEkDbf+FT9JdF6cJNwPqCUKe/7HVQuipS4kFMyJJhfzpKRrS3
- oNKLxm6AaYR0peOcJuVb8/pJ3w974e9cUCVo7
-X-Google-Smtp-Source: AGHT+IEhuDUkmzOrj5p3mVEeoUyt43JIAO2i9iqQs6GWxIS+AJYPBrHlxCkDLr5MDKc9YdBjNUUuDfKUGrydY8twknk=
-X-Received: by 2002:a05:6102:955:b0:48f:62bb:357c with SMTP id
- ada2fe7eead31-4925c19f256mr7383232137.3.1721488615630; Sat, 20 Jul 2024
- 08:16:55 -0700 (PDT)
+ bh=bGuakzEDT3A6sVjBDDWj9Q5Jw5tOU9PNvuR9CtPoQe4=;
+ b=kE9TSn209T2UwINapEI72cHljBrhqtSGNtNRBB0T/vI1vJquOsrmUZqvCcP8UKDDLC
+ oityzItlMPq018xslBcepNM8uyXVzDOhxRhA7wFEF+R2OBcfw0XTOc9kt4hs9NQtE5Nu
+ m4vFPzwYUgbJIKUqhiJHsVNB5ox4fFBr2DG955tp2PRJnwdd66RsFPZ4zJpCK8hFZBi8
+ 8pmo7SEPGjZlXT/H/7+oK5OohquwBS/TNGGfkJWzstgQmbHMd4eiGhU01EEzdOD6T2PV
+ 394IlgBMPioSEmoWJfXsexSqyT4SSJd3Ki2FQD732pO/F9Fw9/cXjSyZ0RbzU1lsjMpe
+ SYYg==
+X-Gm-Message-State: AOJu0Yx0E2NRKr/5Tn/uzBOSLfytRlf407TPrQtAG4DilkEYPF7xklfZ
+ eeWdYAWRNVaqMYN7Bm2Hvqety4V6ClH/qDS9nxvxoOEU5b/aeJmOHp6LsPxJCtLvat043CG93t9
+ L0146xy14Nb0MEm88Ada9ltgddxq9c6jc6oy/jQ==
+X-Google-Smtp-Source: AGHT+IEUaY0rUecjXzXRaizcCSSxh6yjfFqTuSRC+A/h0CcdS1PIKsBmQfxe0tJ7PBzhFk5UJsiZ5Rx2sMijlgvqPN0=
+X-Received: by 2002:a50:9fa8:0:b0:5a2:6e1c:91ed with SMTP id
+ 4fb4d7f45d1cf-5a47a61f401mr1193303a12.27.1721488759878; Sat, 20 Jul 2024
+ 08:19:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240717110326.45230-1-phil@philjordan.eu>
- <7c545db7-1899-49a9-82ba-967f9e0a9000@daynix.com>
-In-Reply-To: <7c545db7-1899-49a9-82ba-967f9e0a9000@daynix.com>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Sat, 20 Jul 2024 17:16:44 +0200
-Message-ID: <CAAibmn2NuXWkqVVR6-gZLGr6dNRY3YmR5AQ3v9i8pifOkdL_BA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] hw/display/apple-gfx: New macOS PV Graphics device
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: agraf@csgraf.de, berrange@redhat.com, marcandre.lureau@redhat.com, 
- pbonzini@redhat.com, peter.maydell@linaro.org, philmd@linaro.org, 
- qemu-devel@nongnu.org, thuth@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000006b8158061daf4d46"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=phil@philjordan.eu; helo=mail-vs1-xe2a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+ <20240718021012.2057986-27-alistair.francis@wdc.com>
+In-Reply-To: <20240718021012.2057986-27-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 20 Jul 2024 16:19:09 +0100
+Message-ID: <CAFEAcA-Lrnt30uvR5k+GVsM-goKuD7ZQzzxOpxocBf3C6BzvMg@mail.gmail.com>
+Subject: Re: [PULL 26/30] target/riscv: Do not setup pmu timer if OF is
+ disabled
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Atish Patra <atishp@rivosinc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,81 +91,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006b8158061daf4d46
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat 20. Jul 2024 at 16:42, Akihiko Odaki <akihiko.odaki@daynix.com>
-wrote:
-
+On Thu, 18 Jul 2024 at 03:15, Alistair Francis <alistair23@gmail.com> wrote:
 >
-> > It also became clear in out-of-band communication that Alexander would
-> > probably not end up having the time to see the patch through to
-> inclusion,
-> > and was happy for me to start making changes and to integrate my PCI
-> code.
+> From: Atish Patra <atishp@rivosinc.com>
 >
-> I think you also need to take over the base vmapple change because PVG
-> cannot be tested without it; Only macOS can use PVG, and macOS requires
-> vmapple in my understanding.
-
-
-The PCI device variant works fine with x86-64 macOS as the guest system.
-(Or technically any UEFI based guest as the bootrom comes with a UEFI frame
-buffer driver; it just won=E2=80=99t have any acceleration features unless =
-you boot
-macOS.)
-
-If preferable I can leave out the vmapple/MMIO device variant (the
--vmapple.m file) until the rest of the vmapple machine type modifications
-are ready. There still appears to be some kind of interrupt delivery issue
-with some devices on vmapple, so USB HID events are very slow. Or I can
-submit it as is if that=E2=80=99s not a dealbreaker. (How do I handle Alex=
-=E2=80=99
-unmodified patches though, as git send-email tries to send them from the
-patch author=E2=80=99s email address, which means the email rapidly gets sh=
-ot down
-by DKIM mismatch or whatever?)
-
-Thanks,
-Phil
-
---0000000000006b8158061daf4d46
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><br></div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Sat 20. Jul 2024 at 16:42, Akihiko Odaki &lt;<a href=3D"=
-mailto:akihiko.odaki@daynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
-left:1px #ccc solid;padding-left:1ex"><br>
-&gt; It also became clear in out-of-band communication that Alexander would=
-<br>
-&gt; probably not end up having the time to see the patch through to inclus=
-ion,<br>
-&gt; and was happy for me to start making changes and to integrate my PCI c=
-ode.<br>
-<br>
-I think you also need to take over the base vmapple change because PVG <br>
-cannot be tested without it; Only macOS can use PVG, and macOS requires <br=
+> The timer is setup function is invoked in both hpmcounter
+> write and mcountinhibit write path. If the OF bit set, the
+> LCOFI interrupt is disabled. There is no benefitting in
+> setting up the qemu timer until LCOFI is cleared to indicate
+> that interrupts can be fired again.
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> Message-ID: <20240711-smcntrpmf_v7-v8-12-b7c38ae7b263@rivosinc.com>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>  target/riscv/pmu.c | 56 ++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 44 insertions(+), 12 deletions(-)
 >
-vmapple in my understanding.</blockquote><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">The PCI device variant works fine with x86-64 macOS as the gues=
-t system. (Or technically any UEFI based guest as the bootrom comes with a =
-UEFI frame buffer driver; it just won=E2=80=99t have any acceleration featu=
-res unless you boot macOS.)</div><div dir=3D"auto"><br></div><div dir=3D"au=
-to">If preferable I can leave out the vmapple/MMIO device variant (the -vma=
-pple.m file) until the rest of the vmapple machine type modifications are r=
-eady. There still appears to be some kind of interrupt delivery issue with =
-some devices on vmapple, so USB HID events are very slow. Or I can submit i=
-t as is if that=E2=80=99s not a dealbreaker. (How do I handle Alex=E2=80=99=
- unmodified patches though, as git send-email tries to send them from the p=
-atch author=E2=80=99s email address, which means the email rapidly gets sho=
-t down by DKIM mismatch or whatever?)</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">Thanks,</div><div dir=3D"auto">Phil</div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto"><br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex" dir=3D"a=
-uto"></blockquote></div></div>
+> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+> index a4729f6c53..3cc0b3648c 100644
+> --- a/target/riscv/pmu.c
+> +++ b/target/riscv/pmu.c
+> @@ -416,14 +416,49 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+>      return 0;
+>  }
 
---0000000000006b8158061daf4d46--
+Hi; I was looking at an issue Coverity flagged up with this code (CID
+1558461, 1558463):
+
+> +static bool pmu_hpmevent_is_of_set(CPURISCVState *env, uint32_t ctr_idx)
+> +{
+> +    target_ulong mhpmevent_val;
+> +    uint64_t of_bit_mask;
+> +
+> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+> +        mhpmevent_val = env->mhpmeventh_val[ctr_idx];
+> +        of_bit_mask = MHPMEVENTH_BIT_OF;
+> +     } else {
+> +        mhpmevent_val = env->mhpmevent_val[ctr_idx];
+> +        of_bit_mask = MHPMEVENT_BIT_OF;
+
+MHPMEVENT_BIT_OF is defined as BIT_ULL(63)...
+
+> +    }
+> +
+> +    return get_field(mhpmevent_val, of_bit_mask);
+
+...but we pass it to get_field(), whose definition is:
+
+#define get_field(reg, mask) (((reg) & \
+                 (uint64_t)(mask)) / ((mask) & ~((mask) << 1)))
+
+Notice that part of this expression is "(mask) << 1". So Coverity complains
+that we took a constant value and shifted it right off the top.
+
+I think this is probably a false positive, but why is target/riscv
+using its own ad-hoc macros for extracting bitfields? We have
+a standard set of extract/deposit macros in bitops.h, and not
+using them makes the riscv code harder to read for people who
+are used to the rest of the codebase (e.g. to figure out if this
+Coverity issue is a false positive I would need to look at these
+macros to figure out what exactly they're doing).
+
+thanks
+-- PMM
 
