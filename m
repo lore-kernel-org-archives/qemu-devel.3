@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F4AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C28C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVFZA-000786-2x; Sat, 20 Jul 2024 15:16:24 -0400
+	id 1sVFsU-000132-QI; Sat, 20 Jul 2024 15:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYx-0006q7-JX
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:14 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFsT-00010P-Je
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:36:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYk-0000rL-Sm
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:06 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJAjSN021362;
- Sat, 20 Jul 2024 19:15:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references; s=
- corp-2023-11-20; bh=DpTciMWL5BAj6n1iFBVHsSIkDF5ym/ImJcxqzxWgfVM=; b=
- HmApqsn91G1CDYkSxmlgQTxqrGQpck7Zr2TuIl2cqJ7WAW0KIq9DvXIjElG5oiQ1
- 9LC1OnX7gLhdsbRkhGLCb/gZarT6s5jYutewWkjOJX/+sNTXUgcWTbobnwiPv0Bu
- E2D9oFVBWXJfjtwna8esOHZxH4b/DONoY2P4BEzVh8tEWVjxZxsjj9bw/RYvleP5
- RcV+VMNuPreneGeg0QsSYw8XdzCcK5x9MuPn02nPDId1crGMQhPX9WbH3ee6WP8w
- pyOvHFhBOtl2l81j5fmnWtEGCFxckNv1HZzbzfWF/RUuZF2KbKyXrbb/cHjRFsDn
- 5AXeL8FXtoluVWR6eGWRrw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5gr05b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:51 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46KHe1JX027443; Sat, 20 Jul 2024 19:15:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40g3p5puvf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:50 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdfH028365;
- Sat, 20 Jul 2024 19:15:50 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 40g3p5pusv-9; Sat, 20 Jul 2024 19:15:50 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 08/12] vfio/iommufd: register container for cpr
-Date: Sat, 20 Jul 2024 12:15:33 -0700
-Message-Id: <1721502937-87102-9-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
-References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-20_16,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- bulkscore=0 phishscore=0
- suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407200140
-X-Proofpoint-GUID: 2CudywQa5VHt7u50sWxOlsNDjiJAKXKE
-X-Proofpoint-ORIG-GUID: 2CudywQa5VHt7u50sWxOlsNDjiJAKXKE
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVFsQ-0005EB-NM
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:36:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721504177;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2H9rFRRHangcd0R9YgNmNx4Ng1crSl6EtNkQw9Ia9Ps=;
+ b=TmBkK+xJ8r83MKIUPJzKGb3Mt2i6K8vNzX7m9bLmL/7v8pnpH5BcfNg6EZrm5I0+5S6JUz
+ 4Io0ZrTm7zbca1qpK+zMJYft6ilzShnt2ixuNH6E5oKx1uWylOOsSdgFg70wd7R7yI2pu1
+ ihy/G3n/FcTw6dlWBoNIURYr93K3bE8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-156-STBDarkRMKSTKAtbTJc4FQ-1; Sat, 20 Jul 2024 15:36:16 -0400
+X-MC-Unique: STBDarkRMKSTKAtbTJc4FQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-36857dd6913so1270694f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 12:36:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721504175; x=1722108975;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2H9rFRRHangcd0R9YgNmNx4Ng1crSl6EtNkQw9Ia9Ps=;
+ b=nTEdfXf4sxQ/LA1C3EbFu0jf9dXVZw1OSOt0e3O9B7KxTpsZdX5Gr7p313GcnKfdKD
+ 7QPJGq4sFqYys2FB9CSB/EqDr6udvmUmy539MG8QQ+fEm4ewKG+qkA3xxtS7MXh+VG1z
+ boscteR/mXZwZbqRwvBzRclHp4oDh0nUCtVNp8T6fE1+XOdSKwEfn+tanZOG8Kf+CBKt
+ fhjY5Od3TBC7Zur7ekxgwnU2djoF4IdeK6S8pA2krOVmOsq9Y+MlyVLyGckfuwh12605
+ EPLoaQ2xbXv/n9WtQH70lgIvudo7RoMTgnRJisCxPfb58JeHAoxGdl4OQhmaIRyLTfLt
+ W9EA==
+X-Gm-Message-State: AOJu0YwRh/oOLQirJuXytltdMu3/EUI6ig9Ck0/BIECFJxoK5cWbiWbD
+ IGES+9nJfaCSePIDredT6ycUWDYi6EzFoIvvvWm2401IouBTuIvfO30wNfDqWS/D4Z6m05vvujy
+ c3MNSOoSkgPiT5MUfLB+qlHWKNVBSrZDPaegKMCJ898BbYKLw+0Pn
+X-Received: by 2002:adf:f6c8:0:b0:367:bb20:b3e1 with SMTP id
+ ffacd0b85a97d-3683171f8bemr7468696f8f.51.1721504174723; 
+ Sat, 20 Jul 2024 12:36:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbpzg2rj6k/1VqP/ypZskJ30zjQtU+wvImzMGtU4onrFk0BB59EdLdo0bvUatXh699j8l84g==
+X-Received: by 2002:adf:f6c8:0:b0:367:bb20:b3e1 with SMTP id
+ ffacd0b85a97d-3683171f8bemr7468687f8f.51.1721504174085; 
+ Sat, 20 Jul 2024 12:36:14 -0700 (PDT)
+Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787ced28sm4457561f8f.88.2024.07.20.12.36.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Jul 2024 12:36:13 -0700 (PDT)
+Date: Sat, 20 Jul 2024 15:36:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org,
+ wangyanan55@huawei.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, anisinha@redhat.com, qemu-arm@nongnu.org
+Subject: Re: [PATCH] smbios: make memory device size configurable per Machine
+Message-ID: <20240720153521-mutt-send-email-mst@kernel.org>
+References: <20240711074822.3384344-1-imammedo@redhat.com>
+ <20240711071054-mutt-send-email-mst@kernel.org>
+ <20240711150511.3a8f9013@imammedo.users.ipa.redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240711150511.3a8f9013@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,157 +103,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a vfio iommufd container for CPR.  Add a blocker if the kernel does
-not support IOMMU_IOAS_CHANGE_PROCESS.
+On Thu, Jul 11, 2024 at 03:05:11PM +0200, Igor Mammedov wrote:
+> On Thu, 11 Jul 2024 07:13:27 -0400
+> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> 
+> > On Thu, Jul 11, 2024 at 09:48:22AM +0200, Igor Mammedov wrote:
+> > > Currently SMBIOS maximum memory device chunk is capped at 16Gb,
+> > > which is fine for the most cases (QEMU uses it to describe initial
+> > > RAM (type 17 SMBIOS table entries)).
+> > > However when starting guest with terabytes of RAM this leads to
+> > > too many memory device structures, which eventually upsets linux
+> > > kernel as it reserves only 64K for these entries and when that
+> > > border is crossed out it runs out of reserved memory.
+> > > 
+> > > Instead of partitioning initial RAM on 16Gb chunks, use maximum
+> > > possible chunk size that SMBIOS spec allows[1]. Which lets
+> > > encode RAM in Mb units in uint32_t-1 field (upto 2047Tb).
+> > > As result initial RAM will generate only one type 17 structure
+> > > until host/guest reach ability to use more RAM in the future.
+> > > 
+> > > Compat changes:
+> > > We can't unconditionally change chunk size as it will break
+> > > QEMU<->guest ABI (and migration). Thus introduce a new machine class
+> > > field that would let older versioned machines to use 16Gb chunks
+> > > while new machine type could use maximum possible chunk size.
+> > > 
+> > > While it might seem to be risky to rise max entry size this much
+> > > (much beyond of what current physical RAM modules support),
+> > > I'd not expect it causing much issues, modulo uncovering bugs
+> > > in software running within guest. And those should be fixed
+> > > on guest side to handle SMBIOS spec properly, especially if
+> > > guest is expected to support so huge RAM configs.
+> > > In worst case, QEMU can reduce chunk size later if we would
+> > > care enough about introducing a workaround for some 'unfixable'
+> > > guest OS, either by fixing up the next machine type or
+> > > giving users a CLI option to customize it.
+> > > 
+> > > 1) SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
+> > > 
+> > > PS:
+> > > * tested on 8Tb host with RHEL6 guest, which seems to parse
+> > >   type 17 SMBIOS table entries correctly (according to 'dmidecode').
+> > > 
+> > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > > ---
+> > >  include/hw/boards.h |  4 ++++
+> > >  hw/arm/virt.c       |  1 +
+> > >  hw/core/machine.c   |  1 +
+> > >  hw/i386/pc_piix.c   |  1 +
+> > >  hw/i386/pc_q35.c    |  1 +
+> > >  hw/smbios/smbios.c  | 11 ++++++-----
+> > >  6 files changed, 14 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/include/hw/boards.h b/include/hw/boards.h
+> > > index ef6f18f2c1..48ff6d8b93 100644
+> > > --- a/include/hw/boards.h
+> > > +++ b/include/hw/boards.h
+> > > @@ -237,6 +237,9 @@ typedef struct {
+> > >   *    purposes only.
+> > >   *    Applies only to default memory backend, i.e., explicit memory backend
+> > >   *    wasn't used.
+> > > + * @smbios_memory_device_size:
+> > > + *    Default size of memory device,
+> > > + *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"  
+> > 
+> > Maybe it would be better to just make this a boolean,
+> > and put the spec related logic in smbios.c ?
+> > WDYT?
+> 
+> Using bool here, seems awkward to me,
+> i.e. not clear semantics and compat handling would be
+> complicated as well.
+> 
+> And if we have to expose it someday to users,
+> it would be logical to make it machine property.
+> Given it's used not only by x86, having it as value
+> here lets each machine to customize if necessary
+> using well established pattern (incl. compat machinery)
+> 
+> 
+> > >   */
+> > >  struct MachineClass {
+> > >      /*< private >*/
+> > > @@ -304,6 +307,7 @@ struct MachineClass {
+> > >      const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
+> > >      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+> > >      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+> > > +    uint64_t smbios_memory_device_size;
+> > >  };
+> > >  
+> > >  /**
+> > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > > index b0c68d66a3..719e83e6a1 100644
+> > > --- a/hw/arm/virt.c
+> > > +++ b/hw/arm/virt.c
+> > > @@ -3308,6 +3308,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
+> > >  static void virt_machine_9_0_options(MachineClass *mc)
+> > >  {
+> > >      virt_machine_9_1_options(mc);
+> > > +    mc->smbios_memory_device_size = 16 * GiB;
+> > >      compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+> > >  }
+> > >  DEFINE_VIRT_MACHINE(9, 0)
+> > > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > > index bc38cad7f2..3cfdaec65d 100644
+> > > --- a/hw/core/machine.c
+> > > +++ b/hw/core/machine.c
+> > > @@ -1004,6 +1004,7 @@ static void machine_class_init(ObjectClass *oc, void *data)
+> > >      /* Default 128 MB as guest ram size */
+> > >      mc->default_ram_size = 128 * MiB;
+> > >      mc->rom_file_has_mr = true;
+> > > +    mc->smbios_memory_device_size = 2047 * TiB;
+> > >  
+> > >      /* numa node memory size aligned on 8MB by default.
+> > >       * On Linux, each node's border has to be 8MB aligned  
+> > 
+> > 
+> > 
+> > All these values really should be documented.
+> It's in commit message, but right I'll document value here
+> on respin so it would be easier for reader to see where it
+> comes from.
+> 
+> > And I feel 
+> ???
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- backends/iommufd.c            |  8 ++++++
- hw/vfio/cpr-iommufd.c         | 60 +++++++++++++++++++++++++++++++++++++++++++
- hw/vfio/iommufd.c             |  2 ++
- hw/vfio/meson.build           |  1 +
- include/hw/vfio/vfio-common.h |  3 +++
- include/sysemu/iommufd.h      |  1 +
- 6 files changed, 75 insertions(+)
- create mode 100644 hw/vfio/cpr-iommufd.c
+sorry. what I said above. can we find some place where it is
+not awkward to quote spec?
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 4bdbad2..243178e 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -73,6 +73,14 @@ static void iommufd_backend_class_init(ObjectClass *oc, void *data)
-     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
- }
- 
-+bool iommufd_change_process_capable(IOMMUFDBackend *be)
-+{
-+    struct iommu_ioas_change_process args = {.n_umap = -1};
-+
-+    ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
-+    return (errno != ENOTTY);
-+}
-+
- bool iommufd_backend_connect(IOMMUFDBackend *be, const char *name, Error **errp)
- {
-     int fd;
-diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-new file mode 100644
-index 0000000..f2e34f4
---- /dev/null
-+++ b/hw/vfio/cpr-iommufd.c
-@@ -0,0 +1,60 @@
-+/*
-+ * Copyright (c) 2021-2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/vfio/vfio-common.h"
-+#include "migration/blocker.h"
-+#include "migration/cpr.h"
-+#include "migration/migration.h"
-+#include "migration/vmstate.h"
-+#include "sysemu/iommufd.h"
-+
-+#define IOMMUFD_CONTAINER(base) \
-+    container_of(base, VFIOIOMMUFDContainer, bcontainer)
-+
-+static bool vfio_can_cpr_exec(VFIOIOMMUFDContainer *container, Error **errp)
-+{
-+    if (!iommufd_change_process_capable(container->be)) {
-+        error_setg(errp,
-+                   "VFIO container does not support IOMMU_IOAS_CHANGE_PROCESS");
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static const VMStateDescription vfio_container_vmstate = {
-+    .name = "vfio-iommufd-container",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .needed = cpr_needed_for_reuse,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+bool vfio_iommufd_cpr_register_container(VFIOContainerBase *bcontainer,
-+                                         Error **errp)
-+{
-+    VFIOIOMMUFDContainer *container = IOMMUFD_CONTAINER(bcontainer);
-+
-+    if (!vfio_can_cpr_exec(container, &bcontainer->cpr_blocker)) {
-+        return migrate_add_blocker_modes(&bcontainer->cpr_blocker, errp,
-+                                        MIG_MODE_CPR_EXEC, -1) == 0;
-+    }
-+
-+    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
-+
-+    return true;
-+}
-+
-+void vfio_iommufd_cpr_unregister_container(VFIOContainerBase *bcontainer)
-+{
-+    VFIOIOMMUFDContainer *container = IOMMUFD_CONTAINER(bcontainer);
-+
-+    vmstate_unregister(NULL, &vfio_container_vmstate, container);
-+}
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 6d77daa..585bf09 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -632,6 +632,8 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
-     vioc->attach_device = iommufd_cdev_attach;
-     vioc->detach_device = iommufd_cdev_detach;
-     vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
-+    vioc->cpr_register = vfio_iommufd_cpr_register_container;
-+    vioc->cpr_unregister = vfio_iommufd_cpr_unregister_container;
- };
- 
- static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 5487815..998adb5 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -13,6 +13,7 @@ vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
- vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
-   'cpr.c',
-   'cpr-legacy.c',
-+  'cpr-iommufd.c',
-   'display.c',
-   'pci-quirks.c',
-   'pci.c',
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index ec5b7168..8aa02d4 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -247,6 +247,9 @@ bool vfio_legacy_cpr_register_container(VFIOContainerBase *bcontainer,
- void vfio_legacy_cpr_unregister_container(VFIOContainerBase *bcontainer);
- bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
-                                       uint32_t ioas_id, Error **errp);
-+bool vfio_iommufd_cpr_register_container(VFIOContainerBase *bcontainer,
-+                                         Error **errp);
-+void vfio_iommufd_cpr_unregister_container(VFIOContainerBase *bcontainer);
- 
- extern const MemoryRegionOps vfio_region_ops;
- typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
-diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-index 6955ebd..f80b968 100644
---- a/include/sysemu/iommufd.h
-+++ b/include/sysemu/iommufd.h
-@@ -52,6 +52,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
- bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
-                                      uint32_t *type, void *data, uint32_t len,
-                                      Error **errp);
-+bool iommufd_change_process_capable(IOMMUFDBackend *be);
- 
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
- #endif
--- 
-1.8.3.1
+> > 
+> > 
+> > 
+> > > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> > > index 9445b07b4f..d9e69243b4 100644
+> > > --- a/hw/i386/pc_piix.c
+> > > +++ b/hw/i386/pc_piix.c
+> > > @@ -495,6 +495,7 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+> > >      pc_i440fx_machine_9_1_options(m);
+> > >      m->alias = NULL;
+> > >      m->is_default = false;
+> > > +    m->smbios_memory_device_size = 16 * GiB;
+> > >  
+> > >      compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+> > >      compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+> > > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> > > index 71d3c6d122..9d108b194e 100644
+> > > --- a/hw/i386/pc_q35.c
+> > > +++ b/hw/i386/pc_q35.c
+> > > @@ -374,6 +374,7 @@ static void pc_q35_machine_9_0_options(MachineClass *m)
+> > >      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+> > >      pc_q35_machine_9_1_options(m);
+> > >      m->alias = NULL;
+> > > +    m->smbios_memory_device_size = 16 * GiB;
+> > >      compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+> > >      compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+> > >      pcmc->isa_bios_alias = false;
+> > > diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> > > index 3b7703489d..a394514264 100644
+> > > --- a/hw/smbios/smbios.c
+> > > +++ b/hw/smbios/smbios.c
+> > > @@ -1093,6 +1093,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+> > >                         Error **errp)
+> > >  {
+> > >      unsigned i, dimm_cnt, offset;
+> > > +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+> > >      ERRP_GUARD();
+> > >  
+> > >      assert(ep_type == SMBIOS_ENTRY_POINT_TYPE_32 ||
+> > > @@ -1123,12 +1124,12 @@ static bool smbios_get_tables_ep(MachineState *ms,
+> > >      smbios_build_type_9_table(errp);
+> > >      smbios_build_type_11_table();
+> > >  
+> > > -#define MAX_DIMM_SZ (16 * GiB)
+> > > -#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
+> > > -                                        : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
+> > > +#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? mc->smbios_memory_device_size \
+> > > +    : ((current_machine->ram_size - 1) % mc->smbios_memory_device_size) + 1)
+> > >  
+> > > -    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
+> > > -               MAX_DIMM_SZ;
+> > > +    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size,
+> > > +                             mc->smbios_memory_device_size) /
+> > > +               mc->smbios_memory_device_size;
+> > >  
+> > >      /*
+> > >       * The offset determines if we need to keep additional space between
+> > > -- 
+> > > 2.43.0  
+> > 
 
 
