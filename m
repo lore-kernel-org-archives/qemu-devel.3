@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5172CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EAEC3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVFZG-0007Xz-7b; Sat, 20 Jul 2024 15:16:30 -0400
+	id 1sVFZ8-0006yx-7E; Sat, 20 Jul 2024 15:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYv-0006pw-O3
+ id 1sVFYx-0006q8-Js
  for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:14 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYj-0000pH-2N
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:03 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJA1iM020362;
- Sat, 20 Jul 2024 19:15:40 GMT
+ id 1sVFYk-0000ps-Sf
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:06 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJFiNQ017251;
+ Sat, 20 Jul 2024 19:15:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id; s=corp-2023-11-20; bh=a5KHxr
- QvTRZeUAeYqk6vluuD5Tcqe1WWbOuFrqOSbN8=; b=BVc5EPJqIhTPLBiBLHZUVk
- ONyw4FMk341jit1+poPoL6DZqjcxn+icrIGkf01c5ysEYLWp/hcLqEBE8xsk/6YP
- TOyKFeOE0o1+r2AUz4NJwhAIjaK/Ua9Dod9cm6SNl+hXFgoSE8fq2zUZGIWeJmqn
- M3OdvdrP8pH+jZVZF5XeE4Q8QadS6rNmpN1hpkjDkd5cIFydV9W8cf1jO4Mjbknu
- Vm5+wBDEx7E8fcs3iBfMaZBojEuSl8pIvGKToeDazE+lzS3O0A9lyxdDX/PMxH5S
- UMUpR1dHvRLlMbYnvUnMB0vf8a/1GbSrhdx1wOKYjNE3sRLvmo6340l2pyeyUw+w
- ==
+ from:to:cc:subject:date:message-id:in-reply-to:references; s=
+ corp-2023-11-20; bh=0dXgl+LujCB3wIyI+XNOOhw1CD+oAEVN21vOCufobWU=; b=
+ mpZmrVcy3R+26LxpCbOs7XOisNRbG6hkjFEb+5W0MwKYS3ZuP0Ah0C6SpP1ll22J
+ 2UnhAoj1LxBDT7+ERk+eOye3qPqyXUdZ19CVXRJPueOJaVzY8DI4jIWg0IPdLwRs
+ 6lWHUN3+ToRmgaI+UDyEPYS5R3UxbQIQLWFaYESlpFvKZloQ0GZqsztrneOXPsT8
+ ApX1Qjhaxc28klmR63aYyrh76acOSoOacKHCV+zq24aK4MBvX510HYS4kaKi08k8
+ s8VssQBfcK65jC6ipMRi9dpaKiJVjhSyc8xBAc23nwgV0gB90DX0m2jGffcK/wdw
+ PhIBb4UaXv6k7B85GGuz3A==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5gr051-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk7w000d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:40 +0000 (GMT)
+ Sat, 20 Jul 2024 19:15:50 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46KI0BUG027428; Sat, 20 Jul 2024 19:15:39 GMT
+ with ESMTP id 46KHe2C7027449; Sat, 20 Jul 2024 19:15:49 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40g3p5put4-1
+ 40g3p5puuy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:39 +0000
+ Sat, 20 Jul 2024 19:15:49 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdf1028365;
- Sat, 20 Jul 2024 19:15:39 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdfF028365;
+ Sat, 20 Jul 2024 19:15:49 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 40g3p5pusv-1; Sat, 20 Jul 2024 19:15:39 +0000
+ ESMTP id 40g3p5pusv-8; Sat, 20 Jul 2024 19:15:48 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -64,10 +64,12 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 00/12] Live update: iommufd
-Date: Sat, 20 Jul 2024 12:15:25 -0700
-Message-Id: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 07/12] iommufd: change_process kernel interface
+Date: Sat, 20 Jul 2024 12:15:32 -0700
+Message-Id: <1721502937-87102-8-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
+References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-20_16,2024-07-18_01,2024-05-17_01
@@ -76,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2407200140
-X-Proofpoint-GUID: FwVexKhvD5Nm6n6cMgLPCf6qp-SPfnJz
-X-Proofpoint-ORIG-GUID: FwVexKhvD5Nm6n6cMgLPCf6qp-SPfnJz
+X-Proofpoint-ORIG-GUID: Mc3aYxEQ_c8TbSfcqTMZxaUfzh2CGVCz
+X-Proofpoint-GUID: Mc3aYxEQ_c8TbSfcqTMZxaUfzh2CGVCz
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -102,71 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support iommufd devices with the cpr-exec live migration mode.
-No user-visible interfaces are added.
+Define IOMMU_IOAS_CHANGE_PROCESS for use by CPR.
+This interface is preliminary.
 
-Pass the iommufd and vfio device descriptors from old to new QEMU.  In new
-QEMU, during vfio_realize, skip the ioctls that configure the device, because
-it is already configured.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ linux-headers/linux/iommufd.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-In new QEMU, call ioctl(IOMMU_IOAS_CHANGE_PROCESS) to update the mm ownership,
-locked memory accounting, and virtual address of all DMA mappings.  The old
-virtual address of each memory region is needed to identify the existing
-mapping, so pass the host address of each RAMBlock in the migration data
-stream.
-
-Block CPR if the iommufd container has any vfio mdevs (mediated devices).
-IOMMU_IOAS_CHANGE_PROCESS can be used as-is to support mdevs, but it requires
-extra work in userland at CPR time so that kernel threads have access to the
-old mappings until the mappings are updated in new QEMU.  I have prototyped
-those changes but they need more work before posting.
-
-This series depends on the following qemu series
-  [PATCH V1 00/08] Live update: vfio
-  https://lore.kernel.org/qemu-devel/1720558737-451106-1-git-send-email-steven.sistare@oracle.com/
-
-This series depends on the IOMMU_IOAS_CHANGE_PROCESS kernel interface which
-is a work in progress:
-  iommufd live update
-  https://lore.kernel.org/linux-iommu/1721501805-86928-1-git-send-email-steven.sistare@oracle.com
-
-Steve Sistare (12):
-  vfio: move cpr_exec_notifier
-  iommufd: no DMA to BARs
-  iommufd: pass name to connect
-  migration: cpr_find_fd_any
-  iommufd: preserve device fd
-  iommufd: export iommufd_cdev_get_info_iova_range
-  iommufd: change_process kernel interface
-  vfio/iommufd: register container for cpr
-  vfio/iommufd: rebuild device
-  migration/ram: old host address
-  iommufd: update DMA virtual addresses
-  vfio: mdev blocker
-
- backends/iommufd.c                    | 113 ++++++++++++++++++++++++++++++++--
- hw/core/machine.c                     |   6 ++
- hw/vfio/common.c                      |   3 +-
- hw/vfio/cpr-iommufd.c                 |  84 +++++++++++++++++++++++++
- hw/vfio/cpr-legacy.c                  |  10 +--
- hw/vfio/helpers.c                     |   1 +
- hw/vfio/iommufd.c                     |  43 ++++++++++---
- hw/vfio/meson.build                   |   1 +
- hw/vfio/pci.c                         |  10 +++
- include/exec/memory.h                 |   1 +
- include/exec/ramblock.h               |   1 +
- include/hw/vfio/vfio-common.h         |   7 ++-
- include/hw/vfio/vfio-container-base.h |   3 +
- include/migration/cpr.h               |   1 +
- include/sysemu/iommufd.h              |   7 ++-
- linux-headers/linux/iommufd.h         |  19 ++++++
- migration/cpr.c                       |  15 +++++
- migration/migration.h                 |   2 +
- migration/options.c                   |   2 +
- migration/ram.c                       |   7 +++
- 20 files changed, 316 insertions(+), 20 deletions(-)
- create mode 100644 hw/vfio/cpr-iommufd.c
-
+diff --git a/linux-headers/linux/iommufd.h b/linux-headers/linux/iommufd.h
+index 72e8f4b..568029a 100644
+--- a/linux-headers/linux/iommufd.h
++++ b/linux-headers/linux/iommufd.h
+@@ -50,6 +50,7 @@ enum {
+ 	IOMMUFD_CMD_HWPT_SET_DIRTY_TRACKING,
+ 	IOMMUFD_CMD_HWPT_GET_DIRTY_BITMAP,
+ 	IOMMUFD_CMD_HWPT_INVALIDATE,
++	IOMMUFD_CMD_IOAS_CHANGE_PROCESS,
+ };
+ 
+ /**
+@@ -692,4 +693,22 @@ struct iommu_hwpt_invalidate {
+ 	__u32 __reserved;
+ };
+ #define IOMMU_HWPT_INVALIDATE _IO(IOMMUFD_TYPE, IOMMUFD_CMD_HWPT_INVALIDATE)
++
++struct iommu_ioas_userspace_map {
++    __u64 addr_old;
++    __u64 addr_new;
++    __u64 size;     /* bytes */
++};
++
++struct iommu_ioas_change_process {
++    __u32 size;
++    __u32 flags;    /* must be 0 */
++    __u32 n_umap;
++    __u32 __reserved;   /* must be 0 */
++    __aligned_u64 umap;
++};
++
++#define IOMMU_IOAS_CHANGE_PROCESS \
++        _IO(IOMMUFD_TYPE, IOMMUFD_CMD_IOAS_CHANGE_PROCESS)
++
+ #endif
 -- 
 1.8.3.1
 
