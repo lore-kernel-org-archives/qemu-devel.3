@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FC6C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 18:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECD6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 18:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVEpu-0004so-JR; Sat, 20 Jul 2024 14:29:38 -0400
+	id 1sVEzY-0006Fo-5c; Sat, 20 Jul 2024 14:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEps-0004ks-6N
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEzX-0006FK-Ga
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:39:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEpq-0001a2-Sw
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEzV-0003fn-Q8
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721500173;
+ s=mimecast20190719; t=1721500773;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uOEW9Az1KfkeE271bQ6+gYXD4KUA6/7n9hI0JqF6iJI=;
- b=BAJJBdPDFcS1aI7JMGJhL/YMmeaXy1o0ST66yaxz8LivP37CISeUR9UEqITDiHfOB5vzWB
- l2eAP3/8kvMi2VJOz4pIiQhwb9IUrrApkmfAKq8Y4aUKn1hio28bh1saumhCecGvQnN4kn
- ITtMlhVtauEAiC70W0q//FIs8SjJeSk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e3PnQMFRwJJUSvCrjmKDzfL37bGzpARrjE3In7K798A=;
+ b=ZXKXnorAy2kUo88v0pvCodn/ERLcHBdl+K5G6MKYbEbu6uA1fexI2dbpKBzteUAIMTFSAX
+ 1cs09a8++LellCNBHgSX5eCbKd1V/JMFIfl/GD1FVChsBn6hab58W+oJtPyCSjV7UVd6Kp
+ qCL3+q547URlwdpJ2GF6Mf/GBoHHSlE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-i7vsy5R5MTWsxlt7C-kksg-1; Sat, 20 Jul 2024 14:29:32 -0400
-X-MC-Unique: i7vsy5R5MTWsxlt7C-kksg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3685a5a765fso1505088f8f.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 11:29:32 -0700 (PDT)
+ us-mta-66-wWig3BOIMbuZTZ938jYl6w-1; Sat, 20 Jul 2024 14:38:48 -0400
+X-MC-Unique: wWig3BOIMbuZTZ938jYl6w-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4266945770eso19596075e9.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 11:38:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721500171; x=1722104971;
+ d=1e100.net; s=20230601; t=1721500727; x=1722105527;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uOEW9Az1KfkeE271bQ6+gYXD4KUA6/7n9hI0JqF6iJI=;
- b=WDyjr1zQ5gaPX2sxRPHBmazPQrFqsQZhGoQWS+rMQbTR1ayeyLvw0NIcPR3Aa6p9S/
- 51kJ/v+2uvlyIx8r73IBIp5nJ4++SGoY7dltwt8f+8DIDxelNs00yoU0qk8rqLw711U0
- JtSg5+2ZIB9wkiZZh8j3lcjOUzGbL/asgFj55CcDaIjVhel3E5LQgGD+9Y8jzFqSdrPP
- BW8J2anm+XVMIcx1l0WF1XXJIQDJm4CjGh/SRj9oT5P7enzp4LH2XeRACx4jeYPyzpsB
- n6T5UwhMm5PqlyU04HaONhVjry8x6OYMcGuSRsWXyGJUuC8KVkaKbxYv28VdAdJ4ASqp
- XpCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwPH9q7F+bPtITFyPboC7DdONeQu85yTg/lAG+FNiXBHS0wcmhmp9R5JeQPuJ4z/Wm/+pJAreX1UfVRq29bP/q+gXgolc=
-X-Gm-Message-State: AOJu0Yw75d+k5waa803X2G0Q2DNjLGu55rgk3z47YEvLSumiErmh9S50
- bGt8VnSv/Mv/vtyvCneX3BYPU5A0/p7Lqy7jWj3Q9hKnx3aBRZrvY5le2g4FxhfhHjle4m4kFlK
- 4oYxrAfowN1i42YYpDv5NyjNcypLckzpznTyLYUUx2EppfgTBVsD0
-X-Received: by 2002:a05:6000:1284:b0:368:7564:5a1d with SMTP id
- ffacd0b85a97d-369bbbd886amr1456737f8f.35.1721500171021; 
- Sat, 20 Jul 2024 11:29:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGStjOY8q4esxK0BAAFgLMWWrEoRNu/uObQn68Xuf3qjMnFJeJ/Kj0oloCrQxwtc102e3Faaw==
-X-Received: by 2002:a05:6000:1284:b0:368:7564:5a1d with SMTP id
- ffacd0b85a97d-369bbbd886amr1456724f8f.35.1721500170289; 
- Sat, 20 Jul 2024 11:29:30 -0700 (PDT)
+ bh=e3PnQMFRwJJUSvCrjmKDzfL37bGzpARrjE3In7K798A=;
+ b=RjWPbWC8CobbBNFqP/72eVKQQ7/NKE39w5zXjETSyzDpnu6/oXuVVC/ntl5o8Vyt/x
+ VjQTdd5J+t71I5B3igI2sYMAcxWDnaV0nlrYD6N+LjBW4VX/uv08m3qYS0GIFyI/7qAk
+ Qbll0uVfDGntpMSrgebqBgO0+FdUMlfw96eJmc3/ka81PqW8njRDzDstUQN3zBdD0tF4
+ ddhYnW9Bm5ajdSUFhPRXyrWLhgsuM7bxir6vZOTwTHQLas8lM1c9jtyR1u5P1g1P3wU4
+ afdIHOawaxye8HpEGDk+8jKVfg3HgEkE5oIHDppzu/2hmIxybqoZ46pEjV9nfDrW+1eI
+ 3wYg==
+X-Gm-Message-State: AOJu0YyPQenGE7wcy/ajdMBbE4Oo95xm9mU7IjjENtUaSSXEeDwiTq/E
+ qHfQP3kzj7qdduruyd89MJdkhbNmZVUiyz5Zuqyvn2FM8uZ2/mpJl7KJC5UTce31yZo/6+lKvpH
+ ZMvFYJwXDNufBwy81juhu4sLsej5EKuDLCiFSl3X/koptasgja1Pi
+X-Received: by 2002:a05:600c:4e8b:b0:427:9db3:46ad with SMTP id
+ 5b1f17b1804b1-427dc532266mr13918865e9.23.1721500726892; 
+ Sat, 20 Jul 2024 11:38:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGC/RMdNZnXwMGTV1q2NDsQ5rAuXLjj/bmYvwZhCT9bEr70yzN6WFNvEMZVam/e1L+hIVD1IQ==
+X-Received: by 2002:a05:600c:4e8b:b0:427:9db3:46ad with SMTP id
+ 5b1f17b1804b1-427dc532266mr13918625e9.23.1721500726264; 
+ Sat, 20 Jul 2024 11:38:46 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427dd0ef693sm22275135e9.38.2024.07.20.11.29.29
+ 5b1f17b1804b1-427d2a721b7sm89920945e9.27.2024.07.20.11.38.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jul 2024 11:29:29 -0700 (PDT)
-Date: Sat, 20 Jul 2024 14:29:27 -0400
+ Sat, 20 Jul 2024 11:38:45 -0700 (PDT)
+Date: Sat, 20 Jul 2024 14:38:42 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: YeeLi <seven.yi.lee@gmail.com>
-Cc: jasowang@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, qemu-devel@nongnu.org
-Subject: Re: [PATCH] intel-iommu: fix Read DMAR IQA REG DW
-Message-ID: <20240720142902-mutt-send-email-mst@kernel.org>
-References: <20240704035302.306244-1-seven.yi.lee@gmail.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?iso-8859-1?Q?Herv=E9?= Poussineau <hpoussin@reactos.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Huacai Chen <chenhuacai@kernel.org>
+Subject: Re: [PATCH 0/3] Resolve vt82c686 and piix4 qemu_irq memory leaks
+Message-ID: <20240720143745-mutt-send-email-mst@kernel.org>
+References: <20240704205854.18537-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240704035302.306244-1-seven.yi.lee@gmail.com>
+In-Reply-To: <20240704205854.18537-1-shentey@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -84,7 +89,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 04, 2024 at 11:53:02AM +0800, YeeLi wrote:
-> From: yeeli <seven.yi.lee@gmail.com>
+On Thu, Jul 04, 2024 at 10:58:51PM +0200, Bernhard Beschow wrote:
+> This series first turns vt82c686's "INTR" pin into a named GPIO for better
+> comprehensibility. It then continues fixing qemu_irq memory leaks in vt82c686
+> and piix4 by connecting out IRQs of the south bridges before they get realized.
+> This approach is already used in the pc machines after it had been discussed at
+> KVM forum `23.
 > 
-> When dmar_readq or devmem2 read the DW of IQA always 0UL because
-> "& VTD_IQA_QS". So, try to fix it.
+> Observe that out IRQs are callbacks such as an INTR IRQ handler in a CPU which a
+> south bridge wants to trigger. If, as an implementation detail, the south bridge
+> wants to pass this callback to a child device, such as the PIC, then this
+> callback must be known to the south bridge before it gets realized. Otherwise
+> board code had to wire the PIC device itself, breaking encapsulation. This means
+> that qdev_connect_gpio_out*() has to be called before realize() which this
+> series implements. Another way to look at it is that callbacks apparently are
+> resouces such as memory regions which are also populated before realize().
 > 
-> case:
-> after vtd_mem_write
-> IQA val: 0x100206801
+> Please check if above paragraph makes sense.
 > 
-> after vtd_mem_read
-> IQA val: 0x100206001
-> 
-> Signed-off-by: yeeli <seven.yi.lee@gmail.com>
+> Best regards,
+> Bernhard
 
 
-how was this tested?
+Bernhard, do you intend to resolve Zoltan's comments on this
+patchset?
 
-> ---
->  hw/i386/intel_iommu.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks!
+
+
+> See also:
+> * https://lore.kernel.org/qemu-devel/0FFB5FD2-08CE-4CEC-9001-E7AC24407A44@gmail.
+> com/
+> * "Remove intermediate IRQ forwarder" patches in
+> https://lore.kernel.org/qemu-devel/20230210163744.32182-1-philmd@linaro.org/
 > 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 37c21a0aec..e230a45940 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -2938,7 +2938,8 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
->  
->      /* Invalidation Queue Address Register, 64-bit */
->      case DMAR_IQA_REG:
-> -        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS);
-> +        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS
-> +                | VTD_IQA_DW_MASK);
->          if (size == 4) {
->              val = val & ((1ULL << 32) - 1);
->          }
+> Testing done:
+> * Boot amigaone machine into Linux
+> * Boot pegasos2 machine into MorphOS
+> * Start fuloong2e machine and check that it doesn't abort
+> * Boot malta machine with https://people.debian.org/~gio/dqib/
+> 
+> Bernhard Beschow (3):
+>   hw/isa/vt82c686: Turn "intr" irq into a named gpio
+>   hw/isa/vt82c686: Resolve intermediate IRQ forwarder
+>   hw/isa/piix: Resolve intermediate IRQ forwarder
+> 
+>  hw/isa/piix.c       | 13 ++-----------
+>  hw/isa/vt82c686.c   | 12 ++----------
+>  hw/mips/fuloong2e.c |  2 +-
+>  hw/mips/malta.c     |  4 +---
+>  hw/ppc/amigaone.c   |  8 ++++----
+>  hw/ppc/pegasos2.c   |  4 ++--
+>  6 files changed, 12 insertions(+), 31 deletions(-)
+> 
 > -- 
-> 2.34.1
+> 2.45.2
+> 
 
 
