@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C726DC3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CABC3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVFZ9-00077R-Vc; Sat, 20 Jul 2024 15:16:23 -0400
+	id 1sVFZ9-00074N-99; Sat, 20 Jul 2024 15:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYv-0006py-OQ
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:14 -0400
+ id 1sVFYz-0006qE-FQ
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:15 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYj-0000pi-2M
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:03 -0400
+ id 1sVFYv-0000rZ-3P
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:12 -0400
 Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJC5S7024759;
- Sat, 20 Jul 2024 19:15:47 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJAUWm021897;
+ Sat, 20 Jul 2024 19:15:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references; s=
- corp-2023-11-20; bh=qRto/pvnEyoMMJwjO7J8WazkfLwLTPRBpNgqAp8ROR8=; b=
- PA5kzuaoH35bwTX0JBMRGQ33d5PJNrYycNTfYC+MGuzq4euCt+X1Q5Zp3+Mf6D9R
- SGM9WXft1Hmg6jeVNETMAVqYekgr3h/KNmz2tAsZZR+ZhJPCyj64y0eZrr40GF/J
- 4KIKZ0ytG51H3rn7bNDVCCV9rkCbQbNK8o5mIawXdAY0J+f24+3vSy4wkwRggyty
- IKZSJPp4VqUKCnD/7NXyQ9601RJOL2Pbu1YFh+AmprfYh/p+gLPSUveupN0iZ/m8
- 7GWUCjOk07/Z78HKUW1SqwQT7KOK+Qqo+PTEnklfRm5AEUMqm26vPqQGxpJrG9N2
- JYFu49+qniiQxizg51ZHOQ==
+ corp-2023-11-20; bh=KEtu+Nxv6EH7Q/6YhuuppatukClo9brblJ9w6R7zxOU=; b=
+ JubR34CvCUj+4G4NyrI5TXEht4YWjiiHsdxcLLBrGN/tlgTeXOYkRZ2H3BKIiL6Q
+ H6B93N36aVJy1nrDf7+JQbP1tVrgpSy1kUwRiA2XEtTPp50/KNrraU8LsPJ4W7/6
+ cngv0s6zJglnHRPUxXKm/dRU6wbf4OfgC1JYhmdhhzEtvQJktPAkA/0cT+2X+OEp
+ 8vN0y7Ci76TQph7XBlABwZq3wjxXXzns/KM54IzNKCVq0YvaGTHXeiB16dJCveTM
+ gEORix8Gxg33dSuJi4AgrpJ+qRTtJcw+5owYFEY4EkO8UmZrk6dd9QiJXJgsh0Z0
+ NKx5wgRkqYuNLRHOC8+YzQ==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5jr04d-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5jr04j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:47 +0000 (GMT)
+ Sat, 20 Jul 2024 19:15:54 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46KIfsYr027542; Sat, 20 Jul 2024 19:15:46 GMT
+ with ESMTP id 46KIfsYt027542; Sat, 20 Jul 2024 19:15:53 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40g3p5puu9-1
+ 40g3p5puwa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:46 +0000
+ Sat, 20 Jul 2024 19:15:53 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdfB028365;
- Sat, 20 Jul 2024 19:15:46 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdfL028365;
+ Sat, 20 Jul 2024 19:15:53 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 40g3p5pusv-6; Sat, 20 Jul 2024 19:15:46 +0000
+ ESMTP id 40g3p5pusv-11; Sat, 20 Jul 2024 19:15:53 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -64,9 +64,9 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 05/12] iommufd: preserve device fd
-Date: Sat, 20 Jul 2024 12:15:30 -0700
-Message-Id: <1721502937-87102-6-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 10/12] migration/ram: old host address
+Date: Sat, 20 Jul 2024 12:15:35 -0700
+Message-Id: <1721502937-87102-11-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
 References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2407200140
-X-Proofpoint-GUID: I4keliZ8JNp44lv8SGujXGpB6lDuvuEu
-X-Proofpoint-ORIG-GUID: I4keliZ8JNp44lv8SGujXGpB6lDuvuEu
+X-Proofpoint-GUID: iEqILvLT-oYpMT69ERvnhgoX8cj0UfEh
+X-Proofpoint-ORIG-GUID: iEqILvLT-oYpMT69ERvnhgoX8cj0UfEh
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,146 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the iommu and vfio device fd in CPR state when it is created, and fetch
-the fd from that state after CPR.  Save the devid as the fd id.  Remember
-that the fd was reused, for subsequent patches.
+Remember the RAMBlock host address as host_old during migration, for use
+by CPR.  The iommufd interface to update the virtual address of DMA
+mappings requires it.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- backends/iommufd.c       | 12 +++++++++++-
- hw/vfio/iommufd.c        | 17 ++++++++++++++++-
- include/sysemu/iommufd.h |  1 +
- 3 files changed, 28 insertions(+), 2 deletions(-)
+ hw/core/machine.c       | 6 ++++++
+ include/exec/ramblock.h | 1 +
+ migration/migration.h   | 2 ++
+ migration/options.c     | 2 ++
+ migration/ram.c         | 7 +++++++
+ 5 files changed, 18 insertions(+)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index fc37386..4bdbad2 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -16,6 +16,7 @@
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
- #include "qemu/error-report.h"
-+#include "migration/cpr.h"
- #include "monitor/monitor.h"
- #include "trace.h"
- #include <sys/ioctl.h>
-@@ -77,11 +78,17 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, const char *name, Error **errp)
-     int fd;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9676953..0ac16b8 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -35,6 +35,12 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
  
-     if (be->owned && !be->users) {
--        fd = qemu_open_old("/dev/iommu", O_RDWR);
-+        g_autofree char *iname = g_strdup_printf("%s_iommu", name);
-+        fd = cpr_find_fd(iname, 0);
-+        be->reused = (fd >= 0);
-+        if (!be->reused) {
-+            fd = qemu_open_old("/dev/iommu", O_RDWR);
-+        }
-         if (fd < 0) {
-             error_setg_errno(errp, errno, "/dev/iommu opening failed");
-             return false;
-         }
-+        cpr_resave_fd(iname, 0, fd);
-         be->fd = fd;
-     }
-     be->users++;
-@@ -92,6 +99,8 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, const char *name, Error **errp)
- 
- void iommufd_backend_disconnect(IOMMUFDBackend *be, const char *name)
- {
-+    g_autofree char *iname = g_strdup_printf("%s_iommu", name);
++/* TBD: register hw_compat_9_1 with machines */
++GlobalProperty hw_compat_9_1[] = {
++    { "migration", "send-host-old", "off"},
++};
++const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
 +
-     if (!be->users) {
-         goto out;
-     }
-@@ -101,6 +110,7 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be, const char *name)
-         be->fd = -1;
-     }
- out:
-+    cpr_delete_fd(iname, 0);
-     trace_iommufd_backend_disconnect(be->fd, be->users);
- }
+ GlobalProperty hw_compat_9_0[] = {
+     {"arm-cpu", "backcompat-cntfrq", "true" },
+     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 64484cd..8f1c535 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -28,6 +28,7 @@ struct RAMBlock {
+     struct rcu_head rcu;
+     struct MemoryRegion *mr;
+     uint8_t *host;
++    uint64_t host_old;
+     uint8_t *colo_cache; /* For colo, VM's ram cache */
+     ram_addr_t offset;
+     ram_addr_t used_length;
+diff --git a/migration/migration.h b/migration/migration.h
+index 38aa140..b5e3151 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -442,6 +442,8 @@ struct MigrationState {
+      */
+     uint8_t clear_bitmap_shift;
  
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 255966a..cefc9e0 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -24,6 +24,7 @@
- #include "sysemu/reset.h"
- #include "qemu/cutils.h"
- #include "qemu/chardev_open.h"
-+#include "migration/cpr.h"
- #include "pci.h"
++    bool send_host_old;
++
+     /*
+      * This save hostname when out-going migration starts
+      */
+diff --git a/migration/options.c b/migration/options.c
+index 7526f9f..197cb86 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -92,6 +92,8 @@ Property migration_properties[] = {
+                       clear_bitmap_shift, CLEAR_BITMAP_SHIFT_DEFAULT),
+     DEFINE_PROP_BOOL("x-preempt-pre-7-2", MigrationState,
+                      preempt_pre_7_2, false),
++    DEFINE_PROP_BOOL("send-host-old", MigrationState,
++                     send_host_old, true),
  
- static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-@@ -84,6 +85,11 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
-         goto err_kvm_device_add;
-     }
+     /* Migration parameters */
+     DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
+diff --git a/migration/ram.c b/migration/ram.c
+index 1e1e05e..8644917 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3030,6 +3030,9 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+             qemu_put_byte(f, strlen(block->idstr));
+             qemu_put_buffer(f, (uint8_t *)block->idstr, strlen(block->idstr));
+             qemu_put_be64(f, block->used_length);
++            if (migrate_get_current()->send_host_old) {
++                qemu_put_be64(f, (uint64_t)block->host);
++            }
+             if (migrate_postcopy_ram() &&
+                 block->page_size != max_hg_page_size) {
+                 qemu_put_be64(f, block->page_size);
+@@ -4021,6 +4024,10 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
  
-+    if (vbasedev->reused) {
-+        /* Already bound, and devid was set in iommufd_cdev_attach */
-+        goto skip_bind;
+     assert(block);
+ 
++    if (migrate_get_current()->send_host_old) {
++        block->host_old = qemu_get_be64(f);
 +    }
 +
-     /* Bind device to iommufd */
-     bind.iommufd = iommufd->fd;
-     if (ioctl(vbasedev->fd, VFIO_DEVICE_BIND_IOMMUFD, &bind)) {
-@@ -95,6 +101,8 @@ static bool iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
-     vbasedev->devid = bind.out_devid;
-     trace_iommufd_cdev_connect_and_bind(bind.iommufd, vbasedev->name,
-                                         vbasedev->fd, vbasedev->devid);
-+
-+skip_bind:
-     return true;
- err_bind:
-     iommufd_cdev_kvm_device_del(vbasedev);
-@@ -305,13 +313,18 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
- 
-     if (vbasedev->fd < 0) {
--        devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
-+        devfd = cpr_find_fd_any(vbasedev->name, (int *)&vbasedev->devid);
-+        vbasedev->reused = (devfd >= 0);
-+        if (!vbasedev->reused) {
-+            devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
-+        }
-         if (devfd < 0) {
-             return false;
-         }
-         vbasedev->fd = devfd;
-     } else {
-         devfd = vbasedev->fd;
-+        vbasedev->reused = false;
-     }
- 
-     if (!iommufd_cdev_connect_and_bind(vbasedev, errp)) {
-@@ -413,6 +426,7 @@ found_container:
-     vbasedev->bcontainer = bcontainer;
-     QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
-     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-+    cpr_resave_fd(vbasedev->name, vbasedev->devid, devfd);
- 
-     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-                                    vbasedev->num_regions, vbasedev->flags);
-@@ -452,6 +466,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
-     iommufd_cdev_container_destroy(container);
-     vfio_put_address_space(space);
- 
-+    cpr_delete_fd(vbasedev->name, vbasedev->devid);
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
-     close(vbasedev->fd);
- }
-diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-index aa195d1..6955ebd 100644
---- a/include/sysemu/iommufd.h
-+++ b/include/sysemu/iommufd.h
-@@ -32,6 +32,7 @@ struct IOMMUFDBackend {
-     /*< protected >*/
-     int fd;            /* /dev/iommu file descriptor */
-     bool owned;        /* is the /dev/iommu opened internally */
-+    bool reused;       /* fd is reused after CPR */
-     uint32_t users;
- 
-     /*< public >*/
+     if (migrate_mapped_ram()) {
+         parse_ramblock_mapped_ram(f, block, length, &local_err);
+         if (local_err) {
 -- 
 1.8.3.1
 
