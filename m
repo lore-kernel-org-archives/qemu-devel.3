@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C6DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 18:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FC6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 18:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVEpP-0003rG-Ld; Sat, 20 Jul 2024 14:29:07 -0400
+	id 1sVEpu-0004so-JR; Sat, 20 Jul 2024 14:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEpO-0003qS-61
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEps-0004ks-6N
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEpM-0001YH-Lc
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVEpq-0001a2-Sw
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 14:29:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721500143;
+ s=mimecast20190719; t=1721500173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M9Bui12bHVwVUpuaw6ICP67/S/kEmSjKUpygxm3n0R8=;
- b=E9wjIfCEevXOn0m4mKbzM2gpwaXQ/Gt1lYQr1Rcaih82rESLFxmE2t+iKxKLrbLtZdZDTy
- bnWzeDO5kY9Nqjgl3b0dtHWagtB9071QOjF1iMSDTcdHmdiyBR/gaZ153vxW3C9aheYWC2
- nyCw4YqM7DxBTOvjh9olOEFQiehtVoE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uOEW9Az1KfkeE271bQ6+gYXD4KUA6/7n9hI0JqF6iJI=;
+ b=BAJJBdPDFcS1aI7JMGJhL/YMmeaXy1o0ST66yaxz8LivP37CISeUR9UEqITDiHfOB5vzWB
+ l2eAP3/8kvMi2VJOz4pIiQhwb9IUrrApkmfAKq8Y4aUKn1hio28bh1saumhCecGvQnN4kn
+ ITtMlhVtauEAiC70W0q//FIs8SjJeSk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-445-spfRd9iXMFWYSJICjhfbMQ-1; Sat, 20 Jul 2024 14:29:01 -0400
-X-MC-Unique: spfRd9iXMFWYSJICjhfbMQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4279b07cd45so18687435e9.3
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 11:29:01 -0700 (PDT)
+ us-mta-564-i7vsy5R5MTWsxlt7C-kksg-1; Sat, 20 Jul 2024 14:29:32 -0400
+X-MC-Unique: i7vsy5R5MTWsxlt7C-kksg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3685a5a765fso1505088f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 11:29:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721500140; x=1722104940;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M9Bui12bHVwVUpuaw6ICP67/S/kEmSjKUpygxm3n0R8=;
- b=Apt1izmrIHntm10ezKvDRMQAuJMeDYZyYLIM3R582Spj1nz0lg6o0RssnqhC70R1DR
- L64qO8CaaVkQV+cW+b8BnCpxy4LSYS8zBNYrRv334L/6aasGXBOZH9XIyOCSVu+A+7yq
- ezgPfnMyrpb4Xo7gRVDy5ycLlTt+3Xr0slCK2VMZLOD5pBTAVkLmHAOd6VA3UgMXwSFu
- 2rbiWA/4mst4S0LCgAOO7FiFjD1EZmCA8+1+lQGvSVb813AVjbuwx5mKQu6jdyOpMJmr
- /W5smjZ2VE5R2CR+jawrV86Tun2wAfTPgJHq9gY1DxuzDy4QpVJ1Nlel+DxqJdaRFhDB
- KAOw==
+ d=1e100.net; s=20230601; t=1721500171; x=1722104971;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uOEW9Az1KfkeE271bQ6+gYXD4KUA6/7n9hI0JqF6iJI=;
+ b=WDyjr1zQ5gaPX2sxRPHBmazPQrFqsQZhGoQWS+rMQbTR1ayeyLvw0NIcPR3Aa6p9S/
+ 51kJ/v+2uvlyIx8r73IBIp5nJ4++SGoY7dltwt8f+8DIDxelNs00yoU0qk8rqLw711U0
+ JtSg5+2ZIB9wkiZZh8j3lcjOUzGbL/asgFj55CcDaIjVhel3E5LQgGD+9Y8jzFqSdrPP
+ BW8J2anm+XVMIcx1l0WF1XXJIQDJm4CjGh/SRj9oT5P7enzp4LH2XeRACx4jeYPyzpsB
+ n6T5UwhMm5PqlyU04HaONhVjry8x6OYMcGuSRsWXyGJUuC8KVkaKbxYv28VdAdJ4ASqp
+ XpCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwh1lAUkcgcaqTLKomQuUYXs1SFpwg/PQPt9tv475jKD6M3RiFmRjpFnrxMjSq0weJ8S2NLxP4AT3+S0Toydyw+UZx11g=
-X-Gm-Message-State: AOJu0YzlohOosKY9nCilX9BXnpJpyhwbEhtirEetQ95TLFp5gJ6nlKOf
- RmKeQhc8TgS4Mi9XjEiJgRGV87DKoJKe/QwhGUHa1YeJQ/Wv5l2nwgc9fU+dmDNNTFe4VwWT47o
- +u6lAns4NmsFKYVQjHeCoP1UbJLwsE3PE/Hpn2wkJJENIm39VHuFi
-X-Received: by 2002:a05:600c:3b0a:b0:426:67df:31e6 with SMTP id
- 5b1f17b1804b1-427dc524c85mr12504925e9.17.1721500140164; 
- Sat, 20 Jul 2024 11:29:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvaEoRPH7rBO1/CytUR5YesZH0zj/Jf20R9aZMgoOKpZ5ptTTXWhz+1W7lcE9Wl9YAM3y0zA==
-X-Received: by 2002:a05:600c:3b0a:b0:426:67df:31e6 with SMTP id
- 5b1f17b1804b1-427dc524c85mr12504785e9.17.1721500139628; 
- Sat, 20 Jul 2024 11:28:59 -0700 (PDT)
+ AJvYcCVwPH9q7F+bPtITFyPboC7DdONeQu85yTg/lAG+FNiXBHS0wcmhmp9R5JeQPuJ4z/Wm/+pJAreX1UfVRq29bP/q+gXgolc=
+X-Gm-Message-State: AOJu0Yw75d+k5waa803X2G0Q2DNjLGu55rgk3z47YEvLSumiErmh9S50
+ bGt8VnSv/Mv/vtyvCneX3BYPU5A0/p7Lqy7jWj3Q9hKnx3aBRZrvY5le2g4FxhfhHjle4m4kFlK
+ 4oYxrAfowN1i42YYpDv5NyjNcypLckzpznTyLYUUx2EppfgTBVsD0
+X-Received: by 2002:a05:6000:1284:b0:368:7564:5a1d with SMTP id
+ ffacd0b85a97d-369bbbd886amr1456737f8f.35.1721500171021; 
+ Sat, 20 Jul 2024 11:29:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGStjOY8q4esxK0BAAFgLMWWrEoRNu/uObQn68Xuf3qjMnFJeJ/Kj0oloCrQxwtc102e3Faaw==
+X-Received: by 2002:a05:6000:1284:b0:368:7564:5a1d with SMTP id
+ ffacd0b85a97d-369bbbd886amr1456724f8f.35.1721500170289; 
+ Sat, 20 Jul 2024 11:29:30 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a3c0fasm93608845e9.7.2024.07.20.11.28.58
+ 5b1f17b1804b1-427dd0ef693sm22275135e9.38.2024.07.20.11.29.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jul 2024 11:28:59 -0700 (PDT)
-Date: Sat, 20 Jul 2024 14:28:56 -0400
+ Sat, 20 Jul 2024 11:29:29 -0700 (PDT)
+Date: Sat, 20 Jul 2024 14:29:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yee Li <seven.yi.lee@gmail.com>
+To: YeeLi <seven.yi.lee@gmail.com>
 Cc: jasowang@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
  eduardo@habkost.net, qemu-devel@nongnu.org
 Subject: Re: [PATCH] intel-iommu: fix Read DMAR IQA REG DW
-Message-ID: <20240720142728-mutt-send-email-mst@kernel.org>
+Message-ID: <20240720142902-mutt-send-email-mst@kernel.org>
 References: <20240704035302.306244-1-seven.yi.lee@gmail.com>
- <CALX8JfT5ecx4qQTsBMdFAqS-r4FoBd0T5WQFGr0MwYnAMo+Meg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALX8JfT5ecx4qQTsBMdFAqS-r4FoBd0T5WQFGr0MwYnAMo+Meg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240704035302.306244-1-seven.yi.lee@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,82 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 04, 2024 at 02:54:00PM +0800, Yee Li wrote:
-> Sorry, the patch missing "((  ))"
-> Replace "& VTD_IQA_QS" with "& (VTD_IQA_QS | VTD_IQA_DW_MASK))" is correct.
-> Revised patch as follows,
+On Thu, Jul 04, 2024 at 11:53:02AM +0800, YeeLi wrote:
+> From: yeeli <seven.yi.lee@gmail.com>
 > 
-
-So submit it properly.
-Also, how did you test the patch?
-
+> When dmar_readq or devmem2 read the DW of IQA always 0UL because
+> "& VTD_IQA_QS". So, try to fix it.
+> 
+> case:
+> after vtd_mem_write
+> IQA val: 0x100206801
+> 
+> after vtd_mem_read
+> IQA val: 0x100206001
+> 
 > Signed-off-by: yeeli <seven.yi.lee@gmail.com>
 
 
-
+how was this tested?
 
 > ---
 >  hw/i386/intel_iommu.c | 3 ++-
 >  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 37c21a0aec..23562ba26b 100644
+> index 37c21a0aec..e230a45940 100644
 > --- a/hw/i386/intel_iommu.c
 > +++ b/hw/i386/intel_iommu.c
-> @@ -2938,7 +2938,8 @@ static uint64_t vtd_mem_read(void *opaque,
-> hwaddr addr, unsigned size)
-> 
+> @@ -2938,7 +2938,8 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+>  
 >      /* Invalidation Queue Address Register, 64-bit */
 >      case DMAR_IQA_REG:
 > -        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS);
-> +        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & (VTD_IQA_QS
-> +                    | VTD_IQA_DW_MASK));
-
-
-This is a very messy way to write this.
-Align things properly pls.
-
+> +        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS
+> +                | VTD_IQA_DW_MASK);
 >          if (size == 4) {
 >              val = val & ((1ULL << 32) - 1);
 >          }
 > -- 
 > 2.34.1
-> 
-> YeeLi <seven.yi.lee@gmail.com> 于2024年7月4日周四 11:53写道：
-> >
-> > From: yeeli <seven.yi.lee@gmail.com>
-> >
-> > When dmar_readq or devmem2 read the DW of IQA always 0UL because
-> > "& VTD_IQA_QS". So, try to fix it.
-> >
-> > case:
-> > after vtd_mem_write
-> > IQA val: 0x100206801
-> >
-> > after vtd_mem_read
-> > IQA val: 0x100206001
-> >
-> > Signed-off-by: yeeli <seven.yi.lee@gmail.com>
-> > ---
-> >  hw/i386/intel_iommu.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> > index 37c21a0aec..e230a45940 100644
-> > --- a/hw/i386/intel_iommu.c
-> > +++ b/hw/i386/intel_iommu.c
-> > @@ -2938,7 +2938,8 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
-> >
-> >      /* Invalidation Queue Address Register, 64-bit */
-> >      case DMAR_IQA_REG:
-> > -        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS);
-> > +        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS
-> > +                | VTD_IQA_DW_MASK);
-> >          if (size == 4) {
-> >              val = val & ((1ULL << 32) - 1);
-> >          }
-> > --
-> > 2.34.1
-> >
 
 
