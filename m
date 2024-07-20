@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82DDCC3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 14:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E10C3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 14:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVB6n-0002u9-4n; Sat, 20 Jul 2024 10:30:49 -0400
+	id 1sVBI6-00089n-IF; Sat, 20 Jul 2024 10:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVB6a-0002tI-Uu
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 10:30:37 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sVBHy-000899-SG
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 10:42:22 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVB6Z-00066q-A4
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 10:30:36 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2eea7e2b0e6so44669241fa.3
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 07:30:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sVBHw-0007zP-J1
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 10:42:22 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-70b1808dee9so1216202b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 07:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721485833; x=1722090633; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Uptd6Sg8a8qm0Taau224XMUtyCDFbp5nkVVJUrPdyQ0=;
- b=mIJNZvCMvndnjfV50rH+6ymUbB04lldL8TL7ivT6Es/timnVyekxbSFdJ40tk4e1by
- A7uHmc0NsypLWLX3BYR6ncWrnvOfnFnaOTzCFWGZT9kvLnLUkdldShZMbhohl+2Hc21N
- /j1nFQkJmlJwQtDVb0hGo3lsN4zs1gtFa4c8weRICnDHMbgPh4poGSj63uZTDCEwmwJp
- 7vgJIWtQzWFv2txMrSKitjyP4eaOwGrfufSrNIgaBTjKsGNRnXqtwSS66Pj62OBpgcCJ
- RobWGKVFEOvYZIXKk8H3qEr9SNow83Zp8DGbVGZTcU7D5PD6AWZYiaegHZ6aBaSEd6ib
- G6qg==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721486539; x=1722091339;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DwPAuo/7rz2gW8o4CO78MQtw/IJxJKFvi/JhEDhcpWs=;
+ b=y/sdHk7uxHJunTgb6vZ8UzximeZFhMUSxlbZgxn6oguOTLYuFDEMWNYBTmvFZzPBW3
+ P4yI63576+KYd5ICbAvrIikycFrntLEutxWqYxPIPxqsWVv0hcn7Anc6PlKCFgBPdfX7
+ ws5Jz/TT90G4j7gDnf9L2JgWq5IiBsYyzqYbEYlJdMHm+dyxE2NrlNnZ7y40Q5TyGdHM
+ 3mzuSNYedYLQ272m8facAPEa27gaBKyKAh4EEZelyxy5flFfF/IsdESNyoQW1aEjRxDT
+ HTFAUeBg78Rzg7JzYNBMlENq2966XNp4RZJO7UqlB5UtRMEUkPMak5q6y7sH6jZ1l6jd
+ W0qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721485833; x=1722090633;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Uptd6Sg8a8qm0Taau224XMUtyCDFbp5nkVVJUrPdyQ0=;
- b=A58eUhVqN6faaWeXq3jycNjSrz20zvOv9BEEETtDkco9o2k0+IpPCaAPivK9OaZf+I
- nBiA2KzLVldQXCCkllZK1UskKOg9SaJHhdNbnnR/aZaU6koj+wFU6LSZZSvuj3aTQvPw
- F3nGei8TBS1HRTbSLM9u97VDmNBi/u34B2yawcKokEXTgkTerwvViIxAJvhJE5qDaiCI
- 0YP72PR8tj8KOwwbtzipm7y5oNciAreOc2XFZFP7NVw/7+ofL4ZYbSQJLW3WYDxa9b3v
- I+ma5ucsKtv056971yKQ1mYZaJwZPIBROJAWM23MYYl7ofAlVMxCoAsHZtbpUSrLfioh
- Inxw==
-X-Gm-Message-State: AOJu0YwMigfU1VQAea47xFk4K+/PBfnLUxuH9r3GCRMRwX5Vtqbz9dlu
- up4/0UqP/abIDf58MmvVg2FKwzT/SmXQYkHZqnA4eE7B5MiM0JgJ+mCeM6WQlW/LrLC62jJbz39
- 5DgfvgxpNDYTJ0QJG8p0ylJjHPhZ7YmfX+9Hizg==
-X-Google-Smtp-Source: AGHT+IH/MFZe3iWJamyWl9D6CTfWkNJ7xzhwe9Q23oqXl3blENXXvPBh3/25KahI0tLdfDiRBCb8r2H7B2BRoAWwyWo=
-X-Received: by 2002:a05:651c:2102:b0:2ee:4c66:6828 with SMTP id
- 38308e7fff4ca-2ef167bf608mr24353881fa.24.1721485832490; Sat, 20 Jul 2024
- 07:30:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721486539; x=1722091339;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DwPAuo/7rz2gW8o4CO78MQtw/IJxJKFvi/JhEDhcpWs=;
+ b=oDeUEau+SVTy7/rb4kYdT5aLJ2EiwDXqAkLjsIoOddFA1EVifEJxG+ma2sBxNHlR//
+ wfcogorbK/estlQNefJyyjf9mhZDKUM05dq1Opdk1c7d0Xft+UwO6Nb+v387CWMdEhyl
+ LhEKQX5mh3CChrnPWPkDzU3epJu6hsASPIu9eXDkLkGBaap9aGNXq7cFyXDSJn2r+iwR
+ 7Rvys/674wu4ky4ZfIFcQkDoN0s1A21aNJt4I33W0CPFE+2rcG9EYnXsLuYxmkTwwz5s
+ nEAELawfy40uWv24rNfg5ysqwwiZFbMz/R7FrQZMpfgPa5bhEHqj3lZ41nFgV07SRgsW
+ +3aA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgcJeBa+Z9iiHdc8q/S0nkw8ZKJLEIXtUtx/1zt5HTH/5qp/RJAlwoynQV448iBgHAdm4tll4XTBXJbBm7YKs03K0ECV4=
+X-Gm-Message-State: AOJu0YwenZoe9kn+gDPCzgB/ytmOgsRKUFkpjT+oFadh6JLuDnXvBXh3
+ oO8NKLCGujcKzSj2iU6tChr0qlMRdYX0k9okrHC2krF5ky1IB3raIHBe+6ZOrCbM/lIZaYmoU+s
+ KDpA=
+X-Google-Smtp-Source: AGHT+IGk9LV9bAjObySsxGjx0EEWEN/RygHhST7VOFhAkRP72h9HtmfdlFTLFBg+lN8zxNZ17JzA0w==
+X-Received: by 2002:a05:6a00:148d:b0:706:6f18:839d with SMTP id
+ d2e1a72fcca58-70d0f0ae1a6mr933228b3a.14.1721486539129; 
+ Sat, 20 Jul 2024 07:42:19 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70cff49152esm2703066b3a.20.2024.07.20.07.42.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 20 Jul 2024 07:42:18 -0700 (PDT)
+Message-ID: <7c545db7-1899-49a9-82ba-967f9e0a9000@daynix.com>
+Date: Sat, 20 Jul 2024 23:42:15 +0900
 MIME-Version: 1.0
-References: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
-In-Reply-To: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 20 Jul 2024 15:30:21 +0100
-Message-ID: <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
-Subject: Re: [PATCH] [PATCH] system/memory: Fix max access size
-To: TaiseiIto <taisei1212@outlook.jp>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com, 
- david@redhat.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] hw/display/apple-gfx: New macOS PV Graphics device
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
+ agraf@csgraf.de, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ berrange@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ peter.maydell@linaro.org
+References: <20240717110326.45230-1-phil@philjordan.eu>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240717110326.45230-1-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::434;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,64 +101,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 20 Jul 2024 at 08:56, TaiseiIto <taisei1212@outlook.jp> wrote:
->
-> Before this commit, an HPET driver can not write correct values to
-> comparator registers of HPET timers. When I tested my HPET driver on QEMU, I
-> ovserved too early HPET interruptions. I investigated cause and found that
-> QEMU didn't write higher 32 bits of comparator registers of HPET timers even
-> though my HPET driver did 64 bits writing to the registers. When my HPET
-> driver wrote to an HPET timer comparator register with 64-bit access size,
-> QEMU divided once 64-bit writing into twice 32-bit writings because QEMU
-> allowed only up to 32-bit writing. In the twice 32-bit writings, first, QEMU
-> wrote lower 32 bits of the comparator register and immediately clear
-> HPET_TN_SETVAL flag which means whether a software can write the comparator
-> register of the HPET timer. Then, QEMU tried to write higher 32 bits of the
-> comparator register, but the writing is rejected because the HPET_TN_SETVAL
-> flag is already cleared. As a result, the comparator register of the HPET
-> timer had a incorrect value and generated too early HPET interruptions.
-> After this commit, QEMU allows 64-bit writings. So, once 64-bit writing to
-> HPET timer comparator register is not divided into twice 32-bit writings.
-> Therefore, the comparator register of the HPET timer has correct value. As
-> a result, the HPET timer generates interruptions at the correct time.
->
-> Signed-off-by: TaiseiIto <taisei1212@outlook.jp>
-> ---
->  system/memory.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index 5e6eb459d5..985a5bd2bb 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -544,7 +544,7 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
->          access_size_min = 1;
->      }
->      if (!access_size_max) {
-> -        access_size_max = 4;
-> +        access_size_max = 8;
->      }
+On 2024/07/17 20:03, Phil Dennis-Jordan wrote:
+> This sequence of patches integrates the paravirtualised graphics device
+> implemented by macOS's ParavirtualizedGraphics.Framework into Qemu.
+> Combined with the guest drivers which ship with macOS versions 11 and up,
+> this allows the guest OS to use the host's GPU for hardware accelerated
+> 3D graphics, GPGPU compute (both using the 'Metal' graphics API), and
+> window compositing.
+> 
+> Some background:
+> ----------------
+> 
+> The device exposed by the ParavirtualizedGraphics.Framework's (henceforth
+> PVG) public API consists of a PCI device with a single memory-mapped BAR;
+> the VMM is expected to pass reads and writes through to the framework, and
+> to forward interrupts emenating from it to the guest VM.
+> 
+> The bulk of data exchange between host and guest occurs via shared memory,
+> however. For this purpose, PVG makes callbacks to VMM code for allocating,
+> mapping, unmapping, and deallocating "task" memory ranges. Each task
+> represents a contiguous host virtual address range, and PVG expects the
+> VMM to map specific guest system memory ranges to these host addresses via
+> subsequent map callbacks. Multiple tasks can exist at a time, each with
+> many mappings.
+> 
+> Data is exchanged via an undocumented, Apple-proprietary protocol. The
+> PVG API only acts as a facilitator for establishing the communication
+> mechanism. This is perhaps not ideal, and among other things means it
+> only works on macOS hosts, but it's the only serious option we've got for
+> good performance and quality graphics with macOS guests at this time.
+> 
+> The first iterations of this PVG integration into Qemu were developed
+> by Alexander Graf as part of his "vmapple" machine patch series for
+> supporting aarch64 macOS guests, and posted to qemu-devel in June and
+> August 2023:
+> 
+> https://lore.kernel.org/all/20230830161425.91946-1-graf@amazon.com/T/
+> 
+> This integration mimics the "vmapple"/"apple-gfx" variant of the PVG device
+> used by Apple's own VMM, Virtualization.framework. This variant does not use
+> PCI but acts as a direct MMIO system device; there are two MMIO ranges, one
+> behaving identically to the PCI BAR, while the other's functionality is
+> exposed by private APIs in the PVG framework. It is only available on aarch64
+> macOS hosts.
+> 
+> I had prior to this simultaneously and independently developed my own PVG
+> integration for Qemu using the public PCI device APIs, with x86-64 and
+> corresponding macOS guests and hosts as the target. After some months of
+> use in production, I was slowly reviewing the code and readying it for
+> upstreaming around the time Alexander posted his vmapple patches.
+> 
+> I ended up reviewing the vmapple PVG code in detail; I identified a number
+> of issues with it (mainly thanks to my prior trial-and-error working with
+> the framework) but overall I thought it a better basis for refinement
+> than my own version:
+> 
+>   - It implemented the vmapple variant of the device. I thought it better to
+>     port the part I understood well (PCI variant) to this than trying to port
+>     the part I didn't understand well (MMIO vmapple variant) to my own code.
+>   - The code was already tidier than my own.
+> 
+> It also became clear in out-of-band communication that Alexander would
+> probably not end up having the time to see the patch through to inclusion,
+> and was happy for me to start making changes and to integrate my PCI code.
 
-This piece of code is setting the default access_size_max value
-to be used by a MemoryRegionOps struct that hasn't explicitly
-set that field. We use 4 because that's a pretty common setup for devices,
-and also for compatibility. Changing the default because of a problem with
-a specific device isn't the right fix.
+I think you also need to take over the base vmapple change because PVG 
+cannot be tested without it; Only macOS can use PVG, and macOS requires 
+vmapple in my understanding.
 
-If we wanted to change the default we would need to audit every MemoryRegionOps
-struct in the codebase and explicitly set the value to 4 if it wasn't
-already set.
-(If we wanted to change the default I think I would vote for requiring
-the fields to be
-explicitly set everywhere and having no default at all. But that's a
-lot of work and
-it's not worth doing.)
-
-If the HPET timer device is supposed to permit 64 bit writes and it is not
-doing so, then that needs to be fixed in the HPET timer device model, by
-making sure that its read/write functions correctly handle the size=8 case
-and then setting access_size_max =8 in its MemoryRegionOps struct.
-
-thanks
--- PMM
+Regards,
+Akihiko Odaki
 
