@@ -4,88 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D39C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 07:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0669C3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 07:56:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sV4eb-00046u-Fs; Sat, 20 Jul 2024 03:37:17 -0400
+	id 1sV4wX-0001ss-0c; Sat, 20 Jul 2024 03:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV4ea-00046R-Jt
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 03:37:16 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV4eY-0003kS-Rd
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 03:37:16 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1fbc3a9d23bso19147595ad.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 00:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721461032; x=1722065832;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vrAZso19fqxeBKuRsdBPsgtjLxqPngIzRriCWaQphiE=;
- b=pvoafla+nh4vIGrxKcgvF3rpZKsG3UiAIa2pbRRMmxOQxMiAHI2IBe3xenBqKnNvgM
- YkM+fU9zevHDYccLnb1/sCBKJp/Ua0dZ0NydMh7hbTi2VepSgykWbS2C/lKLDNeboQT/
- vjIN/4zJ9dOJuT/GENvrSzJLw3vl/ZAtzU0Ys76hTYQocbcWgsEllsX/B4emBCRHAUmD
- H6+CrwQZRb+NuIab0uZS1UttpjdGj1fprW1Eb0hH3DqjKlRzDMgNMmeMefcGW4hGSxDT
- zSFmlbYrvhg5RpAbu/bz9vXWzrERh7nNRW+JhL8ePks0Fw6f7/7iiiCSXFiNhX5a9po8
- OCPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721461032; x=1722065832;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vrAZso19fqxeBKuRsdBPsgtjLxqPngIzRriCWaQphiE=;
- b=oXTNM3YgJLCPGG/qmICYzxHhgCO46Lj/k68tMDaJlWlU6SUB6M0JkBn5GRZK1Q7tpG
- IAdxjTz4M8h2Ra7DHMOlHOoe5LTqgKbcyarWlzFsOiYi2dSpjHEQfrSGr1vcviCrUpHC
- XTaGrnshSuuuXWqC3YjSSzJqsEmwyGvpnNXooxWzzuNbcx8WEKcciMVoyLBW0q6PZpdS
- XKxK/WWL6U3qOPDnhDElbSzQ2zNHRAMeXoPGMCrT7Bz+9wrLvCmLxWDn7oiAP8NN2Cb4
- iwlUIFTJH9fHcd47gy7hBh05XL+73MraYVwYMaQSRmABCyGVHhT44h7ef2DAineHfuua
- e+2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVs8iT/eoDuIpy+JAlUUc0s04vAopcZBRAa4XPY/TN/4TWDIqbuwhU2AI6DiKIX03Uf3vSE4Q6K3B8n/DZD6tIQybzqU3c=
-X-Gm-Message-State: AOJu0YxpZCnljFIGN48pAnazh1C5jr5AjCl/86Jcv9ktZLN7bkVbGAjX
- qt1jl/JmQWFT479X4ns2W7PF+uMoF+6x6C9pX6keHTU1+ylmvdINVhKEZAiOmCM=
-X-Google-Smtp-Source: AGHT+IHmGL0maaqF6LqKoCGen9+8kCK5m9cvoy0NrR3/JFEf2nh6kEzzPZEGMlZAOALaaLej9SUsnQ==
-X-Received: by 2002:a17:902:e74d:b0:1fb:4f2e:8b7c with SMTP id
- d9443c01a7336-1fd74533ff5mr18346475ad.7.1721461032493; 
- Sat, 20 Jul 2024 00:37:12 -0700 (PDT)
-Received: from [157.82.204.122] ([157.82.204.122])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f48cd7csm15999995ad.286.2024.07.20.00.37.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Jul 2024 00:37:12 -0700 (PDT)
-Message-ID: <ff50879f-fca2-4658-bea5-fce60e396ad1@daynix.com>
-Date: Sat, 20 Jul 2024 16:37:09 +0900
+ (Exim 4.90_1) (envelope-from <taisei1212@outlook.jp>)
+ id 1sV4wU-0001pS-RN
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 03:55:47 -0400
+Received: from mail-psaapc01olkn2080e.outbound.protection.outlook.com
+ ([2a01:111:f400:feae::80e]
+ helo=APC01-PSA-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <taisei1212@outlook.jp>)
+ id 1sV4wS-0006zW-2H
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 03:55:45 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bZxe9D4mGv6A/otAwLTBdUVcJvt8CisrSz+oP+aU04GB9nfgBlwSuDUzawCqmXszfZis2//MQckndGmTONiA8yHFlXYynVNQ6Jw04p3J9nTV3qSfK79mUmGFhfyblvXizexRI9jZup4fgVP+A02c97jYPC2ML7k/eph7s7c8nr1IP9KCp2NnDicQaTtlZbT4JDtEOdq2JjNAQux+8yVUYdHf5oQd5mzGDDRsCs52SsKLq1ag0O2eRkIijABoqqnO8Mfkym0ItebATtytdL7EDuZiIJ+Ejsr/LF7scwWaWlE0nTAMF2QBfVrpbh5a5EngqRKIG6M8YRQ+KJYevIKxPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hhFrgqAevyT8rA2H+uWsv0/MWTkNmuzhkEqx7LRAOZ4=;
+ b=thPiZgXq07yC0OU1GhcxPwxri13oEAn0f5MQp2VvV9Sytx+lL41uZX43NjaBN93JE7ouYBtViNA5KrMkhWKfLe0Vn6mJIJNFVJzV280DFhwF4+J0zYDwvaTK/Vi5HmMjZg0w2YSecMjGiTrcZXlrbTRWKClqlxzYVd2lV4BqG62chWRCEAGrL42doE5D+bJS2neYgNurcx6lY1mKcx9s0RxrN+YTBsZTgUnu0WD77j2E1tyeQ8Ca+99VmjO6p19YQqZmoaqFQScHeSmAf61wcOnqI0PedfwyTMgYlMlM/r+F/rHE5mdI5MaWOo3un2kqlCLNnhXqa/+CopajT9R2QA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.JP;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hhFrgqAevyT8rA2H+uWsv0/MWTkNmuzhkEqx7LRAOZ4=;
+ b=QNdP8uxHhCA4254kcxOKo+BH7RQ5D4hJt1y+4LvPiuPW5h+u6wShBVRyxbHt/L95gExobgVMldT/5pVyAzg5L5/fnezIvGcHvfU2lu85SY813fwph6EE2gNvPW/hUHrVdC/HKQbZx0e/S1l53isXHcrJffaghbbyeFgBnucivZtyTaFovG/7n++DOjwsgxtkWcxXDm9icS5zxxJO0K+Xj0l22TDDvHWs3UWlPlyYjzzUNHnJGm/A6OyqhGce+8iHOXwRllG1Q/RZySRCjjod4GenASqNhJcxZTcqTRK9LS1kLD/c1O2WgFGfCqC8+jW9MfTPq/z7M2PRvbbWyD8zSQ==
+Received: from TY0PR0101MB4285.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:1b0::11) by TYZPR01MB5726.apcprd01.prod.exchangelabs.com
+ (2603:1096:405:24::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.16; Sat, 20 Jul
+ 2024 07:55:36 +0000
+Received: from TY0PR0101MB4285.apcprd01.prod.exchangelabs.com
+ ([fe80::85c5:f6c5:8a81:ee35]) by
+ TY0PR0101MB4285.apcprd01.prod.exchangelabs.com
+ ([fe80::85c5:f6c5:8a81:ee35%7]) with mapi id 15.20.7784.017; Sat, 20 Jul 2024
+ 07:55:36 +0000
+From: TaiseiIto <taisei1212@outlook.jp>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, TaiseiIto <taisei1212@outlook.jp>
+Subject: [PATCH] [PATCH] system/memory: Fix max access size
+Date: Sat, 20 Jul 2024 07:55:18 +0000
+Message-ID: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TMN: [OIuYdUx8QdxXbkZu1EEeXSgCbk9og/w1]
+X-ClientProxiedBy: TYAPR01CA0021.jpnprd01.prod.outlook.com (2603:1096:404::33)
+ To TY0PR0101MB4285.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:1b0::11)
+X-Microsoft-Original-Message-ID: <20240720075518.25285-1-taisei1212@outlook.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/cocoa: Do not automatically zoom for HiDPI
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20240318-zoom-v1-1-07ad14fcde19@daynix.com>
- <CAFEAcA_i3Os6YPwxx99sWvK5qdzopMGBZgvVKJ7qX-waCc7RnQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA_i3Os6YPwxx99sWvK5qdzopMGBZgvVKJ7qX-waCc7RnQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY0PR0101MB4285:EE_|TYZPR01MB5726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 46b7cd46-5be7-44ab-7835-08dca89156db
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|19110799003|8060799006|461199028|440099028|3412199025|1710799026;
+X-Microsoft-Antispam-Message-Info: 8ugzgZLKQ8Q9/yBpvDtOZfKSrULTpoNWZOung5nvOPwvYUujKzjJXP7gdSz4NGe19yJ9o2fnp4u8Rs+2T4fDTiq5TX7d0uwFxfcVvXUfasEmSUc74Qq7q8HkWSDjO/AGL9HVb0bBmR/ev2wV15818QKLFDXBFl+j3HmGIDyX+dT1vQWLQ33Ls7Vxr2LGL4Le94kkq09ajMe6PjuG04nIDTT3aENtH3TlhB5w7QNODWw/MD6oiF/6pk60Y5kz2d/h8fWejXTBoVXHugE5wXhNlMPuPzVPatkiyBBZSX/9ZXa/k/Z9NKJVRyHBG32NsSJOa8CEdXr06ZK1jBWr4J40fuMPksUpxtcvyZxeuTUZNB40Mm2Eq+yeaHn6AUnjaWEb6ZWsHNegIyUoF3eLoO4bjoMnhx4rC+0u3y46b5l0NoQ5Zf/f8zKF7jRES8p8y0+2QuO+D8pDtIRmdIUBmI0amMFSdq9F6ylVblyNSK+IbZO4frCfZqA7O6Qwx0pf74593WVeWmvKVlIzhPQ3naKiB2VuoAYFnanQ5HZHtu5sIF7Fgl0YwzDXgfhDEZWqqBIMzmjJ9ok7sUN6c5uZEjAY2VxXBYKHEOOpRp3kwmacEa+ndM63DtDBgGg3an6S1979IXsljqfqapmWh/sNkDZNsYe65rBLnD62jP76S46iw1rTIUX0K6giJQVm6Dq4c3ua
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?g7icGMdeNqzAoJa+tp9F5HsO7j3KYKGkhi8woaCtXeZnM/Gbcyd8uvi2DTou?=
+ =?us-ascii?Q?UqKiZ2Hmp8yolqd06FozUu4KIdalGPKLsbYPOsgs9RVH7TT/Fa/ZwuxB8Hus?=
+ =?us-ascii?Q?JMw578KO95Srcs7/V1EDEmWsUpa3GaENcqShQuL89FC40Spsvcm842BoEJ1d?=
+ =?us-ascii?Q?gqwYeaThS1wfd4GdesfjTNqFEJ/foruhxLK6u5miCbIIqkYEWkvjKkKyCh1r?=
+ =?us-ascii?Q?RY28jem3NPSbPi3pVSc/lWjcEbBhKNKMtcKj2FSJ6TKLOPx6ugd/HW65/8xv?=
+ =?us-ascii?Q?xgdVeASJRRboxn1GBqQ5vxeVyPkMJ39HUXT/yaY93pm69lEXNJifDsCW//FO?=
+ =?us-ascii?Q?uyR+0a+4yMpxgh0K/cnNQIwRseHWbCy3e+alN/qZCpgKZJ37I+nApK64AmZ0?=
+ =?us-ascii?Q?O1mh9h8Uv2yEm0jnb/SQtFfNf2tqlE3M8q8BwG9aRVWEMI8Ff8lKe9lzdaBT?=
+ =?us-ascii?Q?v8KbLMSSYvkQ993mFJ3xfR1ycsN0KLp+Gpxeb1iLr3YC6163te9kQ9xWD/GY?=
+ =?us-ascii?Q?PeOz7YGJEzQB7YzF/RmzAp10eUSiazA/AZ63OLyE459nZTAp5hRlvi2IL9aL?=
+ =?us-ascii?Q?j3Fq9NFIN1YeCEI9EWHOq4QqCRsr4oSN0gsfG35/X3p6LrvMxcjEdoccVRGR?=
+ =?us-ascii?Q?RHlpG8oMdRgYyn980W/qJYFQxEpY1FQF/6L2Z+7dyDJECNeZAhVuMlHOobyS?=
+ =?us-ascii?Q?sjBsPnTkCDCxW5iJhKXayA0vnV3Upi0pcBhUBcrbuSALEewOowgHw9eq8UqN?=
+ =?us-ascii?Q?Rj16SNzPLjrSrfhRnQT+b0Kn+Lggmi1x29CP/iGErdscgp3l5bP1GiFB+lgF?=
+ =?us-ascii?Q?c8pEe5d4Xk4u6P5Ie4taJLtrZY/hsfzW9ZqsuQu73bws1tApUBqqdsNx+w+o?=
+ =?us-ascii?Q?wL4VucGghnBSEQb5CUQj7L1Lw1kz5dQsaO6bH0eyNCFTORbSLU5siAceNpur?=
+ =?us-ascii?Q?3PR5Qcjla+VXlMwe1DEy7cgXZ9Qv/fpBWTS4PNwrRElnIVsnySJggSZzfW7D?=
+ =?us-ascii?Q?uTjGff1OC3+USDgcL2wfB4Ahf/6qlpgyA/dUYtTY/mafgnM6yZn9UreSg/vX?=
+ =?us-ascii?Q?j8r810etNH+AHh800KCmWK8jebCbe27GpoYebFt/DfmHrEdClEdCbPbUBXx+?=
+ =?us-ascii?Q?iOpZf0TpCgvplCDgyJkeEogS+AbYBDsmtHqzsyvBGh5wNH5geFej9Dbn/nMs?=
+ =?us-ascii?Q?Ntmh4wzLt4xBVDqekJGfjBgiUljMUAMlVjMQ+mRVzzQRSUWgKSt+oPXz410?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-d8e84.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46b7cd46-5be7-44ab-7835-08dca89156db
+X-MS-Exchange-CrossTenant-AuthSource: TY0PR0101MB4285.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2024 07:55:36.2867 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR01MB5726
+Received-SPF: pass client-ip=2a01:111:f400:feae::80e;
+ envelope-from=taisei1212@outlook.jp;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +127,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/22 22:06, Peter Maydell wrote:
-> On Mon, 18 Mar 2024 at 09:02, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> Cocoa automatically zooms for a HiDPI display like Retina and makes
->> the display blurry. Revert the automatic zooming.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   ui/cocoa.m | 9 ++++++---
->>   1 file changed, 6 insertions(+), 3 deletions(-)
->>
->> diff --git a/ui/cocoa.m b/ui/cocoa.m
->> index fa879d7dcd4b..c5b3c28000ff 100644
->> --- a/ui/cocoa.m
->> +++ b/ui/cocoa.m
->> @@ -522,7 +522,10 @@ - (void) resizeWindow
->>       [[self window] setContentAspectRatio:NSMakeSize(screen.width, screen.height)];
->>
->>       if (!([[self window] styleMask] & NSWindowStyleMaskResizable)) {
->> -        [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
->> +        CGFloat width = screen.width / [[self window] backingScaleFactor];
->> +        CGFloat height = screen.height / [[self window] backingScaleFactor];
->> +
->> +        [[self window] setContentSize:NSMakeSize(width, height)];
->>           [[self window] center];
->>       } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
->>           [[self window] setContentSize:[self screenSafeAreaSize]];
->> @@ -575,8 +578,8 @@ - (void) updateUIInfoLocked
->>
->>       info.xoff = 0;
->>       info.yoff = 0;
->> -    info.width = frameSize.width;
->> -    info.height = frameSize.height;
->> +    info.width = frameSize.width * [[self window] backingScaleFactor];
->> +    info.height = frameSize.height * [[self window] backingScaleFactor];
->>
->>       dpy_set_ui_info(dcl.con, &info, TRUE);
->>   }
-> 
-> Could we / should we use convertRectToBacking and convertRectFromBacking
-> rather than doing the multiply/divide ourselves? The docs seem to
-> recommend against directly using backingScaleFactor when possible.
+Before this commit, an HPET driver can not write correct values to
+comparator registers of HPET timers. When I tested my HPET driver on QEMU, I
+ovserved too early HPET interruptions. I investigated cause and found that
+QEMU didn't write higher 32 bits of comparator registers of HPET timers even
+though my HPET driver did 64 bits writing to the registers. When my HPET
+driver wrote to an HPET timer comparator register with 64-bit access size,
+QEMU divided once 64-bit writing into twice 32-bit writings because QEMU
+allowed only up to 32-bit writing. In the twice 32-bit writings, first, QEMU
+wrote lower 32 bits of the comparator register and immediately clear
+HPET_TN_SETVAL flag which means whether a software can write the comparator
+register of the HPET timer. Then, QEMU tried to write higher 32 bits of the
+comparator register, but the writing is rejected because the HPET_TN_SETVAL
+flag is already cleared. As a result, the comparator register of the HPET
+timer had a incorrect value and generated too early HPET interruptions.
+After this commit, QEMU allows 64-bit writings. So, once 64-bit writing to
+HPET timer comparator register is not divided into twice 32-bit writings.
+Therefore, the comparator register of the HPET timer has correct value. As
+a result, the HPET timer generates interruptions at the correct time.
 
-Sorry, I forgot to reply this.
+Signed-off-by: TaiseiIto <taisei1212@outlook.jp>
+---
+ system/memory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Unfortunately, Cocoa does not provide a method to scale NSSize while 
-convertRectToBacking and convertRectFromBacking work with NSRect, which 
-is the reason why I opted for manual scaling here.
+diff --git a/system/memory.c b/system/memory.c
+index 5e6eb459d5..985a5bd2bb 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -544,7 +544,7 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+         access_size_min = 1;
+     }
+     if (!access_size_max) {
+-        access_size_max = 4;
++        access_size_max = 8;
+     }
+ 
+     /* Do not allow more than one simultaneous access to a device's IO Regions */
+-- 
+2.34.1
 
-Regards,
-Akihiko Odaki
 
