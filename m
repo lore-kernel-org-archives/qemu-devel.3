@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EC6C3DA63
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F4AC3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 19:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVFZE-0007RY-Iq; Sat, 20 Jul 2024 15:16:28 -0400
+	id 1sVFZA-000786-2x; Sat, 20 Jul 2024 15:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYt-0006pt-CI
+ id 1sVFYx-0006q7-JX
  for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:14 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sVFYj-0000pN-2M
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:02 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJAT2N021757;
- Sat, 20 Jul 2024 19:15:42 GMT
+ id 1sVFYk-0000rL-Sm
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 15:16:06 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46KJAjSN021362;
+ Sat, 20 Jul 2024 19:15:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references; s=
- corp-2023-11-20; bh=+svMWzFd5fTMtOMPInlaYfVGm5rk0v5rTgwc8FqpUes=; b=
- NaYfL5HSm6maWXJrVj4vUL66k+vbZfU5/oGoXpNzxt+EczPbFBHxLPo+cE9aV9Yd
- GUemXQEITDHNB/mFQhfmWsGRjxMsv9K0wn7/b6KzBIke2oyVr15aV742Pc4xjv32
- NEq80VL3u/AS2E3Q8NlZzqJQR94DE6qNOIpayClrEisy7grR69AOAtr/Gq0ptCMP
- bsWscsbaBlsLkwhHR7N80LDaBEf2BQx3GE/FquE7GYcpkUPJQR/LVDRjqFRm+e+l
- 7qH053MI0mJvWe7gtpsw1fTDqXrqgUH//wgM0CghzmRBuv6RSzwQDj/xlTjVHn+O
- yVsFlz5VXnyxGpIOh3IHkg==
+ corp-2023-11-20; bh=DpTciMWL5BAj6n1iFBVHsSIkDF5ym/ImJcxqzxWgfVM=; b=
+ HmApqsn91G1CDYkSxmlgQTxqrGQpck7Zr2TuIl2cqJ7WAW0KIq9DvXIjElG5oiQ1
+ 9LC1OnX7gLhdsbRkhGLCb/gZarT6s5jYutewWkjOJX/+sNTXUgcWTbobnwiPv0Bu
+ E2D9oFVBWXJfjtwna8esOHZxH4b/DONoY2P4BEzVh8tEWVjxZxsjj9bw/RYvleP5
+ RcV+VMNuPreneGeg0QsSYw8XdzCcK5x9MuPn02nPDId1crGMQhPX9WbH3ee6WP8w
+ pyOvHFhBOtl2l81j5fmnWtEGCFxckNv1HZzbzfWF/RUuZF2KbKyXrbb/cHjRFsDn
+ 5AXeL8FXtoluVWR6eGWRrw==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5jr04b-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40gk5gr05b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:41 +0000 (GMT)
+ Sat, 20 Jul 2024 19:15:51 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46KI7MNd027535; Sat, 20 Jul 2024 19:15:41 GMT
+ with ESMTP id 46KHe1JX027443; Sat, 20 Jul 2024 19:15:51 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40g3p5putc-1
+ 40g3p5puvf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 20 Jul 2024 19:15:41 +0000
+ Sat, 20 Jul 2024 19:15:50 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdf3028365;
- Sat, 20 Jul 2024 19:15:40 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46KJFdfH028365;
+ Sat, 20 Jul 2024 19:15:50 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 40g3p5pusv-2; Sat, 20 Jul 2024 19:15:40 +0000
+ ESMTP id 40g3p5pusv-9; Sat, 20 Jul 2024 19:15:50 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -64,9 +64,9 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Philippe Mathieu-Daude <philmd@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V1 01/12] vfio: move cpr_exec_notifier
-Date: Sat, 20 Jul 2024 12:15:26 -0700
-Message-Id: <1721502937-87102-2-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V1 08/12] vfio/iommufd: register container for cpr
+Date: Sat, 20 Jul 2024 12:15:33 -0700
+Message-Id: <1721502937-87102-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
 References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2407200140
-X-Proofpoint-GUID: AiT4tP8vkgJH0EV0qLH0UFEc2NZ00gAd
-X-Proofpoint-ORIG-GUID: AiT4tP8vkgJH0EV0qLH0UFEc2NZ00gAd
+X-Proofpoint-GUID: 2CudywQa5VHt7u50sWxOlsNDjiJAKXKE
+X-Proofpoint-ORIG-GUID: 2CudywQa5VHt7u50sWxOlsNDjiJAKXKE
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,73 +104,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the cpr notifier to the base container.  This change will be squashed
-into the "live update: vfio" series.
+Register a vfio iommufd container for CPR.  Add a blocker if the kernel does
+not support IOMMU_IOAS_CHANGE_PROCESS.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/cpr-legacy.c                  | 10 +++++-----
- include/hw/vfio/vfio-common.h         |  1 -
- include/hw/vfio/vfio-container-base.h |  1 +
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ backends/iommufd.c            |  8 ++++++
+ hw/vfio/cpr-iommufd.c         | 60 +++++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/iommufd.c             |  2 ++
+ hw/vfio/meson.build           |  1 +
+ include/hw/vfio/vfio-common.h |  3 +++
+ include/sysemu/iommufd.h      |  1 +
+ 6 files changed, 75 insertions(+)
+ create mode 100644 hw/vfio/cpr-iommufd.c
 
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index 8f6224e..91be762 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -107,9 +107,9 @@ static const VMStateDescription vfio_container_vmstate = {
- static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
-                                   MigrationEvent *e, Error **errp)
- {
--    VFIOContainer *container =
--        container_of(notifier, VFIOContainer, cpr_exec_notifier);
--    VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIOContainerBase *bcontainer =
-+        container_of(notifier, VFIOContainerBase, cpr_exec_notifier);
-+    VFIOContainer *container = VFIO_CONTAINER(bcontainer);
- 
-     if (e->type != MIG_EVENT_PRECOPY_FAILED) {
-         return 0;
-@@ -147,7 +147,7 @@ bool vfio_legacy_cpr_register_container(VFIOContainerBase *bcontainer,
- 
-     vmstate_register(NULL, -1, &vfio_container_vmstate, container);
- 
--    migration_add_notifier_mode(&container->cpr_exec_notifier,
-+    migration_add_notifier_mode(&bcontainer->cpr_exec_notifier,
-                                 vfio_cpr_fail_notifier,
-                                 MIG_MODE_CPR_EXEC);
-     return true;
-@@ -158,5 +158,5 @@ void vfio_legacy_cpr_unregister_container(VFIOContainerBase *bcontainer)
-     VFIOContainer *container = VFIO_CONTAINER(bcontainer);
- 
-     vmstate_unregister(NULL, &vfio_container_vmstate, container);
--    migration_remove_notifier(&container->cpr_exec_notifier);
-+    migration_remove_notifier(&bcontainer->cpr_exec_notifier);
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 4bdbad2..243178e 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -73,6 +73,14 @@ static void iommufd_backend_class_init(ObjectClass *oc, void *data)
+     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
  }
+ 
++bool iommufd_change_process_capable(IOMMUFDBackend *be)
++{
++    struct iommu_ioas_change_process args = {.n_umap = -1};
++
++    ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++    return (errno != ENOTTY);
++}
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, const char *name, Error **errp)
+ {
+     int fd;
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+new file mode 100644
+index 0000000..f2e34f4
+--- /dev/null
++++ b/hw/vfio/cpr-iommufd.c
+@@ -0,0 +1,60 @@
++/*
++ * Copyright (c) 2021-2024 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/vfio/vfio-common.h"
++#include "migration/blocker.h"
++#include "migration/cpr.h"
++#include "migration/migration.h"
++#include "migration/vmstate.h"
++#include "sysemu/iommufd.h"
++
++#define IOMMUFD_CONTAINER(base) \
++    container_of(base, VFIOIOMMUFDContainer, bcontainer)
++
++static bool vfio_can_cpr_exec(VFIOIOMMUFDContainer *container, Error **errp)
++{
++    if (!iommufd_change_process_capable(container->be)) {
++        error_setg(errp,
++                   "VFIO container does not support IOMMU_IOAS_CHANGE_PROCESS");
++        return false;
++    }
++    return true;
++}
++
++static const VMStateDescription vfio_container_vmstate = {
++    .name = "vfio-iommufd-container",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = cpr_needed_for_reuse,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++bool vfio_iommufd_cpr_register_container(VFIOContainerBase *bcontainer,
++                                         Error **errp)
++{
++    VFIOIOMMUFDContainer *container = IOMMUFD_CONTAINER(bcontainer);
++
++    if (!vfio_can_cpr_exec(container, &bcontainer->cpr_blocker)) {
++        return migrate_add_blocker_modes(&bcontainer->cpr_blocker, errp,
++                                        MIG_MODE_CPR_EXEC, -1) == 0;
++    }
++
++    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
++
++    return true;
++}
++
++void vfio_iommufd_cpr_unregister_container(VFIOContainerBase *bcontainer)
++{
++    VFIOIOMMUFDContainer *container = IOMMUFD_CONTAINER(bcontainer);
++
++    vmstate_unregister(NULL, &vfio_container_vmstate, container);
++}
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6d77daa..585bf09 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -632,6 +632,8 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+     vioc->attach_device = iommufd_cdev_attach;
+     vioc->detach_device = iommufd_cdev_detach;
+     vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
++    vioc->cpr_register = vfio_iommufd_cpr_register_container;
++    vioc->cpr_unregister = vfio_iommufd_cpr_unregister_container;
+ };
+ 
+ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index 5487815..998adb5 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -13,6 +13,7 @@ vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
+ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+   'cpr.c',
+   'cpr-legacy.c',
++  'cpr-iommufd.c',
+   'display.c',
+   'pci-quirks.c',
+   'pci.c',
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 1902c8f..9512a0c 100644
+index ec5b7168..8aa02d4 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -81,7 +81,6 @@ typedef struct VFIOContainer {
-     VFIOContainerBase bcontainer;
-     int fd; /* /dev/vfio/vfio, empowered by the attached groups */
-     unsigned iommu_type;
--    NotifierWithReturn cpr_exec_notifier;
-     bool vaddr_unmapped;
-     QLIST_HEAD(, VFIOGroup) group_list;
- } VFIOContainer;
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 3d30365..f8b7b26 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -52,6 +52,7 @@ typedef struct VFIOContainerBase {
-     QLIST_HEAD(, VFIODevice) device_list;
-     GList *iova_ranges;
-     NotifierWithReturn cpr_reboot_notifier;
-+    NotifierWithReturn cpr_exec_notifier;
-     Error *cpr_blocker;
- } VFIOContainerBase;
+@@ -247,6 +247,9 @@ bool vfio_legacy_cpr_register_container(VFIOContainerBase *bcontainer,
+ void vfio_legacy_cpr_unregister_container(VFIOContainerBase *bcontainer);
+ bool iommufd_cdev_get_info_iova_range(VFIOIOMMUFDContainer *container,
+                                       uint32_t ioas_id, Error **errp);
++bool vfio_iommufd_cpr_register_container(VFIOContainerBase *bcontainer,
++                                         Error **errp);
++void vfio_iommufd_cpr_unregister_container(VFIOContainerBase *bcontainer);
  
+ extern const MemoryRegionOps vfio_region_ops;
+ typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
+diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+index 6955ebd..f80b968 100644
+--- a/include/sysemu/iommufd.h
++++ b/include/sysemu/iommufd.h
+@@ -52,6 +52,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+                                      Error **errp);
++bool iommufd_change_process_capable(IOMMUFDBackend *be);
+ 
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ #endif
 -- 
 1.8.3.1
 
