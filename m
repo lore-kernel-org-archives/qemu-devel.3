@@ -4,64 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490C0C3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 06:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC32BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 06:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sV3jB-0000Z1-U4; Sat, 20 Jul 2024 02:37:59 -0400
+	id 1sV42O-0000oT-Ch; Sat, 20 Jul 2024 02:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sV3j8-0000VG-5s
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 02:37:54 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sV42B-0000lF-2n
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 02:57:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sV3j4-0001IS-9N
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 02:37:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sV428-0004qE-Nb
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 02:57:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721457468;
+ s=mimecast20190719; t=1721458649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J5Qv7Mi5xuxSpBJ6ZFkgnA68t4MriTbgmPYFIVpBlG0=;
- b=B4bnu0csoGZxBWp68MHVFn5OUrswGR2oKHUEYsQSG/qokNWvZJCqJFUsiXBmTAWpwBTOlt
- bajallOkbe9sVeXRFUqxqyyKdck1L+pa2wsarxTRXjYPFdtcp5QHbo5penpr9/RNGykKUZ
- Ag0Dkg+65LjILfVSTPoVt4CUkEyyy5c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-_WwOcT-HNUa2YDLpWqJYXQ-1; Sat,
- 20 Jul 2024 02:37:44 -0400
-X-MC-Unique: _WwOcT-HNUa2YDLpWqJYXQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2581195608B; Sat, 20 Jul 2024 06:37:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15810195605A; Sat, 20 Jul 2024 06:37:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 041C321E668E; Sat, 20 Jul 2024 08:37:41 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] qapi/qom: make some QOM properties depend on the build
- settings
-In-Reply-To: <20240604135931.311709-1-sgarzare@redhat.com> (Stefano
- Garzarella's message of "Tue, 4 Jun 2024 15:59:31 +0200")
-References: <20240604135931.311709-1-sgarzare@redhat.com>
-Date: Sat, 20 Jul 2024 08:37:40 +0200
-Message-ID: <87cyn86023.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=YXMsCmeXKhC38wpL3NNuJlhVAfBISSTjp4BIt8SDGGU=;
+ b=OtZ27GTIW3XdY0p6LnOE0ZZRTq7OLeNGHpxYSPWqtOcgGkqFptj9/ix7D/a5UXkJdp09ob
+ 43b+B8VgvGMXbadaqAHyHMMq8TFjja5O2cU6jpaUsfuClZF3Su0whPmVvyOjrtHCJhikX3
+ vwFJD62pMowbjmRFvCWUBHxXwW+p3GE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-XP1qiY38P-e3sWvUNRBBTA-1; Sat, 20 Jul 2024 02:57:27 -0400
+X-MC-Unique: XP1qiY38P-e3sWvUNRBBTA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3684ea1537fso1074342f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Jul 2024 23:57:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721458646; x=1722063446;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YXMsCmeXKhC38wpL3NNuJlhVAfBISSTjp4BIt8SDGGU=;
+ b=RexyyKczQQ29c6iJvRzk0HQKZnCTyYTcfCx63jm91wNoXbw7p4iaCPEioaU5139DLO
+ sux0NvVc3lbYNSQdldEGmsExPJkboJs4WgaCjIw1WUPOaHQIVmbaqaj90gt6MLBiXFSS
+ oMQ5I3v2EQrfBiUmy4hMxYNXwKYp/CYj36Xma52CVuSZ9cHdFf+N7/IW9rUY9o5zEXac
+ u5AZLtxM9O9Q8yiF1mvp1kJv/SliPCkxNKiwIix15HmQLB/VyGnkApmGxKKH/RAf3pgO
+ lmvBV+BL9uzQ9qlBgn4PAoulFau+KyAS7xIfSR1OtQK68rVLflSEXG0WHv3XPc5MspgW
+ GrVw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTxcOm0bZv8DQ0CxIrl5ZMQ536hw0qZF9wCqaYu0q38gBuFJj9NU4qg5NjSDxB7vOZUWQjIKQIhtqvZFz3c2dE/mfdkNU=
+X-Gm-Message-State: AOJu0YxbHAdP0SI7F7fBWTtFNu0L8Uhc8DVlvRzl4lw5ZzxfI3pEZg4l
+ q4mhrg62YyLFEn0m1U4AGIlP6Td+47WmGxkB4DDzRWVOYggYpYnqx2mb2fOdWSPTa6nlfTp3pUX
+ O/a+Q5PMVIlYmGoZ53ma50Z4uNA8Oy/MHj4r2MPZWyLYULbt6qcGD
+X-Received: by 2002:adf:f94b:0:b0:367:89fd:1e06 with SMTP id
+ ffacd0b85a97d-369bae86ae4mr379249f8f.36.1721458646676; 
+ Fri, 19 Jul 2024 23:57:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXFzd6g8EVkwVEJLYWejZnfJQyyfqYp4/eBTiDpX0/kZT5xpYj/P0ubyNVhmglrkLwEVSLXw==
+X-Received: by 2002:adf:f94b:0:b0:367:89fd:1e06 with SMTP id
+ ffacd0b85a97d-369bae86ae4mr379235f8f.36.1721458646250; 
+ Fri, 19 Jul 2024 23:57:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:530f:c053:4ab2:f786?
+ ([2a01:e0a:9e2:9000:530f:c053:4ab2:f786])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787ed572sm3259039f8f.110.2024.07.19.23.57.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jul 2024 23:57:25 -0700 (PDT)
+Message-ID: <6a46981d-8c36-4a83-b3bb-49f8cc5450c7@redhat.com>
+Date: Sat, 20 Jul 2024 08:57:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/vfio/container: Fix SIGSEV on
+ vfio_container_instance_finalize()
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, zhenzhong.duan@intel.com,
+ alex.williamson@redhat.com
+Cc: yanghliu@redhat.com
+References: <20240719165011.1751831-1-eric.auger@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240719165011.1751831-1-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,115 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I dropped this on the floor.  Sorry for the delay!
+On 7/19/24 18:50, Eric Auger wrote:
+> In vfio_connect_container's error path, the base container is
+> removed twice form the VFIOAddressSpace QLIST: first on the
+> listener_release_exit label and second, on free_container_exit
+> label, through object_unref(container), which calls
+> vfio_container_instance_finalize().
+> 
+> Let's remove the first instance.
+> 
+> Fixes: 938026053f4 ("vfio/container: Switch to QOM")
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-Stefano Garzarella <sgarzare@redhat.com> writes:
+Oh. Nice catch !
 
-> Some QOM properties are associated with ObjectTypes that already
-> depend on CONFIG_* switches. So to avoid generating dead code,
-> let's also make the definition of those properties dependent on
-> the corresponding CONFIG_*.
->
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->  qapi/qom.json | 21 ++++++++++++++-------
->  1 file changed, 14 insertions(+), 7 deletions(-)
->
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 38dde6d785..ae93313a60 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -222,7 +222,8 @@
->  ##
->  { 'struct': 'CanHostSocketcanProperties',
->    'data': { 'if': 'str',
-> -            'canbus': 'str' } }
-> +            'canbus': 'str' },
-> +  'if': 'CONFIG_LINUX' }
->  
->  ##
->  # @ColoCompareProperties:
-> @@ -305,7 +306,8 @@
->  ##
->  { 'struct': 'CryptodevVhostUserProperties',
->    'base': 'CryptodevBackendProperties',
-> -  'data': { 'chardev': 'str' } }
-> +  'data': { 'chardev': 'str' },
-> +  'if': 'CONFIG_VHOST_CRYPTO' }
->  
->  ##
->  # @DBusVMStateProperties:
-> @@ -514,7 +516,8 @@
->    'data': { 'evdev': 'str',
->              '*grab_all': 'bool',
->              '*repeat': 'bool',
-> -            '*grab-toggle': 'GrabToggleKeys' } }
-> +            '*grab-toggle': 'GrabToggleKeys' },
-> +  'if': 'CONFIG_LINUX' }
->  
->  ##
->  # @EventLoopBaseProperties:
-> @@ -719,7 +722,8 @@
->    'base': 'MemoryBackendProperties',
->    'data': { '*hugetlb': 'bool',
->              '*hugetlbsize': 'size',
-> -            '*seal': 'bool' } }
-> +            '*seal': 'bool' },
-> +  'if': 'CONFIG_LINUX' }
->  
->  ##
->  # @MemoryBackendEpcProperties:
-> @@ -736,7 +740,8 @@
->  ##
->  { 'struct': 'MemoryBackendEpcProperties',
->    'base': 'MemoryBackendProperties',
-> -  'data': {} }
-> +  'data': {},
-> +  'if': 'CONFIG_LINUX' }
->  
->  ##
->  # @PrManagerHelperProperties:
-> @@ -749,7 +754,8 @@
->  # Since: 2.11
->  ##
->  { 'struct': 'PrManagerHelperProperties',
-> -  'data': { 'path': 'str' } }
-> +  'data': { 'path': 'str' },
-> +  'if': 'CONFIG_LINUX' }
->  
->  ##
->  # @QtestProperties:
-> @@ -872,7 +878,8 @@
->  ##
->  { 'struct': 'RngRandomProperties',
->    'base': 'RngProperties',
-> -  'data': { '*filename': 'str' } }
-> +  'data': { '*filename': 'str' },
-> +  'if': 'CONFIG_POSIX' }
->  
->  ##
->  # @SevGuestProperties:
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
-Squashing in
-
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index e102be337b..9b216cee8e 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -488,7 +488,8 @@
- ##
- { 'struct': 'SecretKeyringProperties',
-   'base': 'SecretCommonProperties',
--  'data': { 'serial': 'int32' } }
-+  'data': { 'serial': 'int32' },
-+  'if': 'CONFIG_SECRET_KEYRING' }
- 
- ##
- # @TlsCredsProperties:
-
-Queued, thanks!
+>   hw/vfio/container.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 425db1a14c..d8b7c533af 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -657,7 +657,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>       return true;
+>   listener_release_exit:
+>       QLIST_REMOVE(group, container_next);
+> -    QLIST_REMOVE(bcontainer, next);
+>       vfio_kvm_device_del_group(group);
+>       memory_listener_unregister(&bcontainer->listener);
+>       if (vioc->release) {
 
 
