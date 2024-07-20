@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90AFBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29171C3DA59
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 09:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sV6Qv-00087a-22; Sat, 20 Jul 2024 05:31:17 -0400
+	id 1sV6RK-0001Oq-H1; Sat, 20 Jul 2024 05:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV6Qs-00085f-MK
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:14 -0400
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ id 1sV6RC-0000tc-4K
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:34 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sV6Qq-0006rN-52
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:14 -0400
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-80557928673so112563639f.2
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:31:11 -0700 (PDT)
+ id 1sV6RA-00072U-Cq
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 05:31:33 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fb3b7d0d3aso16063795ad.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 02:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721467871; x=1722072671;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721467891; x=1722072691;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LDU2Zt8gZBQKmgVee2JKdgi66cDuvrO7hSjjib8H/lk=;
- b=gDLxedGJRL2mp0zXQyMrOKjo209VOlpagT4KGP/XikVCQfaOdubnSrJYxFb/4QbKlo
- LycQHosjSk+oybFMQwDBnU+HUozaTY2/4GbQkpNdZ0OdTO+lagoy59Phu7bMJYoCmOZO
- XuxdTWPSDOF7RGudknS4k5AEIUbromOVPZlUgjB6bf75QTHaaXNGAvcyTvta0NfdLsDI
- JBG1qZZ1CASeEgbrtFOKRDCN2dgY9ujh5BHv7aoDe1BQvzlXlp7IKpzq4kmHKqiR5g7H
- gYKNCdTsH12qFbXn7vmL8EAp/tyWaXwJGL1b+X/vw1Z6DRHX+aLCsmJCDd5Zq+VTH7Zz
- 84yw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=99AglDGYDKt8UyQF0+i2KqD6ZLYCDLBz3EOwXuGJkA8=;
+ b=HfT2VOL5VIbT8ZHrIbAK//60Tmh36FOId22UhhgTfPnIfA7e2mV8miGS2eYZrR7sSd
+ QhHEciMpzyLFij+9bR0KojbXagx/lfpSobo0Y6Gg/l7NeB4o2mWS5VpKB+rMcYHmF4fD
+ Ubpmp76NM4diHD/YvV13UoTR9QTg/AG+LmYr+015+O2QJGlSUqnYzbrvaCGg8X513187
+ 3dTT1mTmg3Iir+MpJnyw4oJPCO53yDXQa1/GjRBDJzWk4Ah5zBlIVjA9e/KdM27T3Cao
+ 79drRVqtfXMfsW1v80uvsoPI1bOEnT7/2/DPBCIvLWQT/1bD+ZyjTbLNc4CUGBMwUwKK
+ YtDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721467871; x=1722072671;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LDU2Zt8gZBQKmgVee2JKdgi66cDuvrO7hSjjib8H/lk=;
- b=NayZpw/2ffWqjGu097oSyzXdz1vl1azKgDiLXX6pcxp0Y1k4u8uh0ySLFCCZezMGiY
- fCrCaL4EqDlccJOTuLOayVtaNYkiU5z2T/4nGX8PtbdlBfJKC3ViOwCTwGtL77kOSApe
- NOSc0Va25NpQpQuZrkuO59KMgchkcobvM/wr9i+uKe1B++91/6e/WWSmZzO34aRbD4mF
- nTGSUka5kYoAyLZkMpz/4OeIZtVPeVQWIPHRrlhybYNeOQZus9qWpPynKVnuGNtz8t7L
- 5rNX8A0J3egufcvpfFMtU4VblW2qW3sGxtTIf02zXZWrB0j0QYSZ2tBhy0OuJDlPatuV
- S49g==
+ d=1e100.net; s=20230601; t=1721467891; x=1722072691;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=99AglDGYDKt8UyQF0+i2KqD6ZLYCDLBz3EOwXuGJkA8=;
+ b=TCNOOiBGYyldPPkScDgursfpWw+m+rZ8Uq+q7fnKesiNGOv0fubFP8L9QupEC17V66
+ 5rcnGi84gzEq1iyUgU7vZFy5d/nDJiBKNqQk08WsgG6Lm5mtQ2Obr930md2ngyiDnkQc
+ hWR2ZsMfkMmL1Wq7VvX8E2tbmqmlARgX4IltvkPV0X5f471/jidrqavGXhD+ivEGFBlt
+ kZZvPs8CoL2es4HSsgEsVpdJT2k2IsvCmSNIIjlv6UPsDq11O83s2b+AGZ41H3DI9gE5
+ d3+KKVFsCKsEV0vCqgIyfzBKI9N1Dx6vZ8r0bMOB0poMezdV9BT2S8OdhDr7B8eSH4jk
+ GMLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWSQvLGWIwAcjcMPxx/ja3/kFRZdHsuSKmBlZit4hs3CSSoRLy/zT800kk7S4O/C+Z98Hb3cFd7F5ab5y2T84Sm9tGcmwU=
-X-Gm-Message-State: AOJu0YwSR8qn0xmb199bTIl2QR8Q0VKHTwS0nM/dc7bqoDSnH5zhu7Jn
- zkQefvG5ARTlkdtIjvi4vyUUGkf8o5aU0b7IFsrOS4klPbyn3mGObhxMWUwUCtHfRomp55zcB12
- gD1s=
-X-Google-Smtp-Source: AGHT+IHVPm8t/2gzpEDM1KgANQdKw0h2OLMQUsUVee8JWg0S2UQKWLWHEfSx+ctre7NQWEHi+VEghg==
-X-Received: by 2002:a05:6e02:180e:b0:397:584d:9b73 with SMTP id
- e9e14a558f8ab-398e47ef554mr27226765ab.7.1721467870772; 
- Sat, 20 Jul 2024 02:31:10 -0700 (PDT)
+ AJvYcCWy+4X/nisjKcm0u4JfTIAFJxWjIzaLutjpZZwcO9gK5U5nZY21+wGVdKmdZKhvx6DsKG293R8n04OeLaiNu3fMknj2DoQ=
+X-Gm-Message-State: AOJu0Yz+Bzk/JA8PRSmnu42eDhM0/jI87xqz635B98KUvm3Z9Azdgauc
+ DBtTluVP0AeTjsjiDV3BZ1U3F5VeRerw0+UXpGuX5evraV4XHgxt/IaZHtvIhv0+Z+3uGYLV79S
+ /wpU=
+X-Google-Smtp-Source: AGHT+IGilupQDoh1YjZT0MqsC5EdkPJxgrupVuH9NgGrPu/6pkbEQMPZjNYjiWTJHABuEd78H+Srqg==
+X-Received: by 2002:a05:6a20:12cd:b0:1c3:b1b3:75cf with SMTP id
+ adf61e73a8af0-1c4285d386fmr1147019637.14.1721467890772; 
+ Sat, 20 Jul 2024 02:31:30 -0700 (PDT)
 Received: from localhost ([157.82.204.122])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-70d0fa125acsm538989b3a.190.2024.07.20.02.31.08
+ 98e67ed59e1d1-2cb77504fa2sm4228362a91.46.2024.07.20.02.31.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 20 Jul 2024 02:31:10 -0700 (PDT)
+ Sat, 20 Jul 2024 02:31:30 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v4 0/6] target/arm/kvm: Report PMU unavailability
-Date: Sat, 20 Jul 2024 18:30:48 +0900
-Message-Id: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
+Date: Sat, 20 Jul 2024 18:30:53 +0900
+Subject: [PATCH v4 5/6] hvf: arm: Properly disable PMU
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMiDm2YC/23MSw6DIBSF4a0YxqWBizzsqPtoOkDAysBHoCUa4
- 96LdtCYdnhu7vcvKLrgXUSXYkHBJR/90OdRngpkWt0/HPY2bwQESiKgwmP3wtryRkgHhluC8uc
- YXOOnvXK75936+BzCvEcT3a5HnygmWIKoKLBaKV1erZ57P53N0KEtkOCLJBUfBBk1zDFX1mCZ5
- T+I/UEsI2WkoYorDSAPaF3XNzZ7TOABAQAA
+Message-Id: <20240720-pmu-v4-5-2a2b28f6b08f@daynix.com>
+References: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
+In-Reply-To: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::d32;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-io1-xd32.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,60 +99,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target/arm/kvm.c checked PMU availability but claimed PMU is
-available even if it is not. In fact, Asahi Linux supports KVM but lacks
-PMU support. Only advertise PMU availability only when it is really
-available.
-
-Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
+Setting pmu property used to have no effect for hvf so fix it.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v4:
-- Split patch "target/arm/kvm: Fix PMU feature bit early" into
-  "target/arm/kvm: Set PMU for host only when available" and
-  "target/arm/kvm: Do not silently remove PMU".
-- Changed to define PMU also for Armv7.
-- Changed not to define PMU for M.
-- Extracted patch "hvf: arm: Raise an exception for sysreg by default"
-  from "hvf: arm: Properly disable PMU".
-- Rebased.
-- Link to v3: https://lore.kernel.org/r/20240716-pmu-v3-0-8c7c1858a227@daynix.com
+ target/arm/hvf/hvf.c | 184 +++++++++++++++++++++++++++------------------------
+ 1 file changed, 97 insertions(+), 87 deletions(-)
 
-Changes in v3:
-- Dropped patch "target/arm: Do not allow setting 'pmu' for hvf".
-- Dropped patch "target/arm: Allow setting 'pmu' only for host and max".
-- Dropped patch "target/arm/kvm: Report PMU unavailability".
-- Added patch "target/arm/kvm: Fix PMU feature bit early".
-- Added patch "hvf: arm: Do not advance PC when raising an exception".
-- Added patch "hvf: arm: Properly disable PMU".
-- Changed to check for Armv8 before adding PMU property.
-- Link to v2: https://lore.kernel.org/r/20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 1a749534fb0d..adcdfae0b17f 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1204,45 +1204,50 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+ 
++    if (arm_feature(env, ARM_FEATURE_PMU)) {
++        switch (reg) {
++        case SYSREG_PMCR_EL0:
++            *val = env->cp15.c9_pmcr;
++            return 0;
++        case SYSREG_PMCCNTR_EL0:
++            pmu_op_start(env);
++            *val = env->cp15.c15_ccnt;
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMCNTENCLR_EL0:
++            *val = env->cp15.c9_pmcnten;
++            return 0;
++        case SYSREG_PMOVSCLR_EL0:
++            *val = env->cp15.c9_pmovsr;
++            return 0;
++        case SYSREG_PMSELR_EL0:
++            *val = env->cp15.c9_pmselr;
++            return 0;
++        case SYSREG_PMINTENCLR_EL1:
++            *val = env->cp15.c9_pminten;
++            return 0;
++        case SYSREG_PMCCFILTR_EL0:
++            *val = env->cp15.pmccfiltr_el0;
++            return 0;
++        case SYSREG_PMCNTENSET_EL0:
++            *val = env->cp15.c9_pmcnten;
++            return 0;
++        case SYSREG_PMUSERENR_EL0:
++            *val = env->cp15.c9_pmuserenr;
++            return 0;
++        case SYSREG_PMCEID0_EL0:
++        case SYSREG_PMCEID1_EL0:
++            /* We can't really count anything yet, declare all events invalid */
++            *val = 0;
++            return 0;
++        }
++    }
++
+     switch (reg) {
+     case SYSREG_CNTPCT_EL0:
+         *val = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) /
+               gt_cntfrq_period_ns(arm_cpu);
+         return 0;
+-    case SYSREG_PMCR_EL0:
+-        *val = env->cp15.c9_pmcr;
+-        return 0;
+-    case SYSREG_PMCCNTR_EL0:
+-        pmu_op_start(env);
+-        *val = env->cp15.c15_ccnt;
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMCNTENCLR_EL0:
+-        *val = env->cp15.c9_pmcnten;
+-        return 0;
+-    case SYSREG_PMOVSCLR_EL0:
+-        *val = env->cp15.c9_pmovsr;
+-        return 0;
+-    case SYSREG_PMSELR_EL0:
+-        *val = env->cp15.c9_pmselr;
+-        return 0;
+-    case SYSREG_PMINTENCLR_EL1:
+-        *val = env->cp15.c9_pminten;
+-        return 0;
+-    case SYSREG_PMCCFILTR_EL0:
+-        *val = env->cp15.pmccfiltr_el0;
+-        return 0;
+-    case SYSREG_PMCNTENSET_EL0:
+-        *val = env->cp15.c9_pmcnten;
+-        return 0;
+-    case SYSREG_PMUSERENR_EL0:
+-        *val = env->cp15.c9_pmuserenr;
+-        return 0;
+-    case SYSREG_PMCEID0_EL0:
+-    case SYSREG_PMCEID1_EL0:
+-        /* We can't really count anything yet, declare all events invalid */
+-        *val = 0;
+-        return 0;
+     case SYSREG_OSLSR_EL1:
+         *val = env->cp15.oslsr_el1;
+         return 0;
+@@ -1486,64 +1491,69 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+                            SYSREG_OP2(reg),
+                            val);
+ 
+-    switch (reg) {
+-    case SYSREG_PMCCNTR_EL0:
+-        pmu_op_start(env);
+-        env->cp15.c15_ccnt = val;
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMCR_EL0:
+-        pmu_op_start(env);
++    if (arm_feature(env, ARM_FEATURE_PMU)) {
++        switch (reg) {
++        case SYSREG_PMCCNTR_EL0:
++            pmu_op_start(env);
++            env->cp15.c15_ccnt = val;
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMCR_EL0:
++            pmu_op_start(env);
+ 
+-        if (val & PMCRC) {
+-            /* The counter has been reset */
+-            env->cp15.c15_ccnt = 0;
+-        }
++            if (val & PMCRC) {
++                /* The counter has been reset */
++                env->cp15.c15_ccnt = 0;
++            }
+ 
+-        if (val & PMCRP) {
+-            unsigned int i;
+-            for (i = 0; i < pmu_num_counters(env); i++) {
+-                env->cp15.c14_pmevcntr[i] = 0;
++            if (val & PMCRP) {
++                unsigned int i;
++                for (i = 0; i < pmu_num_counters(env); i++) {
++                    env->cp15.c14_pmevcntr[i] = 0;
++                }
+             }
+-        }
+ 
+-        env->cp15.c9_pmcr &= ~PMCR_WRITABLE_MASK;
+-        env->cp15.c9_pmcr |= (val & PMCR_WRITABLE_MASK);
++            env->cp15.c9_pmcr &= ~PMCR_WRITABLE_MASK;
++            env->cp15.c9_pmcr |= (val & PMCR_WRITABLE_MASK);
+ 
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMUSERENR_EL0:
+-        env->cp15.c9_pmuserenr = val & 0xf;
+-        return 0;
+-    case SYSREG_PMCNTENSET_EL0:
+-        env->cp15.c9_pmcnten |= (val & pmu_counter_mask(env));
+-        return 0;
+-    case SYSREG_PMCNTENCLR_EL0:
+-        env->cp15.c9_pmcnten &= ~(val & pmu_counter_mask(env));
+-        return 0;
+-    case SYSREG_PMINTENCLR_EL1:
+-        pmu_op_start(env);
+-        env->cp15.c9_pminten |= val;
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMOVSCLR_EL0:
+-        pmu_op_start(env);
+-        env->cp15.c9_pmovsr &= ~val;
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMSWINC_EL0:
+-        pmu_op_start(env);
+-        pmswinc_write(env, val);
+-        pmu_op_finish(env);
+-        return 0;
+-    case SYSREG_PMSELR_EL0:
+-        env->cp15.c9_pmselr = val & 0x1f;
+-        return 0;
+-    case SYSREG_PMCCFILTR_EL0:
+-        pmu_op_start(env);
+-        env->cp15.pmccfiltr_el0 = val & PMCCFILTR_EL0;
+-        pmu_op_finish(env);
+-        return 0;
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMUSERENR_EL0:
++            env->cp15.c9_pmuserenr = val & 0xf;
++            return 0;
++        case SYSREG_PMCNTENSET_EL0:
++            env->cp15.c9_pmcnten |= (val & pmu_counter_mask(env));
++            return 0;
++        case SYSREG_PMCNTENCLR_EL0:
++            env->cp15.c9_pmcnten &= ~(val & pmu_counter_mask(env));
++            return 0;
++        case SYSREG_PMINTENCLR_EL1:
++            pmu_op_start(env);
++            env->cp15.c9_pminten |= val;
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMOVSCLR_EL0:
++            pmu_op_start(env);
++            env->cp15.c9_pmovsr &= ~val;
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMSWINC_EL0:
++            pmu_op_start(env);
++            pmswinc_write(env, val);
++            pmu_op_finish(env);
++            return 0;
++        case SYSREG_PMSELR_EL0:
++            env->cp15.c9_pmselr = val & 0x1f;
++            return 0;
++        case SYSREG_PMCCFILTR_EL0:
++            pmu_op_start(env);
++            env->cp15.pmccfiltr_el0 = val & PMCCFILTR_EL0;
++            pmu_op_finish(env);
++            return 0;
++        }
++    }
++
++    switch (reg) {
+     case SYSREG_OSLAR_EL1:
+         env->cp15.oslsr_el1 = val & 1;
+         return 0;
 
-Changes in v2:
-- Restricted writes to 'pmu' to host and max.
-- Prohibited writes to 'pmu' for hvf.
-- Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
-
----
-Akihiko Odaki (6):
-      target/arm/kvm: Set PMU for host only when available
-      target/arm/kvm: Do not silently remove PMU
-      target/arm: Always add pmu property for Armv7-A/R+
-      hvf: arm: Raise an exception for sysreg by default
-      hvf: arm: Properly disable PMU
-      hvf: arm: Do not advance PC when raising an exception
-
- target/arm/cpu.c     |   5 +-
- target/arm/hvf/hvf.c | 302 ++++++++++++++++++++++++++-------------------------
- target/arm/kvm.c     |   7 +-
- 3 files changed, 159 insertions(+), 155 deletions(-)
----
-base-commit: a87a7c449e532130d4fa8faa391ff7e1f04ed660
-change-id: 20240629-pmu-ad5f67e2c5d0
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.45.2
 
 
