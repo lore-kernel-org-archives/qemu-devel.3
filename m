@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BDAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jul 2024 22:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9509FC3DA59
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 02:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVIJ3-0003c7-W8; Sat, 20 Jul 2024 18:11:58 -0400
+	id 1sVMRl-0003FD-CJ; Sat, 20 Jul 2024 22:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sVIJ2-0003Zn-8W
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 18:11:56 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
+ id 1sVMRi-0003Ee-QU
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 22:37:10 -0400
+Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sVIJ0-0007LI-J3
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 18:11:56 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4266edcc54cso87405e9.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 15:11:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
+ id 1sVMRf-0007j1-GE
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 22:37:10 -0400
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-6ad86f3cc34so18504846d6.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 19:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1721513512; x=1722118312; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=FDH9b/hMRvMUcJMBkMcovYtJEAbv1WVdTz2/dbvxC1k=;
- b=HCP+GI+GgEqzqlfejutTJe2nHrOzSz4/6BV65l0WroIe2T4HBgr0wgcaLDXlOFgZuy
- eTVRfRn0ykqOtZjl4IG1s/qNpVmRx8MZEfn1ugzL4SqHGk2269se7y5FQeOp0m8EWazn
- mFhwIiOOZFx2sc7jP/hmmFuh2nOq1DAKt417gr35DBzWe1YJQShvAOnkW+zEE0b9q8dC
- IF5Ejyq84CzgxZB0r+ci0INcXDx+utIekCIZIoEoU6XjhqJe/QnEY8lknyWTJmtDhgqK
- XZRoFfjWIKniHf7LbjU9s66KATnKl2MdRP7DVP125BO52oKKn1W4WfDqoH7AlNy4dl2R
- mG/Q==
+ d=gmail.com; s=20230601; t=1721529425; x=1722134225; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=44otZtK80sVCzn9krLuxIPwb4HtMcylbrQef21NWXos=;
+ b=HuXls6x57gjDExHNiAB20+ahpY5EbhjGwAS59j1VBYhYnToqiWu/f21PVJqqz4m6RA
+ Z3Zp2HP4xtOcxQQr1GuSeYmnu6FVTswSGsDg19ImNg2HnNedqLg5AfkotjGNeMmFXVIJ
+ i2Azox6cvbxP+bI/+XiLS5X1ZpnH7RNLAtEaPFHToZynj9MtfabCD/uGawTbQrbmgQQJ
+ kag9jGPYyDWV0Bt2+RxqofXw4Bwox7BpwXIsSVBxol/EmpDd/P9NR7QvlGM0PaDH8jIQ
+ FPOJ3zbWTLUMfFeYmVhhNtMfYXFnDYT/wGd7qlVlBU9KCKmTbIasLJ4UQTCl3FXmRYnI
+ KiuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721513512; x=1722118312;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FDH9b/hMRvMUcJMBkMcovYtJEAbv1WVdTz2/dbvxC1k=;
- b=BY3I1sxAJbXZGvDJ4yN0QKupBz7t1mary6pT6UMpFmpJZ9tbeXEN1cHzJHkIAEloRA
- xM+2OZb6Zb/XQ4Mev5MIan3QZp4Jyq/sB0Mo8jVNnikR8WauvkxPxh2Xe0W8vlIcmr7G
- /j7w1HKaftIUsO33oZ8xDdmq2N1H1wP7kzd6gPnuN6oI7x+D+S++pk9alwtXwA9m6n35
- KXQDw3YSKpa3yWfb+JJclZNCNuyOKMOusQ7ZkgGQq5I3zzNMePXCqqPDvXJm5/pk28eh
- uLGQr1YRF2m/rpIll9v8YmqJZJwX8c6moIB8cBoeLFBn6Twk2zi9BO0iDXGSD2QNSSIZ
- radw==
+ d=1e100.net; s=20230601; t=1721529425; x=1722134225;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=44otZtK80sVCzn9krLuxIPwb4HtMcylbrQef21NWXos=;
+ b=AsrZlhje+aKfzNqr0DbRG6/Rij7he/sQxi9ta+YRtmGbFIzaBR7hjXre8X0JDk5fYZ
+ pXaRX/Ll8cgZhjsGO16mNUYlPaWJEo+rWi63CX5MRJJVNxJUlPSCsGH47e2MZ5ofwUd6
+ mZihuIaJKoY5+5VfyJyhSCD6YsU6FXcb49cyNh/0KDnBegdgs2YCkA+gVlPv0UhIvyBt
+ enNunPUbJh2N85L3k6HR5f4SW6H9ktPfnQGk8hFBqlvkz+drlBDafkep3PFqG8kV4+mS
+ kwkJvCsfPl5FiStW0rPw5poWaB/YWO9LKgFp6ybf+aICcfUFgIsNRQl+ntuwChp9bncp
+ 1LGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpaopDQy8m469roG2EA0DIiXgEZM6TqWsjCp/AcienVg17yK+KZMw03rjExHFZ/Y9EPP755GeRSslOJ8eN7OJwkUMsAjU=
-X-Gm-Message-State: AOJu0Yw2pJum+4LIuG6NJ9cDvW/T1hWdPniAZUqExtKgO7pwrXX7+dyU
- wG5kFXz+4EU16gKMuYusF2jrFryffhVzvdaSBMO6vSPGseNPV4Kh+8tPd39mIg==
-X-Google-Smtp-Source: AGHT+IFzrZC0RbZzhipr9RyQZLh69/YXpKDOqNrWXbGdRhb9dEzhJG87B3tL4aEpSQKGpCN6Iy+84A==
-X-Received: by 2002:a05:600c:1d0a:b0:421:7caf:eb69 with SMTP id
- 5b1f17b1804b1-427dbb48583mr1086455e9.4.1721513511668; 
- Sat, 20 Jul 2024 15:11:51 -0700 (PDT)
-Received: from google.com (180.232.140.34.bc.googleusercontent.com.
- [34.140.232.180]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36878695a52sm4670208f8f.64.2024.07.20.15.11.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jul 2024 15:11:51 -0700 (PDT)
-Date: Sat, 20 Jul 2024 22:11:47 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Julien Grall <julien@xen.org>, eric.auger@redhat.com,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org,
- maz@kernel.org, nicolinc@nvidia.com, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [PATCH v5 00/18] SMMUv3 nested translation support
-Message-ID: <Zpw2I2ATUqDt19qv@google.com>
-References: <20240715084519.1189624-1-smostafa@google.com>
- <20240717150931.GA3988597@myrica>
- <1e7e750b-61bd-4822-8742-124bdf66a7c4@redhat.com>
- <5684927d-d890-42be-841c-ece681502503@xen.org>
- <a0ee8ba3-174f-4d00-807f-31584cba42d4@xen.org>
- <CAFEAcA8T3Yrj_R-B2oUW_Uu3u5HZs4RY1P+A7zF+8xWJnmtpQA@mail.gmail.com>
+ AJvYcCVl9AZTfr5XCmLznQgnJAUdOfmblyh44FFGiRSZPQK99eKHAzJL8fmJHLAjK/qEaJkpvYYlGy0/Ov6G7WmQlLG4voIEpJ0=
+X-Gm-Message-State: AOJu0Yzob2ME3qW2oR3zIItH6d9Y9aTibOr2wVkFdygf0N/YNzPJw3KL
+ L4s+NnTutiCGAMDues6wM12AyZyE0M0I2170LuX0cdq5FmOXJyrNhUJYdWUiapBnHWVT8/lvYZp
+ AJwnSyhvF4MDIUtvNQYoyPkI6utE=
+X-Google-Smtp-Source: AGHT+IGvM8xXQLi5fwYEc50nyZ0JMZEov0Cpt45GF/Oy8iU+DEHZJ2tDe/4YMg9Ih6aPAeGYe02YHEa8DInVEien71Y=
+X-Received: by 2002:a05:6214:acf:b0:6b0:8fe5:4a98 with SMTP id
+ 6a1803df08f44-6b95a74e963mr51469556d6.36.1721529425092; Sat, 20 Jul 2024
+ 19:37:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA8T3Yrj_R-B2oUW_Uu3u5HZs4RY1P+A7zF+8xWJnmtpQA@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=smostafa@google.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+References: <20240708100816.1916346-1-pykfirst@gmail.com>
+ <468ed4a0-14b1-4d0b-9537-9a550b14f0da@eviden.com>
+ <20240720150438-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240720150438-mutt-send-email-mst@kernel.org>
+From: Yuke Peng <pykfirst@gmail.com>
+Date: Sun, 21 Jul 2024 10:36:53 +0800
+Message-ID: <CAHJVP31QoonZ5AjottoBWRaLcgKwKcEXZ=TSkoY9KY95wSxt-Q@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/i386/intel_iommu: Block CFI when necessary
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
+ envelope-from=pykfirst@gmail.com; helo=mail-qv1-xf30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,75 +99,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Hi
 
-On Fri, Jul 19, 2024 at 04:57:18PM +0100, Peter Maydell wrote:
-> On Fri, 19 Jul 2024 at 16:36, Julien Grall <julien@xen.org> wrote:
+On Sun, Jul 21, 2024 at 3:05=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Tue, Jul 09, 2024 at 04:43:25AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> > Hi
 > >
-> > Hi,
-> >
-> > On 18/07/2024 10:43, Julien Grall wrote:
-> > > Hi Eric,
+> > On 08/07/2024 12:08, Yuke Peng wrote:
+> > > Caution: External email. Do not open attachments or click links, unle=
+ss this email comes from a known sender and you know the content is safe.
 > > >
-> > > On 17/07/2024 18:43, Eric Auger wrote:
-> > >> Hi Peter, Richard,
-> > >>
-> > >> On 7/17/24 17:09, Jean-Philippe Brucker wrote:
-> > >>> On Mon, Jul 15, 2024 at 08:45:00AM +0000, Mostafa Saleh wrote:
-> > >>>> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
-> > >>>> but not nested instances.
-> > >>>> This patch series adds support for nested translation in SMMUv3,
-> > >>>> this is controlled by property “arm-smmuv3.stage=nested”, and
-> > >>>> advertised to guests as (IDR0.S1P == 1 && IDR0.S2P == 2)
-> > >>> For the whole series (3-9, 11, 12, 15, 16, 18):
-> > >>>
-> > >>> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > >>>
-> > >>> (and I think patch 16 is missing Eric's R-b)
-> > >>
-> > >> Jean-Philippe and I have followed up the progress of this series,
-> > >> Mostafa took into account all our comments and all the patches were
-> > >> reviewed. It seems to be in a pretty decent state so if you don't have
-> > >> any objection, please consider pulling it for 9.1.
-> > >>
-> > >> On my end I did some testing in non nesting mode with virtio-net/vhost
-> > >> and I have not noticed any regression.
-> > >> Would be nice if someone could send his T-b for the nested part though
-> > >> (Julien?).
 > > >
-> > > I haven't yet tried the latest version. I will do that in the next
-> > > couple of days.
-> > I see this is already merged. If this still matters:
+> > > According to Intel VT-d specification 5.1.4, CFI must be blocked when
+> > > Extended Interrupt Mode is enabled or Compatibility format interrupts
+> > > are disabled.
+> > >
+> > > Signed-off-by: Yuke Peng <pykfirst@gmail.com>
+> > > ---
+> > > Changes in v2:
+> > > - Use subsections for the cfi_enabled field.
+> > > - Link to v1: https://lore.kernel.org/qemu-devel/20240625112819.86228=
+2-1-pykfirst@gmail.com/
+> > >
+> > > ---
+> > >   hw/i386/intel_iommu.c         | 53 ++++++++++++++++++++++++++++++++=
++--
+> > >   hw/i386/trace-events          |  1 +
+> > >   include/hw/i386/intel_iommu.h |  1 +
+> > >   3 files changed, 53 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> > > index 5085a6fee3..af9c864bde 100644
+> > > --- a/hw/i386/intel_iommu.c
+> > > +++ b/hw/i386/intel_iommu.c
+> > > @@ -2410,6 +2410,22 @@ static void vtd_handle_gcmd_ire(IntelIOMMUStat=
+e *s, bool en)
+> > >       }
+> > >   }
+> > >
+> > > +/* Handle Compatibility Format Interrupts Enable/Disable */
+> > > +static void vtd_handle_gcmd_cfi(IntelIOMMUState *s, bool en)
+> > > +{
+> > > +    trace_vtd_cfi_enable(en);
+> > > +
+> > > +    if (en) {
+> > > +        s->cfi_enabled =3D true;
+> > > +        /* Ok - report back to driver */
+> > > +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_CFIS);
+> > > +    } else {
+> > > +        s->cfi_enabled =3D false;
+> > > +        /* Ok - report back to driver */
+> > > +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, VTD_GSTS_CFIS, 0);
+> > > +    }
+> > > +}
+> > > +
+> > >   /* Handle write to Global Command Register */
+> > >   static void vtd_handle_gcmd_write(IntelIOMMUState *s)
+> > >   {
+> > > @@ -2440,6 +2456,10 @@ static void vtd_handle_gcmd_write(IntelIOMMUSt=
+ate *s)
+> > >           /* Interrupt remap enable/disable */
+> > >           vtd_handle_gcmd_ire(s, val & VTD_GCMD_IRE);
+> > >       }
+> > > +    if (changed & VTD_GCMD_CFI) {
+> > > +        /* Compatibility format interrupts enable/disable */
+> > > +        vtd_handle_gcmd_cfi(s, val & VTD_GCMD_CFI);
+> > > +    }
+> > >   }
+> > >
+> > >   /* Handle write to Context Command Register */
+> > > @@ -3283,7 +3303,25 @@ static int vtd_post_load(void *opaque, int ver=
+sion_id)
+> > >       return 0;
+> > >   }
+> > >
+> > > -static const VMStateDescription vtd_vmstate =3D {
+> > > +static bool vtd_cfi_needed(void *opaque)
+> > > +{
+> > > +    IntelIOMMUState *iommu =3D opaque;
+> > > +
+> > > +    return iommu->intr_enabled && !iommu->intr_eime;
+> > > +}
+> > > +
+> > > +static const VMStateDescription vmstate_vtd_cfi =3D {
+> > > +    .name =3D "iommu-intel/cfi",
+> > > +    .version_id =3D 1,
+> > > +    .minimum_version_id =3D 1,
+> > > +    .needed =3D vtd_cfi_needed,
+> > > +    .fields =3D (VMStateField[]) {
+> > > +        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
+> > > +        VMSTATE_END_OF_LIST()
+> > > +    }
+> > > +};
+> > > +
+> > > +static const VMStateDescription vmstate_vtd =3D {
+> > Why is vtd_vmstate renamed to vmstate_vtd? is it necessary?
+>
+>
+>
+> Yuke Peng, do you plan to answer this?
+
+Sorry for the late reply and for not using the "reply to all" option.
+I will update the reply email:
+
+On Fri, Jul 12, 2024 at 2:56=E2=80=AFAM CLEMENT MATHIEU--DRIF
+<clement.mathieu--drif@eviden.com> wrote:
+>
+> On 11/07/2024 10:19, Yuke Peng wrote:
 > >
-> > Tested-by: Julien Grall <jgrall@amazon.com>
-> 
-> We can't retrospectively add the tag, but the testing itself
-> is still important -- thanks for doing it.
-> 
-> Q: is there any reason not to:
->  (a) change the default to "nested" rather than "1"
->  (b) make the virt board (for new virt machine versions) use
->      "nested"?
-> 
-> AIUI "nested" should be a superset of "stage-1 only", the guest
-> can just ignore stage-2 if it doesn't care about it. Or is
-> there a performance hit from having stage-2 around even if the
-> guest doesn't enable it?
+> > On Tue, Jul 9, 2024 at 12:43=E2=80=AFPM CLEMENT MATHIEU--DRIF <clement.=
+mathieu--drif@eviden.com> wrote:
+> > >
+> > > Hi
+> > >
+> > > On 08/07/2024 12:08, Yuke Peng wrote:
+> > > > +static const VMStateDescription vmstate_vtd_cfi =3D {
+> > > > +    .name =3D "iommu-intel/cfi",
+> > > > +    .version_id =3D 1,
+> > > > +    .minimum_version_id =3D 1,
+> > > > +    .needed =3D vtd_cfi_needed,
+> > > > +    .fields =3D (VMStateField[]) {
+> > > > +        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
+> > > > +        VMSTATE_END_OF_LIST()
+> > > > +    }
+> > > > +};
+> > > > +
+> > > > +static const VMStateDescription vmstate_vtd =3D {
+> > > Why is vtd_vmstate renamed to vmstate_vtd? is it necessary?
+> > >
+> >
+> > When I attempted to use vtd_vmstate as a reference to name the
+> > cfi subsection. I found the proposed name was a bit odd for me, like
+> > "vtd_cfi_vmstate" or "vtd_vmstate_cfi".
+> >
+> > I checked the other examples using subsections and I found they use
+> > vmstate_xxx like "vmstate_serial" and "vmstate_serial_timeout_ipending"=
+.
+> > So here I rename vtd_vmstate to vmstate_vtd.
+>
+> Hi,
+>
+> I can't say if this will be approved or not.
+> But if you really think renaming is important, you should make a patch fo=
+r that specific change instead of using the same patch for all changes.
+>
+> Maybe you should consider using "reply all" so that people on the list ca=
+n keep track of the conversation.
 
-I didn’t do benchmarks, but from the code, I don’t think there
-would be a difference from using stage-1 only or nested stages
-with stage-1 config.
-I didn’t make “nested” the default stage or used it for the virt
-board, as I was worried about compatibility issues (I think that
-breaks backward migration), but otherwise I don’t see issues.
+I had intended to split this patch into two parts, but I've been too
+busy to work on it. I'm sorry about that.
 
-But if I understand correctly, setting that for virt board 9.1
-(virt_machine_9_1_options) would be fine?
+>
+>
+> > >       .name =3D "iommu-intel",
+> > >       .version_id =3D 1,
+> > >       .minimum_version_id =3D 1,
+> > > @@ -3306,6 +3344,10 @@ static const VMStateDescription vtd_vmstate =
+=3D {
+> > >           VMSTATE_BOOL(intr_enabled, IntelIOMMUState),
+> > >           VMSTATE_BOOL(intr_eime, IntelIOMMUState),
+> > >           VMSTATE_END_OF_LIST()
+> > > +    },
+> > > +    .subsections =3D (const VMStateDescription * []) {
+> > > +        &vmstate_vtd_cfi,
+> > > +        NULL
+> > >       }
+> > >   };
+> > >
+> > > @@ -3525,6 +3567,12 @@ static int vtd_interrupt_remap_msi(IntelIOMMUS=
+tate *iommu,
+> > >
+> > >       /* This is compatible mode. */
+> > >       if (addr.addr.int_mode !=3D VTD_IR_INT_FORMAT_REMAP) {
+> > > +        if (iommu->intr_eime || !iommu->cfi_enabled) {
+> > > +            if (do_fault) {
+> > > +                vtd_report_ir_fault(iommu, sid, VTD_FR_IR_REQ_COMPAT=
+, 0);
+> > > +            }
+> > > +            return -EINVAL;
+> > > +        }
+> > >           memcpy(translated, origin, sizeof(*origin));
+> > >           goto out;
+> > >       }
+> > > @@ -3950,6 +3998,7 @@ static void vtd_init(IntelIOMMUState *s)
+> > >       s->root_scalable =3D false;
+> > >       s->dmar_enabled =3D false;
+> > >       s->intr_enabled =3D false;
+> > > +    s->cfi_enabled =3D false;
+> > >       s->iq_head =3D 0;
+> > >       s->iq_tail =3D 0;
+> > >       s->iq =3D 0;
+> > > @@ -4243,7 +4292,7 @@ static void vtd_class_init(ObjectClass *klass, =
+void *data)
+> > >       X86IOMMUClass *x86_class =3D X86_IOMMU_DEVICE_CLASS(klass);
+> > >
+> > >       dc->reset =3D vtd_reset;
+> > > -    dc->vmsd =3D &vtd_vmstate;
+> > > +    dc->vmsd =3D &vmstate_vtd;
+> > >       device_class_set_props(dc, vtd_properties);
+> > >       dc->hotpluggable =3D false;
+> > >       x86_class->realize =3D vtd_realize;
+> > > diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+> > > index 53c02d7ac8..ffd87db65f 100644
+> > > --- a/hw/i386/trace-events
+> > > +++ b/hw/i386/trace-events
+> > > @@ -57,6 +57,7 @@ vtd_dmar_translate(uint8_t bus, uint8_t slot, uint8=
+_t func, uint64_t iova, uint6
+> > >   vtd_dmar_enable(bool en) "enable %d"
+> > >   vtd_dmar_fault(uint16_t sid, int fault, uint64_t addr, bool is_writ=
+e) "sid 0x%"PRIx16" fault %d addr 0x%"PRIx64" write %d"
+> > >   vtd_ir_enable(bool en) "enable %d"
+> > > +vtd_cfi_enable(bool en) "enable %d"
+> > >   vtd_ir_irte_get(int index, uint64_t lo, uint64_t hi) "index %d low =
+0x%"PRIx64" high 0x%"PRIx64
+> > >   vtd_ir_remap(int index, int tri, int vec, int deliver, uint32_t des=
+t, int dest_mode) "index %d trigger %d vector %d deliver %d dest 0x%"PRIx32=
+" mode %d"
+> > >   vtd_ir_remap_type(const char *type) "%s"
+> > > diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_io=
+mmu.h
+> > > index 7fa0a695c8..38e20d0f2c 100644
+> > > --- a/include/hw/i386/intel_iommu.h
+> > > +++ b/include/hw/i386/intel_iommu.h
+> > > @@ -294,6 +294,7 @@ struct IntelIOMMUState {
+> > >
+> > >       /* interrupt remapping */
+> > >       bool intr_enabled;              /* Whether guest enabled IR */
+> > > +    bool cfi_enabled;               /* Whether CFI is enabled */
+> > >       dma_addr_t intr_root;           /* Interrupt remapping table po=
+inter */
+> > >       uint32_t intr_size;             /* Number of IR table entries *=
+/
+> > >       bool intr_eime;                 /* Extended interrupt mode enab=
+led */
+> > > --
+> > > 2.34.1
+> > >
+> > >
+>
 
-Thanks,
-Mostafa
-
-> 
-> thanks
-> -- PMM
+Yuke Peng
 
