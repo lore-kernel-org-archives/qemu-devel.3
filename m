@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDF7C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CA3C3DA61
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVRiW-0001Mw-DQ; Sun, 21 Jul 2024 04:14:52 -0400
+	id 1sVRiW-0001OB-ON; Sun, 21 Jul 2024 04:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiD-0000pj-Rm
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiI-0000sC-AR
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiC-0001Qw-HI
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiF-0001SO-MA
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721549672;
+ s=mimecast20190719; t=1721549675;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NBczWv8OU+Ht6azEoj1D6vXUlchhp2XhO4LmUdx+/5Y=;
- b=dSXKMEJQdiZrGwkRl9IlQMAKqErEp3c6qD4wvgtrhI1EpUISRt9xtIGS5+64OCKLUzbZ7G
- ycbFCDC7INPFx6OkqJO7UbBoxK5sjSgSg3s0k7g2fh+1YPNtunOsMQEUsSwlqC6Fsq9qHk
- 4Co/YwI9Gg04jMNZ1NvRRFQAmEC/pCs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=udAg7aoSsOCQyOYgTRax+Vjy2Ro/dmRw73+40ghuTPA=;
+ b=gRaVMU96S7DZWItF4JpHJcyJvbn3nRwDpjJoVxFxLQYXsEAEQnjG3ES1vxShuQ5hjGHpDr
+ WAmNeS6Mm9DEKF8/QUssjVIMnFoTD0Oh+3w3ZpzeZVaJkxfC68Z7Y8cnDVTvFUfZf6NEpg
+ RPR7uVddHTMtGxf8a4Jl2+Yhh5m+P5g=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-iTADQesoNJm-0MeaNuIXKg-1; Sun,
- 21 Jul 2024 04:14:26 -0400
-X-MC-Unique: iTADQesoNJm-0MeaNuIXKg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-UmOJ5cyaOdGUHOH0VtgqJw-1; Sun,
+ 21 Jul 2024 04:14:29 -0400
+X-MC-Unique: UmOJ5cyaOdGUHOH0VtgqJw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C926919560AA; Sun, 21 Jul 2024 08:14:24 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D42901955F43; Sun, 21 Jul 2024 08:14:28 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.37])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0163B1955D47; Sun, 21 Jul 2024 08:14:22 +0000 (UTC)
+ id 282321955D4F; Sun, 21 Jul 2024 08:14:26 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/15] aspeed: Introduce a 'hw_strap1' machine attribute
-Date: Sun, 21 Jul 2024 10:13:54 +0200
-Message-ID: <20240721081401.425588-9-clg@redhat.com>
+Subject: [PULL 10/15] tests/avocado/machine_aspeed.py: Add eMMC boot tests
+Date: Sun, 21 Jul 2024 10:13:56 +0200
+Message-ID: <20240721081401.425588-11-clg@redhat.com>
 In-Reply-To: <20240721081401.425588-1-clg@redhat.com>
 References: <20240721081401.425588-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -83,52 +82,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@kaod.org>
+The image was built using the process described in commit c8cb19876d3e
+("hw/sd/sdcard: Support boot area in emmc image") with artefacts from
+the latest successful build of the IBM P10 BMC platform available on:
 
-To change default behavior of a machine and boot from eMMC, future
-changes will add a machine option to let the user configure the
-boot-from-eMMC HW strapping bit. Add a new machine attribute first.
+  https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/lastSuccessfulBuild/
 
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/aspeed.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tests/avocado/machine_aspeed.py | 39 +++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a8f5c14ae535..9939559f6dd0 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -46,6 +46,7 @@ struct AspeedMachineState {
-     uint32_t uart_chosen;
-     char *fmc_model;
-     char *spi_model;
-+    uint32_t hw_strap1;
- };
+diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+index f66ad38d3503..29e6b388a9fd 100644
+--- a/tests/avocado/machine_aspeed.py
++++ b/tests/avocado/machine_aspeed.py
+@@ -439,3 +439,42 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
+         self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
+         self.ssh_connect('root', '0penBmc', False)
  
- /* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
-@@ -393,7 +394,7 @@ static void aspeed_machine_init(MachineState *machine)
-         }
-     }
- 
--    object_property_set_int(OBJECT(bmc->soc), "hw-strap1", amc->hw_strap1,
-+    object_property_set_int(OBJECT(bmc->soc), "hw-strap1", bmc->hw_strap1,
-                             &error_abort);
-     object_property_set_int(OBJECT(bmc->soc), "hw-strap2", amc->hw_strap2,
-                             &error_abort);
-@@ -1077,7 +1078,10 @@ static void aspeed_set_mmio_exec(Object *obj, bool value, Error **errp)
- 
- static void aspeed_machine_instance_init(Object *obj)
- {
-+    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(obj);
++class AST2x00MachineMMC(QemuSystemTest):
 +
-     ASPEED_MACHINE(obj)->mmio_exec = false;
-+    ASPEED_MACHINE(obj)->hw_strap1 = amc->hw_strap1;
- }
- 
- static char *aspeed_get_fmc_model(Object *obj, Error **errp)
++    timeout = 240
++
++    def wait_for_console_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(self, success_message,
++                                 failure_message='Kernel panic - not syncing',
++                                 vm=vm)
++
++    def test_arm_aspeed_emmc_boot(self):
++        """
++        :avocado: tags=arch:arm
++        :avocado: tags=machine:rainier-bmc
++        :avocado: tags=device:emmc
++        """
++
++        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
++                     'mmc-p10bmc-20240617.qcow2')
++        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
++        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
++                                      algorithm='sha256')
++
++        self.require_netdev('user')
++
++        self.vm.set_console()
++        self.vm.add_args('-drive',
++                         'file=' + image_path + ',if=sd,id=sd2,index=2',
++                         '-net', 'nic', '-net', 'user')
++        self.vm.launch()
++
++        self.wait_for_console_pattern('U-Boot SPL 2019.04')
++        self.wait_for_console_pattern('Trying to boot from MMC1')
++        self.wait_for_console_pattern('U-Boot 2019.04')
++        self.wait_for_console_pattern('eMMC 2nd Boot')
++        self.wait_for_console_pattern('## Loading kernel from FIT Image')
++        self.wait_for_console_pattern('Starting kernel ...')
++        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
++        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
++        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
 -- 
 2.45.2
 
