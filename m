@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF228C3DA61
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6D8C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVRiX-0001SL-Mu; Sun, 21 Jul 2024 04:14:53 -0400
+	id 1sVRiW-0001OU-RO; Sun, 21 Jul 2024 04:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiV-0001IU-6N
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiQ-0000zx-5e
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiT-0001XS-AZ
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiO-0001Wn-Lb
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721549686;
+ s=mimecast20190719; t=1721549683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZFJk6N4bnlLhuN7xHBbX28ecMO0lvE2LS6iTIcHWdX8=;
- b=MoaMipXjZQUFzc4qlCpUncAD/SqLLvbnJ6HA+mPMkA39ybbrx7/xVKOCSc213X+bOxN6eM
- sOwZwL3AvN1PjyUPHT2Awxxg/spiFY2bvkEC7H7+lg0s4ixZs6ZHBaZVc+B8AbMD4QNbl5
- +yaoIy1Rfm/1QHLZdDmMDRtO6wGvBAk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=S+aR5VWlIskcMFdhgKOYGffyXi++pUDYCIjMSJNpxPo=;
+ b=Xfuxv8itt8z63hp0hA/NKtIFdiSR1sCWzEhky5S8PbvE03P/Psyuj80k+qgsXKgGahx5Qd
+ +7gXinC9mm6OdlfL7/PjY+L6AaFddiRvs/qQ88NKmh7gTi2ceR44GG+1hzqSHm1LgZBngS
+ zCAanY419ZNF+e3APNhVyvngQQguED0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-CvNePszeP8e0jDzSSl8nMw-1; Sun,
- 21 Jul 2024 04:14:42 -0400
-X-MC-Unique: CvNePszeP8e0jDzSSl8nMw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-f9QX7qRvO2-LYNnC9Fc4_Q-1; Sun,
+ 21 Jul 2024 04:14:39 -0400
+X-MC-Unique: f9QX7qRvO2-LYNnC9Fc4_Q-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4A8019560AB; Sun, 21 Jul 2024 08:14:40 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03C0C1955F3D; Sun, 21 Jul 2024 08:14:39 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.37])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4586C1955D47; Sun, 21 Jul 2024 08:14:39 +0000 (UTC)
+ id 3C2741955D47; Sun, 21 Jul 2024 08:14:37 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/15] hw/i2c/aspeed: support to set the different memory size
-Date: Sun, 21 Jul 2024 10:13:59 +0200
-Message-ID: <20240721081401.425588-14-clg@redhat.com>
+Subject: [PULL 12/15] aspeed/soc: support ADC for AST2700
+Date: Sun, 21 Jul 2024 10:13:58 +0200
+Message-ID: <20240721081401.425588-13-clg@redhat.com>
 In-Reply-To: <20240721081401.425588-1-clg@redhat.com>
 References: <20240721081401.425588-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,82 +84,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-According to the datasheet of ASPEED SOCs,
-an I2C controller owns 8KB of register space for AST2700,
-owns 4KB of register space for AST2600, AST2500 and AST2400,
-and owns 64KB of register space for AST1030.
-
-It set the memory region size 4KB by default and it does not compatible
-register space for AST2700.
-
-Introduce a new class attribute to set the I2C controller memory size
-for different ASPEED SOCs.
+Add ADC model for AST2700 ADC support.
+The ADC controller registers base address is start at
+0x14C0_0000 and its address space is 0x1000.
+The ADC controller interrupt is connected to
+GICINT130_INTC group at bit 16. The GIC IRQ is 130.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/i2c/aspeed_i2c.h | 2 +-
- hw/i2c/aspeed_i2c.c         | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index a064479e599c..065b636d2999 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -283,7 +283,7 @@ struct AspeedI2CClass {
-     uint8_t *(*bus_pool_base)(AspeedI2CBus *);
-     bool check_sram;
-     bool has_dma;
--
-+    uint64_t mem_size;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index a9fb0d4b8874..4257b5e8af82 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -60,6 +60,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_SLIIO]     =  0x14C1E000,
+     [ASPEED_GIC_DIST]      =  0x12200000,
+     [ASPEED_GIC_REDIST]    =  0x12280000,
++    [ASPEED_DEV_ADC]       =  0x14C00000,
  };
  
- static inline bool aspeed_i2c_is_new_mode(AspeedI2CState *s)
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index b43afd250de4..7d5a53c4c015 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1014,7 +1014,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
- 
-     sysbus_init_irq(sbd, &s->irq);
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_i2c_ctrl_ops, s,
--                          "aspeed.i2c", 0x1000);
-+                          "aspeed.i2c", aic->mem_size);
-     sysbus_init_mmio(sbd, &s->iomem);
- 
-     for (i = 0; i < aic->num_busses; i++) {
-@@ -1286,6 +1286,7 @@ static void aspeed_2400_i2c_class_init(ObjectClass *klass, void *data)
-     aic->pool_size = 0x800;
-     aic->pool_base = 0x800;
-     aic->bus_pool_base = aspeed_2400_i2c_bus_pool_base;
-+    aic->mem_size = 0x1000;
+ #define AST2700_MAX_IRQ 288
+@@ -344,6 +345,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
+     object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
+     object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_2700_INTC);
++
++    snprintf(typename, sizeof(typename), "aspeed.adc-%s", socname);
++    object_initialize_child(obj, "adc", &s->adc, typename);
  }
  
- static const TypeInfo aspeed_2400_i2c_info = {
-@@ -1320,6 +1321,7 @@ static void aspeed_2500_i2c_class_init(ObjectClass *klass, void *data)
-     aic->bus_pool_base = aspeed_2500_i2c_bus_pool_base;
-     aic->check_sram = true;
-     aic->has_dma = true;
-+    aic->mem_size = 0x1000;
- }
+ /*
+@@ -601,6 +605,14 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sliio), 0,
+                     sc->memmap[ASPEED_DEV_SLIIO]);
  
- static const TypeInfo aspeed_2500_i2c_info = {
-@@ -1353,6 +1355,7 @@ static void aspeed_2600_i2c_class_init(ObjectClass *klass, void *data)
-     aic->pool_base = 0xC00;
-     aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
-     aic->has_dma = true;
-+    aic->mem_size = 0x1000;
- }
- 
- static const TypeInfo aspeed_2600_i2c_info = {
-@@ -1376,6 +1379,7 @@ static void aspeed_1030_i2c_class_init(ObjectClass *klass, void *data)
-     aic->pool_base = 0xC00;
-     aic->bus_pool_base = aspeed_2600_i2c_bus_pool_base;
-     aic->has_dma = true;
-+    aic->mem_size = 0x10000;
- }
- 
- static const TypeInfo aspeed_1030_i2c_info = {
++    /* ADC */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->adc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->adc), 0, sc->memmap[ASPEED_DEV_ADC]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
 2.45.2
 
