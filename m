@@ -4,56 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A428C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 07:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B096C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:15:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVQwP-0000gr-2a; Sun, 21 Jul 2024 03:25:09 -0400
+	id 1sVRiC-0000ll-BD; Sun, 21 Jul 2024 04:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sVQwN-0000eQ-Af
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 03:25:07 -0400
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRhw-0000ht-F6
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sVQwL-0001IL-Fi
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 03:25:07 -0400
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46L7ObED077157
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Sun, 21 Jul 2024 15:24:37 +0800 (+08)
- (envelope-from alvinga@andestech.com)
-Received: from atctrx.andestech.com (10.0.15.190) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sun, 21 Jul
- 2024 15:24:38 +0800
-To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH v3 0/2] RISC-V: Add preliminary textra trigger CSR functions
-Date: Sun, 21 Jul 2024 15:24:20 +0800
-Message-ID: <20240721072422.1377506-1-alvinga@andestech.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRhu-0001Mo-Sx
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721549653;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZY1yFMZpxDed399Qr48TOhVB82T6ImNnvzW360N3de4=;
+ b=Amc6tD2VImDDhGzX/DGnthrciOvCbuf9gmIbA3EwM+e0sb40OyVDs6yeUDNgth3wsqTOzO
+ wSr1aDO1M849u69vJtKpFNkJJUNTFwo5uQbKHs1mIJi4EZzcZUXAZKexfrIt80uPApxRMO
+ E0DNRiYMjfQ+fwXi3Kq+ZOrAAdqK5EU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-2SVm6Eu9MaKlmZLti_He8w-1; Sun,
+ 21 Jul 2024 04:14:09 -0400
+X-MC-Unique: 2SVm6Eu9MaKlmZLti_He8w-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF1A51956080; Sun, 21 Jul 2024 08:14:07 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.37])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 40B761955D47; Sun, 21 Jul 2024 08:14:05 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 01/15] aspeed/smc: Fix possible integer overflow
+Date: Sun, 21 Jul 2024 10:13:47 +0200
+Message-ID: <20240721081401.425588-2-clg@redhat.com>
+In-Reply-To: <20240721081401.425588-1-clg@redhat.com>
+References: <20240721081401.425588-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.15.190]
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46L7ObED077157
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,36 +79,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alvin Chang <alvinga@andestech.com>
-From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to RISC-V Debug specification, the optional textra32 and textra64
-trigger CSRs can be used to configure additional matching conditions for the
-triggers.
+Coverity reports a possible integer overflow because routine
+aspeeed_smc_hclk_divisor() has a codepath returning 0, which could
+lead to an integer overflow when computing variable 'hclk_shift' in
+the caller aspeed_smc_dma_calibration().
 
-This series support to write MHVALUE and MHSELECT fields into textra32 and
-textra64 trigger CSRs. Besides, the additional matching condition between
-textra.MHVALUE and mcontext CSR is also implemented.
+The value passed to aspeed_smc_hclk_divisor() is always between 0 and
+15 and, in this case, there is always a matching hclk divisor. Remove
+the return 0 and use g_assert_not_reached() instead.
 
-Changes from v2:
-- Remove redundant log
+Fixes: Coverity CID 1547822
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/ssi/aspeed_smc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Changes from v1:
-- Log that mhselect only supports 0 or 4 for now
-- Simplify writing of tdata3
-
-Alvin Chang (2):
-  target/riscv: Preliminary textra trigger CSR writting support
-  target/riscv: Add textra matching condition for the triggers
-
- target/riscv/cpu_bits.h |  10 +++
- target/riscv/debug.c    | 132 +++++++++++++++++++++++++++++++++++++---
- target/riscv/debug.h    |   3 +
- 3 files changed, 138 insertions(+), 7 deletions(-)
-
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index 49205ab76d38..f39fb85a35e9 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -789,8 +789,7 @@ static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
+         }
+     }
+ 
+-    aspeed_smc_error("invalid HCLK mask %x", hclk_mask);
+-    return 0;
++    g_assert_not_reached();
+ }
+ 
+ /*
 -- 
-2.34.1
+2.45.2
 
 
