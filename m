@@ -4,68 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CA3C3DA61
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6805C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 08:17:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVRiW-0001OB-ON; Sun, 21 Jul 2024 04:14:52 -0400
+	id 1sVRiT-0001Af-6W; Sun, 21 Jul 2024 04:14:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiI-0000sC-AR
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRhx-0000hy-Q0
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRiF-0001SO-MA
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVRhv-0001Mb-It
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 04:14:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721549675;
+ s=mimecast20190719; t=1721549652;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=udAg7aoSsOCQyOYgTRax+Vjy2Ro/dmRw73+40ghuTPA=;
- b=gRaVMU96S7DZWItF4JpHJcyJvbn3nRwDpjJoVxFxLQYXsEAEQnjG3ES1vxShuQ5hjGHpDr
- WAmNeS6Mm9DEKF8/QUssjVIMnFoTD0Oh+3w3ZpzeZVaJkxfC68Z7Y8cnDVTvFUfZf6NEpg
- RPR7uVddHTMtGxf8a4Jl2+Yhh5m+P5g=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1wzLzCscshtHDHvwyRkvpGP6+NyNsPtsxpc3wvfrY6I=;
+ b=ABNnxBkJrOMiY1JxYt4ra4ni4DZ71zA+rD0nDMyhAmrRJlt9Xkn2pb/E1eun8UYYZcAf2e
+ RYre++kFoJLfybH5wPU07wX0c4eGwHhvqk7KZCQIA7Pq5dSRanDwpAKYeBcshXojCceTE9
+ LInRDT5S0fqPoadFZo49lsFIot/txuQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-UmOJ5cyaOdGUHOH0VtgqJw-1; Sun,
- 21 Jul 2024 04:14:29 -0400
-X-MC-Unique: UmOJ5cyaOdGUHOH0VtgqJw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-7MH9mvo-OQ2H-ZvmPpALRg-1; Sun,
+ 21 Jul 2024 04:14:06 -0400
+X-MC-Unique: 7MH9mvo-OQ2H-ZvmPpALRg-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D42901955F43; Sun, 21 Jul 2024 08:14:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D662B19560A1; Sun, 21 Jul 2024 08:14:05 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.37])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 282321955D4F; Sun, 21 Jul 2024 08:14:26 +0000 (UTC)
+ id 222651955D47; Sun, 21 Jul 2024 08:14:03 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/15] tests/avocado/machine_aspeed.py: Add eMMC boot tests
-Date: Sun, 21 Jul 2024 10:13:56 +0200
-Message-ID: <20240721081401.425588-11-clg@redhat.com>
-In-Reply-To: <20240721081401.425588-1-clg@redhat.com>
-References: <20240721081401.425588-1-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 00/15] aspeed queue
+Date: Sun, 21 Jul 2024 10:13:46 +0200
+Message-ID: <20240721081401.425588-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,67 +78,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The image was built using the process described in commit c8cb19876d3e
-("hw/sd/sdcard: Support boot area in emmc image") with artefacts from
-the latest successful build of the IBM P10 BMC platform available on:
+The following changes since commit a87a7c449e532130d4fa8faa391ff7e1f04ed660:
 
-  https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/lastSuccessfulBuild/
+  Merge tag 'pull-loongarch-20240719' of https://gitlab.com/gaosong/qemu into staging (2024-07-19 16:28:28 +1000)
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/avocado/machine_aspeed.py | 39 +++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+are available in the Git repository at:
 
-diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
-index f66ad38d3503..29e6b388a9fd 100644
---- a/tests/avocado/machine_aspeed.py
-+++ b/tests/avocado/machine_aspeed.py
-@@ -439,3 +439,42 @@ def test_aarch64_ast2700_evb_sdk_v09_02(self):
-         self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
-         self.ssh_connect('root', '0penBmc', False)
- 
-+class AST2x00MachineMMC(QemuSystemTest):
-+
-+    timeout = 240
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(self, success_message,
-+                                 failure_message='Kernel panic - not syncing',
-+                                 vm=vm)
-+
-+    def test_arm_aspeed_emmc_boot(self):
-+        """
-+        :avocado: tags=arch:arm
-+        :avocado: tags=machine:rainier-bmc
-+        :avocado: tags=device:emmc
-+        """
-+
-+        image_url = ('https://fileserver.linaro.org/s/B6pJTwWEkzSDi36/download/'
-+                     'mmc-p10bmc-20240617.qcow2')
-+        image_hash = ('d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b')
-+        image_path = self.fetch_asset(image_url, asset_hash=image_hash,
-+                                      algorithm='sha256')
-+
-+        self.require_netdev('user')
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-drive',
-+                         'file=' + image_path + ',if=sd,id=sd2,index=2',
-+                         '-net', 'nic', '-net', 'user')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern('U-Boot SPL 2019.04')
-+        self.wait_for_console_pattern('Trying to boot from MMC1')
-+        self.wait_for_console_pattern('U-Boot 2019.04')
-+        self.wait_for_console_pattern('eMMC 2nd Boot')
-+        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern('Booting Linux on physical CPU 0xf00')
-+        self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
-+        self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
--- 
-2.45.2
+  https://github.com/legoater/qemu/ tags/pull-aspeed-20240721
+
+for you to fetch changes up to 4db1c16441923fc152142ae4bcc1cba23064cb8b:
+
+  aspeed: fix coding style (2024-07-21 07:46:38 +0200)
+
+----------------------------------------------------------------
+aspeed queue:
+
+* SMC model fix (Coverity)
+* AST2600 boot for eMMC support and test
+* AST2700 ADC model
+* I2C model changes preparing AST2700 I2C support
+
+----------------------------------------------------------------
+Cédric Le Goater (10):
+      aspeed/smc: Fix possible integer overflow
+      aspeed: Change type of eMMC device
+      aspeed: Load eMMC first boot area as a boot rom
+      aspeed/scu: Add boot-from-eMMC HW strapping bit for AST2600 SoC
+      aspeed: Introduce a AspeedSoCClass 'boot_from_emmc' handler
+      aspeed: Tune eMMC device properties to reflect HW strapping
+      aspeed: Add boot-from-eMMC HW strapping bit to rainier-bmc machine
+      aspeed: Introduce a 'hw_strap1' machine attribute
+      aspeed: Introduce a 'boot-emmc' machine option
+      tests/avocado/machine_aspeed.py: Add eMMC boot tests
+
+Jamin Lin (5):
+      aspeed/adc: Add AST2700 support
+      aspeed/soc: support ADC for AST2700
+      hw/i2c/aspeed: support to set the different memory size
+      hw/i2c/aspeed: rename the I2C class pool attribute to share_pool
+      aspeed: fix coding style
+
+ docs/system/arm/aspeed.rst      |  2 +
+ include/hw/adc/aspeed_adc.h     |  1 +
+ include/hw/arm/aspeed_soc.h     |  1 +
+ include/hw/i2c/aspeed_i2c.h     |  6 +--
+ include/hw/misc/aspeed_scu.h    |  4 ++
+ hw/adc/aspeed_adc.c             | 16 ++++++++
+ hw/arm/aspeed.c                 | 83 +++++++++++++++++++++++++++++++++--------
+ hw/arm/aspeed_ast2600.c         |  8 ++++
+ hw/arm/aspeed_ast27x0.c         | 12 ++++++
+ hw/arm/aspeed_soc_common.c      |  7 ++++
+ hw/i2c/aspeed_i2c.c             | 45 ++++++++++++----------
+ hw/ssi/aspeed_smc.c             |  3 +-
+ tests/avocado/machine_aspeed.py | 39 +++++++++++++++++++
+ 13 files changed, 188 insertions(+), 39 deletions(-)
 
 
