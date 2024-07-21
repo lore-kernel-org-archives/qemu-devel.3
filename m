@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D57C3DA63
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 13:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949C5C3DA61
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 13:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVWVh-0000r4-Vw; Sun, 21 Jul 2024 09:21:58 -0400
+	id 1sVWVi-0000rt-3M; Sun, 21 Jul 2024 09:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVSZO-0002Gu-3J
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 05:09:30 -0400
+ (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVSZM-0002GN-MX
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 05:09:28 -0400
 Received: from kuriko.dram.page ([65.108.252.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVSZM-0002QF-FP
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 05:09:29 -0400
+ (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVSZJ-0002Pm-0m
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 05:09:27 -0400
 From: Vivian Wang <uwu@dram.page>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dram.page; s=mail;
- t=1721552966; bh=gK/jIAxVKlERV1qkgDSRBBE0fYvUoxt+qhPcUqdUVgI=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=L8pqtadHCcegDS+Gd8+hfVC+G27C3rkaYxCnzUSPgQm3v86DQoKLfad96BR2q0fd6
- tGDlnebCH86vwvGEi0IaRaxPwksfPQMRKlZEOkZAJLgQsYZqr7wXeuRiCnXT3NzeGq
- yMvUBKOnmzo5Zr2EISDtK5h5jcKREvAu5hgUIbVE=
+ t=1721552959; bh=nrrvipFBAhgDnyJR+4gF1DQaIkKMnSnYaI8hLutuQJw=;
+ h=From:To:Cc:Subject:Date;
+ b=fLG5KiFwgl5nUYdQsp3IEU+TtoAnG3ESDxoL6xhcxCqpCQ/veqJMhc9WcO5iJeA92
+ ZPsv3nC/bC/xnehNGjvM7/YKfMBpspftnAVUdGDVSSn3nBLCRjAneWma5qztiFhiwk
+ yCTMruA/PsZ3sDHfXZ56VoubIsAcTLUMA4USbD2g=
 To: qemu-devel@nongnu.org
 Cc: Vivian Wang <uwu@dram.page>, Richard Henderson <rth@twiddle.net>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 2/2] linux-user/main: Check errno when getting AT_EXECFD
-Date: Sun, 21 Jul 2024 17:08:17 +0800
-Message-ID: <20240721090817.120888-3-uwu@dram.page>
-In-Reply-To: <20240721090817.120888-1-uwu@dram.page>
-References: <20240721090817.120888-1-uwu@dram.page>
+Subject: [PATCH 0/2] linux-user: Fix handling when AT_EXECFD is 0
+Date: Sun, 21 Jul 2024 17:08:15 +0800
+Message-ID: <20240721090817.120888-1-uwu@dram.page>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=65.108.252.55; envelope-from=uwu@dram.page;
@@ -59,36 +57,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's possible for AT_EXECFD to end up with a valid value of 0. Check
-errno when using qemu_getauxval instead of return value to handle this
-case.
+Found when trying to build coreutils under linux-user as binfmt_misc
+interpreter with "open-binary" flag.
 
-Not handling this case leads to a confusing condition where the
-executable ends up as fd 0, i.e. stdin.
+I'm unsure whether the version detection in patch 1 makes sense. Please
+advise on how to handle situations like this.
 
-Signed-off-by: Vivian Wang <uwu@dram.page>
-Fixes: 0b959cf5e4cc ("linux-user: Use qemu_getauxval for AT_EXECFD")
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2448
----
- linux-user/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 7d3cf45fa9..8143a0d4b0 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -755,8 +755,9 @@ int main(int argc, char **argv, char **envp)
-     /*
-      * Manage binfmt-misc open-binary flag
-      */
-+    errno = 0;
-     execfd = qemu_getauxval(AT_EXECFD);
--    if (execfd == 0) {
-+    if (errno != 0) {
-         execfd = open(exec_path, O_RDONLY);
-         if (execfd < 0) {
-             printf("Error while loading %s: %s\n", exec_path, strerror(errno));
--- 
+Vivian Wang (2):
+  util/getauxval: Ensure setting errno if not found
+  linux-user/main: Check errno when getting AT_EXECFD
+
+ linux-user/main.c |  3 ++-
+ util/getauxval.c  | 14 ++++++++++++--
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+--
 2.45.1
 
 
