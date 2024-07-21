@@ -4,85 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9509FC3DA59
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 02:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BEDC3DA59
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jul 2024 03:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVMRl-0003FD-CJ; Sat, 20 Jul 2024 22:37:13 -0400
+	id 1sVN8T-0006fJ-0O; Sat, 20 Jul 2024 23:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
- id 1sVMRi-0003Ee-QU
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 22:37:10 -0400
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sVN8Q-0006ct-4x
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 23:21:18 -0400
+Received: from va-2-37.ptr.blmpb.com ([209.127.231.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
- id 1sVMRf-0007j1-GE
- for qemu-devel@nongnu.org; Sat, 20 Jul 2024 22:37:10 -0400
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6ad86f3cc34so18504846d6.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jul 2024 19:37:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721529425; x=1722134225; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=44otZtK80sVCzn9krLuxIPwb4HtMcylbrQef21NWXos=;
- b=HuXls6x57gjDExHNiAB20+ahpY5EbhjGwAS59j1VBYhYnToqiWu/f21PVJqqz4m6RA
- Z3Zp2HP4xtOcxQQr1GuSeYmnu6FVTswSGsDg19ImNg2HnNedqLg5AfkotjGNeMmFXVIJ
- i2Azox6cvbxP+bI/+XiLS5X1ZpnH7RNLAtEaPFHToZynj9MtfabCD/uGawTbQrbmgQQJ
- kag9jGPYyDWV0Bt2+RxqofXw4Bwox7BpwXIsSVBxol/EmpDd/P9NR7QvlGM0PaDH8jIQ
- FPOJ3zbWTLUMfFeYmVhhNtMfYXFnDYT/wGd7qlVlBU9KCKmTbIasLJ4UQTCl3FXmRYnI
- KiuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721529425; x=1722134225;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=44otZtK80sVCzn9krLuxIPwb4HtMcylbrQef21NWXos=;
- b=AsrZlhje+aKfzNqr0DbRG6/Rij7he/sQxi9ta+YRtmGbFIzaBR7hjXre8X0JDk5fYZ
- pXaRX/Ll8cgZhjsGO16mNUYlPaWJEo+rWi63CX5MRJJVNxJUlPSCsGH47e2MZ5ofwUd6
- mZihuIaJKoY5+5VfyJyhSCD6YsU6FXcb49cyNh/0KDnBegdgs2YCkA+gVlPv0UhIvyBt
- enNunPUbJh2N85L3k6HR5f4SW6H9ktPfnQGk8hFBqlvkz+drlBDafkep3PFqG8kV4+mS
- kwkJvCsfPl5FiStW0rPw5poWaB/YWO9LKgFp6ybf+aICcfUFgIsNRQl+ntuwChp9bncp
- 1LGQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVl9AZTfr5XCmLznQgnJAUdOfmblyh44FFGiRSZPQK99eKHAzJL8fmJHLAjK/qEaJkpvYYlGy0/Ov6G7WmQlLG4voIEpJ0=
-X-Gm-Message-State: AOJu0Yzob2ME3qW2oR3zIItH6d9Y9aTibOr2wVkFdygf0N/YNzPJw3KL
- L4s+NnTutiCGAMDues6wM12AyZyE0M0I2170LuX0cdq5FmOXJyrNhUJYdWUiapBnHWVT8/lvYZp
- AJwnSyhvF4MDIUtvNQYoyPkI6utE=
-X-Google-Smtp-Source: AGHT+IGvM8xXQLi5fwYEc50nyZ0JMZEov0Cpt45GF/Oy8iU+DEHZJ2tDe/4YMg9Ih6aPAeGYe02YHEa8DInVEien71Y=
-X-Received: by 2002:a05:6214:acf:b0:6b0:8fe5:4a98 with SMTP id
- 6a1803df08f44-6b95a74e963mr51469556d6.36.1721529425092; Sat, 20 Jul 2024
- 19:37:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240708100816.1916346-1-pykfirst@gmail.com>
- <468ed4a0-14b1-4d0b-9537-9a550b14f0da@eviden.com>
- <20240720150438-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240720150438-mutt-send-email-mst@kernel.org>
-From: Yuke Peng <pykfirst@gmail.com>
-Date: Sun, 21 Jul 2024 10:36:53 +0800
-Message-ID: <CAHJVP31QoonZ5AjottoBWRaLcgKwKcEXZ=TSkoY9KY95wSxt-Q@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/i386/intel_iommu: Block CFI when necessary
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Peter Xu <peterx@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sVN8L-0006tU-R7
+ for qemu-devel@nongnu.org; Sat, 20 Jul 2024 23:21:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1721532058;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=H0qyK51ZJ7CjenPfVwFluItbdtRPnhMEeOXpjqscy1g=;
+ b=g+8XWH81DpBlVyqqZA56VNZF9UgwB9unAYEPRRZqXpBgWuef5mjlZiR3eDXVE4204tS9qc
+ QHE9aBnP9gTPFu/q/+1Pe1kYKDTfyyvBQTgiRKOlDFvhWUt+sci1V+ALRSmSsCaehcg1lp
+ z200m5GLsxgEJLzrFydzuRsZf8+529CyE57++eY51enBSp7v0Lq4rczVk2zpZO+8ywbcSS
+ 4CgEf0kO1La/kFp3k1hJbdydZhQ9t20uObFIjw0Db9A/TUVTSzodzEP95pmEUYr/Wz2JHA
+ /kuXpcBUrjQqa4+D4/YRcd2kYJZ4meq0lL6w+Q+zBSrsCrtaEvfUgUC3cLq/Ew==
+Date: Sun, 21 Jul 2024 11:20:56 +0800
+Subject: Re: [PATCH v2] vhsot-user: Do not wait for replay for not sent
+ VHOST_USER_SET_LOG_BASE
+In-Reply-To: <20240720145819-mutt-send-email-mst@kernel.org>
+X-Lms-Return-Path: <lba+1669c7e99+4d7753+nongnu.org+xiangwencheng@dayudpu.com>
+References: <20240718083103.56214-1-xiangwencheng@dayudpu.com>
+ <20240720145819-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=pykfirst@gmail.com; helo=mail-qv1-xf30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.0ff73b39.722e.4462.b426.f477adef04f2@feishu.cn>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: <qemu-devel@nongnu.org>
+From: "BillXiang" <xiangwencheng@dayudpu.com>
+Mime-Version: 1.0
+Received-SPF: pass client-ip=209.127.231.37;
+ envelope-from=xiangwencheng@dayudpu.com; helo=va-2-37.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,246 +67,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Sun, Jul 21, 2024 at 3:05=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Tue, Jul 09, 2024 at 04:43:25AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> > Hi
-> >
-> > On 08/07/2024 12:08, Yuke Peng wrote:
-> > > Caution: External email. Do not open attachments or click links, unle=
-ss this email comes from a known sender and you know the content is safe.
-> > >
-> > >
-> > > According to Intel VT-d specification 5.1.4, CFI must be blocked when
-> > > Extended Interrupt Mode is enabled or Compatibility format interrupts
-> > > are disabled.
-> > >
-> > > Signed-off-by: Yuke Peng <pykfirst@gmail.com>
-> > > ---
-> > > Changes in v2:
-> > > - Use subsections for the cfi_enabled field.
-> > > - Link to v1: https://lore.kernel.org/qemu-devel/20240625112819.86228=
-2-1-pykfirst@gmail.com/
-> > >
-> > > ---
-> > >   hw/i386/intel_iommu.c         | 53 ++++++++++++++++++++++++++++++++=
-+--
-> > >   hw/i386/trace-events          |  1 +
-> > >   include/hw/i386/intel_iommu.h |  1 +
-> > >   3 files changed, 53 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> > > index 5085a6fee3..af9c864bde 100644
-> > > --- a/hw/i386/intel_iommu.c
-> > > +++ b/hw/i386/intel_iommu.c
-> > > @@ -2410,6 +2410,22 @@ static void vtd_handle_gcmd_ire(IntelIOMMUStat=
-e *s, bool en)
-> > >       }
-> > >   }
-> > >
-> > > +/* Handle Compatibility Format Interrupts Enable/Disable */
-> > > +static void vtd_handle_gcmd_cfi(IntelIOMMUState *s, bool en)
-> > > +{
-> > > +    trace_vtd_cfi_enable(en);
-> > > +
-> > > +    if (en) {
-> > > +        s->cfi_enabled =3D true;
-> > > +        /* Ok - report back to driver */
-> > > +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_CFIS);
-> > > +    } else {
-> > > +        s->cfi_enabled =3D false;
-> > > +        /* Ok - report back to driver */
-> > > +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, VTD_GSTS_CFIS, 0);
-> > > +    }
-> > > +}
-> > > +
-> > >   /* Handle write to Global Command Register */
-> > >   static void vtd_handle_gcmd_write(IntelIOMMUState *s)
-> > >   {
-> > > @@ -2440,6 +2456,10 @@ static void vtd_handle_gcmd_write(IntelIOMMUSt=
-ate *s)
-> > >           /* Interrupt remap enable/disable */
-> > >           vtd_handle_gcmd_ire(s, val & VTD_GCMD_IRE);
-> > >       }
-> > > +    if (changed & VTD_GCMD_CFI) {
-> > > +        /* Compatibility format interrupts enable/disable */
-> > > +        vtd_handle_gcmd_cfi(s, val & VTD_GCMD_CFI);
-> > > +    }
-> > >   }
-> > >
-> > >   /* Handle write to Context Command Register */
-> > > @@ -3283,7 +3303,25 @@ static int vtd_post_load(void *opaque, int ver=
-sion_id)
-> > >       return 0;
-> > >   }
-> > >
-> > > -static const VMStateDescription vtd_vmstate =3D {
-> > > +static bool vtd_cfi_needed(void *opaque)
-> > > +{
-> > > +    IntelIOMMUState *iommu =3D opaque;
-> > > +
-> > > +    return iommu->intr_enabled && !iommu->intr_eime;
-> > > +}
-> > > +
-> > > +static const VMStateDescription vmstate_vtd_cfi =3D {
-> > > +    .name =3D "iommu-intel/cfi",
-> > > +    .version_id =3D 1,
-> > > +    .minimum_version_id =3D 1,
-> > > +    .needed =3D vtd_cfi_needed,
-> > > +    .fields =3D (VMStateField[]) {
-> > > +        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
-> > > +        VMSTATE_END_OF_LIST()
-> > > +    }
-> > > +};
-> > > +
-> > > +static const VMStateDescription vmstate_vtd =3D {
-> > Why is vtd_vmstate renamed to vmstate_vtd? is it necessary?
->
->
->
-> Yuke Peng, do you plan to answer this?
+> From: "Michael S. Tsirkin"<mst@redhat.com>
+> Date:=C2=A0 Sun, Jul 21, 2024, 03:01
+> Subject:=C2=A0 Re: [PATCH v2] vhsot-user: Do not wait for replay for not =
+sent VHOST_USER_SET_LOG_BASE
+> To: "BillXiang"<xiangwencheng@dayudpu.com>
+> Cc: <qemu-devel@nongnu.org>
+> typos in subject do not inspire confidence.
 
-Sorry for the late reply and for not using the "reply to all" option.
-I will update the reply email:
+Sorry
 
-On Fri, Jul 12, 2024 at 2:56=E2=80=AFAM CLEMENT MATHIEU--DRIF
-<clement.mathieu--drif@eviden.com> wrote:
->
-> On 11/07/2024 10:19, Yuke Peng wrote:
-> >
-> > On Tue, Jul 9, 2024 at 12:43=E2=80=AFPM CLEMENT MATHIEU--DRIF <clement.=
-mathieu--drif@eviden.com> wrote:
-> > >
-> > > Hi
-> > >
-> > > On 08/07/2024 12:08, Yuke Peng wrote:
-> > > > +static const VMStateDescription vmstate_vtd_cfi =3D {
-> > > > +    .name =3D "iommu-intel/cfi",
-> > > > +    .version_id =3D 1,
-> > > > +    .minimum_version_id =3D 1,
-> > > > +    .needed =3D vtd_cfi_needed,
-> > > > +    .fields =3D (VMStateField[]) {
-> > > > +        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
-> > > > +        VMSTATE_END_OF_LIST()
-> > > > +    }
-> > > > +};
-> > > > +
-> > > > +static const VMStateDescription vmstate_vtd =3D {
-> > > Why is vtd_vmstate renamed to vmstate_vtd? is it necessary?
-> > >
-> >
-> > When I attempted to use vtd_vmstate as a reference to name the
-> > cfi subsection. I found the proposed name was a bit odd for me, like
-> > "vtd_cfi_vmstate" or "vtd_vmstate_cfi".
-> >
-> > I checked the other examples using subsections and I found they use
-> > vmstate_xxx like "vmstate_serial" and "vmstate_serial_timeout_ipending"=
-.
-> > So here I rename vtd_vmstate to vmstate_vtd.
->
-> Hi,
->
-> I can't say if this will be approved or not.
-> But if you really think renaming is important, you should make a patch fo=
-r that specific change instead of using the same patch for all changes.
->
-> Maybe you should consider using "reply all" so that people on the list ca=
-n keep track of the conversation.
+>=C2=A0
+> On Thu, Jul 18, 2024 at 04:31:03PM +0800, BillXiang wrote:
+> > From: BillXiang <xiangwencheng@dayudpu.com>
+> >=C2=A0
+> > We have added VHOST_USER_SET_LOG_BASE to vhost_user_per_device_request
+> > in https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg02559.ht=
+ml
+>=C2=A0
+> Pls put commit here not ML link:
+> commit ABCDEFGHIKLM ("subject")
+>=C2=A0
+> > and will send this message only for vq 0.
+>=C2=A0
+> you mean "should send"?
+>=C2=A0
 
-I had intended to split this patch into two parts, but I've been too
-busy to work on it. I'm sorry about that.
+What I mean is the commit 7c211eb078c4 ("vhost-user: Skip unnecessary dupli=
+cated VHOST_USER_SET_LOG_BASE requests")=C2=A0
+will cause VHOST_USER_SET_LOG_BASE to be sent only when 'vq_index =3D=3D 0'=
+ in vhost_user_write,=C2=A0
+so that we can not use vhost_user_read to get reply when 'vq_index !=3D 0'
 
->
->
-> > >       .name =3D "iommu-intel",
-> > >       .version_id =3D 1,
-> > >       .minimum_version_id =3D 1,
-> > > @@ -3306,6 +3344,10 @@ static const VMStateDescription vtd_vmstate =
-=3D {
-> > >           VMSTATE_BOOL(intr_enabled, IntelIOMMUState),
-> > >           VMSTATE_BOOL(intr_eime, IntelIOMMUState),
-> > >           VMSTATE_END_OF_LIST()
-> > > +    },
-> > > +    .subsections =3D (const VMStateDescription * []) {
-> > > +        &vmstate_vtd_cfi,
-> > > +        NULL
-> > >       }
-> > >   };
-> > >
-> > > @@ -3525,6 +3567,12 @@ static int vtd_interrupt_remap_msi(IntelIOMMUS=
-tate *iommu,
-> > >
-> > >       /* This is compatible mode. */
-> > >       if (addr.addr.int_mode !=3D VTD_IR_INT_FORMAT_REMAP) {
-> > > +        if (iommu->intr_eime || !iommu->cfi_enabled) {
-> > > +            if (do_fault) {
-> > > +                vtd_report_ir_fault(iommu, sid, VTD_FR_IR_REQ_COMPAT=
-, 0);
-> > > +            }
-> > > +            return -EINVAL;
-> > > +        }
-> > >           memcpy(translated, origin, sizeof(*origin));
-> > >           goto out;
-> > >       }
-> > > @@ -3950,6 +3998,7 @@ static void vtd_init(IntelIOMMUState *s)
-> > >       s->root_scalable =3D false;
-> > >       s->dmar_enabled =3D false;
-> > >       s->intr_enabled =3D false;
-> > > +    s->cfi_enabled =3D false;
-> > >       s->iq_head =3D 0;
-> > >       s->iq_tail =3D 0;
-> > >       s->iq =3D 0;
-> > > @@ -4243,7 +4292,7 @@ static void vtd_class_init(ObjectClass *klass, =
-void *data)
-> > >       X86IOMMUClass *x86_class =3D X86_IOMMU_DEVICE_CLASS(klass);
-> > >
-> > >       dc->reset =3D vtd_reset;
-> > > -    dc->vmsd =3D &vtd_vmstate;
-> > > +    dc->vmsd =3D &vmstate_vtd;
-> > >       device_class_set_props(dc, vtd_properties);
-> > >       dc->hotpluggable =3D false;
-> > >       x86_class->realize =3D vtd_realize;
-> > > diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> > > index 53c02d7ac8..ffd87db65f 100644
-> > > --- a/hw/i386/trace-events
-> > > +++ b/hw/i386/trace-events
-> > > @@ -57,6 +57,7 @@ vtd_dmar_translate(uint8_t bus, uint8_t slot, uint8=
-_t func, uint64_t iova, uint6
-> > >   vtd_dmar_enable(bool en) "enable %d"
-> > >   vtd_dmar_fault(uint16_t sid, int fault, uint64_t addr, bool is_writ=
-e) "sid 0x%"PRIx16" fault %d addr 0x%"PRIx64" write %d"
-> > >   vtd_ir_enable(bool en) "enable %d"
-> > > +vtd_cfi_enable(bool en) "enable %d"
-> > >   vtd_ir_irte_get(int index, uint64_t lo, uint64_t hi) "index %d low =
-0x%"PRIx64" high 0x%"PRIx64
-> > >   vtd_ir_remap(int index, int tri, int vec, int deliver, uint32_t des=
-t, int dest_mode) "index %d trigger %d vector %d deliver %d dest 0x%"PRIx32=
-" mode %d"
-> > >   vtd_ir_remap_type(const char *type) "%s"
-> > > diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_io=
-mmu.h
-> > > index 7fa0a695c8..38e20d0f2c 100644
-> > > --- a/include/hw/i386/intel_iommu.h
-> > > +++ b/include/hw/i386/intel_iommu.h
-> > > @@ -294,6 +294,7 @@ struct IntelIOMMUState {
-> > >
-> > >       /* interrupt remapping */
-> > >       bool intr_enabled;              /* Whether guest enabled IR */
-> > > +    bool cfi_enabled;               /* Whether CFI is enabled */
-> > >       dma_addr_t intr_root;           /* Interrupt remapping table po=
-inter */
-> > >       uint32_t intr_size;             /* Number of IR table entries *=
-/
-> > >       bool intr_eime;                 /* Extended interrupt mode enab=
-led */
-> > > --
-> > > 2.34.1
-> > >
-> > >
->
-
-Yuke Peng
+>=C2=A0
+> >=C2=A0
+> > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+> > ---
+> > V1[1] -> V2:
+> >=C2=A0 - Refrain from appending flags to messages that could=C2=A0
+> > precipitate validation failures upon execution of the=C2=A0
+> > `vhost_user_read_header` function.=C2=A0
+> >=C2=A0
+> > [1]https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg01923.ht=
+ml
+> > ---
+> >=C2=A0 hw/virtio/vhost-user.c | 2 +-
+> >=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
+> >=C2=A0
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index 00561daa06..fd12992d15 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev=
+ *dev, uint64_t base,
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return ret;
+> > =C2=A0 =C2=A0=C2=A0 }
+> > =C2=A0
+> > - =C2=A0=C2=A0 if (shmfd) {
+> > + =C2=A0=C2=A0 if (shmfd && (dev->vq_index =3D=3D 0)) {
+>=C2=A0
+> extra () not needed here.
+>=C2=A0
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 msg.hdr.size =3D 0;
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 ret =3D vhost_user_read(dev, &msg);
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 if (ret < 0) {
+> > --=C2=A0
+> > 2.30.0
 
