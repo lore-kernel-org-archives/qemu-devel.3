@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB20C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13F1C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0q3-0005Bl-Db; Mon, 22 Jul 2024 17:44:59 -0400
+	id 1sW0qT-0006cx-G6; Mon, 22 Jul 2024 17:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sW0pt-00051l-KN
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:44:50 -0400
-Received: from mail-io1-xd31.google.com ([2607:f8b0:4864:20::d31])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sW0q5-0005Lx-Vf
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:45:02 -0400
+Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sW0pq-0004HB-7z
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:44:48 -0400
-Received: by mail-io1-xd31.google.com with SMTP id
- ca18e2360f4ac-7f70a708f8aso195010239f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 14:44:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sW0q3-0004Mr-TR
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:45:01 -0400
+Received: by mail-il1-x132.google.com with SMTP id
+ e9e14a558f8ab-397580fa3bcso10961375ab.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 14:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721684682; x=1722289482;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721684698; x=1722289498;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mcZb5YItFOMqqJrIuqjuWAfUzsfp40iXsHzNY3+LniI=;
- b=bW39cLkuzQIbfXRB5IXR1T4ogc0+HrGeHaAptQ+Hktv2jaxz+T4S0KvXEb4yoqvPik
- ggkpNEU77QQ8sBIooQncxyVA1ur6bmHGKZNZt2wA9ekGgHnMzIokBAoPCZVJblqHHjT5
- J7Ws1mXXbtI5D3N1cEfzcW8W0LnAFIm5kjRP9YG7rJmS+Ove+JCB0j0GGPFub6VodLNM
- Qo48+dZV6nJwxEk/jPahb+nWrbzIzIESm8CRwRcpOy0tzD3rHtMjGHm4fSE3K2AS0vxI
- rlhUijMZbHgQiyNbUX2scqULlG91l0zA7+jLnOEa0gh1VSRv3TcI0uXU6UQshReU1pwH
- UY0A==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t9VX1qTliZmCA4rGJoDFFHTihIbFxaJR/Jp9RTUGPRo=;
+ b=cB9WxR23KMftJMKH8norVcvqRLOZjji8duMPUZ6WZGrVYA9/7UN70qs9h9W84V1pTD
+ wAy3UbdzaSgwyX/vq3XPIN85yXB4lMMBFdS/0tlwhBOcmj6PAhEBAamCiLNuPeBmfxEd
+ /7luOY7cLFpLAuEXHYSd5PuMP8w2AVc7PTKdGZiBpLdM1nDg80qzDIfnES9bclRmH1X8
+ baPnPZR6s9DhZLeVPMG4T5IyGib5Rk9t92Yrug2XN5sJEjRTQpoesCJFskwiDs5dpwzp
+ z/w2Yhftt5UWG5iOQTdDvXgQiepuVjY4aB1QJLhSuvoCaccaF9pOPeqYjeIzQGl1SJGa
+ 9zFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721684682; x=1722289482;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mcZb5YItFOMqqJrIuqjuWAfUzsfp40iXsHzNY3+LniI=;
- b=MbJFFElHEdOm62WZcb/vyPnYpYL0AFYs+Nv2e3rrhY9sHPrIzSMXzEDZA0oUA83aMU
- nuK41uc2rdNuhs0wvzt8v2t3+G8olWqK7nJf8g8VYj35LjVMJCyeYbhkT1P6KL/q9xSP
- 8SaLDFn+n6EwJ1ZwNbLhv4WbCULXDJYDZMGy9t8YblMLSkuk+nByq+/QuRrTdLBgIhg6
- bH2yD+iMv6bM+OW2VeiZNf0dLZ8+yar/miBEar1yhS8K9Y353sx6oh3znoquv1WO4YGc
- NQjKr4w1E7S63EwprOY30Yd4nZmt7g24hGQE6bJJkcCch9unsowyvGaqsFVos7BjPsUg
- Zagw==
-X-Gm-Message-State: AOJu0YxD8k/mJWybXfuO8o6GPI5zSGnGUXEFduuX+Vr4blCfozCBnBQ8
- a/F9dmnVIEqx1F24+9gshG7KX7uC/8rYhel11nyzFzP9evjJhyHnSVYIdQUCh9tRG2Z0kogFTMB
- LXio=
-X-Google-Smtp-Source: AGHT+IFQBrheJxH3hpcGT94Cvgq8hrIIMBtG42ne79yKTqkBnD+2ZDNE0qhMeDrUceGG9I0q0xg9QA==
-X-Received: by 2002:a05:6602:2ccb:b0:804:b327:52d5 with SMTP id
- ca18e2360f4ac-81ea30a2126mr148544939f.4.1721684682374; 
- Mon, 22 Jul 2024 14:44:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721684698; x=1722289498;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t9VX1qTliZmCA4rGJoDFFHTihIbFxaJR/Jp9RTUGPRo=;
+ b=tjWUZr6IIukagucFme1dnD1gdWosFNz7bMxOfAJihmK49Eali78NTQT4RjNkO8QrEl
+ xZ1ikvFh18ECQiuK9R9zhSnJrGG4uYfR1ir3FSxIt+lS68NopwAHgaMFBr6NKyy/3jY7
+ 6CyM9AnjVZNZvk+OET5nnCSd0l1t4ycV0QJntGtBhdJbHW49QIwNlr21Z27AI1KIye4y
+ biNXdqIW+v3TfKGY64O8dAeOjSwtR7tokJKhYqIJl/lCIZsxb/T3PKewHjOSDlVqvLTH
+ Q7YavwPKdWSShBhg505zJya7pO5IUdYrKjyOS7ii8XTaSqf3rSBev8mG/UUf5ODMSNJO
+ oMKg==
+X-Gm-Message-State: AOJu0YwydiRfulYdDumQt4WiheC4IiB9FPPGesh8rH2V3a2ohPBSuqV0
+ 9ACgloJ4y/wl+EAJw78HfT+i0auZ0YYGNf4GIoyLAHDyZn5eAn+j1MZwvEZNk6p/VtVloMz44tR
+ /Bv4=
+X-Google-Smtp-Source: AGHT+IF+cSzMZVgs3oOl9JYy6lFyV7l46bbgP9Ut4Pb6hKdSMG8AqtiBBNDWjQFJxPZXLXxk+hjChw==
+X-Received: by 2002:a05:6e02:1a43:b0:375:a37c:14b6 with SMTP id
+ e9e14a558f8ab-3993ffd5902mr114438415ab.23.1721684698096; 
+ Mon, 22 Jul 2024 14:44:58 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c2343d2ff3sm1816830173.128.2024.07.22.14.44.41
+ 8926c6da1cb9f-4c2343d2ff3sm1816830173.128.2024.07.22.14.44.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 14:44:42 -0700 (PDT)
+ Mon, 22 Jul 2024 14:44:57 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
  Warner Losh <imp@bsdimp.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 00/14] bsd-user: Misc changes for 9.1 (I hope)
-Date: Mon, 22 Jul 2024 15:42:59 -0600
-Message-ID: <20240722214313.89503-1-imp@bsdimp.com>
+Subject: [PATCH 13/14] bsd-user: Make compile for non-linux user-mode stuff
+Date: Mon, 22 Jul 2024 15:43:12 -0600
+Message-ID: <20240722214313.89503-14-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240722214313.89503-1-imp@bsdimp.com>
+References: <20240722214313.89503-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d31;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd31.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::132;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x132.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,78 +93,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series includes two main sets of patches. To make it simple to
-review, I've included the changes from my student which the later changes depend
-on. I've included a change from Jessica and Doug as well. I've reviewed them,
-but more eyes never hurt.
+We include the files that define PR_MTE_TCF_SHIFT only on Linux, but use
+them unconditionally. Restrict its use to Linux-only.
 
-I've also included a number of 'touch up' patches needed either to get the
-aarch64 building, or to implmement suggestions from prior review cycles. The
-main one is what's charitably described as a kludge: force aarch64 to use 4k
-pages. The qemu-project (and blitz branch) hasn't had the necessary changes to
-bsd-user needed to support variable page size.
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ target/arm/gdbstub64.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Sorry this is so late... Live has conspired to delay me.
-
-Doug Rabson (1):
-  bsd-user: Simplify the implementation of execve
-
-Jessica Clarke (1):
-  bsd-user: Sync fork_start/fork_end with linux-user
-
-Stacey Son (6):
-  bsd-user:Add CPU initialization and management functions
-  bsd-user:Add AArch64 register handling and related functions
-  bsd-user:Add ARM AArch64 signal handling support
-  bsd-user:Add get_mcontext function for ARM AArch64
-  bsd-user:Add set_mcontext function for ARM AArch64
-  bsd-user:Add AArch64 improvements and signal handling functions
-
-Warner Losh (6):
-  bsd-user:Add ARM AArch64 support and capabilities
-  bsd-user:Add setup_sigframe_arch function for ARM AArch64
-  bsd-user: Hard wire aarch64 to be 4k pages only
-  bsd-user: Define TARGET_SIGSTACK_ALIGN and use it to round stack
-  bsd-user: Make compile for non-linux user-mode stuff
-  bsd-user: Add aarch64 build to tree
-
- bsd-user/aarch64/signal.c               | 137 +++++++++++++++++
- bsd-user/aarch64/target_arch.h          |  29 ++++
- bsd-user/aarch64/target_arch_cpu.c      |  31 ++++
- bsd-user/aarch64/target_arch_cpu.h      | 189 ++++++++++++++++++++++++
- bsd-user/aarch64/target_arch_elf.h      | 163 ++++++++++++++++++++
- bsd-user/aarch64/target_arch_reg.h      |  56 +++++++
- bsd-user/aarch64/target_arch_signal.h   |  82 ++++++++++
- bsd-user/aarch64/target_arch_sigtramp.h |  48 ++++++
- bsd-user/aarch64/target_arch_sysarch.h  |  42 ++++++
- bsd-user/aarch64/target_arch_thread.h   |  61 ++++++++
- bsd-user/aarch64/target_arch_vmparam.h  |  74 ++++++++++
- bsd-user/aarch64/target_syscall.h       |  51 +++++++
- bsd-user/arm/target_arch_signal.h       |   2 +
- bsd-user/freebsd/os-proc.c              | 118 +--------------
- bsd-user/i386/target_arch_signal.h      |   2 +
- bsd-user/main.c                         |  46 ++----
- bsd-user/qemu.h                         |   3 +
- bsd-user/signal.c                       |   9 +-
- bsd-user/x86_64/target_arch_signal.h    |   2 +
- configs/targets/aarch64-bsd-user.mak    |   3 +
- target/arm/cpu-param.h                  |   4 +
- target/arm/gdbstub64.c                  |   4 +
- 22 files changed, 1001 insertions(+), 155 deletions(-)
- create mode 100644 bsd-user/aarch64/signal.c
- create mode 100644 bsd-user/aarch64/target_arch.h
- create mode 100644 bsd-user/aarch64/target_arch_cpu.c
- create mode 100644 bsd-user/aarch64/target_arch_cpu.h
- create mode 100644 bsd-user/aarch64/target_arch_elf.h
- create mode 100644 bsd-user/aarch64/target_arch_reg.h
- create mode 100644 bsd-user/aarch64/target_arch_signal.h
- create mode 100644 bsd-user/aarch64/target_arch_sigtramp.h
- create mode 100644 bsd-user/aarch64/target_arch_sysarch.h
- create mode 100644 bsd-user/aarch64/target_arch_thread.h
- create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
- create mode 100644 bsd-user/aarch64/target_syscall.h
- create mode 100644 configs/targets/aarch64-bsd-user.mak
-
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 2e2bc2700b8..6dc81aecb2a 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -404,6 +404,7 @@ int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, int reg)
+ 
+ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+ {
++#if defined(CONFIG_LINUX)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+ 
+@@ -425,6 +426,9 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+     arm_set_mte_tcf0(env, tcf);
+ 
+     return 1;
++#else
++    return 0;
++#endif
+ }
+ 
+ static void handle_q_memtag(GArray *params, void *user_ctx)
 -- 
 2.45.1
 
