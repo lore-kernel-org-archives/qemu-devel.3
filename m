@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E690C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28FD2C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkk-0007Rt-Pp; Sun, 21 Jul 2024 20:18:10 -0400
+	id 1sVgkF-0004dU-1I; Sun, 21 Jul 2024 20:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgki-0007ID-Bz
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkD-0004WT-1K
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkg-0005rN-QV
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkB-0005m9-5S
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607486;
+ s=mimecast20190719; t=1721607453;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X3rdo+GHcXhDhgz/MwpIwvItnaY2iCPaS+aQJmkzF0Q=;
- b=ZmPPlw9RpuO4oV3+lEWBJRm4kNklgPxQeJ6AfOV500VpFYk5Uji7aT2YTawXl25j8OcQQK
- dBknLSHRV1IhPp2j3fcggp2hhvj9Nf525zuTHxblJGu37VhX1YSgRy5xOuSWnIgATt7H7g
- 6P6oredeT1cuOF/kUST2pD8RulHJnTU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AzUslSpv+tevRPtwsSDiIptOoVAEmUbWgTJDTpf/8Eg=;
+ b=WSA52J5cl4c3SEVM1GYjObqHkJSnaws7sIWBLUDU6Bn4VrGvCqcsp7eBmV0zFqgl9np93x
+ Scj2pOrPvFmIFwzfTud0U5R8TCjA45VdFxQkHr6bTZVIEzBMk6IgyV+ByP67inmf6hwMJI
+ 2ei94va1XsLnGL/5RJGCOgSNx+qUfUA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-Ukb7xp5dM9KLklaTTn64gw-1; Sun, 21 Jul 2024 20:18:04 -0400
-X-MC-Unique: Ukb7xp5dM9KLklaTTn64gw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42668699453so37766735e9.3
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:04 -0700 (PDT)
+ us-mta-288-8w3H2CeZPC-5ZQ1Yoc1QFg-1; Sun, 21 Jul 2024 20:17:31 -0400
+X-MC-Unique: 8w3H2CeZPC-5ZQ1Yoc1QFg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4279418eb2bso25990315e9.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607483; x=1722212283;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X3rdo+GHcXhDhgz/MwpIwvItnaY2iCPaS+aQJmkzF0Q=;
- b=d5speWoQZLtXhTdnfHBPXHG0/0WGZ5vOYrYdghxz9TI42h/QoP9KhK7Fe9Qpg1ka20
- DEISUDeM7kQahDVGoIMMRGMQSgU04JpkIvmsSYfwFB0suyBrPrsdieqHqgaHoo17NEFo
- YuafhmdgAbdGDTw0OWojPKMwe0l9S8o8n6Xw92/OSr6YTslsLfz5yKiPX911Sol7sVSa
- qFr29yP3WLvmC46r0Y2FcLgCqRfpTeCxfO79DKUAkmmV9oyxAh7Zvqb0NdA3jbPTZR95
- 7T5rIvo+JohIAjIl62jGm+J777r5XIyvjSkLRN6Jr2CqQRE3Bws8iUmybFi/PK34g7mp
- G1Kg==
-X-Gm-Message-State: AOJu0Yy6DnK8n66TDZATij5Be8SJfQjrYLbNpd5xCjETBOeeeG2ljXNA
- jkEvZ522iCYtk7eWYFFkKRcd4aHssYxyTAtpVsQfrit+v/ojudunI/xQTajt6Pjh7t0LgNuBVO+
- N0hqprOTFDnsNrFk6di7mtYJqFL8XFepLclGayR9mUsABEfM85yE5Y383Y5R4KEiW4oqBI//Eqn
- cpU04K14AvORBKLh2nmomRzff2fI0wOw==
-X-Received: by 2002:a5d:64ca:0:b0:368:7868:2d76 with SMTP id
- ffacd0b85a97d-369bb2b3e33mr4329941f8f.51.1721607482919; 
- Sun, 21 Jul 2024 17:18:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9PsrsT0ngl6b3E+Hlq5IwBHIKYLH1yAfbf5OUyONRqVDVbY/mdxLyfIkyXoDWQzgmYFWRCg==
-X-Received: by 2002:a5d:64ca:0:b0:368:7868:2d76 with SMTP id
- ffacd0b85a97d-369bb2b3e33mr4329926f8f.51.1721607482359; 
- Sun, 21 Jul 2024 17:18:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607449; x=1722212249;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AzUslSpv+tevRPtwsSDiIptOoVAEmUbWgTJDTpf/8Eg=;
+ b=MAytey9XOvNl9KWrNcJEUswPCy0+MtlBF4s9g1FV9iih/5oTGC1cjnIYWpiphWJ+Ah
+ yA38wwP059N7yxeE3WFLs2clB4gRLzDegNsH4Z8xWTGFd7y8jdBijwdkjxx4KT05Gg3D
+ FBAcuIIBysyaYJLQLsU6HJezDtuF2fPmb17EMXmfDXFX3K6yazO4U5/Fm4TPh59duHOh
+ 4SU5WEOMzVjfztZOGxZoSF2VvfEJYY+khiC/wREBSWkFF2COZmxlLLTADUoalexwQ7Dz
+ 2gwJZyDFDjfXvntbjB5qDQuXQMWx5bF1vGqFAebN5oCGU1tCB6X3xILwxDVk2cF/brH/
+ rByQ==
+X-Gm-Message-State: AOJu0YwyKydOKVDlP2BgjOSrJMnrA+++Dln6r66HC3Rr29E1g+wpcubN
+ KUr0H7aWYfhSjdEpUkVHXOmXiUeasxKOMkw3z8H4ulw2oRhbjyngHzVQK9rnmOH3u5RBpvxEhOg
+ qqRw5RMcQ9IEcP4wcdev5S33Ib29fvOxly0It7bCWPpTmWgwl5oEllndS5RAzojAiOkrfOh2eBk
+ 2g2bsvH4C6u4Wbm0QTY4Mx4/x4VlJ8+w==
+X-Received: by 2002:a05:600c:4f45:b0:426:6f0e:a60 with SMTP id
+ 5b1f17b1804b1-427dc529c91mr30252355e9.17.1721607449479; 
+ Sun, 21 Jul 2024 17:17:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErTcgERCTX1yip86aFVsMTM9zQ1FTRH83ANvbTXnBpQ2vdFULKucimSOqrY6Rvez7ku0S6sw==
+X-Received: by 2002:a05:600c:4f45:b0:426:6f0e:a60 with SMTP id
+ 5b1f17b1804b1-427dc529c91mr30252185e9.17.1721607448879; 
+ Sun, 21 Jul 2024 17:17:28 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868490fsm7049524f8f.6.2024.07.21.17.18.01
+ 5b1f17b1804b1-427d6901781sm105984705e9.14.2024.07.21.17.17.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:01 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:00 -0400
+ Sun, 21 Jul 2024 17:17:28 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:26 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 34/63] virtio-pci: Implement SR-IOV PF
-Message-ID: <c49b5d97dbd3d5c005f14d30da315a68e77d9f77.1721607331.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Minwoo Im <minwoo.im@samsung.com>, Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 18/63] intel_iommu: fix FRCD construction macro
+Message-ID: <a3c8d7e38550c3d5a46e6fa94ffadfa625a4861d.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -101,99 +109,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-Allow user to attach SR-IOV VF to a virtio-pci PF.
+The constant must be unsigned, otherwise the two's complement
+overrides the other fields when a PASID is present.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240715-sriov-v5-6-3f5539093ffc@daynix.com>
+Fixes: 1b2b12376c8a ("intel-iommu: PASID support")
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Message-Id: <20240709142557.317271-2-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-pci.h |  1 +
- hw/virtio/virtio-pci.c         | 20 +++++++++++++++-----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ hw/i386/intel_iommu_internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 9e67ba38c7..34539f2f67 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -152,6 +152,7 @@ struct VirtIOPCIProxy {
-     uint32_t modern_io_bar_idx;
-     uint32_t modern_mem_bar_idx;
-     int config_cap;
-+    uint16_t last_pcie_cap_offset;
-     uint32_t flags;
-     bool disable_modern;
-     bool ignore_backend_features;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 9534730bba..0c8fcc5627 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1955,6 +1955,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-     uint8_t *config;
-     uint32_t size;
-     VirtIODevice *vdev = virtio_bus_get_device(bus);
-+    int16_t res;
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index f8cf99bddf..cbc4030031 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -267,7 +267,7 @@
+ /* For the low 64-bit of 128-bit */
+ #define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
+ #define VTD_FRCD_PV(val)        (((val) & 0xffffULL) << 40)
+-#define VTD_FRCD_PP(val)        (((val) & 0x1) << 31)
++#define VTD_FRCD_PP(val)        (((val) & 0x1ULL) << 31)
+ #define VTD_FRCD_IR_IDX(val)    (((val) & 0xffffULL) << 48)
  
-     /*
-      * Virtio capabilities present without
-@@ -2100,6 +2101,14 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-         pci_register_bar(&proxy->pci_dev, proxy->legacy_io_bar_idx,
-                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
-     }
-+
-+    res = pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
-+                                                   proxy->last_pcie_cap_offset,
-+                                                   errp);
-+    if (res > 0) {
-+        proxy->last_pcie_cap_offset += res;
-+        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
-+    }
- }
- 
- static void virtio_pci_device_unplugged(DeviceState *d)
-@@ -2187,7 +2196,7 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
- 
-     if (pcie_port && pci_is_express(pci_dev)) {
-         int pos;
--        uint16_t last_pcie_cap_offset = PCI_CONFIG_SPACE_SIZE;
-+        proxy->last_pcie_cap_offset = PCI_CONFIG_SPACE_SIZE;
- 
-         pos = pcie_endpoint_cap_init(pci_dev, 0);
-         assert(pos > 0);
-@@ -2207,9 +2216,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         pci_set_word(pci_dev->config + pos + PCI_PM_PMC, 0x3);
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_AER) {
--            pcie_aer_init(pci_dev, PCI_ERR_VER, last_pcie_cap_offset,
-+            pcie_aer_init(pci_dev, PCI_ERR_VER, proxy->last_pcie_cap_offset,
-                           PCI_ERR_SIZEOF, NULL);
--            last_pcie_cap_offset += PCI_ERR_SIZEOF;
-+            proxy->last_pcie_cap_offset += PCI_ERR_SIZEOF;
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_DEVERR) {
-@@ -2234,9 +2243,9 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_ATS) {
--            pcie_ats_init(pci_dev, last_pcie_cap_offset,
-+            pcie_ats_init(pci_dev, proxy->last_pcie_cap_offset,
-                           proxy->flags & VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED);
--            last_pcie_cap_offset += PCI_EXT_CAP_ATS_SIZEOF;
-+            proxy->last_pcie_cap_offset += PCI_EXT_CAP_ATS_SIZEOF;
-         }
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_FLR) {
-@@ -2263,6 +2272,7 @@ static void virtio_pci_exit(PCIDevice *pci_dev)
-     bool pcie_port = pci_bus_is_express(pci_get_bus(pci_dev)) &&
-                      !pci_bus_is_root(pci_get_bus(pci_dev));
- 
-+    pcie_sriov_pf_exit(&proxy->pci_dev);
-     msix_uninit_exclusive_bar(pci_dev);
-     if (proxy->flags & VIRTIO_PCI_FLAG_AER && pcie_port &&
-         pci_is_express(pci_dev)) {
+ /* DMA Remapping Fault Conditions */
 -- 
 MST
 
