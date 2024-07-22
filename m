@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC490C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2571C3DA70
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVmw4-0000yY-7C; Mon, 22 Jul 2024 02:54:16 -0400
+	id 1sVmwn-0004NP-Dk; Mon, 22 Jul 2024 02:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmvy-0000il-Jd
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:54:10 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmwm-0004IM-9E
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:55:00 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmvw-00055K-U5
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:54:10 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-36887ca3da2so1483825f8f.2
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 23:54:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmwk-000593-Ko
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:55:00 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2ee9b098bd5so50884071fa.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 23:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721631246; x=1722236046; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721631297; x=1722236097; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DPfGU/BA/sxZ2gzNfCsAG12BfIJbzay3LRA9fySmEkc=;
- b=sSv8H9rPrlZ3JJcZlDhLBIWwvZepObrNnHPzwAT0oNTD9Rc0mcUmJ9Fn/M2Xt57z6D
- Lwk2pDQ9gMuWlyadB4P6BZOo840VBP91x/uY9FZG6MD/EnfwbP7vKxaG3/3RpPzKnIou
- IUJuNQ0/MX+8nq/NNSUV/XuNk4aavK13wYZOHKNORLki9Vxa1A+ndRPiwS4vYpiLoXXG
- p11YQmQqk96BssA7L5sdf4xl1mbwLZLEtNB2unEncU1uHr5f43vwCDQKFe7Ucx28AJj7
- p7H5QLlBaobSZUnO9tMPMF25v/dEgy8OFNf/u47xn13WcL/qBqx29tMR1WH74rxTyYiY
- FLwg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=suY8gqgezLbAE9TOVB83qdEPUeM3qcUTVHktutxGJAg=;
+ b=dHD6rEFPhgZOlLY8SPvKjZxkr9HJJg48ZxDxJVFAfsz8fS1Br4+IX0wbntmI+D5o9c
+ JLYOM2l90Bomaj82+41yU9GKn1hq84fyheFKwP4OtrZgZe+/gk8stXkeqEpoM9Kj55hL
+ nqAt+sfE1Ze5BJBIOUGqNVytl4lmcJouHVkl2VaBGxq3Mb9vuzQwVQSVQCfdqJFvSJhC
+ CSRQdRVcWXN02REdthslsbxenjBB2ALrUbZgIMfS2GwNjC5MrK6havyenYpYQFFnpWCW
+ X7T5hwmD51WCF5rBfIza1d9bkEErnCGhXXkzcJrFBx9oBYMn5FHhfwgR2qk+EPxtkmdp
+ hLGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721631246; x=1722236046;
+ d=1e100.net; s=20230601; t=1721631297; x=1722236097;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DPfGU/BA/sxZ2gzNfCsAG12BfIJbzay3LRA9fySmEkc=;
- b=bf2ytnlC6meSPt6Vd8q0VvgN8AVk57yxPj7+MLzGVbGiP1aWYitJeJVPpuKpxyUI5Y
- zQjAPpWe3oaXC08rTscq6AW8A2d4ew+HsIiDSMptObVOcFldV90nWiA8I1PcmkaLfLxj
- g8YnrQy7Hw98OmE69Q1TON7EUbqAWrEM6xW+jaythnbJjl3jxAEsKl5QyScB6dXmrb5w
- rHsIPtG+Xo9zhLzvTcFrsnWJPdkbmkYbhzB9DRSu+CI8h0SU30glmDbYsSlTBgxyL8cM
- jtLd1/bNXJZMYsLrpOzASnfeIL2UFteLYl9XXhpvwL1seKaKx7UEHhtDSNk6YVipKFls
- VHKw==
+ bh=suY8gqgezLbAE9TOVB83qdEPUeM3qcUTVHktutxGJAg=;
+ b=nKpfg6p3Mjb0aEyPV43Ap4gRokOApZ139oCiTtBrbxr4m71eI2fUUT7M2LJyqBK3Je
+ wqgAKCa2KZ1G2UH5uTWv92s3DJ/3YNWECDSB0zWz1mUALuos5NBqi2nXttslIeHcsdva
+ EUkhe2php6Do3ntO5r6uVEAsVDmzrhzxPAjM3GJ4Yj4pfcoovP1bL8GJKhJIP787Xqei
+ r52UC3Rwk2fO84MCpYWX3AZAopRecicwXOOc1HBrJdvw4MyoXFQbwOtVthoyGFsnhBHV
+ SazVibHBfjJdsVgdpIPfAHCIz4z4K+kVSDxH7I16lbBRvhkh0v12vjxziUvshIME2TcE
+ p1kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZ0WKt+jqTuJm4kjuLKCV+F9JA8Zh5tEZjePTVEqcMgdeWJRzaK/zs4M76wk94z5HRtRWCrn5sJmL8IQqUAcT6kUMhyeg=
-X-Gm-Message-State: AOJu0YyVwok9AsvAas5CH+pSHTkkZFoPMtuPjAwG0ghX1NvVG78EIMXv
- L1N5jKDGIT2uxuMfHKGqDaDqDH4nlwGQ4H0eRChwYdvIiNHEPvgsYhXD0XqTKWg=
-X-Google-Smtp-Source: AGHT+IGC7xP3zmDxOcjY0gQkIum0D1XdWmh5K4L+Xlwa8VLgUVyr3znNy62dt3/bPVhxbZ1mB/EzrA==
-X-Received: by 2002:a5d:42c3:0:b0:368:48e6:5056 with SMTP id
- ffacd0b85a97d-369bbbbf9dfmr3170797f8f.22.1721631246446; 
- Sun, 21 Jul 2024 23:54:06 -0700 (PDT)
+ AJvYcCWfJVa8xl/flOITUVsZnDB7pAVedKfEupVT2ykVcbACpxhFLYIoo/5X3n5agVH/Xb1jg49ZJl23R5LcpY8dJhQwC56Pm0A=
+X-Gm-Message-State: AOJu0YzwzL1HspMlxsB7LFTCxSeLek3+Dt25SOQ/baZU5O10WaprhUJz
+ iYtuzcTHSNANn2kDVOT1IePGdeGsnycQxG8FMh+bZIF5EIlQ9R/l0Y+iYdLRsFA=
+X-Google-Smtp-Source: AGHT+IFgSREL1nTqizZ601MjRN/ad6zdu68ok3HivnSpWgTSIEhUQcS4XC/sMkPzOunOOHX2AFJrLA==
+X-Received: by 2002:a2e:9e02:0:b0:2ef:2580:c0c6 with SMTP id
+ 38308e7fff4ca-2ef2580c2d4mr32061231fa.14.1721631296664; 
+ Sun, 21 Jul 2024 23:54:56 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ed595sm7622630f8f.107.2024.07.21.23.54.05
+ 5b1f17b1804b1-427d6936d62sm112532305e9.42.2024.07.21.23.54.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 21 Jul 2024 23:54:06 -0700 (PDT)
-Message-ID: <e3ff47be-6316-4db6-84bd-53bc39c42e7e@linaro.org>
-Date: Mon, 22 Jul 2024 08:54:03 +0200
+ Sun, 21 Jul 2024 23:54:56 -0700 (PDT)
+Message-ID: <42f92293-2c7e-4ab0-920d-f81da79f550c@linaro.org>
+Date: Mon, 22 Jul 2024 08:54:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] range: Make ranges_overlap() return bool
+Subject: Re: [PATCH 02/13] arm/boot: make range overlap check more readable
 To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org
 References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
- <20240722040742.11513-2-yaoxt.fnst@fujitsu.com>
+ <20240722040742.11513-3-yaoxt.fnst@fujitsu.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722040742.11513-2-yaoxt.fnst@fujitsu.com>
+In-Reply-To: <20240722040742.11513-3-yaoxt.fnst@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,14 +98,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/7/24 06:07, Yao Xingtao via wrote:
-> Just like range_overlaps_range(), use the returned bool value
-> to check whether 2 given ranges overlap.
+> use ranges_overlap() instead of open-coding the overlap check to improve
+> the readability of the code.
 > 
 > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 > ---
->   include/qemu/range.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   hw/arm/boot.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+> index d480a7da02cf..a004a90e87be 100644
+> --- a/hw/arm/boot.c
+> +++ b/hw/arm/boot.c
+> @@ -26,6 +26,7 @@
+>   #include "qemu/config-file.h"
+>   #include "qemu/option.h"
+>   #include "qemu/units.h"
+> +#include "qemu/range.h"
+>   
+>   /* Kernel boot protocol is specified in the kernel docs
+>    * Documentation/arm/Booting and Documentation/arm64/booting.txt
+> @@ -238,8 +239,8 @@ void arm_write_secure_board_setup_dummy_smc(ARMCPU *cpu,
+>       assert((mvbar_addr & 0x1f) == 0 && (mvbar_addr >> 4) < 0x100);
+>   
+>       /* check that these blobs don't overlap */
+> -    assert((mvbar_addr + sizeof(mvbar_blob) <= info->board_setup_addr)
+> -          || (info->board_setup_addr + sizeof(board_setup_blob) <= mvbar_addr));
+> +    assert(!ranges_overlap(mvbar_addr, sizeof(mvbar_blob),
+> +           info->board_setup_addr, sizeof(board_setup_blob)));
 
+Indentation is of, otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
