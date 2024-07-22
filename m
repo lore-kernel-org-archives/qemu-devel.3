@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DF3C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 954E4C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgjy-0003WB-4L; Sun, 21 Jul 2024 20:17:22 -0400
+	id 1sVgmO-0007bM-Sw; Sun, 21 Jul 2024 20:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjw-0003Q7-IR
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgl7-0001RD-QJ
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgju-0005kc-Dp
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgl5-0005uT-R9
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607437;
+ s=mimecast20190719; t=1721607509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ugOrV8EJw9eeb5qLhYeR3H1/gihB/jIlqcXCvXTnPcM=;
- b=DQ+HUvXwbBl91p1cwn7EirsqrYsLiOCDUG0jYA47z+nNQv02PJtUrvVhlEN5NJ3LTfEm8s
- H+4ARLGKepAemiZJA1dflsXVG/eKP5YlViuTYKMAo5Vpt1JAPVfwtuRRWhEZFi0xayi90U
- 5rbxG8Y+IXwd4FHTkptybVdd3frLY3A=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DSrvGWDM8WQlkDQ1QptgcjyZ8pct3cQ7nSxPz3zLafI=;
+ b=Lnx97+XjxefFQ0CYeeleujw+I9Vcyam9zmf4IQCGeC2a7SHH8ZwRFmHE6cZJE/LWP1OnDJ
+ 8s3DGb6T2CuL0os0XsPuW3ZCzU3s5hNlE5RuW5H7BcZzW9M32w5QGHnhRb9dVkJh4ELSWF
+ zrocGQ1c32+37+gwIQz3Ym/Apngc3h4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-071YkblUPFCiBYeL_Z0kMA-1; Sun, 21 Jul 2024 20:17:16 -0400
-X-MC-Unique: 071YkblUPFCiBYeL_Z0kMA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-427d92bec90so19337785e9.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:15 -0700 (PDT)
+ us-mta-488-RioShQkKOOeOhjGgtZiTBQ-1; Sun, 21 Jul 2024 20:18:26 -0400
+X-MC-Unique: RioShQkKOOeOhjGgtZiTBQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42725d3ae3eso27672475e9.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607434; x=1722212234;
+ d=1e100.net; s=20230601; t=1721607504; x=1722212304;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ugOrV8EJw9eeb5qLhYeR3H1/gihB/jIlqcXCvXTnPcM=;
- b=F28mf2FRjei01RPJ/jCGVtJuJ1RRQCjWL9fTwIfffyKInR0jTU6O37tdnSCYfQZ/LL
- QiC33pIB7ohDmZIkekhUVCllhLlAWoND/oEdi8rO+5ni21r8Ab0x+079FwkkcfrnNAFn
- G6O+ff5XuixGPPS+Edm62fFafyNf5+ciAJXQL/hMYUQj1hGH/xFnmnV8KvUVdmWh/3Hc
- L1LcDp1XVm+XkiYwebiCivQDv7O8Nhquav2JshLsiNUs5aTdb4U1zZVbU8Mk0csQ0JLe
- WDtdK0hJyd1VESHw9BS8H41Gfhh2WGk/qYg7hnCnIHrepWKQbdsgQfOYl90RSv317Xl8
- N/Gg==
-X-Gm-Message-State: AOJu0YyKzu3Q8Dw+QIgKH3wxdGNReM5Cno+iKgzN+ptjooJ6xmHUP03u
- ZJ+/ppRKysaCMT+NC788+nlwB0Yah4ioOk5IC4p/QrGIE/iSt9VbOgV6kPvE3gysvBXXl35ieQD
- 2wXru2GrzLRQdCFz3pS+2TvCBCsZuxDxIBPCc3v174RcnpqEHfG0JJDlOs9JGco/MhjReW0D1zQ
- GT1/k5LPmMAHtXIiejvwXwO+66wHXaKg==
-X-Received: by 2002:a05:600c:1f87:b0:426:67ad:38e3 with SMTP id
- 5b1f17b1804b1-427daa2135bmr35797175e9.3.1721607434558; 
- Sun, 21 Jul 2024 17:17:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEL39haoVzxK3A7NMK1RgArJGKb6H+U6UJO5NsILwpa0gDHb2CX2rIugNPw4PRCJngp20+K5A==
-X-Received: by 2002:a05:600c:1f87:b0:426:67ad:38e3 with SMTP id
- 5b1f17b1804b1-427daa2135bmr35796995e9.3.1721607433938; 
- Sun, 21 Jul 2024 17:17:13 -0700 (PDT)
+ bh=DSrvGWDM8WQlkDQ1QptgcjyZ8pct3cQ7nSxPz3zLafI=;
+ b=Nb0d82m3nUqjWGeXwVW044af1v/MXUbl6arC/J9jbzbyFM15FXBFi1v9SO9rp8n5mG
+ Ws0np+Wyu8V+Gw+iqcFHETLFFPfpulqOHm8ZlzwAWyiZ6q15xYxIbr5VoAli2ioo7tDL
+ DeRaDjHR4g3H74WUKEQfYoASG1pSge9y1fVb1Ram8NzypTFCgxmn1FoIon7DL7STXRR3
+ oZ4U2KPf2hWPsMS/dBs9BlS/JYSwsUEZqzYN/O+41OHMNW02ihj2mpRJIRhnL5O/09D6
+ z77TrZBortXof8CDW0JAs9UOiBjhSvWYNCqQLfsA7fWHK8rLTTPd27AWE8DvXFlW9uNl
+ ghLQ==
+X-Gm-Message-State: AOJu0Yx3+rA1JGfpdEpy3Zm/b0T0twFeo+55QRJdwHleyFH/FdoyLxp9
+ lYaSvZ8VzC3yxPNKd+PSDFUtm9xRV7x+Sw1utGHwlNjYNNGW4MaNe2MUq72uZmbpZEac/L85hYV
+ USTchQtnYYvH9Sq8ajaJ4F3lJbORHRP3dH5/D4HmcQGfwVG4YlF1cx0kMJUcBTR0nGzaBBuX/t2
+ IISame7y18JiaZQb0ElGp5ZW59lDtR+Q==
+X-Received: by 2002:a05:600c:1f10:b0:426:5e8e:aa47 with SMTP id
+ 5b1f17b1804b1-427dcf69b05mr32388475e9.4.1721607504319; 
+ Sun, 21 Jul 2024 17:18:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVAs5BgjvLYEh0pd5ccwHoeJwA+QVq/mi0TrjT3zQzDHFtsVJSvrjJQivRAc7qy/gvL18oVw==
+X-Received: by 2002:a05:600c:1f10:b0:426:5e8e:aa47 with SMTP id
+ 5b1f17b1804b1-427dcf69b05mr32388205e9.4.1721607503800; 
+ Sun, 21 Jul 2024 17:18:23 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ced6dsm6999983f8f.75.2024.07.21.17.17.12
+ 5b1f17b1804b1-427d68fa9b1sm107760615e9.8.2024.07.21.17.18.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:13 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:12 -0400
+ Sun, 21 Jul 2024 17:18:23 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shiju Jose <shiju.jose@huawei.com>,
- Davidlohr Bueso <dave@stgolabs.net>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 11/63] hw/cxl/cxl-mailbox-utils: Add support for feature
- commands (8.2.9.6)
-Message-ID: <d80378943a6b88b8d211e1468073d9dd44239e27.1721607331.git.mst@redhat.com>
+ Salil Mehta <salil.mehta@huawei.com>,
+ Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
+ Gavin Shan <gshan@redhat.com>, Xianglai Li <lixianglai@loongson.cn>,
+ Miguel Luis <miguel.luis@oracle.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 43/63] physmem: Add helper function to destroy CPU AddressSpace
+Message-ID: <3ef94482c9e3e996eb5ed1ab3ec829885dc50d7f.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,14 +88,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,338 +112,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+From: Salil Mehta <salil.mehta@huawei.com>
 
-CXL spec 3.1 section 8.2.9.6 describes optional device specific features.
-CXL devices supports features with changeable attributes.
-Get Supported Features retrieves the list of supported device specific
-features. The settings of a feature can be retrieved using Get Feature and
-optionally modified using Set Feature.
+Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
+involves destruction of the CPU AddressSpace. Add common function to help
+destroy the CPU AddressSpace.
 
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Link: https://lore.kernel.org/r/20240223085902.1549-2-shiju.jose@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240705123039.963781-3-Jonathan.Cameron@huawei.com>
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Xianglai Li <lixianglai@loongson.cn>
+Tested-by: Miguel Luis <miguel.luis@oracle.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Tested-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240716111502.202344-7-salil.mehta@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  10 ++
- hw/cxl/cxl-mailbox-utils.c  | 258 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 268 insertions(+)
+ include/exec/cpu-common.h |  8 ++++++++
+ include/hw/core/cpu.h     |  1 +
+ system/physmem.c          | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index cc98553583..48ed0d9240 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -464,6 +464,14 @@ typedef struct CXLDCRegion {
-     unsigned long *blk_bitmap;
- } CXLDCRegion;
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 815342d043..240ee04369 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -129,6 +129,14 @@ size_t qemu_ram_pagesize_largest(void);
+  */
+ void cpu_address_space_init(CPUState *cpu, int asidx,
+                             const char *prefix, MemoryRegion *mr);
++/**
++ * cpu_address_space_destroy:
++ * @cpu: CPU for which address space needs to be destroyed
++ * @asidx: integer index of this address space
++ *
++ * Note that with KVM only one address space is supported.
++ */
++void cpu_address_space_destroy(CPUState *cpu, int asidx);
  
-+typedef struct CXLSetFeatureInfo {
-+    QemuUUID uuid;
-+    uint8_t data_transfer_flag;
-+    bool data_saved_across_reset;
-+    uint16_t data_offset;
-+    size_t data_size;
-+} CXLSetFeatureInfo;
-+
- struct CXLType3Dev {
-     /* Private */
-     PCIDevice parent_obj;
-@@ -501,6 +509,8 @@ struct CXLType3Dev {
-     CXLPoisonList scan_media_results;
-     bool scan_media_hasrun;
+ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+                             hwaddr len, bool is_write);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index d946161717..1c9c775df6 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -496,6 +496,7 @@ struct CPUState {
+     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
  
-+    CXLSetFeatureInfo set_feat_info;
-+
-     struct dynamic_capacity {
-         HostMemoryBackend *host_dc;
-         AddressSpace host_dc_as;
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index dbaa83a110..7b7d8e5eae 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -69,6 +69,10 @@ enum {
-     LOGS        = 0x04,
-         #define GET_SUPPORTED 0x0
-         #define GET_LOG       0x1
-+    FEATURES    = 0x05,
-+        #define GET_SUPPORTED 0x0
-+        #define GET_FEATURE   0x1
-+        #define SET_FEATURE   0x2
-     IDENTIFY    = 0x40,
-         #define MEMORY_DEVICE 0x0
-     CCLS        = 0x41,
-@@ -767,6 +771,248 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
+     struct CPUAddressSpace *cpu_ases;
++    int cpu_ases_count;
+     int num_ases;
+     AddressSpace *as;
+     MemoryRegion *memory;
+diff --git a/system/physmem.c b/system/physmem.c
+index 9a3b3a7636..0e19186e1b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -763,6 +763,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+ 
+     if (!cpu->cpu_ases) {
+         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
++        cpu->cpu_ases_count = cpu->num_ases;
+     }
+ 
+     newas = &cpu->cpu_ases[asidx];
+@@ -776,6 +777,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+     }
  }
  
-+/* CXL r3.1 section 8.2.9.6: Features */
-+/*
-+ * Get Supported Features output payload
-+ * CXL r3.1 section 8.2.9.6.1 Table 8-96
-+ */
-+typedef struct CXLSupportedFeatureHeader {
-+    uint16_t entries;
-+    uint16_t nsuppfeats_dev;
-+    uint32_t reserved;
-+} QEMU_PACKED CXLSupportedFeatureHeader;
-+
-+/*
-+ * Get Supported Features Supported Feature Entry
-+ * CXL r3.1 section 8.2.9.6.1 Table 8-97
-+ */
-+typedef struct CXLSupportedFeatureEntry {
-+    QemuUUID uuid;
-+    uint16_t feat_index;
-+    uint16_t get_feat_size;
-+    uint16_t set_feat_size;
-+    uint32_t attr_flags;
-+    uint8_t get_feat_version;
-+    uint8_t set_feat_version;
-+    uint16_t set_feat_effects;
-+    uint8_t rsvd[18];
-+} QEMU_PACKED CXLSupportedFeatureEntry;
-+
-+/*
-+ * Get Supported Features Supported Feature Entry
-+ * CXL rev 3.1 section 8.2.9.6.1 Table 8-97
-+ */
-+/* Supported Feature Entry : attribute flags */
-+#define CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE BIT(0)
-+#define CXL_FEAT_ENTRY_ATTR_FLAG_DEEPEST_RESET_PERSISTENCE_MASK GENMASK(3, 1)
-+#define CXL_FEAT_ENTRY_ATTR_FLAG_PERSIST_ACROSS_FIRMWARE_UPDATE BIT(4)
-+#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_DEFAULT_SELECTION BIT(5)
-+#define CXL_FEAT_ENTRY_ATTR_FLAG_SUPPORT_SAVED_SELECTION BIT(6)
-+
-+/* Supported Feature Entry : set feature effects */
-+#define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_COLD_RESET BIT(0)
-+#define CXL_FEAT_ENTRY_SFE_IMMEDIATE_CONFIG_CHANGE BIT(1)
-+#define CXL_FEAT_ENTRY_SFE_IMMEDIATE_DATA_CHANGE BIT(2)
-+#define CXL_FEAT_ENTRY_SFE_IMMEDIATE_POLICY_CHANGE BIT(3)
-+#define CXL_FEAT_ENTRY_SFE_IMMEDIATE_LOG_CHANGE BIT(4)
-+#define CXL_FEAT_ENTRY_SFE_SECURITY_STATE_CHANGE BIT(5)
-+#define CXL_FEAT_ENTRY_SFE_BACKGROUND_OPERATION BIT(6)
-+#define CXL_FEAT_ENTRY_SFE_SUPPORT_SECONDARY_MAILBOX BIT(7)
-+#define CXL_FEAT_ENTRY_SFE_SUPPORT_ABORT_BACKGROUND_OPERATION BIT(8)
-+#define CXL_FEAT_ENTRY_SFE_CEL_VALID BIT(9)
-+#define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_CONV_RESET BIT(10)
-+#define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_CXL_RESET BIT(11)
-+
-+enum CXL_SUPPORTED_FEATURES_LIST {
-+    CXL_FEATURE_MAX
-+};
-+
-+/* Get Feature CXL 3.1 Spec 8.2.9.6.2 */
-+/*
-+ * Get Feature input payload
-+ * CXL r3.1 section 8.2.9.6.2 Table 8-99
-+ */
-+/* Get Feature : Payload in selection */
-+enum CXL_GET_FEATURE_SELECTION {
-+    CXL_GET_FEATURE_SEL_CURRENT_VALUE,
-+    CXL_GET_FEATURE_SEL_DEFAULT_VALUE,
-+    CXL_GET_FEATURE_SEL_SAVED_VALUE,
-+    CXL_GET_FEATURE_SEL_MAX
-+};
-+
-+/* Set Feature CXL 3.1 Spec 8.2.9.6.3 */
-+/*
-+ * Set Feature input payload
-+ * CXL r3.1 section 8.2.9.6.3 Table 8-101
-+ */
-+typedef struct CXLSetFeatureInHeader {
-+        QemuUUID uuid;
-+        uint32_t flags;
-+        uint16_t offset;
-+        uint8_t version;
-+        uint8_t rsvd[9];
-+} QEMU_PACKED QEMU_ALIGNED(16) CXLSetFeatureInHeader;
-+
-+/* Set Feature : Payload in flags */
-+#define CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK   0x7
-+enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
-+    CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER,
-+    CXL_SET_FEATURE_FLAG_INITIATE_DATA_TRANSFER,
-+    CXL_SET_FEATURE_FLAG_CONTINUE_DATA_TRANSFER,
-+    CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER,
-+    CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER,
-+    CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MAX
-+};
-+#define CXL_SET_FEAT_DATA_SAVED_ACROSS_RESET BIT(3)
-+
-+/* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
-+static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-+                                             uint8_t *payload_in,
-+                                             size_t len_in,
-+                                             uint8_t *payload_out,
-+                                             size_t *len_out,
-+                                             CXLCCI *cci)
++void cpu_address_space_destroy(CPUState *cpu, int asidx)
 +{
-+    struct {
-+        uint32_t count;
-+        uint16_t start_index;
-+        uint16_t reserved;
-+    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_in = (void *)payload_in;
++    CPUAddressSpace *cpuas;
 +
-+    struct {
-+        CXLSupportedFeatureHeader hdr;
-+        CXLSupportedFeatureEntry feat_entries[];
-+    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
-+    uint16_t index, req_entries;
-+    uint16_t entry;
++    assert(cpu->cpu_ases);
++    assert(asidx >= 0 && asidx < cpu->num_ases);
++    /* KVM cannot currently support multiple address spaces. */
++    assert(asidx == 0 || !kvm_enabled());
 +
-+    if (!object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+    if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
-+        /*
-+         * Temporary: suppress compiler error due to unsigned
-+         * comparioson to zero.
-+         */
-+        true /*get_feats_in->start_index >= CXL_FEATURE_MAX*/) {
-+        return CXL_MBOX_INVALID_INPUT;
++    cpuas = &cpu->cpu_ases[asidx];
++    if (tcg_enabled()) {
++        memory_listener_unregister(&cpuas->tcg_as_listener);
 +    }
 +
-+    req_entries = (get_feats_in->count -
-+                   sizeof(CXLSupportedFeatureHeader)) /
-+                   sizeof(CXLSupportedFeatureEntry);
-+    req_entries = MIN(req_entries,
-+                      (CXL_FEATURE_MAX - get_feats_in->start_index));
++    address_space_destroy(cpuas->as);
++    g_free_rcu(cpuas->as, rcu);
 +
-+    for (entry = 0, index = get_feats_in->start_index;
-+         entry < req_entries; index++) {
-+        switch (index) {
-+        default:
-+            __builtin_unreachable();
-+        }
++    if (asidx == 0) {
++        /* reset the convenience alias for address space 0 */
++        cpu->as = NULL;
 +    }
-+    get_feats_out->hdr.nsuppfeats_dev = CXL_FEATURE_MAX;
-+    get_feats_out->hdr.entries = req_entries;
-+    *len_out = sizeof(CXLSupportedFeatureHeader) +
-+                      req_entries * sizeof(CXLSupportedFeatureEntry);
 +
-+    return CXL_MBOX_SUCCESS;
++    if (--cpu->cpu_ases_count == 0) {
++        g_free(cpu->cpu_ases);
++        cpu->cpu_ases = NULL;
++    }
 +}
 +
-+/* CXL r3.1 section 8.2.9.6.2: Get Feature (Opcode 0501h) */
-+static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
-+                                           uint8_t *payload_in,
-+                                           size_t len_in,
-+                                           uint8_t *payload_out,
-+                                           size_t *len_out,
-+                                           CXLCCI *cci)
-+{
-+    struct {
-+        QemuUUID uuid;
-+        uint16_t offset;
-+        uint16_t count;
-+        uint8_t selection;
-+    } QEMU_PACKED QEMU_ALIGNED(16) * get_feature;
-+    uint16_t bytes_to_copy = 0;
-+    CXLType3Dev *ct3d;
-+    CXLSetFeatureInfo *set_feat_info;
-+
-+    if (!object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+
-+    ct3d = CXL_TYPE3(cci->d);
-+    get_feature = (void *)payload_in;
-+
-+    set_feat_info = &ct3d->set_feat_info;
-+    if (qemu_uuid_is_equal(&get_feature->uuid, &set_feat_info->uuid)) {
-+        return CXL_MBOX_FEATURE_TRANSFER_IN_PROGRESS;
-+    }
-+
-+    if (get_feature->selection != CXL_GET_FEATURE_SEL_CURRENT_VALUE) {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+    if (get_feature->offset + get_feature->count > cci->payload_max) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    *len_out = bytes_to_copy;
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
-+/* CXL r3.1 section 8.2.9.6.3: Set Feature (Opcode 0502h) */
-+static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-+                                           uint8_t *payload_in,
-+                                           size_t len_in,
-+                                           uint8_t *payload_out,
-+                                           size_t *len_out,
-+                                           CXLCCI *cci)
-+{
-+    CXLSetFeatureInHeader *hdr = (void *)payload_in;
-+    CXLSetFeatureInfo *set_feat_info;
-+    uint8_t data_transfer_flag;
-+    CXLType3Dev *ct3d;
-+
-+
-+    if (!object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+    ct3d = CXL_TYPE3(cci->d);
-+    set_feat_info = &ct3d->set_feat_info;
-+
-+    if (!qemu_uuid_is_null(&set_feat_info->uuid) &&
-+        !qemu_uuid_is_equal(&hdr->uuid, &set_feat_info->uuid)) {
-+        return CXL_MBOX_FEATURE_TRANSFER_IN_PROGRESS;
-+    }
-+    if (hdr->flags & CXL_SET_FEAT_DATA_SAVED_ACROSS_RESET) {
-+        set_feat_info->data_saved_across_reset = true;
-+    } else {
-+        set_feat_info->data_saved_across_reset = false;
-+    }
-+
-+    data_transfer_flag =
-+              hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK;
-+    if (data_transfer_flag == CXL_SET_FEATURE_FLAG_INITIATE_DATA_TRANSFER) {
-+        set_feat_info->uuid = hdr->uuid;
-+        set_feat_info->data_size = 0;
-+    }
-+    set_feat_info->data_transfer_flag = data_transfer_flag;
-+    set_feat_info->data_offset = hdr->offset;
-+
-+    if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-+        data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER ||
-+        data_transfer_flag ==  CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER) {
-+        memset(&set_feat_info->uuid, 0, sizeof(QemuUUID));
-+        set_feat_info->data_transfer_flag = 0;
-+        set_feat_info->data_saved_across_reset = false;
-+        set_feat_info->data_offset = 0;
-+        set_feat_info->data_size = 0;
-+    }
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- /* CXL r3.1 Section 8.2.9.9.1.1: Identify Memory Device (Opcode 4000h) */
- static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-                                              uint8_t *payload_in,
-@@ -2114,6 +2360,18 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported,
-                               0, 0 },
-     [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-+    [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
-+                                  cmd_features_get_supported, 0x8, 0 },
-+    [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
-+                                cmd_features_get_feature, 0x15, 0 },
-+    [FEATURES][SET_FEATURE] = { "FEATURES_SET_FEATURE",
-+                                cmd_features_set_feature,
-+                                ~0,
-+                                (CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-+                                 CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-+                                 CXL_MBOX_IMMEDIATE_POLICY_CHANGE |
-+                                 CXL_MBOX_IMMEDIATE_LOG_CHANGE |
-+                                 CXL_MBOX_SECURITY_STATE_CHANGE)},
-     [IDENTIFY][MEMORY_DEVICE] = { "IDENTIFY_MEMORY_DEVICE",
-         cmd_identify_memory_device, 0, 0 },
-     [CCLS][GET_PARTITION_INFO] = { "CCLS_GET_PARTITION_INFO",
+ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+ {
+     /* Return the AddressSpace corresponding to the specified index */
 -- 
 MST
 
