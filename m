@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAACCC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F05C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgjk-0002dh-CK; Sun, 21 Jul 2024 20:17:08 -0400
+	id 1sVgkX-0006GJ-4u; Sun, 21 Jul 2024 20:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgji-0002Wc-IR
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkP-0005UG-Lu
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjg-0005il-Ud
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkN-0005nP-Fm
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607424;
+ s=mimecast20190719; t=1721607465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hdw2m0bn75zRr+MYU0d0hXAq7eMAE3t8pjHbmVXVlwk=;
- b=I7QFFMR6BizUyx6Q72rEbsvommJ7ovAv1Bp+BXlqVfiTQV9jnqnnGi1fTDqruF7HvD3672
- GnixfEnSSdDA6nseA6mrlpNoCRqAk0ky4Ac6F9bdc5WiEiFKRAqCRwfJ/FyFqefc0+R52t
- pMlNqyJWujICz6e1foMfc/3McuJq/1E=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=c/XwQGLmqpOnXFp7/p1VkjvkoBY6YC9rGIfU0QombD0=;
+ b=cV1EDsLfKftHtTaKRy2dS2i4t+bttodTBVImOzNYseZAZBl0bsComtMN/ePQ02+XbvX+WT
+ CgDE+WdL+W4rDIEVaxpbcKk5oZ+HPTTgazEpz9rZPGvdnMryZq1khxnloegIFV0jnTyTv7
+ 4PCCsifPRvXWl5x+w/SPPmeU3p75vnU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-CicUJZ8OMxeW78EOQ6s8Mg-1; Sun, 21 Jul 2024 20:17:01 -0400
-X-MC-Unique: CicUJZ8OMxeW78EOQ6s8Mg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3687529b63fso2066646f8f.2
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:01 -0700 (PDT)
+ us-mta-311-mkhygVVhMSGSN0DXmumMUw-1; Sun, 21 Jul 2024 20:17:44 -0400
+X-MC-Unique: mkhygVVhMSGSN0DXmumMUw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42668857c38so27733565e9.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607419; x=1722212219;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hdw2m0bn75zRr+MYU0d0hXAq7eMAE3t8pjHbmVXVlwk=;
- b=IJS8x0Y/cWbinQwpV0pJ3dYYMzZFXu4/O1xtWmLS+tBGpmGbF/sAOQuh3THmcCpWMm
- QCyHEletDcNFeJqcKiYl/aFDG8LGYsS4cxwuecGWQw2DrOATxPELP626RzK9WqbQSBJF
- h8a6yplfTc73IhiTnqhwMzq3l9I3hElN6pPa4KdsHpWB2Ad+gMyNZ7RxLwNhgYPyGDX9
- n53vdJTq6kJyQhfCFJQUmldV2Bt1I5SZkgETyMEFDSjyuz7LS8h0egcRDuHcDitWmFmD
- IKoS3yl2nZPzc9wFNonFKPQW1YflTrhzilD1GvhOhQONVq3qKFTjVuvSGLoVWy/wECNz
- In9A==
-X-Gm-Message-State: AOJu0Yy7GcFLUTQFJLOsZ9/uMdD2QSxqY2gwAl+kKdXyDx6j3959jxKc
- 3QesrLQ7MabmPkkCTwzF0oPWcovC2iMkkK9ybZ4x8Z+3JAtv2NKKbkkQcaTDDFzyvhbB2M3RTOD
- y16ZSHEybgG6cbe5CXSme90hHOjbAVNgIBEG0R5khw9/GBHvDL8c42XBZyMml8gppI3TwfgBRNY
- KN05UODbaiTcrBCOTHTge73k+g0qSHTg==
-X-Received: by 2002:a5d:490e:0:b0:366:f041:935d with SMTP id
- ffacd0b85a97d-369bbc91e34mr2694911f8f.60.1721607419558; 
- Sun, 21 Jul 2024 17:16:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEdV4xbC9k1ETsh7gGyBAbNToEi3yyHBAODFbEZB/YQRsymI6klh7+Wzcn7/9PQh0uu4fyvw==
-X-Received: by 2002:a5d:490e:0:b0:366:f041:935d with SMTP id
- ffacd0b85a97d-369bbc91e34mr2694898f8f.60.1721607419025; 
- Sun, 21 Jul 2024 17:16:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607462; x=1722212262;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c/XwQGLmqpOnXFp7/p1VkjvkoBY6YC9rGIfU0QombD0=;
+ b=hs6RFPuJouLjzqfpgiOX9O4q3qoB/ngPahtfDAa7yFR2Fx7wKTtmNzaKPKFtPe6HAA
+ RTx2FQurx2It4kRjkXe2lFgf+07/UBSprmcBzymCjw3rZQfYBj/uL38KWNMIvn8+US4J
+ LVM/+EIRDXXfh+wUqYeuu13sPII68Vd3ooqQYIpLhbe5EFhZxHJcvi2wQdwX4/QzJ1sr
+ r5pXUWvGFzY288H3xpOdvNMbhwQ4wr7KbeOV2UkNSG3wSX8sTIQ3op+bBAAuj41JaJ+r
+ e+EHaoNnyvsiBcyU5FGJ+ayJQicrm5CP+FrpteHAwBhidz+zu14KbgMSWoGSZxrCIjnE
+ +v8A==
+X-Gm-Message-State: AOJu0YxPf94Q3gEGC4Z8mCtYYiMRATKX666J8pbxchEc1qYGuscEqNS7
+ Mxi0P5z6+q5U88+8Cem2bvCuIGymZjp4lHr67pZ/P4rXRn272IcEKb4bQCtEoMa9sWmohFCKTbH
+ dmoBFTi6bLOzeop6IqtUnwn3f3ukRX5GnEWEAqmjfcHnFWzg0M9nqCIBx8eOSOKzj8rr6xCtdrE
+ Ba/Gbr+mjMVevitTpepYqTMODL3dEyqg==
+X-Received: by 2002:a5d:4e49:0:b0:368:4e4f:cec5 with SMTP id
+ ffacd0b85a97d-369bae2512fmr3157333f8f.35.1721607462356; 
+ Sun, 21 Jul 2024 17:17:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEI0hcKUSqjqAPe3LpGpBgRRLTIFf68etQr4hG7y1zIoqyZNvpLZgqNuqa9ti212/xeQtGQzw==
+X-Received: by 2002:a5d:4e49:0:b0:368:4e4f:cec5 with SMTP id
+ ffacd0b85a97d-369bae2512fmr3157319f8f.35.1721607461659; 
+ Sun, 21 Jul 2024 17:17:41 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ed551sm7004209f8f.113.2024.07.21.17.16.57
+ ffacd0b85a97d-368786943d3sm7034880f8f.50.2024.07.21.17.17.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:16:58 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:16:57 -0400
+ Sun, 21 Jul 2024 17:17:41 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 04/63] hw/cxl: Check for multiple mappings of memory backends.
-Message-ID: <9de2049c95e1a94e27430e71a9d9ace07ec8eda6.1721607331.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 24/63] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
+ support
+Message-ID: <b44135daa3721778f4656ca3c15bd9b3060f1176.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -101,63 +105,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-Similar protection to that provided for -numa memdev=x
-to make sure that memory used to back a type3 device is not also mapped
-as normal RAM, or for multiple type3 devices.
+Add VIRTIO_F_IN_ORDER feature support for the virtqueue_fill operation.
 
-This is an easy footgun to remove and seems multiple people have
-run into it.
+The goal of the virtqueue_ordered_fill operation when the
+VIRTIO_F_IN_ORDER feature has been negotiated is to search for this
+now-used element, set its length, and mark the element as filled in
+the VirtQueue's used_elems array.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240705113956.941732-4-Jonathan.Cameron@huawei.com>
+By marking the element as filled, it will indicate that this element has
+been processed and is ready to be flushed, so long as the element is
+in-order.
+
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240710125522.4168043-4-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ hw/virtio/virtio.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 35ac59883a..e7fbbb4d51 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -737,6 +737,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-             error_setg(errp, "volatile memdev must have backing device");
-             return false;
-         }
-+        if (host_memory_backend_is_mapped(ct3d->hostvmem)) {
-+            error_setg(errp, "memory backend %s can't be used multiple times.",
-+               object_get_canonical_path_component(OBJECT(ct3d->hostvmem)));
-+            return false;
-+        }
-         memory_region_set_nonvolatile(vmr, false);
-         memory_region_set_enabled(vmr, true);
-         host_memory_backend_set_mapped(ct3d->hostvmem, true);
-@@ -760,6 +765,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-             error_setg(errp, "persistent memdev must have backing device");
-             return false;
-         }
-+        if (host_memory_backend_is_mapped(ct3d->hostpmem)) {
-+            error_setg(errp, "memory backend %s can't be used multiple times.",
-+               object_get_canonical_path_component(OBJECT(ct3d->hostpmem)));
-+            return false;
-+        }
-         memory_region_set_nonvolatile(pmr, true);
-         memory_region_set_enabled(pmr, true);
-         host_memory_backend_set_mapped(ct3d->hostpmem, true);
-@@ -790,6 +800,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-             return false;
-         }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 98eb601b09..0000a7b41c 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -872,6 +872,46 @@ static void virtqueue_packed_fill(VirtQueue *vq, const VirtQueueElement *elem,
+     vq->used_elems[idx].ndescs = elem->ndescs;
+ }
  
-+        if (host_memory_backend_is_mapped(ct3d->dc.host_dc)) {
-+            error_setg(errp, "memory backend %s can't be used multiple times.",
-+               object_get_canonical_path_component(OBJECT(ct3d->dc.host_dc)));
-+            return false;
++static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
++                                   unsigned int len)
++{
++    unsigned int i, steps, max_steps;
++
++    i = vq->used_idx % vq->vring.num;
++    steps = 0;
++    /*
++     * We shouldn't need to increase 'i' by more than the distance
++     * between used_idx and last_avail_idx.
++     */
++    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
++
++    /* Search for element in vq->used_elems */
++    while (steps <= max_steps) {
++        /* Found element, set length and mark as filled */
++        if (vq->used_elems[i].index == elem->index) {
++            vq->used_elems[i].len = len;
++            vq->used_elems[i].in_order_filled = true;
++            break;
 +        }
-         /*
-          * Set DC regions as volatile for now, non-volatile support can
-          * be added in the future if needed.
++
++        i += vq->used_elems[i].ndescs;
++        steps += vq->used_elems[i].ndescs;
++
++        if (i >= vq->vring.num) {
++            i -= vq->vring.num;
++        }
++    }
++
++    /*
++     * We should be able to find a matching VirtQueueElement in
++     * used_elems. If we don't, this is an error.
++     */
++    if (steps >= max_steps) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: %s cannot fill buffer id %u\n",
++                      __func__, vq->vdev->name, elem->index);
++    }
++}
++
+ static void virtqueue_packed_fill_desc(VirtQueue *vq,
+                                        const VirtQueueElement *elem,
+                                        unsigned int idx,
+@@ -922,7 +962,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
+         return;
+     }
+ 
+-    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
++        virtqueue_ordered_fill(vq, elem, len);
++    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+         virtqueue_packed_fill(vq, elem, len, idx);
+     } else {
+         virtqueue_split_fill(vq, elem, len, idx);
 -- 
 MST
 
