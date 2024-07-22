@@ -4,84 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F688C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84864C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 17:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVwMU-0008TL-Du; Mon, 22 Jul 2024 12:58:10 -0400
+	id 1sVwSs-0007Tu-Ig; Mon, 22 Jul 2024 13:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVwMS-0008Sj-Nb
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:58:08 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVwMQ-0000bt-I8
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:58:08 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-58ef19aa69dso3338106a12.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:58:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721667483; x=1722272283; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B8JBNfyDx6RiYz8GFyg5nZBmzmrFRobqHW3GhxMarJY=;
- b=O8pQKq5ImHlyz/GeABWzF8FoJU1P7WisvLr7KlCjfF8Ke4wGqzV/pT6Nk85hgWNObC
- IyhRAik5X/vCBxTsZJ5FRVhAYxsHbQo3agWY1NbIlQger26msGIbJUKq2/TmEXFQRfaV
- cZ8tBOmenX6eZVOn+mgss3MIZiV39tLGy7xcC6YDSBZ79rQ4SJy03i8x0fi5caBwbon+
- 0nhCMGFvVyNcPPQWn14+KKFuzPJjs2ffEyQ/34hpmmTszSwLcWkN5gdO6UBZcJGRDgaO
- v4BTmmAloTr1cLkjLFdli5zfkzRl+FRKdaGE3PAA+v09AXSiUiw+IWJUw2j6ymlv93A/
- yjBA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVwSh-0007Sh-3h
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 13:04:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVwSd-0001yN-CR
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 13:04:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721667868;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s1tKNgDqi680IcfjUYLdhlx4N0wT8lxbCdtBuqYz7UU=;
+ b=OLCoz2vnu/xWCO7Wu7AoDu6nNGbBvMITUka8JbdY4pHJhKym23HeuKM3Bbr1+rzY60wy+4
+ X82oITqz1yw5vBj8Tak9XTqn8CdCtABAwTz94fh/z0g/KQg6VZgJjn3b8EXhPxny0ilmky
+ YtkwhhMj3D75ZpqswGp7wJVs7O7J+Cs=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-kn1FgtyxOmqed1R1oOi8Mg-1; Mon, 22 Jul 2024 13:04:26 -0400
+X-MC-Unique: kn1FgtyxOmqed1R1oOi8Mg-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-44e0507a7ddso62085801cf.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 10:04:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721667483; x=1722272283;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B8JBNfyDx6RiYz8GFyg5nZBmzmrFRobqHW3GhxMarJY=;
- b=jnrhx7WuF3V/oiqiRbGu0bVFww3UTSjMcfuCCPoK7YX6xXDzLouY5GTkMRJnWMsWpS
- +TIag+mXfiINHVk4r0k2hN+bn86hp8LM6jCpS9vTKe/ayM9pmLAUaiEVzEk7bPagyqXf
- t/KZJDdduVB8fL5VjccrzB13X4DR9wm93+7wbY1lOlqt+haAd9jBRseeURhMcz5N7Hgi
- llFCo0voVSwIuFVbxcdY053MkArkz3LDzVNtn18DcdK7FB8ijhq8HZIDymN1wT+sGlWp
- ETb29Frko/7UbZZgHOn4xWXqRctj/5AYER9iCqqfI/9c9APPszrUHQDgNuoQBhAGi5Kq
- Z4jw==
+ d=1e100.net; s=20230601; t=1721667866; x=1722272666;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s1tKNgDqi680IcfjUYLdhlx4N0wT8lxbCdtBuqYz7UU=;
+ b=B63BDaJj1//zeGV72QH7bXS/83RXLl0tl1WPDPowsioilD/sdZD6OhL0alwYYua3sF
+ ATMTdFRH6GPjNP/edeIPH0EVpV7LJtEGLlVymLeAlcgOxXcxRHcapqf6PTB4N6MqC1PM
+ SnUoosvLfTAKH/Q0gEzuRDPvXdRqpDsqXE3ypRdD1TZErbm1DBlyBNdDcWpNRoYhZubZ
+ wep3IsTQcEiiuXQzo8SUeRTapQDViFJT/bs/eaghDWjeyX32k5Z2TSplNvgdRO8iuGTX
+ /hojWsvrvufBlAkxBslcTU5YLxsUAWVMb14aStVW4e/aJ37KbPX0WsLU2qIh30cfM2pf
+ LS7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3noGM2hi4WPotEEIdMJZl6m9G9hYUwLguuHEXRtiTbB2U38TvdsoBX2kOyp57OU2lCnJ8lny2c8Gyc7gSWEeNuW8MFx4=
-X-Gm-Message-State: AOJu0YzMpXvkj+jHOGqiKpvB5GSH3Hi1RucYRMGc6lvfX6OwisqU0gCV
- 9/DssJ/fiQDeT+eQCeBf+Tl1TMRGLbGsG4QFUc7RL8MzLRVCUcn4JPdKNIQjnixU3HXTTtvlQxu
- JlwtBrH9GUpiatKz09AUoolLGfpvPXAgjYTpxzDat79nLO5kf
-X-Google-Smtp-Source: AGHT+IH9HKzL5FY19StczYLrMOMU1MiApVgqcLoRTHAbQ/6PFmazz8Lm7m+sm+jn+gdWzXDH2gaN7KiseCxeOf/Eg3E=
-X-Received: by 2002:a50:d615:0:b0:5a2:2fa5:f146 with SMTP id
- 4fb4d7f45d1cf-5a94363b6e0mr334694a12.28.1721667482895; Mon, 22 Jul 2024
- 09:58:02 -0700 (PDT)
+ AJvYcCW/tD8hAmFpNiOnFmkeoY7Y+KUQpTXdJLDqC2Mw9NLlrwW/v7M35RFqHAUHYboBEn86C3bBbDmy/9b4hGoWepzVO8WGj9k=
+X-Gm-Message-State: AOJu0YyUhBAYIJtCHSOr9+JzpD4b49K3Y7WejJQZzBYq8qkcDR+rs+4h
+ 4VAlK8i5oXl93x7ka/x4QUqIbDymQkVrAuHlI0JSXq62EvRP/e/BiwLsKgMkz87ZWE9LDWzhoB4
+ Zh/XroXw36QCnM1z4mR9tjPADo4oRqdso6YFgumPVyGxiB2CODrfZ
+X-Received: by 2002:ac8:5842:0:b0:44f:9e17:61fc with SMTP id
+ d75a77b69052e-44fa5386f54mr92713751cf.61.1721667866178; 
+ Mon, 22 Jul 2024 10:04:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzOm0pxH9GhVXMnduP1EwdjVd3iN3x9GliI+9jwma3/irweSJYkG5n+ppm/2ZxoRjt5NSXsg==
+X-Received: by 2002:ac8:5842:0:b0:44f:9e17:61fc with SMTP id
+ d75a77b69052e-44fa5386f54mr92713331cf.61.1721667865686; 
+ Mon, 22 Jul 2024 10:04:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
+ ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f9cda7c26sm34666621cf.69.2024.07.22.10.04.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 10:04:25 -0700 (PDT)
+Message-ID: <544c0bfe-7dcc-48e7-80a3-ca7f4b255d1b@redhat.com>
+Date: Mon, 22 Jul 2024 19:04:22 +0200
 MIME-Version: 1.0
-References: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
- <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
- <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
- <21bed558-49d2-408d-baaf-97451780c53a@linaro.org>
- <CABgObfbeJEv49mfOte-4ysSDmWkBV5tUSJOh+Ye1hu19bFUZmQ@mail.gmail.com>
-In-Reply-To: <CABgObfbeJEv49mfOte-4ysSDmWkBV5tUSJOh+Ye1hu19bFUZmQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Jul 2024 17:57:50 +0100
-Message-ID: <CAFEAcA9kEwjX5vDcf6wk-T_v5eYZfPJtnYrCobc5Z=33xJDisQ@mail.gmail.com>
-Subject: Re: [PATCH] [PATCH] system/memory: Fix max access size
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- TaiseiIto <taisei1212@outlook.jp>, qemu-devel@nongnu.org, peterx@redhat.com, 
- david@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 12/13] vfio/migration: Don't block migration device
+ dirty tracking is unsupported
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240719120501.81279-1-joao.m.martins@oracle.com>
+ <20240719120501.81279-13-joao.m.martins@oracle.com>
+ <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
+ <f5d64358-70e3-4217-8376-356c8aaac8ea@oracle.com>
+ <1304a8c4-be47-4b47-88dd-328a8f167e54@oracle.com>
+ <967952f0-e3bd-4c86-b4a8-4906e6b3e248@redhat.com>
+ <103a2101-3f9e-46da-b45b-b8a4eaa7d6e7@oracle.com>
+ <51012898-c535-4fb1-b101-3d613d46fc30@redhat.com>
+ <27e2792c-6eba-4fab-a22d-40e46dae9cda@oracle.com>
+ <f9e3bc1c-71f2-442a-8697-19b64a225d57@redhat.com>
+ <1d7aaeb6-67ab-4897-96e0-e6128680dd4c@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <1d7aaeb6-67ab-4897-96e0-e6128680dd4c@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,26 +117,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jul 2024 at 17:51, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On Mon, Jul 22, 2024 at 4:29=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> wrote:
-> > It seems this model could be simplified using .min_access_size =3D 8,
-> > letting the core memory layer handle the % 4 byte accesses (the
-> > read path is obvious, the write one a bit less). Nothing urgent,
-> > possibly a BitSizedTask.
->
-> The memory access core is not able to do a read-modify-write
-> operation. You can get a smaller read from a bigger one or split a
-> large read/write into many small ones, but it cannot convert a small
-> write into a large one. Even splitting a large read/write into many
-> small ones is only possible if they don't have side effects.
+On 7/22/24 18:29, Joao Martins wrote:
+> On 22/07/2024 16:58, Cédric Le Goater wrote:
+>> On 7/22/24 17:42, Joao Martins wrote:
+>>> On 22/07/2024 16:13, Cédric Le Goater wrote:
+>>>> On 7/22/24 17:01, Joao Martins wrote:
+>>>>> On 22/07/2024 15:53, Cédric Le Goater wrote:
+>>>>>> On 7/19/24 19:26, Joao Martins wrote:
+>>>>>>> On 19/07/2024 15:24, Joao Martins wrote:
+>>>>>>>> On 19/07/2024 15:17, Cédric Le Goater wrote:
+>>>>>>>>> On 7/19/24 14:05, Joao Martins wrote:
+>>>>>>>>>> By default VFIO migration is set to auto, which will support live
+>>>>>>>>>> migration if the migration capability is set *and* also dirty page
+>>>>>>>>>> tracking is supported.
+>>>>>>>>>>
+>>>>>>>>>> For testing purposes one can force enable without dirty page tracking
+>>>>>>>>>> via enable-migration=on, but that option is generally left for testing
+>>>>>>>>>> purposes.
+>>>>>>>>>>
+>>>>>>>>>> So starting with IOMMU dirty tracking it can use to accomodate the lack of
+>>>>>>>>>> VF dirty page tracking allowing us to minimize the VF requirements for
+>>>>>>>>>> migration and thus enabling migration by default for those too.
+>>>>>>>>>>
+>>>>>>>>>> While at it change the error messages to mention IOMMU dirty tracking as
+>>>>>>>>>> well.
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>>>>>>>>>> ---
+>>>>>>>>>>       include/hw/vfio/vfio-common.h |  1 +
+>>>>>>>>>>       hw/vfio/iommufd.c             |  2 +-
+>>>>>>>>>>       hw/vfio/migration.c           | 11 ++++++-----
+>>>>>>>>>>       3 files changed, 8 insertions(+), 6 deletions(-)
+>>>>>>>>>>
+>>>>>>>>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>>>>>>>>>> index 7e530c7869dc..00b9e933449e 100644
+>>>>>>>>>> --- a/include/hw/vfio/vfio-common.h
+>>>>>>>>>> +++ b/include/hw/vfio/vfio-common.h
+>>>>>>>>>> @@ -299,6 +299,7 @@ int vfio_devices_query_dirty_bitmap(const
+>>>>>>>>>> VFIOContainerBase *bcontainer,
+>>>>>>>>>>                       VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error
+>>>>>>>>>> **errp);
+>>>>>>>>>>       int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>>>>>>>>> uint64_t
+>>>>>>>>>> iova,
+>>>>>>>>>>                                 uint64_t size, ram_addr_t ram_addr, Error
+>>>>>>>>>> **errp);
+>>>>>>>>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
+>>>>>>>>>>         /* Returns 0 on success, or a negative errno. */
+>>>>>>>>>>       bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+>>>>>>>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>>>>>>>>> index 7dd5d43ce06a..a998e8578552 100644
+>>>>>>>>>> --- a/hw/vfio/iommufd.c
+>>>>>>>>>> +++ b/hw/vfio/iommufd.c
+>>>>>>>>>> @@ -111,7 +111,7 @@ static void
+>>>>>>>>>> iommufd_cdev_unbind_and_disconnect(VFIODevice
+>>>>>>>>>> *vbasedev)
+>>>>>>>>>>           iommufd_backend_disconnect(vbasedev->iommufd);
+>>>>>>>>>>       }
+>>>>>>>>>>       -static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>>>>>>>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>>>>>>>>>       {
+>>>>>>>>>>           return hwpt && hwpt->hwpt_flags &
+>>>>>>>>>> IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>>>>>>>>>>       }
+>>>>>>>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>>>>>>>>>> index 34d4be2ce1b1..63ffa46c9652 100644
+>>>>>>>>>> --- a/hw/vfio/migration.c
+>>>>>>>>>> +++ b/hw/vfio/migration.c
+>>>>>>>>>> @@ -1036,16 +1036,17 @@ bool vfio_migration_realize(VFIODevice *vbasedev,
+>>>>>>>>>> Error **errp)
+>>>>>>>>>>               return !vfio_block_migration(vbasedev, err, errp);
+>>>>>>>>>>           }
+>>>>>>>>>>       -    if (!vbasedev->dirty_pages_supported) {
+>>>>>>>>>> +    if (!vbasedev->dirty_pages_supported &&
+>>>>>>>>>> +        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> Some platforms do not have IOMMUFD support and this call will need
+>>>>>>>>> some kind of abstract wrapper to reflect dirty tracking support in
+>>>>>>>>> the IOMMU backend.
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> This was actually on purpose because only IOMMUFD presents a view of
+>>>>>>>> hardware
+>>>>>>>> whereas type1 supporting dirty page tracking is not used as means to
+>>>>>>>> 'migration
+>>>>>>>> is supported'.
+>>>>>>>>
+>>>>>>>> The hwpt is nil in type1 and the helper checks that, so it should return
+>>>>>>>> false.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Oh wait, maybe you're talking about CONFIG_IOMMUFD=n which I totally didn't
+>>>>>>> consider. Maybe this would be a elegant way to address it? Looks to pass my
+>>>>>>> build with CONFIG_IOMMUFD=n
+>>>>>>>
+>>>>>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>>>>>>> index 61dd48e79b71..422ad4a5bdd1 100644
+>>>>>>> --- a/include/hw/vfio/vfio-common.h
+>>>>>>> +++ b/include/hw/vfio/vfio-common.h
+>>>>>>> @@ -300,7 +300,14 @@ int vfio_devices_query_dirty_bitmap(const
+>>>>>>> VFIOContainerBase
+>>>>>>> *bcontainer,
+>>>>>>>                      VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error
+>>>>>>> **errp);
+>>>>>>>      int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t
+>>>>>>> iova,
+>>>>>>>                                uint64_t size, ram_addr_t ram_addr, Error
+>>>>>>> **errp);
+>>>>>>> +#ifdef CONFIG_IOMMUFD
+>>>>>>>      bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
+>>>>>>> +#else
+>>>>>>> +static inline bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>>>>>> +{
+>>>>>>> +    return false;
+>>>>>>> +}
+>>>>>>> +#endif
+>>>>>>>
+>>>>>>>      /* Returns 0 on success, or a negative errno. */
+>>>>>>>      bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+>>>>>>>
+>>>>>>
+>>>>>> hmm, no. You will need to introduce a new Host IOMMU device capability,
+>>>>>> something like :
+>>>>>>
+>>>>>>       HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING,
+>>>>>>
+>>>>>> Then, introduce an helper routine to check the capability  :
+>>>>>>
+>>>>>>       return hiodc->get_cap( ... HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING...)
+>>>>>>     and replace the iommufd_hwpt_dirty_tracking call with it.
+>>>>>>
+>>>>>> Yeah I know, it's cumbersome but it's cleaner !
+>>>>>>
+>>>>>
+>>>>> Funny you mention it, because that's what I did in v3:
+>>>>>
+>>>>> https://lore.kernel.org/qemu-devel/20240708143420.16953-9-joao.m.martins@oracle.com/
+>>>>>
+>>>>> But it was suggested to drop (I am assuming to avoid complexity)
+>>>>
+>>>> my bad if I did :/
+>>>>
+>>>
+>>> No worries it is all part of review -- I think Zhenzhong proposed with good
+>>> intentions, and I probably didn't think too hard about the consequences on
+>>> layering with the HIOD.
+>>>
+>>>> we will need an helper such as :
+>>>>
+>>>>     bool vfio_device_dirty_tracking(VFIODevice *vbasedev)
+>>>>     {
+>>>>         HostIOMMUDevice *hiod = vbasedev->hiod ;
+>>>>         HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>>>>
+>>>>         return hiodc->get_cap &&
+>>>>             hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING, NULL)
+>>>> == 1;
+>>>>     }
+>>>>
+>>>> and something like,
+>>>>
+>>>>     static int hiod_iommufd_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+>>>>                                          Error **errp)
+>>>>     {
+>>>>         switch (cap) {
+>>>>         case HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING:
+>>>>             return !!(hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING);
+>>>>         default:
+>>>>             error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+>>>>             return -EINVAL;
+>>>>         }
+>>>>     }
+>>>>
+>>>> Feel free to propose your own implementation,
+>>>>
+>>>
+>>> Actually it's close to what I had in v3 link, except the new helper (the name
+>>> vfio_device_dirty_tracking is a bit misleading I would call it
+>>> vfio_device_iommu_dirty_tracking)
+>>
+>> Let's call it vfio_device_iommu_dirty_tracking.
+>>
+> 
+> I thinking about this and I am not that sure it makes sense. That is the
+> .get_cap() stuff.
+> 
+> Using the hw_caps is only useful when choosing hwpt_flags, then the only thing
+> that matters for patch 12 is after the device is attached ... hence we gotta
+> look at hwpt_flags. That ultimately is what tells if dirty tracking can be done
+> in the device pagetable.
+> 
+> I can expand hiod_iommufd_vfio_get_cap() to return the hwpt flags, but it feels
+> just as hacky given that I am testing its enablement of the hardware pagetable
+> (HWPT), and not asking a HIOD capability.
 
-IIRC it will convert a small write into a large one, but
-it does so by zero-extending the value and doing a single
-large write. (This is the behaviour you want for some
-devices.)
+arf. yes.
 
-thanks
--- PMM
+> e.g. hiod_iommufd_vfio_get_cap would make more sense in patch 9 for the
+> attach_device() flow[*], but not for vfio_migration_realize() flow.
+> 
+> [*] though feels unneeded as we only have a local callsite, not external user so
+> far.
+> 
+> Which would technically make v5.1 patch a more correct right check, perhaps with
+> better layering/naming.
+
+The quick fix (plan B if needed) would be :
+
+@@ -1038,8 +1038,11 @@ bool vfio_migration_realize(VFIODevice *
+      }
+  
+      if ((!vbasedev->dirty_pages_supported ||
+-         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
+-        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
++         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF)
++#ifdef CONFIG_IOMMUFD
++        && !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)
++#endif
++        ) {
+          if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
+              error_setg(&err,
+                         "%s: VFIO device doesn't support device and "
+
+I would prefer to avoid the common component to reference IOMMUFD
+directly. The only exception today is the use of the vbasedev->iommufd
+pointer which is treated as opaque.
+
+I guess a simple approach would be to store the result of
+iommufd_hwpt_dirty_tracking(hwpt) under a 'dirty_tracking' attribute
+of vbasedev and return the value in vfio_device_iommu_dirty_tracking() ?
+
+if not, let's merge v5 (with more acks) and the fix of plan B.
+
+
+>>> I can follow-up with this improvement in case this gets merged as is,
+>>
+>> I can't merge as is since it break compiles (I am excluding the v5.1 patch).
+>> Which means I would prefer a v6 please.
+>>
+> 
+> Ah OK -- I thought this discussion assumed v5.1 to be in which does fix the
+> compilation issue and all that remained were acks.
+
+v5.1 proposes a CONFIG_IOMMUFD in a header file which is error prone.
+  
+>>> or include
+>>> it in the next version if you prefer to adjourn this series into 9.2 (given the
+>>> lack of time to get everything right).
+>>
+>> There aren't many open questions left.
+>>
+>> * PATCH 5 lacks a R-b. I would feel more confortable if ZhenZhong or
+>>    Eric acked the changes.
+>> * PATCH 9 is slightly hacky with the use of vfio_device_get_aw_bits().
+>>    I think it's minor. I would also feel more confortable if ZhenZhong
+>>    acked the changes.
+> 
+> I guess you meant patch 6 and not 9.
+
+yes.
+
+Thanks,
+
+C.
+
+
+
+> 
+>> * PATCH 12 needs the fix we have been talking about.
+>> * PATCH 13 is for dev/debug.
+>>
+>>
+>> What's important is to avoid introducing regressions in the current behavior,
+>> that is when not using IOMMUFD. It looks fine on that aspect AFAICT.
+> 
+> OK
+> 
+
 
