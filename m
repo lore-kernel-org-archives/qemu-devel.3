@@ -4,105 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3B3C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 09:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F329C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 09:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVpBj-0007AG-Re; Mon, 22 Jul 2024 05:18:35 -0400
+	id 1sVpBi-00076S-NP; Mon, 22 Jul 2024 05:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sVpBh-000751-Mz; Mon, 22 Jul 2024 05:18:33 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sVpBg-00074R-VP
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 05:18:32 -0400
+Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sVpBe-000707-TR; Mon, 22 Jul 2024 05:18:33 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46M8R2cQ019478;
- Mon, 22 Jul 2024 09:12:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:from:to:cc:references:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- fqsMJDbDFkoL65U9ankgIPX0mPAkJ0b1dw4bEw9b/TA=; b=ezKyR93BrWLyXhGc
- lB4dl5rQK3/6gIQEqKmQRn6LR0W0RUq9/d5EPsschtQueaNvePplQT8UbctnjRw8
- OKI1XqFqR6Fpn8oWZnNXVXMRgHnH33lLC5jBB2oyXEY7GAc2P7Uyg72owNvlUW+W
- I7HprEXvNv3CnzeDzanWM9ktXjVg6SuE6P+DjPN2lSgu3saYrRzbxbDk2FleCLvk
- Okb+x69wr35l6E0idZf+SDxT+KmEPTRVjO/zFBIiqeAjMvq2C3MHm0iEe63wmj1L
- G3reaCv0guf9W7srwQJY87orpmgdBfGQdHbCP2tIdj9+ySlwRL7JQY+cZkojcY3X
- PPdN9Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gr8vtpb4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jul 2024 09:12:41 +0000 (GMT)
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46M9CfBV023510;
- Mon, 22 Jul 2024 09:12:41 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gr8vtpb3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jul 2024 09:12:41 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46M8j1AB007907; Mon, 22 Jul 2024 09:12:40 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxn9mgd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jul 2024 09:12:40 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46M9CYIK27525794
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 09:12:36 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 522F12004E;
- Mon, 22 Jul 2024 09:12:34 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8EF112005A;
- Mon, 22 Jul 2024 09:12:32 +0000 (GMT)
-Received: from [9.109.199.72] (unknown [9.109.199.72])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 22 Jul 2024 09:12:32 +0000 (GMT)
-Message-ID: <c3c2ab69-777f-4bb2-8e39-974fca3ab8ad@linux.ibm.com>
-Date: Mon, 22 Jul 2024 14:42:30 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/5] Power11 support for QEMU [PSeries]
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-References: <20240606121657.254308-1-adityag@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20240606121657.254308-1-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: IIQuInh3hve37p4yYkbIqi4iWzK-Hx2k
-X-Proofpoint-ORIG-GUID: pP3T6rrSm15bu60JBI2f-Q-IAn1yayVK
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sVpBe-00070C-MZ
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 05:18:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721639910; x=1753175910;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=ZvFvlkZKdi5W69jVbhfr83v0lCFGwEMMmPywyanuR5c=;
+ b=Or6N4EAxdm4Hd5U9IY+Zw9nflaGc3VKS/95g9LqYwhshE/PsaArQXVx+
+ DDHzFcIcZKb48xdhmoHUsJL3VnBQXrOo2hRGXGsNdvJyF69d656FmrBJT
+ mnNqGmvbeJGvuuOYJJbdllkqorzpmMktO8HZbKLgJxS3OCos1R+hKZPLV
+ 8PwwvJ5PmVypCO/WyTj6vgEDHD5sDbg+QIue8+66nCvQ/rEPRBLwNv3kB
+ o1lOXib2B0LXNzYu98HLAbULVUrNJobu3XIntcnrD58cTYjz6uuhKHCUb
+ JO8xl8chSYwxiQ8y7RoZ0RePAiNeG4bT6yRdzMfzG60fqQZljDEQ1VDYM g==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="156131696"
+X-IronPort-AV: E=Sophos;i="6.09,227,1716217200"; d="scan'208";a="156131696"
+Received: from unknown (HELO oym-r2.gw.nic.fujitsu.com) ([210.162.30.90])
+ by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2024 18:18:24 +0900
+Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
+ [192.168.87.60])
+ by oym-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id DC63BD424D
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 18:18:21 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id 3B26DD772C
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 18:18:21 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id C41EA20077821
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 18:18:20 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 1D4001A000A;
+ Mon, 22 Jul 2024 17:18:20 +0800 (CST)
+To: qemu-devel@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH 1/2] mips/loongson3_virt: remove useless type cast
+Date: Mon, 22 Jul 2024 05:17:27 -0400
+Message-ID: <20240722091728.4334-2-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240722091728.4334-1-yaoxt.fnst@fujitsu.com>
+References: <20240722091728.4334-1-yaoxt.fnst@fujitsu.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_05,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- priorityscore=1501
- malwarescore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999 phishscore=0
- impostorscore=0 suspectscore=0 clxscore=1011 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2407220068
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28544.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28544.006
+X-TMASE-Result: 10--5.976700-10.000000
+X-TMASE-MatchedRID: v71phiYrRiEa66IW4jMGMZU7Bltw5qVLwTlc9CcHMZerwqxtE531VIPc
+ XuILVCbaWQbTJ68QuVgWYr4WijAYQ5cFdomgH0lnFEUknJ/kEl6YwzE9E8g5OfoLR4+zsDTtFEA
+ kLaTcFnqI/UV79dj9Nmav4DJCbJGDAYupYlXdWF9CiCqLP1WREA==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.61.253;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,99 +93,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Any comments on this ?
+The type of kernel_entry, kernel_low and kernel_high is uint64_t, cast
+the pointer of this type to uint64_t* is useless.
 
-This series is containing only the pseries support for Power11, hence 
-independent of skiboot patches. powernv is on hold till skiboot changes 
-are released.
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+---
+ hw/mips/loongson3_virt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 4ad36f0c5b64..408e3d7054cd 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -355,8 +355,8 @@ static uint64_t load_kernel(CPUMIPSState *env)
+ 
+     kernel_size = load_elf(loaderparams.kernel_filename, NULL,
+                            cpu_mips_kseg0_to_phys, NULL,
+-                           (uint64_t *)&kernel_entry,
+-                           (uint64_t *)&kernel_low, (uint64_t *)&kernel_high,
++                           &kernel_entry,
++                           &kernel_low, &kernel_high,
+                            NULL, 0, EM_MIPS, 1, 0);
+     if (kernel_size < 0) {
+         error_report("could not load kernel '%s': %s",
+-- 
+2.41.0
 
-Thanks,
-
-Aditya Gupta
-
-
-On 06/06/24 17:46, Aditya Gupta wrote:
-> Overview
-> ============
->
-> Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
->
-> This patch series is for pseries support for Power11.
->
-> As Power11 core is same as Power10, hence much of the code has been reused from
-> Power10.
->
-> Power11 was added in Linux in:
->    commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
->
-> Git Tree for Testing
-> ====================
->
-> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v5-pseries
->
-> Has been tested with following cases:
-> * '-M pseries' / '-M pseries -cpu Power11'
-> * '-smp' option tested
-> * with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
-> * with/without device 'virtio-scsi-pci'
-> * with/without -kernel and -drive with qcow_file
->
-> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
->
-> Changelog
-> =========
-> v5:
->    + split patch series into pseries+powernv
->    + patch #1: apply harsh's patch to reduce duplication
->    + patch #2: simplified, by removing duplication
->    + patch #3: update docs, according to harsh's suggestion
->    + patch #4: no functional change, #define used for P9 & P10 pcr_supported
->    + patch #5: no change
->
-> v4:
->    + patch #5: fix memory leak in pnv_chip_power10_quad_realize
->    - no change in other patches
->
-> v3:
->    + patch #1: version power11 as power11_v2.0
->    + patch #2: split target hw/pseries code into patch #2
->    + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
->    + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
->    + patch #6-#11: no change
->    - remove commit to make Power11 as default
->
-> v2:
->    + split powernv patch into homer,lpc,occ,psi,sbe
->    + reduce code duplication by reusing power10 code
->    + make power11 as default
->    + rebase on qemu upstream/master
->    + add more information in commit descriptions
->    + update docs
->    + update skiboot.lid
->
->
-> Aditya Gupta (4):
->    target/ppc: Add Power11 DD2.0 processor
->    ppc/pseries: Add Power11 cpu type
->    target/ppc: Introduce 'PowerPCCPUClass::logical_pvr'
->    target/ppc: Fix regression due to Power10 and Power11 having same PCR
->
-> Harsh Prateek Bora (1):
->    target/ppc: reduce code duplication across Power9/10 init code
->
->   docs/system/ppc/pseries.rst |  17 +++-
->   hw/ppc/spapr_cpu_core.c     |   1 +
->   target/ppc/compat.c         |  11 +++
->   target/ppc/cpu-models.c     |   3 +
->   target/ppc/cpu-models.h     |   3 +
->   target/ppc/cpu.h            |   1 +
->   target/ppc/cpu_init.c       | 183 +++++++++++++++---------------------
->   target/ppc/cpu_init.h       |  78 +++++++++++++++
->   8 files changed, 184 insertions(+), 113 deletions(-)
->   create mode 100644 target/ppc/cpu_init.h
->
 
