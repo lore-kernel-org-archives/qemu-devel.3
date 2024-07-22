@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A54C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CACC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrSa-0008TV-W3; Mon, 22 Jul 2024 07:44:09 -0400
+	id 1sVrSr-0000zg-4w; Mon, 22 Jul 2024 07:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sVrSW-0008Lo-ER
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:05 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1sVrSj-0000Ye-4u
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:18 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sVrSR-0002P6-O7
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:04 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3687ea0521cso2764801f8f.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:43:59 -0700 (PDT)
+ id 1sVrSe-0002QH-D4
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:16 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3686b554cfcso1929409f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721648638; x=1722253438; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721648650; x=1722253450; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+n8BGOwUhxG6uJAAcZ/OYvOHaCJ7tZUjkrkd4d32s0c=;
- b=XAIwZoDbW9PJbBNMVaJ2/sRfKhN2t+xD4gCAyFZWCis4ceyMc3mDO3cjmbKoBwRrpv
- +DnzQp2X++jEyMIp+DNmE0KBOf+XSbcBDnqnm23cQESVYOp+RL96hxdlZjY0Oql/S1rn
- Sshqhgtx7eYwddFZ2Eu6c9k41fHi1M4YeY15Z9LLkbGwCDYuBka2AySNRZec1H/IwdXm
- OQMuqgifJ5Tw+KXKuCf9a3mFE57OA69bXd7rLIgpipZ9YDdMzQ3qGa+rFoUhPrSueQ59
- K3JQ0faXVHcm9wh+kfRj9gS5266Rd0PNMX7qTLPWdieQk4ecWCY5Q8shhMs3lZuPDKqx
- SIjA==
+ bh=OVLGD6KIEzAVggABsFYZeBPl3B+hTeGtDK8Ro+VkMEw=;
+ b=Y6FeaJGMVo0Pk2s6+ZwZjpn6fn+wwkvw0iyMEvEvx1iBHFbILy18ffMK++WMEPOb5A
+ Y0nmZvhHbvO7fU05n1n4TpvhO8snGlLV8APS98NEmjCSgkLzQSOwA81I+QAuERz7QAVt
+ vaajnVRl1bcTu2zlCYBAG0dOZrk6QKdplcdc/yu54LBfSKtrOhp7FsJqrb3ucW+bbgOG
+ VjcPD/C3mBclEFypsuQQr/bCh1IwowgZF00Nt823RnvsePWhZt3QljIHniweHlnQEIUO
+ w7QdJEJ2OJkfqOWGwb2UdynceaD7VvVPSeaxXlvF1rRex91UNLPX5uEnNiImaFuH0Gsd
+ JjWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721648638; x=1722253438;
+ d=1e100.net; s=20230601; t=1721648650; x=1722253450;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+n8BGOwUhxG6uJAAcZ/OYvOHaCJ7tZUjkrkd4d32s0c=;
- b=XqAvepxSDN9lEpdK/QqbMh9YdWYqw6KW5hXcImbJb8aIjXpLjSpezC6ft2UXNmBAmp
- 5wpbP7ROaRW1GAPb7SxUEP63LcM5NOh/qszMQGxHUFKeUOlEN5N9GJG7LqyaR2WcaqyI
- NfRV5gDMl8eXVHKOmg23Igs0l58TmgKInSgQP7simMTnqzc2rhuiK/i1vHzkYIY16WRF
- Gvygbxzmu94LDoJS1pwXAme5KYbAPj+39IwhHFlnvwvAn/W1d0RtgEY7LdrT/IS5au+t
- ceHQrnoU5HdJq5jI0ulX4iFEOG+PZuYPrHKdhTMx/EZe5WUxDLJoAw8lsv7FyiC3RjT6
- yBEw==
-X-Gm-Message-State: AOJu0Yz3YezfYrGIL4Ml+i6M/dADh+kJbHxGCWapUmUMBTcG14RFmHxm
- z9uLkhSMlth57HFQZPymX6rjSMHjtc00tT0yKxXJH50QX4eoGdAX+QBBIMdQr5XeBeOsutlfCa1
- 5HTU=
-X-Google-Smtp-Source: AGHT+IGURgbnoCJNF1OivzIKVIAlSnX52qpcn/AiueU3RjPDaAFRXfhATGrNMpanFDgh24TjMvGeYw==
-X-Received: by 2002:adf:f5cd:0:b0:367:f059:4c55 with SMTP id
- ffacd0b85a97d-369bae4cf80mr4553688f8f.26.1721648637871; 
- Mon, 22 Jul 2024 04:43:57 -0700 (PDT)
+ bh=OVLGD6KIEzAVggABsFYZeBPl3B+hTeGtDK8Ro+VkMEw=;
+ b=bsScChN/2NR3PF2tgA9g1N7S7NglnPSBq9FhRDLNyzqihnsKLdS4bOik4LY82zC2MV
+ LQ3Dm6qlgVjAVK+6V8nivVWd0kCcv5zFQJpCeV42olX7v6sqgmYun+At74UoFORNGvlC
+ hL6kCFU76doeInTOcXwzBVcD4GDV9Z91DBhQkyT3yA4R2N2NIkoVL3w5rn1k95c97nXt
+ ZCZXR/76Mq/rgWL1sfLoTlaCiQozuCiAIyZRB51SSRdmUFHW837sVOI2W0HAjzhnWqBR
+ vD4CyhyRKtsnoqNHz8Up643uek/U4W5cck8dJknu5jbdpUR8Hl2bNKS3pAAVrtlVm49g
+ hL4g==
+X-Gm-Message-State: AOJu0YzlAxYLev3OvmLG29AKHt/n4AEBIuCejycHMYZCkcMzWZhWjEK5
+ I1KKeQw91OgDLhpFb5k273WMtPTKAlEc/BTWSzlC31ShFoc5B8SxeWs2XmMVQ8E6rHglo8ezxv/
+ 4rh0=
+X-Google-Smtp-Source: AGHT+IFOjG96H258P5BGAEOpEnwrH+tHdP4vI7NIc3XHb9cX2gkQUmoT4hURn2SjXhYpaQ/f72dSxw==
+X-Received: by 2002:a5d:42c3:0:b0:368:48e6:5056 with SMTP id
+ ffacd0b85a97d-369bbbbf9dfmr3658676f8f.22.1721648649723; 
+ Mon, 22 Jul 2024 04:44:09 -0700 (PDT)
 Received: from localhost.localdomain (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787eba8csm8323513f8f.91.2024.07.22.04.43.55
+ ffacd0b85a97d-368787eba8csm8323513f8f.91.2024.07.22.04.44.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:43:57 -0700 (PDT)
+ Mon, 22 Jul 2024 04:44:09 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
@@ -71,27 +71,25 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
  Richard Henderson <richard.henderson@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [RFC PATCH v5 2/8] build deps: update lcitool to include rust bits
-Date: Mon, 22 Jul 2024 14:43:32 +0300
-Message-ID: <49e451adf4a3203760fb671e7509b24a7e31976f.1721648163.git.manos.pitsidianakis@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+Subject: [RFC PATCH v5 7/8] rust: add PL011 device model
+Date: Mon, 22 Jul 2024 14:43:37 +0300
+Message-ID: <a9edaf0a253b15af1d8270ab17ca20410c4e395d.1721648163.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
 References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,641 +105,1780 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+This commit adds a re-implementation of hw/char/pl011.c in Rust.
 
-For rust development we need cargo, rustc and bindgen in our various
-development environments. Update the libvirt-ci project to (!495) and
-regenerate the containers and other dependency lists.
+How to build:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+1. Configure a QEMU build with:
+   --enable-system --target-list=aarch64-softmmu --enable-rust
+2. Launching a VM with qemu-system-aarch64 should use the Rust version
+   of the pl011 device
+
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- .gitlab-ci.d/cirrus/freebsd-13.vars                   | 2 +-
- .gitlab-ci.d/cirrus/macos-13.vars                     | 2 +-
- .gitlab-ci.d/cirrus/macos-14.vars                     | 2 +-
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 3 +++
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 3 +++
- tests/docker/dockerfiles/alpine.docker                | 3 +++
- tests/docker/dockerfiles/centos9.docker               | 3 +++
- tests/docker/dockerfiles/debian-amd64-cross.docker    | 4 ++++
- tests/docker/dockerfiles/debian-arm64-cross.docker    | 4 ++++
- tests/docker/dockerfiles/debian-armel-cross.docker    | 4 ++++
- tests/docker/dockerfiles/debian-armhf-cross.docker    | 4 ++++
- tests/docker/dockerfiles/debian-i686-cross.docker     | 4 ++++
- tests/docker/dockerfiles/debian-mips64el-cross.docker | 4 ++++
- tests/docker/dockerfiles/debian-mipsel-cross.docker   | 4 ++++
- tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 4 ++++
- tests/docker/dockerfiles/debian-s390x-cross.docker    | 4 ++++
- tests/docker/dockerfiles/debian.docker                | 3 +++
- tests/docker/dockerfiles/fedora-win64-cross.docker    | 3 +++
- tests/docker/dockerfiles/fedora.docker                | 3 +++
- tests/docker/dockerfiles/opensuse-leap.docker         | 2 ++
- tests/docker/dockerfiles/ubuntu2204.docker            | 3 +++
- tests/lcitool/libvirt-ci                              | 2 +-
- tests/lcitool/projects/qemu.yml                       | 3 +++
- tests/vm/generated/freebsd.json                       | 2 ++
- 24 files changed, 71 insertions(+), 4 deletions(-)
+ MAINTAINERS                            |   5 +
+ hw/arm/Kconfig                         |  33 +-
+ rust/Kconfig                           |   1 +
+ rust/hw/Kconfig                        |   2 +
+ rust/hw/char/Kconfig                   |   3 +
+ rust/hw/char/meson.build               |   1 +
+ rust/hw/char/pl011/.gitignore          |   2 +
+ rust/hw/char/pl011/Cargo.lock          | 123 ++++++
+ rust/hw/char/pl011/Cargo.toml          |  26 ++
+ rust/hw/char/pl011/README.md           |  31 ++
+ rust/hw/char/pl011/meson.build         |  24 +
+ rust/hw/char/pl011/rustfmt.toml        |   1 +
+ rust/hw/char/pl011/src/definitions.rs  |  48 ++
+ rust/hw/char/pl011/src/device.rs       | 541 +++++++++++++++++++++++
+ rust/hw/char/pl011/src/device_class.rs |  58 +++
+ rust/hw/char/pl011/src/lib.rs          | 584 +++++++++++++++++++++++++
+ rust/hw/char/pl011/src/memory_ops.rs   |  45 ++
+ rust/hw/meson.build                    |   1 +
+ rust/meson.build                       |   2 +
+ 19 files changed, 1520 insertions(+), 11 deletions(-)
+ create mode 100644 rust/hw/Kconfig
+ create mode 100644 rust/hw/char/Kconfig
+ create mode 100644 rust/hw/char/meson.build
+ create mode 100644 rust/hw/char/pl011/.gitignore
+ create mode 100644 rust/hw/char/pl011/Cargo.lock
+ create mode 100644 rust/hw/char/pl011/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/README.md
+ create mode 100644 rust/hw/char/pl011/meson.build
+ create mode 120000 rust/hw/char/pl011/rustfmt.toml
+ create mode 100644 rust/hw/char/pl011/src/definitions.rs
+ create mode 100644 rust/hw/char/pl011/src/device.rs
+ create mode 100644 rust/hw/char/pl011/src/device_class.rs
+ create mode 100644 rust/hw/char/pl011/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+ create mode 100644 rust/hw/meson.build
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-13.vars b/.gitlab-ci.d/cirrus/freebsd-13.vars
-index 3785afca36..8c3b02d089 100644
---- a/.gitlab-ci.d/cirrus/freebsd-13.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-13.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip-3.8'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-13.vars b/.gitlab-ci.d/cirrus/macos-13.vars
-index 534f029956..3c8ba1a277 100644
---- a/.gitlab-ci.d/cirrus/macos-13.vars
-+++ b/.gitlab-ci.d/cirrus/macos-13.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
-index 43070f4a26..d227c5deca 100644
---- a/.gitlab-ci.d/cirrus/macos-14.vars
-+++ b/.gitlab-ci.d/cirrus/macos-14.vars
-@@ -11,6 +11,6 @@ MAKE='/opt/homebrew/bin/gmake'
- NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
--PKGS='bash bc bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 jemalloc jpeg-turbo json-c libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 xorriso zlib zstd'
- PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-index fd5489cd82..6f856a5da2 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
-@@ -7,10 +7,12 @@
- packages:
-   - bash
-   - bc
-+  - bindgen
-   - bison
-   - bsdextrautils
-   - bzip2
-   - ca-certificates
-+  - cargo
-   - ccache
-   - clang
-   - dbus
-@@ -112,6 +114,7 @@ packages:
-   - python3-venv
-   - python3-yaml
-   - rpm2cpio
-+  - rustc
-   - sed
-   - socat
-   - sparse
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-index afa04502cf..217515f90d 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
-@@ -7,10 +7,12 @@
- packages:
-   - bash
-   - bc
-+  - bindgen
-   - bison
-   - bsdextrautils
-   - bzip2
-   - ca-certificates
-+  - cargo
-   - ccache
-   - clang
-   - dbus
-@@ -110,6 +112,7 @@ packages:
-   - python3-venv
-   - python3-yaml
-   - rpm2cpio
-+  - rustc
-   - sed
-   - socat
-   - sparse
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index b079a83fe2..fc488c94ac 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -18,6 +18,7 @@ RUN apk update && \
-         bzip2-dev \
-         ca-certificates \
-         capstone-dev \
-+        cargo \
-         ccache \
-         ceph-dev \
-         clang \
-@@ -89,6 +90,8 @@ RUN apk update && \
-         py3-yaml \
-         python3 \
-         rpm2cpio \
-+        rust \
-+        rust-bindgen \
-         samurai \
-         sdl2-dev \
-         sdl2_image-dev \
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index 0256865b9e..e6a69c56f8 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -16,12 +16,14 @@ RUN dnf distro-sync -y && \
-         alsa-lib-devel \
-         bash \
-         bc \
-+        bindgen-cli \
-         bison \
-         brlapi-devel \
-         bzip2 \
-         bzip2-devel \
-         ca-certificates \
-         capstone-devel \
-+        cargo \
-         ccache \
-         clang \
-         ctags \
-@@ -102,6 +104,7 @@ RUN dnf distro-sync -y && \
-         python3-sphinx_rtd_theme \
-         python3-tomli \
-         rdma-core-devel \
-+        rust \
-         sed \
-         snappy-devel \
-         socat \
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 8058695979..62f8c000ed 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -52,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -169,6 +172,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/x86_64-linux-gnu && \
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1789bcfd9b..0af4ef58ed 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1187,6 +1187,11 @@ F: include/hw/*/microbit*.h
+ F: tests/qtest/microbit-test.c
+ F: docs/system/arm/nrf.rst
  
- ENV ABI "x86_64-linux-gnu"
- ENV MESON_OPTS "--cross-file=x86_64-linux-gnu"
-+ENV RUST_TARGET "x86_64-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 15457d7657..42523e9113 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -52,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -168,6 +171,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/aarch64-linux-gnu && \
++ARM PL011 Rust device
++M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++S: Maintained
++F: rust/hw/char/pl011/
++
+ AVR Machines
+ -------------
  
- ENV ABI "aarch64-linux-gnu"
- ENV MESON_OPTS "--cross-file=aarch64-linux-gnu"
-+ENV RUST_TARGET "aarch64-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=aarch64-linux-gnu-
- ENV DEF_TARGET_LIST aarch64-softmmu,aarch64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-armel-cross.docker b/tests/docker/dockerfiles/debian-armel-cross.docker
-index c26ffc2e9e..35d42dba97 100644
---- a/tests/docker/dockerfiles/debian-armel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armel-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -54,6 +56,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -169,6 +172,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/arm-linux-gnueabi && \
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 1ad60da7aa..45438c1bc4 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -20,7 +20,8 @@ config ARM_VIRT
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select GPIO_PWR
+@@ -80,7 +81,8 @@ config HIGHBANK
+     select AHCI
+     select ARM_TIMER # sp804
+     select ARM_V7M
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL022 # SPI
+     select PL031 # RTC
+     select PL061 # GPIO
+@@ -93,7 +95,8 @@ config INTEGRATOR
+     depends on TCG && ARM
+     select ARM_TIMER
+     select INTEGRATOR_DEBUG
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL041 # audio
+     select PL050 # keyboard/mouse
+@@ -119,7 +122,8 @@ config MUSCA
+     default y
+     depends on TCG && ARM
+     select ARMSSE
+-    select PL011
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031
+     select SPLIT_IRQ
+     select UNIMP
+@@ -228,7 +232,8 @@ config Z2
+     depends on TCG && ARM
+     select PFLASH_CFI01
+     select WM8750
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PXA2XX
  
- ENV ABI "arm-linux-gnueabi"
- ENV MESON_OPTS "--cross-file=arm-linux-gnueabi"
-+ENV RUST_TARGET "armv5te-unknown-linux-gnueabi"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=arm-linux-gnueabi-
- ENV DEF_TARGET_LIST arm-softmmu,arm-linux-user,armeb-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index 8f87656d89..1b2c260e5a 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -52,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -168,6 +171,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/arm-linux-gnueabihf && \
+ config REALVIEW
+@@ -248,7 +253,8 @@ config REALVIEW
+     select WM8750 # audio codec
+     select LSI_SCSI_PCI
+     select PCI
+-    select PL011  # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031  # RTC
+     select PL041  # audio codec
+     select PL050  # keyboard/mouse
+@@ -273,7 +279,8 @@ config SBSA_REF
+     select PCI_EXPRESS
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL031 # RTC
+     select PL061 # GPIO
+     select USB_XHCI_SYSBUS
+@@ -297,7 +304,8 @@ config STELLARIS
+     select ARM_V7M
+     select CMSDK_APB_WATCHDOG
+     select I2C
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL022 # SPI
+     select PL061 # GPIO
+     select SSD0303 # OLED display
+@@ -356,7 +364,8 @@ config VEXPRESS
+     select ARM_TIMER # sp804
+     select LAN9118
+     select PFLASH_CFI01
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select PL041 # audio codec
+     select PL181  # display
+     select REALVIEW
+@@ -440,7 +449,8 @@ config RASPI
+     default y
+     depends on TCG && ARM
+     select FRAMEBUFFER
+-    select PL011 # UART
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select SDHCI
+     select USB_DWC2
+     select BCM2835_SPI
+@@ -515,7 +525,8 @@ config XLNX_VERSAL
+     select ARM_GIC
+     select CPU_CLUSTER
+     select DEVICE_TREE
+-    select PL011
++    select PL011 if !HAVE_RUST # UART
++    select X_PL011_RUST if HAVE_RUST # UART
+     select CADENCE
+     select VIRTIO_MMIO
+     select UNIMP
+diff --git a/rust/Kconfig b/rust/Kconfig
+index e69de29bb2..f9f5c39098 100644
+--- a/rust/Kconfig
++++ b/rust/Kconfig
+@@ -0,0 +1 @@
++source hw/Kconfig
+diff --git a/rust/hw/Kconfig b/rust/hw/Kconfig
+new file mode 100644
+index 0000000000..4d934f30af
+--- /dev/null
++++ b/rust/hw/Kconfig
+@@ -0,0 +1,2 @@
++# devices Kconfig
++source char/Kconfig
+diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
+new file mode 100644
+index 0000000000..a1732a9e97
+--- /dev/null
++++ b/rust/hw/char/Kconfig
+@@ -0,0 +1,3 @@
++config X_PL011_RUST
++    bool
++    default y if HAVE_RUST
+diff --git a/rust/hw/char/meson.build b/rust/hw/char/meson.build
+new file mode 100644
+index 0000000000..5716dc43ef
+--- /dev/null
++++ b/rust/hw/char/meson.build
+@@ -0,0 +1 @@
++subdir('pl011')
+diff --git a/rust/hw/char/pl011/.gitignore b/rust/hw/char/pl011/.gitignore
+new file mode 100644
+index 0000000000..71eaff2035
+--- /dev/null
++++ b/rust/hw/char/pl011/.gitignore
+@@ -0,0 +1,2 @@
++# Ignore generated bindings file overrides.
++src/bindings.rs.inc
+diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
+new file mode 100644
+index 0000000000..1af92fb16b
+--- /dev/null
++++ b/rust/hw/char/pl011/Cargo.lock
+@@ -0,0 +1,123 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 3
++
++[[package]]
++name = "arbitrary-int"
++version = "1.2.7"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d"
++
++[[package]]
++name = "bilge"
++version = "0.2.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57"
++dependencies = [
++ "arbitrary-int",
++ "bilge-impl",
++]
++
++[[package]]
++name = "bilge-impl"
++version = "0.2.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8"
++dependencies = [
++ "itertools",
++ "proc-macro-error",
++ "proc-macro2",
++ "quote",
++ "syn",
++]
++
++[[package]]
++name = "either"
++version = "1.12.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b"
++
++[[package]]
++name = "itertools"
++version = "0.11.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
++dependencies = [
++ "either",
++]
++
++[[package]]
++name = "pl011"
++version = "0.1.0"
++dependencies = [
++ "bilge",
++ "qemu_api",
++]
++
++[[package]]
++name = "proc-macro-error"
++version = "1.0.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
++dependencies = [
++ "proc-macro-error-attr",
++ "proc-macro2",
++ "quote",
++ "version_check",
++]
++
++[[package]]
++name = "proc-macro-error-attr"
++version = "1.0.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "version_check",
++]
++
++[[package]]
++name = "proc-macro2"
++version = "1.0.84"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
++dependencies = [
++ "unicode-ident",
++]
++
++[[package]]
++name = "qemu_api"
++version = "0.1.0"
++
++[[package]]
++name = "quote"
++version = "1.0.36"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
++dependencies = [
++ "proc-macro2",
++]
++
++[[package]]
++name = "syn"
++version = "2.0.66"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "unicode-ident",
++]
++
++[[package]]
++name = "unicode-ident"
++version = "1.0.12"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
++
++[[package]]
++name = "version_check"
++version = "0.9.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+new file mode 100644
+index 0000000000..67a6973da6
+--- /dev/null
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -0,0 +1,26 @@
++[package]
++name = "pl011"
++version = "0.1.0"
++edition = "2021"
++authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
++license = "GPL-2.0 OR GPL-3.0-or-later"
++readme = "README.md"
++homepage = "https://www.qemu.org"
++description = "pl011 device model for QEMU"
++repository = "https://gitlab.com/epilys/rust-for-qemu"
++resolver = "2"
++publish = false
++keywords = []
++categories = []
++
++[lib]
++crate-type = ["staticlib"]
++
++[dependencies]
++arbitrary-int = { version = "1.2.7" }
++bilge = { version = "0.2.0" }
++bilge-impl = { version = "0.2.0" }
++qemu_api = { path = "../../../qemu-api" }
++
++# Do not include in any global workspace
++[workspace]
+diff --git a/rust/hw/char/pl011/README.md b/rust/hw/char/pl011/README.md
+new file mode 100644
+index 0000000000..cd7dea3163
+--- /dev/null
++++ b/rust/hw/char/pl011/README.md
+@@ -0,0 +1,31 @@
++# PL011 QEMU Device Model
++
++This library implements a device model for the PrimeCell® UART (PL011)
++device in QEMU.
++
++## Build static lib
++
++Host build target must be explicitly specified:
++
++```sh
++cargo build --target x86_64-unknown-linux-gnu
++```
++
++Replace host target triplet if necessary.
++
++## Generate Rust documentation
++
++To generate docs for this crate, including private items:
++
++```sh
++cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
++```
++
++To include direct dependencies like `bilge` (bitmaps for register types):
++
++```sh
++cargo tree --depth 1 -e normal --prefix none \
++ | cut -d' ' -f1 \
++ | xargs printf -- '-p %s\n' \
++ | xargs cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
++```
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+new file mode 100644
+index 0000000000..427788da6e
+--- /dev/null
++++ b/rust/hw/char/pl011/meson.build
+@@ -0,0 +1,24 @@
++if not config_host_data.get('CONFIG_HAVE_RUST')
++  subdir_done()
++endif
++
++add_languages('rust', required: true)
++subdir('vendor')
++
++_libpl011_rs = static_library(
++  'pl011',
++  files('src/lib.rs'),
++  rust_abi: 'c',
++  rust_args: rust_args + [
++    '--edition', '2021',
++  ],
++  dependencies: [
++    dep_bilge,
++    dep_bilge_impl,
++    qemu_api,
++  ],
++)
++
++specific_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
++  link_whole: [_libpl011_rs],
++)])
+diff --git a/rust/hw/char/pl011/rustfmt.toml b/rust/hw/char/pl011/rustfmt.toml
+new file mode 120000
+index 0000000000..39f97b043b
+--- /dev/null
++++ b/rust/hw/char/pl011/rustfmt.toml
+@@ -0,0 +1 @@
++../rustfmt.toml
+\ No newline at end of file
+diff --git a/rust/hw/char/pl011/src/definitions.rs b/rust/hw/char/pl011/src/definitions.rs
+new file mode 100644
+index 0000000000..d7958baa83
+--- /dev/null
++++ b/rust/hw/char/pl011/src/definitions.rs
+@@ -0,0 +1,48 @@
++// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
++
++//! Definitions required by QEMU when registering the device.
++
++use core::{mem::MaybeUninit, ptr::NonNull};
++
++use qemu_api::bindings::*;
++
++use crate::{device::PL011State, device_class::pl011_class_init};
++
++#[used]
++#[no_mangle]
++pub static TYPE_PL011: &std::ffi::CStr = c"pl011";
++
++qemu_api::type_info! {
++    PL011_ARM_INFO: PL011State,
++    name: c"pl011",
++    parent: TYPE_SYS_BUS_DEVICE,
++    instance_init: Some(pl011_init),
++    abstract_: false,
++    class_init: Some(pl011_class_init),
++}
++
++#[used]
++pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
++    name: PL011_ARM_INFO.name,
++    unmigratable: true,
++    ..unsafe { MaybeUninit::<VMStateDescription>::zeroed().assume_init() }
++};
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_init(obj: *mut Object) {
++    assert!(!obj.is_null());
++    let mut state = NonNull::new_unchecked(obj.cast::<PL011State>());
++    state.as_mut().init();
++}
++
++qemu_api::module_init! {
++    qom: register_type => {
++        type_register_static(&PL011_ARM_INFO);
++    }
++}
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+new file mode 100644
+index 0000000000..3643b7bdee
+--- /dev/null
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -0,0 +1,541 @@
++// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
++
++use core::{
++    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
++    ptr::{addr_of, addr_of_mut, NonNull},
++};
++
++use qemu_api::bindings::{self, *};
++
++use crate::{
++    definitions::PL011_ARM_INFO,
++    memory_ops::PL011_OPS,
++    registers::{self, Interrupt},
++    RegisterOffset,
++};
++
++static PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
++
++const DATA_BREAK: u32 = 1 << 10;
++
++/// QEMU sourced constant.
++pub const PL011_FIFO_DEPTH: usize = 16_usize;
++
++#[repr(C)]
++#[derive(Debug)]
++/// PL011 Device Model in QEMU
++pub struct PL011State {
++    pub parent_obj: SysBusDevice,
++    pub iomem: MemoryRegion,
++    pub readbuff: u32,
++    #[doc(alias = "fr")]
++    pub flags: registers::Flags,
++    #[doc(alias = "lcr")]
++    pub line_control: registers::LineControl,
++    #[doc(alias = "rsr")]
++    pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
++    #[doc(alias = "cr")]
++    pub control: registers::Control,
++    pub dmacr: u32,
++    pub int_enabled: u32,
++    pub int_level: u32,
++    pub read_fifo: [u32; PL011_FIFO_DEPTH],
++    pub ilpr: u32,
++    pub ibrd: u32,
++    pub fbrd: u32,
++    pub ifl: u32,
++    pub read_pos: usize,
++    pub read_count: usize,
++    pub read_trigger: usize,
++    #[doc(alias = "chr")]
++    pub char_backend: CharBackend,
++    /// QEMU interrupts
++    ///
++    /// ```text
++    ///  * sysbus MMIO region 0: device registers
++    ///  * sysbus IRQ 0: `UARTINTR` (combined interrupt line)
++    ///  * sysbus IRQ 1: `UARTRXINTR` (receive FIFO interrupt line)
++    ///  * sysbus IRQ 2: `UARTTXINTR` (transmit FIFO interrupt line)
++    ///  * sysbus IRQ 3: `UARTRTINTR` (receive timeout interrupt line)
++    ///  * sysbus IRQ 4: `UARTMSINTR` (momem status interrupt line)
++    ///  * sysbus IRQ 5: `UARTEINTR` (error interrupt line)
++    /// ```
++    #[doc(alias = "irq")]
++    pub interrupts: [qemu_irq; 6usize],
++    #[doc(alias = "clk")]
++    pub clock: NonNull<Clock>,
++    #[doc(alias = "migrate_clk")]
++    pub migrate_clock: bool,
++}
++
++#[used]
++pub static CLK_NAME: &CStr = c"clk";
++
++impl PL011State {
++    pub fn init(&mut self) {
++        // SAFETY:
++        //
++        // self and self.iomem are guaranteed to be valid at this point since callers
++        // must make sure the `self` reference is valid.
++        unsafe {
++            memory_region_init_io(
++                addr_of_mut!(self.iomem),
++                addr_of_mut!(*self).cast::<Object>(),
++                &PL011_OPS,
++                addr_of_mut!(*self).cast::<c_void>(),
++                PL011_ARM_INFO.name,
++                0x1000,
++            );
++            let sbd = addr_of_mut!(*self).cast::<SysBusDevice>();
++            let dev = addr_of_mut!(*self).cast::<DeviceState>();
++            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
++            for irq in self.interrupts.iter_mut() {
++                sysbus_init_irq(sbd, irq);
++            }
++            self.clock = NonNull::new(qdev_init_clock_in(
++                dev,
++                CLK_NAME.as_ptr(),
++                None, /* pl011_clock_update */
++                addr_of_mut!(*self).cast::<c_void>(),
++                ClockEvent_ClockUpdate,
++            ))
++            .unwrap();
++        }
++    }
++
++    pub fn read(&mut self, offset: hwaddr, _size: core::ffi::c_uint) -> u64 {
++        use RegisterOffset::*;
++
++        match RegisterOffset::try_from(offset) {
++            Err(v) if (0x3f8..0x400).contains(&v) => {
++                u64::from(PL011_ID_ARM[((offset - 0xfe0) >> 2) as usize])
++            }
++            Err(_) => {
++                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
++                0
++            }
++            Ok(DR) => {
++                // s->flags &= ~PL011_FLAG_RXFF;
++                self.flags.set_receive_fifo_full(false);
++                let c = self.read_fifo[self.read_pos];
++                if self.read_count > 0 {
++                    self.read_count -= 1;
++                    self.read_pos = (self.read_pos + 1) & (self.fifo_depth() - 1);
++                }
++                if self.read_count == 0 {
++                    // self.flags |= PL011_FLAG_RXFE;
++                    self.flags.set_receive_fifo_empty(true);
++                }
++                if self.read_count + 1 == self.read_trigger {
++                    //self.int_level &= ~ INT_RX;
++                    self.int_level &= !registers::INT_RX;
++                }
++                // Update error bits.
++                self.receive_status_error_clear = c.to_be_bytes()[3].into();
++                self.update();
++                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                // initialized in realize().
++                unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
++                c.into()
++            }
++            Ok(RSR) => u8::from(self.receive_status_error_clear).into(),
++            Ok(FR) => u16::from(self.flags).into(),
++            Ok(FBRD) => self.fbrd.into(),
++            Ok(ILPR) => self.ilpr.into(),
++            Ok(IBRD) => self.ibrd.into(),
++            Ok(LCR_H) => u16::from(self.line_control).into(),
++            Ok(CR) => {
++                // We exercise our self-control.
++                u16::from(self.control).into()
++            }
++            Ok(FLS) => self.ifl.into(),
++            Ok(IMSC) => self.int_enabled.into(),
++            Ok(RIS) => self.int_level.into(),
++            Ok(MIS) => u64::from(self.int_level & self.int_enabled),
++            Ok(ICR) => {
++                // "The UARTICR Register is the interrupt clear register and is write-only"
++                // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
++                0
++            }
++            Ok(DMACR) => self.dmacr.into(),
++        }
++    }
++
++    pub fn write(&mut self, offset: hwaddr, value: u64) {
++        // eprintln!("write offset {offset} value {value}");
++        use RegisterOffset::*;
++        let value: u32 = value as u32;
++        match RegisterOffset::try_from(offset) {
++            Err(_bad_offset) => {
++                eprintln!("write bad offset {offset} value {value}");
++            }
++            Ok(DR) => {
++                // ??? Check if transmitter is enabled.
++                let ch: u8 = value as u8;
++                // XXX this blocks entire thread. Rewrite to use
++                // qemu_chr_fe_write and background I/O callbacks
++
++                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                // initialized in realize().
++                unsafe {
++                    qemu_chr_fe_write_all(addr_of_mut!(self.char_backend), &ch, 1);
++                }
++                self.loopback_tx(value);
++                self.int_level |= registers::INT_TX;
++                self.update();
++            }
++            Ok(RSR) => {
++                self.receive_status_error_clear = 0.into();
++            }
++            Ok(FR) => {
++                // flag writes are ignored
++            }
++            Ok(ILPR) => {
++                self.ilpr = value;
++            }
++            Ok(IBRD) => {
++                self.ibrd = value;
++            }
++            Ok(FBRD) => {
++                self.fbrd = value;
++            }
++            Ok(LCR_H) => {
++                let value = value as u16;
++                let new_val: registers::LineControl = value.into();
++                // Reset the FIFO state on FIFO enable or disable
++                if bool::from(self.line_control.fifos_enabled())
++                    ^ bool::from(new_val.fifos_enabled())
++                {
++                    self.reset_fifo();
++                }
++                if self.line_control.send_break() ^ new_val.send_break() {
++                    let mut break_enable: c_int = new_val.send_break().into();
++                    // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++                    // initialized in realize().
++                    unsafe {
++                        qemu_chr_fe_ioctl(
++                            addr_of_mut!(self.char_backend),
++                            CHR_IOCTL_SERIAL_SET_BREAK as i32,
++                            addr_of_mut!(break_enable).cast::<c_void>(),
++                        );
++                    }
++                    self.loopback_break(break_enable > 0);
++                }
++                self.line_control = new_val;
++                self.set_read_trigger();
++            }
++            Ok(CR) => {
++                // ??? Need to implement the enable bit.
++                let value = value as u16;
++                self.control = value.into();
++                self.loopback_mdmctrl();
++            }
++            Ok(FLS) => {
++                self.ifl = value;
++                self.set_read_trigger();
++            }
++            Ok(IMSC) => {
++                self.int_enabled = value;
++                self.update();
++            }
++            Ok(RIS) => {}
++            Ok(MIS) => {}
++            Ok(ICR) => {
++                self.int_level &= !value;
++                self.update();
++            }
++            Ok(DMACR) => {
++                self.dmacr = value;
++                if value & 3 > 0 {
++                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
++                    eprintln!("pl011: DMA not implemented");
++                }
++            }
++        }
++    }
++
++    #[inline]
++    fn loopback_tx(&mut self, value: u32) {
++        if !self.loopback_enabled() {
++            return;
++        }
++
++        // Caveat:
++        //
++        // In real hardware, TX loopback happens at the serial-bit level
++        // and then reassembled by the RX logics back into bytes and placed
++        // into the RX fifo. That is, loopback happens after TX fifo.
++        //
++        // Because the real hardware TX fifo is time-drained at the frame
++        // rate governed by the configured serial format, some loopback
++        // bytes in TX fifo may still be able to get into the RX fifo
++        // that could be full at times while being drained at software
++        // pace.
++        //
++        // In such scenario, the RX draining pace is the major factor
++        // deciding which loopback bytes get into the RX fifo, unless
++        // hardware flow-control is enabled.
++        //
++        // For simplicity, the above described is not emulated.
++        self.put_fifo(value);
++    }
++
++    fn loopback_mdmctrl(&mut self) {
++        if !self.loopback_enabled() {
++            return;
++        }
++
++        /*
++         * Loopback software-driven modem control outputs to modem status inputs:
++         *   FR.RI  <= CR.Out2
++         *   FR.DCD <= CR.Out1
++         *   FR.CTS <= CR.RTS
++         *   FR.DSR <= CR.DTR
++         *
++         * The loopback happens immediately even if this call is triggered
++         * by setting only CR.LBE.
++         *
++         * CTS/RTS updates due to enabled hardware flow controls are not
++         * dealt with here.
++         */
++
++        //fr = s->flags & ~(PL011_FLAG_RI | PL011_FLAG_DCD |
++        //                  PL011_FLAG_DSR | PL011_FLAG_CTS);
++        //fr |= (cr & CR_OUT2) ? PL011_FLAG_RI  : 0;
++        //fr |= (cr & CR_OUT1) ? PL011_FLAG_DCD : 0;
++        //fr |= (cr & CR_RTS)  ? PL011_FLAG_CTS : 0;
++        //fr |= (cr & CR_DTR)  ? PL011_FLAG_DSR : 0;
++        //
++        self.flags.set_ring_indicator(self.control.out_2());
++        self.flags.set_data_carrier_detect(self.control.out_1());
++        self.flags.set_clear_to_send(self.control.request_to_send());
++        self.flags
++            .set_data_set_ready(self.control.data_transmit_ready());
++
++        // Change interrupts based on updated FR
++        let mut il = self.int_level;
++
++        il &= !Interrupt::MS;
++        //il |= (fr & PL011_FLAG_DSR) ? INT_DSR : 0;
++        //il |= (fr & PL011_FLAG_DCD) ? INT_DCD : 0;
++        //il |= (fr & PL011_FLAG_CTS) ? INT_CTS : 0;
++        //il |= (fr & PL011_FLAG_RI)  ? INT_RI  : 0;
++
++        if self.flags.data_set_ready() {
++            il |= Interrupt::DSR as u32;
++        }
++        if self.flags.data_carrier_detect() {
++            il |= Interrupt::DCD as u32;
++        }
++        if self.flags.clear_to_send() {
++            il |= Interrupt::CTS as u32;
++        }
++        if self.flags.ring_indicator() {
++            il |= Interrupt::RI as u32;
++        }
++        self.int_level = il;
++        self.update();
++    }
++
++    fn loopback_break(&mut self, enable: bool) {
++        if enable {
++            self.loopback_tx(DATA_BREAK);
++        }
++    }
++
++    fn set_read_trigger(&mut self) {
++        //#if 0
++        //    /* The docs say the RX interrupt is triggered when the FIFO exceeds
++        //       the threshold.  However linux only reads the FIFO in response to an
++        //       interrupt.  Triggering the interrupt when the FIFO is non-empty seems
++        //       to make things work.  */
++        //    if (s->lcr & LCR_FEN)
++        //        s->read_trigger = (s->ifl >> 1) & 0x1c;
++        //    else
++        //#endif
++        self.read_trigger = 1;
++    }
++
++    pub fn realize(&mut self) {
++        // SAFETY: self.char_backend has the correct size and alignment for a
++        // CharBackend object, and its callbacks are of the correct types.
++        unsafe {
++            qemu_chr_fe_set_handlers(
++                addr_of_mut!(self.char_backend),
++                Some(pl011_can_receive),
++                Some(pl011_receive),
++                Some(pl011_event),
++                None,
++                addr_of_mut!(*self).cast::<c_void>(),
++                core::ptr::null_mut(),
++                true,
++            );
++        }
++    }
++
++    pub fn reset(&mut self) {
++        self.line_control.reset();
++        self.receive_status_error_clear.reset();
++        self.dmacr = 0;
++        self.int_enabled = 0;
++        self.int_level = 0;
++        self.ilpr = 0;
++        self.ibrd = 0;
++        self.fbrd = 0;
++        self.read_trigger = 1;
++        self.ifl = 0x12;
++        self.control.reset();
++        self.flags = 0.into();
++        self.reset_fifo();
++    }
++
++    pub fn reset_fifo(&mut self) {
++        self.read_count = 0;
++        self.read_pos = 0;
++
++        /* Reset FIFO flags */
++        self.flags.reset();
++    }
++
++    pub fn can_receive(&self) -> bool {
++        // trace_pl011_can_receive(s->lcr, s->read_count, r);
++        self.read_count < self.fifo_depth()
++    }
++
++    pub fn event(&mut self, event: QEMUChrEvent) {
++        if event == bindings::QEMUChrEvent_CHR_EVENT_BREAK && !self.fifo_enabled() {
++            self.put_fifo(DATA_BREAK);
++            self.receive_status_error_clear.set_break_error(true);
++        }
++    }
++
++    #[inline]
++    pub fn fifo_enabled(&self) -> bool {
++        matches!(self.line_control.fifos_enabled(), registers::Mode::FIFO)
++    }
++
++    #[inline]
++    pub fn loopback_enabled(&self) -> bool {
++        self.control.enable_loopback()
++    }
++
++    #[inline]
++    pub fn fifo_depth(&self) -> usize {
++        // Note: FIFO depth is expected to be power-of-2
++        if self.fifo_enabled() {
++            return PL011_FIFO_DEPTH;
++        }
++        1
++    }
++
++    pub fn put_fifo(&mut self, value: c_uint) {
++        let depth = self.fifo_depth();
++        assert!(depth > 0);
++        let slot = (self.read_pos + self.read_count) & (depth - 1);
++        self.read_fifo[slot] = value;
++        self.read_count += 1;
++        // s->flags &= ~PL011_FLAG_RXFE;
++        self.flags.set_receive_fifo_empty(false);
++        if self.read_count == depth {
++            //s->flags |= PL011_FLAG_RXFF;
++            self.flags.set_receive_fifo_full(true);
++        }
++
++        if self.read_count == self.read_trigger {
++            self.int_level |= registers::INT_RX;
++            self.update();
++        }
++    }
++
++    pub fn update(&mut self) {
++        let flags = self.int_level & self.int_enabled;
++        for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
++            // SAFETY: self.interrupts have been initialized in init().
++            unsafe { qemu_set_irq(*irq, i32::from(flags & i != 0)) };
++        }
++    }
++}
++
++/// Which bits in the interrupt status matter for each outbound IRQ line ?
++pub const IRQMASK: [u32; 6] = [
++    /* combined IRQ */
++    Interrupt::E
++        | Interrupt::MS
++        | Interrupt::RT as u32
++        | Interrupt::TX as u32
++        | Interrupt::RX as u32,
++    Interrupt::RX as u32,
++    Interrupt::TX as u32,
++    Interrupt::RT as u32,
++    Interrupt::MS,
++    Interrupt::E,
++];
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_can_receive(opaque: *mut c_void) -> c_int {
++    assert!(!opaque.is_null());
++    let state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++    state.as_ref().can_receive().into()
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++///
++/// The buffer and size arguments must also be valid.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_receive(
++    opaque: *mut core::ffi::c_void,
++    buf: *const u8,
++    size: core::ffi::c_int,
++) {
++    assert!(!opaque.is_null());
++    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++    if state.as_ref().loopback_enabled() {
++        return;
++    }
++    if size > 0 {
++        assert!(!buf.is_null());
++        state.as_mut().put_fifo(*buf.cast::<c_uint>())
++    }
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_event(opaque: *mut core::ffi::c_void, event: QEMUChrEvent) {
++    assert!(!opaque.is_null());
++    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++    state.as_mut().event(event)
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer for `chr`.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_create(
++    addr: u64,
++    irq: qemu_irq,
++    chr: *mut Chardev,
++) -> *mut DeviceState {
++    let dev: *mut DeviceState = unsafe { qdev_new(PL011_ARM_INFO.name) };
++    assert!(!dev.is_null());
++    let sysbus: *mut SysBusDevice = dev as *mut SysBusDevice;
++
++    qdev_prop_set_chr(dev, bindings::TYPE_CHARDEV.as_ptr(), chr);
++    sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
++    sysbus_mmio_map(sysbus, 0, addr);
++    sysbus_connect_irq(sysbus, 0, irq);
++    dev
++}
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+new file mode 100644
+index 0000000000..6b99239133
+--- /dev/null
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -0,0 +1,58 @@
++// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
++
++use core::ptr::NonNull;
++
++use qemu_api::bindings::*;
++
++use crate::{definitions::VMSTATE_PL011, device::PL011State};
++
++qemu_api::declare_properties! {
++    PL011_PROPERTIES,
++    qemu_api::define_property!(
++        c"chardev",
++        PL011State,
++        char_backend,
++        unsafe { &qdev_prop_chr },
++        CharBackend
++    ),
++    qemu_api::define_property!(
++        c"migrate-clk",
++        PL011State,
++        migrate_clock,
++        unsafe { &qdev_prop_bool },
++        bool
++    ),
++}
++
++qemu_api::device_class_init! {
++    pl011_class_init,
++    props => PL011_PROPERTIES,
++    realize_fn => Some(pl011_realize),
++    reset_fn => Some(pl011_reset),
++    vmsd => VMSTATE_PL011,
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_realize(dev: *mut DeviceState, _errp: *mut *mut Error) {
++    assert!(!dev.is_null());
++    let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
++    state.as_mut().realize();
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer, that has
++/// the same size as [`PL011State`]. We also expect the device is
++/// readable/writeable from one thread at any time.
++#[no_mangle]
++pub unsafe extern "C" fn pl011_reset(dev: *mut DeviceState) {
++    assert!(!dev.is_null());
++    let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
++    state.as_mut().reset();
++}
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+new file mode 100644
+index 0000000000..697d2ef5a6
+--- /dev/null
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -0,0 +1,584 @@
++// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
++//
++// PL011 QEMU Device Model
++//
++// This library implements a device model for the PrimeCell® UART (PL011)
++// device in QEMU.
++//
++#![doc = include_str!("../README.md")]
++//! # Library crate
++//!
++//! See [`PL011State`](crate::device::PL011State) for the device model type and
++//! the [`registers`] module for register types.
++
++#![deny(
++    rustdoc::broken_intra_doc_links,
++    rustdoc::redundant_explicit_links,
++    clippy::correctness,
++    clippy::suspicious,
++    clippy::complexity,
++    clippy::perf,
++    clippy::cargo,
++    clippy::nursery,
++    clippy::style,
++    // restriction group
++    clippy::dbg_macro,
++    clippy::as_underscore,
++    clippy::assertions_on_result_states,
++    // pedantic group
++    clippy::doc_markdown,
++    clippy::borrow_as_ptr,
++    clippy::cast_lossless,
++    clippy::option_if_let_else,
++    clippy::missing_const_for_fn,
++    clippy::cognitive_complexity,
++    clippy::missing_safety_doc,
++    )]
++
++extern crate bilge;
++extern crate bilge_impl;
++extern crate qemu_api;
++
++pub mod definitions;
++pub mod device;
++pub mod device_class;
++pub mod memory_ops;
++
++/// Offset of each register from the base memory address of the device.
++///
++/// # Source
++/// ARM DDI 0183G, Table 3-1 p.3-3
++#[doc(alias = "offset")]
++#[allow(non_camel_case_types)]
++#[repr(u64)]
++#[derive(Debug)]
++pub enum RegisterOffset {
++    /// Data Register
++    ///
++    /// A write to this register initiates the actual data transmission
++    #[doc(alias = "UARTDR")]
++    DR = 0x000,
++    /// Receive Status Register or Error Clear Register
++    #[doc(alias = "UARTRSR")]
++    #[doc(alias = "UARTECR")]
++    RSR = 0x004,
++    /// Flag Register
++    ///
++    /// A read of this register shows if transmission is complete
++    #[doc(alias = "UARTFR")]
++    FR = 0x018,
++    /// Fractional Baud Rate Register
++    ///
++    /// responsible for baud rate speed
++    #[doc(alias = "UARTFBRD")]
++    FBRD = 0x028,
++    /// `IrDA` Low-Power Counter Register
++    #[doc(alias = "UARTILPR")]
++    ILPR = 0x020,
++    /// Integer Baud Rate Register
++    ///
++    /// Responsible for baud rate speed
++    #[doc(alias = "UARTIBRD")]
++    IBRD = 0x024,
++    /// line control register (data frame format)
++    #[doc(alias = "UARTLCR_H")]
++    LCR_H = 0x02C,
++    /// Toggle UART, transmission or reception
++    #[doc(alias = "UARTCR")]
++    CR = 0x030,
++    /// Interrupt FIFO Level Select Register
++    #[doc(alias = "UARTIFLS")]
++    FLS = 0x034,
++    /// Interrupt Mask Set/Clear Register
++    #[doc(alias = "UARTIMSC")]
++    IMSC = 0x038,
++    /// Raw Interrupt Status Register
++    #[doc(alias = "UARTRIS")]
++    RIS = 0x03C,
++    /// Masked Interrupt Status Register
++    #[doc(alias = "UARTMIS")]
++    MIS = 0x040,
++    /// Interrupt Clear Register
++    #[doc(alias = "UARTICR")]
++    ICR = 0x044,
++    /// DMA control Register
++    #[doc(alias = "UARTDMACR")]
++    DMACR = 0x048,
++    ///// Reserved, offsets `0x04C` to `0x07C`.
++    //Reserved = 0x04C,
++}
++
++impl core::convert::TryFrom<u64> for RegisterOffset {
++    type Error = u64;
++
++    fn try_from(value: u64) -> Result<Self, Self::Error> {
++        macro_rules! case {
++            ($($discriminant:ident),*$(,)*) => {
++                /* check that matching on all macro arguments compiles, which means we are not
++                 * missing any enum value; if the type definition ever changes this will stop
++                 * compiling.
++                 */
++                const fn _assert_exhaustive(val: RegisterOffset) {
++                    match val {
++                        $(RegisterOffset::$discriminant => (),)*
++                    }
++                }
++
++                match value {
++                    $(x if x == Self::$discriminant as u64 => Ok(Self::$discriminant),)*
++                     _ => Err(value),
++                }
++            }
++        }
++        case! { DR, RSR, FR, FBRD, ILPR, IBRD, LCR_H, CR, FLS, IMSC, RIS, MIS, ICR, DMACR }
++    }
++}
++
++pub mod registers {
++    //! Device registers exposed as typed structs which are backed by arbitrary
++    //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
++    //!
++    //! All PL011 registers are essentially 32-bit wide, but are typed here as
++    //! bitmaps with only the necessary width. That is, if a struct bitmap
++    //! in this module is for example 16 bits long, it should be conceived
++    //! as a 32-bit register where the unmentioned higher bits are always
++    //! unused thus treated as zero when read or written.
++    use bilge::prelude::*;
++
++    // TODO: FIFO Mode has different semantics
++    /// Data Register, `UARTDR`
++    ///
++    /// The `UARTDR` register is the data register.
++    ///
++    /// For words to be transmitted:
++    ///
++    /// - if the FIFOs are enabled, data written to this location is pushed onto
++    ///   the transmit
++    /// FIFO
++    /// - if the FIFOs are not enabled, data is stored in the transmitter
++    ///   holding register (the
++    /// bottom word of the transmit FIFO).
++    ///
++    /// The write operation initiates transmission from the UART. The data is
++    /// prefixed with a start bit, appended with the appropriate parity bit
++    /// (if parity is enabled), and a stop bit. The resultant word is then
++    /// transmitted.
++    ///
++    /// For received words:
++    ///
++    /// - if the FIFOs are enabled, the data byte and the 4-bit status (break,
++    ///   frame, parity,
++    /// and overrun) is pushed onto the 12-bit wide receive FIFO
++    /// - if the FIFOs are not enabled, the data byte and status are stored in
++    ///   the receiving
++    /// holding register (the bottom word of the receive FIFO).
++    ///
++    /// The received data byte is read by performing reads from the `UARTDR`
++    /// register along with the corresponding status information. The status
++    /// information can also be read by a read of the `UARTRSR/UARTECR`
++    /// register.
++    ///
++    /// # Note
++    ///
++    /// You must disable the UART before any of the control registers are
++    /// reprogrammed. When the UART is disabled in the middle of
++    /// transmission or reception, it completes the current character before
++    /// stopping.
++    ///
++    /// # Source
++    /// ARM DDI 0183G 3.3.1 Data Register, UARTDR
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    #[doc(alias = "UARTDR")]
++    pub struct Data {
++        _reserved: u4,
++        pub data: u8,
++        pub framing_error: bool,
++        pub parity_error: bool,
++        pub break_error: bool,
++        pub overrun_error: bool,
++    }
++
++    // TODO: FIFO Mode has different semantics
++    /// Receive Status Register / Error Clear Register, `UARTRSR/UARTECR`
++    ///
++    /// The UARTRSR/UARTECR register is the receive status register/error clear
++    /// register. Receive status can also be read from the `UARTRSR`
++    /// register. If the status is read from this register, then the status
++    /// information for break, framing and parity corresponds to the
++    /// data character read from the [Data register](Data), `UARTDR` prior to
++    /// reading the UARTRSR register. The status information for overrun is
++    /// set immediately when an overrun condition occurs.
++    ///
++    ///
++    /// # Note
++    /// The received data character must be read first from the [Data
++    /// Register](Data), `UARTDR` before reading the error status associated
++    /// with that data character from the `UARTRSR` register. This read
++    /// sequence cannot be reversed, because the `UARTRSR` register is
++    /// updated only when a read occurs from the `UARTDR` register. However,
++    /// the status information can also be obtained by reading the `UARTDR`
++    /// register
++    ///
++    /// # Source
++    /// ARM DDI 0183G 3.3.2 Receive Status Register/Error Clear Register,
++    /// UARTRSR/UARTECR
++    #[bitsize(8)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    pub struct ReceiveStatusErrorClear {
++        pub framing_error: bool,
++        pub parity_error: bool,
++        pub break_error: bool,
++        pub overrun_error: bool,
++        _reserved_unpredictable: u4,
++    }
++
++    impl ReceiveStatusErrorClear {
++        pub fn reset(&mut self) {
++            // All the bits are cleared to 0 on reset.
++            *self = 0.into();
++        }
++    }
++
++    impl Default for ReceiveStatusErrorClear {
++        fn default() -> Self {
++            0.into()
++        }
++    }
++
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    /// Flag Register, `UARTFR`
++    #[doc(alias = "UARTFR")]
++    pub struct Flags {
++        /// CTS Clear to send. This bit is the complement of the UART clear to
++        /// send, `nUARTCTS`, modem status input. That is, the bit is 1
++        /// when `nUARTCTS` is LOW.
++        pub clear_to_send: bool,
++        /// DSR Data set ready. This bit is the complement of the UART data set
++        /// ready, `nUARTDSR`, modem status input. That is, the bit is 1 when
++        /// `nUARTDSR` is LOW.
++        pub data_set_ready: bool,
++        /// DCD Data carrier detect. This bit is the complement of the UART data
++        /// carrier detect, `nUARTDCD`, modem status input. That is, the bit is
++        /// 1 when `nUARTDCD` is LOW.
++        pub data_carrier_detect: bool,
++        /// BUSY UART busy. If this bit is set to 1, the UART is busy
++        /// transmitting data. This bit remains set until the complete
++        /// byte, including all the stop bits, has been sent from the
++        /// shift register. This bit is set as soon as the transmit FIFO
++        /// becomes non-empty, regardless of whether the UART is enabled
++        /// or not.
++        pub busy: bool,
++        /// RXFE Receive FIFO empty. The meaning of this bit depends on the
++        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
++        /// is disabled, this bit is set when the receive holding
++        /// register is empty. If the FIFO is enabled, the RXFE bit is
++        /// set when the receive FIFO is empty.
++        pub receive_fifo_empty: bool,
++        /// TXFF Transmit FIFO full. The meaning of this bit depends on the
++        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
++        /// is disabled, this bit is set when the transmit holding
++        /// register is full. If the FIFO is enabled, the TXFF bit is
++        /// set when the transmit FIFO is full.
++        pub transmit_fifo_full: bool,
++        /// RXFF Receive FIFO full. The meaning of this bit depends on the state
++        /// of the FEN bit in the UARTLCR_H register. If the FIFO is
++        /// disabled, this bit is set when the receive holding register
++        /// is full. If the FIFO is enabled, the RXFF bit is set when
++        /// the receive FIFO is full.
++        pub receive_fifo_full: bool,
++        /// Transmit FIFO empty. The meaning of this bit depends on the state of
++        /// the FEN bit in the [Line Control register](LineControl),
++        /// `UARTLCR_H`. If the FIFO is disabled, this bit is set when the
++        /// transmit holding register is empty. If the FIFO is enabled,
++        /// the TXFE bit is set when the transmit FIFO is empty. This
++        /// bit does not indicate if there is data in the transmit shift
++        /// register.
++        pub transmit_fifo_empty: bool,
++        /// `RI`, is `true` when `nUARTRI` is `LOW`.
++        pub ring_indicator: bool,
++        _reserved_zero_no_modify: u7,
++    }
++
++    impl Flags {
++        pub fn reset(&mut self) {
++            // After reset TXFF, RXFF, and BUSY are 0, and TXFE and RXFE are 1
++            self.set_receive_fifo_full(false);
++            self.set_transmit_fifo_full(false);
++            self.set_busy(false);
++            self.set_receive_fifo_empty(true);
++            self.set_transmit_fifo_empty(true);
++        }
++    }
++
++    impl Default for Flags {
++        fn default() -> Self {
++            let mut ret: Self = 0.into();
++            ret.reset();
++            ret
++        }
++    }
++
++    #[bitsize(16)]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    /// Line Control Register, `UARTLCR_H`
++    #[doc(alias = "UARTLCR_H")]
++    pub struct LineControl {
++        /// 15:8 - Reserved, do not modify, read as zero.
++        _reserved_zero_no_modify: u8,
++        /// 7 SPS Stick parity select.
++        /// 0 = stick parity is disabled
++        /// 1 = either:
++        /// • if the EPS bit is 0 then the parity bit is transmitted and checked
++        /// as a 1 • if the EPS bit is 1 then the parity bit is
++        /// transmitted and checked as a 0. This bit has no effect when
++        /// the PEN bit disables parity checking and generation. See Table 3-11
++        /// on page 3-14 for the parity truth table.
++        pub sticky_parity: bool,
++        /// WLEN Word length. These bits indicate the number of data bits
++        /// transmitted or received in a frame as follows: b11 = 8 bits
++        /// b10 = 7 bits
++        /// b01 = 6 bits
++        /// b00 = 5 bits.
++        pub word_length: WordLength,
++        /// FEN Enable FIFOs:
++        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
++        /// 1-byte-deep holding registers 1 = transmit and receive FIFO
++        /// buffers are enabled (FIFO mode).
++        pub fifos_enabled: Mode,
++        /// 3 STP2 Two stop bits select. If this bit is set to 1, two stop bits
++        /// are transmitted at the end of the frame. The receive
++        /// logic does not check for two stop bits being received.
++        pub two_stops_bits: bool,
++        /// EPS Even parity select. Controls the type of parity the UART uses
++        /// during transmission and reception:
++        /// - 0 = odd parity. The UART generates or checks for an odd number of
++        ///   1s in the data and parity bits.
++        /// - 1 = even parity. The UART generates or checks for an even number
++        ///   of 1s in the data and parity bits.
++        /// This bit has no effect when the `PEN` bit disables parity checking
++        /// and generation. See Table 3-11 on page 3-14 for the parity
++        /// truth table.
++        pub parity: Parity,
++        /// 1 PEN Parity enable:
++        ///
++        /// - 0 = parity is disabled and no parity bit added to the data frame
++        /// - 1 = parity checking and generation is enabled.
++        ///
++        /// See Table 3-11 on page 3-14 for the parity truth table.
++        pub parity_enabled: bool,
++        /// BRK Send break.
++        ///
++        /// If this bit is set to `1`, a low-level is continually output on the
++        /// `UARTTXD` output, after completing transmission of the
++        /// current character. For the proper execution of the break command,
++        /// the software must set this bit for at least two complete
++        /// frames. For normal use, this bit must be cleared to `0`.
++        pub send_break: bool,
++    }
++
++    impl LineControl {
++        pub fn reset(&mut self) {
++            // All the bits are cleared to 0 when reset.
++            *self = 0.into();
++        }
++    }
++
++    impl Default for LineControl {
++        fn default() -> Self {
++            0.into()
++        }
++    }
++
++    #[bitsize(1)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `EPS` "Even parity select", field of [Line Control
++    /// register](LineControl).
++    pub enum Parity {
++        /// - 0 = odd parity. The UART generates or checks for an odd number of
++        ///   1s in the data and parity bits.
++        Odd = 0,
++        /// - 1 = even parity. The UART generates or checks for an even number
++        ///   of 1s in the data and parity bits.
++        Even = 1,
++    }
++
++    #[bitsize(1)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `FEN` "Enable FIFOs" or Device mode, field of [Line Control
++    /// register](LineControl).
++    pub enum Mode {
++        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
++        /// 1-byte-deep holding registers
++        Character = 0,
++        /// 1 = transmit and receive FIFO buffers are enabled (FIFO mode).
++        FIFO = 1,
++    }
++
++    impl From<Mode> for bool {
++        fn from(val: Mode) -> Self {
++            matches!(val, Mode::FIFO)
++        }
++    }
++
++    #[bitsize(2)]
++    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
++    /// `WLEN` Word length, field of [Line Control register](LineControl).
++    ///
++    /// These bits indicate the number of data bits transmitted or received in a
++    /// frame as follows:
++    pub enum WordLength {
++        /// b11 = 8 bits
++        _8Bits = 0b11,
++        /// b10 = 7 bits
++        _7Bits = 0b10,
++        /// b01 = 6 bits
++        _6Bits = 0b01,
++        /// b00 = 5 bits.
++        _5Bits = 0b00,
++    }
++
++    /// Control Register, `UARTCR`
++    ///
++    /// The `UARTCR` register is the control register. All the bits are cleared
++    /// to `0` on reset except for bits `9` and `8` that are set to `1`.
++    ///
++    /// # Source
++    /// ARM DDI 0183G, 3.3.8 Control Register, `UARTCR`, Table 3-12
++    #[bitsize(16)]
++    #[doc(alias = "UARTCR")]
++    #[derive(Clone, Copy, DebugBits, FromBits)]
++    pub struct Control {
++        /// `UARTEN` UART enable: 0 = UART is disabled. If the UART is disabled
++        /// in the middle of transmission or reception, it completes the current
++        /// character before stopping. 1 = the UART is enabled. Data
++        /// transmission and reception occurs for either UART signals or SIR
++        /// signals depending on the setting of the SIREN bit.
++        pub enable_uart: bool,
++        /// `SIREN` `SIR` enable: 0 = IrDA SIR ENDEC is disabled. `nSIROUT`
++        /// remains LOW (no light pulse generated), and signal transitions on
++        /// SIRIN have no effect. 1 = IrDA SIR ENDEC is enabled. Data is
++        /// transmitted and received on nSIROUT and SIRIN. UARTTXD remains HIGH,
++        /// in the marking state. Signal transitions on UARTRXD or modem status
++        /// inputs have no effect. This bit has no effect if the UARTEN bit
++        /// disables the UART.
++        pub enable_sir: bool,
++        /// `SIRLP` SIR low-power IrDA mode. This bit selects the IrDA encoding
++        /// mode. If this bit is cleared to 0, low-level bits are transmitted as
++        /// an active high pulse with a width of 3/ 16th of the bit period. If
++        /// this bit is set to 1, low-level bits are transmitted with a pulse
++        /// width that is 3 times the period of the IrLPBaud16 input signal,
++        /// regardless of the selected bit rate. Setting this bit uses less
++        /// power, but might reduce transmission distances.
++        pub sir_lowpower_irda_mode: u1,
++        /// Reserved, do not modify, read as zero.
++        _reserved_zero_no_modify: u4,
++        /// `LBE` Loopback enable. If this bit is set to 1 and the SIREN bit is
++        /// set to 1 and the SIRTEST bit in the Test Control register, UARTTCR
++        /// on page 4-5 is set to 1, then the nSIROUT path is inverted, and fed
++        /// through to the SIRIN path. The SIRTEST bit in the test register must
++        /// be set to 1 to override the normal half-duplex SIR operation. This
++        /// must be the requirement for accessing the test registers during
++        /// normal operation, and SIRTEST must be cleared to 0 when loopback
++        /// testing is finished. This feature reduces the amount of external
++        /// coupling required during system test. If this bit is set to 1, and
++        /// the SIRTEST bit is set to 0, the UARTTXD path is fed through to the
++        /// UARTRXD path. In either SIR mode or UART mode, when this bit is set,
++        /// the modem outputs are also fed through to the modem inputs. This bit
++        /// is cleared to 0 on reset, to disable loopback.
++        pub enable_loopback: bool,
++        /// `TXE` Transmit enable. If this bit is set to 1, the transmit section
++        /// of the UART is enabled. Data transmission occurs for either UART
++        /// signals, or SIR signals depending on the setting of the SIREN bit.
++        /// When the UART is disabled in the middle of transmission, it
++        /// completes the current character before stopping.
++        pub enable_transmit: bool,
++        /// `RXE` Receive enable. If this bit is set to 1, the receive section
++        /// of the UART is enabled. Data reception occurs for either UART
++        /// signals or SIR signals depending on the setting of the SIREN bit.
++        /// When the UART is disabled in the middle of reception, it completes
++        /// the current character before stopping.
++        pub enable_receive: bool,
++        /// `DTR` Data transmit ready. This bit is the complement of the UART
++        /// data transmit ready, `nUARTDTR`, modem status output. That is, when
++        /// the bit is programmed to a 1 then `nUARTDTR` is LOW.
++        pub data_transmit_ready: bool,
++        /// `RTS` Request to send. This bit is the complement of the UART
++        /// request to send, `nUARTRTS`, modem status output. That is, when the
++        /// bit is programmed to a 1 then `nUARTRTS` is LOW.
++        pub request_to_send: bool,
++        /// `Out1` This bit is the complement of the UART Out1 (`nUARTOut1`)
++        /// modem status output. That is, when the bit is programmed to a 1 the
++        /// output is 0. For DTE this can be used as Data Carrier Detect (DCD).
++        pub out_1: bool,
++        /// `Out2` This bit is the complement of the UART Out2 (`nUARTOut2`)
++        /// modem status output. That is, when the bit is programmed to a 1, the
++        /// output is 0. For DTE this can be used as Ring Indicator (RI).
++        pub out_2: bool,
++        /// `RTSEn` RTS hardware flow control enable. If this bit is set to 1,
++        /// RTS hardware flow control is enabled. Data is only requested when
++        /// there is space in the receive FIFO for it to be received.
++        pub rts_hardware_flow_control_enable: bool,
++        /// `CTSEn` CTS hardware flow control enable. If this bit is set to 1,
++        /// CTS hardware flow control is enabled. Data is only transmitted when
++        /// the `nUARTCTS` signal is asserted.
++        pub cts_hardware_flow_control_enable: bool,
++    }
++
++    impl Control {
++        pub fn reset(&mut self) {
++            *self = 0.into();
++            self.set_enable_receive(true);
++            self.set_enable_transmit(true);
++        }
++    }
++
++    impl Default for Control {
++        fn default() -> Self {
++            let mut ret: Self = 0.into();
++            ret.reset();
++            ret
++        }
++    }
++
++    /// Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC
++    pub const INT_OE: u32 = 1 << 10;
++    pub const INT_BE: u32 = 1 << 9;
++    pub const INT_PE: u32 = 1 << 8;
++    pub const INT_FE: u32 = 1 << 7;
++    pub const INT_RT: u32 = 1 << 6;
++    pub const INT_TX: u32 = 1 << 5;
++    pub const INT_RX: u32 = 1 << 4;
++    pub const INT_DSR: u32 = 1 << 3;
++    pub const INT_DCD: u32 = 1 << 2;
++    pub const INT_CTS: u32 = 1 << 1;
++    pub const INT_RI: u32 = 1 << 0;
++    pub const INT_E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
++    pub const INT_MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
++
++    #[repr(u32)]
++    pub enum Interrupt {
++        OE = 1 << 10,
++        BE = 1 << 9,
++        PE = 1 << 8,
++        FE = 1 << 7,
++        RT = 1 << 6,
++        TX = 1 << 5,
++        RX = 1 << 4,
++        DSR = 1 << 3,
++        DCD = 1 << 2,
++        CTS = 1 << 1,
++        RI = 1 << 0,
++    }
++
++    impl Interrupt {
++        pub const E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
++        pub const MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
++    }
++}
++
++// TODO: You must disable the UART before any of the control registers are
++// reprogrammed. When the UART is disabled in the middle of transmission or
++// reception, it completes the current character before stopping
+diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
+new file mode 100644
+index 0000000000..6144d28586
+--- /dev/null
++++ b/rust/hw/char/pl011/src/memory_ops.rs
+@@ -0,0 +1,45 @@
++// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
++
++use core::{mem::MaybeUninit, ptr::NonNull};
++
++use qemu_api::bindings::*;
++
++use crate::device::PL011State;
++
++pub static PL011_OPS: MemoryRegionOps = MemoryRegionOps {
++    read: Some(pl011_read),
++    write: Some(pl011_write),
++    read_with_attrs: None,
++    write_with_attrs: None,
++    endianness: device_endian_DEVICE_NATIVE_ENDIAN,
++    valid: unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_1>::zeroed().assume_init() },
++    impl_: MemoryRegionOps__bindgen_ty_2 {
++        min_access_size: 4,
++        max_access_size: 4,
++        ..unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_2>::zeroed().assume_init() }
++    },
++};
++
++#[no_mangle]
++unsafe extern "C" fn pl011_read(
++    opaque: *mut core::ffi::c_void,
++    addr: hwaddr,
++    size: core::ffi::c_uint,
++) -> u64 {
++    assert!(!opaque.is_null());
++    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++    state.as_mut().read(addr, size)
++}
++
++#[no_mangle]
++unsafe extern "C" fn pl011_write(
++    opaque: *mut core::ffi::c_void,
++    addr: hwaddr,
++    data: u64,
++    _size: core::ffi::c_uint,
++) {
++    assert!(!opaque.is_null());
++    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
++    state.as_mut().write(addr, data)
++}
+diff --git a/rust/hw/meson.build b/rust/hw/meson.build
+new file mode 100644
+index 0000000000..860196645e
+--- /dev/null
++++ b/rust/hw/meson.build
+@@ -0,0 +1 @@
++subdir('char')
+diff --git a/rust/meson.build b/rust/meson.build
+index a903c7c602..4c858e9d1f 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -11,3 +11,5 @@ _lib_bindings_rs = static_library(
+ )
  
- ENV ABI "arm-linux-gnueabihf"
- ENV MESON_OPTS "--cross-file=arm-linux-gnueabihf"
-+ENV RUST_TARGET "armv7-unknown-linux-gnueabihf"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=arm-linux-gnueabihf-
- ENV DEF_TARGET_LIST arm-softmmu,arm-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f4ef054a2e..50ad6179a2 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -54,6 +56,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -169,6 +172,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
- 
- ENV ABI "i686-linux-gnu"
- ENV MESON_OPTS "--cross-file=i686-linux-gnu"
-+ENV RUST_TARGET "i686-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index 59c4c68dce..27db4509b6 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -54,6 +56,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -167,6 +170,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/mips64el-linux-gnuabi64 && \
- 
- ENV ABI "mips64el-linux-gnuabi64"
- ENV MESON_OPTS "--cross-file=mips64el-linux-gnuabi64"
-+ENV RUST_TARGET "mips64el-unknown-linux-gnuabi64"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=mips64el-linux-gnuabi64-
- ENV DEF_TARGET_LIST mips64el-softmmu,mips64el-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 880c774f1c..725a632e4b 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -54,6 +56,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-wheel \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -167,6 +170,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/mipsel-linux-gnu && \
- 
- ENV ABI "mipsel-linux-gnu"
- ENV MESON_OPTS "--cross-file=mipsel-linux-gnu"
-+ENV RUST_TARGET "mipsel-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=mipsel-linux-gnu-
- ENV DEF_TARGET_LIST mipsel-softmmu,mipsel-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 1d55b9514c..c85b43704c 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -52,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -167,6 +170,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/powerpc64le-linux-gnu && \
- 
- ENV ABI "powerpc64le-linux-gnu"
- ENV MESON_OPTS "--cross-file=powerpc64le-linux-gnu"
-+ENV RUST_TARGET "powerpc64le-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=powerpc64le-linux-gnu-
- ENV DEF_TARGET_LIST ppc64-softmmu,ppc64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 62ccda6ab1..022c84b0da 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       dbus \
-                       debianutils \
-@@ -52,6 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-@@ -166,6 +169,7 @@ endian = 'big'\n" > /usr/local/share/meson/cross/s390x-linux-gnu && \
- 
- ENV ABI "s390x-linux-gnu"
- ENV MESON_OPTS "--cross-file=s390x-linux-gnu"
-+ENV RUST_TARGET "s390x-unknown-linux-gnu"
- ENV QEMU_CONFIGURE_OPTS --cross-prefix=s390x-linux-gnu-
- ENV DEF_TARGET_LIST s390x-softmmu,s390x-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 0d1d401eb8..c30fab88f7 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       clang \
-                       dbus \
-@@ -119,6 +121,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 007e1574bd..d1a1922b35 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -20,9 +20,11 @@ exec "$@"\n' > /usr/bin/nosync && \
-     nosync dnf install -y \
-                bash \
-                bc \
-+               bindgen-cli \
-                bison \
-                bzip2 \
-                ca-certificates \
-+               cargo \
-                ccache \
-                ctags \
-                dbus-daemon \
-@@ -52,6 +54,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                python3-sphinx \
-                python3-sphinx_rtd_theme \
-                python3-zombie-imp \
-+               rust \
-                sed \
-                socat \
-                sparse \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 44f239c088..bb05ca4172 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -23,12 +23,14 @@ exec "$@"\n' > /usr/bin/nosync && \
-                alsa-lib-devel \
-                bash \
-                bc \
-+               bindgen-cli \
-                bison \
-                brlapi-devel \
-                bzip2 \
-                bzip2-devel \
-                ca-certificates \
-                capstone-devel \
-+               cargo \
-                ccache \
-                clang \
-                ctags \
-@@ -112,6 +114,7 @@ exec "$@"\n' > /usr/bin/nosync && \
-                python3-sphinx_rtd_theme \
-                python3-zombie-imp \
-                rdma-core-devel \
-+               rust \
-                sed \
-                snappy-devel \
-                socat \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 836f531ac1..3e8bc8447e 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -16,6 +16,7 @@ RUN zypper update -y && \
-            brlapi-devel \
-            bzip2 \
-            ca-certificates \
-+           cargo \
-            ccache \
-            clang \
-            ctags \
-@@ -94,6 +95,7 @@ RUN zypper update -y && \
-            python311-pip \
-            python311-setuptools \
-            rdma-core-devel \
-+           rust \
-            sed \
-            snappy-devel \
-            sndio-devel \
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index beeb44fc28..98ee55f7e0 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -13,10 +13,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     eatmydata apt-get install --no-install-recommends -y \
-                       bash \
-                       bc \
-+                      bindgen \
-                       bison \
-                       bsdextrautils \
-                       bzip2 \
-                       ca-certificates \
-+                      cargo \
-                       ccache \
-                       clang \
-                       dbus \
-@@ -119,6 +121,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       python3-venv \
-                       python3-yaml \
-                       rpm2cpio \
-+                      rustc \
-                       sed \
-                       socat \
-                       sparse \
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index 0e9490cebc..9b2b2ceb80 160000
---- a/tests/lcitool/libvirt-ci
-+++ b/tests/lcitool/libvirt-ci
-@@ -1 +1 @@
--Subproject commit 0e9490cebc726ef772b6c9e27dac32e7ae99f9b2
-+Subproject commit 9b2b2ceb80a7a215bdfb9000bcc2c1a30457ec69
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index 0c85784259..7e85b27b66 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -3,11 +3,13 @@ packages:
-  - alsa
-  - bash
-  - bc
-+ - bindgen
-  - bison
-  - brlapi
-  - bzip2
-  - bzip2-libs
-  - capstone
-+ - cargo
-  - ccache
-  - clang
-  - cmocka
-@@ -100,6 +102,7 @@ packages:
-  - python3-tomli
-  - python3-venv
-  - rpm2cpio
-+ - rust
-  - sdl2
-  - sdl2-image
-  - sed
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 2d5895ebed..3d36c8af7c 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -60,6 +60,8 @@
-     "py39-yaml",
-     "python3",
-     "rpm2cpio",
-+    "rust",
-+    "rust-bindgen-cli",
-     "sdl2",
-     "sdl2_image",
-     "snappy",
+ subdir('qemu-api')
++
++subdir('hw')
 -- 
 γαῖα πυρί μιχθήτω
 
