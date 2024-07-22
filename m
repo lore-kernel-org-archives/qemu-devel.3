@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E11F6C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7611C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqq7-0005af-Dx; Mon, 22 Jul 2024 07:04:23 -0400
+	id 1sVqqE-00065c-SI; Mon, 22 Jul 2024 07:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq4-0005TS-AB
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:20 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1sVqqC-0005vX-9b
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:28 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq2-0002R9-3n
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:20 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a79f9a72a99so925259866b.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
+ id 1sVqqA-0002Ud-Kh
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:28 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2a90243c9so3130754a12.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646256; x=1722251056; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8mwWesMelRm+DkK/zQIQiqzyehUGEfnqgx8ImE9NQCg=;
- b=NF1u8LqgU5OXFxycDqf2imK0IsHPjVybBcckw75b1LUNVnKa5h44mYIln2TVCo1mHO
- upx/uumLCuwv5Qcd3SpSO4u8JX12M+DdAAO+OnvqsXXnzLVXMCf360/3jsk9co92s7Ze
- wSF73bRJXPPHcmnQujwGcY6iS4af0FCHIoJzVCqVHie2a7pTWwxfIUcFRCqwrIr8vjBY
- mlHAo3jwkTNZQkNCbH6T1ztfsTYWMLUZHGxzgMoEHNWdYIEPZEFRkdQk9B8DUlXcniWD
- u+2dCrz85JYqFwAGfbCgCsJPwC0V+N1/LzPX5UiORhjOK+YJCuSjVV7OXd5X0naqXkLY
- GZpA==
+ d=linaro.org; s=google; t=1721646264; x=1722251064; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N5Md4ulxL95o26Yk8COW88V0WI0Iz0p2W7Xea2hC5X0=;
+ b=OUeccvxNIGQ43WKRmmtf+e8xP23rQBnyhroNgaUZB5j25of/PWHp2kf2w+7ayqutE6
+ kzQ36iV67E/BFzbm3qDWBh5uh+WKqpkRWmBYxO3mZGFuNG6hIeJ5zOe9WO3TrwYIaaT4
+ CX8hlK9NQpukDqhKSyP7ydvppmsh1y97RTeZIqq1CaU/gzhaOKeKFlk09xC+7LCPkIYB
+ PJIYB5kwv7CuZ+OpONZOHEZQUaixyKtT+wKCsi2N1/zy2Ig+KCP2o8jSmb2o6jOSFHak
+ F5sfu4BH7oc9QBef2FF4mOohNYrpT8AR9CDBPpY2fzMzpcfCNF4lYRAhAbCCCFooQMTl
+ q9CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646256; x=1722251056;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8mwWesMelRm+DkK/zQIQiqzyehUGEfnqgx8ImE9NQCg=;
- b=kcxGmjX7Qyjm3LCkoPwNYo++bK69i7RGUqONKJgeXOn1/177hv3CM282LezEyhGIGI
- AFSM6Gq6wnn3MoWwgI9/8+MWLXtnLB7P8a7ac9mhWY8VsSnmOrKeBLAVIV5H3dlOV9Gk
- XmUsccLvJJrxz4BCXBaAvNTNDviglehGmUGFMGtydLmdHgVQc2qzB0vRdR2DBZPDWKS/
- BEgn7oZ1YtApIi7o9OvYyKB47I2eGs43/Pz3MEKHJp9sfRU+KCNK28QBc3drMbnnDioQ
- rBX8OF3akLN/Kwhf9A5KgoBZHxUKg15k+NmI9Bgk/whicZIZPY3qXZ8he/9/7cRp+9tt
- 4Yzg==
-X-Gm-Message-State: AOJu0YxCp8crmAH90jMV61Pv985sGxNpkQlQ98cOHqX1Z0DwtYNuZzSq
- Sexsev2yVi189iPG+RgXSHaor77iI3EKlJuOc0LWfymeyvjTlRQ9QNTe8DlPHrk=
-X-Google-Smtp-Source: AGHT+IEN/TKx0Av8Wq4BgsA53uWmm8ILmH3I38v3nN7TKH3Gx+nefBSiSBat/lrlentw0G0XOlJoWQ==
-X-Received: by 2002:a17:906:e297:b0:a77:ce4c:8c9c with SMTP id
- a640c23a62f3a-a7a0f0ffe2amr1327497466b.8.1721646255297; 
- Mon, 22 Jul 2024 04:04:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721646264; x=1722251064;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N5Md4ulxL95o26Yk8COW88V0WI0Iz0p2W7Xea2hC5X0=;
+ b=mOeZje39UJLDRqfGVM4Ic/b7bmddFCfk7zI6IwDOKaIV3pLNLruzIHf9Rct5sCZeer
+ xgC07mwDDAYD6pRjbMpyBBOdE6DooXMURnPS0BgAsE804QTrPZtskA0lP1C78IQq9VNk
+ F48LQxoFSolwcJ832+SbMMDDOZn6lrfNgQU2K12LNfeCLwBDpTdQ4WrLLvIhEwxIwstN
+ Z7p6uf/AWy6ZFZQae/Lt6MkZlxYA2SIjBbHQOx/ePCDZHuZEfVAnZhn/VGWo+PZf57UK
+ k2n0j7L3Hl/Y/SVZSG0d+DinjAtT5oPVzFxLjlPXn0bxuYJkm6l9S/4kUPuRTU3maqL0
+ btUg==
+X-Gm-Message-State: AOJu0Yx9AGamakjzgLfbln0+1MkMoYsGoGtA+xD35W0hAZ3ZvSATNiTX
+ G2v3GNbL3PPMyJuOuwSY4vuWsJpok9dRnElc2wcewwZYE3q/z0SVY8eAYuUgQ0bXmqUnzw6Czp2
+ v
+X-Google-Smtp-Source: AGHT+IE5NPpPdmE8l4TzWUyD14yNKEkIzbpnjZjn0H04VScby9QjVy1BTM5FLyxZlsnVB3mcFm/M+g==
+X-Received: by 2002:a05:6402:3486:b0:5a3:18a6:698a with SMTP id
+ 4fb4d7f45d1cf-5a47ac09492mr4527718a12.33.1721646264018; 
+ Mon, 22 Jul 2024 04:04:24 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c922296sm416720366b.179.2024.07.22.04.04.14
+ 4fb4d7f45d1cf-5a30c7d326csm5881186a12.86.2024.07.22.04.04.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:04:14 -0700 (PDT)
+ Mon, 22 Jul 2024 04:04:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8BE945F8B1;
- Mon, 22 Jul 2024 12:04:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B94B4620FD;
+ Mon, 22 Jul 2024 12:04:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 00/16] Final bits for 9.1-rc0 (docker, plugins, gdbstub,
- semihosting)
-Date: Mon, 22 Jul 2024 12:03:57 +0100
-Message-Id: <20240722110413.118418-1-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PULL 12/16] target/mips: Restrict semihosting to TCG
+Date: Mon, 22 Jul 2024 12:04:09 +0100
+Message-Id: <20240722110413.118418-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
+References: <20240722110413.118418-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,84 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-warn: No match for commit c135d5eaafe7aa2533da663d8e5a34a424b71eb9 found at https://gitlab.com/stsquad/qemu.git
-warn: Are you sure you pushed 'pull-target-arm-20240711-209-gc135d5eaaf' there?
-The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Merge tag 'pull-aspeed-20240721' of https://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
+Semihosting currently uses the TCG probe_access API. To prepare for
+encoding the TCG dependency in Kconfig, do not enable it unless TCG
+is available.
 
-are available in the Git repository at:
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240717105723.58965-6-philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240718094523.1198645-13-alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git pull-target-arm-20240711-209-gc135d5eaaf
-
-for you to fetch changes up to c135d5eaafe7aa2533da663d8e5a34a424b71eb9:
-
-  tests/tcg/aarch64: Fix test-mte.py (2024-07-22 09:38:17 +0100)
-
-----------------------------------------------------------------
-Alex Bennée (3):
-      testing: bump to latest libvirt-ci
-      gdbstub: Re-factor gdb command extensions
-      tests/plugins: use qemu_plugin_outs for inline stats
-
-Frédéric Pétrot (1):
-      plugins/execlog.c: correct dump of registers values
-
-Philippe Mathieu-Daudé (8):
-      semihosting: Include missing 'gdbstub/syscalls.h' header
-      target/m68k: Add semihosting stub
-      target/mips: Add semihosting stub
-      target/m68k: Restrict semihosting to TCG
-      target/mips: Restrict semihosting to TCG
-      target/riscv: Restrict semihosting to TCG
-      target/xtensa: Restrict semihosting to TCG
-      semihosting: Restrict to TCG
-
-Pierrick Bouvier (1):
-      plugins: fix mem callback array size
-
-Richard Henderson (1):
-      tests/tcg/aarch64: Fix test-mte.py
-
-Simon Hamelin (1):
-      plugins/stoptrigger: TCG plugin to stop execution under conditions
-
-Thomas Huth (1):
-      tests/avocado: Remove non-working sparc leon3 test
-
- MAINTAINERS                               |   1 -
- docs/devel/tcg-plugins.rst                |  22 +++++
- include/gdbstub/commands.h                |  19 ++--
- include/semihosting/syscalls.h            |   2 +
- target/arm/internals.h                    |   4 +-
- accel/tcg/plugin-gen.c                    |   3 +-
- contrib/plugins/execlog.c                 |   2 +-
- contrib/plugins/stoptrigger.c             | 151 ++++++++++++++++++++++++++++++
- gdbstub/gdbstub.c                         | 141 ++++++++++++++++------------
- target/arm/gdbstub.c                      |  16 +---
- target/arm/gdbstub64.c                    |  11 +--
- target/m68k/semihosting-stub.c            |  15 +++
- target/mips/tcg/sysemu/semihosting-stub.c |  15 +++
- tests/plugin/inline.c                     |  58 +++++++-----
- .gitlab-ci.d/cirrus/freebsd-13.vars       |   2 +-
- contrib/plugins/Makefile                  |   1 +
- semihosting/Kconfig                       |   1 +
- target/m68k/Kconfig                       |   2 +-
- target/m68k/meson.build                   |   5 +-
- target/mips/Kconfig                       |   2 +-
- target/mips/tcg/sysemu/meson.build        |   6 +-
- target/riscv/Kconfig                      |   4 +-
- target/xtensa/Kconfig                     |   2 +-
- tests/avocado/machine_sparc_leon3.py      |  37 --------
- tests/lcitool/libvirt-ci                  |   2 +-
- tests/tcg/aarch64/gdbstub/test-mte.py     |   2 +-
- tests/vm/generated/freebsd.json           |  14 +--
- 27 files changed, 370 insertions(+), 170 deletions(-)
- create mode 100644 contrib/plugins/stoptrigger.c
- create mode 100644 target/m68k/semihosting-stub.c
- create mode 100644 target/mips/tcg/sysemu/semihosting-stub.c
- delete mode 100644 tests/avocado/machine_sparc_leon3.py
-
+diff --git a/target/mips/Kconfig b/target/mips/Kconfig
+index eb19c94c7d..876048b150 100644
+--- a/target/mips/Kconfig
++++ b/target/mips/Kconfig
+@@ -1,6 +1,6 @@
+ config MIPS
+     bool
+-    select SEMIHOSTING
++    imply SEMIHOSTING if TCG
+ 
+ config MIPS64
+     bool
 -- 
 2.39.2
 
