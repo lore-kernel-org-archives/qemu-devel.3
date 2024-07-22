@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95BFC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040AEC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVtoU-0002GY-6H; Mon, 22 Jul 2024 10:14:54 -0400
+	id 1sVtoo-0003Tg-05; Mon, 22 Jul 2024 10:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sVtoS-0002B3-QF
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:14:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sVtol-0003L6-C8; Mon, 22 Jul 2024 10:15:12 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sVtoQ-00024i-4Y
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:14:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721657688;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YH2HdWk31OF/j29uTTroj2mPTh75IVMdYHocGe8eFhI=;
- b=Ixpkh2np59xV0mnDTDZv4OtXOxvbb/aZDDMm7iUSoexI7pd0Oe/qM011w4EkWiaHFh1SQU
- cWbPBKMci3tTPzk6kdfmk+jcK0xaF3XsQDvD+wHxMyGS1eOEGDJKLzH9BSb8z5y/OI9GYr
- FVWDbdoQYDqTXQRjFzhnYToDpMkcjUg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-wkFxgSLrPBaazEBCECz0EQ-1; Mon,
- 22 Jul 2024 10:14:46 -0400
-X-MC-Unique: wkFxgSLrPBaazEBCECz0EQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D4CD19560A1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 14:14:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.102])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA4E51955D44; Mon, 22 Jul 2024 14:14:43 +0000 (UTC)
-Date: Mon, 22 Jul 2024 15:14:40 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sVtoh-0002CR-Qy; Mon, 22 Jul 2024 10:15:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721657708; x=1753193708;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=6ZzsOV0SsccAhlyGxokRhWmGrLOJAiEG1PQ1JxrnUMc=;
+ b=eyM0iYUKoRpIk++0bNcIgvMnnlBPnaf8YnMFDSyQlHn7yVxe0+pNtMwA
+ LxhNtX1euCt3Q6d5HBAAg2w4KIH9xUvjA+7DjEZSWvOIjIhcx3qtpLKDo
+ Ns4XpVT8fUV+1jxoX8nLF92vqdS5hJGUOcUS1rpTAucl+WTlNXNVbJxOM
+ LeZY4aIQjFJXCUd4LBtpbRbZn4TD6YCJE/GyMiv2UrduXe3qBWCMknMrB
+ 4pDg4/tCXG0AXNxySaJA7BGVomJgwzrwE8bAWZSDoZEZtXrXZWth3i3Dn
+ bpSORyMpJcTB/hCAjtJeRU00RP6jQ95DhcQXbub4HXBqubHWBlje+Vyon w==;
+X-CSE-ConnectionGUID: qDnH1lJlQvGYm3x4z3+GxQ==
+X-CSE-MsgGUID: /1LsVifMSg2W8TxrfZiL2A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11141"; a="41755203"
+X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="41755203"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2024 07:14:50 -0700
+X-CSE-ConnectionGUID: wDAU7JD6TwyVWg1E/NElIg==
+X-CSE-MsgGUID: GZ6yDPBXRMe5vcfqwQRJXg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="89346284"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa001.jf.intel.com with ESMTP; 22 Jul 2024 07:14:44 -0700
+Date: Mon, 22 Jul 2024 22:30:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH for-9.0] qapi: drop unused
- QCryptoBlockCreateOptionsLUKS.detached-header
-Message-ID: <Zp5pUDQhOc150ts_@redhat.com>
-References: <20240319153908.194975-1-berrange@redhat.com>
- <87jzlyyzo0.fsf@pond.sub.org> <Zp5YICB4dCjh3e-X@redhat.com>
- <8734o134gv.fsf@pond.sub.org>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
+Message-ID: <Zp5tBHBoeXZy44ys@intel.com>
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-3-zhao1.liu@intel.com>
+ <87wmld361y.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8734o134gv.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+In-Reply-To: <87wmld361y.fsf@pond.sub.org>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,87 +93,214 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 04:07:28PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+Hi Markus,
+
+On Mon, Jul 22, 2024 at 03:33:13PM +0200, Markus Armbruster wrote:
+> Date: Mon, 22 Jul 2024 15:33:13 +0200
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
 > 
-> > On Tue, Mar 19, 2024 at 05:06:07PM +0100, Markus Armbruster wrote:
-> >> Daniel P. Berrangé <berrange@redhat.com> writes:
-> >> 
-> >> > The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
-> >> > was left over from earlier patch iterations.
-> >> >
-> >> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> >> > ---
-> >> >  qapi/crypto.json | 5 +----
-> >> >  1 file changed, 1 insertion(+), 4 deletions(-)
-> >> >
-> >> > diff --git a/qapi/crypto.json b/qapi/crypto.json
-> >> > index 931c88e688..ad9e3d0297 100644
-> >> > --- a/qapi/crypto.json
-> >> > +++ b/qapi/crypto.json
-> >> > @@ -226,8 +226,6 @@
-> >> >  # @iter-time: number of milliseconds to spend in PBKDF passphrase
-> >> >  #     processing.  Currently defaults to 2000. (since 2.8)
-> >> >  #
-> >> > -# @detached-header: create a detached LUKS header. (since 9.0)
-> >> > -#
-> >> >  # Since: 2.6
-> >> >  ##
-> >> >  { 'struct': 'QCryptoBlockCreateOptionsLUKS',
-> >> > @@ -237,8 +235,7 @@
-> >> >              '*ivgen-alg': 'QCryptoIVGenAlgorithm',
-> >> >              '*ivgen-hash-alg': 'QCryptoHashAlgorithm',
-> >> >              '*hash-alg': 'QCryptoHashAlgorithm',
-> >> > -            '*iter-time': 'int',
-> >> > -            '*detached-header': 'bool'}}
-> >> > +            '*iter-time': 'int' }}
-> >> >  
-> >> >  ##
-> >> >  # @QCryptoBlockOpenOptions:
-> >> 
-> >> Glad you caught this in time.
-> >> 
-> >> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Zhao Liu <zhao1.liu@intel.com> writes:
+> 
+> > Introduce smp-cache object so that user could define cache properties.
 > >
-> > Urgh, it appears this patch got lost and was not in fact included in
-> > 9.0.  What's your opinion on removing it from 9.1 with no deprecation
-> > period ?  Functionally it did absolutely nothing even if used, so
-> > removing it at most would cause an incorrect field to now be rejected.
+> > In smp-cache object, define cache topology based on CPU topology level
+> > with two reasons:
+> >
+> > 1. In practice, a cache will always be bound to the CPU container
+> >    (either private in the CPU container or shared among multiple
+> >    containers), and CPU container is often expressed in terms of CPU
+> >    topology level.
+> > 2. The x86's cache-related CPUIDs encode cache topology based on APIC
+> >    ID's CPU topology layout. And the ACPI PPTT table that ARM/RISCV
+> >    relies on also requires CPU containers to help indicate the private
+> >    shared hierarchy of the cache. Therefore, for SMP systems, it is
+> >    natural to use the CPU topology hierarchy directly in QEMU to define
+> >    the cache topology.
+> >
+> > Currently, separated L1 cache (L1 data cache and L1 instruction cache)
+> > with unified higher-level cache (e.g., unified L2 and L3 caches), is the
+> > most common cache architectures.
+> >
+> > Therefore, enumerate the L1 D-cache, L1 I-cache, L2 cache and L3 cache
+> > with smp-cache object to add the basic cache topology support.
+> >
+> > Suggested-by: Daniel P. Berrange <berrange@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Doc section "Deprecated features":
+> [...]
 > 
->     In general features are intended to be supported indefinitely once
->     introduced into QEMU. In the event that a feature needs to be removed,
->     it will be listed in this section. The feature will remain functional for the
->     release in which it was deprecated and one further release. After these two
->     releases, the feature is liable to be removed. Deprecated features may also
->     generate warnings on the console when QEMU starts up, or if activated via a
->     monitor command, however, this is not a mandatory requirement.
+> > diff --git a/qapi/machine-common.json b/qapi/machine-common.json
+> > index 82413c668bdb..8b8c0e9eeb86 100644
+> > --- a/qapi/machine-common.json
+> > +++ b/qapi/machine-common.json
+> > @@ -64,3 +64,53 @@
+> >    'prefix': 'CPU_TOPO_LEVEL',
+> >    'data': [ 'invalid', 'thread', 'core', 'module', 'cluster',
+> >              'die', 'socket', 'book', 'drawer', 'default' ] }
+> > +
+> > +##
+> > +# @SMPCacheName:
 > 
-> Note this talks about *features*.
-> 
-> The software industry has a longstanding habit of declaring bugs
-> features.  By removing @detached-header without a deprecation period, we
-> effectively do the opposite.  The opposite of something bad must be
-> good, right?  ;-)
-> 
-> Seriously, it's a judgement call.  I'm happy to defer to your judgement
-> here.
+> Why the SMP in this name?  Because it's currently only used by SMP
+> stuff?  Or is there another reason I'm missing?
 
-Ok, I'm going to include this in 9.1.  The chances of something already
-using the new 'detached header' feature from 9.0 is small. Out of that
-small set, the chances of something setting the (useless) 'detached-header'
-QAPI field is even smaller. 
+Yes, I suppose it can only be used in SMP case.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Because Intel's heterogeneous CPUs have different topologies for cache,
+for example, Alderlake's L2, for P core, L2 is per P-core, but for E
+core, L2 is per module (4 E cores per module). Thus I would like to keep
+the topology semantics of this object and -smp as consistent as possible.
+
+Do you agree?
+
+> The more idiomatic QAPI name would be SmpCacheName.  Likewise for the
+> other type names below.
+
+I hesitated here as well, but considering that SMPConfiguration is "SMP"
+and not "Smp", it has that name. I'll change to SmpCacheName for strict
+initial capitalization.
+
+> > +#
+> > +# An enumeration of cache for SMP systems.  The cache name here is
+> > +# a combination of cache level and cache type.
+> 
+> The first sentence feels awkward.  Maybe
+> 
+>    # Caches an SMP system may have.
+> 
+> > +#
+> > +# @l1d: L1 data cache.
+> > +#
+> > +# @l1i: L1 instruction cache.
+> > +#
+> > +# @l2: L2 (unified) cache.
+> > +#
+> > +# @l3: L3 (unified) cache
+> > +#
+> > +# Since: 9.1
+> > +##
+> 
+> This assumes the L1 cache is split, and L2 and L3 are unified.
+> 
+> If we model a system with say a unified L1 cache, we'd simply extend
+> this enum.  No real difference to extending it for additional levels.
+> Correct?
+
+Yes. For unified L1, we just need add a "l1" which is opposed to l1i/l1d.
+
+> > +{ 'enum': 'SMPCacheName',
+> > +  'prefix': 'SMP_CACHE',
+> 
+> Why not call it SmpCache, and ditch 'prefix'?
+
+Because the SMPCache structure in smp_cache.h uses the similar name:
+
++#define TYPE_SMP_CACHE "smp-cache"
++OBJECT_DECLARE_SIMPLE_TYPE(SMPCache, SMP_CACHE)
++
++struct SMPCache {
++    Object parent_obj;
++
++    SMPCacheProperty props[SMP_CACHE__MAX];
++};
+
+Naming is always difficult, so I would use Smpcache here if you feel that
+SmpCache is sufficient to distinguish it from SMPCache, or I would also
+rename the SMPCache structure to SMPCacheState in smp_cache.h.
+
+Which way do you prefer?
+
+> > +  'data': [ 'l1d', 'l1i', 'l2', 'l3' ] }
+> 
+> > +
+> > +##
+> > +# @SMPCacheProperty:
+> 
+> Sure we want to call this "property" (singular) and not "properties"?
+> What if we add members to this type?
+> 
+> > +#
+> > +# Cache information for SMP systems.
+> > +#
+> > +# @name: Cache name.
+> > +#
+> > +# @topo: Cache topology level.  It accepts the CPU topology
+> > +#     enumeration as the parameter, i.e., CPUs in the same
+> > +#     topology container share the same cache.
+> > +#
+> > +# Since: 9.1
+> > +##
+> > +{ 'struct': 'SMPCacheProperty',
+> > +  'data': {
+> > +  'name': 'SMPCacheName',
+> > +  'topo': 'CpuTopologyLevel' } }
+> 
+> We tend to avoid abbreviations in the QAPI schema.  Please consider
+> naming this 'topology'.
+
+Sure!
+
+> > +
+> > +##
+> > +# @SMPCacheProperties:
+> > +#
+> > +# List wrapper of SMPCacheProperty.
+> > +#
+> > +# @caches: the SMPCacheProperty list.
+> > +#
+> > +# Since 9.1
+> > +##
+> > +{ 'struct': 'SMPCacheProperties',
+> > +  'data': { 'caches': ['SMPCacheProperty'] } }
+> 
+> Ah, now I see why you used the singular above!
+> 
+> However, this type holds the properties of call caches.  It is a list
+> where each element holds the properties of a single cache.  Calling the
+> former "cache property" and the latter "cache properties" is confusing.
+
+Yes...
+
+> SmpCachesProperties and SmpCacheProperties would put the singular
+> vs. plural where it belongs.  Sounds a bit awkward to me, though.
+> Naming is hard.
+
+For SmpCachesProperties, it's easy to overlook the first "s".
+
+> Other ideas, anybody?
+
+Maybe SmpCacheOptions or SmpCachesPropertyWrapper?
+
+> > diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+> > index b1581988e4eb..25394f2cda50 100644
+> > --- a/qapi/qapi-schema.json
+> > +++ b/qapi/qapi-schema.json
+> > @@ -64,11 +64,11 @@
+> >  { 'include': 'compat.json' }
+> >  { 'include': 'control.json' }
+> >  { 'include': 'introspect.json' }
+> > -{ 'include': 'qom.json' }
+> > -{ 'include': 'qdev.json' }
+> >  { 'include': 'machine-common.json' }
+> >  { 'include': 'machine.json' }
+> >  { 'include': 'machine-target.json' }
+> > +{ 'include': 'qom.json' }
+> > +{ 'include': 'qdev.json' }
+> >  { 'include': 'replay.json' }
+> >  { 'include': 'yank.json' }
+> >  { 'include': 'misc.json' }
+> 
+> Worth explaining in the commit message, I think.
+
+Because of the include relationship between the json files, I need to
+change the order. I had a "crazy" proposal to clean up this:
+https://lore.kernel.org/qemu-devel/20240517062748.782366-1-zhao1.liu@intel.com/
+
+Thanks,
+Zhao
 
 
