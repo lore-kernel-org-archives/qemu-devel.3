@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EC0C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FBD3C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkf-00072j-2x; Sun, 21 Jul 2024 20:18:05 -0400
+	id 1sVgkW-0006AL-1a; Sun, 21 Jul 2024 20:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkc-0006pD-2D
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkQ-0005XK-H7
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgka-0005pN-Kb
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkN-0005nR-GY
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607480;
+ s=mimecast20190719; t=1721607465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YsjbOlvo43JAEesCygimaYMAVGDqCDgHnftdBHHCG1k=;
- b=Jame7BYmofqLV6GV69L3RedE6CjHhulOVvdR0wgaIkjyO8qqM+mOicf3X3kZJg4lrAW15k
- LiOEBk7BJfuO05vCX0Ibln2chn4a99fT50IwtPjbFMW3bixnIMUEwTFo1S1C29i6fbHzD5
- hEk0xTVwmCcACRYZAVBO9httV8+swdg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qR3YDVYd2Wg1NGSld2m3zgomMPSJCBgN770Yvk3JKto=;
+ b=jLd9vTxsDfy3/5krU7qmKxO01yA1Rgkr1d3Gddv9E+EaOlVxuNeM7wkHODrscPAbevElsE
+ ieZvwtoBePzrhSeaD/3rZ12zacBYEZ6YXovtLlz67lDzgsHvII5xk/MYonUaupg1DgZTuR
+ gae5yKpW44hHT0TYJOa8nRbUobi5s28=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-f4JoZPfWN3KzAKWpCl5yVA-1; Sun, 21 Jul 2024 20:17:58 -0400
-X-MC-Unique: f4JoZPfWN3KzAKWpCl5yVA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-367962f0cb0so2112121f8f.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:58 -0700 (PDT)
+ us-mta-169-s0_JJ5xfPiuPJ8_vON2Phw-1; Sun, 21 Jul 2024 20:17:44 -0400
+X-MC-Unique: s0_JJ5xfPiuPJ8_vON2Phw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42725ef39e2so26912025e9.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607477; x=1722212277;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YsjbOlvo43JAEesCygimaYMAVGDqCDgHnftdBHHCG1k=;
- b=aoYUySKaNmm5iVLyApRTbTwE1R+YSShC9RpyUxZIzaZ1fLstjZ2xbL8T4oMSUOersn
- H+cqxCZ6XNcVmIctBrq4/oChZ0e5VfdtS69dLsZTZrvsqZD+vOVZmD2W/APxT+IqPD/y
- GZzn8Mn2w3gXWkaCA0xGucFm+VazXWSnTDJVsc6OLEOr3LtLeQ+ugJ/Q9zXLTyFHvG0b
- 3NgVJ6mglgLclIiWEPoa2VOlFiVBsvftz3rA/FCPendYDqPj8LzlsNfFaVA2MagYURyP
- YfGQokysYKegIGzFwdWcS8nKc+9hLNUlTiXVzzW2809KOwQBIPofZvYqpe/dWygE5u/R
- 0EFg==
-X-Gm-Message-State: AOJu0Yw/9RIcryC5m34GZFwYr0pP3z53wZoHLUcFb2osvBalfD4VZwy2
- gBhoG6PAOEZrP/JZ1K8aHMljgvHU+J47mjT2/zhjQFSN/CUdn90XjpJ0FocEW9vxUNjlRwcoH73
- pDJqW41u50A7nKDF557K47hslCAY8qPXAGBE0mielY/sx/+YzaUV29h35/arGThWk8XH6Pg6Rg7
- 5s1VkP1IYwg/wCo0ZCbSLiTAViGz2L5Q==
-X-Received: by 2002:a5d:6d08:0:b0:367:8fc3:a25b with SMTP id
- ffacd0b85a97d-369bae6adcdmr3890739f8f.42.1721607476970; 
- Sun, 21 Jul 2024 17:17:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHp9fc8vx9XKKXRF9DrIWuQQZ1Rq8vZati0wdVvpF80Fnjy8lhkZuVDG8DEWdOFP6jNLoipXA==
-X-Received: by 2002:a5d:6d08:0:b0:367:8fc3:a25b with SMTP id
- ffacd0b85a97d-369bae6adcdmr3890723f8f.42.1721607476204; 
- Sun, 21 Jul 2024 17:17:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607460; x=1722212260;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qR3YDVYd2Wg1NGSld2m3zgomMPSJCBgN770Yvk3JKto=;
+ b=Tx2Lo0VpfVXPYcR6uRuCT4WP20j4+9FKD59rLC16BCDg52gp85qQb0J8JNeSDM2BnA
+ wFcYxfpqo0QREoDAHunJ1P+GewEQ45LtDRdDslP8yvSqtArVYl4JNciyp8biUXbkRPef
+ OwKXgS5uP1Ocdpr0MH71nUe5YyO0s9skdpPr4HRquMk7JF1GfoLDZvCV8tot+K679/nr
+ zpgAXi4G40u3vjyBSuNWTS1wJwh1Y9Dcx+Cu8d8CHFJhr2Vlpilgdb4HwjQMHPVkKCcU
+ 3QVrjDJch5edKHOyusL1D7qbC0xOBs1JiinzyK8oeXAJ1ImYuju91eGeoY72tGXEUCZ3
+ E6HQ==
+X-Gm-Message-State: AOJu0Ywl1z/+VCY4ySlw1rz0wMh7z08oHU4Rfk8nYLibkW+akt3bBGRu
+ hP/kzyE6hob3Mc9PchD+ujMad10H2D/DYf23uTbNALj598kEfs1tEf0U5dZqfn+Iu7IonJjO/Se
+ dIxkwrQf1WgsVsbhmmwjzPXezcoWLaweloakGcYQbZhcqG+uIm1lLRRbnfnkooe2DdSnsb/T7wn
+ EeP1oAgoio40m0b4xVPT+dp/uOZIBtDA==
+X-Received: by 2002:a05:600c:1547:b0:425:5ec3:570b with SMTP id
+ 5b1f17b1804b1-427dc578efdmr28707605e9.35.1721607460207; 
+ Sun, 21 Jul 2024 17:17:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEje2D6euFaTQKRQVbBqxfL0t+RH1yWtfKfyi7Q4xwxL40Wm8Gat+um29Oj2O0ti0ja3MpU3g==
+X-Received: by 2002:a05:600c:1547:b0:425:5ec3:570b with SMTP id
+ 5b1f17b1804b1-427dc578efdmr28707485e9.35.1721607459701; 
+ Sun, 21 Jul 2024 17:17:39 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ceda0sm7006837f8f.87.2024.07.21.17.17.55
+ 5b1f17b1804b1-427d6934ec6sm106843415e9.41.2024.07.21.17.17.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:55 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:54 -0400
+ Sun, 21 Jul 2024 17:17:39 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 31/63] pcie_sriov: Ensure PF and VF are mutually exclusive
-Message-ID: <22c343dd303098c9ae2e19363b3571aedb383052.1721607331.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 23/63] virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
+Message-ID: <2256e8482b2bba88abcc734dbc6951b825773f0b.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -102,34 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-A device cannot be a SR-IOV PF and a VF at the same time.
+Add VIRTIO_F_IN_ORDER feature support in virtqueue_split_pop and
+virtqueue_packed_pop.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240715-sriov-v5-3-3f5539093ffc@daynix.com>
+VirtQueueElements popped from the available/descritpor ring are added to
+the VirtQueue's used_elems array in-order and in the same fashion as
+they would be added the used and descriptor rings, respectively.
+
+This will allow us to keep track of the current order, what elements
+have been written, as well as an element's essential data after being
+processed.
+
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240710125522.4168043-3-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pcie_sriov.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/virtio/virtio.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 56523ab4e8..6c79658b4c 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -42,6 +42,11 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     uint8_t *cfg = dev->config + offset;
-     uint8_t *wmask;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 583a224163..98eb601b09 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1505,7 +1505,7 @@ static void *virtqueue_alloc_element(size_t sz, unsigned out_num, unsigned in_nu
  
-+    if (pci_is_vf(dev)) {
-+        error_setg(errp, "a device cannot be both an SR-IOV PF and a VF");
-+        return false;
+ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+ {
+-    unsigned int i, head, max;
++    unsigned int i, head, max, idx;
+     VRingMemoryRegionCaches *caches;
+     MemoryRegionCache indirect_desc_cache;
+     MemoryRegionCache *desc_cache;
+@@ -1629,6 +1629,13 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+         elem->in_sg[i] = iov[out_num + i];
+     }
+ 
++    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
++        idx = (vq->last_avail_idx - 1) % vq->vring.num;
++        vq->used_elems[idx].index = elem->index;
++        vq->used_elems[idx].len = elem->len;
++        vq->used_elems[idx].ndescs = elem->ndescs;
 +    }
 +
-     if (total_vfs) {
-         uint16_t ari_cap = pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI);
-         uint16_t first_vf_devfn = dev->devfn + vf_offset;
+     vq->inuse++;
+ 
+     trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
+@@ -1762,6 +1769,13 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+ 
+     elem->index = id;
+     elem->ndescs = (desc_cache == &indirect_desc_cache) ? 1 : elem_entries;
++
++    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
++        vq->used_elems[vq->last_avail_idx].index = elem->index;
++        vq->used_elems[vq->last_avail_idx].len = elem->len;
++        vq->used_elems[vq->last_avail_idx].ndescs = elem->ndescs;
++    }
++
+     vq->last_avail_idx += elem->ndescs;
+     vq->inuse += elem->ndescs;
+ 
 -- 
 MST
 
