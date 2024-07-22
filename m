@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5231EC3DA70
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05436C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn48-0002kQ-7Q; Mon, 22 Jul 2024 03:02:36 -0400
+	id 1sVn47-0002Vo-3n; Mon, 22 Jul 2024 03:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3t-0001SD-KD
+ id 1sVn3s-0001S8-CM
  for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3r-0006Xy-2E
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:21 -0400
+ id 1sVn3n-0006Xd-Ti
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631734;
+ s=mimecast20190719; t=1721631729;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QDm+bALEuRyr/I6SUsJtjqWPSF0aymjvBOySRpCpJs8=;
- b=S7G2scZnohl6jHqmmLONbFZN88aNpQIyw890B+WPZjtcNw90ldixdTOv1fqxx2fWxuDYxl
- ts01tGcUE8hC7ujHhf39h7IPQZ/7msYj8Za6yejBPYVIEEjLJ4kOQQs0iHAw82ZKh/nGJg
- EuWtEEA2kta+MBSvrfrUL6CSOedF9F4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YGBUTi+kEzU/5R5vJJYayJk8oJTN0dkMbx5vlt8m6pI=;
+ b=FORWrLGjbNHmlm482ZmXlQgr0Gx7967a73IXbukovymzgvWTkFZLaQ0jTNVjQzywh8MtaO
+ Z+Fj1J0lUMJd8Ea/Y6c0/4ZMzCJKu+3XveG/YwmgdxNqDkX2hWCoFxH4K3gXtSVe3btM0p
+ Lkk2UibhJtfbG2v4Cr6SQjRPJFirvDc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-4nsZ5ngKMpyDclfZtx8Y6A-1; Mon,
- 22 Jul 2024 03:02:11 -0400
-X-MC-Unique: 4nsZ5ngKMpyDclfZtx8Y6A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-HolEwKP9NDK-vJOirmycfg-1; Mon,
+ 22 Jul 2024 03:02:05 -0400
+X-MC-Unique: HolEwKP9NDK-vJOirmycfg-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFBB518EB1B5; Mon, 22 Jul 2024 07:02:04 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCC4B1955D55; Mon, 22 Jul 2024 07:02:04 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.252])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B05E6191C5C5; Mon, 22 Jul 2024 07:01:51 +0000 (UTC)
+ id 428921944A9A; Mon, 22 Jul 2024 07:01:50 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 12/25] qga: conditionalize schema for commands only supported
- on Windows
-Date: Mon, 22 Jul 2024 10:01:09 +0300
-Message-ID: <20240722070122.27615-13-kkostiuk@redhat.com>
+Subject: [PULL 11/25] qga: conditionalize schema for commands requiring
+ linux/win32
+Date: Mon, 22 Jul 2024 10:01:08 +0300
+Message-ID: <20240722070122.27615-12-kkostiuk@redhat.com>
 In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -85,9 +85,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
+Some commands were blocked based on CONFIG_FSFREEZE, but their
+impl had nothing todo with CONFIG_FSFREEZE, and were instead
+either Linux-only, or Win+Linux-only.
+
 Rather than creating stubs for every command that just return
 QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-fully exclude generation of the commands on non-Windows.
+fully exclude generation of the stats and fsinfo commands on
+platforms that can't support them.
 
 The command will be rejected at QMP dispatch time instead,
 avoiding reimplementing rejection by blocking the stub commands.
@@ -102,98 +107,275 @@ to
 This has the additional benefit that the QGA protocol reference
 now documents what conditions enable use of the command.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20240712132459.3974109-13-berrange@redhat.com>
+Message-ID: <20240712132459.3974109-12-berrange@redhat.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/commands-posix.c |  9 ---------
- qga/qapi-schema.json | 15 ++++++++++-----
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ qga/commands-bsd.c   | 24 -----------------------
+ qga/commands-posix.c | 30 ++---------------------------
+ qga/qapi-schema.json | 45 +++++++++++++++++++++++++++-----------------
+ 3 files changed, 30 insertions(+), 69 deletions(-)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 838dc3cf98..b7f96aa005 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -1207,8 +1207,6 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
-     blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-fstrim"));
- #endif
- 
--    blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-get-devices"));
+diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
+index 17bddda1cf..9ce48af311 100644
+--- a/qga/commands-bsd.c
++++ b/qga/commands-bsd.c
+@@ -149,30 +149,6 @@ int qmp_guest_fsfreeze_do_thaw(Error **errp)
+     }
+     return ret;
+ }
 -
-     return blockedrpcs;
- }
- 
-@@ -1419,13 +1417,6 @@ GuestOSInfo *qmp_guest_get_osinfo(Error **errp)
-     return info;
- }
- 
--GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
+-GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
 -{
 -    error_setg(errp, QERR_UNSUPPORTED);
--
 -    return NULL;
 -}
 -
- #ifndef HOST_NAME_MAX
- # ifdef _POSIX_HOST_NAME_MAX
- #  define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
+-GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+ #endif /* CONFIG_FSFREEZE */
+ 
+ #ifdef HAVE_GETIFADDRS
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 09d08ee2ca..838dc3cf98 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1146,12 +1146,6 @@ error:
+ 
+ #if !defined(CONFIG_FSFREEZE)
+ 
+-GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+ GuestFsfreezeStatus qmp_guest_fsfreeze_status(Error **errp)
+ {
+     error_setg(errp, QERR_UNSUPPORTED);
+@@ -1181,25 +1175,6 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
+ 
+     return 0;
+ }
+-
+-GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+ #endif /* CONFIG_FSFREEZE */
+ 
+ #if !defined(CONFIG_FSTRIM)
+@@ -1217,10 +1192,9 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+ #if !defined(CONFIG_FSFREEZE)
+     {
+         const char *list[] = {
+-            "guest-get-fsinfo", "guest-fsfreeze-status",
++            "guest-fsfreeze-status",
+             "guest-fsfreeze-freeze", "guest-fsfreeze-freeze-list",
+-            "guest-fsfreeze-thaw", "guest-get-fsinfo",
+-            "guest-get-disks", NULL};
++            "guest-fsfreeze-thaw", NULL};
+         char **p = (char **)list;
+ 
+         while (*p) {
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 9bd5aa53bc..de3fc46d2e 100644
+index 79ed4f0e21..9bd5aa53bc 100644
 --- a/qga/qapi-schema.json
 +++ b/qga/qapi-schema.json
-@@ -1527,7 +1527,8 @@
- # @pci: PCI device
- ##
- { 'enum': 'GuestDeviceType',
--  'data': [ 'pci' ] }
-+  'data': [ 'pci' ],
-+  'if': 'CONFIG_WIN32' }
+@@ -870,7 +870,8 @@
+ { 'enum': 'GuestDiskBusType',
+   'data': [ 'ide', 'fdc', 'scsi', 'virtio', 'xen', 'usb', 'uml', 'sata',
+             'sd', 'unknown', 'ieee1394', 'ssa', 'fibre', 'raid', 'iscsi',
+-            'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ] }
++            'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ],
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
  
  ##
- # @GuestDeviceIdPCI:
-@@ -1539,7 +1540,8 @@
- # Since: 5.2
+@@ -888,7 +889,8 @@
  ##
- { 'struct': 'GuestDeviceIdPCI',
--  'data': { 'vendor-id': 'uint16', 'device-id': 'uint16' } }
-+  'data': { 'vendor-id': 'uint16', 'device-id': 'uint16' },
-+  'if': 'CONFIG_WIN32' }
+ { 'struct': 'GuestPCIAddress',
+   'data': {'domain': 'int', 'bus': 'int',
+-           'slot': 'int', 'function': 'int'} }
++           'slot': 'int', 'function': 'int'},
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
  
  ##
- # @GuestDeviceId:
-@@ -1553,7 +1555,8 @@
- { 'union': 'GuestDeviceId',
-   'base': { 'type': 'GuestDeviceType' },
+ # @GuestCCWAddress:
+@@ -907,7 +909,8 @@
+   'data': {'cssid': 'int',
+            'ssid': 'int',
+            'subchno': 'int',
+-           'devno': 'int'} }
++           'devno': 'int'},
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+ ##
+ # @GuestDiskAddress:
+@@ -936,7 +939,8 @@
+            'bus-type': 'GuestDiskBusType',
+            'bus': 'int', 'target': 'int', 'unit': 'int',
+            '*serial': 'str', '*dev': 'str',
+-           '*ccw-address': 'GuestCCWAddress'} }
++           '*ccw-address': 'GuestCCWAddress'},
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+ ##
+ # @GuestNVMeSmart:
+@@ -973,7 +977,8 @@
+            'media-errors-lo': 'uint64',
+            'media-errors-hi': 'uint64',
+            'number-of-error-log-entries-lo': 'uint64',
+-           'number-of-error-log-entries-hi': 'uint64' } }
++           'number-of-error-log-entries-hi': 'uint64' },
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+ ##
+ # @GuestDiskSmart:
+@@ -987,7 +992,8 @@
+ { 'union': 'GuestDiskSmart',
+   'base': { 'type': 'GuestDiskBusType' },
    'discriminator': 'type',
--  'data': { 'pci': 'GuestDeviceIdPCI' } }
-+  'data': { 'pci': 'GuestDeviceIdPCI' },
-+  'if': 'CONFIG_WIN32' }
+-  'data': { 'nvme': 'GuestNVMeSmart' } }
++  'data': { 'nvme': 'GuestNVMeSmart' },
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
  
  ##
- # @GuestDeviceInfo:
-@@ -1574,7 +1577,8 @@
-       '*driver-date': 'int',
-       '*driver-version': 'str',
-       '*id': 'GuestDeviceId'
--  } }
-+  },
-+  'if': 'CONFIG_WIN32' }
+ # @GuestDiskInfo:
+@@ -1012,7 +1018,8 @@
+ { 'struct': 'GuestDiskInfo',
+   'data': {'name': 'str', 'partition': 'bool', '*dependencies': ['str'],
+            '*address': 'GuestDiskAddress', '*alias': 'str',
+-           '*smart': 'GuestDiskSmart'} }
++           '*smart': 'GuestDiskSmart'},
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
  
  ##
- # @guest-get-devices:
-@@ -1586,7 +1590,8 @@
+ # @guest-get-disks:
+@@ -1025,7 +1032,8 @@
  # Since: 5.2
  ##
- { 'command': 'guest-get-devices',
--  'returns': ['GuestDeviceInfo'] }
-+  'returns': ['GuestDeviceInfo'],
-+  'if': 'CONFIG_WIN32' }
+ { 'command': 'guest-get-disks',
+-  'returns': ['GuestDiskInfo'] }
++  'returns': ['GuestDiskInfo'],
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
  
  ##
- # @GuestAuthorizedKeys:
+ # @GuestFilesystemInfo:
+@@ -1051,7 +1059,8 @@
+ { 'struct': 'GuestFilesystemInfo',
+   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
+            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
+-           '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']} }
++           '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']},
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+ ##
+ # @guest-get-fsinfo:
+@@ -1064,7 +1073,8 @@
+ # Since: 2.2
+ ##
+ { 'command': 'guest-get-fsinfo',
+-  'returns': ['GuestFilesystemInfo'] }
++  'returns': ['GuestFilesystemInfo'],
++  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
+ 
+ ##
+ # @guest-set-user-password:
+@@ -1703,7 +1713,8 @@
+            '*ios-pgr': 'uint64',
+            '*total-ticks': 'uint64',
+            '*weight-ticks': 'uint64'
+-           } }
++           },
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestDiskStatsInfo:
+@@ -1721,7 +1732,7 @@
+            'major': 'uint64',
+            'minor': 'uint64',
+            'stats': 'GuestDiskStats' },
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-diskstats:
+@@ -1734,7 +1745,7 @@
+ ##
+ { 'command': 'guest-get-diskstats',
+   'returns': ['GuestDiskStatsInfo'],
+-  'if': 'CONFIG_POSIX'
++  'if': 'CONFIG_LINUX'
+ }
+ 
+ ##
+@@ -1748,7 +1759,7 @@
+ ##
+ { 'enum': 'GuestCpuStatsType',
+   'data': [ 'linux' ],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ 
+ ##
+@@ -1794,7 +1805,7 @@
+            '*guest': 'uint64',
+            '*guestnice': 'uint64'
+            },
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestCpuStats:
+@@ -1809,7 +1820,7 @@
+   'base': { 'type': 'GuestCpuStatsType' },
+   'discriminator': 'type',
+   'data': { 'linux': 'GuestLinuxCpuStats' },
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-cpustats:
+@@ -1822,5 +1833,5 @@
+ ##
+ { 'command': 'guest-get-cpustats',
+   'returns': ['GuestCpuStats'],
+-  'if': 'CONFIG_POSIX'
++  'if': 'CONFIG_LINUX'
+ }
 -- 
 2.45.2
 
