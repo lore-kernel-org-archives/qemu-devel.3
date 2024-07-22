@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8DF7C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C076C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgmT-0008Ls-Rt; Sun, 21 Jul 2024 20:19:57 -0400
+	id 1sVgmS-00086E-Gb; Sun, 21 Jul 2024 20:19:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglf-0003aj-53
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglH-0001wB-AO
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglc-0005zF-GK
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglD-0005vV-1l
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607543;
+ s=mimecast20190719; t=1721607518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sKWGQeqJTV62O0PjhVO4qR0DAdvYkDIxQ36H6bU2Erc=;
- b=hzlq5miZHmmtePkFYx6s5JdD9VcyshdLwZpdzxkxJMOfztrxYeSNcwlo+X8TLsFWt2u+jI
- sIrghdIvXuV2/0Q6sMeEPTEnp6CUn+0GP/nCtAMmYUswVX66+sdpCFIYHHXckVLotH7q3I
- r2PSOqYNPntM9VpYF+nFhaZGpUqRQgE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+taPMy5Q8060TvpZgWRsF1ltpcOrUHjqjPNdMJkSVmk=;
+ b=gFpd/CdEWpUd9ZnTkA11bE7FQ6IVDPgUL4LS+Va2QQyDlVFCxyQdN/gdltnVpQIC2i6S9K
+ 88sX1e4C00pxy6Y4QjPkNNlwXsSkFW4h8+oM1wKF0z8Z8c4RAYywzpY1J7ua31pbe914Ko
+ nt0ETxhuGHxjyRG0ZfDT+GT8c46nuEo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-FUkQ8cBaOGiXJ0jY13f8fg-1; Sun, 21 Jul 2024 20:19:02 -0400
-X-MC-Unique: FUkQ8cBaOGiXJ0jY13f8fg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3687eca5980so1730166f8f.0
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:19:01 -0700 (PDT)
+ us-mta-412-O57d3f1rP2CAAYU1ceKrFQ-1; Sun, 21 Jul 2024 20:18:36 -0400
+X-MC-Unique: O57d3f1rP2CAAYU1ceKrFQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4265464ddc9so15455105e9.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607540; x=1722212340;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sKWGQeqJTV62O0PjhVO4qR0DAdvYkDIxQ36H6bU2Erc=;
- b=lMjG2gmzoX/vjezznCduLeF/lhSKZJzMoKilYOFmKkaoZumsUwywAFUzWps9LKz28k
- 2fXGzG5JM1mqpB/yzUk7przOUH+3qFYSam6pBuzovMjC3vBs/nGsptQNBh9Jw8T0vOjA
- +PllrQUCm3CZxiFbqmLjTXFhz/4qBgVv6xIyyI9bjX5AN62TZ4Dz6W4ELC8VRXKPVm6N
- dmyJoa6MYirGMmT6LNfLyKpFEK3GlbaRJJhQSS8l7UA3AfMmhBok355ijcwVFEB9LeQc
- T6xJpjbgR3ZMPwSUrlpU8RzHsrWvnfl98XHa3NKFgDrKbn5q3tfMCE6I5yhxLafGHn/E
- f0QQ==
-X-Gm-Message-State: AOJu0YzCNZsQ9yJCT6+ifJSkl36BKR4zG5Y1AwDxb+5OR0PvZHVtBnwF
- TDI+rCHaUBwQQWHVFP51tXA+5MrUduWDVD2QoPYluhYH9fB1W0TpBhQe0I+0ZmC2U+LzQqtkSrx
- ppyN5/cH3zga8ISFfl8NFAo4bwOyRzcx44h3PziHjekyuuwc6sinSwsxnhnrB6+Pxn9ouUWT3Rb
- 2x3Xe0RZReULg6vC7Ta19C3f8UzVD/KQ==
-X-Received: by 2002:a5d:4b0a:0:b0:35f:1cc9:1d1d with SMTP id
- ffacd0b85a97d-369bae89634mr2784119f8f.38.1721607540591; 
- Sun, 21 Jul 2024 17:19:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCRZ4W+Hm++PaECUygA8QJPpMhESbb0eP8SqZNfF7e+5rzoq/6O92JYWKj02ORghTFvWzl8Q==
-X-Received: by 2002:a5d:4b0a:0:b0:35f:1cc9:1d1d with SMTP id
- ffacd0b85a97d-369bae89634mr2784100f8f.38.1721607540027; 
- Sun, 21 Jul 2024 17:19:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607515; x=1722212315;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+taPMy5Q8060TvpZgWRsF1ltpcOrUHjqjPNdMJkSVmk=;
+ b=BanaRycDWQVRWakkRBnh/dK3TVDqvy2XzAwQ4rUh+YOOzP7RO/HVq6Gt4VuwJY3qfl
+ JwX+1OOZ/gr3kqmgFqmb2BgB0PaHQ/YqSGeE9xgvFJ+1wdevtX9UP0bXgnRgK5QZtyDw
+ sjcWhRz8tNkHmo5LXJVrrsUU1TsAPa6C/ViLT3Bu2r+2t+5+j5zYX3+iokF8IwUL/fIt
+ 72Hj8dUT6e/rDzt2cJYrPDXLE6lmrnCt9JR4KTpOke3DAZDyaJB4iiWjRQFo2ANpJYp5
+ R9waE5NNeFYqD33Eh5JTVXMtip9+GbqGvFX2sQxtGR+7RaenRyr2w+gl2ZRec8o72snu
+ V6Hg==
+X-Gm-Message-State: AOJu0Yzuhv/Ls+bEpZtXJrGf4yCHb8KnT4v+qqJ35w/OPewRyXMQMMsw
+ tGyht1keJTqoyzP+s2YvyickCAJFmVXx6KI/u3O9n1KwwzWVlkVLVVpMahbs1PzRHs0zZ6rots+
+ 0+GDMX4jDO8sjOf4zM6wFrQu2sjV1e3SGgzI9GxGm4qaz2g+YImRPq+7Imwc+3Rm4QPR+bOFfo1
+ SSwGpXteWFd7UHKq7oSaa7YHqVlv1PYw==
+X-Received: by 2002:a05:600c:46ce:b0:426:686f:7ad with SMTP id
+ 5b1f17b1804b1-427da805e46mr39659245e9.10.1721607514825; 
+ Sun, 21 Jul 2024 17:18:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG7QDE/bNhHpHK6AcOFPRi1M4tg3TKYoiAu3jzyNrFF935IgyTnkTQoC5GBKu0yx+sdRc56w==
+X-Received: by 2002:a05:600c:46ce:b0:426:686f:7ad with SMTP id
+ 5b1f17b1804b1-427da805e46mr39659125e9.10.1721607514320; 
+ Sun, 21 Jul 2024 17:18:34 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ceda0sm7008237f8f.87.2024.07.21.17.18.58
+ 5b1f17b1804b1-427d68fa493sm107416355e9.10.2024.07.21.17.18.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:59 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:58 -0400
+ Sun, 21 Jul 2024 17:18:33 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair23@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Wilfred Mallawa <wilfred.mallawa@wdc.com>,
- Huai-Cheng Kuo <hchkuo@avery-design.com.tw>,
- Chris Browy <cbrowy@avery-design.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 60/63] hw/pci: Add all Data Object Types defined in PCIe r6.0
-Message-ID: <acc0b88d341da848fc9e45002dab4507f75e8c4f.1721607331.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL 48/63] virtio-iommu: Remove the end point on detach
+Message-ID: <4dc8ff564fbefd6f8542ef3367b839d1319a5de6.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -107,35 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair23@gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Add all of the defined protocols/features from the PCIe-SIG r6.0
-"Table 6-32 PCI-SIG defined Data Object Types (Vendor ID = 0001h)"
-table.
+We currently miss the removal of the endpoint in case of detach.
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Message-Id: <20240703092027.644758-2-alistair.francis@wdc.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Message-Id: <20240716094619.1713905-5-eric.auger@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pcie_doe.h | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/virtio/virtio-iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/pci/pcie_doe.h b/include/hw/pci/pcie_doe.h
-index 87dc17dcef..15d94661f9 100644
---- a/include/hw/pci/pcie_doe.h
-+++ b/include/hw/pci/pcie_doe.h
-@@ -46,6 +46,8 @@ REG32(PCI_DOE_CAP_STATUS, 0)
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 2de41ab412..440dfa6e92 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -786,6 +786,7 @@ static int virtio_iommu_detach(VirtIOIOMMU *s,
+     if (QLIST_EMPTY(&domain->endpoint_list)) {
+         g_tree_remove(s->domains, GUINT_TO_POINTER(domain->id));
+     }
++    g_tree_remove(s->endpoints, GUINT_TO_POINTER(ep_id));
+     return VIRTIO_IOMMU_S_OK;
+ }
  
- /* PCI-SIG defined Data Object Types - r6.0 Table 6-32 */
- #define PCI_SIG_DOE_DISCOVERY       0x00
-+#define PCI_SIG_DOE_CMA             0x01
-+#define PCI_SIG_DOE_SECURED_CMA     0x02
- 
- #define PCI_DOE_DW_SIZE_MAX         (1 << 18)
- #define PCI_DOE_PROTOCOL_NUM_MAX    256
 -- 
 MST
 
