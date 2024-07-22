@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7666AC3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A25D9C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0ML-0002Cl-TS; Mon, 22 Jul 2024 17:14:17 -0400
+	id 1sW0OV-0006ap-Ki; Mon, 22 Jul 2024 17:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sW0MH-0001w0-QG
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:13 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sW0ME-0006RD-E8
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:13 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MKtf7c029624;
- Mon, 22 Jul 2024 21:14:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=i
- t5gHDkbe+9G6naJjQV0IFhHjLF/UM6ENZP2pWprYUc=; b=VNyBmd+qfaCFrRlL9
- 5bfSonN00XOxgoI/q4XHK3703n4vS749Vl32VOpjipZ4SoTGUj5Lq12K88pR7OYO
- LfJ4gcXcOshtWOijlIRWWC2Ds/+InbT4dVYxxg7/vXug8XhjEI30frdJQF5BAZZm
- 7fwt8L4rSHEbsi2vkqflTb/h45HXLIFU+kX73DavrFmjjeUNPBaldIakbvb4LCGr
- vunm0LM/wVDPdg0mkidOt7RJi36bjx3JMmAQXD/qwN5UR0lSynjYyqDR8RMaejs8
- W6zIfw31ZRnDHHKtnlVXgYiVenfLNJCrI2rVG6TAIM+r6REPtKr1YIOGnZE7c9rW
- IglZQ==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40hfe7bskh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 21:14:07 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46MKPefb010962; Mon, 22 Jul 2024 21:14:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40h29qa7ma-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 21:14:06 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46ML6txH040372;
- Mon, 22 Jul 2024 21:14:06 GMT
-Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-61-12.vpn.oracle.com
- [10.175.61.12])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 40h29qa7av-9; Mon, 22 Jul 2024 21:14:06 +0000
-From: Joao Martins <joao.m.martins@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v6 8/9] vfio/migration: Don't block migration device dirty
- tracking is unsupported
-Date: Mon, 22 Jul 2024 22:13:25 +0100
-Message-Id: <20240722211326.70162-9-joao.m.martins@oracle.com>
-In-Reply-To: <20240722211326.70162-1-joao.m.martins@oracle.com>
-References: <20240722211326.70162-1-joao.m.martins@oracle.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW0OS-00065z-Vl
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:16:29 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW0OP-0006xu-Uw
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:16:28 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42660b8dd27so33942205e9.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 14:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721682983; x=1722287783; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NDWMQvdXIiq8x1xZYflvJfvpfEHJMEtDM+ZW2/x7pkg=;
+ b=GpYC/4BPcflDlGFc2yS8PL1CZZt4LnbS2sWOk1gqdIIPr5rCjzQnsVer0c3eRvhKF0
+ vmUMqczeDiAW4x/CUwiV9Qc0u2PIjSUW3GgbHQ2MLt+VLepjA4a0ycd/DdUaNkURwqyX
+ bHh0VzcNSf73IRp2G95BV5XnwUpQCXdedfWRJuw/bakAW4Zm6lY+uIbubrUBPnlt5iPl
+ FglfpocIDsD07JvZM1T7UzE1hDdr4Ta8z0H13lOdje8uowlm2doUu0abSQmD8Ud4ySU7
+ cIaqujyaGvWgop+A/7Zfn8vUn5t81nYMRBd4AMGhjP+iiMKOvvNbFyRKmDvCXgAYZf9q
+ QdDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721682983; x=1722287783;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NDWMQvdXIiq8x1xZYflvJfvpfEHJMEtDM+ZW2/x7pkg=;
+ b=kQBWCbSAnX2S6FwpKdoMmUmKetWlQCBOac6fZjpeT6Z3XGqEX2gXBpoDfeRo94pral
+ xjIjoKHjDzSUqnBCVHGA3WRLXvUFixCRRKmWDSgPPGrmQ2OQsG71bllcM355gVGfGerX
+ E37rqctlMuEJ3itYWVPh2ONHbEvfz59ZNHJndTcVUQvAnVhwZqydzZUV2k9lDXspQ9Zo
+ GoohKDBb6O4xhAwFntY/pDo0nmwz362maYHTis47zQcGDZZO6z1GgBwlz1114kOuWL6Z
+ 9Uvq6SIrq37I0kodvoV3RGpprYnI7y0asGT2IWuzrUxXWVo0/Eb5eLam4Hx/KWLEIUhU
+ mE1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3i0C58mMtvNWS2QEnADy0w/h2/9Lj6rPmJDFGfXyHZmrzsTHr5a96fOfakLCDW4SWN4OYBomExyMq8RH7tMW+mGE7wtg=
+X-Gm-Message-State: AOJu0Yw3S/FBrVC2GJ55hKp7Z/dNndJ3G/KmukpuXd8VtgQOCFIrj5mo
+ +ypOin7TA2KBjaWYinKitwMX+5euZvSbxB9dRKluZLPPKwwk5WYbtMN1vbE7Z16Z4+Fa7wflxmQ
+ 9
+X-Google-Smtp-Source: AGHT+IGJpNi8IuiOeZpYpNlNrdKrPX8xJA+DRjZ7OPUH9gxW1u9OsaLmHh8EPpWTVL8VjRvep9lmig==
+X-Received: by 2002:a05:600c:1f8f:b0:426:5fcf:5e89 with SMTP id
+ 5b1f17b1804b1-427dc5797e0mr43082645e9.33.1721682982813; 
+ Mon, 22 Jul 2024 14:16:22 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.14])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d2a3c0fasm172340405e9.7.2024.07.22.14.16.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 14:16:22 -0700 (PDT)
+Message-ID: <e81bcfc9-bea8-4807-86d3-c18ecab3a318@linaro.org>
+Date: Mon, 22 Jul 2024 23:16:20 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_14,2024-07-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- bulkscore=0 adultscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=898 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407220157
-X-Proofpoint-GUID: JjT9L4azc0Ei7p4gCSrrsyRb5YRbHUOF
-X-Proofpoint-ORIG-GUID: JjT9L4azc0Ei7p4gCSrrsyRb5YRbHUOF
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] mips/loongson3_virt: remove useless type cast
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240722091728.4334-1-yaoxt.fnst@fujitsu.com>
+ <20240722091728.4334-2-yaoxt.fnst@fujitsu.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240722091728.4334-2-yaoxt.fnst@fujitsu.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By default VFIO migration is set to auto, which will support live
-migration if the migration capability is set *and* also dirty page
-tracking is supported.
+On 22/7/24 11:17, Yao Xingtao wrote:
+> The type of kernel_entry, kernel_low and kernel_high is uint64_t, cast
+> the pointer of this type to uint64_t* is useless.
+> 
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> ---
+>   hw/mips/loongson3_virt.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-For testing purposes one can force enable without dirty page tracking
-via enable-migration=on, but that option is generally left for testing
-purposes.
-
-So starting with IOMMU dirty tracking it can use to accomodate the lack of
-VF dirty page tracking allowing us to minimize the VF requirements for
-migration and thus enabling migration by default for those too.
-
-While at it change the error messages to mention IOMMU dirty tracking as
-well.
-
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
----
- hw/vfio/migration.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 34d4be2ce1b1..cbfaef7afffe 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1036,16 +1036,16 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         return !vfio_block_migration(vbasedev, err, errp);
-     }
- 
--    if (!vbasedev->dirty_pages_supported) {
-+    if (!vbasedev->dirty_pages_supported && !vbasedev->iommu_dirty_tracking) {
-         if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
-             error_setg(&err,
--                       "%s: VFIO device doesn't support device dirty tracking",
--                       vbasedev->name);
-+                       "%s: VFIO device doesn't support device and "
-+                       "IOMMU dirty tracking", vbasedev->name);
-             goto add_blocker;
-         }
- 
--        warn_report("%s: VFIO device doesn't support device dirty tracking",
--                    vbasedev->name);
-+        warn_report("%s: VFIO device doesn't support device and "
-+                    "IOMMU dirty tracking", vbasedev->name);
-     }
- 
-     ret = vfio_block_multiple_devices_migration(vbasedev, errp);
--- 
-2.17.2
+Patch queued, thanks.
 
 
