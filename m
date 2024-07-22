@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62115C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F67C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW22j-0002pT-A8; Mon, 22 Jul 2024 19:02:09 -0400
+	id 1sW24m-0000Zf-3P; Mon, 22 Jul 2024 19:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sW22h-0002ic-BQ
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:02:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sW22e-0002Iq-04
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:02:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721689322;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7kCNxQHBimJ1b2pQoeHqAdulJTeGmjT77OuswTwrk1E=;
- b=CkhitQ+HyFa+Z68AFoM2aiGfyqRUWrY81sSEOTkZhddHQ188xDAsFj8CXD47QYDu3qNyWd
- 32hUsiafmNf5vIb9xnTiYlSOwRxJpQKwaaRP69s2Q02aM2MHawADaCUnDlF0ayY8li46jP
- MQoUzWdrNzaJajwIK7C64fOs39+cKLg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-MypGVh5sN-uK49_PDPuIuQ-1; Mon, 22 Jul 2024 19:02:00 -0400
-X-MC-Unique: MypGVh5sN-uK49_PDPuIuQ-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6b792d6fe5bso16120066d6.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:02:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sW24j-0000Yx-KI
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:04:13 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sW24g-0002hL-JO
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:04:12 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42793fc0a6dso34616835e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721689449; x=1722294249; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FCxDQ9JzfhNywJ4JOX80Y6BDKJysUMhqpGdP4YFbnVs=;
+ b=KBREil/BOxy2bDAe5BWa/ftf72P0/qQ0bm7HcADpbdiGkNheXaHFCC2BNi+vWszqAi
+ aQ3oesMRAltI6LYfPZVW4GahpueMhHHmCSx9XxvpOHYTZTLWOGr3QJPSWTo1bbp4Huso
+ qhozrBrJTm5OXYsL7qRPDUsf2OLrdB2Mf1gWI8wbLOJR66JEomH/2S1tPu7v2g2UIxjr
+ yEI7IYYk9a07QA9zQXD34setYRPAt9dKPzg4EC09cCdsqLr4m2reaK++lTiIqRzT4o4Q
+ COyMabaAu7gJwYexpOkuimQdqtKdI7Zi//PzNtoUnqTpcx5NoBDbc9bvbQC07iGpw8jx
+ 2V/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721689320; x=1722294120;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7kCNxQHBimJ1b2pQoeHqAdulJTeGmjT77OuswTwrk1E=;
- b=OHyl5j6o2nOW7dO58qmXn4oVpbGwC5RqViUOU96bUN1tfgEWSkU63V1eYXwzX2/dsq
- lVj3RNko50WLcTqAQMBYBukl35/W1e6ilX6N/fwLILHgzm2ShxQA3t3qsbYMXslu/P4Y
- PPqMSJ8opb0DGj9kdSNr/vPWYJ2+wYqCs0H38zGqiXXmOC1/D6l9qFN6MN+vliwxLNpN
- YWQphIoVTf/XINVN1VZtv43AvMFRfMq8FbDtRQQuJ5cW3JGb0knP/Sr7fjSLHQJJjErq
- njTIM58SO5hQERFsO8dOLbHxodF1dIbuGbf2vuQ/WnhKG7RQktq/AGvPE4BPuE/YQ6pY
- YOrw==
-X-Gm-Message-State: AOJu0YzvKiCmuVIfmvNGnyEVBYf/OFBsLtARNMXJv7FyqVitEkHg4va3
- 2NUnk7/nrshbX1J43qtMTSKSRGpp1pbl4IghgbGiXOwd4d2m9F1B9mI3+Vwnslm8zO46EuUcBs5
- nf/H5OUvk81sDl38E0Ucn2mRJi/pWq0o8wcFgIvogpPQzWlmtsp4q
-X-Received: by 2002:a05:6214:3da1:b0:6b5:de38:d6ee with SMTP id
- 6a1803df08f44-6b9587d9a91mr63760216d6.3.1721689319949; 
- Mon, 22 Jul 2024 16:01:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyMDUrso0GVYyel0s2KL9tqxssKLjtcLoZRl5yk4HFJz5pTtQbnYBabkoepqKmnJ0+HeyF4Q==
-X-Received: by 2002:a05:6214:3da1:b0:6b5:de38:d6ee with SMTP id
- 6a1803df08f44-6b9587d9a91mr63760036d6.3.1721689319470; 
- Mon, 22 Jul 2024 16:01:59 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b970cc21c4sm17646516d6.122.2024.07.22.16.01.58
+ d=1e100.net; s=20230601; t=1721689449; x=1722294249;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FCxDQ9JzfhNywJ4JOX80Y6BDKJysUMhqpGdP4YFbnVs=;
+ b=AmIxACPR5nLx7G1O+mlA3kETJwWOHANb4RfFBvBXuWVP4x1YtHPfmRw5g7nj2t4xsc
+ nraR8KhLvG2b+IrXbWEojlPLhNNOYDOhzhe9udG4xeOal9O4nCDA5GAe5LaiLLGPxyNe
+ gOwoeBteVfyobjc5OmLyEJ146upbszorcDD2x4PbOX+EEv3FeeRAz4tndIkw8+KByPJj
+ QNVZkKDMh0wUMu73lK3udnq7PPj6ivM9lBluw9vydIrt2ear6uPLl6KDMew8TtYOCZoQ
+ F2eOKjJLpKZ0j87i6j0WvVtaWaFfkuZKEPbBxhyYxXvRhfqEpVss5ayx154UuHzMWIwK
+ TtNg==
+X-Gm-Message-State: AOJu0YwmrplqmLAf3tL92woxjLskF7HWtG4WF0LiLXAf+07sYhCh+uNB
+ iX+PFnhyKO144fj8OKWxV4rTGPKgv1jXjt5c6AkOeXndvv3ippu7PzNwURiFy4eHqSHiXmP2RAr
+ 7
+X-Google-Smtp-Source: AGHT+IEblqzr0iShzKVaWAnol8ZjPa3NCTVufY4KPqd8DsfbCJUdN/FyfUG2CWQKBep4F6s8qgq8MA==
+X-Received: by 2002:a05:600c:46d0:b0:426:60e4:c691 with SMTP id
+ 5b1f17b1804b1-427ecfe03b8mr7043685e9.11.1721689448508; 
+ Mon, 22 Jul 2024 16:04:08 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427ef50de6dsm2559225e9.1.2024.07.22.16.04.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 16:01:58 -0700 (PDT)
-Date: Mon, 22 Jul 2024 19:01:55 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH v2 0/9] migration/multifd: Remove
- multifd_send_state->pages
-Message-ID: <Zp7k4wF1W6Fzp7YW@x1n>
-References: <20240722175914.24022-1-farosas@suse.de> <Zp65zvb9oy9my-qY@x1n>
- <87msm9yy77.fsf@suse.de> <Zp7HH6-WeYKXQ-fy@x1n>
- <87a5i9yvhf.fsf@suse.de>
+ Mon, 22 Jul 2024 16:04:07 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F0C3F5F8B0;
+ Tue, 23 Jul 2024 00:04:06 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 00/16] Final bits for 9.1-rc0 (docker, plugins, gdbstub,
+ semihosting)
+Date: Tue, 23 Jul 2024 00:04:06 +0100
+Message-Id: <20240722230406.369447-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87a5i9yvhf.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,161 +95,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 06:20:28PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Mon, Jul 22, 2024 at 05:21:48PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Mon, Jul 22, 2024 at 02:59:05PM -0300, Fabiano Rosas wrote:
-> >> >> Hi,
-> >> >> 
-> >> >> In this v2 I took Peter's suggestion of keeping the channels' pointers
-> >> >> and moving only the extra slot. The major changes are in patches 5 and
-> >> >> 9. Patch 3 introduces the structure:
-> >> >> 
-> >> >> typedef enum {
-> >> >>     MULTIFD_PAYLOAD_NONE,
-> >> >>     MULTIFD_PAYLOAD_RAM,
-> >> >> } MultiFDPayloadType;
-> >> >> 
-> >> >> struct MultiFDSendData {
-> >> >>     MultiFDPayloadType type;
-> >> >>     union {
-> >> >>         MultiFDPages_t ram;
-> >> >>     } u;
-> >> >> };
-> >> >> 
-> >> >> I added a NONE type so we can use it to tell when the channel has
-> >> >> finished sending a packet, since we'll need to switch types between
-> >> >> clients anyway. This avoids having to introduce a 'size', or 'free'
-> >> >> variable.
-> >> >
-> >> > This at least looks better to me, thanks.
-> >> >
-> >> >> 
-> >> >> WHAT'S MISSING:
-> >> >> 
-> >> >> - The support for calling multifd_send() concurrently. Maciej has this
-> >> >>   in his series so I didn't touch it.
-> >> >> 
-> >> >> - A way of adding methods for the new payload type. Currently, the
-> >> >>   compression methods are somewhat coupled with ram migration, so I'm
-> >> >>   not sure how to proceed.
-> >> >
-> >> > What is this one?  Why compression methods need new payload?  Aren't they
-> >> > ram-typed?
-> >> 
-> >> The data we transport is MultiFDPages_t, yes, but the MultiFDMethods are
-> >> either nocomp, or the compression-specific methods
-> >> (e.g. zlib_send_prepare).
-> >> 
-> >> How do we add methods for the upcoming new payload types? I don't expect
-> >> us to continue using nocomp and then do "if (ram)... else if
-> >> (device_state) ..." inside of them. I would expect us to rename
-> >> s/nocomp/ram/ and add a new set of MultiFDMethods for the new data type
-> >> (e.g. vfio_send_prepare, vmstate_send_prepare, etc).
-> >> 
-> >> multifd_nocomp_ops -> multifd_ram_ops // rename
-> >> multifd_zlib_ops   // existing
-> >> multifd_device_ops // new
-> >> 
-> >> The challenge here is that the current framework is nocomp
-> >> vs. compression. It needs to become ram + compression vs. other types.
-> >
-> > IMHO we can keep multifd_ops[] only for RAM.  There's only send_prepare()
-> > that device state will need, and so far it's only (referring Maciej's
-> > code):
-> >
-> > static int nocomp_send_prepare_device_state(MultiFDSendParams *p,
-> >                                             Error **errp)
-> > {
-> >     multifd_send_prepare_header_device_state(p);
-> >
-> >     assert(!(p->flags & MULTIFD_FLAG_SYNC));
-> >
-> >     p->next_packet_size = p->device_state->buf_len;
-> >     if (p->next_packet_size > 0) {
-> >         p->iov[p->iovs_num].iov_base = p->device_state->buf;
-> >         p->iov[p->iovs_num].iov_len = p->next_packet_size;
-> >         p->iovs_num++;
-> >     }
-> >
-> >     p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
-> >
-> >     multifd_send_fill_packet_device_state(p);
-> >
-> >     return 0;
-> > }
-> >
-> > None of other multifd_ops are used.
-> 
-> There's also a conditional around device_state when calling
-> ->recv(). That could seems like it could go to a hook.
-> 
-> https://lore.kernel.org/r/41dedaf2c9abebb5e45f88c052daa26320715a92.1718717584.git.maciej.szmigiero@oracle.com
+The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
 
-Actually that's exactly what I think is right.. it looks to me now that we
-could bypass anything in MultifdOps (including recv()) but let device state
-be a parallel layer of MultifdOps itself, leaving MultifdOps only for
-compressors.
+  Merge tag 'pull-aspeed-20240721' of https://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
 
-And yeah, I still remember you just renamed it from recv_pages() to
-recv()..  it's just that now when think it again it looks like cleaner to
-make it only about pages..
+are available in the Git repository at:
 
-> 
-> >
-> > I think we can directly invoke this part of device state code in
-> > multifd_send_thread() for now.  So far I think it should be ok.
-> 
-> It's not just that. There's also a check for "if (ram)" at every call to
-> multifd_ops to avoid calling the ram code when doing the device
-> migration. It would be way easier to just set noop functions for those.
-> 
-> static MultiFDMethods multifd_devstate_ops = {
->     .send_setup = noop_send_setup,
->     .send_cleanup = noop_send_cleanup,
->     .send_prepare = devstate_send_prepare,
->     .recv_setup = noop_recv_setup,
->     .recv_cleanup = noop_recv_cleanup,
->     .recv = devstate_recv
-> };
-> 
-> I'm not saying this needs to be done in this series though. But I do
-> think that's the correct design choice for the long term.
+  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-9.1-rc0-230724-1
 
-Yes it should be separate.
+for you to fetch changes up to c135d5eaafe7aa2533da663d8e5a34a424b71eb9:
 
-And what I meant is we don't need all these noops, but recv() keeps being
-ignored just like above, then for sender side, right now it's:
+  tests/tcg/aarch64: Fix test-mte.py (2024-07-22 09:38:17 +0100)
 
-            ret = multifd_send_state->ops->send_prepare(p, &local_err);
-            if (migrate_mapped_ram()) {
-                file_write_ramblock_iov();
-            } else {
-                ret = qio_channel_writev_full_all();
-            }
+----------------------------------------------------------------
+Maintainer updates for testing, gdbstub, semihosting, plugins
 
-VFIO can process device state in parallel, so:
+  - bump python in *BSD images via libvirt-ci
+  - remove old unused Leon3 Avocado test
+  - re-factor gdb command extension
+  - add stoptrigger plugin to contrib
+  - ensure plugin mem callbacks properly sized
+  - reduce check-tcg noise of inline plugin test
+  - fix register dumping in execlog plugin
+  - restrict semihosting to TCG builds
+  - fix regex in MTE test
 
-    if (ram) {
-        ret = multifd_send_state->ops->send_prepare(p, &local_err);
-        if (migrate_mapped_ram()) {
-                file_write_ramblock_iov();
-        } else {
-                qio_channel_writev_full_all();
-        }
-    } else {
-        // device state handling
-        multifd_send_device_prepare(...);
-        ...
-        qio_channel_writev_full_all();
-    }
+----------------------------------------------------------------
+Alex Bennée (3):
+      testing: bump to latest libvirt-ci
+      gdbstub: Re-factor gdb command extensions
+      tests/plugins: use qemu_plugin_outs for inline stats
 
-Then MultifdOps doesn't apply to device states.
+Frédéric Pétrot (1):
+      plugins/execlog.c: correct dump of registers values
+
+Philippe Mathieu-Daudé (8):
+      semihosting: Include missing 'gdbstub/syscalls.h' header
+      target/m68k: Add semihosting stub
+      target/mips: Add semihosting stub
+      target/m68k: Restrict semihosting to TCG
+      target/mips: Restrict semihosting to TCG
+      target/riscv: Restrict semihosting to TCG
+      target/xtensa: Restrict semihosting to TCG
+      semihosting: Restrict to TCG
+
+Pierrick Bouvier (1):
+      plugins: fix mem callback array size
+
+Richard Henderson (1):
+      tests/tcg/aarch64: Fix test-mte.py
+
+Simon Hamelin (1):
+      plugins/stoptrigger: TCG plugin to stop execution under conditions
+
+Thomas Huth (1):
+      tests/avocado: Remove non-working sparc leon3 test
+
+ MAINTAINERS                               |   1 -
+ docs/devel/tcg-plugins.rst                |  22 +++++
+ include/gdbstub/commands.h                |  19 ++--
+ include/semihosting/syscalls.h            |   2 +
+ target/arm/internals.h                    |   4 +-
+ accel/tcg/plugin-gen.c                    |   3 +-
+ contrib/plugins/execlog.c                 |   2 +-
+ contrib/plugins/stoptrigger.c             | 151 ++++++++++++++++++++++++++++++
+ gdbstub/gdbstub.c                         | 141 ++++++++++++++++------------
+ target/arm/gdbstub.c                      |  16 +---
+ target/arm/gdbstub64.c                    |  11 +--
+ target/m68k/semihosting-stub.c            |  15 +++
+ target/mips/tcg/sysemu/semihosting-stub.c |  15 +++
+ tests/plugin/inline.c                     |  58 +++++++-----
+ .gitlab-ci.d/cirrus/freebsd-13.vars       |   2 +-
+ contrib/plugins/Makefile                  |   1 +
+ semihosting/Kconfig                       |   1 +
+ target/m68k/Kconfig                       |   2 +-
+ target/m68k/meson.build                   |   5 +-
+ target/mips/Kconfig                       |   2 +-
+ target/mips/tcg/sysemu/meson.build        |   6 +-
+ target/riscv/Kconfig                      |   4 +-
+ target/xtensa/Kconfig                     |   2 +-
+ tests/avocado/machine_sparc_leon3.py      |  37 --------
+ tests/lcitool/libvirt-ci                  |   2 +-
+ tests/tcg/aarch64/gdbstub/test-mte.py     |   2 +-
+ tests/vm/generated/freebsd.json           |  14 +--
+ 27 files changed, 370 insertions(+), 170 deletions(-)
+ create mode 100644 contrib/plugins/stoptrigger.c
+ create mode 100644 target/m68k/semihosting-stub.c
+ create mode 100644 target/mips/tcg/sysemu/semihosting-stub.c
+ delete mode 100644 tests/avocado/machine_sparc_leon3.py
 
 -- 
-Peter Xu
+2.39.2
 
 
