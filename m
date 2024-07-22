@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A44C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787ADC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVzJG-0001xT-QJ; Mon, 22 Jul 2024 16:07:02 -0400
+	id 1sVzJ3-0001aM-DF; Mon, 22 Jul 2024 16:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sVzJ9-0001r9-9i
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:56 -0400
+ id 1sVzIz-0001Os-Qu
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sVzJ6-0002Ap-V5
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:54 -0400
+ id 1sVzIx-00028Y-Hg
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721678811;
+ s=mimecast20190719; t=1721678801;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FEJmUnkeUzN1ax0YK2lz7mjh5s7bmtFKiLd/PhFCb1Q=;
- b=H1rOO+GbZZCAewO63+3fG52XB+gTP8KOtN5HGS4YnkV+olf2cTI53xUzeLgofCI81l0V57
- aKCvzZk8d7fbpeFZ4C/kEXLR16SrM7rYhf3yxEoqFvbj7sT71p2Gj7q8M0ooMq5ZnY3E8B
- FLzg9zAyHHXjvWdzxbvqIudI7rk6QmE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=88/1GPhkmpmJqo+1fBvTPO4xBgJvZaHZw1AJlm/mYPA=;
+ b=KC8LVt+d1GGnv0KIN9VQIFB4lXtr+9NjbKJI1LgpFBDwsnOOSMOqH2rMjdd2LcDtyntRsK
+ z1SLG4M/33yfYsIm1+YTwg51W9QQ6nDl7pfS0iVZthJg8GxSltWOeiVCDyTYZrHriaWzXO
+ 80ZqzfRyCFvxsWHSpmZ1Gg8mksM7x/8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-vit9v5uYOwK2rwIvR_KgGQ-1; Mon,
- 22 Jul 2024 16:06:49 -0400
-X-MC-Unique: vit9v5uYOwK2rwIvR_KgGQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-txhalE9gPIq-tgoAfLfVoA-1; Mon,
+ 22 Jul 2024 16:06:39 -0400
+X-MC-Unique: txhalE9gPIq-tgoAfLfVoA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36A2A19792EB; Mon, 22 Jul 2024 20:06:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EA0E1955D59; Mon, 22 Jul 2024 20:06:38 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0B831955F40; Mon, 22 Jul 2024 20:06:46 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0476A195605A; Mon, 22 Jul 2024 20:06:36 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
+Cc: richard.henderson@linaro.org, Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 5/8] ui/vdagent: improve vdagent_fe_open() trace
-Date: Tue, 23 Jul 2024 00:06:15 +0400
-Message-ID: <20240722200619.135163-6-marcandre.lureau@redhat.com>
+Subject: [PULL 3/8] Cursor: 8 -> 1 bit alpha downsampling improvement
+Date: Tue, 23 Jul 2024 00:06:13 +0400
+Message-ID: <20240722200619.135163-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20240722200619.135163-1-marcandre.lureau@redhat.com>
 References: <20240722200619.135163-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -84,52 +84,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
-Place the trace when the function enters, with arg value.
+Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
+turning alpha values of 255 into 1 and everything else into 0. This
+means that mostly-opaque pixels ended up completely invisible.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240717171541.201525-3-marcandre.lureau@redhat.com>
+This patch changes the behaviour so that only pixels with less than 50%
+alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+
+This greatly improves the subjective appearance of anti-aliased mouse
+cursors, such as those used by macOS, when using a front-end UI without
+support for alpha-blended cursors, such as some VNC clients.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20240624101040.82726-1-phil@philjordan.eu>
 ---
- ui/vdagent.c    | 3 ++-
- ui/trace-events | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ ui/cursor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 64d7ab245a..cb74739bc4 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -872,6 +872,8 @@ static void vdagent_chr_set_fe_open(struct Chardev *chr, int fe_open)
- {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(chr);
- 
-+    trace_vdagent_fe_open(fe_open);
-+
-     if (!fe_open) {
-         trace_vdagent_close();
-         vdagent_disconnect(vd);
-@@ -881,7 +883,6 @@ static void vdagent_chr_set_fe_open(struct Chardev *chr, int fe_open)
-         return;
-     }
- 
--    trace_vdagent_open();
- }
- 
- static void vdagent_chr_parse(QemuOpts *opts, ChardevBackend *backend,
-diff --git a/ui/trace-events b/ui/trace-events
-index 07eb494246..f5faa149d2 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -132,7 +132,7 @@ xkeymap_keymap(const char *name) "keymap '%s'"
- clipboard_check_serial(int cur, int recv, bool ok) "cur:%d recv:%d %d"
- 
- # vdagent.c
--vdagent_open(void) ""
-+vdagent_fe_open(bool fe_open) "fe_open=%d"
- vdagent_close(void) ""
- vdagent_disconnect(void) ""
- vdagent_send(const char *name) "msg %s"
+diff --git a/ui/cursor.c b/ui/cursor.c
+index 29717b3ecb..dd3853320d 100644
+--- a/ui/cursor.c
++++ b/ui/cursor.c
+@@ -232,7 +232,7 @@ void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
+     for (y = 0; y < c->height; y++) {
+         bit = 0x80;
+         for (x = 0; x < c->width; x++, data++) {
+-            if ((*data & 0xff000000) != 0xff000000) {
++            if ((*data & 0x80000000) == 0x0) { /* Alpha < 0x80 (128) */
+                 if (transparent != 0) {
+                     mask[x/8] |= bit;
+                 }
 -- 
 2.45.2.827.g557ae147e6
 
