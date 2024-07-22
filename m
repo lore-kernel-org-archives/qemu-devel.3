@@ -4,85 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81670C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B22EC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVuAa-0005RU-Ax; Mon, 22 Jul 2024 10:37:44 -0400
+	id 1sVuNG-00046a-2m; Mon, 22 Jul 2024 10:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVuAU-0005LV-DE
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:37:40 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVuAS-0006xS-7t
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:37:38 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-369cb9f086aso1104305f8f.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721659053; x=1722263853; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7/kPwislHTjvX5KRQDtlNXK70ZY8PmJtnPvR1+V/OJw=;
- b=Zmc1T+iwjdHdrCY3IhmYldlF8/B1sX3cyz0BoxO8aHV8eyXRx2C6Ye/w1idX9tjI0+
- qKNjKVw3rDOqJEHrCOVUBb5C2ypp3TSeF5lKfgzZK9kWY4skD9TQItjPvxg9Xp/hO6bt
- EUc/aCD8d10zJEo5vWFCoDyPhU1UaxRjl0m6gzOEj2z5gxUOaQpo/uTpRiwy8qZQ3WiH
- /Vi3ndW8B53jDK9IX5sIha6sUWk8w3IGkmc5wm4uVATE3mEixMc+abKRuLk/YRAjNQmC
- XEwP9LoaMvZdxDRyWV/2gtMYzKDx78dT5wqMnlDSVNN5JR1vL8MFrLgOu6jjcRH3zSaW
- PgKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721659053; x=1722263853;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7/kPwislHTjvX5KRQDtlNXK70ZY8PmJtnPvR1+V/OJw=;
- b=aOMjtW5gI35ubrxR9Bkw+Gw4pH8PRMDzxpYRpBuaY+AQOvDdFxaEuAmRe2vF5j8+Ci
- 0JGqF8J3NY1+ydH0iBIPy/TJs7X6Y8FTJ/ovT6NKGzWpanRpM5XCnpH3QnBjg5Xb3Bln
- bmsN3XpWm8hMVS+HDYLEX/9+dL3w9/YVI6VlG3LR6FRSm8t64TuCZFMLdNpa+MvLCGg1
- MpGBEemr36Rf3co3lLSZW5477Nio4IZWurpv3uJYbo413MkFuDEsYUsHAJ9lBarHzQoe
- COkHusFZD1xykCHOPrgVjjFtAylAR2LildvEqnyqHKvmszPluYXttMM5dQ7uOTO4IqUI
- sI0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVflO5RiGelJaqqTwOQvsb3XK70a71fWTnUs7m6MJQHBbho7bOQLsZtDmCmVWD5XCWN/0AdeAN9kjr+LfYGRrM22Lxqxjs=
-X-Gm-Message-State: AOJu0Yx9NvsyxUBDG9Hkr7g206GQsC+LdUUSUoNU7c7wXYk6V0h01d9V
- XJpUBnuIhS80ycGuod3tJIExgyT1AoF2T3tGuWnuofN60bCy5oBKAkdi1Q+KPuU=
-X-Google-Smtp-Source: AGHT+IGlF3QSJVllDNZluwpNRjyAstEDSclveOBORMJmxIiCeuwvWMtFFjX5RsdLuJqiRY/iS7ikyQ==
-X-Received: by 2002:a5d:6e03:0:b0:367:97b9:d5ed with SMTP id
- ffacd0b85a97d-369dec0cfa8mr72893f8f.9.1721659053363; 
- Mon, 22 Jul 2024 07:37:33 -0700 (PDT)
-Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
- [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787cededsm8770557f8f.78.2024.07.22.07.37.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 07:37:32 -0700 (PDT)
-Message-ID: <1ae5a1f5-981c-4e83-a2b5-36f8d92f46f4@linaro.org>
-Date: Mon, 22 Jul 2024 16:37:31 +0200
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sVuND-00045C-8w; Mon, 22 Jul 2024 10:50:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sVuNA-0001O2-Qc; Mon, 22 Jul 2024 10:50:46 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MDpVFv004052;
+ Mon, 22 Jul 2024 14:50:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=O
+ SqlrLi3038mrMeL7628MtfKD4vx9WeZD01grs7xCSw=; b=l6CPdj6wgkN6/vVJr
+ yL/8mcOBsxZx3U/G7SLRFu26VtX/syK6ULf0wl7bbjtjVyNC7h0bNslMhwmvJ0Yx
+ geTxbJGWFceYYhPz8FS7h/EYhZfI398rt8laMNAPFZalyZy7Y854O9/bb8HpC0Zn
+ sdNLtPzOU+ch8D7LgDwdGNarthoEkqBWGzWy/bX20wF0c9EI8cyEEvD7NsxmPABs
+ yXRXQtvULy5x6KHdKHmGz7U46KDATZS7KRiIrxDye2PhCGDnsTtFH8Bkxbvpujpp
+ 9MHz2gFNy8l2qKgCNg9olFWfkrDdowTgvsekCIlbRJZt1sv4kWS5fciN2o/N9z3n
+ m1Saw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40hjmp93qq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:50:31 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46MEoVud029484;
+ Mon, 22 Jul 2024 14:50:31 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40hjmp93qj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:50:31 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46MCW8Fn006718; Mon, 22 Jul 2024 14:50:29 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxn75saa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:50:29 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46MEoQ7q49742486
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jul 2024 14:50:29 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D91E15805B;
+ Mon, 22 Jul 2024 14:50:26 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F236158067;
+ Mon, 22 Jul 2024 14:50:25 +0000 (GMT)
+Received: from [9.67.181.135] (unknown [9.67.181.135])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 22 Jul 2024 14:50:25 +0000 (GMT)
+Message-ID: <28ea8260-a411-4651-8e2a-1fcc009f5043@linux.ibm.com>
+Date: Mon, 22 Jul 2024 10:50:25 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] crypto: push error reporting into TLS session I/O APIs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20240722131611.2820041-1-berrange@redhat.com>
- <20240722131611.2820041-5-berrange@redhat.com>
+Subject: Re: [PATCH v3] target/s390x: filter deprecated properties based on
+ model expansion type
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
+ david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20240719181741.35146-1-walling@linux.ibm.com>
+ <87h6cksk4h.fsf@pond.sub.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722131611.2820041-5-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <87h6cksk4h.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: euFx5qDrZ0uIuoSYxFvpHDIN1DMxEI3-
+X-Proofpoint-ORIG-GUID: mfouTK2_nTcP9R5ZaRZz8BseC8RGRaoh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_10,2024-07-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 bulkscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 spamscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407220108
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,22 +119,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 15:16, Daniel P. Berrangé wrote:
-> The current TLS session I/O APIs just return a synthetic errno
-> value on error, which has been translated from a gnutls error
-> value. This looses a large amount of valuable information that
-> distinguishes different scenarios.
+On 7/20/24 1:33 AM, Markus Armbruster wrote:
+> Collin Walling <walling@linux.ibm.com> writes:
 > 
-> Pushing population of the "Error *errp" object into the TLS
-> session I/O APIs gives more detailed error information.
+>> Currently, there is no way to execute the query-cpu-model-expansion
+>> command to retrieve a comprehenisve list of deprecated properties, as
+>> the result is dependent per-model. To enable this, the expansion output
+>> is modified as such:
+>>
+>> When reporting a "full" CPU model, show the *entire* list of deprecated
+>> properties regardless if they are supported on the model. A full
+>> expansion outputs all known CPU model properties anyway, so it makes
+>> sense to report all deprecated properties here too.
+>>
+>> This allows management apps to query a single model (e.g. host) to
+>> acquire the full list of deprecated properties.
+>>
+>> Additionally, when reporting a "static" CPU model, the command will
+>> only show deprecated properties that are a subset of the model's
+>> *enabled* properties. This is more accurate than how the query was
+>> handled before, which blindly reported deprecated properties that
+>> were never otherwise introduced for certain models.
+>>
+>> Acked-by: David Hildenbrand <david@redhat.com>
+>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>> ---
+>>
+>> Changelog:
+>>
+>>     v3
+>>     - Removed the 'note' and cleaned up documentation
+>>     - Revised commit message
+>>
+>>     v2
+>>     - Changed commit message
+>>     - Added documentation reflecting this change
+>>     - Made code changes that more accurately filter the deprecated
+>>         properties based on expansion type.  This change makes it
+>>         so that the deprecated-properties reported for a static model
+>>         expansion are a subset of the model's properties instead of
+>>         the model's full-definition properties.
+>>
+>> ---
+>>  qapi/machine-target.json         |  5 +++--
+>>  target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
+>>  2 files changed, 12 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>> index a8d9ec87f5..67086f006f 100644
+>> --- a/qapi/machine-target.json
+>> +++ b/qapi/machine-target.json
+>> @@ -21,8 +21,9 @@
+>>  # @props: a dictionary of QOM properties to be applied
+>>  #
+>>  # @deprecated-props: a list of properties that are flagged as deprecated
+>> -#     by the CPU vendor.  These props are a subset of the full model's
+>> -#     definition list of properties. (since 9.1)
+>> +#     by the CPU vendor.  These properties are either a subset of the
+>> +#     properties enabled on the CPU model, or a set of properties
+>> +#     deprecated across all models for the architecture.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   crypto/tlssession.c         | 47 ++++++++++++++++---------------------
->   include/crypto/tlssession.h | 23 ++++++++++++++----
->   io/channel-tls.c            | 44 ++++++++++++++--------------------
->   3 files changed, 57 insertions(+), 57 deletions(-)
+> 
+> When is it "a subset of the properties enabled on the CPU model", and
+> when is it "a set of properties deprecated across all models for the
+> architecture"?
+> 
+> My guess based on the commit message: it's the former when
+> query-cpu-model-expansion's type is "static", and the latter when it's
+> "full".
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Correct.  I'm not confident where or how to document this dependency
+since cross-referencing commands/data structures does not seem to be the
+convention here.  My first thought is to mention how deprecated
+properties are expanded under the @CpuModelExpansionType.  Something like:
+
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index 67086f006f..3f38c5229f 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -44,11 +44,15 @@
+ #     options, and accelerator options.  Therefore, the resulting
+ #     model can be used by tooling without having to specify a
+ #     compatibility machine - e.g. when displaying the "host" model.
+-#     The @static CPU models are migration-safe.
++#     The @static CPU models are migration-safe.  Deprecated
++#     properties are a subset of the properties enabled for the
++#     expanded model.
+ #
+ # @full: Expand all properties.  The produced model is not guaranteed
+ #     to be migration-safe, but allows tooling to get an insight and
+-#     work with model details.
++#     work with model details.  Deprecated properties are a set of
++#     properties that are deprecated across all models for the
++#     architecture.
+ #
+ # .. note:: When a non-migration-safe CPU model is expanded in static
+ #    mode, some features enabled by the CPU model may be omitted,
+
+Thoughts?
+
+[...]
+
+>> +
+>> +        /* deprecated features that are a subset of the model's enabled features */
+> 
+> Recommend to wrap this line for legibility.
+> 
+
+[...]
+
+Thanks for the feedback!  Pending your response to the above, I'll post
+a v4.
+
+-- 
+Regards,
+  Collin
 
 
