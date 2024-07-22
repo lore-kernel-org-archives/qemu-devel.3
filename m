@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D883C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E1FC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0ML-0002AN-BL; Mon, 22 Jul 2024 17:14:17 -0400
+	id 1sW0ML-00029g-7k; Mon, 22 Jul 2024 17:14:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sW0ME-0001ib-Gg
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:11 -0400
+ id 1sW0MI-0001x5-2a
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:14 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sW0MA-0006NU-Ey
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:09 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MKtWsc011108;
- Mon, 22 Jul 2024 21:13:58 GMT
+ id 1sW0MG-0006Rd-Cw
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:14:13 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MKtWhe027864;
+ Mon, 22 Jul 2024 21:14:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=
- corp-2023-11-20; bh=FScN6vJ9o5kB6jsxhdHXnV2HRGNqzHmlMgZHf4cmUCc=; b=
- oIU7CGsAmfQKPxE+/xsEbAhmZ0q973uv4x0m3ckTFB67lqZp9quWF60tTf+/YKSB
- grbiYJGImjlihxl40zorCJAX9ha6xhcah05rTZ5eeXJyn77GXRSwEl0hUdRhQzX0
- JGrouXsOrxKfe5J6ZeUgPX8Vlju0OhQWt/N9N/Yf7jGJAN/io7GUWVc31+ZMAyiB
- Mfnw3zwJfwcgm4jcjC6z3QK3e2kAHv7bzmx+L2HACfN/KPhX3/2X6+hDCShwhAVc
- i2Z/8De/t6SPnemQ0yRBpdBa4Swg1j2r2parhYJyc17oMufE7VZib1VO5AQVkZuo
- jkjzi87INcZx2HoZ7Yjszw==
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=Y
+ C1WMdI0JndYGcGCaSMDcPAq/+OVRfSVO2R5/HJKHnc=; b=dRIhMAg4RVSFUiv23
+ ZFkoy1XXxMPU/xvp1ReOKb5+4MS7JdlKPU2iEe5TR3a1p53Sf7AYgycEw+7rwNj4
+ QejTf21cThtbXgf3hLHMGurkNGj2YgYa3BbBOCQuB+PrR9r11mLiBk2R2J88d6/L
+ ImGIz1Hrj5RVPPFVYITvkUavG3u+G8rQLMqB7Evg521cX0xUNusVw2+PrOd5V1OC
+ V0IBJKq0rd2L+W36g2/90vsWhnbV8TPjY6XAp2QZxMchxAzeh93ARa/f9byfyX0u
+ fHG2GbCp1L7vry9THrqES6RI6i/QUvxeiRUX2I6hQ0TvpULddf5pYb1b71vxWYOD
+ MIojQ==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40hgkt3jj7-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40hgcrbmpv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 21:13:58 +0000 (GMT)
+ Mon, 22 Jul 2024 21:14:10 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46ML7ijO011016; Mon, 22 Jul 2024 21:13:56 GMT
+ with ESMTP id 46MKYVRl010981; Mon, 22 Jul 2024 21:14:09 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40h29qa7fh-1
+ 40h29qa7n8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 21:13:56 +0000
+ Mon, 22 Jul 2024 21:14:08 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46ML6tx7040372;
- Mon, 22 Jul 2024 21:13:56 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46ML6txJ040372;
+ Mon, 22 Jul 2024 21:14:08 GMT
 Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-61-12.vpn.oracle.com
  [10.175.61.12])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 40h29qa7av-4; Mon, 22 Jul 2024 21:13:56 +0000
+ 40h29qa7av-10; Mon, 22 Jul 2024 21:14:08 +0000
 From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -62,24 +62,23 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v6 3/9] vfio/iommufd: Add hw_caps field to HostIOMMUDeviceCaps
-Date: Mon, 22 Jul 2024 22:13:20 +0100
-Message-Id: <20240722211326.70162-4-joao.m.martins@oracle.com>
+Subject: [PATCH v6 9/9] vfio/common: Allow disabling device dirty page tracking
+Date: Mon, 22 Jul 2024 22:13:26 +0100
+Message-Id: <20240722211326.70162-10-joao.m.martins@oracle.com>
 In-Reply-To: <20240722211326.70162-1-joao.m.martins@oracle.com>
 References: <20240722211326.70162-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-22_14,2024-07-22_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  bulkscore=0 adultscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=999 phishscore=0 malwarescore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=955 phishscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2407220157
-X-Proofpoint-GUID: EA2aVHy7MW7DimDQb4N7KcHK1S02jv9i
-X-Proofpoint-ORIG-GUID: EA2aVHy7MW7DimDQb4N7KcHK1S02jv9i
+X-Proofpoint-GUID: dmSpJwBQVBAk1bwbd_PWPNofHCWVYfJZ
+X-Proofpoint-ORIG-GUID: dmSpJwBQVBAk1bwbd_PWPNofHCWVYfJZ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -104,50 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store the value of @caps returned by iommufd_backend_get_device_info()
-in a new field HostIOMMUDeviceCaps::hw_caps. Right now the only value is
-whether device IOMMU supports dirty tracking (IOMMU_HW_CAP_DIRTY_TRACKING).
+The property 'x-pre-copy-dirty-page-tracking' allows disabling the whole
+tracking of VF pre-copy phase of dirty page tracking, though it means
+that it will only be used at the start of the switchover phase.
 
-This is in preparation for HostIOMMUDevice::realize() being called early
-during attach_device().
+Add an option that disables the VF dirty page tracking, and fall
+back into container-based dirty page tracking. This also allows to
+use IOMMU dirty tracking even on VFs with their own dirty
+tracker scheme.
 
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/sysemu/host_iommu_device.h | 4 ++++
- hw/vfio/iommufd.c                  | 1 +
- 2 files changed, 5 insertions(+)
+ include/hw/vfio/vfio-common.h | 1 +
+ hw/vfio/common.c              | 3 +++
+ hw/vfio/migration.c           | 4 +++-
+ hw/vfio/pci.c                 | 3 +++
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-index d1c10ff7c239..809cced4ba5c 100644
---- a/include/sysemu/host_iommu_device.h
-+++ b/include/sysemu/host_iommu_device.h
-@@ -19,9 +19,13 @@
-  * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
-  *
-  * @type: host platform IOMMU type.
-+ *
-+ * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
-+ *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
-  */
- typedef struct HostIOMMUDeviceCaps {
-     uint32_t type;
-+    uint64_t hw_caps;
- } HostIOMMUDeviceCaps;
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 1e02c98b09ba..fed499b199f0 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -138,6 +138,7 @@ typedef struct VFIODevice {
+     VFIOMigration *migration;
+     Error *migration_blocker;
+     OnOffAuto pre_copy_dirty_page_tracking;
++    OnOffAuto device_dirty_page_tracking;
+     bool dirty_pages_supported;
+     bool dirty_tracking;
+     bool iommu_dirty_tracking;
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index da12cbd56408..36d0cf6585b2 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -199,6 +199,9 @@ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
+     VFIODevice *vbasedev;
  
- #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 5bb623879abe..5e2fc1ce089d 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -724,6 +724,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
++        if (vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) {
++            return false;
++        }
+         if (!vbasedev->dirty_pages_supported) {
+             return false;
+         }
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index cbfaef7afffe..262d42a46e58 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -1036,7 +1036,9 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
+         return !vfio_block_migration(vbasedev, err, errp);
+     }
  
-     hiod->name = g_strdup(vdev->name);
-     caps->type = type;
-+    caps->hw_caps = hw_caps;
- 
-     return true;
- }
+-    if (!vbasedev->dirty_pages_supported && !vbasedev->iommu_dirty_tracking) {
++    if ((!vbasedev->dirty_pages_supported ||
++         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
++        !vbasedev->iommu_dirty_tracking) {
+         if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
+             error_setg(&err,
+                        "%s: VFIO device doesn't support device and "
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 8c0f212a163e..a0767de54b8d 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3364,6 +3364,9 @@ static Property vfio_pci_dev_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("x-pre-copy-dirty-page-tracking", VFIOPCIDevice,
+                             vbasedev.pre_copy_dirty_page_tracking,
+                             ON_OFF_AUTO_ON),
++    DEFINE_PROP_ON_OFF_AUTO("x-device-dirty-page-tracking", VFIOPCIDevice,
++                            vbasedev.device_dirty_page_tracking,
++                            ON_OFF_AUTO_ON),
+     DEFINE_PROP_ON_OFF_AUTO("display", VFIOPCIDevice,
+                             display, ON_OFF_AUTO_OFF),
+     DEFINE_PROP_UINT32("xres", VFIOPCIDevice, display_xres, 0),
 -- 
 2.17.2
 
