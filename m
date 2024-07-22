@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FBD3C3DA61
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF9CC3DA63
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkW-0006AL-1a; Sun, 21 Jul 2024 20:17:56 -0400
+	id 1sVgmR-0007pi-0j; Sun, 21 Jul 2024 20:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkQ-0005XK-H7
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglC-0001j3-Ab
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkN-0005nR-GY
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgl9-0005uy-EE
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607465;
+ s=mimecast20190719; t=1721607514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qR3YDVYd2Wg1NGSld2m3zgomMPSJCBgN770Yvk3JKto=;
- b=jLd9vTxsDfy3/5krU7qmKxO01yA1Rgkr1d3Gddv9E+EaOlVxuNeM7wkHODrscPAbevElsE
- ieZvwtoBePzrhSeaD/3rZ12zacBYEZ6YXovtLlz67lDzgsHvII5xk/MYonUaupg1DgZTuR
- gae5yKpW44hHT0TYJOa8nRbUobi5s28=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PcyBRXkTTTsoCZ0FToTwoi2W+WoWKXejjiio+24ADX4=;
+ b=D5ko1VLSyrXHqLQHPKj/Pa6u9VC3gXupl2mZBw3by7nz1I33k3hEGKEFKrcDK9xE/YtW0d
+ EvuETaTltG8FQffAGov+1KR0ieoQ9QBmQ3jDHoG54xheiiEfxCGa1mQEZakL4hZpAJH4tI
+ 9yRou/6GnWmBlo8H+ig1oubXYWxzmko=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-s0_JJ5xfPiuPJ8_vON2Phw-1; Sun, 21 Jul 2024 20:17:44 -0400
-X-MC-Unique: s0_JJ5xfPiuPJ8_vON2Phw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42725ef39e2so26912025e9.0
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:42 -0700 (PDT)
+ us-mta-332-gDCpH2F3NaKIhYCG9HD-Qg-1; Sun, 21 Jul 2024 20:18:28 -0400
+X-MC-Unique: gDCpH2F3NaKIhYCG9HD-Qg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42668699453so37768895e9.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607460; x=1722212260;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qR3YDVYd2Wg1NGSld2m3zgomMPSJCBgN770Yvk3JKto=;
- b=Tx2Lo0VpfVXPYcR6uRuCT4WP20j4+9FKD59rLC16BCDg52gp85qQb0J8JNeSDM2BnA
- wFcYxfpqo0QREoDAHunJ1P+GewEQ45LtDRdDslP8yvSqtArVYl4JNciyp8biUXbkRPef
- OwKXgS5uP1Ocdpr0MH71nUe5YyO0s9skdpPr4HRquMk7JF1GfoLDZvCV8tot+K679/nr
- zpgAXi4G40u3vjyBSuNWTS1wJwh1Y9Dcx+Cu8d8CHFJhr2Vlpilgdb4HwjQMHPVkKCcU
- 3QVrjDJch5edKHOyusL1D7qbC0xOBs1JiinzyK8oeXAJ1ImYuju91eGeoY72tGXEUCZ3
- E6HQ==
-X-Gm-Message-State: AOJu0Ywl1z/+VCY4ySlw1rz0wMh7z08oHU4Rfk8nYLibkW+akt3bBGRu
- hP/kzyE6hob3Mc9PchD+ujMad10H2D/DYf23uTbNALj598kEfs1tEf0U5dZqfn+Iu7IonJjO/Se
- dIxkwrQf1WgsVsbhmmwjzPXezcoWLaweloakGcYQbZhcqG+uIm1lLRRbnfnkooe2DdSnsb/T7wn
- EeP1oAgoio40m0b4xVPT+dp/uOZIBtDA==
-X-Received: by 2002:a05:600c:1547:b0:425:5ec3:570b with SMTP id
- 5b1f17b1804b1-427dc578efdmr28707605e9.35.1721607460207; 
- Sun, 21 Jul 2024 17:17:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEje2D6euFaTQKRQVbBqxfL0t+RH1yWtfKfyi7Q4xwxL40Wm8Gat+um29Oj2O0ti0ja3MpU3g==
-X-Received: by 2002:a05:600c:1547:b0:425:5ec3:570b with SMTP id
- 5b1f17b1804b1-427dc578efdmr28707485e9.35.1721607459701; 
- Sun, 21 Jul 2024 17:17:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607507; x=1722212307;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PcyBRXkTTTsoCZ0FToTwoi2W+WoWKXejjiio+24ADX4=;
+ b=MXLynDPsa17xgrrHkBygb3wo5tL039IulxbTKFcY7X7DXn+kkokQaQx/xIOeMelFFA
+ VBfrPFFM3XKdQCmU4lDHZssIEEQHM8/tGlxZWJerOh0Acw+0icfpPswGF/JzO+knByXC
+ AYwGyNHmMwoRB65UmNCXezE/SR/DsbXqd3ku3UxO//CeuU/KZ++8v2n3q/MjjSz76MEC
+ EWmLHuAhhDDJkwGlvbs/vtnVipSamYlTsuX3MGIgh2+qpSQu1PCAVP0M/lJ1Fj1IW7FK
+ Xhg8Rbx62diFCDoAKg7+TF7t1ojAG6ZJJzy6GECqk2K+Sjrjpc4XEIztRpRvieu/T6iL
+ pTgQ==
+X-Gm-Message-State: AOJu0Yy4C6XRRvf04z4shxFmghwiAn188XUblQjvbiHKt7ax+yJilg3B
+ eSqBsEQRFoF3rtrevMC/N/DR0+oh5mOT6CIf8htSQxxS6XaSqFqiKzwqF44Ycv92zjCZgFPmzp8
+ vWN4vbkJ43gVwrO6yX3JuSIh2O9pJ1M0cb6HxppIZz/3HoBbBAwSA6a6oIA02G5UMs+5tUFBHPz
+ QWO0G2H02/AfzXIBXwjWAe1+C/OgJXpA==
+X-Received: by 2002:a05:600c:4ed3:b0:426:690d:d5b7 with SMTP id
+ 5b1f17b1804b1-427dc55bb09mr37066355e9.25.1721607507015; 
+ Sun, 21 Jul 2024 17:18:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsouKXDGxkIdMyPaPINBJmjiQT+Suo0Ny91y8xgXjnhkmksE7uwx7aHFzR8O8q72lm/20CfA==
+X-Received: by 2002:a05:600c:4ed3:b0:426:690d:d5b7 with SMTP id
+ 5b1f17b1804b1-427dc55bb09mr37066145e9.25.1721607506421; 
+ Sun, 21 Jul 2024 17:18:26 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d6934ec6sm106843415e9.41.2024.07.21.17.17.38
+ 5b1f17b1804b1-427d2a804a4sm62340195e9.1.2024.07.21.17.18.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:39 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:37 -0400
+ Sun, 21 Jul 2024 17:18:25 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL 23/63] virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
-Message-ID: <2256e8482b2bba88abcc734dbc6951b825773f0b.1721607331.git.mst@redhat.com>
+ Salil Mehta <salil.mehta@huawei.com>,
+ Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
+ Gavin Shan <gshan@redhat.com>, Xianglai Li <lixianglai@loongson.cn>,
+ Miguel Luis <miguel.luis@oracle.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 44/63] gdbstub: Add helper function to unregister GDB register
+ space
+Message-ID: <1f08da5cf90c3e0d60487ac13ed7079ff3735637.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,69 +112,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonah Palmer <jonah.palmer@oracle.com>
+From: Salil Mehta <salil.mehta@huawei.com>
 
-Add VIRTIO_F_IN_ORDER feature support in virtqueue_split_pop and
-virtqueue_packed_pop.
+Add common function to help unregister the GDB register space. This shall be
+done in context to the CPU unrealization.
 
-VirtQueueElements popped from the available/descritpor ring are added to
-the VirtQueue's used_elems array in-order and in the same fashion as
-they would be added the used and descriptor rings, respectively.
+Note: These are common functions exported to arch specific code. For example,
+for ARM this code is being referred in associated arch specific patch-set:
 
-This will allow us to keep track of the current order, what elements
-have been written, as well as an element's essential data after being
-processed.
+Link: https://lore.kernel.org/qemu-devel/20230926103654.34424-1-salil.mehta@huawei.com/
 
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20240710125522.4168043-3-jonah.palmer@oracle.com>
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Xianglai Li <lixianglai@loongson.cn>
+Tested-by: Miguel Luis <miguel.luis@oracle.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+Tested-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240716111502.202344-8-salil.mehta@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ include/exec/gdbstub.h |  6 ++++++
+ gdbstub/gdbstub.c      | 13 +++++++++++++
+ hw/core/cpu-common.c   |  5 ++++-
+ 3 files changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 583a224163..98eb601b09 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1505,7 +1505,7 @@ static void *virtqueue_alloc_element(size_t sz, unsigned out_num, unsigned in_nu
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index 1bd2c4ec2a..d73f424f56 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -40,6 +40,12 @@ void gdb_register_coprocessor(CPUState *cpu,
+                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+                               const GDBFeature *feature, int g_pos);
  
- static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
- {
--    unsigned int i, head, max;
-+    unsigned int i, head, max, idx;
-     VRingMemoryRegionCaches *caches;
-     MemoryRegionCache indirect_desc_cache;
-     MemoryRegionCache *desc_cache;
-@@ -1629,6 +1629,13 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
-         elem->in_sg[i] = iov[out_num + i];
++/**
++ * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
++ * @cpu - the CPU associated with registers
++ */
++void gdb_unregister_coprocessor_all(CPUState *cpu);
++
+ /**
+  * gdbserver_start: start the gdb server
+  * @port_or_device: connection spec for gdb
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index b9ad0a063e..5da17d6530 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -618,6 +618,19 @@ void gdb_register_coprocessor(CPUState *cpu,
      }
+ }
  
-+    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-+        idx = (vq->last_avail_idx - 1) % vq->vring.num;
-+        vq->used_elems[idx].index = elem->index;
-+        vq->used_elems[idx].len = elem->len;
-+        vq->used_elems[idx].ndescs = elem->ndescs;
++void gdb_unregister_coprocessor_all(CPUState *cpu)
++{
++    /*
++     * Safe to nuke everything. GDBRegisterState::xml is static const char so
++     * it won't be freed
++     */
++    g_array_free(cpu->gdb_regs, true);
++
++    cpu->gdb_regs = NULL;
++    cpu->gdb_num_regs = 0;
++    cpu->gdb_num_g_regs = 0;
++}
++
+ static void gdb_process_breakpoint_remove_all(GDBProcess *p)
+ {
+     CPUState *cpu = gdb_get_first_cpu_in_process(p);
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index d2e3e4570a..7982ecd39a 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -282,7 +282,10 @@ static void cpu_common_finalize(Object *obj)
+     }
+ #endif
+     free_queued_cpu_work(cpu);
+-    g_array_free(cpu->gdb_regs, TRUE);
++    /* If cleanup didn't happen in context to gdb_unregister_coprocessor_all */
++    if (cpu->gdb_regs) {
++        g_array_free(cpu->gdb_regs, TRUE);
 +    }
-+
-     vq->inuse++;
- 
-     trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
-@@ -1762,6 +1769,13 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
- 
-     elem->index = id;
-     elem->ndescs = (desc_cache == &indirect_desc_cache) ? 1 : elem_entries;
-+
-+    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-+        vq->used_elems[vq->last_avail_idx].index = elem->index;
-+        vq->used_elems[vq->last_avail_idx].len = elem->len;
-+        vq->used_elems[vq->last_avail_idx].ndescs = elem->ndescs;
-+    }
-+
-     vq->last_avail_idx += elem->ndescs;
-     vq->inuse += elem->ndescs;
- 
+     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+     qemu_mutex_destroy(&cpu->work_mutex);
+     qemu_cond_destroy(cpu->halt_cond);
 -- 
 MST
 
