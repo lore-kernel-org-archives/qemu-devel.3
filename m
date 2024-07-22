@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854C7C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76224C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrjs-0002gE-67; Mon, 22 Jul 2024 08:02:00 -0400
+	id 1sVrjv-0002y7-QC; Mon, 22 Jul 2024 08:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrir-0006kR-4m
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrio-0006aQ-Fi
  for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrip-0006X7-Ab
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:00:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVril-0006Wk-N2
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649654;
+ s=mimecast20190719; t=1721649650;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oL7JIWMOcGxx5sOxMOum2TUxmjJ/cw72Pvh/qbuTYqc=;
- b=SADkZIaViSwwls7b3mQLPVLDgsVOVBqblORA9FCplB6rMApsH1VzJgzrhizUnpZGsMn2Pv
- kwjgzvE+alishL69RoPXgG88tX3nNDMLGLOO4RBnnnC1hvO7JyfzHSHmETTnSUqgrtcDD1
- b0FixNjMHpLqjtoEhMnXbFQ5fdBogU4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=U2Zpk0BJpOgDk+mn/Ap9wBHDUPM0GlRWY3lYqAee7FA=;
+ b=ZvDTb7tWiazl+SOSmSNepIwR3DeeQa7lZU1mpIGumLoadBS9M/ltIUTgdQ1P0RbL5Ahr2t
+ Z14e/G+Nlk6/ZHkZkORREvWqn3XEerLJZaHhckHHAicVIsDqkN6h9FScZEG3+a+ZcK4Rky
+ LV+w8m2iy6VMbFYMldtla4Gc5Qk/0xI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-5XYqw3f5ONqz3qCqNXe9Vw-1; Mon,
- 22 Jul 2024 08:00:51 -0400
-X-MC-Unique: 5XYqw3f5ONqz3qCqNXe9Vw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-7KoKtCZoMsW0hGLC1NjN9A-1; Mon,
+ 22 Jul 2024 08:00:47 -0400
+X-MC-Unique: 7KoKtCZoMsW0hGLC1NjN9A-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 773EE1944A95; Mon, 22 Jul 2024 12:00:37 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E90B190548E; Mon, 22 Jul 2024 12:00:39 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.179])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE53C1955E76; Mon, 22 Jul 2024 12:00:31 +0000 (UTC)
+ id 89ACE1955DD3; Mon, 22 Jul 2024 12:00:34 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: [PULL 02/12] tests/avocado/boot_xen.py: unify tags
-Date: Mon, 22 Jul 2024 14:00:16 +0200
-Message-ID: <20240722120026.675449-3-thuth@redhat.com>
+Subject: [PULL 03/12] tests/avocado/boot_xen.py: use class attribute
+Date: Mon, 22 Jul 2024 14:00:17 +0200
+Message-ID: <20240722120026.675449-4-thuth@redhat.com>
 In-Reply-To: <20240722120026.675449-1-thuth@redhat.com>
 References: <20240722120026.675449-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -82,75 +82,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Cleber Rosa <crosa@redhat.com>
 
-Because all tests share the same tags, it's possible to have all of
-them at the class level.
+Rather than defining a single use variable, let's just use the class
+attribute directly.
 
 Signed-off-by: Cleber Rosa <crosa@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20231208190911.102879-10-crosa@redhat.com>
+Message-ID: <20231208190911.102879-11-crosa@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/boot_xen.py | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
+ tests/avocado/boot_xen.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/tests/avocado/boot_xen.py b/tests/avocado/boot_xen.py
-index f80cbcb8fb..f4b63c1ef2 100644
+index f4b63c1ef2..f29bc58b9e 100644
 --- a/tests/avocado/boot_xen.py
 +++ b/tests/avocado/boot_xen.py
-@@ -20,6 +20,11 @@
- class BootXen(LinuxKernelTest):
-     """
-     Boots a Xen hypervisor with a Linux DomU kernel.
-+
-+    :avocado: tags=arch:aarch64
-+    :avocado: tags=accel:tcg
-+    :avocado: tags=cpu:cortex-a57
-+    :avocado: tags=machine:virt
-     """
+@@ -50,11 +50,10 @@ def launch_xen(self, xen_path):
  
-     timeout = 90
-@@ -60,13 +65,6 @@ def launch_xen(self, xen_path):
-         wait_for_console_pattern(self, console_pattern, "Panic on CPU 0:")
+         self.vm.set_console()
  
-     def test_arm64_xen_411_and_dom0(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=accel:tcg
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        """
--
-         # archive of file from https://deb.debian.org/debian/pool/main/x/xen/
-         xen_url = ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
-                    'download?path=%2F&files='
-@@ -78,13 +76,6 @@ def test_arm64_xen_411_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     def test_arm64_xen_414_and_dom0(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=accel:tcg
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        """
--
-         # archive of file from https://deb.debian.org/debian/pool/main/x/xen/
-         xen_url = ('https://fileserver.linaro.org/s/JSsewXGZ6mqxPr5/'
-                    'download?path=%2F&files='
-@@ -96,13 +87,6 @@ def test_arm64_xen_414_and_dom0(self):
-         self.launch_xen(xen_path)
- 
-     def test_arm64_xen_415_and_dom0(self):
--        """
--        :avocado: tags=arch:aarch64
--        :avocado: tags=accel:tcg
--        :avocado: tags=cpu:cortex-a57
--        :avocado: tags=machine:virt
--        """
--
-         xen_url = ('https://fileserver.linaro.org/'
-                    's/JSsewXGZ6mqxPr5/download'
-                    '?path=%2F&files=xen-upstream-4.15-unstable.deb')
+-        xen_command_line = self.XEN_COMMON_COMMAND_LINE
+         self.vm.add_args('-machine', 'virtualization=on',
+                          '-m', '768',
+                          '-kernel', xen_path,
+-                         '-append', xen_command_line,
++                         '-append', self.XEN_COMMON_COMMAND_LINE,
+                          '-device',
+                          'guest-loader,addr=0x47000000,kernel=%s,bootargs=console=hvc0'
+                          % (kernel_path))
 -- 
 2.45.2
 
