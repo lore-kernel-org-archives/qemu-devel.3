@@ -4,69 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA5FC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD094C3DA70
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn41-0001ug-Pt; Mon, 22 Jul 2024 03:02:29 -0400
+	id 1sVn40-0001lu-ON; Mon, 22 Jul 2024 03:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3N-0008BY-8Z
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3H-0006QP-Cw
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sVn3L-00086U-W9
  for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631702;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N4SjKYE/l+ASRKemP852P3wDtmsES289bR/yHY7NCmc=;
- b=MVB/p7luy5FWWUVsrfa3K0Gb3cdZQ6fm4ifGSq25Yms5f3nNH8tqxMjsCJS+KI+wXaGXnC
- CbZyifum2R3frHuxBzRUSjTOq3JoKNCUGQ+KXObxk4ynqT+Asf0J/b+JYOdddc+auLYXQu
- oX/3o8JYk4caNsY0ydHXVtpNPpApyxA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-qn736ogROgO0Jts5znUL9g-1; Mon,
- 22 Jul 2024 03:01:40 -0400
-X-MC-Unique: qn736ogROgO0Jts5znUL9g-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14C7E196E024; Mon, 22 Jul 2024 07:01:37 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.224.252])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 192F31955D48; Mon, 22 Jul 2024 07:01:33 +0000 (UTC)
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 04/25] qga: move linux fs/disk command impls to commands-linux.c
-Date: Mon, 22 Jul 2024 10:01:01 +0300
-Message-ID: <20240722070122.27615-5-kkostiuk@redhat.com>
-In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
-References: <20240722070122.27615-1-kkostiuk@redhat.com>
+Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sVn3J-0006QG-BR
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721631705; x=1753167705;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=wrc4GDFfyWwU5APUAdOKGqGoHN0t07zmZegj31LG+Cw=;
+ b=eiudvubKB6tLqZU81Ko4VhNt8aDQhyvp4HUbdHXqIkEwzbLUXOqWLh09
+ 8VObmaBOrBGY1Utk4N6SCt04r4aZzqTRbiKrbzGnBgaspODookTNA0jcY
+ 4wemePpMY4UHocVJ/z4bFJ52AuDMf/yL9KNFDzDl65Svb3EvkPJKstAeR
+ +7bUJg3jE1dxgnFYSeIQQPHBjmjRDk0DnyCSb810A2VBBwNZ88dTtYVrN
+ l1nYjfoV7KhjG7CQwPTFGMcncgUNs7TOn8WOpC7J5iMb8RJQKgMbzZcnx
+ N/e/URVGpQPo0k5Xk7cuwcuI7UQZcKCzdMSVCHsXHy10uGQNKaNJOkQIi A==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="146982855"
+X-IronPort-AV: E=Sophos;i="6.09,227,1716217200"; d="scan'208";a="146982855"
+Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
+ by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2024 16:01:38 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id DBF7BE8D2B
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:36 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 13E2ED4F46
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:36 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 981A7E628
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:35 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id BA1A41A000A;
+ Mon, 22 Jul 2024 15:01:34 +0800 (CST)
+Message-ID: <b537967c-eed7-4265-9a9e-3925d49aecef@fujitsu.com>
+Date: Mon, 22 Jul 2024 15:01:34 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+To: Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>
+Cc: jonathan.cameron@huawei.com, dave@stgolabs.net, ira.weiny@intel.com,
+ alison.schofield@intel.com, vishal.l.verma@intel.com, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+ <6675bd86ea005_57ac29411@dwillia2-xfh.jf.intel.com.notmuch>
+ <965e2c27-6147-4237-b4b6-6aaf74363aa2@fujitsu.com>
+ <1fab087b-eb6c-485e-a2ed-f86e8dfacc5d@fujitsu.com>
+ <ec0f2e8d-e783-4211-8d41-2b9a6df67049@intel.com>
+In-Reply-To: <ec0f2e8d-e783-4211-8d41-2b9a6df67049@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28544.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28544.005
+X-TMASE-Result: 10--23.833000-10.000000
+X-TMASE-MatchedRID: vkIe3oCKrUmPvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYBFQ
+ /vtbW7XNCP4GWEsAbpWNZCQJKjBBDgMPXi5ZiyFvVnzlQiaE21r4h+uI7dxXxOjMOEZ5AL0SsJs
+ JK5IfvnZTx0o+4nb1whJ+INVehs+97IFOpFOFSvixaW0fY4IMuDqu3dM+YhFRVxk27EKh25K0pv
+ xdZww2r8T+c55jUI9At1K/UeVR3qjWNSt25psfwjz6L+U/pejxpSwAzAEivMea9Zo7TJaDsJgUL
+ y4zAbFBOQzI/xUtTVxfahmBw9cTVoke/R2iCaQjn6y0mNkW0aSlY4F8r0vXP6Y5ZGw7wyeHsDBn
+ W53+2jl755lTx6LDRs9gc1n8GYlrmcUNCy5hvn9kBXeGzp60+nZljA0Gozoih2WtnORUKg685QX
+ 45szp96KnDnwlJfeMOyOCKgT1VIsqr12s6iu4vArcxrzwsv5uf70KM8eatUjfc2Xd6VJ+ym+tWV
+ Fb8XYlPJEa0PzdsXmikrdCCR3aDe/i00nUfc4wnVTWWiNp+v8Jlr1xKkE5ucC5DTEMxpeQfiq1g
+ j2xET/FG6rPbKnpuqrlqe9TaLwsJfmEcyk6uEa3D7EeeyZCM9fgqdEINwWeVgkL9epqBvGxpN5W
+ P+PXywGRC3bBIF8o8Ptw9gr7VGfSXsg8wGtgHdKDcT1f9CjEBMdp5178zSN68OnX6EF0WhhBvWg
+ ZlX+8585VzGMOFzABi3kqJOK62b+/RSFMoL2cxEHRux+uk8jpP8tMOyYmaA==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.61.252;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,1886 +106,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
 
-The qmp_guest_{fstrim, get_fsinfo, get_disks} command impls in
-commands-posix.c are surrounded by '#ifdef __linux__' so should
-instead live in commands-linux.c
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240712132459.3974109-5-berrange@redhat.com>
-Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
----
- qga/commands-linux.c | 904 ++++++++++++++++++++++++++++++++++++++++++
- qga/commands-posix.c | 909 -------------------------------------------
- 2 files changed, 904 insertions(+), 909 deletions(-)
+在 2024/7/20 0:04, Dave Jiang 写道:
+> 
+> 
+> On 7/1/24 7:12 PM, Shiyang Ruan wrote:
+>>
+>>
+>> 在 2024/6/25 21:56, Shiyang Ruan 写道:
+>>>
+>>>
+>>> 在 2024/6/22 1:51, Dan Williams 写道:
+>>>> Shiyang Ruan wrote:
+>>>>> Background:
+>>>>> Since CXL device is a memory device, while CPU consumes a poison page of
+>>>>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
+>>>>> which-First path is configured.  This is the first report.  Then
+>>>>> currently, in FW-First path, the poison event is transferred according
+>>>>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
+>>>>>    -> CPER -> trace report.  This is the second one.  These two reports
+>>>>> are indicating the same poisoning page, which is the so-called "duplicate
+>>>>> report"[1].  And the memory_failure() handling I'm trying to add in
+>>>>> OS-First path could also be another duplicate report.
+>>>>>
+>>>>> Hope the flow below could make it easier to understand:
+>>>>> CPU accesses bad memory on CXL device, then
+>>>>>    -> MCE (INT18), *always* report (1)
+>>>>>    -> * FW-First (implemented now)
+>>>>>         -> CXL device -> FW
+>>>>>            -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
+>>>>>       * OS-First (not implemented yet, I'm working on it)
+>>>>>         -> CXL device -> MSI
+>>>>>            -> OS:CXL driver -> memory_failure() (2.b)
+>>>>> so, the (1) and (2.a/b) are duplicated.
+>>>>>
+>>>>> (I didn't get response in my reply for [1] while I have to make patch to
+>>>>> solve this problem, so please correct me if my understanding is wrong.)
+>>>>
+>>>> The CPU MCE may not be in the loop. Consider the case of patrol scrub,
+>>>> or device-DMA accessing poison. In that case the device will signal a
+>>>> component event and the CPU may never issue the MCE.
+>>>
+>>> My other patch: "cxl/core: add poison creation event handler", adds calling memory_failure() when an event is received form device, which checks the poison record (insert if not exists) to make sure poison would be reported/handled, but not twice, no matter CPU issues the MCE later or earlier.  And the lock of poison record makes sure that it's fine even in race condition.
+>>>
+>>>>
+>>>> What is missing for me from this description is *why* does the duplicate
+>>>> report matter in practice? If all that happens is that the kernel
+>>>> repeats the lookup to offline the page and set the HWPoison bit, is that
+>>>> duplicated work worth adding more tracking?
+>>>
+>>> Besides setting the HWPoison bit for the poison page, memory_failure() also finds and notifies those processes who are accessing the poison page, and tries to recovery the page.  And there seems no lock to prevent the 2nd memory_failure() and clearing poison operation from being called in race, then the HWPoison bit could be unsure.  I think that's the problem.
+>>>
+>>>   > So, I think all CXL poison notification events should trigger an
+>>>   > action optional memory_failure(). I expect this needs to make sure
+>>>   > that duplicates re not a problem. I.e. in the case of CPU consumption
+>>>   > of CXL poison, that causes a synchronous MF_ACTION_REQUIRED event via
+>>>   > the MCE path *and* it may trigger the device to send an error record
+>>>   > for the same page. As far as I can see, duplicate reports (MCE + CXL
+>>>   > device) are unavoidable.
+>>>
+>>> As you mentioned in my other patch, this problem should be solved at first.  My patch adds the poison record (tracking, which might not become very large) to prevent duplicating report.
+>>
+>> Ping~
+>>
+>> And I had some problems when using xarray, please see below.
+>>
+>>>
+>>>>
+>>>>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
+>>>>> to check whether the current poison page has been reported (if yes,
+>>>>> stop the notifier chain, won't call the following memory_failure()
+>>>>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
+>>>>> page already handled(recorded and reported) in (1) or (2), the other one
+>>>>> won't duplicate the report.  The record could be clear when
+>>>>> cxl_clear_poison() is called.
+>>>>>
+>>>>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
+>>>>>
+>>>>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+>>>>> ---
+>>>>>    arch/x86/include/asm/mce.h |   1 +
+>>>>>    drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
+>>>>>    drivers/cxl/core/memdev.c  |   6 +-
+>>>>>    drivers/cxl/cxlmem.h       |   3 +
+>>>>>    4 files changed, 139 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
+>>>>> index dfd2e9699bd7..d8109c48e7d9 100644
+>>>>> --- a/arch/x86/include/asm/mce.h
+>>>>> +++ b/arch/x86/include/asm/mce.h
+>>>>> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
+>>>>>        MCE_PRIO_NFIT,
+>>>>>        MCE_PRIO_EXTLOG,
+>>>>>        MCE_PRIO_UC,
+>>>>> +    MCE_PRIO_CXL,
+>>>>>        MCE_PRIO_EARLY,
+>>>>>        MCE_PRIO_CEC,
+>>>>>        MCE_PRIO_HIGHEST = MCE_PRIO_CEC
+>>>>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+>>>>> index 2626f3fff201..0eb3c5401e81 100644
+>>>>> --- a/drivers/cxl/core/mbox.c
+>>>>> +++ b/drivers/cxl/core/mbox.c
+>>>>> @@ -4,6 +4,8 @@
+>>>>>    #include <linux/debugfs.h>
+>>>>>    #include <linux/ktime.h>
+>>>>>    #include <linux/mutex.h>
+>>>>> +#include <linux/notifier.h>
+>>>>> +#include <asm/mce.h>
+>>>>>    #include <asm/unaligned.h>
+>>>>>    #include <cxlpci.h>
+>>>>>    #include <cxlmem.h>
+>>>>> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+>>>>>            if (cxlr)
+>>>>>                hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>>>>> +        if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
+>>>>> +            return;
+>>>>> +
+>>>>>            if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
+>>>>>                trace_cxl_general_media(cxlmd, type, cxlr, hpa,
+>>>>>                            &evt->gen_media);
+>>>>> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
+>>>>>    }
+>>>>>    EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
+>>>>> +struct cxl_mce_record {
+>>>>> +    struct list_head node;
+>>>>> +    u64 hpa;
+>>>>> +};
+>>>>> +LIST_HEAD(cxl_mce_records);
+>>>>> +DEFINE_MUTEX(cxl_mce_mutex);
+>>>>
+>>>> I would recommend an xarray for this use case as that already has its
+>>>> own internal locking and efficient memory allocation for new nodes.
+>>>>
+>>>> However, the "why" question needs to be answered first.
+>>>
+>>> xarray does look better.  I didn't think of it befre.  Thanks for suggestion.
+>>
+>> I'm trying using xarray but but I'm running into two problems.
+>>
+>> The first one is: xarray stores an entry with a specified index, but here we only need to store the PFN.  I'm not sure how to specific an index for a PFN.  So I think xarray might not suitable for my case.
+>> The second one: because we only need to store/search PFN, the list node only contains a list_head and a PFN. But xarray seems to require more memory for each node, which causes more overhead.
+> 
+> Use PFN as the index of the xarray since it's unique. And that makes finding the entry easy with xarray because you just pass in the PFN as the key. You can store an xarray entry with no data.
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 3fabf54882..084e6c9e85 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -14,10 +14,21 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qga-qapi-commands.h"
-+#include "qapi/error.h"
-+#include "qapi/qmp/qerror.h"
- #include "commands-common.h"
- #include "cutils.h"
- #include <mntent.h>
- #include <sys/ioctl.h>
-+#include <mntent.h>
-+#include <linux/nvme_ioctl.h>
-+#include "block/nvme.h"
-+
-+#ifdef CONFIG_LIBUDEV
-+#include <libudev.h>
-+#endif
-+
-+#include <sys/statvfs.h>
- 
- #if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
- static int dev_major_minor(const char *devpath,
-@@ -286,6 +297,899 @@ int qmp_guest_fsfreeze_do_thaw(Error **errp)
- }
- #endif /* CONFIG_FSFREEZE */
- 
-+#if defined(CONFIG_FSFREEZE)
-+
-+static char *get_pci_driver(char const *syspath, int pathlen, Error **errp)
-+{
-+    char *path;
-+    char *dpath;
-+    char *driver = NULL;
-+    char buf[PATH_MAX];
-+    ssize_t len;
-+
-+    path = g_strndup(syspath, pathlen);
-+    dpath = g_strdup_printf("%s/driver", path);
-+    len = readlink(dpath, buf, sizeof(buf) - 1);
-+    if (len != -1) {
-+        buf[len] = 0;
-+        driver = g_path_get_basename(buf);
-+    }
-+    g_free(dpath);
-+    g_free(path);
-+    return driver;
-+}
-+
-+static int compare_uint(const void *_a, const void *_b)
-+{
-+    unsigned int a = *(unsigned int *)_a;
-+    unsigned int b = *(unsigned int *)_b;
-+
-+    return a < b ? -1 : a > b ? 1 : 0;
-+}
-+
-+/* Walk the specified sysfs and build a sorted list of host or ata numbers */
-+static int build_hosts(char const *syspath, char const *host, bool ata,
-+                       unsigned int *hosts, int hosts_max, Error **errp)
-+{
-+    char *path;
-+    DIR *dir;
-+    struct dirent *entry;
-+    int i = 0;
-+
-+    path = g_strndup(syspath, host - syspath);
-+    dir = opendir(path);
-+    if (!dir) {
-+        error_setg_errno(errp, errno, "opendir(\"%s\")", path);
-+        g_free(path);
-+        return -1;
-+    }
-+
-+    while (i < hosts_max) {
-+        entry = readdir(dir);
-+        if (!entry) {
-+            break;
-+        }
-+        if (ata && sscanf(entry->d_name, "ata%d", hosts + i) == 1) {
-+            ++i;
-+        } else if (!ata && sscanf(entry->d_name, "host%d", hosts + i) == 1) {
-+            ++i;
-+        }
-+    }
-+
-+    qsort(hosts, i, sizeof(hosts[0]), compare_uint);
-+
-+    g_free(path);
-+    closedir(dir);
-+    return i;
-+}
-+
-+/*
-+ * Store disk device info for devices on the PCI bus.
-+ * Returns true if information has been stored, or false for failure.
-+ */
-+static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
-+                                           GuestDiskAddress *disk,
-+                                           Error **errp)
-+{
-+    unsigned int pci[4], host, hosts[8], tgt[3];
-+    int i, nhosts = 0, pcilen;
-+    GuestPCIAddress *pciaddr = disk->pci_controller;
-+    bool has_ata = false, has_host = false, has_tgt = false;
-+    char *p, *q, *driver = NULL;
-+    bool ret = false;
-+
-+    p = strstr(syspath, "/devices/pci");
-+    if (!p || sscanf(p + 12, "%*x:%*x/%x:%x:%x.%x%n",
-+                     pci, pci + 1, pci + 2, pci + 3, &pcilen) < 4) {
-+        g_debug("only pci device is supported: sysfs path '%s'", syspath);
-+        return false;
-+    }
-+
-+    p += 12 + pcilen;
-+    while (true) {
-+        driver = get_pci_driver(syspath, p - syspath, errp);
-+        if (driver && (g_str_equal(driver, "ata_piix") ||
-+                       g_str_equal(driver, "sym53c8xx") ||
-+                       g_str_equal(driver, "virtio-pci") ||
-+                       g_str_equal(driver, "ahci") ||
-+                       g_str_equal(driver, "nvme") ||
-+                       g_str_equal(driver, "xhci_hcd") ||
-+                       g_str_equal(driver, "ehci-pci"))) {
-+            break;
-+        }
-+
-+        g_free(driver);
-+        if (sscanf(p, "/%x:%x:%x.%x%n",
-+                          pci, pci + 1, pci + 2, pci + 3, &pcilen) == 4) {
-+            p += pcilen;
-+            continue;
-+        }
-+
-+        g_debug("unsupported driver or sysfs path '%s'", syspath);
-+        return false;
-+    }
-+
-+    p = strstr(syspath, "/target");
-+    if (p && sscanf(p + 7, "%*u:%*u:%*u/%*u:%u:%u:%u",
-+                    tgt, tgt + 1, tgt + 2) == 3) {
-+        has_tgt = true;
-+    }
-+
-+    p = strstr(syspath, "/ata");
-+    if (p) {
-+        q = p + 4;
-+        has_ata = true;
-+    } else {
-+        p = strstr(syspath, "/host");
-+        q = p + 5;
-+    }
-+    if (p && sscanf(q, "%u", &host) == 1) {
-+        has_host = true;
-+        nhosts = build_hosts(syspath, p, has_ata, hosts,
-+                             ARRAY_SIZE(hosts), errp);
-+        if (nhosts < 0) {
-+            goto cleanup;
-+        }
-+    }
-+
-+    pciaddr->domain = pci[0];
-+    pciaddr->bus = pci[1];
-+    pciaddr->slot = pci[2];
-+    pciaddr->function = pci[3];
-+
-+    if (strcmp(driver, "ata_piix") == 0) {
-+        /* a host per ide bus, target*:0:<unit>:0 */
-+        if (!has_host || !has_tgt) {
-+            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
-+            goto cleanup;
-+        }
-+        for (i = 0; i < nhosts; i++) {
-+            if (host == hosts[i]) {
-+                disk->bus_type = GUEST_DISK_BUS_TYPE_IDE;
-+                disk->bus = i;
-+                disk->unit = tgt[1];
-+                break;
-+            }
-+        }
-+        if (i >= nhosts) {
-+            g_debug("no host for '%s' (driver '%s')", syspath, driver);
-+            goto cleanup;
-+        }
-+    } else if (strcmp(driver, "sym53c8xx") == 0) {
-+        /* scsi(LSI Logic): target*:0:<unit>:0 */
-+        if (!has_tgt) {
-+            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
-+            goto cleanup;
-+        }
-+        disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
-+        disk->unit = tgt[1];
-+    } else if (strcmp(driver, "virtio-pci") == 0) {
-+        if (has_tgt) {
-+            /* virtio-scsi: target*:0:0:<unit> */
-+            disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
-+            disk->unit = tgt[2];
-+        } else {
-+            /* virtio-blk: 1 disk per 1 device */
-+            disk->bus_type = GUEST_DISK_BUS_TYPE_VIRTIO;
-+        }
-+    } else if (strcmp(driver, "ahci") == 0) {
-+        /* ahci: 1 host per 1 unit */
-+        if (!has_host || !has_tgt) {
-+            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
-+            goto cleanup;
-+        }
-+        for (i = 0; i < nhosts; i++) {
-+            if (host == hosts[i]) {
-+                disk->unit = i;
-+                disk->bus_type = GUEST_DISK_BUS_TYPE_SATA;
-+                break;
-+            }
-+        }
-+        if (i >= nhosts) {
-+            g_debug("no host for '%s' (driver '%s')", syspath, driver);
-+            goto cleanup;
-+        }
-+    } else if (strcmp(driver, "nvme") == 0) {
-+        disk->bus_type = GUEST_DISK_BUS_TYPE_NVME;
-+    } else if (strcmp(driver, "ehci-pci") == 0 || strcmp(driver, "xhci_hcd") == 0) {
-+        disk->bus_type = GUEST_DISK_BUS_TYPE_USB;
-+    } else {
-+        g_debug("unknown driver '%s' (sysfs path '%s')", driver, syspath);
-+        goto cleanup;
-+    }
-+
-+    ret = true;
-+
-+cleanup:
-+    g_free(driver);
-+    return ret;
-+}
-+
-+/*
-+ * Store disk device info for non-PCI virtio devices (for example s390x
-+ * channel I/O devices). Returns true if information has been stored, or
-+ * false for failure.
-+ */
-+static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
-+                                                 GuestDiskAddress *disk,
-+                                                 Error **errp)
-+{
-+    unsigned int tgt[3];
-+    char *p;
-+
-+    if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
-+        g_debug("Unsupported virtio device '%s'", syspath);
-+        return false;
-+    }
-+
-+    p = strstr(syspath, "/target");
-+    if (p && sscanf(p + 7, "%*u:%*u:%*u/%*u:%u:%u:%u",
-+                    &tgt[0], &tgt[1], &tgt[2]) == 3) {
-+        /* virtio-scsi: target*:0:<target>:<unit> */
-+        disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
-+        disk->bus = tgt[0];
-+        disk->target = tgt[1];
-+        disk->unit = tgt[2];
-+    } else {
-+        /* virtio-blk: 1 disk per 1 device */
-+        disk->bus_type = GUEST_DISK_BUS_TYPE_VIRTIO;
-+    }
-+
-+    return true;
-+}
-+
-+/*
-+ * Store disk device info for CCW devices (s390x channel I/O devices).
-+ * Returns true if information has been stored, or false for failure.
-+ */
-+static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
-+                                           GuestDiskAddress *disk,
-+                                           Error **errp)
-+{
-+    unsigned int cssid, ssid, subchno, devno;
-+    char *p;
-+
-+    p = strstr(syspath, "/devices/css");
-+    if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
-+                     &cssid, &ssid, &subchno, &devno) < 4) {
-+        g_debug("could not parse ccw device sysfs path: %s", syspath);
-+        return false;
-+    }
-+
-+    disk->ccw_address = g_new0(GuestCCWAddress, 1);
-+    disk->ccw_address->cssid = cssid;
-+    disk->ccw_address->ssid = ssid;
-+    disk->ccw_address->subchno = subchno;
-+    disk->ccw_address->devno = devno;
-+
-+    if (strstr(p, "/virtio")) {
-+        build_guest_fsinfo_for_nonpci_virtio(syspath, disk, errp);
-+    }
-+
-+    return true;
-+}
-+
-+/* Store disk device info specified by @sysfs into @fs */
-+static void build_guest_fsinfo_for_real_device(char const *syspath,
-+                                               GuestFilesystemInfo *fs,
-+                                               Error **errp)
-+{
-+    GuestDiskAddress *disk;
-+    GuestPCIAddress *pciaddr;
-+    bool has_hwinf;
-+#ifdef CONFIG_LIBUDEV
-+    struct udev *udev = NULL;
-+    struct udev_device *udevice = NULL;
-+#endif
-+
-+    pciaddr = g_new0(GuestPCIAddress, 1);
-+    pciaddr->domain = -1;                       /* -1 means field is invalid */
-+    pciaddr->bus = -1;
-+    pciaddr->slot = -1;
-+    pciaddr->function = -1;
-+
-+    disk = g_new0(GuestDiskAddress, 1);
-+    disk->pci_controller = pciaddr;
-+    disk->bus_type = GUEST_DISK_BUS_TYPE_UNKNOWN;
-+
-+#ifdef CONFIG_LIBUDEV
-+    udev = udev_new();
-+    udevice = udev_device_new_from_syspath(udev, syspath);
-+    if (udev == NULL || udevice == NULL) {
-+        g_debug("failed to query udev");
-+    } else {
-+        const char *devnode, *serial;
-+        devnode = udev_device_get_devnode(udevice);
-+        if (devnode != NULL) {
-+            disk->dev = g_strdup(devnode);
-+        }
-+        serial = udev_device_get_property_value(udevice, "ID_SERIAL");
-+        if (serial != NULL && *serial != 0) {
-+            disk->serial = g_strdup(serial);
-+        }
-+    }
-+
-+    udev_unref(udev);
-+    udev_device_unref(udevice);
-+#endif
-+
-+    if (strstr(syspath, "/devices/pci")) {
-+        has_hwinf = build_guest_fsinfo_for_pci_dev(syspath, disk, errp);
-+    } else if (strstr(syspath, "/devices/css")) {
-+        has_hwinf = build_guest_fsinfo_for_ccw_dev(syspath, disk, errp);
-+    } else if (strstr(syspath, "/virtio")) {
-+        has_hwinf = build_guest_fsinfo_for_nonpci_virtio(syspath, disk, errp);
-+    } else {
-+        g_debug("Unsupported device type for '%s'", syspath);
-+        has_hwinf = false;
-+    }
-+
-+    if (has_hwinf || disk->dev || disk->serial) {
-+        QAPI_LIST_PREPEND(fs->disk, disk);
-+    } else {
-+        qapi_free_GuestDiskAddress(disk);
-+    }
-+}
-+
-+static void build_guest_fsinfo_for_device(char const *devpath,
-+                                          GuestFilesystemInfo *fs,
-+                                          Error **errp);
-+
-+/* Store a list of slave devices of virtual volume specified by @syspath into
-+ * @fs */
-+static void build_guest_fsinfo_for_virtual_device(char const *syspath,
-+                                                  GuestFilesystemInfo *fs,
-+                                                  Error **errp)
-+{
-+    Error *err = NULL;
-+    DIR *dir;
-+    char *dirpath;
-+    struct dirent *entry;
-+
-+    dirpath = g_strdup_printf("%s/slaves", syspath);
-+    dir = opendir(dirpath);
-+    if (!dir) {
-+        if (errno != ENOENT) {
-+            error_setg_errno(errp, errno, "opendir(\"%s\")", dirpath);
-+        }
-+        g_free(dirpath);
-+        return;
-+    }
-+
-+    for (;;) {
-+        errno = 0;
-+        entry = readdir(dir);
-+        if (entry == NULL) {
-+            if (errno) {
-+                error_setg_errno(errp, errno, "readdir(\"%s\")", dirpath);
-+            }
-+            break;
-+        }
-+
-+        if (entry->d_type == DT_LNK) {
-+            char *path;
-+
-+            g_debug(" slave device '%s'", entry->d_name);
-+            path = g_strdup_printf("%s/slaves/%s", syspath, entry->d_name);
-+            build_guest_fsinfo_for_device(path, fs, &err);
-+            g_free(path);
-+
-+            if (err) {
-+                error_propagate(errp, err);
-+                break;
-+            }
-+        }
-+    }
-+
-+    g_free(dirpath);
-+    closedir(dir);
-+}
-+
-+static bool is_disk_virtual(const char *devpath, Error **errp)
-+{
-+    g_autofree char *syspath = realpath(devpath, NULL);
-+
-+    if (!syspath) {
-+        error_setg_errno(errp, errno, "realpath(\"%s\")", devpath);
-+        return false;
-+    }
-+    return strstr(syspath, "/devices/virtual/block/") != NULL;
-+}
-+
-+/* Dispatch to functions for virtual/real device */
-+static void build_guest_fsinfo_for_device(char const *devpath,
-+                                          GuestFilesystemInfo *fs,
-+                                          Error **errp)
-+{
-+    ERRP_GUARD();
-+    g_autofree char *syspath = NULL;
-+    bool is_virtual = false;
-+
-+    syspath = realpath(devpath, NULL);
-+    if (!syspath) {
-+        if (errno != ENOENT) {
-+            error_setg_errno(errp, errno, "realpath(\"%s\")", devpath);
-+            return;
-+        }
-+
-+        /* ENOENT: This devpath may not exist because of container config */
-+        if (!fs->name) {
-+            fs->name = g_path_get_basename(devpath);
-+        }
-+        return;
-+    }
-+
-+    if (!fs->name) {
-+        fs->name = g_path_get_basename(syspath);
-+    }
-+
-+    g_debug("  parse sysfs path '%s'", syspath);
-+    is_virtual = is_disk_virtual(syspath, errp);
-+    if (*errp != NULL) {
-+        return;
-+    }
-+    if (is_virtual) {
-+        build_guest_fsinfo_for_virtual_device(syspath, fs, errp);
-+    } else {
-+        build_guest_fsinfo_for_real_device(syspath, fs, errp);
-+    }
-+}
-+
-+#ifdef CONFIG_LIBUDEV
-+
-+/*
-+ * Wrapper around build_guest_fsinfo_for_device() for getting just
-+ * the disk address.
-+ */
-+static GuestDiskAddress *get_disk_address(const char *syspath, Error **errp)
-+{
-+    g_autoptr(GuestFilesystemInfo) fs = NULL;
-+
-+    fs = g_new0(GuestFilesystemInfo, 1);
-+    build_guest_fsinfo_for_device(syspath, fs, errp);
-+    if (fs->disk != NULL) {
-+        return g_steal_pointer(&fs->disk->value);
-+    }
-+    return NULL;
-+}
-+
-+static char *get_alias_for_syspath(const char *syspath)
-+{
-+    struct udev *udev = NULL;
-+    struct udev_device *udevice = NULL;
-+    char *ret = NULL;
-+
-+    udev = udev_new();
-+    if (udev == NULL) {
-+        g_debug("failed to query udev");
-+        goto out;
-+    }
-+    udevice = udev_device_new_from_syspath(udev, syspath);
-+    if (udevice == NULL) {
-+        g_debug("failed to query udev for path: %s", syspath);
-+        goto out;
-+    } else {
-+        const char *alias = udev_device_get_property_value(
-+            udevice, "DM_NAME");
-+        /*
-+         * NULL means there was an error and empty string means there is no
-+         * alias. In case of no alias we return NULL instead of empty string.
-+         */
-+        if (alias == NULL) {
-+            g_debug("failed to query udev for device alias for: %s",
-+                syspath);
-+        } else if (*alias != 0) {
-+            ret = g_strdup(alias);
-+        }
-+    }
-+
-+out:
-+    udev_unref(udev);
-+    udev_device_unref(udevice);
-+    return ret;
-+}
-+
-+static char *get_device_for_syspath(const char *syspath)
-+{
-+    struct udev *udev = NULL;
-+    struct udev_device *udevice = NULL;
-+    char *ret = NULL;
-+
-+    udev = udev_new();
-+    if (udev == NULL) {
-+        g_debug("failed to query udev");
-+        goto out;
-+    }
-+    udevice = udev_device_new_from_syspath(udev, syspath);
-+    if (udevice == NULL) {
-+        g_debug("failed to query udev for path: %s", syspath);
-+        goto out;
-+    } else {
-+        ret = g_strdup(udev_device_get_devnode(udevice));
-+    }
-+
-+out:
-+    udev_unref(udev);
-+    udev_device_unref(udevice);
-+    return ret;
-+}
-+
-+static void get_disk_deps(const char *disk_dir, GuestDiskInfo *disk)
-+{
-+    g_autofree char *deps_dir = NULL;
-+    const gchar *dep;
-+    GDir *dp_deps = NULL;
-+
-+    /* List dependent disks */
-+    deps_dir = g_strdup_printf("%s/slaves", disk_dir);
-+    g_debug("  listing entries in: %s", deps_dir);
-+    dp_deps = g_dir_open(deps_dir, 0, NULL);
-+    if (dp_deps == NULL) {
-+        g_debug("failed to list entries in %s", deps_dir);
-+        return;
-+    }
-+    disk->has_dependencies = true;
-+    while ((dep = g_dir_read_name(dp_deps)) != NULL) {
-+        g_autofree char *dep_dir = NULL;
-+        char *dev_name;
-+
-+        /* Add dependent disks */
-+        dep_dir = g_strdup_printf("%s/%s", deps_dir, dep);
-+        dev_name = get_device_for_syspath(dep_dir);
-+        if (dev_name != NULL) {
-+            g_debug("  adding dependent device: %s", dev_name);
-+            QAPI_LIST_PREPEND(disk->dependencies, dev_name);
-+        }
-+    }
-+    g_dir_close(dp_deps);
-+}
-+
-+/*
-+ * Detect partitions subdirectory, name is "<disk_name><number>" or
-+ * "<disk_name>p<number>"
-+ *
-+ * @disk_name -- last component of /sys path (e.g. sda)
-+ * @disk_dir -- sys path of the disk (e.g. /sys/block/sda)
-+ * @disk_dev -- device node of the disk (e.g. /dev/sda)
-+ */
-+static GuestDiskInfoList *get_disk_partitions(
-+    GuestDiskInfoList *list,
-+    const char *disk_name, const char *disk_dir,
-+    const char *disk_dev)
-+{
-+    GuestDiskInfoList *ret = list;
-+    struct dirent *de_disk;
-+    DIR *dp_disk = NULL;
-+    size_t len = strlen(disk_name);
-+
-+    dp_disk = opendir(disk_dir);
-+    while ((de_disk = readdir(dp_disk)) != NULL) {
-+        g_autofree char *partition_dir = NULL;
-+        char *dev_name;
-+        GuestDiskInfo *partition;
-+
-+        if (!(de_disk->d_type & DT_DIR)) {
-+            continue;
-+        }
-+
-+        if (!(strncmp(disk_name, de_disk->d_name, len) == 0 &&
-+            ((*(de_disk->d_name + len) == 'p' &&
-+            isdigit(*(de_disk->d_name + len + 1))) ||
-+                isdigit(*(de_disk->d_name + len))))) {
-+            continue;
-+        }
-+
-+        partition_dir = g_strdup_printf("%s/%s",
-+            disk_dir, de_disk->d_name);
-+        dev_name = get_device_for_syspath(partition_dir);
-+        if (dev_name == NULL) {
-+            g_debug("Failed to get device name for syspath: %s",
-+                disk_dir);
-+            continue;
-+        }
-+        partition = g_new0(GuestDiskInfo, 1);
-+        partition->name = dev_name;
-+        partition->partition = true;
-+        partition->has_dependencies = true;
-+        /* Add parent disk as dependent for easier tracking of hierarchy */
-+        QAPI_LIST_PREPEND(partition->dependencies, g_strdup(disk_dev));
-+
-+        QAPI_LIST_PREPEND(ret, partition);
-+    }
-+    closedir(dp_disk);
-+
-+    return ret;
-+}
-+
-+static void get_nvme_smart(GuestDiskInfo *disk)
-+{
-+    int fd;
-+    GuestNVMeSmart *smart;
-+    NvmeSmartLog log = {0};
-+    struct nvme_admin_cmd cmd = {
-+        .opcode = NVME_ADM_CMD_GET_LOG_PAGE,
-+        .nsid = NVME_NSID_BROADCAST,
-+        .addr = (uintptr_t)&log,
-+        .data_len = sizeof(log),
-+        .cdw10 = NVME_LOG_SMART_INFO | (1 << 15) /* RAE bit */
-+                 | (((sizeof(log) >> 2) - 1) << 16)
-+    };
-+
-+    fd = qga_open_cloexec(disk->name, O_RDONLY, 0);
-+    if (fd == -1) {
-+        g_debug("Failed to open device: %s: %s", disk->name, g_strerror(errno));
-+        return;
-+    }
-+
-+    if (ioctl(fd, NVME_IOCTL_ADMIN_CMD, &cmd)) {
-+        g_debug("Failed to get smart: %s: %s", disk->name, g_strerror(errno));
-+        close(fd);
-+        return;
-+    }
-+
-+    disk->smart = g_new0(GuestDiskSmart, 1);
-+    disk->smart->type = GUEST_DISK_BUS_TYPE_NVME;
-+
-+    smart = &disk->smart->u.nvme;
-+    smart->critical_warning = log.critical_warning;
-+    smart->temperature = lduw_le_p(&log.temperature); /* unaligned field */
-+    smart->available_spare = log.available_spare;
-+    smart->available_spare_threshold = log.available_spare_threshold;
-+    smart->percentage_used = log.percentage_used;
-+    smart->data_units_read_lo = le64_to_cpu(log.data_units_read[0]);
-+    smart->data_units_read_hi = le64_to_cpu(log.data_units_read[1]);
-+    smart->data_units_written_lo = le64_to_cpu(log.data_units_written[0]);
-+    smart->data_units_written_hi = le64_to_cpu(log.data_units_written[1]);
-+    smart->host_read_commands_lo = le64_to_cpu(log.host_read_commands[0]);
-+    smart->host_read_commands_hi = le64_to_cpu(log.host_read_commands[1]);
-+    smart->host_write_commands_lo = le64_to_cpu(log.host_write_commands[0]);
-+    smart->host_write_commands_hi = le64_to_cpu(log.host_write_commands[1]);
-+    smart->controller_busy_time_lo = le64_to_cpu(log.controller_busy_time[0]);
-+    smart->controller_busy_time_hi = le64_to_cpu(log.controller_busy_time[1]);
-+    smart->power_cycles_lo = le64_to_cpu(log.power_cycles[0]);
-+    smart->power_cycles_hi = le64_to_cpu(log.power_cycles[1]);
-+    smart->power_on_hours_lo = le64_to_cpu(log.power_on_hours[0]);
-+    smart->power_on_hours_hi = le64_to_cpu(log.power_on_hours[1]);
-+    smart->unsafe_shutdowns_lo = le64_to_cpu(log.unsafe_shutdowns[0]);
-+    smart->unsafe_shutdowns_hi = le64_to_cpu(log.unsafe_shutdowns[1]);
-+    smart->media_errors_lo = le64_to_cpu(log.media_errors[0]);
-+    smart->media_errors_hi = le64_to_cpu(log.media_errors[1]);
-+    smart->number_of_error_log_entries_lo =
-+        le64_to_cpu(log.number_of_error_log_entries[0]);
-+    smart->number_of_error_log_entries_hi =
-+        le64_to_cpu(log.number_of_error_log_entries[1]);
-+
-+    close(fd);
-+}
-+
-+static void get_disk_smart(GuestDiskInfo *disk)
-+{
-+    if (disk->address
-+        && (disk->address->bus_type == GUEST_DISK_BUS_TYPE_NVME)) {
-+        get_nvme_smart(disk);
-+    }
-+}
-+
-+GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
-+{
-+    GuestDiskInfoList *ret = NULL;
-+    GuestDiskInfo *disk;
-+    DIR *dp = NULL;
-+    struct dirent *de = NULL;
-+
-+    g_debug("listing /sys/block directory");
-+    dp = opendir("/sys/block");
-+    if (dp == NULL) {
-+        error_setg_errno(errp, errno, "Can't open directory \"/sys/block\"");
-+        return NULL;
-+    }
-+    while ((de = readdir(dp)) != NULL) {
-+        g_autofree char *disk_dir = NULL, *line = NULL,
-+            *size_path = NULL;
-+        char *dev_name;
-+        Error *local_err = NULL;
-+        if (de->d_type != DT_LNK) {
-+            g_debug("  skipping entry: %s", de->d_name);
-+            continue;
-+        }
-+
-+        /* Check size and skip zero-sized disks */
-+        g_debug("  checking disk size");
-+        size_path = g_strdup_printf("/sys/block/%s/size", de->d_name);
-+        if (!g_file_get_contents(size_path, &line, NULL, NULL)) {
-+            g_debug("  failed to read disk size");
-+            continue;
-+        }
-+        if (g_strcmp0(line, "0\n") == 0) {
-+            g_debug("  skipping zero-sized disk");
-+            continue;
-+        }
-+
-+        g_debug("  adding %s", de->d_name);
-+        disk_dir = g_strdup_printf("/sys/block/%s", de->d_name);
-+        dev_name = get_device_for_syspath(disk_dir);
-+        if (dev_name == NULL) {
-+            g_debug("Failed to get device name for syspath: %s",
-+                disk_dir);
-+            continue;
-+        }
-+        disk = g_new0(GuestDiskInfo, 1);
-+        disk->name = dev_name;
-+        disk->partition = false;
-+        disk->alias = get_alias_for_syspath(disk_dir);
-+        QAPI_LIST_PREPEND(ret, disk);
-+
-+        /* Get address for non-virtual devices */
-+        bool is_virtual = is_disk_virtual(disk_dir, &local_err);
-+        if (local_err != NULL) {
-+            g_debug("  failed to check disk path, ignoring error: %s",
-+                error_get_pretty(local_err));
-+            error_free(local_err);
-+            local_err = NULL;
-+            /* Don't try to get the address */
-+            is_virtual = true;
-+        }
-+        if (!is_virtual) {
-+            disk->address = get_disk_address(disk_dir, &local_err);
-+            if (local_err != NULL) {
-+                g_debug("  failed to get device info, ignoring error: %s",
-+                    error_get_pretty(local_err));
-+                error_free(local_err);
-+                local_err = NULL;
-+            }
-+        }
-+
-+        get_disk_deps(disk_dir, disk);
-+        get_disk_smart(disk);
-+        ret = get_disk_partitions(ret, de->d_name, disk_dir, dev_name);
-+    }
-+
-+    closedir(dp);
-+
-+    return ret;
-+}
-+
-+#else
-+
-+GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
-+{
-+    error_setg(errp, QERR_UNSUPPORTED);
-+    return NULL;
-+}
-+
-+#endif
-+
-+/* Return a list of the disk device(s)' info which @mount lies on */
-+static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
-+                                               Error **errp)
-+{
-+    GuestFilesystemInfo *fs = g_malloc0(sizeof(*fs));
-+    struct statvfs buf;
-+    unsigned long used, nonroot_total, fr_size;
-+    char *devpath = g_strdup_printf("/sys/dev/block/%u:%u",
-+                                    mount->devmajor, mount->devminor);
-+
-+    fs->mountpoint = g_strdup(mount->dirname);
-+    fs->type = g_strdup(mount->devtype);
-+    build_guest_fsinfo_for_device(devpath, fs, errp);
-+
-+    if (statvfs(fs->mountpoint, &buf) == 0) {
-+        fr_size = buf.f_frsize;
-+        used = buf.f_blocks - buf.f_bfree;
-+        nonroot_total = used + buf.f_bavail;
-+        fs->used_bytes = used * fr_size;
-+        fs->total_bytes = nonroot_total * fr_size;
-+        fs->total_bytes_privileged = buf.f_blocks * fr_size;
-+
-+        fs->has_total_bytes = true;
-+        fs->has_total_bytes_privileged = true;
-+        fs->has_used_bytes = true;
-+    }
-+
-+    g_free(devpath);
-+
-+    return fs;
-+}
-+
-+GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-+{
-+    FsMountList mounts;
-+    struct FsMount *mount;
-+    GuestFilesystemInfoList *ret = NULL;
-+    Error *local_err = NULL;
-+
-+    QTAILQ_INIT(&mounts);
-+    if (!build_fs_mount_list(&mounts, &local_err)) {
-+        error_propagate(errp, local_err);
-+        return NULL;
-+    }
-+
-+    QTAILQ_FOREACH(mount, &mounts, next) {
-+        g_debug("Building guest fsinfo for '%s'", mount->dirname);
-+
-+        QAPI_LIST_PREPEND(ret, build_guest_fsinfo(mount, &local_err));
-+        if (local_err) {
-+            error_propagate(errp, local_err);
-+            qapi_free_GuestFilesystemInfoList(ret);
-+            ret = NULL;
-+            break;
-+        }
-+    }
-+
-+    free_fs_mount_list(&mounts);
-+    return ret;
-+}
-+#endif /* CONFIG_FSFREEZE */
-+
-+#if defined(CONFIG_FSTRIM)
-+/*
-+ * Walk list of mounted file systems in the guest, and trim them.
-+ */
-+GuestFilesystemTrimResponse *
-+qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
-+{
-+    GuestFilesystemTrimResponse *response;
-+    GuestFilesystemTrimResult *result;
-+    int ret = 0;
-+    FsMountList mounts;
-+    struct FsMount *mount;
-+    int fd;
-+    struct fstrim_range r;
-+
-+    slog("guest-fstrim called");
-+
-+    QTAILQ_INIT(&mounts);
-+    if (!build_fs_mount_list(&mounts, errp)) {
-+        return NULL;
-+    }
-+
-+    response = g_malloc0(sizeof(*response));
-+
-+    QTAILQ_FOREACH(mount, &mounts, next) {
-+        result = g_malloc0(sizeof(*result));
-+        result->path = g_strdup(mount->dirname);
-+
-+        QAPI_LIST_PREPEND(response->paths, result);
-+
-+        fd = qga_open_cloexec(mount->dirname, O_RDONLY, 0);
-+        if (fd == -1) {
-+            result->error = g_strdup_printf("failed to open: %s",
-+                                            strerror(errno));
-+            continue;
-+        }
-+
-+        /* We try to cull filesystems we know won't work in advance, but other
-+         * filesystems may not implement fstrim for less obvious reasons.
-+         * These will report EOPNOTSUPP; while in some other cases ENOTTY
-+         * will be reported (e.g. CD-ROMs).
-+         * Any other error means an unexpected error.
-+         */
-+        r.start = 0;
-+        r.len = -1;
-+        r.minlen = has_minimum ? minimum : 0;
-+        ret = ioctl(fd, FITRIM, &r);
-+        if (ret == -1) {
-+            if (errno == ENOTTY || errno == EOPNOTSUPP) {
-+                result->error = g_strdup("trim not supported");
-+            } else {
-+                result->error = g_strdup_printf("failed to trim: %s",
-+                                                strerror(errno));
-+            }
-+            close(fd);
-+            continue;
-+        }
-+
-+        result->has_minimum = true;
-+        result->minimum = r.minlen;
-+        result->has_trimmed = true;
-+        result->trimmed = r.len;
-+        close(fd);
-+    }
-+
-+    free_fs_mount_list(&mounts);
-+    return response;
-+}
-+#endif /* CONFIG_FSTRIM */
- 
- #define LINUX_SYS_STATE_FILE "/sys/power/state"
- #define SUSPEND_SUPPORTED 0
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index ef21da63be..98aafc45f3 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -24,23 +24,12 @@
- #include "qemu/base64.h"
- #include "qemu/cutils.h"
- #include "commands-common.h"
--#include "block/nvme.h"
- #include "cutils.h"
- 
- #ifdef HAVE_UTMPX
- #include <utmpx.h>
- #endif
- 
--#if defined(__linux__)
--#include <mntent.h>
--#include <sys/statvfs.h>
--#include <linux/nvme_ioctl.h>
--
--#ifdef CONFIG_LIBUDEV
--#include <libudev.h>
--#endif
--#endif
--
- #ifdef HAVE_GETIFADDRS
- #include <arpa/inet.h>
- #include <sys/socket.h>
-@@ -842,904 +831,6 @@ static void guest_fsfreeze_cleanup(void)
- }
- #endif
- 
--/* linux-specific implementations. avoid this if at all possible. */
--#if defined(__linux__)
--#if defined(CONFIG_FSFREEZE)
--
--static char *get_pci_driver(char const *syspath, int pathlen, Error **errp)
--{
--    char *path;
--    char *dpath;
--    char *driver = NULL;
--    char buf[PATH_MAX];
--    ssize_t len;
--
--    path = g_strndup(syspath, pathlen);
--    dpath = g_strdup_printf("%s/driver", path);
--    len = readlink(dpath, buf, sizeof(buf) - 1);
--    if (len != -1) {
--        buf[len] = 0;
--        driver = g_path_get_basename(buf);
--    }
--    g_free(dpath);
--    g_free(path);
--    return driver;
--}
--
--static int compare_uint(const void *_a, const void *_b)
--{
--    unsigned int a = *(unsigned int *)_a;
--    unsigned int b = *(unsigned int *)_b;
--
--    return a < b ? -1 : a > b ? 1 : 0;
--}
--
--/* Walk the specified sysfs and build a sorted list of host or ata numbers */
--static int build_hosts(char const *syspath, char const *host, bool ata,
--                       unsigned int *hosts, int hosts_max, Error **errp)
--{
--    char *path;
--    DIR *dir;
--    struct dirent *entry;
--    int i = 0;
--
--    path = g_strndup(syspath, host - syspath);
--    dir = opendir(path);
--    if (!dir) {
--        error_setg_errno(errp, errno, "opendir(\"%s\")", path);
--        g_free(path);
--        return -1;
--    }
--
--    while (i < hosts_max) {
--        entry = readdir(dir);
--        if (!entry) {
--            break;
--        }
--        if (ata && sscanf(entry->d_name, "ata%d", hosts + i) == 1) {
--            ++i;
--        } else if (!ata && sscanf(entry->d_name, "host%d", hosts + i) == 1) {
--            ++i;
--        }
--    }
--
--    qsort(hosts, i, sizeof(hosts[0]), compare_uint);
--
--    g_free(path);
--    closedir(dir);
--    return i;
--}
--
--/*
-- * Store disk device info for devices on the PCI bus.
-- * Returns true if information has been stored, or false for failure.
-- */
--static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
--                                           GuestDiskAddress *disk,
--                                           Error **errp)
--{
--    unsigned int pci[4], host, hosts[8], tgt[3];
--    int i, nhosts = 0, pcilen;
--    GuestPCIAddress *pciaddr = disk->pci_controller;
--    bool has_ata = false, has_host = false, has_tgt = false;
--    char *p, *q, *driver = NULL;
--    bool ret = false;
--
--    p = strstr(syspath, "/devices/pci");
--    if (!p || sscanf(p + 12, "%*x:%*x/%x:%x:%x.%x%n",
--                     pci, pci + 1, pci + 2, pci + 3, &pcilen) < 4) {
--        g_debug("only pci device is supported: sysfs path '%s'", syspath);
--        return false;
--    }
--
--    p += 12 + pcilen;
--    while (true) {
--        driver = get_pci_driver(syspath, p - syspath, errp);
--        if (driver && (g_str_equal(driver, "ata_piix") ||
--                       g_str_equal(driver, "sym53c8xx") ||
--                       g_str_equal(driver, "virtio-pci") ||
--                       g_str_equal(driver, "ahci") ||
--                       g_str_equal(driver, "nvme") ||
--                       g_str_equal(driver, "xhci_hcd") ||
--                       g_str_equal(driver, "ehci-pci"))) {
--            break;
--        }
--
--        g_free(driver);
--        if (sscanf(p, "/%x:%x:%x.%x%n",
--                          pci, pci + 1, pci + 2, pci + 3, &pcilen) == 4) {
--            p += pcilen;
--            continue;
--        }
--
--        g_debug("unsupported driver or sysfs path '%s'", syspath);
--        return false;
--    }
--
--    p = strstr(syspath, "/target");
--    if (p && sscanf(p + 7, "%*u:%*u:%*u/%*u:%u:%u:%u",
--                    tgt, tgt + 1, tgt + 2) == 3) {
--        has_tgt = true;
--    }
--
--    p = strstr(syspath, "/ata");
--    if (p) {
--        q = p + 4;
--        has_ata = true;
--    } else {
--        p = strstr(syspath, "/host");
--        q = p + 5;
--    }
--    if (p && sscanf(q, "%u", &host) == 1) {
--        has_host = true;
--        nhosts = build_hosts(syspath, p, has_ata, hosts,
--                             ARRAY_SIZE(hosts), errp);
--        if (nhosts < 0) {
--            goto cleanup;
--        }
--    }
--
--    pciaddr->domain = pci[0];
--    pciaddr->bus = pci[1];
--    pciaddr->slot = pci[2];
--    pciaddr->function = pci[3];
--
--    if (strcmp(driver, "ata_piix") == 0) {
--        /* a host per ide bus, target*:0:<unit>:0 */
--        if (!has_host || !has_tgt) {
--            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
--            goto cleanup;
--        }
--        for (i = 0; i < nhosts; i++) {
--            if (host == hosts[i]) {
--                disk->bus_type = GUEST_DISK_BUS_TYPE_IDE;
--                disk->bus = i;
--                disk->unit = tgt[1];
--                break;
--            }
--        }
--        if (i >= nhosts) {
--            g_debug("no host for '%s' (driver '%s')", syspath, driver);
--            goto cleanup;
--        }
--    } else if (strcmp(driver, "sym53c8xx") == 0) {
--        /* scsi(LSI Logic): target*:0:<unit>:0 */
--        if (!has_tgt) {
--            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
--            goto cleanup;
--        }
--        disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
--        disk->unit = tgt[1];
--    } else if (strcmp(driver, "virtio-pci") == 0) {
--        if (has_tgt) {
--            /* virtio-scsi: target*:0:0:<unit> */
--            disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
--            disk->unit = tgt[2];
--        } else {
--            /* virtio-blk: 1 disk per 1 device */
--            disk->bus_type = GUEST_DISK_BUS_TYPE_VIRTIO;
--        }
--    } else if (strcmp(driver, "ahci") == 0) {
--        /* ahci: 1 host per 1 unit */
--        if (!has_host || !has_tgt) {
--            g_debug("invalid sysfs path '%s' (driver '%s')", syspath, driver);
--            goto cleanup;
--        }
--        for (i = 0; i < nhosts; i++) {
--            if (host == hosts[i]) {
--                disk->unit = i;
--                disk->bus_type = GUEST_DISK_BUS_TYPE_SATA;
--                break;
--            }
--        }
--        if (i >= nhosts) {
--            g_debug("no host for '%s' (driver '%s')", syspath, driver);
--            goto cleanup;
--        }
--    } else if (strcmp(driver, "nvme") == 0) {
--        disk->bus_type = GUEST_DISK_BUS_TYPE_NVME;
--    } else if (strcmp(driver, "ehci-pci") == 0 || strcmp(driver, "xhci_hcd") == 0) {
--        disk->bus_type = GUEST_DISK_BUS_TYPE_USB;
--    } else {
--        g_debug("unknown driver '%s' (sysfs path '%s')", driver, syspath);
--        goto cleanup;
--    }
--
--    ret = true;
--
--cleanup:
--    g_free(driver);
--    return ret;
--}
--
--/*
-- * Store disk device info for non-PCI virtio devices (for example s390x
-- * channel I/O devices). Returns true if information has been stored, or
-- * false for failure.
-- */
--static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
--                                                 GuestDiskAddress *disk,
--                                                 Error **errp)
--{
--    unsigned int tgt[3];
--    char *p;
--
--    if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
--        g_debug("Unsupported virtio device '%s'", syspath);
--        return false;
--    }
--
--    p = strstr(syspath, "/target");
--    if (p && sscanf(p + 7, "%*u:%*u:%*u/%*u:%u:%u:%u",
--                    &tgt[0], &tgt[1], &tgt[2]) == 3) {
--        /* virtio-scsi: target*:0:<target>:<unit> */
--        disk->bus_type = GUEST_DISK_BUS_TYPE_SCSI;
--        disk->bus = tgt[0];
--        disk->target = tgt[1];
--        disk->unit = tgt[2];
--    } else {
--        /* virtio-blk: 1 disk per 1 device */
--        disk->bus_type = GUEST_DISK_BUS_TYPE_VIRTIO;
--    }
--
--    return true;
--}
--
--/*
-- * Store disk device info for CCW devices (s390x channel I/O devices).
-- * Returns true if information has been stored, or false for failure.
-- */
--static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
--                                           GuestDiskAddress *disk,
--                                           Error **errp)
--{
--    unsigned int cssid, ssid, subchno, devno;
--    char *p;
--
--    p = strstr(syspath, "/devices/css");
--    if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
--                     &cssid, &ssid, &subchno, &devno) < 4) {
--        g_debug("could not parse ccw device sysfs path: %s", syspath);
--        return false;
--    }
--
--    disk->ccw_address = g_new0(GuestCCWAddress, 1);
--    disk->ccw_address->cssid = cssid;
--    disk->ccw_address->ssid = ssid;
--    disk->ccw_address->subchno = subchno;
--    disk->ccw_address->devno = devno;
--
--    if (strstr(p, "/virtio")) {
--        build_guest_fsinfo_for_nonpci_virtio(syspath, disk, errp);
--    }
--
--    return true;
--}
--
--/* Store disk device info specified by @sysfs into @fs */
--static void build_guest_fsinfo_for_real_device(char const *syspath,
--                                               GuestFilesystemInfo *fs,
--                                               Error **errp)
--{
--    GuestDiskAddress *disk;
--    GuestPCIAddress *pciaddr;
--    bool has_hwinf;
--#ifdef CONFIG_LIBUDEV
--    struct udev *udev = NULL;
--    struct udev_device *udevice = NULL;
--#endif
--
--    pciaddr = g_new0(GuestPCIAddress, 1);
--    pciaddr->domain = -1;                       /* -1 means field is invalid */
--    pciaddr->bus = -1;
--    pciaddr->slot = -1;
--    pciaddr->function = -1;
--
--    disk = g_new0(GuestDiskAddress, 1);
--    disk->pci_controller = pciaddr;
--    disk->bus_type = GUEST_DISK_BUS_TYPE_UNKNOWN;
--
--#ifdef CONFIG_LIBUDEV
--    udev = udev_new();
--    udevice = udev_device_new_from_syspath(udev, syspath);
--    if (udev == NULL || udevice == NULL) {
--        g_debug("failed to query udev");
--    } else {
--        const char *devnode, *serial;
--        devnode = udev_device_get_devnode(udevice);
--        if (devnode != NULL) {
--            disk->dev = g_strdup(devnode);
--        }
--        serial = udev_device_get_property_value(udevice, "ID_SERIAL");
--        if (serial != NULL && *serial != 0) {
--            disk->serial = g_strdup(serial);
--        }
--    }
--
--    udev_unref(udev);
--    udev_device_unref(udevice);
--#endif
--
--    if (strstr(syspath, "/devices/pci")) {
--        has_hwinf = build_guest_fsinfo_for_pci_dev(syspath, disk, errp);
--    } else if (strstr(syspath, "/devices/css")) {
--        has_hwinf = build_guest_fsinfo_for_ccw_dev(syspath, disk, errp);
--    } else if (strstr(syspath, "/virtio")) {
--        has_hwinf = build_guest_fsinfo_for_nonpci_virtio(syspath, disk, errp);
--    } else {
--        g_debug("Unsupported device type for '%s'", syspath);
--        has_hwinf = false;
--    }
--
--    if (has_hwinf || disk->dev || disk->serial) {
--        QAPI_LIST_PREPEND(fs->disk, disk);
--    } else {
--        qapi_free_GuestDiskAddress(disk);
--    }
--}
--
--static void build_guest_fsinfo_for_device(char const *devpath,
--                                          GuestFilesystemInfo *fs,
--                                          Error **errp);
--
--/* Store a list of slave devices of virtual volume specified by @syspath into
-- * @fs */
--static void build_guest_fsinfo_for_virtual_device(char const *syspath,
--                                                  GuestFilesystemInfo *fs,
--                                                  Error **errp)
--{
--    Error *err = NULL;
--    DIR *dir;
--    char *dirpath;
--    struct dirent *entry;
--
--    dirpath = g_strdup_printf("%s/slaves", syspath);
--    dir = opendir(dirpath);
--    if (!dir) {
--        if (errno != ENOENT) {
--            error_setg_errno(errp, errno, "opendir(\"%s\")", dirpath);
--        }
--        g_free(dirpath);
--        return;
--    }
--
--    for (;;) {
--        errno = 0;
--        entry = readdir(dir);
--        if (entry == NULL) {
--            if (errno) {
--                error_setg_errno(errp, errno, "readdir(\"%s\")", dirpath);
--            }
--            break;
--        }
--
--        if (entry->d_type == DT_LNK) {
--            char *path;
--
--            g_debug(" slave device '%s'", entry->d_name);
--            path = g_strdup_printf("%s/slaves/%s", syspath, entry->d_name);
--            build_guest_fsinfo_for_device(path, fs, &err);
--            g_free(path);
--
--            if (err) {
--                error_propagate(errp, err);
--                break;
--            }
--        }
--    }
--
--    g_free(dirpath);
--    closedir(dir);
--}
--
--static bool is_disk_virtual(const char *devpath, Error **errp)
--{
--    g_autofree char *syspath = realpath(devpath, NULL);
--
--    if (!syspath) {
--        error_setg_errno(errp, errno, "realpath(\"%s\")", devpath);
--        return false;
--    }
--    return strstr(syspath, "/devices/virtual/block/") != NULL;
--}
--
--/* Dispatch to functions for virtual/real device */
--static void build_guest_fsinfo_for_device(char const *devpath,
--                                          GuestFilesystemInfo *fs,
--                                          Error **errp)
--{
--    ERRP_GUARD();
--    g_autofree char *syspath = NULL;
--    bool is_virtual = false;
--
--    syspath = realpath(devpath, NULL);
--    if (!syspath) {
--        if (errno != ENOENT) {
--            error_setg_errno(errp, errno, "realpath(\"%s\")", devpath);
--            return;
--        }
--
--        /* ENOENT: This devpath may not exist because of container config */
--        if (!fs->name) {
--            fs->name = g_path_get_basename(devpath);
--        }
--        return;
--    }
--
--    if (!fs->name) {
--        fs->name = g_path_get_basename(syspath);
--    }
--
--    g_debug("  parse sysfs path '%s'", syspath);
--    is_virtual = is_disk_virtual(syspath, errp);
--    if (*errp != NULL) {
--        return;
--    }
--    if (is_virtual) {
--        build_guest_fsinfo_for_virtual_device(syspath, fs, errp);
--    } else {
--        build_guest_fsinfo_for_real_device(syspath, fs, errp);
--    }
--}
--
--#ifdef CONFIG_LIBUDEV
--
--/*
-- * Wrapper around build_guest_fsinfo_for_device() for getting just
-- * the disk address.
-- */
--static GuestDiskAddress *get_disk_address(const char *syspath, Error **errp)
--{
--    g_autoptr(GuestFilesystemInfo) fs = NULL;
--
--    fs = g_new0(GuestFilesystemInfo, 1);
--    build_guest_fsinfo_for_device(syspath, fs, errp);
--    if (fs->disk != NULL) {
--        return g_steal_pointer(&fs->disk->value);
--    }
--    return NULL;
--}
--
--static char *get_alias_for_syspath(const char *syspath)
--{
--    struct udev *udev = NULL;
--    struct udev_device *udevice = NULL;
--    char *ret = NULL;
--
--    udev = udev_new();
--    if (udev == NULL) {
--        g_debug("failed to query udev");
--        goto out;
--    }
--    udevice = udev_device_new_from_syspath(udev, syspath);
--    if (udevice == NULL) {
--        g_debug("failed to query udev for path: %s", syspath);
--        goto out;
--    } else {
--        const char *alias = udev_device_get_property_value(
--            udevice, "DM_NAME");
--        /*
--         * NULL means there was an error and empty string means there is no
--         * alias. In case of no alias we return NULL instead of empty string.
--         */
--        if (alias == NULL) {
--            g_debug("failed to query udev for device alias for: %s",
--                syspath);
--        } else if (*alias != 0) {
--            ret = g_strdup(alias);
--        }
--    }
--
--out:
--    udev_unref(udev);
--    udev_device_unref(udevice);
--    return ret;
--}
--
--static char *get_device_for_syspath(const char *syspath)
--{
--    struct udev *udev = NULL;
--    struct udev_device *udevice = NULL;
--    char *ret = NULL;
--
--    udev = udev_new();
--    if (udev == NULL) {
--        g_debug("failed to query udev");
--        goto out;
--    }
--    udevice = udev_device_new_from_syspath(udev, syspath);
--    if (udevice == NULL) {
--        g_debug("failed to query udev for path: %s", syspath);
--        goto out;
--    } else {
--        ret = g_strdup(udev_device_get_devnode(udevice));
--    }
--
--out:
--    udev_unref(udev);
--    udev_device_unref(udevice);
--    return ret;
--}
--
--static void get_disk_deps(const char *disk_dir, GuestDiskInfo *disk)
--{
--    g_autofree char *deps_dir = NULL;
--    const gchar *dep;
--    GDir *dp_deps = NULL;
--
--    /* List dependent disks */
--    deps_dir = g_strdup_printf("%s/slaves", disk_dir);
--    g_debug("  listing entries in: %s", deps_dir);
--    dp_deps = g_dir_open(deps_dir, 0, NULL);
--    if (dp_deps == NULL) {
--        g_debug("failed to list entries in %s", deps_dir);
--        return;
--    }
--    disk->has_dependencies = true;
--    while ((dep = g_dir_read_name(dp_deps)) != NULL) {
--        g_autofree char *dep_dir = NULL;
--        char *dev_name;
--
--        /* Add dependent disks */
--        dep_dir = g_strdup_printf("%s/%s", deps_dir, dep);
--        dev_name = get_device_for_syspath(dep_dir);
--        if (dev_name != NULL) {
--            g_debug("  adding dependent device: %s", dev_name);
--            QAPI_LIST_PREPEND(disk->dependencies, dev_name);
--        }
--    }
--    g_dir_close(dp_deps);
--}
--
--/*
-- * Detect partitions subdirectory, name is "<disk_name><number>" or
-- * "<disk_name>p<number>"
-- *
-- * @disk_name -- last component of /sys path (e.g. sda)
-- * @disk_dir -- sys path of the disk (e.g. /sys/block/sda)
-- * @disk_dev -- device node of the disk (e.g. /dev/sda)
-- */
--static GuestDiskInfoList *get_disk_partitions(
--    GuestDiskInfoList *list,
--    const char *disk_name, const char *disk_dir,
--    const char *disk_dev)
--{
--    GuestDiskInfoList *ret = list;
--    struct dirent *de_disk;
--    DIR *dp_disk = NULL;
--    size_t len = strlen(disk_name);
--
--    dp_disk = opendir(disk_dir);
--    while ((de_disk = readdir(dp_disk)) != NULL) {
--        g_autofree char *partition_dir = NULL;
--        char *dev_name;
--        GuestDiskInfo *partition;
--
--        if (!(de_disk->d_type & DT_DIR)) {
--            continue;
--        }
--
--        if (!(strncmp(disk_name, de_disk->d_name, len) == 0 &&
--            ((*(de_disk->d_name + len) == 'p' &&
--            isdigit(*(de_disk->d_name + len + 1))) ||
--                isdigit(*(de_disk->d_name + len))))) {
--            continue;
--        }
--
--        partition_dir = g_strdup_printf("%s/%s",
--            disk_dir, de_disk->d_name);
--        dev_name = get_device_for_syspath(partition_dir);
--        if (dev_name == NULL) {
--            g_debug("Failed to get device name for syspath: %s",
--                disk_dir);
--            continue;
--        }
--        partition = g_new0(GuestDiskInfo, 1);
--        partition->name = dev_name;
--        partition->partition = true;
--        partition->has_dependencies = true;
--        /* Add parent disk as dependent for easier tracking of hierarchy */
--        QAPI_LIST_PREPEND(partition->dependencies, g_strdup(disk_dev));
--
--        QAPI_LIST_PREPEND(ret, partition);
--    }
--    closedir(dp_disk);
--
--    return ret;
--}
--
--static void get_nvme_smart(GuestDiskInfo *disk)
--{
--    int fd;
--    GuestNVMeSmart *smart;
--    NvmeSmartLog log = {0};
--    struct nvme_admin_cmd cmd = {
--        .opcode = NVME_ADM_CMD_GET_LOG_PAGE,
--        .nsid = NVME_NSID_BROADCAST,
--        .addr = (uintptr_t)&log,
--        .data_len = sizeof(log),
--        .cdw10 = NVME_LOG_SMART_INFO | (1 << 15) /* RAE bit */
--                 | (((sizeof(log) >> 2) - 1) << 16)
--    };
--
--    fd = qga_open_cloexec(disk->name, O_RDONLY, 0);
--    if (fd == -1) {
--        g_debug("Failed to open device: %s: %s", disk->name, g_strerror(errno));
--        return;
--    }
--
--    if (ioctl(fd, NVME_IOCTL_ADMIN_CMD, &cmd)) {
--        g_debug("Failed to get smart: %s: %s", disk->name, g_strerror(errno));
--        close(fd);
--        return;
--    }
--
--    disk->smart = g_new0(GuestDiskSmart, 1);
--    disk->smart->type = GUEST_DISK_BUS_TYPE_NVME;
--
--    smart = &disk->smart->u.nvme;
--    smart->critical_warning = log.critical_warning;
--    smart->temperature = lduw_le_p(&log.temperature); /* unaligned field */
--    smart->available_spare = log.available_spare;
--    smart->available_spare_threshold = log.available_spare_threshold;
--    smart->percentage_used = log.percentage_used;
--    smart->data_units_read_lo = le64_to_cpu(log.data_units_read[0]);
--    smart->data_units_read_hi = le64_to_cpu(log.data_units_read[1]);
--    smart->data_units_written_lo = le64_to_cpu(log.data_units_written[0]);
--    smart->data_units_written_hi = le64_to_cpu(log.data_units_written[1]);
--    smart->host_read_commands_lo = le64_to_cpu(log.host_read_commands[0]);
--    smart->host_read_commands_hi = le64_to_cpu(log.host_read_commands[1]);
--    smart->host_write_commands_lo = le64_to_cpu(log.host_write_commands[0]);
--    smart->host_write_commands_hi = le64_to_cpu(log.host_write_commands[1]);
--    smart->controller_busy_time_lo = le64_to_cpu(log.controller_busy_time[0]);
--    smart->controller_busy_time_hi = le64_to_cpu(log.controller_busy_time[1]);
--    smart->power_cycles_lo = le64_to_cpu(log.power_cycles[0]);
--    smart->power_cycles_hi = le64_to_cpu(log.power_cycles[1]);
--    smart->power_on_hours_lo = le64_to_cpu(log.power_on_hours[0]);
--    smart->power_on_hours_hi = le64_to_cpu(log.power_on_hours[1]);
--    smart->unsafe_shutdowns_lo = le64_to_cpu(log.unsafe_shutdowns[0]);
--    smart->unsafe_shutdowns_hi = le64_to_cpu(log.unsafe_shutdowns[1]);
--    smart->media_errors_lo = le64_to_cpu(log.media_errors[0]);
--    smart->media_errors_hi = le64_to_cpu(log.media_errors[1]);
--    smart->number_of_error_log_entries_lo =
--        le64_to_cpu(log.number_of_error_log_entries[0]);
--    smart->number_of_error_log_entries_hi =
--        le64_to_cpu(log.number_of_error_log_entries[1]);
--
--    close(fd);
--}
--
--static void get_disk_smart(GuestDiskInfo *disk)
--{
--    if (disk->address
--        && (disk->address->bus_type == GUEST_DISK_BUS_TYPE_NVME)) {
--        get_nvme_smart(disk);
--    }
--}
--
--GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
--{
--    GuestDiskInfoList *ret = NULL;
--    GuestDiskInfo *disk;
--    DIR *dp = NULL;
--    struct dirent *de = NULL;
--
--    g_debug("listing /sys/block directory");
--    dp = opendir("/sys/block");
--    if (dp == NULL) {
--        error_setg_errno(errp, errno, "Can't open directory \"/sys/block\"");
--        return NULL;
--    }
--    while ((de = readdir(dp)) != NULL) {
--        g_autofree char *disk_dir = NULL, *line = NULL,
--            *size_path = NULL;
--        char *dev_name;
--        Error *local_err = NULL;
--        if (de->d_type != DT_LNK) {
--            g_debug("  skipping entry: %s", de->d_name);
--            continue;
--        }
--
--        /* Check size and skip zero-sized disks */
--        g_debug("  checking disk size");
--        size_path = g_strdup_printf("/sys/block/%s/size", de->d_name);
--        if (!g_file_get_contents(size_path, &line, NULL, NULL)) {
--            g_debug("  failed to read disk size");
--            continue;
--        }
--        if (g_strcmp0(line, "0\n") == 0) {
--            g_debug("  skipping zero-sized disk");
--            continue;
--        }
--
--        g_debug("  adding %s", de->d_name);
--        disk_dir = g_strdup_printf("/sys/block/%s", de->d_name);
--        dev_name = get_device_for_syspath(disk_dir);
--        if (dev_name == NULL) {
--            g_debug("Failed to get device name for syspath: %s",
--                disk_dir);
--            continue;
--        }
--        disk = g_new0(GuestDiskInfo, 1);
--        disk->name = dev_name;
--        disk->partition = false;
--        disk->alias = get_alias_for_syspath(disk_dir);
--        QAPI_LIST_PREPEND(ret, disk);
--
--        /* Get address for non-virtual devices */
--        bool is_virtual = is_disk_virtual(disk_dir, &local_err);
--        if (local_err != NULL) {
--            g_debug("  failed to check disk path, ignoring error: %s",
--                error_get_pretty(local_err));
--            error_free(local_err);
--            local_err = NULL;
--            /* Don't try to get the address */
--            is_virtual = true;
--        }
--        if (!is_virtual) {
--            disk->address = get_disk_address(disk_dir, &local_err);
--            if (local_err != NULL) {
--                g_debug("  failed to get device info, ignoring error: %s",
--                    error_get_pretty(local_err));
--                error_free(local_err);
--                local_err = NULL;
--            }
--        }
--
--        get_disk_deps(disk_dir, disk);
--        get_disk_smart(disk);
--        ret = get_disk_partitions(ret, de->d_name, disk_dir, dev_name);
--    }
--
--    closedir(dp);
--
--    return ret;
--}
--
--#else
--
--GuestDiskInfoList *qmp_guest_get_disks(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
--#endif
--
--/* Return a list of the disk device(s)' info which @mount lies on */
--static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
--                                               Error **errp)
--{
--    GuestFilesystemInfo *fs = g_malloc0(sizeof(*fs));
--    struct statvfs buf;
--    unsigned long used, nonroot_total, fr_size;
--    char *devpath = g_strdup_printf("/sys/dev/block/%u:%u",
--                                    mount->devmajor, mount->devminor);
--
--    fs->mountpoint = g_strdup(mount->dirname);
--    fs->type = g_strdup(mount->devtype);
--    build_guest_fsinfo_for_device(devpath, fs, errp);
--
--    if (statvfs(fs->mountpoint, &buf) == 0) {
--        fr_size = buf.f_frsize;
--        used = buf.f_blocks - buf.f_bfree;
--        nonroot_total = used + buf.f_bavail;
--        fs->used_bytes = used * fr_size;
--        fs->total_bytes = nonroot_total * fr_size;
--        fs->total_bytes_privileged = buf.f_blocks * fr_size;
--
--        fs->has_total_bytes = true;
--        fs->has_total_bytes_privileged = true;
--        fs->has_used_bytes = true;
--    }
--
--    g_free(devpath);
--
--    return fs;
--}
--
--GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
--{
--    FsMountList mounts;
--    struct FsMount *mount;
--    GuestFilesystemInfoList *ret = NULL;
--    Error *local_err = NULL;
--
--    QTAILQ_INIT(&mounts);
--    if (!build_fs_mount_list(&mounts, &local_err)) {
--        error_propagate(errp, local_err);
--        return NULL;
--    }
--
--    QTAILQ_FOREACH(mount, &mounts, next) {
--        g_debug("Building guest fsinfo for '%s'", mount->dirname);
--
--        QAPI_LIST_PREPEND(ret, build_guest_fsinfo(mount, &local_err));
--        if (local_err) {
--            error_propagate(errp, local_err);
--            qapi_free_GuestFilesystemInfoList(ret);
--            ret = NULL;
--            break;
--        }
--    }
--
--    free_fs_mount_list(&mounts);
--    return ret;
--}
--#endif /* CONFIG_FSFREEZE */
--
--#if defined(CONFIG_FSTRIM)
--/*
-- * Walk list of mounted file systems in the guest, and trim them.
-- */
--GuestFilesystemTrimResponse *
--qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
--{
--    GuestFilesystemTrimResponse *response;
--    GuestFilesystemTrimResult *result;
--    int ret = 0;
--    FsMountList mounts;
--    struct FsMount *mount;
--    int fd;
--    struct fstrim_range r;
--
--    slog("guest-fstrim called");
--
--    QTAILQ_INIT(&mounts);
--    if (!build_fs_mount_list(&mounts, errp)) {
--        return NULL;
--    }
--
--    response = g_malloc0(sizeof(*response));
--
--    QTAILQ_FOREACH(mount, &mounts, next) {
--        result = g_malloc0(sizeof(*result));
--        result->path = g_strdup(mount->dirname);
--
--        QAPI_LIST_PREPEND(response->paths, result);
--
--        fd = qga_open_cloexec(mount->dirname, O_RDONLY, 0);
--        if (fd == -1) {
--            result->error = g_strdup_printf("failed to open: %s",
--                                            strerror(errno));
--            continue;
--        }
--
--        /* We try to cull filesystems we know won't work in advance, but other
--         * filesystems may not implement fstrim for less obvious reasons.
--         * These will report EOPNOTSUPP; while in some other cases ENOTTY
--         * will be reported (e.g. CD-ROMs).
--         * Any other error means an unexpected error.
--         */
--        r.start = 0;
--        r.len = -1;
--        r.minlen = has_minimum ? minimum : 0;
--        ret = ioctl(fd, FITRIM, &r);
--        if (ret == -1) {
--            if (errno == ENOTTY || errno == EOPNOTSUPP) {
--                result->error = g_strdup("trim not supported");
--            } else {
--                result->error = g_strdup_printf("failed to trim: %s",
--                                                strerror(errno));
--            }
--            close(fd);
--            continue;
--        }
--
--        result->has_minimum = true;
--        result->minimum = r.minlen;
--        result->has_trimmed = true;
--        result->trimmed = r.len;
--        close(fd);
--    }
--
--    free_fs_mount_list(&mounts);
--    return response;
--}
--#endif /* CONFIG_FSTRIM */
--
--#endif /* __linux__ */
--
- #if defined(__linux__) || defined(__FreeBSD__)
- void qmp_guest_set_user_password(const char *username,
-                                  const char *password,
--- 
-2.45.2
+I didn't know it can store index with no data.  I'll try in this way.
 
+> At this point you are just detecting whether the entry has been stored (valid) or not. Hope that helps.
+
+Thank you very much!
+
+
+--
+Ruan.
+
+> 
+>>
+>> Maybe I'm overthinking this?
+>>
+>>
+>> -- 
+>> Thanks
+>> Ruan.
+>>
+>>>
+>>> -- 
+>>> Thanks
+>>> Ruan.
 
