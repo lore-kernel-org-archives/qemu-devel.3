@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7DEC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81670C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVu8l-0000K7-PS; Mon, 22 Jul 2024 10:35:51 -0400
+	id 1sVuAa-0005RU-Ax; Mon, 22 Jul 2024 10:37:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu8j-0000J3-Pt
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:35:49 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVuAU-0005LV-DE
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:37:40 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu8i-0006dq-0R
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:35:49 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-42122ac2f38so21919595e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:35:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVuAS-0006xS-7t
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:37:38 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-369cb9f086aso1104305f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721658946; x=1722263746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721659053; x=1722263853; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yKkbNP7k8veH9HBo1aRUDQDRNQnYv7nQb8tnSM7O4YY=;
- b=Cx7+iGjHqNV/Zjxl1iDf19JW/Vt0BrH8Qwre22MRDjmZqrQXTbfMImnjVm0LWWp8QV
- RmFataNs0Vit120u01mQZmKif/XCuy3Bsu9cll86JRfCypiPJtNHxS6qjM63jOCa1bcG
- K8iX1euJ91lRXMuI9J7eEQcmKKCP0k46Ixpx/cZtnGo86HYqIICt6BrUjIKHG9HVo7pf
- 7LxZ6TS+MPoutpIY5gF3vQfAa+NIPPkd2icxcD61K1dUfLxOa7JgzTLA7TG2HtuuTSFU
- 7EUcPHkYLVgq+Kg0wxX18REsEjlTjTOzkbkyNHIWhJUrIGCjfg9YSgcN+dCSs0fVoDLE
- YbQw==
+ bh=7/kPwislHTjvX5KRQDtlNXK70ZY8PmJtnPvR1+V/OJw=;
+ b=Zmc1T+iwjdHdrCY3IhmYldlF8/B1sX3cyz0BoxO8aHV8eyXRx2C6Ye/w1idX9tjI0+
+ qKNjKVw3rDOqJEHrCOVUBb5C2ypp3TSeF5lKfgzZK9kWY4skD9TQItjPvxg9Xp/hO6bt
+ EUc/aCD8d10zJEo5vWFCoDyPhU1UaxRjl0m6gzOEj2z5gxUOaQpo/uTpRiwy8qZQ3WiH
+ /Vi3ndW8B53jDK9IX5sIha6sUWk8w3IGkmc5wm4uVATE3mEixMc+abKRuLk/YRAjNQmC
+ XEwP9LoaMvZdxDRyWV/2gtMYzKDx78dT5wqMnlDSVNN5JR1vL8MFrLgOu6jjcRH3zSaW
+ PgKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721658946; x=1722263746;
+ d=1e100.net; s=20230601; t=1721659053; x=1722263853;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKkbNP7k8veH9HBo1aRUDQDRNQnYv7nQb8tnSM7O4YY=;
- b=Wo+k9KVbC5F4dm02N47Lj3WRRvxzoDHoa1K8N2v1iOljagegEYPB26b6Kjlxbr45c4
- FXsX9g0BDEpPsA1v9jHNxVrQzAEFFPQ669EUYOw17YbgFb0tustRixQkNcccWcK1bq/T
- JriK9bLQYbtG22TmL0kQrMhJ+dO/nfEog6uFcpHlyUh2mWAlfIiwaV9ZQ0Qr/BLpxcgF
- NxsoUER4rZHxIk6ziMAqcS/cO8sE44bRojcQc252SJio8xByFcNKu5KDM+2tNIFJOjew
- A6BP/L4QpM9uAoquDCi8UCN9Rb87sCgpHTKGvAeKqswxFzmiQEhMSS17vKRYkRoOAXab
- ZSug==
+ bh=7/kPwislHTjvX5KRQDtlNXK70ZY8PmJtnPvR1+V/OJw=;
+ b=aOMjtW5gI35ubrxR9Bkw+Gw4pH8PRMDzxpYRpBuaY+AQOvDdFxaEuAmRe2vF5j8+Ci
+ 0JGqF8J3NY1+ydH0iBIPy/TJs7X6Y8FTJ/ovT6NKGzWpanRpM5XCnpH3QnBjg5Xb3Bln
+ bmsN3XpWm8hMVS+HDYLEX/9+dL3w9/YVI6VlG3LR6FRSm8t64TuCZFMLdNpa+MvLCGg1
+ MpGBEemr36Rf3co3lLSZW5477Nio4IZWurpv3uJYbo413MkFuDEsYUsHAJ9lBarHzQoe
+ COkHusFZD1xykCHOPrgVjjFtAylAR2LildvEqnyqHKvmszPluYXttMM5dQ7uOTO4IqUI
+ sI0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCAPt7eJ9XtvnZf2dAeo9f0cE7NJp6fG4fA1/fwHPufAfI+BfFhJ8yNH1hzv8ULgVvvddhAEYvj04kGawq85U5dD8LJ1E=
-X-Gm-Message-State: AOJu0YxRDEV450xkPYN+mRBJ+2n9bpTcgLVWDOCPNqoPN09/TX1p2OnL
- vR2nG5McU4ey2T7/uLf5/HWm6ARzstOL/p7pAkut35X2NYu1cDlI7X9k4zzX514=
-X-Google-Smtp-Source: AGHT+IFjQyfdqB4LZaZ+N3giUeTnxHmG6OmgZSeKpgzAnnhth2CRDkscPej4ek7o9uR63w0O5bcFNw==
-X-Received: by 2002:a05:600c:46ce:b0:426:686f:7ad with SMTP id
- 5b1f17b1804b1-427da805e46mr54659635e9.10.1721658946393; 
- Mon, 22 Jul 2024 07:35:46 -0700 (PDT)
+ AJvYcCVflO5RiGelJaqqTwOQvsb3XK70a71fWTnUs7m6MJQHBbho7bOQLsZtDmCmVWD5XCWN/0AdeAN9kjr+LfYGRrM22Lxqxjs=
+X-Gm-Message-State: AOJu0Yx9NvsyxUBDG9Hkr7g206GQsC+LdUUSUoNU7c7wXYk6V0h01d9V
+ XJpUBnuIhS80ycGuod3tJIExgyT1AoF2T3tGuWnuofN60bCy5oBKAkdi1Q+KPuU=
+X-Google-Smtp-Source: AGHT+IGlF3QSJVllDNZluwpNRjyAstEDSclveOBORMJmxIiCeuwvWMtFFjX5RsdLuJqiRY/iS7ikyQ==
+X-Received: by 2002:a5d:6e03:0:b0:367:97b9:d5ed with SMTP id
+ ffacd0b85a97d-369dec0cfa8mr72893f8f.9.1721659053363; 
+ Mon, 22 Jul 2024 07:37:33 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68f789csm132263585e9.6.2024.07.22.07.35.45
+ ffacd0b85a97d-368787cededsm8770557f8f.78.2024.07.22.07.37.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 07:35:45 -0700 (PDT)
-Message-ID: <2870ed4c-4f7d-4f8b-b7a9-6bc5ceba60b3@linaro.org>
-Date: Mon, 22 Jul 2024 16:35:43 +0200
+ Mon, 22 Jul 2024 07:37:32 -0700 (PDT)
+Message-ID: <1ae5a1f5-981c-4e83-a2b5-36f8d92f46f4@linaro.org>
+Date: Mon, 22 Jul 2024 16:37:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] crypto: propagate errors from TLS session I/O
- callbacks
+Subject: Re: [PATCH 4/5] crypto: push error reporting into TLS session I/O APIs
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240722131611.2820041-1-berrange@redhat.com>
- <20240722131611.2820041-6-berrange@redhat.com>
+ <20240722131611.2820041-5-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722131611.2820041-6-berrange@redhat.com>
+In-Reply-To: <20240722131611.2820041-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,52 +100,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/7/24 15:16, Daniel P. Berrangé wrote:
-> GNUTLS doesn't know how to perform I/O on anything other than plain
-> FDs, so the TLS session provides it with some I/O callbacks. The
-> GNUTLS API design requires these callbacks to return a unix errno
-> value, which means we're currently loosing the useful QEMU "Error"
-> object.
+> The current TLS session I/O APIs just return a synthetic errno
+> value on error, which has been translated from a gnutls error
+> value. This looses a large amount of valuable information that
+> distinguishes different scenarios.
 > 
-> This changes the I/O callbacks in QEMU to stash the "Error" object
-> in the QCryptoTLSSession class, and fetch it when seeing an I/O
-> error returned from GNUTLS, thus preserving useful error messages.
+> Pushing population of the "Error *errp" object into the TLS
+> session I/O APIs gives more detailed error information.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   crypto/tlssession.c                 | 71 +++++++++++++++++++++++++----
->   include/crypto/tlssession.h         | 10 +++-
->   io/channel-tls.c                    | 18 ++++----
->   tests/unit/test-crypto-tlssession.c | 28 ++++++++++--
->   4 files changed, 103 insertions(+), 24 deletions(-)
-
-
-> @@ -505,11 +551,20 @@ qcrypto_tls_session_handshake(QCryptoTLSSession *session,
->               ret == GNUTLS_E_AGAIN) {
->               ret = 1;
->           } else {
-> -            error_setg(errp, "TLS handshake failed: %s",
-> -                       gnutls_strerror(ret));
-> +            if (session->rerr || session->werr) {
-> +                error_setg(errp, "TLS handshake failed: %s: %s",
-> +                           gnutls_strerror(ret),
-> +                           error_get_pretty(session->rerr ? session->rerr : session->werr));
-
-Could leverage ternary operator here.
+>   crypto/tlssession.c         | 47 ++++++++++++++++---------------------
+>   include/crypto/tlssession.h | 23 ++++++++++++++----
+>   io/channel-tls.c            | 44 ++++++++++++++--------------------
+>   3 files changed, 57 insertions(+), 57 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +            } else {
-> +                error_setg(errp, "TLS handshake failed: %s",
-> +                           gnutls_strerror(ret));
-> +            }
->               ret = -1;
->           }
->       }
-> +    error_free(session->rerr);
-> +    error_free(session->werr);
-> +    session->rerr = session->werr = NULL;
->   
->       return ret;
->   }
 
 
