@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAD3C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3B1C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVtzy-00015V-7A; Mon, 22 Jul 2024 10:26:46 -0400
+	id 1sVu2N-0007p8-F2; Mon, 22 Jul 2024 10:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sVtzv-00011Q-9d; Mon, 22 Jul 2024 10:26:43 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sVtzs-000586-76; Mon, 22 Jul 2024 10:26:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721658401; x=1753194401;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=OsrIUd37YeYaTA7dO/rYy+a/KCssuHBkjLNEx5suQu0=;
- b=hSy0PDa5l4BjzoKO+qruCPMD8eV2cxIblGpKaiZk0q8sBpx/3SCUBgX+
- e2gW6+IlgvsMscaRb8H+jPewCEuV8zvdw10wY77JamicExpNWx2Qe1YL6
- qjsxHa59Vi3pZDjBh2Gu0KEVrQ2Wy8Hy3F1upHTf8G8r7eJsEXzxxSP90
- +cK7zHqIbiT6yiJ7NMKhdzylKEUfmp6cSwC7mvNgHW35ohyL0089XCDOL
- 6Vy5pdKbkSoDjDSKixOtwgpCRkLhoDVFhw0w08czvyVOWr1hD9uk56ejE
- BHvj82WWvWUaVG9K0Px+C9vwUTXK7hnt41HeuZRm8WySQqKjX8NMSzRUO g==;
-X-CSE-ConnectionGUID: Tu7lbsH3SXqLzG1Or8lVwg==
-X-CSE-MsgGUID: MtyZea+2RhOpcy2+dXY8fg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11141"; a="30617142"
-X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="30617142"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2024 07:26:37 -0700
-X-CSE-ConnectionGUID: +SEajsCAQSm91RWdetg5tQ==
-X-CSE-MsgGUID: RxjqKHH3QVySpkXovI9GSA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="51555979"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 22 Jul 2024 07:26:30 -0700
-Date: Mon, 22 Jul 2024 22:42:14 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
-Message-ID: <Zp5vxtXWDeHAdPok@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-9-zhao1.liu@intel.com>
- <87r0bl35ug.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu2L-0007oa-RC
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:29:13 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu2K-0005SG-2o
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:29:13 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4266b1f1b21so32719975e9.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:29:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721658550; x=1722263350; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4EGE6XShqi0/nfJLO/MS/xopgU6PUeNaRRk82ZPR41Q=;
+ b=uhdSDeqt+RhTZP7Dk6NRPuh6AUq2uJ02Te+BNX2AbR8za7aeuYabSoBaVZfn5CvjHl
+ hCEvIKoH8AC0Pkzdw0DbkuLWhFb/fYFXnv/1kLEv4A73QGXNffvTfaGdjDRwiCtwuKXn
+ 6Q4Ry6kLo31pIS7siV7eb8VIeKfgcPCOixxeT9PXz8Tpwtivzhi22WuJK+OCzShrniyx
+ 6zFCKlyE4R/qyPZL9tsg6LLbe9GNHJB+sS2/m26IslKBAEKS7851Ux2FTVB2T4XhReiQ
+ VomBefUj1+knyu9Dj4uIavmh7uX2AO3L7M+ClIVJqioKMEiIbeGLo7VT75MwFPQBhRoz
+ cLAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721658550; x=1722263350;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4EGE6XShqi0/nfJLO/MS/xopgU6PUeNaRRk82ZPR41Q=;
+ b=c7tLyPl+8ds7jvvGi9gF3drdkUOzc3SBfkY99tGGkw6a3CMKhUzzY6LxAduWJ0JjQi
+ ni6ttXpRdskA4MlKoZoOZoI84u1KnBFGlVjU+HFVyn2oyDWECAss4e4lTHbXwfUcbMlD
+ jYG53V+u8xP0iXo9lrMb5oFuL68+/9f4532bJDfQnfUH3w++OCeI4CWRu/R+mL89aUhQ
+ frq9GTnCJaYxPjwfeWvQuyK05ouK2zZt1MW7kxCtV8t6JLlm+WHMOoTlf8QQa3C29mbp
+ 3I/9X1cGO+C48CBe3kZHuKZobOlaia4WhkrztKPJdekWuNS47fHDw749686a5x1H1rEh
+ S89w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtUuPcmDXWzpABoTsW/Vn87Vzjc9hK3UhxpYQeSqwJB+uUOxqPFRxn9U9Tg0aAbuKaIv5ikSB1TGgC0kTJJ9+mtUgAnT4=
+X-Gm-Message-State: AOJu0Yz2ZNufC22RptvQgRWRqiC0ZGtwtNGLV3D1Pv3ael2Rex7qU1oJ
+ /3u9642QU3pbyFBT4yFNMKYVJNp1ILqga4Ar8BMYXYUni1bRZGalJbAbPNzvdig=
+X-Google-Smtp-Source: AGHT+IEsNerB4pUlLzcDbayfNDZhx7veJcRZMAaHHhxfnF7uZgMjCx7A0bR9UeIDaPzwMm0JSU+D+A==
+X-Received: by 2002:a05:600c:4e47:b0:426:6e8b:3dc5 with SMTP id
+ 5b1f17b1804b1-427dc56753emr54702105e9.32.1721658550311; 
+ Mon, 22 Jul 2024 07:29:10 -0700 (PDT)
+Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
+ [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d8e68ba0sm121498795e9.21.2024.07.22.07.29.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 07:29:09 -0700 (PDT)
+Message-ID: <21bed558-49d2-408d-baaf-97451780c53a@linaro.org>
+Date: Mon, 22 Jul 2024 16:29:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87r0bl35ug.fsf@pond.sub.org>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] [PATCH] system/memory: Fix max access size
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: TaiseiIto <taisei1212@outlook.jp>, qemu-devel@nongnu.org,
+ peterx@redhat.com, david@redhat.com
+References: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
+ <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
+ <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,122 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
-On Mon, Jul 22, 2024 at 03:37:43PM +0200, Markus Armbruster wrote:
-> Date: Mon, 22 Jul 2024 15:37:43 +0200
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
->  object
+On 22/7/24 13:53, Paolo Bonzini wrote:
+> On Sat, Jul 20, 2024 at 4:30 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+>> If the HPET timer device is supposed to permit 64 bit writes and it is not
+>> doing so, then that needs to be fixed in the HPET timer device model, by
+>> making sure that its read/write functions correctly handle the size=8 case
+>> and then setting access_size_max =8 in its MemoryRegionOps struct.
 > 
-> Zhao Liu <zhao1.liu@intel.com> writes:
+> It does, and I've started looking into it[1].
 > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> The replacement for this patch is simple (on top of that branch):
 > 
-> This patch is just documentation.  The code got added in some previous
-> patch.  Would it make sense to squash this patch into that previous
-> patch?
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index 5e60fedc089..ac55dd1ebd6 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -637,6 +637,10 @@ static const MemoryRegionOps hpet_ram_ops = {
+>           .min_access_size = 4,
+>           .max_access_size = 8,
+>       },
+> +    .impl = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
 
-OK, I'll merge them.
+It seems this model could be simplified using .min_access_size = 8,
+letting the core memory layer handle the % 4 byte accesses (the
+read path is obvious, the write one a bit less). Nothing urgent,
+possibly a BitSizedTask.
 
-> > ---
-> > Changes since RFC v2:
-> >  * Rewrote the document of smp-cache object.
-> >
-> > Changes since RFC v1:
-> >  * Use "*_cache=topo_level" as -smp example as the original "level"
-> >    term for a cache has a totally different meaning. (Jonathan)
-> > ---
-> >  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 58 insertions(+)
-> >
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index 8ca7f34ef0c8..4b84f4508a6e 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -159,6 +159,15 @@ SRST
-> >          ::
-> >  
-> >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
-> > +
-> > +    ``smp-cache='id'``
-> > +        Allows to configure cache property (now only the cache topology level).
-> > +
-> > +        For example:
-> > +        ::
-> > +
-> > +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
-> > +            -machine smp-cache=cache
-> >  ERST
-> >  
-> >  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> > @@ -5871,6 +5880,55 @@ SRST
-> >          ::
-> >  
-> >              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
-> > +
-> > +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
-> > +        Create an smp-cache object that configures machine's cache
-> > +        property. Currently, cache property only include cache topology
-> > +        level.
-> > +
-> > +        This option must be written in JSON format to support JSON list.
+> +    },
+>       .endianness = DEVICE_NATIVE_ENDIAN,
+>   };
 > 
-> Why?
-
-I'm not familiar with this, so I hope you could educate me if I'm wrong.
-
-All I know so far is for -object that defining a list can only be done in
-JSON format and not with a numeric index like a keyval based option, like:
-
--object smp-cache,id=cache0,caches.0.name=l1i,caches.0.topo=core: Parameter 'caches' is missing
-
-the above doesn't work.
-
-Is there any other way to specify a list in command line?
-
-> > +
-> > +        The ``caches`` parameter accepts a list of cache property in JSON
-> > +        format.
-> > +
-> > +        A list element requires the cache name to be specified in the
-> > +        ``name`` parameter (currently ``l1d``, ``l1i``, ``l2`` and ``l3``
-> > +        are supported). ``topo`` parameter accepts CPU topology levels
-> > +        including ``thread``, ``core``, ``module``, ``cluster``, ``die``,
-> > +        ``socket``, ``book``, ``drawer`` and ``default``. The ``topo``
-> > +        parameter indicates CPUs winthin the same CPU topology container
-> > +        are sharing the same cache.
-> > +
-> > +        Some machines may have their own cache topology model, and this
-> > +        object may override the machine-specific cache topology setting
-> > +        by specifying smp-cache object in the -machine. When specifying
-> > +        the cache topology level of ``default``, it will honor the default
-> > +        machine-specific cache topology setting. For other topology levels,
-> > +        they will override the default setting.
-> > +
-> > +        An example list of caches to configure the cache model (l1d cache
-> > +        per core, l1i cache per core, l2 cache per module and l3 cache per
-> > +        socket) supported by PC machine might look like:
-> > +
-> > +        ::
-> > +
-> > +              {
-> > +                "caches": [
-> > +                   { "name": "l1d", "topo": "core" },
-> > +                   { "name": "l1i", "topo": "core" },
-> > +                   { "name": "l2", "topo": "module" },
-> > +                   { "name": "l3", "topo": "socket" },
-> > +                ]
-> > +              }
-> > +
-> > +        An example smp-cache object would look like:()
-> > +
-> > +        .. parsed-literal::
-> > +
-> > +             # |qemu_system| \\
-> > +                 ... \\
-> > +                 -object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}' \\
-> > +                 ...
-> >  ERST
+> I'll now look into the other patch for interrupts. Thanks for testing
+> my changes!
 > 
+> Paolo
+> 
+> [1] https://gitlab.com/bonzini/qemu/-/commits/hpet
+> 
+
 
