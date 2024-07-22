@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1942CC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32BA1C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0WU-0001F3-9G; Mon, 22 Jul 2024 17:24:46 -0400
+	id 1sW0WR-0000vF-JR; Mon, 22 Jul 2024 17:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW0WQ-00010r-Sd
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:43 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sW0WH-0000Nd-4d
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:35 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW0WP-0008SA-4n
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:42 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4266182a9d7so31852475e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 14:24:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721683479; x=1722288279; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UQmlgxAH9frE+MB5y7q3Nk6y378Ms759NKEkIfMV3aA=;
- b=DGi3tclRCBuXepKzTuktbzNmXiEnl7QggsziZaHiP0ZoFEvgOLEtlQ+e22znFR543b
- lyVRN6hDfyL2OsVhf//+p2/8+xxJWrQs1G9Cp7nPjj6I8pVhVal5+UTw5Q9fRG5bh4ME
- 5hBUQAoaSpF/GiDmDMgUvmnGt9/SWqX/j2omsfMSSUCdg4X7N+48OP1hA0Fix6Nth9qI
- AAzzmqPMk8/anezK8aP+IQPtnXFsfMJdjF+8ltrT+eRnS6/gJdjRQL+Az5wq6HQTz9eO
- 1LEssy2sNaQu2v2Rxwb9DU0IopONmx4bqXHCNYrrB5pPnxTQf26m0ipbpbyN3m8AqJXl
- o8Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721683479; x=1722288279;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UQmlgxAH9frE+MB5y7q3Nk6y378Ms759NKEkIfMV3aA=;
- b=bMBuSeb5SmiuQQnaV7c4ix7OeA1A4odSh0RcJKjYFdMzLLuDVPMjKuOMuq1lFhJrxC
- eyuCePqp5+6uYG7m8/hU94Fsc4efsZynJubNGr4jG1VLdCa/PB27BktzPm6yfquMhDcy
- 0pjR6rRzkf1pj/erLpn+aAXUZ0x4+uw3gSYSja8S32hO5kA87q5PSbokc3NTZ6ijjwvR
- x8vIroVTFvIWAWP0g6e9Wan8PbAI/udvzsH0Bs+glrm3DCQpVNRPAWekHPX5qyiYiHQJ
- nCm8zYT2DEYveQMbfqOSGgxc50Yw/iZn2YZAZrK5r+fbHxtsZEKgQGreXN6NUGs3kQps
- xJdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXx8IsjiKJBACCZBpQrIwxRTXmHSIvjEYre1XiuRVlqdWbuUYaozk92maetHB5GBalidKrphQJXukwwJRga+XL6Cog3zFc=
-X-Gm-Message-State: AOJu0Yw95udU8dD/u+2LQxKdPi4tUdY9UYTqqlJsW5UE+2AH1q1+EV35
- DslmOgmwPYJ2zdspIyD89sgyQQ3tQdx5mhYRhhvG7iW04oZ7KmIiydwWCb1s2m0=
-X-Google-Smtp-Source: AGHT+IH2rba/6LBS8bhDvVMf3xlaKgzNhvXi+AQ/p8JMADU8a1VDGCb5MnQPH0P2plPPCPAod9tMhA==
-X-Received: by 2002:a05:600c:1d96:b0:426:5ee3:728b with SMTP id
- 5b1f17b1804b1-427daa28651mr59071125e9.13.1721683479504; 
- Mon, 22 Jul 2024 14:24:39 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.14])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a7257esm167810725e9.28.2024.07.22.14.24.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 14:24:39 -0700 (PDT)
-Message-ID: <365e4c97-63f7-4cdb-bc3f-0853ffec85ca@linaro.org>
-Date: Mon, 22 Jul 2024 23:24:37 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sW0WE-0008RK-H4
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:32 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6404421A8A;
+ Mon, 22 Jul 2024 21:24:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721683469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
+ b=Gf6emSpQstW9YC8bsNudLUuRMRn0RBSs23g3LuoOzma6ILNBF/tKOYQy2Q1YrW5K9bBDYf
+ 7ZST50Pdzz6cX4r9XmL52rmVLIzZFcNehNzETwRqpXpbxeUVYo2DVTp1El4Gv9Vp2gvvBO
+ OTcOvstBt8WW+dhSHE0/h0oWjAwSm40=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721683469;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
+ b=fEsLHYhKE75wPREbl+rCsAfuY4HXIyLm3vyFOMXzYGZf7yNVZBu99EgRppUkA5Tfnt5BKh
+ ZXf7ducvrlAbSoDg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721683469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
+ b=Gf6emSpQstW9YC8bsNudLUuRMRn0RBSs23g3LuoOzma6ILNBF/tKOYQy2Q1YrW5K9bBDYf
+ 7ZST50Pdzz6cX4r9XmL52rmVLIzZFcNehNzETwRqpXpbxeUVYo2DVTp1El4Gv9Vp2gvvBO
+ OTcOvstBt8WW+dhSHE0/h0oWjAwSm40=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721683469;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
+ b=fEsLHYhKE75wPREbl+rCsAfuY4HXIyLm3vyFOMXzYGZf7yNVZBu99EgRppUkA5Tfnt5BKh
+ ZXf7ducvrlAbSoDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFF51136A9;
+ Mon, 22 Jul 2024 21:24:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SqVWKQzOnma8PAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 22 Jul 2024 21:24:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH v2 8/9] migration/multifd: Don't send ram data
+ during SYNC
+In-Reply-To: <Zp7JBmVqMYw7rOT9@x1n>
+References: <20240722175914.24022-1-farosas@suse.de>
+ <20240722175914.24022-9-farosas@suse.de> <Zp7JBmVqMYw7rOT9@x1n>
+Date: Mon, 22 Jul 2024 18:24:16 -0300
+Message-ID: <877cddyvb3.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] Ui patches
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20240722200619.135163-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722200619.135163-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-1.10 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,24 +114,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 22:06, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
-> 
->    Merge tag 'pull-aspeed-20240721' of https://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
-> 
-> for you to fetch changes up to 903cc9e1173e0778caa50871e8275c898770c690:
-> 
->    chardev/char-win-stdio.c: restore old console mode (2024-07-22 22:25:46 +0400)
-> 
-> ----------------------------------------------------------------
-> UI-related for 9.1
+Peter Xu <peterx@redhat.com> writes:
 
-Thanks Marc-André :)
+> On Mon, Jul 22, 2024 at 02:59:13PM -0300, Fabiano Rosas wrote:
+>> Skip saving and loading any ram data in the packet in the case of a
+>> SYNC. This fixes a shortcoming of the current code which requires a
+>> reset of the MultiFDPages_t fields right after the previous
+>> pending_job finishes, otherwise the very next job might be a SYNC and
+>> multifd_send_fill_packet() will put the stale values in the packet.
+>> 
+>> By not calling multifd_ram_fill_packet(), we can stop resetting
+>> MultiFDPages_t in the multifd core and leave that to the client code.
+>> 
+>> Actually moving the reset function is not yet done because
+>> pages->num==0 is used by the client code to determine whether the
+>> MultiFDPages_t needs to be flushed. The subsequent patches will
+>> replace that with a generic flag that is not dependent on
+>> MultiFDPages_t.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/multifd.c | 12 ++++++++++--
+>>  1 file changed, 10 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index d25b8658b2..4394ca6ade 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -438,6 +438,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>>  {
+>>      MultiFDPacket_t *packet = p->packet;
+>>      uint64_t packet_num;
+>> +    bool sync_packet = p->flags & MULTIFD_FLAG_SYNC;
+>>  
+>>      memset(packet, 0, p->packet_len);
+>>  
+>> @@ -452,7 +453,9 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>>  
+>>      p->packets_sent++;
+>>  
+>> -    multifd_ram_fill_packet(p);
+>> +    if (!sync_packet) {
+>> +        multifd_ram_fill_packet(p);
+>> +    }
+>>  
+>>      trace_multifd_send(p->id, packet_num,
+>>                         be32_to_cpu(packet->normal_pages),
+>> @@ -563,7 +566,12 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>>      p->packet_num = be64_to_cpu(packet->packet_num);
+>>      p->packets_recved++;
+>>  
+>> -    ret = multifd_ram_unfill_packet(p, errp);
+>> +    if (p->flags & MULTIFD_FLAG_SYNC) {
+>> +        p->normal_num = 0;
+>> +        p->zero_num = 0;
+>
+> Instead of this, I wonder whether we shouldn't touch those fields at all,
+> but:
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 0a85951d58..55abd9a1ef 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1547,7 +1547,9 @@ static void *multifd_recv_thread(void *opaque)
+>              flags = p->flags;
+>              /* recv methods don't know how to handle the SYNC flag */
+>              p->flags &= ~MULTIFD_FLAG_SYNC;
+> -            has_data = p->normal_num || p->zero_num;
+> +
+> +            if (!(flags & MULTIFD_FLAG_SYNC))
+> +                has_data = p->normal_num || p->zero_num;
+>              qemu_mutex_unlock(&p->mutex);
+>          } else {
+>              /*
 
+Good idea.
+
+>
+>> +    } else {
+>> +        ret = multifd_ram_unfill_packet(p, errp);
+>> +    }
+>>  
+>>      trace_multifd_recv(p->id, p->packet_num, p->normal_num, p->zero_num,
+>>                         p->flags, p->next_packet_size);
+>> -- 
+>> 2.35.3
+>> 
 
