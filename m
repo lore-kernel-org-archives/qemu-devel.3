@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B986C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B215AC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkU-000613-TZ; Sun, 21 Jul 2024 20:17:54 -0400
+	id 1sVglc-0002sW-GM; Sun, 21 Jul 2024 20:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkQ-0005Z3-Vc
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglL-0002Au-P3
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkP-0005nh-02
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglJ-0005wC-Fj
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607467;
+ s=mimecast20190719; t=1721607524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qh9R5tJPsU6nQaE9x9stYdkZI3361sYm/2KiRgpRciY=;
- b=c54RqwRuQpaNNIXdoFJQ/SHjNekZ0ywyuU+vaZnk5tVQA56PENBz+TpNAxqS+5V/KvrKpl
- naa71TYl4as7IwJjDLSdbEnQsQsmgari59eMhlPKQrPBiJ6w0q4mwiMMycnbYyWJc/ehWh
- GQ+4QlrAudTadobVE1TnUw6JTa24iDw=
+ bh=2MFU5YluLJy3dMwMtCRKC5eZxelIcmwO+t8tRGjROFc=;
+ b=fyU7JAlDE6XfI9DXhzVO5DF2SaHhnemXSMGGVvWNiRhLsqPwaegrs18xRCfrPSwUik5JNs
+ jSFsVEALuMZckp6R5xPiCkZ48sjD1Op3f+vbmyd4SIO1STkrql7g9CeXZ1ZzDY/tT03Upi
+ Wpg2Hqdx+1JLHkOOn8fUXx8O4FqXOjg=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-hVi_YfOnM_e9a_IX8GAmCw-1; Sun, 21 Jul 2024 20:17:45 -0400
-X-MC-Unique: hVi_YfOnM_e9a_IX8GAmCw-1
+ us-mta-127-NWlMjow5Np-UUeG9blZMqw-1; Sun, 21 Jul 2024 20:18:42 -0400
+X-MC-Unique: NWlMjow5Np-UUeG9blZMqw-1
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36831873b39so1861898f8f.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:45 -0700 (PDT)
+ ffacd0b85a97d-36835daf8b7so2715769f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607464; x=1722212264;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qh9R5tJPsU6nQaE9x9stYdkZI3361sYm/2KiRgpRciY=;
- b=cdRGnErZJBDmLBhKqb2mppWU214kABYng8PB1+IhV/Z3OIhE1coyMcbPOm01u7s38v
- LbuQRvXpu2SOYkLyAgHZkg9ZiCDgyISVMFx4ahnOwgiOVocXgOg8tK/u6UGxKgq2tz1B
- yLiu2Z1UK5ieoTolSFn3CRzH6/pyzM4ykgW/vR/2EofsRVRsoEGX0ylk3fENrUhqZU2u
- m/IMT/7J77Q6C+k0cxfrPnddRas6B+FaBsxBHJzWADIYn3Eeb+itsnJGXukM8Udtdck4
- +tkSjwHayLHfgPyt+qAflV5EOpuTEXyYjkkGeQ5Ss6NyhMAV1MIV66ng7/+A4XXgm+ws
- OOng==
-X-Gm-Message-State: AOJu0YybcIZH1fhnXEYcR9QzGXWFZHaWdkWAkN2DF7Jjm+5CxOvqsHTi
- woBxlKGr3iSWsRovnq3u5F3Az14VvsIYNbftrEXu5/oCGn2IFQ6WqyosQTKWo7ZVS7AUmKnLy3m
- Dyay9lK3i9q/fL1+tj7gvVHNDMjmYytOP/XzhmofHEy9eW3y3AjNSAO00EuoLldXSMDfeYV87WS
- Em/KkCyGa3vsLQWCfsnjyctCEV1VYTnA==
-X-Received: by 2002:a5d:5441:0:b0:368:37d5:3f2e with SMTP id
- ffacd0b85a97d-36837d53fdcmr8248834f8f.32.1721607464433; 
- Sun, 21 Jul 2024 17:17:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjcErND1fbND0ixpQbnVRCuRdnwW/Dwtjo26+SmsSamirHgBekXhlee7K8TbSQke9dxftQLQ==
-X-Received: by 2002:a5d:5441:0:b0:368:37d5:3f2e with SMTP id
- ffacd0b85a97d-36837d53fdcmr8248823f8f.32.1721607463652; 
- Sun, 21 Jul 2024 17:17:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607521; x=1722212321;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2MFU5YluLJy3dMwMtCRKC5eZxelIcmwO+t8tRGjROFc=;
+ b=Tf6exIy3f9LWp0+eeufqXc+STC6xkQETmjFMnU00mp4til+7X/xKxFwShp7ZStVPgj
+ uMCit2DVvQYhVMSAT3NaEf/opKvADgNJCkIpJyPIeH7qfG847iQ0Nd3NWVLuOe4ywVuA
+ OEYETLgX1RZ2tFi6D3V6e9NApU5SuG0uJ2MUAhUHGdEFAGn+e8WXKHbc83Q7pH0/dXla
+ /mPdMCe7b2jYZOMzB205Dk1Go/ybxJnQ4QguckX7mLgSRU/8g38KzBazXFEjsZo+dP3A
+ 1e2Gt0Qp9daewn2u7ZIGyPufzwiLSdxcr7Js0qWAqAHFnlLzVMVrTb+5ThsV/mhVCnj7
+ iJQA==
+X-Gm-Message-State: AOJu0YxGgAWM2m0b3cfbPrK8eIr3MiRRhwgyEfyqmGzioYVmQ2nTCM6S
+ T+CjlWszXhV19d057JBw91tfHWiEEMel+4y5YC/QlUnfoWbBInWwc3lJnvSZ79D3TsJRaJ/Q23b
+ qQ5o0IUtOl57oPTyiEqAkDDZTCFoFjTWSFodsTcqIenGYg7WvpbIR3QtvF54jYFUejTfu8Ybk/q
+ AunzT8czzCwVVI2dUd6xNxxaWMEAVvAQ==
+X-Received: by 2002:a5d:4604:0:b0:368:7282:51d6 with SMTP id
+ ffacd0b85a97d-369bae4d54dmr4227556f8f.21.1721607521257; 
+ Sun, 21 Jul 2024 17:18:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWzKtRRYHll+mm01uoqHoCxQ2/pCyfQk0/jmxFlqOHMnxJDo0jZlLMmPQiMvL27rYFpYlwMQ==
+X-Received: by 2002:a5d:4604:0:b0:368:7282:51d6 with SMTP id
+ ffacd0b85a97d-369bae4d54dmr4227530f8f.21.1721607520599; 
+ Sun, 21 Jul 2024 17:18:40 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ced33sm7052068f8f.86.2024.07.21.17.17.42
+ ffacd0b85a97d-36878684204sm7029703f8f.2.2024.07.21.17.18.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:43 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:41 -0400
+ Sun, 21 Jul 2024 17:18:40 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL 25/63] virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER
- support
-Message-ID: <844619147c5110f335cbbbad51cda6a898c7ef33.1721607331.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: [PULL 51/63] hw/riscv/virt-acpi-build.c: Add namespace devices for
+ PLIC and APLIC
+Message-ID: <dbd4cc00ca249b75170c2c0fd60ee2db452352a9.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -105,122 +108,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonah Palmer <jonah.palmer@oracle.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-Add VIRTIO_F_IN_ORDER feature support for the virtqueue_flush operation.
+As per the requirement ACPI_080 in the RISC-V Boot and Runtime Services
+(BRS) specification [1],  PLIC and APLIC should be in namespace as well.
+So, add them using the defined HID.
 
-The goal of the virtqueue_ordered_flush operation when the
-VIRTIO_F_IN_ORDER feature has been negotiated is to write elements to
-the used/descriptor ring in-order and then update used_idx.
+[1] - https://github.com/riscv-non-isa/riscv-brs/releases/download/v0.0.2/riscv-brs-spec.pdf
+      (Chapter 6)
 
-The function iterates through the VirtQueueElement used_elems array
-in-order starting at vq->used_idx. If the element is valid (filled), the
-element is written to the used/descriptor ring. This process continues
-until we find an invalid (not filled) element.
-
-For packed VQs, the first entry (at vq->used_idx) is written to the
-descriptor ring last so the guest doesn't see any invalid descriptors.
-
-If any elements were written, the used_idx is updated.
-
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20240710125522.4168043-5-jonah.palmer@oracle.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240716144306.2432257-2-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
 ---
- hw/virtio/virtio.c | 71 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 70 insertions(+), 1 deletion(-)
+ hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 0000a7b41c..397c261c3c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1023,6 +1023,73 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 0925528160..5f5082a35b 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -141,6 +141,30 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
      }
  }
  
-+static void virtqueue_ordered_flush(VirtQueue *vq)
++static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
++                                     uint64_t mmio_base, uint64_t mmio_size,
++                                     const char *hid)
 +{
-+    unsigned int i = vq->used_idx % vq->vring.num;
-+    unsigned int ndescs = 0;
-+    uint16_t old = vq->used_idx;
-+    uint16_t new;
-+    bool packed;
-+    VRingUsedElem uelem;
++    uint64_t plic_aplic_addr;
++    uint32_t gsi_base;
++    uint8_t  socket;
 +
-+    packed = virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED);
++    for (socket = 0; socket < socket_count; socket++) {
++        plic_aplic_addr = mmio_base + mmio_size * socket;
++        gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
++        Aml *dev = aml_device("IC%.02X", socket);
++        aml_append(dev, aml_name_decl("_HID", aml_string("%s", hid)));
++        aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
++        aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
 +
-+    if (packed) {
-+        if (unlikely(!vq->vring.desc)) {
-+            return;
-+        }
-+    } else if (unlikely(!vq->vring.used)) {
-+        return;
++        Aml *crs = aml_resource_template();
++        aml_append(crs, aml_memory32_fixed(plic_aplic_addr, mmio_size,
++                                           AML_READ_WRITE));
++        aml_append(dev, aml_name_decl("_CRS", crs));
++        aml_append(scope, dev);
 +    }
-+
-+    /* First expected in-order element isn't ready, nothing to do */
-+    if (!vq->used_elems[i].in_order_filled) {
-+        return;
-+    }
-+
-+    /* Search for filled elements in-order */
-+    while (vq->used_elems[i].in_order_filled) {
-+        /*
-+         * First entry for packed VQs is written last so the guest
-+         * doesn't see invalid descriptors.
-+         */
-+        if (packed && i != vq->used_idx) {
-+            virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
-+        } else if (!packed) {
-+            uelem.id = vq->used_elems[i].index;
-+            uelem.len = vq->used_elems[i].len;
-+            vring_used_write(vq, &uelem, i);
-+        }
-+
-+        vq->used_elems[i].in_order_filled = false;
-+        ndescs += vq->used_elems[i].ndescs;
-+        i += vq->used_elems[i].ndescs;
-+        if (i >= vq->vring.num) {
-+            i -= vq->vring.num;
-+        }
-+    }
-+
-+    if (packed) {
-+        virtqueue_packed_fill_desc(vq, &vq->used_elems[vq->used_idx], 0, true);
-+        vq->used_idx += ndescs;
-+        if (vq->used_idx >= vq->vring.num) {
-+            vq->used_idx -= vq->vring.num;
-+            vq->used_wrap_counter ^= 1;
-+            vq->signalled_used_valid = false;
-+        }
-+    } else {
-+        /* Make sure buffer is written before we update index. */
-+        smp_wmb();
-+        new = old + ndescs;
-+        vring_used_idx_set(vq, new);
-+        if (unlikely((int16_t)(new - vq->signalled_used) <
-+                     (uint16_t)(new - old))) {
-+            vq->signalled_used_valid = false;
-+        }
-+    }
-+    vq->inuse -= ndescs;
 +}
 +
- void virtqueue_flush(VirtQueue *vq, unsigned int count)
- {
-     if (virtio_device_disabled(vq->vdev)) {
-@@ -1030,7 +1097,9 @@ void virtqueue_flush(VirtQueue *vq, unsigned int count)
-         return;
-     }
+ static void
+ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+                     uint32_t uart_irq)
+@@ -411,6 +435,14 @@ static void build_dsdt(GArray *table_data,
  
--    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-+    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
-+        virtqueue_ordered_flush(vq);
-+    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-         virtqueue_packed_flush(vq, count);
-     } else {
-         virtqueue_split_flush(vq, count);
+     socket_count = riscv_socket_count(ms);
+ 
++    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
++        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_PLIC].base,
++                                 memmap[VIRT_PLIC].size, "RSCV0001");
++    } else {
++        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_APLIC_S].base,
++                                 memmap[VIRT_APLIC_S].size, "RSCV0002");
++    }
++
+     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
+ 
+     if (socket_count == 1) {
 -- 
 MST
 
