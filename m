@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292E2C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E98C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrk5-0004DD-1s; Mon, 22 Jul 2024 08:02:13 -0400
+	id 1sVrk0-0003h3-RH; Mon, 22 Jul 2024 08:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjS-0000to-UV
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjR-0006ca-AB
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649692;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Do2mT8dvAEeD4SVkrarJHyrbkBSoqOxoGbUZB5E1UEc=;
- b=Ld2/FU+7vh95Xc4jH1dIciqI6WdwNedoyK8yl7GIqppGi31gDQqvu5e51KPWelS99YbU2D
- twfYaP8OD37UnmVWf3VX1E24JysZiJ31b9U7iEMkEUbHdFRnZzgCGPx0g+tYTm5nopjKjv
- iTaSI6G6US9vGEuphp9/Rv+3Qp6Ul1A=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-pjC0wl9SNr6XGX4Y_Ws44w-1; Mon,
- 22 Jul 2024 08:01:29 -0400
-X-MC-Unique: pjC0wl9SNr6XGX4Y_Ws44w-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91E76190599A; Mon, 22 Jul 2024 12:01:21 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.179])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B27251955DC8; Mon, 22 Jul 2024 12:01:01 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: [PULL 12/12] target/s390x: filter deprecated properties based on
- model expansion type
-Date: Mon, 22 Jul 2024 14:00:26 +0200
-Message-ID: <20240722120026.675449-13-thuth@redhat.com>
-In-Reply-To: <20240722120026.675449-1-thuth@redhat.com>
-References: <20240722120026.675449-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVrj9-00085d-Rg
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:23 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVrj7-0006Z1-3p
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:14 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-449f23df593so20847001cf.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721649671; x=1722254471; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8Fln7ND/XFf9546dWeieHTYfFN5qdhIFy3sUae7oFtY=;
+ b=gtqVW0p3Mkr8dnfq7EpeG5EoLFkWusASy6Wjn3ny5G7GdUkNgpdws9R9IuacNCLk/f
+ EWgMEKTUugTFkHJaYXcXDNUuq1EPMYBlNHIgC6sbtHhws2rGY6CSzsGmXMP3m+iL+P2O
+ 2Wh2gZXkZwEqZVX7QH+ZyxdgkBWR8MwNfWQyCPNfdgI3euVEYncprBuYT6U1/IlZt8BG
+ RrNV4Z5TQVsyQGGKuo+H53GY1e8KIqt9hXn2Y1eR70VpLWF+O8wCk3Yx2ihru5MiP+pg
+ Owb2rVw7KFqlwK80YNWI7hbj8TDL1CmtiDSgdUrAZzKcmiNTqeBvPl7wm6x5Ym5VzPJ6
+ 84tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721649671; x=1722254471;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8Fln7ND/XFf9546dWeieHTYfFN5qdhIFy3sUae7oFtY=;
+ b=aven6r0kB+VR5fCstUu/hpP3ucO9D3oA5i2DYtu5xSTLjeBTn4Hc/jcKyfO4G/7YkX
+ XCdzLhMRhhikNzk1UTaZajbyMYyqwUuTj0jyVJtgLAtIMXU0Q5T2JyndIV0ERorbettE
+ KxLu1Ij7DqLLCahKijgccjZGqsRcvjWsih2ZSxhM2quvvVBLonxPgF1/LAytZloR8kfq
+ o8bTTTB2n/MXep+KDFVn66/6IZa++n7ZwrO0Is4F0aIEvl5CnO/GfE7RybmViK/NVEw4
+ LPEBimwgAEzSwr75BTsILYgu8D8eWHIwwUK33uT/hP3jJkRXoA+ZDKZBVvG1p8YrwcAy
+ 5MZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkyIzdgCVuNdyn4RtOFXYz1/VMN5VvcTFZaoYFdKS7aiPOuFtGvbMTP96Q0UjFRZBhO+RQUTmjLvf3u9APIklENAS2DRA=
+X-Gm-Message-State: AOJu0YxuhqU88bXmC6fEzlAYf43qZ8Fv/b1MdhJHx4AS7ufnh1a8dVtY
+ w0fVNzHRrcU26uMhg1gxnjMG7toH3gaPSszj9caUvVd14/AdgOsJN7lrJ5WN5ogS5xRfabywcVR
+ fMlREYXhssrX63E5YRkMAUwOhP5Of5+AM
+X-Google-Smtp-Source: AGHT+IHP1cSd6E9heOxhPOyiv6+Qx4G3corQtqt0GjtY0XKv7K7eaHeEZLtQnev++yuGsUev+n4MKdccFw3g8amqIpM=
+X-Received: by 2002:a05:622a:1193:b0:447:f211:43f2 with SMTP id
+ d75a77b69052e-44fa5261984mr107033441cf.12.1721649671428; Mon, 22 Jul 2024
+ 05:01:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <172150520664.2040.13953223569736513482-0@git.sr.ht>
+ <CAJ+F1CJrhUD5wyQDDauoTY=hok0BM7hUx99+5mK4tC4YkhtM4g@mail.gmail.com>
+ <CAAiTLFVv8_i4ucbRQOSi9=ARz7kPzV--8HNzZ05zoeKvuOkt5w@mail.gmail.com>
+In-Reply-To: <CAAiTLFVv8_i4ucbRQOSi9=ARz7kPzV--8HNzZ05zoeKvuOkt5w@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 22 Jul 2024 16:00:59 +0400
+Message-ID: <CAJ+F1CLGQzp-CpNVZZx8w4bi9NLUc3Q+-ReOO7C8xjNxKpQhyQ@mail.gmail.com>
+Subject: Re: [PATCH qemu] ui/gtk: Reuse input event slots for GdkEventTouch
+To: Sergio Lopez Pascual <slp@redhat.com>
+Cc: "~katharine_chui" <kwchuiaa@connect.ust.hk>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000017e211061dd4cd13"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,99 +91,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Collin Walling <walling@linux.ibm.com>
+--00000000000017e211061dd4cd13
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Currently, there is no way to execute the query-cpu-model-expansion
-command to retrieve a comprehenisve list of deprecated properties, as
-the result is dependent per-model. To enable this, the expansion output
-is modified as such:
+Hi
 
-When reporting a "full" CPU model, show the *entire* list of deprecated
-properties regardless if they are supported on the model. A full
-expansion outputs all known CPU model properties anyway, so it makes
-sense to report all deprecated properties here too.
+On Mon, Jul 22, 2024 at 3:58=E2=80=AFPM Sergio Lopez Pascual <slp@redhat.co=
+m> wrote:
 
-This allows management apps to query a single model (e.g. host) to
-acquire the full list of deprecated properties.
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+>
+> > Hi
+> >
+> > Adding Sergio in CC, who wrote that code. I don't have means to test it=
+,
+> > which also limits my understanding and ability to check this.
+> >
+> > On Sat, Jul 20, 2024 at 11:58=E2=80=AFPM ~katharine_chui <
+> katharine_chui@git.sr.ht>
+> > wrote:
+> >
+> >> From: Katharine Chui <kwchuiaa@connect.ust.hk>
+> >>
+> >> There seems to be no guarantee as to how GdkEventTouch.sequence
+> >> would progress https://docs.gtk.org/gdk3/struct.EventTouch.html
+> >>
+> >>
+> > True, we also abuse the internal implementation which stores low intege=
+rs
+> > in the sequence pointer.
+> >
+> > In the case of steam gamescope session, touch input would
+> >> increment the number every touch, resulting in all touch inputs
+> >> after the 10th touch to get dropped
+> >>
+> >> ...
+> >> qemu: warning: Unexpected touch slot number:  10 >=3D 10
+> >> qemu: warning: Unexpected touch slot number:  11 >=3D 10
+> >> qemu: warning: Unexpected touch slot number:  12 >=3D 10
+> >> qemu: warning: Unexpected touch slot number:  13 >=3D 10
+> >> qemu: warning: Unexpected touch slot number:  14 >=3D 10
+> >> ...
+> >>
+> >> Reuse the slots on gtk to avoid that
+> >>
+> >
+> > But doing modulo like this, there is a chance of conflict with already
+> used
+> > slots.
+> >
+> > Maybe it's time for a better gtk implementation which would handle a
+> proper
+> > sequence pointer to slot mapping.
+>
+> The problem with slots vs. sequences is that, from what I can see,
+> there's not way to obtain the slot number from EventTouch, which makes
+> me thing we're a little to high in the abstraction layer to emulate
+> multi-touch properly. And with GTK4 it seems to be even worse, because
+> it tries harder to process gestures on its own (we need them to be
+> processed by the guest instead).
+>
+> Under some compositors, we were lucky enough that indeed slots =3D=3D
+> sequences, so we could actually pass those events as that and have the
+> guest process and recognize simple gestures (i.e. pinching) properly.
+>
+> The "right" solution would be finding a way to operate at a lower level
+> than what EventTouch provides us today, but I don't know how feasible is
+> that from within the limits of the ui/gtk3.c.
+>
+> In case that's not possible, the modulo workaround is probably as good
+> as we can get.
+>
 
-Additionally, when reporting a "static" CPU model, the command will
-only show deprecated properties that are a subset of the model's
-*enabled* properties. This is more accurate than how the query was
-handled before, which blindly reported deprecated properties that
-were never otherwise introduced for certain models.
+Can't we map the sequence pointer to a (reusable) counter? So up to
+max-slots sequences could be mapped uniquely and we would reject events
+that do not fit within max-slots.
 
-Acked-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Jiri Denemark <jdenemar@redhat.com>
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
-Message-ID: <20240719181741.35146-1-walling@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- qapi/machine-target.json         |  5 +++--
- target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
- 2 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 7edb876b5c..a552e2b0ce 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -21,8 +21,9 @@
- # @props: a dictionary of QOM properties to be applied
- #
- # @deprecated-props: a list of properties that are flagged as deprecated
--#     by the CPU vendor.  These props are a subset of the full model's
--#     definition list of properties. (since 9.1)
-+#     by the CPU vendor.  These properties are either a subset of the
-+#     properties enabled on the CPU model, or a set of properties
-+#     deprecated across all models for the architecture.
- #
- # Since: 2.8
- ##
-diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-index 977fbc6522..94dd798b4c 100644
---- a/target/s390x/cpu_models_sysemu.c
-+++ b/target/s390x/cpu_models_sysemu.c
-@@ -174,11 +174,15 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-                                 bool delta_changes)
- {
-     QDict *qdict = qdict_new();
--    S390FeatBitmap bitmap;
-+    S390FeatBitmap bitmap, deprecated;
- 
-     /* always fallback to the static base model */
-     info->name = g_strdup_printf("%s-base", model->def->name);
- 
-+    /* features flagged as deprecated */
-+    bitmap_zero(deprecated, S390_FEAT_MAX);
-+    s390_get_deprecated_features(deprecated);
-+
-     if (delta_changes) {
-         /* features deleted from the base feature set */
-         bitmap_andnot(bitmap, model->def->base_feat, model->features,
-@@ -193,6 +197,9 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-         if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
-             s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
-         }
-+
-+        /* deprecated features that are a subset of the model's enabled features */
-+        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
-     } else {
-         /* expand all features */
-         s390_feat_bitmap_to_ascii(model->features, qdict,
-@@ -207,12 +214,7 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-         info->props = QOBJECT(qdict);
-     }
- 
--    /* features flagged as deprecated */
--    bitmap_zero(bitmap, S390_FEAT_MAX);
--    s390_get_deprecated_features(bitmap);
--
--    bitmap_and(bitmap, bitmap, model->def->full_feat, S390_FEAT_MAX);
--    s390_feat_bitmap_to_ascii(bitmap, &info->deprecated_props, list_add_feat);
-+    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
-     info->has_deprecated_props = !!info->deprecated_props;
- }
- 
--- 
-2.45.2
+--=20
+Marc-Andr=C3=A9 Lureau
 
+--00000000000017e211061dd4cd13
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 22, 2024 at 3:58=E2=80=
+=AFPM Sergio Lopez Pascual &lt;<a href=3D"mailto:slp@redhat.com">slp@redhat=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com=
+" target=3D"_blank">marcandre.lureau@gmail.com</a>&gt; writes:<br>
+<br>
+&gt; Hi<br>
+&gt;<br>
+&gt; Adding Sergio in CC, who wrote that code. I don&#39;t have means to te=
+st it,<br>
+&gt; which also limits my understanding and ability to check this.<br>
+&gt;<br>
+&gt; On Sat, Jul 20, 2024 at 11:58=E2=80=AFPM ~katharine_chui &lt;<a href=
+=3D"mailto:katharine_chui@git.sr.ht" target=3D"_blank">katharine_chui@git.s=
+r.ht</a>&gt;<br>
+&gt; wrote:<br>
+&gt;<br>
+&gt;&gt; From: Katharine Chui &lt;<a href=3D"mailto:kwchuiaa@connect.ust.hk=
+" target=3D"_blank">kwchuiaa@connect.ust.hk</a>&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; There seems to be no guarantee as to how GdkEventTouch.sequence<br=
+>
+&gt;&gt; would progress <a href=3D"https://docs.gtk.org/gdk3/struct.EventTo=
+uch.html" rel=3D"noreferrer" target=3D"_blank">https://docs.gtk.org/gdk3/st=
+ruct.EventTouch.html</a><br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt; True, we also abuse the internal implementation which stores low integ=
+ers<br>
+&gt; in the sequence pointer.<br>
+&gt;<br>
+&gt; In the case of steam gamescope session, touch input would<br>
+&gt;&gt; increment the number every touch, resulting in all touch inputs<br=
+>
+&gt;&gt; after the 10th touch to get dropped<br>
+&gt;&gt;<br>
+&gt;&gt; ...<br>
+&gt;&gt; qemu: warning: Unexpected touch slot number:=C2=A0 10 &gt;=3D 10<b=
+r>
+&gt;&gt; qemu: warning: Unexpected touch slot number:=C2=A0 11 &gt;=3D 10<b=
+r>
+&gt;&gt; qemu: warning: Unexpected touch slot number:=C2=A0 12 &gt;=3D 10<b=
+r>
+&gt;&gt; qemu: warning: Unexpected touch slot number:=C2=A0 13 &gt;=3D 10<b=
+r>
+&gt;&gt; qemu: warning: Unexpected touch slot number:=C2=A0 14 &gt;=3D 10<b=
+r>
+&gt;&gt; ...<br>
+&gt;&gt;<br>
+&gt;&gt; Reuse the slots on gtk to avoid that<br>
+&gt;&gt;<br>
+&gt;<br>
+&gt; But doing modulo like this, there is a chance of conflict with already=
+ used<br>
+&gt; slots.<br>
+&gt;<br>
+&gt; Maybe it&#39;s time for a better gtk implementation which would handle=
+ a proper<br>
+&gt; sequence pointer to slot mapping.<br>
+<br>
+The problem with slots vs. sequences is that, from what I can see,<br>
+there&#39;s not way to obtain the slot number from EventTouch, which makes<=
+br>
+me thing we&#39;re a little to high in the abstraction layer to emulate<br>
+multi-touch properly. And with GTK4 it seems to be even worse, because<br>
+it tries harder to process gestures on its own (we need them to be<br>
+processed by the guest instead).<br>
+<br>
+Under some compositors, we were lucky enough that indeed slots =3D=3D<br>
+sequences, so we could actually pass those events as that and have the<br>
+guest process and recognize simple gestures (i.e. pinching) properly.<br>
+<br>
+The &quot;right&quot; solution would be finding a way to operate at a lower=
+ level<br>
+than what EventTouch provides us today, but I don&#39;t know how feasible i=
+s<br>
+that from within the limits of the ui/gtk3.c.<br>
+<br>
+In case that&#39;s not possible, the modulo workaround is probably as good<=
+br>
+as we can get.<br clear=3D"all"></blockquote><div><br></div><div>Can&#39;t =
+we map the sequence pointer to a (reusable) counter? So up to max-slots seq=
+uences could be mapped uniquely and we would reject events that do not fit =
+within max-slots.</div><div> <br></div></div><br><span class=3D"gmail_signa=
+ture_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-=
+Andr=C3=A9 Lureau<br></div></div>
+
+--00000000000017e211061dd4cd13--
 
