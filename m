@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9154C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC96C3DA63
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgmR-0007yZ-T4; Sun, 21 Jul 2024 20:19:55 -0400
+	id 1sVgkf-00075M-Ma; Sun, 21 Jul 2024 20:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglJ-00024d-Jo
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkd-0006wf-Nb
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglG-0005vo-FP
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkc-0005pb-AY
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607521;
+ s=mimecast20190719; t=1721607481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qrDoyOU8aLoqXDosKSDaANOTDQMMjAFfwW6ZQlvyVxk=;
- b=ZJOPUbI+drLGKe1cL/rmFS01zhQon5KKovKfmTQasewl07kG2M/rpnftvU8G8VOrC+iN7Q
- oo3RW7y6Ud6Wdb7HnXDZBswv2DtscrAonCZj2rzzXB9R2C650qAfKWxl2yxGwUr+VL2bBg
- fqTmQns615FfJoCPyWm9LvAquMWT4Sc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+eij6Bxq47w2bciZE/Rv+DzW/akdlQrWlADFCMstsmc=;
+ b=R2rOPGcDnMvlQE4m6kpIPBQMVCtNFZFbHv61HpLwIFSJeZ53sj39CgvFj0FnBzJWyIzIDs
+ SvKbWP0bAquMm/3EN2BhOOGscKbchSKM2Hkf2UbfzHkyadFja6V3MGBYDprlC9P4paNImK
+ KJvJDQxKk/i+r06SIIKMpTgv2yx29EY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-DOjRHeDHMGGq2GkFQDRyvg-1; Sun, 21 Jul 2024 20:18:38 -0400
-X-MC-Unique: DOjRHeDHMGGq2GkFQDRyvg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-369bf135b49so665350f8f.0
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:38 -0700 (PDT)
+ us-mta-519-UPG4eHjlMLegMQ8l1PYRUQ-1; Sun, 21 Jul 2024 20:18:00 -0400
+X-MC-Unique: UPG4eHjlMLegMQ8l1PYRUQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42668857c38so27734975e9.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607517; x=1722212317;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qrDoyOU8aLoqXDosKSDaANOTDQMMjAFfwW6ZQlvyVxk=;
- b=UuBZUH3BbKmqDdd8g9QD/toeFje772BEZ/lg6vux4d4hJvrRbasa6VlBae2xucNewg
- DYPoWr0yJhGYih6M9tMAFN/ZP9XZPuEPz5t/6/6P5iAzMixU5Iia6/KP90X+qcT/V2sX
- DjzsdgkHgS2HxJJ8zmmfUq3WMYQHGJr3/c0Q0kSfJoSbPnAfZhjvSGJCIHo65k1JZSb8
- NqZ5zJk0pJA5xh+Fyxj5souCIrtUJtOP2ubEs5r1YabtqGrotLv1D6fKqKfLnlrf+QQX
- d6ZAeJrDPpjcOScXbiPaEJ4ZcrP3C0s4hwn+OI8qpkvnmswmgSANg4Vo4aoQ6iW9KIyZ
- 8vqA==
-X-Gm-Message-State: AOJu0Yy61pVvv8m+618ebjeufsT30TZve5Q5wfm2cQrYkGZqiAt187Rz
- nwErf0g4qp8nzSJiSXrufAMMuRJUa8sVCKpYHpW3BenI3HDEuDfaCK1EgZPePCSoORRYTi5SMxz
- DTGJuccnWJLyKRpUjBvqd8lZ8mtxr4zNg6b2mEsNNbBvq24vLQ3T890M0yabN8STTvCoXzjWOLQ
- m8Xp1OA4FuGpBDo79FWss6q49KaMyaKg==
-X-Received: by 2002:a5d:53d0:0:b0:360:728d:8439 with SMTP id
- ffacd0b85a97d-369b66a18camr3956902f8f.2.1721607516836; 
- Sun, 21 Jul 2024 17:18:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoLrhS4w9mdOYGKXhYPKqbrEl4aoz0iTh0xJskX67EREMMdJq5Ff9axOlDY/5bJXnKCUa4Fg==
-X-Received: by 2002:a5d:53d0:0:b0:360:728d:8439 with SMTP id
- ffacd0b85a97d-369b66a18camr3956892f8f.2.1721607516303; 
- Sun, 21 Jul 2024 17:18:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607478; x=1722212278;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+eij6Bxq47w2bciZE/Rv+DzW/akdlQrWlADFCMstsmc=;
+ b=xMcYrEYf+tvs/anh4l9PnLcZHAu2lwQyMVzfbEHs4LFEBAGUzdDl2srYiecOfiPRf8
+ uIyZFF4L+gR6RnSEWx2wRSKGz2AECUvLy+bfxq9vfjZjwCETtyMfYtNMZVubTz/V+NEU
+ OGLsG5QyifaQM/01vJkFXj4g1y7FrOvhmWRbCoCOpA0gcKO06o9dakDfOtcI5Cns7LZe
+ pm7yPY+OoxRMYlFpwEKHsvIpeTfhl2EHJAsY03mpLV9GNjRnw3YHu90bN7g/DXycjmpk
+ 20HUOVgqBh3b/k1CVeRkxvPbcc7Ixs+pQ8E/C7jwqDdZNL6aaDcnhCGIbfybzIBE61AR
+ gdnQ==
+X-Gm-Message-State: AOJu0Yy4UyCK6dHfwzINr6hp9Nk9W/f+juEwgaPyFdPcuSA4D0XK8La7
+ 9EawFTyedHKXr2VrLfXgWcM41M79t52+SIyEdFg0UeTKqT74F5pbG+hfcJwUcIRpIX2N7LOpZgK
+ QfuVi73rePH7R0rh16vgBaYjcMKMEaG+MBuSh5iQRT4CyIOODtuzNV30zKF2dymbuDzDF9U3UXy
+ pNTCQ22N+gnCbn8crL4D5HzkkeZ5+ASg==
+X-Received: by 2002:a05:600c:3ba9:b0:426:647b:1bfc with SMTP id
+ 5b1f17b1804b1-427dc5584d8mr28430685e9.30.1721607478733; 
+ Sun, 21 Jul 2024 17:17:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfAToW3g7nzJrtU6eFvr3vVXZ/4lypIFreDDV7ozbONpqf31axrZlekR03YbUNNpmKEmaeMA==
+X-Received: by 2002:a05:600c:3ba9:b0:426:647b:1bfc with SMTP id
+ 5b1f17b1804b1-427dc5584d8mr28430535e9.30.1721607478233; 
+ Sun, 21 Jul 2024 17:17:58 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ced33sm7053287f8f.86.2024.07.21.17.18.35
+ 5b1f17b1804b1-427d692998csm106210135e9.32.2024.07.21.17.17.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:35 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:34 -0400
+ Sun, 21 Jul 2024 17:17:57 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:56 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Subject: [PULL 49/63] hw/vfio/common: Add vfio_listener_region_del_iommu
- trace event
-Message-ID: <82679f515adbd6ebca1908042d873be31989764d.1721607331.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 32/63] pcie_sriov: Check PCI Express for SR-IOV PF
+Message-ID: <fe70e4c53e4513ee5a536a84f7ccdfe64a72fef4.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -106,57 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Trace when VFIO gets notified about the deletion of an IOMMU MR.
-Also trace the name of the region in the add_iommu trace message.
+SR-IOV requires PCI Express.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20240716094619.1713905-6-eric.auger@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240715-sriov-v5-4-3f5539093ffc@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/vfio/common.c     | 3 ++-
- hw/vfio/trace-events | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ hw/pci/pcie_sriov.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 6d15b36e0b..cfc44a4569 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -599,7 +599,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
-         IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-         int iommu_idx;
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 6c79658b4c..15a4aac1f4 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -42,6 +42,11 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     uint8_t *cfg = dev->config + offset;
+     uint8_t *wmask;
  
--        trace_vfio_listener_region_add_iommu(iova, end);
-+        trace_vfio_listener_region_add_iommu(section->mr->name, iova, end);
-         /*
-          * FIXME: For VFIO iommu types which have KVM acceleration to
-          * avoid bouncing all map/unmaps through qemu this way, this
-@@ -725,6 +725,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
-     if (memory_region_is_iommu(section->mr)) {
-         VFIOGuestIOMMU *giommu;
- 
-+        trace_vfio_listener_region_del_iommu(section->mr->name);
-         QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
-             if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
-                 giommu->n.start == section->offset_within_region) {
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index e16179b507..98bd4dccea 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -95,7 +95,8 @@ vfio_region_read(char *name, int index, uint64_t addr, unsigned size, uint64_t d
- vfio_iommu_map_notify(const char *op, uint64_t iova_start, uint64_t iova_end) "iommu %s @ 0x%"PRIx64" - 0x%"PRIx64
- vfio_listener_region_skip(const char *name, uint64_t start, uint64_t end) "SKIPPING %s 0x%"PRIx64" - 0x%"PRIx64
- vfio_spapr_group_attach(int groupfd, int tablefd) "Attached groupfd %d to liobn fd %d"
--vfio_listener_region_add_iommu(uint64_t start, uint64_t end) "region_add [iommu] 0x%"PRIx64" - 0x%"PRIx64
-+vfio_listener_region_add_iommu(const char* name, uint64_t start, uint64_t end) "region_add [iommu] %s 0x%"PRIx64" - 0x%"PRIx64
-+vfio_listener_region_del_iommu(const char *name) "region_del [iommu] %s"
- vfio_listener_region_add_ram(uint64_t iova_start, uint64_t iova_end, void *vaddr) "region_add [ram] 0x%"PRIx64" - 0x%"PRIx64" [%p]"
- vfio_known_safe_misalignment(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
- vfio_listener_region_add_no_dma_map(const char *name, uint64_t iova, uint64_t size, uint64_t page_size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" is not aligned to 0x%"PRIx64" and cannot be mapped for DMA"
++    if (!pci_is_express(dev)) {
++        error_setg(errp, "PCI Express is required for SR-IOV PF");
++        return false;
++    }
++
+     if (pci_is_vf(dev)) {
+         error_setg(errp, "a device cannot be both an SR-IOV PF and a VF");
+         return false;
 -- 
 MST
 
