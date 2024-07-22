@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F18C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E5FC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqq5-0005Uc-Qy; Mon, 22 Jul 2024 07:04:21 -0400
+	id 1sVqqA-0005os-Mw; Mon, 22 Jul 2024 07:04:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq4-0005T6-0G
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:20 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1sVqq9-0005i0-0z
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:25 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq2-0002RB-48
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:19 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5a15692b6f6so3395112a12.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
+ id 1sVqq7-0002S3-Ct
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:24 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2ffc34431so1360469a12.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646256; x=1722251056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721646261; x=1722251061; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1UxZeJVXfh506tEb3223GmpHqSZOGPy9dFtloKHCAl0=;
- b=DmUZzPMYBUaXr++d7/FNchIF+2GzAONswbftFjgg2nJtyMwKspeCaVipPxBK2LbTPD
- 8KSNsvcWHqoPPuLHyW37aq7UCiTezGpu+vMnc2wuvQs1jovzeysAxi53NY52Ty/thhX7
- gm8llfSQD0t5y0Dqy2ODrBfsF5ryNyKwdcaCvrYhb4MZDZM5XTLq6QJCPfLF4DYd5KaG
- f8ntZUbPNvf4fcDMmPADSagdd5obrp/hqmOpkdIr+jA3Yn94CxtuPrQ1MP3/5ni241iS
- 9m4dV3ZmDCbnrYky0jy481ZbQ1i4FLA2r2g5M+aah3CmkogUoXbpngem7KRYAKDksplN
- xH9w==
+ bh=6Bff66en4q3ciCjIte8eGShr6vFbC86/IAqQsdiX7yI=;
+ b=Y6pzBmek71k0omMZ7EkLieRtQ76+lwiCBDt7YBOgo+0eC5CTZfkA0+RKUu+ZiJ+jko
+ d2rW69W0qddiSEW6II5vl1YY/UiUBYmVb36IoSf+IFaGTvPYmDXxMo10nK4IVQdx/lXf
+ dAIyW6XP/791XE8sWS+6r6KgQNEnzxP1jSOefaoam9ezHtC/Ltbb7FRL+ysJKR7+w62O
+ mwDGUF6NJ8ORdscof6VSl8TPGnviGNlV9FR658JbhVkoCsCJfBitepYLM2vqbhqzpZ+5
+ EZ6cG+UcT7dqt9INPwXY2NVtyvYPm/a8LlKky8bYTu/lVcNpcBmP24lblKzysckX/dje
+ Tyjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646256; x=1722251056;
+ d=1e100.net; s=20230601; t=1721646261; x=1722251061;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1UxZeJVXfh506tEb3223GmpHqSZOGPy9dFtloKHCAl0=;
- b=mu2UYkuojyvdy+NmEkZpDEe95sbnFHcuKmiszhlMF8jmOn9IVI1HHmTTTTdY+JN1uS
- rN5AvywOx4emm8LRCehIgxTVVvP6g2iEODYjVyHzUO47mxnFaxe/7EqMw599LD3Wm5fy
- bg+hVYRCdJDaLEX9FTU2UoMLzdOsyk54wVhM6iurJxVNjPauEpOJw6fCIVlDeK8R/3K0
- Dbfj/fjLtC0/jUTxudzEjTihsRs5pL5O6Q9QYpiHi/Mq/p8d1m5iQ4kP1c/v67LuKY95
- +z3Lr+6hRBGGUS/kEWR0koUe+r0/EbHZYldDom7ey7fHC96E/k9/zVnhGANtQk4FIanI
- duOA==
-X-Gm-Message-State: AOJu0Yxw/c+W7SU5a1QKQDfTTesnRnoWqD0G76A+EjN7WDLSutSdNhuU
- RR5w7DPInCirOwpvA4c2GoQPk6WlgN/zjQzhbERpfBJDvTQLNZ1C/QLAA0u+cqk=
-X-Google-Smtp-Source: AGHT+IHM2nvW7nHuvQE2tzGuvgDxxAdwRrtEqsHSlgPTepHdvcKBBbYQzAtfFWLT2vODC8K/iHo5pQ==
-X-Received: by 2002:a17:907:940e:b0:a72:6b08:ab24 with SMTP id
- a640c23a62f3a-a7a4bfa3dcdmr451066366b.14.1721646255614; 
- Mon, 22 Jul 2024 04:04:15 -0700 (PDT)
+ bh=6Bff66en4q3ciCjIte8eGShr6vFbC86/IAqQsdiX7yI=;
+ b=akjfgD5NkINjtMBcJnwfF3aCdoUXRvtSDAYwp7V3YGjDsH8vH8ZP5mAsb47r9u3dT/
+ 53QvJlGCifltRQGH3N443TQ/YV9Vp/8PN6HSkVuwOAqYyA/zA66J1q8yZlm8vNtVlo0V
+ Rod8SgipD4zqpodxeSv+8kKp7w1yg2V0tazN+fl1hW69KThAdM8/cy9MEZqN+eL5KbmJ
+ TiAAwPYl8ZDt8wes7svh3y7uEkIUWbCJBueYI29jLhOIbxbznnf3/a7T99SrabnAX+E/
+ qh5qMZTicOdxU2kdeCUhI5l8kQN4MNTi8q41FcKSS2ImJxPgGBMIv+Y2uTtx50xI9Rbm
+ FA4A==
+X-Gm-Message-State: AOJu0YyLrgJRde4lfcG7aAkIVcYvtCubspTd3pGd236+yLVUs7bevNeb
+ mv49vUrmKPpi8mNK9K/VND9ilazoRUUWAzcm/nYlzdIauKhutyZvm7E7IP1ClOk=
+X-Google-Smtp-Source: AGHT+IGvIaqImjfOHU4Cznapr8tkFtilw7FTYVC4J3FFCgz7ZWLVcGqUbRVC94rcLHdJxHCfnFOONA==
+X-Received: by 2002:a05:6402:3590:b0:5a1:f9bc:7f13 with SMTP id
+ 4fb4d7f45d1cf-5a479f4fe93mr6178268a12.22.1721646260687; 
+ Mon, 22 Jul 2024 04:04:20 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c95088fsm406324566b.212.2024.07.22.04.04.14
+ 4fb4d7f45d1cf-5a7344dd630sm2232918a12.54.2024.07.22.04.04.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:04:14 -0700 (PDT)
+ Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A57DC5F8FC;
- Mon, 22 Jul 2024 12:04:13 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 400CF5FA03;
+ Mon, 22 Jul 2024 12:04:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [PULL 01/16] testing: bump to latest libvirt-ci
-Date: Mon, 22 Jul 2024 12:03:58 +0100
-Message-Id: <20240722110413.118418-2-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 07/16] plugins/execlog.c: correct dump of registers values
+Date: Mon, 22 Jul 2024 12:04:04 +0100
+Message-Id: <20240722110413.118418-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
 References: <20240722110413.118418-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,56 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This brings in the latest python mappings for the BSD updates.
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Register values are dumped as 'sz' chunks of two nibbles in the execlog
+plugin, sz was 1 too big.
+
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240620083805.73603-1-frederic.petrot@univ-grenoble-alpes.fr>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240718094523.1198645-2-alex.bennee@linaro.org>
+Message-Id: <20240718094523.1198645-8-alex.bennee@linaro.org>
 
-diff --git a/.gitlab-ci.d/cirrus/freebsd-13.vars b/.gitlab-ci.d/cirrus/freebsd-13.vars
-index 3785afca36..29ab9645f9 100644
---- a/.gitlab-ci.d/cirrus/freebsd-13.vars
-+++ b/.gitlab-ci.d/cirrus/freebsd-13.vars
-@@ -11,6 +11,6 @@ MAKE='/usr/local/bin/gmake'
- NINJA='/usr/local/bin/ninja'
- PACKAGING_COMMAND='pkg'
- PIP3='/usr/local/bin/pip-3.8'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py39-numpy py39-pillow py39-pip py39-sphinx py39-sphinx_rtd_theme py39-tomli py39-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
-+PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache cmocka ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-sphinx py311-sphinx_rtd_theme py311-tomli py311-yaml python3 rpm2cpio sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 xorriso zstd'
- PYPI_PKGS=''
- PYTHON='/usr/local/bin/python3'
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-index 0e9490cebc..789b4601bc 160000
---- a/tests/lcitool/libvirt-ci
-+++ b/tests/lcitool/libvirt-ci
-@@ -1 +1 @@
--Subproject commit 0e9490cebc726ef772b6c9e27dac32e7ae99f9b2
-+Subproject commit 789b4601bce4e01f43fdb6ad4ce5ab4e46674440
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index 2d5895ebed..2a361cecd0 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -51,13 +51,13 @@
-     "pixman",
-     "pkgconf",
-     "png",
--    "py39-numpy",
--    "py39-pillow",
--    "py39-pip",
--    "py39-sphinx",
--    "py39-sphinx_rtd_theme",
--    "py39-tomli",
--    "py39-yaml",
-+    "py311-numpy",
-+    "py311-pillow",
-+    "py311-pip",
-+    "py311-sphinx",
-+    "py311-sphinx_rtd_theme",
-+    "py311-tomli",
-+    "py311-yaml",
-     "python3",
-     "rpm2cpio",
-     "sdl2",
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 371db97eb1..1c1601cc0b 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -101,7 +101,7 @@ static void insn_check_regs(CPU *cpu)
+             GByteArray *temp = reg->last;
+             g_string_append_printf(cpu->last_exec, ", %s -> 0x", reg->name);
+             /* TODO: handle BE properly */
+-            for (int i = sz; i >= 0; i--) {
++            for (int i = sz - 1; i >= 0; i--) {
+                 g_string_append_printf(cpu->last_exec, "%02x",
+                                        reg->new->data[i]);
+             }
 -- 
 2.39.2
 
