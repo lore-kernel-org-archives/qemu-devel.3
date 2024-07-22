@@ -4,64 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F818C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B3FC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVsuV-00009C-N8; Mon, 22 Jul 2024 09:17:03 -0400
+	id 1sVt37-0008Eq-Io; Mon, 22 Jul 2024 09:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sVsuD-0008Sb-Lf
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:16:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVt36-0008Cm-Ck
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:25:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sVsuB-0007bZ-P8
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:16:45 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVt34-0000rF-Eq
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721654201;
+ s=mimecast20190719; t=1721654753;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s5DJJUVbon9TskouPJ1tJwzGjEbnwiy/XcJutS09hwM=;
- b=LxyiUi4uHORy/o/AuJxnmbaqq2c7gD1PPD4oltdnqEpcLbvUglvh2sqK3v/LFGGkWKdHi4
- f/egz1y1+3DSIoPMTnLfZvMkUrgIdn6scYIU9r0aOFqR/ksXsGO7ec9E7Zmcj2rJbOJ0pd
- QT/BGP1OFVZR73LVgnX9clf1vxKCtFY=
+ bh=04tgYp28H6fbQsDrXzcIGR3NEN71W7VaA3H2XpdKMHI=;
+ b=AGjXw1wad1Bgbr0Qoxb0QrlKLWEGW2HLieW7uZz6o2jWdEvwF7p4tjUAh5hQIkF1mCOUY+
+ 0BAalxOzs/8oacyqOLnXIChHpU+/sMXmz/w2/je5bl9QDmvTxuZjhjuuI78S/2pHCR3d4W
+ afxGXSvjugsvZ50axIfXAc27CuXM8LE=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-WUc1m6GQNZGAVb2vmdiPxg-1; Mon,
- 22 Jul 2024 09:16:38 -0400
-X-MC-Unique: WUc1m6GQNZGAVb2vmdiPxg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-t16BuqhTMX6bzZ0XjL_oaw-1; Mon,
+ 22 Jul 2024 09:25:47 -0400
+X-MC-Unique: t16BuqhTMX6bzZ0XjL_oaw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48A4D1944AAD; Mon, 22 Jul 2024 13:16:37 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.102])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 738121932D85; Mon, 22 Jul 2024 13:16:27 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 4/5] crypto: push error reporting into TLS session I/O APIs
-Date: Mon, 22 Jul 2024 14:16:10 +0100
-Message-ID: <20240722131611.2820041-5-berrange@redhat.com>
-In-Reply-To: <20240722131611.2820041-1-berrange@redhat.com>
-References: <20240722131611.2820041-1-berrange@redhat.com>
+ id B2CE71978CF2; Mon, 22 Jul 2024 13:25:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 649091932AA9; Mon, 22 Jul 2024 13:24:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 60CC721E669B; Mon, 22 Jul 2024 15:24:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 1/8] hw/core: Make CPU topology enumeration arch-agnostic
+In-Reply-To: <20240704031603.1744546-2-zhao1.liu@intel.com> (Zhao Liu's
+ message of "Thu, 4 Jul 2024 11:15:56 +0800")
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-2-zhao1.liu@intel.com>
+Date: Mon, 22 Jul 2024 15:24:24 +0200
+Message-ID: <875xsx4l13.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,231 +97,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current TLS session I/O APIs just return a synthetic errno
-value on error, which has been translated from a gnutls error
-value. This looses a large amount of valuable information that
-distinguishes different scenarios.
+One little thing...
 
-Pushing population of the "Error *errp" object into the TLS
-session I/O APIs gives more detailed error information.
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlssession.c         | 47 ++++++++++++++++---------------------
- include/crypto/tlssession.h | 23 ++++++++++++++----
- io/channel-tls.c            | 44 ++++++++++++++--------------------
- 3 files changed, 57 insertions(+), 57 deletions(-)
+> Cache topology needs to be defined based on CPU topology levels. Thus,
+> define CPU topology enumeration in qapi/machine.json to make it generic
+> for all architectures.
+>
+> To match the general topology naming style, rename CPU_TOPO_LEVEL_SMT
+> and CPU_TOPO_LEVEL_PACKAGE to CPU_TOPO_LEVEL_THREAD and
+> CPU_TOPO_LEVEL_SOCKET.
+>
+> Also, enumerate additional topology levels for non-i386 arches, and add
+> a CPU_TOPO_LEVEL_DEFAULT to help future smp-cache object de-compatibilize
+> arch-specific cache topology settings.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index 1e98f44e0d..f0076a4add 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -441,23 +441,19 @@ qcrypto_tls_session_set_callbacks(QCryptoTLSSession *session,
- ssize_t
- qcrypto_tls_session_write(QCryptoTLSSession *session,
-                           const char *buf,
--                          size_t len)
-+                          size_t len,
-+                          Error **errp)
- {
-     ssize_t ret = gnutls_record_send(session->handle, buf, len);
- 
-     if (ret < 0) {
--        switch (ret) {
--        case GNUTLS_E_AGAIN:
--            errno = EAGAIN;
--            break;
--        case GNUTLS_E_INTERRUPTED:
--            errno = EINTR;
--            break;
--        default:
--            errno = EIO;
--            break;
-+        if (ret == GNUTLS_E_AGAIN) {
-+            return QCRYPTO_TLS_SESSION_ERR_BLOCK;
-+        } else {
-+            error_setg(errp,
-+                       "Cannot write to TLS channel: %s", gnutls_strerror(ret));
-+            return -1;
-         }
--        ret = -1;
-     }
- 
-     return ret;
-@@ -467,26 +463,23 @@ qcrypto_tls_session_write(QCryptoTLSSession *session,
- ssize_t
- qcrypto_tls_session_read(QCryptoTLSSession *session,
-                          char *buf,
--                         size_t len)
-+                         size_t len,
-+                         bool gracefulTermination,
-+                         Error **errp)
- {
-     ssize_t ret = gnutls_record_recv(session->handle, buf, len);
- 
-     if (ret < 0) {
--        switch (ret) {
--        case GNUTLS_E_AGAIN:
--            errno = EAGAIN;
--            break;
--        case GNUTLS_E_INTERRUPTED:
--            errno = EINTR;
--            break;
--        case GNUTLS_E_PREMATURE_TERMINATION:
--            errno = ECONNABORTED;
--            break;
--        default:
--            errno = EIO;
--            break;
-+        if (ret == GNUTLS_E_AGAIN) {
-+            return QCRYPTO_TLS_SESSION_ERR_BLOCK;
-+        } else if ((ret == GNUTLS_E_PREMATURE_TERMINATION) &&
-+                   gracefulTermination){
-+            return 0;
-+        } else {
-+            error_setg(errp,
-+                       "Cannot read from TLS channel: %s", gnutls_strerror(ret));
-+            return -1;
-         }
--        ret = -1;
-     }
- 
-     return ret;
-diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
-index 571049bd0e..291e602540 100644
---- a/include/crypto/tlssession.h
-+++ b/include/crypto/tlssession.h
-@@ -107,6 +107,7 @@
- 
- typedef struct QCryptoTLSSession QCryptoTLSSession;
- 
-+#define QCRYPTO_TLS_SESSION_ERR_BLOCK -2
- 
- /**
-  * qcrypto_tls_session_new:
-@@ -212,6 +213,7 @@ void qcrypto_tls_session_set_callbacks(QCryptoTLSSession *sess,
-  * @sess: the TLS session object
-  * @buf: the plain text to send
-  * @len: the length of @buf
-+ * @errp: pointer to hold returned error object
-  *
-  * Encrypt @len bytes of the data in @buf and send
-  * it to the remote peer using the callback previously
-@@ -221,32 +223,45 @@ void qcrypto_tls_session_set_callbacks(QCryptoTLSSession *sess,
-  * qcrypto_tls_session_get_handshake_status() returns
-  * QCRYPTO_TLS_HANDSHAKE_COMPLETE
-  *
-- * Returns: the number of bytes sent, or -1 on error
-+ * Returns: the number of bytes sent,
-+ * or QCRYPTO_TLS_SESSION_ERR_BLOCK if the write would block,
-+ * or -1 on error.
-  */
- ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
-                                   const char *buf,
--                                  size_t len);
-+                                  size_t len,
-+                                  Error **errp);
- 
- /**
-  * qcrypto_tls_session_read:
-  * @sess: the TLS session object
-  * @buf: to fill with plain text received
-  * @len: the length of @buf
-+ * @gracefulTermination: treat premature termination as graceful EOF
-+ * @errp: pointer to hold returned error object
-  *
-  * Receive up to @len bytes of data from the remote peer
-  * using the callback previously registered with
-  * qcrypto_tls_session_set_callbacks(), decrypt it and
-  * store it in @buf.
-  *
-+ * If @gracefulTermination is true, then a premature termination
-+ * of the TLS session will be treated as indicating EOF, as
-+ * opposed to an error.
-+ *
-  * It is an error to call this before
-  * qcrypto_tls_session_get_handshake_status() returns
-  * QCRYPTO_TLS_HANDSHAKE_COMPLETE
-  *
-- * Returns: the number of bytes received, or -1 on error
-+ * Returns: the number of bytes received,
-+ * or QCRYPTO_TLS_SESSION_ERR_BLOCK if the receive would block,
-+ * or -1 on error.
-  */
- ssize_t qcrypto_tls_session_read(QCryptoTLSSession *sess,
-                                  char *buf,
--                                 size_t len);
-+                                 size_t len,
-+                                 bool gracefulTermination,
-+                                 Error **errp);
- 
- /**
-  * qcrypto_tls_session_check_pending:
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 67b9700006..eab64b0706 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -279,22 +279,17 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-     for (i = 0 ; i < niov ; i++) {
-         ssize_t ret = qcrypto_tls_session_read(tioc->session,
-                                                iov[i].iov_base,
--                                               iov[i].iov_len);
--        if (ret < 0) {
--            if (errno == EAGAIN) {
--                if (got) {
--                    return got;
--                } else {
--                    return QIO_CHANNEL_ERR_BLOCK;
--                }
--            } else if (errno == ECONNABORTED &&
--                       (qatomic_load_acquire(&tioc->shutdown) &
--                        QIO_CHANNEL_SHUTDOWN_READ)) {
--                return 0;
-+                                               iov[i].iov_len,
-+                                               (qatomic_load_acquire(&tioc->shutdown) &
-+                                                QIO_CHANNEL_SHUTDOWN_READ),
-+                                               errp);
-+        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-+            if (got) {
-+                return got;
-+            } else {
-+                return QIO_CHANNEL_ERR_BLOCK;
-             }
--
--            error_setg_errno(errp, errno,
--                             "Cannot read from TLS channel");
-+        } else if (ret < 0) {
-             return -1;
-         }
-         got += ret;
-@@ -321,18 +316,15 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
-     for (i = 0 ; i < niov ; i++) {
-         ssize_t ret = qcrypto_tls_session_write(tioc->session,
-                                                 iov[i].iov_base,
--                                                iov[i].iov_len);
--        if (ret <= 0) {
--            if (errno == EAGAIN) {
--                if (done) {
--                    return done;
--                } else {
--                    return QIO_CHANNEL_ERR_BLOCK;
--                }
-+                                                iov[i].iov_len,
-+                                                errp);
-+        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-+            if (done) {
-+                return done;
-+            } else {
-+                return QIO_CHANNEL_ERR_BLOCK;
-             }
--
--            error_setg_errno(errp, errno,
--                             "Cannot write to TLS channel");
-+        } else if (ret < 0) {
-             return -1;
-         }
-         done += ret;
--- 
-2.45.2
+[...]
+
+> diff --git a/qapi/machine-common.json b/qapi/machine-common.json
+> index fa6bd71d1280..82413c668bdb 100644
+> --- a/qapi/machine-common.json
+> +++ b/qapi/machine-common.json
+> @@ -5,7 +5,7 @@
+>  # See the COPYING file in the top-level directory.
+>  
+>  ##
+> -# = Machines S390 data types
+> +# = Common machine types
+>  ##
+>  
+>  ##
+> @@ -19,3 +19,48 @@
+>  { 'enum': 'CpuS390Entitlement',
+>    'prefix': 'S390_CPU_ENTITLEMENT',
+>    'data': [ 'auto', 'low', 'medium', 'high' ] }
+> +
+> +##
+> +# @CpuTopologyLevel:
+> +#
+> +# An enumeration of CPU topology levels.
+> +#
+> +# @invalid: Invalid topology level.
+> +#
+> +# @thread: thread level, which would also be called SMT level or
+> +#     logical processor level.  The @threads option in
+> +#     SMPConfiguration is used to configure the topology of this
+> +#     level.
+> +#
+> +# @core: core level.  The @cores option in SMPConfiguration is used
+> +#     to configure the topology of this level.
+> +#
+> +# @module: module level.  The @modules option in SMPConfiguration is
+> +#     used to configure the topology of this level.
+> +#
+> +# @cluster: cluster level.  The @clusters option in SMPConfiguration
+> +#     is used to configure the topology of this level.
+> +#
+> +# @die: die level.  The @dies option in SMPConfiguration is used to
+> +#     configure the topology of this level.
+> +#
+> +# @socket: socket level, which would also be called package level.
+> +#     The @sockets option in SMPConfiguration is used to configure
+> +#     the topology of this level.
+> +#
+> +# @book: book level.  The @books option in SMPConfiguration is used
+> +#     to configure the topology of this level.
+> +#
+> +# @drawer: drawer level.  The @drawers option in SMPConfiguration is
+> +#     used to configure the topology of this level.
+> +#
+> +# @default: default level.  Some architectures will have default
+> +#     topology settings (e.g., cache topology), and this special
+> +#     level means following the architecture-specific settings.
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'enum': 'CpuTopologyLevel',
+> +  'prefix': 'CPU_TOPO_LEVEL',
+
+Why set a 'prefix'?
+
+> +  'data': [ 'invalid', 'thread', 'core', 'module', 'cluster',
+> +            'die', 'socket', 'book', 'drawer', 'default' ] }
+
+[...]
 
 
