@@ -4,98 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2285DC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A681C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVuQ9-0000mV-FX; Mon, 22 Jul 2024 10:53:49 -0400
+	id 1sVuU2-0006Je-Ih; Mon, 22 Jul 2024 10:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVuQ2-0000kz-HV
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:53:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sVuTs-0006G3-BX; Mon, 22 Jul 2024 10:57:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVuPy-0001gx-1K
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:53:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721660015;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l0Mf5rgCKchnsAOErpbTgcmp12w8QxTlco4vT6xm1ss=;
- b=b/EP3NSRploj/ENYcGqCGyQX1Zo0zxD2w2c9HIuLhkf6rV3o9IjqnCABsV+k/LwntYvk17
- 3EzkuKPVLdw3tLeA6MmL+Ehh5B5moT+ub6HPT6TuQI7mfmw1kTt4XDC+BCJna9YV7uvkhS
- MWYeo4hH2oQqLccoMv4NviSo2eJhNfk=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522-1Ts6b2-LOeK_yVhQrbaibQ-1; Mon, 22 Jul 2024 10:53:33 -0400
-X-MC-Unique: 1Ts6b2-LOeK_yVhQrbaibQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-79efc957469so540288685a.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:53:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721660009; x=1722264809;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l0Mf5rgCKchnsAOErpbTgcmp12w8QxTlco4vT6xm1ss=;
- b=tYYHnGvSM6Nqxs2mkB5PRa9Vjygy7Q1Zqt0vnGQ/bCFSYcgbE+G14p1jB/VGWE+dWk
- QWPVCm2Ntx3cymOc6uo73vUbhUbnPvtV8JZYWs3uMXSXEpMHPZOjoq4YZ0aF6boOq5FF
- uI6b4mcN2B+sNlaYrcmrt2QJLL6qDeW2el5RIc4E03jCD1ArP87+1cE5cLlXIw4Uy03+
- tMmCS3xG/BuM+jHyAAi1zA0krE3zJ34w6/PaVyCOUtM+YnXTLdh1ZDzzBvgjTDTHWt7E
- CbjhZz4En9lrtDL2BqZd2O97JxwgBeIPb694LzGj4Gpp8MFNH0qBOP8yojA5AMEqji/K
- dp6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYKzmG9Iq40Whp+kasYvbiuhHY0lMG/xZodE7hc2AG9c9v5UrrpehEdTWlVCcu7/CPFgNKxoc901pwHgfb/DTVeqSeVDo=
-X-Gm-Message-State: AOJu0YxWltHzn91pwkiPbW7kC4P80a6Mzj/PVJ1TMHxf4TIIxYQEKzrf
- McIYn4JFfJgavzK3oVFaE76fH+N+cBV+JpfEwjdw2vOVwSjvQ5gVZODDpIuQR/1umTdXjVAlDSO
- M6i06wdlrOqxmC8NftV8VPu4Xhs//LgIHEhTYagdKLAPF8Q6JWIuJ
-X-Received: by 2002:a05:620a:17a3:b0:79f:17da:6444 with SMTP id
- af79cd13be357-7a1a13a88ddmr1271400585a.47.1721660008954; 
- Mon, 22 Jul 2024 07:53:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTMQC404fiBdL45X4xVBfC513xX+p+2uqQOLCFKKLCYbQmELiavFsUR5qgyWT3pnHhv9tPtw==
-X-Received: by 2002:a05:620a:17a3:b0:79f:17da:6444 with SMTP id
- af79cd13be357-7a1a13a88ddmr1271397385a.47.1721660008556; 
- Mon, 22 Jul 2024 07:53:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
- ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a19906038asm365815785a.92.2024.07.22.07.53.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 07:53:28 -0700 (PDT)
-Message-ID: <967952f0-e3bd-4c86-b4a8-4906e6b3e248@redhat.com>
-Date: Mon, 22 Jul 2024 16:53:25 +0200
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sVuTq-0002TZ-H2; Mon, 22 Jul 2024 10:57:40 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MDdhpn012728;
+ Mon, 22 Jul 2024 14:57:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ U+li4814Q9tCvcATyXlLiN6X75BCNwmJCNROeIUF478=; b=oxNhBg9G6+xmdDhX
+ fggPUc+HjAlK9I2oD8NnZz/ICXAaVn+C88R8mVCP28E9EQUVFhSqp/oguVtMhOjj
+ os7nhV2/VzNstgMSaBYFY8hyz5AomY2jppw/AVpW63AnKFnvMgsSaNc87SuQbF5z
+ 6hMS4xFDaxHFGHWJezqK1Q9TW2x6Dn/knMQc5g9O0k+OYLKBTNS1KyhdvVrmSqtJ
+ S5v6ro/PCQ9N/VXHGqWAU2WUFhCiOD0BQD3dUqd78BYA31SCRK2Sy5GmUoDPnsh3
+ NPT7IQT7PHJXKeFh84v3HRistJ2lmJWceBgD5widDOxHqZtvo6rnt6O3/7q/kd3M
+ gdHiPQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gpxhbaaj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:57:33 +0000 (GMT)
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46MEvXLV032628;
+ Mon, 22 Jul 2024 14:57:33 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gpxhbaag-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:57:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46MCGRFa007099; Mon, 22 Jul 2024 14:57:32 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gx72dx6u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 14:57:32 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46MEvTqO14352946
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jul 2024 14:57:31 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7EA9D58055;
+ Mon, 22 Jul 2024 14:57:29 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BB69858061;
+ Mon, 22 Jul 2024 14:57:28 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.147.234]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jul 2024 14:57:28 +0000 (GMT)
+Message-ID: <40cf2370a1838b1aa1e9eb2cfc75a0543ceb45bd.camel@linux.ibm.com>
+Subject: Re: [PATCH 2/2] vfio/ccw: Don't initialize HOST_IOMMU_DEVICE with mdev
+From: Eric Farman <farman@linux.ibm.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ joao.m.martins@oracle.com, chao.p.peng@intel.com, Thomas Huth
+ <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>, "open
+ list:S390 general arch..." <qemu-s390x@nongnu.org>
+Date: Mon, 22 Jul 2024 10:57:28 -0400
+In-Reply-To: <20240722070713.1342711-3-zhenzhong.duan@intel.com>
+References: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
+ <20240722070713.1342711-3-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: WiS15as8IekzDVB7Bs2plpRM5mw9zzXF
+X-Proofpoint-GUID: 1pwDMugAvwBohLEG1Yw7GE3jHpQJj0Kk
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 12/13] vfio/migration: Don't block migration device
- dirty tracking is unsupported
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240719120501.81279-1-joao.m.martins@oracle.com>
- <20240719120501.81279-13-joao.m.martins@oracle.com>
- <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
- <f5d64358-70e3-4217-8376-356c8aaac8ea@oracle.com>
- <1304a8c4-be47-4b47-88dd-328a8f167e54@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <1304a8c4-be47-4b47-88dd-328a8f167e54@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_10,2024-07-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0
+ phishscore=0 mlxscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407220112
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,127 +118,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/19/24 19:26, Joao Martins wrote:
-> On 19/07/2024 15:24, Joao Martins wrote:
->> On 19/07/2024 15:17, Cédric Le Goater wrote:
->>> On 7/19/24 14:05, Joao Martins wrote:
->>>> By default VFIO migration is set to auto, which will support live
->>>> migration if the migration capability is set *and* also dirty page
->>>> tracking is supported.
->>>>
->>>> For testing purposes one can force enable without dirty page tracking
->>>> via enable-migration=on, but that option is generally left for testing
->>>> purposes.
->>>>
->>>> So starting with IOMMU dirty tracking it can use to accomodate the lack of
->>>> VF dirty page tracking allowing us to minimize the VF requirements for
->>>> migration and thus enabling migration by default for those too.
->>>>
->>>> While at it change the error messages to mention IOMMU dirty tracking as
->>>> well.
->>>>
->>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->>>> ---
->>>>    include/hw/vfio/vfio-common.h |  1 +
->>>>    hw/vfio/iommufd.c             |  2 +-
->>>>    hw/vfio/migration.c           | 11 ++++++-----
->>>>    3 files changed, 8 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->>>> index 7e530c7869dc..00b9e933449e 100644
->>>> --- a/include/hw/vfio/vfio-common.h
->>>> +++ b/include/hw/vfio/vfio-common.h
->>>> @@ -299,6 +299,7 @@ int vfio_devices_query_dirty_bitmap(const
->>>> VFIOContainerBase *bcontainer,
->>>>                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
->>>>    int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->>>>                              uint64_t size, ram_addr_t ram_addr, Error **errp);
->>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
->>>>      /* Returns 0 on success, or a negative errno. */
->>>>    bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
->>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->>>> index 7dd5d43ce06a..a998e8578552 100644
->>>> --- a/hw/vfio/iommufd.c
->>>> +++ b/hw/vfio/iommufd.c
->>>> @@ -111,7 +111,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice
->>>> *vbasedev)
->>>>        iommufd_backend_disconnect(vbasedev->iommufd);
->>>>    }
->>>>    -static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->>>>    {
->>>>        return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>>>    }
->>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>>> index 34d4be2ce1b1..63ffa46c9652 100644
->>>> --- a/hw/vfio/migration.c
->>>> +++ b/hw/vfio/migration.c
->>>> @@ -1036,16 +1036,17 @@ bool vfio_migration_realize(VFIODevice *vbasedev,
->>>> Error **errp)
->>>>            return !vfio_block_migration(vbasedev, err, errp);
->>>>        }
->>>>    -    if (!vbasedev->dirty_pages_supported) {
->>>> +    if (!vbasedev->dirty_pages_supported &&
->>>> +        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
->>>
->>>
->>> Some platforms do not have IOMMUFD support and this call will need
->>> some kind of abstract wrapper to reflect dirty tracking support in
->>> the IOMMU backend.
->>>
->>
->> This was actually on purpose because only IOMMUFD presents a view of hardware
->> whereas type1 supporting dirty page tracking is not used as means to 'migration
->> is supported'.
->>
->> The hwpt is nil in type1 and the helper checks that, so it should return false.
->>
-> 
-> Oh wait, maybe you're talking about CONFIG_IOMMUFD=n which I totally didn't
-> consider. Maybe this would be a elegant way to address it? Looks to pass my
-> build with CONFIG_IOMMUFD=n
-> 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 61dd48e79b71..422ad4a5bdd1 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -300,7 +300,14 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase
-> *bcontainer,
->                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
->   int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->                             uint64_t size, ram_addr_t ram_addr, Error **errp);
-> +#ifdef CONFIG_IOMMUFD
->   bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
-> +#else
-> +static inline bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
-> +{
-> +    return false;
-> +}
-> +#endif
-> 
->   /* Returns 0 on success, or a negative errno. */
->   bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-> 
+On Mon, 2024-07-22 at 15:07 +0800, Zhenzhong Duan wrote:
+> mdevs aren't "physical" devices and when asking for backing IOMMU info,
+> it fails the entire provisioning of the guest. Fix that by setting
+> vbasedev->mdev true so skipping HostIOMMUDevice initialization in the
+> presence of mdevs.
 
-hmm, no. You will need to introduce a new Host IOMMU device capability,
-something like :
+Hmm, picking the two commits that Cedric mentioned in his cover-letter repl=
+y [1] doesn't "fail the entire provisioning of the guest" for me.
 
-    HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING,
+Applying this patch on top of that causes the call from vfio_attach_device(=
+) to hiod_legacy_vfio_realize() to be skipped, which seems odd. What am I m=
+issing?
 
-Then, introduce an helper routine to check the capability  :
+[1] https://lore.kernel.org/qemu-devel/4c9a184b-514c-4276-95ca-9ed86623b9a4=
+@redhat.com/
 
-    return hiodc->get_cap( ... HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING...)
-  
-and replace the iommufd_hwpt_dirty_tracking call with it.
-
-Yeah I know, it's cumbersome but it's cleaner !
-
-That's not a major problem in the series. I can address it at the end
-to avoid a resend. First, let's get a R-b on all other patches.
-
-Thanks,
-
-C.
-
+>=20
+> Fixes: 930589520128 ("vfio/iommufd: Implement HostIOMMUDeviceClass::reali=
+ze() handler")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/vfio/ccw.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>=20
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index 1f8e1272c7..70934b01d5 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -675,6 +675,9 @@ static void vfio_ccw_instance_init(Object *obj)
+>      VFIOCCWDevice *vcdev =3D VFIO_CCW(obj);
+>      VFIODevice *vbasedev =3D &vcdev->vdev;
+> =20
+> +    /* CCW device is mdev type device */
+> +    vbasedev->mdev =3D true;
+> +
+>      /*
+>       * All vfio-ccw devices are believed to operate in a way compatible =
+with
+>       * discarding of memory in RAM blocks, ie. pages pinned in the host =
+are
 
 
