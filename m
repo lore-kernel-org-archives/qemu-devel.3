@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB0BC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6EBC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrzz-0002zf-I8; Mon, 22 Jul 2024 08:18:39 -0400
+	id 1sVs25-00034C-CP; Mon, 22 Jul 2024 08:20:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVrzr-0002Sr-HE
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:18:33 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVs23-0002yc-Nm
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:20:47 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVrzo-0001vr-5v
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:18:30 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-52efa9500e0so1826878e87.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:18:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVs20-0002Pb-87
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:20:47 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4266eda81c5so36016835e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721650703; x=1722255503; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721650842; x=1722255642; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nAYQf5D48DFLt9cwFqb/2mZtQgNYOqa+v7g18kjzPNs=;
- b=cz7/zuTyMF3Aj/9B/E9/P7w4TlqHCNFVjdfdgqvN5H+E/ATybImNQwSgJ2/CUSKj6N
- M6pjHhjJHra9yke67xZCvxq45wZEuDGUNqA87bYxsEfi/iUkctItbrs/PUW5u5BqSbib
- Yo8om84vSqrSoYzPiC5i8PKtWg/0TZjbunaS8sUP0uJVJZ3Tz7k94htiY1gOtC2Xi8TM
- 5iYAkA35cjjl4GD5nS2YBeZJKxNMLCYWd88aF5ztqXxw2T9ouUszIWG1CVbSUHcwsxtL
- H2I2TEiT1LncV/3a386787rB7G7Yr4k7nKj8+43MPRnXxSjz7hiQHNFRO8gA6O2pmDBu
- Vsig==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=o3MTmTnf/xuhISk/ITg0IeItLg375WvqZFO4Tlc7y7w=;
+ b=vbFP4J0HOKWmqyp9E4KZOeLK0h1x8xUf8llTInz73gAHWB2VTIghe8TeIds7dtE1zh
+ dsv5lzT8ItwPdqLtplp2oxp5X8sWFAPJhjvCTfYzdBGHZiacPkcJkkOPi4ci3Or74xx6
+ RX7hkXoyY2faNk1g1ecqTXvgqubtX7tCcdAAoQFqcyevSm/lrjyh+TfHUhFzrhnSNySJ
+ OSC4oTG0fmNIt+NZAwBayO1Rx8NqynKA7iKp0N4neMgL082xKQckIL8r6iHsk3aLlRBv
+ SWr9e7Q6uFH69qYxHCf9TyeQy8khiJmRzqU4zvqVp5XddrxociFbrvhYeGkV7qwLVWn0
+ NiuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721650703; x=1722255503;
+ d=1e100.net; s=20230601; t=1721650842; x=1722255642;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nAYQf5D48DFLt9cwFqb/2mZtQgNYOqa+v7g18kjzPNs=;
- b=md5PrTBgoEA0TRe+EncXLajREciRLpdSnfzsReZbl6pQmO4sEcZF9qR7BtQhnB9gsG
- jNqI46L2Y0a0RI+gcrnxCdFeI7wLEq/TUmxKNzigs9OoLP9jl97tk6eX+A7mBESekWEk
- BOAsl0q8UYUxWat9sy9BfKnRHfCn14PI9P2eMx3foRmEZiWBBxmO8WrOvmzDPE4OyD/v
- ZwFQwZtQznAUp2bTRCP4b7LzqehLF6YSViaZsY2MDcsSI0HVhtKavsSkt8L1pKRgmxrM
- /SvmFkMLQa29VSgRGvEuYpLSIpXMSgXKD7GajaXk7jrMRAyorarIfbhYaI0vlhQgPcAs
- Khzw==
+ bh=o3MTmTnf/xuhISk/ITg0IeItLg375WvqZFO4Tlc7y7w=;
+ b=mpICBcjC67ikCSUdnGwNfXvvGVkh3DhzZoOPSHG4JSZxlNJ97mv43Kc6qS/gcI5k4H
+ Lh8X48X0FDUfTqufhChZu4ot2FB/dj6URJ0d6P+tJDsXcfYxRDDW9m1iOE3x/fo+YYES
+ HvHLykx4VLkeTsge5p743lZrlPTBZATK87eTLzOET+r4ut9MVPO75UbnFhGYni/TjN4u
+ +BVCSnbR1V1yeTgidHSk1C+jgWeiFHIynSx0N1HvzReNh3mXzvLqyrQM++XTEYb/nEo3
+ ms5MYheut7Xs0lhvVCa6yIa9OSFIZs309pqxMWAmpGXO3sSeizghaMC8/e3BeXni0Ml5
+ /lOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpSvinZJxmOpz+kLqcwPA/EI7tJWdL9OcjrjytLFzYS0ou3WnuRHytI68PT6KpV8uKZdj3HDsCQWSgQoLHIdnYvauC+tY=
-X-Gm-Message-State: AOJu0Yy+k1hO5y4+goshG6ScUbhK3lf3OvixYsKCd7BmfmiWYd+TRPEy
- +CeVMYiAXASv9o4LeTmPpxoY9F90QjJSbJIgw1YCFCoSGZdP7L9+TjIjce3ff6DyrDBNTw+Eg18
- +
-X-Google-Smtp-Source: AGHT+IEZASNFKQKCHOyyjz2ZCVf21ECbb5vH56YPAH6p7I4MAwKkT4c+xKK7pAAxpL6dIbAySEjWBg==
-X-Received: by 2002:ac2:4e10:0:b0:52e:f4b4:6ec1 with SMTP id
- 2adb3069b0e04-52efb7c847dmr4102432e87.46.1721650702863; 
- Mon, 22 Jul 2024 05:18:22 -0700 (PDT)
+ AJvYcCXw+wPqKoncIrYS+Ut6LNDap+h2jys4E8S5jEPcFV1HZhwrSDyKvw9b3COw222JfetjiWml1v3RZ4ApZH/NpRv2GXARaUo=
+X-Gm-Message-State: AOJu0YzY7GodjVDxh8bj3Awusv804sk1CdgPaER4tAMoWSDWOZCpkcOb
+ w9L/xoF42FTJDyiyx+kug+T3EHupj4vJGIoB6rbQQcgzg4t7xzmI3LK2sTaXI0w=
+X-Google-Smtp-Source: AGHT+IG2IBtz3m+6rkjg28AXNuSrTz5fQoySjI68bBJvVyTYflLZ8M0YpzNJ3volLnKBWSYaqgVgYg==
+X-Received: by 2002:a05:600c:4f47:b0:426:61fc:fc1a with SMTP id
+ 5b1f17b1804b1-427dc515d17mr51610075e9.3.1721650842324; 
+ Mon, 22 Jul 2024 05:20:42 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-52ef5578506sm1207900e87.295.2024.07.22.05.18.21
+ 5b1f17b1804b1-427d2920313sm112804515e9.0.2024.07.22.05.20.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 05:18:22 -0700 (PDT)
-Message-ID: <0450331f-7bf2-4a6b-9503-d3b13229f216@linaro.org>
-Date: Mon, 22 Jul 2024 14:18:19 +0200
+ Mon, 22 Jul 2024 05:20:41 -0700 (PDT)
+Message-ID: <778e6f3e-c4ec-4bef-a936-7dc9d8d5316c@linaro.org>
+Date: Mon, 22 Jul 2024 14:20:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] sparc/ldst_helper: make range overlap check more
- readable
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
- <20240722040742.11513-9-yaoxt.fnst@fujitsu.com>
+Subject: Re: [PATCH 3/3] util/fifo8: Introduce fifo8_change_capacity()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20240719151628.46253-1-philmd@linaro.org>
+ <20240719151628.46253-4-philmd@linaro.org>
+ <e49735e8-1c33-42cb-9181-662a0c010b97@ilande.co.uk>
+ <69df9510-1b1a-434e-bbbe-1df7acf49f58@linaro.org>
+ <CAFEAcA_Ec_P1fNqs6aDK_QnGFDhSapf4btYoM5YjRf_3a4nRPQ@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722040742.11513-9-yaoxt.fnst@fujitsu.com>
+In-Reply-To: <CAFEAcA_Ec_P1fNqs6aDK_QnGFDhSapf4btYoM5YjRf_3a4nRPQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 06:07, Yao Xingtao via wrote:
-> use ranges_overlap() instead of open-coding the overlap check to improve
-> the readability of the code.
+On 22/7/24 13:52, Peter Maydell wrote:
+> On Mon, 22 Jul 2024 at 11:56, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 19/7/24 22:21, Mark Cave-Ayland wrote:
+>>> On 19/07/2024 16:16, Philippe Mathieu-Daudé wrote:
+>>>
+>>>> FIFOs can be resized at runtime. Introduce the
+>>>> fifo8_change_capacity() method to do that.
+>>>> When capacity is changed, the FIFO must be reset.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>    include/qemu/fifo8.h | 10 ++++++++++
+>>>>    util/fifo8.c         |  7 +++++++
+>>>>    2 files changed, 17 insertions(+)
+>>>>
+>>>> diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
+>>>> index c6295c6ff0..9fe0555a24 100644
+>>>> --- a/include/qemu/fifo8.h
+>>>> +++ b/include/qemu/fifo8.h
+>>>> @@ -31,6 +31,16 @@ void fifo8_create(Fifo8 *fifo, uint32_t capacity);
+>>>>    void fifo8_destroy(Fifo8 *fifo);
+>>>> +/**
+>>>> + * fifo8_change_capacity:
+>>>> + * @fifo: struct Fifo8 to change the capacity
+>>>> + * @capacity: new capacity of the FIFO
+>>>> + *
+>>>> + * Change a FIFO capacity to the specified size. The FIFO is reset.
+>>>> + */
+>>>> +
+>>>> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity);
+>>>> +
+>>>>    /**
+>>>>     * fifo8_push:
+>>>>     * @fifo: FIFO to push to
+>>>> diff --git a/util/fifo8.c b/util/fifo8.c
+>>>> index 2925fe5611..c453afd774 100644
+>>>> --- a/util/fifo8.c
+>>>> +++ b/util/fifo8.c
+>>>> @@ -34,6 +34,13 @@ void fifo8_destroy(Fifo8 *fifo)
+>>>>        g_free(fifo->data);
+>>>>    }
+>>>> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity)
+>>>> +{
+>>>> +    fifo->data = g_renew(uint8_t, fifo->data, capacity);
+>>>> +    fifo->capacity = capacity;
+>>>> +    fifo8_reset(fifo);
+>>>> +}
+>>>> +
+>>>>    void fifo8_push(Fifo8 *fifo, uint8_t data)
+>>>>    {
+>>>>        assert(fifo->num < fifo->capacity);
+>>>
+>>> The changes look okay, however I'm a little confused as to why this is
+>>> needed as generally hardware FIFOs are a fixed size? Presumably this is
+>>> related to the PL011 series?
+>>
+>> Indeed, this is to model trying to stay as close as possible to
+>> the datasheet, which states:
+>>
+>>     2.4.3 UART operation
+>>
+>>       Disabling the FIFOs
+>>
+>>         Additionally, you can disable the FIFOs. In this case,
+>>         the transmit and receive sides of the UART have 1-byte
+>>         holding registers (the bottom entry of the FIFOs). The
+>>         overrun bit is set when a word has been received, and
+>>         the previous one was not yet read. In this implementation,
+>>         the FIFOs are not physically disabled, but the flags are
+>>         manipulated to give the illusion of a 1-byte register.
 > 
-> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-> ---
->   target/sparc/ldst_helper.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-> index 2d48e98bf468..d92c9f15934e 100644
-> --- a/target/sparc/ldst_helper.c
-> +++ b/target/sparc/ldst_helper.c
-> @@ -19,6 +19,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/log.h"
-> +#include "qemu/range.h"
->   #include "cpu.h"
->   #include "tcg/tcg.h"
->   #include "exec/helper-proto.h"
-> @@ -240,9 +241,7 @@ static void replace_tlb_1bit_lru(SparcTLBEntry *tlb,
->               if (new_ctx == ctx) {
->                   uint64_t vaddr = tlb[i].tag & ~0x1fffULL;
->                   uint64_t size = 8192ULL << 3 * TTE_PGSIZE(tlb[i].tte);
-> -                if (new_vaddr == vaddr
+> Notice that in the hardware we don't actually resize the FIFO,
+> though -- we just only ever keep one element in it...
 
-Please mention in the patch description why it is safe to remove this
-equality check. With that:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> -                    || (new_vaddr < vaddr + size
-> -                        && vaddr < new_vaddr + new_size)) {
-> +                if (ranges_overlap(new_vaddr, new_size, vaddr, size)) {
->                       DPRINTF_MMU("auto demap entry [%d] %lx->%lx\n", i, vaddr,
->                                   new_vaddr);
->                       replace_tlb_entry(&tlb[i], tlb_tag, tlb_tte, env1);
-
+Yes. IIUC Mark's comment in the PL011 series, we don't need
+this (confusing) method at all:
+https://lore.kernel.org/qemu-devel/4e6b616f-3acc-4130-9b92-1af7fed540da@ilande.co.uk/
 
