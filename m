@@ -4,60 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4011C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683FAC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrk0-0003gb-Pj; Mon, 22 Jul 2024 08:02:08 -0400
+	id 1sVrnv-0008SY-Nw; Mon, 22 Jul 2024 08:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjN-0000Yl-HS
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:32 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sVrni-0007bS-8C
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjL-0006bM-95
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:28 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sVrnf-0007uz-OX
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649685;
+ s=mimecast20190719; t=1721649952;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EjSpN6QaR0ZZqxOK/bmYl/C0IZbF2wTX5yhHiNZlgP8=;
- b=ABQdCamxuS1JF3ip1ROHHO7FCRBww+5STOxmz5JUJb6uRsOf9Se9zgiBzm8xk8RUWO8zGg
- GkfkRgdmA8lj64ZQxtV7jl+PBjNMsO2ED9lh/ys8f1/EI0VDEUh3urT419Rs7B8SE0gDr+
- OLzM67ozDzKMacC3FLIuK/HQHTnspKA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-jZqpIsknN0qTDOYbtXSbXQ-1; Mon,
- 22 Jul 2024 08:01:22 -0400
-X-MC-Unique: jZqpIsknN0qTDOYbtXSbXQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 310851955D4D; Mon, 22 Jul 2024 12:01:18 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.179])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 69F231955DD0; Mon, 22 Jul 2024 12:00:55 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: [PULL 09/12] hw: Fix crash that happens when introspecting scsi-block
- on older machine types
-Date: Mon, 22 Jul 2024 14:00:23 +0200
-Message-ID: <20240722120026.675449-10-thuth@redhat.com>
-In-Reply-To: <20240722120026.675449-1-thuth@redhat.com>
-References: <20240722120026.675449-1-thuth@redhat.com>
+ bh=X4p0LHYIjMjvQI23Lts1WhjklTNehlg506joAY8S7dI=;
+ b=TF9ibDQWjTxLPmKwH5EmfzaSQRYOmkVrMF5b4bYHtoMswarS/+2b5oNhImLZlnORR70uxn
+ reEzPgnjrrzIGSjVTBL2HUXYXljkXjGBBypvwjsUKpf02jXWtGHHybSWbWhp4908rffHaU
+ V4IW1Yv/Yc7F7j4l+OGYaGfEUlgA/J4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-444-rDP7vz5mNkKgKUX41xw1KQ-1; Mon, 22 Jul 2024 08:05:51 -0400
+X-MC-Unique: rDP7vz5mNkKgKUX41xw1KQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a77e59a53c4so339886266b.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:05:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721649950; x=1722254750;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X4p0LHYIjMjvQI23Lts1WhjklTNehlg506joAY8S7dI=;
+ b=qw2xISquWwvnVz7P6G7XSNBuFfS4oe0DRBa3GQvDOwXWnQT6t6H5xgt/rKp9+R7DEZ
+ uP9bRfOcoshXTMpH2SeA3r17NrY5qwsN89NNI9EXCS/Hg5xsqDQl6cIpzxyx5van9r6L
+ G2ibeOmtBkDp1aI+q5vZUgRciSCVMlr6nRwewcN6/hlqHHRdnyE7S32NfJ5NPBti0Qi5
+ YLL8qX0Mqjm1RbW3tttmzNfXcsu63CwYx0NN/mACMOWGHzVwiyKxwq5Ljqiw0wn5b/AF
+ WK3A+g1ByHdZqQgsXNl2hdrwOwg+KNI2TIFvsfTTcompaiUZYfUkx4GoNK5uHeviQhh2
+ a5VA==
+X-Gm-Message-State: AOJu0YyQ6dxsxQNd4+Z9HU6Eg0R+hUx19duLD2y95d2xZn6MPcc87v0Q
+ 4nJQN5bZCjqfrwl45wMYeKptPCShn8kWD8NRxAOlboHCFM6Ca9CcC9Wb4lUclsyWJvzzHAiHwBH
+ 4kUoomXtirORHE1P5MI11TY4oUUMnCnzyfauRvIB3y1fnzK2rq18vwbH6eeEQ68eGBe3HSpp3MR
+ sg8aoHXHM7Ym5SOv6621DThc1q28f9Yptafory
+X-Received: by 2002:a17:907:3e1a:b0:a75:23bb:6087 with SMTP id
+ a640c23a62f3a-a7a4c016cafmr472537566b.29.1721649949867; 
+ Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFL9DpPt69DCrN4oscH9ziF6uIM8tcAlf8QWRNxtUJbIWNMpmLv23fuEI7m5SAgEAyUWDNzjg==
+X-Received: by 2002:a17:907:3e1a:b0:a75:23bb:6087 with SMTP id
+ a640c23a62f3a-a7a4c016cafmr472535766b.29.1721649949508; 
+ Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7a3c8bf32esm414269566b.134.2024.07.22.05.05.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 3/7] hpet: remove unnecessary variable "index"
+Date: Mon, 22 Jul 2024 14:05:37 +0200
+Message-ID: <20240722120541.70790-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240722120541.70790-1-pbonzini@redhat.com>
+References: <20240722120541.70790-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,49 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"make check SPEED=slow" is currently failing the device-introspect-test on
-older machine types since introspecting "scsi-block" is causing an abort:
-
- $ ./qemu-system-x86_64 -M pc-q35-8.0 -monitor stdio
- QEMU 9.0.50 monitor - type 'help' for more information
- (qemu) device_add scsi-block,help
- Unexpected error in object_property_find_err() at
- ../../devel/qemu/qom/object.c:1357:
- can't apply global scsi-disk-base.migrate-emulated-scsi-request=false:
- Property 'scsi-block.migrate-emulated-scsi-request' not found
- Aborted (core dumped)
-
-The problem is that the compat code tries to change the
-"migrate-emulated-scsi-request" property for all devices that are
-derived from "scsi-block", but the property has only been added
-to "scsi-hd" and "scsi-cd" via the DEFINE_SCSI_DISK_PROPERTIES macro.
-
-Thus let's fix the problem by only changing the property on the devices
-that really have this property.
-
-Fixes: b4912afa5f ("scsi-disk: Fix crash for VM configured with USB CDROM after live migration")
-Message-ID: <20240703090904.909720-1-thuth@redhat.com>
-Acked-by: Hyman Huang <yong.huang@smartx.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/core/machine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/timer/hpet.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index bc38cad7f2..8a878f84d7 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -36,7 +36,8 @@
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index bbb1e5f0897..380e272fbeb 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -437,12 +437,12 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+                               unsigned size)
+ {
+     HPETState *s = opaque;
+-    uint64_t cur_tick, index;
++    uint64_t cur_tick;
  
- GlobalProperty hw_compat_9_0[] = {
-     {"arm-cpu", "backcompat-cntfrq", "true" },
--    {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
-+    { "scsi-hd", "migrate-emulated-scsi-request", "false" },
-+    { "scsi-cd", "migrate-emulated-scsi-request", "false" },
-     {"vfio-pci", "skip-vsc-check", "false" },
-     { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
-     {"sd-card", "spec_version", "2" },
+     trace_hpet_ram_read(addr);
+-    index = addr;
++
+     /*address range of all TN regs*/
+-    if (index >= 0x100 && index <= 0x3ff) {
++    if (addr >= 0x100 && addr <= 0x3ff) {
+         uint8_t timer_id = (addr - 0x100) / 0x20;
+         HPETTimer *timer = &s->timer[timer_id];
+ 
+@@ -469,7 +469,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+             break;
+         }
+     } else {
+-        switch (index) {
++        switch (addr) {
+         case HPET_ID:
+             return s->capability;
+         case HPET_PERIOD:
+@@ -510,15 +510,14 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+ {
+     int i;
+     HPETState *s = opaque;
+-    uint64_t old_val, new_val, val, index;
++    uint64_t old_val, new_val, val;
+ 
+     trace_hpet_ram_write(addr, value);
+-    index = addr;
+     old_val = hpet_ram_read(opaque, addr, 4);
+     new_val = value;
+ 
+     /*address range of all TN regs*/
+-    if (index >= 0x100 && index <= 0x3ff) {
++    if (addr >= 0x100 && addr <= 0x3ff) {
+         uint8_t timer_id = (addr - 0x100) / 0x20;
+         HPETTimer *timer = &s->timer[timer_id];
+ 
+@@ -620,7 +619,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+         }
+         return;
+     } else {
+-        switch (index) {
++        switch (addr) {
+         case HPET_ID:
+             return;
+         case HPET_CFG:
 -- 
 2.45.2
 
