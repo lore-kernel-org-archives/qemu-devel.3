@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D10C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 08:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AF8C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 08:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVoch-000581-MI; Mon, 22 Jul 2024 04:42:23 -0400
+	id 1sVohI-0002Hf-Oi; Mon, 22 Jul 2024 04:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sVocg-00056g-4j
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:42:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sVocd-0008Tl-EU
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:42:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721637737;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zRSKaSRjpFfonr9Edn0C7le+LYWa17h+LW7IgmU12Kg=;
- b=DG7Tsk6ufxunF7IuacRXeS9DVI5bUNkUCArRdUcVOG15iSDaJtf/LsvcNJXNafuHoWi0YX
- yIroZ3tgROcPO31nrVABVW3ZD+ZUzMBzTDj0JuI1pfB50x4LqOLGgtBjukVcHOakFPP3L4
- Kfir5YnpU30V0DnhtGc7Gs11Ou42tZA=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-CqsAklJSMQy10eBQG4BpzA-1; Mon, 22 Jul 2024 04:42:13 -0400
-X-MC-Unique: CqsAklJSMQy10eBQG4BpzA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5a69c1f5691so1425089a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 01:42:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVohG-0002GN-Oc
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:47:06 -0400
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVohF-0000rj-2N
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:47:06 -0400
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-492aae5fde6so114565137.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 01:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721638024; x=1722242824; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vSWZQQgX/yMbSi88MVBZcJkBOdq2/Coa/757HPrD3d8=;
+ b=HwBu4dy4jvSq4U95P/vYDDPWMLTMXoDb/oFHsnzttL4qxUGDJpwBAf6qkZ//nCYDkR
+ vBH5RrU9fdTa6sbgbTk0ZLeGYBIYb8EBkQsE8eVadpAzxm4Ace14JNqEVd09CDnOBWF6
+ 0Wr9aijrRAIo0sP2owxONSJ+ZufDQBUSoJRH1VxXTm5mwKc1d6atu1W9Bwmi+TIxvhQl
+ 57l6VL/l2a6C8k9C7UwTysAf18bVYfANpdElHoS5T9j6noerL/V9wsU9sgTr0ceMJdJl
+ SEldaXsNlixamBMrUfB+H9HSQRWEpPToci7rsBqmKBuOKO4x6gXZAeZ2qUzlTTc+zZSr
+ eOMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721637732; x=1722242532;
+ d=1e100.net; s=20230601; t=1721638024; x=1722242824;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zRSKaSRjpFfonr9Edn0C7le+LYWa17h+LW7IgmU12Kg=;
- b=gbgBLggJ9uQxYqjxYFK2HoradXdFPV4IJxxoIU36PB+NZOXODjY+VjbtQLucBuXbP5
- jem2/zhpO5eTDDUJxIQo3vCFgt8Dif0Ne8K++hxBlwRT/iQ65DimcLCLaZSnbSvocQ8T
- zT+7/DlMtQC4ifWIjBqPFnoslTU9B71geXj5bgY4yGSuLjcFosCMQzuu+rOgCr8Woaci
- LkQFHR5LWPPqj6XjaGuOPCVtjxXknii+Dg16PKbmDLeEwRmuVHAZCmZsViXc03VzuLrF
- LircoBH5zsn/2FQ67p/YUkR/U5NQ1u4+as5giKTyrooZvnoWRyFjlbitWo4m2s5vZUzK
- j73g==
+ bh=vSWZQQgX/yMbSi88MVBZcJkBOdq2/Coa/757HPrD3d8=;
+ b=GrShQT+R2KdPH/U5hMGySEb3h8UD52Abv8FrhUFFqlPM+awFCVbY2v1vNzgpDGLYui
+ yRgsvo1xFcDcsHGHi9VE00CVpc8lBHnZJlB0Q8lkyOW7HojZfgLOCnItWEY345BTSqU/
+ QxNu+NDxnjDepBbZDEmUNXey9sKirG5FjkxWw9blvClf5RD+t+Y/P8kVuu1J39VehFIA
+ PsjU1cKlWrkIkllRJbq0+MEF4JuFtq7WGZxWW/ewUxWT6J749UMo8Os72TzYTY5AK5yY
+ pp61gbXEQgzSndLf0NowvNP+qh0Qt0kkf7w9lyQ6sbdDF6LdrAIrBNdupbl2z5NME0GU
+ MYTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsHtnK1UH+MmxXjZeeFHKSG7MWHVmjlrd8sza+LvDlhi3N48AHYPmodDvaUJuXasaFvO5wdVU63eN8scCUSenXPADhuEg=
-X-Gm-Message-State: AOJu0Yyq/zXFZKmVJ18ecASPZ1xGLbT8yjaZ8rGb3lSCVzBrOV7KLXVH
- f2v+lR8jXHfm0ZtjWowKoStcbMNmr28ZBq4bO50xGfxoP3NR2pr3xI13AjKJVO1lsncGqsjxcR/
- s3KDUeJt6giQ0qnQBzYY4AohCCF0OWFk00JmNu09QDKEazMNYkl2AwYfJRDTbPa0LF9TIGvDplv
- vNhm2l3m9cSVzYJjfdj5yX9JGZBUM=
-X-Received: by 2002:a05:6402:51c7:b0:57c:614c:56e7 with SMTP id
- 4fb4d7f45d1cf-5a40e8367e2mr6255598a12.18.1721637732527; 
- Mon, 22 Jul 2024 01:42:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrc5xm5F1LseiYkWQFsUG3W8XLnlMMg/IW0bn2TqPmD+5JHvv2K8gCd+lXc7zuqjdfGzzNZystdyGFsSAEesQ=
-X-Received: by 2002:a05:6402:51c7:b0:57c:614c:56e7 with SMTP id
- 4fb4d7f45d1cf-5a40e8367e2mr6255579a12.18.1721637732006; Mon, 22 Jul 2024
- 01:42:12 -0700 (PDT)
+ AJvYcCWmLvUYak67gQIC2MfquZst+BfpLpQyYF8U435FdAVKZWBbT1IZFzSg4uGnr8fuXJI7CDySbLyXlw5/88jcVwehYX7OqD8=
+X-Gm-Message-State: AOJu0YxtygLk/EXVMUuzfonXIeF2emktVco1TnIwthbVJI9qrObyaDwJ
+ oqu6iAA+deOFJAJGlj/fSwPNd8AZNUnSEeIFso8Byerd0uGvM7GpKs8XH1/r1sX/WcMx38C/wpr
+ 8rsvND4UuQWUy2xuoO2ghYvkJrew=
+X-Google-Smtp-Source: AGHT+IEIeIowskGYz0VHlnR2XKQt8z0teQBECBrVMt3JeBB3JHJLAFGK8dVe5iAidy235Fk4k9cQ3aGKKFn9Sfe1su0=
+X-Received: by 2002:a05:6102:3c8a:b0:48f:e57a:e2f6 with SMTP id
+ ada2fe7eead31-4928b931429mr7603789137.1.1721638023920; Mon, 22 Jul 2024
+ 01:47:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240719052531.926801-1-lulu@redhat.com>
- <CACGkMEtauhCfYSfFHc-GXAzvXm78fodTpDb-JcoGwfVjCD1qvw@mail.gmail.com>
-In-Reply-To: <CACGkMEtauhCfYSfFHc-GXAzvXm78fodTpDb-JcoGwfVjCD1qvw@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Mon, 22 Jul 2024 16:41:33 +0800
-Message-ID: <CACLfguWc-jNvdo02hrJaiU7epY_d3WOWkurHj7yW0-onfMFSwQ@mail.gmail.com>
-Subject: Re: [PATCH v5] virtio-pci: Fix the use of an uninitialized irqfd
-To: Jason Wang <jasowang@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000072d2f2061dd2056f"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20240605185050.1678102-1-tavip@google.com>
+ <87r0br8bve.fsf@pond.sub.org>
+ <CAFEAcA8nFz_4M3s4NoWpfhJZ=pxRc92shSKfoL6iN=_Oqmc-tw@mail.gmail.com>
+ <87msmfkp57.fsf@pond.sub.org>
+In-Reply-To: <87msmfkp57.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 22 Jul 2024 12:46:53 +0400
+Message-ID: <CAJ+F1CJtuGr2ahww4YhL_GqkjrysmO0NVAFBxN1_1NH-GQN4mQ@mail.gmail.com>
+Subject: Re: [PATCH v3] chardev: add path option for pty backend
+To: Octavian Purdila <tavip@google.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Markus Armbruster <armbru@redhat.com>, eblake@redhat.com, berrange@redhat.com, 
+ Paulo Neves <ptsneves@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000d906bf061dd21625"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-vs1-xe2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,407 +94,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000072d2f2061dd2056f
+--000000000000d906bf061dd21625
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 22 Jul 2024 at 15:24, Jason Wang <jasowang@redhat.com> wrote:
->
-> Hi Cindy
->
-> On Fri, Jul 19, 2024 at 1:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > The crash was reported in MAC OS and NixOS, here is the link for this
-bug
-> > https://gitlab.com/qemu-project/qemu/-/issues/2334
-> > https://gitlab.com/qemu-project/qemu/-/issues/2321
-> >
-> > In this bug, they are using the virtio_input device. The guest notifier
-was
-> > not supported for this device, The function
-virtio_pci_set_guest_notifiers()
-> > was not called, and the vector_irqfd was not initialized.
-> >
-> > So the fix is adding the check for vector_irqfd in
-virtio_pci_get_notifier()
-> >
-> > But The function virtio_pci_get_notifier(),it can also be used in all
-kinds of device.
-> > If the vector_irqfd still didn't initial after the
-VIRTIO_CONFIG_S_DRIVER_OK is set
-> > means this device is not using guest notifier. We can let the check
-fail here
-> >
-> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
-> >
-> > The bt tree for this bug is:
-> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-> > kvm_virtio_pci_vq_vector_use () at
-../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> > 817         if (irqfd->users =3D=3D 0) {
-> > (gdb) thread apply all bt
-> > ...
-> > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-> > 0  kvm_virtio_pci_vq_vector_use () at
-../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> > 1  kvm_virtio_pci_vector_use_one () at
-../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-> > 2  0x00005983657045e2 in memory_region_write_accessor () at
-../qemu-9.0.0/system/memory.c:497
-> > 3  0x0000598365704ba6 in access_with_adjusted_size () at
-../qemu-9.0.0/system/memory.c:573
-> > 4  0x0000598365705059 in memory_region_dispatch_write () at
-../qemu-9.0.0/system/memory.c:1528
-> > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at
-../qemu-9.0.0/system/physmem.c:2713
-> > 6  0x000059836570ba7d in flatview_write_continue () at
-../qemu-9.0.0/system/physmem.c:2743
-> > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-> > 8  0x000059836570bb76 in address_space_write () at
-../qemu-9.0.0/system/physmem.c:2894
-> > 9  0x0000598365763afe in address_space_rw () at
-../qemu-9.0.0/system/physmem.c:2904
-> > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-> > 11 0x000059836576656e in kvm_vcpu_thread_fn () at
-../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-> > 12 0x0000598365926ca8 in qemu_thread_start () at
-../qemu-9.0.0/util/qemu-thread-posix.c:541
-> > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-> > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-> >
-> > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >  hw/virtio/virtio-pci.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index 592fdaa10f..dc31a37ec0 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy
-*proxy, int queue_no,
-> >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >      VirtQueue *vq;
-> >
-> > +    if (!proxy->vector_irqfd && vdev->status &
-VIRTIO_CONFIG_S_DRIVER_OK)
-> > +        return -1;
-> > +
->
-> Did this mean !proxy->vector_irqfd && !(vdev->status &
-> VIRTIO_CONFIG_S_DRIVER_OK)) is legal?
->
-> Thanks
->
-yes, for my test, I didn't meet this kind of environment. However, since
-this function is used widely in many environments, I cannot cover all
-devices for testing.
+Hi Octavian,
 
-I think we can change the patch back to the first version, which is to
-check the proxy->vector_irqfd in virtio_pci_set_vector(). This will have a
-lower risk and make more sense
-thanks
-cindy
+You should send a new version with the changes requested by Markus. (we
+might miss 9.1 though)
 
+On Thu, Jul 18, 2024 at 1:48=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-On Mon, 22 Jul 2024 at 15:24, Jason Wang <jasowang@redhat.com> wrote:
-
-> Hi Cindy
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
-> On Fri, Jul 19, 2024 at 1:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+> > On Thu, 18 Jul 2024 at 07:15, Markus Armbruster <armbru@redhat.com>
+> wrote:
+> >>
+> >> Looks like this one fell through the cracks.
+> >>
+> >> Octavian Purdila <tavip@google.com> writes:
+> >>
+> >> > Add path option to the pty char backend which will create a symbolic
+> >> > link to the given path that points to the allocated PTY.
+> >> >
+> >> > This avoids having to make QMP or HMP monitor queries to find out wh=
+at
+> >> > the new PTY device path is.
+> >>
+> >> QMP commands chardev-add and chardev-change return the information you
+> >> want:
+> >>
+> >>     # @pty: name of the slave pseudoterminal device, present if and on=
+ly
+> >>     #     if a chardev of type 'pty' was created
+> >>
+> >> So does HMP command chardev-add.  HMP chardev apparently doesn't, but
+> >> that could be fixed.
+> >>
+> >> So, the use case is basically the command line, right?
 > >
-> > The crash was reported in MAC OS and NixOS, here is the link for this b=
-ug
-> > https://gitlab.com/qemu-project/qemu/-/issues/2334
-> > https://gitlab.com/qemu-project/qemu/-/issues/2321
+> >> The feature feels rather doubtful to me, to be honest.
 > >
-> > In this bug, they are using the virtio_input device. The guest notifier
-> was
-> > not supported for this device, The function
-> virtio_pci_set_guest_notifiers()
-> > was not called, and the vector_irqfd was not initialized.
-> >
-> > So the fix is adding the check for vector_irqfd in
-> virtio_pci_get_notifier()
-> >
-> > But The function virtio_pci_get_notifier(),it can also be used in all
-> kinds of device.
-> > If the vector_irqfd still didn't initial after the
-> VIRTIO_CONFIG_S_DRIVER_OK is set
-> > means this device is not using guest notifier. We can let the check fai=
-l
-> here
-> >
-> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
-> >
-> > The bt tree for this bug is:
-> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-> > kvm_virtio_pci_vq_vector_use () at
-> ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> > 817         if (irqfd->users =3D=3D 0) {
-> > (gdb) thread apply all bt
-> > ...
-> > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-> > 0  kvm_virtio_pci_vq_vector_use () at
-> ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> > 1  kvm_virtio_pci_vector_use_one () at
-> ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-> > 2  0x00005983657045e2 in memory_region_write_accessor () at
-> ../qemu-9.0.0/system/memory.c:497
-> > 3  0x0000598365704ba6 in access_with_adjusted_size () at
-> ../qemu-9.0.0/system/memory.c:573
-> > 4  0x0000598365705059 in memory_region_dispatch_write () at
-> ../qemu-9.0.0/system/memory.c:1528
-> > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at
-> ../qemu-9.0.0/system/physmem.c:2713
-> > 6  0x000059836570ba7d in flatview_write_continue () at
-> ../qemu-9.0.0/system/physmem.c:2743
-> > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-> > 8  0x000059836570bb76 in address_space_write () at
-> ../qemu-9.0.0/system/physmem.c:2894
-> > 9  0x0000598365763afe in address_space_rw () at
-> ../qemu-9.0.0/system/physmem.c:2904
-> > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-> > 11 0x000059836576656e in kvm_vcpu_thread_fn () at
-> ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-> > 12 0x0000598365926ca8 in qemu_thread_start () at
-> ../qemu-9.0.0/util/qemu-thread-posix.c:541
-> > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-> > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-> >
-> > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >  hw/virtio/virtio-pci.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index 592fdaa10f..dc31a37ec0 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy
-> *proxy, int queue_no,
-> >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >      VirtQueue *vq;
-> >
-> > +    if (!proxy->vector_irqfd && vdev->status &
-> VIRTIO_CONFIG_S_DRIVER_OK)
-> > +        return -1;
-> > +
+> > The command line is an important use-case, though. Not every
+> > user of QEMU is libvirt with a QMP/HMP connection readily
+> > to hand that they would prefer to use for all configuration...
 >
-> Did this mean !proxy->vector_irqfd && !(vdev->status &
-> VIRTIO_CONFIG_S_DRIVER_OK)) is legal?
+> In general yes.  But what are the use cases for this one?
 >
-> Thanks
+> To me, specifying path=3D/mumble/symlink plus the bother of cleaning up
+> stale ones doesn't feel like much of an improvement over reading the pty
+> name from "info chardev".  I guess I'm missing something.  Tell me!
 >
-> >      if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
-> >          *n =3D virtio_config_get_guest_notifier(vdev);
-> >          *vector =3D vdev->config_vector;
-> > --
-> > 2.45.0
-> >
+> If we decide we want this, then the QMP interface needs to be fixed:
+> Call the argument @path for consistency, and document it properly.
+> Actually straightforward, just create a new struct instead of pressing
+> ChardevHostdev into service.
+>
+> Some advice on robust use of @path could be useful, in particular on
+> guarding against QEMU leaving stale links behind.
+>
+> Additional decision: whether to extend the old-style syntax.
+>
 >
 >
 
---00000000000072d2f2061dd2056f
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000d906bf061dd21625
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><br><br>On Mon, 22 Jul 2024 at 15:24, Jason Wang &lt;<a hr=
-ef=3D"mailto:jasowang@redhat.com" target=3D"_blank">jasowang@redhat.com</a>=
-&gt; wrote:<br>&gt;<br>&gt; Hi Cindy<br>&gt;<br>&gt; On Fri, Jul 19, 2024 a=
-t 1:25=E2=80=AFPM Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.com" target=3D=
-"_blank">lulu@redhat.com</a>&gt; wrote:<br>&gt; &gt;<br>&gt; &gt; The crash=
- was reported in MAC OS and NixOS, here is the link for this bug<br>&gt; &g=
-t; <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2334" target=3D=
-"_blank">https://gitlab.com/qemu-project/qemu/-/issues/2334</a><br>&gt; &gt=
-; <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2321" target=3D"=
-_blank">https://gitlab.com/qemu-project/qemu/-/issues/2321</a><br>&gt; &gt;=
-<br>&gt; &gt; In this bug, they are using the virtio_input device. The gues=
-t notifier was<br>&gt; &gt; not supported for this device, The function vir=
-tio_pci_set_guest_notifiers()<br>&gt; &gt; was not called, and the vector_i=
-rqfd was not initialized.<br>&gt; &gt;<br>&gt; &gt; So the fix is adding th=
-e check for vector_irqfd in virtio_pci_get_notifier()<br>&gt; &gt;<br>&gt; =
-&gt; But The function virtio_pci_get_notifier(),it can also be used in all =
-kinds of device.<br>&gt; &gt; If the vector_irqfd still didn&#39;t initial =
-after the VIRTIO_CONFIG_S_DRIVER_OK is set<br>&gt; &gt; means this device i=
-s not using guest notifier. We can let the check fail here<br>&gt; &gt;<br>=
-&gt; &gt; This fix is verified in vyatta,MacOS,NixOS,fedora system.<br>&gt;=
- &gt;<br>&gt; &gt; The bt tree for this bug is:<br>&gt; &gt; Thread 6 &quot=
-;CPU 0/KVM&quot; received signal SIGSEGV, Segmentation fault.<br>&gt; &gt; =
-[Switching to Thread 0x7c817be006c0 (LWP 1269146)]<br>&gt; &gt; kvm_virtio_=
-pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817<br>&gt; &g=
-t; 817 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (irqfd-&gt;users =3D=3D 0) {<br>&gt; =
-&gt; (gdb) thread apply all bt<br>&gt; &gt; ...<br>&gt; &gt; Thread 6 (Thre=
-ad 0x7c817be006c0 (LWP 1269146) &quot;CPU 0/KVM&quot;):<br>&gt; &gt; 0 =C2=
-=A0kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:=
-817<br>&gt; &gt; 1 =C2=A0kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/=
-hw/virtio/virtio-pci.c:893<br>&gt; &gt; 2 =C2=A00x00005983657045e2 in memor=
-y_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497<br>&gt; &gt=
-; 3 =C2=A00x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0=
-.0/system/memory.c:573<br>&gt; &gt; 4 =C2=A00x0000598365705059 in memory_re=
-gion_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528<br>&gt; &gt; 5=
- =C2=A00x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../q=
-emu-9.0.0/system/physmem.c:2713<br>&gt; &gt; 6 =C2=A00x000059836570ba7d in =
-flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743<br>&gt; &=
-gt; 7 =C2=A0flatview_write () at ../qemu-9.0.0/system/physmem.c:2774<br>&gt=
-; &gt; 8 =C2=A00x000059836570bb76 in address_space_write () at ../qemu-9.0.=
-0/system/physmem.c:2894<br>&gt; &gt; 9 =C2=A00x0000598365763afe in address_=
-space_rw () at ../qemu-9.0.0/system/physmem.c:2904<br>&gt; &gt; 10 kvm_cpu_=
-exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917<br>&gt; &gt; 11 0x0000598=
-36576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops=
-.c:50<br>&gt; &gt; 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu=
--9.0.0/util/qemu-thread-posix.c:541<br>&gt; &gt; 13 0x00007c8185bcd1cf in ?=
-?? () at /usr/lib/libc.so.6<br>&gt; &gt; 14 0x00007c8185c4e504 in clone () =
-at /usr/lib/libc.so.6<br>&gt; &gt;<br>&gt; &gt; Fixes: 2ce6cff94d (&quot;vi=
-rtio-pci: fix use of a released vector&quot;)<br>&gt; &gt; Cc: <a href=3D"m=
-ailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable@nongnu.org</a><=
-br>&gt; &gt; Signed-off-by: Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.com"=
- target=3D"_blank">lulu@redhat.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &gt; =
-=C2=A0hw/virtio/virtio-pci.c | 3 +++<br>&gt; &gt; =C2=A01 file changed, 3 i=
-nsertions(+)<br>&gt; &gt;<br>&gt; &gt; diff --git a/hw/virtio/virtio-pci.c =
-b/hw/virtio/virtio-pci.c<br>&gt; &gt; index 592fdaa10f..dc31a37ec0 100644<b=
-r>&gt; &gt; --- a/hw/virtio/virtio-pci.c<br>&gt; &gt; +++ b/hw/virtio/virti=
-o-pci.c<br>&gt; &gt; @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier=
-(VirtIOPCIProxy *proxy, int queue_no,<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0Virt=
-IODevice *vdev =3D virtio_bus_get_device(&amp;proxy-&gt;bus);<br>&gt; &gt; =
-=C2=A0 =C2=A0 =C2=A0VirtQueue *vq;<br>&gt; &gt;<br>&gt; &gt; + =C2=A0 =C2=
-=A0if (!proxy-&gt;vector_irqfd &amp;&amp; vdev-&gt;status &amp; VIRTIO_CONF=
-IG_S_DRIVER_OK)<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>&gt=
-; &gt; +<br>&gt;<br>&gt; Did this mean !proxy-&gt;vector_irqfd &amp;&amp; !=
-(vdev-&gt;status &amp;<br>&gt; VIRTIO_CONFIG_S_DRIVER_OK)) is legal?<br>&gt=
-;<br>&gt; Thanks<br>&gt;<br><div>yes, for my test, I didn&#39;t meet this k=
-ind of environment. However, since this function is used widely in many env=
-ironments, I cannot cover all devices for testing.=C2=A0</div><div><br></di=
-v><div><font face=3D"arial, sans-serif">I think we can=C2=A0<span style=3D"=
-color:rgb(28,28,28);font-size:14px">change the patch back to the first vers=
-ion, which is to check the=C2=A0</span></font>proxy-&gt;vector_irqfd<font f=
-ace=3D"arial, sans-serif"><span style=3D"color:rgb(28,28,28);font-size:14px=
-">=C2=A0in  virtio_pci_set_vector(). This</span>=C2=A0will have a lower ris=
-k and make more sense=C2=A0</font></div><div><font face=3D"arial, sans-seri=
-f">thanks</font></div><div><font face=3D"arial, sans-serif">cindy</font></d=
-iv></div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
-_attr">On Mon, 22 Jul 2024 at 15:24, Jason Wang &lt;<a href=3D"mailto:jasow=
-ang@redhat.com" target=3D"_blank">jasowang@redhat.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Cindy<br>
+<div dir=3D"ltr"><div>Hi Octavian,</div><div><br></div><div>You should send=
+ a new version with the changes requested by Markus. (we might miss 9.1 tho=
+ugh)<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmai=
+l_attr">On Thu, Jul 18, 2024 at 1:48=E2=80=AFPM Markus Armbruster &lt;<a hr=
+ef=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">Peter Maydell &lt;<a href=
+=3D"mailto:peter.maydell@linaro.org" target=3D"_blank">peter.maydell@linaro=
+.org</a>&gt; writes:<br>
 <br>
-On Fri, Jul 19, 2024 at 1:25=E2=80=AFPM Cindy Lu &lt;<a href=3D"mailto:lulu=
-@redhat.com" target=3D"_blank">lulu@redhat.com</a>&gt; wrote:<br>
+&gt; On Thu, 18 Jul 2024 at 07:15, Markus Armbruster &lt;<a href=3D"mailto:=
+armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; Looks like this one fell through the cracks.<br>
+&gt;&gt;<br>
+&gt;&gt; Octavian Purdila &lt;<a href=3D"mailto:tavip@google.com" target=3D=
+"_blank">tavip@google.com</a>&gt; writes:<br>
+&gt;&gt;<br>
+&gt;&gt; &gt; Add path option to the pty char backend which will create a s=
+ymbolic<br>
+&gt;&gt; &gt; link to the given path that points to the allocated PTY.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; This avoids having to make QMP or HMP monitor queries to find=
+ out what<br>
+&gt;&gt; &gt; the new PTY device path is.<br>
+&gt;&gt;<br>
+&gt;&gt; QMP commands chardev-add and chardev-change return the information=
+ you<br>
+&gt;&gt; want:<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0# @pty: name of the slave pseudoterminal device=
+, present if and only<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0if a chardev of type &#39;=
+pty&#39; was created<br>
+&gt;&gt;<br>
+&gt;&gt; So does HMP command chardev-add.=C2=A0 HMP chardev apparently does=
+n&#39;t, but<br>
+&gt;&gt; that could be fixed.<br>
+&gt;&gt;<br>
+&gt;&gt; So, the use case is basically the command line, right?<br>
 &gt;<br>
-&gt; The crash was reported in MAC OS and NixOS, here is the link for this =
-bug<br>
-&gt; <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2334" rel=3D"=
-noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues=
-/2334</a><br>
-&gt; <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2321" rel=3D"=
-noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues=
-/2321</a><br>
+&gt;&gt; The feature feels rather doubtful to me, to be honest.<br>
 &gt;<br>
-&gt; In this bug, they are using the virtio_input device. The guest notifie=
-r was<br>
-&gt; not supported for this device, The function virtio_pci_set_guest_notif=
-iers()<br>
-&gt; was not called, and the vector_irqfd was not initialized.<br>
-&gt;<br>
-&gt; So the fix is adding the check for vector_irqfd in virtio_pci_get_noti=
-fier()<br>
-&gt;<br>
-&gt; But The function virtio_pci_get_notifier(),it can also be used in all =
-kinds of device.<br>
-&gt; If the vector_irqfd still didn&#39;t initial after the VIRTIO_CONFIG_S=
-_DRIVER_OK is set<br>
-&gt; means this device is not using guest notifier. We can let the check fa=
-il here<br>
-&gt;<br>
-&gt; This fix is verified in vyatta,MacOS,NixOS,fedora system.<br>
-&gt;<br>
-&gt; The bt tree for this bug is:<br>
-&gt; Thread 6 &quot;CPU 0/KVM&quot; received signal SIGSEGV, Segmentation f=
-ault.<br>
-&gt; [Switching to Thread 0x7c817be006c0 (LWP 1269146)]<br>
-&gt; kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.=
-c:817<br>
-&gt; 817=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (irqfd-&gt;users =3D=3D 0) {<b=
-r>
-&gt; (gdb) thread apply all bt<br>
-&gt; ...<br>
-&gt; Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) &quot;CPU 0/KVM&quot;):<=
-br>
-&gt; 0=C2=A0 kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/vir=
-tio-pci.c:817<br>
-&gt; 1=C2=A0 kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/vi=
-rtio-pci.c:893<br>
-&gt; 2=C2=A0 0x00005983657045e2 in memory_region_write_accessor () at ../qe=
-mu-9.0.0/system/memory.c:497<br>
-&gt; 3=C2=A0 0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-=
-9.0.0/system/memory.c:573<br>
-&gt; 4=C2=A0 0x0000598365705059 in memory_region_dispatch_write () at ../qe=
-mu-9.0.0/system/memory.c:1528<br>
-&gt; 5=C2=A0 0x00005983659b8e1f in flatview_write_continue_step.isra.0 () a=
-t ../qemu-9.0.0/system/physmem.c:2713<br>
-&gt; 6=C2=A0 0x000059836570ba7d in flatview_write_continue () at ../qemu-9.=
-0.0/system/physmem.c:2743<br>
-&gt; 7=C2=A0 flatview_write () at ../qemu-9.0.0/system/physmem.c:2774<br>
-&gt; 8=C2=A0 0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/=
-system/physmem.c:2894<br>
-&gt; 9=C2=A0 0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/sys=
-tem/physmem.c:2904<br>
-&gt; 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917<br>
-&gt; 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/=
-kvm/kvm-accel-ops.c:50<br>
-&gt; 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qe=
-mu-thread-posix.c:541<br>
-&gt; 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6<br>
-&gt; 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6<br>
-&gt;<br>
-&gt; Fixes: 2ce6cff94d (&quot;virtio-pci: fix use of a released vector&quot=
-;)<br>
-&gt; Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-s=
-table@nongnu.org</a><br>
-&gt; Signed-off-by: Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.com" target=
-=3D"_blank">lulu@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/virtio/virtio-pci.c | 3 +++<br>
-&gt;=C2=A0 1 file changed, 3 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c<br>
-&gt; index 592fdaa10f..dc31a37ec0 100644<br>
-&gt; --- a/hw/virtio/virtio-pci.c<br>
-&gt; +++ b/hw/virtio/virtio-pci.c<br>
-&gt; @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy =
-*proxy, int queue_no,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 VirtIODevice *vdev =3D virtio_bus_get_device(&amp;=
-proxy-&gt;bus);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 VirtQueue *vq;<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 if (!proxy-&gt;vector_irqfd &amp;&amp; vdev-&gt;status =
-&amp; VIRTIO_CONFIG_S_DRIVER_OK)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;<br>
-&gt; +<br>
+&gt; The command line is an important use-case, though. Not every<br>
+&gt; user of QEMU is libvirt with a QMP/HMP connection readily<br>
+&gt; to hand that they would prefer to use for all configuration...<br>
 <br>
-Did this mean !proxy-&gt;vector_irqfd &amp;&amp; !(vdev-&gt;status &amp;<br=
->
-VIRTIO_CONFIG_S_DRIVER_OK)) is legal?<br>
+In general yes.=C2=A0 But what are the use cases for this one?<br>
 <br>
-Thanks<br>
+To me, specifying path=3D/mumble/symlink plus the bother of cleaning up<br>
+stale ones doesn&#39;t feel like much of an improvement over reading the pt=
+y<br>
+name from &quot;info chardev&quot;.=C2=A0 I guess I&#39;m missing something=
+.=C2=A0 Tell me!<br>
 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *n =3D virtio_config_get_guest_notif=
-ier(vdev);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *vector =3D vdev-&gt;config_vector;<=
-br>
-&gt; --<br>
-&gt; 2.45.0<br>
-&gt;<br>
+If we decide we want this, then the QMP interface needs to be fixed:<br>
+Call the argument @path for consistency, and document it properly.<br>
+Actually straightforward, just create a new struct instead of pressing<br>
+ChardevHostdev into service.<br>
 <br>
-</blockquote></div>
+Some advice on robust use of @path could be useful, in particular on<br>
+guarding against QEMU leaving stale links behind.<br>
+<br>
+Additional decision: whether to extend the old-style syntax.<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
 
---00000000000072d2f2061dd2056f--
-
+--000000000000d906bf061dd21625--
 
