@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F05C3DA5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC221C3DA63
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkX-0006GJ-4u; Sun, 21 Jul 2024 20:17:57 -0400
+	id 1sVgkq-0007z0-Kl; Sun, 21 Jul 2024 20:18:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkP-0005UG-Lu
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkp-0007sr-CP
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkN-0005nP-Fm
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkn-0005sR-IE
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607465;
+ s=mimecast20190719; t=1721607492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c/XwQGLmqpOnXFp7/p1VkjvkoBY6YC9rGIfU0QombD0=;
- b=cV1EDsLfKftHtTaKRy2dS2i4t+bttodTBVImOzNYseZAZBl0bsComtMN/ePQ02+XbvX+WT
- CgDE+WdL+W4rDIEVaxpbcKk5oZ+HPTTgazEpz9rZPGvdnMryZq1khxnloegIFV0jnTyTv7
- 4PCCsifPRvXWl5x+w/SPPmeU3p75vnU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wmqhjtW3VVd/s0tK/0z/W3SbHoTTKsvguEWbJfZllQs=;
+ b=HZtJdit3TYKrjLs3HxJGgmq7jLwn2AVhFU3228L1eqgo3qCu/w0G50dFmBAlP9XN7fItNZ
+ iV6fgFmL4h25y3pvJFXn9BJIlgfAYkosjtmWFRfBdDFiGjmJFb7zMqK2gUE+LZzx4ZZr7m
+ SDvKy3QxjCl/mJ4Gr8Tc/67G9rSmfBw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-mkhygVVhMSGSN0DXmumMUw-1; Sun, 21 Jul 2024 20:17:44 -0400
-X-MC-Unique: mkhygVVhMSGSN0DXmumMUw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42668857c38so27733565e9.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:43 -0700 (PDT)
+ us-mta-607-o7Bs_ihRNtONSFKEscfEmg-1; Sun, 21 Jul 2024 20:18:10 -0400
+X-MC-Unique: o7Bs_ihRNtONSFKEscfEmg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4272718b9b0so28091815e9.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607462; x=1722212262;
+ d=1e100.net; s=20230601; t=1721607489; x=1722212289;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c/XwQGLmqpOnXFp7/p1VkjvkoBY6YC9rGIfU0QombD0=;
- b=hs6RFPuJouLjzqfpgiOX9O4q3qoB/ngPahtfDAa7yFR2Fx7wKTtmNzaKPKFtPe6HAA
- RTx2FQurx2It4kRjkXe2lFgf+07/UBSprmcBzymCjw3rZQfYBj/uL38KWNMIvn8+US4J
- LVM/+EIRDXXfh+wUqYeuu13sPII68Vd3ooqQYIpLhbe5EFhZxHJcvi2wQdwX4/QzJ1sr
- r5pXUWvGFzY288H3xpOdvNMbhwQ4wr7KbeOV2UkNSG3wSX8sTIQ3op+bBAAuj41JaJ+r
- e+EHaoNnyvsiBcyU5FGJ+ayJQicrm5CP+FrpteHAwBhidz+zu14KbgMSWoGSZxrCIjnE
- +v8A==
-X-Gm-Message-State: AOJu0YxPf94Q3gEGC4Z8mCtYYiMRATKX666J8pbxchEc1qYGuscEqNS7
- Mxi0P5z6+q5U88+8Cem2bvCuIGymZjp4lHr67pZ/P4rXRn272IcEKb4bQCtEoMa9sWmohFCKTbH
- dmoBFTi6bLOzeop6IqtUnwn3f3ukRX5GnEWEAqmjfcHnFWzg0M9nqCIBx8eOSOKzj8rr6xCtdrE
- Ba/Gbr+mjMVevitTpepYqTMODL3dEyqg==
-X-Received: by 2002:a5d:4e49:0:b0:368:4e4f:cec5 with SMTP id
- ffacd0b85a97d-369bae2512fmr3157333f8f.35.1721607462356; 
- Sun, 21 Jul 2024 17:17:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEI0hcKUSqjqAPe3LpGpBgRRLTIFf68etQr4hG7y1zIoqyZNvpLZgqNuqa9ti212/xeQtGQzw==
-X-Received: by 2002:a5d:4e49:0:b0:368:4e4f:cec5 with SMTP id
- ffacd0b85a97d-369bae2512fmr3157319f8f.35.1721607461659; 
- Sun, 21 Jul 2024 17:17:41 -0700 (PDT)
+ bh=wmqhjtW3VVd/s0tK/0z/W3SbHoTTKsvguEWbJfZllQs=;
+ b=V4/vOmXPPAHDIWCr9XTBrEyzAgLJ0jyOs63fJfkBsUBj7TaLgEI8M3OigDuSGUOwzs
+ ff+iZE9UbEdd9QRr0MzIBgdCYU28kAAZuAH5303stb6zwJa3BISmBN2EoNGsZH/911R4
+ p3orgISBEnd+rLtExjPPZPeCUP9LQlmKZzoiwItcZ2D2/i57JmrFkm+acs0Z0p/X2CfH
+ hiB/FpYNEkco5geqnLS3pSBR5620YM9gUDJCYK5tOIXIHparhOikNvaNVIUCvRdfQwcD
+ CVDE9ml1++UFWUMD6CDUzQ0iBDO0KxiF7+3AMA3fyayIsgKsKRZd3b+Kk17WeeSP5QDa
+ gnOQ==
+X-Gm-Message-State: AOJu0YyIOnpiqoe4rcXbpQMb2T+59cgtCAh6sG+QcwDm/odRRaOYfZG2
+ PCfFGoPM/oVZz9vR2qJBld4ZD4Nzlh3vOxM41jzxhDK6fqZDQGw3qzvlAXrLxVmFsNfcc08Z8n3
+ Gqv37BBl7PqJ/aMHbitfWe1eZHG/3B5ZqPO7vdG85xCZckvxhjQ8tG2yk6yYzumtFKIf47QUN0o
+ ebLoVcgl0peP45rwi6t0cCuimypj1JOA==
+X-Received: by 2002:a05:600c:3acb:b0:427:9dad:e6ac with SMTP id
+ 5b1f17b1804b1-427dc586456mr34493735e9.34.1721607489039; 
+ Sun, 21 Jul 2024 17:18:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyOtAeRE+aIwMTy25tqZqKW4tLnyBG1isZ2hLUU44HXIE/i+j23w0grVM+kImYJyDExGnVHw==
+X-Received: by 2002:a05:600c:3acb:b0:427:9dad:e6ac with SMTP id
+ 5b1f17b1804b1-427dc586456mr34493535e9.34.1721607488551; 
+ Sun, 21 Jul 2024 17:18:08 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368786943d3sm7034880f8f.50.2024.07.21.17.17.40
+ 5b1f17b1804b1-427d6934ec6sm106853125e9.41.2024.07.21.17.18.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:41 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:39 -0400
+ Sun, 21 Jul 2024 17:18:08 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:06 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL 24/63] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
- support
-Message-ID: <b44135daa3721778f4656ca3c15bd9b3060f1176.1721607331.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org
+Subject: [PULL 37/63] smbios: make memory device size configurable per Machine
+Message-ID: <0dd7f4777d1d44fe67f3323b462bc0f0a2f686a2.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -89,7 +92,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,90 +108,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonah Palmer <jonah.palmer@oracle.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-Add VIRTIO_F_IN_ORDER feature support for the virtqueue_fill operation.
+Currently QEMU describes initial[1] RAM* in SMBIOS as a series of
+virtual DIMMs (capped at 16Gb max) using type 17 structure entries.
 
-The goal of the virtqueue_ordered_fill operation when the
-VIRTIO_F_IN_ORDER feature has been negotiated is to search for this
-now-used element, set its length, and mark the element as filled in
-the VirtQueue's used_elems array.
+Which is fine for the most cases.  However when starting guest
+with terabytes of RAM this leads to too many memory device
+structures, which eventually upsets linux kernel as it reserves
+only 64K for these entries and when that border is crossed out
+it runs out of reserved memory.
 
-By marking the element as filled, it will indicate that this element has
-been processed and is ready to be flushed, so long as the element is
-in-order.
+Instead of partitioning initial RAM on 16Gb DIMMs, use maximum
+possible chunk size that SMBIOS spec allows[2]. Which lets
+encode RAM in lower 31 bits of 32bit field (which amounts upto
+2047Tb per DIMM).
+As result initial RAM will generate only one type 17 structure
+until host/guest reach ability to use more RAM in the future.
 
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20240710125522.4168043-4-jonah.palmer@oracle.com>
+Compat changes:
+We can't unconditionally change chunk size as it will break
+QEMU<->guest ABI (and migration). Thus introduce a new machine
+class field that would let older versioned machines to use
+legacy 16Gb chunks, while new(er) machine type[s] use maximum
+possible chunk size.
+
+PS:
+While it might seem to be risky to rise max entry size this large
+(much beyond of what current physical RAM modules support),
+I'd not expect it causing much issues, modulo uncovering bugs
+in software running within guest. And those should be fixed
+on guest side to handle SMBIOS spec properly, especially if
+guest is expected to support so huge RAM configs.
+
+In worst case, QEMU can reduce chunk size later if we would
+care enough about introducing a workaround for some 'unfixable'
+guest OS, either by fixing up the next machine type or
+giving users a CLI option to customize it.
+
+1) Initial RAM - is RAM configured with help '-m SIZE' CLI option/
+   implicitly defined by machine. It doesn't include memory
+   configured with help of '-device' option[s] (pcdimm,nvdimm,...)
+2) SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
+
+PS:
+* tested on 8Tb host with RHEL6 guest, which seems to parse
+  type 17 SMBIOS table entries correctly (according to 'dmidecode').
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240715122417.4059293-1-imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ include/hw/boards.h |  4 ++++
+ hw/arm/virt.c       |  1 +
+ hw/core/machine.c   |  6 ++++++
+ hw/i386/pc_piix.c   |  1 +
+ hw/i386/pc_q35.c    |  1 +
+ hw/smbios/smbios.c  | 11 ++++++-----
+ 6 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 98eb601b09..0000a7b41c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -872,6 +872,46 @@ static void virtqueue_packed_fill(VirtQueue *vq, const VirtQueueElement *elem,
-     vq->used_elems[idx].ndescs = elem->ndescs;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index ef6f18f2c1..48ff6d8b93 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -237,6 +237,9 @@ typedef struct {
+  *    purposes only.
+  *    Applies only to default memory backend, i.e., explicit memory backend
+  *    wasn't used.
++ * @smbios_memory_device_size:
++ *    Default size of memory device,
++ *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
+  */
+ struct MachineClass {
+     /*< private >*/
+@@ -304,6 +307,7 @@ struct MachineClass {
+     const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
+     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
++    uint64_t smbios_memory_device_size;
+ };
+ 
+ /**
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b0c68d66a3..719e83e6a1 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3308,6 +3308,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
+ static void virt_machine_9_0_options(MachineClass *mc)
+ {
+     virt_machine_9_1_options(mc);
++    mc->smbios_memory_device_size = 16 * GiB;
+     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
  }
- 
-+static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
-+                                   unsigned int len)
-+{
-+    unsigned int i, steps, max_steps;
-+
-+    i = vq->used_idx % vq->vring.num;
-+    steps = 0;
+ DEFINE_VIRT_MACHINE(9, 0)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index bc38cad7f2..ac30544e7f 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1004,6 +1004,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
+     /* Default 128 MB as guest ram size */
+     mc->default_ram_size = 128 * MiB;
+     mc->rom_file_has_mr = true;
 +    /*
-+     * We shouldn't need to increase 'i' by more than the distance
-+     * between used_idx and last_avail_idx.
++     * SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
++     * use max possible value that could be encoded into
++     * 'Extended Size' field (2047Tb).
 +     */
-+    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
-+
-+    /* Search for element in vq->used_elems */
-+    while (steps <= max_steps) {
-+        /* Found element, set length and mark as filled */
-+        if (vq->used_elems[i].index == elem->index) {
-+            vq->used_elems[i].len = len;
-+            vq->used_elems[i].in_order_filled = true;
-+            break;
-+        }
-+
-+        i += vq->used_elems[i].ndescs;
-+        steps += vq->used_elems[i].ndescs;
-+
-+        if (i >= vq->vring.num) {
-+            i -= vq->vring.num;
-+        }
-+    }
-+
-+    /*
-+     * We should be able to find a matching VirtQueueElement in
-+     * used_elems. If we don't, this is an error.
-+     */
-+    if (steps >= max_steps) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: %s cannot fill buffer id %u\n",
-+                      __func__, vq->vdev->name, elem->index);
-+    }
-+}
-+
- static void virtqueue_packed_fill_desc(VirtQueue *vq,
-                                        const VirtQueueElement *elem,
-                                        unsigned int idx,
-@@ -922,7 +962,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
-         return;
-     }
++    mc->smbios_memory_device_size = 2047 * TiB;
  
--    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-+    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
-+        virtqueue_ordered_fill(vq, elem, len);
-+    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-         virtqueue_packed_fill(vq, elem, len, idx);
-     } else {
-         virtqueue_split_fill(vq, elem, len, idx);
+     /* numa node memory size aligned on 8MB by default.
+      * On Linux, each node's border has to be 8MB aligned
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 9445b07b4f..d9e69243b4 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -495,6 +495,7 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+     pc_i440fx_machine_9_1_options(m);
+     m->alias = NULL;
+     m->is_default = false;
++    m->smbios_memory_device_size = 16 * GiB;
+ 
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 71d3c6d122..9d108b194e 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -374,6 +374,7 @@ static void pc_q35_machine_9_0_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_machine_9_1_options(m);
+     m->alias = NULL;
++    m->smbios_memory_device_size = 16 * GiB;
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+     pcmc->isa_bios_alias = false;
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 3b7703489d..a394514264 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1093,6 +1093,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+                        Error **errp)
+ {
+     unsigned i, dimm_cnt, offset;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
+     ERRP_GUARD();
+ 
+     assert(ep_type == SMBIOS_ENTRY_POINT_TYPE_32 ||
+@@ -1123,12 +1124,12 @@ static bool smbios_get_tables_ep(MachineState *ms,
+     smbios_build_type_9_table(errp);
+     smbios_build_type_11_table();
+ 
+-#define MAX_DIMM_SZ (16 * GiB)
+-#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
+-                                        : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
++#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? mc->smbios_memory_device_size \
++    : ((current_machine->ram_size - 1) % mc->smbios_memory_device_size) + 1)
+ 
+-    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
+-               MAX_DIMM_SZ;
++    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size,
++                             mc->smbios_memory_device_size) /
++               mc->smbios_memory_device_size;
+ 
+     /*
+      * The offset determines if we need to keep additional space between
 -- 
 MST
 
