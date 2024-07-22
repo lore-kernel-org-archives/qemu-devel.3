@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B215AC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69BBC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVglc-0002sW-GM; Sun, 21 Jul 2024 20:19:07 -0400
+	id 1sVgkb-0006lJ-DW; Sun, 21 Jul 2024 20:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglL-0002Au-P3
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkY-0006Lt-10
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglJ-0005wC-Fj
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkW-0005ot-I5
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607524;
+ s=mimecast20190719; t=1721607475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2MFU5YluLJy3dMwMtCRKC5eZxelIcmwO+t8tRGjROFc=;
- b=fyU7JAlDE6XfI9DXhzVO5DF2SaHhnemXSMGGVvWNiRhLsqPwaegrs18xRCfrPSwUik5JNs
- jSFsVEALuMZckp6R5xPiCkZ48sjD1Op3f+vbmyd4SIO1STkrql7g9CeXZ1ZzDY/tT03Upi
- Wpg2Hqdx+1JLHkOOn8fUXx8O4FqXOjg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RbreE3gRMg3HkdLWMl2uNhF2Or3FkZXwY0kwp8ati68=;
+ b=HvwmU7w5HoDnZs42uxB2Bxiitw7mtfU73fd8T7Q8QTDgAKqEvCKZu60pHq6rHY2ked5sJs
+ L3nJ77YCjmlTjPdiHHiuwoIwkFe2xKFKIzGr8gNbggsw7fplytAJFiuxa9eersW3yJNnV+
+ wiqLiay3tfC8LvK5FEMF9Qes1XyRgfg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-NWlMjow5Np-UUeG9blZMqw-1; Sun, 21 Jul 2024 20:18:42 -0400
-X-MC-Unique: NWlMjow5Np-UUeG9blZMqw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36835daf8b7so2715769f8f.2
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:42 -0700 (PDT)
+ us-mta-477-r6xD_lWiNQCrUiv5ATiWjg-1; Sun, 21 Jul 2024 20:17:52 -0400
+X-MC-Unique: r6xD_lWiNQCrUiv5ATiWjg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-369bf135b49so665206f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607521; x=1722212321;
+ d=1e100.net; s=20230601; t=1721607471; x=1722212271;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2MFU5YluLJy3dMwMtCRKC5eZxelIcmwO+t8tRGjROFc=;
- b=Tf6exIy3f9LWp0+eeufqXc+STC6xkQETmjFMnU00mp4til+7X/xKxFwShp7ZStVPgj
- uMCit2DVvQYhVMSAT3NaEf/opKvADgNJCkIpJyPIeH7qfG847iQ0Nd3NWVLuOe4ywVuA
- OEYETLgX1RZ2tFi6D3V6e9NApU5SuG0uJ2MUAhUHGdEFAGn+e8WXKHbc83Q7pH0/dXla
- /mPdMCe7b2jYZOMzB205Dk1Go/ybxJnQ4QguckX7mLgSRU/8g38KzBazXFEjsZo+dP3A
- 1e2Gt0Qp9daewn2u7ZIGyPufzwiLSdxcr7Js0qWAqAHFnlLzVMVrTb+5ThsV/mhVCnj7
- iJQA==
-X-Gm-Message-State: AOJu0YxGgAWM2m0b3cfbPrK8eIr3MiRRhwgyEfyqmGzioYVmQ2nTCM6S
- T+CjlWszXhV19d057JBw91tfHWiEEMel+4y5YC/QlUnfoWbBInWwc3lJnvSZ79D3TsJRaJ/Q23b
- qQ5o0IUtOl57oPTyiEqAkDDZTCFoFjTWSFodsTcqIenGYg7WvpbIR3QtvF54jYFUejTfu8Ybk/q
- AunzT8czzCwVVI2dUd6xNxxaWMEAVvAQ==
-X-Received: by 2002:a5d:4604:0:b0:368:7282:51d6 with SMTP id
- ffacd0b85a97d-369bae4d54dmr4227556f8f.21.1721607521257; 
- Sun, 21 Jul 2024 17:18:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWzKtRRYHll+mm01uoqHoCxQ2/pCyfQk0/jmxFlqOHMnxJDo0jZlLMmPQiMvL27rYFpYlwMQ==
-X-Received: by 2002:a5d:4604:0:b0:368:7282:51d6 with SMTP id
- ffacd0b85a97d-369bae4d54dmr4227530f8f.21.1721607520599; 
- Sun, 21 Jul 2024 17:18:40 -0700 (PDT)
+ bh=RbreE3gRMg3HkdLWMl2uNhF2Or3FkZXwY0kwp8ati68=;
+ b=YzoUu4GD5XIBc03Fn6MtXBdMQn3cwumd+whR7Ultap4eKiXx6FzeJdJjcmKPh49dlf
+ RzNDOX1uk8aTyQP0+s3Gd8IPVlayHcxyzjNyTG0ENN43JeOcg72cAEdkcc/R7LmzstTR
+ hzIv5niwvru1s0f5FQyHfcM/n9kso6lbeCFTuNDD86N7NqI/H2f0/zPjyTsH/5+hMfZ4
+ 56h6PMDo5HDWiZGuQ5laPpOfI6FpxLkws4KNH7Zz7Nr93BhK+CrGkKr3XKG1qm30srTU
+ Q7JYjCd96eJs7Sw5ZIzMvp2hIe5aQrIEJ8xKKnG1gFbS+B7nLFjbpscX/QwtADQxYwMJ
+ dN7w==
+X-Gm-Message-State: AOJu0Yz8Pag2tP6JsGRXafxYWJ4qI/3iMrMy9bKE+kNGymXogCGfMK4J
+ EtLap0/r2qi3j2zjrtWfblM7drVMKczyDPrCfPJ9R3UYja9R7TV46q9bIh+XG1xP0vT16ZDGsFv
+ y+y0NGfKnv3sYyWcLrs4u7I39+neyG4rw4j7aRYbWma/LLKigB87KbZe4VeKp500ZAgh5pDtGi4
+ JwnkwTPjU72U70sxkQmMdpuZV7W3ieyQ==
+X-Received: by 2002:adf:ef02:0:b0:368:35b8:129e with SMTP id
+ ffacd0b85a97d-36873ed7c49mr4990094f8f.13.1721607470835; 
+ Sun, 21 Jul 2024 17:17:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMr+xClpJWFy3DqUbuV6wkHl7tYSkOhCuLKOaeCVEsVlkB6uE2ZqPBS/Voc9BN0tX6PU98EA==
+X-Received: by 2002:adf:ef02:0:b0:368:35b8:129e with SMTP id
+ ffacd0b85a97d-36873ed7c49mr4990079f8f.13.1721607470242; 
+ Sun, 21 Jul 2024 17:17:50 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36878684204sm7029703f8f.2.2024.07.21.17.18.39
+ ffacd0b85a97d-3687868bc42sm7025824f8f.46.2024.07.21.17.17.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:40 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:38 -0400
+ Sun, 21 Jul 2024 17:17:49 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: [PULL 51/63] hw/riscv/virt-acpi-build.c: Add namespace devices for
- PLIC and APLIC
-Message-ID: <dbd4cc00ca249b75170c2c0fd60ee2db452352a9.1721607331.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>, changpeng.liu@intel.com,
+ Raphael Norwitz <raphael@enfabrica.net>
+Subject: [PULL 28/63] contrib/vhost-user-blk: fix overflowing expression
+Message-ID: <99d7c1b99a3fdb69213c09da6b7614243f877bee.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -108,75 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-As per the requirement ACPI_080 in the RISC-V Boot and Runtime Services
-(BRS) specification [1],  PLIC and APLIC should be in namespace as well.
-So, add them using the defined HID.
+Coverity reported:
 
-[1] - https://github.com/riscv-non-isa/riscv-brs/releases/download/v0.0.2/riscv-brs-spec.pdf
-      (Chapter 6)
+  >>>     CID 1549454:  Integer handling issues  (OVERFLOW_BEFORE_WIDEN)
+  >>>     Potentially overflowing expression
+          "le32_to_cpu(desc->num_sectors) << 9" with type "uint32_t"
+          (32 bits, unsigned) is evaluated using 32-bit arithmetic, and
+          then used in a context that expects an expression of type
+          "uint64_t" (64 bits, unsigned).
+  199                               le32_to_cpu(desc->num_sectors) << 9 };
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240716144306.2432257-2-sunilvl@ventanamicro.com>
+Coverity noticed this issue after commit ab04420c3 ("contrib/vhost-user-*:
+use QEMU bswap helper functions"), but it was pre-existing and introduced
+from the beginning by commit caa1ee4313 ("vhost-user-blk: add
+discard/write zeroes features support").
+
+Explicitly cast the 32-bit value before the shift to fix this issue.
+
+Fixes: Coverity CID 1549454
+Fixes: 5ab04420c3 ("contrib/vhost-user-*: use QEMU bswap helper functions")
+Fixes: caa1ee4313 ("vhost-user-blk: add discard/write zeroes features support")
+Cc: changpeng.liu@intel.com
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240712153857.207440-1-sgarzare@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ contrib/vhost-user-blk/vhost-user-blk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 0925528160..5f5082a35b 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -141,6 +141,30 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirtState *s)
-     }
- }
- 
-+static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
-+                                     uint64_t mmio_base, uint64_t mmio_size,
-+                                     const char *hid)
-+{
-+    uint64_t plic_aplic_addr;
-+    uint32_t gsi_base;
-+    uint8_t  socket;
-+
-+    for (socket = 0; socket < socket_count; socket++) {
-+        plic_aplic_addr = mmio_base + mmio_size * socket;
-+        gsi_base = VIRT_IRQCHIP_NUM_SOURCES * socket;
-+        Aml *dev = aml_device("IC%.02X", socket);
-+        aml_append(dev, aml_name_decl("_HID", aml_string("%s", hid)));
-+        aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-+        aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-+
-+        Aml *crs = aml_resource_template();
-+        aml_append(crs, aml_memory32_fixed(plic_aplic_addr, mmio_size,
-+                                           AML_READ_WRITE));
-+        aml_append(dev, aml_name_decl("_CRS", crs));
-+        aml_append(scope, dev);
-+    }
-+}
-+
- static void
- acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
-                     uint32_t uart_irq)
-@@ -411,6 +435,14 @@ static void build_dsdt(GArray *table_data,
- 
-     socket_count = riscv_socket_count(ms);
- 
-+    if (s->aia_type == VIRT_AIA_TYPE_NONE) {
-+        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_PLIC].base,
-+                                 memmap[VIRT_PLIC].size, "RSCV0001");
-+    } else {
-+        acpi_dsdt_add_plic_aplic(scope, socket_count, memmap[VIRT_APLIC_S].base,
-+                                 memmap[VIRT_APLIC_S].size, "RSCV0002");
-+    }
-+
-     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
- 
-     if (socket_count == 1) {
+diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
+index 9492146855..6cc18a1c04 100644
+--- a/contrib/vhost-user-blk/vhost-user-blk.c
++++ b/contrib/vhost-user-blk/vhost-user-blk.c
+@@ -196,7 +196,7 @@ vub_discard_write_zeroes(VubReq *req, struct iovec *iov, uint32_t iovcnt,
+     VubDev *vdev_blk = req->vdev_blk;
+     desc = buf;
+     uint64_t range[2] = { le64_to_cpu(desc->sector) << 9,
+-                          le32_to_cpu(desc->num_sectors) << 9 };
++                          (uint64_t)le32_to_cpu(desc->num_sectors) << 9 };
+     if (type == VIRTIO_BLK_T_DISCARD) {
+         if (ioctl(vdev_blk->blk_fd, BLKDISCARD, range) == 0) {
+             g_free(buf);
 -- 
 MST
 
