@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C076C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711D7C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgmS-00086E-Gb; Sun, 21 Jul 2024 20:19:56 -0400
+	id 1sVgmf-000197-4P; Sun, 21 Jul 2024 20:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglH-0001wB-AO
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgll-0003yk-5E
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglD-0005vV-1l
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglj-00061n-AN
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607518;
+ s=mimecast20190719; t=1721607550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+taPMy5Q8060TvpZgWRsF1ltpcOrUHjqjPNdMJkSVmk=;
- b=gFpd/CdEWpUd9ZnTkA11bE7FQ6IVDPgUL4LS+Va2QQyDlVFCxyQdN/gdltnVpQIC2i6S9K
- 88sX1e4C00pxy6Y4QjPkNNlwXsSkFW4h8+oM1wKF0z8Z8c4RAYywzpY1J7ua31pbe914Ko
- nt0ETxhuGHxjyRG0ZfDT+GT8c46nuEo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=csYPPQ6V3Zw3B+Skv6+vmMgGos87nUcKxMNRDL7UsyQ=;
+ b=PL6cjX7G/t1EEuqDmWB7+hGjFdIj9nP/Q6XYp0HB7wcB1iNisxnD3oCOFpcIdDa+UB1zCY
+ Jq6W/KuVqIfnwuA+arZTsZjYHEQNyTPTk4UUdWFtolPkOfr8h5tHxmmL+LG6t8C7t1fnjg
+ V8kdZLeg8cXR5cAxyLIMt3LMLSX38/E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-O57d3f1rP2CAAYU1ceKrFQ-1; Sun, 21 Jul 2024 20:18:36 -0400
-X-MC-Unique: O57d3f1rP2CAAYU1ceKrFQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4265464ddc9so15455105e9.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:36 -0700 (PDT)
+ us-mta-499-TxGAVbfKNZe_CSYm3y6u5A-1; Sun, 21 Jul 2024 20:19:08 -0400
+X-MC-Unique: TxGAVbfKNZe_CSYm3y6u5A-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-42668699453so37772155e9.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:19:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607515; x=1722212315;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+taPMy5Q8060TvpZgWRsF1ltpcOrUHjqjPNdMJkSVmk=;
- b=BanaRycDWQVRWakkRBnh/dK3TVDqvy2XzAwQ4rUh+YOOzP7RO/HVq6Gt4VuwJY3qfl
- JwX+1OOZ/gr3kqmgFqmb2BgB0PaHQ/YqSGeE9xgvFJ+1wdevtX9UP0bXgnRgK5QZtyDw
- sjcWhRz8tNkHmo5LXJVrrsUU1TsAPa6C/ViLT3Bu2r+2t+5+j5zYX3+iokF8IwUL/fIt
- 72Hj8dUT6e/rDzt2cJYrPDXLE6lmrnCt9JR4KTpOke3DAZDyaJB4iiWjRQFo2ANpJYp5
- R9waE5NNeFYqD33Eh5JTVXMtip9+GbqGvFX2sQxtGR+7RaenRyr2w+gl2ZRec8o72snu
- V6Hg==
-X-Gm-Message-State: AOJu0Yzuhv/Ls+bEpZtXJrGf4yCHb8KnT4v+qqJ35w/OPewRyXMQMMsw
- tGyht1keJTqoyzP+s2YvyickCAJFmVXx6KI/u3O9n1KwwzWVlkVLVVpMahbs1PzRHs0zZ6rots+
- 0+GDMX4jDO8sjOf4zM6wFrQu2sjV1e3SGgzI9GxGm4qaz2g+YImRPq+7Imwc+3Rm4QPR+bOFfo1
- SSwGpXteWFd7UHKq7oSaa7YHqVlv1PYw==
-X-Received: by 2002:a05:600c:46ce:b0:426:686f:7ad with SMTP id
- 5b1f17b1804b1-427da805e46mr39659245e9.10.1721607514825; 
- Sun, 21 Jul 2024 17:18:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGG7QDE/bNhHpHK6AcOFPRi1M4tg3TKYoiAu3jzyNrFF935IgyTnkTQoC5GBKu0yx+sdRc56w==
-X-Received: by 2002:a05:600c:46ce:b0:426:686f:7ad with SMTP id
- 5b1f17b1804b1-427da805e46mr39659125e9.10.1721607514320; 
- Sun, 21 Jul 2024 17:18:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607547; x=1722212347;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=csYPPQ6V3Zw3B+Skv6+vmMgGos87nUcKxMNRDL7UsyQ=;
+ b=u2p+sXkYXDFSpfz39wlpnW8jCVzW2ppLoyiQjegd6vrnG2qYuGfN4YUlqMz4hW/CBM
+ r8Jt5dMUPI2+cwbCvDgH7ca8rIm/BkUD5u5ICb23sHeIgTU29mzwvwNigc/ZO2rfWiL8
+ sIDLVn5gMADP0tmlf11xaNKolkGEiHKSRsYcmOJdhkP3PvCq4/UULeSpWZJRga8EFC+n
+ sdNOoLxVciYWAzizNVd6c0fc/ClHCotbRLiGOErNzHpjMUgp7tlCnCxO/0D/z3lkUZYn
+ /ja06blalhuQbmrNRnDzY9m/+DxQYJVVsI/jVjvzKEP/LZ9zS8sEe+jqEAJVaCtisQGN
+ dv7w==
+X-Gm-Message-State: AOJu0YxprMzXXB5++Jwi4/1zAUGT3+Gin6X082RmMG20lO4L2+gD/7zA
+ maFdOBaKTWqnRW2h0QtnuSd4eHC0WSTnXAAIe7cHOq87v4zqaqlL/4y4sWjO3iIXbgcbMsRFxJP
+ GSVX6GanDxVrU7HG16u11f871grxIRdvgTv9bvnpnI21+bCXh8d1Qq1JNIw60v7U/znRx1ItpuB
+ KUXxB1K0t+sWAMLk1kJLPJ6p1yJVsZrQ==
+X-Received: by 2002:a05:600c:4452:b0:426:63f1:9a1b with SMTP id
+ 5b1f17b1804b1-427dc56b427mr32415075e9.33.1721607547295; 
+ Sun, 21 Jul 2024 17:19:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEhg98lL2fJAKGAldy02gl285EAdjgl11w2DXscYdCLR+LWILqoX1SqFzzHKLblz+m1yPWQg==
+X-Received: by 2002:a05:600c:4452:b0:426:63f1:9a1b with SMTP id
+ 5b1f17b1804b1-427dc56b427mr32414955e9.33.1721607546723; 
+ Sun, 21 Jul 2024 17:19:06 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68fa493sm107416355e9.10.2024.07.21.17.18.33
+ 5b1f17b1804b1-427d692977asm106911665e9.31.2024.07.21.17.19.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:33 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:32 -0400
+ Sun, 21 Jul 2024 17:19:06 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:19:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL 48/63] virtio-iommu: Remove the end point on detach
-Message-ID: <4dc8ff564fbefd6f8542ef3367b839d1319a5de6.1721607331.git.mst@redhat.com>
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 63/63] virtio: Always reset vhost devices
+Message-ID: <67d834362c55d6fca6504975bc34755606f17cf2.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,32 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-We currently miss the removal of the endpoint in case of detach.
+Requiring `vhost_started` to be true for resetting vhost devices in
+`virtio_reset()` seems like the wrong condition: Most importantly, the
+preceding `virtio_set_status(vdev, 0)` call will (for vhost devices) end
+up in `vhost_dev_stop()` (through vhost devices' `.set_status`
+implementations), setting `vdev->vhost_started = false`.  Therefore, the
+gated `vhost_reset_device()` call is unreachable.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20240716094619.1713905-5-eric.auger@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+`vhost_started` is not documented, so it is hard to say what exactly it
+is supposed to mean, but judging from the fact that `vhost_dev_start()`
+sets it and `vhost_dev_stop()` clears it, it seems like it indicates
+whether there is a vhost back-end, and whether that back-end is
+currently running and processing virtio requests.
+
+Making a reset conditional on whether the vhost back-end is processing
+virtio requests seems wrong; in fact, it is probably better to reset it
+only when it is not currently processing requests, which is exactly the
+current order of operations in `virtio_reset()`: First, the back-end is
+stopped through `virtio_set_status(vdev, 0)`, then we want to send a
+reset.
+
+Therefore, we should drop the `vhost_started` condition, but in its
+stead we then have to verify that we can indeed send a reset to this
+vhost device, by not just checking `k->get_vhost != NULL` (introduced by
+commit 95e1019a4a9), but also that the vhost back-end is connected
+(`hdev = k->get_vhost(); hdev != NULL && hdev->vhost_ops != NULL`).
+
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-Id: <20240710112310.316551-1-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/virtio.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 2de41ab412..440dfa6e92 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -786,6 +786,7 @@ static int virtio_iommu_detach(VirtIOIOMMU *s,
-     if (QLIST_EMPTY(&domain->endpoint_list)) {
-         g_tree_remove(s->domains, GUINT_TO_POINTER(domain->id));
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 397c261c3c..624fdcae91 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2275,8 +2275,12 @@ void virtio_reset(void *opaque)
+         vdev->device_endian = virtio_default_endian();
      }
-+    g_tree_remove(s->endpoints, GUINT_TO_POINTER(ep_id));
-     return VIRTIO_IOMMU_S_OK;
- }
  
+-    if (vdev->vhost_started && k->get_vhost) {
+-        vhost_reset_device(k->get_vhost(vdev));
++    if (k->get_vhost) {
++        struct vhost_dev *hdev = k->get_vhost(vdev);
++        /* Only reset when vhost back-end is connected */
++        if (hdev && hdev->vhost_ops) {
++            vhost_reset_device(hdev);
++        }
+     }
+ 
+     if (k->reset) {
 -- 
 MST
 
