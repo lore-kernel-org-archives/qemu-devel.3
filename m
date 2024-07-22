@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C05C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA05C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrcG-0001zY-4l; Mon, 22 Jul 2024 07:54:08 -0400
+	id 1sVrei-0003xX-D7; Mon, 22 Jul 2024 07:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrcE-0001ug-O9
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:54:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVreS-00038T-I1
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:56:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrcC-0004xE-K9
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:54:06 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVreQ-0005RE-9i
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:56:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649242;
+ s=mimecast20190719; t=1721649381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7t+ZSKa4nlskc6kI5581FAFmnYMMP4iTrelA6/NetKc=;
- b=Zqi1iAcLQIBV4/fLpkX5Dvf6A5C8QvoMCn/CFLXLF3/JvYRYhIIG7u2vNlTz3cN9A1zhGU
- xFzCRmnnPd6bebH/qIc3lQUERMFoDq2qM+jWbiACnO/Q1eOEnIUld/mL8a175forJ8ywRB
- DivV8LEfjHa5CgASGueUr9WsJpSy7kA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-Ssg413RBMluQujiR9mDZFg-1; Mon, 22 Jul 2024 07:53:58 -0400
-X-MC-Unique: Ssg413RBMluQujiR9mDZFg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36873ed688dso2472683f8f.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:53:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721649236; x=1722254036;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7t+ZSKa4nlskc6kI5581FAFmnYMMP4iTrelA6/NetKc=;
- b=KryrVfO2jeznXcDogbOHGbkfzq5xgf2tPagZ9ih1zMcoZcOcOwdFolfkZ4T5TTy7rI
- v+N+gdUACWSlJnnYNbxgMkvdJd6C89y08MDk2zpaI7yhjt6CMqAcfw9Id4yNSbpW29OJ
- afkmpKu4QftqSrvk1SCHcwinX3UqhWtZQeEnWNB59gPsbasTo5UBOKKUBoteNI+oi85E
- i0SRCIlv3YJtKQSJMJaetqiAzq00I8oQEwUap7kRyqTea6KS6o4a/sZlrCBhzM8RgVmA
- AlvIw7n9Ue5tc+ddAJ9J8poOBqTx8clshOdbNC56vlrfY8xvRqQaVWIMnfSMaFs01VRG
- PrLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0h2tIMF4AvD7Co7XA1dvgVaiCLcPDT5JSvE+c8vSSzankuBgFIz2aXRlfHCaWNpwuaX3HiO+Wb/kxX0hYROrT58HNyo0=
-X-Gm-Message-State: AOJu0Yz4AP4yA6yTiLeFksT9qyTUveTIsdZ+msFztkdkZ5DdFATZTGHZ
- 7gO8Q+RpbmR44Gti1xWOAhjNza49x7XCOBonwQsw/v0aDTICCr6oOSviYTvy98xqimK9r9ln3dz
- sU1/a7a+C8DlF08TgtEQ4x1m95vXJfPeUWUe+/oDGpfb78Ti1Or818RoMmo9MVkoApKwj0A0xVO
- TunFpu4icFotKPc7A+JTX9Jd2wn0lK3qy54Jt6vA==
-X-Received: by 2002:adf:ed06:0:b0:366:e89c:342b with SMTP id
- ffacd0b85a97d-369bbc930f4mr4083910f8f.52.1721649236573; 
- Mon, 22 Jul 2024 04:53:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQK/+fg6O2t8h6iuvN3F5NJ9zor5+6mVjeOZdg7OJuYcnIJLepNj+HxMgXWaycEW6h4v01rfHEG1Lx84xQ9TY=
-X-Received: by 2002:adf:ed06:0:b0:366:e89c:342b with SMTP id
- ffacd0b85a97d-369bbc930f4mr4083901f8f.52.1721649236261; Mon, 22 Jul 2024
- 04:53:56 -0700 (PDT)
+ bh=lYDl5sIhPvDgTfoHlN8PA/tdUOLQIuS/j96hYp8nn7w=;
+ b=O2Jc0FvyUC8MoNrJJ5Cd4Bvc2IEsCeCqCPQiGPzFc8mFOkPDdpD6FxBfNwXJokX0nGdPmg
+ jjZDohuqdmg7CjJ2UXLAa8/Gk/UCjMsuzctc8zuPtjxTuYdjDhBusctJrYFlSWJdAlocUc
+ yNQbOLNaVdsITVsajmMGVbG8G9Pw9TQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-aZ5uOBE9M22_s-WhrSY-7w-1; Mon,
+ 22 Jul 2024 07:56:15 -0400
+X-MC-Unique: aZ5uOBE9M22_s-WhrSY-7w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ECAE1944B29; Mon, 22 Jul 2024 11:56:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 669573000188; Mon, 22 Jul 2024 11:56:10 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 67E0E21E668F; Mon, 22 Jul 2024 13:56:08 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 1/8] hw/core: Make CPU topology enumeration arch-agnostic
+In-Reply-To: <20240704031603.1744546-2-zhao1.liu@intel.com> (Zhao Liu's
+ message of "Thu, 4 Jul 2024 11:15:56 +0800")
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-2-zhao1.liu@intel.com>
+Date: Mon, 22 Jul 2024 13:56:08 +0200
+Message-ID: <87wmld4p47.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
- <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
-In-Reply-To: <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 22 Jul 2024 13:53:44 +0200
-Message-ID: <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
-Subject: Re: [PATCH] [PATCH] system/memory: Fix max access size
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: TaiseiIto <taisei1212@outlook.jp>, qemu-devel@nongnu.org, peterx@redhat.com,
- david@redhat.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,7 +81,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,39 +97,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 20, 2024 at 4:30=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
-> If the HPET timer device is supposed to permit 64 bit writes and it is no=
-t
-> doing so, then that needs to be fixed in the HPET timer device model, by
-> making sure that its read/write functions correctly handle the size=3D8 c=
-ase
-> and then setting access_size_max =3D8 in its MemoryRegionOps struct.
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-It does, and I've started looking into it[1].
+> Cache topology needs to be defined based on CPU topology levels. Thus,
+> define CPU topology enumeration in qapi/machine.json to make it generic
+> for all architectures.
+>
+> To match the general topology naming style, rename CPU_TOPO_LEVEL_SMT
+> and CPU_TOPO_LEVEL_PACKAGE to CPU_TOPO_LEVEL_THREAD and
+> CPU_TOPO_LEVEL_SOCKET.
+>
+> Also, enumerate additional topology levels for non-i386 arches, and add
+> a CPU_TOPO_LEVEL_DEFAULT to help future smp-cache object de-compatibilize
+> arch-specific cache topology settings.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-The replacement for this patch is simple (on top of that branch):
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 5e60fedc089..ac55dd1ebd6 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -637,6 +637,10 @@ static const MemoryRegionOps hpet_ram_ops =3D {
-         .min_access_size =3D 4,
-         .max_access_size =3D 8,
-     },
-+    .impl =3D {
-+        .min_access_size =3D 4,
-+        .max_access_size =3D 8,
-+    },
-     .endianness =3D DEVICE_NATIVE_ENDIAN,
- };
+> ---
+> Changes since RFC v2:
+>  * Dropped cpu-topology.h and cpu-topology.c since QAPI has the helper
+>    (CpuTopologyLevel_str) to convert enum to string. (Markus)
+>  * Fixed text format in machine.json (CpuTopologyLevel naming, 2 spaces
+>    between sentences). (Markus)
+>  * Added a new level "default" to de-compatibilize some arch-specific
+>    topo settings. (Daniel)
+>  * Moved CpuTopologyLevel to qapi/machine-common.json, at where the
+>    cache enumeration and smp-cache object would be added.
+>    - If smp-cache object is defined in qapi/machine.json, storage-daemon
+>      will complain about the qmp cmds in qapi/machine.json during
+>      compiling.
 
-I'll now look into the other patch for interrupts. Thanks for testing
-my changes!
-
-Paolo
-
-[1] https://gitlab.com/bonzini/qemu/-/commits/hpet
+At some point, we may have to rethink the split between machine.json,
+machine-target.json, and machine-common.json.  Not this patch's problem.
 
 
