@@ -4,202 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B3AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 15:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C677BC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 15:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVufb-00088Y-Dg; Mon, 22 Jul 2024 11:09:47 -0400
+	id 1sVujT-0005r8-3c; Mon, 22 Jul 2024 11:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sVufZ-00087W-8b; Mon, 22 Jul 2024 11:09:45 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVujN-0005p9-Cg
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 11:13:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sVufP-0004iA-W6; Mon, 22 Jul 2024 11:09:45 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MC1OjK031944;
- Mon, 22 Jul 2024 15:09:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=/upR8xrd8bhbOcqASZ1xButsmAFUZM5jN0a3BTp+4zk=; b=
- Nz6Z+xp7r4+ZiDagJtabZwcHL1CmjtcF3lhY8qmwmOVLG/maD8Ng6mxaQ//I7nby
- Kpt0jEYyHfUB2LlupPg0CbVxlhnqePHjpvbajs1EOOfMzeCkAyxvhOftZ/DIe2L7
- AtEMamhyH/IizO/TDh7CXI8XENhsS/HhInZ0YsMqupIV1mlZZX4CxMOSmrAmuCXM
- knIMcMUSJ5cuh80NBAhGjOP4KcX1ax7Q7JTaif4DbMG0flJU01XzAVsMVkTpheox
- xiVDHcu5wiv1p8drEsAPAqj+Vjsw/s73gT8e4HUhZ0f2+bjq+JdS8PJzXF7xz2Pz
- CWfOeOM92fQuuz9ubuqCaQ==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40hfxpa6j5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 15:09:29 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46METFrI033646; Mon, 22 Jul 2024 15:09:29 GMT
-Received: from nam12-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam12lp2176.outbound.protection.outlook.com [104.47.55.176])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 40h2682j3w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 15:09:29 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=l/Q+HPxPNx30l5PqBhhCP8nIF5IKw8v40+mifiyz6WFTPpLgrjZmSq8Z/GjzVQRUUkMNxELMSEn7ue7SICMWJXmpKb6KQNL/RI1zpVjRqndfVSl2Vdol0mIFJuUIfpjkJdZ+eLNM1s/t+pfp4L7HeLIdp3qAbj/hzLMD+g2sEeItmgoQIjHi7rBZxGqddRbYxmgPF/pQ9d2Ll36VOVfig0iSQKvJpaHBp/K9xqV0llyNo+f42LQpQO56KV37jLGiwdsHDsjO1cCa76MQ9gffV/5TiJAnXd0P0jV9vyEorpYDXtQLJDtdP1j6QxAgP+ysrfq64mWFUkUNKLjLaQ0jog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/upR8xrd8bhbOcqASZ1xButsmAFUZM5jN0a3BTp+4zk=;
- b=OtHEe2AJK6/Hodct9k9ugIsCVffHrKZtYpWPMTxqfNkHsF0bkeSjzsLr4eBv0MwJYiLEuK8vVMvdVIgkM9K+pCGGpoJxOAf7W4bt6C2ZfLKgAHskyF/5R0bxRgnnLyIsMTArrrvS9y2dskJGlRoRqt+QrOl3anwItenU0YSuO13NFbMrQBnBsVQbilYJPU0mDVrf4Zrn/gUEYLWupsAb8q/FUMR+Ibbl0j9HXA4bjb0Aw2qhEmViOJMPy3ey8Xp7Sx2+5DcN9ybC1JTCI2pBlGBsQ3kqzhvfSQUNumqtZFVu+P74ko3o2AWBtzIc2JaPL3DhMVxvX9E5ALTWGhQr2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/upR8xrd8bhbOcqASZ1xButsmAFUZM5jN0a3BTp+4zk=;
- b=erhFzGOibV3KKb/F6E4fEOtFRdewJmnUHx48b4i11Sc7LNf5GaCNcn7xWk7SN1Sn6nn4JJimLTU1kmGYxg6fWORoFgpTJP8f2Qe4bP8tyj8Kn3Dr3D5vz27gNeTWcxG22eltjXR9xM7hBo835SOpPAK2hNBy/Wjr/aLhEz4phTs=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by SA2PR10MB4443.namprd10.prod.outlook.com (2603:10b6:806:11b::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.18; Mon, 22 Jul
- 2024 15:09:25 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%3]) with mapi id 15.20.7762.025; Mon, 22 Jul 2024
- 15:09:25 +0000
-Message-ID: <3072c39e-fd1b-4cc1-a189-2aa64a1d5984@oracle.com>
-Date: Mon, 22 Jul 2024 16:09:16 +0100
-Subject: Re: [PATCH 2/2] vfio/ccw: Don't initialize HOST_IOMMU_DEVICE with mdev
-To: Eric Farman <farman@linux.ibm.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Thomas Huth <thuth@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- "open list:S390 general arch..." <qemu-s390x@nongnu.org>,
- qemu-devel@nongnu.org
-References: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
- <20240722070713.1342711-3-zhenzhong.duan@intel.com>
- <40cf2370a1838b1aa1e9eb2cfc75a0543ceb45bd.camel@linux.ibm.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <40cf2370a1838b1aa1e9eb2cfc75a0543ceb45bd.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM0PR02CA0200.eurprd02.prod.outlook.com
- (2603:10a6:20b:28f::7) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVujL-0005dg-1G
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 11:13:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721661217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OktzIyp+O8Bk73QmL0XsgshYqeJl7DE38QlOHnqONt0=;
+ b=cPCdZUDxKi6y/2+tK7nXiMA7y8y/1v5HyL7iAtAP17RfzNXa4K3QnyQFqu6lNqy9fc8DGc
+ ZzFNslUwI/CaUv9lXrwKAZVodqQC5aSTErd5mhX8rLNEc5zJvrrgllO9Mw1BxThOzHvlnC
+ WOk0grZ1UhtRqX67i765QnDxi8iUrnM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-2UneoxcNOdSVqWUQ-UkjUQ-1; Mon, 22 Jul 2024 11:13:34 -0400
+X-MC-Unique: 2UneoxcNOdSVqWUQ-UkjUQ-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-79efd11a9faso520028985a.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 08:13:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721661214; x=1722266014;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OktzIyp+O8Bk73QmL0XsgshYqeJl7DE38QlOHnqONt0=;
+ b=eGfy2SNnWOavPCEvm5cMlhrRtLVmY0I/w2dzVZk4+myPGFg+PLFpdAVjlclFndy95V
+ h6ZrhnJUBY+awBNvS4z+fFhdmE6smBZI8Ky64+Y5NZSMp0f0ux/kjbEaCjFl9iZqKY0Y
+ Y6Gl24U1O2lzLjBr+zKRNL5nJMS0fGY3mR2PKaMwsiwyX9okToLPh43cgCyoXymrTBBq
+ 0YyDZrStQw+QIteyHqanIbpLJdrDyij3m7mPSvihHqotKYZcrz82960a9OvdCZCHa1nN
+ XrOIjFoxPSsYTLv4lAoTqfRPCphXGQ13n+5aRakbAg2U7u4leb04KRk+zZtwJwhQEw22
+ c/Hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfXhPJHjqk6YFxxn0npwZNIfCP77eSlVdr9UQXr/wFxgHPQqhQAKRMft8CMmI/Qbl6c/rfLB6QBBpYRV5Nmk7EW2cFIwE=
+X-Gm-Message-State: AOJu0YxkeXANmPjtG7AILHq6KcFLchWYHoj91fERknaDvt4eFB6iz4Pf
+ mK6j6GlESTym371IvZ0RUKnx5hDqfs83A6d3UOuO8tdv+QqfD8W1x1fIP8lzYaqyjo4+/D/ZFfa
+ S5dF2hOJq/tUPwpUN7LQnvAo/tv7rhdaOeMFCGb4s+r4lA0am2Al4
+X-Received: by 2002:ad4:5f8d:0:b0:6b5:ebd3:b8f8 with SMTP id
+ 6a1803df08f44-6b9610274b0mr107531256d6.4.1721661213824; 
+ Mon, 22 Jul 2024 08:13:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6lFNYxm3ZfwYg/+M9DlMwjY7rzgbhMx0FwTfK65/we+WrBaO6tTbX5pQY90zN/ASea4Pliw==
+X-Received: by 2002:ad4:5f8d:0:b0:6b5:ebd3:b8f8 with SMTP id
+ 6a1803df08f44-6b9610274b0mr107530926d6.4.1721661213407; 
+ Mon, 22 Jul 2024 08:13:33 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
+ ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b7ac7bd2a7sm36253976d6.20.2024.07.22.08.13.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 08:13:33 -0700 (PDT)
+Message-ID: <51012898-c535-4fb1-b101-3d613d46fc30@redhat.com>
+Date: Mon, 22 Jul 2024 17:13:30 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|SA2PR10MB4443:EE_
-X-MS-Office365-Filtering-Correlation-Id: d8768ea4-a1dd-4453-365d-08dcaa604628
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?T3RrUnQxRkVMa0hQdURJTnoxMnZCTFRUUHllWDh4MGhwQVZreE9jT0ZvbzZz?=
- =?utf-8?B?eG5XU001cHhjZ3ZiREs5OUh0MnRSa1NKZ3Irb2wrQUswYzZuZTIvd3ZPazN3?=
- =?utf-8?B?VXBTOUNKQUIwOEI1Q2MwQWU0VlMwTnViNkg1aWZQcmRFbUJaNlVydGNuV3h5?=
- =?utf-8?B?RGpwVmJyeVhVZUZhcnIxbVk3WURCdjBxN2pMNEJKcUdHd2Y2TWs3czRtNnRH?=
- =?utf-8?B?WGhMUzBkQXRHeFFaa0tNalNVTmNSOVl4WnVEUExsR0Q4Y1JqRUpraWtHaUlw?=
- =?utf-8?B?MFRYeWMvRGFSblNVamR3VzJNVm9mS1NTUG1WbVd6TlZJU1FLZUU4WGNxWTIv?=
- =?utf-8?B?SGZ0L0JvRnRaN1dNT2pUU3YvYmI1OUpxa05CSDl0K0FGVkV0MWVURml4a1FX?=
- =?utf-8?B?VGRRaHRraFdNMTFrNWE0Tm1BSG5QVmhhd1pmczNHL2wzalNGT0ZLTk1BL1h1?=
- =?utf-8?B?cE1OckJLbGUxQ1BNU2VsVmhWV3QrU3JDVmlKMW8vdG1odUVvWUZENlIwakZ4?=
- =?utf-8?B?WEkxejgycjR1bGYzamdaRi9JM1p0dTgxN29kZWNFWG5MSlByeng5TGFiZW9Z?=
- =?utf-8?B?Zk10TEx2YlJYSHFQUFc2UHpacHUwS293VHhsR01kZXZPbzhwQXg3V2lXNlRj?=
- =?utf-8?B?TjRKbEFkZC9ORDI0UTVEZ3JsU2VLVXpSSmNCbXVlUTF2bjJaYkZzWGkvclNT?=
- =?utf-8?B?ckVySFdkSytrRHdSSkhtb2wzZDRtNTVyWXB4S05pVnhUVG91N2lPQmw0Q2NZ?=
- =?utf-8?B?akV0aXRscEVjTDY2aWZWZ09JZDlFYkdzYWRWd1JJbTVqVkFISEZpZnk5Z213?=
- =?utf-8?B?QmJ5dWVsWjRPa2UrSDlERUVFMXFoTTk3WDdFdldNeTRIR2lpdHc5c01JQUtZ?=
- =?utf-8?B?d1IrbTRuOUlUeVVpMG5oYkExNlpTaEVza3Baa1R1M3VUd1I4bzlmaTV5NVJa?=
- =?utf-8?B?SVVCVzFJM1pmSU4xcTBCUVlMa0dkNW9zSyt0RWFBVDk2YzVaYjN0NnRlYVFW?=
- =?utf-8?B?cXBtSThqdzQwQWtPRHBNdkoySW14K2JwL2dFTitRL3ptY2o4L2Q1Qi9KQk5R?=
- =?utf-8?B?emhmSUI0dzlvRkdXT0VRMHJxazdtU1JCam5oV2x6MFBEbTN0N3hOcmVOYXQy?=
- =?utf-8?B?blFwVmVmYmZ4MDA1MU1xSGxIdnE5aU9JVmF0ZWpHaE9UK2p6aHZXdVMzVG1G?=
- =?utf-8?B?UWpqL2d1ZnlwK3lIMlFzTlYzYW1qbnF1SEtSNGVqTjBxVjFlbDE4VnFHS1N3?=
- =?utf-8?B?NUJjNGVLRlVBVmQ4UmEyZnJ0Y3R3NVo2MzUyRkZBMEs3ZjZvWVBwNVNXWGFP?=
- =?utf-8?B?OFJzdEt6VUZ5cnBqNThyNFpHMlY4eEpMR3pRN2czVlNwNUwxdldXcWQ4U21k?=
- =?utf-8?B?T2tBZUdWQ0RLVDVxQmg1NVBHUHB1M0oxZFRCaDNZK2xSWEhqOTRMRnBXcE02?=
- =?utf-8?B?RUhwSkNYNlZEb1RHQ044ZE5nb1RiL3BrZ0dDaG91OFJRL3VLN1lGdGtPWjNM?=
- =?utf-8?B?RjNub3k2WGxPN1p2Z0dzRkdRVHlaelY1NVFUbmk4TnVsQ1duMGdSbFU4UUZG?=
- =?utf-8?B?S3M1QTJNbDZEc1RTMGNscjF1cEhrYXdpSi9QOXBZWkdLalJkbnZ1Y0NDV2pH?=
- =?utf-8?B?K3hzNUF4ZEUydUZDTzF5TUlzRGNWV3FxR0c2WjJpNkZWM0RSaEZFSng3ZG44?=
- =?utf-8?B?b1pkLy9TbFZ1Z25YOUU5RHJBY1Jaa1diVG94SEdKQ210Y1IxWHFKd0JmYjM5?=
- =?utf-8?Q?1c0xbMqIBOVpmVprZI=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Tm9BeFVFV2Rsdk56N0N4ZThDeWg4SStYaWtkemgyb3BiOENibzV2TEN5MXRM?=
- =?utf-8?B?K3VVMWFyaEhxeDFBRitpWm1oNE5IT2FUbjRpRWgrUER4dzdDR095OW5mYkxM?=
- =?utf-8?B?WTZoYU5NeGdPeWU1M1hCWEFoYTJrM1pIWlhaR2htd2ZyWmZXZVFJZVFGajR2?=
- =?utf-8?B?WXNpYWRQN1dQRnJHSVllZGlERUdNd3E2NVlLYi9yZS8zbFBVM0tDSmhEN3hs?=
- =?utf-8?B?c1ZwdUdob21yNHd3QUd3OWNQem5BYmw4NTF5Qmo3R1Rtd1E1TXlaeWxKcnBw?=
- =?utf-8?B?UHFLR2tmMjg3bDV5NWRrd2llREc3bDRPRTUrQzREdlk0NTlaTWpDMzNJU0po?=
- =?utf-8?B?R20vOVdsaEJ3bWNkS2t5OWtja1BmQWRmdHd5WVR1cEFUNHQ5WDVRRFNNTEZH?=
- =?utf-8?B?Q2V6NE9XNW1vQW84OW93N0ZSTm9iR0VyRHJaUXR5NFNhSjB3VkNnbFFPL1dn?=
- =?utf-8?B?K0FWWUNDRUJuZWZwY1lSa2ZQdFIrc3M5M05CdVRUZmk3SkZSSnFsOFJmV1p3?=
- =?utf-8?B?NE1kTWVnUzhjdmEwVGFlZmFmUzN1RFZCZ0JjcFdQN01yVjM5cmROekkybjMr?=
- =?utf-8?B?WTdWVmlsUkFheU0zMGd0QVBrT1BoUm1SaUphZUtuaGMwMUl2UDFsRm9QYlFT?=
- =?utf-8?B?U2NHSkN3S3pOL0ZnVmUrdzlVN0hPMDA2Y1oxczVpT1ppS2dtMlQyQUFxNENQ?=
- =?utf-8?B?YTdRaFZqWU1zNXlyeWNpSXZmVTFSbUVwNllnZ090eDBycEt0eEF0ajVEbnNK?=
- =?utf-8?B?TDYwWlFENkora3Job002NVZHem5BSDJ3S0I3YWNHK2E5VnJUU3lNalVBSkdW?=
- =?utf-8?B?b0ExQUxoaGNFajJOUitVaXd4RUJudG5yTGkrMXB3N2NYbkUvZDMwemFWWmIr?=
- =?utf-8?B?WGVLSHFaeGxVS2dBNGtrblpCY2Z2bG9Ncmg3QW5kMlJ0eUJNbStkaFVVc2NW?=
- =?utf-8?B?MmRBeEZPK09Kem1FcE1LOWRHMDRYak9OQzVCQXNla3JoNnhGL3ZERVkrNmZI?=
- =?utf-8?B?V1lXdk54ZmMycjVCTml0dEZoODYrc2RLY1dQU0htZ3VHNjRuMGw4VUprT2Vq?=
- =?utf-8?B?YytSMjBnektBZThKcnlLZTdzODlPYzN0VmxZNDBLR2FzZXNiU3dnWTNraXVv?=
- =?utf-8?B?OW1BYlBnU3NkbnhUL2c5VTQwbktDRHJ4Si8wY1Fobks5S2N4RXhyeDcxc3dC?=
- =?utf-8?B?bzl2dDE1OGNKWGJiSFAvQ09uMW1nWWpEcElibjJaZHVaanRtTHZqSVN1VHo4?=
- =?utf-8?B?NTFYQjg5SzhyR1RYbG5HaDl2OEdXbGtOcVQ5TWlCaFRyQlVKNHBNR3RpbEhw?=
- =?utf-8?B?cGRUYVIrcVVqdDRORVBRUHFnN1NtS2pMZ29oZHYybHZUckdpU2t6ZDNJeGhB?=
- =?utf-8?B?cWpJV0M2NEVIT1JUdTBGMjVOa01hZURvamRLM2htTFNwOWNZQkRBWEh4Yzlk?=
- =?utf-8?B?NElNOWZTZ05ZNUEzV0FlV21LTUdPOFBoVGhGazNtdUplUWpxRldTblRMSUtl?=
- =?utf-8?B?cElDbFhKTTV0blpDSnlnZkRveTlZT2t3NjFhckJOSHF2K1V6cm40NUJSV2lq?=
- =?utf-8?B?aEdJbnJ5OTF3dVBKUXV3RU5BNHlHUzB6RVpacVViTHhrRE5hQUZuMkh6VGdG?=
- =?utf-8?B?UzlKSmt4MDdoelU0K0JNQUMzSFptZzQ0dDdObjJWNnRSQ09Pc2djSDY3eXJt?=
- =?utf-8?B?MXRrVUVuT3d3b0xQN1A3bk4weEF0cFg5ak9pK2xsVzZEeHpzM1ZmMkQrQjFj?=
- =?utf-8?B?QlJWaytCUVRMaStzN0UxMndYdHhjYkFyMDN3K0wvb2k2a2hGTndiU0pENlZm?=
- =?utf-8?B?NGZsdTNxRm5QRDd0ZzFYZWNVNHFMNCtUZENOQWNXZ3Z2UEg3bDk0TDJsUDd4?=
- =?utf-8?B?T2M3NldXelJSUGQ2TE52bE1TVklrNmtwd1NKNGFydVFYS0xoNHlOYTJBK3Zo?=
- =?utf-8?B?L2tDdHpCYTRBUFVVbzhUd3R1SUpnZThlQm1xZkliTnVOWldHM0FWZ2NtNFZz?=
- =?utf-8?B?QXMxL1ZyMUpXL1FMYlEyVkRDdktSS2lKOC9IdllZcmg1M3BETkZIVXZoV2hG?=
- =?utf-8?B?eXdEWEYySTV4aGI0NjlpZHUwNDVPenVwSEJrQ0hXS2pubFJGV2FKWlVVSTkx?=
- =?utf-8?B?YlFvQk5lU0R6ak9yMlZDRlVwU0x2K3ZLRVZVWHl6TmxaZUoyV0VHVERvM1hM?=
- =?utf-8?B?VEE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 1U1y0dH/Y3bnPk3e3IfOtQmnksCOIEuvrnuqGLxfZsde4XWQub78Xp0JfQpnm3lj0RRfCpf2/XNmjiQl4jQL6M7pPEbxSzP0Rb1bmsWtQ2koNx+/C6czuY0x2X7dRqPhuZd3oWF5mxD1OecYEtTNQG2RPFBCBJ73x98PJdblTEF9zr8Ynzqq7IRmChGbG18MbzTuWeX7Igk1kErzEjdqOz5RATEFPdD+Qf2esSAlG3XNBR+nyPSP+6PDThnMeOictrW5SjZFtf3OynwjKw2zBxonHv9DDLhVN4ckYmQJ5VLHAuBsnrHU6yg6g9qAYILdkdHAzfvxVl3NeDoJsZUUT1F+2qVUU9fUURx+P3pk2BtwxmziSEfm4WL1hFkuP7Vh2XOkXXXXRM52rZcUbwbP7aAFavTRhUFsbtA2nNgw3DzPC8P+th1gELFGCEN1iiGrmDEUT/3AyD3HvQo05irwJ0KkKd4mAI0WZPPTuZP/bSMJcvSMp7V/3AWHu3/MBhmMjhFn9XodNWS+XZYKlMBx6bPnCNe913L6K48BWPeXpg0MRXGUcBFd4Aq2T/kq6d9kdIZogEWDdofejqpRaQJ/20+WbRlfI32Ezdiwn9Y18tQ=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8768ea4-a1dd-4453-365d-08dcaa604628
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2024 15:09:25.2901 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 06nLXyIMyT+oCXcqhuGLJO+8tQuUqTUGJMJa/dGoj2ZcwnwUgY9BycghUb6zFMpsdmhK1PmkDPtO0ZjetP9EZfhO46t7W0sjsCQqJKppulw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4443
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_10,2024-07-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 suspectscore=0
- spamscore=0 bulkscore=0 malwarescore=0 phishscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407220114
-X-Proofpoint-GUID: 5ayWgJ5PWXOKLHSId1kXZXjFkGXI3NA8
-X-Proofpoint-ORIG-GUID: 5ayWgJ5PWXOKLHSId1kXZXjFkGXI3NA8
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 12/13] vfio/migration: Don't block migration device
+ dirty tracking is unsupported
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240719120501.81279-1-joao.m.martins@oracle.com>
+ <20240719120501.81279-13-joao.m.martins@oracle.com>
+ <a8239962-c987-4ca1-b342-95fd8f03179e@redhat.com>
+ <f5d64358-70e3-4217-8376-356c8aaac8ea@oracle.com>
+ <1304a8c4-be47-4b47-88dd-328a8f167e54@oracle.com>
+ <967952f0-e3bd-4c86-b4a8-4906e6b3e248@redhat.com>
+ <103a2101-3f9e-46da-b45b-b8a4eaa7d6e7@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <103a2101-3f9e-46da-b45b-b8a4eaa7d6e7@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -215,33 +113,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/07/2024 15:57, Eric Farman wrote:
-> On Mon, 2024-07-22 at 15:07 +0800, Zhenzhong Duan wrote:
->> mdevs aren't "physical" devices and when asking for backing IOMMU info,
->> it fails the entire provisioning of the guest. Fix that by setting
->> vbasedev->mdev true so skipping HostIOMMUDevice initialization in the
->> presence of mdevs.
+On 7/22/24 17:01, Joao Martins wrote:
+> On 22/07/2024 15:53, Cédric Le Goater wrote:
+>> On 7/19/24 19:26, Joao Martins wrote:
+>>> On 19/07/2024 15:24, Joao Martins wrote:
+>>>> On 19/07/2024 15:17, Cédric Le Goater wrote:
+>>>>> On 7/19/24 14:05, Joao Martins wrote:
+>>>>>> By default VFIO migration is set to auto, which will support live
+>>>>>> migration if the migration capability is set *and* also dirty page
+>>>>>> tracking is supported.
+>>>>>>
+>>>>>> For testing purposes one can force enable without dirty page tracking
+>>>>>> via enable-migration=on, but that option is generally left for testing
+>>>>>> purposes.
+>>>>>>
+>>>>>> So starting with IOMMU dirty tracking it can use to accomodate the lack of
+>>>>>> VF dirty page tracking allowing us to minimize the VF requirements for
+>>>>>> migration and thus enabling migration by default for those too.
+>>>>>>
+>>>>>> While at it change the error messages to mention IOMMU dirty tracking as
+>>>>>> well.
+>>>>>>
+>>>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>>>>>> ---
+>>>>>>     include/hw/vfio/vfio-common.h |  1 +
+>>>>>>     hw/vfio/iommufd.c             |  2 +-
+>>>>>>     hw/vfio/migration.c           | 11 ++++++-----
+>>>>>>     3 files changed, 8 insertions(+), 6 deletions(-)
+>>>>>>
+>>>>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>>>>>> index 7e530c7869dc..00b9e933449e 100644
+>>>>>> --- a/include/hw/vfio/vfio-common.h
+>>>>>> +++ b/include/hw/vfio/vfio-common.h
+>>>>>> @@ -299,6 +299,7 @@ int vfio_devices_query_dirty_bitmap(const
+>>>>>> VFIOContainerBase *bcontainer,
+>>>>>>                     VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+>>>>>>     int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t
+>>>>>> iova,
+>>>>>>                               uint64_t size, ram_addr_t ram_addr, Error
+>>>>>> **errp);
+>>>>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
+>>>>>>       /* Returns 0 on success, or a negative errno. */
+>>>>>>     bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+>>>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>>>>> index 7dd5d43ce06a..a998e8578552 100644
+>>>>>> --- a/hw/vfio/iommufd.c
+>>>>>> +++ b/hw/vfio/iommufd.c
+>>>>>> @@ -111,7 +111,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice
+>>>>>> *vbasedev)
+>>>>>>         iommufd_backend_disconnect(vbasedev->iommufd);
+>>>>>>     }
+>>>>>>     -static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>>>>> +bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>>>>>     {
+>>>>>>         return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>>>>>>     }
+>>>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>>>>>> index 34d4be2ce1b1..63ffa46c9652 100644
+>>>>>> --- a/hw/vfio/migration.c
+>>>>>> +++ b/hw/vfio/migration.c
+>>>>>> @@ -1036,16 +1036,17 @@ bool vfio_migration_realize(VFIODevice *vbasedev,
+>>>>>> Error **errp)
+>>>>>>             return !vfio_block_migration(vbasedev, err, errp);
+>>>>>>         }
+>>>>>>     -    if (!vbasedev->dirty_pages_supported) {
+>>>>>> +    if (!vbasedev->dirty_pages_supported &&
+>>>>>> +        !iommufd_hwpt_dirty_tracking(vbasedev->hwpt)) {
+>>>>>
+>>>>>
+>>>>> Some platforms do not have IOMMUFD support and this call will need
+>>>>> some kind of abstract wrapper to reflect dirty tracking support in
+>>>>> the IOMMU backend.
+>>>>>
+>>>>
+>>>> This was actually on purpose because only IOMMUFD presents a view of hardware
+>>>> whereas type1 supporting dirty page tracking is not used as means to 'migration
+>>>> is supported'.
+>>>>
+>>>> The hwpt is nil in type1 and the helper checks that, so it should return false.
+>>>>
+>>>
+>>> Oh wait, maybe you're talking about CONFIG_IOMMUFD=n which I totally didn't
+>>> consider. Maybe this would be a elegant way to address it? Looks to pass my
+>>> build with CONFIG_IOMMUFD=n
+>>>
+>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>>> index 61dd48e79b71..422ad4a5bdd1 100644
+>>> --- a/include/hw/vfio/vfio-common.h
+>>> +++ b/include/hw/vfio/vfio-common.h
+>>> @@ -300,7 +300,14 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase
+>>> *bcontainer,
+>>>                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+>>>    int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+>>>                              uint64_t size, ram_addr_t ram_addr, Error **errp);
+>>> +#ifdef CONFIG_IOMMUFD
+>>>    bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt);
+>>> +#else
+>>> +static inline bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>>> +{
+>>> +    return false;
+>>> +}
+>>> +#endif
+>>>
+>>>    /* Returns 0 on success, or a negative errno. */
+>>>    bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+>>>
+>>
+>> hmm, no. You will need to introduce a new Host IOMMU device capability,
+>> something like :
+>>
+>>     HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING,
+>>
+>> Then, introduce an helper routine to check the capability  :
+>>
+>>     return hiodc->get_cap( ... HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING...)
+>>   
+>> and replace the iommufd_hwpt_dirty_tracking call with it.
+>>
+>> Yeah I know, it's cumbersome but it's cleaner !
+>>
 > 
-> Hmm, picking the two commits that Cedric mentioned in his cover-letter reply [1] doesn't "fail the entire provisioning of the guest" for me.
+> Funny you mention it, because that's what I did in v3:
 > 
-> Applying this patch on top of that causes the call from vfio_attach_device() to hiod_legacy_vfio_realize() to be skipped, which seems odd. What am I missing?
+> https://lore.kernel.org/qemu-devel/20240708143420.16953-9-joao.m.martins@oracle.com/
 > 
-> [1] https://lore.kernel.org/qemu-devel/4c9a184b-514c-4276-95ca-9ed86623b9a4@redhat.com/
->
+> But it was suggested to drop (I am assuming to avoid complexity)
 
-If you are using IOMMUFD it will fail the entire provisioning i.e. GET_HW_INFO
-fails because there's no actual device/IOMMU you can probe hardware information
-from and you can't start a guest. This happened at least for me in x86 vfio-pci
-mdevs (or at least I reproduced it when trying to test mdev_tty)
+my bad if I did :/
 
-But if you don't support IOMMUFD, then it probably makes no difference as type1
-doesn't do anything particularly special besides initializing some static data.
-The realize is skipped because you technically don't have a physical host IOMMU
-directly behind the mdev, but rather some parent function related software
-entity doing that for you.
+we will need an helper such as :
 
-Zhengzhong noticed there were some other mdevs aside from vfio-pci and in an
-attempt to prevent regression elsewhere it posted for the other mdevs in qemu.
+   bool vfio_device_dirty_tracking(VFIODevice *vbasedev)
+   {
+       HostIOMMUDevice *hiod = vbasedev->hiod ;
+       HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
 
-	Joao
+       return hiodc->get_cap &&
+           hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING, NULL) == 1;
+   }
+
+and something like,
+
+   static int hiod_iommufd_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+                                        Error **errp)
+   {
+       switch (cap) {
+       case HOST_IOMMU_DEVICE_CAP_DIRTY_TRACKING:
+           return !!(hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING);
+       default:
+           error_setg(errp, "%s: unsupported capability %x", hiod->name, cap);
+           return -EINVAL;
+       }
+   }
+
+Feel free to propose your own implementation,
+
+Thanks,
+
+C.
+
+
+
+> 
+>> That's not a major problem in the series. I can address it at the end
+>> to avoid a resend. First, let's get a R-b on all other patches.
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+> 
+
 
