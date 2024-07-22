@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4241C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C273C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn4J-0003y7-HM; Mon, 22 Jul 2024 03:02:47 -0400
+	id 1sVn4B-00035M-34; Mon, 22 Jul 2024 03:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn46-0002V2-Ub
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:34 -0400
+ id 1sVn3s-0001SB-TN
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn44-0006hY-MR
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:34 -0400
+ id 1sVn3q-0006XV-Oi
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631752;
+ s=mimecast20190719; t=1721631728;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wFiSy8dnquqxFZ4SIsZQtIWnG9t46QRosa8oiF0a59k=;
- b=F5xOKgizIfvxITz84h4XlD9ka0u9oI/cNFz6C8SCNCTutaTNiAK2FjX3RuRDOLn5Yv5/xY
- zkS7msMg5oZeY4kUMxnblJGnsI2JVak5K/haXq8cgaVoXRYt+7jDSspQCd2sIu5tY+9tLQ
- CS5XtWZlcoyRnH5ucptgGgLV5TC11vI=
+ bh=YOicOYD38yRq9S9QWOEkM+4EGRe93blGX0zFcQggxnI=;
+ b=inv+X2jCMm+tXupAO9jn+gJsIkzE9WPkdErokh7J8x3Jq1I6+e/LiQ+FiRzjZPZRL0jmfF
+ N/njLyLKSYZ/Y2z4jQLydu0vYcX17A9acuQ1r7igj6VU+A1oCSpp6M+PRvQ7pefmYWjKuV
+ 0HTaaJKMeIc6EvW1u7FOzQ+iRNQ3b0I=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-PIwLtRnEPhi4XnbPeKjm9A-1; Mon,
- 22 Jul 2024 03:02:28 -0400
-X-MC-Unique: PIwLtRnEPhi4XnbPeKjm9A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-3vhdAMckOUu9avS4CuGwWQ-1; Mon,
+ 22 Jul 2024 03:02:02 -0400
+X-MC-Unique: 3vhdAMckOUu9avS4CuGwWQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E1ED1955D44; Mon, 22 Jul 2024 07:02:27 +0000 (UTC)
+ id 944471955F56; Mon, 22 Jul 2024 07:01:53 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.252])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF5B11955D4B; Mon, 22 Jul 2024 07:02:15 +0000 (UTC)
+ id 69794196BB78; Mon, 22 Jul 2024 07:01:48 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 19/25] qga: move declare of QGAConfig struct to top of file
-Date: Mon, 22 Jul 2024 10:01:16 +0300
-Message-ID: <20240722070122.27615-20-kkostiuk@redhat.com>
+Subject: [PULL 10/25] qga: conditionalize schema for commands requiring
+ getifaddrs
+Date: Mon, 22 Jul 2024 10:01:07 +0300
+Message-ID: <20240722070122.27615-11-kkostiuk@redhat.com>
 In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -84,82 +85,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-It is referenced by QGAState already, and it is clearer to declare all
-data types at the top of the file, rather than have them mixed with
-code later.
+Rather than creating stubs for every comamnd that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the network interface command on
+POSIX platforms lacking getifaddrs().
+
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+This changes the error message for affected commands from
+
+   {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+
+to
+
+    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20240712132459.3974109-20-berrange@redhat.com>
+Message-ID: <20240712132459.3974109-11-berrange@redhat.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/main.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ qga/commands-posix.c | 13 -------------
+ qga/qapi-schema.json | 15 ++++++++++-----
+ 2 files changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/qga/main.c b/qga/main.c
-index 17b6ce18ac..647d27037c 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -70,6 +70,28 @@ typedef struct GAPersistentState {
- 
- typedef struct GAConfig GAConfig;
- 
-+struct GAConfig {
-+    char *channel_path;
-+    char *method;
-+    char *log_filepath;
-+    char *pid_filepath;
-+#ifdef CONFIG_FSFREEZE
-+    char *fsfreeze_hook;
-+#endif
-+    char *state_dir;
-+#ifdef _WIN32
-+    const char *service;
-+#endif
-+    gchar *bliststr; /* blockedrpcs may point to this string */
-+    gchar *aliststr; /* allowedrpcs may point to this string */
-+    GList *blockedrpcs;
-+    GList *allowedrpcs;
-+    int daemonize;
-+    GLogLevelFlags log_level;
-+    int dumpconf;
-+    bool retry_path;
-+};
-+
- struct GAState {
-     JSONMessageParser parser;
-     GMainLoop *main_loop;
-@@ -996,28 +1018,6 @@ static GList *split_list(const gchar *str, const gchar *delim)
-     return list;
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 559d71ffae..09d08ee2ca 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1142,14 +1142,6 @@ error:
+     return NULL;
  }
  
--struct GAConfig {
--    char *channel_path;
--    char *method;
--    char *log_filepath;
--    char *pid_filepath;
--#ifdef CONFIG_FSFREEZE
--    char *fsfreeze_hook;
--#endif
--    char *state_dir;
--#ifdef _WIN32
--    const char *service;
--#endif
--    gchar *bliststr; /* blockedrpcs may point to this string */
--    gchar *aliststr; /* allowedrpcs may point to this string */
--    GList *blockedrpcs;
--    GList *allowedrpcs;
--    int daemonize;
--    GLogLevelFlags log_level;
--    int dumpconf;
--    bool retry_path;
--};
+-#else
 -
- static void config_load(GAConfig *config)
+-GuestNetworkInterfaceList *qmp_guest_network_get_interfaces(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+ #endif /* HAVE_GETIFADDRS */
+ 
+ #if !defined(CONFIG_FSFREEZE)
+@@ -1222,11 +1214,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+ /* add unsupported commands to the list of blocked RPCs */
+ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
  {
-     GError *gerr = NULL;
+-#if !defined(HAVE_GETIFADDRS)
+-    blockedrpcs = g_list_append(blockedrpcs,
+-                              g_strdup("guest-network-get-interfaces"));
+-#endif
+-
+ #if !defined(CONFIG_FSFREEZE)
+     {
+         const char *list[] = {
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 38483652ac..79ed4f0e21 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -654,7 +654,8 @@
+ # Since: 1.1
+ ##
+ { 'enum': 'GuestIpAddressType',
+-  'data': [ 'ipv4', 'ipv6' ] }
++  'data': [ 'ipv4', 'ipv6' ],
++  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+ 
+ ##
+ # @GuestIpAddress:
+@@ -670,7 +671,8 @@
+ { 'struct': 'GuestIpAddress',
+   'data': {'ip-address': 'str',
+            'ip-address-type': 'GuestIpAddressType',
+-           'prefix': 'int'} }
++           'prefix': 'int'},
++  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+ 
+ ##
+ # @GuestNetworkInterfaceStat:
+@@ -702,7 +704,8 @@
+             'tx-packets': 'uint64',
+             'tx-errs': 'uint64',
+             'tx-dropped': 'uint64'
+-           } }
++           },
++  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+ 
+ ##
+ # @GuestNetworkInterface:
+@@ -722,7 +725,8 @@
+   'data': {'name': 'str',
+            '*hardware-address': 'str',
+            '*ip-addresses': ['GuestIpAddress'],
+-           '*statistics': 'GuestNetworkInterfaceStat' } }
++           '*statistics': 'GuestNetworkInterfaceStat' },
++  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+ 
+ ##
+ # @guest-network-get-interfaces:
+@@ -734,7 +738,8 @@
+ # Since: 1.1
+ ##
+ { 'command': 'guest-network-get-interfaces',
+-  'returns': ['GuestNetworkInterface'] }
++  'returns': ['GuestNetworkInterface'],
++  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+ 
+ ##
+ # @GuestLogicalProcessor:
 -- 
 2.45.2
 
