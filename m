@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFFFC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02914C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqzn-0002cV-2Y; Mon, 22 Jul 2024 07:14:23 -0400
+	id 1sVrGk-0007YR-Gg; Mon, 22 Jul 2024 07:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqzk-0002S0-6f
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:14:20 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqzi-0004Jw-1b
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:14:19 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-368557c9e93so2107299f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:14:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646856; x=1722251656; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mrk2g2iMtnBRvtrBAoapMSBcMDfcCWKQff90zKvNuK8=;
- b=uH9Bt1diQUxDNNipwH2hOzfCbKNutV7bzf44MeMYBL+cYStDlFjT+V2b3sc9GF2dO3
- EekDqJSAJuZw76oVAXQqnjpaHMngyLWYAdIl8zDtBKHEJ3pRNiYb5uvSBH84QMO0388P
- iAXlTPTzr93jBLG8UL3CIJ2RqiFYjjrPgsV/PE6Uc7iONMCqkNqK6Ex3JyBYBM+wwx7h
- w5Kol6NFiWQakxH3qlC4Se4RgEiCk+4X976GiUZF/Y0LL/leo6wNGdjluUOSPZrRw4hy
- 1AZ6bowTsiBDBJxcBq8JZNvHNQCgZ9lI0u20bR6RymGwIw+YB+7W+DUkvnjOeHUJuLI5
- ew9Q==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sVrGj-0007Ry-4g
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:31:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sVrGg-0007ee-Lk
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:31:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721647909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gyPEZosLEJoPzw9jwU4q2rXpE+iQ8AW2A91E1ZFe2VA=;
+ b=EKuW/loMj/gqNkalApre6ckNz3HW1JMLmkZuAvxpNHncvu1XebL011itSK6DIS0nezFpkr
+ wicbANWcXMNHl5rIVoMnSe4qoVjTdE5Ovq2d5EIzM30WuNydEobJv+ypAOmVwvkftaxXsZ
+ Cw+aqt/tABjJv1grrtLmSbmgW5wkOZs=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-428-rCT_s_2CN-KFFTSlipA_-Q-1; Mon, 22 Jul 2024 07:31:47 -0400
+X-MC-Unique: rCT_s_2CN-KFFTSlipA_-Q-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-65f94703b89so140038117b3.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:31:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646856; x=1722251656;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1721647907; x=1722252707;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mrk2g2iMtnBRvtrBAoapMSBcMDfcCWKQff90zKvNuK8=;
- b=gqEa70EEl5eNbYG3X9FrtPSQ7nG45O7/DrUH8bvfyVSZWBgJFf/zJ3yGh5ZSU01sk2
- JUm58ft2OTmmXRxnNcduwbWHiEKxTi5TIA6UJYCbvw+rpltN+pzlgv0UXsk0z749xpAI
- 3aC4X+EOgi17WpPVtbtRUw/8DPBi8tt8AL3UP6JkpGcpar98ktt33s6mktfGj0oc9gcY
- 5HWTsePyjVcC1XXcnELSqfY+ISdynKmfghP4rS7A5I1lxSqq3Acn7U30un5NVyRbMCpj
- b3hdmoG3q5nqCkqZVlC4yiY3j54aYJx660XUkcq+LQRX2pI1nN7/dDYWxssTkarG3cvT
- FE0g==
-X-Gm-Message-State: AOJu0YyNapcw/YYiyvp7Nf9ou/aDEiyLrFd67YPcGuGXWohlQwzU/Cpd
- QrSPTC4SWhJuywZJF1Wb63vNcI4EmyL9lOz8tBJeUiz5cN7n4SCVP/KJ+mNngBI=
-X-Google-Smtp-Source: AGHT+IHog/oFTJy6XYNf/ScBPInZxgsN2XaercaybmALj6e1X5srF1S4TLQ28yr2hOa93bnEzwBQ2g==
-X-Received: by 2002:a5d:5f8d:0:b0:368:445e:91cc with SMTP id
- ffacd0b85a97d-369bae13627mr5096890f8f.21.1721646855413; 
- Mon, 22 Jul 2024 04:14:15 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ebd50sm8179498f8f.93.2024.07.22.04.14.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:14:09 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF7E962102;
- Mon, 22 Jul 2024 12:04:14 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PULL 13/16] target/riscv: Restrict semihosting to TCG
-Date: Mon, 22 Jul 2024 12:04:10 +0100
-Message-Id: <20240722110413.118418-14-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
-References: <20240722110413.118418-1-alex.bennee@linaro.org>
+ bh=gyPEZosLEJoPzw9jwU4q2rXpE+iQ8AW2A91E1ZFe2VA=;
+ b=Tfn7PHf07cFy6ym8i5cjjT3frdjVQw09mRa4RTytbDAW0JpItFMzRHLCnam1C+Xycl
+ pbXT/UQBjEltxiVesf+3DWmXe4yObFZoRmFpuhSH+0SEi54OSVODNd5W9KEtwJFoEbHa
+ SEDPMpMT3QyaP6elCemne+RFUYixp/MEkE2LDWtYkfthKo5Af+0of8psOeYSjxx4uIqu
+ b/2h6oVLMY/yGBRPYppFi0292G5RTWCqWrngrUT8QKKZ1fIPriP3EGtTwLASUgrY4dFq
+ xSsd5igMjIaaS/zpavvA/cy2opeeBRyddP2emj5DHmT58gr6+rs6jTSbO2NGEwZexay4
+ l3gQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUk8GdUHxxB6KuEwdJFkAsShOAHODBVUEP6Px1NZpjBsUYwBTx160SdxCYoKkre/87S9oTpAY9LzdPuZEjzqqzA2WGkfXw=
+X-Gm-Message-State: AOJu0Ywfqq+xdGPyiOWzW2UsE+02GdaR86vpJNPzyeU7jwYf7NedGmWE
+ cNg6VuvYbVQeadmsnf8Fq8vZmkfcw/fmkpI21ZzeKq1liGHSHPEjzQQF6gRxikjrFRnL3gn5OuX
+ Z1GDlnFHHVDDFx2r/a5LhomBTx/qJZFctjQ/6nrgc3sus20on8ZXUdKHtiYLoPqROwUq9fer1Ou
+ Ls4Lw6h7xMuY2v13pPo/NACGUab1w=
+X-Received: by 2002:a05:690c:385:b0:64b:52e8:4ae3 with SMTP id
+ 00721157ae682-66a634572c5mr112037777b3.3.1721647907183; 
+ Mon, 22 Jul 2024 04:31:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQTQYr8zUa+IMGMvfMYbjNUGaKxvIuGajLpSouFkn/6/PO5nx2TymcbwT6V7lNoEbakc2GJnKCtEa3UBrp3gE=
+X-Received: by 2002:a05:690c:385:b0:64b:52e8:4ae3 with SMTP id
+ 00721157ae682-66a634572c5mr112037517b3.3.1721647906931; Mon, 22 Jul 2024
+ 04:31:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240710125522.4168043-1-jonah.palmer@oracle.com>
+ <20240710125522.4168043-7-jonah.palmer@oracle.com>
+ <20240720151557-mutt-send-email-mst@kernel.org>
+ <CAJaqyWesMrixZo+duwLqNUq311QpCvFJOWob8nnprYeK47T44g@mail.gmail.com>
+In-Reply-To: <CAJaqyWesMrixZo+duwLqNUq311QpCvFJOWob8nnprYeK47T44g@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 22 Jul 2024 13:31:09 +0200
+Message-ID: <CAJaqyWdU901wG=b1joD+ZH=sUOLzvwOJAYwCS=9PfWhsATAZkA@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] virtio: Add VIRTIO_F_IN_ORDER property definition
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,36 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Mon, Jul 22, 2024 at 1:11=E2=80=AFPM Eugenio Perez Martin
+<eperezma@redhat.com> wrote:
+>
+> On Sat, Jul 20, 2024 at 9:16=E2=80=AFPM Michael S. Tsirkin <mst@redhat.co=
+m> wrote:
+> >
+> > On Wed, Jul 10, 2024 at 08:55:19AM -0400, Jonah Palmer wrote:
+> > > Extend the virtio device property definitions to include the
+> > > VIRTIO_F_IN_ORDER feature.
+> > >
+> > > The default state of this feature is disabled, allowing it to be
+> > > explicitly enabled where it's supported.
+> > >
+> > > Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> >
+> >
+> > Given release is close, it's likely wise.
+> > However, I think we should flip the default in the future
+> > release.
+> >
+>
+> Should we post a new version with v9.2 tag enabling it?
+>
 
-Semihosting currently uses the TCG probe_access API. To prepare for
-encoding the TCG dependency in Kconfig, do not enable it unless TCG
-is available.
+Sorry, actually I think this needs some more thought. Maybe in_order
+hurts the performance of devices that are usually out of order, like
+blk. Should we enable only for virtio-net and let each device code
+decide?
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240717105723.58965-7-philmd@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240718094523.1198645-14-alex.bennee@linaro.org>
-
-diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
-index 5f30df22f2..c332616d36 100644
---- a/target/riscv/Kconfig
-+++ b/target/riscv/Kconfig
-@@ -1,9 +1,9 @@
- config RISCV32
-     bool
--    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
-+    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
-     select DEVICE_TREE # needed by boot.c
- 
- config RISCV64
-     bool
--    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
-+    imply ARM_COMPATIBLE_SEMIHOSTING if TCG
-     select DEVICE_TREE # needed by boot.c
--- 
-2.39.2
+> > > ---
+> > >  include/hw/virtio/virtio.h | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> > > index fdc827f82e..d2a1938757 100644
+> > > --- a/include/hw/virtio/virtio.h
+> > > +++ b/include/hw/virtio/virtio.h
+> > > @@ -373,7 +373,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+> > >      DEFINE_PROP_BIT64("packed", _state, _field, \
+> > >                        VIRTIO_F_RING_PACKED, false), \
+> > >      DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+> > > -                      VIRTIO_F_RING_RESET, true)
+> > > +                      VIRTIO_F_RING_RESET, true), \
+> > > +    DEFINE_PROP_BIT64("in_order", _state, _field, \
+> > > +                      VIRTIO_F_IN_ORDER, false)
+> > >
+> > >  hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+> > >  bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
+> > > --
+> > > 2.43.5
+> >
 
 
