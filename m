@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2A1C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60C4C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0WT-00018y-2J; Mon, 22 Jul 2024 17:24:45 -0400
+	id 1sW0Yi-0003CF-Ix; Mon, 22 Jul 2024 17:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW0WH-0000Nb-4N; Mon, 22 Jul 2024 17:24:33 -0400
+ id 1sW0Ye-0002wZ-IF; Mon, 22 Jul 2024 17:27:01 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW0WD-0008RC-Ll; Mon, 22 Jul 2024 17:24:32 -0400
+ id 1sW0Yc-0000jF-Q1; Mon, 22 Jul 2024 17:27:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=NKqTZKbxY0DRlQy87302mXYMYJxfvGIWK2T3dznCNv0=; b=AXGqyKhh3ssOrmVcd1BJ2z8OwC
- IzrdrO+uKke1/g9BKEeK4l0nrtIPHONu0BYu1I3BBWvnQYte3Tyx0Ep7Wv3XJyb4U1z1NKSw3DU1s
- LDRBv63I9ZbPRjPn2KiBBWo9S44H87vpRcLsltPJzBygIX9NpKLeuAK7QyzoJK7z+sSEK8/6MNldi
- Tshexb2H7kcXtrMm2yD0viTMU/twPs0ycEDN5MpGzUVcIkgOB8nhciJfxMHPsotanPvRpEDQD3zCo
- QrCnOmKB1nzcpWf7Wq7oQsd1cW44dy0Zcg46Rr1CQPTg0oUfdRFyHkP5lmydzWIj7+qRPbKqO7ZJl
- D9CXeFqRzPtKZxMakD0hhIX0E9aSD1ebMyyprIxmv//XLMFSKxAHgAJtqdCpzOwUWDnMMt1N6b1aI
- PzU5eKNCeMf82vcpQTxftVTSoEPIfkPrlPlvyzedFJa8tDi4xRrK0f+paUkHEyY+I4KGJ43pPCfMv
- +ECOo9E+P+9YH9qWyb8J/HK2tf3fpQZpzpoAo8W9GfQDvHZno2vfUjf4lDD2+puFfId3U0u7KXK1n
- 5FOFM6YWVd6bpVRhIJCAbKlZvUTJsy4pa6QISfaJ4RELRaX9IwQLPJ5iTKLKvGj9IW6q1REMjYuP4
- d8EYBOUmjkpzwtS4Lq1uMXi6WyL9dBwnfbZ9MGhTo=;
+ bh=ekp8nZSyGbF4baG0fwetw0q1NFHANeINpXRceYAnmRM=; b=f421mLsQVpf8L1UKZzSRT6WxyY
+ /8onrYJ6JVLKV4B3NOD7qgENC+veOHrUlviIxfyt3WoPcLMLsOgpvsa6qiAMFGN2qV/Cq+eT8xK/T
+ fSCVdSeFEGd/1VZcKb7tbToG5/Npz0xLgl6LFHDL898w+Pze6uOUkDarRX1YZnyX0bGE/QAy7yCwy
+ S+UwSdropLh5JkUxv4ehKMMUf1hIDurE5cx5pPa6vPtMiygBd/xVBPMo3QYvLaOjlECD3UDCTbULV
+ sPiaHPDGwfHAAbJpURmmKTvh7rRp79OO/zO8pY61g+3RuMSFrazBJKo63cgYhJKfR1vy6EwUMsSoK
+ bASPwWdPpvGGJRS+jUCt7L6sngnwNiSNauSv++rPSVWMwHJeMN8lkc+5Iw07g0yEHb29dsoMkqT6y
+ AreetfgHtDPtfYCte3kljQUBV825xl27E26O8q0wxG87jABQV3OBh9oF19lV+ZfkFnhyG/X4wM5ia
+ qHEGZ0AT0gSwp9EpTkbMtwB+I3UlkWpM+EsDWm6alpHCDLrGCGnno5kTB2MZwqZkinZ7g0sZffUk2
+ WNcVAiD7QISryYtHS3wTpyYaqNhsSTaHf8qw6TxFXkIqnF+ou8CPiGwg9OagApREU9jAqe1xLg0Kn
+ HjN5cLEEBj9ooYisjRpRpj7T8mU0pOUDdKHFZsupE=;
 Received: from [2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW0Ud-0003NV-9I; Mon, 22 Jul 2024 22:22:55 +0100
-Message-ID: <21d354aa-b0ed-424e-8453-eae493693d61@ilande.co.uk>
-Date: Mon, 22 Jul 2024 22:24:21 +0100
+ id 1sW0X3-0003Oo-2v; Mon, 22 Jul 2024 22:25:25 +0100
+Message-ID: <7e222b69-49e6-4d0c-9b44-45c42e18cfb2@ilande.co.uk>
+Date: Mon, 22 Jul 2024 22:26:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -48,7 +48,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 References: <20240722160745.67904-1-philmd@linaro.org>
- <20240722160745.67904-6-philmd@linaro.org>
+ <20240722160745.67904-7-philmd@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,13 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240722160745.67904-6-philmd@linaro.org>
+In-Reply-To: <20240722160745.67904-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 5/7] util/fifo8: Rename fifo8_pop_buf() ->
- fifo8_pop_constbuf()
+Subject: Re: [PATCH v2 6/7] util/fifo8: Expose fifo8_pop_buf()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,12 +108,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/07/2024 17:07, Philippe Mathieu-Daudé wrote:
 
-> Since fifo8_pop_buf() return a const buffer (which points
-> directly into the FIFO backing store), rename it using the
-> 'constbuf' suffix. This will help differentiate with methods
-> *copying* the FIFO data.
+> Extract fifo8_pop_buf() from hw/scsi/esp.c and expose
+> it as part of the <qemu/fifo8.h> API. This function takes
+> care of non-contiguous (wrapped) FIFO buffer (which is an
+> implementation detail).
 
-Similar comment re: fifo8_pop_bufptr() as before, but still:
+I wonder if it is also worth updating the comment for fifo8_pop_bufptr() indicating 
+that it returns a pointer to the internal buffer without checking for overflow, and 
+that in general fifo8_pop_buf() is recommended instead? Otherwise:
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
@@ -123,148 +124,141 @@ ATB,
 
 Mark.
 
+> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/qemu/fifo8.h    | 4 ++--
->   chardev/msmouse.c       | 2 +-
->   hw/char/goldfish_tty.c  | 4 ++--
->   hw/net/allwinner_emac.c | 2 +-
->   hw/scsi/esp.c           | 4 ++--
->   ui/console-vc.c         | 2 +-
->   ui/gtk.c                | 2 +-
->   util/fifo8.c            | 2 +-
->   8 files changed, 11 insertions(+), 11 deletions(-)
+>   include/qemu/fifo8.h | 14 ++++++++++++++
+>   hw/scsi/esp.c        | 36 +++---------------------------------
+>   util/fifo8.c         | 29 +++++++++++++++++++++++++++++
+>   3 files changed, 46 insertions(+), 33 deletions(-)
 > 
 > diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-> index 79450f4583..686918a3a4 100644
+> index 686918a3a4..21c7a22937 100644
 > --- a/include/qemu/fifo8.h
 > +++ b/include/qemu/fifo8.h
-> @@ -63,7 +63,7 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, uint32_t num);
+> @@ -62,6 +62,20 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, uint32_t num);
+>    */
 >   uint8_t fifo8_pop(Fifo8 *fifo);
 >   
+> +/**
+> + * fifo8_pop_buf:
+> + * @fifo: FIFO to pop from
+> + * @dest: the buffer to write the data into (can be NULL)
+> + * @destlen: size of @dest and maximum number of bytes to pop
+> + *
+> + * Pop a number of elements from the FIFO up to a maximum of @destlen.
+> + * The popped data is copied into the @dest buffer.
+> + * Care is taken when the data wraps around in the ring buffer.
+> + *
+> + * Returns: number of bytes popped.
+> + */
+> +uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen);
+> +
 >   /**
-> - * fifo8_pop_buf:
-> + * fifo8_pop_constbuf:
+>    * fifo8_pop_constbuf:
 >    * @fifo: FIFO to pop from
->    * @max: maximum number of bytes to pop
->    * @numptr: pointer filled with number of bytes returned (can be NULL)
-> @@ -86,7 +86,7 @@ uint8_t fifo8_pop(Fifo8 *fifo);
->    *
->    * Returns: A pointer to popped data.
->    */
-> -const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
-> +const uint8_t *fifo8_pop_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
->   
->   /**
->    * fifo8_peek_constbuf: read upto max bytes from the fifo
-> diff --git a/chardev/msmouse.c b/chardev/msmouse.c
-> index a774c397b4..08836d92e8 100644
-> --- a/chardev/msmouse.c
-> +++ b/chardev/msmouse.c
-> @@ -81,7 +81,7 @@ static void msmouse_chr_accept_input(Chardev *chr)
->           const uint8_t *buf;
->           uint32_t size;
->   
-> -        buf = fifo8_pop_buf(&mouse->outbuf, MIN(len, avail), &size);
-> +        buf = fifo8_pop_constbuf(&mouse->outbuf, MIN(len, avail), &size);
->           qemu_chr_be_write(chr, buf, size);
->           len = qemu_chr_be_can_write(chr);
->           avail -= size;
-> diff --git a/hw/char/goldfish_tty.c b/hw/char/goldfish_tty.c
-> index f8ff043c39..2c5004851d 100644
-> --- a/hw/char/goldfish_tty.c
-> +++ b/hw/char/goldfish_tty.c
-> @@ -69,7 +69,7 @@ static uint64_t goldfish_tty_read(void *opaque, hwaddr addr,
->   static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
->   {
->       uint32_t to_copy;
-> -    uint8_t *buf;
-> +    const uint8_t *buf;
->       uint8_t data_out[GOLFISH_TTY_BUFFER_SIZE];
->       int len;
->       uint64_t ptr;
-> @@ -109,7 +109,7 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
->           len = s->data_len;
->           ptr = s->data_ptr;
->           while (len && !fifo8_is_empty(&s->rx_fifo)) {
-> -            buf = (uint8_t *)fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
-> +            buf = fifo8_pop_constbuf(&s->rx_fifo, len, &to_copy);
->               address_space_rw(&address_space_memory, ptr,
->                               MEMTXATTRS_UNSPECIFIED, buf, to_copy, 1);
->   
-> diff --git a/hw/net/allwinner_emac.c b/hw/net/allwinner_emac.c
-> index 989839784a..3b0a2ee07e 100644
-> --- a/hw/net/allwinner_emac.c
-> +++ b/hw/net/allwinner_emac.c
-> @@ -349,7 +349,7 @@ static void aw_emac_write(void *opaque, hwaddr offset, uint64_t value,
->                                 "allwinner_emac: TX length > fifo data length\n");
->               }
->               if (len > 0) {
-> -                data = fifo8_pop_buf(fifo, len, &ret);
-> +                data = fifo8_pop_constbuf(fifo, len, &ret);
->                   qemu_send_packet(nc, data, ret);
->                   aw_emac_tx_reset(s, chan);
->                   /* Raise TX interrupt */
 > diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-> index 526ed91bef..64384f9b0e 100644
+> index 64384f9b0e..cec847b54a 100644
 > --- a/hw/scsi/esp.c
 > +++ b/hw/scsi/esp.c
-> @@ -208,7 +208,7 @@ static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
+> @@ -197,39 +197,9 @@ static uint8_t esp_fifo_pop(ESPState *s)
+>       return val;
+>   }
+>   
+> -static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
+> -{
+> -    const uint8_t *buf;
+> -    uint32_t n, n2;
+> -    int len;
+> -
+> -    if (maxlen == 0) {
+> -        return 0;
+> -    }
+> -
+> -    len = maxlen;
+> -    buf = fifo8_pop_constbuf(fifo, len, &n);
+> -    if (dest) {
+> -        memcpy(dest, buf, n);
+> -    }
+> -
+> -    /* Add FIFO wraparound if needed */
+> -    len -= n;
+> -    len = MIN(len, fifo8_num_used(fifo));
+> -    if (len) {
+> -        buf = fifo8_pop_constbuf(fifo, len, &n2);
+> -        if (dest) {
+> -            memcpy(&dest[n], buf, n2);
+> -        }
+> -        n += n2;
+> -    }
+> -
+> -    return n;
+> -}
+> -
+>   static uint32_t esp_fifo_pop_buf(ESPState *s, uint8_t *dest, int maxlen)
+>   {
+> -    uint32_t len = esp_fifo8_pop_buf(&s->fifo, dest, maxlen);
+> +    uint32_t len = fifo8_pop_buf(&s->fifo, dest, maxlen);
+>   
+>       esp_update_drq(s);
+>       return len;
+> @@ -335,7 +305,7 @@ static void do_command_phase(ESPState *s)
+>       if (!cmdlen || !s->current_dev) {
+>           return;
 >       }
+> -    esp_fifo8_pop_buf(&s->cmdfifo, buf, cmdlen);
+> +    fifo8_pop_buf(&s->cmdfifo, buf, cmdlen);
 >   
->       len = maxlen;
-> -    buf = fifo8_pop_buf(fifo, len, &n);
-> +    buf = fifo8_pop_constbuf(fifo, len, &n);
->       if (dest) {
->           memcpy(dest, buf, n);
+>       current_lun = scsi_device_find(&s->bus, 0, s->current_dev->id, s->lun);
+>       if (!current_lun) {
+> @@ -381,7 +351,7 @@ static void do_message_phase(ESPState *s)
+>       /* Ignore extended messages for now */
+>       if (s->cmdfifo_cdb_offset) {
+>           int len = MIN(s->cmdfifo_cdb_offset, fifo8_num_used(&s->cmdfifo));
+> -        esp_fifo8_pop_buf(&s->cmdfifo, NULL, len);
+> +        fifo8_pop_buf(&s->cmdfifo, NULL, len);
+>           s->cmdfifo_cdb_offset = 0;
 >       }
-> @@ -217,7 +217,7 @@ static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
->       len -= n;
->       len = MIN(len, fifo8_num_used(fifo));
->       if (len) {
-> -        buf = fifo8_pop_buf(fifo, len, &n2);
-> +        buf = fifo8_pop_constbuf(fifo, len, &n2);
->           if (dest) {
->               memcpy(&dest[n], buf, n2);
->           }
-> diff --git a/ui/console-vc.c b/ui/console-vc.c
-> index 899fa11c94..e9906aae59 100644
-> --- a/ui/console-vc.c
-> +++ b/ui/console-vc.c
-> @@ -287,7 +287,7 @@ static void kbd_send_chars(QemuTextConsole *s)
->           const uint8_t *buf;
->           uint32_t size;
->   
-> -        buf = fifo8_pop_buf(&s->out_fifo, MIN(len, avail), &size);
-> +        buf = fifo8_pop_constbuf(&s->out_fifo, MIN(len, avail), &size);
->           qemu_chr_be_write(s->chr, buf, size);
->           len = qemu_chr_be_can_write(s->chr);
->           avail -= size;
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index bc29f7a1b4..a4db90e8cb 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -1820,7 +1820,7 @@ static void gd_vc_send_chars(VirtualConsole *vc)
->           const uint8_t *buf;
->           uint32_t size;
->   
-> -        buf = fifo8_pop_buf(&vc->vte.out_fifo, MIN(len, avail), &size);
-> +        buf = fifo8_pop_constbuf(&vc->vte.out_fifo, MIN(len, avail), &size);
->           qemu_chr_be_write(vc->vte.chr, buf, size);
->           len = qemu_chr_be_can_write(vc->vte.chr);
->           avail -= size;
+>   }
 > diff --git a/util/fifo8.c b/util/fifo8.c
-> index 21943c6032..31f0d34c0c 100644
+> index 31f0d34c0c..6610b79182 100644
 > --- a/util/fifo8.c
 > +++ b/util/fifo8.c
-> @@ -97,7 +97,7 @@ const uint8_t *fifo8_peek_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
->       return fifo8_peekpop_buf(fifo, max, numptr, false);
->   }
->   
-> -const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
-> +const uint8_t *fifo8_pop_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
->   {
+> @@ -102,6 +102,35 @@ const uint8_t *fifo8_pop_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
 >       return fifo8_peekpop_buf(fifo, max, numptr, true);
 >   }
+>   
+> +uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
+> +{
+> +    const uint8_t *buf;
+> +    uint32_t n1, n2 = 0;
+> +    uint32_t len;
+> +
+> +    if (destlen == 0) {
+> +        return 0;
+> +    }
+> +
+> +    len = destlen;
+> +    buf = fifo8_pop_constbuf(fifo, len, &n1);
+> +    if (dest) {
+> +        memcpy(dest, buf, n1);
+> +    }
+> +
+> +    /* Add FIFO wraparound if needed */
+> +    len -= n1;
+> +    len = MIN(len, fifo8_num_used(fifo));
+> +    if (len) {
+> +        buf = fifo8_pop_constbuf(fifo, len, &n2);
+> +        if (dest) {
+> +            memcpy(&dest[n1], buf, n2);
+> +        }
+> +    }
+> +
+> +    return n1 + n2;
+> +}
+> +
+>   bool fifo8_is_empty(Fifo8 *fifo)
+>   {
+>       return (fifo->num == 0);
 
 
