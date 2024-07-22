@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEC6C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B04DC3DA64
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqqB-0005qW-1t; Mon, 22 Jul 2024 07:04:27 -0400
+	id 1sVqq8-0005dS-1M; Mon, 22 Jul 2024 07:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq9-0005iA-2V
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:25 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1sVqq5-0005UF-HD
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:21 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq7-0002S0-Ch
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:24 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5a10bb7b237so3415590a12.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:21 -0700 (PDT)
+ id 1sVqq3-0002RJ-4y
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:21 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a77e5929033so412109466b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646261; x=1722251061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721646257; x=1722251057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CUepoQkJbTEdFdSk4GA6KAzs4URRnm4V9SeWpypNLMA=;
- b=yobLrQ96S33VR/w0VHi5hvI56kMEX/b2+bE22ik6Hj9w2A8YEFntd3xXCBIaGfW3j0
- 8P45FtH68Xx4IXENO3X8DqZfjWUZ9vj5o7VvGI8soBCUGa54odPihJSesbtZa3Kx6rky
- QpfYnKzabwo339RQhNchZlYsjZxPbvkpt6UOlh0PIoAZCiIyj7GQ9tOpcVlRId6kEIkM
- AVpZNqCysnGJAhkZFCQZ5PPM20ZOvCILGq/JbUrWMPf9iddwW9HfVkJWe0kAisSXMEm8
- J4ubUnmHYp6VEbaydGz7L1/IEu3n+caInBHm2vMWMsHw2in3H2jHgyA1egOmLDV+lo5F
- FMSg==
+ bh=B/uzwaGj2Fi8+Yx5qy3aEaskQ+qw83w2a8whjBsiJBo=;
+ b=l0AFLjkxU3lP1p+y3t5/Dp16CmSqSHRt6aJl8bsPEuy9Fet+BGa97uUuFV0vw6UQIZ
+ +z+2h395kl2OaThtl45sFt98WTksSZLekX5rIz8zRLsDEhJyMIOFT79BU654nLKStEfc
+ KaAP/U3lTF2/57cjsHJ6C6g4vVuukO9EP3B3tQrjZga2eZfgRnSC8qRBIWCkXmmqmrYV
+ KpuE4llUjunNEqllB4RrwhevKMndytABWUQWGAjDlLlFf/zYiC/RrelFEJ3qgVa4SaTy
+ 9SGnP9wA6UOIiRO4uNw96K6G4njwKGa245RDHzLtoyvifT0SYwHAJ25sEdL6gIbmYY+q
+ Itmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646261; x=1722251061;
+ d=1e100.net; s=20230601; t=1721646257; x=1722251057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CUepoQkJbTEdFdSk4GA6KAzs4URRnm4V9SeWpypNLMA=;
- b=XSseW87WffNvC5W659T80jQ3DUnMDIloC4442sELOYX3S5M6PbbLrI0J49zYl1OcG5
- IKjLXk+KRcXu1giDlq9v1XHTQDSiIWfgnyOeksLk7lTtp7CICLbFqzDvhP3vnHPWWwCX
- Sv7rkn6ADRNK8O4Etsp0aaXbSKEqDlGEMZ2ZTdMy0NwgOnb4jW04JXY+a55ITv5vQkqO
- P/xmo9ohvYe/INM00iPWies1tc3Q1wl3W01WpZes7IM1VmOrHeVt8IiZEZ7Ngaxx+ZJM
- ChyhMQGEz5GPgqXDT5DJIlqs7x0z8x95gfnW0y1pP44r9tx/qFyuspxEPz3PvsOEBK0T
- 4TeA==
-X-Gm-Message-State: AOJu0YyvmsUstSGCFO+KRuCE5JapZR8FmFB5TlX3qlOMjR2aJKJZgoZZ
- KFB2w6bRXe4ASKitYo56PyqmD4xyLYSYbUST0kSvKbGfVqUqGcAubYFblhQJBxI=
-X-Google-Smtp-Source: AGHT+IGHGUGYbCwIwElDnZU2JS9vqSfQ0LG915eoJKSKTfxOXPJa5yG3Yu/9adCIShQWZYPfLcgJUA==
-X-Received: by 2002:a17:906:6a06:b0:a77:b664:c078 with SMTP id
- a640c23a62f3a-a7a4c010bcemr469474066b.27.1721646260391; 
- Mon, 22 Jul 2024 04:04:20 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c94a9e0sm409565266b.188.2024.07.22.04.04.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=B/uzwaGj2Fi8+Yx5qy3aEaskQ+qw83w2a8whjBsiJBo=;
+ b=w20uA4LzjCqL3oYYZ8uJ6TQr1Eqmk9ILMJy/3cisrjPiegalu/Q5XSJhexvlmFx/SA
+ vERNSNDj/4owIbTvkmubQhyzxk27s5Odx3e+seuGEJ6xlbr3Tb060+DcuRlH1bIfMs0D
+ uZHD/0IUmWf40j1VDim5RzIhkG7VQNoeCLkwEjbNrweVgy6E9mGbrVInMD7odJpD+a17
+ ikd34S9WxEhLpSgbVA6AkxBPiBPGBtX2JOHMgtG9Y21AsaIVG7BJzVpZNeJALuputcId
+ fdQfl13xsOKpQbzTxdC6j+ksYN0PoPMiJPtGwztCxgi+YMKsma3t1EuigS3Xomx3h7ps
+ XSSg==
+X-Gm-Message-State: AOJu0YxGl0Azu4rYoD9uBdjFK/tqCEofI6HSa4mmUVR8F1RB0ZNbIMzL
+ /FVpTNXvp1tDL7cPn0nRNsIP/ZPKJxBZ4QISxhYY8pP34Qt+VMVG1rNAkVi0ci0=
+X-Google-Smtp-Source: AGHT+IGcx6QjwgQQzfy7J4OCAwZq4UqoIFDkRKAkVR/8em8ttK8yKn4whMa/AQRIqYF6/TW30EiwWw==
+X-Received: by 2002:a17:907:2dab:b0:a72:7603:49ef with SMTP id
+ a640c23a62f3a-a7a4c1216ffmr469782566b.35.1721646257367; 
  Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7a81cd53d6sm2675266b.139.2024.07.22.04.04.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jul 2024 04:04:14 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 15DD95F9F4;
- Mon, 22 Jul 2024 12:04:14 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BCAA05F931;
+ Mon, 22 Jul 2024 12:04:13 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Xingtao Yao <yaoxt.fnst@fujitsu.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 05/16] plugins: fix mem callback array size
-Date: Mon, 22 Jul 2024 12:04:02 +0100
-Message-Id: <20240722110413.118418-6-alex.bennee@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 02/16] tests/avocado: Remove non-working sparc leon3 test
+Date: Mon, 22 Jul 2024 12:03:59 +0100
+Message-Id: <20240722110413.118418-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
 References: <20240722110413.118418-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,39 +98,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-data was correctly copied, but size of array was not set
-(g_array_sized_new only reserves memory, but does not set size).
+The test has been marked as broken more than 4 years ago, and
+so far nobody ever cared to fix it. Thus let's simply remove it
+now ... if somebody ever needs it again, they can restore the
+file from an older version of QEMU.
 
-As a result, callbacks were not called for code path relying on
-plugin_register_vcpu_mem_cb().
-
-Found when trying to trigger mem access callbacks for atomic
-instructions.
-
-Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Clément Chigot <chigot@adacore.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240710111755.60584-1-thuth@redhat.com>
+[AJB: fix MAINTAINERS]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240706191335.878142-2-pierrick.bouvier@linaro.org>
-Message-Id: <20240718094523.1198645-6-alex.bennee@linaro.org>
+Message-Id: <20240718094523.1198645-3-alex.bennee@linaro.org>
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index b6bae32b99..ec89a085b4 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -85,8 +85,7 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-     len = insn->mem_cbs->len;
-     arr = g_array_sized_new(false, false,
-                             sizeof(struct qemu_plugin_dyn_cb), len);
--    memcpy(arr->data, insn->mem_cbs->data,
--           len * sizeof(struct qemu_plugin_dyn_cb));
-+    g_array_append_vals(arr, insn->mem_cbs->data, len);
-     qemu_plugin_add_dyn_cb_arr(arr);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d9811458c..d5ff6c2498 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1727,7 +1727,6 @@ S: Maintained
+ F: hw/sparc/leon3.c
+ F: hw/*/grlib*
+ F: include/hw/*/grlib*
+-F: tests/avocado/machine_sparc_leon3.py
  
-     tcg_gen_st_ptr(tcg_constant_ptr((intptr_t)arr), tcg_env,
+ S390 Machines
+ -------------
+diff --git a/tests/avocado/machine_sparc_leon3.py b/tests/avocado/machine_sparc_leon3.py
+deleted file mode 100644
+index e61b223185..0000000000
+--- a/tests/avocado/machine_sparc_leon3.py
++++ /dev/null
+@@ -1,37 +0,0 @@
+-# Functional test that boots a Leon3 machine and checks its serial console.
+-#
+-# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later. See the COPYING file in the top-level directory.
+-
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado import skip
+-
+-
+-class Leon3Machine(QemuSystemTest):
+-
+-    timeout = 60
+-
+-    @skip("Test currently broken")
+-    # A Window Underflow exception occurs before booting the kernel,
+-    # and QEMU exit calling cpu_abort(), which makes this test to fail.
+-    def test_leon3_helenos_uimage(self):
+-        """
+-        :avocado: tags=arch:sparc
+-        :avocado: tags=machine:leon3_generic
+-        :avocado: tags=binfmt:uimage
+-        """
+-        kernel_url = ('http://www.helenos.org/releases/'
+-                      'HelenOS-0.6.0-sparc32-leon3.bin')
+-        kernel_hash = 'a88c9cfdb8430c66650e5290a08765f9bf049a30'
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-
+-        self.vm.set_console()
+-        self.vm.add_args('-kernel', kernel_path)
+-
+-        self.vm.launch()
+-
+-        wait_for_console_pattern(self, 'Copyright (c) 2001-2014 HelenOS project')
+-        wait_for_console_pattern(self, 'Booting the kernel ...')
 -- 
 2.39.2
 
