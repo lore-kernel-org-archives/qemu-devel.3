@@ -4,96 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD094C3DA70
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 896FFC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn40-0001lu-ON; Mon, 22 Jul 2024 03:02:28 -0400
+	id 1sVn3y-0001Nk-Fb; Mon, 22 Jul 2024 03:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sVn3L-00086U-W9
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:48 -0400
-Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sVn3S-0008VV-Ka
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sVn3J-0006QG-BR
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1721631705; x=1753167705;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=wrc4GDFfyWwU5APUAdOKGqGoHN0t07zmZegj31LG+Cw=;
- b=eiudvubKB6tLqZU81Ko4VhNt8aDQhyvp4HUbdHXqIkEwzbLUXOqWLh09
- 8VObmaBOrBGY1Utk4N6SCt04r4aZzqTRbiKrbzGnBgaspODookTNA0jcY
- 4wemePpMY4UHocVJ/z4bFJ52AuDMf/yL9KNFDzDl65Svb3EvkPJKstAeR
- +7bUJg3jE1dxgnFYSeIQQPHBjmjRDk0DnyCSb810A2VBBwNZ88dTtYVrN
- l1nYjfoV7KhjG7CQwPTFGMcncgUNs7TOn8WOpC7J5iMb8RJQKgMbzZcnx
- N/e/URVGpQPo0k5Xk7cuwcuI7UQZcKCzdMSVCHsXHy10uGQNKaNJOkQIi A==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="146982855"
-X-IronPort-AV: E=Sophos;i="6.09,227,1716217200"; d="scan'208";a="146982855"
-Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
- by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2024 16:01:38 +0900
-Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
- [192.168.87.58])
- by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id DBF7BE8D2B
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:36 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 13E2ED4F46
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:36 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 981A7E628
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:01:35 +0900 (JST)
-Received: from [192.168.50.5] (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id BA1A41A000A;
- Mon, 22 Jul 2024 15:01:34 +0800 (CST)
-Message-ID: <b537967c-eed7-4265-9a9e-3925d49aecef@fujitsu.com>
-Date: Mon, 22 Jul 2024 15:01:34 +0800
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sVn3Q-0006Sp-BM
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721631711;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EOgOENq6Mj10vsiSf6ufiGKm8C5yzr2fOB/o6Phgc2Q=;
+ b=MQeWjzcuc1f3vzMQtoK2v9HK7oFvB6Mh57va/93BX0J73kjmYHGxR3cOl3LGPVxVH69uk3
+ a8eur82cKRUk7U9SILO+N3GcISrzRYmWUuFcjRkl7wvhBzR0N8B/sKDuZbW6bOzDLbdGiS
+ dzmGJ91sL5VfJqU4TIRwOLEtWeAqeF8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-tPM6j02qNcKy0zWb5FY2Bw-1; Mon,
+ 22 Jul 2024 03:01:45 -0400
+X-MC-Unique: tPM6j02qNcKy0zWb5FY2Bw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D18D1945103; Mon, 22 Jul 2024 07:01:39 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.224.252])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 082E91955BEE; Mon, 22 Jul 2024 07:01:36 +0000 (UTC)
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 05/25] qga: move linux disk/cpu stats command impls to
+ commands-linux.c
+Date: Mon, 22 Jul 2024 10:01:02 +0300
+Message-ID: <20240722070122.27615-6-kkostiuk@redhat.com>
+In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
+References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-To: Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>
-Cc: jonathan.cameron@huawei.com, dave@stgolabs.net, ira.weiny@intel.com,
- alison.schofield@intel.com, vishal.l.verma@intel.com, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
- <6675bd86ea005_57ac29411@dwillia2-xfh.jf.intel.com.notmuch>
- <965e2c27-6147-4237-b4b6-6aaf74363aa2@fujitsu.com>
- <1fab087b-eb6c-485e-a2ed-f86e8dfacc5d@fujitsu.com>
- <ec0f2e8d-e783-4211-8d41-2b9a6df67049@intel.com>
-In-Reply-To: <ec0f2e8d-e783-4211-8d41-2b9a6df67049@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28544.005
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28544.005
-X-TMASE-Result: 10--23.833000-10.000000
-X-TMASE-MatchedRID: vkIe3oCKrUmPvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYBFQ
- /vtbW7XNCP4GWEsAbpWNZCQJKjBBDgMPXi5ZiyFvVnzlQiaE21r4h+uI7dxXxOjMOEZ5AL0SsJs
- JK5IfvnZTx0o+4nb1whJ+INVehs+97IFOpFOFSvixaW0fY4IMuDqu3dM+YhFRVxk27EKh25K0pv
- xdZww2r8T+c55jUI9At1K/UeVR3qjWNSt25psfwjz6L+U/pejxpSwAzAEivMea9Zo7TJaDsJgUL
- y4zAbFBOQzI/xUtTVxfahmBw9cTVoke/R2iCaQjn6y0mNkW0aSlY4F8r0vXP6Y5ZGw7wyeHsDBn
- W53+2jl755lTx6LDRs9gc1n8GYlrmcUNCy5hvn9kBXeGzp60+nZljA0Gozoih2WtnORUKg685QX
- 45szp96KnDnwlJfeMOyOCKgT1VIsqr12s6iu4vArcxrzwsv5uf70KM8eatUjfc2Xd6VJ+ym+tWV
- Fb8XYlPJEa0PzdsXmikrdCCR3aDe/i00nUfc4wnVTWWiNp+v8Jlr1xKkE5ucC5DTEMxpeQfiq1g
- j2xET/FG6rPbKnpuqrlqe9TaLwsJfmEcyk6uEa3D7EeeyZCM9fgqdEINwWeVgkL9epqBvGxpN5W
- P+PXywGRC3bBIF8o8Ptw9gr7VGfSXsg8wGtgHdKDcT1f9CjEBMdp5178zSN68OnX6EF0WhhBvWg
- ZlX+8585VzGMOFzABi3kqJOK62b+/RSFMoL2cxEHRux+uk8jpP8tMOyYmaA==
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.252;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,176 +80,443 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
-From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+The qmp_guest_{diskstats,cpustats} command impls in
+commands-posix.c are surrounded by '#ifdef __linux__' so should
+instead live in commands-linux.c
 
-在 2024/7/20 0:04, Dave Jiang 写道:
-> 
-> 
-> On 7/1/24 7:12 PM, Shiyang Ruan wrote:
->>
->>
->> 在 2024/6/25 21:56, Shiyang Ruan 写道:
->>>
->>>
->>> 在 2024/6/22 1:51, Dan Williams 写道:
->>>> Shiyang Ruan wrote:
->>>>> Background:
->>>>> Since CXL device is a memory device, while CPU consumes a poison page of
->>>>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
->>>>> which-First path is configured.  This is the first report.  Then
->>>>> currently, in FW-First path, the poison event is transferred according
->>>>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
->>>>>    -> CPER -> trace report.  This is the second one.  These two reports
->>>>> are indicating the same poisoning page, which is the so-called "duplicate
->>>>> report"[1].  And the memory_failure() handling I'm trying to add in
->>>>> OS-First path could also be another duplicate report.
->>>>>
->>>>> Hope the flow below could make it easier to understand:
->>>>> CPU accesses bad memory on CXL device, then
->>>>>    -> MCE (INT18), *always* report (1)
->>>>>    -> * FW-First (implemented now)
->>>>>         -> CXL device -> FW
->>>>>            -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
->>>>>       * OS-First (not implemented yet, I'm working on it)
->>>>>         -> CXL device -> MSI
->>>>>            -> OS:CXL driver -> memory_failure() (2.b)
->>>>> so, the (1) and (2.a/b) are duplicated.
->>>>>
->>>>> (I didn't get response in my reply for [1] while I have to make patch to
->>>>> solve this problem, so please correct me if my understanding is wrong.)
->>>>
->>>> The CPU MCE may not be in the loop. Consider the case of patrol scrub,
->>>> or device-DMA accessing poison. In that case the device will signal a
->>>> component event and the CPU may never issue the MCE.
->>>
->>> My other patch: "cxl/core: add poison creation event handler", adds calling memory_failure() when an event is received form device, which checks the poison record (insert if not exists) to make sure poison would be reported/handled, but not twice, no matter CPU issues the MCE later or earlier.  And the lock of poison record makes sure that it's fine even in race condition.
->>>
->>>>
->>>> What is missing for me from this description is *why* does the duplicate
->>>> report matter in practice? If all that happens is that the kernel
->>>> repeats the lookup to offline the page and set the HWPoison bit, is that
->>>> duplicated work worth adding more tracking?
->>>
->>> Besides setting the HWPoison bit for the poison page, memory_failure() also finds and notifies those processes who are accessing the poison page, and tries to recovery the page.  And there seems no lock to prevent the 2nd memory_failure() and clearing poison operation from being called in race, then the HWPoison bit could be unsure.  I think that's the problem.
->>>
->>>   > So, I think all CXL poison notification events should trigger an
->>>   > action optional memory_failure(). I expect this needs to make sure
->>>   > that duplicates re not a problem. I.e. in the case of CPU consumption
->>>   > of CXL poison, that causes a synchronous MF_ACTION_REQUIRED event via
->>>   > the MCE path *and* it may trigger the device to send an error record
->>>   > for the same page. As far as I can see, duplicate reports (MCE + CXL
->>>   > device) are unavoidable.
->>>
->>> As you mentioned in my other patch, this problem should be solved at first.  My patch adds the poison record (tracking, which might not become very large) to prevent duplicating report.
->>
->> Ping~
->>
->> And I had some problems when using xarray, please see below.
->>
->>>
->>>>
->>>>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
->>>>> to check whether the current poison page has been reported (if yes,
->>>>> stop the notifier chain, won't call the following memory_failure()
->>>>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
->>>>> page already handled(recorded and reported) in (1) or (2), the other one
->>>>> won't duplicate the report.  The record could be clear when
->>>>> cxl_clear_poison() is called.
->>>>>
->>>>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
->>>>>
->>>>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
->>>>> ---
->>>>>    arch/x86/include/asm/mce.h |   1 +
->>>>>    drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
->>>>>    drivers/cxl/core/memdev.c  |   6 +-
->>>>>    drivers/cxl/cxlmem.h       |   3 +
->>>>>    4 files changed, 139 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
->>>>> index dfd2e9699bd7..d8109c48e7d9 100644
->>>>> --- a/arch/x86/include/asm/mce.h
->>>>> +++ b/arch/x86/include/asm/mce.h
->>>>> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
->>>>>        MCE_PRIO_NFIT,
->>>>>        MCE_PRIO_EXTLOG,
->>>>>        MCE_PRIO_UC,
->>>>> +    MCE_PRIO_CXL,
->>>>>        MCE_PRIO_EARLY,
->>>>>        MCE_PRIO_CEC,
->>>>>        MCE_PRIO_HIGHEST = MCE_PRIO_CEC
->>>>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
->>>>> index 2626f3fff201..0eb3c5401e81 100644
->>>>> --- a/drivers/cxl/core/mbox.c
->>>>> +++ b/drivers/cxl/core/mbox.c
->>>>> @@ -4,6 +4,8 @@
->>>>>    #include <linux/debugfs.h>
->>>>>    #include <linux/ktime.h>
->>>>>    #include <linux/mutex.h>
->>>>> +#include <linux/notifier.h>
->>>>> +#include <asm/mce.h>
->>>>>    #include <asm/unaligned.h>
->>>>>    #include <cxlpci.h>
->>>>>    #include <cxlmem.h>
->>>>> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
->>>>>            if (cxlr)
->>>>>                hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
->>>>> +        if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
->>>>> +            return;
->>>>> +
->>>>>            if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
->>>>>                trace_cxl_general_media(cxlmd, type, cxlr, hpa,
->>>>>                            &evt->gen_media);
->>>>> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
->>>>>    }
->>>>>    EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
->>>>> +struct cxl_mce_record {
->>>>> +    struct list_head node;
->>>>> +    u64 hpa;
->>>>> +};
->>>>> +LIST_HEAD(cxl_mce_records);
->>>>> +DEFINE_MUTEX(cxl_mce_mutex);
->>>>
->>>> I would recommend an xarray for this use case as that already has its
->>>> own internal locking and efficient memory allocation for new nodes.
->>>>
->>>> However, the "why" question needs to be answered first.
->>>
->>> xarray does look better.  I didn't think of it befre.  Thanks for suggestion.
->>
->> I'm trying using xarray but but I'm running into two problems.
->>
->> The first one is: xarray stores an entry with a specified index, but here we only need to store the PFN.  I'm not sure how to specific an index for a PFN.  So I think xarray might not suitable for my case.
->> The second one: because we only need to store/search PFN, the list node only contains a list_head and a PFN. But xarray seems to require more memory for each node, which causes more overhead.
-> 
-> Use PFN as the index of the xarray since it's unique. And that makes finding the entry easy with xarray because you just pass in the PFN as the key. You can store an xarray entry with no data.
+This also removes a "#ifdef CONFIG_LINUX" that was nested inside
+a "#ifdef __linux__".
 
-I didn't know it can store index with no data.  I'll try in this way.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20240712132459.3974109-6-berrange@redhat.com>
+Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+---
+ qga/commands-linux.c | 195 ++++++++++++++++++++++++++++++++++++++++++
+ qga/commands-posix.c | 199 -------------------------------------------
+ 2 files changed, 195 insertions(+), 199 deletions(-)
 
-> At this point you are just detecting whether the entry has been stored (valid) or not. Hope that helps.
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 084e6c9e85..c0e8bd4062 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -1594,3 +1594,198 @@ int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
+ 
+     return processed;
+ }
++
++#define MAX_NAME_LEN 128
++static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
++{
++    GuestDiskStatsInfoList *head = NULL, **tail = &head;
++    const char *diskstats = "/proc/diskstats";
++    FILE *fp;
++    size_t n;
++    char *line = NULL;
++
++    fp = fopen(diskstats, "r");
++    if (fp  == NULL) {
++        error_setg_errno(errp, errno, "open(\"%s\")", diskstats);
++        return NULL;
++    }
++
++    while (getline(&line, &n, fp) != -1) {
++        g_autofree GuestDiskStatsInfo *diskstatinfo = NULL;
++        g_autofree GuestDiskStats *diskstat = NULL;
++        char dev_name[MAX_NAME_LEN];
++        unsigned int ios_pgr, tot_ticks, rq_ticks, wr_ticks, dc_ticks, fl_ticks;
++        unsigned long rd_ios, rd_merges_or_rd_sec, rd_ticks_or_wr_sec, wr_ios;
++        unsigned long wr_merges, rd_sec_or_wr_ios, wr_sec;
++        unsigned long dc_ios, dc_merges, dc_sec, fl_ios;
++        unsigned int major, minor;
++        int i;
++
++        i = sscanf(line, "%u %u %s %lu %lu %lu"
++                   "%lu %lu %lu %lu %u %u %u %u"
++                   "%lu %lu %lu %u %lu %u",
++                   &major, &minor, dev_name,
++                   &rd_ios, &rd_merges_or_rd_sec, &rd_sec_or_wr_ios,
++                   &rd_ticks_or_wr_sec, &wr_ios, &wr_merges, &wr_sec,
++                   &wr_ticks, &ios_pgr, &tot_ticks, &rq_ticks,
++                   &dc_ios, &dc_merges, &dc_sec, &dc_ticks,
++                   &fl_ios, &fl_ticks);
++
++        if (i < 7) {
++            continue;
++        }
++
++        diskstatinfo = g_new0(GuestDiskStatsInfo, 1);
++        diskstatinfo->name = g_strdup(dev_name);
++        diskstatinfo->major = major;
++        diskstatinfo->minor = minor;
++
++        diskstat = g_new0(GuestDiskStats, 1);
++        if (i == 7) {
++            diskstat->has_read_ios = true;
++            diskstat->read_ios = rd_ios;
++            diskstat->has_read_sectors = true;
++            diskstat->read_sectors = rd_merges_or_rd_sec;
++            diskstat->has_write_ios = true;
++            diskstat->write_ios = rd_sec_or_wr_ios;
++            diskstat->has_write_sectors = true;
++            diskstat->write_sectors = rd_ticks_or_wr_sec;
++        }
++        if (i >= 14) {
++            diskstat->has_read_ios = true;
++            diskstat->read_ios = rd_ios;
++            diskstat->has_read_sectors = true;
++            diskstat->read_sectors = rd_sec_or_wr_ios;
++            diskstat->has_read_merges = true;
++            diskstat->read_merges = rd_merges_or_rd_sec;
++            diskstat->has_read_ticks = true;
++            diskstat->read_ticks = rd_ticks_or_wr_sec;
++            diskstat->has_write_ios = true;
++            diskstat->write_ios = wr_ios;
++            diskstat->has_write_sectors = true;
++            diskstat->write_sectors = wr_sec;
++            diskstat->has_write_merges = true;
++            diskstat->write_merges = wr_merges;
++            diskstat->has_write_ticks = true;
++            diskstat->write_ticks = wr_ticks;
++            diskstat->has_ios_pgr = true;
++            diskstat->ios_pgr = ios_pgr;
++            diskstat->has_total_ticks = true;
++            diskstat->total_ticks = tot_ticks;
++            diskstat->has_weight_ticks = true;
++            diskstat->weight_ticks = rq_ticks;
++        }
++        if (i >= 18) {
++            diskstat->has_discard_ios = true;
++            diskstat->discard_ios = dc_ios;
++            diskstat->has_discard_merges = true;
++            diskstat->discard_merges = dc_merges;
++            diskstat->has_discard_sectors = true;
++            diskstat->discard_sectors = dc_sec;
++            diskstat->has_discard_ticks = true;
++            diskstat->discard_ticks = dc_ticks;
++        }
++        if (i >= 20) {
++            diskstat->has_flush_ios = true;
++            diskstat->flush_ios = fl_ios;
++            diskstat->has_flush_ticks = true;
++            diskstat->flush_ticks = fl_ticks;
++        }
++
++        diskstatinfo->stats = g_steal_pointer(&diskstat);
++        QAPI_LIST_APPEND(tail, diskstatinfo);
++        diskstatinfo = NULL;
++    }
++    free(line);
++    fclose(fp);
++    return head;
++}
++
++GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
++{
++    return guest_get_diskstats(errp);
++}
++
++GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
++{
++    GuestCpuStatsList *head = NULL, **tail = &head;
++    const char *cpustats = "/proc/stat";
++    int clk_tck = sysconf(_SC_CLK_TCK);
++    FILE *fp;
++    size_t n;
++    char *line = NULL;
++
++    fp = fopen(cpustats, "r");
++    if (fp  == NULL) {
++        error_setg_errno(errp, errno, "open(\"%s\")", cpustats);
++        return NULL;
++    }
++
++    while (getline(&line, &n, fp) != -1) {
++        GuestCpuStats *cpustat = NULL;
++        GuestLinuxCpuStats *linuxcpustat;
++        int i;
++        unsigned long user, system, idle, iowait, irq, softirq, steal, guest;
++        unsigned long nice, guest_nice;
++        char name[64];
++
++        i = sscanf(line, "%s %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
++                   name, &user, &nice, &system, &idle, &iowait, &irq, &softirq,
++                   &steal, &guest, &guest_nice);
++
++        /* drop "cpu 1 2 3 ...", get "cpuX 1 2 3 ..." only */
++        if ((i == EOF) || strncmp(name, "cpu", 3) || (name[3] == '\0')) {
++            continue;
++        }
++
++        if (i < 5) {
++            slog("Parsing cpu stat from %s failed, see \"man proc\"", cpustats);
++            break;
++        }
++
++        cpustat = g_new0(GuestCpuStats, 1);
++        cpustat->type = GUEST_CPU_STATS_TYPE_LINUX;
++
++        linuxcpustat = &cpustat->u.q_linux;
++        linuxcpustat->cpu = atoi(&name[3]);
++        linuxcpustat->user = user * 1000 / clk_tck;
++        linuxcpustat->nice = nice * 1000 / clk_tck;
++        linuxcpustat->system = system * 1000 / clk_tck;
++        linuxcpustat->idle = idle * 1000 / clk_tck;
++
++        if (i > 5) {
++            linuxcpustat->has_iowait = true;
++            linuxcpustat->iowait = iowait * 1000 / clk_tck;
++        }
++
++        if (i > 6) {
++            linuxcpustat->has_irq = true;
++            linuxcpustat->irq = irq * 1000 / clk_tck;
++            linuxcpustat->has_softirq = true;
++            linuxcpustat->softirq = softirq * 1000 / clk_tck;
++        }
++
++        if (i > 8) {
++            linuxcpustat->has_steal = true;
++            linuxcpustat->steal = steal * 1000 / clk_tck;
++        }
++
++        if (i > 9) {
++            linuxcpustat->has_guest = true;
++            linuxcpustat->guest = guest * 1000 / clk_tck;
++        }
++
++        if (i > 10) {
++            linuxcpustat->has_guest = true;
++            linuxcpustat->guest = guest * 1000 / clk_tck;
++            linuxcpustat->has_guestnice = true;
++            linuxcpustat->guestnice = guest_nice * 1000 / clk_tck;
++        }
++
++        QAPI_LIST_APPEND(tail, cpustat);
++    }
++
++    free(line);
++    fclose(fp);
++    return head;
++}
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 98aafc45f3..5da60e65ab 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1195,205 +1195,6 @@ GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
+     return info;
+ }
+ 
+-#define MAX_NAME_LEN 128
+-static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
+-{
+-#ifdef CONFIG_LINUX
+-    GuestDiskStatsInfoList *head = NULL, **tail = &head;
+-    const char *diskstats = "/proc/diskstats";
+-    FILE *fp;
+-    size_t n;
+-    char *line = NULL;
+-
+-    fp = fopen(diskstats, "r");
+-    if (fp  == NULL) {
+-        error_setg_errno(errp, errno, "open(\"%s\")", diskstats);
+-        return NULL;
+-    }
+-
+-    while (getline(&line, &n, fp) != -1) {
+-        g_autofree GuestDiskStatsInfo *diskstatinfo = NULL;
+-        g_autofree GuestDiskStats *diskstat = NULL;
+-        char dev_name[MAX_NAME_LEN];
+-        unsigned int ios_pgr, tot_ticks, rq_ticks, wr_ticks, dc_ticks, fl_ticks;
+-        unsigned long rd_ios, rd_merges_or_rd_sec, rd_ticks_or_wr_sec, wr_ios;
+-        unsigned long wr_merges, rd_sec_or_wr_ios, wr_sec;
+-        unsigned long dc_ios, dc_merges, dc_sec, fl_ios;
+-        unsigned int major, minor;
+-        int i;
+-
+-        i = sscanf(line, "%u %u %s %lu %lu %lu"
+-                   "%lu %lu %lu %lu %u %u %u %u"
+-                   "%lu %lu %lu %u %lu %u",
+-                   &major, &minor, dev_name,
+-                   &rd_ios, &rd_merges_or_rd_sec, &rd_sec_or_wr_ios,
+-                   &rd_ticks_or_wr_sec, &wr_ios, &wr_merges, &wr_sec,
+-                   &wr_ticks, &ios_pgr, &tot_ticks, &rq_ticks,
+-                   &dc_ios, &dc_merges, &dc_sec, &dc_ticks,
+-                   &fl_ios, &fl_ticks);
+-
+-        if (i < 7) {
+-            continue;
+-        }
+-
+-        diskstatinfo = g_new0(GuestDiskStatsInfo, 1);
+-        diskstatinfo->name = g_strdup(dev_name);
+-        diskstatinfo->major = major;
+-        diskstatinfo->minor = minor;
+-
+-        diskstat = g_new0(GuestDiskStats, 1);
+-        if (i == 7) {
+-            diskstat->has_read_ios = true;
+-            diskstat->read_ios = rd_ios;
+-            diskstat->has_read_sectors = true;
+-            diskstat->read_sectors = rd_merges_or_rd_sec;
+-            diskstat->has_write_ios = true;
+-            diskstat->write_ios = rd_sec_or_wr_ios;
+-            diskstat->has_write_sectors = true;
+-            diskstat->write_sectors = rd_ticks_or_wr_sec;
+-        }
+-        if (i >= 14) {
+-            diskstat->has_read_ios = true;
+-            diskstat->read_ios = rd_ios;
+-            diskstat->has_read_sectors = true;
+-            diskstat->read_sectors = rd_sec_or_wr_ios;
+-            diskstat->has_read_merges = true;
+-            diskstat->read_merges = rd_merges_or_rd_sec;
+-            diskstat->has_read_ticks = true;
+-            diskstat->read_ticks = rd_ticks_or_wr_sec;
+-            diskstat->has_write_ios = true;
+-            diskstat->write_ios = wr_ios;
+-            diskstat->has_write_sectors = true;
+-            diskstat->write_sectors = wr_sec;
+-            diskstat->has_write_merges = true;
+-            diskstat->write_merges = wr_merges;
+-            diskstat->has_write_ticks = true;
+-            diskstat->write_ticks = wr_ticks;
+-            diskstat->has_ios_pgr = true;
+-            diskstat->ios_pgr = ios_pgr;
+-            diskstat->has_total_ticks = true;
+-            diskstat->total_ticks = tot_ticks;
+-            diskstat->has_weight_ticks = true;
+-            diskstat->weight_ticks = rq_ticks;
+-        }
+-        if (i >= 18) {
+-            diskstat->has_discard_ios = true;
+-            diskstat->discard_ios = dc_ios;
+-            diskstat->has_discard_merges = true;
+-            diskstat->discard_merges = dc_merges;
+-            diskstat->has_discard_sectors = true;
+-            diskstat->discard_sectors = dc_sec;
+-            diskstat->has_discard_ticks = true;
+-            diskstat->discard_ticks = dc_ticks;
+-        }
+-        if (i >= 20) {
+-            diskstat->has_flush_ios = true;
+-            diskstat->flush_ios = fl_ios;
+-            diskstat->has_flush_ticks = true;
+-            diskstat->flush_ticks = fl_ticks;
+-        }
+-
+-        diskstatinfo->stats = g_steal_pointer(&diskstat);
+-        QAPI_LIST_APPEND(tail, diskstatinfo);
+-        diskstatinfo = NULL;
+-    }
+-    free(line);
+-    fclose(fp);
+-    return head;
+-#else
+-    g_debug("disk stats reporting available only for Linux");
+-    return NULL;
+-#endif
+-}
+-
+-GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+-{
+-    return guest_get_diskstats(errp);
+-}
+-
+-GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+-{
+-    GuestCpuStatsList *head = NULL, **tail = &head;
+-    const char *cpustats = "/proc/stat";
+-    int clk_tck = sysconf(_SC_CLK_TCK);
+-    FILE *fp;
+-    size_t n;
+-    char *line = NULL;
+-
+-    fp = fopen(cpustats, "r");
+-    if (fp  == NULL) {
+-        error_setg_errno(errp, errno, "open(\"%s\")", cpustats);
+-        return NULL;
+-    }
+-
+-    while (getline(&line, &n, fp) != -1) {
+-        GuestCpuStats *cpustat = NULL;
+-        GuestLinuxCpuStats *linuxcpustat;
+-        int i;
+-        unsigned long user, system, idle, iowait, irq, softirq, steal, guest;
+-        unsigned long nice, guest_nice;
+-        char name[64];
+-
+-        i = sscanf(line, "%s %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
+-                   name, &user, &nice, &system, &idle, &iowait, &irq, &softirq,
+-                   &steal, &guest, &guest_nice);
+-
+-        /* drop "cpu 1 2 3 ...", get "cpuX 1 2 3 ..." only */
+-        if ((i == EOF) || strncmp(name, "cpu", 3) || (name[3] == '\0')) {
+-            continue;
+-        }
+-
+-        if (i < 5) {
+-            slog("Parsing cpu stat from %s failed, see \"man proc\"", cpustats);
+-            break;
+-        }
+-
+-        cpustat = g_new0(GuestCpuStats, 1);
+-        cpustat->type = GUEST_CPU_STATS_TYPE_LINUX;
+-
+-        linuxcpustat = &cpustat->u.q_linux;
+-        linuxcpustat->cpu = atoi(&name[3]);
+-        linuxcpustat->user = user * 1000 / clk_tck;
+-        linuxcpustat->nice = nice * 1000 / clk_tck;
+-        linuxcpustat->system = system * 1000 / clk_tck;
+-        linuxcpustat->idle = idle * 1000 / clk_tck;
+-
+-        if (i > 5) {
+-            linuxcpustat->has_iowait = true;
+-            linuxcpustat->iowait = iowait * 1000 / clk_tck;
+-        }
+-
+-        if (i > 6) {
+-            linuxcpustat->has_irq = true;
+-            linuxcpustat->irq = irq * 1000 / clk_tck;
+-            linuxcpustat->has_softirq = true;
+-            linuxcpustat->softirq = softirq * 1000 / clk_tck;
+-        }
+-
+-        if (i > 8) {
+-            linuxcpustat->has_steal = true;
+-            linuxcpustat->steal = steal * 1000 / clk_tck;
+-        }
+-
+-        if (i > 9) {
+-            linuxcpustat->has_guest = true;
+-            linuxcpustat->guest = guest * 1000 / clk_tck;
+-        }
+-
+-        if (i > 10) {
+-            linuxcpustat->has_guest = true;
+-            linuxcpustat->guest = guest * 1000 / clk_tck;
+-            linuxcpustat->has_guestnice = true;
+-            linuxcpustat->guestnice = guest_nice * 1000 / clk_tck;
+-        }
+-
+-        QAPI_LIST_APPEND(tail, cpustat);
+-    }
+-
+-    free(line);
+-    fclose(fp);
+-    return head;
+-}
+ 
+ #else /* defined(__linux__) */
+ 
+-- 
+2.45.2
 
-Thank you very much!
-
-
---
-Ruan.
-
-> 
->>
->> Maybe I'm overthinking this?
->>
->>
->> -- 
->> Thanks
->> Ruan.
->>
->>>
->>> -- 
->>> Thanks
->>> Ruan.
 
