@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F17AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13225C3DA64
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVtMx-0003TD-5t; Mon, 22 Jul 2024 09:46:27 -0400
+	id 1sVtQz-0001JC-ML; Mon, 22 Jul 2024 09:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sVtMn-0003Pl-20; Mon, 22 Jul 2024 09:46:17 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtQx-0001IW-PN
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sVtMi-0005DF-JP; Mon, 22 Jul 2024 09:46:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721655973; x=1753191973;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=0VBpJCAF/a++txWiiz/0DTFqCVwBxK6I/Uf6ZwYzsFM=;
- b=GB+Z8DDaW4U5ycMiudD0lY5wB28u2FrQjt00F2+6HbL4xqYzSaSW9ZQY
- 17N0D/vbYCXivP1+FIyHyXzQSZ/Sn2eeBMku4QOhE1d8RubJXPi4o7JpF
- t4MMIY5Oo2VvoAjwZEfjDrzAWOpUuCbBBwOkcxrkvA+d6uj7Nd63csKHj
- PAc0Zh3M2dUsa0Y2IUaMRFyQ5pfQosxPtpWLMhIVdm/r16dfq6gipmSH6
- tbLkhluQhiEmHiikf96guzdtl8bx0XATFZT3dYPHLvDHYvJM4HgL7lU0R
- PUAQzEwI00wyrNe+Gc8ZbhFgU/ath2WQTbP7EwNTl/9lXsYd3wZrinaNg w==;
-X-CSE-ConnectionGUID: UgtzinQeRkanvnJa9vjibw==
-X-CSE-MsgGUID: RJhdkX3jR7mRuDP5a80kRw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="19353449"
-X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="19353449"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2024 06:46:04 -0700
-X-CSE-ConnectionGUID: KKANULJsSICbrZipe8omdg==
-X-CSE-MsgGUID: A6QV4KAqQ76bUFCb7lKS1Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,228,1716274800"; d="scan'208";a="51954848"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 22 Jul 2024 06:45:59 -0700
-Date: Mon, 22 Jul 2024 22:01:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 1/8] hw/core: Make CPU topology enumeration arch-agnostic
-Message-ID: <Zp5mRrjuZWnE+9gz@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-2-zhao1.liu@intel.com>
- <875xsx4l13.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtQu-000695-WD
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721656229;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w6LC2WP6jEv4eCf3PzKgn/SGsMfxUCl4qUtK8eoxfEI=;
+ b=dW94GvaiuZfVWKlp6v+gmLwArQ+dhREkFvbLNkTsWCrUVyqeYGSl6oojTKCTgim8zAv+kC
+ rbvXtVP9JV91LvpDFLnk7ijBikYhgWzt+zBtcOGHAP0MQrVSrnnxkZ8TZRJ29dq6Ag/ycH
+ 2q30/GcEkzFmUH/LFgY+lmwEWepPkvQ=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-VHkZJeMmPjC-5Thb7-_96Q-1; Mon, 22 Jul 2024 09:50:27 -0400
+X-MC-Unique: VHkZJeMmPjC-5Thb7-_96Q-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-66890dbb7b8so113664617b3.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 06:50:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721656226; x=1722261026;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=w6LC2WP6jEv4eCf3PzKgn/SGsMfxUCl4qUtK8eoxfEI=;
+ b=eAuMp0eIKdIKZ5uzFs99SkUbqED19euQzIjOAfZcgirdKJZf70u3jYyJBZ0ZtiY1IV
+ eTKIsbcwAsUaxYvV97SJTUQ3zIO/ncuQeiGWEYclAcWpNrZWYN9V7fKR0m+Qoo6plvSq
+ 8fAhxbAmFJGi5CU9fTx4DSgsbJvCzyvuzntKQ+i251R9uFsResDrCO2Up7sRCoZk2WzE
+ PCKj5p48wz1Zsx9wA3j5xRqVPZi+1im35sp4eLcYPQ+iM9CDsbiquL7IJrLvuIfxIPuC
+ P5h8yIDjouulnmsB7E0rOw9dBm+ywKO8MiPdSOTPkbqHCur2qXaPmTLm/DCbWkARiENV
+ TE/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEZ6YYji8OjyXAZD8t4ZP5wECHWHR1LznuleV7VLsVl0ANMjfH2qmyTHBRkItcs7KKg77W7z0ZjQ0f0IZZXZJjBOMp1kQ=
+X-Gm-Message-State: AOJu0YzS1TmoKszPjny4Q6Mt1e9bKa2CTeFX21vSKHJtEVhVkjsFoRTl
+ +jt0wxQEOSZIHjXMcjxm6ek/aEzdkfSa5rtk3gTDKHs8d42lY8ZvyTiPEJcE39S54f+WVvlI/vI
+ AGyBuaMMHg83TOTZ7ORhv03AmnvEd9I4M+AryXEsp+J16o0tvqGXftbpQ4iKP
+X-Received: by 2002:a0d:d003:0:b0:66a:d93b:3047 with SMTP id
+ 00721157ae682-66ad93b311bmr75599017b3.25.1721656226629; 
+ Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEl0QPAqlTeXfvCvERXkFt2nl2qHAL7U/kUAqwqdkevpFdi4oRtIR5umD4BOnbJzKMu82YGww==
+X-Received: by 2002:a0d:d003:0:b0:66a:d93b:3047 with SMTP id
+ 00721157ae682-66ad93b311bmr75598837b3.25.1721656226354; 
+ Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
+ ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a19a49f268sm350205385a.87.2024.07.22.06.50.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
+Message-ID: <6f568dca-65d2-4536-9946-596710ba3de4@redhat.com>
+Date: Mon, 22 Jul 2024 15:50:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875xsx4l13.fsf@pond.sub.org>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Don't initialize HOST_IOMMU_DEVICE with mdev
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
+ joao.m.martins@oracle.com, chao.p.peng@intel.com
+References: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,108 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
-On Mon, Jul 22, 2024 at 03:24:24PM +0200, Markus Armbruster wrote:
-> Date: Mon, 22 Jul 2024 15:24:24 +0200
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH 1/8] hw/core: Make CPU topology enumeration
->  arch-agnostic
+On 7/22/24 09:07, Zhenzhong Duan wrote:
+> This fixes a potential issue with mdev that fails to initialize HOST_IOMMU_DEVICE.
+> Reason is mdev isn't physical device and doesn't support IOMMU_GET_HW_INFO.
 > 
-> One little thing...
+> I thought ap/ccw are all mdev type and need a fix.
 > 
-> Zhao Liu <zhao1.liu@intel.com> writes:
+> This series depends on a patch from Joao which fixes the same for vfio-pci.
+> See https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg04612.html
 > 
-> > Cache topology needs to be defined based on CPU topology levels. Thus,
-> > define CPU topology enumeration in qapi/machine.json to make it generic
-> > for all architectures.
-> >
-> > To match the general topology naming style, rename CPU_TOPO_LEVEL_SMT
-> > and CPU_TOPO_LEVEL_PACKAGE to CPU_TOPO_LEVEL_THREAD and
-> > CPU_TOPO_LEVEL_SOCKET.
-> >
-> > Also, enumerate additional topology levels for non-i386 arches, and add
-> > a CPU_TOPO_LEVEL_DEFAULT to help future smp-cache object de-compatibilize
-> > arch-specific cache topology settings.
-> >
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Not tested due to no ap/ccw environment. But build test pass.
 > 
-> [...]
+> Thanks
+> Zhenzhong
 > 
-> > diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-> > index fa6bd71d1280..82413c668bdb 100644
-> > --- a/qapi/machine-common.json
-> > +++ b/qapi/machine-common.json
-> > @@ -5,7 +5,7 @@
-> >  # See the COPYING file in the top-level directory.
-> >  
-> >  ##
-> > -# = Machines S390 data types
-> > +# = Common machine types
-> >  ##
-> >  
-> >  ##
-> > @@ -19,3 +19,48 @@
-> >  { 'enum': 'CpuS390Entitlement',
-> >    'prefix': 'S390_CPU_ENTITLEMENT',
-> >    'data': [ 'auto', 'low', 'medium', 'high' ] }
-> > +
-> > +##
-> > +# @CpuTopologyLevel:
-> > +#
-> > +# An enumeration of CPU topology levels.
-> > +#
-> > +# @invalid: Invalid topology level.
-> > +#
-> > +# @thread: thread level, which would also be called SMT level or
-> > +#     logical processor level.  The @threads option in
-> > +#     SMPConfiguration is used to configure the topology of this
-> > +#     level.
-> > +#
-> > +# @core: core level.  The @cores option in SMPConfiguration is used
-> > +#     to configure the topology of this level.
-> > +#
-> > +# @module: module level.  The @modules option in SMPConfiguration is
-> > +#     used to configure the topology of this level.
-> > +#
-> > +# @cluster: cluster level.  The @clusters option in SMPConfiguration
-> > +#     is used to configure the topology of this level.
-> > +#
-> > +# @die: die level.  The @dies option in SMPConfiguration is used to
-> > +#     configure the topology of this level.
-> > +#
-> > +# @socket: socket level, which would also be called package level.
-> > +#     The @sockets option in SMPConfiguration is used to configure
-> > +#     the topology of this level.
-> > +#
-> > +# @book: book level.  The @books option in SMPConfiguration is used
-> > +#     to configure the topology of this level.
-> > +#
-> > +# @drawer: drawer level.  The @drawers option in SMPConfiguration is
-> > +#     used to configure the topology of this level.
-> > +#
-> > +# @default: default level.  Some architectures will have default
-> > +#     topology settings (e.g., cache topology), and this special
-> > +#     level means following the architecture-specific settings.
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'enum': 'CpuTopologyLevel',
-> > +  'prefix': 'CPU_TOPO_LEVEL',
+> Zhenzhong Duan (2):
+>    vfio/ap: Don't initialize HOST_IOMMU_DEVICE with mdev
+>    vfio/ccw: Don't initialize HOST_IOMMU_DEVICE with mdev
 > 
-> Why set a 'prefix'?
+>   hw/vfio/ap.c  | 3 +++
+>   hw/vfio/ccw.c | 3 +++
+>   2 files changed, 6 insertions(+)
 > 
 
-Because my previous i386 commit 6ddeb0ec8c29 ("i386/cpu: Introduce bitmap
-to cache available CPU topology levels") introduced the level
-enumeration with such prefix. For naming consistency, and to shorten the
-length of the name, I've used the same prefix here as well.
 
-I've sensed that you don't like the TOPO abbreviation and I'll remove the
-prefix :-).
+Applied to vfio-next.
 
 Thanks,
-Zhao
+
+C.
 
 
 
