@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC221C3DA63
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCA2C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgkq-0007z0-Kl; Sun, 21 Jul 2024 20:18:16 -0400
+	id 1sVgly-0005Cw-Al; Sun, 21 Jul 2024 20:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkp-0007sr-CP
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglR-0002aw-64
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgkn-0005sR-IE
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglP-0005xW-DF
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:18:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607492;
+ s=mimecast20190719; t=1721607530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wmqhjtW3VVd/s0tK/0z/W3SbHoTTKsvguEWbJfZllQs=;
- b=HZtJdit3TYKrjLs3HxJGgmq7jLwn2AVhFU3228L1eqgo3qCu/w0G50dFmBAlP9XN7fItNZ
- iV6fgFmL4h25y3pvJFXn9BJIlgfAYkosjtmWFRfBdDFiGjmJFb7zMqK2gUE+LZzx4ZZr7m
- SDvKy3QxjCl/mJ4Gr8Tc/67G9rSmfBw=
+ bh=WUYDk8FUt/O+FXoIUIkb4reQo415JT0gLF3CIIPrYls=;
+ b=VmTpe/biTdDPcmQYRvhipjj+Eta1YD5XGg96KLs7F21vQXD7T45lzPQDaMDfsYISeVs0UM
+ OT6IrOr34Zu6CQRES7WlR4eolweVhXEQvByuIR9yl1gIHz27xU4t1RiO9DnWqZYooR/oZM
+ a0V7tC7SY7+1DiQt2eqKtQHiGKQ9zYo=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-o7Bs_ihRNtONSFKEscfEmg-1; Sun, 21 Jul 2024 20:18:10 -0400
-X-MC-Unique: o7Bs_ihRNtONSFKEscfEmg-1
+ us-mta-617-K80vAoScPzCy9VhLksNZLw-1; Sun, 21 Jul 2024 20:18:49 -0400
+X-MC-Unique: K80vAoScPzCy9VhLksNZLw-1
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4272718b9b0so28091815e9.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:10 -0700 (PDT)
+ 5b1f17b1804b1-42671a6fb9dso25239965e9.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:18:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607489; x=1722212289;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wmqhjtW3VVd/s0tK/0z/W3SbHoTTKsvguEWbJfZllQs=;
- b=V4/vOmXPPAHDIWCr9XTBrEyzAgLJ0jyOs63fJfkBsUBj7TaLgEI8M3OigDuSGUOwzs
- ff+iZE9UbEdd9QRr0MzIBgdCYU28kAAZuAH5303stb6zwJa3BISmBN2EoNGsZH/911R4
- p3orgISBEnd+rLtExjPPZPeCUP9LQlmKZzoiwItcZ2D2/i57JmrFkm+acs0Z0p/X2CfH
- hiB/FpYNEkco5geqnLS3pSBR5620YM9gUDJCYK5tOIXIHparhOikNvaNVIUCvRdfQwcD
- CVDE9ml1++UFWUMD6CDUzQ0iBDO0KxiF7+3AMA3fyayIsgKsKRZd3b+Kk17WeeSP5QDa
- gnOQ==
-X-Gm-Message-State: AOJu0YyIOnpiqoe4rcXbpQMb2T+59cgtCAh6sG+QcwDm/odRRaOYfZG2
- PCfFGoPM/oVZz9vR2qJBld4ZD4Nzlh3vOxM41jzxhDK6fqZDQGw3qzvlAXrLxVmFsNfcc08Z8n3
- Gqv37BBl7PqJ/aMHbitfWe1eZHG/3B5ZqPO7vdG85xCZckvxhjQ8tG2yk6yYzumtFKIf47QUN0o
- ebLoVcgl0peP45rwi6t0cCuimypj1JOA==
-X-Received: by 2002:a05:600c:3acb:b0:427:9dad:e6ac with SMTP id
- 5b1f17b1804b1-427dc586456mr34493735e9.34.1721607489039; 
- Sun, 21 Jul 2024 17:18:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyOtAeRE+aIwMTy25tqZqKW4tLnyBG1isZ2hLUU44HXIE/i+j23w0grVM+kImYJyDExGnVHw==
-X-Received: by 2002:a05:600c:3acb:b0:427:9dad:e6ac with SMTP id
- 5b1f17b1804b1-427dc586456mr34493535e9.34.1721607488551; 
- Sun, 21 Jul 2024 17:18:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607528; x=1722212328;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WUYDk8FUt/O+FXoIUIkb4reQo415JT0gLF3CIIPrYls=;
+ b=TSLRYyiYbgkLnnHr3tGmk02m7UDwzaDUHOkFpUqU55DvtfeYv3RyNdb/4WkmIM/el/
+ f6GPzH+pwejZieb9d0U4ToTV7+u26E73k5og2AryRgr9jOLTat1TzXH7xJacrcaRXSvB
+ 5LX1DimhfDtQ/UsarPCbJn968+gd4OAb4p5yUb/0ylMb4PaUBZIVIHLm/qrqnXgOsbBa
+ X84jWrjlD1l05gssj6mdqzUDD359Zq1bV7y1Hfu5D4jLcUAn1R8w9SRa5QezTkzNO9ZH
+ imV09+EEvVl/pblwvsXSAv8AP3lwONrtM110Ay3LrPsS7k2me29KjKTtoH4h3gEs9Ht2
+ 3Z1w==
+X-Gm-Message-State: AOJu0Yxc7AoFEEZP15efFLv9FkXWS7bOeXjEmWij7ow8KV2TvfM4RxoW
+ B8FAoW5A8gqhW+VIObwPGtNi6aC87hlQx3mXs5pqqD56J46kX0n+jzqkWOXtYXI3sgiFIBVYfrX
+ cy+AGpi9ZEwBb8tncgFZXZB8NqhbdMrk7SDdv/SJpJ3hkx28bYYSKxRd/S6Ut5xpvaf1O8Q+9iw
+ 3HfwRAgFbNy8TaItzEKbMlKIqXUSjEAA==
+X-Received: by 2002:a05:600c:3ba3:b0:426:5de3:2ae5 with SMTP id
+ 5b1f17b1804b1-427dc520291mr38634635e9.10.1721607528007; 
+ Sun, 21 Jul 2024 17:18:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEm0kI/w09KN27i6SCc7Nyn2TmcReM1GKo5eFcICdIBK5s45Gj3934GA+ivd2ww5odWpowjew==
+X-Received: by 2002:a05:600c:3ba3:b0:426:5de3:2ae5 with SMTP id
+ 5b1f17b1804b1-427dc520291mr38634425e9.10.1721607527081; 
+ Sun, 21 Jul 2024 17:18:47 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d6934ec6sm106853125e9.41.2024.07.21.17.18.07
+ 5b1f17b1804b1-427d2a8e2a1sm132413165e9.31.2024.07.21.17.18.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:18:08 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:18:06 -0400
+ Sun, 21 Jul 2024 17:18:46 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org
-Subject: [PULL 37/63] smbios: make memory device size configurable per Machine
-Message-ID: <0dd7f4777d1d44fe67f3323b462bc0f0a2f686a2.1721607331.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>, Igor Mammedov <imammedo@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 54/63] acpi/gpex: Create PCI link devices outside PCI root
+ bridge
+Message-ID: <e196a89bd12e38615699271240c3ae2fa2e94194.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -92,7 +89,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,171 +105,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-Currently QEMU describes initial[1] RAM* in SMBIOS as a series of
-virtual DIMMs (capped at 16Gb max) using type 17 structure entries.
+Currently, PCI link devices (PNP0C0F) are always created within the
+scope of the PCI root bridge. However, RISC-V needs these link devices
+to be created outside to ensure the probing order in the OS. This
+matches the example given in the ACPI specification [1] as well. Hence,
+create these link devices directly under _SB instead of under the PCI
+root bridge.
 
-Which is fine for the most cases.  However when starting guest
-with terabytes of RAM this leads to too many memory device
-structures, which eventually upsets linux kernel as it reserves
-only 64K for these entries and when that border is crossed out
-it runs out of reserved memory.
+To keep these link device names unique for multiple PCI bridges, change
+the device name from GSIx to LXXY format where XX is the PCI bus number
+and Y is the INTx.
 
-Instead of partitioning initial RAM on 16Gb DIMMs, use maximum
-possible chunk size that SMBIOS spec allows[2]. Which lets
-encode RAM in lower 31 bits of 32bit field (which amounts upto
-2047Tb per DIMM).
-As result initial RAM will generate only one type 17 structure
-until host/guest reach ability to use more RAM in the future.
+GPEX is currently used by riscv, aarch64/virt and x86/microvm machines.
+So, this change will alter the DSDT for those systems.
 
-Compat changes:
-We can't unconditionally change chunk size as it will break
-QEMU<->guest ABI (and migration). Thus introduce a new machine
-class field that would let older versioned machines to use
-legacy 16Gb chunks, while new(er) machine type[s] use maximum
-possible chunk size.
+[1] - ACPI 5.1: 6.2.13.1 Example: Using _PRT to Describe PCI IRQ Routing
 
-PS:
-While it might seem to be risky to rise max entry size this large
-(much beyond of what current physical RAM modules support),
-I'd not expect it causing much issues, modulo uncovering bugs
-in software running within guest. And those should be fixed
-on guest side to handle SMBIOS spec properly, especially if
-guest is expected to support so huge RAM configs.
-
-In worst case, QEMU can reduce chunk size later if we would
-care enough about introducing a workaround for some 'unfixable'
-guest OS, either by fixing up the next machine type or
-giving users a CLI option to customize it.
-
-1) Initial RAM - is RAM configured with help '-m SIZE' CLI option/
-   implicitly defined by machine. It doesn't include memory
-   configured with help of '-device' option[s] (pcdimm,nvdimm,...)
-2) SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
-
-PS:
-* tested on 8Tb host with RHEL6 guest, which seems to parse
-  type 17 SMBIOS table entries correctly (according to 'dmidecode').
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240715122417.4059293-1-imammedo@redhat.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240716144306.2432257-5-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/boards.h |  4 ++++
- hw/arm/virt.c       |  1 +
- hw/core/machine.c   |  6 ++++++
- hw/i386/pc_piix.c   |  1 +
- hw/i386/pc_q35.c    |  1 +
- hw/smbios/smbios.c  | 11 ++++++-----
- 6 files changed, 19 insertions(+), 5 deletions(-)
+ hw/pci-host/gpex-acpi.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index ef6f18f2c1..48ff6d8b93 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -237,6 +237,9 @@ typedef struct {
-  *    purposes only.
-  *    Applies only to default memory backend, i.e., explicit memory backend
-  *    wasn't used.
-+ * @smbios_memory_device_size:
-+ *    Default size of memory device,
-+ *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
-  */
- struct MachineClass {
-     /*< private >*/
-@@ -304,6 +307,7 @@ struct MachineClass {
-     const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
-     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
-     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
-+    uint64_t smbios_memory_device_size;
- };
+diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+index f69413ea2c..391fabb8a8 100644
+--- a/hw/pci-host/gpex-acpi.c
++++ b/hw/pci-host/gpex-acpi.c
+@@ -7,7 +7,8 @@
+ #include "hw/pci/pcie_host.h"
+ #include "hw/acpi/cxl.h"
  
- /**
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index b0c68d66a3..719e83e6a1 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3308,6 +3308,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
- static void virt_machine_9_0_options(MachineClass *mc)
+-static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
++static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
++                                          Aml *scope, uint8_t bus_num)
  {
-     virt_machine_9_1_options(mc);
-+    mc->smbios_memory_device_size = 16 * GiB;
-     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     Aml *method, *crs;
+     int i, slot_no;
+@@ -20,7 +21,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
+             Aml *pkg = aml_package(4);
+             aml_append(pkg, aml_int((slot_no << 16) | 0xFFFF));
+             aml_append(pkg, aml_int(i));
+-            aml_append(pkg, aml_name("GSI%d", gsi));
++            aml_append(pkg, aml_name("L%.02X%X", bus_num, gsi));
+             aml_append(pkg, aml_int(0));
+             aml_append(rt_pkg, pkg);
+         }
+@@ -30,7 +31,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
+     /* Create GSI link device */
+     for (i = 0; i < PCI_NUM_PINS; i++) {
+         uint32_t irqs = irq + i;
+-        Aml *dev_gsi = aml_device("GSI%d", i);
++        Aml *dev_gsi = aml_device("L%.02X%X", bus_num, i);
+         aml_append(dev_gsi, aml_name_decl("_HID", aml_string("PNP0C0F")));
+         aml_append(dev_gsi, aml_name_decl("_UID", aml_int(i)));
+         crs = aml_resource_template();
+@@ -45,7 +46,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
+         aml_append(dev_gsi, aml_name_decl("_CRS", crs));
+         method = aml_method("_SRS", 1, AML_NOTSERIALIZED);
+         aml_append(dev_gsi, method);
+-        aml_append(dev, dev_gsi);
++        aml_append(scope, dev_gsi);
+     }
  }
- DEFINE_VIRT_MACHINE(9, 0)
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index bc38cad7f2..ac30544e7f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1004,6 +1004,12 @@ static void machine_class_init(ObjectClass *oc, void *data)
-     /* Default 128 MB as guest ram size */
-     mc->default_ram_size = 128 * MiB;
-     mc->rom_file_has_mr = true;
-+    /*
-+     * SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
-+     * use max possible value that could be encoded into
-+     * 'Extended Size' field (2047Tb).
-+     */
-+    mc->smbios_memory_device_size = 2047 * TiB;
  
-     /* numa node memory size aligned on 8MB by default.
-      * On Linux, each node's border has to be 8MB aligned
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 9445b07b4f..d9e69243b4 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -495,6 +495,7 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
-     pc_i440fx_machine_9_1_options(m);
-     m->alias = NULL;
-     m->is_default = false;
-+    m->smbios_memory_device_size = 16 * GiB;
+@@ -174,7 +175,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+                 aml_append(dev, aml_name_decl("_PXM", aml_int(numa_node)));
+             }
  
-     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 71d3c6d122..9d108b194e 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -374,6 +374,7 @@ static void pc_q35_machine_9_0_options(MachineClass *m)
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_machine_9_1_options(m);
-     m->alias = NULL;
-+    m->smbios_memory_device_size = 16 * GiB;
-     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-     pcmc->isa_bios_alias = false;
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 3b7703489d..a394514264 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -1093,6 +1093,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
-                        Error **errp)
- {
-     unsigned i, dimm_cnt, offset;
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     ERRP_GUARD();
+-            acpi_dsdt_add_pci_route_table(dev, cfg->irq);
++            acpi_dsdt_add_pci_route_table(dev, cfg->irq, scope, bus_num);
  
-     assert(ep_type == SMBIOS_ENTRY_POINT_TYPE_32 ||
-@@ -1123,12 +1124,12 @@ static bool smbios_get_tables_ep(MachineState *ms,
-     smbios_build_type_9_table(errp);
-     smbios_build_type_11_table();
+             /*
+              * Resources defined for PXBs are composed of the following parts:
+@@ -205,7 +206,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+     aml_append(dev, aml_name_decl("_STR", aml_unicode("PCIe 0 Device")));
+     aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
  
--#define MAX_DIMM_SZ (16 * GiB)
--#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
--                                        : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
-+#define GET_DIMM_SZ ((i < dimm_cnt - 1) ? mc->smbios_memory_device_size \
-+    : ((current_machine->ram_size - 1) % mc->smbios_memory_device_size) + 1)
+-    acpi_dsdt_add_pci_route_table(dev, cfg->irq);
++    acpi_dsdt_add_pci_route_table(dev, cfg->irq, scope, 0);
  
--    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
--               MAX_DIMM_SZ;
-+    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size,
-+                             mc->smbios_memory_device_size) /
-+               mc->smbios_memory_device_size;
- 
-     /*
-      * The offset determines if we need to keep additional space between
+     method = aml_method("_CBA", 0, AML_NOTSERIALIZED);
+     aml_append(method, aml_return(aml_int(cfg->ecam.base)));
 -- 
 MST
 
