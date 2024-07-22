@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C273C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770E3C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn4B-00035M-34; Mon, 22 Jul 2024 03:02:39 -0400
+	id 1sVn4K-0004A1-PU; Mon, 22 Jul 2024 03:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3s-0001SB-TN
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sVn4D-0003FQ-6M
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3q-0006XV-Oi
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:20 -0400
+ id 1sVn4B-0006kg-EX
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631728;
+ s=mimecast20190719; t=1721631758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YOicOYD38yRq9S9QWOEkM+4EGRe93blGX0zFcQggxnI=;
- b=inv+X2jCMm+tXupAO9jn+gJsIkzE9WPkdErokh7J8x3Jq1I6+e/LiQ+FiRzjZPZRL0jmfF
- N/njLyLKSYZ/Y2z4jQLydu0vYcX17A9acuQ1r7igj6VU+A1oCSpp6M+PRvQ7pefmYWjKuV
- 0HTaaJKMeIc6EvW1u7FOzQ+iRNQ3b0I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=E+4OEcfCBx1yNmRfg8InUQI1xPEQU0KY9UnlgF5lAIQ=;
+ b=F1DD4Bmk3NEv09DNSYddAXaTLACSExbbqOwHqFNKUlw6KtK7XGJYCAzbEEZag7SA8Xev5a
+ 6/jslxAaCgg7NbPKSm/VWebCUB4uwaYaKS2zivdj96waFnfNPDugUtHfCWuL8CW430rDyg
+ pjBmCXnK25fswEhp+R6FFXl47cQxozM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-3vhdAMckOUu9avS4CuGwWQ-1; Mon,
- 22 Jul 2024 03:02:02 -0400
-X-MC-Unique: 3vhdAMckOUu9avS4CuGwWQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-38l6o44fMTCiWUtavkn6pw-1; Mon,
+ 22 Jul 2024 03:02:37 -0400
+X-MC-Unique: 38l6o44fMTCiWUtavkn6pw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 944471955F56; Mon, 22 Jul 2024 07:01:53 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D7DF41955D50; Mon, 22 Jul 2024 07:02:34 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.252])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69794196BB78; Mon, 22 Jul 2024 07:01:48 +0000 (UTC)
+ id 5E0711955D52; Mon, 22 Jul 2024 07:02:28 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 10/25] qga: conditionalize schema for commands requiring
- getifaddrs
-Date: Mon, 22 Jul 2024 10:01:07 +0300
-Message-ID: <20240722070122.27615-11-kkostiuk@redhat.com>
+Subject: [PULL 23/25] qga/commands-posix: Make ga_wait_child() return boolean
+Date: Mon, 22 Jul 2024 10:01:20 +0300
+Message-ID: <20240722070122.27615-24-kkostiuk@redhat.com>
 In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,122 +82,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Rather than creating stubs for every comamnd that just return
-QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-fully exclude generation of the network interface command on
-POSIX platforms lacking getifaddrs().
+Make ga_wait_child() return boolean and check the returned boolean
+in ga_run_command() instead of dereferencing @errp.
 
-The command will be rejected at QMP dispatch time instead,
-avoiding reimplementing rejection by blocking the stub commands.
-This changes the error message for affected commands from
-
-   {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
-
-to
-
-    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
-
-This has the additional benefit that the QGA protocol reference
-now documents what conditions enable use of the command.
-
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20240712132459.3974109-11-berrange@redhat.com>
+Message-ID: <20240716162351.270095-1-zhao1.liu@intel.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/commands-posix.c | 13 -------------
- qga/qapi-schema.json | 15 ++++++++++-----
- 2 files changed, 10 insertions(+), 18 deletions(-)
+ qga/commands-posix.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 559d71ffae..09d08ee2ca 100644
+index 578d29f228..c2bd0b4316 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -1142,14 +1142,6 @@ error:
-     return NULL;
+@@ -48,7 +48,7 @@
+ #endif
+ #endif
+ 
+-static void ga_wait_child(pid_t pid, int *status, Error **errp)
++static bool ga_wait_child(pid_t pid, int *status, Error **errp)
+ {
+     pid_t rpid;
+ 
+@@ -59,10 +59,11 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+     if (rpid == -1) {
+         error_setg_errno(errp, errno, "failed to wait for child (pid: %d)",
+                          pid);
+-        return;
++        return false;
+     }
+ 
+     g_assert(rpid == pid);
++    return true;
  }
  
--#else
--
--GuestNetworkInterfaceList *qmp_guest_network_get_interfaces(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
- #endif /* HAVE_GETIFADDRS */
+ static ssize_t ga_pipe_read_str(int fd[2], char **str)
+@@ -167,8 +168,7 @@ static int ga_run_command(const char *argv[], const char *in_str,
+         goto out;
+     }
  
- #if !defined(CONFIG_FSFREEZE)
-@@ -1222,11 +1214,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
- /* add unsupported commands to the list of blocked RPCs */
- GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
- {
--#if !defined(HAVE_GETIFADDRS)
--    blockedrpcs = g_list_append(blockedrpcs,
--                              g_strdup("guest-network-get-interfaces"));
--#endif
--
- #if !defined(CONFIG_FSFREEZE)
-     {
-         const char *list[] = {
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 38483652ac..79ed4f0e21 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -654,7 +654,8 @@
- # Since: 1.1
- ##
- { 'enum': 'GuestIpAddressType',
--  'data': [ 'ipv4', 'ipv6' ] }
-+  'data': [ 'ipv4', 'ipv6' ],
-+  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
+-    ga_wait_child(pid, &status, errp);
+-    if (*errp) {
++    if (!ga_wait_child(pid, &status, errp)) {
+         goto out;
+     }
  
- ##
- # @GuestIpAddress:
-@@ -670,7 +671,8 @@
- { 'struct': 'GuestIpAddress',
-   'data': {'ip-address': 'str',
-            'ip-address-type': 'GuestIpAddressType',
--           'prefix': 'int'} }
-+           'prefix': 'int'},
-+  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
- 
- ##
- # @GuestNetworkInterfaceStat:
-@@ -702,7 +704,8 @@
-             'tx-packets': 'uint64',
-             'tx-errs': 'uint64',
-             'tx-dropped': 'uint64'
--           } }
-+           },
-+  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
- 
- ##
- # @GuestNetworkInterface:
-@@ -722,7 +725,8 @@
-   'data': {'name': 'str',
-            '*hardware-address': 'str',
-            '*ip-addresses': ['GuestIpAddress'],
--           '*statistics': 'GuestNetworkInterfaceStat' } }
-+           '*statistics': 'GuestNetworkInterfaceStat' },
-+  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
- 
- ##
- # @guest-network-get-interfaces:
-@@ -734,7 +738,8 @@
- # Since: 1.1
- ##
- { 'command': 'guest-network-get-interfaces',
--  'returns': ['GuestNetworkInterface'] }
-+  'returns': ['GuestNetworkInterface'],
-+  'if': { 'any': ['CONFIG_WIN32', 'HAVE_GETIFADDRS'] } }
- 
- ##
- # @GuestLogicalProcessor:
 -- 
 2.45.2
 
