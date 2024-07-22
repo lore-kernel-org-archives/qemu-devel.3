@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB102C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E15C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgk6-00043E-6y; Sun, 21 Jul 2024 20:17:30 -0400
+	id 1sVgkB-0004OV-1v; Sun, 21 Jul 2024 20:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgk4-0003vx-Bn
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgk9-0004JJ-P9
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgk2-0005lT-WB
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgk7-0005lz-UU
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607446;
+ s=mimecast20190719; t=1721607451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b1DVK7w17GPjd2vAQhHKtU0B8nNst/5eqxCLxdYr+cI=;
- b=gf2Mlax2Aq2RDQ8p/rv6Y3/H9Wz1vZYBlrpRQIaesLCX1jS5bReXAOYbYb3U0eDa4Qn8L2
- DXttJ0TZoIgby0+pgqZXtI/n4sCLu6f+tvu3sBNnOeTBHUdVo6X1m+yoet/jNlV03N7nCw
- iYFld16NFiGtn3Dry4koNfiLMBCIhhI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g0S4hWSM06AIIIvMLr4s6kHBfIjfxBV9+M5h/WPYNyI=;
+ b=YNP6aoaKCOK+C2Wj3Q6kfahdola9ecE+ahAOU6d5tQTqsVpLJzW06RZYxPOnl/ePAGUyiH
+ J7jneUCF8Y0Fu3zlQBw4y0FTqotInI3zpuYMZqmPPIVUcmnEiSLyez8TIZ80n6aWRwmnLu
+ 2OsBqWz1d5y7ccwNpv5v0wWU+vOkKQQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-sWw6uVoTO4ivVzH9403SXw-1; Sun, 21 Jul 2024 20:17:24 -0400
-X-MC-Unique: sWw6uVoTO4ivVzH9403SXw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42666ed2d5fso25930045e9.3
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:24 -0700 (PDT)
+ us-mta-466-NgXSa-MrNfSg4Yeq_85D-w-1; Sun, 21 Jul 2024 20:17:28 -0400
+X-MC-Unique: NgXSa-MrNfSg4Yeq_85D-w-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42660bca669so25378775e9.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607443; x=1722212243;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b1DVK7w17GPjd2vAQhHKtU0B8nNst/5eqxCLxdYr+cI=;
- b=EpEhzD9008AJpXNf04z7HvRWZnvhxT16XqEjcPWyGjgLfKcLLm3wP09wJHUQMaI8Ix
- Gok2CQTRCFDrRyhXjqkf0qkMMyV1vsR0iooWiEDj//M5aA0cqppwiY9KYVJMo0ARBnsv
- VO24iB5QqbB6MmoSlSI0FQSBd+iaeveaoRhnDEbWsOhU62OleYSrdYZqJGb5+d87C6B/
- wZwaXK2gK0c675Gh9D6wEapKC1urHTYGML7SVIOMMRYWbwzIuVhoX7ZIpKMREb9nGk5s
- bVdJwCu5Elu7idZCPkXVUX+FT22OyrWazxH+i1s8wGZ3p4AnoWQHKYiEUrSoDeOOs1oY
- Fp2g==
-X-Gm-Message-State: AOJu0YyPMBXXq5Ckf0LxRGysUufPNZFNfVYcEoe09Fq2Yra6YADJI3TS
- YmqPko9mkoAkzxesUH7E17DvEovHMszv9I33UBv6NGjmjjMzSrkQLoI6SVrICe06kWnSqphyI6O
- j/qazkoI4+W8fkA7Mqk2a9kVKtaoxV8jleepjjHBz4AttbvY/IV4RdJPGA+fJq0F+KuAn9viAnS
- 1HAY35sK1x+m2XSKPkwubSRLF6hnbxyw==
-X-Received: by 2002:a05:600c:314d:b0:426:5dca:50a with SMTP id
- 5b1f17b1804b1-427dc531d47mr32801935e9.21.1721607443168; 
- Sun, 21 Jul 2024 17:17:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGE5ezX0uRHXNslnNmqbBgg7RqX0cIh811EpZ5bWGJHemxROVr893VGvhfDGBfkANjzJjW24w==
-X-Received: by 2002:a05:600c:314d:b0:426:5dca:50a with SMTP id
- 5b1f17b1804b1-427dc531d47mr32801755e9.21.1721607442241; 
- Sun, 21 Jul 2024 17:17:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607447; x=1722212247;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g0S4hWSM06AIIIvMLr4s6kHBfIjfxBV9+M5h/WPYNyI=;
+ b=vuOFc1i96HSux8WVpXQ3gowrk4Or0NdkrwUQVAOTvJ69yg2jGpKMw42iAL6m1d0Uey
+ z3Dv8JelzVN9UHdRTyT3jsU9jA31IF4ibzRs3gbWZKBPPS8Hg4EH8Z9Cg5fVmNcbCW3w
+ 6Ybd/5OTbQhOhIbfg0U5v+IxC21jvtAtKzQreGi3uSRoDZZEdgKvtzTnCkyk9F1SjjoJ
+ sGt3VaCzh2Z0OoibJ0SAtZ/jRPBnd4zOBpM2iWSvEc/6SZnBFuT09HmPITImln46L8mK
+ zDuFv9sA0hPgzr+uVPcyyOR68tIaUhh/Pf4Qr64wRD8S1552bukOo8jMAMIYToB/lH9s
+ kIMw==
+X-Gm-Message-State: AOJu0YycUA+cEBZr+cA6cDg7yAxCkl2d8jqQTP0xRmEFib1OZQ3iTuKi
+ xAw4i4Ifui3LmDkooidNevTqbIaX4/BgMVk369YqybjBjF1u6caZpzaCxkJlMei1NLo9qBPJ8Vl
+ TLMxyAMEkmjcufceA9ld3af6NCdwgSkpspanyq8Xuh9K26d3fumnyGqNvRiEXBNlIAcJJmX2Tcr
+ EXHxHeA7RFiNQn9g2vMPfPXzK8Sj3Odw==
+X-Received: by 2002:a05:600c:190d:b0:426:66e9:b844 with SMTP id
+ 5b1f17b1804b1-427dc515427mr37324255e9.8.1721607447028; 
+ Sun, 21 Jul 2024 17:17:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvOb5riDtOVlMPVBcHkq5z28fjXS2hMV8i3Kx8UR/J/hWvBBqkXqNeuu1QvzANlYuQ03P3iA==
+X-Received: by 2002:a05:600c:190d:b0:426:66e9:b844 with SMTP id
+ 5b1f17b1804b1-427dc515427mr37324065e9.8.1721607446515; 
+ Sun, 21 Jul 2024 17:17:26 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68fa171sm107667915e9.1.2024.07.21.17.17.21
+ 5b1f17b1804b1-427d2a94380sm133711655e9.39.2024.07.21.17.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:21 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:20 -0400
+ Sun, 21 Jul 2024 17:17:25 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:17:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Yi Liu <yi.l.liu@intel.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 15/63] MAINTAINERS: Add myself as a VT-d reviewer
-Message-ID: <e3f15732c479e6c4baa56af65f52d99fbfb5c417.1721607331.git.mst@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 17/63] virtio-snd: check for invalid param shift operands
+Message-ID: <9b6083465fb8311f2410615f8303a41f580a2a20.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,28 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Message-Id: <20240708032112.796339-1-yi.l.liu@intel.com>
+When setting the parameters of a PCM stream, we compute the bit flag
+with the format and rate values as shift operand to check if they are
+set in supported_formats and supported_rates.
+
+If the guest provides a format/rate value which when shifting 1 results
+in a value bigger than the number of bits in
+supported_formats/supported_rates, we must report an error.
+
+Previously, this ended up triggering the not reached assertions later
+when converting to internal QEMU values.
+
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ hw/audio/virtio-snd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b7e9ced3e8..8ad64ff76b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3659,6 +3659,7 @@ F: tests/uefi-test-tools/
- VT-d Emulation
- M: Michael S. Tsirkin <mst@redhat.com>
- R: Jason Wang <jasowang@redhat.com>
-+R: Yi Liu <yi.l.liu@intel.com>
- S: Supported
- F: hw/i386/intel_iommu.c
- F: hw/i386/intel_iommu_internal.h
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index e6432ac959..e5196aa4bb 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+         error_report("Number of channels is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_formats & BIT(params->format))) {
++    if (BIT(params->format) > sizeof(supported_formats) ||
++        !(supported_formats & BIT(params->format))) {
+         error_report("Stream format is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
+-    if (!(supported_rates & BIT(params->rate))) {
++    if (BIT(params->rate) > sizeof(supported_rates) ||
++        !(supported_rates & BIT(params->rate))) {
+         error_report("Stream rate is not supported.");
+         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
+     }
 -- 
 MST
 
