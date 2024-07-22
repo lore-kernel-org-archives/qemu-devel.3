@@ -4,85 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3552AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CE2C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVzEV-0001kh-4R; Mon, 22 Jul 2024 16:02:07 -0400
+	id 1sVzIv-00018S-IQ; Mon, 22 Jul 2024 16:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVzET-0001ij-FS
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:02:05 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVzER-0001Ml-LQ
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:02:05 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4265b7514fcso22820195e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721678522; x=1722283322; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DXgZG32sbZUUJvy0LLPw9dM3Lgo9p3e4NlYrhphNMnM=;
- b=BQjIMeQCWdAOYPTUmFgaoS6zeCk1RQzrjSdDBIaTbla4KUnazq1Ym2w72PQ5G4AURJ
- e208wfBZwP+kpmtBR00Pgy1r2Tcaod763Ik5eZWG8vUlpoN32GlgIkDQSQIRLQXN/1V5
- YFMX25v0zDzorX9qJliEohlo0xSnmCIB0nHXTx8hNS/bFxczSM5VDbN4UpHwprcoAzG0
- cIFZH/xgkfUQL2wY6APu7eZmHyaeAOXSnMxZgPVksojLXpW7pjPUKqv1pZ5IrT0mmtFy
- wkF78MC2jFZdSI8aKEhNz7UKExd1KNdgtUCF4EtQsIE+ZajvxSBNM4gfGTZvQGIwcxuq
- vqtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721678522; x=1722283322;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DXgZG32sbZUUJvy0LLPw9dM3Lgo9p3e4NlYrhphNMnM=;
- b=NklaquD6mH+BVtLmSmGzX/yo+3ZUB0ZH6g18F5dmeZPOH3D07EaoLSZgMULh5/+TqC
- 10i22KxtMWNkFTctHqvJ2DlMTm/8O7rY/L589O5jZ66qD4CwqKlS/H9XOJoLY4Lnu2Hg
- T1d5lK1sC93TO1CFurq+Q+wvZ4A46ld3Ghbd10yie1yyq3DvoTWBZYt//ndlrUutlpki
- 8xaW5zjW4PxwJI6+GcUrnKKi7McBegM3TXXiosKv2HsBEE7Fp/lmrLP05ne8x4RGuQFJ
- 8y4dvHaJ1IdiNaINUQ6qT4sLPKmFb8fI9F037b5cPYQbdo7s8/ob0EUP3vqsueZR05uo
- oEoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsSNn1k00qwPBuJucZHTVxZ2mI3ju4sfCitAmGMy8ZI+k+Ir3F24VYXv4a4VTHJXBNa3TpjYiPDd8RJe6Hp4m/vWeNC5U=
-X-Gm-Message-State: AOJu0YzJ32qPt+AfEY3RonYqj3IWWD2mvGfgbSJSc2V2BKW1uNWOsfbs
- KJhLQiWy6XRxk/jAXqI/ahpI3zAvG/x6+F48V9uIRcnuDfW+I3RVEHyzijR42zk=
-X-Google-Smtp-Source: AGHT+IFHUueJSJxWFeqPr/ldGhcWIYfrh/b+4/wdhPTe9x9cwOreFxzqhRNcg9ciOQ8ryVGLOjK2oQ==
-X-Received: by 2002:a5d:6e06:0:b0:366:dee6:a9ea with SMTP id
- ffacd0b85a97d-368740244d5mr6943432f8f.26.1721678521872; 
- Mon, 22 Jul 2024 13:02:01 -0700 (PDT)
-Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
- [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787eba8csm9446016f8f.91.2024.07.22.13.02.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 13:02:01 -0700 (PDT)
-Message-ID: <9a8c2997-b9be-43ed-8fb6-febd6b50024d@linaro.org>
-Date: Mon, 22 Jul 2024 22:01:59 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1sVzIs-00017N-3h
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1sVzIo-00026z-SY
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721678788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9JsaUgLSl5fogxysDiOAgpHhg7qEM39samc8Xtse6i8=;
+ b=Zp2x6qnHQMR6qmKvZfgWyHCiy6rthiZ+GDiGao++KK6orY/OewIzLibv2DrS31NVhsqgc5
+ aB6o7pGKGIJOaugCLVT+UHxTdsm9WYTgeKB/2gytzrD8vkfTAMtGeuF2nR4XYw9Ve2t1/t
+ +jTxUTfz0MXDGqvY4Wiy29G47nCuw3s=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-Bnf6N5ueMSeq6wMvIIYFcg-1; Mon,
+ 22 Jul 2024 16:06:24 -0400
+X-MC-Unique: Bnf6N5ueMSeq6wMvIIYFcg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E0751955D57; Mon, 22 Jul 2024 20:06:23 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.9])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5780E1955D44; Mon, 22 Jul 2024 20:06:21 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 0/8] Ui patches
+Date: Tue, 23 Jul 2024 00:06:10 +0400
+Message-ID: <20240722200619.135163-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if
- EL2 is not enabled
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240722172957.1041231-1-peter.maydell@linaro.org>
- <20240722172957.1041231-5-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722172957.1041231-5-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,39 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 19:29, Peter Maydell wrote:
-> When determining the current vector length, the SMCR_EL2.LEN and
-> SVCR_EL2.LEN settings should only be considered if EL2 is enabled
-> (compare the pseudocode CurrentSVL and CurrentNSVL which call
-> EL2Enabled()).
-> 
-> We were checking against ARM_FEATURE_EL2 rather than calling
-> arm_is_el2_enabled(), which meant that we would look at
-> SMCR_EL2/SVCR_EL2 when in Secure EL1 or Secure EL0 even if Secure EL2
-> was not enabled.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Just curious, how did you notice?
+The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
 
-> Use the correct check in sve_vqm1_for_el_sm().
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index ce319572354..8fb4b474e83 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -7232,7 +7232,7 @@ uint32_t sve_vqm1_for_el_sm(CPUARMState *env, int el, bool sm)
->       if (el <= 1 && !el_is_in_host(env, el)) {
->           len = MIN(len, 0xf & (uint32_t)cr[1]);
->       }
-> -    if (el <= 2 && arm_feature(env, ARM_FEATURE_EL2)) {
-> +    if (el <= 2 && arm_is_el2_enabled(env)) {
->           len = MIN(len, 0xf & (uint32_t)cr[2]);
->       }
->       if (arm_feature(env, ARM_FEATURE_EL3)) {
+  Merge tag 'pull-aspeed-20240721' of https://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+
+for you to fetch changes up to 903cc9e1173e0778caa50871e8275c898770c690:
+
+  chardev/char-win-stdio.c: restore old console mode (2024-07-22 22:25:46 +0400)
+
+----------------------------------------------------------------
+UI-related for 9.1
+
+----------------------------------------------------------------
+
+Gerd Hoffmann (1):
+  vnc: increase max display size
+
+Marc-André Lureau (5):
+  virtio-gpu-gl: declare dependency on ui-opengl
+  ui: add more tracing for dbus
+  ui/vdagent: improve vdagent_fe_open() trace
+  ui/vdagent: notify clipboard peers of serial reset
+  ui/vdagent: send caps on fe_open
+
+Phil Dennis-Jordan (1):
+  Cursor: 8 -> 1 bit alpha downsampling improvement
+
+songziming (1):
+  chardev/char-win-stdio.c: restore old console mode
+
+ ui/vnc.h                   |  4 ++--
+ audio/dbusaudio.c          |  2 +-
+ chardev/char-win-stdio.c   |  5 +++++
+ hw/display/virtio-gpu-gl.c |  1 +
+ ui/clipboard.c             |  2 ++
+ ui/cursor.c                |  2 +-
+ ui/dbus-clipboard.c        |  4 ++++
+ ui/vdagent.c               | 11 ++++++++---
+ audio/trace-events         |  2 +-
+ ui/trace-events            |  5 ++++-
+ 10 files changed, 29 insertions(+), 9 deletions(-)
+
+-- 
+2.45.2.827.g557ae147e6
 
 
