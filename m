@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CE2C3DA5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0133C3DA64
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVzIv-00018S-IQ; Mon, 22 Jul 2024 16:06:41 -0400
+	id 1sVzJ9-0001qJ-3m; Mon, 22 Jul 2024 16:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sVzIs-00017N-3h
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:38 -0400
+ id 1sVzJ4-0001hW-Il
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1sVzIo-00026z-SY
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:36 -0400
+ id 1sVzJ2-0002AW-2D
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:06:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721678788;
+ s=mimecast20190719; t=1721678807;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9JsaUgLSl5fogxysDiOAgpHhg7qEM39samc8Xtse6i8=;
- b=Zp2x6qnHQMR6qmKvZfgWyHCiy6rthiZ+GDiGao++KK6orY/OewIzLibv2DrS31NVhsqgc5
- aB6o7pGKGIJOaugCLVT+UHxTdsm9WYTgeKB/2gytzrD8vkfTAMtGeuF2nR4XYw9Ve2t1/t
- +jTxUTfz0MXDGqvY4Wiy29G47nCuw3s=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lwS2UJS6Dk+QSP9VKVi2wgZoBdpN6fEAMlHpX9EWZ2M=;
+ b=HXCqOJsxETqEHvA/xYW+KDl7AJ5XEPFI9Td8B44i+jM9Hc+P3c6vStZJYzflMswiRqb3SO
+ U5PvbVnRUo+fOKoT0USfoXjscWjRvJlDtEwZ5DGg9h43LKwkprWi6V4Tbbz1fBqvLOsdM8
+ 3QmmXtBbyHoZ0Ne3LwIPoTeffo6ro8M=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-Bnf6N5ueMSeq6wMvIIYFcg-1; Mon,
- 22 Jul 2024 16:06:24 -0400
-X-MC-Unique: Bnf6N5ueMSeq6wMvIIYFcg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-600--Mgnse4xOxaU2QjdGfJPag-1; Mon,
+ 22 Jul 2024 16:06:44 -0400
+X-MC-Unique: -Mgnse4xOxaU2QjdGfJPag-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E0751955D57; Mon, 22 Jul 2024 20:06:23 +0000 (UTC)
+ id 8E99F1955D62; Mon, 22 Jul 2024 20:06:43 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.9])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5780E1955D44; Mon, 22 Jul 2024 20:06:21 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D4EA63000192; Mon, 22 Jul 2024 20:06:41 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 0/8] Ui patches
-Date: Tue, 23 Jul 2024 00:06:10 +0400
-Message-ID: <20240722200619.135163-1-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 4/8] ui: add more tracing for dbus
+Date: Tue, 23 Jul 2024 00:06:14 +0400
+Message-ID: <20240722200619.135163-5-marcandre.lureau@redhat.com>
+In-Reply-To: <20240722200619.135163-1-marcandre.lureau@redhat.com>
+References: <20240722200619.135163-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -83,51 +87,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240717171541.201525-2-marcandre.lureau@redhat.com>
+---
+ audio/dbusaudio.c   | 2 +-
+ ui/dbus-clipboard.c | 4 ++++
+ audio/trace-events  | 2 +-
+ ui/trace-events     | 2 ++
+ 4 files changed, 8 insertions(+), 2 deletions(-)
 
-  Merge tag 'pull-aspeed-20240721' of https://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
-
-for you to fetch changes up to 903cc9e1173e0778caa50871e8275c898770c690:
-
-  chardev/char-win-stdio.c: restore old console mode (2024-07-22 22:25:46 +0400)
-
-----------------------------------------------------------------
-UI-related for 9.1
-
-----------------------------------------------------------------
-
-Gerd Hoffmann (1):
-  vnc: increase max display size
-
-Marc-André Lureau (5):
-  virtio-gpu-gl: declare dependency on ui-opengl
-  ui: add more tracing for dbus
-  ui/vdagent: improve vdagent_fe_open() trace
-  ui/vdagent: notify clipboard peers of serial reset
-  ui/vdagent: send caps on fe_open
-
-Phil Dennis-Jordan (1):
-  Cursor: 8 -> 1 bit alpha downsampling improvement
-
-songziming (1):
-  chardev/char-win-stdio.c: restore old console mode
-
- ui/vnc.h                   |  4 ++--
- audio/dbusaudio.c          |  2 +-
- chardev/char-win-stdio.c   |  5 +++++
- hw/display/virtio-gpu-gl.c |  1 +
- ui/clipboard.c             |  2 ++
- ui/cursor.c                |  2 +-
- ui/dbus-clipboard.c        |  4 ++++
- ui/vdagent.c               | 11 ++++++++---
- audio/trace-events         |  2 +-
- ui/trace-events            |  5 ++++-
- 10 files changed, 29 insertions(+), 9 deletions(-)
-
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index 60fcf643ec..095e739382 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -105,7 +105,7 @@ static size_t dbus_put_buffer_out(HWVoiceOut *hw, void *buf, size_t size)
+     assert(buf == vo->buf + vo->buf_pos && vo->buf_pos + size <= vo->buf_size);
+     vo->buf_pos += size;
+ 
+-    trace_dbus_audio_put_buffer_out(size);
++    trace_dbus_audio_put_buffer_out(vo->buf_pos, vo->buf_size);
+ 
+     if (vo->buf_pos < vo->buf_size) {
+         return size;
+diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
+index fe7fcdecb6..fbb043abca 100644
+--- a/ui/dbus-clipboard.c
++++ b/ui/dbus-clipboard.c
+@@ -141,6 +141,8 @@ dbus_clipboard_qemu_request(QemuClipboardInfo *info,
+     const char *mimes[] = { MIME_TEXT_PLAIN_UTF8, NULL };
+     size_t n;
+ 
++    trace_dbus_clipboard_qemu_request(type);
++
+     if (type != QEMU_CLIPBOARD_TYPE_TEXT) {
+         /* unsupported atm */
+         return;
+@@ -305,6 +307,8 @@ dbus_clipboard_grab(
+         return DBUS_METHOD_INVOCATION_HANDLED;
+     }
+ 
++    trace_dbus_clipboard_grab(arg_selection, arg_serial);
++
+     if (s >= QEMU_CLIPBOARD_SELECTION__COUNT) {
+         g_dbus_method_invocation_return_error(
+             invocation,
+diff --git a/audio/trace-events b/audio/trace-events
+index ab04f020ce..7e3f1593c8 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -15,7 +15,7 @@ oss_version(int version) "OSS version = 0x%x"
+ 
+ # dbusaudio.c
+ dbus_audio_register(const char *s, const char *dir) "sender = %s, dir = %s"
+-dbus_audio_put_buffer_out(size_t len) "len = %zu"
++dbus_audio_put_buffer_out(size_t pos, size_t size) "buf_pos = %zu, buf_size = %zu"
+ dbus_audio_read(size_t len) "len = %zu"
+ 
+ # pwaudio.c
+diff --git a/ui/trace-events b/ui/trace-events
+index 69ff22955d..07eb494246 100644
+--- a/ui/trace-events
++++ b/ui/trace-events
+@@ -157,7 +157,9 @@ dbus_mouse_rel_motion(int dx, int dy) "dx=%d, dy=%d"
+ dbus_touch_send_event(unsigned int kind, uint32_t num_slot, uint32_t x, uint32_t y) "kind=%u, num_slot=%u, x=%d, y=%d"
+ dbus_update(int x, int y, int w, int h) "x=%d, y=%d, w=%d, h=%d"
+ dbus_update_gl(int x, int y, int w, int h) "x=%d, y=%d, w=%d, h=%d"
++dbus_clipboard_grab(int selection, unsigned int serial) "selection=%d serial=%u"
+ dbus_clipboard_grab_failed(void) ""
++dbus_clipboard_qemu_request(int type) "type=%d"
+ dbus_clipboard_register(const char *bus_name) "peer %s"
+ dbus_clipboard_unregister(const char *bus_name) "peer %s"
+ dbus_scanout_texture(uint32_t tex_id, bool backing_y_0_top, uint32_t backing_width, uint32_t backing_height, uint32_t x, uint32_t y, uint32_t w, uint32_t h) "tex_id:%u y0top:%d back:%ux%u %u+%u-%ux%u"
 -- 
 2.45.2.827.g557ae147e6
 
