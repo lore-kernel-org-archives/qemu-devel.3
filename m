@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E5FC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D60C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqqA-0005os-Mw; Mon, 22 Jul 2024 07:04:26 -0400
+	id 1sVqqB-0005ry-E2; Mon, 22 Jul 2024 07:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq9-0005i0-0z
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:25 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1sVqqA-0005nA-8k
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:26 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq7-0002S3-Ct
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:24 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5a2ffc34431so1360469a12.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:21 -0700 (PDT)
+ id 1sVqq8-0002UL-It
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:26 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5a3458bf7cfso3059203a12.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646261; x=1722251061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721646263; x=1722251063; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6Bff66en4q3ciCjIte8eGShr6vFbC86/IAqQsdiX7yI=;
- b=Y6pzBmek71k0omMZ7EkLieRtQ76+lwiCBDt7YBOgo+0eC5CTZfkA0+RKUu+ZiJ+jko
- d2rW69W0qddiSEW6II5vl1YY/UiUBYmVb36IoSf+IFaGTvPYmDXxMo10nK4IVQdx/lXf
- dAIyW6XP/791XE8sWS+6r6KgQNEnzxP1jSOefaoam9ezHtC/Ltbb7FRL+ysJKR7+w62O
- mwDGUF6NJ8ORdscof6VSl8TPGnviGNlV9FR658JbhVkoCsCJfBitepYLM2vqbhqzpZ+5
- EZ6cG+UcT7dqt9INPwXY2NVtyvYPm/a8LlKky8bYTu/lVcNpcBmP24lblKzysckX/dje
- Tyjw==
+ bh=7oQdAPnxXqSmkLw/KIFULqM8OBF8epxnQmZ+s02z5ZE=;
+ b=EQAF3nMVMkBnW1elX7paO3PoRncp7/gdKC6yxWMA+i4QRDxVL1tG7syYPdZ6/E9CfL
+ 4NrqKfHZe9+MLGVfbN3JGIWzDzLHzLMpzKIKCSsHGjD+iitC5wYyUg2bxr4j0jsW7iCl
+ f8i/7zLLAg0yZKucW2926MrwZaL8EZfPQDvV3esFRjh86g8mWVHAaGKmM+QC+A/wJIT1
+ +8iI5i9kTuB9709vqnWS0g4TTIFbHfZdemewuBwd7PJ8YZrKas7yLyhL7dIV1Co8UfG2
+ A54n3W/DcVQL2ddJ0SFxDkKXbmR8Men5IcMngirq9x2GHb1ad4Z0Ff/8aJW8FgNWMVW5
+ H/IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646261; x=1722251061;
+ d=1e100.net; s=20230601; t=1721646263; x=1722251063;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6Bff66en4q3ciCjIte8eGShr6vFbC86/IAqQsdiX7yI=;
- b=akjfgD5NkINjtMBcJnwfF3aCdoUXRvtSDAYwp7V3YGjDsH8vH8ZP5mAsb47r9u3dT/
- 53QvJlGCifltRQGH3N443TQ/YV9Vp/8PN6HSkVuwOAqYyA/zA66J1q8yZlm8vNtVlo0V
- Rod8SgipD4zqpodxeSv+8kKp7w1yg2V0tazN+fl1hW69KThAdM8/cy9MEZqN+eL5KbmJ
- TiAAwPYl8ZDt8wes7svh3y7uEkIUWbCJBueYI29jLhOIbxbznnf3/a7T99SrabnAX+E/
- qh5qMZTicOdxU2kdeCUhI5l8kQN4MNTi8q41FcKSS2ImJxPgGBMIv+Y2uTtx50xI9Rbm
- FA4A==
-X-Gm-Message-State: AOJu0YyLrgJRde4lfcG7aAkIVcYvtCubspTd3pGd236+yLVUs7bevNeb
- mv49vUrmKPpi8mNK9K/VND9ilazoRUUWAzcm/nYlzdIauKhutyZvm7E7IP1ClOk=
-X-Google-Smtp-Source: AGHT+IGvIaqImjfOHU4Cznapr8tkFtilw7FTYVC4J3FFCgz7ZWLVcGqUbRVC94rcLHdJxHCfnFOONA==
-X-Received: by 2002:a05:6402:3590:b0:5a1:f9bc:7f13 with SMTP id
- 4fb4d7f45d1cf-5a479f4fe93mr6178268a12.22.1721646260687; 
- Mon, 22 Jul 2024 04:04:20 -0700 (PDT)
+ bh=7oQdAPnxXqSmkLw/KIFULqM8OBF8epxnQmZ+s02z5ZE=;
+ b=T/VHZVwLPCyix4xz52jcDjmyNogw3g4m6aAIx2ylnbIoj5rbRWxLPchimOOsGLsZ8m
+ Q45zUh0EUBRPPlQZVHZWPuzTqpnxKTxmbfXkI2RV02bW8/h1pF8hk4ERQxt/xEk+aWT5
+ swAoAkFxQbN+5g9DIfwpgsPtrohlnKTDIkIndNfIl7j7dkmVAKI+pCSuvRfeiVQyAtg6
+ ciQEMnRZOH3fbP7ae3d8AlGwQugDyKJgVGs5NHVoeajDK4kwXoyYNNXEIhPx3/zLIesX
+ EdRqRmOaFiMCGc9tcAkedYjy4OQEs+z0o0KmuoVnsEym4t0s4YUSDuI9WTrpR3Fvv3FG
+ zfnw==
+X-Gm-Message-State: AOJu0YyQxEwAYAytNb3dPVlkTImRQL+PL18KPhnVxwtQExpWwASe8ZNm
+ 3QQmcl3CkXwXSjyZivFi64oTguCFHJ2wra/8CSCVYZzagPm//+ZSOgD8ChGGZUY=
+X-Google-Smtp-Source: AGHT+IG9+rricyA1vZVnwzwa33roI2P/3RkQ1EF6+Jq3xT5FOM9u2EoMSkWLS/nihIIdGKIPPbpNTw==
+X-Received: by 2002:a05:6402:1d4c:b0:5a3:e652:d59 with SMTP id
+ 4fb4d7f45d1cf-5a4761b3f06mr4502987a12.0.1721646262557; 
+ Mon, 22 Jul 2024 04:04:22 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5a7344dd630sm2232918a12.54.2024.07.22.04.04.16
+ 4fb4d7f45d1cf-5a30c3f0673sm5907642a12.61.2024.07.22.04.04.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
+ Mon, 22 Jul 2024 04:04:18 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 400CF5FA03;
+ by draig.lan (Postfix) with ESMTP id 71FE3620ED;
  Mon, 22 Jul 2024 12:04:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 07/16] plugins/execlog.c: correct dump of registers values
-Date: Mon, 22 Jul 2024 12:04:04 +0100
-Message-Id: <20240722110413.118418-8-alex.bennee@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 09/16] target/m68k: Add semihosting stub
+Date: Mon, 22 Jul 2024 12:04:06 +0100
+Message-Id: <20240722110413.118418-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
 References: <20240722110413.118418-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,30 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Register values are dumped as 'sz' chunks of two nibbles in the execlog
-plugin, sz was 1 too big.
+Since the SEMIHOSTING feature is optional, we need
+a stub to link when it is disabled.
 
-Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240620083805.73603-1-frederic.petrot@univ-grenoble-alpes.fr>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240717105723.58965-3-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240718094523.1198645-8-alex.bennee@linaro.org>
+Message-Id: <20240718094523.1198645-10-alex.bennee@linaro.org>
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index 371db97eb1..1c1601cc0b 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -101,7 +101,7 @@ static void insn_check_regs(CPU *cpu)
-             GByteArray *temp = reg->last;
-             g_string_append_printf(cpu->last_exec, ", %s -> 0x", reg->name);
-             /* TODO: handle BE properly */
--            for (int i = sz; i >= 0; i--) {
-+            for (int i = sz - 1; i >= 0; i--) {
-                 g_string_append_printf(cpu->last_exec, "%02x",
-                                        reg->new->data[i]);
-             }
+diff --git a/target/m68k/semihosting-stub.c b/target/m68k/semihosting-stub.c
+new file mode 100644
+index 0000000000..d6a5965e29
+--- /dev/null
++++ b/target/m68k/semihosting-stub.c
+@@ -0,0 +1,15 @@
++/*
++ *  m68k/ColdFire semihosting stub
++ *
++ * SPDX-FileContributor: Philippe Mathieu-Daudé <philmd@linaro.org>
++ * SPDX-FileCopyrightText: 2024 Linaro Ltd.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++
++void do_m68k_semihosting(CPUM68KState *env, int nr)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/m68k/meson.build b/target/m68k/meson.build
+index 8d3f9ce288..4d213daaf6 100644
+--- a/target/m68k/meson.build
++++ b/target/m68k/meson.build
+@@ -11,9 +11,12 @@ m68k_ss.add(files(
+ 
+ m68k_system_ss = ss.source_set()
+ m68k_system_ss.add(files(
+-  'm68k-semi.c',
+   'monitor.c'
+ ))
++m68k_system_ss.add(when: ['CONFIG_SEMIHOSTING'],
++  if_true: files('m68k-semi.c'),
++  if_false: files('semihosting-stub.c')
++)
+ 
+ target_arch += {'m68k': m68k_ss}
+ target_system_arch += {'m68k': m68k_system_ss}
 -- 
 2.39.2
 
