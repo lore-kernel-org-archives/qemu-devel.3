@@ -4,199 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F48DC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 09:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9EEC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 09:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVpCv-0004we-BI; Mon, 22 Jul 2024 05:19:49 -0400
+	id 1sVpFx-0001QY-Bb; Mon, 22 Jul 2024 05:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sVpCY-00039A-K8; Mon, 22 Jul 2024 05:19:28 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sVpFs-0001Fm-TT; Mon, 22 Jul 2024 05:22:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sVpCW-00074h-S2; Mon, 22 Jul 2024 05:19:26 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46M7d6an002424;
- Mon, 22 Jul 2024 09:19:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=QUdC3g6WANRjNekq//gQPRrtIbPeXImQla7RNbRBptk=; b=
- JcdQXJZqzjHgG8W/svOaNncSj7Uw3IJhK3lNPMAFgdvOJClE77M94IDVK/dRn0Sh
- aFLFuiyYGC+TLCwPITS98VfGPWlpfOnYtBQT6aKlr/uJI61vp/wxR+sXDzAGPbrJ
- llzyP0qaqc0h3VUVXcnlPiwuFFEkRBapuEFqZ0E1KLkMByCUyE/yRCHcfauUdJGN
- tjtSwZcSnQjFkh0p237K6npYQ/Qik+A0F3DNQSnCFRlNdk2vWkz74hFbyPYQ15+1
- XzL0NMxSBhi31HV/MAxvPTL80ffCZCz+wpoz4ucSx5wg6J7JMn/uhUi0oFUzpfkN
- TG5Q1EccSnFaS3LxcV4TXQ==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40hgcr8x92-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 09:18:59 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 46M91iu7009067; Mon, 22 Jul 2024 09:18:58 GMT
-Received: from nam12-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam12lp2168.outbound.protection.outlook.com [104.47.59.168])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40h29ypdd4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jul 2024 09:18:58 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UFMpnf+AgnsplPg99K0n9wfGQ4rbPlBygAZRzAKHZwB/YuZjONX2hLr979kZejzvA1jgg1SMh68OJyMsH716IT1iDyZomc4sixqSeoxSuJn1Yp8tfYNYtIY0qxL1mGBpJ/g1wRmA3GQ5vs9xNCcHGbFiydBiOxn79pG4tbuiGijzO9kCV3LykM7OooVD8ci2M8bnKHetZF6sviggXvJuOsDIe/SpcNpfrfbhzbA1+QPnb6N++YwBdnCYyqzi+86DyM0BJ+1OHJ+utlVxev0BHVJ3IMu5UKBxnRgTdR0H8IMWI+FUSm3KNL/YC8wftFjerCZOkRXW7l2bWGmknRl+Aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QUdC3g6WANRjNekq//gQPRrtIbPeXImQla7RNbRBptk=;
- b=PEu1rWYe7OpYIK5dRYTekBGFzcRCQXWcPSG5aQuo9FjMXe3k3jDTuq9as52vvNlSL1yOmyHUjbAcV6Dr7kddXEoNf1YavOTsw16gR95+7g6ypQDjc/M/C8z0dYmahaoetolMLVxsqfnDMnPsy/jpY5iZz3LacDHwBfTb7GxNCH7TlikNLWmTyI8U9j3Vvx46oFX8lHhanNJQYPhfBR5QWH4XwnlslT405WOkrQHpLHL14aEs0OmKJIeJYXWykGsomc9zKZXtdsdrochDUwlO5rmQmFZ4XcvL/xLP4KngIzW0YMgdlGfrcgXvVv0N8cHbbFv5e9Q1/+x5FXMu5JJjkA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QUdC3g6WANRjNekq//gQPRrtIbPeXImQla7RNbRBptk=;
- b=ZKVZDGJLNphQMf10D3EtzTbWCCYdH4TcoeXTFzjh4KUhwH3nk0aJquLMMo20Kc7uyzAwVYhB8pijNsaG1sef0Ip2LjR9u/vdZPpxHZCEQvlF/BfxECNIeGGS58wDSotGsvu6z4nocVmSodJYNMONNcyxHyzZfg2jh00qe8HZuRs=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by PH0PR10MB5756.namprd10.prod.outlook.com (2603:10b6:510:146::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.20; Mon, 22 Jul
- 2024 09:18:56 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::79f1:d24f:94ea:2b53%3]) with mapi id 15.20.7762.025; Mon, 22 Jul 2024
- 09:18:56 +0000
-Message-ID: <ebd01af8-9e39-42e9-93bd-a5a4368bc647@oracle.com>
-Date: Mon, 22 Jul 2024 10:18:34 +0100
-Subject: Re: [PATCH 1/2] vfio/ap: Don't initialize HOST_IOMMU_DEVICE with mdev
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com, Thomas Huth <thuth@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- "open list:S390 general arch..." <qemu-s390x@nongnu.org>
-References: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
- <20240722070713.1342711-2-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <20240722070713.1342711-2-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2P153CA0010.APCP153.PROD.OUTLOOK.COM (2603:1096::20) To
- PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sVpFm-0007dm-5w; Mon, 22 Jul 2024 05:22:48 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46M7ToCp014429;
+ Mon, 22 Jul 2024 09:17:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=0
+ RpKGXELt3c+sfZUJmA2NCxvEbtjbFY+kiPpqg7OBbI=; b=iV1YFWI0rSslI6Snt
+ jY2JxAt2clriPzaEWJsp29zwIdCpnY8VXtzGKLSq7F8Jp9lFrygiTLQYJPzR97y0
+ MVCh90WXE8eIOtN8zuwdTxpmVskka4KAo4H7bnmTzb1HOeL1bRIHfBxxplJUQ++O
+ GgEBk9WDjNXo2XKoftS0xZhifqODgyIaAxDFrF5N3Se4EmPM69xTe+chNO5DkXUo
+ xnAHCJmmdA9e6XdxyMjVB3SHkNPFurfcecvAeW2ZG9qjYvGJtPpr6LOZ843l+zKy
+ QT8oeSKOPqTV/RFKN/Gn/k0LEvn1jKHmobi/hm9o1pu3T/i/my3lQBLMbM+KWPre
+ ePiVA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40hk2xg729-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:17:27 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46M9HQ61007391;
+ Mon, 22 Jul 2024 09:17:27 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40hk2xg725-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:17:26 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46M8sd2e005890; Mon, 22 Jul 2024 09:17:26 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gy2p4e76-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:17:26 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46M9HKHG48693734
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jul 2024 09:17:22 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6B14320043;
+ Mon, 22 Jul 2024 09:17:20 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D4E392004F;
+ Mon, 22 Jul 2024 09:17:17 +0000 (GMT)
+Received: from [9.109.199.72] (unknown [9.109.199.72])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jul 2024 09:17:17 +0000 (GMT)
+Message-ID: <00d202a7-03dd-4cb0-8e02-3c49a025e284@linux.ibm.com>
+Date: Mon, 22 Jul 2024 14:47:16 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|PH0PR10MB5756:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8d8cdb33-d7f8-4e55-e83b-08dcaa2f4ff1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WUk5bGREa0xFOFJweHNDemVQcmxxMDIwVzZNWWVVbVZGbjBCSzVxYVZST3lh?=
- =?utf-8?B?ZzNobXdWUnI5WmpHQXlRZVVKaG44dkFsaGU5TjhmRHdTU1lKOVNkVnh2TVpC?=
- =?utf-8?B?aUZ0WHpSM0Z3VkxQUFlUblpHb3VYaW1rR1JDdXRJWTFtWkRSQWI2L0wrTTg0?=
- =?utf-8?B?eXlGMzJJR3BDSHhhbHI3dlhKV3pTNHRaQjgvTkU4UGZGNitxYjBUaU5EYU9X?=
- =?utf-8?B?OTc3d003aWlKeEQzZEhqZ01OdkltNVM3SENsN0tFbjFjSlhKUXRQSXlOVzFj?=
- =?utf-8?B?RlRmYlZpZFROMXl4dGZUKzZkcW5Yci9ycmJnQi82VTEzL1Q5SHNlWk4wUWYv?=
- =?utf-8?B?dm1lWUVHY0R4dlVhV0htN1l5K1NlY0M4elNHcDdRWllJaXpSVkVjbVBHOXFZ?=
- =?utf-8?B?Q2tlZDE1Qmk1cEZVbm9XVUx2cHFJZE5ua0JXTnU1R1VtQVZDOSs5RFY3OEN3?=
- =?utf-8?B?RWFXQkNFVFRWL3N4WElkeFo1Uk9oVUZ4bVB2YXlqV1F5OElaZWdMZG4yUzF1?=
- =?utf-8?B?T3lLTmlNRGFwelJxbDAwb3F1Y0hPcllINXhYcUZiQ3VERlR4SHlTYndqNFVW?=
- =?utf-8?B?VGd0MWp0ZnFFeWt3b2ZBNCtaVVJZT1hlV3RDbmxRbXNwUWFqM2J0dXFVMHVl?=
- =?utf-8?B?UmtJdUVORkJIRVlxczl6bEYvQnhtVGdVWGJZQWlaZElQYTViaFJCUGc2bFFo?=
- =?utf-8?B?Y0FncDFabVE4aUdUOGtQREVGY1FxanpQU1dMWHJZQ1A4THJPVWNNUnQ0M2lQ?=
- =?utf-8?B?a1ZVbjlzbmUxc3FhMTlFWXhwcFIxNStzZGErOUdRZzVFRHRhekdnRjhlWCtS?=
- =?utf-8?B?Z3k2U0hZam9RNGFsMWozcE9CNXFvUmJPRkRFazFSS2dYaWQ4KzQzRWNQcGNX?=
- =?utf-8?B?OFRNajFkM2NtVzNaQndxOS9zazB4WUxzZnY1TUtHNFRpS3Z5anBHbG9GRUZE?=
- =?utf-8?B?UDlFUGN6ejdPbTVUeVlUUmF3a3UxVHRaK2JtZmt5SWo3WTBjYlFsclJ0S055?=
- =?utf-8?B?TUJpUHJuM0l6M2swcU5JenpTdmNISDB3VzN4K3lwSHd1ZTJhSnpRNHFSOVU1?=
- =?utf-8?B?OW5iQ2E1a1RHRVI2T2twemUyRC8xWlRvZG9XRmtlWVVUclB1UVlPNUFjL3VJ?=
- =?utf-8?B?TkZKUy9qREx3MStQa3g3SmdwdTNCVE1oSE56L0o2djQ1YnZWc2VaU0pDYWYy?=
- =?utf-8?B?MmkwOGErVllPT3krZW9YVUl0TzlCRGRIcVZmSzRYcnlEajJlaDdMUTAySXNv?=
- =?utf-8?B?U3pxSXI2dHZUNDFwU2kyS3F5aW1EdEVldHM1aURlNHNKVVJnNnM1RXNMNDB5?=
- =?utf-8?B?U1FvalE0SmIzeE1uWllLNy9QQnFieXZZeVZoMDFjYWRpQ3o3M0hhWHBvYWRu?=
- =?utf-8?B?MFp5SllvY2x6OEIrZUMxTlBDRHBRMXlLVTR0RlYvMGE3YzZvUHdsdkY1dWRv?=
- =?utf-8?B?REdUQUprb1FaR1BWd09KaTcyUDRPV2JMNDdNc3IzdHVuejY4NVY5eHVHYTNq?=
- =?utf-8?B?TC9PWUJRRkFLdUJBNW1GQVhrS0RDUGVoNlFuekNla0tQRjBkVkcrdHdXeSt3?=
- =?utf-8?B?V3hhWGtqSFY5b1RzVEJ1WmFyS3FXNUViVm5XWlE2cmRpN0ZTVDZTb29qVklQ?=
- =?utf-8?B?eGJsYmdNcjdYai9MN285dDM3dVNRREF2OUdMY0RJaTFEUG1hbHZWZXNSOG5l?=
- =?utf-8?B?WjQ5V1I1VGMrSk41WkpydGZBT0pMS2dFVTdWUzVCRlppb1JQVkpmMHFSMlNV?=
- =?utf-8?B?NXJPL0xSZE1Ec01pY0tpMHF1N015Yk1QOFBXWml1L01ZMFZNdUJCQnk4S1cw?=
- =?utf-8?B?VjJQVWNRbWM3VjlvcE80QT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dEwrZUtEOVhqUmxSc004ZVQ5eXNFWjZrWkd6bTFUaVpMQ3Y1dnUwWWQvUU5L?=
- =?utf-8?B?WlVNd0h5ZW5ybTQwQkwwa1g5VnpialIzcXc3STdNSnhIcWRpbW16djc0U0ZY?=
- =?utf-8?B?WHRtdFZpZHR4bktsaTZQV2xFYlhKenhYcDBER0dQWWFOMjNxWnF1WW9vY0ZI?=
- =?utf-8?B?dEV2TXUxeDQxVkZUWWlldU9XMW5mMFYrak9KK21RVExFVHpEOGZiTXJsRWpo?=
- =?utf-8?B?dVBsSnE3MEwzUEVBQ09BVktYbmVKME1sMXpwbDMrc2VmVERjL2tVQU9DbDZl?=
- =?utf-8?B?b3ZGR3hnTStVNTNyc3pUMVV4NEgyeGJmeEtnR29MRHQ2NHJab3BKNzlGRWRp?=
- =?utf-8?B?WDQyZ3VTVlVORlAzeWxmNDFsNGRtNFBGL0RIRElXNmp3VmF6OHUwNUI4L09R?=
- =?utf-8?B?cHFkUHFOS1Y0KzMzZERCTEJHK1EvM003L3hzQ2lLUHM5bWNVR01qTHppS21X?=
- =?utf-8?B?eEN5dE1WTmNKblA2YWgrTDlkNlBNTU9zY0ZuU0dqbjdvTFBzMDdXdm80dExE?=
- =?utf-8?B?S0pjL0pXRXhQNEdhZjBwK3g0NDBsRzlIRDZrRjRnR0VPbW5ESTVSbVdpNVZl?=
- =?utf-8?B?cTNNUFpsM2RoR0dHNnJFNVpMZzdnZU1UeEZQNVNZdmFzNXF5MGdBbCtIeXlw?=
- =?utf-8?B?SFMvWHJSemxpRXpIaTBtVHAvenp5dVZKRzc1a2tsdXhLTDltUVlHTUthSTJq?=
- =?utf-8?B?ZDdjNFFFbmw2cWlmMCtCWjRQeHVkdVdNam1idERnUFIwTnpZZGM3OWxxWWpJ?=
- =?utf-8?B?OEV4aENvSHYxMDlNZlUwQmFxZ0R6MmFPN2lXQS9Nc0JLQS9oeTRtQldtYWsy?=
- =?utf-8?B?SktNUVlnN0JiaDJyMzlXa1ZvQk1sMXJRR3FHUy8wZjBZZDlIRXA2VzJkUHRo?=
- =?utf-8?B?OU5QcU85NzN1SjJ4VHZYZ1lJWndyd3BoZXBTT2h0SVNNNUxRTmdtbHJmNjBX?=
- =?utf-8?B?bG9aMkRFcVV1R205R3RFNEtEZTBSWDNzZmdjK05hNlRoWXp4ZTRMSHpCN2VI?=
- =?utf-8?B?cW05bHJMYS9MdENvT0VsWWxHY25LdlNWSzhtK29vNnI3aXAvcDMxaXFwanc5?=
- =?utf-8?B?cTNwTXM3RE96dG5tbEo3REZZY3g3d2tiRzZoNFdOdXg0ZGU1bndON3NLeG8w?=
- =?utf-8?B?WFUyY1RXWHN0L1A5NzVxVFcyUUlWZXFnbjJuVHgvYStmdzRBbkJKZFVrT08z?=
- =?utf-8?B?eUNkNitOOUFCdFI4Z3FLd3h6eUdFMWlWNzB2T2ltMFRjTi80cU8wclczTDdF?=
- =?utf-8?B?VTRjZS9BY1h5ZlpvL1RseDdBVSsyc3VoWWVWOUtPeHl1UlVtSzNCYkh0aS82?=
- =?utf-8?B?eFpsNVBLazdaSk53VFdaSW5GTHJuSjRWYkVRUk41TXJFR1VxTXI3VnhuL0RD?=
- =?utf-8?B?SmxnSzlCbkoxZW9aL0xERVl4bzU1cnNSYkp6eFp0VkF2ZVEweExrcHRRWUpZ?=
- =?utf-8?B?STZWWWV3VVBOSmRTU2QvZmY4UWpHM1gzTmZEcktIVVUzQmRwemFjdmYzQ2pJ?=
- =?utf-8?B?eHhsUStGSFhMdFI1WGlYZTlhakFPSVBRTlNvZ3Y4ZzE1YWtlK1FlZ2VsL29H?=
- =?utf-8?B?MmUraU1oRFI2WUsvVkcyZytNYWY0NStmRHNROHh6YjNEc0JVaFgxYkNlcDVs?=
- =?utf-8?B?QjF6YkE5ZGJpcEU0bkgycnNoVHdlbHhlK0RVTTNqSndqdmZCY3JVYVVDeXQv?=
- =?utf-8?B?NFhlWGFoNW1FblNvMHdzaG5GYVZINUcvOXhwejVSWStlQW94aE84U245STBn?=
- =?utf-8?B?MGEyd2VSbzB5WVBlWEZOYXJEenhjSTBzMmVnUWpnd2wyeWc0aGhIK1JRUUZn?=
- =?utf-8?B?eGdhYlhhcTVjbWNhUXZoTXpwRWxmMkdsdmZCRXZHOXJRSm5kN0F6OUdTWElG?=
- =?utf-8?B?b3FHN2RZY3hEYmFFS2kyeGlmaUg0dTQwQ3J1Z2JMeEN5aEwzQmttQkJwWjVC?=
- =?utf-8?B?REVob3IzMTFqMmF1YzNNL0FWMnZVeVNCako0OWc1eDRQdTk4MjJUdkdoRzVP?=
- =?utf-8?B?c1JuN1JlaWt3NkVhVVdNc3JwcG9TMlk1Rmp4WWszSG1SVDZLMHo5ZzBJSk9r?=
- =?utf-8?B?bER0NDFabnlYeDgybFFvSExiRUhWNm5qNVZDL1ZJa1lobGd4OGhlMzdBcGU3?=
- =?utf-8?B?cW1hUXJ0MDU3QU1MOElna00vNmdmM24zMkRWNmhtejVpWXNZR292U3FXWEFs?=
- =?utf-8?B?Q0E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: jb6POKbcWHiOKbNTzJeb317WVz1VoV+2iXX+3url14ZgsHueMaUEgVBCwj+DQV7q3OMuNSW8GQdrrYMZh0KmEUUX9BGegA8o6ljK3bH0Fz2ywRHMlgM1Z2ZV8gnq+3S8Ir6vlHvZkeKXJWS/0wYUUQQvYheK+0yKxb8lfIsIC4i7d+CBmvNcWJ7F31t3IvzaE665U1uAfyyScPU/7im5vyOmU/LkMiSh72Rj0iwzuwknrgekUlXvsK3aO5Rv0C+0OIAHCHRFIkzpCUx8HiWCz7SleEC10+wPNTbDsEwppP3DlZJ+PbcY/cmlRxXdc87F093UMrgRYuMQegDQPJ5AujAl7DrxZdS+6AvPnRH+ehaDbp0K2c0Xlh7DytmJ9yzfPmnR2Hpe1biECYREXjQvQ/TsptclsDwXmFQdf+DR7ZWQINXLE8mAagj6Kn3TJuaE698rvmRo6R7TUs+NVTY2y7CkgPrhAp9hU+FItiFq9cWIPdyrLULvzWVxGro2+6R3enJNaGn1jQn6B4xeKD2L0Ot14a1id2T5meRcsmvRD20SB4Z+C/lNHBlCbhd/sGsClEG9gCUrmooFfP4xQ2MrjWkYISKgojMXN9+0jezKJNs=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d8cdb33-d7f8-4e55-e83b-08dcaa2f4ff1
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2024 09:18:56.3787 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EVYyaUjOg7IdP4B5XuaECzMqpSq8T447PB/MW8qfma0mgls5t6X0xKT8SB9xciQjXdWMdsuoNZg7f3EQVk2OuG0TUyk+W53GIvbzPtK95Gs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB5756
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/pnv: Update Power10's cfam id to use Power10 DD2
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>
+References: <20240502062701.1379833-1-adityag@linux.ibm.com>
+ <a1e529e9-32b2-438a-b50d-10117296d4e1@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <a1e529e9-32b2-438a-b50d-10117296d4e1@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 8HOMncvn_sOp0bGhwK52wyX6U5iK7qO5
+X-Proofpoint-GUID: -CTkVOfcrB_F5T5hACPjeI4PZLPstVNd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-22_05,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 spamscore=0
- malwarescore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2407220072
-X-Proofpoint-GUID: po7D6UAKLO0LkmJ0jPnGOgEX6Bo_VL-h
-X-Proofpoint-ORIG-GUID: po7D6UAKLO0LkmJ0jPnGOgEX6Bo_VL-h
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015
+ adultscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2407220068
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -213,34 +121,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/07/2024 08:07, Zhenzhong Duan wrote:
-> mdevs aren't "physical" devices and when asking for backing IOMMU info,
-> it fails the entire provisioning of the guest. Fix that by setting
-> vbasedev->mdev true so skipping HostIOMMUDevice initialization in the
-> presence of mdevs.
-> 
-> Fixes: 930589520128 ("vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Hello,
 
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Any comments on this change ?
 
-> ---
->  hw/vfio/ap.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 0c4354e3e7..391bfb72ca 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -230,6 +230,9 @@ static void vfio_ap_instance_init(Object *obj)
->       */
->      vfio_device_init(vbasedev, VFIO_DEVICE_TYPE_AP, &vfio_ap_ops,
->                       DEVICE(vapdev), true);
-> +
-> +    /* AP device is mdev type device */
-> +    vbasedev->mdev = true;
->  }
->  
->  #ifdef CONFIG_IOMMUFD
+Though this isn't urgent and won't change behaviour much, mainly other 
+than skiboot recognising the chip as P10 DD2.
 
+
+Thanks
+
+- Aditya Gupta
+
+
+On 02/05/24 13:51, Cédric Le Goater wrote:
+
+> On 5/2/24 08:27, Aditya Gupta wrote:
+>> Power10 DD1.0 was dropped in:
+>>
+>>      commit 8f054d9ee825 ("ppc: Drop support for POWER9 and POWER10 
+>> DD1 chips")
+>>
+>> Use the newer Power10 DD2 chips cfam id.
+>>
+>> Cc: Cédric Le Goater <clg@kaod.org>
+>> Cc: David Gibson <david@gibson.dropbear.id.au>
+>> Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+>> Cc: Laurent Vivier <lvivier@redhat.com>
+>> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+>> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>> Cc: Paolo Bonzini <pbonzini@redhat.com>
+>> Cc: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>
+>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>
+> Thanks,
+>
+> C.
+>
+>
+>> ---
+>>   hw/ppc/pnv.c            | 2 +-
+>>   tests/qtest/pnv-xscom.h | 2 +-
+>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>> index 6e3a5ccdec76..06a4e4d13948 100644
+>> --- a/hw/ppc/pnv.c
+>> +++ b/hw/ppc/pnv.c
+>> @@ -2090,7 +2090,7 @@ static void 
+>> pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+>>       PnvChipClass *k = PNV_CHIP_CLASS(klass);
+>>       static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = 
+>> {14, 14, 2, 16};
+>>   -    k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with 
+>> NX) */
+>> +    k->chip_cfam_id = 0x220da04980000000ull; /* P10 DD2.0 (with NX) */
+>>       k->cores_mask = POWER10_CORE_MASK;
+>>       k->chip_pir = pnv_chip_pir_p10;
+>>       k->intc_create = pnv_chip_power10_intc_create;
+>> diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
+>> index 6f62941744a6..5aa1701ea768 100644
+>> --- a/tests/qtest/pnv-xscom.h
+>> +++ b/tests/qtest/pnv-xscom.h
+>> @@ -56,7 +56,7 @@ static const PnvChip pnv_chips[] = {
+>>           .chip_type  = PNV_CHIP_POWER10,
+>>           .cpu_model  = "POWER10",
+>>           .xscom_base = 0x000603fc00000000ull,
+>> -        .cfam_id    = 0x120da04900008000ull,
+>> +        .cfam_id    = 0x220da04980000000ull,
+>>           .first_core = 0x0,
+>>           .num_i2c    = 4,
+>>       },
+>
 
