@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A87AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 10:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD439C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 10:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqd3-0003IN-SD; Mon, 22 Jul 2024 06:50:53 -0400
+	id 1sVqi7-0001ow-Rf; Mon, 22 Jul 2024 06:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVqd2-0003C6-GU
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 06:50:52 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVqi5-0001io-Gp
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 06:56:06 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVqd0-0008FV-Lo
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 06:50:52 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3686b285969so1769137f8f.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 03:50:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVqhw-0000lU-2x
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 06:56:02 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4266f3e0df8so29468935e9.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 03:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721645449; x=1722250249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721645754; x=1722250554; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PN2oRhooOrosFKFvJdWTgpacvxKpiFQ+3KpU2AqSwOE=;
- b=dpITkosuVELoawqyT4vIlrfP/Mso+k3I95zU79IM7NQrvtBYSvDGg9Qc0lwTU7ICSU
- Pf7aGbn3KVL54GpA8MkZEQHkSzprdlLFpW29N001jQd78wEqR07M57z6QUBKpTFyFbyT
- 4WkUOSPExz+Qn3LRZ9mQ4MoMC7Erw6Gc6B8VnRo/0B6pJt0cdxvEMwg/6T2PQXd6/5/e
- dNSN3wSdj9xerLop+YQlSOd+8sXwXFiVXk232L2F8KIKAIxIohitc6sKOm7rAkhfM9p/
- QJw7Hs/Q4KUV+5bZblZfRK/Fb3xHbW1ss9FDa9Zncoq/Lsv5tOadSIY65oOYtgLW2AfN
- +L1Q==
+ bh=SSqRJsuOgPkQp+molU80IEyHUVgCBYRr0K3MQ8/UCKY=;
+ b=GRnpqZjdZ3qF3xPhODFKY8143OTTNzwlAJD3dHi02dk4VbqDDrqGGN/ScZRurd4GIr
+ Fq0AB4Q1UGoHsMrD7YNum8GYCGbMRHljL20KBHxFtXjO0v56LvPk+CLYLPYFgp92wK9O
+ nrR+jonvP2TsCgFG/g+KoUDp7MCQGQ9WLNeF6+FuiBDq2sqg4NIqoY551kN5C1ZkbRIU
+ wtvMrw8DVC17FLh5dAOwbPKnRZy52SHUVhY2IOzXbsmZtJsCWo2sR9FlLg6xsLYZKvo1
+ aH+gImv4Ayszv4yx8CHUTBCCTcTBV1KUgVTQFJiScurzALlNyqzVC9F00uWEx5ambjgw
+ E1ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721645449; x=1722250249;
+ d=1e100.net; s=20230601; t=1721645754; x=1722250554;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PN2oRhooOrosFKFvJdWTgpacvxKpiFQ+3KpU2AqSwOE=;
- b=Fr+qsABArJoDmVI30U8/UD5puX1KyQbeNSyWldVDBhXIGIK5EuW2m7/nsl/0K6o3v7
- FAaGdv9S3Ch99AQPC3coeRlGXMptMB7mHWORy4lxD14M2im5y9zq+ZfTPKFeKg+FJku9
- qxX62DZQ/p2pgWLLc8SLkb7X2Ids9bb+FWzUCgIocDX27eiEXd8SUCV2N6SjD4YkEkS5
- ntoiLvJ2iJ2dJf/NrPSfbMEnSSDlJxeqf68jl2/kYZ2GZk5HESMQypOYNLo44kEQYXvD
- QDJW4jmVj3ncDCViR/fvXB83t5e0cTxwY5C/5/mTlcegAtBU1C0IiB497wFm/MuKwBbC
- UtVw==
+ bh=SSqRJsuOgPkQp+molU80IEyHUVgCBYRr0K3MQ8/UCKY=;
+ b=eMP9mbrUFMdviUEVtJMTO+srAuOx3Oxq66F3LlWq0vEpxlw84vHvKVWwJKRsWWuD29
+ n5We5rDJ44MMa8fvcASTit86Yd68Qh3v0KNAO/AXrxFAepB+Dw3Acyka823yxxdBc58h
+ XQ3DjptYfm7mHMeEw9FAzXrEY4GzMS3Ur8wDbsgMz2qdHs/b+ZiidlR0oS+iNo9Tlhcx
+ NLVip/E7Bn3LHCnsXxq9PiTnI8XzJ0zgjwPVOU2Ap3oCNwpCigxhVtxRVYss2MxvH3mL
+ ixI663J4BS5QCz8Pgvhhozf5sDpqSsI1RV6+KEymzcSM0nghjuPV5e9W9DmQ+bjsiqe3
+ s7NQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGyYjiETpiePAEoLAJfB/XxnVl4CM1sWezLeo3XFCQuS2o7GF3Wa6pCy7gECZledwM3Cjqcb1PsF/RsF/H6AI5u7ECOB4=
-X-Gm-Message-State: AOJu0YxmZj9RQvyNuuHzUdt4imFxQ7k4BJZ0uJzt8ryWdRN9xlKEH6/q
- xcLjdqHE8DwPSuXnik1L0xavyqDb1FDKBFnTH4Mg0Dkbv4d6SHsCqHVFCCTUe4w=
-X-Google-Smtp-Source: AGHT+IEibaFNo9EMIi0x2i2qaGzLlQEWe219oabrn6FAI4x+ldS8SxEH2l4xJJaQN/H4OLPH4KH5uw==
-X-Received: by 2002:a5d:5f43:0:b0:367:4383:d9b4 with SMTP id
- ffacd0b85a97d-369bb2ab66emr6002809f8f.56.1721645448831; 
- Mon, 22 Jul 2024 03:50:48 -0700 (PDT)
+ AJvYcCWIXLA8fEg+wmnryFiSbPHKNR/QUH++sK5mYa61FM/3EN80FP1iVRhlM6qdb9v6R7QrvLERuujNku2aGtM5BAqJYX8cmjc=
+X-Gm-Message-State: AOJu0YyZpvbQN9xZKf2Mg1zeuYadwO4yKqyS1AgyhtbQ8knom+EkRvnE
+ DdqQlB7N0KLDzwMzu/jJz/bAwbSIDYSSP+eOc2tASxdIwudmHTrQWf+pjvcsYLnBDbMFSSItXOt
+ v
+X-Google-Smtp-Source: AGHT+IEPlfCS+7hbnElK16ovnhrYILyiKEaLq6tQ1oWgXZZQI5wGJWh0XxtdQkdXQ1jzppImGSaXww==
+X-Received: by 2002:a05:600c:1c8b:b0:426:54c9:dfed with SMTP id
+ 5b1f17b1804b1-427dc57654bmr38882185e9.28.1721645753479; 
+ Mon, 22 Jul 2024 03:55:53 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ecbd5sm8146209f8f.100.2024.07.22.03.50.47
+ 5b1f17b1804b1-427d8e68ba0sm114323815e9.21.2024.07.22.03.55.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 03:50:48 -0700 (PDT)
-Message-ID: <0a3ab138-955a-4af5-8643-479075fd21e1@linaro.org>
-Date: Mon, 22 Jul 2024 12:50:46 +0200
+ Mon, 22 Jul 2024 03:55:53 -0700 (PDT)
+Message-ID: <69df9510-1b1a-434e-bbbe-1df7acf49f58@linaro.org>
+Date: Mon, 22 Jul 2024 12:55:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/smmuv3: Assert input to oas2bits() is valid
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- eric.auger@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org
-References: <20240722103531.2377348-1-smostafa@google.com>
+Subject: Re: [PATCH 3/3] util/fifo8: Introduce fifo8_change_capacity()
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20240719151628.46253-1-philmd@linaro.org>
+ <20240719151628.46253-4-philmd@linaro.org>
+ <e49735e8-1c33-42cb-9181-662a0c010b97@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722103531.2377348-1-smostafa@google.com>
+In-Reply-To: <e49735e8-1c33-42cb-9181-662a0c010b97@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,21 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 12:35, Mostafa Saleh wrote:
-> Coverity has spotted a possible problem with the OAS handling
-> (CID 1558464), where the error return of oas2bits() -1 is not
-> checked, which can cause an overflow in oas value.
+On 19/7/24 22:21, Mark Cave-Ayland wrote:
+> On 19/07/2024 16:16, Philippe Mathieu-Daudé wrote:
 > 
-> oas2bits() is only called with valid inputs, harden the function
-> to assert that.
+>> FIFOs can be resized at runtime. Introduce the
+>> fifo8_change_capacity() method to do that.
+>> When capacity is changed, the FIFO must be reset.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/qemu/fifo8.h | 10 ++++++++++
+>>   util/fifo8.c         |  7 +++++++
+>>   2 files changed, 17 insertions(+)
+>>
+>> diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
+>> index c6295c6ff0..9fe0555a24 100644
+>> --- a/include/qemu/fifo8.h
+>> +++ b/include/qemu/fifo8.h
+>> @@ -31,6 +31,16 @@ void fifo8_create(Fifo8 *fifo, uint32_t capacity);
+>>   void fifo8_destroy(Fifo8 *fifo);
+>> +/**
+>> + * fifo8_change_capacity:
+>> + * @fifo: struct Fifo8 to change the capacity
+>> + * @capacity: new capacity of the FIFO
+>> + *
+>> + * Change a FIFO capacity to the specified size. The FIFO is reset.
+>> + */
+>> +
+>> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity);
+>> +
+>>   /**
+>>    * fifo8_push:
+>>    * @fifo: FIFO to push to
+>> diff --git a/util/fifo8.c b/util/fifo8.c
+>> index 2925fe5611..c453afd774 100644
+>> --- a/util/fifo8.c
+>> +++ b/util/fifo8.c
+>> @@ -34,6 +34,13 @@ void fifo8_destroy(Fifo8 *fifo)
+>>       g_free(fifo->data);
+>>   }
+>> +void fifo8_change_capacity(Fifo8 *fifo, uint32_t capacity)
+>> +{
+>> +    fifo->data = g_renew(uint8_t, fifo->data, capacity);
+>> +    fifo->capacity = capacity;
+>> +    fifo8_reset(fifo);
+>> +}
+>> +
+>>   void fifo8_push(Fifo8 *fifo, uint8_t data)
+>>   {
+>>       assert(fifo->num < fifo->capacity);
 > 
-> Reported-By: Peter Maydell <peter.maydell@linaro.org>
-> Link: https://lore.kernel.org/qemu-devel/CAFEAcA-H=n-3mHC+eL6YjfL1m+x+b+Fk3mkgZbN74WNxifFVow@mail.gmail.com/
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> ---
->   hw/arm/smmuv3-internal.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> The changes look okay, however I'm a little confused as to why this is 
+> needed as generally hardware FIFOs are a fixed size? Presumably this is 
+> related to the PL011 series?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Indeed, this is to model trying to stay as close as possible to
+the datasheet, which states:
+
+   2.4.3 UART operation
+
+     Disabling the FIFOs
+
+       Additionally, you can disable the FIFOs. In this case,
+       the transmit and receive sides of the UART have 1-byte
+       holding registers (the bottom entry of the FIFOs). The
+       overrun bit is set when a word has been received, and
+       the previous one was not yet read. In this implementation,
+       the FIFOs are not physically disabled, but the flags are
+       manipulated to give the illusion of a 1-byte register.
 
 
