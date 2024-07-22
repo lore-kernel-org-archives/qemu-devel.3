@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDE2C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9620AC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVw8T-0005SS-1i; Mon, 22 Jul 2024 12:43:41 -0400
+	id 1sVwE0-00055F-GY; Mon, 22 Jul 2024 12:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVw8R-0005Lr-91
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:43:39 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sVwDy-00053J-S9
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:49:22 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVw8P-0006RB-5D
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:43:38 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4266f535e82so32139475e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:43:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sVwDw-0007LC-LA
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:49:22 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70d2b921c48so757834b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:49:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721666612; x=1722271412; darn=nongnu.org;
+ d=sifive.com; s=google; t=1721666958; x=1722271758; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7TtHrl9rQrselaWy83peZcth3CnbPxV5LK1Nw2zxaDw=;
- b=zpgZAxzun7MmHVDCsiV0OBI/A2LADi0M2yjGfe0yYgzqCm8ZvluV3oSMuVfF00pi09
- AOwhC+eOFQXg9zeKLvMz3TNq6E/7PofXzahejiA38orwpCOOrqKuoal/fhUtq/VunZ2p
- manic6tjm9+QJnIenVde794eYB2S2hQinFY0EMNzSmznxe5W4rurXKvHIx8kmcibZzjW
- 6rd4lwXMG593soCRj29Q56QHqDmqjEdxXK1cifqyyWO5wSXSlWN/sdrE53ps3nhvbj5/
- tI79xv7XnaVx4KVTGosNJ2BUo7ylJK/no+/b3To0ndWCeLUVgB70HqKCIQ76hNpIjb2t
- ScKA==
+ bh=ojd67kYJwQNwCJ7C4DJs/GgdGhSFvQnplRWu/lP131A=;
+ b=MB1YZUnEBw/nasA+5UHIddjm3KtLCyswmXdLOPmEi5LuZsqvYhLjeJgyHC2bisfRxT
+ n1PqaoFNXlpfXkRE/keVcJDs2tCOm75aMl6y3RfbitO9NxzIUI7zPVFBfG8mMoZFmmy3
+ 7IN/xBxRSvEjRbaBnRfUbKst3+fqB+Qj8hEMGdBTScmp23I2en8VdQrgORRx4TadS+I1
+ 4n+9sTqCsYU0wujm4y4bbZjXLwwB+apveEHEMMsfgTsM73rUP94/o2H/TumT+0eFaTti
+ udFDg0X1io2vmGcDG4KDEEzK2Rwno5HzBawS/ycqJp/omKhsr+NXbMMj94IfKN8eHsf/
+ ElnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721666612; x=1722271412;
+ d=1e100.net; s=20230601; t=1721666958; x=1722271758;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7TtHrl9rQrselaWy83peZcth3CnbPxV5LK1Nw2zxaDw=;
- b=YiW5q40l+SG++TLf67zRtnCCDdW+uzk21+xSUFygdr5T1wfTig+dP1zDFyMYUQnsd9
- tUiJCvL8GIpCwNkTicI+hWwAVcGbKAG3wYPgnO+Fchiur/sPB6Ywdy0d46iT43Ezn0bl
- Jn+8WksLKJBGCxY+/r3aPW4RYAhuX1L/FTEt1vu2wVGZRCmEXVkqq/KRmrs7EvhaDYmU
- ew1fiqxN8OkExH6wpcHlsdJvgIn9LLesdsvRK/AngNuqDncMsZUakJH8hxA3zFqYBZ+z
- ijuEVivODA+D9xMXTmToKtO6Z80DvF08y2B+YVDScia3P3p/ableAEZORhFqI4yhfcD+
- +tTQ==
-X-Gm-Message-State: AOJu0YzFigQQVlkQMEJE0ftgSuoOwmlQszKudagC4TfKK2Rdj3ODC6bH
- Ra+Gvs5dUn1nqbEc7q/8/UVv9W9rkS5SlMX9/utQnvZG6XFYrpKJxxVJzFxJQgM=
-X-Google-Smtp-Source: AGHT+IE3Z+VgPiNNfzLv/KHYJe6LPDVPEVwVALgyCzLrL9ZdVZ2NlrnhyNSoV0Ta9GvXxstWauoqDw==
-X-Received: by 2002:a05:600c:3d92:b0:424:a656:66b3 with SMTP id
- 5b1f17b1804b1-427dc5292dbmr57433275e9.22.1721666612312; 
- Mon, 22 Jul 2024 09:43:32 -0700 (PDT)
-Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
- [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d9193350sm120374305e9.40.2024.07.22.09.43.31
+ bh=ojd67kYJwQNwCJ7C4DJs/GgdGhSFvQnplRWu/lP131A=;
+ b=DoX8O0ZfwDW8VGCxtdy1lza6tfsQmfK0I/iEIIXRlpphNHbFI7K/C2k33vZ990NE9H
+ tg2KTr9OvmCPMu1Kp0Ez6LcIAxZH+yTOKu6dhDmsp0NWyoNdkXuvdb756mce/kALVQKz
+ 6o+smUxK0+aueITnrjY3/bAM6SWbDH9kBRXy74D1b2aOWGvSpOQVfwzYwTqVWiwD1kYm
+ rQIzBlnF7VvXEnif8ieqrvAuQ0jqzNeUUuB+o9dh3ty1HDwYbBDUGd4l6ZDWEhI22yhW
+ SPSLNowuIzHkXW2yLutaj+xlVfK+Yi9p8C1CW5PV9ap5pV29AfrG9GaelQcOdsVFaZmh
+ +tdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWL0yrBtDswu7pDXbiARFBRoKT33tRisDIX0/XVENMCnDNvF3h+Abc3wkRrzC4QQ0elR5z02ceuWRFOec9tSzIuh7TBL74=
+X-Gm-Message-State: AOJu0YywJ/7+iKjOchB9IbQo4U7AqILjZt9HQ5lhLioQ9A9i7uA9nXVV
+ IFM7uLQ5nKNd0Bs1C0mTKSlEYzgZ6OqB6saDYePmy6ilYHSTC10yTuQbNrN1lSc=
+X-Google-Smtp-Source: AGHT+IFWc15RCjb9dB08HdxgnTQQZpVJGNH8Z4+qSSdqBJ5a7WIkTpT5xXLMYfztPhOU/QCYTspaCA==
+X-Received: by 2002:a05:6a20:430e:b0:1c2:8bcc:bb09 with SMTP id
+ adf61e73a8af0-1c42857336cmr6308503637.8.1721666957556; 
+ Mon, 22 Jul 2024 09:49:17 -0700 (PDT)
+Received: from [100.64.0.1] (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fd6f28e87esm56848115ad.66.2024.07.22.09.49.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 09:43:31 -0700 (PDT)
-Message-ID: <a194f976-aff7-4aea-989e-0aff693d6dbd@linaro.org>
-Date: Mon, 22 Jul 2024 18:43:29 +0200
+ Mon, 22 Jul 2024 09:49:17 -0700 (PDT)
+Message-ID: <c96ad0e8-bb2b-4af3-b706-57cd93653f9d@sifive.com>
+Date: Tue, 23 Jul 2024 00:49:14 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer of machine core
-To: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Cc: qemu-devel@nongnu.org
-References: <20240722164412.1163414-1-zhao1.liu@intel.com>
+Subject: Re: [PATCH v3 12/12] target/riscv: Simplify probing in vext_ldff
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongu.org, qemu-s390x@nongnu.org,
+ qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+References: <20240719010707.1319675-1-richard.henderson@linaro.org>
+ <20240719010707.1319675-13-richard.henderson@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722164412.1163414-1-zhao1.liu@intel.com>
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <20240719010707.1319675-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,31 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 18:44, Zhao Liu wrote:
-> While working on a series of CPU/cache topology work, I became
-> interested in the machine core component and would like to help to
-> review more related patches.
+Reviewed-by: Max Chou <max.chou@sifive.com>
 
-Thanks!
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On 2024/7/19 9:07 AM, Richard Henderson wrote:
+> The current pairing of tlb_vaddr_to_host with extra is either
+> inefficient (user-only, with page_check_range) or incorrect
+> (system, with probe_pages).
+>
+> For proper non-fault behaviour, use probe_access_flags with
+> its nonfault parameter set to true.
+>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7d9811458cb0..0c55fe72611d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1879,6 +1879,7 @@ M: Eduardo Habkost <eduardo@habkost.net>
->   M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
->   R: Philippe Mathieu-Daudé <philmd@linaro.org>
->   R: Yanan Wang <wangyanan55@huawei.com>
-> +R: Zhao Liu <zhao1.liu@intel.com>
->   S: Supported
->   F: hw/core/cpu-common.c
->   F: hw/core/cpu-sysemu.c
+>   target/riscv/vector_helper.c | 31 +++++++++++++++++--------------
+>   1 file changed, 17 insertions(+), 14 deletions(-)
+>
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 1b4d5a8e37..10a52ceb5b 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -474,7 +474,6 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>             vext_ldst_elem_fn *ldst_elem,
+>             uint32_t log2_esz, uintptr_t ra)
+>   {
+> -    void *host;
+>       uint32_t i, k, vl = 0;
+>       uint32_t nf = vext_nf(desc);
+>       uint32_t vm = vext_vm(desc);
+> @@ -493,27 +492,31 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>           }
+>           addr = adjust_addr(env, base + i * (nf << log2_esz));
+>           if (i == 0) {
+> +            /* Allow fault on first element. */
+>               probe_pages(env, addr, nf << log2_esz, ra, MMU_DATA_LOAD);
+>           } else {
+> -            /* if it triggers an exception, no need to check watchpoint */
+>               remain = nf << log2_esz;
+>               while (remain > 0) {
+> +                void *host;
+> +                int flags;
+> +
+>                   offset = -(addr | TARGET_PAGE_MASK);
+> -                host = tlb_vaddr_to_host(env, addr, MMU_DATA_LOAD, mmu_index);
+> -                if (host) {
+> -#ifdef CONFIG_USER_ONLY
+> -                    if (!page_check_range(addr, offset, PAGE_READ)) {
+> -                        vl = i;
+> -                        goto ProbeSuccess;
+> -                    }
+> -#else
+> -                    probe_pages(env, addr, offset, ra, MMU_DATA_LOAD);
+> -#endif
+> -                } else {
+> +
+> +                /* Probe nonfault on subsequent elements. */
+> +                flags = probe_access_flags(env, addr, offset, MMU_DATA_LOAD,
+> +                                           mmu_index, true, &host, 0);
+> +
+> +                /*
+> +                 * Stop if invalid (unmapped) or mmio (transaction may fail).
+> +                 * Do not stop if watchpoint, as the spec says that
+> +                 * first-fault should continue to access the same
+> +                 * elements regardless of any watchpoint.
+> +                 */
+> +                if (flags & ~TLB_WATCHPOINT) {
+>                       vl = i;
+>                       goto ProbeSuccess;
+>                   }
+> -                if (remain <=  offset) {
+> +                if (remain <= offset) {
+>                       break;
+>                   }
+>                   remain -= offset;
 
 
