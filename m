@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176DEC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD305C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 20:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVzo0-0005tb-Vp; Mon, 22 Jul 2024 16:38:49 -0400
+	id 1sVzqT-000282-Ux; Mon, 22 Jul 2024 16:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVzny-0005sy-QO
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:38:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVzqS-000277-76
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:41:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVznv-0008D7-SO
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:38:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVzqQ-0000I8-MX
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 16:41:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721680722;
+ s=mimecast20190719; t=1721680877;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kHUVeWk20YcEgOmAqHlb135jt536U3NdxkdqYwG4Sa0=;
- b=KChj+NmKZPue7EdDoEhE9FI60DBQOcKEmcuN94oL0GG6n1lkdWE3p/Of0kfOpp3dqbWpL6
- nIsx4m1CZWQzqFJuSYgrB0ebjIvyiDghcatsVRk7ikWqv7WJUEs0SKs73N/N6dUidwx96V
- iGi5zKkVdMFj8oj6oZa1stHQnWc0Hic=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VkmtHvclAyJaNkiLv+MWPU9tEc42jBXKMUOJLq0bQ7E=;
+ b=QTmpz+fuE61CQAfk4zHMnN0mHO/YVyKVRzyj72yNomwFbNTxz/Z/pxErvEDMXyYS7XdBBz
+ trukC5YJJFLDDGZfjtSZMVo+jxnGPqmCqIwuozKH3vdspyFVont8F4blP6x0OJ6a7R9+/Z
+ SQNXzcPTE9XL2cLeWla1DnalXZH1T08=
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-455-qVG51b95OtmWrpaF4qEJCg-1; Mon, 22 Jul 2024 16:38:40 -0400
-X-MC-Unique: qVG51b95OtmWrpaF4qEJCg-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-44945f42a7fso1851861cf.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:38:40 -0700 (PDT)
+ us-mta-167-iCdRDb1UOaOHHRL9X9AI2w-1; Mon, 22 Jul 2024 16:41:14 -0400
+X-MC-Unique: iCdRDb1UOaOHHRL9X9AI2w-1
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-4f51ae60628so84279e0c.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:41:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721680720; x=1722285520;
+ d=1e100.net; s=20230601; t=1721680874; x=1722285674;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kHUVeWk20YcEgOmAqHlb135jt536U3NdxkdqYwG4Sa0=;
- b=PioIPvvFnOM06sws16jejGaeotevgRQipYnw4xErDJaUKCkk8bdZ2KA7dL4BbESVc9
- bbLjzjH0yaVpMkvviulEkg2PO9KUWuoiNegwzHNMFpvlOTWUn+aYzfIg8IrzI7VofKFs
- r5mN19thWlPFb3EvfJ0Zj2pA8E7xFar8IZPh52iZtyTyHsYNZs/b8MUjiSRuT8x873OQ
- R6Cw9Ob9+AUlbFwV/r3m/96OQJmpeEmkt+yTamnsC/qo20QPaCJcKcBCYTXMsgIGT5OT
- GCpBMjh37xQkY1LURFRLvROLnX26sUMT1DI2GqyqjA4RfP2h7qJ7CddlwZk2DqxvMjWt
- N2gw==
-X-Gm-Message-State: AOJu0YwtXvwqM+JOeBbPQsfUuUVnHyBcLYKTZEITR3aF3Ar/zVEJUTpt
- fIR4zgkgoPtOmSFvtQCotc+dWiBd1aBYBUyULU3M930sWmIuqHLReXDflpB6taUFXNhQvOj3+8T
- sKQTvUJ7pDZBBSgutFpS45XzHsVnuz+eTgBqBo3TzS6qzVj32XcEkVuadH0df
-X-Received: by 2002:a05:622a:1a13:b0:446:64c9:df73 with SMTP id
- d75a77b69052e-44fa5240962mr65707361cf.1.1721680719865; 
- Mon, 22 Jul 2024 13:38:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpk2Q9wHueBT7SwYUHc5AKDpQQ7BhnpE72wCZcGcCF+8m1cu1P0AHy3WCZd0yhSYTUb7Tn1g==
-X-Received: by 2002:a05:622a:1a13:b0:446:64c9:df73 with SMTP id
- d75a77b69052e-44fa5240962mr65707241cf.1.1721680719415; 
- Mon, 22 Jul 2024 13:38:39 -0700 (PDT)
+ bh=VkmtHvclAyJaNkiLv+MWPU9tEc42jBXKMUOJLq0bQ7E=;
+ b=fyPzTg0FtwcLzEkEUoTw6mI8u1dEJHE3UA9csDBroKg1ne6rg7HNIKyW4VA+uTX916
+ TVw5JuD5zXKMflFzjv/PmbWUilzGG6Tdn1tK0JeGd1ECFnrm5sJTdrejb9dUVafRnu77
+ iCicf3NVunoa1rYkiKYbXWFRKvxU7qeeeFWiHFYo9xXKW11ndQquzde5wxOJ8BWGZEQX
+ BFV1G2jy4XrYQRFXkATvuXrSq6/UNgqT4BGDoxRBkrOtO6zOF3cmd/O22Ye8PqEhDGmC
+ p+575iDCcz8GArEldN6VTJvmPWj5WGZXxr/ywHhh8/GHr1+6K1J2oLbega/tAscxIQT7
+ JTGw==
+X-Gm-Message-State: AOJu0YzGpso8ZBnhBxZvuanNn5sbAT6MbknfIZMZfxhBBJwPg+jMNNQe
+ phTr2tfH/FFFHc25Q3ilQTif0fGqWn7JcuSwi5tS/M7ocAjG4Ajw7bhTpb/T1xeqGesqCY7P3hI
+ fC+bx34ZI5oRdyvtKnL5x1AMg2axj2I+NDMAYB1jGp9whnxeowU45
+X-Received: by 2002:a05:6102:1626:b0:492:ab16:d05b with SMTP id
+ ada2fe7eead31-492ab16d2f2mr1763754137.0.1721680874025; 
+ Mon, 22 Jul 2024 13:41:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUpByCWiaWvSGwaouzSahrJ4hrnd1L9LQnXWBvxPdSfNQIiIJXMmjw/gswMcHrLz6Etv8EWA==
+X-Received: by 2002:a05:6102:1626:b0:492:ab16:d05b with SMTP id
+ ada2fe7eead31-492ab16d2f2mr1763741137.0.1721680873575; 
+ Mon, 22 Jul 2024 13:41:13 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44f9cd4da6dsm37102401cf.57.2024.07.22.13.38.38
+ af79cd13be357-7a19900570dsm399812285a.68.2024.07.22.13.41.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 13:38:38 -0700 (PDT)
-Date: Mon, 22 Jul 2024 16:38:36 -0400
+ Mon, 22 Jul 2024 13:41:13 -0700 (PDT)
+Date: Mon, 22 Jul 2024 16:41:11 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH v2 6/9] migration/multifd: Move pages accounting into
- multifd_send_zero_page_detect()
-Message-ID: <Zp7DTIM15kmvrQ4z@x1n>
+Subject: Re: [RFC PATCH v2 9/9] migration/multifd: Replace
+ multifd_send_state->pages with client data
+Message-ID: <Zp7D59BBkjUVdThg@x1n>
 References: <20240722175914.24022-1-farosas@suse.de>
- <20240722175914.24022-7-farosas@suse.de> <Zp6zF2oOHJMixISu@x1n>
- <87plr5yyua.fsf@suse.de>
+ <20240722175914.24022-10-farosas@suse.de> <Zp65Iqiz_rRleE_Q@x1n>
+ <87jzhdyxyu.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87plr5yyua.fsf@suse.de>
+In-Reply-To: <87jzhdyxyu.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -100,42 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 05:07:57PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Mon, Jul 22, 2024 at 02:59:11PM -0300, Fabiano Rosas wrote:
-> >> All references to pages are being removed from the multifd worker
-> >> threads in order to allow multifd to deal with different payload
-> >> types.
-> >> 
-> >> multifd_send_zero_page_detect() is called by all multifd migration
-> >> paths that deal with pages and is the last spot where zero pages and
-> >> normal page amounts are adjusted. Move the pages accounting into that
-> >> function.
+On Mon, Jul 22, 2024 at 05:26:49PM -0300, Fabiano Rosas wrote:
+> >> +void multifd_ram_save_setup(void)
+> >> +{
+> >> +    uint32_t n = MULTIFD_PACKET_SIZE / qemu_target_page_size();
+> >> +
+> >> +    multifd_ram_send = multifd_send_data_alloc();
+> >> +    multifd_ram_send->u.ram.allocated = n;
 > >
-> > True, but it's a bit hackish to update (especially, normal) page counters
-> > in a zero page detect function.
+> > IIUC this line won't help, as the type is still NONE.. We may need to reset
+> > this in multifd_pages_reset() even if it's a constant to RAM code.
 > 
-> Hm, that's the one place in the code that actually sets
-> normal_num. Seems adequate to me.
+> I could maybe just hardcode it in the packet. No point setting this
+> every time.
 
-Fair point.
-
-> 
-> > I understand you want to move pages out of the thread function, that's
-> > fair. How about put it in your new multifd_ram_fill_packet()?
-> >
-> 
-> That one is skipped when mapped-ram is in use. I could move it to
-> nocomp_send_prepare() after the zero_page_detect. It seems we're moving
-> towards changing nocomp -> ram at some point anyway. Would that be
-> better? It would duplicate the call due to the compression code.
-
-Maybe it's simply that the helper itself (multifd_send_zero_page_detect)
-needs a better name (perhaps multifd_send_ram_setup()?). I'm ok we leave
-this one as-is:
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Yeah sounds ok.  As long as this keeps working after VFIO can reuse this
+object at some point (and overwrite "allocate"), then it looks fine by me.
 
 -- 
 Peter Xu
