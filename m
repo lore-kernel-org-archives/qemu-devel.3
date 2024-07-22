@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32BA1C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2A1C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 21:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW0WR-0000vF-JR; Mon, 22 Jul 2024 17:24:44 -0400
+	id 1sW0WT-00018y-2J; Mon, 22 Jul 2024 17:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sW0WH-0000Nd-4d
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:35 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sW0WE-0008RK-H4
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 17:24:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6404421A8A;
- Mon, 22 Jul 2024 21:24:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721683469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
- b=Gf6emSpQstW9YC8bsNudLUuRMRn0RBSs23g3LuoOzma6ILNBF/tKOYQy2Q1YrW5K9bBDYf
- 7ZST50Pdzz6cX4r9XmL52rmVLIzZFcNehNzETwRqpXpbxeUVYo2DVTp1El4Gv9Vp2gvvBO
- OTcOvstBt8WW+dhSHE0/h0oWjAwSm40=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721683469;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
- b=fEsLHYhKE75wPREbl+rCsAfuY4HXIyLm3vyFOMXzYGZf7yNVZBu99EgRppUkA5Tfnt5BKh
- ZXf7ducvrlAbSoDg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1721683469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
- b=Gf6emSpQstW9YC8bsNudLUuRMRn0RBSs23g3LuoOzma6ILNBF/tKOYQy2Q1YrW5K9bBDYf
- 7ZST50Pdzz6cX4r9XmL52rmVLIzZFcNehNzETwRqpXpbxeUVYo2DVTp1El4Gv9Vp2gvvBO
- OTcOvstBt8WW+dhSHE0/h0oWjAwSm40=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1721683469;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JicEtaI3u4S3r1yIXA6NgtBJPRK79QmzjuDe17NhSC8=;
- b=fEsLHYhKE75wPREbl+rCsAfuY4HXIyLm3vyFOMXzYGZf7yNVZBu99EgRppUkA5Tfnt5BKh
- ZXf7ducvrlAbSoDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFF51136A9;
- Mon, 22 Jul 2024 21:24:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SqVWKQzOnma8PAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 22 Jul 2024 21:24:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH v2 8/9] migration/multifd: Don't send ram data
- during SYNC
-In-Reply-To: <Zp7JBmVqMYw7rOT9@x1n>
-References: <20240722175914.24022-1-farosas@suse.de>
- <20240722175914.24022-9-farosas@suse.de> <Zp7JBmVqMYw7rOT9@x1n>
-Date: Mon, 22 Jul 2024 18:24:16 -0300
-Message-ID: <877cddyvb3.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sW0WH-0000Nb-4N; Mon, 22 Jul 2024 17:24:33 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sW0WD-0008RC-Ll; Mon, 22 Jul 2024 17:24:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=NKqTZKbxY0DRlQy87302mXYMYJxfvGIWK2T3dznCNv0=; b=AXGqyKhh3ssOrmVcd1BJ2z8OwC
+ IzrdrO+uKke1/g9BKEeK4l0nrtIPHONu0BYu1I3BBWvnQYte3Tyx0Ep7Wv3XJyb4U1z1NKSw3DU1s
+ LDRBv63I9ZbPRjPn2KiBBWo9S44H87vpRcLsltPJzBygIX9NpKLeuAK7QyzoJK7z+sSEK8/6MNldi
+ Tshexb2H7kcXtrMm2yD0viTMU/twPs0ycEDN5MpGzUVcIkgOB8nhciJfxMHPsotanPvRpEDQD3zCo
+ QrCnOmKB1nzcpWf7Wq7oQsd1cW44dy0Zcg46Rr1CQPTg0oUfdRFyHkP5lmydzWIj7+qRPbKqO7ZJl
+ D9CXeFqRzPtKZxMakD0hhIX0E9aSD1ebMyyprIxmv//XLMFSKxAHgAJtqdCpzOwUWDnMMt1N6b1aI
+ PzU5eKNCeMf82vcpQTxftVTSoEPIfkPrlPlvyzedFJa8tDi4xRrK0f+paUkHEyY+I4KGJ43pPCfMv
+ +ECOo9E+P+9YH9qWyb8J/HK2tf3fpQZpzpoAo8W9GfQDvHZno2vfUjf4lDD2+puFfId3U0u7KXK1n
+ 5FOFM6YWVd6bpVRhIJCAbKlZvUTJsy4pa6QISfaJ4RELRaX9IwQLPJ5iTKLKvGj9IW6q1REMjYuP4
+ d8EYBOUmjkpzwtS4Lq1uMXi6WyL9dBwnfbZ9MGhTo=;
+Received: from [2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sW0Ud-0003NV-9I; Mon, 22 Jul 2024 22:22:55 +0100
+Message-ID: <21d354aa-b0ed-424e-8453-eae493693d61@ilande.co.uk>
+Date: Mon, 22 Jul 2024 22:24:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-1.10 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_THREE(0.00)[3];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20240722160745.67904-1-philmd@linaro.org>
+ <20240722160745.67904-6-philmd@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240722160745.67904-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 5/7] util/fifo8: Rename fifo8_pop_buf() ->
+ fifo8_pop_constbuf()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,90 +107,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 22/07/2024 17:07, Philippe Mathieu-Daudé wrote:
 
-> On Mon, Jul 22, 2024 at 02:59:13PM -0300, Fabiano Rosas wrote:
->> Skip saving and loading any ram data in the packet in the case of a
->> SYNC. This fixes a shortcoming of the current code which requires a
->> reset of the MultiFDPages_t fields right after the previous
->> pending_job finishes, otherwise the very next job might be a SYNC and
->> multifd_send_fill_packet() will put the stale values in the packet.
->> 
->> By not calling multifd_ram_fill_packet(), we can stop resetting
->> MultiFDPages_t in the multifd core and leave that to the client code.
->> 
->> Actually moving the reset function is not yet done because
->> pages->num==0 is used by the client code to determine whether the
->> MultiFDPages_t needs to be flushed. The subsequent patches will
->> replace that with a generic flag that is not dependent on
->> MultiFDPages_t.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/multifd.c | 12 ++++++++++--
->>  1 file changed, 10 insertions(+), 2 deletions(-)
->> 
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index d25b8658b2..4394ca6ade 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -438,6 +438,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->>  {
->>      MultiFDPacket_t *packet = p->packet;
->>      uint64_t packet_num;
->> +    bool sync_packet = p->flags & MULTIFD_FLAG_SYNC;
->>  
->>      memset(packet, 0, p->packet_len);
->>  
->> @@ -452,7 +453,9 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->>  
->>      p->packets_sent++;
->>  
->> -    multifd_ram_fill_packet(p);
->> +    if (!sync_packet) {
->> +        multifd_ram_fill_packet(p);
->> +    }
->>  
->>      trace_multifd_send(p->id, packet_num,
->>                         be32_to_cpu(packet->normal_pages),
->> @@ -563,7 +566,12 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>      p->packet_num = be64_to_cpu(packet->packet_num);
->>      p->packets_recved++;
->>  
->> -    ret = multifd_ram_unfill_packet(p, errp);
->> +    if (p->flags & MULTIFD_FLAG_SYNC) {
->> +        p->normal_num = 0;
->> +        p->zero_num = 0;
->
-> Instead of this, I wonder whether we shouldn't touch those fields at all,
-> but:
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 0a85951d58..55abd9a1ef 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -1547,7 +1547,9 @@ static void *multifd_recv_thread(void *opaque)
->              flags = p->flags;
->              /* recv methods don't know how to handle the SYNC flag */
->              p->flags &= ~MULTIFD_FLAG_SYNC;
-> -            has_data = p->normal_num || p->zero_num;
-> +
-> +            if (!(flags & MULTIFD_FLAG_SYNC))
-> +                has_data = p->normal_num || p->zero_num;
->              qemu_mutex_unlock(&p->mutex);
->          } else {
->              /*
+> Since fifo8_pop_buf() return a const buffer (which points
+> directly into the FIFO backing store), rename it using the
+> 'constbuf' suffix. This will help differentiate with methods
+> *copying* the FIFO data.
 
-Good idea.
+Similar comment re: fifo8_pop_bufptr() as before, but still:
 
->
->> +    } else {
->> +        ret = multifd_ram_unfill_packet(p, errp);
->> +    }
->>  
->>      trace_multifd_recv(p->id, p->packet_num, p->normal_num, p->zero_num,
->>                         p->flags, p->next_packet_size);
->> -- 
->> 2.35.3
->> 
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
+
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/qemu/fifo8.h    | 4 ++--
+>   chardev/msmouse.c       | 2 +-
+>   hw/char/goldfish_tty.c  | 4 ++--
+>   hw/net/allwinner_emac.c | 2 +-
+>   hw/scsi/esp.c           | 4 ++--
+>   ui/console-vc.c         | 2 +-
+>   ui/gtk.c                | 2 +-
+>   util/fifo8.c            | 2 +-
+>   8 files changed, 11 insertions(+), 11 deletions(-)
+> 
+> diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
+> index 79450f4583..686918a3a4 100644
+> --- a/include/qemu/fifo8.h
+> +++ b/include/qemu/fifo8.h
+> @@ -63,7 +63,7 @@ void fifo8_push_all(Fifo8 *fifo, const uint8_t *data, uint32_t num);
+>   uint8_t fifo8_pop(Fifo8 *fifo);
+>   
+>   /**
+> - * fifo8_pop_buf:
+> + * fifo8_pop_constbuf:
+>    * @fifo: FIFO to pop from
+>    * @max: maximum number of bytes to pop
+>    * @numptr: pointer filled with number of bytes returned (can be NULL)
+> @@ -86,7 +86,7 @@ uint8_t fifo8_pop(Fifo8 *fifo);
+>    *
+>    * Returns: A pointer to popped data.
+>    */
+> -const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
+> +const uint8_t *fifo8_pop_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
+>   
+>   /**
+>    * fifo8_peek_constbuf: read upto max bytes from the fifo
+> diff --git a/chardev/msmouse.c b/chardev/msmouse.c
+> index a774c397b4..08836d92e8 100644
+> --- a/chardev/msmouse.c
+> +++ b/chardev/msmouse.c
+> @@ -81,7 +81,7 @@ static void msmouse_chr_accept_input(Chardev *chr)
+>           const uint8_t *buf;
+>           uint32_t size;
+>   
+> -        buf = fifo8_pop_buf(&mouse->outbuf, MIN(len, avail), &size);
+> +        buf = fifo8_pop_constbuf(&mouse->outbuf, MIN(len, avail), &size);
+>           qemu_chr_be_write(chr, buf, size);
+>           len = qemu_chr_be_can_write(chr);
+>           avail -= size;
+> diff --git a/hw/char/goldfish_tty.c b/hw/char/goldfish_tty.c
+> index f8ff043c39..2c5004851d 100644
+> --- a/hw/char/goldfish_tty.c
+> +++ b/hw/char/goldfish_tty.c
+> @@ -69,7 +69,7 @@ static uint64_t goldfish_tty_read(void *opaque, hwaddr addr,
+>   static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
+>   {
+>       uint32_t to_copy;
+> -    uint8_t *buf;
+> +    const uint8_t *buf;
+>       uint8_t data_out[GOLFISH_TTY_BUFFER_SIZE];
+>       int len;
+>       uint64_t ptr;
+> @@ -109,7 +109,7 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
+>           len = s->data_len;
+>           ptr = s->data_ptr;
+>           while (len && !fifo8_is_empty(&s->rx_fifo)) {
+> -            buf = (uint8_t *)fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
+> +            buf = fifo8_pop_constbuf(&s->rx_fifo, len, &to_copy);
+>               address_space_rw(&address_space_memory, ptr,
+>                               MEMTXATTRS_UNSPECIFIED, buf, to_copy, 1);
+>   
+> diff --git a/hw/net/allwinner_emac.c b/hw/net/allwinner_emac.c
+> index 989839784a..3b0a2ee07e 100644
+> --- a/hw/net/allwinner_emac.c
+> +++ b/hw/net/allwinner_emac.c
+> @@ -349,7 +349,7 @@ static void aw_emac_write(void *opaque, hwaddr offset, uint64_t value,
+>                                 "allwinner_emac: TX length > fifo data length\n");
+>               }
+>               if (len > 0) {
+> -                data = fifo8_pop_buf(fifo, len, &ret);
+> +                data = fifo8_pop_constbuf(fifo, len, &ret);
+>                   qemu_send_packet(nc, data, ret);
+>                   aw_emac_tx_reset(s, chan);
+>                   /* Raise TX interrupt */
+> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+> index 526ed91bef..64384f9b0e 100644
+> --- a/hw/scsi/esp.c
+> +++ b/hw/scsi/esp.c
+> @@ -208,7 +208,7 @@ static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
+>       }
+>   
+>       len = maxlen;
+> -    buf = fifo8_pop_buf(fifo, len, &n);
+> +    buf = fifo8_pop_constbuf(fifo, len, &n);
+>       if (dest) {
+>           memcpy(dest, buf, n);
+>       }
+> @@ -217,7 +217,7 @@ static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
+>       len -= n;
+>       len = MIN(len, fifo8_num_used(fifo));
+>       if (len) {
+> -        buf = fifo8_pop_buf(fifo, len, &n2);
+> +        buf = fifo8_pop_constbuf(fifo, len, &n2);
+>           if (dest) {
+>               memcpy(&dest[n], buf, n2);
+>           }
+> diff --git a/ui/console-vc.c b/ui/console-vc.c
+> index 899fa11c94..e9906aae59 100644
+> --- a/ui/console-vc.c
+> +++ b/ui/console-vc.c
+> @@ -287,7 +287,7 @@ static void kbd_send_chars(QemuTextConsole *s)
+>           const uint8_t *buf;
+>           uint32_t size;
+>   
+> -        buf = fifo8_pop_buf(&s->out_fifo, MIN(len, avail), &size);
+> +        buf = fifo8_pop_constbuf(&s->out_fifo, MIN(len, avail), &size);
+>           qemu_chr_be_write(s->chr, buf, size);
+>           len = qemu_chr_be_can_write(s->chr);
+>           avail -= size;
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index bc29f7a1b4..a4db90e8cb 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -1820,7 +1820,7 @@ static void gd_vc_send_chars(VirtualConsole *vc)
+>           const uint8_t *buf;
+>           uint32_t size;
+>   
+> -        buf = fifo8_pop_buf(&vc->vte.out_fifo, MIN(len, avail), &size);
+> +        buf = fifo8_pop_constbuf(&vc->vte.out_fifo, MIN(len, avail), &size);
+>           qemu_chr_be_write(vc->vte.chr, buf, size);
+>           len = qemu_chr_be_can_write(vc->vte.chr);
+>           avail -= size;
+> diff --git a/util/fifo8.c b/util/fifo8.c
+> index 21943c6032..31f0d34c0c 100644
+> --- a/util/fifo8.c
+> +++ b/util/fifo8.c
+> @@ -97,7 +97,7 @@ const uint8_t *fifo8_peek_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+>       return fifo8_peekpop_buf(fifo, max, numptr, false);
+>   }
+>   
+> -const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+> +const uint8_t *fifo8_pop_constbuf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
+>   {
+>       return fifo8_peekpop_buf(fifo, max, numptr, true);
+>   }
+
 
