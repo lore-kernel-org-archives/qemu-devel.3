@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BEAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 19:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5E4C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 19:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVz83-0008Fe-S1; Mon, 22 Jul 2024 15:55:27 -0400
+	id 1sVzAm-0004is-T7; Mon, 22 Jul 2024 15:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVz82-0008DJ-Ad
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 15:55:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVzAl-0004hj-Ak
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 15:58:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVz7z-0008PA-ST
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 15:55:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sVzAj-0000GJ-D6
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 15:58:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721678122;
+ s=mimecast20190719; t=1721678291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=X0LPyGE72j3SD3ifOQnfTtPrPDbVPiGVFnnJfHe16f0=;
- b=TfqMgLgg5PHBPLUtbOoA+fZKODsCzFnQZ756zyCVStldlAxrqCDC3H3gqPnrijiaBU5W0Z
- gIwoKS3Qz+4HDpHk0gh7BNyYKaOkRi3mO+Jow3igMDYTjRzks/j4ACHPB4cNjME/LDcM5N
- BHTCJQrE0cV39OEMtRAkK070Xylo5jE=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zmz9mr5ZNDWMARlN+kvSujkElo6vpqn2K198ywPca4w=;
+ b=LNd4mfII9qNbVoLtgl9d+mxZdcUegUR8aDltq4jzoZHQ6gsrlott1l0q1PPLZJxfLmJsy4
+ +41cC2Wgc/f23zMspT5WqfmrIB59GS+ME5//EpzSwpV0CVOlthyABeZxN8VyTC0L328WZG
+ rjWiYBU64Ij63JPGFTnGKeLtcfdy8C4=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-355-T2qae29xPr6vAX8nreg2sQ-1; Mon, 22 Jul 2024 15:55:20 -0400
-X-MC-Unique: T2qae29xPr6vAX8nreg2sQ-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6b798c6b850so14025596d6.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 12:55:20 -0700 (PDT)
+ us-mta-694-2X-oj1pvMI-wBiSx2GMuVQ-1; Mon, 22 Jul 2024 15:58:10 -0400
+X-MC-Unique: 2X-oj1pvMI-wBiSx2GMuVQ-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-70360c6dd2eso75644a34.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 12:58:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721678120; x=1722282920;
+ d=1e100.net; s=20230601; t=1721678289; x=1722283089;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X0LPyGE72j3SD3ifOQnfTtPrPDbVPiGVFnnJfHe16f0=;
- b=b8knjJe21egj5ew4kGE15nAG8rgVf1EQUkzZArn+uqTiEP0etWHAwzZ7s1XG3yFLZC
- myLbyKKstKREILen5Pg6W3DSqnEbZ2LWASiCt7qIX9NluAd62REd099vvg3WF38+4m2U
- Z85NTY/WXxaYXctPHK7GGeGY0ucRfQZltFCKzvWwmsV3kklG6QMA4NMaLwVxn8U/e5Mb
- Fn+mv7QFbPvzyq37jIEb5V9JEe1ZgQtTAZLZbrNfcR8mNlU2eDZBgGeCOkbulpmbzlD7
- UImpn/+YRbK9ZvHOjeBdHU7szTJtbujcE4OEidscDAVQHEPWvA3ReoUshzemCohH1E0a
- O83Q==
-X-Gm-Message-State: AOJu0YyZJr1y3O+TJplMBavy/J+Iyn14gqcJd+whSoh875HBrd8d7zgC
- 8/oSfMejyojgXiMi0gbU1xNaiOD+YV1luy2g3geWryLlypBIZTCVDhX+TeUCIQvLaNob3/BbHnI
- rJdNddqzizvX/aXHzVGQn+C7Hw19L1422XF7gxp1R99dPNEnsgFqj
-X-Received: by 2002:a05:6214:5f09:b0:6b5:ec9a:41ef with SMTP id
- 6a1803df08f44-6b94f02af18mr63335206d6.2.1721678119823; 
- Mon, 22 Jul 2024 12:55:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+zfnB1PwQNJKw0DCSIO9oPi9vWSXET/7PgZAYuxh+QPlT+uYoxLdVb0ll2LgWmhS1QghTgg==
-X-Received: by 2002:a05:6214:5f09:b0:6b5:ec9a:41ef with SMTP id
- 6a1803df08f44-6b94f02af18mr63335056d6.2.1721678119312; 
- Mon, 22 Jul 2024 12:55:19 -0700 (PDT)
+ bh=zmz9mr5ZNDWMARlN+kvSujkElo6vpqn2K198ywPca4w=;
+ b=oth7cHm7pDRg/x0z4IFeXcfIwTjlDO1Xt3VKUfSXSzidxs001LdKCSBpVyrdIERwDO
+ vMlZnaUg7F6Gri52CVRSbgBaXx678xbjRmYspB3rFBtGrYApQK58DcNLHs1G0N8wdni+
+ IhGpyx3GpzFsfzVnmoaVfV9ChGL/YhlUpjZgkWLLtqQo+qh7RBZ3+AIogfu1GUr03GGX
+ pyKODW9KVFop57b2Yq8plwGeXil8dRPtG0PlN+xvNcsBkdUuxAWQh8Z8R9iEwV5XIAbr
+ BYvwtJhmoGvyyQp4PCXsoCXWuio8CfW6O49sT9OD3FRYj/45nKBvqvl0jND8VXad3CMd
+ mwAg==
+X-Gm-Message-State: AOJu0YxwbYF8bXBvLspQ2yW9ib2nVDmo+FiEhcAll1g8eoOgT+r+3s0o
+ S5mZl3NN1C3Eo8STxkgJiQ2NqxJPVQ8SkuEEaDp9j6eJXsG2radKXmRaHmewIm9KieGtXwSYdF0
+ hAv/ti/7/5z4d0Ayxx4QVQyjnX0W0NpDvmDPCOv/AEZInWKRhQIkq
+X-Received: by 2002:a05:6808:1408:b0:3da:4c28:66ae with SMTP id
+ 5614622812f47-3dae60a6293mr4991187b6e.5.1721678289229; 
+ Mon, 22 Jul 2024 12:58:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERFp8Y3eLOO3tt1hvAlvkgtT0u6dcE4p6U1hHuTR71/lul5B9h3/2O9OXES1Tqyof1diJUbw==
+X-Received: by 2002:a05:6808:1408:b0:3da:4c28:66ae with SMTP id
+ 5614622812f47-3dae60a6293mr4991172b6e.5.1721678288771; 
+ Mon, 22 Jul 2024 12:58:08 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b7ac7f15d3sm38572496d6.67.2024.07.22.12.55.17
+ d75a77b69052e-44f9cdbdfb9sm35799801cf.85.2024.07.22.12.58.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 12:55:17 -0700 (PDT)
-Date: Mon, 22 Jul 2024 15:55:14 -0400
+ Mon, 22 Jul 2024 12:58:08 -0700 (PDT)
+Date: Mon, 22 Jul 2024 15:58:06 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH v2 9/9] migration/multifd: Replace
- multifd_send_state->pages with client data
-Message-ID: <Zp65Iqiz_rRleE_Q@x1n>
+Subject: Re: [RFC PATCH v2 0/9] migration/multifd: Remove
+ multifd_send_state->pages
+Message-ID: <Zp65zvb9oy9my-qY@x1n>
 References: <20240722175914.24022-1-farosas@suse.de>
- <20240722175914.24022-10-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240722175914.24022-10-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240722175914.24022-1-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,237 +98,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 02:59:14PM -0300, Fabiano Rosas wrote:
-> Multifd currently has a simple scheduling mechanism that distributes
-> work to the various channels by keeping storage space within each
-> channel and an extra space that is given to the client. Each time the
-> client fills the space with data and calls into multifd, that space is
-> given to the next idle channel and a free storage space is taken from
-> the channel and given to client for the next iteration.
+On Mon, Jul 22, 2024 at 02:59:05PM -0300, Fabiano Rosas wrote:
+> Hi,
 > 
-> This means we always need (#multifd_channels + 1) memory slots to
-> operate multifd.
+> In this v2 I took Peter's suggestion of keeping the channels' pointers
+> and moving only the extra slot. The major changes are in patches 5 and
+> 9. Patch 3 introduces the structure:
 > 
-> This is fine, except that the presence of this one extra memory slot
-> doesn't allow different types of payloads to be processed at the same
-> time in different channels, i.e. the data type of
-> multifd_send_state->pages needs to be the same as p->pages.
+> typedef enum {
+>     MULTIFD_PAYLOAD_NONE,
+>     MULTIFD_PAYLOAD_RAM,
+> } MultiFDPayloadType;
 > 
-> For each new data type different from MultiFDPage_t that is to be
-> handled, this logic would need to be duplicated by adding new fields
-> to multifd_send_state, to the channels and to multifd_send_pages().
+> struct MultiFDSendData {
+>     MultiFDPayloadType type;
+>     union {
+>         MultiFDPages_t ram;
+>     } u;
+> };
 > 
-> Fix this situation by moving the extra slot into the client and using
-> only the generic type MultiFDSendData in the multifd core.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/multifd.c | 58 ++++++++++++++++++++++++++++-----------------
->  migration/multifd.h |  2 ++
->  migration/ram.c     |  1 +
->  3 files changed, 39 insertions(+), 22 deletions(-)
-> 
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 4394ca6ade..0a85951d58 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -49,7 +49,6 @@ typedef struct {
->  
->  struct {
->      MultiFDSendParams *params;
-> -    MultiFDSendData *data;
->      /*
->       * Global number of generated multifd packets.
->       *
-> @@ -97,6 +96,8 @@ struct {
->      MultiFDMethods *ops;
->  } *multifd_recv_state;
->  
-> +/* TODO: move these to multifd-ram.c */
-> +static MultiFDSendData *multifd_ram_send;
->  static size_t multifd_ram_payload_size(void)
->  {
->      uint32_t n = MULTIFD_PACKET_SIZE / qemu_target_page_size();
-> @@ -118,6 +119,14 @@ static MultiFDSendData *multifd_send_data_alloc(void)
->      return g_malloc0(sizeof(MultiFDPayloadType) + max_payload_size);
->  }
->  
-> +void multifd_ram_save_setup(void)
-> +{
-> +    uint32_t n = MULTIFD_PACKET_SIZE / qemu_target_page_size();
-> +
-> +    multifd_ram_send = multifd_send_data_alloc();
-> +    multifd_ram_send->u.ram.allocated = n;
+> I added a NONE type so we can use it to tell when the channel has
+> finished sending a packet, since we'll need to switch types between
+> clients anyway. This avoids having to introduce a 'size', or 'free'
+> variable.
 
-IIUC this line won't help, as the type is still NONE.. We may need to reset
-this in multifd_pages_reset() even if it's a constant to RAM code.
+This at least looks better to me, thanks.
 
-Side note: looks like multifd_ram_send is leaked across the patch.
+> 
+> WHAT'S MISSING:
+> 
+> - The support for calling multifd_send() concurrently. Maciej has this
+>   in his series so I didn't touch it.
+> 
+> - A way of adding methods for the new payload type. Currently, the
+>   compression methods are somewhat coupled with ram migration, so I'm
+>   not sure how to proceed.
 
-> +}
-> +
->  static bool multifd_use_packets(void)
->  {
->      return !migrate_mapped_ram();
-> @@ -620,7 +629,7 @@ static void multifd_send_kick_main(MultiFDSendParams *p)
->   *
->   * Returns true if succeed, false otherwise.
->   */
-> -static bool multifd_send_pages(void)
-> +static bool multifd_send(MultiFDSendData **send_data)
->  {
->      int i;
->      static int next_channel;
-> @@ -661,11 +670,16 @@ static bool multifd_send_pages(void)
->       */
->      smp_mb_acquire();
->  
-> -    assert(!p->data->u.ram.num);
-> +    assert(multifd_payload_empty(p->data));
->  
-> -    tmp = multifd_send_state->data;
-> -    multifd_send_state->data = p->data;
-> +    /*
-> +     * Swap the pointers. The channel gets the client data for
-> +     * transferring and the client gets back an unused data slot.
-> +     */
-> +    tmp = *send_data;
-> +    *send_data = p->data;
->      p->data = tmp;
-> +
->      /*
->       * Making sure p->data is setup before marking pending_job=true. Pairs
->       * with the qatomic_load_acquire() in multifd_send_thread().
-> @@ -697,7 +711,12 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
->      MultiFDPages_t *pages;
->  
->  retry:
-> -    pages = &multifd_send_state->data->u.ram;
-> +    pages = &multifd_ram_send->u.ram;
-> +
-> +    if (multifd_payload_empty(multifd_ram_send)) {
-> +        multifd_pages_reset(pages);
-> +        multifd_set_payload_type(multifd_ram_send, MULTIFD_PAYLOAD_RAM);
-> +    }
->  
->      /* If the queue is empty, we can already enqueue now */
->      if (multifd_queue_empty(pages)) {
-> @@ -715,7 +734,7 @@ retry:
->       * After flush, always retry.
->       */
->      if (pages->block != block || multifd_queue_full(pages)) {
-> -        if (!multifd_send_pages()) {
-> +        if (!multifd_send(&multifd_ram_send)) {
->              return false;
->          }
->          goto retry;
-> @@ -833,6 +852,8 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
->      g_free(p->packet);
->      p->packet = NULL;
->      multifd_send_state->ops->send_cleanup(p, errp);
-> +    g_free(p->data);
-> +    p->data = NULL;
+What is this one?  Why compression methods need new payload?  Aren't they
+ram-typed?
 
-These two lines look superfluous.
+> 
+> - Moving all the multifd ram code into multifd-ram.c after this^ is
+>   sorted out.
+> 
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1381005020
+> 
+> v1:
+> https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
+> 
+> First of all, apologies for the roughness of the series. I'm off for
+> the next couple of weeks and wanted to put something together early
+> for your consideration.
 
->  
->      return *errp == NULL;
->  }
-> @@ -845,8 +866,6 @@ static void multifd_send_cleanup_state(void)
->      qemu_sem_destroy(&multifd_send_state->channels_ready);
->      g_free(multifd_send_state->params);
->      multifd_send_state->params = NULL;
-> -    g_free(multifd_send_state->data);
-> -    multifd_send_state->data = NULL;
->      g_free(multifd_send_state);
->      multifd_send_state = NULL;
->  }
-> @@ -895,15 +914,14 @@ int multifd_send_sync_main(void)
->  {
->      int i;
->      bool flush_zero_copy;
-> -    MultiFDPages_t *pages;
->  
->      if (!migrate_multifd()) {
->          return 0;
->      }
-> -    pages = &multifd_send_state->data->u.ram;
-> -    if (pages->num) {
-> -        if (!multifd_send_pages()) {
-> -            error_report("%s: multifd_send_pages fail", __func__);
-> +
-> +    if (!multifd_payload_empty(multifd_ram_send)) {
-> +        if (!multifd_send(&multifd_ram_send)) {
-> +            error_report("%s: multifd_send fail", __func__);
->              return -1;
->          }
->      }
-> @@ -977,13 +995,11 @@ static void *multifd_send_thread(void *opaque)
->  
->          /*
->           * Read pending_job flag before p->data.  Pairs with the
-> -         * qatomic_store_release() in multifd_send_pages().
-> +         * qatomic_store_release() in multifd_send().
->           */
->          if (qatomic_load_acquire(&p->pending_job)) {
-> -            MultiFDPages_t *pages = &p->data->u.ram;
-> -
->              p->iovs_num = 0;
-> -            assert(pages->num);
-> +            assert(!multifd_payload_empty(p->data));
->  
->              ret = multifd_send_state->ops->send_prepare(p, &local_err);
->              if (ret != 0) {
-> @@ -1006,13 +1022,13 @@ static void *multifd_send_thread(void *opaque)
->              stat64_add(&mig_stats.multifd_bytes,
->                         p->next_packet_size + p->packet_len);
->  
-> -            multifd_pages_reset(pages);
->              p->next_packet_size = 0;
-> +            multifd_set_payload_type(p->data, MULTIFD_PAYLOAD_NONE);
->  
->              /*
->               * Making sure p->data is published before saying "we're
->               * free".  Pairs with the smp_mb_acquire() in
-> -             * multifd_send_pages().
-> +             * multifd_send().
->               */
->              qatomic_store_release(&p->pending_job, false);
->          } else {
-> @@ -1206,8 +1222,6 @@ bool multifd_send_setup(void)
->      thread_count = migrate_multifd_channels();
->      multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
->      multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-> -    multifd_send_state->data = multifd_send_data_alloc();
-> -    multifd_send_state->data->u.ram.allocated = page_count;
->      qemu_sem_init(&multifd_send_state->channels_created, 0);
->      qemu_sem_init(&multifd_send_state->channels_ready, 0);
->      qatomic_set(&multifd_send_state->exiting, 0);
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index c9c01579a0..04c000f435 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -113,6 +113,8 @@ static inline void multifd_set_payload_type(MultiFDSendData *data,
->      data->type = type;
->  }
->  
-> +void multifd_ram_save_setup(void);
-> +
->  typedef struct {
->      /* Fields are only written at creating/deletion time */
->      /* No lock required for them, they are read only */
-> diff --git a/migration/ram.c b/migration/ram.c
-> index edec1a2d07..2b90396b3c 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3058,6 +3058,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
->      migration_ops = g_malloc0(sizeof(MigrationOps));
->  
->      if (migrate_multifd()) {
-> +        multifd_ram_save_setup();
->          migration_ops->ram_save_target_page = ram_save_target_page_multifd;
->      } else {
->          migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+PS: I assume this is old content, or I'll envy you on how frequent you can
+take days off!..
+
+> 
+> This series is a refactoring (based on an earlier, off-list
+> attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
+> the multifd core. If we're going to add support for more data types to
+> multifd, we first need to clean that up.
+> 
+> This time around this work was prompted by Maciej's series[1]. I see
+> you're having to add a bunch of is_device_state checks to work around
+> the rigidity of the code.
+> 
+> Aside from the VFIO work, there is also the intent (coming back from
+> Juan's ideas) to make multifd the default code path for migration,
+> which will have to include the vmstate migration and anything else we
+> put on the stream via QEMUFile.
+> 
+> I have long since been bothered by having 'pages' sprinkled all over
+> the code, so I might be coming at this with a bit of a narrow focus,
+> but I believe in order to support more types of payloads in multifd,
+> we need to first allow the scheduling at multifd_send_pages() to be
+> independent of MultiFDPages_t. So here it is. Let me know what you
+> think.
+> 
+> (as I said, I'll be off for a couple of weeks, so feel free to
+> incorporate any of this code if it's useful. Or to ignore it
+> completely).
+> 
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1340992028
+> 
+> 0- https://github.com/farosas/qemu/commits/multifd-packet-cleanups/
+> 1- https://lore.kernel.org/r/cover.1718717584.git.maciej.szmigiero@oracle.com
+> 
+> Fabiano Rosas (9):
+>   migration/multifd: Reduce access to p->pages
+>   migration/multifd: Pass in MultiFDPages_t to file_write_ramblock_iov
+>   migration/multifd: Introduce MultiFDSendData
+>   migration/multifd: Make MultiFDPages_t:offset a flexible array member
+>   migration/multifd: Replace p->pages with an union pointer
+>   migration/multifd: Move pages accounting into
+>     multifd_send_zero_page_detect()
+>   migration/multifd: Isolate ram pages packet data
+>   migration/multifd: Don't send ram data during SYNC
+>   migration/multifd: Replace multifd_send_state->pages with client data
+> 
+>  migration/file.c              |   3 +-
+>  migration/file.h              |   2 +-
+>  migration/multifd-qpl.c       |  10 +-
+>  migration/multifd-uadk.c      |   9 +-
+>  migration/multifd-zero-page.c |   9 +-
+>  migration/multifd-zlib.c      |   4 +-
+>  migration/multifd-zstd.c      |   4 +-
+>  migration/multifd.c           | 239 +++++++++++++++++++++-------------
+>  migration/multifd.h           |  37 ++++--
+>  migration/ram.c               |   1 +
+>  10 files changed, 201 insertions(+), 117 deletions(-)
+> 
+> 
+> base-commit: a7ddb48bd1363c8bcdf42776d320289c42191f01
 > -- 
 > 2.35.3
 > 
