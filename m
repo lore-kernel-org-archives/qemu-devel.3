@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A02C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DAF1C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn4B-00034w-29; Mon, 22 Jul 2024 03:02:39 -0400
+	id 1sVn4J-0003vI-87; Mon, 22 Jul 2024 03:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn43-00028F-AG
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:31 -0400
+ id 1sVn4B-00039R-RJ
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn41-0006g5-JN
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:31 -0400
+ id 1sVn49-0006kR-TM
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631748;
+ s=mimecast20190719; t=1721631757;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HawM42my9yZBi1WA1VuBcr74tOpmDzcYHSpZSXjQ29A=;
- b=VzgtcT/F032e72LuNM1a4xuDr2yKAG/ZlKmdjD2BxtB9SsH1gsf7vlp9SuHf/jmVTa2CAU
- Gg3j/7bEfNyeQhC45IFPZlYX1dbtthOXwHBk8+NtBp1OQNj+1vD9Ce7UOH6Zd4JV8cYKGw
- 77bWYjNRZC2EjPeHvjHNJNAmdhMk/qY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5CbcfPWI0b4zDdzDwjOfNU7w7BaKQjsQtXbym1EVQi0=;
+ b=DpmWaiu3R5pGato54zmqQZEuTVNsEwweFwz2HkiTmt420RdRFmiX5fWb2Vkgr7a1Rfj3lp
+ W/sb377oPY+gxzL6FXH9U4l3txBurwXCB1KCNWhOl5RC83WCw2tRwF73mARUKvgJT3ks2i
+ 8ywEB8W+FqOPTaC9KZR3+hBt7ZN7uGU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-sXtmIjTXMsaNV_6rXu2ySQ-1; Mon,
- 22 Jul 2024 03:02:23 -0400
-X-MC-Unique: sXtmIjTXMsaNV_6rXu2ySQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-YUJMM4XRMtWCPUCc8Lpt7w-1; Mon,
+ 22 Jul 2024 03:02:34 -0400
+X-MC-Unique: YUJMM4XRMtWCPUCc8Lpt7w-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8942418E6E15; Mon, 22 Jul 2024 07:02:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1C241944A89; Mon, 22 Jul 2024 07:02:33 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.252])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30CC1195605A; Mon, 22 Jul 2024 07:02:11 +0000 (UTC)
+ id 0663A1955BED; Mon, 22 Jul 2024 07:02:31 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 17/25] qga: conditionalize schema for commands not supported on
- other UNIX
-Date: Mon, 22 Jul 2024 10:01:14 +0300
-Message-ID: <20240722070122.27615-18-kkostiuk@redhat.com>
+Subject: [PULL 25/25] qga/linux: Add new api 'guest-network-get-route'
+Date: Mon, 22 Jul 2024 10:01:22 +0300
+Message-ID: <20240722070122.27615-26-kkostiuk@redhat.com>
 In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
@@ -83,82 +81,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Dehan Meng <demeng@redhat.com>
 
-Rather than creating stubs for every command that just return
-QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema  to
-fully exclude generation of the commands on other UNIX.
+The Route information of the Linux VM needs to be used
+by administrators and users when debugging network problems
+and troubleshooting.
 
-The command will be rejected at QMP dispatch time instead,
-avoiding reimplementing rejection by blocking the stub commands.
-This changes the error message for affected commands from
-
-    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
-
-to
-
-    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
-
-This has the additional benefit that the QGA protocol reference
-now documents what conditions enable use of the command.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Dehan Meng <demeng@redhat.com>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20240712132459.3974109-18-berrange@redhat.com>
+Message-ID: <20240613092802.346246-2-demeng@redhat.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- meson.build          | 1 +
- qga/commands-posix.c | 8 --------
- qga/qapi-schema.json | 3 ++-
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ qga/commands-linux.c | 133 +++++++++++++++++++++++++++++++++++++++++++
+ qga/qapi-schema.json |  73 ++++++++++++++++++++++++
+ 2 files changed, 206 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 83f9728524..23f35193ee 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2276,6 +2276,7 @@ config_host_data.set('CONFIG_ATTR', libattr.found())
- config_host_data.set('CONFIG_BDRV_WHITELIST_TOOLS', get_option('block_drv_whitelist_in_tools'))
- config_host_data.set('CONFIG_BRLAPI', brlapi.found())
- config_host_data.set('CONFIG_BSD', host_os in bsd_oses)
-+config_host_data.set('CONFIG_FREEBSD', host_os == 'freebsd')
- config_host_data.set('CONFIG_CAPSTONE', capstone.found())
- config_host_data.set('CONFIG_COCOA', cocoa.found())
- config_host_data.set('CONFIG_DARWIN', host_os == 'darwin')
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index a353f64ae6..f4104f2760 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -877,14 +877,6 @@ void qmp_guest_set_user_password(const char *username,
-         return;
-     }
- }
--#else /* __linux__ || __FreeBSD__ */
--void qmp_guest_set_user_password(const char *username,
--                                 const char *password,
--                                 bool crypted,
--                                 Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--}
- #endif /* __linux__ || __FreeBSD__ */
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 89bdcded01..62954c5a6c 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -28,6 +28,10 @@
+ #include <libudev.h>
+ #endif
  
- #ifdef HAVE_GETIFADDRS
++#ifdef HAVE_GETIFADDRS
++#include <net/if.h>
++#endif
++
+ #include <sys/statvfs.h>
+ 
+ #if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
+@@ -2089,3 +2093,132 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+     fclose(fp);
+     return head;
+ }
++
++static char *hexToIPAddress(const void *hexValue, int is_ipv6)
++{
++    if (is_ipv6) {
++        char addr[INET6_ADDRSTRLEN];
++        struct in6_addr in6;
++        const char *hexStr = (const char *)hexValue;
++        int i;
++
++        for (i = 0; i < 16; i++) {
++            sscanf(&hexStr[i * 2], "%02hhx", &in6.s6_addr[i]);
++        }
++        inet_ntop(AF_INET6, &in6, addr, INET6_ADDRSTRLEN);
++
++        return g_strdup(addr);
++    } else {
++        unsigned int hexInt = *(unsigned int *)hexValue;
++        unsigned int byte1 = (hexInt >> 24) & 0xFF;
++        unsigned int byte2 = (hexInt >> 16) & 0xFF;
++        unsigned int byte3 = (hexInt >> 8) & 0xFF;
++        unsigned int byte4 = hexInt & 0xFF;
++
++        return g_strdup_printf("%u.%u.%u.%u", byte4, byte3, byte2, byte1);
++    }
++}
++
++GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
++{
++    GuestNetworkRouteList *head = NULL, **tail = &head;
++    const char *routeFiles[] = {"/proc/net/route", "/proc/net/ipv6_route"};
++    FILE *fp;
++    size_t n;
++    char *line = NULL;
++    int firstLine;
++    int is_ipv6;
++    int i;
++
++    for (i = 0; i < 2; i++) {
++        firstLine = 1;
++        is_ipv6 = (i == 1);
++        fp = fopen(routeFiles[i], "r");
++        if (fp == NULL) {
++            error_setg_errno(errp, errno, "open(\"%s\")", routeFiles[i]);
++            free(line);
++            continue;
++        }
++
++        while (getline(&line, &n, fp) != -1) {
++            if (firstLine && !is_ipv6) {
++                firstLine = 0;
++                continue;
++            }
++            GuestNetworkRoute *route = NULL;
++            GuestNetworkRoute *networkroute;
++            char Iface[IFNAMSIZ];
++            if (is_ipv6) {
++                char Destination[33], Source[33], NextHop[33];
++                int DesPrefixlen, SrcPrefixlen, Metric, RefCnt, Use, Flags;
++
++                /* Parse the line and extract the values */
++                if (sscanf(line, "%32s %x %32s %x %32s %x %x %x %x %32s",
++                           Destination, &DesPrefixlen, Source,
++                           &SrcPrefixlen, NextHop, &Metric, &RefCnt,
++                           &Use, &Flags, Iface) != 10) {
++                    continue;
++                }
++
++                route = g_new0(GuestNetworkRoute, 1);
++                networkroute = route;
++                networkroute->iface = g_strdup(Iface);
++                networkroute->destination = hexToIPAddress(Destination, 1);
++                networkroute->metric = Metric;
++                networkroute->source = hexToIPAddress(Source, 1);
++                networkroute->desprefixlen = g_strdup_printf(
++                    "%d", DesPrefixlen
++                );
++                networkroute->srcprefixlen = g_strdup_printf(
++                    "%d", SrcPrefixlen
++                );
++                networkroute->nexthop = hexToIPAddress(NextHop, 1);
++                networkroute->has_flags = true;
++                networkroute->flags = Flags;
++                networkroute->has_refcnt = true;
++                networkroute->refcnt = RefCnt;
++                networkroute->has_use = true;
++                networkroute->use = Use;
++                networkroute->version = 6;
++            } else {
++                unsigned int Destination, Gateway, Mask, Flags;
++                int RefCnt, Use, Metric, MTU, Window, IRTT;
++
++                /* Parse the line and extract the values */
++                if (sscanf(line, "%s %X %X %x %d %d %d %X %d %d %d",
++                           Iface, &Destination, &Gateway, &Flags, &RefCnt,
++                           &Use, &Metric, &Mask, &MTU, &Window, &IRTT) != 11) {
++                    continue;
++                }
++
++                route = g_new0(GuestNetworkRoute, 1);
++                networkroute = route;
++                networkroute->iface = g_strdup(Iface);
++                networkroute->destination = hexToIPAddress(&Destination, 0);
++                networkroute->gateway = hexToIPAddress(&Gateway, 0);
++                networkroute->mask = hexToIPAddress(&Mask, 0);
++                networkroute->metric = Metric;
++                networkroute->has_flags = true;
++                networkroute->flags = Flags;
++                networkroute->has_refcnt = true;
++                networkroute->refcnt = RefCnt;
++                networkroute->has_use = true;
++                networkroute->use = Use;
++                networkroute->has_mtu = true;
++                networkroute->mtu = MTU;
++                networkroute->has_window = true;
++                networkroute->window = Window;
++                networkroute->has_irtt = true;
++                networkroute->irtt = IRTT;
++                networkroute->version = 4;
++            }
++
++            QAPI_LIST_APPEND(tail, route);
++        }
++
++        free(line);
++        fclose(fp);
++    }
++
++    return head;
++}
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 0662a68c43..c763163fcd 100644
+index c763163fcd..495706cf73 100644
 --- a/qga/qapi-schema.json
 +++ b/qga/qapi-schema.json
-@@ -1109,7 +1109,8 @@
- # Since: 2.3
- ##
- { 'command': 'guest-set-user-password',
--  'data': { 'username': 'str', 'password': 'str', 'crypted': 'bool' } }
-+  'data': { 'username': 'str', 'password': 'str', 'crypted': 'bool' },
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD'] } }
- 
- ##
- # @GuestMemoryBlock:
+@@ -1851,3 +1851,76 @@
+   'returns': ['GuestCpuStats'],
+   'if': 'CONFIG_LINUX'
+ }
++
++##
++# @GuestNetworkRoute:
++#
++# Route information, currently, only linux supported.
++#
++# @iface: The destination network or host's egress network interface in the routing table
++#
++# @destination: The IP address of the target network or host, The final destination of the packet
++#
++# @metric: Route metric
++#
++# @gateway: The IP address of the next hop router
++#
++# @mask: Subnet Mask (IPv4 only)
++#
++# @irtt: Initial round-trip delay (not for windows, IPv4 only)
++#
++# @flags: Route flags (not for windows)
++#
++# @refcnt: The route's reference count (not for windows)
++#
++# @use: Route usage count (not for windows)
++#
++# @window: TCP window size, used for flow control (not for windows, IPv4 only)
++#
++# @mtu: Data link layer maximum packet size (not for windows)
++#
++# @desprefixlen: Destination prefix length (for IPv6)
++#
++# @source: Source IP address (for IPv6)
++#
++# @srcprefixlen: Source prefix length (for IPv6)
++#
++# @nexthop: Next hop IP address (for IPv6)
++#
++# @version: IP version (4 or 6)
++#
++# Since: 9.1
++
++##
++{ 'struct': 'GuestNetworkRoute',
++  'data': {'iface': 'str',
++           'destination': 'str',
++           'metric': 'int',
++           '*gateway': 'str',
++           '*mask': 'str',
++           '*irtt': 'int',
++           '*flags': 'uint64',
++           '*refcnt': 'int',
++           '*use': 'int',
++           '*window': 'int',
++           '*mtu': 'int',
++           '*desprefixlen': 'str',
++           '*source': 'str',
++           '*srcprefixlen': 'str',
++           '*nexthop': 'str',
++           'version': 'int'
++           },
++  'if': 'CONFIG_LINUX' }
++
++##
++# @guest-network-get-route:
++#
++# Retrieve information about route of network.
++# Returns: List of route info of guest.
++#
++# Since: 9.1
++##
++{ 'command': 'guest-network-get-route',
++  'returns': ['GuestNetworkRoute'],
++  'if': 'CONFIG_LINUX'
++}
 -- 
 2.45.2
 
