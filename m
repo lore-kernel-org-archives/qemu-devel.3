@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4995C3DA63
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FAFC3DA61
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgjj-0002aO-Ho; Sun, 21 Jul 2024 20:17:07 -0400
+	id 1sVgjg-0002Mg-06; Sun, 21 Jul 2024 20:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgji-0002UL-0s
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgje-0002M0-KH
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjg-0005hU-9P
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjc-0005h4-9q
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607423;
+ s=mimecast20190719; t=1721607418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fgG/mkRDkzGxJm+xP/ZVe4hG5yYRqISPsjfYjXIDy78=;
- b=Qrm2VYQ/5n6m9w6OBlzSAr0/KudmrbrGaYo71brbBhmpPXQixw9Pp04Yi3sF66zdSevEz/
- 9GfL5rabEC3czbFQtm9/cx0RwPvUGDeI0jZmLhSS/F451g5fFvxWo9NjZ9xcvx8yEiEQJb
- U+oTLsNLWtk1nQVCCHZ0gQhPE42Gkg0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DH/ESJQPBGLop/GhzPXFwzSewSPtzCwZMu0vBrYFALw=;
+ b=I3zhScJlP5i9vueKCC6AOEsGm618hzpvWitAm0954/lzrDILDyntTYfks046nhwEGBng+h
+ dAmsBff5Xrd5JtFWy1SzuvrXB8DmqZaiNluzt7HZpSgq0MFzxLxjq2D3JsnIjLloOwzygP
+ Egsmv1Z8uPrXjPQ8+ujfyezM5er/Xyo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-Wsl84XdrO2K-Th-HdTzQ7w-1; Sun, 21 Jul 2024 20:16:57 -0400
-X-MC-Unique: Wsl84XdrO2K-Th-HdTzQ7w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-427e369f757so6935595e9.0
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:16:56 -0700 (PDT)
+ us-mta-392-C0P1o7E9NySlS8oB9AG1AA-1; Sun, 21 Jul 2024 20:16:53 -0400
+X-MC-Unique: C0P1o7E9NySlS8oB9AG1AA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-36873ed688dso2098444f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:16:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607415; x=1722212215;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fgG/mkRDkzGxJm+xP/ZVe4hG5yYRqISPsjfYjXIDy78=;
- b=RZVRBUwQh4b6XBgRXgqNjh4cE2o8SD09OnErPXymrznraPfbpr1OnQ2xDKXaGRi5uA
- Lm3V48+sa56hqd+AjkTOWjtKPTvdaGjoXUHiDhtMepihO9t4Lx3pVwcubIquhKUuD5h3
- xjvs+vBG1o2TtsDi7CFbKAkj7WYgc2rLfCdHrzQLqYPzNrE+ox4SsKG0U2tVHHCufr0J
- FrXKl1f0+u/OzJAG62hxoSweSulToOPHs/1kDUwV5XBK6HExlVML1nnmna8jOT5qRgX8
- auOUXTcANq+T7tBQ43u4nW8VVu4XSK2sX//N9DMyoJbusd+8wFiv8K3vM46iKbiOtdZR
- cmUQ==
-X-Gm-Message-State: AOJu0YweQbMgvvO4Gj3QlP1Jf6gvdaXgxk8wmNb/j7FMNc5z/YlN3tPF
- UnhDFYTaHlF+TO89X1vVBtJGZqYNveGyVA2x2X1gQkiA2v6k2CwjTy0rxukbHrhs9kYSAPWxS9M
- +J1p1MSJEjsSRRtDasbDuFVHw7JCYAnaLR90HTRVlVLA0Y3XpXlDaPOpL5Hwlpvvu7KSRjGAQGU
- 0RlUeR4wnOWlqYdKIryIqNbPWiusOZ3A==
-X-Received: by 2002:a05:600c:a085:b0:426:6f87:65fc with SMTP id
- 5b1f17b1804b1-427dc527fcemr38494465e9.17.1721607415550; 
- Sun, 21 Jul 2024 17:16:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPnFDRryGdHj2f+jEDHtdDbCppv6tQ6L8GFqd/fm4YVJiIjnNt4v0Fz2vgQzXUwuJDgMxFGg==
-X-Received: by 2002:a05:600c:a085:b0:426:6f87:65fc with SMTP id
- 5b1f17b1804b1-427dc527fcemr38494325e9.17.1721607414987; 
- Sun, 21 Jul 2024 17:16:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721607411; x=1722212211;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DH/ESJQPBGLop/GhzPXFwzSewSPtzCwZMu0vBrYFALw=;
+ b=EanSg+SRkA+WiZ8KP5Sphx4ALbnJcUK2wqSBuY7FCmB+PEvakONbghE88EW9dB0qky
+ CO0K2fO3+EjIfhevRlEpJHn4nJJ4HSVgslclVLiuygXlODusaqyTmuDNy0Nfw9S7oO8q
+ 34UgGYvo6fDTQZGBLMeK0rZ85UtM6uNlX69uKmi0/xS5Q1i8QdysDnSgJF1YTcwHNTCL
+ xzFsebpB1oE3vY6t0dagc0an8bRi3mhESlT6y8+PZWLOvUrlkjtHT1SKMx/xyUk8gLpp
+ H8C6xjrQYRLN/W5Y7bEkKTVS3NYZubyGfa2qYVYqJiuJ6XicqBQkB7KTMiG3t8BNpHZL
+ 5c1g==
+X-Gm-Message-State: AOJu0YxUGrs4UZbRw3tetPEssEgTDoiP5HkDOUsdBdKhNA9QlfTb7VK9
+ q82Bef5q57v9FbNzYigiEDz5jgFY5CYhNpbFBMbO+tDoacMj6uVpSgkfkM6oDTiVrW20dnIpbCs
+ oS8nFMa3CK5BccsT29JUoLhOAKOGeMotgqJOnI4Nyqj02nP/pjlAZSOOi+C2D5qB1a8HkvUFsIX
+ IDJkMcxcF6dvpwGLGx6xfd/7vxfmcgUQ==
+X-Received: by 2002:adf:edcb:0:b0:362:c7b3:764c with SMTP id
+ ffacd0b85a97d-369bbc91e3fmr3088257f8f.48.1721607411358; 
+ Sun, 21 Jul 2024 17:16:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMhHc70yYCIaUSWPk6Ik0f96jKSZ2poUNaMCageMQsqSt3ajK9NG/AmIAD87aB/o60wU3nMg==
+X-Received: by 2002:adf:edcb:0:b0:362:c7b3:764c with SMTP id
+ ffacd0b85a97d-369bbc91e3fmr3088244f8f.48.1721607410558; 
+ Sun, 21 Jul 2024 17:16:50 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a947fasm133276815e9.43.2024.07.21.17.16.53
+ 5b1f17b1804b1-427db34fe3fsm73495175e9.4.2024.07.21.17.16.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:16:54 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:16:53 -0400
+ Sun, 21 Jul 2024 17:16:49 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:16:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 02/63] MAINTAINERS: add Stefano Garzarella as vhost/vhost-user
- reviewer
-Message-ID: <7967b7e0b17cb5e700ca040e0b68ba8fb0035c0d.1721607331.git.mst@redhat.com>
-References: <cover.1721607331.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/63] virtio,pci,pc: features,fixes
+Message-ID: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,34 +99,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+A couple of fixes are outstanding, will merge later.
 
-I have recently been working on supporting vhost-user on any POSIX,
-so I want to help maintain it.
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240704081336.21208-1-sgarzare@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+The following changes since commit a87a7c449e532130d4fa8faa391ff7e1f04ed660:
+
+  Merge tag 'pull-loongarch-20240719' of https://gitlab.com/gaosong/qemu into staging (2024-07-19 16:28:28 +1000)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 67d834362c55d6fca6504975bc34755606f17cf2:
+
+  virtio: Always reset vhost devices (2024-07-21 14:45:56 -0400)
+
+----------------------------------------------------------------
+virtio,pci,pc: features,fixes
+
+pci: Initial support for SPDM Responders
+cxl: Add support for scan media, feature commands, device patrol scrub
+    control, DDR5 ECS control, firmware updates
+virtio: in-order support
+virtio-net: support for SR-IOV emulation (note: known issues on s390,
+                                          might get reverted if not fixed)
+smbios: memory device size is now configurable per Machine
+cpu: architecture agnostic code to support vCPU Hotplug
+
+Fixes, cleanups all over the place.
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d9811458c..b7e9ced3e8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2209,6 +2209,7 @@ F: docs/devel/vfio-iommufd.rst
- 
- vhost
- M: Michael S. Tsirkin <mst@redhat.com>
-+R: Stefano Garzarella <sgarzare@redhat.com>
- S: Supported
- F: hw/*/*vhost*
- F: docs/interop/vhost-user.json
--- 
-MST
+----------------------------------------------------------------
+Akihiko Odaki (8):
+      hw/pci: Do not add ROM BAR for SR-IOV VF
+      hw/pci: Fix SR-IOV VF number calculation
+      pcie_sriov: Ensure PF and VF are mutually exclusive
+      pcie_sriov: Check PCI Express for SR-IOV PF
+      pcie_sriov: Allow user to create SR-IOV device
+      virtio-pci: Implement SR-IOV PF
+      virtio-net: Implement SR-IOV VF
+      docs: Document composable SR-IOV device
+
+Alistair Francis (1):
+      hw/pci: Add all Data Object Types defined in PCIe r6.0
+
+Clément Mathieu--Drif (4):
+      intel_iommu: fix FRCD construction macro
+      intel_iommu: move VTD_FRCD_PV and VTD_FRCD_PP declarations
+      intel_iommu: fix type of the mask field in VTDIOTLBPageInvInfo
+      intel_iommu: make type match
+
+Davidlohr Bueso (3):
+      hw/cxl: Add get scan media capabilities cmd support
+      hw/cxl: Add get scan media results cmd support
+      hw/cxl: Support firmware updates
+
+Eric Auger (6):
+      Revert "virtio-iommu: Clear IOMMUDevice when VFIO device is unplugged"
+      virtio-iommu: Remove probe_done
+      virtio-iommu: Free [host_]resv_ranges on unset_iommu_devices
+      virtio-iommu: Remove the end point on detach
+      hw/vfio/common: Add vfio_listener_region_del_iommu trace event
+      virtio-iommu: Add trace point on virtio_iommu_detach_endpoint_from_domain
+
+Fan Ni (1):
+      hw/cxl/cxl-mailbox-utils: remove unneeded mailbox output payload space zeroing
+
+Gregory Price (1):
+      cxl/mailbox: move mailbox effect definitions to a header
+
+Hanna Czenczek (1):
+      virtio: Always reset vhost devices
+
+Huai-Cheng Kuo (1):
+      backends: Initial support for SPDM socket support
+
+Hyeonggon Yoo (2):
+      hw/cxl/mbox: replace sanitize_running() with cxl_dev_media_disabled()
+      hw/cxl/events: discard all event records during sanitation
+
+Igor Mammedov (1):
+      smbios: make memory device size configurable per Machine
+
+Jonah Palmer (6):
+      virtio: Add bool to VirtQueueElement
+      virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
+      virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support
+      virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER support
+      vhost,vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
+      virtio: Add VIRTIO_F_IN_ORDER property definition
+
+Jonathan Cameron (1):
+      hw/cxl: Check for multiple mappings of memory backends.
+
+Manos Pitsidianakis (2):
+      virtio-snd: add max size bounds check in input cb
+      virtio-snd: check for invalid param shift operands
+
+Salil Mehta (7):
+      accel/kvm: Extract common KVM vCPU {creation,parking} code
+      hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
+      hw/acpi: Update ACPI GED framework to support vCPU Hotplug
+      hw/acpi: Update GED _EVT method AML with CPU scan
+      hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
+      physmem: Add helper function to destroy CPU AddressSpace
+      gdbstub: Add helper function to unregister GDB register space
+
+Shiju Jose (3):
+      hw/cxl/cxl-mailbox-utils: Add support for feature commands (8.2.9.6)
+      hw/cxl/cxl-mailbox-utils: Add device patrol scrub control feature
+      hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS control feature
+
+Stefano Garzarella (2):
+      MAINTAINERS: add Stefano Garzarella as vhost/vhost-user reviewer
+      contrib/vhost-user-blk: fix overflowing expression
+
+Sunil V L (9):
+      hw/riscv/virt-acpi-build.c: Add namespace devices for PLIC and APLIC
+      hw/riscv/virt-acpi-build.c: Update the HID of RISC-V UART
+      tests/acpi: Allow DSDT acpi table changes for aarch64
+      acpi/gpex: Create PCI link devices outside PCI root bridge
+      tests/acpi: update expected DSDT blob for aarch64 and microvm
+      tests/qtest/bios-tables-test.c: Remove the fall back path
+      tests/acpi: Add empty ACPI data files for RISC-V
+      tests/qtest/bios-tables-test.c: Enable basic testing for RISC-V
+      tests/acpi: Add expected ACPI AML files for RISC-V
+
+Wilfred Mallawa (1):
+      hw/nvme: Add SPDM over DOE support
+
+Yi Liu (1):
+      MAINTAINERS: Add myself as a VT-d reviewer
+
+Zhao Liu (1):
+      hw/cxl/cxl-host: Fix segmentation fault when getting cxl-fmw property
+
+Zheyu Ma (1):
+      hw/virtio/virtio-crypto: Fix op_code assignment in virtio_crypto_create_asym_session
+
+ accel/kvm/kvm-cpus.h                           |   1 -
+ hw/i386/intel_iommu_internal.h                 |   6 +-
+ include/exec/cpu-common.h                      |   8 +
+ include/exec/gdbstub.h                         |   6 +
+ include/hw/acpi/cpu.h                          |   7 +-
+ include/hw/acpi/generic_event_device.h         |   5 +
+ include/hw/boards.h                            |   4 +
+ include/hw/core/cpu.h                          |   1 +
+ include/hw/cxl/cxl_device.h                    |  88 ++-
+ include/hw/cxl/cxl_mailbox.h                   |  18 +
+ include/hw/pci/pci_device.h                    |  13 +-
+ include/hw/pci/pcie_doe.h                      |   5 +
+ include/hw/pci/pcie_sriov.h                    |  18 +
+ include/hw/virtio/virtio-iommu.h               |   1 -
+ include/hw/virtio/virtio-pci.h                 |   1 +
+ include/hw/virtio/virtio.h                     |   6 +-
+ include/sysemu/kvm.h                           |  25 +
+ include/sysemu/spdm-socket.h                   |  74 ++
+ accel/kvm/kvm-all.c                            |  95 ++-
+ backends/spdm-socket.c                         | 216 ++++++
+ contrib/vhost-user-blk/vhost-user-blk.c        |   2 +-
+ gdbstub/gdbstub.c                              |  13 +
+ hw/acpi/acpi-cpu-hotplug-stub.c                |   6 +
+ hw/acpi/cpu.c                                  |  18 +-
+ hw/acpi/generic_event_device.c                 |  50 ++
+ hw/arm/virt.c                                  |   1 +
+ hw/audio/virtio-snd.c                          |  13 +-
+ hw/block/vhost-user-blk.c                      |   1 +
+ hw/core/cpu-common.c                           |   5 +-
+ hw/core/machine.c                              |   6 +
+ hw/cxl/cxl-events.c                            |  13 +
+ hw/cxl/cxl-host.c                              |   3 +-
+ hw/cxl/cxl-mailbox-utils.c                     | 966 +++++++++++++++++++++++--
+ hw/i386/acpi-build.c                           |   3 +-
+ hw/i386/intel_iommu.c                          |   2 +-
+ hw/i386/pc_piix.c                              |   1 +
+ hw/i386/pc_q35.c                               |   1 +
+ hw/mem/cxl_type3.c                             |  64 +-
+ hw/net/vhost_net.c                             |   2 +
+ hw/nvme/ctrl.c                                 |  62 ++
+ hw/pci-host/gpex-acpi.c                        |  13 +-
+ hw/pci/pci.c                                   |  76 +-
+ hw/pci/pcie_sriov.c                            | 300 ++++++--
+ hw/riscv/virt-acpi-build.c                     |  34 +-
+ hw/scsi/vhost-scsi.c                           |   1 +
+ hw/scsi/vhost-user-scsi.c                      |   1 +
+ hw/smbios/smbios.c                             |  11 +-
+ hw/vfio/common.c                               |   3 +-
+ hw/virtio/vhost-user-fs.c                      |   1 +
+ hw/virtio/vhost-user-vsock.c                   |   1 +
+ hw/virtio/virtio-crypto.c                      |   2 +-
+ hw/virtio/virtio-iommu.c                       |  88 +--
+ hw/virtio/virtio-net-pci.c                     |   1 +
+ hw/virtio/virtio-pci.c                         |  20 +-
+ hw/virtio/virtio.c                             | 139 +++-
+ net/vhost-vdpa.c                               |   1 +
+ system/physmem.c                               |  29 +
+ tests/qtest/bios-tables-test.c                 |  40 +-
+ MAINTAINERS                                    |   9 +
+ accel/kvm/trace-events                         |   5 +-
+ backends/Kconfig                               |   4 +
+ backends/meson.build                           |   2 +
+ docs/specs/acpi_hw_reduced_hotplug.rst         |   3 +-
+ docs/specs/index.rst                           |   1 +
+ docs/specs/spdm.rst                            | 134 ++++
+ docs/system/index.rst                          |   1 +
+ docs/system/sriov.rst                          |  36 +
+ hw/vfio/trace-events                           |   3 +-
+ hw/virtio/trace-events                         |   1 +
+ tests/data/acpi/aarch64/virt/DSDT              | Bin 5196 -> 5196 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt | Bin 5282 -> 5282 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp        | Bin 6557 -> 6557 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb          | Bin 7679 -> 7679 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology     | Bin 5398 -> 5398 bytes
+ tests/data/acpi/riscv64/virt/APIC              | Bin 0 -> 116 bytes
+ tests/data/acpi/riscv64/virt/DSDT              | Bin 0 -> 3576 bytes
+ tests/data/acpi/riscv64/virt/FACP              | Bin 0 -> 276 bytes
+ tests/data/acpi/riscv64/virt/MCFG              | Bin 0 -> 60 bytes
+ tests/data/acpi/riscv64/virt/RHCT              | Bin 0 -> 332 bytes
+ tests/data/acpi/riscv64/virt/SPCR              | Bin 0 -> 80 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie          | Bin 3023 -> 3023 bytes
+ 81 files changed, 2500 insertions(+), 290 deletions(-)
+ create mode 100644 include/hw/cxl/cxl_mailbox.h
+ create mode 100644 include/sysemu/spdm-socket.h
+ create mode 100644 backends/spdm-socket.c
+ create mode 100644 docs/specs/spdm.rst
+ create mode 100644 docs/system/sriov.rst
+ create mode 100644 tests/data/acpi/riscv64/virt/APIC
+ create mode 100644 tests/data/acpi/riscv64/virt/DSDT
+ create mode 100644 tests/data/acpi/riscv64/virt/FACP
+ create mode 100644 tests/data/acpi/riscv64/virt/MCFG
+ create mode 100644 tests/data/acpi/riscv64/virt/RHCT
+ create mode 100644 tests/data/acpi/riscv64/virt/SPCR
 
 
