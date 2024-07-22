@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A16AC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CF2C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVmoi-0001MO-Ms; Mon, 22 Jul 2024 02:46:40 -0400
+	id 1sVmol-0001ZT-KP; Mon, 22 Jul 2024 02:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoY-00016Z-Ei; Mon, 22 Jul 2024 02:46:31 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ id 1sVmoY-000166-2i; Mon, 22 Jul 2024 02:46:31 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoV-0003f9-3h; Mon, 22 Jul 2024 02:46:30 -0400
+ id 1sVmoU-0003f6-Vr; Mon, 22 Jul 2024 02:46:29 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id DD580CE0A1B;
+ by sin.source.kernel.org (Postfix) with ESMTP id E0F3ECE0AFC;
  Mon, 22 Jul 2024 06:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E95C116B1;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E80C4AF0E;
  Mon, 22 Jul 2024 06:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1721630776;
- bh=XsNqpMUJB0O6cj3yT/NeTaj5tNxcpWbVl6wxYyGWgio=;
+ bh=8fT3iZX4Ak9UXbYdPywtW7xLXPjIWOMseP9okwfRJuM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UEdxjxKvHvqJG9nY5yYMVZS5k1A8R0r0CgsbhkqHHaLTaGUD8V/UFTeKmWf2O9lYD
- Fu7CVBD2UTQYKgihYIBTBVHLTf4lvDxZpmxzq0RS2imdQg8uXlvSq7zpaOiTJPp97l
- KL1koWTU+jiJK2Pt26yofkCSA+7Xp4dxIVmz9IME8/pbhNwkxx77JxNBSz+8oBshXW
- q4HfyqDFBHIVM/qvk5ah6kRn9uE/i3z8Elyo2jBjtD/Ze+wZrBvLkUNyCJzIRi216U
- GrI2iR2qZkViHRE1X8ifOU2F3AHSzsbtQ8/OCrVOe48yqruK4gataRLwh+krS3Ui1u
- dNSnIHSCbghwA==
+ b=kNpRBZZsm9mWd6iSI9j3jYworOiHY2yeaDBzIMmsRhBVgsfyLe/BKMCa2M+a7D2j1
+ +SpV1pEFifQ4EQoqZZlS+7wlnC+o2LihdhDKyfnxCGES7DcUUQv/U3LkklCSHaq3VN
+ bxSHWYImNcUZ0+Fhcu/acfry+UH6Mh/zm/4pKfdYgyAvsfR4ajI+7xHzrN8480zpQ1
+ Qad5WxpHn/ESnwr4kp8AAz9CDY+5p3+uXBitopiQvR7pYEJnZj/MH1bA4kvbSSPj1S
+ MLzg8uEJEMoIQDJZ/6Hin+GzvTVOyp6l+ptBvWyjzDYavsA1P0YFEKoKHbm8Arrled
+ i7NDbtmtbjZnQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoI-00000000WQi-0oQV; Mon, 22 Jul 2024 08:46:14 +0200
+ id 1sVmoI-00000000WR2-1NVJ; Mon, 22 Jul 2024 08:46:14 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 1/7] arm/virt: place power button pin number on a define
-Date: Mon, 22 Jul 2024 08:45:53 +0200
-Message-ID: <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v3 6/7] acpi/ghes: update comments to point to newer ACPI specs
+Date: Mon, 22 Jul 2024 08:45:58 +0200
+Message-ID: <66c1ab4988589be99ae925c6361548f55fea58b0.1721630625.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1721630625.git.mchehab+huawei@kernel.org>
 References: <cover.1721630625.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55;
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
  envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -78,82 +76,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having magic numbers inside the code is not a good idea, as it
-is error-prone. So, instead, create a macro with the number
-definition.
+There is one reference to ACPI 4.0 and several references
+to ACPI 6.x versions.
+
+Update them to point to ACPI 6.5 whenever possible.
+
+There's one reference that was kept pointing to ACPI 6.4,
+though, with HEST revision 1.
+
+ACPI 6.5 now defines HEST revision 2, and defined a new
+way to handle source types starting from 12. According
+with ACPI 6.5 revision history:
+
+	2312 Update to the HEST table and adding new error
+	     source descriptor - Table 18.2.
+
+Yet, the spec doesn't define yet any new source
+descriptors. It just defines a different behavior when
+source type is above 11.
+
+I also double-checked GHES implementation on an open
+source project (Linux Kernel). Currently upstream
+doesn't currently handle HEST revision, ignoring such
+field.
+
+In any case, revision 2 seems to be backward-compatible
+with revison 1 when type <= 11 and just one error is
+contained on a HEST record.
+
+So, while it is probably safe to update it, there's no
+real need. So, let's keep the implementation using
+an ACPI 6.4 compatible table, e. g. HEST revision 1.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/arm/virt-acpi-build.c | 6 +++---
- hw/arm/virt.c            | 7 ++++---
- include/hw/arm/virt.h    | 3 +++
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ hw/acpi/ghes.c | 48 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index e10cad86dd73..f76fb117adff 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -154,10 +154,10 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
-     aml_append(dev, aml_name_decl("_CRS", crs));
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 6075ef5893ce..ebf1b812aaaa 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -45,9 +45,9 @@
+ #define GAS_ADDR_OFFSET 4
  
-     Aml *aei = aml_resource_template();
--    /* Pin 3 for power button */
--    const uint32_t pin_list[1] = {3};
-+
-+    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
-     aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
--                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
-+                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
-                                  "GPO0", NULL, 0));
-     aml_append(dev, aml_name_decl("_AEI", aei));
+ /*
+- * The total size of Generic Error Data Entry
+- * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
+- * Table 18-343 Generic Error Data Entry
++ * The total size of Generic Error Data Entry before data field
++ * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
++ * Table 18.12 Generic Error Data Entry
+  */
+ #define ACPI_GHES_DATA_LENGTH               72
  
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index b0c68d66a345..c99c8b1713c6 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
-     if (s->acpi_dev) {
-         acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
-     } else {
--        /* use gpio Pin 3 for power button event */
-+        /* use gpio Pin for power button event */
-         qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
-     }
+@@ -65,8 +65,8 @@
+ 
+ /*
+  * Total size for Generic Error Status Block except Generic Error Data Entries
+- * ACPI 6.2: 18.3.2.7.1 Generic Error Data,
+- * Table 18-380 Generic Error Status Block
++ * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
++ * Table 18.11 Generic Error Status Block
+  */
+ #define ACPI_GHES_GESB_SIZE                 20
+ 
+@@ -82,7 +82,8 @@ enum AcpiGenericErrorSeverity {
+ 
+ /*
+  * Hardware Error Notification
+- * ACPI 4.0: 17.3.2.7 Hardware Error Notification
++ * ACPI 6.5: 18.3.2.9 Hardware Error Notification,
++ * Table 18.14 - Hardware Error Notification Structure
+  * Composes dummy Hardware Error Notification descriptor of specified type
+  */
+ static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
+@@ -112,7 +113,8 @@ static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
+ 
+ /*
+  * Generic Error Data Entry
+- * ACPI 6.1: 18.3.2.7.1 Generic Error Data
++ * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
++ * Table 18.12 - Generic Error Data Entry
+  */
+ static void acpi_ghes_generic_error_data(GArray *table,
+                 const uint8_t *section_type, uint32_t error_severity,
+@@ -148,7 +150,8 @@ static void acpi_ghes_generic_error_data(GArray *table,
+ 
+ /*
+  * Generic Error Status Block
+- * ACPI 6.1: 18.3.2.7.1 Generic Error Data
++ * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
++ * Table 18.11 - Generic Hardware Error Source Structure
+  */
+ static void acpi_ghes_generic_error_status(GArray *table, uint32_t block_status,
+                 uint32_t raw_data_offset, uint32_t raw_data_length,
+@@ -429,15 +432,18 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+         0, sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE, 0);
  }
-@@ -1013,7 +1013,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-                              uint32_t phandle)
+ 
+-/* Build Generic Hardware Error Source version 2 (GHESv2) */
++/*
++ * Build Generic Hardware Error Source version 2 (GHESv2)
++ * ACPI 6.5: 18.3.2.8 Generic Hardware Error Source version 2 (GHESv2 - Type 10),
++ * Table 18.13: Generic Hardware Error Source version 2 (GHESv2)
++ */
+ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
  {
-     gpio_key_dev = sysbus_create_simple("gpio-key", -1,
--                                        qdev_get_gpio_in(pl061_dev, 3));
-+                                        qdev_get_gpio_in(pl061_dev,
-+                                                         GPIO_PIN_POWER_BUTTON));
+     uint64_t address_offset;
+-    /*
+-     * Type:
+-     * Generic Hardware Error Source version 2(GHESv2 - Type 10)
+-     */
++    /* Type: (GHESv2 - Type 10) */
+     build_append_int_noprefix(table_data, ACPI_GHES_SOURCE_GENERIC_ERROR_V2, 2);
++
++    /* ACPI 6.5: Table 18.10 - Generic Hardware Error Source Structure */
+     /* Source Id */
+     build_append_int_noprefix(table_data, source_id, 2);
+     /* Related Source Id */
+@@ -481,11 +487,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+     /* Error Status Block Length */
+     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
  
-     qemu_fdt_add_subnode(fdt, "/gpio-keys");
-     qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
-@@ -1024,7 +1025,7 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-     qemu_fdt_setprop_cell(fdt, "/gpio-keys/poweroff", "linux,code",
-                           KEY_POWER);
-     qemu_fdt_setprop_cells(fdt, "/gpio-keys/poweroff",
--                           "gpios", phandle, 3, 0);
-+                           "gpios", phandle, GPIO_PIN_POWER_BUTTON, 0);
+-    /*
+-     * Read Ack Register
+-     * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
+-     * version 2 (GHESv2 - Type 10)
+-     */
++    /* ACPI 6.5: fields defined at GHESv2 table */
++    /* Read Ack Register */
+     address_offset = table_data->len;
+     build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
+                      4 /* QWord access */, 0);
+@@ -504,11 +507,16 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+     build_append_int_noprefix(table_data, 0x1, 8);
  }
  
- #define SECURE_GPIO_POWEROFF 0
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index ab961bb6a9b8..a4d937ed45ac 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -47,6 +47,9 @@
- /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
- #define PVTIME_SIZE_PER_CPU 64
+-/* Build Hardware Error Source Table */
++/*
++ * Build Hardware Error Source Table
++ * ACPI 6.4: 18.3.2 ACPI Error Source
++ * Table 18.2: Hardware Error Source Table (HEST)
++ */
+ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+                      const char *oem_id, const char *oem_table_id)
+ {
+-    AcpiTable table = { .sig = "HEST", .rev = 1,
++    AcpiTable table = { .sig = "HEST",
++                        .rev = 1,                   /* ACPI 4.0 to 6.4 */
+                         .oem_id = oem_id, .oem_table_id = oem_table_id };
  
-+/* GPIO pins */
-+#define GPIO_PIN_POWER_BUTTON  3
-+
- enum {
-     VIRT_FLASH,
-     VIRT_MEM,
+     acpi_table_begin(&table, table_data);
 -- 
 2.45.2
 
