@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D6DC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA47CC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 00:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVgk1-0003ie-2H; Sun, 21 Jul 2024 20:17:25 -0400
+	id 1sVgmW-0000aX-JC; Sun, 21 Jul 2024 20:20:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjz-0003bi-Ah
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgle-0003VX-8U
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVgjx-0005ky-9I
- for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:17:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sVglc-0005z1-Fu
+ for qemu-devel@nongnu.org; Sun, 21 Jul 2024 20:19:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721607440;
+ s=mimecast20190719; t=1721607542;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=D6a6rs+lqNePMYg6fXsfNOdsN7cy/NFFK4flSLPM9E4=;
- b=KI89CDbYnmq8TV8VDwft3+PVYryTSll4mPD/N1geAqRKFq/quSMDRdEdF6jYMqgnVyCM8l
- gJIY9dUojJXz21d2jkM2xpC59j5GykGCJVplhrRT+3cjLxKvRztGz/10+Wvl+8M5fi3PJU
- j0rQbQ508tBbl2nS6d1XHLjC21E22pM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MeXmlkXUO1c12DbabmZ2BwxdEJDDqafMQQCrC5Sf5B0=;
+ b=LxIodMakSr3W+4vcYDMODrdyrUEMHtSUmeiteCv9pVSz9ZUZgA1EBSNuIOGl4Uuk3QmmL8
+ 31VldqHq27k9Imf6XemxthNpWo8wt8BxjoHK2EprblFESOehS0DsBB3eJ2wyV9gCipfrz/
+ z7Vih9p1swQqu3qget2vss7+xdxfLcM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-WRKLpZpAMtSOfUyM7xTqCw-1; Sun, 21 Jul 2024 20:17:18 -0400
-X-MC-Unique: WRKLpZpAMtSOfUyM7xTqCw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-369bbbdb5a1so398177f8f.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:17:18 -0700 (PDT)
+ us-mta-74-mI3AK4OmOByK3xvdwfHEaw-1; Sun, 21 Jul 2024 20:19:00 -0400
+X-MC-Unique: mI3AK4OmOByK3xvdwfHEaw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-369bf135b49so665407f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 17:19:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721607437; x=1722212237;
+ d=1e100.net; s=20230601; t=1721607539; x=1722212339;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D6a6rs+lqNePMYg6fXsfNOdsN7cy/NFFK4flSLPM9E4=;
- b=eBeLEXpR7IPSle6i3PT6EjqWFqMSV8eq+/bP8t8hOZSEhsmLqX448zuAKfhaRK5nvo
- 5UZivtwbQtUtCpKLTQFnmpJIGND8L8+Lqf1CJVYB66Rd+JCFGBOQJAGD9ZjjlJzincnW
- FTnHYjubRXElUOaLVRds4uvz67uOcNRtLkazf4qh2OzcDaZbSmVBloKoHCYxtgy15MFy
- h9sDhPHtDyNHRQjYPo/bDW3VDRr+1lPNPvRQQMGbq3VKuOmpB9cZD2pi7IFARA2KgTeU
- dLR0R1BDVXuIOmbjgDU9RbHMFnXmxzDqVVjazfkzP+IsYIruPwA17CAkVjGWLUvVPFE5
- V38g==
-X-Gm-Message-State: AOJu0YwP4nDXm1jd6SJkppWKo+pHWiKx9E3ALJK3PVvYamu1WnVo4WTV
- +d3ksL1+ZIZBpyAp8ga0lJcMF68o20Vi7sw9S8S3/rkAb3XvKaKkVvIsb1U43wT8QgAVUzncZuo
- xIUdExqjFCM4P8sxx9eIC6gmBPKU7pGhJxuYS8MRg8FNYFmfpQL4kTpTYJWXCbKqXn58GMejWO/
- Ez2Xt5Y0ebz0xkQjSGGX/Po9pXh/pIYA==
-X-Received: by 2002:a5d:4a0c:0:b0:368:3b89:df1d with SMTP id
- ffacd0b85a97d-36873f18e6cmr5923451f8f.22.1721607436719; 
- Sun, 21 Jul 2024 17:17:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVxRluhAq5w9MJ1JKYm94mQQlhyPAOoginULAlcRF/enWH0o2SP1ntbXkKlQwPvrP89UO5Bg==
-X-Received: by 2002:a5d:4a0c:0:b0:368:3b89:df1d with SMTP id
- ffacd0b85a97d-36873f18e6cmr5923436f8f.22.1721607436088; 
- Sun, 21 Jul 2024 17:17:16 -0700 (PDT)
+ bh=MeXmlkXUO1c12DbabmZ2BwxdEJDDqafMQQCrC5Sf5B0=;
+ b=s0xvFkdI6RnH/yrC9pynPWsCdLf/l625pWulRlpAz4BaQW5tLyEtR5CYf0+cffIfvx
+ vINrj34yuq831CULaqsCDOUS6bfTjRsS8lfypY5JNmhVp7yIWx+2z+EWUEBgudoEdmRj
+ BdPOMWP7ZePXS0xYQT8JL6Fwut0IyWSEiwYTJOHbQdfGKLfpBnSoaRQnhDNZ0hzlayQ5
+ NQa0HS4qMOQbI7FsL10hqczd3hFrIR2JHh3gC437jPTJgdc7xEUislXPVKlCG33dRwAD
+ /XjOlS5IyK3hdC1Uzo4n/eFG+/ppr4gI2MX1ARjXr/d+rPd8/APdkCsC/Tz9hi4qtovj
+ kCCw==
+X-Gm-Message-State: AOJu0YxCOjknUwajaEsnSySPAdcI/t3Ocd5eUhTjQu1TPKXHNgCTFQj0
+ qL5ZEV1na5d8MsR4hMCj6kHBBj4A1W5RHafd1+ucONxuOcBglwmzU0ENPnGmLgGpEV7mKV9iak3
+ aW6VzH9M1O4SOKanKIua3j1X6cWh9Dx/uSYcGIE775W3eMOhOJTzfq2P2CaEgVOUhzSDOIRF1pL
+ m+nGjD59i9dIWt1nhwUyyNP57mdQAEIw==
+X-Received: by 2002:a5d:6e06:0:b0:366:dee6:a9ea with SMTP id
+ ffacd0b85a97d-368740244d5mr5158849f8f.26.1721607538727; 
+ Sun, 21 Jul 2024 17:18:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFK4RM+QFGyLG5C1KGTK/gxitW6L130y3xBcxwJs2s7cA7UZeBkcqghNyypqVCn4UqfRX+4XQ==
+X-Received: by 2002:a5d:6e06:0:b0:366:dee6:a9ea with SMTP id
+ ffacd0b85a97d-368740244d5mr5158834f8f.26.1721607537941; 
+ Sun, 21 Jul 2024 17:18:57 -0700 (PDT)
 Received: from redhat.com (mob-5-90-113-158.net.vodafone.it. [5.90.113.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68fa493sm107390905e9.10.2024.07.21.17.17.14
+ ffacd0b85a97d-3687868480csm7009779f8f.13.2024.07.21.17.18.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Jul 2024 17:17:15 -0700 (PDT)
-Date: Sun, 21 Jul 2024 20:17:14 -0400
+ Sun, 21 Jul 2024 17:18:57 -0700 (PDT)
+Date: Sun, 21 Jul 2024 20:18:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shiju Jose <shiju.jose@huawei.com>,
- Davidlohr Bueso <dave@stgolabs.net>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 12/63] hw/cxl/cxl-mailbox-utils: Add device patrol scrub
- control feature
-Message-ID: <d88f667414106c7216485774293d0831c2482d20.1721607331.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 59/63] tests/acpi: Add expected ACPI AML files for RISC-V
+Message-ID: <ec737d2443427a6313cf8af2fa0c5f375938aab2.1721607331.git.mst@redhat.com>
 References: <cover.1721607331.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,14 +79,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1721607331.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,236 +103,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-CXL spec 3.1 section 8.2.9.9.11.1 describes the device patrol scrub control
-feature. The device patrol scrub proactively locates and makes corrections
-to errors in regular cycle. The patrol scrub control allows the request to
-configure patrol scrub input configurations.
+As per the step 5 in the process documented in bios-tables-test.c,
+generate the expected ACPI AML data files for RISC-V using the
+rebuild-expected-aml.sh script and update the
+bios-tables-test-allowed-diff.h.
 
-The patrol scrub control allows the requester to specify the number of
-hours for which the patrol scrub cycles must be completed, provided that
-the requested number is not less than the minimum number of hours for the
-patrol scrub cycle that the device is capable of. In addition, the patrol
-scrub controls allow the host to disable and enable the feature in case
-disabling of the feature is needed for other purposes such as
-performance-aware operations which require the background operations to be
-turned off.
+These are all new files being added for the first time. Hence, iASL diff
+output is not added.
 
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Link: https://lore.kernel.org/r/20240223085902.1549-3-shiju.jose@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240705123039.963781-4-Jonathan.Cameron@huawei.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240716144306.2432257-10-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h | 24 +++++++++++
- hw/cxl/cxl-mailbox-utils.c  | 79 ++++++++++++++++++++++++++++++++++---
- hw/mem/cxl_type3.c          |  9 +++++
- 3 files changed, 107 insertions(+), 5 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   6 ------
+ tests/data/acpi/riscv64/virt/APIC           | Bin 0 -> 116 bytes
+ tests/data/acpi/riscv64/virt/DSDT           | Bin 0 -> 3576 bytes
+ tests/data/acpi/riscv64/virt/FACP           | Bin 0 -> 276 bytes
+ tests/data/acpi/riscv64/virt/MCFG           | Bin 0 -> 60 bytes
+ tests/data/acpi/riscv64/virt/RHCT           | Bin 0 -> 332 bytes
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 0 -> 80 bytes
+ 7 files changed, 6 deletions(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 48ed0d9240..2c1df25453 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -427,6 +427,26 @@ typedef struct CXLPoison {
- typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
- #define CXL_POISON_LIST_LIMIT 256
- 
-+/* CXL memory device patrol scrub control attributes */
-+typedef struct CXLMemPatrolScrubReadAttrs {
-+        uint8_t scrub_cycle_cap;
-+        uint16_t scrub_cycle;
-+        uint8_t scrub_flags;
-+} QEMU_PACKED CXLMemPatrolScrubReadAttrs;
-+
-+typedef struct CXLMemPatrolScrubWriteAttrs {
-+    uint8_t scrub_cycle_hr;
-+    uint8_t scrub_flags;
-+} QEMU_PACKED CXLMemPatrolScrubWriteAttrs;
-+
-+#define CXL_MEMDEV_PS_GET_FEATURE_VERSION    0x01
-+#define CXL_MEMDEV_PS_SET_FEATURE_VERSION    0x01
-+#define CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT    BIT(0)
-+#define CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT    BIT(1)
-+#define CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT    12
-+#define CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT    1
-+#define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
-+
- #define DCD_MAX_NUM_REGION 8
- 
- typedef struct CXLDCExtentRaw {
-@@ -511,6 +531,10 @@ struct CXLType3Dev {
- 
-     CXLSetFeatureInfo set_feat_info;
- 
-+    /* Patrol scrub control attributes */
-+    CXLMemPatrolScrubReadAttrs patrol_scrub_attrs;
-+    CXLMemPatrolScrubWriteAttrs patrol_scrub_wr_attrs;
-+
-     struct dynamic_capacity {
-         HostMemoryBackend *host_dc;
-         AddressSpace host_dc_as;
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 7b7d8e5eae..485beb9dba 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -824,6 +824,7 @@ typedef struct CXLSupportedFeatureEntry {
- #define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_CXL_RESET BIT(11)
- 
- enum CXL_SUPPORTED_FEATURES_LIST {
-+    CXL_FEATURE_PATROL_SCRUB = 0,
-     CXL_FEATURE_MAX
- };
- 
-@@ -865,6 +866,17 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
- };
- #define CXL_SET_FEAT_DATA_SAVED_ACROSS_RESET BIT(3)
- 
-+/* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
-+static const QemuUUID patrol_scrub_uuid = {
-+    .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
-+                 0x75, 0x77, 0x4e, 0x06, 0xdb, 0x8a)
-+};
-+
-+typedef struct CXLMemPatrolScrubSetFeature {
-+        CXLSetFeatureInHeader hdr;
-+        CXLMemPatrolScrubWriteAttrs feat_data;
-+} QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
-+
- /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
- static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-                                              uint8_t *payload_in,
-@@ -890,11 +902,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-         return CXL_MBOX_UNSUPPORTED;
-     }
-     if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
--        /*
--         * Temporary: suppress compiler error due to unsigned
--         * comparioson to zero.
--         */
--        true /*get_feats_in->start_index >= CXL_FEATURE_MAX*/) {
-+        get_feats_in->start_index >= CXL_FEATURE_MAX) {
-         return CXL_MBOX_INVALID_INPUT;
-     }
- 
-@@ -907,6 +915,21 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-     for (entry = 0, index = get_feats_in->start_index;
-          entry < req_entries; index++) {
-         switch (index) {
-+        case  CXL_FEATURE_PATROL_SCRUB:
-+            /* Fill supported feature entry for device patrol scrub control */
-+            get_feats_out->feat_entries[entry++] =
-+                           (struct CXLSupportedFeatureEntry) {
-+                .uuid = patrol_scrub_uuid,
-+                .feat_index = index,
-+                .get_feat_size = sizeof(CXLMemPatrolScrubReadAttrs),
-+                .set_feat_size = sizeof(CXLMemPatrolScrubWriteAttrs),
-+                .attr_flags = CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE,
-+                .get_feat_version = CXL_MEMDEV_PS_GET_FEATURE_VERSION,
-+                .set_feat_version = CXL_MEMDEV_PS_SET_FEATURE_VERSION,
-+                .set_feat_effects = CXL_FEAT_ENTRY_SFE_IMMEDIATE_CONFIG_CHANGE |
-+                                    CXL_FEAT_ENTRY_SFE_CEL_VALID,
-+            };
-+            break;
-         default:
-             __builtin_unreachable();
-         }
-@@ -956,6 +979,20 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
-         return CXL_MBOX_INVALID_INPUT;
-     }
- 
-+    if (qemu_uuid_is_equal(&get_feature->uuid, &patrol_scrub_uuid)) {
-+        if (get_feature->offset >= sizeof(CXLMemPatrolScrubReadAttrs)) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+        bytes_to_copy = sizeof(CXLMemPatrolScrubReadAttrs) -
-+                                             get_feature->offset;
-+        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
-+        memcpy(payload_out,
-+               (uint8_t *)&ct3d->patrol_scrub_attrs + get_feature->offset,
-+               bytes_to_copy);
-+    } else {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
-+
-     *len_out = bytes_to_copy;
- 
-     return CXL_MBOX_SUCCESS;
-@@ -970,7 +1007,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-                                            CXLCCI *cci)
- {
-     CXLSetFeatureInHeader *hdr = (void *)payload_in;
-+    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
-+    CXLMemPatrolScrubSetFeature *ps_set_feature;
-     CXLSetFeatureInfo *set_feat_info;
-+    uint16_t bytes_to_copy = 0;
-     uint8_t data_transfer_flag;
-     CXLType3Dev *ct3d;
- 
-@@ -999,11 +1039,40 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-     }
-     set_feat_info->data_transfer_flag = data_transfer_flag;
-     set_feat_info->data_offset = hdr->offset;
-+    bytes_to_copy = len_in - sizeof(CXLSetFeatureInHeader);
-+
-+    if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-+        if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION) {
-+            return CXL_MBOX_UNSUPPORTED;
-+        }
-+
-+        ps_set_feature = (void *)payload_in;
-+        ps_write_attrs = &ps_set_feature->feat_data;
-+        memcpy((uint8_t *)&ct3d->patrol_scrub_wr_attrs + hdr->offset,
-+               ps_write_attrs,
-+               bytes_to_copy);
-+        set_feat_info->data_size += bytes_to_copy;
-+
-+        if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-+            data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
-+            ct3d->patrol_scrub_attrs.scrub_cycle &= ~0xFF;
-+            ct3d->patrol_scrub_attrs.scrub_cycle |=
-+                          ct3d->patrol_scrub_wr_attrs.scrub_cycle_hr & 0xFF;
-+            ct3d->patrol_scrub_attrs.scrub_flags &= ~0x1;
-+            ct3d->patrol_scrub_attrs.scrub_flags |=
-+                          ct3d->patrol_scrub_wr_attrs.scrub_flags & 0x1;
-+        }
-+    } else {
-+        return CXL_MBOX_UNSUPPORTED;
-+    }
- 
-     if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER ||
-         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER) {
-         memset(&set_feat_info->uuid, 0, sizeof(QemuUUID));
-+        if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-+            memset(&ct3d->patrol_scrub_wr_attrs, 0, set_feat_info->data_size);
-+        }
-         set_feat_info->data_transfer_flag = 0;
-         set_feat_info->data_saved_across_reset = false;
-         set_feat_info->data_offset = 0;
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index c7910687ae..7c583d80f5 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -908,6 +908,15 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     }
-     cxl_event_init(&ct3d->cxl_dstate, 2);
- 
-+    /* Set default value for patrol scrub attributes */
-+    ct3d->patrol_scrub_attrs.scrub_cycle_cap =
-+                           CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT |
-+                           CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT;
-+    ct3d->patrol_scrub_attrs.scrub_cycle =
-+                           CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
-+                           (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
-+    ct3d->patrol_scrub_attrs.scrub_flags = CXL_MEMDEV_PS_ENABLE_DEFAULT;
-+
-     return;
- 
- err_release_cdat:
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 70474a097f..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,7 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/APIC",
+-"tests/data/acpi/riscv64/virt/DSDT",
+-"tests/data/acpi/riscv64/virt/FACP",
+-"tests/data/acpi/riscv64/virt/MCFG",
+-"tests/data/acpi/riscv64/virt/RHCT",
+-"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/data/acpi/riscv64/virt/APIC b/tests/data/acpi/riscv64/virt/APIC
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..66a25dfd2d6ea2b607c024722b2eab95873a01e9 100644
+GIT binary patch
+literal 116
+zcmZ<^@N_O=U|?X|;^gn_5v<@85#X$#prF9Wz`y`vgJ>9#P+??1=7Rt_Us?qr5)aeJ
+KkN{%wz_<X^jtBt&
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..6a33f5647ddd6de3a0f000f718b58f6fff44f0fd 100644
+GIT binary patch
+literal 3576
+zcmZwK&u`mg7zgmjiJLf%lR7`zq;1+{Fo^@2^d_OS7etfS?V2fRL!7NhLGq-k6C-Gp
+zF^~pAOg%8DxNJpSxD?U90wICKi5oX25JxWj18_5X{3G*svn#pr+xPjt@8_-EzP4;@
+z{9leJakslKckM>^&7o{G8V!Yr_%nYu<zH_(cGsDl?5a`-p*g!fE7y_3o)BV#H0OHH
+zBF!0e#)X&k%hk&YaaHtq_Ih%%xpN?Q{Gd0s2iJuVEz%r&+|jd|BV|X?967QJ1wH?H
+zhRaQ}N<{Z*a<b8r;S@%;ydi{W&ZcnH?$R@bWDwo-3T0aE4}!@DmF-z254NmV{K3fN
+zA-_zKqUheJnq%2kv6U#4bhG@#{o{u_Uky$l{rK%q*S=SZD@w7N$Q{1>-r@Aht-D9>
+ze|U7~@ID!|wMmncj(TGhPPe}|+808sKOJ=D42L$oFMnuWGzNPSO@FO0f*0wzh(;tL
+z5kz!(7Ol7lJrS27A{ohOMmshm8JDpY$xx#iuf%4kaT&u%##}UGJvL)5F5_k-BNfef
+zH8vv^mvJ1)NJld^Vl&cl84n^ET9DCG`?Ke1xHlA1?96VC;m9uJ^{jUnHoX4+osDhf
+zlw*%<W#UH#cL_u(8bn=+iSpZKQP+4@!QBE;e6vKS^+HUR--cPiU4vOk%z7~<%Ws=y
+z^}im<Uhn{OR!3~|n)IyTil1hC`zmQpx4So6M|(Uf)b-ksB=zWs8YHMe79G(?bej(8
+zh=@bH$7nbjm--**4~khe>$=3h8}dIZef~33G`L+)@bZKg$-WS6D&|zfbrs^8=In~A
+zT2##YKlAF^PcOMr1bq`;WovfDm0{O}Unzph1bLO=C`qp}oI%p747(=%%4SfR^ee+r
+zRIf6ef$CL;T~)s_oV@B+hNH}Za}Jzy=$!K_!%<S;Oo20n&J;S+;7o%vjm|VWHE?R+
+z)X=G+GXu^HI5X(Xpi>8@4o)4NIy$r9%z`tE&MZ0&a2nt=&}pDE2hJQgbLh;WGY`%@
+zIP>VtqjMgd^WdCE=R7)1aGKyW(P^Ty0L}t93+ODMvk1;2IE&~kqO%0f5;#lfETOXu
+z&N4X5=q#gi0h|lqTtMdnIv2sY2+l=xE~2vn&I&jy=&Yc#3eGAxtLUtva|xVF;9NrI
+z5;~W`xeU%_bS|TF1)MA3TtVjwI&0vpfwP9r8ah|OxeCrzbgrUv4V-J>Ttnv?I_u!9
+zgR_p#dgv@0j_h{m!XP5y?^brx`n@l5l;9>Jmru&W3Xu`M5^TAy`&sa=u=TJ)ioqLB
+z?{K~Dlq6E<^yNs6ckrIlbzT0)0EfTV)a>iSA!%|v>Qi|q<Lui~J)M%Y4w~n?>9e<a
+zCqEhd+5Wd)+xq6<Ugzi6e!q1()m3R7v`(kGCar_^F<)>Fe`s^mCw$WDd_FfHpWRkI
+z<v_1@^L+8~S=i5SHu;Cg+?m@irr+iLb{?d8F)d$lEPJ4yU-D=3+s3bd+v^_>9##Gs
+zEd3$}=b5v2=%SER6h6`9WT1|=?a1~=daq3U;?mZ|bL%5`QC!!39TtaQZM==v|D}}K
+A9{>OV
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/riscv64/virt/FACP b/tests/data/acpi/riscv64/virt/FACP
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..a5276b65ea8ce46cc9b40d96d98f0669c9089ed4 100644
+GIT binary patch
+literal 276
+zcmZ>BbPf<<WME(ucJg=j2v%^42yj+VP*7lGU|;~TK{R!N0J?Fk=mG-;0$qJWL3RTG
+D;^qed
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/riscv64/virt/MCFG b/tests/data/acpi/riscv64/virt/MCFG
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..37eb923a9320f5573c0c2cdb90bd98409cc7eb6f 100644
+GIT binary patch
+literal 60
+tcmeZuc5}C3U|?Y6aq@Te2v%^42yj+VP*7lGU|;~TK{OIDfU^ICXaEdF2LS*8
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4f231735abad925435c3cd052e6641b1b4187278 100644
+GIT binary patch
+literal 332
+zcmXBQu}TCn5C-5sDu-BDTQ1g?$6<ZfTp=iGVK+>&SuVKAE}7g4Q~4C)^I7^5Cy7(c
+z_YX|<Kks+14+b#T+sEDhrQ5ze?Yge(41k)ebw0non->7?Tl$5;5Aw2EhsZ<kNQ2v~
+zZN*OUpZOoHIF1vy5QfGm?aO8H^-d*Mr0&5d=L2atgj8lewvWRcNn<>Yq`X;YA!Uve
+zDUVqk>2Qc4kvb-IJ*j0<Ye}t;z84a4ZZ5ex9aHhyrw<Y-3y<9Nt|wWz_asY53y&nr
+fY-54J6%4S#>I|1P;dHuz!Fg+;c5!QfI|KXypVnys
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4da9daf65f71a13ac2b488d4e9728f194b569a43 100644
+GIT binary patch
+literal 80
+zcmWFza1IJ!U|?X{>E!S15v<@85#X$#prF9Wz`y`vgJ>{NU;r@%Kx_d9E(Qh$c8~z`
+M|NsC0LsftQ0Q@}*0RR91
+
+literal 0
+HcmV?d00001
+
 -- 
 MST
 
