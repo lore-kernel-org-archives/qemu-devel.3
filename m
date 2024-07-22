@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00049C3DA59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156E7C3DA7E
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVvZv-0005L4-Aj; Mon, 22 Jul 2024 12:07:59 -0400
+	id 1sVvZk-0004pU-Sm; Mon, 22 Jul 2024 12:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVvZq-00055J-7H
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:54 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sVvZZ-0004hi-U4
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:38 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVvZo-0007fe-Hh
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:53 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-36887ca3da2so1874392f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:07:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sVvZY-0007eH-07
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:37 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1fd66cddd07so19100695ad.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721664469; x=1722269269; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9OXBMV4qUioh74t9F5ySrsmXcQ3/BZ3r66GlJck4oz4=;
- b=YrWD88QoRVS359JEH3k6CVsgZVP1+EUlYHYbFfv46q8dos/oHe02uiY6t7lUc/pW4I
- rjBYTAsCm45CUssQ97GQpnAtgPjndTCSicGLZCqmfjXwGYRwPmzFlcyg94UB7fcUixEB
- Mh4xRLBXQZAY88z+IY/3M2AqnycHQOBEtYW3ZQ2sFPlFQIkmdYkSBm3SXwp/s0vxJzG0
- nTbm7eZCwMrVkpr+g+8k+zwIz+2OWfUb1XhserRwPEKeTTj04wv62vSV/Rwux6kliDJ0
- hN/NHJ1jibom3kBQHdVNeBUDXLZ/BaJgrwyqereDN/xa2tstJPKeREhWOrWtPwiVHyk0
- qKuA==
+ d=linaro.org; s=google; t=1721664453; x=1722269253; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Pcell0MRaFDFSI4iiBTc3IYNF1B/5BVQzfL7iLBoEns=;
+ b=BfOmtheKYokTvSpqyisaCna6zq5wYW4zeZiwNcjz6VYBBST4pCyAF5LAbrbEQ615yi
+ ddqGicJ82Rml3WETrK/2E7ZMKs4mj25IVGdOPx1Pc+ng31wIRJypJ90e9rbC7I6DA2By
+ qIobCT4HCA24BSV5dq3r/Qzh9bajclPIOcWte/bbsB5wKZmftgnysJemJd+Nx4ZI53bY
+ e5DK6565Fdhy8P0XBtuC/HTQFIetcEVOrkrSjz/o8XGzn0y2J6Q1iCx91ZHuorfaXG4y
+ 54pn38M8PyVvuJ2zvTX06L35dgGcJNXFlgqh7sZqH/u45IuhjG+0zYhg23cZEdybJt3q
+ PXMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721664469; x=1722269269;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9OXBMV4qUioh74t9F5ySrsmXcQ3/BZ3r66GlJck4oz4=;
- b=qJ7fWz7EAiVKpNAMV52EHFIGfpbDI8957NKFWHkCXpyFJNOYmU5Al8Twn6M224pNQ2
- gzwdyKlm+xgSiYHJcmjf8F6zbRm9RPXqnrm87qa8/6KZLBqLIq1gE5jvVuiel38YzUbW
- jwN+WxQ51bFh09c+nvRmbRjP46h5pK8i0dCCL9fcxTcJCerBtoJR1+3V+RdYtYqi2ahn
- BBJsPg+0U1uKWWtWpBwCkbnxb3iOz8HOsWMpNxkKqWRBpVBtfS1eX00/YD8lpto82Gba
- BCavKRMYvO3S0U0/Kyp8Ih7G/RkXVJG8Pc+7wt2nSoc9DjfrtTckaBu6Gi6dJH29QbF0
- dWeQ==
-X-Gm-Message-State: AOJu0Yxr6wcbqzeIHqup2bzK4aKiWKpGRYCyDWmjoro++6V+rH4w414B
- QIXMiJQ94sPTfc1CcosyhIvDSgHZ8i1u3BCVpDfm+wn+HTduQUSbj7tl71/5qZzAtJUicvqi/mo
- A
-X-Google-Smtp-Source: AGHT+IEEQOaEyC3ZGAb4KHeZ8onREs/k5/cfmjlsYZOkpswDb0x9vz5R37amm7ALKpaOtZ57CUFwGw==
-X-Received: by 2002:a5d:4e45:0:b0:367:991f:4377 with SMTP id
- ffacd0b85a97d-369dee62a5cmr205724f8f.58.1721664468689; 
- Mon, 22 Jul 2024 09:07:48 -0700 (PDT)
-Received: from localhost.localdomain
- (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr. [176.184.20.254])
+ d=1e100.net; s=20230601; t=1721664453; x=1722269253;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pcell0MRaFDFSI4iiBTc3IYNF1B/5BVQzfL7iLBoEns=;
+ b=R5XgyuSxlKdpY1XZ7QRy9ra+hYJU7wwnS/ywDfxAR5ufxSAssM0sGCAyQzBG/82dqt
+ plYkdPYqaX5SpJQCSZN8OzyqAOHcbS9JOACBTST6BfExfMnOdz1bSnsB4wGzzEa/nomI
+ 3DakXOHRrohOoEYLpycvg1vpXlGW4ilXhpagIIsfbjm5C98gS85iFTy4cupbdnCPtgGc
+ hSPscdPsI4wtuhxFXP1TfGfTgVlc0bux49/MfOurYn4vjI2QQ/eE1e/MMGVpReZczqkd
+ R4pHNqoFZX+ckkxHlZgdkmTJdbbBA+a/aDYFzctt4fa2lgyz3CSlS6I7dY5uOmJ+9wVn
+ 3wjA==
+X-Gm-Message-State: AOJu0YwlH1LP4tKqPPYQ7J7CjyzT7YFiNLVoa5Y2xQ/3vverbaTDz8uZ
+ llbAzmoKAgY45BVWEHceBz1xEIDcfmBJft8RbeUwPr532pPSQwWeusxofCepsPPEEMzQleDyr12
+ X
+X-Google-Smtp-Source: AGHT+IGvZpdQsZM3JQdLa9m0azY8LdW1CcylmlytsamuBEHh1TrAg1kEJEHiBZiEs6h9E/t7idVN8A==
+X-Received: by 2002:a17:902:e84a:b0:1fc:6acd:1ecf with SMTP id
+ d9443c01a7336-1fdb5fae0f2mr2001145ad.65.1721664453120; 
+ Mon, 22 Jul 2024 09:07:33 -0700 (PDT)
+Received: from amd.. ([2804:7f0:b402:9243:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ebd50sm8868499f8f.93.2024.07.22.09.07.47
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 22 Jul 2024 09:07:48 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/7] util/fifo8: Rework fifo8_pop_buf()
-Date: Mon, 22 Jul 2024 18:07:38 +0200
-Message-ID: <20240722160745.67904-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d9443c01a7336-1fd6f2ac8eesm56533165ad.118.2024.07.22.09.07.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jul 2024 09:07:32 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+Cc: peter.maydell@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH 3/4] tests/guest-debug: Support passing arguments to the GDB
+ test script
+Date: Mon, 22 Jul 2024 16:07:08 +0000
+Message-Id: <20240722160709.1677430-4-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240722160709.1677430-1-gustavo.romero@linaro.org>
+References: <20240722160709.1677430-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,34 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename current fifo8_pop_buf() as fifo8_pop_constbuf()
-and expose ESP's fifo8_pop_buf() which takes care of
-wrapped FIFO buffer.
+This commit adds a new option to run-test.py, --test-args, which can
+be used to pass arguments to the GDB test script specified by the --test
+option. The arguments passed are in the key=value form, and multiple
+pairs can be passed, separated by a space. For example:
 
-Supersedes: <20240719151628.46253-1-philmd@linaro.org>
-  util/fifo8: Introduce fifo8_change_capacity()
+run-test.py [...] --test <GDB_TEST_SCRIPT> --test-args v0="string" v1=10
 
-Philippe Mathieu-Daudé (7):
-  chardev/char-fe: Document returned value on error
-  util/fifo8: Fix style
-  util/fifo8: Use fifo8_reset() in fifo8_create()
-  util/fifo8: Rename fifo8_peek_buf() -> fifo8_peek_constbuf()
-  util/fifo8: Rename fifo8_pop_buf() -> fifo8_pop_constbuf()
-  util/fifo8: Expose fifo8_pop_buf()
-  util/fifo8: Introduce fifo8_discard()
+The 'v0' and 'v1' variables will then be available in the GDB test
+script, like this:
 
- include/chardev/char-fe.h |  3 +++
- include/qemu/fifo8.h      | 50 ++++++++++++++++++++++++---------------
- chardev/msmouse.c         |  2 +-
- hw/char/goldfish_tty.c    |  4 ++--
- hw/net/allwinner_emac.c   |  2 +-
- hw/scsi/esp.c             | 38 ++++-------------------------
- ui/console-vc.c           |  2 +-
- ui/gtk.c                  |  2 +-
- util/fifo8.c              | 48 +++++++++++++++++++++++++++++++------
- 9 files changed, 85 insertions(+), 66 deletions(-)
+print(v0)
+print(v1)
 
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+---
+ tests/guest-debug/run-test.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index 368ff8a890..63b55fb8bd 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -27,6 +27,7 @@ def get_args():
+     parser.add_argument("--binary", help="Binary to debug",
+                         required=True)
+     parser.add_argument("--test", help="GDB test script")
++    parser.add_argument("--test-args", help="Arguments to GDB test script")
+     parser.add_argument("--gdb", help="The gdb binary to use",
+                         default=None)
+     parser.add_argument("--gdb-args", help="Additional gdb arguments")
+@@ -91,6 +92,9 @@ def log(output, msg):
+     gdb_cmd += " -ex 'target remote %s'" % (socket_name)
+     # finally the test script itself
+     if args.test:
++        if args.test_args:
++            test_args = args.test_args.replace(" ",";")
++            gdb_cmd += f" -ex 'py {test_args}'"
+         gdb_cmd += " -x %s" % (args.test)
+ 
+ 
 -- 
-2.41.0
+2.34.1
 
 
