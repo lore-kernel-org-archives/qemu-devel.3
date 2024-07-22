@@ -4,83 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 843B8C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 08:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4BBC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 08:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVo6U-0008OM-Ed; Mon, 22 Jul 2024 04:09:07 -0400
+	id 1sVoLO-0007Si-WC; Mon, 22 Jul 2024 04:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVo6Q-0008MR-Mz
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:09:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVo6O-0002B6-4g
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:09:01 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-427b9dcbb09so29702015e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 01:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721635738; x=1722240538; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GuhGhQfW+nG+132ytSxy9RpTW+oDEVjviPWjVECwFhM=;
- b=Z91Wx9YOkS0cg1rWYDyPACw95r+1yYlZkCWKlr5lmK2/hC5jlaDGqe6DZKKXrDw39E
- 5SMxagdtHth5T9oB11s0ntzpDi9D9C7xqFDhfvjVdZdYH3OQE/auvRkQquYu2Eq0c7YI
- uc/rkmXZ5GGL34SKOE38dsxa5VrV2bBMbvf1HqstghWdF1R+5VYvcyYTAGy37ijKBLfB
- VRc50gGmNYUs/0XoKO2xVc4dkCCIelaZJ7RLJr++GyUkXoCOxLjjEsJDhtjeCo8dTFLJ
- TbULNPQP9BRUD5ch4wnc6nU4N06B3u0n8rxirjmxJjqnpXhbmnzKJnykiOqJtqut95Px
- +VRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721635738; x=1722240538;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GuhGhQfW+nG+132ytSxy9RpTW+oDEVjviPWjVECwFhM=;
- b=nFK5AI5X9rZp9Dxvpb94CLEuVBnBALagxda1S9rPEzbNdvN4qrs9/kqhaZ19k2z2re
- VTSEcNvHjnQDv/CuOw5BbjV6mIHcwSFKGZBqf4/6bbHZZ0sJiPwv8720ygaRfKY9Kbg1
- phJWqreR3D9qFh2hkOCcfz6j6d+BGZ8VTqkC1wdXVB5wf/SzcSaUEm+hPXUv1d/ZhXx8
- F/iT8S3TvwU4iqAHAqSL9pK8Y0CJNi3sVtWDTerixqaTO2GKYVf/FfV7sGMkY0v6KwKm
- Dhbgir5pfI2kAAP7Wh9dFiaFSHByn4V4yhCEXfA4N08oZjc3sgTAL2N/R6DYEKrtSa1Q
- Qbgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBcAvX25CmCeehJJQ3RA27kvfL0/f77kYpy+eVUTLClXPMeymkfbnHbX6mKpxkcEQqCQrR5VoSqriepGJwpGKoceXlw4M=
-X-Gm-Message-State: AOJu0Yzv2lC+1yK8AVNeMV7Ygt7jh16Spia0UxUffEYLWl8LKYAKCDNa
- xKxMoUDLG73IScBG03e8K3c9b3ilMNinZbqcQwP5umk4g43SZFUA2WdnM/ppb1g=
-X-Google-Smtp-Source: AGHT+IFISfe7Glmxr7X5ayHDuHzcYnKBZCYOjH/6XVdDUkj2wovbUHVeWIkoddXiTHyXbY7zPENxhw==
-X-Received: by 2002:a5d:5352:0:b0:368:71bc:2b0c with SMTP id
- ffacd0b85a97d-369bae02398mr3704156f8f.10.1721635738020; 
- Mon, 22 Jul 2024 01:08:58 -0700 (PDT)
-Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
- [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ecf92sm7759570f8f.101.2024.07.22.01.08.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 01:08:57 -0700 (PDT)
-Message-ID: <8ab5cfc4-3360-4b2e-9679-8566aea9b890@linaro.org>
-Date: Mon, 22 Jul 2024 10:08:55 +0200
+ (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVoLL-0007Rg-TO
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:24:28 -0400
+Received: from kuriko.dram.page ([65.108.252.55])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <uwu@dram.page>) id 1sVoLJ-0005QR-EX
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 04:24:27 -0400
+Message-ID: <902417dd-2aa7-409a-b62d-7950e34c444a@dram.page>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dram.page; s=mail;
+ t=1721636661; bh=NltPddG/kQPh+rP/tIkQxxIgi4gg9JyT9BNmfW2mGas=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Of9pY9raIaGMK0t40LLMzTg+DyOgZIVTjFAJf+jtpK+CvrtshK9W5wkdpeCLYeUwa
+ RO/KhTqLhq2uFCdkia65ViBBD0fmI/FisLw9VwnqoVEMKZprLiWRNFXw3JjQ9LLuxT
+ hTyvbr/mBN4x+TnySPZGOLllKlPPBawQyipYwR+Y=
+Date: Mon, 22 Jul 2024 16:24:02 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i2c/mpc_i2c.c: Fix mmio region size
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-References: <20240721225506.B32704E6039@zero.eik.bme.hu>
+Subject: Re: [PATCH 1/2] util/getauxval: Ensure setting errno if not found
+To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Richard Henderson <rth@twiddle.net>, Laurent Vivier <laurent@vivier.eu>
+References: <20240721090817.120888-1-uwu@dram.page>
+ <20240721090817.120888-2-uwu@dram.page>
+ <OSZPR01MB6453807448D47F3EFA427C878DA82@OSZPR01MB6453.jpnprd01.prod.outlook.com>
 Content-Language: en-US
-Cc: Andrew Randrianasulu <randrianasulu@gmail.com>,
- Amit Singh Tomar <amit.tomar@freescale.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240721225506.B32704E6039@zero.eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+From: Vivian Wang <uwu@dram.page>
+Autocrypt: addr=uwu@dram.page; keydata=
+ xjMEYCKGnBYJKwYBBAHaRw8BAQdAwFaJhAn7kfIDolkfKS0kHaovYtSrWdgPBvpf2Y4mMGXN
+ G1ZpdmlhbiBXYW5nIDx1d3VAZHJhbS5wYWdlPsKTBBMWCgA7FiEE5m9lW8MCF4SCBOqVI586
+ hxRi/RAFAmOj7bgCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQI586hxRi/RAa
+ TwD+Msk9COeIk1OHprnzVSJpN1DQEbzy1v6ruze7EbFaHQAA/25EiTgJt74CEeh89LrZMdSg
+ CuEMuuE0ZqXKt0Sda8kOzjgEYCKGzhIKKwYBBAGXVQEFAQEHQHWGHrayqlh2o4CIqwO7gcHb
+ S2GCIg600hlKxwUkv/k/AwEIB8J4BBgWCAAgAhsMFiEE5m9lW8MCF4SCBOqVI586hxRi/RAF
+ AmHRSJUACgkQI586hxRi/RDqdQEAieTWLWwmklDHF5sa9pLZ8fEXbxK9kGd4s6LEGWVj8ZAB
+ AP++50uuPLCX+UbU15QVsfHdrXZQ+HAc+EgrnasvqQwM
+In-Reply-To: <OSZPR01MB6453807448D47F3EFA427C878DA82@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=65.108.252.55; envelope-from=uwu@dram.page;
+ helo=kuriko.dram.page
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,38 +71,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Amit & Andrew
-
-On 22/7/24 00:55, BALATON Zoltan wrote:
-> The last register of this device is at offset 0x14 occupying 8 bits so
-> to cover it the mmio region needs to be 0x15 bytes long. Also correct
-> the name of the field storing this register value to match the
-> register name.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/i2c/mpc_i2c.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-
-
-> @@ -329,7 +329,7 @@ static void mpc_i2c_realize(DeviceState *dev, Error **errp)
->       MPCI2CState  *i2c = MPC_I2C(dev);
->       sysbus_init_irq(SYS_BUS_DEVICE(dev), &i2c->irq);
->       memory_region_init_io(&i2c->iomem, OBJECT(i2c), &i2c_ops, i2c,
-> -                          "mpc-i2c", 0x14);
-> +                          "mpc-i2c", 0x15);
-
-Personally I'm not a big fan of non-pow2 regions, so I'd have picked
-0x20 or 0x100 where the 2nd i2c controller starts. Amit, what do you
-think?
-
-Anyhow,
-
-Fixes: 7abb479c7a ("PPC: E500: Add FSL I2C controller")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &i2c->iomem);
->       i2c->bus = i2c_init_bus(dev, "i2c");
->   }
+On 7/22/24 08:18, Xingtao Yao (Fujitsu) wrote:
+>
+>> -----Original Message-----
+>> From: qemu-devel-bounces+yaoxt.fnst=fujitsu.com@nongnu.org
+>> <qemu-devel-bounces+yaoxt.fnst=fujitsu.com@nongnu.org> On Behalf Of Vivian
+>> Wang
+>> Sent: Sunday, July 21, 2024 5:08 PM
+>> To: qemu-devel@nongnu.org
+>> Cc: Vivian Wang <uwu@dram.page>; Richard Henderson <rth@twiddle.net>;
+>> Laurent Vivier <laurent@vivier.eu>
+>> Subject: [PATCH 1/2] util/getauxval: Ensure setting errno if not found
+>>
+>> Sometimes zero is a valid value for getauxval (e.g. AT_EXECFD). Make
+>> sure that we can distinguish between a valid zero value and a not found
+>> entry by setting errno.
+>>
+>> Ignore getauxval from sys/auxv.h on glibc < 2.19 because it does not set
+>> errno.
+>>
+>> Signed-off-by: Vivian Wang <uwu@dram.page>
+>> ---
+>>  util/getauxval.c | 14 ++++++++++++--
+>>  1 file changed, 12 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/util/getauxval.c b/util/getauxval.c
+>> index b124107d61..f1008bdc59 100644
+>> --- a/util/getauxval.c
+>> +++ b/util/getauxval.c
+>> @@ -24,7 +24,13 @@
+>>
+>>  #include "qemu/osdep.h"
+>>
+>> -#ifdef CONFIG_GETAUXVAL
+>> +/* If glibc < 2.19, getauxval can't be used because it does not set errno if
+>> +   entry is not found. */
+>> +#if defined(CONFIG_GETAUXVAL) && \
+>> +    (!defined(__GLIBC__) \
+>> +        || __GLIBC__ > 2 \
+>> +        || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 19))
+> you can use GLIB_CHECK_VERSION(2, 19, 0) instead
+That wouldn't work. I'm testing for glibc, not glib.
+>> +
+>>  /* Don't inline this in qemu/osdep.h, because pulling in <sys/auxv.h> for
+>>     the system declaration of getauxval pulls in the system <elf.h>, which
+>>     conflicts with qemu's version.  */
+>> @@ -95,6 +101,7 @@ unsigned long qemu_getauxval(unsigned long type)
+>>          }
+>>      }
+>>
+>> +    errno = ENOENT;
+>>      return 0;
+>>  }
+>>
+>> @@ -104,7 +111,9 @@ unsigned long qemu_getauxval(unsigned long type)
+>>  unsigned long qemu_getauxval(unsigned long type)
+>>  {
+>>      unsigned long aux = 0;
+>> -    elf_aux_info(type, &aux, sizeof(aux));
+>> +    int ret = elf_aux_info(type, &aux, sizeof(aux));
+>> +    if (ret != 0)
+>> +        errno = ret;
+>>      return aux;
+>>  }
+>>
+>> @@ -112,6 +121,7 @@ unsigned long qemu_getauxval(unsigned long type)
+>>
+>>  unsigned long qemu_getauxval(unsigned long type)
+>>  {
+>> +    errno = ENOSYS;
+>>      return 0;
+>>  }
+>>
+>> --
+>> 2.45.1
+>>
 
 
