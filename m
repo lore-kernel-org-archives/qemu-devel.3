@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E7CC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91218C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVro0-0000VA-9l; Mon, 22 Jul 2024 08:06:16 -0400
+	id 1sVrny-0000LJ-QC; Mon, 22 Jul 2024 08:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrnr-0008HA-Jy
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sVrnj-0007hU-Np
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrno-0007w3-9w
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:06 -0400
+ id 1sVrng-0007v6-8i
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649963;
+ s=mimecast20190719; t=1721649955;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tClUS2s/M0YyRZbl85m11Cv3d2+aU9p8IaBUrdhpDqA=;
- b=d00ZvyTHrbRAsl1PRiWDFtlTiP8EBSV+Ko+9L7UsldeWOtbiPA3TGbXmKKm56VILRquItP
- g7Em09edJgWTTOroqIbtOfrFP2UB9IvnvPxNnHBFx4A0sMYkAtyNVcydHt66nMbfDPMfMk
- 1ZTZr5XB261B1P/CSt6mcdBN/tyoOJ8=
+ bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
+ b=b3cj+rgx9wUcA2ef32h38nK0ZUkTjzLBEtn0F0f3ZkxiYWs3ihKUy1luTmyvRVVOlsf3+h
+ 4012hsOsi7faB7Vn6mjFB3M4pBYMquvUBxrNmyaNnwxIP0GOLBnzjDh2kAdTq5X+fdVizK
+ RIEzh/ui7sfQiO7Fk7WjSMM/S3HJXu4=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-SSc8k4EJMQO6zM22Gl4XwQ-1; Mon, 22 Jul 2024 08:06:01 -0400
-X-MC-Unique: SSc8k4EJMQO6zM22Gl4XwQ-1
+ us-mta-138-o99HMqfeMZm0XJrUdc83Mw-1; Mon, 22 Jul 2024 08:05:54 -0400
+X-MC-Unique: o99HMqfeMZm0XJrUdc83Mw-1
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a77df0dc240so347886766b.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:06:01 -0700 (PDT)
+ a640c23a62f3a-a77e024eaa4so357554666b.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:05:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721649960; x=1722254760;
+ d=1e100.net; s=20230601; t=1721649952; x=1722254752;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tClUS2s/M0YyRZbl85m11Cv3d2+aU9p8IaBUrdhpDqA=;
- b=wWd65Z4bNSK/oNyxjCKSSwb0m3vih1bGCXEaw/+PSmVVswEbDsNWM9uiLy+ohgDVZ7
- blk4YW3E1of1KXm8L5dXAN/vY4BWjlX/CojzBR/bFl+tpFcyMur/2uzimYiLQ+Z+Xf/f
- FTDKFG3OR80ctzljdVHw94VMb/pls7VGl2FSSZPHK4g8PemiZ7jf7fRwTPoSeQyHKpD3
- BXXCbzOYz5QmAgCVpeay/YhJrufCXWcA47Gc8nBQufeND9LJRsrjvjiQhbhUrN2nZ7Vo
- s8EX+BQSpwXENa11W+PB186cfOUHnA8OXWpkKwN5Tqt2wl9XNIDfB/CYdpPSzZj7L5h7
- 6okg==
-X-Gm-Message-State: AOJu0Yxxkq+GBiCatsxxGvxfsWkxpvRV+lg0ioFtVmSKj0T6ZS/Ry7bb
- iQqaySRD3NvqxLkYQvXUgC/DZN4GZGCSxSCFxGEvEGuUREUbADRlnpxuIlH1mtwofpZLrVIL8VH
- BLFHOd5lYBkKAXip/7NXAhhexr7s2t5C6Y+ZEHFGMg3c7gvB6oo8Nbhxc7BC1016lJbp03ORVGB
- zYbwiXoqVsvNVRjVtPEG7w4z58Zl5vwfEj5+QK
-X-Received: by 2002:a17:907:944b:b0:a77:d0a0:ea74 with SMTP id
- a640c23a62f3a-a7a4bfa4f77mr438361466b.3.1721649960154; 
- Mon, 22 Jul 2024 05:06:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoi/zm0pSQtqSuvPv3mMzgrC2a/0wb5qN0c+vcSDZdCPIPcvGvxGg0SVbFUVc0slbqB3WUxQ==
-X-Received: by 2002:a17:907:944b:b0:a77:d0a0:ea74 with SMTP id
- a640c23a62f3a-a7a4bfa4f77mr438359566b.3.1721649959811; 
- Mon, 22 Jul 2024 05:05:59 -0700 (PDT)
+ bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
+ b=fGde4rO/9Xin9j8fx7JM0RJHfU/JjgTY6+6c4qf0bDWJ6Vf2GMhce24Fods5LBo+CL
+ GsloUl9ArH05dFoMb3iRes+yZ8UMVsGvpexf9mEq2HYICqMeIHuue2/XpRyzQllC9a0k
+ aqBubtEgdXVpXMxp+sZjEW4HtG1wIzr+pMvyCM1dF0+3vwRKCewjtAv9kfwMxvsAxxQW
+ hWcgrsBYpe/yBumZE9saBKha1K65qM7x27cgSFsmoIoJCmD7YDk7tLuxFdP+FfT/GDr+
+ 9qwSzOp6OL/xpIGmMA9Jyw6/DUgHUSnh/xXiPLDZyCJJA7KIlllrA96KR0u2Jz4CSQ5e
+ ipKA==
+X-Gm-Message-State: AOJu0YzRKgEjzxB9QKJaAUr45LUSftNUgX34aarxOlJSP0c3UFw6Dxlt
+ 4v4iwYyu298kdh4jB5p/fFaGdnqYvm1A8QIgw1WzZMjq4APSP4l3WXzQYVKtj2MYLdZR4KnmiTG
+ MbSc6Lh21bmnChPXtHVdbZW8s1xlKlgvKoDUCn6ETDb2poP6F9QaZ14CoLRZLwtt020/TvLH6YQ
+ 14fjxJyPv7CVpQKtj1Nff59uOaq95pM51Y3Sq6
+X-Received: by 2002:a17:907:2d94:b0:a72:84c9:cedc with SMTP id
+ a640c23a62f3a-a7a01115d81mr1346834366b.8.1721649952491; 
+ Mon, 22 Jul 2024 05:05:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVepP+xxO5pGcHlPO+wKcXAjNJ4FPyvbSy3siSoBPH/qkVtasWjrzo0eqA/o1biA4AQ2t1vQ==
+X-Received: by 2002:a17:907:2d94:b0:a72:84c9:cedc with SMTP id
+ a640c23a62f3a-a7a01115d81mr1346833166b.8.1721649952009; 
+ Mon, 22 Jul 2024 05:05:52 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c92308dsm419969166b.170.2024.07.22.05.05.58
+ a640c23a62f3a-a7a3c91e2e8sm415014066b.156.2024.07.22.05.05.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 05:05:59 -0700 (PDT)
+ Mon, 22 Jul 2024 05:05:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 7/7] hpet: avoid timer storms on periodic timers
-Date: Mon, 22 Jul 2024 14:05:41 +0200
-Message-ID: <20240722120541.70790-8-pbonzini@redhat.com>
+Subject: [PATCH 4/7] hpet: place read-only bits directly in "new_val"
+Date: Mon, 22 Jul 2024 14:05:38 +0200
+Message-ID: <20240722120541.70790-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240722120541.70790-1-pbonzini@redhat.com>
 References: <20240722120541.70790-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,53 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the period is set to a value that is too low, there could be no
-time left to run the rest of QEMU.  Do not trigger interrupts faster
-than 1 MHz.
+The variable "val" is used for two different purposes.  As an intermediate
+value when writing configuration registers, and to store the cleared bits
+when writing ISR.
+
+Use "new_val" for the former, and rename the variable so that it is clearer
+for the latter case.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/timer/hpet.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ hw/timer/hpet.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 1654b7cb8b8..471950adef1 100644
+index 380e272fbeb..831e5a95b09 100644
 --- a/hw/timer/hpet.c
 +++ b/hw/timer/hpet.c
-@@ -59,6 +59,7 @@ typedef struct HPETTimer {  /* timers */
-     uint8_t wrap_flag;      /* timer pop will indicate wrap for one-shot 32-bit
-                              * mode. Next pop will be actual timer expiration.
-                              */
-+    uint64_t last;          /* last value armed, to avoid timer storms */
- } HPETTimer;
- 
- struct HPETState {
-@@ -266,6 +267,7 @@ static int hpet_post_load(void *opaque, int version_id)
-     for (i = 0; i < s->num_timers; i++) {
-         HPETTimer *t = &s->timer[i];
-         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
-+        t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
-     }
-     /* Recalculate the offset between the main counter and guest time */
-     if (!s->hpet_offset_saved) {
-@@ -364,8 +366,15 @@ static const VMStateDescription vmstate_hpet = {
- 
- static void hpet_arm(HPETTimer *t, uint64_t tick)
+@@ -510,7 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
  {
--    /* FIXME: Clamp period to reasonable min value? */
--    timer_mod(t->qemu_timer, hpet_get_ns(t->state, tick));
-+    uint64_t ns = hpet_get_ns(t->state, tick);
-+
-+    /* Clamp period to reasonable min value (1 us) */
-+    if (timer_is_periodic(t) && ns - t->last < 1000) {
-+        ns = t->last + 1000;
-+    }
-+
-+    t->last = ns;
-+    timer_mod(t->qemu_timer, ns);
- }
+     int i;
+     HPETState *s = opaque;
+-    uint64_t old_val, new_val, val;
++    uint64_t old_val, new_val, cleared;
  
- /*
+     trace_hpet_ram_write(addr, value);
+     old_val = hpet_ram_read(opaque, addr, 4);
+@@ -536,13 +536,12 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+                  */
+                 update_irq(timer, 0);
+             }
+-            val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
+-            timer->config = (timer->config & 0xffffffff00000000ULL) | val;
++            new_val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
++            timer->config = (timer->config & 0xffffffff00000000ULL) | new_val;
+             if (activating_bit(old_val, new_val, HPET_TN_ENABLE)
+                 && (s->isr & (1 << timer_id))) {
+                 update_irq(timer, 1);
+             }
+-
+             if (new_val & HPET_TN_32BIT) {
+                 timer->cmp = (uint32_t)timer->cmp;
+                 timer->period = (uint32_t)timer->period;
+@@ -623,8 +622,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+         case HPET_ID:
+             return;
+         case HPET_CFG:
+-            val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
+-            s->config = (s->config & 0xffffffff00000000ULL) | val;
++            new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
++            s->config = (s->config & 0xffffffff00000000ULL) | new_val;
+             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
+                 /* Enable main counter and interrupt generation. */
+                 s->hpet_offset =
+@@ -658,9 +657,9 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+             trace_hpet_invalid_hpet_cfg(4);
+             break;
+         case HPET_STATUS:
+-            val = new_val & s->isr;
++            cleared = new_val & s->isr;
+             for (i = 0; i < s->num_timers; i++) {
+-                if (val & (1 << i)) {
++                if (cleared & (1 << i)) {
+                     update_irq(&s->timer[i], 0);
+                 }
+             }
 -- 
 2.45.2
 
