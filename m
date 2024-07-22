@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32EA8C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B62C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVqqE-00062R-5L; Mon, 22 Jul 2024 07:04:30 -0400
+	id 1sVqqF-00067l-Ev; Mon, 22 Jul 2024 07:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq7-0005am-D5
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:23 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1sVqqD-00060S-JW
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:29 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sVqq5-0002Rw-Py
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:23 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a77baa87743so434604166b.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:21 -0700 (PDT)
+ id 1sVqqB-0002V2-S8
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:04:29 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-52ed9b802ceso3601634e87.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721646260; x=1722251060; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721646266; x=1722251066; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PrRW6kDAk1zqxe6ChLfrm5m8ZkEkLVOG9+rzr/DdABE=;
- b=dOJU5A2GMkruF/LwkIgq6HbbZWgHRVbeKZdQTqVSV7hI4k94cyOZo8M3D2qE2ja5pX
- 4pmeWZlygJCu4p9aiTWPNxf5kjmWlKNAbbp72/gJf//yVTQluhi32jKzrt/U3yrVhWah
- GUSizjGVPEfFR/wA9IYh9hLaIWOwSITuE4rh+qVnoVQzQe59BCdmCsT4aR0xPOHMbGRc
- WTMtXoeKJR9g0urDBZl2tisNIItJ8vJleaPi11iNYcPTPAsZult1xHNfsBBd7p1g3VZp
- 8hdZUy4J0FE3OhirN9jIzPkbVW8GL58IQgXuZrctSsZPY7UrS98UMIAPybq9KHVqU13L
- zA1A==
+ bh=7AtSpKBg1PmrqtB9T+k18UXmGojBdHF5u/W8SCXR64Q=;
+ b=AP79L0ukUD9rMYNL1/5In/Tpiucwh15srzsL+o9SWCqsL7rgyGsmV3U5XxU+ASC+z3
+ I04R8pJ1Q6b8oigypEfjDbrJiYFtT7AL2YuMMgUZ8EaaXqVdjmYIAoFVB8B8M7b0za/E
+ J4sn77ANVB2fNCqKy4/NdbjEq6B75IVLE64K/2sOHeqgFNScrMpX0F5FCPnTVkF8qv//
+ X76Yq/qsY5FfJxBaUQ0voCRPNu3/6G4O25n2FU4HXAplhjBkpQRYku7G4Wds3TAr6VG8
+ AHAJ5c/DnCWGt3VQK3Q7aMF85LunfcO+4GzGvUbdhHxePlPDB8GbttPzKHH1eJnNCiwz
+ G3Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721646260; x=1722251060;
+ d=1e100.net; s=20230601; t=1721646266; x=1722251066;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PrRW6kDAk1zqxe6ChLfrm5m8ZkEkLVOG9+rzr/DdABE=;
- b=ggEsxEkiv7hi2lCaO+9dM6AfIzZkqW5TMoG/80yEMXIqPDnExwvS6FDP/VEr6ZJUkq
- 7lb8MqMsP227LfQ8boYujzyUXPh/iN1/5IJItlDmoo8YXN0lXd31kDzLDVNH0A5Vm9t5
- ZTIDCP8BaHr/8lVekByK6xLdElRZemq9espf8yjsiQEmKQBbqJm5Jc5ZngWX0ft7vW3Y
- Naan7sQJynLPyGX4KVvEXvE9f0HjWZUQTP6s5JupcZUqS9xN3PGLLG6n5SO2NeXU46GY
- PQiLQB/6j95iAAEgbJEN5YylH3IscM3Sh851d+ELEgdObT3E1M3IsKjQiig1hkgyPkvu
- lDXQ==
-X-Gm-Message-State: AOJu0Yxa91HqcoCOe4+n/NKZZ4E7/WWr0ivR/iW9miZDWP0Rn3npMjnZ
- v4nDjqTBw5qBu4X9d2YbuJ59Rbjr/8wfZrz1CnxZh6pRxssyF/5LZDoJFNw2Ivw=
-X-Google-Smtp-Source: AGHT+IEBcB7EGPcrXxM/6n9K+VMNhtFndgjcQj5F1VcgUSrUDhxKzNtbXp0mTfQm9Godb7jMqwYm3g==
-X-Received: by 2002:a17:907:7f27:b0:a77:d7f1:42eb with SMTP id
- a640c23a62f3a-a7a4c051b22mr506743066b.23.1721646260101; 
- Mon, 22 Jul 2024 04:04:20 -0700 (PDT)
+ bh=7AtSpKBg1PmrqtB9T+k18UXmGojBdHF5u/W8SCXR64Q=;
+ b=L8qgU5AeT7Db7hYKXEVEZ5TAx3HGjDCNCAsP8Yz5TWYCsB3T8xigm4TXwHAwXr6ydk
+ T1xFu9m3kQ51EEtqbjm4lmec6r1arbXgja/mlQlmvAl3ikkos4g0oYDe2PiOMYWu/BYt
+ xKJh79+57sfDpUco/pjBLw5T7wL5YPQvEmwptET0REyFzhT+9GP85Gl7sZT2pRmh6aB0
+ 7LAn0n2U6LLjkmKGVvsSqW3Cm+++iB+JorqgfsG0otH32KomGg9u3V2bXmrJ6oUyx6+l
+ AZojN626B3eK9683d8mVecwTaQODQtCMORYg8G4RO8jnpzzaTGv3XqTh1AzUQ18Uqy3T
+ r4yA==
+X-Gm-Message-State: AOJu0YwtHbTIIm/pHOP4RABu5i8o/HVybnYEKsO0iBbf4C4BRPsALb+D
+ Aqzr8FA9xXJlRDCuvHlAIZuFUCwIwd9K9FywU5aviq7LK/cSoAWhjJXwBLXL9iOcy0JzqlPdKSy
+ g
+X-Google-Smtp-Source: AGHT+IHe1ySeXT19FsNX7wE6bb/v8ISDKLD9zdrD5E19IUELryty/6F+fHt8ZqjC47Qkc6RvkViYKQ==
+X-Received: by 2002:a05:6512:1322:b0:52c:e0e1:9ae3 with SMTP id
+ 2adb3069b0e04-52efb851b4amr4187041e87.57.1721646265801; 
+ Mon, 22 Jul 2024 04:04:25 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c785d7fsm408521466b.29.2024.07.22.04.04.16
+ a640c23a62f3a-a7a3c9225fdsm415887666b.173.2024.07.22.04.04.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:04:17 -0700 (PDT)
+ Mon, 22 Jul 2024 04:04:22 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5823A5FA17;
- Mon, 22 Jul 2024 12:04:14 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1D2416211C;
+ Mon, 22 Jul 2024 12:04:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 08/16] semihosting: Include missing 'gdbstub/syscalls.h' header
-Date: Mon, 22 Jul 2024 12:04:05 +0100
-Message-Id: <20240722110413.118418-9-alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 16/16] tests/tcg/aarch64: Fix test-mte.py
+Date: Mon, 22 Jul 2024 12:04:13 +0100
+Message-Id: <20240722110413.118418-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240722110413.118418-1-alex.bennee@linaro.org>
 References: <20240722110413.118418-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,33 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-"semihosting/syscalls.h" requires definitions from
-"gdbstub/syscalls.h", include it in order to avoid:
+Python 3.12 warns:
 
-  include/semihosting/syscalls.h:23:38: error: unknown type name 'gdb_syscall_complete_cb'
-  void semihost_sys_open(CPUState *cs, gdb_syscall_complete_cb complete,
-                                       ^
+  TEST    gdbstub MTE support on aarch64
+/home/rth/qemu/src/tests/tcg/aarch64/gdbstub/test-mte.py:21: SyntaxWarning: invalid escape sequence '\('
+  PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\)."
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240717105723.58965-2-philmd@linaro.org>
+Double up the \ to pass one through to the pattern.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240719004143.1319260-1-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240718094523.1198645-9-alex.bennee@linaro.org>
 
-diff --git a/include/semihosting/syscalls.h b/include/semihosting/syscalls.h
-index 3a5ec229eb..b5937c619a 100644
---- a/include/semihosting/syscalls.h
-+++ b/include/semihosting/syscalls.h
-@@ -9,6 +9,8 @@
- #ifndef SEMIHOSTING_SYSCALLS_H
- #define SEMIHOSTING_SYSCALLS_H
+diff --git a/tests/tcg/aarch64/gdbstub/test-mte.py b/tests/tcg/aarch64/gdbstub/test-mte.py
+index 2db0663c1a..66f9c25f8a 100644
+--- a/tests/tcg/aarch64/gdbstub/test-mte.py
++++ b/tests/tcg/aarch64/gdbstub/test-mte.py
+@@ -18,7 +18,7 @@
+ from test_gdbstub import main, report
  
-+#include "gdbstub/syscalls.h"
-+
- /*
-  * Argument loading from the guest is performed by the caller;
-  * results are returned via the 'complete' callback.
+ 
+-PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \(0x[0-9a-f]+\)."
++PATTERN_0 = "Memory tags for address 0x[0-9a-f]+ match \\(0x[0-9a-f]+\\)."
+ PATTERN_1 = ".*(0x[0-9a-f]+)"
+ 
+ 
 -- 
 2.39.2
 
