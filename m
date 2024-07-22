@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E687CC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFAC7C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVnCU-0007GI-7v; Mon, 22 Jul 2024 03:11:14 -0400
+	id 1sVnCq-0000YQ-Fy; Mon, 22 Jul 2024 03:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnBn-000439-Lh
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:10:33 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnCa-0008Bi-3p
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:11:23 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnBl-0008Dp-3Q
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:10:30 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4265b7514fcso17977485e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 00:10:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnCY-0008GG-7v
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:11:19 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-367ab76d5e1so1269032f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 00:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721632226; x=1722237026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721632275; x=1722237075; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3C5LdFld23QJZTnpm+OZsFcLc+0U0BjbOZ/gtJ3vbyI=;
- b=ajM7sJwrsn/R2szZhABN96yMJQT4dozC89ah2guJDKcV9sF+3ZxHgqrHvmuVMHmNcA
- V9dZ+fIfGTCl27HMAnRIadcCUBGEvelgUZWNMFDF+TTnSo2rBMhRfHf+CYlz7gol6Y/O
- YTn3nKz5t7G1yeNwPgkK71Aw3HyhUTY3OWu6Fv05kW2qQ75bZxzKW4ULB23fYpPDETz6
- mhUgSO4WURQN1R7V7G63i/E0V3SmJaB0ZxlWguS6j2I4fmbrQHvAFN0wYfTxy25sqDcB
- 8fQ8H/w2Tf0ct2FgWTtxTocmbZWtfIVuhD5qyMHHUEHb9UNjJNaw//g5k7gaIJsdz76n
- 5tbg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4pM0o6kt3X/A+rKgMU2W1MvQ1iLLhV1KY19HqwZ2AMA=;
+ b=kS0HjX7A4RPe+sq/WeebVxhUR6G9bPImZ7sgFj5lEtDYvchY3EQJhBTgxN7Q/iQLyn
+ XOUjCFGF/iSPrY5fjZYGmfFjNTdSd7vldxzpLtUa9Bq8quw0XqAeITbE6f6G8MDp2PAi
+ 8TLyfPSPb+VI8n1t0S2QREwLBhuSzeaNRqtzucjJYbMzy8SUvvEOr+MsgpQBSxXmwg9P
+ u/kJoFqqlsRcCepVJaggke8+o/UGaPnzD21b74JQTS83xwfdMrLezEPidt2U3d4Zg+aX
+ 6xOzAhGI8roBfrD4/oCGpkvRu5nuuN9tWDHRI20RfrdQ0evDbXSyyfZS6k/qoc+WcdrV
+ 3dyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721632226; x=1722237026;
+ d=1e100.net; s=20230601; t=1721632275; x=1722237075;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3C5LdFld23QJZTnpm+OZsFcLc+0U0BjbOZ/gtJ3vbyI=;
- b=hCTjp1YSyVzeuu/iKZfJLInUCSrKDi7k4uTxnPiAqprk1tgb8mPmdHwL74BGa7l7Mg
- nTZWYHqjB5aQRL2Q99is6fLLr/v75tT1diG3DLHpEp/9cLYWaQSHDuVjW1sFmyzOrv86
- LpM3B6hOsUqjg4CB5PgqoiWwPTV4kJjOpdvRXfdd4QeoMdOVA+tUTPkwvJFtTvcCCq4a
- 0ekPe9a87mCGeU1GUBbggwZWmIWn2XVA1yPrCkJ5ZgyDwqOrp4df96B+SHciy2oWJIbN
- LXz3nXgVHCOrMHl7CeCgvHXWr4hQ636FXocUAoTEySnvNPL4HzsAaBngpD7oTpXBAXwW
- O4iQ==
+ bh=4pM0o6kt3X/A+rKgMU2W1MvQ1iLLhV1KY19HqwZ2AMA=;
+ b=cQHMDlz1MLLqdmNaCMIQHwKw78OHcVaZTN0yPXk+nSTSHHCFeBgs+qXFwkPKwbZeD1
+ IXYGvNHRzzQqdzuay0ULEmcWYqgxTTLsENOGpOZUePBmTjihkce0fPe3e44H908ViQ02
+ kePR37TaVn4id/vT91TrU4lezja4GqgFC+gYtyl1Mh/UsG0RS6ZreuIshaxiyqbNQYAy
+ Kf8cOR7lC927NPT7JWrR6IYOxxjajH/AT5fBk6pLu7frYlNP++yk+je7uRMGwcXRbQyq
+ QcolHc8eNRUAeXxLp5zY9+WeqL8RhrZf1PYa/xmuzwRN2q3y8tLAauyPpHYN1NlZYncL
+ s28g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1BmmUzSgWAs7JOyolfAF86+Ob6UnjYGMUv029cR/IHMJ4ekK/snrV6NGBn1CctsKMZ/T20OfJXNFxzuaqFu+yQI44KYk=
-X-Gm-Message-State: AOJu0YxScMAo6V9icoX8yaJEyD8urfCU6S1+TpEkdx8ZgKlF6ve6zurI
- XeFHYrDt2l2RGpr+kibJu+W7xddag+KW+k2frSNGkr8bqXImnztLj6XJ3zAVj+0=
-X-Google-Smtp-Source: AGHT+IEgj7g3sDit3zTGeQZnXWaP9laQtl44tCzcp4hcbSVCGBllyqdrXMTtiitnFz2PWZ246ec1aA==
-X-Received: by 2002:a05:600c:1c15:b0:426:5b19:d2b3 with SMTP id
- 5b1f17b1804b1-427d2ac0092mr75557395e9.14.1721632226390; 
- Mon, 22 Jul 2024 00:10:26 -0700 (PDT)
+ AJvYcCWugMtFfNpmqkIT1zsle0tSxnAKGutiaoRtHDnIyTi6m4hzEGgs+Vuen1uVoeg0OGVGaRok1OrjelrirH7V1D9oSAIH04U=
+X-Gm-Message-State: AOJu0Yzo4W9m9A4rramcZWzYFcyoWmRgqmBiGo2ZgdAtTGXBl+Q5MrcO
+ Ghh+oE6XHmjcV2UdLNdjCJKV11GXfZ3rdppNxqh7dH0fuZpyGpmMrLwimoWs0Jk=
+X-Google-Smtp-Source: AGHT+IGNXpt+y+Z8dxA9cCL8KBOIfEIZxZEfdC7qkyYvKeN3GxAWLXGlHOuV5wqpf0pWp7CQJC/5rQ==
+X-Received: by 2002:a5d:4a06:0:b0:368:5e34:4b4b with SMTP id
+ ffacd0b85a97d-369bbbb3025mr3481664f8f.6.1721632275088; 
+ Mon, 22 Jul 2024 00:11:15 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d292077dsm144297855e9.0.2024.07.22.00.10.24
+ ffacd0b85a97d-368786949f5sm7671393f8f.57.2024.07.22.00.11.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 00:10:25 -0700 (PDT)
-Message-ID: <40355ff1-9025-4501-b552-f3e046e2533c@linaro.org>
-Date: Mon, 22 Jul 2024 09:10:23 +0200
+ Mon, 22 Jul 2024 00:11:14 -0700 (PDT)
+Message-ID: <2e942fe2-88c7-495d-b3af-00963e7e2b61@linaro.org>
+Date: Mon, 22 Jul 2024 09:11:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] qtest/fuzz: make range overlap check more readable
+Subject: Re: [PATCH 06/13] aspeed_smc: make range overlap check more readable
 To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>,
- Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Darren Kenny <darren.kenny@oracle.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>
+ Alistair Francis <alistair@alistair23.me>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Cc: qemu-arm@nongnu.org
 References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
- <20240722040742.11513-8-yaoxt.fnst@fujitsu.com>
+ <20240722040742.11513-7-yaoxt.fnst@fujitsu.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722040742.11513-8-yaoxt.fnst@fujitsu.com>
+In-Reply-To: <20240722040742.11513-7-yaoxt.fnst@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,10 +107,9 @@ On 22/7/24 06:07, Yao Xingtao via wrote:
 > 
 > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 > ---
->   tests/qtest/fuzz/generic_fuzz.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   hw/ssi/aspeed_smc.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
