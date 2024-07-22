@@ -4,115 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C03C3DA59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3B3C3DA5D
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 09:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVpBk-0007Dg-GB; Mon, 22 Jul 2024 05:18:36 -0400
+	id 1sVpBj-0007AG-Re; Mon, 22 Jul 2024 05:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s.ziming@hotmail.com>)
- id 1sVpBi-00077W-VQ
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 05:18:35 -0400
-Received: from mail-me3aus01olkn20800.outbound.protection.outlook.com
- ([2a01:111:f403:2818::800]
- helo=AUS01-ME3-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sVpBh-000751-Mz; Mon, 22 Jul 2024 05:18:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <s.ziming@hotmail.com>)
- id 1sVpBh-00070L-7R
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 05:18:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b0BYgIg+grnt4LexwAoctjvHx9y4OYRwVby3G3qnAwxhCxqswIVGpe2z/OMQOXEA3xy8vHCUWFOB9ZwqhoUCTx0eJDGJzzT3JVH7dDwuLIjvkRzCcEIy9d6DFISbA+sWBpcZJdtCHOusdQjLVN+sfcIqOfu26LkCIxloMNEubBqq9ZFc29EfQZHlfJi5jp+0Lr69iY8Hf3NJUv3pHR1m0rZ05wgiyGwTvPQxXdenZ4BcBTX+Z5G+TbuPVFXBYDRU13tdW34AIba5U5jmLq9zwq2fHNPXT/t9TJU+mPiHbzbjPV/aK9zbwlxYgQuz2dNtYjXVfC0RmxkqLCQhRQluXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oIMDSheINXwKc9jqQHtzcYJ1Mqg42IQOcxVZpaKscAI=;
- b=hqsZsmgQwYRsaJk2PQVgapkvktK52Lr70Q2AEmSlrPsQNswvntUG7gCCPFvVU6W5LQiGU2BUp3gVY79vwuqJEiB2MCk5FHeaRoYa51XBorpesVOCq3L4ZDyWOq8YYP6hqXCTh64s+JZLEiAnWktZh6Ehe7AD6D755rYJY7m9ODrtaYq02bEblqP0l6AGMyNJoaHOWC8FwGPDWOPPYZtIVtu/C5WvGCr76ti8KpXlYEgqHk7yHfOJqhEiizqUM/TeIeojsZQFxR/FBKUPJ3R+/zZ2/39C6htStcYN8oL3ZQYctaAHSoWdq0VHYvqeSgdq35/iLTyJxivvQ5sJJLZ2qw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oIMDSheINXwKc9jqQHtzcYJ1Mqg42IQOcxVZpaKscAI=;
- b=m4dk8RSaCzBuvjVVvpeUVKzsBOtU49G66htV4JHtthxS/jSC4FChA1684T+BhMDx1SQ1KyZLI62/HqkikDBZktpaO2WwWpjHWIC/Zuws1a3NH04yk6iMQdAvI2Rhj3bZylsXgjPP0vOG7Bv4CRqRHk+H5EQb7+StazyQ/9jUteI2JrlHPw+TpajK0J5eVZTOsgz91ECXRESnrlKmX8ql3JZXQKEyc2boxRcYFkSn+KTqD6JD1z0dTs9dFxaToFfacuO7hi4Wc0gLctG/0JpWJGYra/kGRLOOH96VntyMh4QfkP+b20xmz2y94Y+l1/s1JdTGYHcBY0oLshnw/3M7nA==
-Received: from ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:10e::12)
- by ME3P282MB0708.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:8a::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.20; Mon, 22 Jul
- 2024 09:18:27 +0000
-Received: from ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM
- ([fe80::e85:7caf:eaf4:c0fa]) by ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM
- ([fe80::e85:7caf:eaf4:c0fa%4]) with mapi id 15.20.7784.017; Mon, 22 Jul 2024
- 09:18:27 +0000
-From: songziming <s.ziming@hotmail.com>
-To: qemu-devel@nongnu.org
-Cc: songziming <s.ziming@hotmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] chardev/char-win-stdio.c: restore old console mode
-Date: Mon, 22 Jul 2024 16:54:48 +0800
-Message-ID: <ME3P282MB2548B9C3523209F6045785D18CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.34.1.windows.1
-In-Reply-To: <CAJ+F1CJXWRSktYPucOvO5F-zC73VMaUFfxUxksxMTLKugYNB8A@mail.gmail.com>
-References: <CAJ+F1CJXWRSktYPucOvO5F-zC73VMaUFfxUxksxMTLKugYNB8A@mail.gmail.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN: [gpm5MfbB9iQVKnbzSFn0AZQsatm5OJI7]
-X-ClientProxiedBy: SI2P153CA0035.APCP153.PROD.OUTLOOK.COM
- (2603:1096:4:190::14) To ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:10e::12)
-X-Microsoft-Original-Message-ID: <20240722085448.2025-1-s.ziming@hotmail.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sVpBe-000707-TR; Mon, 22 Jul 2024 05:18:33 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46M8R2cQ019478;
+ Mon, 22 Jul 2024 09:12:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:subject:from:to:cc:references:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ fqsMJDbDFkoL65U9ankgIPX0mPAkJ0b1dw4bEw9b/TA=; b=ezKyR93BrWLyXhGc
+ lB4dl5rQK3/6gIQEqKmQRn6LR0W0RUq9/d5EPsschtQueaNvePplQT8UbctnjRw8
+ OKI1XqFqR6Fpn8oWZnNXVXMRgHnH33lLC5jBB2oyXEY7GAc2P7Uyg72owNvlUW+W
+ I7HprEXvNv3CnzeDzanWM9ktXjVg6SuE6P+DjPN2lSgu3saYrRzbxbDk2FleCLvk
+ Okb+x69wr35l6E0idZf+SDxT+KmEPTRVjO/zFBIiqeAjMvq2C3MHm0iEe63wmj1L
+ G3reaCv0guf9W7srwQJY87orpmgdBfGQdHbCP2tIdj9+ySlwRL7JQY+cZkojcY3X
+ PPdN9Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gr8vtpb4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:12:41 +0000 (GMT)
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46M9CfBV023510;
+ Mon, 22 Jul 2024 09:12:41 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40gr8vtpb3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:12:41 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46M8j1AB007907; Mon, 22 Jul 2024 09:12:40 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxn9mgd5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jul 2024 09:12:40 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46M9CYIK27525794
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jul 2024 09:12:36 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 522F12004E;
+ Mon, 22 Jul 2024 09:12:34 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8EF112005A;
+ Mon, 22 Jul 2024 09:12:32 +0000 (GMT)
+Received: from [9.109.199.72] (unknown [9.109.199.72])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jul 2024 09:12:32 +0000 (GMT)
+Message-ID: <c3c2ab69-777f-4bb2-8e39-974fca3ab8ad@linux.ibm.com>
+Date: Mon, 22 Jul 2024 14:42:30 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/5] Power11 support for QEMU [PSeries]
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+References: <20240606121657.254308-1-adityag@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20240606121657.254308-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: IIQuInh3hve37p4yYkbIqi4iWzK-Hx2k
+X-Proofpoint-ORIG-GUID: pP3T6rrSm15bu60JBI2f-Q-IAn1yayVK
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ME3P282MB2548:EE_|ME3P282MB0708:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5c78851-c7e3-4395-13e2-08dcaa2f3e4f
-X-MS-Exchange-SLBlob-MailProps: WaIXnCbdHrORrPiYp+O3K2PHowtbVet0a+BB+iU3UuwNBkHBRykGT0cHQ3KoDOc8CqPuGbtXmq4HZlIGlOxofyFTXMYPG9LcAjifsWZSHGAqdITEWqwgK+ZJaN9SmuZNfyjwnZwUNUE8Kr10yln3MjNw+NroWZoD7LvWJDWln+Q2CKcBDOLUe4MYJxL6g7RQdvnX87n+NwrT0JToXP4r5PFd29KCb0IwxggH97WQauz5W/q6bE2TqN/hdFJygt1pNYDnpPbS6fyk0Fe6Ay72tJ0t6qKpbfxNnzPci6i0vJKfkHMWEOdXKmvVX8PPxBjPXLHMBx1Q7hnHysmrWBFGQfVpwnsMIggTXlf6XpJHgtNZ9+x+lUOO98L0CDGfJB+EatirZctqiBbikjqq2+S7HIsYIHXhATGU+XtyJlps4TobeUWiBliCsNj6d6vmeTAqBvERx+5B6LgZMA7RBMSg2mRZ83cmg8lPQTcnlbfstxbEXRD91SnEREkpuGC4VvzQXFxKcqWQX182VkTxCfFKyPgj5eQe3um95cB4Dtnq9UdlQRA9MDW7cGOtd9VgXuu1weFCXZ7IRTpUYGtAmGkdul11snqgE0euXKYOcI61kaU3UzIcpuzce4S7VfO7XJ/tO63tp8kmOm08/wQcyqdX3TACdzVEgdmb0QmOpyqCjz7P5eewTMR0ei1NIHYmRIWXBmzx4f1i225ivZ0iAjJxLY3vRx8WoliT0JD0JBrEVSvPrcSFFX+zqE9qQZ2saxuRCtedtRg9HfM=
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|461199028|19110799003|8060799006|440099028|3412199025|1710799026;
-X-Microsoft-Antispam-Message-Info: 7raXGqZbXijNxnxdH3o6XwAJzyB0cf0BXNdWg7KgLGOaiX8tZo3Ku/2M1Q7LAXO4uFMlAjQyZyTLDa8jhvq6iJ9cpIWtifH1/fmKDKvG9fXGYt9av356dNDX15xS5RK0JaGO2zdwlXpwXKnEvPTYBOya/KuYTuejRajIzF3gf1XbAMtPtdSYlWl0cczUQl0BfrdPI/X/dljwh/4wyycGuZmE83osruS84MkO/cIRVfpyj3ENLgo7jCiu7VT2dWgZHFMA0sXHpBWnX85R0F7vVcjnsqt8fr1+TinUAd9DYnbfLbFZnGtrhafoCq9RrgKXrtThowpyYF2qGaNPLDrkBZidXT/q5pCkaoL3El73FYUyRWUgFQf5p4rQ4buuu+5qZMCxXuK2XgjgfODAU9BoxUcM/TDjRWPiXvUWgrfRR666DCwtiADxxYW6nMUY8MYBYOuGLVUZtD/WGrILqcanCSjqE7HsoRBAdrVlVly63X+fNB1g7Q937i8NA9ExrFWmx3grB4ZDw9OO4F1v+4K+T1gDBkbaZ6TWO4RCArlkMel5udK7/qCFoMX5BrQ8erTK0gLAu7iDhDfrt9FBopp8oGPQrJOwW9FQy/6Vz8FfKIohfKQG3yoiiVxHXwYUb7wU2FzYkHRGOIJdz/5884S1eRAufMxI97KcfnshNKG2frs=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?krPRILkRfjctbAyulST3rUghwcmWxyFdYP+NaZlG9Z8sdEG0u8rleoaUDtsn?=
- =?us-ascii?Q?0ZdJ8JszD3+gzGmeA5zwIKw5rK9iCmyeA5/oUcG1iHt+3bYdlQl0fpeFO37Y?=
- =?us-ascii?Q?mNtdfIjqxpPhy0ryLWuIHMAXwbpNDBFkd7MCtxbD/V+2p+51XApxcv4Ze8cO?=
- =?us-ascii?Q?3PH/1cqExOvGSvuHO3hhR/sgCTzx0vgPyfWDUI9oA+0ApDoJwjESR1xKZCNV?=
- =?us-ascii?Q?4GuUQBFnuWOXF9Gq0s7wXzhY9xMVDlRiMY/IvF5vDza3Ogrj7BbOTH4gfx7e?=
- =?us-ascii?Q?r0vQOMuTjSEv1BLalmD0/dalhjuuvy+8/bR4u3adYVlhIVczTgMs+1DfjGKe?=
- =?us-ascii?Q?MeC5+tAe7lxJeomOeweNcr8eP55/w3wRBatwzyQYc+h8NUM/tcNVFS1pwLJI?=
- =?us-ascii?Q?sONOFfMpK5IKIdQvbW1W0s4Oc8vnXG0WBdMzgOPy4JARckyOtJ1nLV1iOYpK?=
- =?us-ascii?Q?42gQErc7NwcBxm2ZoUThWiHhL+sLUKYyAsDWMiM2gAfsut26bt/ipNo51pcP?=
- =?us-ascii?Q?PvEloCGUesnJrCqvjvAP/bVHdFjp5+K3VPFpx6DZp/cY8SbyvuPi5oJPad8L?=
- =?us-ascii?Q?gyI2g6UtV7n6JnvvrWE/qk0YatvrJWyrgH6FL7H1Nedkr9spCqPvcNJhsxX4?=
- =?us-ascii?Q?FSrhxvulR5zFk/5dXz78/dZCTtd1bwbSPwjmOSuS42Y/pNCeoYjngYLUEqgi?=
- =?us-ascii?Q?+XsmN9U3NrQBuxfC9UObGf+2vQnQNaarASsXdVWInTCfoQsjkWedcRf7LKbo?=
- =?us-ascii?Q?8/5Oey3hbT2IEVYii0d1ouOp2pqX5HvczWR22fU3GH2QeyYFNF5rtqg6sbBn?=
- =?us-ascii?Q?VLPtQDtkZZv2OgpBf7YcpNzYcxdPLcvZe0VgOaPIqb4eI7mBPaq8uDEj8Lim?=
- =?us-ascii?Q?4RnKtmTJeWWQUP90mVGNm+iiwIxuqRP2ftaBBeZiJsAeyohLEQZ6C+23+7lF?=
- =?us-ascii?Q?Ybv7OETnAoPpVAIlgFna+MVBe8rFU9GE2vCOcbGLdWllDRbgz3jM5bUperaR?=
- =?us-ascii?Q?aKYNCUgaDdGyP5Hty2JoxQZoC1AIHwx+o2ZXPkjqjopTn365P1ul0/9mDw9x?=
- =?us-ascii?Q?NnyRIzQ49e3wUOZ8tismYLsfbdPNHuZGalcViGT/1610hCwmF+KJYBfbKbu6?=
- =?us-ascii?Q?z57GpbhRzKrcR48lQ9CbJMrWtaDuvI/dANrvSHvs6DViFfoLC6NsBlytBl7p?=
- =?us-ascii?Q?QcdRDmeHJ1RWcl6yuqOuEsjwdRCkPSwFB5NIU0NB8RMtm9ha9r/w3MIo4PU?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-722bc.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5c78851-c7e3-4395-13e2-08dcaa2f3e4f
-X-MS-Exchange-CrossTenant-AuthSource: ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2024 09:18:26.9388 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME3P282MB0708
-Received-SPF: pass client-ip=2a01:111:f403:2818::800;
- envelope-from=s.ziming@hotmail.com;
- helo=AUS01-ME3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_05,2024-07-18_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ priorityscore=1501
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=999 phishscore=0
+ impostorscore=0 suspectscore=0 clxscore=1011 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2407220068
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,49 +119,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Any comments on this ?
 
-I've updated the patch.
+This series is containing only the pseries support for Power11, hence 
+independent of skiboot patches. powernv is on hold till skiboot changes 
+are released.
 
-Now it only reset mode if handle is valid.
 
-Signed-off-by: Ziming Song <s.ziming@hotmail.com>
+Thanks,
 
----
- chardev/char-win-stdio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Aditya Gupta
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index 1a18999..13325ca 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -33,6 +33,7 @@
- struct WinStdioChardev {
-     Chardev parent;
-     HANDLE  hStdIn;
-+    DWORD   dwOldMode;
-     HANDLE  hInputReadyEvent;
-     HANDLE  hInputDoneEvent;
-     HANDLE  hInputThread;
-@@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
-     }
- 
-     is_console = GetConsoleMode(stdio->hStdIn, &dwMode) != 0;
-+    stdio->dwOldMode = dwMode;
- 
-     if (is_console) {
-         if (qemu_add_wait_object(stdio->hStdIn,
-@@ -221,6 +223,9 @@ static void char_win_stdio_finalize(Object *obj)
- {
-     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
- 
-+    if (stdio->hStdIn != INVALID_HANDLE_VALUE) {
-+        SetConsoleMode(stdio->hStdIn, stdio->dwOldMode);
-+    }
-     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
-         CloseHandle(stdio->hInputReadyEvent);
-     }
--- 
-2.34.1.windows.1
 
+On 06/06/24 17:46, Aditya Gupta wrote:
+> Overview
+> ============
+>
+> Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
+>
+> This patch series is for pseries support for Power11.
+>
+> As Power11 core is same as Power10, hence much of the code has been reused from
+> Power10.
+>
+> Power11 was added in Linux in:
+>    commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
+>
+> Git Tree for Testing
+> ====================
+>
+> QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v5-pseries
+>
+> Has been tested with following cases:
+> * '-M pseries' / '-M pseries -cpu Power11'
+> * '-smp' option tested
+> * with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
+> * with/without device 'virtio-scsi-pci'
+> * with/without -kernel and -drive with qcow_file
+>
+> Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
+>
+> Changelog
+> =========
+> v5:
+>    + split patch series into pseries+powernv
+>    + patch #1: apply harsh's patch to reduce duplication
+>    + patch #2: simplified, by removing duplication
+>    + patch #3: update docs, according to harsh's suggestion
+>    + patch #4: no functional change, #define used for P9 & P10 pcr_supported
+>    + patch #5: no change
+>
+> v4:
+>    + patch #5: fix memory leak in pnv_chip_power10_quad_realize
+>    - no change in other patches
+>
+> v3:
+>    + patch #1: version power11 as power11_v2.0
+>    + patch #2: split target hw/pseries code into patch #2
+>    + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
+>    + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
+>    + patch #6-#11: no change
+>    - remove commit to make Power11 as default
+>
+> v2:
+>    + split powernv patch into homer,lpc,occ,psi,sbe
+>    + reduce code duplication by reusing power10 code
+>    + make power11 as default
+>    + rebase on qemu upstream/master
+>    + add more information in commit descriptions
+>    + update docs
+>    + update skiboot.lid
+>
+>
+> Aditya Gupta (4):
+>    target/ppc: Add Power11 DD2.0 processor
+>    ppc/pseries: Add Power11 cpu type
+>    target/ppc: Introduce 'PowerPCCPUClass::logical_pvr'
+>    target/ppc: Fix regression due to Power10 and Power11 having same PCR
+>
+> Harsh Prateek Bora (1):
+>    target/ppc: reduce code duplication across Power9/10 init code
+>
+>   docs/system/ppc/pseries.rst |  17 +++-
+>   hw/ppc/spapr_cpu_core.c     |   1 +
+>   target/ppc/compat.c         |  11 +++
+>   target/ppc/cpu-models.c     |   3 +
+>   target/ppc/cpu-models.h     |   3 +
+>   target/ppc/cpu.h            |   1 +
+>   target/ppc/cpu_init.c       | 183 +++++++++++++++---------------------
+>   target/ppc/cpu_init.h       |  78 +++++++++++++++
+>   8 files changed, 184 insertions(+), 113 deletions(-)
+>   create mode 100644 target/ppc/cpu_init.h
+>
 
