@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13225C3DA64
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E641C3DA59
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVtQz-0001JC-ML; Mon, 22 Jul 2024 09:50:37 -0400
+	id 1sVtRC-0001Yb-1z; Mon, 22 Jul 2024 09:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtQx-0001IW-PN
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtR7-0001XE-C1
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtQu-000695-WD
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sVtR4-0006E3-KR
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:50:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721656229;
+ s=mimecast20190719; t=1721656241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w6LC2WP6jEv4eCf3PzKgn/SGsMfxUCl4qUtK8eoxfEI=;
- b=dW94GvaiuZfVWKlp6v+gmLwArQ+dhREkFvbLNkTsWCrUVyqeYGSl6oojTKCTgim8zAv+kC
- rbvXtVP9JV91LvpDFLnk7ijBikYhgWzt+zBtcOGHAP0MQrVSrnnxkZ8TZRJ29dq6Ag/ycH
- 2q30/GcEkzFmUH/LFgY+lmwEWepPkvQ=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bwkAQvs4w9+D8x+XrZ/OEsVc1RQqttmeOws4RPDEAFg=;
+ b=OxO7H8JI+L4S2D+A14xrcCH+gKAEinMIAo8pAe7/GNbvY341mu5icz/eEsnZSgYQTp6+0I
+ XuRif0tp2aH9QOVV+0dVG8uNoa1PlS/zPzqfMFVvOWpy16qOIo4lVn1HKnWlnIuTukiszA
+ FWBmpsa5QZJxykDIvUgAOy1cf6mRaK8=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-VHkZJeMmPjC-5Thb7-_96Q-1; Mon, 22 Jul 2024 09:50:27 -0400
-X-MC-Unique: VHkZJeMmPjC-5Thb7-_96Q-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-66890dbb7b8so113664617b3.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 06:50:27 -0700 (PDT)
+ us-mta-635-ewguAvVhOQeqyJd_e8ndLg-1; Mon, 22 Jul 2024 09:50:39 -0400
+X-MC-Unique: ewguAvVhOQeqyJd_e8ndLg-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a164026621so602117985a.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 06:50:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721656226; x=1722261026;
+ d=1e100.net; s=20230601; t=1721656239; x=1722261039;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w6LC2WP6jEv4eCf3PzKgn/SGsMfxUCl4qUtK8eoxfEI=;
- b=eAuMp0eIKdIKZ5uzFs99SkUbqED19euQzIjOAfZcgirdKJZf70u3jYyJBZ0ZtiY1IV
- eTKIsbcwAsUaxYvV97SJTUQ3zIO/ncuQeiGWEYclAcWpNrZWYN9V7fKR0m+Qoo6plvSq
- 8fAhxbAmFJGi5CU9fTx4DSgsbJvCzyvuzntKQ+i251R9uFsResDrCO2Up7sRCoZk2WzE
- PCKj5p48wz1Zsx9wA3j5xRqVPZi+1im35sp4eLcYPQ+iM9CDsbiquL7IJrLvuIfxIPuC
- P5h8yIDjouulnmsB7E0rOw9dBm+ywKO8MiPdSOTPkbqHCur2qXaPmTLm/DCbWkARiENV
- TE/A==
+ bh=bwkAQvs4w9+D8x+XrZ/OEsVc1RQqttmeOws4RPDEAFg=;
+ b=K00PsK1Tag4aLc2B2ZY8N1jRA3NzG+oHpxdtdU/OsZ/8smAMpX53/AXO+43O2JfIk2
+ iiDmD74lNgCTK2PxMTWAuSyxNpMCU4hbSfw3CzMbZNesHaZYq+eJzLju/Grf1YpriCaY
+ YrbbB2WzP6rpuIzC6f7C9QLiz8Pu9mDksryZ3pjtGeJI+2PYfSUL7zS8AQomD/dMKB+4
+ lYLHHh46tglke70UZIwy3OR6G3FXv+Lcg27fW8TIv9VxWc6MhONl2B3WbncH7UbysdFx
+ S+XRJRQQssVN+Xa+F00A10LvHHXubVCgnWypIt7g3bUYSTf+jaAcQiUAZGJJCy02zqF3
+ L2ug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEZ6YYji8OjyXAZD8t4ZP5wECHWHR1LznuleV7VLsVl0ANMjfH2qmyTHBRkItcs7KKg77W7z0ZjQ0f0IZZXZJjBOMp1kQ=
-X-Gm-Message-State: AOJu0YzS1TmoKszPjny4Q6Mt1e9bKa2CTeFX21vSKHJtEVhVkjsFoRTl
- +jt0wxQEOSZIHjXMcjxm6ek/aEzdkfSa5rtk3gTDKHs8d42lY8ZvyTiPEJcE39S54f+WVvlI/vI
- AGyBuaMMHg83TOTZ7ORhv03AmnvEd9I4M+AryXEsp+J16o0tvqGXftbpQ4iKP
-X-Received: by 2002:a0d:d003:0:b0:66a:d93b:3047 with SMTP id
- 00721157ae682-66ad93b311bmr75599017b3.25.1721656226629; 
- Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEl0QPAqlTeXfvCvERXkFt2nl2qHAL7U/kUAqwqdkevpFdi4oRtIR5umD4BOnbJzKMu82YGww==
-X-Received: by 2002:a0d:d003:0:b0:66a:d93b:3047 with SMTP id
- 00721157ae682-66ad93b311bmr75598837b3.25.1721656226354; 
- Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
+ AJvYcCXjiFmSzBD7k8cPirZ08TEfN0x14aTFH8OPxgwMoZGdK+YAAZEK4bfWIGzNSYNhc0grgFeyKUv85mePvenfsHiyPvdbYPU=
+X-Gm-Message-State: AOJu0YzEAdviBygzH5istMi+09rTeqKpKvts1MhDdwOP/K2WhLvJZpll
+ m3fk2bGyVJVU+Z1STAuvmV6lRsCo+qvrhECRVU9IAEUu4PFqMcGVV9SSqr/UuNVOHIQxNFmNrfz
+ KfaTncu8m3MKCB33Thdo4zBWt0faMukurOIO+kWgSrnzDuejBNDOu
+X-Received: by 2002:a05:620a:f02:b0:79f:504:3db with SMTP id
+ af79cd13be357-7a1a13c5f29mr1115739685a.68.1721656239165; 
+ Mon, 22 Jul 2024 06:50:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2CRdkiJ+SnngRn6lzhPDKpR5VzhJUghbX6wrUB6SvsdztlzJLrBNVjadJgoJMb6qfHy2zDA==
+X-Received: by 2002:a05:620a:f02:b0:79f:504:3db with SMTP id
+ af79cd13be357-7a1a13c5f29mr1115736685a.68.1721656238803; 
+ Mon, 22 Jul 2024 06:50:38 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
  ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a19a49f268sm350205385a.87.2024.07.22.06.50.25
+ af79cd13be357-7a19905ecf7sm360068785a.98.2024.07.22.06.50.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 06:50:26 -0700 (PDT)
-Message-ID: <6f568dca-65d2-4536-9946-596710ba3de4@redhat.com>
-Date: Mon, 22 Jul 2024 15:50:23 +0200
+ Mon, 22 Jul 2024 06:50:38 -0700 (PDT)
+Message-ID: <2cadf05b-fad9-40e6-9e1f-0c28cae75c2f@redhat.com>
+Date: Mon, 22 Jul 2024 15:50:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Don't initialize HOST_IOMMU_DEVICE with mdev
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com,
- joao.m.martins@oracle.com, chao.p.peng@intel.com
-References: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH] hw/vfio/container: Fix SIGSEV on
+ vfio_container_instance_finalize()
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, zhenzhong.duan@intel.com,
+ alex.williamson@redhat.com
+Cc: yanghliu@redhat.com
+References: <20240719165011.1751831-1-eric.auger@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240722070713.1342711-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20240719165011.1751831-1-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -104,28 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/24 09:07, Zhenzhong Duan wrote:
-> This fixes a potential issue with mdev that fails to initialize HOST_IOMMU_DEVICE.
-> Reason is mdev isn't physical device and doesn't support IOMMU_GET_HW_INFO.
+On 7/19/24 18:50, Eric Auger wrote:
+> In vfio_connect_container's error path, the base container is
+> removed twice form the VFIOAddressSpace QLIST: first on the
+> listener_release_exit label and second, on free_container_exit
+> label, through object_unref(container), which calls
+> vfio_container_instance_finalize().
 > 
-> I thought ap/ccw are all mdev type and need a fix.
+> Let's remove the first instance.
 > 
-> This series depends on a patch from Joao which fixes the same for vfio-pci.
-> See https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg04612.html
+> Fixes: 938026053f4 ("vfio/container: Switch to QOM")
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>   hw/vfio/container.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> Not tested due to no ap/ccw environment. But build test pass.
-> 
-> Thanks
-> Zhenzhong
-> 
-> Zhenzhong Duan (2):
->    vfio/ap: Don't initialize HOST_IOMMU_DEVICE with mdev
->    vfio/ccw: Don't initialize HOST_IOMMU_DEVICE with mdev
-> 
->   hw/vfio/ap.c  | 3 +++
->   hw/vfio/ccw.c | 3 +++
->   2 files changed, 6 insertions(+)
-> 
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 425db1a14c..d8b7c533af 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -657,7 +657,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>       return true;
+>   listener_release_exit:
+>       QLIST_REMOVE(group, container_next);
+> -    QLIST_REMOVE(bcontainer, next);
+>       vfio_kvm_device_del_group(group);
+>       memory_listener_unregister(&bcontainer->listener);
+>       if (vioc->release) {
 
 
 Applied to vfio-next.
