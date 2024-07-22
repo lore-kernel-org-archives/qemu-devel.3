@@ -4,70 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D03BC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2E5C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn4A-0002yg-18; Mon, 22 Jul 2024 03:02:38 -0400
+	id 1sVnAz-0000XW-IK; Mon, 22 Jul 2024 03:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3r-0001P8-SD
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3l-0006V8-MT
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631720;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=22WbaUUG6tr8owoGK4eXd/MQaVjk6gSNcB7HRHhlDlM=;
- b=POmhXhI10ghHDmECHTFDPZRozurmBLZlg5gpwBcWzRXE5W228Bd/dm3dVab1Nb3ynaDNdW
- mqlFY2xEcX1BHws/XBCvmE6wORaP9ukVZGKD3a4mMdBtRDonQdu3m8YYJhKN2vRhSkF5FW
- J/mpf6KUkXo40mFAHVrXXdYEw7UfXd4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-CjASe0PjMpOKSt-ebuogTw-1; Mon,
- 22 Jul 2024 03:01:54 -0400
-X-MC-Unique: CjASe0PjMpOKSt-ebuogTw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9F021955D5A; Mon, 22 Jul 2024 07:01:45 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.224.252])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70EC41944B2C; Mon, 22 Jul 2024 07:01:44 +0000 (UTC)
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 08/25] qga: conditionalize schema for commands unsupported on
- Windows
-Date: Mon, 22 Jul 2024 10:01:05 +0300
-Message-ID: <20240722070122.27615-9-kkostiuk@redhat.com>
-In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
-References: <20240722070122.27615-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVnAx-0000RD-QW
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:09:39 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sVnAs-0007wP-D4
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:09:36 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-79f17d6be18so241493085a.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 00:09:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721632171; x=1722236971; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L/ALWNxQdZivRnUqyoCbNjh/amFjxJE1OY4FPKSYoe0=;
+ b=lvjGgNUn1FVoAWgkpmvEWlLLJVj63FkhP0pz0QaI063krguSSGdtDdFGUXS5sUH4pG
+ V9m33XaGYnzCkqJKzPcK0dcO0Cd6DEP5TbvuVj9+7/tYZxH69hYNDNyoUEqwA9EI/KxR
+ VlRkkgoL2VO8n/yORWBWArNwgDTf0nPXzJKSQnA1kz+4/gxC4uwZoI0M3HsT7fvsUSfp
+ QAqQnLQou2QNUMf9WguzSipO2NeyEKodsRkzybMrqoJgzCHpo01iJm0n3pZ70AM2eoXu
+ ZwpLVmfNUFq2yq2CZ3PbYgNS72WHukW8dyrk3z1nEbcvBpuF45d0KfzTtjuYii9aSjXC
+ lfBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721632171; x=1722236971;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L/ALWNxQdZivRnUqyoCbNjh/amFjxJE1OY4FPKSYoe0=;
+ b=bY9rSxJHSKf0dU6nFTPlQbcN8oqyQHJZy+BwR5+iHVL+Rp0xJ+waUiRZ0z0+Whg2dc
+ LOMdaDuki/sgLCBTHCUho1+nLzS4bTPrn6XkROsiLs5sMaZ6mX5/Q35RANb8KFlddXOP
+ toBBUsJaU3IReuSQ+jKSeK8GexHSU1R20H6HMDC90GTvczylvHXexGxt5om8bQjP8vx+
+ DDvo4LF73FjYFIfduWvfQhEx7WOtMaC2pZRPm3EOnbcSpH5zDPvrT0e3XRt6Y9b3M5dz
+ 7xLY2pc28AU4xQy1EWoUtEOtxMTzIW60AFhlgBnzZy7c0Q1LY23UpvzbN0hj+2CcHhdT
+ ZCKA==
+X-Gm-Message-State: AOJu0YwVj5W/7bdBLOATqzfZHIIvPc/GZaGK09iHxWXIw2apZTkBDz54
+ pLgZIqpM4YiJsggTCT+JnesIGONCKZ21TM2aYPAW3G0fXxzez/p9b34uU44mMpsKtS5vhB4bXQc
+ /8S5i0RcJvpvEewUis9MfUjEIMH4=
+X-Google-Smtp-Source: AGHT+IEu35VUd3A2wosaz7AzV90pazyuNNgxpZAaRwufTyJgH4HFoqvKgSC9libpqX4ebDgCIV6qF1CP2lq2r1kWJCs=
+X-Received: by 2002:a05:622a:353:b0:446:59ab:56a6 with SMTP id
+ d75a77b69052e-44fa535e4e8mr102638121cf.47.1721632171216; Mon, 22 Jul 2024
+ 00:09:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <ME3P282MB25482B87915BEBE85CCE7E898CAF2@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <ME3P282MB25482B87915BEBE85CCE7E898CAF2@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 22 Jul 2024 11:09:19 +0400
+Message-ID: <CAJ+F1CJXWRSktYPucOvO5F-zC73VMaUFfxUxksxMTLKugYNB8A@mail.gmail.com>
+Subject: Re: [PATCH] chardev/char-win-stdio.c: restore old console mode
+To: songziming <s.ziming@hotmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000ffd796061dd0b98e"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x732.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,306 +87,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+--000000000000ffd796061dd0b98e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Rather than creating stubs for every command that just return
-QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-fully exclude generation of the commands on Windows.
+Hi
 
-The command will be rejected at QMP dispatch time instead,
-avoiding reimplementing rejection by blocking the stub commands.
-This changes the error message for affected commands from
+On Mon, Jul 22, 2024 at 12:01=E2=80=AFAM songziming <s.ziming@hotmail.com> =
+wrote:
 
-    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+> If I use `-serial stdio` on Windows, after QEMU exits, the terminal
+> could not handle arrow keys and tab any more. Because stdio backend
+> on Windows sets console mode to virtual terminal input when starts,
+> but does not restore the old mode when finalize.
+>
+> This small patch saves the old console mode and set it back.
+>
 
-to
+Thanks, we had a similar patch from Irina Ryapolova, but it didn't save the
+old mode and she didn't update it.
 
-    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
 
-This also fixes an accidental inconsistency where some commands
-(guest-get-diskstats & guest-get-cpustats) are implemented as
-stubs, yet not added to the blockedrpc list. Those change their
-error message from
+> Signed-off-by: Ziming Song <s.ziming@hotmail.com>
+>
 
-    {"class": "GenericError, "desc": "this feature or command is not currently supported"}
+> ---
+>  chardev/char-win-stdio.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+> index 1a18999..5b24893 100644
+> --- a/chardev/char-win-stdio.c
+> +++ b/chardev/char-win-stdio.c
+> @@ -33,6 +33,7 @@
+>  struct WinStdioChardev {
+>      Chardev parent;
+>      HANDLE  hStdIn;
+> +    DWORD   dwOldMode;
+>      HANDLE  hInputReadyEvent;
+>      HANDLE  hInputDoneEvent;
+>      HANDLE  hInputThread;
+> @@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
+>      }
+>
+>      is_console =3D GetConsoleMode(stdio->hStdIn, &dwMode) !=3D 0;
+> +    stdio->dwOldMode =3D dwMode;
+>
+>      if (is_console) {
+>          if (qemu_add_wait_object(stdio->hStdIn,
+> @@ -220,6 +222,7 @@ err1:
+>  static void char_win_stdio_finalize(Object *obj)
+>  {
+>      WinStdioChardev *stdio =3D WIN_STDIO_CHARDEV(obj);
+> +    SetConsoleMode(stdio->hStdIn, stdio->dwOldMode);
+>
+>
+It should not reset if the open callback was not called successfully.
 
-to
+You can check if it's the case by adding a if (stdio->hStdIn !=3D
+INVALID_HANDLE_VALUE) condition.
 
-    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+     if (stdio->hInputReadyEvent !=3D INVALID_HANDLE_VALUE) {
+>          CloseHandle(stdio->hInputReadyEvent);
+> --
+> 2.45.1.windows.1
+>
+>
+>
 
-The final additional benefit is that the QGA protocol reference
-now documents what conditions enable use of the command.
+--=20
+Marc-Andr=C3=A9 Lureau
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240712132459.3974109-9-berrange@redhat.com>
-Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
----
- qga/commands-posix.c |  2 +-
- qga/commands-win32.c | 56 +-------------------------------------------
- qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
- 3 files changed, 32 insertions(+), 71 deletions(-)
+--000000000000ffd796061dd0b98e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 2a3bef7445..0dd8555867 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -1280,7 +1280,7 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
-             "guest-get-memory-blocks", "guest-set-memory-blocks",
-             "guest-get-memory-block-info",
-             NULL};
--        char **p = (char **)list;
-+        const char **p = list;
- 
-         while (*p) {
-             blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index 9fe670d5b4..2533e4c748 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -1494,11 +1494,6 @@ out:
-     }
- }
- 
--void qmp_guest_suspend_hybrid(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--}
--
- static IP_ADAPTER_ADDRESSES *guest_get_adapters_addresses(Error **errp)
- {
-     IP_ADAPTER_ADDRESSES *adptr_addrs = NULL;
-@@ -1862,12 +1857,6 @@ GuestLogicalProcessorList *qmp_guest_get_vcpus(Error **errp)
-     return NULL;
- }
- 
--int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return -1;
--}
--
- static gchar *
- get_net_error_message(gint error)
- {
-@@ -1969,46 +1958,15 @@ done:
-     g_free(rawpasswddata);
- }
- 
--GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
--GuestMemoryBlockResponseList *
--qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
--GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
- /* add unsupported commands to the list of blocked RPCs */
- GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
- {
--    const char *list_unsupported[] = {
--        "guest-suspend-hybrid",
--        "guest-set-vcpus",
--        "guest-get-memory-blocks", "guest-set-memory-blocks",
--        "guest-get-memory-block-info",
--        NULL};
--    char **p = (char **)list_unsupported;
--
--    while (*p) {
--        blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
--    }
--
-     if (!vss_init(true)) {
-         g_debug("vss_init failed, vss commands are going to be disabled");
-         const char *list[] = {
-             "guest-get-fsinfo", "guest-fsfreeze-status",
-             "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
--        p = (char **)list;
-+        char **p = (char **)list;
- 
-         while (*p) {
-             blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
-@@ -2505,15 +2463,3 @@ char *qga_get_host_name(Error **errp)
- 
-     return g_utf16_to_utf8(tmp, size, NULL, NULL, NULL);
- }
--
--GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
--
--GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--    return NULL;
--}
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 1273d85bb5..2f0215afc7 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -637,7 +637,8 @@
- #
- # Since: 1.1
- ##
--{ 'command': 'guest-suspend-hybrid', 'success-response': false }
-+{ 'command': 'guest-suspend-hybrid', 'success-response': false,
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestIpAddressType:
-@@ -807,7 +808,8 @@
- ##
- { 'command': 'guest-set-vcpus',
-   'data':    {'vcpus': ['GuestLogicalProcessor'] },
--  'returns': 'int' }
-+  'returns': 'int',
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestDiskBusType:
-@@ -1100,7 +1102,8 @@
- { 'struct': 'GuestMemoryBlock',
-   'data': {'phys-index': 'uint64',
-            'online': 'bool',
--           '*can-offline': 'bool'} }
-+           '*can-offline': 'bool'},
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @guest-get-memory-blocks:
-@@ -1116,7 +1119,8 @@
- # Since: 2.3
- ##
- { 'command': 'guest-get-memory-blocks',
--  'returns': ['GuestMemoryBlock'] }
-+  'returns': ['GuestMemoryBlock'],
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestMemoryBlockResponseType:
-@@ -1139,7 +1143,8 @@
- ##
- { 'enum': 'GuestMemoryBlockResponseType',
-   'data': ['success', 'not-found', 'operation-not-supported',
--           'operation-failed'] }
-+           'operation-failed'],
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestMemoryBlockResponse:
-@@ -1157,7 +1162,8 @@
- { 'struct': 'GuestMemoryBlockResponse',
-   'data': { 'phys-index': 'uint64',
-             'response': 'GuestMemoryBlockResponseType',
--            '*error-code': 'int' }}
-+            '*error-code': 'int' },
-+  'if': 'CONFIG_POSIX'}
- 
- ##
- # @guest-set-memory-blocks:
-@@ -1188,7 +1194,8 @@
- ##
- { 'command': 'guest-set-memory-blocks',
-   'data':    {'mem-blks': ['GuestMemoryBlock'] },
--  'returns': ['GuestMemoryBlockResponse'] }
-+  'returns': ['GuestMemoryBlockResponse'],
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestMemoryBlockInfo:
-@@ -1200,7 +1207,8 @@
- # Since: 2.3
- ##
- { 'struct': 'GuestMemoryBlockInfo',
--  'data': {'size': 'uint64'} }
-+  'data': {'size': 'uint64'},
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @guest-get-memory-block-info:
-@@ -1212,7 +1220,8 @@
- # Since: 2.3
- ##
- { 'command': 'guest-get-memory-block-info',
--  'returns': 'GuestMemoryBlockInfo' }
-+  'returns': 'GuestMemoryBlockInfo',
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestExecStatus:
-@@ -1702,7 +1711,8 @@
-   'data': {'name': 'str',
-            'major': 'uint64',
-            'minor': 'uint64',
--           'stats': 'GuestDiskStats' } }
-+           'stats': 'GuestDiskStats' },
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @guest-get-diskstats:
-@@ -1714,7 +1724,8 @@
- # Since: 7.1
- ##
- { 'command': 'guest-get-diskstats',
--  'returns': ['GuestDiskStatsInfo']
-+  'returns': ['GuestDiskStatsInfo'],
-+  'if': 'CONFIG_POSIX'
- }
- 
- ##
-@@ -1727,7 +1738,8 @@
- # Since: 7.1
- ##
- { 'enum': 'GuestCpuStatsType',
--  'data': [ 'linux' ] }
-+  'data': [ 'linux' ],
-+  'if': 'CONFIG_POSIX' }
- 
- 
- ##
-@@ -1772,7 +1784,8 @@
-            '*steal': 'uint64',
-            '*guest': 'uint64',
-            '*guestnice': 'uint64'
--           } }
-+           },
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @GuestCpuStats:
-@@ -1786,7 +1799,8 @@
- { 'union': 'GuestCpuStats',
-   'base': { 'type': 'GuestCpuStatsType' },
-   'discriminator': 'type',
--  'data': { 'linux': 'GuestLinuxCpuStats' } }
-+  'data': { 'linux': 'GuestLinuxCpuStats' },
-+  'if': 'CONFIG_POSIX' }
- 
- ##
- # @guest-get-cpustats:
-@@ -1798,5 +1812,6 @@
- # Since: 7.1
- ##
- { 'command': 'guest-get-cpustats',
--  'returns': ['GuestCpuStats']
-+  'returns': ['GuestCpuStats'],
-+  'if': 'CONFIG_POSIX'
- }
--- 
-2.45.2
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 22, 2024 at 12:01=E2=80=
+=AFAM songziming &lt;<a href=3D"mailto:s.ziming@hotmail.com">s.ziming@hotma=
+il.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">If I use `-serial stdio` on Windows, after QEMU exits, the terminal<b=
+r>
+could not handle arrow keys and tab any more. Because stdio backend<br>
+on Windows sets console mode to virtual terminal input when starts,<br>
+but does not restore the old mode when finalize.<br>
+<br>
+This small patch saves the old console mode and set it back.<br></blockquot=
+e><div><br></div><div>Thanks, we had a similar patch from=C2=A0<span>Irina =
+Ryapolova, but it didn&#39;t save the old mode and she didn&#39;t update it=
+.</span></div><div><span><br></span> </div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">
+<br>
+Signed-off-by: Ziming Song &lt;<a href=3D"mailto:s.ziming@hotmail.com" targ=
+et=3D"_blank">s.ziming@hotmail.com</a>&gt;<br></blockquote><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
+<br>
+---<br>
+=C2=A0chardev/char-win-stdio.c | 3 +++<br>
+=C2=A01 file changed, 3 insertions(+)<br>
+<br>
+diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c<br>
+index 1a18999..5b24893 100644<br>
+--- a/chardev/char-win-stdio.c<br>
++++ b/chardev/char-win-stdio.c<br>
+@@ -33,6 +33,7 @@<br>
+=C2=A0struct WinStdioChardev {<br>
+=C2=A0 =C2=A0 =C2=A0Chardev parent;<br>
+=C2=A0 =C2=A0 =C2=A0HANDLE=C2=A0 hStdIn;<br>
++=C2=A0 =C2=A0 DWORD=C2=A0 =C2=A0dwOldMode;<br>
+=C2=A0 =C2=A0 =C2=A0HANDLE=C2=A0 hInputReadyEvent;<br>
+=C2=A0 =C2=A0 =C2=A0HANDLE=C2=A0 hInputDoneEvent;<br>
+=C2=A0 =C2=A0 =C2=A0HANDLE=C2=A0 hInputThread;<br>
+@@ -159,6 +160,7 @@ static void qemu_chr_open_stdio(Chardev *chr,<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0is_console =3D GetConsoleMode(stdio-&gt;hStdIn, &amp;dw=
+Mode) !=3D 0;<br>
++=C2=A0 =C2=A0 stdio-&gt;dwOldMode =3D dwMode;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (is_console) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (qemu_add_wait_object(stdio-&gt;hStdIn=
+,<br>
+@@ -220,6 +222,7 @@ err1:<br>
+=C2=A0static void char_win_stdio_finalize(Object *obj)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0WinStdioChardev *stdio =3D WIN_STDIO_CHARDEV(obj);<br>
++=C2=A0 =C2=A0 SetConsoleMode(stdio-&gt;hStdIn, stdio-&gt;dwOldMode);<br>
+<br></blockquote><div><br></div><div>It should not reset if the open callba=
+ck was not called successfully.</div><div><br></div><div>You can check if i=
+t&#39;s the case by adding a if (stdio-&gt;hStdIn !=3D INVALID_HANDLE_VALUE=
+) condition.</div><div><br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">
+=C2=A0 =C2=A0 =C2=A0if (stdio-&gt;hInputReadyEvent !=3D INVALID_HANDLE_VALU=
+E) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CloseHandle(stdio-&gt;hInputReadyEvent);<=
+br>
+-- <br>
+2.45.1.windows.1<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
 
+--000000000000ffd796061dd0b98e--
 
