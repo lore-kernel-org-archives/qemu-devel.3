@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D64C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979C3C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVu4v-0004D2-4K; Mon, 22 Jul 2024 10:31:53 -0400
+	id 1sVu5a-0006cw-8j; Mon, 22 Jul 2024 10:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu4s-00049y-Hi
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:31:50 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu5V-0006R2-7a
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:32:29 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu4r-00063T-0h
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:31:50 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4266eda81c5so37709075e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:31:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu5T-00066u-JN
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:32:28 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2ef2ed592f6so13339281fa.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721658707; x=1722263507; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721658746; x=1722263546; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=y2kkm5GxDIm0v0vyBRbrS55jDFAHppYtNPVmtNL1YEc=;
- b=HrYMOD7gu+wJBjwZDTONN+sYhsOu1+NvN4DdwDy+O7DLJH71dPGY705vpwup7QCP9D
- IMQr2JENQyMsN7jVlf5qao2ujdhM/0NAY7L0unicaA+NIvGb/3p2IvndpJLx+o767p9l
- 7bs/mQf1SoYoJ75o4KzCgI3gQxUQPAiJ1+eqoWyrEleF/KOTaIQM/vu00lA8YrzH8qbg
- oZpvk3hu3UkD5/K9A+BMmbTB35BPQf8yyiEStogj6ejhR6Qa2tnhm6W3KJLLWyU5QTj7
- G7MWBpwGMCb48ezM09YPC5Gxw1a8TrPDCD09AmTLV7XSSCKL3dmyhYnpYDQ3VQ1IHv8K
- P7GA==
+ bh=9oiaCfjshe58+J8gYFfIHHnHyJqFDL/IqBecOq6O6qg=;
+ b=pVAfKhl8T/krWm/NlYuwMb06Q9qbTj73kunemZEAT0dGlea3CSt1A9foslsGm0tpbo
+ LMxDrnpz6GnPfxkINgpsunbcTjv9O/MDA0YpfYhtifSCu6MX1dL2oGWuyK/9AW7WyB4c
+ mGeHnOnm1x2MuRTiuoAKDNOrWnyOoJsQWIyt3hd1C0OkNtumE0if0RCmsbx09h2VxVaC
+ uPSd/f2XRIy5mgn7xaEn/QmdwPd+GxhySKYQeHsJ8LY6onrVe+JWB5oM3+pR6xfOC2z8
+ VfruiAFB6bW95vmB+CH0VNLqfBGdN9VYLY/KZxG5k0DDHtumBWB3fv5HCDKsad2vSo4x
+ MV/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721658707; x=1722263507;
+ d=1e100.net; s=20230601; t=1721658746; x=1722263546;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y2kkm5GxDIm0v0vyBRbrS55jDFAHppYtNPVmtNL1YEc=;
- b=TzG+9rPUst6W9PY/4AhtJesehCkpz+MEU8kHyvbjZMwaUuMBs+1MpXdi/kFNPm0DWP
- hDCmyA5q3Gnkrs2BhJ0/Fc4qU7KLV3oMgcACGejQXWZzEEUy91VPW3Jg0aVTbXKkZXFe
- tISGTyZzaNgXqCB/RNqfvkRJolveMapD7mg5dAG/BLup4YsBmRiYMeaVlOUA/h/wU9c9
- GnW6cVAE6MSUQAYLNCaKGT6q3LxYHihswePKGq+mXWEgBH/r3QtjGYcz60+Ru7uDTEgL
- Iz55Zf6TO3+AiJprdl3DIQ1lqIK64M5ThwPOokEIeTJCH6VfDBGQPNdzut9PWE6IdGdo
- 83NQ==
+ bh=9oiaCfjshe58+J8gYFfIHHnHyJqFDL/IqBecOq6O6qg=;
+ b=QNu+EZcTC/Bd1rqLCRRBmUPCIf8DisN+XhzCup9RBMjMoLfCfScyeYAYQyhlOLr1Ep
+ 6cE1L2tQiNHYzI+XYSEtvR2XUXWjjx/pB7KkU1REhsyC0g0VWYg6Oiy9MqlnWMN4KOb2
+ KZoxb8qkV899JQuXK8F18g/Ryp+/B0j8AO4ecAOHh8DWusE2s7vegTQ6UXnR3klR85/P
+ 355Z5aBDXGi2NUubQxNAEEhZytYLzS1A4PNGunIyC1yfe90OosM/Gc8vJfQ20xFIWqvh
+ AMo/NnwNIcL4P11GOgzG7e3SGaksF+AK49p/sGtCCIgk7BZ8xFTwlPdpF7XhqxvzQzWv
+ Kccw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFjyfhM8uKxozCbhTjEnCs5ZgWqVZRhJMlPVbt8t74D6wdPlfwLeM7Ua+dreJ8p6uMQ8QSBPb/h7vooE+zd0fT/mTgMgo=
-X-Gm-Message-State: AOJu0Yy8H93NOOe0zPgyYjpKOvi4/7ECSMFtrx9fuo7uFW3GCgC9ijI7
- f8fVF1ISR8ik2HuqgU76oajKRGL7nE4F1SRipcMQRBRbUWlcbgm8r0OlgwAKLIg=
-X-Google-Smtp-Source: AGHT+IHVR74e+Ksnt0el06BPIU89keloWQDT0+NrR90NRV09lmdoJOlq0H5+QqbiQ6dPkVLwFfcXRg==
-X-Received: by 2002:a5d:4604:0:b0:368:7282:51d6 with SMTP id
- ffacd0b85a97d-369bae4d54dmr5889900f8f.21.1721658706981; 
- Mon, 22 Jul 2024 07:31:46 -0700 (PDT)
+ AJvYcCWRG+M3NdFHB0GVVz08dC2mkcSNUd6FdSfHIxcFowPSYtofmgPgW/EhSYu6a5ORCmQAnSCYxd5sAG39C2WX2SbNUBLvnR8=
+X-Gm-Message-State: AOJu0YzQFHoTHBW4/24w16oHh/hyULuYrH2epzUPE5A9ervcehGRUp37
+ 56OARH9gqbdJSV2BNgIMz8Isy1sC22WUhhzdHq2///PpYmQFa47BjGQy5EwvJ94=
+X-Google-Smtp-Source: AGHT+IGc2Q7dyNhC0WLE7knltYRYpKVJ3TFV/y3kr9e40xhvuQleqAhfkQL66yVnhV69Z5HKCuV1Cw==
+X-Received: by 2002:a2e:9586:0:b0:2ef:24a9:a75d with SMTP id
+ 38308e7fff4ca-2ef24a9a985mr39232171fa.14.1721658745716; 
+ Mon, 22 Jul 2024 07:32:25 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d68f789csm132043995e9.6.2024.07.22.07.31.45
+ 5b1f17b1804b1-427d69073d5sm130290335e9.25.2024.07.22.07.32.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 07:31:46 -0700 (PDT)
-Message-ID: <29d1c659-fd98-424e-a090-97ae941103c0@linaro.org>
-Date: Mon, 22 Jul 2024 16:31:44 +0200
+ Mon, 22 Jul 2024 07:32:25 -0700 (PDT)
+Message-ID: <466f4899-0a07-4599-8b0d-07c4a8c759da@linaro.org>
+Date: Mon, 22 Jul 2024 16:32:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] chardev: add tracing of socket error conditions
+Subject: Re: [PATCH 3/5] crypto: drop gnutls debug logging support
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240722131611.2820041-1-berrange@redhat.com>
- <20240722131611.2820041-3-berrange@redhat.com>
+ <20240722131611.2820041-4-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240722131611.2820041-3-berrange@redhat.com>
+In-Reply-To: <20240722131611.2820041-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +100,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/7/24 15:16, Daniel P. Berrangé wrote:
-> This adds trace points to every error scenario in the chardev socket
-> backend that can lead to termination of the connection.
+> GNUTLS already supports dynamically enabling its logging at runtime by
+> setting the env var 'GNUTLS_DEBUG_LEVEL=10', so there is no need to
+> re-invent this logic in QEMU in a way that requires a re-compile.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   chardev/char-socket.c | 34 +++++++++++++++++++++-------------
->   chardev/trace-events  | 10 ++++++++++
->   2 files changed, 31 insertions(+), 13 deletions(-)
+>   crypto/init.c | 11 -----------
+>   1 file changed, 11 deletions(-)
+> 
+> diff --git a/crypto/init.c b/crypto/init.c
+> index fb7f1bff10..2d6dfa3091 100644
+> --- a/crypto/init.c
+> +++ b/crypto/init.c
+> @@ -34,13 +34,6 @@
+>   
+>   #include "crypto/random.h"
+>   
+> -/* #define DEBUG_GNUTLS */
+
+Maybe mention GNUTLS_DEBUG_LEVEL=10 here or in header? Otherwise
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
