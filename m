@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA625C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA99C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW2Ol-00049N-9E; Mon, 22 Jul 2024 19:24:55 -0400
+	id 1sW2Oc-0003ii-Sq; Mon, 22 Jul 2024 19:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW2Ok-000453-A7
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:54 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sW2Oa-0003dF-TS
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:44 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW2Oi-00063t-LC
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:54 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5c661e75ff6so2280856eaf.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:24:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sW2OY-00060h-QM
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:44 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52fc4388a64so708847e87.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721690691; x=1722295491; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=O3zcffW/9Og8nMl7p0aEkK3Qzk1wT2SFMBnrP3P4Fwc=;
- b=BC/ZuHll3D9lxh9KD90of+8+OUBEOqz/AAmmydMal9zHWPwu+xAu3yXraChjMa1yWs
- VhrhHCI7Z5MmGZpZgMirQuGE2g/PEvEl48fGvzsltHly1DJhzZBI8XnW0SW5+tWISNRz
- cXEtvlhf2j5ZES+YE/pvAPoRznjiUnPU/WI0pSmmMo1QsPcT3pSB3UUJkIjJ0m3tR5dp
- a42VMuGD1bztCo5Nr7ym+vvi58oWDmmZnb4BmOHb35BwjsT/s0eOuAB8Z2wF5QlpeMp+
- 2hJTxSgocH9RWi47g+rgW7RM8lZBOhA+wCQJ0wcu6g+9UJCifC2l/85svMJVOrEquMgT
- BnmQ==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721690677; x=1722295477;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4rijGo3HaETYPHa30L2mqR1DEK8teFf3f2P78Lzwjek=;
+ b=NZPBmw6GfFgw2MV4THjlfU7a389rzLp/woHpS3BM6e0W0eeu/fq+288kSbq4OsEN8J
+ ZH9I1F745ijgciECpu6G5iZzjXaXWOuEGuXiKnPLVC6+ZfcojD9LwSB1A4+9ZKufui2l
+ TXHHR+thXdNImycnoe5vXyxQlKgYHfSf0Vi2GjtnPIHanlZpXwIOhQkYtbcTPSrvhxZg
+ ULGOiT5woPSXIcnFdtgL9pkkaPhSzxfdXxwzHLUJEWg047AS6TIg5aTRf3v9M4er0skF
+ z60ZgBAhHwkePL59dupDZdCZF0C/FvEB81GCh1/hLJr8hGzr7sfRVsgZtW+BVE3BUIq3
+ BPIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721690691; x=1722295491;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=O3zcffW/9Og8nMl7p0aEkK3Qzk1wT2SFMBnrP3P4Fwc=;
- b=IX2z0/jU8anEmcAE1LX91M9LKR0cITaXza2ZeawLyxF0bw6sWqvxHKR3FcsnQK6r6E
- CT2oX069n9NYJmbntAgx4yMY8CbsWugKWgO3mEz4D3RCV1JqSiypKlkSFN7UB8rbYWBX
- LLJS7pqzCvLFhmeupMnP7Kg+1Xl0aPDhHhv0dt19rDaGDMiAHA16r+w+qmSWTIaN/c6v
- zM3py9rpA81j6KfIwfogimu9y/l/RmTAodLYruiUOQ47CS80oaaNv7l1yEV1oRKsvxX7
- YrPPZVkC9gC6Av4bwAifHDTp+di3uUji6hZiC8+RstzbjbS4W1rSLN+ulbBjeE7t3yex
- Yeqw==
+ d=1e100.net; s=20230601; t=1721690677; x=1722295477;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4rijGo3HaETYPHa30L2mqR1DEK8teFf3f2P78Lzwjek=;
+ b=PsqJsJ95CW3Df3X7QvItl/BZfJ/zAulLhweG3d2+g9QW1waIzsrsfRD6z0shA49aDY
+ EL+KDk2vc9eNEfuB2RG52gdd7AxOMsF7D08p1R3n4riPCqdwf7+le9G5O+gRyqDeKNmT
+ si5zFfhLc0Ll3PkdKEsrrZzicTsggdLS459q4e6fmhdsNilFFuFJeC02NkpAvgZaCJty
+ 8dJE2zY/2VpE9p4fQS8tF8/yv4yMCQi2o6Dn6Ck+kDnVoSU6m5+KjumcDaOwhfODssvh
+ qfFwlq2smYUwoR7dZVcubtoPlfRYbdQ6Dx7P4XKLPOZmzpruf2ky0Aa6tRyukd3wB+qK
+ ogKA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVM5PU/IzcLUD9PnPohkiw86CLfIfSjpR2A7ilaLBHi6qTnModLmfaEPxHxW8XlC4pOMbkJih+J73KyEJ7JWlQjqBy3bVM=
-X-Gm-Message-State: AOJu0YwiSBJE2iAkCsEr+YzMerxj/Tobz0bOXqvF5Ivwff3AG8fn+5do
- h5EyvEeo7qUz3QR+vCygIT78GyPN60oYCFjZskahFnfXFEJsLRUU67bFZtswqtk=
-X-Google-Smtp-Source: AGHT+IEdCnDL7RSSjyPdaZ9lPKWDPWNr3FKLJfGzqomtXCUauRtssQZQtqiQlAAGg5/DVit9cLts4A==
-X-Received: by 2002:a05:6358:7e53:b0:1a5:28a5:f2b9 with SMTP id
- e5c5f4694b2df-1acc5a781femr998006055d.2.1721690690966; 
- Mon, 22 Jul 2024 16:24:50 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cb77506757sm8750945a91.35.2024.07.22.16.24.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 16:24:50 -0700 (PDT)
-Message-ID: <6438c625-89d6-48e7-be02-7b77f4090c0b@linaro.org>
-Date: Tue, 23 Jul 2024 09:24:44 +1000
+ AJvYcCXpuIkI6P/Yxu0l0mkXSlgG30OTU3fVKzfKu3z+Y95h42n2e+abU0HAPBBR+Q2SJcbjKKidfkU3+yhfk7M8TpuDDV39cnw=
+X-Gm-Message-State: AOJu0YwG/tnM+ATXB1hcEl59yQ72hAvVHI85Svq0/5Lx9Cjq6u9BNoLQ
+ 94430PrO82NdStLuXM6yAS87VKnjk0rdDKAy7ieJaOAxi//Mvm4u2JSvL8l2ayRJlETK9kKVKzB
+ j/tZAKvnsIg+MTeWtg9jIHp3ytEOLocVmEAAbeQ==
+X-Google-Smtp-Source: AGHT+IFKfc4v679rnAGo7XggcR2Jyw6mkDnxv5CnqrWBSUP7I+gxv06+8Li4inxuE/V9xaFHw+v/w/iTNSitH8DxsyQ=
+X-Received: by 2002:a05:6512:10cf:b0:52f:c24b:175f with SMTP id
+ 2adb3069b0e04-52fc4047b2bmr701334e87.20.1721690677292; Mon, 22 Jul 2024
+ 16:24:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] linux-user/main: Check errno when getting AT_EXECFD
-To: Vivian Wang <uwu@dram.page>, qemu-devel@nongnu.org
-Cc: Richard Henderson <rth@twiddle.net>, Laurent Vivier <laurent@vivier.eu>
-References: <20240721090817.120888-1-uwu@dram.page>
- <20240721090817.120888-3-uwu@dram.page>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240721090817.120888-3-uwu@dram.page>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+ <20240718021012.2057986-22-alistair.francis@wdc.com>
+ <CAFEAcA9dToUo9LwxQwCLSL=gVTXWs9M23BpLhm+eD1rZShnehQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9dToUo9LwxQwCLSL=gVTXWs9M23BpLhm+eD1rZShnehQ@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Mon, 22 Jul 2024 16:24:26 -0700
+Message-ID: <CAHBxVyGQHBobpf71o4Qp51iQGXKBh0Ajup=e_a95xdLF==V_WQ@mail.gmail.com>
+Subject: Re: [PULL 21/30] target/riscv: Implement privilege mode filtering for
+ cycle/instret
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
+ Rajnesh Kanwal <rkanwal@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=atishp@rivosinc.com; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,38 +97,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/21/24 19:08, Vivian Wang wrote:
-> It's possible for AT_EXECFD to end up with a valid value of 0. Check
-> errno when using qemu_getauxval instead of return value to handle this
-> case.
-> 
-> Not handling this case leads to a confusing condition where the
-> executable ends up as fd 0, i.e. stdin.
-> 
-> Signed-off-by: Vivian Wang <uwu@dram.page>
-> Fixes: 0b959cf5e4cc ("linux-user: Use qemu_getauxval for AT_EXECFD")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2448
-> ---
->   linux-user/main.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 7d3cf45fa9..8143a0d4b0 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -755,8 +755,9 @@ int main(int argc, char **argv, char **envp)
->       /*
->        * Manage binfmt-misc open-binary flag
->        */
-> +    errno = 0;
->       execfd = qemu_getauxval(AT_EXECFD);
-> -    if (execfd == 0) {
-> +    if (errno != 0) {
->           execfd = open(exec_path, O_RDONLY);
->           if (execfd < 0) {
->               printf("Error while loading %s: %s\n", exec_path, strerror(errno));
+On Sat, Jul 20, 2024 at 7:44=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 18 Jul 2024 at 03:12, Alistair Francis <alistair23@gmail.com> wro=
+te:
+> >
+> > From: Atish Patra <atishp@rivosinc.com>
+> >
+> > Privilege mode filtering can also be emulated for cycle/instret by
+> > tracking host_ticks/icount during each privilege mode switch. This
+> > patch implements that for both cycle/instret and mhpmcounters. The
+> > first one requires Smcntrpmf while the other one requires Sscofpmf
+> > to be enabled.
+> >
+> > The cycle/instret are still computed using host ticks when icount
+> > is not enabled. Otherwise, they are computed using raw icount which
+> > is more accurate in icount mode.
+>
+> Hi; Coverity points out some possible issues with this patch
+> (CID 1558459, 1558462):
+>
+>
+> > +typedef struct PMUFixedCtrState {
+> > +        /* Track cycle and icount for each privilege mode */
+> > +        uint64_t counter[4];
+> > +        uint64_t counter_prev[4];
+> > +        /* Track cycle and icount for each privilege mode when V =3D 1=
+*/
+> > +        uint64_t counter_virt[2];
+> > +        uint64_t counter_virt_prev[2];
+>
+> These two arrays are defined with size 2...
+>
+>
+> > +static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+> > +                                         target_ulong newpriv, bool ne=
+w_virt)
+> > +{
+> > +    uint64_t *snapshot_prev, *snapshot_new;
+> > +    uint64_t current_icount;
+> > +    uint64_t *counter_arr;
+> > +    uint64_t delta;
+> > +
+> > +    if (icount_enabled()) {
+> > +        current_icount =3D icount_get_raw();
+> > +    } else {
+> > +        current_icount =3D cpu_get_host_ticks();
+> > +    }
+> > +
+> > +    if (env->virt_enabled) {
+> > +        counter_arr =3D env->pmu_fixed_ctrs[1].counter_virt;
+> > +        snapshot_prev =3D env->pmu_fixed_ctrs[1].counter_virt_prev;
+> > +    } else {
+> > +        counter_arr =3D env->pmu_fixed_ctrs[1].counter;
+> > +        snapshot_prev =3D env->pmu_fixed_ctrs[1].counter_prev;
+> > +    }
+> > +
+> > +    if (new_virt) {
+> > +        snapshot_new =3D env->pmu_fixed_ctrs[1].counter_virt_prev;
+> > +    } else {
+> > +        snapshot_new =3D env->pmu_fixed_ctrs[1].counter_prev;
+> > +    }
+> > +
+> > +     /*
+> > +      * new_priv can be same as env->priv. So we need to calculate
+> > +      * delta first before updating snapshot_new[new_priv].
+> > +      */
+> > +    delta =3D current_icount - snapshot_prev[env->priv];
+> > +    snapshot_new[newpriv] =3D current_icount;
+> > +
+> > +    counter_arr[env->priv] +=3D delta;
+>
+> ...and in this function we may use those counter_virt and
+> counter_virt_prev arrays with newpriv and env->priv as indexes,
+> but in the callsites like riscv_cpu_set_mode() the assertions on
+> newpriv etc are things like
+>   g_assert(newpriv <=3D PRV_M && newpriv !=3D PRV_RESERVED);
+>
+> so Coverity thinks newpriv might be PRV_M (because that's the only
+> explicit range guard it's seen) and we will overrun the array.
+>
+> If this is a "can't happen" case I think we should have asserts in the
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+Yes. Both these arrays are used when virt is enabled which can't
+happen when PRV_M.
+The separate array is required to distinguish between VS and HS mode
+where both priv is PRV_S.
+
+> functions like riscv_pmu_icount_update_priv() and riscv_pmu_cycle_update_=
+priv()
+> that might index into these arrays that the indexes can't be out of bound=
+s
+> for these smaller arrays.
+>
+
+Sure. I will add the asserts and send a fix patch.
+
+>
+> thanks
+> -- PMM
 
