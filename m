@@ -4,89 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91218C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D9DC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrny-0000LJ-QC; Mon, 22 Jul 2024 08:06:14 -0400
+	id 1sVrqI-0003g1-S9; Mon, 22 Jul 2024 08:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrnj-0007hU-Np
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrng-0007v6-8i
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
- b=b3cj+rgx9wUcA2ef32h38nK0ZUkTjzLBEtn0F0f3ZkxiYWs3ihKUy1luTmyvRVVOlsf3+h
- 4012hsOsi7faB7Vn6mjFB3M4pBYMquvUBxrNmyaNnwxIP0GOLBnzjDh2kAdTq5X+fdVizK
- RIEzh/ui7sfQiO7Fk7WjSMM/S3HJXu4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-o99HMqfeMZm0XJrUdc83Mw-1; Mon, 22 Jul 2024 08:05:54 -0400
-X-MC-Unique: o99HMqfeMZm0XJrUdc83Mw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a77e024eaa4so357554666b.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:05:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sVrq0-0002AJ-Nv
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:08:25 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sVrpz-0008A6-1j
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:08:20 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a7979c3ffb1so217119166b.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:08:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721650097; x=1722254897; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tNhx5XCbDz2ES+x3Bn09OzYyRx83+WywVAD5VUceAnw=;
+ b=MolMc0VT2S7JFA2+oZPbDfLLQR0yhvNZ+jcQDuL/Gg6yWx7c1Z+Lw2m6ShvDhau5jy
+ 69wxWP97xr6vBBG834fImvg4BgSjQKX4VfVNXAJYgQeD9pxn/z+of0z+zVKob45JstKx
+ 3JYv1hemjwAWKtpU9AJJ83cba6KR0bRryolxJ3/MaqH0L8/iUHI+b5ZfwmPNZE9wSTxZ
+ EzHsQopzFJLRxSAC3sK8OtVeLUwyjVIN8yxdDfKREYanTX+vo43aIluSnEby/Iotq0A4
+ zyXK4fDeEVf29nynt+U7SVZCLtI2PCjCxxxAEAOt94K5FJrZPx/2CLa8qrc5WTr187Tv
+ Wdag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721649952; x=1722254752;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
- b=fGde4rO/9Xin9j8fx7JM0RJHfU/JjgTY6+6c4qf0bDWJ6Vf2GMhce24Fods5LBo+CL
- GsloUl9ArH05dFoMb3iRes+yZ8UMVsGvpexf9mEq2HYICqMeIHuue2/XpRyzQllC9a0k
- aqBubtEgdXVpXMxp+sZjEW4HtG1wIzr+pMvyCM1dF0+3vwRKCewjtAv9kfwMxvsAxxQW
- hWcgrsBYpe/yBumZE9saBKha1K65qM7x27cgSFsmoIoJCmD7YDk7tLuxFdP+FfT/GDr+
- 9qwSzOp6OL/xpIGmMA9Jyw6/DUgHUSnh/xXiPLDZyCJJA7KIlllrA96KR0u2Jz4CSQ5e
- ipKA==
-X-Gm-Message-State: AOJu0YzRKgEjzxB9QKJaAUr45LUSftNUgX34aarxOlJSP0c3UFw6Dxlt
- 4v4iwYyu298kdh4jB5p/fFaGdnqYvm1A8QIgw1WzZMjq4APSP4l3WXzQYVKtj2MYLdZR4KnmiTG
- MbSc6Lh21bmnChPXtHVdbZW8s1xlKlgvKoDUCn6ETDb2poP6F9QaZ14CoLRZLwtt020/TvLH6YQ
- 14fjxJyPv7CVpQKtj1Nff59uOaq95pM51Y3Sq6
-X-Received: by 2002:a17:907:2d94:b0:a72:84c9:cedc with SMTP id
- a640c23a62f3a-a7a01115d81mr1346834366b.8.1721649952491; 
- Mon, 22 Jul 2024 05:05:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVepP+xxO5pGcHlPO+wKcXAjNJ4FPyvbSy3siSoBPH/qkVtasWjrzo0eqA/o1biA4AQ2t1vQ==
-X-Received: by 2002:a17:907:2d94:b0:a72:84c9:cedc with SMTP id
- a640c23a62f3a-a7a01115d81mr1346833166b.8.1721649952009; 
- Mon, 22 Jul 2024 05:05:52 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c91e2e8sm415014066b.156.2024.07.22.05.05.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 05:05:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 4/7] hpet: place read-only bits directly in "new_val"
-Date: Mon, 22 Jul 2024 14:05:38 +0200
-Message-ID: <20240722120541.70790-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240722120541.70790-1-pbonzini@redhat.com>
-References: <20240722120541.70790-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1721650097; x=1722254897;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tNhx5XCbDz2ES+x3Bn09OzYyRx83+WywVAD5VUceAnw=;
+ b=Hi+2cc9eId/x7RaORHgEOW+r7hoEsJnYs2WhbwTuNTt71BHTkCQAnAc5dnUoywo6ID
+ WXlXQcN0QhYZr1saAD2KEzHGgFpEZmgMx7tzdPvprlH9i8NTwvUs7f2XxM8IeTn1YJlR
+ MnJ89nh8v/OlnOlNTXvr835xA5RVSQ6FOOI+KP88cKi0tZvWaOdtqXwaCDBx42A/oKN7
+ 6vv3vPhbKWassU7oTa2b6sN6uJnd5PWuwOl4svOIjyTVm6oh3Sx+e5FOO92A6NhaVJR4
+ JzatTogSkVRwvZqSAw4vjqKZvyqYwqPfETHNm6ZqjYk0s5zBSdEklOzEM9jdjc/3I5bm
+ qAkA==
+X-Gm-Message-State: AOJu0YzrZj/b2SkWPUwYnrGm0Nye83bT50GQ38QxwbqxoQrOnTwEZWRk
+ cRJQzIvnDnCyx/ArwCelrUVvuqbxAWdwK2c97xfa7V3hKl4S0iEuYBmE+fYZeh0Zn1IHPvVncvI
+ lSnnUJMu6g6jvVlCAFwlUBQQ9YJx0a1KwBFOdvg==
+X-Google-Smtp-Source: AGHT+IFk/sRPFT7ntlKIpcbEDYk92bIFDYiAB96cwYrkiSaj9/WugrTyEQAgEfWBGltNeNgze6A4uizf0uQfmAhbj7M=
+X-Received: by 2002:a05:6402:50c8:b0:5a2:c1b1:4d3 with SMTP id
+ 4fb4d7f45d1cf-5a47b1dee89mr6199567a12.28.1721650097158; Mon, 22 Jul 2024
+ 05:08:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240719010707.1319675-1-richard.henderson@linaro.org>
+ <20240719010707.1319675-9-richard.henderson@linaro.org>
+In-Reply-To: <20240719010707.1319675-9-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Jul 2024 13:08:06 +0100
+Message-ID: <CAFEAcA8HxomNgX2pALS7M0BMiqxcCtBV932WDDXE-KO+00HZkg@mail.gmail.com>
+Subject: Re: [PATCH v3 08/12] target/ppc: Improve helper_dcbz for user-only
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongu.org, 
+ qemu-s390x@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,71 +89,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The variable "val" is used for two different purposes.  As an intermediate
-value when writing configuration registers, and to store the cleared bits
-when writing ISR.
+On Fri, 19 Jul 2024 at 02:08, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Mark the reserve_addr check unlikely.  Use tlb_vaddr_to_host
+> instead of probe_write, relying on the memset itself to test
+> for page writability.  Use set/clear_helper_retaddr so that
+> we can properly unwind on segfault.
+>
+> With this, a trivial loop around guest memset will spend
+> nearly 50% of runtime within helper_dcbz and host memset.
 
-Use "new_val" for the former, and rename the variable so that it is clearer
-for the latter case.
+I find this a bit difficult to interpret -- maybe add
+what it was before (presumably spending too much time
+somewhere else) ?
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/timer/hpet.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 380e272fbeb..831e5a95b09 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -510,7 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
- {
-     int i;
-     HPETState *s = opaque;
--    uint64_t old_val, new_val, val;
-+    uint64_t old_val, new_val, cleared;
- 
-     trace_hpet_ram_write(addr, value);
-     old_val = hpet_ram_read(opaque, addr, 4);
-@@ -536,13 +536,12 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-                  */
-                 update_irq(timer, 0);
-             }
--            val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
--            timer->config = (timer->config & 0xffffffff00000000ULL) | val;
-+            new_val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
-+            timer->config = (timer->config & 0xffffffff00000000ULL) | new_val;
-             if (activating_bit(old_val, new_val, HPET_TN_ENABLE)
-                 && (s->isr & (1 << timer_id))) {
-                 update_irq(timer, 1);
-             }
--
-             if (new_val & HPET_TN_32BIT) {
-                 timer->cmp = (uint32_t)timer->cmp;
-                 timer->period = (uint32_t)timer->period;
-@@ -623,8 +622,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-         case HPET_ID:
-             return;
-         case HPET_CFG:
--            val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
--            s->config = (s->config & 0xffffffff00000000ULL) | val;
-+            new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
-+            s->config = (s->config & 0xffffffff00000000ULL) | new_val;
-             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
-                 /* Enable main counter and interrupt generation. */
-                 s->hpet_offset =
-@@ -658,9 +657,9 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-             trace_hpet_invalid_hpet_cfg(4);
-             break;
-         case HPET_STATUS:
--            val = new_val & s->isr;
-+            cleared = new_val & s->isr;
-             for (i = 0; i < s->num_timers; i++) {
--                if (val & (1 << i)) {
-+                if (cleared & (1 << i)) {
-                     update_irq(&s->timer[i], 0);
-                 }
-             }
--- 
-2.45.2
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
