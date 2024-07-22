@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC46C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 04:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E51C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 04:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVkMr-0004Yv-Vl; Mon, 22 Jul 2024 00:09:46 -0400
+	id 1sVkU2-00032x-0q; Mon, 22 Jul 2024 00:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sVkMn-00048k-Hh
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 00:09:41 -0400
-Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
+ id 1sVkMf-0003ZH-Oh
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 00:09:35 -0400
+Received: from esa4.hc1455-7.c3s2.iphmx.com ([68.232.139.117])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sVkMl-0001wx-PE
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 00:09:41 -0400
+ id 1sVkMd-0001v6-K5
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 00:09:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1721621379; x=1753157379;
+ t=1721621371; x=1753157371;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GA4nPORIGQjzZVaVYEJiQuZjbCyqq1kZkMjn0l4f0HM=;
- b=rJ3FcGhDZ0penx6139hdWFVrVi7+PiwT/8qAoo6Z3k35Yp6lrt+V+Duk
- naEL5u3OSplpGfQ3VYrZZV28yiH84l4/oYQwTe+Ec0ynR9kdeOvlmZ5KC
- dIRls92pGaZj9pyq7A0OnAOMCEgUfcwHTqOI1I9XFl82I+UJWfmNj+IzF
- 0GrY74DOsnJPMhwOaLLzfZCIqJoGpfcrnnvjfGZVHgtJMCeaYVZA+pQQz
- k1+Za3Ethhw15ju5OV9LzToTVqevMuGchasPnorMob34sf92LbjSiYVjG
- WowCEGc5O/hjXY6PK469fkP9h0dVlU6Sc7xZ9GPsjFXkoIPf2xZHc9VYz A==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="146958168"
-X-IronPort-AV: E=Sophos;i="6.09,227,1716217200"; d="scan'208";a="146958168"
-Received: from unknown (HELO oym-r2.gw.nic.fujitsu.com) ([210.162.30.90])
- by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2024 13:09:37 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id CAD05D9223
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:35 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 0F7F1BF3C5
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:25 +0900 (JST)
+ bh=J16J3bUUCCZz8SNQ1pnXVC0f4NBP6OpuoE09JYT9tFk=;
+ b=rUdIVEDMApJ3CMBwHAUHFznrzvmbeXdAwf7FhQoXYLPLYQX+JexeVjga
+ VDc38TPnLdi5z3j/JkXgPnLX4kUULqPSICQefiz/IDIoo7AAaftsC0XZE
+ kQ5Xst55VqWoPw1B5014edYPds2sf9EXW4DgcxSwW+2GTL2aI7jmPf1kL
+ vJZZxFq1gVfpVmew0k5kB4BwHOdneNbz+GphmbEbq/JWSNchSiIAjFlE9
+ PZpudbJAB+r9F8eNz/Pe6B9jeBcACkwHAiKWws2AvYYaq1GxUxKBE5lni
+ MbIVBBjIT4+5cbR0fZj01NtkHKJRQOsBAplcQyEag94jLZa9KpVPsArvX g==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11140"; a="168189032"
+X-IronPort-AV: E=Sophos;i="6.09,227,1716217200"; d="scan'208";a="168189032"
+Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
+ by esa4.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2024 13:09:29 +0900
+Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
+ [192.168.83.65])
+ by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 6791DC68E1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:27 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id A78EDD5084
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:26 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 9642F20076D0D
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:24 +0900 (JST)
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 411E06BEE3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 13:09:26 +0900 (JST)
 Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id BB8B81A000A;
- Mon, 22 Jul 2024 12:09:23 +0800 (CST)
-To: qemu-devel@nongnu.org, Alexander Bulekov <alxndr@bu.edu>,
- Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
- Laurent Vivier <lvivier@redhat.com>
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id DA7011A000C;
+ Mon, 22 Jul 2024 12:09:25 +0800 (CST)
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
 Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH 07/13] qtest/fuzz: make range overlap check more readable
-Date: Mon, 22 Jul 2024 00:07:36 -0400
-Message-ID: <20240722040742.11513-8-yaoxt.fnst@fujitsu.com>
+Subject: [PATCH 12/13] dump: make range overlap check more readable
+Date: Mon, 22 Jul 2024 00:07:41 -0400
+Message-ID: <20240722040742.11513-13-yaoxt.fnst@fujitsu.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
 References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28544.005
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28544.004
 X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28544.005
-X-TMASE-Result: 10-0.713900-10.000000
-X-TMASE-MatchedRID: alxK4aWrxwlrFdvBEmTnvDyjd/AizytBAZn/4A9db2TAuQ0xDMaXkH4q
- tYI9sRE/3BlBvFCka9sboCivyaDEEgdrD3O6lkawngIgpj8eDcBpkajQR5gb3mn0m688Eo38Kra
- uXd3MZDVhghmdIrP4RYGHOnE1bLKai1k/2x9BxsnjSkboDGTSyiplNLSwFcg5nYfGVyys98Q+/a
- BNVcwpcBVYRtxXPf7JWHxhTISq8s7/I8o6mB5zERXFEH92Kf64nTtPxlIuIBW9Hzj86YHXBCnif
- x5AGfCL
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28544.004
+X-TMASE-Result: 10-1.466200-10.000000
+X-TMASE-MatchedRID: aX2W24vmfqtrFdvBEmTnvE7nLUqYrlslFIuBIWrdOePfUZT83lbkEMJ0
+ 8DtUl59d4vM1YF6AJbbCCfuIMF6xLSdET58jp62S9M5PwAWtc78/e8WetA82gR8A5FKx/2CwHoy
+ 9hRvP6ZHWc/yVdeVbB9+rXFOMnFgVcT8bxD7i6R6YlW8M/ovaPK9ZlES3lzEjwGC8e6520fKw0P
+ Jt06oJaHpaQl5xviY7wxgWdRvK9Un9g+oMf9KM6Q==
 X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.252;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=68.232.139.117;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa4.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -107,30 +103,46 @@ the readability of the code.
 
 Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 ---
- tests/qtest/fuzz/generic_fuzz.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ dump/dump.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index ec842e03c5e6..d107a496da63 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -11,6 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
+diff --git a/dump/dump.c b/dump/dump.c
+index 84064d890d2c..45e84428aea5 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -30,6 +30,7 @@
+ #include "migration/blocker.h"
+ #include "hw/core/cpu.h"
+ #include "win_dump.h"
 +#include "qemu/range.h"
  
- #include <wordexp.h>
+ #include <zlib.h>
+ #ifdef CONFIG_LZO
+@@ -574,8 +575,10 @@ static void get_offset_range(hwaddr phys_addr,
  
-@@ -211,7 +212,7 @@ void fuzz_dma_read_cb(size_t addr, size_t len, MemoryRegion *mr)
-          i < dma_regions->len && (avoid_double_fetches || qtest_log_enabled);
-          ++i) {
-         region = g_array_index(dma_regions, address_range, i);
--        if (addr < region.addr + region.size && addr + len > region.addr) {
-+        if (ranges_overlap(addr, len, region.addr, region.size)) {
-             double_fetch = true;
-             if (addr < region.addr
-                 && avoid_double_fetches) {
+     QTAILQ_FOREACH(block, &s->guest_phys_blocks.head, next) {
+         if (dump_has_filter(s)) {
+-            if (block->target_start >= s->filter_area_begin + s->filter_area_length ||
+-                block->target_end <= s->filter_area_begin) {
++            if (!ranges_overlap(block->target_start,
++                                block->target_end - block->target_start,
++                                s->filter_area_begin,
++                                s->filter_area_length)) {
+                 /* This block is out of the range */
+                 continue;
+             }
+@@ -734,8 +737,9 @@ int64_t dump_filtered_memblock_start(GuestPhysBlock *block,
+ {
+     if (filter_area_length) {
+         /* return -1 if the block is not within filter area */
+-        if (block->target_start >= filter_area_start + filter_area_length ||
+-            block->target_end <= filter_area_start) {
++        if (!ranges_overlap(block->target_start,
++                            block->target_end - block->target_start,
++                            filter_area_start, filter_area_length)) {
+             return -1;
+         }
+ 
 -- 
 2.41.0
 
