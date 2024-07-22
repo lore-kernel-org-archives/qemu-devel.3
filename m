@@ -4,84 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61881C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8B0C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 13:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVtF3-0006ci-5n; Mon, 22 Jul 2024 09:38:17 -0400
+	id 1sVtJB-00069x-9Y; Mon, 22 Jul 2024 09:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVtF1-0006YT-Uf
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:38:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sVtEy-0003Xt-VM
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:38:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721655492;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9EiBCLqkK09Y1BVxrLWcGqAzYTQfgigTA0WYXbrnHsM=;
- b=bMk9Um/S4ylAO6LhuVaEaSRWbYkIsTH9ozr1l8qZelJ3uxPHZnWmBXwq4f5Np4Y4idxoRN
- mzgbVljuB3DZyIPHR1vYqQ1qWTAseTuPnRVG2NZoRgmS7O9zcWLMPQ2fQ2eyHjGth2H51w
- xvHg5V0MDwrbPCyUJZjDWkO6ff0hPqI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-YUk80kGdPXGEVKtTCjXqAQ-1; Mon,
- 22 Jul 2024 09:38:06 -0400
-X-MC-Unique: YUk80kGdPXGEVKtTCjXqAQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sVtJ6-000691-EX
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:42:29 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sVtJ4-0004RW-OA
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 09:42:28 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BF23196E0A0; Mon, 22 Jul 2024 13:37:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D52391944AA4; Mon, 22 Jul 2024 13:37:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AB0FB21E669B; Mon, 22 Jul 2024 15:37:43 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
- Habkost
- <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
- <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
- <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
- kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
- <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
-In-Reply-To: <20240704031603.1744546-9-zhao1.liu@intel.com> (Zhao Liu's
- message of "Thu, 4 Jul 2024 11:16:03 +0800")
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-9-zhao1.liu@intel.com>
-Date: Mon, 22 Jul 2024 15:37:43 +0200
-Message-ID: <87r0bl35ug.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 115611FB6B;
+ Mon, 22 Jul 2024 13:42:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721655744; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5RXhkjT7sbCb8cmHoYzvXj9LvAdqjiPHDjQoDQ/87yk=;
+ b=UB4yfN3W4KOfoTE7F//oZGHPH9TPd5pyFWjqoCJmObyeslbl2JdAe4W5+xk46nsyVrdqz8
+ i1JBZCJFjrdReFzXZ01ta3YR/uc1bCv+B8SOsLci0A068/f4LUKcwbetwgp06cpCf9HZ1c
+ ZnJ8DBWcm1IObdvkYWcXxtApx3zSRQk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721655744;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5RXhkjT7sbCb8cmHoYzvXj9LvAdqjiPHDjQoDQ/87yk=;
+ b=JoKv3f+MrLQf3KsJt3suWlvPoxJ7VitV8JZq0wny3qs8uNc8hGQ6KVORrdIEKMR/oFhYOS
+ K8bLeuLO5d555lBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1721655744; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5RXhkjT7sbCb8cmHoYzvXj9LvAdqjiPHDjQoDQ/87yk=;
+ b=UB4yfN3W4KOfoTE7F//oZGHPH9TPd5pyFWjqoCJmObyeslbl2JdAe4W5+xk46nsyVrdqz8
+ i1JBZCJFjrdReFzXZ01ta3YR/uc1bCv+B8SOsLci0A068/f4LUKcwbetwgp06cpCf9HZ1c
+ ZnJ8DBWcm1IObdvkYWcXxtApx3zSRQk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1721655744;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5RXhkjT7sbCb8cmHoYzvXj9LvAdqjiPHDjQoDQ/87yk=;
+ b=JoKv3f+MrLQf3KsJt3suWlvPoxJ7VitV8JZq0wny3qs8uNc8hGQ6KVORrdIEKMR/oFhYOS
+ K8bLeuLO5d555lBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 85F9E138A7;
+ Mon, 22 Jul 2024 13:42:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ntsoE79hnmbWPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 22 Jul 2024 13:42:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Philippe Mathieu-Daude <philmd@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 04/11] migration: stop vm earlier for cpr
+In-Reply-To: <0d1e8314-cc14-4bd2-8d80-93f6291ada1f@oracle.com>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-5-git-send-email-steven.sistare@oracle.com>
+ <87sew726b9.fsf@suse.de> <0d1e8314-cc14-4bd2-8d80-93f6291ada1f@oracle.com>
+Date: Mon, 22 Jul 2024 10:42:21 -0300
+Message-ID: <87v80xzgoy.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spamd-Result: default: False [-2.60 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MISSING_XM_UA(0.00)[];
+ TAGGED_RCPT(0.00)[]; RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[10];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,habkost.net,linaro.org];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, oracle.com:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,101 +121,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-
-This patch is just documentation.  The code got added in some previous
-patch.  Would it make sense to squash this patch into that previous
-patch?
-
-> ---
-> Changes since RFC v2:
->  * Rewrote the document of smp-cache object.
+> On 7/17/2024 2:59 PM, Fabiano Rosas wrote:
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>> 
+>>> Stop the vm earlier for cpr, to guarantee consistent device state when
+>>> CPR state is saved.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>> ---
+>>>   migration/migration.c | 22 +++++++++++++---------
+>>>   1 file changed, 13 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index 0f47765..8a8e927 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -2077,6 +2077,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>>       MigrationState *s = migrate_get_current();
+>>>       g_autoptr(MigrationChannel) channel = NULL;
+>>>       MigrationAddress *addr = NULL;
+>>> +    bool stopped = false;
+>>>   
+>>>       /*
+>>>        * Having preliminary checks for uri and channel
+>>> @@ -2120,6 +2121,15 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>>           }
+>>>       }
+>>>   
+>>> +    if (migrate_mode_is_cpr(s)) {
+>>> +        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>> +        if (ret < 0) {
+>>> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+>>> +            goto out;
+>>> +        }
+>>> +        stopped = true;
+>>> +    }
+>>> +
+>>>       if (cpr_state_save(&local_err)) {
+>>>           goto out;
+>>>       }
+>>> @@ -2155,6 +2165,9 @@ out:
+>>>           }
+>>>           migrate_fd_error(s, local_err);
+>>>           error_propagate(errp, local_err);
+>>> +        if (stopped && runstate_is_live(s->vm_old_state)) {
+>>> +            vm_start();
+>>> +        }
+>> 
+>> What about non-live states? Shouldn't this be:
+>> 
+>> if (stopped) {
+>>     vm_resume();
+>> }
 >
-> Changes since RFC v1:
->  * Use "*_cache=topo_level" as -smp example as the original "level"
->    term for a cache has a totally different meaning. (Jonathan)
-> ---
->  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 58 insertions(+)
+> Not quite.  vm_old_state may be a stopped state, so we don't want to resume.
+> However, I should probably restore the old stopped state here.  I'll try some more
+> error recovery scenarios.
+
+AIUI vm_resume() does the right thing already:
+
+void vm_resume(RunState state)
+{
+    if (runstate_is_live(state)) {
+        vm_start();
+    } else {
+        runstate_set(state);
+    }
+}
+
 >
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 8ca7f34ef0c8..4b84f4508a6e 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -159,6 +159,15 @@ SRST
->          ::
->  
->              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
-> +
-> +    ``smp-cache='id'``
-> +        Allows to configure cache property (now only the cache topology level).
-> +
-> +        For example:
-> +        ::
-> +
-> +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
-> +            -machine smp-cache=cache
->  ERST
->  
->  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> @@ -5871,6 +5880,55 @@ SRST
->          ::
->  
->              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
-> +
-> +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
-> +        Create an smp-cache object that configures machine's cache
-> +        property. Currently, cache property only include cache topology
-> +        level.
-> +
-> +        This option must be written in JSON format to support JSON list.
-
-Why?
-
-> +
-> +        The ``caches`` parameter accepts a list of cache property in JSON
-> +        format.
-> +
-> +        A list element requires the cache name to be specified in the
-> +        ``name`` parameter (currently ``l1d``, ``l1i``, ``l2`` and ``l3``
-> +        are supported). ``topo`` parameter accepts CPU topology levels
-> +        including ``thread``, ``core``, ``module``, ``cluster``, ``die``,
-> +        ``socket``, ``book``, ``drawer`` and ``default``. The ``topo``
-> +        parameter indicates CPUs winthin the same CPU topology container
-> +        are sharing the same cache.
-> +
-> +        Some machines may have their own cache topology model, and this
-> +        object may override the machine-specific cache topology setting
-> +        by specifying smp-cache object in the -machine. When specifying
-> +        the cache topology level of ``default``, it will honor the default
-> +        machine-specific cache topology setting. For other topology levels,
-> +        they will override the default setting.
-> +
-> +        An example list of caches to configure the cache model (l1d cache
-> +        per core, l1i cache per core, l2 cache per module and l3 cache per
-> +        socket) supported by PC machine might look like:
-> +
-> +        ::
-> +
-> +              {
-> +                "caches": [
-> +                   { "name": "l1d", "topo": "core" },
-> +                   { "name": "l1i", "topo": "core" },
-> +                   { "name": "l2", "topo": "module" },
-> +                   { "name": "l3", "topo": "socket" },
-> +                ]
-> +              }
-> +
-> +        An example smp-cache object would look like:()
-> +
-> +        .. parsed-literal::
-> +
-> +             # |qemu_system| \\
-> +                 ... \\
-> +                 -object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}' \\
-> +                 ...
->  ERST
-
+> - Steve
+>
+>> 
+>>>           return;
+>>>       }
+>>>   }
+>>> @@ -3738,7 +3751,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>>>       Error *local_err = NULL;
+>>>       uint64_t rate_limit;
+>>>       bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+>>> -    int ret;
+>>>   
+>>>       /*
+>>>        * If there's a previous error, free it and prepare for another one.
+>>> @@ -3810,14 +3822,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>>>           return;
+>>>       }
+>>>   
+>>> -    if (migrate_mode_is_cpr(s)) {
+>>> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>> -        if (ret < 0) {
+>>> -            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+>>> -            goto fail;
+>>> -        }
+>>> -    }
+>>> -
+>>>       if (migrate_background_snapshot()) {
+>>>           qemu_thread_create(&s->thread, "mig/snapshot",
+>>>                   bg_migration_thread, s, QEMU_THREAD_JOINABLE);
 
