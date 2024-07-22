@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9E9C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 22:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4FBC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 22:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW1Rz-0008Rs-5k; Mon, 22 Jul 2024 18:24:11 -0400
+	id 1sW1Ub-0004zH-2w; Mon, 22 Jul 2024 18:26:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW1Rs-0008Qi-4N; Mon, 22 Jul 2024 18:24:04 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW1Rp-00039x-9y; Mon, 22 Jul 2024 18:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=spjUBKFS6QaWhZsVpAytuVz/tRWNcLBDro2q2YDUItc=; b=GuxpFaHMS1Er3WCNJ4P3s6Yptm
- 1Apf11XJwHppfMj6Wz/25Adcf0MkBEdIAsR02/VoXz0J5y2UcAIrrCsV8QbKrGRATHt3iUlbcFHT/
- fCZ8HKclqAOdJYfF16VL6oNo00SsaUTj8FhLYu/lU09GkySop3XvylZH3DgbxOShx2Zxo8waNlVjz
- GlIYsasMrjL+XXQZOzUv1/wp+qFKIgrnQda4gkGI9/dsDzrIDI87YAcuRP5I4YJuqlvzSohfebF9S
- 6Z5ISADcHSuKLR6yGtPBE8b6ZWJ879h67/Ec+wrYDa3vWgPrWQieUtNBTzBgwJTLkf1TkSgW2SJCE
- Pty5gDcyrwRuxL4obVN1B01bhSTSfzBWLQnJNXqXf8+eCDnMsgBA9qJuyOKqW0PQ7mKSemnSQjYeY
- iNuDHz4X/HmO1mYY7aKskFQNS+LW7q5wm2zgfslK5Z5w7dDGCOZ8/s5EXJqlxwDfqXD7VyIa7qDUf
- P69O4UsTAjWm9hCWh4QqGsqaGCJ8Ow8ayo55XiQHWJziAcvzH/Iq6/zthXAXvb4lwVm3wya95jizn
- aNYWn5bSiuVDXMob9IUufyuiObhTDQGO8LwDPKJa5gxzLa8oC5tA4l3WWHfQWwI0XYzevmd9gcnz6
- JesO7n2haOmHERrgun4AZjm4H94wBt4I9cPioucgo=;
-Received: from [2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sW1QD-0003kj-Gq; Mon, 22 Jul 2024 23:22:25 +0100
-Message-ID: <d5ada7c0-eac8-483c-901d-172fd16a2c4b@ilande.co.uk>
-Date: Mon, 22 Jul 2024 23:23:51 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW1UU-0004xE-Pd
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:26:46 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW1US-0003jZ-Qh
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:26:46 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fd66cddd4dso1334235ad.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 15:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721687202; x=1722292002; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jWDfVrnaWMfIXgFgaz5jn1TeB6DYHTIuveHzb1zlTas=;
+ b=p1H4DaDWUdhzSh2YHOC8BKoBqSU+lk9fFMwcgKSeViHDDPdBeiJIrCAI2YmOOfQDG+
+ sR76fOqM+8LW7cY/pGFisRNcdT1+UTiGvDbSxgAuCQ+q261CX/9xg102/F2aVcItJoFG
+ IYXx3kMQFbYe1uBt15PBinkVkucwRqUeD0xhquxIame8QfOiXz12Pqgeh0TbdTlLuh7Q
+ G8rUBHgHRhFwp4FQN+UgQLSTFoR0Ub9TF5YU7Q4mS5kspxwRXdbBLqxvycTmpbwQ1U1o
+ pLPkv7uQuMNBBpglbC0vqq31g5+PkhG0kpPk3rbib+ct7c5ysfmsP8qUUN2lQyTRIcQ4
+ iv2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721687202; x=1722292002;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jWDfVrnaWMfIXgFgaz5jn1TeB6DYHTIuveHzb1zlTas=;
+ b=foLSGLxUGOJJAfRkfJMGUtZLMaWHlwY6X8MhMZpJ6K2s2Vl4rQfGq3L3WO/MqOCxw1
+ 9oIovM35gY6t3HugE6+bTUYqKSnVCfkrlSnx5HoIewhjGQt3U19iLeGNigHXRv7VFKX8
+ gHAmGDuKDZPJcCzAxXffSx1yXAoHglZVTGgPHdAE0Pa40o3oZjVb5natuCYx+gR5S1dU
+ QvxxnL/CvFQSVEm0wEWICuMTCF9nNISkzU9hdPvOnEnws7qQ9VpPRxGY2LN70ZcieA3T
+ kKiIakSoQqO5KuGMAc9JdJj6JeVcIih9hI8enrkbM22gx1ygt7FQ+c0Z9ESvogJPILn9
+ bE5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2OFTQ3uTvPXeV6Sw1zQKvcL401lQURNPOmUJ6SU/xyMeKKdY3odbjS5THcZ34TCQnDowaoWF102yBwP5WgfV1sCfCO9Q=
+X-Gm-Message-State: AOJu0YzSvmc+woB7zn5UAhCKwp4k3gndItUuwcUNT0qjruZNUGuSrS0v
+ 6jnPjc8GCmb2aUqUJCiSnDX6977lj8XB8ZSowGb80RfygaAv1q0r2TCmMv4TqvY=
+X-Google-Smtp-Source: AGHT+IHJaRcBecLaG+s6s7Jr5m4/zqMqNgiu6OHBl7rlc+yZoMKoacbn+TQZzB2dmvfRssg2iHDQJA==
+X-Received: by 2002:a17:902:d511:b0:1f7:2293:1886 with SMTP id
+ d9443c01a7336-1fdb5f50c4dmr10583875ad.12.1721687202167; 
+ Mon, 22 Jul 2024 15:26:42 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fd6f48ca81sm60119665ad.299.2024.07.22.15.26.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 15:26:41 -0700 (PDT)
+Message-ID: <2f161331-26db-4b52-92ef-4c24b927ded4@linaro.org>
+Date: Tue, 23 Jul 2024 08:26:33 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20240722160745.67904-1-philmd@linaro.org>
- <20240722160745.67904-7-philmd@linaro.org>
- <7e222b69-49e6-4d0c-9b44-45c42e18cfb2@ilande.co.uk>
- <8fcc1b96-3b8e-4d5e-9154-3abf9b6f730b@linaro.org>
+Subject: Re: [PULL 00/25] Misc QEMU-GA patches 2024-07-22
+To: Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240722070122.27615-1-kkostiuk@redhat.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <8fcc1b96-3b8e-4d5e-9154-3abf9b6f730b@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:c7ab:2566:bad6:7dfd
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 6/7] util/fifo8: Expose fifo8_pop_buf()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,80 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/07/2024 22:39, Philippe Mathieu-Daudé wrote:
+On 7/22/24 17:00, Konstantin Kostiuk wrote:
+> The following changes since commit 23fa74974d8c96bc95cbecc0d4e2d90f984939f6:
+> 
+>    Merge tag 'pull-target-arm-20240718' ofhttps://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-19 07:02:17 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-07-22
+> 
+> for you to fetch changes up to 24d12dfc5abb3b4ac2506f22c3fd0cda40a6977d:
+> 
+>    qga/linux: Add new api 'guest-network-get-route' (2024-07-22 09:51:12 +0300)
+> 
+> ----------------------------------------------------------------
+> qga-pull-2024-07-22
 
-> Hi Mark,
-> 
-> On 22/7/24 23:26, Mark Cave-Ayland wrote:
->> On 22/07/2024 17:07, Philippe Mathieu-Daudé wrote:
->>
->>> Extract fifo8_pop_buf() from hw/scsi/esp.c and expose
->>> it as part of the <qemu/fifo8.h> API. This function takes
->>> care of non-contiguous (wrapped) FIFO buffer (which is an
->>> implementation detail).
->>
->> I wonder if it is also worth updating the comment for fifo8_pop_bufptr() indicating 
->> that it returns a pointer to the internal buffer without checking for overflow,
-> 
-> We document:
-> 
->   * The function may return fewer bytes than requested when the data wraps
->   * around in the ring buffer; in this case only a contiguous part of the data
->   * is returned.
-> 
-> but I'll try to reword a bit.
-> 
->> and that in general fifo8_pop_buf() is recommended instead?
-> 
-> Yes, this was my first motivation but then I forgot to write it :)
-> 
-> BTW I now see fifo8_pop/peek_bufptr() as dangerous API and am thinking
-> of deprecating them (after release). AFAICT the difference is a pair of
-> memcpy(), when I expect to not be that important performance wise.
+Fails testing:
 
-Funny - I had exactly the same thought ;)
+https://gitlab.com/qemu-project/qemu/-/jobs/7401175099
+https://gitlab.com/qemu-project/qemu/-/jobs/7401175098
+https://gitlab.com/qemu-project/qemu/-/jobs/7401175093
 
->> Otherwise:
->>
->> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> 
-> Thanks!
-> 
-> BTW I'll respin this series including the fifo8_peek_buf() patch that
-> I forgot and is the one I need in PL011. Preview:
-> 
-> +uint32_t fifo8_peek_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
-> +{
-> +    uint32_t tail_count, head_count = 0;
-> +
-> +    if (destlen == 0) {
-> +        return 0;
-> +    }
-> +
-> +    destlen = MIN(destlen, fifo->num);
-> +    tail_count = MIN(fifo->capacity - fifo->head, destlen);
-> +
-> +    if (dest) {
-> +        memcpy(dest, &fifo->data[fifo->head], tail_count);
-> +    }
-> +
-> +    /* Add FIFO wraparound if needed */
-> +    destlen -= tail_count;
-> +    head_count = MIN(destlen, fifo->head);
-> +    if (head_count && dest) {
-> +        memcpy(&dest[tail_count], &fifo->data[0], head_count);
-> +    }
-> +
-> +    return tail_count + head_count;
-> +}
-
-Looks good at first glance, although it's getting late here now. If you're looking at 
-making a few more changes before a respin, is it worth considering to add a new file 
-with qtests for the updated Fifo8 implementation?
+../qga/commands-linux.c:2159:42: error: 'sscanf' may overflow; destination buffer in 
+argument 12 has size 16, but the corresponding specifier may require size 33 
+[-Werror,-Wfortify-source]
+                            &Use, &Flags, Iface) != 10) {
 
 
-ATB,
 
-Mark.
-
+r~
 
