@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3B1C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC4EC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 14:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVu2N-0007p8-F2; Mon, 22 Jul 2024 10:29:15 -0400
+	id 1sVu4n-0003zv-7X; Mon, 22 Jul 2024 10:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu2L-0007oa-RC
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:29:13 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu4g-0003y3-Rg
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:31:40 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu2K-0005SG-2o
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:29:13 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4266b1f1b21so32719975e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:29:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVu4c-00062M-T5
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 10:31:38 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-368526b1333so1717064f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 07:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721658550; x=1722263350; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721658693; x=1722263493; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4EGE6XShqi0/nfJLO/MS/xopgU6PUeNaRRk82ZPR41Q=;
- b=uhdSDeqt+RhTZP7Dk6NRPuh6AUq2uJ02Te+BNX2AbR8za7aeuYabSoBaVZfn5CvjHl
- hCEvIKoH8AC0Pkzdw0DbkuLWhFb/fYFXnv/1kLEv4A73QGXNffvTfaGdjDRwiCtwuKXn
- 6Q4Ry6kLo31pIS7siV7eb8VIeKfgcPCOixxeT9PXz8Tpwtivzhi22WuJK+OCzShrniyx
- 6zFCKlyE4R/qyPZL9tsg6LLbe9GNHJB+sS2/m26IslKBAEKS7851Ux2FTVB2T4XhReiQ
- VomBefUj1+knyu9Dj4uIavmh7uX2AO3L7M+ClIVJqioKMEiIbeGLo7VT75MwFPQBhRoz
- cLAg==
+ bh=Wns12XiTd8yS/K47wHNp8N0+Mz+v6AxoZ6X23UL4GAc=;
+ b=rgaxoFsVmr5Q7Ht06HADy8+nKE/MPe5LhV0NHonX+nU79zH0KoaFeWDT6UBrenllaU
+ UVpoLnlX0wnuQ7BxyYA62W36U/VefASs7HUhgFrYANty7bvExypaUyop1lLnGkH8bjCq
+ QtvXtQQCF88m5VtUkAW9Y96/+dn7j1vYIrnzBuLgrdJ83VIzLCLIsffY5zdQn0fXJRiH
+ VuYDJ/R2bvk9MgrrnstTzEj8Bk2t6SXtBRlGXzqQH/6ZmslX9g5uIAaA20GB7D21Bwtl
+ LMX9LT+db0x4UnZpeuCj4NauPnp5NQt6Oz3YoVD0Ka4CUpSCGIQNPhb9XZBw5OVqO5ih
+ xT7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721658550; x=1722263350;
+ d=1e100.net; s=20230601; t=1721658693; x=1722263493;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4EGE6XShqi0/nfJLO/MS/xopgU6PUeNaRRk82ZPR41Q=;
- b=c7tLyPl+8ds7jvvGi9gF3drdkUOzc3SBfkY99tGGkw6a3CMKhUzzY6LxAduWJ0JjQi
- ni6ttXpRdskA4MlKoZoOZoI84u1KnBFGlVjU+HFVyn2oyDWECAss4e4lTHbXwfUcbMlD
- jYG53V+u8xP0iXo9lrMb5oFuL68+/9f4532bJDfQnfUH3w++OCeI4CWRu/R+mL89aUhQ
- frq9GTnCJaYxPjwfeWvQuyK05ouK2zZt1MW7kxCtV8t6JLlm+WHMOoTlf8QQa3C29mbp
- 3I/9X1cGO+C48CBe3kZHuKZobOlaia4WhkrztKPJdekWuNS47fHDw749686a5x1H1rEh
- S89w==
+ bh=Wns12XiTd8yS/K47wHNp8N0+Mz+v6AxoZ6X23UL4GAc=;
+ b=cFnPW5WSyWZglCLUb7FTKb7oHkIz3TBYKpMrl7/mxtOq/We/zRli1A89tWpWWWgvRm
+ UT11NAYukPuBKUBNgj5/iAJUP93V2R0PaEnKtLERgjMABKSstQLtnhk+j2C/VuPY13H4
+ jKApymAsmKRJCjSSNrzyGx9Btk7AjqJWx+RQ69MuS1Cz65lWyh+p0WnDTEVjpZ+8DTWt
+ WpBwzirXbJldw2QajzUaXzJakYuL6ejQ6ljb6oUPdesSyh127tUUCC6Zs1YqwPeiHtE8
+ t4SC6jd6Pc+R7ku+SDs4HBUKpQj6yUMjlntlJ5zv6yS/Wni51qWLy49cVK64uRMaFc0n
+ kohw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtUuPcmDXWzpABoTsW/Vn87Vzjc9hK3UhxpYQeSqwJB+uUOxqPFRxn9U9Tg0aAbuKaIv5ikSB1TGgC0kTJJ9+mtUgAnT4=
-X-Gm-Message-State: AOJu0Yz2ZNufC22RptvQgRWRqiC0ZGtwtNGLV3D1Pv3ael2Rex7qU1oJ
- /3u9642QU3pbyFBT4yFNMKYVJNp1ILqga4Ar8BMYXYUni1bRZGalJbAbPNzvdig=
-X-Google-Smtp-Source: AGHT+IEsNerB4pUlLzcDbayfNDZhx7veJcRZMAaHHhxfnF7uZgMjCx7A0bR9UeIDaPzwMm0JSU+D+A==
-X-Received: by 2002:a05:600c:4e47:b0:426:6e8b:3dc5 with SMTP id
- 5b1f17b1804b1-427dc56753emr54702105e9.32.1721658550311; 
- Mon, 22 Jul 2024 07:29:10 -0700 (PDT)
+ AJvYcCXsyuAo1QwriQR6zYZS2diWA6niW331QbMhWsJY71AGq2wY3O/ru4ahwtaqXG7I68ycXMlAORof5oPTPNtpNdce4eBcKmY=
+X-Gm-Message-State: AOJu0YwWqzAk/exb2/y2shDv8l6dKyf9MyQA659fDaFLhPa7dguiLrMH
+ KmKVZSlocFBNlqwFgnLmpfjvJiFEpYOTRQkA1ZW+c9P+NxM7xtmNKvbSIL2ygpw=
+X-Google-Smtp-Source: AGHT+IE06CndVPmhKCiXB/6m0kNGpgkCM0ji9IshPMwVgF+gVamR1AgNWx0GlomHldeuSFlpKOs94g==
+X-Received: by 2002:adf:e8ce:0:b0:366:df35:b64f with SMTP id
+ ffacd0b85a97d-36873dc1f38mr6541551f8f.4.1721658693325; 
+ Mon, 22 Jul 2024 07:31:33 -0700 (PDT)
 Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
  [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d8e68ba0sm121498795e9.21.2024.07.22.07.29.08
+ 5b1f17b1804b1-427d2a5c356sm157623455e9.18.2024.07.22.07.31.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 07:29:09 -0700 (PDT)
-Message-ID: <21bed558-49d2-408d-baaf-97451780c53a@linaro.org>
-Date: Mon, 22 Jul 2024 16:29:07 +0200
+ Mon, 22 Jul 2024 07:31:32 -0700 (PDT)
+Message-ID: <ddf31355-5234-4371-b4aa-b72f2e6ff73f@linaro.org>
+Date: Mon, 22 Jul 2024 16:31:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] [PATCH] system/memory: Fix max access size
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: TaiseiIto <taisei1212@outlook.jp>, qemu-devel@nongnu.org,
- peterx@redhat.com, david@redhat.com
-References: <TY0PR0101MB4285D5A3587179A5788F3356A4AE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
- <CAFEAcA_vY769Yws9t4WWitsShBK01Oua5zgarTj3YHgUuvpzTw@mail.gmail.com>
- <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
+Subject: Re: [PATCH 1/5] qapi: allow for g_autoptr(Error) usage
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240722131611.2820041-1-berrange@redhat.com>
+ <20240722131611.2820041-2-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfbdXXXbygNn3DbN9Q7xB=kTFTFs5yxFQapSn6SAXdpQZw@mail.gmail.com>
+In-Reply-To: <20240722131611.2820041-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,44 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/24 13:53, Paolo Bonzini wrote:
-> On Sat, Jul 20, 2024 at 4:30 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->> If the HPET timer device is supposed to permit 64 bit writes and it is not
->> doing so, then that needs to be fixed in the HPET timer device model, by
->> making sure that its read/write functions correctly handle the size=8 case
->> and then setting access_size_max =8 in its MemoryRegionOps struct.
+On 22/7/24 15:16, Daniel P. Berrangé wrote:
+> While common error propagation practice does not require manually
+> free'ing of local 'Error' objects, there are some cases where this
+> is needed. One example is where the 'Error' object is only used
+> for providing info to a trace event probe. Supporting g_autoptr
+> avoids the need to manually call 'error_free'.
 > 
-> It does, and I've started looking into it[1].
-> 
-> The replacement for this patch is simple (on top of that branch):
-> 
-> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-> index 5e60fedc089..ac55dd1ebd6 100644
-> --- a/hw/timer/hpet.c
-> +++ b/hw/timer/hpet.c
-> @@ -637,6 +637,10 @@ static const MemoryRegionOps hpet_ram_ops = {
->           .min_access_size = 4,
->           .max_access_size = 8,
->       },
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 8,
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   include/qapi/error.h | 2 ++
+>   1 file changed, 2 insertions(+)
 
-It seems this model could be simplified using .min_access_size = 8,
-letting the core memory layer handle the % 4 byte accesses (the
-read path is obvious, the write one a bit less). Nothing urgent,
-possibly a BitSizedTask.
-
-> +    },
->       .endianness = DEVICE_NATIVE_ENDIAN,
->   };
-> 
-> I'll now look into the other patch for interrupts. Thanks for testing
-> my changes!
-> 
-> Paolo
-> 
-> [1] https://gitlab.com/bonzini/qemu/-/commits/hpet
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
