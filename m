@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01948C3DA63
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D43CC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVw5j-0001tw-K9; Mon, 22 Jul 2024 12:40:51 -0400
+	id 1sVw5l-00022w-Fa; Mon, 22 Jul 2024 12:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sVw5c-0001m1-09; Mon, 22 Jul 2024 12:40:44 -0400
-Received: from fout4-smtp.messagingengine.com ([103.168.172.147])
+ id 1sVw5j-0001tb-6Z; Mon, 22 Jul 2024 12:40:51 -0400
+Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sVw5Z-0005v6-Np; Mon, 22 Jul 2024 12:40:43 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailfout.nyi.internal (Postfix) with ESMTP id 319CC13803C2;
- Mon, 22 Jul 2024 12:40:38 -0400 (EDT)
+ id 1sVw5e-0005xE-PG; Mon, 22 Jul 2024 12:40:50 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 43FA61140163;
+ Mon, 22 Jul 2024 12:40:44 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Mon, 22 Jul 2024 12:40:38 -0400
+ by compute4.internal (MEProxy); Mon, 22 Jul 2024 12:40:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1721666438; x=
- 1721752838; bh=xcR1yAOVdLASgJlPJFEgnT1h7JNGWxb2U6Tq0lR+J10=; b=q
- atwTkvYaqo4KvdJm9Wld5xulOaSI1PxBb6N29wL1+OEHiyEOMN7QDr1lNflmJ/HU
- sFqvJ1R7mp44H5ioK4hb+/ee+9totsn+rYyY/asaJaPSsDXx8TlN3FLh2/oPoexs
- QahiyiS39qvpKDkNdpnyi5FB2AOfBSS/IxZGhlUeK+7PpkofG+MSR1n5Kyu/uCV0
- CHT7T9gOMtP9E3dEXU0Pv9WZftUwfYtjeEwmCU6KV318DfnlYGd0n1i/EzKiXLz4
- XJjb1Mv6mGEc1RRB5AtjzPmyDM21zLrZwtRzLRqDPpWPkGlE8biv3muPJF4/749i
- HNUk+iFNAESh4D4u91zlg==
+ :reply-to:subject:subject:to:to; s=fm2; t=1721666444; x=
+ 1721752844; bh=WyKJRhjeeug+HYE4DuRDplA49rGAICyGPO4Gj8mghwE=; b=h
+ iem9nEf5B1KW5PR5WTt6vBH/AVwuNrmQfv0bXvWi0XCxbST0ijGT9XGx8+XTSrp4
+ 5NXKOfacRlnzoP2cmH/RD+01psz+ADFWQuuFWob2+A4fDM/pa/OOEvgeNwmSZ3Bv
+ loaBpPMzjotWyNPdSThnwrCWKsHx+rcYVcmWFGiYk9U6jCMhUPNnzYHKu24g4jJ5
+ MQ/ABhzwtQRyEZf4IKMENB1tF4dEr4fbk6CD5d9ErL/l57F+ToYA7JMXy8UDhonM
+ 1V6lrdgyr2T7xJtrh82dGEfdEBzucgaaCbe5iB/bNiU9g7qlB0wv1wZ7If9NVDOG
+ a2HWYmElShIxrLHhuCWpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721666438; x=
- 1721752838; bh=xcR1yAOVdLASgJlPJFEgnT1h7JNGWxb2U6Tq0lR+J10=; b=J
- kEUGcTreGp9qmzLpfA+bheEqHX8ICgrGegI1j27BKr+BbGdKMu/UP+k2IwpDv8Wm
- IuOK/qH6TU0S9HCIzG+6P3FYvhdkCQVRvwDGTBUvSid02wfMbmLm132VYizY0Ati
- q1lb3xRUzGpMxvK7ir1UnyqcP/TwTFxH2Icoj2B3B6INIxSfxaOtXO5qf/0CbJht
- F2B3QtyTPZjD+KHhuiQv2T3hwgwCy8YB20dDs/sIMAdUu2aqptJdVFdIQktWcR9X
- F0Z4xCiDTaPivbI2MZIMbAERrz82ZW03i1dQFGcaQOvxLVmaw/Kckc+NAoNHr4jE
- 3X7Q9P2bBnOiH+/YbfmyA==
-X-ME-Sender: <xms:hYueZtNHIbsy1UksymLbMIqM60cft3r_UJpjuAiddPVOquNH2mcZuQ>
- <xme:hYueZv9CLQwwRxeKga6EJr95pz1PEfv1wHh01p4ltBppQRt8wQt1ywUaMCHHWtuiN
- 7hhlK9rvPiF3Hh93g8>
-X-ME-Received: <xmr:hYueZsT46rUQ4Dh8ypfExNuy5OkzvLhMdD9phfVNjyfIZRzDdjDcOTIEwlb7PfIw7vVmeaggDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheejgddutdegucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1721666444; x=
+ 1721752844; bh=WyKJRhjeeug+HYE4DuRDplA49rGAICyGPO4Gj8mghwE=; b=j
+ LpVCqOEL5vyf+Ny+bf23GKyObD0sbMKrMbm/gY6zDHmuSndnMReFN2PGBv2hAyhy
+ 5/hItlP4mxgo3SKdqYTp/rpaMaG3L1Ett7Srzpvte8/xfhrQUEjNTGAAyMjQW4MX
+ jsKOk2lDTb35MHgS8WdWLt+ofd90XcaDtQmEd3PYxNIFqNHTck57flK+LpaOGjU4
+ iYZxaQ/RtYr/tGVhiRVLElC2TK14IRE0h0SVlHF782TflkvMejUYs4QgBjHm6D8X
+ /b6imd94/Yt3/3yb5KECE7Y2qfhBsYCXC+c+mtdrrp/4bFRlRrRcUCHh/MAtT7LB
+ 2N+UtwvZsIN/nKNbS6Fbw==
+X-ME-Sender: <xms:i4ueZoMKdaQg0KTULo1hlCBtRANxp4Kon2BT3zuMXihTnxsiTIU2uA>
+ <xme:i4ueZu9HAcAQv55NN4UvBMYZt6Ju5Tsgzm7w5n1s8quODrQtliGIfL906iKL8pa14
+ 6MIiahESOYiSN-JAYU>
+X-ME-Received: <xmr:i4ueZvSy4HD7KrZ5yAqV6W7HNYlqUmhLyXglNa30f1nKP-NAK2SPkYwjTVWojFIQMovczwaRbQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheejgddutdehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghu
@@ -59,14 +59,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrheejgddutdegucetufdoteggod
  htvghrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudej
  udegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
  htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:hYueZptvHyJPi6booMmNCD6x3KsVx5dCHwI9F_rcaj2AqrNVs39log>
- <xmx:houeZleLz05iokXbvJFQF9YRJWby4Km8tPHZGd_0IE4wSUYBUiXM7Q>
- <xmx:houeZl0aqWweHEBiCtSUi3vRTZAD2cYKMwbxz9uOiPPcq6XxJIgVcw>
- <xmx:houeZh9ZCZhuS8d9Ipfz5txZ7uZlevnYjJ8K6Hw_G97pAGsYAlAZMw>
- <xmx:houeZg3WyJqYbPXe3XmeLWiDFQ3J926wzR1Vg0zBQLT7c5-IbrQRNQl->
+X-ME-Proxy: <xmx:i4ueZgvWRsZiBEd3IGkzeO1qM6PaY-7iIsRw7x4wPrZRDDgrdcsTnA>
+ <xmx:i4ueZgfJ3ign36iMH67bXb50DtDiM11la7_csTKIhnXfYENm2wz7tw>
+ <xmx:i4ueZk1-0nSvfebeImrdNHrgQsk8oKfrz5QYYbttCdxriZNO2inwlg>
+ <xmx:i4ueZk-GsoLe8Iau0zjRL0SXVuFUTXoyXirdSEkEY4ti1qaMhtuURQ>
+ <xmx:jIueZv_v1YTwyiani31pvmlpHBNQMF9L9tChzDhph8aIEOje612vlc0G>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jul 2024 12:40:35 -0400 (EDT)
+ 22 Jul 2024 12:40:41 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -75,36 +75,35 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Klaus Jensen <its@irrelevant.dk>,
  Fam Zheng <fam@euphon.net>, Keith Busch <kbusch@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jesper Devantier <foss@defmacro.it>, Kevin Wolf <kwolf@redhat.com>,
- Zheyu Ma <zheyuma97@gmail.com>, qemu-stable@nongnu.org,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 1/4] hw/nvme: fix memory leak in nvme_dsm
-Date: Mon, 22 Jul 2024 18:40:28 +0200
-Message-ID: <20240722164026.61128-7-its@irrelevant.dk>
+ Ayush Mishra <ayush.m55@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 3/4] hw/nvme: actually implement abort
+Date: Mon, 22 Jul 2024 18:40:30 +0200
+Message-ID: <20240722164026.61128-9-its@irrelevant.dk>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240722164026.61128-6-its@irrelevant.dk>
 References: <20240722164026.61128-6-its@irrelevant.dk>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1450; i=k.jensen@samsung.com;
- h=from:subject; bh=VvCHL/jXjJB40xqUePuYD3s+RJVRAW1gGbIcWezBdXg=;
- b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGaei3s+b5byopuO9jTCOWW2RAss+KEEViH1g
- ga6pM7c3b1gsokBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmnot7AAoJEE3hrzFt
- Tw3pxB8H/jV2O25OAaMv9sIiwpbKDD+hc+DCNKlIAYRKqPWwygDx36Ii9qOP9EXWBWUz11awlYk
- FQlHc99PLvCIE5LhVBtBkjIyeYKRr5OWapE467GPRrGJwxfttjg4g1dEn+mviUeApPh95Zr6As5
- TbIrRtKM8fqJ5QmhT2yQycF7tQBDqDHRkSetxPGhdzndfoTQb6fzfyGh8cxbWPqvFLIBvIF8+xs
- ZM7dybuZlSjdiN20cbO5FWDhZIIr7rHZNISrCk9PlT7Dh9AR8yRuqV/7pQ2vtzGjhKNkjtV4chs
- ny61KZMteQlFLwb+a6UwwOUr49Fm2r7e4QgWZioDtlU0/KxMF+7UT6ry
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2152; i=k.jensen@samsung.com;
+ h=from:subject; bh=uglZ62ZPer5vBDYnn35Dk3Wt8vMep/HYhK4caD0wnJk=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGaei3uawf+QHwE9an/l+E/1HGrp6BeMqdVq3
+ SgXJ969wRlcY4kBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJmnot7AAoJEE3hrzFt
+ Tw3pdU4H/Ridki1+9k3YDCcl0dlBoUgA4znHYdrYNjStvE8Qi0iiyuIawJrzMcK38krNfvw7l56
+ 7blBNZr6wrM95Jh+T807p/VW+GsONVpSSHudkILNdXCiwT0UaP9mVOlwaQkHqIJueEWrCBY80ts
+ kHdP0lUAZFf3+kkVhY57OvkpYS7XaCXDbTyAXZAJWip2CJBkrwFIx5vjG27MnMVFs3Lo92vH8Rh
+ BjzY0IjFux2hnUnpQUyWTKUJPqpYGL9QYC1AKaST9D74Ha73VQ6yey5wihxoBbvg7M3X7Ph4Alg
+ lfYgl7i0ZuRAlTEhuNT+lGSePInZxsoFzVDKRlCjdZsinVFnXiw3uqpp
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout4-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=its@irrelevant.dk;
+ helo=fhigh8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,44 +119,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Ayush Mishra <ayush.m55@samsung.com>
 
-The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
-happens because the allocated memory for iocb->range is not freed in all
-error handling paths.
+Abort was not implemented previously, but we can implement it for AERs
+and asynchrnously for I/O.
 
-Fix this by adding a free to ensure that the allocated memory is properly freed.
-
-ASAN log:
-==3075137==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 480 byte(s) in 6 object(s) allocated from:
-    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
-    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
-    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
-    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
-
-Cc: qemu-stable@nongnu.org
-Fixes: d7d1474fd85d ("hw/nvme: reimplement dsm to allow cancellation")
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/nvme/ctrl.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 5b1b0cabcfc3..f7b4e4627dd2 100644
+index 385438a9ae09..39782ddb2e76 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -2591,6 +2591,7 @@ next:
- done:
-     iocb->aiocb = NULL;
-     iocb->common.cb(iocb->common.opaque, iocb->ret);
-+    g_free(iocb->range);
-     qemu_aio_unref(iocb);
+@@ -1758,6 +1758,10 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
+         break;
+     }
+ 
++    if (ret == -ECANCELED) {
++        status = NVME_CMD_ABORT_REQ;
++    }
++
+     trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), status);
+ 
+     error_setg_errno(&local_err, -ret, "aio failed");
+@@ -5950,12 +5954,40 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+ {
+     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
++    uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
++    NvmeSQueue *sq = n->sq[sqid];
++    NvmeRequest *r, *next;
++    int i;
+ 
+     req->cqe.result = 1;
+     if (nvme_check_sqid(n, sqid)) {
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
+ 
++    if (sqid == 0) {
++        for (i = 0; i < n->outstanding_aers; i++) {
++            NvmeRequest *re = n->aer_reqs[i];
++            if (re->cqe.cid == cid) {
++                memmove(n->aer_reqs + i, n->aer_reqs + i + 1,
++                         (n->outstanding_aers - i - 1) * sizeof(NvmeRequest *));
++                n->outstanding_aers--;
++                re->status = NVME_CMD_ABORT_REQ;
++                req->cqe.result = 0;
++                nvme_enqueue_req_completion(&n->admin_cq, re);
++                return NVME_SUCCESS;
++            }
++        }
++    }
++
++    QTAILQ_FOREACH_SAFE(r, &sq->out_req_list, entry, next) {
++        if (r->cqe.cid == cid) {
++            if (r->aiocb) {
++                blk_aio_cancel_async(r->aiocb);
++            }
++            break;
++        }
++    }
++
+     return NVME_SUCCESS;
  }
  
 -- 
