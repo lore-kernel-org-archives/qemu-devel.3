@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B1FC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17102C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW2OZ-0003YG-JF; Mon, 22 Jul 2024 19:24:43 -0400
+	id 1sW2U8-0003PK-Kt; Mon, 22 Jul 2024 19:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW2OX-0003XY-Fc
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:41 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sW2U6-0003Ol-PR
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:30:26 -0400
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW2OU-000609-Fr
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:24:40 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-70d333d5890so845149b3a.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:24:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sW2U4-0007fU-LT
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:30:26 -0400
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-39834949f27so16263015ab.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721690675; x=1722295475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1721691022; x=1722295822; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qsevfAY9GIpyUuote11CGtGX1WMHv6oHZhtvbmU0TbM=;
- b=qlOziCAxicy9P7g33u938WVae/1IBhbC4hEwv8w5F0hBaDlI+dQn74Rnq3TzMcEIWn
- CTEgWM0xDrewSeWI2BLplSMa4WKj6gqGv3nciIxG4It8J42I8Qc6I8+I1c/v84RTxA8j
- xRUWTuicn6ouPN/Lz1gvwR2phwjePlawUBLnSWZLRYQVDt0n6vynGyttXuOND/fqHApM
- apFdHM6MqyAxX0PjvPYqLGZQiyUd00ftA2jQoxvyiHuc9lNYh1U28HZ+OixfgPqUA4sf
- CgilYuqXjnoXEEd9vBb7A1Rm2KCMrmqElb8vindE8Yf7+Tm5U5SpdyDs8t6ZHqulLE52
- jF+w==
+ bh=IRXEcTw+hD+ofe8jbZzgUX0DrdGiQNE3WX+OB5kbBPU=;
+ b=O/axm/S3OjIwJ1BXRhLI2dAP9MIU9dF6oNirO6nnTzT/qq9Ke86YBHM88a5oE8b+bv
+ aP35BxFTj1ZZmeGFh9q6Ar4E0X2+6kqzV4D0WWMzi9A0hMFP8oWBos4UT5xSXgb6APc9
+ q5r7oWDMCTFEED8UXiq7thipdbESG7+xU+orPSmFOYtWhQWuy/c6OInS1mNbYBmX2jEs
+ vZsZww6WCwkzEPMaRrC5EFnPaD+sPL+QOsx1ev6r6b00qLOEa/p1s7xJlkAb5UyWBz3i
+ Y2bvGX0Nb7f02J9NKCOYani0Ay6lsC5LDJDQQjNE6wY9ajkrUeAXkqNI6zhTUxRLayx2
+ v+gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721690675; x=1722295475;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1721691022; x=1722295822;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qsevfAY9GIpyUuote11CGtGX1WMHv6oHZhtvbmU0TbM=;
- b=Uf92e4adFOcguvpXNmpeR2lt1qOiTQo+j2n/LFNegGKlUX3mll/THHKJk2r7iZVP7R
- dBe4ULXGDWIPFgOHIQj6mNYG22X4gsG4aCUmLyzpdny5OSNbM2YFdpK5K0Sd75HMFxCh
- 4aMKDSTGCXqE+4HAw704EnoyXuo+6jrTK3W8u0yb0mZaGgaM6mQDikhktFGxQ7Kp4ZdI
- Oh+zzSGq9SyBgB3BFhT4uLYTOluGqMOGb7w9esC+UPTs1mBetR9ITldB4OloGg45K1Dc
- SB85D7BVoCLlU8XIpRUZsXm1dtHfS3yRSiMgPzfjCPaJQBCygMrcb6n1hPL5Yjaq4XRz
- uWpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV77pggSyG0+zyUwAqozDLa07kZsRsLAKXaXDChk9j/O7vqza+EM9qsIJHIQbukoN68GnywzBXEnWjs7YNNVXwfzgL/K2w=
-X-Gm-Message-State: AOJu0YxViGCmatbvTkNRYBXhQ3lxnaqhrKB+1L2Z+1ydEKkna3pmCFIL
- Lsz1u5ADE0na5psBftrmCsixjXVFGD5yqSh3ydizeQY881qp5RLpGp8yfb5ay33/O7RbS0s29kl
- fhKS0iw==
-X-Google-Smtp-Source: AGHT+IFjbgaSlchWf1/Bs2E21pyHGqFrMPKy7eiFI8Q2zF61Fl6QYk8Xn5UU7/ZH6G9veEAioEtORg==
-X-Received: by 2002:a05:6a00:10c3:b0:70d:2892:402b with SMTP id
- d2e1a72fcca58-70d289243a2mr6541538b3a.7.1721690675375; 
- Mon, 22 Jul 2024 16:24:35 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ bh=IRXEcTw+hD+ofe8jbZzgUX0DrdGiQNE3WX+OB5kbBPU=;
+ b=FZ25CHSnQt+SHCvO6Ebt1susGRGdW7GfjjiRYmmKMe2Gl4TqExvHxKgnG6PdCmsV2C
+ Pn697vvHwfdZXdRnCX5LL0dZtekmAb+ophV0Mv6woeFhxKqDLD1ZwEPFuQBl9SYsVMeC
+ SO5t0626Vrl0YUTvuAZPoP1vTRckHuzsFK8RXsmB/uUvvlT7tJGGvKqc3bpZTS5yxzxp
+ gFDqxCrHOg8vS/jFeu0gJcIGOHyIQLSxnvKioDlKlO2FJC7DmfRa6zx+5Xf2eOgZhj8k
+ O/PhuiQZpQ16+RlqyDMmmOAH2FEG2hS5nbF/W+abDE1phOHwBFODJ6tN/AkU54Xrj7jx
+ iqXQ==
+X-Gm-Message-State: AOJu0YzWdDoZLWXG4bP2GVQ1/krpURf3E2U5qGU9Ewss0M8yZoE+2wG7
+ ry+WZQ8KwYoYbvjt3elVISA3yZf4z4AcMOYH3Vba4dYHmGhUd14kXhk0NXDGFlDqlOxpD8Ry+fg
+ nsWE=
+X-Google-Smtp-Source: AGHT+IGKqJdUJWpVpnKHZQcrmvR0U3awfCnBSabsmMzeho2BYcn7C1gDT6pI9ZAOgkrCtMktIiyU5A==
+X-Received: by 2002:a05:6e02:218a:b0:395:ee4b:333 with SMTP id
+ e9e14a558f8ab-39a0c9639fcmr13892685ab.28.1721691022330; 
+ Mon, 22 Jul 2024 16:30:22 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70d241803fdsm2731099b3a.220.2024.07.22.16.24.32
+ 41be03b00d2f7-7a1582705d2sm3297901a12.86.2024.07.22.16.30.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 16:24:34 -0700 (PDT)
-Message-ID: <0b27836e-88d2-475a-9cd4-bf781861298c@linaro.org>
-Date: Tue, 23 Jul 2024 09:24:29 +1000
+ Mon, 22 Jul 2024 16:30:21 -0700 (PDT)
+Message-ID: <7e7388e2-a273-45d9-be75-8deda6fc555f@linaro.org>
+Date: Mon, 22 Jul 2024 16:30:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] util/getauxval: Ensure setting errno if not found
-To: Vivian Wang <uwu@dram.page>, qemu-devel@nongnu.org
-Cc: Richard Henderson <rth@twiddle.net>, Laurent Vivier <laurent@vivier.eu>
-References: <20240721090817.120888-1-uwu@dram.page>
- <20240721090817.120888-2-uwu@dram.page>
+Subject: Re: [PATCH] plugins: fix race condition with scoreboards
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240721090817.120888-2-uwu@dram.page>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240722232344.2203257-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240722232344.2203257-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-il1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +97,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/21/24 19:08, Vivian Wang wrote:
-> Sometimes zero is a valid value for getauxval (e.g. AT_EXECFD). Make
-> sure that we can distinguish between a valid zero value and a not found
-> entry by setting errno.
+@Alex: If possible, this patch should be included for the release to come.
+
+On 7/22/24 16:23, Pierrick Bouvier wrote:
+> A deadlock can be created if a new vcpu (a) triggers a scoreboard
+> reallocation, and another vcpu (b) wants to create a new scoreboard at
+> the same time.
 > 
-> Ignore getauxval from sys/auxv.h on glibc < 2.19 because it does not set
-> errno.
+> In this case, (a) holds the plugin lock, and starts an exclusive
+> section, waiting for (b). But at the same time, (b) is waiting for
+> plugin lock.
 > 
-> Signed-off-by: Vivian Wang <uwu@dram.page>
+> The solution is to drop the lock before entering the exclusive section.
+> 
+> This bug can be easily reproduced by creating a callback for any tb
+> exec, that allocates a new scoreboard. In this case, as soon as we reach
+> more than 16 vcpus, the deadlock occurs.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2344
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   util/getauxval.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
+>   plugins/core.c | 29 +++++++++++++++++++++++------
+>   1 file changed, 23 insertions(+), 6 deletions(-)
 > 
-> diff --git a/util/getauxval.c b/util/getauxval.c
-> index b124107d61..f1008bdc59 100644
-> --- a/util/getauxval.c
-> +++ b/util/getauxval.c
-> @@ -24,7 +24,13 @@
+> diff --git a/plugins/core.c b/plugins/core.c
+> index 12c67b4b4eb..e31a5c1c9cc 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -214,28 +214,45 @@ CPUPluginState *qemu_plugin_create_vcpu_state(void)
 >   
->   #include "qemu/osdep.h"
->   
-> -#ifdef CONFIG_GETAUXVAL
-> +/* If glibc < 2.19, getauxval can't be used because it does not set errno if
-> +   entry is not found. */
-> +#if defined(CONFIG_GETAUXVAL) && \
-> +    (!defined(__GLIBC__) \
-> +        || __GLIBC__ > 2 \
-> +        || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 19))
-
-Version 2.19 is so long ago that all supported OS releases have something newer.  For 
-Alpine Linux using musl, the first commit of getauxval had the errno setting.
-
-Therefore we don't need this check.
-
-> @@ -95,6 +101,7 @@ unsigned long qemu_getauxval(unsigned long type)
->           }
+>   static void plugin_grow_scoreboards__locked(CPUState *cpu)
+>   {
+> -    if (cpu->cpu_index < plugin.scoreboard_alloc_size) {
+> +    size_t scoreboard_size = plugin.scoreboard_alloc_size;
+> +    if (cpu->cpu_index < scoreboard_size) {
+>           return;
 >       }
 >   
-> +    errno = ENOENT;
->       return 0;
->   }
-
-Ok.
-
-> @@ -104,7 +111,9 @@ unsigned long qemu_getauxval(unsigned long type)
->   unsigned long qemu_getauxval(unsigned long type)
->   {
->       unsigned long aux = 0;
-> -    elf_aux_info(type, &aux, sizeof(aux));
-> +    int ret = elf_aux_info(type, &aux, sizeof(aux));
-> +    if (ret != 0)
-> +        errno = ret;
-
-Braces required.
-
->       return aux;
->   }
+>       bool need_realloc = FALSE;
+> -    while (cpu->cpu_index >= plugin.scoreboard_alloc_size) {
+> -        plugin.scoreboard_alloc_size *= 2;
+> +    while (cpu->cpu_index >= scoreboard_size) {
+> +        scoreboard_size *= 2;
+>           need_realloc = TRUE;
+>       }
 >   
-> @@ -112,6 +121,7 @@ unsigned long qemu_getauxval(unsigned long type)
+> +    if (!need_realloc) {
+> +        return;
+> +    }
 >   
->   unsigned long qemu_getauxval(unsigned long type)
->   {
-> +    errno = ENOSYS;
->       return 0;
->   }
-
-Ok.
-
-
-r~
+> -    if (!need_realloc || QLIST_EMPTY(&plugin.scoreboards)) {
+> -        /* nothing to do, we just updated sizes for future scoreboards */
+> +    if (QLIST_EMPTY(&plugin.scoreboards)) {
+> +        /* just update size for future scoreboards */
+> +        plugin.scoreboard_alloc_size = scoreboard_size;
+>           return;
+>       }
+>   
+> +    /*
+> +     * A scoreboard creation/deletion might be in progress. If a new vcpu is
+> +     * initialized at the same time, we are safe, as the new
+> +     * plugin.scoreboard_alloc_size was not yet written.
+> +     */
+> +    qemu_rec_mutex_unlock(&plugin.lock);
+> +
+>       /* cpus must be stopped, as tb might still use an existing scoreboard. */
+>       start_exclusive();
+> +    /* re-acquire lock */
+> +    qemu_rec_mutex_lock(&plugin.lock);
+> +    /* in case another vcpu is created between unlock and exclusive section. */
+> +    scoreboard_size = MAX(scoreboard_size, plugin.scoreboard_alloc_size);
+>       struct qemu_plugin_scoreboard *score;
+>       QLIST_FOREACH(score, &plugin.scoreboards, entry) {
+> -        g_array_set_size(score->data, plugin.scoreboard_alloc_size);
+> +        g_array_set_size(score->data, scoreboard_size);
+>       }
+> +    plugin.scoreboard_alloc_size = scoreboard_size;
+>       /* force all tb to be flushed, as scoreboard pointers were changed. */
+>       tb_flush(cpu);
+>       end_exclusive();
 
