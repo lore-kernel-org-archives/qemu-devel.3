@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683FAC3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D18BC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrnv-0008SY-Nw; Mon, 22 Jul 2024 08:06:12 -0400
+	id 1sVrnw-0000BO-N9; Mon, 22 Jul 2024 08:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrni-0007bS-8C
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:06:00 -0400
+ id 1sVrnc-0007EU-Di
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sVrnf-0007uz-OX
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:56 -0400
+ id 1sVrna-0007uT-O9
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:05:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649952;
+ s=mimecast20190719; t=1721649949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X4p0LHYIjMjvQI23Lts1WhjklTNehlg506joAY8S7dI=;
- b=TF9ibDQWjTxLPmKwH5EmfzaSQRYOmkVrMF5b4bYHtoMswarS/+2b5oNhImLZlnORR70uxn
- reEzPgnjrrzIGSjVTBL2HUXYXljkXjGBBypvwjsUKpf02jXWtGHHybSWbWhp4908rffHaU
- V4IW1Yv/Yc7F7j4l+OGYaGfEUlgA/J4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hr9BZw+jnnZPYCHU7IVnZQe9pLLjGhNrmHmaZ/LVdfI=;
+ b=gLdZQvWbecFbGorIotlQL1pRYFpamDByWWeyk52Njdvm4LR0SQSEuAXuksagkVtL90945+
+ yi08lYpD4H1Ko3Lr1ytszObzj74RXDovvh6qjBCQODlU5TyIqAwaDIvtJsoTwnIrcJ0WuQ
+ 2y18Ocb/Be+xmkcNCdNOlVt87J93mds=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-rDP7vz5mNkKgKUX41xw1KQ-1; Mon, 22 Jul 2024 08:05:51 -0400
-X-MC-Unique: rDP7vz5mNkKgKUX41xw1KQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a77e59a53c4so339886266b.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:05:51 -0700 (PDT)
+ us-mta-686-d_qA2aW8N4OR17xMRZsxGw-1; Mon, 22 Jul 2024 08:05:47 -0400
+X-MC-Unique: d_qA2aW8N4OR17xMRZsxGw-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5a534faa028so1152634a12.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 05:05:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721649950; x=1722254750;
+ d=1e100.net; s=20230601; t=1721649945; x=1722254745;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X4p0LHYIjMjvQI23Lts1WhjklTNehlg506joAY8S7dI=;
- b=qw2xISquWwvnVz7P6G7XSNBuFfS4oe0DRBa3GQvDOwXWnQT6t6H5xgt/rKp9+R7DEZ
- uP9bRfOcoshXTMpH2SeA3r17NrY5qwsN89NNI9EXCS/Hg5xsqDQl6cIpzxyx5van9r6L
- G2ibeOmtBkDp1aI+q5vZUgRciSCVMlr6nRwewcN6/hlqHHRdnyE7S32NfJ5NPBti0Qi5
- YLL8qX0Mqjm1RbW3tttmzNfXcsu63CwYx0NN/mACMOWGHzVwiyKxwq5Ljqiw0wn5b/AF
- WK3A+g1ByHdZqQgsXNl2hdrwOwg+KNI2TIFvsfTTcompaiUZYfUkx4GoNK5uHeviQhh2
- a5VA==
-X-Gm-Message-State: AOJu0YyQ6dxsxQNd4+Z9HU6Eg0R+hUx19duLD2y95d2xZn6MPcc87v0Q
- 4nJQN5bZCjqfrwl45wMYeKptPCShn8kWD8NRxAOlboHCFM6Ca9CcC9Wb4lUclsyWJvzzHAiHwBH
- 4kUoomXtirORHE1P5MI11TY4oUUMnCnzyfauRvIB3y1fnzK2rq18vwbH6eeEQ68eGBe3HSpp3MR
- sg8aoHXHM7Ym5SOv6621DThc1q28f9Yptafory
-X-Received: by 2002:a17:907:3e1a:b0:a75:23bb:6087 with SMTP id
- a640c23a62f3a-a7a4c016cafmr472537566b.29.1721649949867; 
- Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFL9DpPt69DCrN4oscH9ziF6uIM8tcAlf8QWRNxtUJbIWNMpmLv23fuEI7m5SAgEAyUWDNzjg==
-X-Received: by 2002:a17:907:3e1a:b0:a75:23bb:6087 with SMTP id
- a640c23a62f3a-a7a4c016cafmr472535766b.29.1721649949508; 
- Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
+ bh=hr9BZw+jnnZPYCHU7IVnZQe9pLLjGhNrmHmaZ/LVdfI=;
+ b=QHPh/P3MYVVzZ2Yz7HHOu6r5M/LwS+yGm/5Dna6wm2S8GB2Xr38U3u4lxfA2ITePiN
+ Uv6akOD68mlPJyxoA47dzWhFJuU9qIdDjJcyOAa8bD0kbMBuU7jZsFv9JvzLgDq2FzD6
+ GQg7HTiXENtPrWjp64Hv4Cf0d9vpZIsEWWdIphR0OYvNXUYFr9m6vYa5WfAzD8cBbHL5
+ vB/WCFL/IdLN9Wsuxexr8GedfuArZ/DzTAQq3vJ2Eg1YRnFezLKhzEC2d5jiTiSz+gjT
+ avrLhA042kFpI5qi5klid4DDjlZ0Pu0nbIspXcJxRvKbAyU4Qia+gmnWVkxoKBib2Eum
+ a19Q==
+X-Gm-Message-State: AOJu0YwF5HkFkluOJYJV4ieXJeIh0uphiNE6dpcjFMGXyl0myFg8KBC8
+ 5k3WdKdLT5HLXHadP/JZv57ERycEr+Kfl1roGMQ545M+IaDtgffE79iS+kAjX7N8OcSiAZ2f+OP
+ E/TTHMv08rAMzkmKc874q/+xx6d3p86EBWMqnHruwmYE/br+QA0YaCGWBIpSY7Xb1aJkl27nQea
+ dG3hxQA0JGzIGRdsnJAgmyqXBmZs8eA7KFLU4O
+X-Received: by 2002:a05:6402:528c:b0:5a2:2101:a714 with SMTP id
+ 4fb4d7f45d1cf-5a479677407mr4553581a12.25.1721649945464; 
+ Mon, 22 Jul 2024 05:05:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbqMKdZok4oCArQguPXMHY6YVtFE2C/Fsb3safFTXF0BzX6kzfMu53c826j63Kx+abDUY6qw==
+X-Received: by 2002:a05:6402:528c:b0:5a2:2101:a714 with SMTP id
+ 4fb4d7f45d1cf-5a479677407mr4553568a12.25.1721649944869; 
+ Mon, 22 Jul 2024 05:05:44 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c8bf32esm414269566b.134.2024.07.22.05.05.48
+ 4fb4d7f45d1cf-5a30c3f0673sm5985630a12.61.2024.07.22.05.05.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 05:05:49 -0700 (PDT)
+ Mon, 22 Jul 2024 05:05:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 3/7] hpet: remove unnecessary variable "index"
-Date: Mon, 22 Jul 2024 14:05:37 +0200
-Message-ID: <20240722120541.70790-4-pbonzini@redhat.com>
+Subject: [PATCH 1/7] hpet: fix and cleanup persistence of interrupt status
+Date: Mon, 22 Jul 2024 14:05:35 +0200
+Message-ID: <20240722120541.70790-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240722120541.70790-1-pbonzini@redhat.com>
 References: <20240722120541.70790-1-pbonzini@redhat.com>
@@ -102,67 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+There are several bugs in the handling of the ISR register:
+
+- switching level->edge was not lowering the interrupt and
+  clearing ISR
+
+- switching on the enable bit was not raising a level-triggered
+  interrupt if the timer had fired
+
+- the timer must be kept running even if not enabled, in
+  order to set the ISR flag, so writes to HPET_TN_CFG must
+  not call hpet_del_timer()
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/timer/hpet.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ hw/timer/hpet.c | 60 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 41 insertions(+), 19 deletions(-)
 
 diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index bbb1e5f0897..380e272fbeb 100644
+index 4cb5393c0b5..58073df02b5 100644
 --- a/hw/timer/hpet.c
 +++ b/hw/timer/hpet.c
-@@ -437,12 +437,12 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-                               unsigned size)
- {
-     HPETState *s = opaque;
--    uint64_t cur_tick, index;
-+    uint64_t cur_tick;
- 
-     trace_hpet_ram_read(addr);
--    index = addr;
+@@ -196,21 +196,31 @@ static void update_irq(struct HPETTimer *timer, int set)
+     }
+     s = timer->state;
+     mask = 1 << timer->tn;
+-    if (!set || !timer_enabled(timer) || !hpet_enabled(timer->state)) {
 +
-     /*address range of all TN regs*/
--    if (index >= 0x100 && index <= 0x3ff) {
-+    if (addr >= 0x100 && addr <= 0x3ff) {
-         uint8_t timer_id = (addr - 0x100) / 0x20;
-         HPETTimer *timer = &s->timer[timer_id];
- 
-@@ -469,7 +469,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-             break;
++    if (set && (timer->config & HPET_TN_TYPE_LEVEL)) {
++        /*
++         * If HPET_TN_ENABLE bit is 0, "the timer will still operate and
++         * generate appropriate status bits, but will not cause an interrupt"
++         */
++        s->isr |= mask;
++    } else {
+         s->isr &= ~mask;
++    }
++
++    if (set && timer_enabled(timer) && hpet_enabled(s)) {
++        if (timer_fsb_route(timer)) {
++            address_space_stl_le(&address_space_memory, timer->fsb >> 32,
++                                 timer->fsb & 0xffffffff, MEMTXATTRS_UNSPECIFIED,
++                                 NULL);
++        } else if (timer->config & HPET_TN_TYPE_LEVEL) {
++            qemu_irq_raise(s->irqs[route]);
++        } else {
++            qemu_irq_pulse(s->irqs[route]);
++        }
++    } else {
+         if (!timer_fsb_route(timer)) {
+             qemu_irq_lower(s->irqs[route]);
          }
-     } else {
--        switch (index) {
-+        switch (addr) {
-         case HPET_ID:
-             return s->capability;
-         case HPET_PERIOD:
-@@ -510,15 +510,14 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+-    } else if (timer_fsb_route(timer)) {
+-        address_space_stl_le(&address_space_memory, timer->fsb >> 32,
+-                             timer->fsb & 0xffffffff, MEMTXATTRS_UNSPECIFIED,
+-                             NULL);
+-    } else if (timer->config & HPET_TN_TYPE_LEVEL) {
+-        s->isr |= mask;
+-        qemu_irq_raise(s->irqs[route]);
+-    } else {
+-        s->isr &= ~mask;
+-        qemu_irq_pulse(s->irqs[route]);
+     }
+ }
+ 
+@@ -414,8 +424,13 @@ static void hpet_set_timer(HPETTimer *t)
+ 
+ static void hpet_del_timer(HPETTimer *t)
  {
-     int i;
-     HPETState *s = opaque;
--    uint64_t old_val, new_val, val, index;
-+    uint64_t old_val, new_val, val;
++    HPETState *s = t->state;
+     timer_del(t->qemu_timer);
+-    update_irq(t, 0);
++
++    if (s->isr & (1 << t->tn)) {
++        /* For level-triggered interrupt, this leaves ISR set but lowers irq.  */
++        update_irq(t, 1);
++    }
+ }
  
-     trace_hpet_ram_write(addr, value);
--    index = addr;
-     old_val = hpet_ram_read(opaque, addr, 4);
-     new_val = value;
- 
-     /*address range of all TN regs*/
--    if (index >= 0x100 && index <= 0x3ff) {
-+    if (addr >= 0x100 && addr <= 0x3ff) {
-         uint8_t timer_id = (addr - 0x100) / 0x20;
-         HPETTimer *timer = &s->timer[timer_id];
- 
-@@ -620,7 +619,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-         }
-         return;
-     } else {
--        switch (index) {
-+        switch (addr) {
-         case HPET_ID:
-             return;
-         case HPET_CFG:
+ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+@@ -515,20 +530,26 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+         switch ((addr - 0x100) % 0x20) {
+         case HPET_TN_CFG:
+             trace_hpet_ram_write_tn_cfg();
+-            if (activating_bit(old_val, new_val, HPET_TN_FSB_ENABLE)) {
++            if (deactivating_bit(old_val, new_val, HPET_TN_TYPE_LEVEL)) {
++                /*
++                 * Do this before changing timer->config; otherwise, if
++                 * HPET_TN_FSB is set, update_irq will not lower the qemu_irq.
++                 */
+                 update_irq(timer, 0);
+             }
+             val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
+             timer->config = (timer->config & 0xffffffff00000000ULL) | val;
++            if (activating_bit(old_val, new_val, HPET_TN_ENABLE)
++                && (s->isr & (1 << timer_id))) {
++                update_irq(timer, 1);
++            }
++
+             if (new_val & HPET_TN_32BIT) {
+                 timer->cmp = (uint32_t)timer->cmp;
+                 timer->period = (uint32_t)timer->period;
+             }
+-            if (activating_bit(old_val, new_val, HPET_TN_ENABLE) &&
+-                hpet_enabled(s)) {
++            if (hpet_enabled(s)) {
+                 hpet_set_timer(timer);
+-            } else if (deactivating_bit(old_val, new_val, HPET_TN_ENABLE)) {
+-                hpet_del_timer(timer);
+             }
+             break;
+         case HPET_TN_CFG + 4: // Interrupt capabilities
+@@ -606,9 +627,10 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+                 s->hpet_offset =
+                     ticks_to_ns(s->hpet_counter) - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+                 for (i = 0; i < s->num_timers; i++) {
+-                    if ((&s->timer[i])->cmp != ~0ULL) {
+-                        hpet_set_timer(&s->timer[i]);
++                    if (timer_enabled(&s->timer[i]) && (s->isr & (1 << i))) {
++                        update_irq(&s->timer[i], 1);
+                     }
++                    hpet_set_timer(&s->timer[i]);
+                 }
+             } else if (deactivating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
+                 /* Halt main counter and disable interrupt generation. */
 -- 
 2.45.2
 
