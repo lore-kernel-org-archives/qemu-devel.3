@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49B8C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 22:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD426C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 22:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW1Iz-0002gB-1Q; Mon, 22 Jul 2024 18:14:53 -0400
+	id 1sW1Jf-0004Aq-Mt; Mon, 22 Jul 2024 18:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW1Ix-0002em-OV
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:14:51 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW1Jd-00041Y-8A
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:15:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW1Iu-0001Oh-IL
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:14:51 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70d265e5278so826570b3a.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 15:14:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW1Ja-0001i2-Gh
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 18:15:32 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42797bcfc77so35990175e9.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 15:15:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721686486; x=1722291286; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721686527; x=1722291327; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9bm5ZHfIENt33oX18YmEAbA4/5twgdpC+ydOn+Iec70=;
- b=p3hCWuHQ8UcA6KCdWeFsq3AUoRjrjvXLJC8lBXH44b3fck6WBE9bb8bjv6kvHbKKbz
- qBvAKIKuq6AB7G+0yEYAFeJ3iMF6A3En41w00ci/DVav1P4UsvpES1ae5yUdO/GC6iMV
- hpb9efMxlSwpPBGCDTwRCmo/KO6QyQegSDxAMiWj2kTA7kEkKGpB+sTK1XypQ7dKrGZE
- Zpm4QyXRkq5HFUYyGKAcqciW96MN5duEWVSakfevF1bIa1pysrYOkftnR+PWD/ZeOXm6
- G+WG24KVmth7We21WLzqE9IYvhZGWyMMwZhJ60pq79HTfGtXoHsbfSDQAVriVfTUEPzX
- 5OWg==
+ bh=R+ad+tPZZMmnnaf17Sh0/8nRQ7Xf7VfvTZMjwt8n4Yc=;
+ b=Leg0pjlNfM0VWozjT4Sa9sEi5kHK6sPUxwiGjylhojPW20V3mC1DWQvUYgN0d2k8UN
+ SAiTE5ZmprgNphbgtXdN/38HkLy6P7kGKT9bHnUjPqBDk78xAitl9G+UGHZpLnoBRmJv
+ e1QaMJVflwMIXn8/lYJBiHm3IfaoZeB/5lqNSk2WJi+bM7kudiUtpWkljRY+rO84C5aO
+ 4Qd/NVnfpT1f00GRhUn7X2u1mduxh5Eq0KvjCK/Jm/0z3+WmP2uYZFIGjLr6bdpeFScI
+ kELCb1NkmHZwXqdYc5KtOW8kJrBVd4JmBHlZYXcazWTiJbSERDSp4v1uH6NwtPFUKpx2
+ fmCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721686486; x=1722291286;
+ d=1e100.net; s=20230601; t=1721686527; x=1722291327;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9bm5ZHfIENt33oX18YmEAbA4/5twgdpC+ydOn+Iec70=;
- b=qXN4dcBexS8ylVOguIV415Tw9cZc62MTFqUaWsMjk5IByhXMmRdbnZdwXkAzCt4fDr
- 25Hs/I+aVJEbt2gCmTXMDQUWXfUYMUFsiLGxpA29WlAIOTki09hVe+Dk/RHJwnED480g
- IAc8UGQnxfl5e3ZaDxilO7ZE19oEVftSvkIZyGwymMbZoeCi5+aQ8F7jbncdZZgdanWp
- 6KrOe3/11RFQgqUJ4g0Ru/zpxvUus2IinnJMYmIatVWIP/kexXaA6LjijAj/w0lOe0kg
- 6cijBfSGP8T6z7T6K4VmHHc4/WykCHDl9/aZ8jbBwHzNPtN1dAHEGZHHT5LkpMsr+qGg
- 5Z4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbRb3p/suPtMj7szWUkBYla+xtrwIv/qKXjf24+j40aQ5Sjyr1DJRBC9HMeD34n/BQDvXs6u/wiVuYgExPEL/G8oEGUjI=
-X-Gm-Message-State: AOJu0Yy1kY93Bl76F+VgAj9A49rXliKhjW5EKitjTS+JnSVXojrw2I5N
- x1q06/tk0H9KHaOx4X9NqgU5srd23JcpMppkznsg/hyMuzlIF6+TT8qF5KdpuF1Oh6LsnItJw4h
- 1h9y6UA==
-X-Google-Smtp-Source: AGHT+IGBymF61sYZOV0Arvo1GF0f6rRuw7mii+jV/er1xTJfPPaOJQ+uFUHmBrkbGT24gVoe4cd+Mg==
-X-Received: by 2002:a05:6a20:2d23:b0:1c3:a63a:cefc with SMTP id
- adf61e73a8af0-1c42285f614mr7066636637.11.1721686486160; 
- Mon, 22 Jul 2024 15:14:46 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ bh=R+ad+tPZZMmnnaf17Sh0/8nRQ7Xf7VfvTZMjwt8n4Yc=;
+ b=T1xNHhzxub/vU6zA4ruOW/6GkNjHtzxXeNEEZBFaeOeBnKHd9L6RcQf7LZovrMl1wM
+ AYt3ZrWOAdh27GH57X2HHTnwsE8Bpc4h5MV2EpJ2PEufEVo5htIb4npVVj5BfQpDgNiH
+ XyEH4SWVdZlgshv0oReftn444J137xKibjRjXtGIR9Gv3EN5JK8bI/bYn8LDSDU31U9f
+ G1FK63YS585XuP8P1z5Er0Ccz3pmVwP4JOldExFgnJhn9dMimhVaTUYQK1CTMetJW3ps
+ 1OUqFamq3P4L2NHDpenwS7zAGH1FK0/2HQ2u+rPsUt92786xoUAuTciorMZntkLwkn3C
+ yxnQ==
+X-Gm-Message-State: AOJu0YwJg103/Lq8og6cc29JM0DiIDey2JoDDxiEsq0omvEiS2VzbWix
+ p+RxxLUABDEBL4Ip13xvFpqcJSUCB22MbfEaKG07IF1hVBSCiDVtVRYe3kZJFjI=
+X-Google-Smtp-Source: AGHT+IGS+ERC2BxRW7iyXbh/t58Vo8DuDj95ZqEcZlOJTyuDF79/MpfPyMLuflj2SulR3Yu7IDZUYA==
+X-Received: by 2002:a05:600c:19cb:b0:426:51ce:bb14 with SMTP id
+ 5b1f17b1804b1-427dc565926mr47174355e9.30.1721686527402; 
+ Mon, 22 Jul 2024 15:15:27 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.14])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f31d2bbsm60096285ad.132.2024.07.22.15.14.41
+ 5b1f17b1804b1-427d922c696sm128505825e9.40.2024.07.22.15.15.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 15:14:45 -0700 (PDT)
-Message-ID: <10a16394-ac70-4cf6-b72e-b39749d64871@linaro.org>
-Date: Tue, 23 Jul 2024 08:14:37 +1000
+ Mon, 22 Jul 2024 15:15:26 -0700 (PDT)
+Message-ID: <20247471-ba88-4757-b522-5d750e378fc4@linaro.org>
+Date: Tue, 23 Jul 2024 00:15:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] target/arm: Various minor SME bugfixes
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240722172957.1041231-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v6 4/4] docs: add test for firmware.json QAPI
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <20240719-qapi-firmware-json-v6-0-c2e3de390b58@linutronix.de>
+ <20240719-qapi-firmware-json-v6-4-c2e3de390b58@linutronix.de>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240722172957.1041231-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240719-qapi-firmware-json-v6-4-c2e3de390b58@linutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,16 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/24 03:29, Peter Maydell wrote:
+Hi Thomas,
+
+On 19/7/24 09:37, Thomas Weißschuh wrote:
+> To make sure that the QAPI description stays valid, add a testcase.
 > 
-> Peter Maydell (4):
->    target/arm: Don't assert for 128-bit tile accesses when SVL is 128
->    target/arm: Fix UMOPA/UMOPS of 16-bit values
->    target/arm: Avoid shifts by -1 in tszimm_shr() and tszimm_shl()
->    target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2 is not enabled
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Link: https://lore.kernel.org/qemu-devel/d9ce0234-4beb-4b90-b14c-76810d3b81d7@linaro.org/
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+> ---
+>   docs/meson.build | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/docs/meson.build b/docs/meson.build
+> index 9040f860ae1a..bcca45a342a3 100644
+> --- a/docs/meson.build
+> +++ b/docs/meson.build
+> @@ -99,3 +99,8 @@ if build_docs
+>     alias_target('html', sphinxdocs)
+>     alias_target('man', sphinxmans)
+>   endif
+> +
+> +test('QAPI firmware.json regression tests', python,
+> +     args: [qapi_gen.full_path(), '-o', meson.current_build_dir() / 'qapi',
+> +            meson.current_source_dir() / 'interop/firmware.json'],
+> +     env: test_env, suite: ['qapi-schema', 'qapi-interop'])
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Did you test this on GitLab CI? Many jobs are failing as:
 
+Program /builds/qemu/build/pyvenv/bin/sphinx-build skipped: feature docs 
+disabled
+../docs/meson.build:106:10: ERROR: Unknown variable "test_env".
 
-r~
+See https://gitlab.com/philmd/qemu/-/pipelines/1383618475/failures
 
