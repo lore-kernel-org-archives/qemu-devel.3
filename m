@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04037C3DA64
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9D5C3DA64
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 12:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrk1-0003oA-Mg; Mon, 22 Jul 2024 08:02:09 -0400
+	id 1sVrjw-0003AU-K9; Mon, 22 Jul 2024 08:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjP-0000iJ-WD
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVriw-00078I-Sb
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVrjO-0006bs-8R
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVriu-0006XO-DV
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 08:01:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721649689;
+ s=mimecast20190719; t=1721649658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s+RcrrZN9DvOXJio1nmBfpVjzrSZCUlgYNSlAHelirY=;
- b=YerJGW+5uhnGbB3AXmQL+iABpVdFi06mut2//llhQO1yRLNsH6UfQFI0t30QBEBN9irvQs
- EOaun3jT9zB+OTBnmCRd8kRj2y2dWCjOeMBhf+2OT/TDT1UODNgOUpAAKy0Y2RGYsmDI+D
- tg8EEcrw6vKM8KeorESc6+75NxSXo84=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KYP/qN9CqCq6MZ5BTqGrnGUxUZgcx6ua6iOxSEzuB0U=;
+ b=Pm5CKlexEUg7jbszTFDoBzKHTsyGXaC/W01RZSvH6Z52RLk9VPyDanlbxOWZl7eB98mkqs
+ Feqm8MYBYcvaGJdpZUmjZanFVrSqCeYbQdWTInj52lAGjWWH0ynrHMwkr5wGqFJfW7rQN0
+ qbsylc/ki9PsXERYqK+xXCkTzR1SLA4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-ZvYA7GOLPvWBMYICt4ZjeA-1; Mon,
- 22 Jul 2024 08:01:26 -0400
-X-MC-Unique: ZvYA7GOLPvWBMYICt4ZjeA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-AkYQQXhFMAahljUUHV6chA-1; Mon,
+ 22 Jul 2024 08:00:54 -0400
+X-MC-Unique: AkYQQXhFMAahljUUHV6chA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45D531954B3B; Mon, 22 Jul 2024 12:00:51 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41C70190549A; Mon, 22 Jul 2024 12:00:50 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.179])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 98CEC1932D1B; Mon, 22 Jul 2024 12:00:48 +0000 (UTC)
+ id 346391955DC9; Mon, 22 Jul 2024 12:00:36 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: [PULL 06/12] tests/avocado/mem-addr-space-check: Remove unused
- "import signal"
-Date: Mon, 22 Jul 2024 14:00:20 +0200
-Message-ID: <20240722120026.675449-7-thuth@redhat.com>
+Subject: [PULL 04/12] tests/avocado: Allow overwriting AVOCADO_SHOW env
+ variable
+Date: Mon, 22 Jul 2024 14:00:18 +0200
+Message-ID: <20240722120026.675449-5-thuth@redhat.com>
 In-Reply-To: <20240722120026.675449-1-thuth@redhat.com>
 References: <20240722120026.675449-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -81,29 +81,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "signal" module is not used here, so we can remove this import
-statement.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Message-ID: <20240719095408.33298-1-thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The 'app' level logging is useful, but sometimes we want
+more, for example QEMU leverages the 'console' logging.
+
+Allow overwriting AVOCADO_SHOW from environment, i.e.:
+
+  $ make check-avocado AVOCADO_SHOW='app,console'
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240719180211.48073-1-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/mem-addr-space-check.py | 1 -
- 1 file changed, 1 deletion(-)
+ tests/Makefile.include | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/avocado/mem-addr-space-check.py b/tests/avocado/mem-addr-space-check.py
-index 85541ea051..d3974599f4 100644
---- a/tests/avocado/mem-addr-space-check.py
-+++ b/tests/avocado/mem-addr-space-check.py
-@@ -9,7 +9,6 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from avocado_qemu import QemuSystemTest
--import signal
- import time
- 
- class MemAddrCheck(QemuSystemTest):
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index d39d5dd6a4..6618bfed70 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -97,7 +97,7 @@ endif
+ # Controls the output generated by Avocado when running tests.
+ # Any number of command separated loggers are accepted.  For more
+ # information please refer to "avocado --help".
+-AVOCADO_SHOW=app
++AVOCADO_SHOW?=app
+ ifndef AVOCADO_TAGS
+ 	AVOCADO_CMDLINE_TAGS=$(patsubst %-softmmu,-t arch:%, \
+ 						 $(filter %-softmmu,$(TARGETS)))
 -- 
 2.45.2
 
