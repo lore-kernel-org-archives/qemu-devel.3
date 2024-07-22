@@ -4,132 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7B1C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414E6C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVna0-0006G1-SK; Mon, 22 Jul 2024 03:35:32 -0400
+	id 1sVnbh-0005ZO-PT; Mon, 22 Jul 2024 03:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVnZx-00061z-G4
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:35:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sVnZv-0004Ia-Q2
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:35:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721633722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Bk2lRLut9uIaV0mNz3ml9cJiQ6qOMmZS4NUfsYcBW/g=;
- b=gln74nzgWAIWUyiomTFIXUPCeIshJ64LfnSmljrKD7SOZc0oTeUuvz6htbcbpQFRCCSS0Y
- D+Zsij/yMVQaA9aqb63F+Cb0TIflJmOLZUn9xZStSt8LSWH50Azi9k7fqoNyYi0f3XYZ9Z
- UQOeRoe2g80d3IJKx37EWEhNBZNfY2o=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-FVLxUe-3NmOS7RFU3FrS8w-1; Mon, 22 Jul 2024 03:35:20 -0400
-X-MC-Unique: FVLxUe-3NmOS7RFU3FrS8w-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4266fbae4c6so29949955e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 00:35:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnbg-0005UJ-F2
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:37:16 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVnbe-0004aB-Ol
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:37:16 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-368663d7f80so1918235f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 00:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721633833; x=1722238633; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Wh1X5/gGdqYMAPh7t9IoUo4Tg3NDFI0W4MCYycRmw74=;
+ b=KSla/KENgPPXwI4OlXRx8ZzMEMOCzPgwpdFMeQB0Hhe/AsrqP9x1NAl2YKUX9+NNcL
+ Xuj4YOybwl7R/MpYfgFiDxPdDBXBPs01RfKVJcS/tJQqmAWlVUb+tVt7hT6ZuamCfoXh
+ M3GVbLNdQQQ9AxH3DXAGiDwA2hrVF73qD0eDECJSX+YoYgMJ/tUVdb0OFT7gl28rjN6Z
+ D7+eF/OFw22+drCXNqRODSyhnBD/lYjoH9qjqWB0Cmw2EeL5U6MtQRtBkMoHms7M9kLr
+ JmJ0w0iAZrn9uC1iZzlOu1e3botPMShWmUjcJdP+d4ajn6M+4HgvZDMc61xQ+XOwNsY+
+ /9dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721633719; x=1722238519;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bk2lRLut9uIaV0mNz3ml9cJiQ6qOMmZS4NUfsYcBW/g=;
- b=CLJhxSyhqTE2NiHnL17csru3eLbcnPf42bixTQmI3ecHXIxyiJtTQiB8j9xOQjwcJw
- VDzFQ++/fFdBcQiVsMK/8bDFmna5Ob25xF28TDDOmtxyBppGhguzHsTSOQIwh7JbI5ub
- kp0839fqS45ZwehWMAbIlUtOCrTTLe+2cTNRiIqtXSzj9/IIuH1Ift6DSrREO0yrPa8N
- qvqH+iqhvK0St98hVOVgIyj5pUsWlyDrFhDUUqmGyfOpc9XgThFgMZQ/aZOsE1AFYChF
- /Qu5bqfV4vBSEXQjgCClkkJAFvm5q7VqEhomRnmQZptYH3S2iCZpongqDXu9BUWhGZyq
- +Gvg==
+ d=1e100.net; s=20230601; t=1721633833; x=1722238633;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wh1X5/gGdqYMAPh7t9IoUo4Tg3NDFI0W4MCYycRmw74=;
+ b=VYg1eLSaIUZVKPK7xTM7Gw+sZtHO6vowYLGHlBGjR9dnA/NWKOJiCpQ7J2FJwtdQ/6
+ Kozh2k7Z6siWMUQEM6iCfqcvSzcRQ79juJR73KNpNquK1ijoI2q4SbU6C6jYXdsy8yi4
+ aBhWjZVf5//O+1qEVXE/hjx1Xe0scgW251bVBowk9XvcQ3ud8X/T0HY7Zhdwxueh4QlG
+ o4X546DK0Ri+l8ZpJOfVaY9ki9SxqPc6OrI9i5NwN1JtOAPR87MHjxtTV2b7u98fjzad
+ +ywjD1VYfL9SF7SMUJgdIqcPs/wwe0oZEtM4VPKtdHhOkHIolAHGR1RcUXPO14MB5xTT
+ gC8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXA5l8kL1cjxfUE7goEovIA8sTxI+xVp0sVNKH/E9icYL22B1UJW8JbGG/p+jSTQCUDjR9QLG7Q0XKtoD2IdYzg06VgmU8=
-X-Gm-Message-State: AOJu0YxAN8xG1Ud1khG1sCqFXpnbhndd7UOHA6hQnDjzOVvx53ljb2/B
- 1nIOnLkveKjKzFauIRCV+A926mJ8ncOr9LrW/WVhe9SxUoUU/VNYtUONv15STmyj32Ha2C0HT+f
- pFmG2zbqSRwdJHMd38WQ10dISJJzlRk5iNJdlQPfCqg5vWTLxFQLw
-X-Received: by 2002:a05:600c:1f10:b0:426:5e8e:aa47 with SMTP id
- 5b1f17b1804b1-427dcf69b05mr37464555e9.4.1721633719713; 
- Mon, 22 Jul 2024 00:35:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCSIEqsMQNeb1SIzoxD6NHr1Fg7tv/hOed6Xu/CaHcBOi7eeiekrjSBPRejg3sxMtaHy5RKg==
-X-Received: by 2002:a05:600c:1f10:b0:426:5e8e:aa47 with SMTP id
- 5b1f17b1804b1-427dcf69b05mr37464485e9.4.1721633719333; 
- Mon, 22 Jul 2024 00:35:19 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-177-101.web.vodafone.de.
- [109.43.177.101]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a6efb6sm144358625e9.24.2024.07.22.00.35.18
+ AJvYcCVAEoyiG/oeQiBOI8rSMwR5wB1iIL5lJ351Qje6sk7Xh9rXBFnJk4DH1QVLNmfzlzWZ7QlonHryr2nSG75vQi6lC41pLMU=
+X-Gm-Message-State: AOJu0YyyzfMQ+mLzJqmVYvrTf5/YUT6UOEKQ3uyb/19ICttCSAddM1oO
+ h0czQ/s+W9wK+me8Z6wN3v39YjC0EmSLOBlFAAx1B6fXCFpYPAX3lyad5A3T9GlWeukABzuf1dB
+ z
+X-Google-Smtp-Source: AGHT+IF+64tAoIC+o6BIK2C9o0CY8GFb1oFxzQVFQ7PppJzMho4fCrRvQy/G8NN+Xua7q2aSrtrqAg==
+X-Received: by 2002:a05:6000:4029:b0:367:9854:791d with SMTP id
+ ffacd0b85a97d-369bb2a1bdbmr4415233f8f.43.1721633832874; 
+ Mon, 22 Jul 2024 00:37:12 -0700 (PDT)
+Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
+ [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787ed28dsm7648982f8f.104.2024.07.22.00.37.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 00:35:19 -0700 (PDT)
-Message-ID: <b538c18f-1b95-45b3-9aba-d1d92491c750@redhat.com>
-Date: Mon, 22 Jul 2024 09:35:17 +0200
+ Mon, 22 Jul 2024 00:37:12 -0700 (PDT)
+Message-ID: <3d5d891c-7e8b-4b13-8fe2-c30c5d2223e1@linaro.org>
+Date: Mon, 22 Jul 2024 09:37:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests: increase timeout per instance of bios-tables-test
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: lvivier@redhat.com, pbonzini@redhat.com, mst@redhat.com
-References: <20240716125930.620861-1-imammedo@redhat.com>
+Subject: Re: [PATCH 00/13] make range overlap check more readable
+To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
+ <897365b8-03b9-49d1-9822-3c99e146c670@linaro.org>
+ <OSZPR01MB64531A7E8576610BDD603D3A8DA82@OSZPR01MB6453.jpnprd01.prod.outlook.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240716125930.620861-1-imammedo@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <OSZPR01MB64531A7E8576610BDD603D3A8DA82@OSZPR01MB6453.jpnprd01.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,36 +98,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/07/2024 14.59, Igor Mammedov wrote:
-> CI often fails 'cross-i686-tci' job due to runner slowness
-> Log shows that test almost complete, with a few remaining
-> when bios-tables-test timeout hits:
+On 22/7/24 08:59, Xingtao Yao (Fujitsu) wrote:
 > 
->    19/270 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
->      TIMEOUT        610.02s   killed by signal 15 SIGTERM
->    ...
->    stderr:
->    TAP parsing error: Too few tests run (expected 8, got 7)
 > 
-> At the same time overall job running time is only ~30 out of 1hr allowed.
+>> -----Original Message-----
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Sent: Monday, July 22, 2024 2:43 PM
+>> To: Yao, Xingtao/姚 幸涛 <yaoxt.fnst@fujitsu.com>; qemu-devel@nongnu.org
+>> Subject: Re: [PATCH 00/13] make range overlap check more readable
+>>
+>> Hi Yao,
+>>
+>> On 22/7/24 06:07, Yao Xingtao via wrote:
+>>> Currently, some components still open-coding the range overlap check.
+>>> Sometimes this check may be fail because some patterns are missed.
+>>
+>> How did you catch all these use cases?
+> I used the Coccinelle to match these use cases, the pattern is below
+> range_overlap.cocci:
 > 
-> Increase bios-tables-test instance timeout on 5min as a fix
-> for slow CI runners.
+> // use ranges_overlap() instead of open-coding the overlap check
+> @@
+> expression E1, E2, E3, E4;
+> @@
+> (
+> - E2 <= E3 || E1 >= E4
+> + !ranges_overlap(E1, E2, E3, E4)
+> |
 > 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->   tests/qtest/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> - (E2 <= E3) || (E1 >= E4)
+> + !ranges_overlap(E1, E2, E3, E4)
+> |
+> 
+> - E1 < E4 && E2 > E3
+> + ranges_overlap(E1, E2, E3, E4)
+> |
+> 
+> - (E1 < E4) && (E2 > E3)
+> + ranges_overlap(E1, E2, E3, E4)
+> |
+> 
+> - (E1 >= E3 && E1 < E4) || (E2 > E3 && E2 <= E4)
+> + ranges_overlap(E1, E2, E3, E4)
+> 
+> |
+> - ((E1 >= E3) && (E1 < E4)) || ((E2 > E3) && (E2 <= E4))
+> + ranges_overlap(E1, E2, E3, E4)
+> )
 
-Since we're entering the freeze period this week, I'm going to pick up this 
-patch for my next pull request in the hope that it will help to get this job 
-green again during the freeze period. But in the long run, it would be 
-really good if someone familiar with the bios-tables-test could analyze why 
-the run time increased so much in recent times for this test and provide a 
-better fix for the problem.
+Please add to scripts/coccinelle/range.cocci.
 
-  Thanks,
-   Thomas
-
+> 
+> then execute the command:
+> # spatch --macro-file scripts/cocci-macro-file.h --sp-file range_overlap.cocci --keep-comments --in-place --use-gitgrep --dir .
+> 
+> but some of the matched cases are not valid and need to be
+> manually judged.
+> 
+> there may be cases that have not been matched yet.
 
 
