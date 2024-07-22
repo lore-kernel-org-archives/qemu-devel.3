@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A3B3C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0BFC3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 07:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVn3f-0000v4-CJ; Mon, 22 Jul 2024 03:02:07 -0400
+	id 1sVn49-0002q8-35; Mon, 22 Jul 2024 03:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3L-00086S-Vj
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:48 -0400
+ id 1sVn3t-0001SE-Kc
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sVn3H-0006Q7-DB
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:01:46 -0400
+ id 1sVn3p-0006VW-5d
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 03:02:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721631697;
+ s=mimecast20190719; t=1721631721;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1kaatKE0Xj7qaVXL/l1YHJwXhBzwKA0pjuCmfeBkz8M=;
- b=iz3iwwVUa92mjHKWTcNjs41SDXyChYzQsarYnC3zLziHof2UuI5mDBufDu3vCd2VCC8DSm
- iDPCC3BxP+UbXViePDf6wertaulEAaKriGBuXVsiO9Q/3wXraqXvhZMrdJzJ1KNhWCnoYD
- 74MeakB0PJUUcgYK5ictk4UvybY0P/s=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WcrI6GYzSR24bBpvmlViN4vLayyZCi/l3RU57NSYOWw=;
+ b=PZHEfPPvIg71rfsl7AF/gffsoDBqgp13H+RmwTamhka9FQeEfNCzb7O1hxgr24F7ejLsKS
+ yFiJofRBrzT/LtCoxBoWtS4FwLGYZaSsUICiyt/6kenQB6EUcZ0IsXrqERi1JGz11ZgJTV
+ VuSqFIluS1pUEn9rjWXvr5Xu91v5EEU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-v0GdNYI_M8Snlf8NWpq2rA-1; Mon,
- 22 Jul 2024 03:01:34 -0400
-X-MC-Unique: v0GdNYI_M8Snlf8NWpq2rA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-a5n0T4IpM2yhYieWNxqxFQ-1; Mon,
+ 22 Jul 2024 03:01:56 -0400
+X-MC-Unique: a5n0T4IpM2yhYieWNxqxFQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F18181955BFC; Mon, 22 Jul 2024 07:01:33 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC7EB19792EE; Mon, 22 Jul 2024 07:01:49 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.252])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1233195605A; Mon, 22 Jul 2024 07:01:31 +0000 (UTC)
+ id 7BEAD1944A9A; Mon, 22 Jul 2024 07:01:46 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 03/25] qga: move linux suspend command impls to commands-linux.c
-Date: Mon, 22 Jul 2024 10:01:00 +0300
-Message-ID: <20240722070122.27615-4-kkostiuk@redhat.com>
+Subject: [PULL 09/25] qga: conditionalize schema for commands unsupported on
+ non-Linux POSIX
+Date: Mon, 22 Jul 2024 10:01:06 +0300
+Message-ID: <20240722070122.27615-10-kkostiuk@redhat.com>
 In-Reply-To: <20240722070122.27615-1-kkostiuk@redhat.com>
 References: <20240722070122.27615-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
@@ -84,573 +85,243 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The qmp_guest_suspend_{disk,ram,hybrid} command impls in
-commands-posix.c are surrounded by '#ifdef __linux__' so should
-instead live in commands-linux.c
+Rather than creating stubs for every command that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the commands on non-Linux POSIX
+platforms
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+This changes the error message for affected commands from
+
+    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+
+to
+
+    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240712132459.3974109-4-berrange@redhat.com>
+Message-ID: <20240712132459.3974109-10-berrange@redhat.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- qga/commands-linux.c | 265 +++++++++++++++++++++++++++++++++++++++++++
- qga/commands-posix.c | 265 -------------------------------------------
- 2 files changed, 265 insertions(+), 265 deletions(-)
+ qga/commands-posix.c | 66 --------------------------------------------
+ qga/qapi-schema.json | 30 +++++++++++---------
+ 2 files changed, 17 insertions(+), 79 deletions(-)
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 78580ac39d..3fabf54882 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -286,6 +286,271 @@ int qmp_guest_fsfreeze_do_thaw(Error **errp)
- }
- #endif /* CONFIG_FSFREEZE */
- 
-+
-+#define LINUX_SYS_STATE_FILE "/sys/power/state"
-+#define SUSPEND_SUPPORTED 0
-+#define SUSPEND_NOT_SUPPORTED 1
-+
-+typedef enum {
-+    SUSPEND_MODE_DISK = 0,
-+    SUSPEND_MODE_RAM = 1,
-+    SUSPEND_MODE_HYBRID = 2,
-+} SuspendMode;
-+
-+/*
-+ * Executes a command in a child process using g_spawn_sync,
-+ * returning an int >= 0 representing the exit status of the
-+ * process.
-+ *
-+ * If the program wasn't found in path, returns -1.
-+ *
-+ * If a problem happened when creating the child process,
-+ * returns -1 and errp is set.
-+ */
-+static int run_process_child(const char *command[], Error **errp)
-+{
-+    int exit_status, spawn_flag;
-+    GError *g_err = NULL;
-+    bool success;
-+
-+    spawn_flag = G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL |
-+                 G_SPAWN_STDERR_TO_DEV_NULL;
-+
-+    success =  g_spawn_sync(NULL, (char **)command, NULL, spawn_flag,
-+                            NULL, NULL, NULL, NULL,
-+                            &exit_status, &g_err);
-+
-+    if (success) {
-+        return WEXITSTATUS(exit_status);
-+    }
-+
-+    if (g_err && (g_err->code != G_SPAWN_ERROR_NOENT)) {
-+        error_setg(errp, "failed to create child process, error '%s'",
-+                   g_err->message);
-+    }
-+
-+    g_error_free(g_err);
-+    return -1;
-+}
-+
-+static bool systemd_supports_mode(SuspendMode mode, Error **errp)
-+{
-+    const char *systemctl_args[3] = {"systemd-hibernate", "systemd-suspend",
-+                                     "systemd-hybrid-sleep"};
-+    const char *cmd[4] = {"systemctl", "status", systemctl_args[mode], NULL};
-+    int status;
-+
-+    status = run_process_child(cmd, errp);
-+
-+    /*
-+     * systemctl status uses LSB return codes so we can expect
-+     * status > 0 and be ok. To assert if the guest has support
-+     * for the selected suspend mode, status should be < 4. 4 is
-+     * the code for unknown service status, the return value when
-+     * the service does not exist. A common value is status = 3
-+     * (program is not running).
-+     */
-+    if (status > 0 && status < 4) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static void systemd_suspend(SuspendMode mode, Error **errp)
-+{
-+    Error *local_err = NULL;
-+    const char *systemctl_args[3] = {"hibernate", "suspend", "hybrid-sleep"};
-+    const char *cmd[3] = {"systemctl", systemctl_args[mode], NULL};
-+    int status;
-+
-+    status = run_process_child(cmd, &local_err);
-+
-+    if (status == 0) {
-+        return;
-+    }
-+
-+    if ((status == -1) && !local_err) {
-+        error_setg(errp, "the helper program 'systemctl %s' was not found",
-+                   systemctl_args[mode]);
-+        return;
-+    }
-+
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+    } else {
-+        error_setg(errp, "the helper program 'systemctl %s' returned an "
-+                   "unexpected exit status code (%d)",
-+                   systemctl_args[mode], status);
-+    }
-+}
-+
-+static bool pmutils_supports_mode(SuspendMode mode, Error **errp)
-+{
-+    Error *local_err = NULL;
-+    const char *pmutils_args[3] = {"--hibernate", "--suspend",
-+                                   "--suspend-hybrid"};
-+    const char *cmd[3] = {"pm-is-supported", pmutils_args[mode], NULL};
-+    int status;
-+
-+    status = run_process_child(cmd, &local_err);
-+
-+    if (status == SUSPEND_SUPPORTED) {
-+        return true;
-+    }
-+
-+    if ((status == -1) && !local_err) {
-+        return false;
-+    }
-+
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+    } else {
-+        error_setg(errp,
-+                   "the helper program '%s' returned an unexpected exit"
-+                   " status code (%d)", "pm-is-supported", status);
-+    }
-+
-+    return false;
-+}
-+
-+static void pmutils_suspend(SuspendMode mode, Error **errp)
-+{
-+    Error *local_err = NULL;
-+    const char *pmutils_binaries[3] = {"pm-hibernate", "pm-suspend",
-+                                       "pm-suspend-hybrid"};
-+    const char *cmd[2] = {pmutils_binaries[mode], NULL};
-+    int status;
-+
-+    status = run_process_child(cmd, &local_err);
-+
-+    if (status == 0) {
-+        return;
-+    }
-+
-+    if ((status == -1) && !local_err) {
-+        error_setg(errp, "the helper program '%s' was not found",
-+                   pmutils_binaries[mode]);
-+        return;
-+    }
-+
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+    } else {
-+        error_setg(errp,
-+                   "the helper program '%s' returned an unexpected exit"
-+                   " status code (%d)", pmutils_binaries[mode], status);
-+    }
-+}
-+
-+static bool linux_sys_state_supports_mode(SuspendMode mode, Error **errp)
-+{
-+    const char *sysfile_strs[3] = {"disk", "mem", NULL};
-+    const char *sysfile_str = sysfile_strs[mode];
-+    char buf[32]; /* hopefully big enough */
-+    int fd;
-+    ssize_t ret;
-+
-+    if (!sysfile_str) {
-+        error_setg(errp, "unknown guest suspend mode");
-+        return false;
-+    }
-+
-+    fd = open(LINUX_SYS_STATE_FILE, O_RDONLY);
-+    if (fd < 0) {
-+        return false;
-+    }
-+
-+    ret = read(fd, buf, sizeof(buf) - 1);
-+    close(fd);
-+    if (ret <= 0) {
-+        return false;
-+    }
-+    buf[ret] = '\0';
-+
-+    if (strstr(buf, sysfile_str)) {
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static void linux_sys_state_suspend(SuspendMode mode, Error **errp)
-+{
-+    g_autoptr(GError) local_gerr = NULL;
-+    const char *sysfile_strs[3] = {"disk", "mem", NULL};
-+    const char *sysfile_str = sysfile_strs[mode];
-+
-+    if (!sysfile_str) {
-+        error_setg(errp, "unknown guest suspend mode");
-+        return;
-+    }
-+
-+    if (!g_file_set_contents(LINUX_SYS_STATE_FILE, sysfile_str,
-+                             -1, &local_gerr)) {
-+        error_setg(errp, "suspend: cannot write to '%s': %s",
-+                   LINUX_SYS_STATE_FILE, local_gerr->message);
-+        return;
-+    }
-+}
-+
-+static void guest_suspend(SuspendMode mode, Error **errp)
-+{
-+    Error *local_err = NULL;
-+    bool mode_supported = false;
-+
-+    if (systemd_supports_mode(mode, &local_err)) {
-+        mode_supported = true;
-+        systemd_suspend(mode, &local_err);
-+
-+        if (!local_err) {
-+            return;
-+        }
-+    }
-+
-+    error_free(local_err);
-+    local_err = NULL;
-+
-+    if (pmutils_supports_mode(mode, &local_err)) {
-+        mode_supported = true;
-+        pmutils_suspend(mode, &local_err);
-+
-+        if (!local_err) {
-+            return;
-+        }
-+    }
-+
-+    error_free(local_err);
-+    local_err = NULL;
-+
-+    if (linux_sys_state_supports_mode(mode, &local_err)) {
-+        mode_supported = true;
-+        linux_sys_state_suspend(mode, &local_err);
-+    }
-+
-+    if (!mode_supported) {
-+        error_free(local_err);
-+        error_setg(errp,
-+                   "the requested suspend mode is not supported by the guest");
-+    } else {
-+        error_propagate(errp, local_err);
-+    }
-+}
-+
-+void qmp_guest_suspend_disk(Error **errp)
-+{
-+    guest_suspend(SUSPEND_MODE_DISK, errp);
-+}
-+
-+void qmp_guest_suspend_ram(Error **errp)
-+{
-+    guest_suspend(SUSPEND_MODE_RAM, errp);
-+}
-+
-+void qmp_guest_suspend_hybrid(Error **errp)
-+{
-+    guest_suspend(SUSPEND_MODE_HYBRID, errp);
-+}
-+
- /* Transfer online/offline status between @vcpu and the guest system.
-  *
-  * On input either @errp or *@errp must be NULL.
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index a8ef41f175..ef21da63be 100644
+index 0dd8555867..559d71ffae 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -1738,271 +1738,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+@@ -887,56 +887,6 @@ void qmp_guest_set_user_password(const char *username,
  }
- #endif /* CONFIG_FSTRIM */
+ #endif /* __linux__ || __FreeBSD__ */
  
--
--#define LINUX_SYS_STATE_FILE "/sys/power/state"
--#define SUSPEND_SUPPORTED 0
--#define SUSPEND_NOT_SUPPORTED 1
--
--typedef enum {
--    SUSPEND_MODE_DISK = 0,
--    SUSPEND_MODE_RAM = 1,
--    SUSPEND_MODE_HYBRID = 2,
--} SuspendMode;
--
--/*
-- * Executes a command in a child process using g_spawn_sync,
-- * returning an int >= 0 representing the exit status of the
-- * process.
-- *
-- * If the program wasn't found in path, returns -1.
-- *
-- * If a problem happened when creating the child process,
-- * returns -1 and errp is set.
-- */
--static int run_process_child(const char *command[], Error **errp)
--{
--    int exit_status, spawn_flag;
--    GError *g_err = NULL;
--    bool success;
--
--    spawn_flag = G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL |
--                 G_SPAWN_STDERR_TO_DEV_NULL;
--
--    success =  g_spawn_sync(NULL, (char **)command, NULL, spawn_flag,
--                            NULL, NULL, NULL, NULL,
--                            &exit_status, &g_err);
--
--    if (success) {
--        return WEXITSTATUS(exit_status);
--    }
--
--    if (g_err && (g_err->code != G_SPAWN_ERROR_NOENT)) {
--        error_setg(errp, "failed to create child process, error '%s'",
--                   g_err->message);
--    }
--
--    g_error_free(g_err);
--    return -1;
--}
--
--static bool systemd_supports_mode(SuspendMode mode, Error **errp)
--{
--    const char *systemctl_args[3] = {"systemd-hibernate", "systemd-suspend",
--                                     "systemd-hybrid-sleep"};
--    const char *cmd[4] = {"systemctl", "status", systemctl_args[mode], NULL};
--    int status;
--
--    status = run_process_child(cmd, errp);
--
--    /*
--     * systemctl status uses LSB return codes so we can expect
--     * status > 0 and be ok. To assert if the guest has support
--     * for the selected suspend mode, status should be < 4. 4 is
--     * the code for unknown service status, the return value when
--     * the service does not exist. A common value is status = 3
--     * (program is not running).
--     */
--    if (status > 0 && status < 4) {
--        return true;
--    }
--
--    return false;
--}
--
--static void systemd_suspend(SuspendMode mode, Error **errp)
--{
--    Error *local_err = NULL;
--    const char *systemctl_args[3] = {"hibernate", "suspend", "hybrid-sleep"};
--    const char *cmd[3] = {"systemctl", systemctl_args[mode], NULL};
--    int status;
--
--    status = run_process_child(cmd, &local_err);
--
--    if (status == 0) {
--        return;
--    }
--
--    if ((status == -1) && !local_err) {
--        error_setg(errp, "the helper program 'systemctl %s' was not found",
--                   systemctl_args[mode]);
--        return;
--    }
--
--    if (local_err) {
--        error_propagate(errp, local_err);
--    } else {
--        error_setg(errp, "the helper program 'systemctl %s' returned an "
--                   "unexpected exit status code (%d)",
--                   systemctl_args[mode], status);
--    }
--}
--
--static bool pmutils_supports_mode(SuspendMode mode, Error **errp)
--{
--    Error *local_err = NULL;
--    const char *pmutils_args[3] = {"--hibernate", "--suspend",
--                                   "--suspend-hybrid"};
--    const char *cmd[3] = {"pm-is-supported", pmutils_args[mode], NULL};
--    int status;
--
--    status = run_process_child(cmd, &local_err);
--
--    if (status == SUSPEND_SUPPORTED) {
--        return true;
--    }
--
--    if ((status == -1) && !local_err) {
--        return false;
--    }
--
--    if (local_err) {
--        error_propagate(errp, local_err);
--    } else {
--        error_setg(errp,
--                   "the helper program '%s' returned an unexpected exit"
--                   " status code (%d)", "pm-is-supported", status);
--    }
--
--    return false;
--}
--
--static void pmutils_suspend(SuspendMode mode, Error **errp)
--{
--    Error *local_err = NULL;
--    const char *pmutils_binaries[3] = {"pm-hibernate", "pm-suspend",
--                                       "pm-suspend-hybrid"};
--    const char *cmd[2] = {pmutils_binaries[mode], NULL};
--    int status;
--
--    status = run_process_child(cmd, &local_err);
--
--    if (status == 0) {
--        return;
--    }
--
--    if ((status == -1) && !local_err) {
--        error_setg(errp, "the helper program '%s' was not found",
--                   pmutils_binaries[mode]);
--        return;
--    }
--
--    if (local_err) {
--        error_propagate(errp, local_err);
--    } else {
--        error_setg(errp,
--                   "the helper program '%s' returned an unexpected exit"
--                   " status code (%d)", pmutils_binaries[mode], status);
--    }
--}
--
--static bool linux_sys_state_supports_mode(SuspendMode mode, Error **errp)
--{
--    const char *sysfile_strs[3] = {"disk", "mem", NULL};
--    const char *sysfile_str = sysfile_strs[mode];
--    char buf[32]; /* hopefully big enough */
--    int fd;
--    ssize_t ret;
--
--    if (!sysfile_str) {
--        error_setg(errp, "unknown guest suspend mode");
--        return false;
--    }
--
--    fd = open(LINUX_SYS_STATE_FILE, O_RDONLY);
--    if (fd < 0) {
--        return false;
--    }
--
--    ret = read(fd, buf, sizeof(buf) - 1);
--    close(fd);
--    if (ret <= 0) {
--        return false;
--    }
--    buf[ret] = '\0';
--
--    if (strstr(buf, sysfile_str)) {
--        return true;
--    }
--    return false;
--}
--
--static void linux_sys_state_suspend(SuspendMode mode, Error **errp)
--{
--    g_autoptr(GError) local_gerr = NULL;
--    const char *sysfile_strs[3] = {"disk", "mem", NULL};
--    const char *sysfile_str = sysfile_strs[mode];
--
--    if (!sysfile_str) {
--        error_setg(errp, "unknown guest suspend mode");
--        return;
--    }
--
--    if (!g_file_set_contents(LINUX_SYS_STATE_FILE, sysfile_str,
--                             -1, &local_gerr)) {
--        error_setg(errp, "suspend: cannot write to '%s': %s",
--                   LINUX_SYS_STATE_FILE, local_gerr->message);
--        return;
--    }
--}
--
--static void guest_suspend(SuspendMode mode, Error **errp)
--{
--    Error *local_err = NULL;
--    bool mode_supported = false;
--
--    if (systemd_supports_mode(mode, &local_err)) {
--        mode_supported = true;
--        systemd_suspend(mode, &local_err);
--
--        if (!local_err) {
--            return;
--        }
--    }
--
--    error_free(local_err);
--    local_err = NULL;
--
--    if (pmutils_supports_mode(mode, &local_err)) {
--        mode_supported = true;
--        pmutils_suspend(mode, &local_err);
--
--        if (!local_err) {
--            return;
--        }
--    }
--
--    error_free(local_err);
--    local_err = NULL;
--
--    if (linux_sys_state_supports_mode(mode, &local_err)) {
--        mode_supported = true;
--        linux_sys_state_suspend(mode, &local_err);
--    }
--
--    if (!mode_supported) {
--        error_free(local_err);
--        error_setg(errp,
--                   "the requested suspend mode is not supported by the guest");
--    } else {
--        error_propagate(errp, local_err);
--    }
--}
+-#ifndef __linux__
 -
 -void qmp_guest_suspend_disk(Error **errp)
 -{
--    guest_suspend(SUSPEND_MODE_DISK, errp);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -}
 -
 -void qmp_guest_suspend_ram(Error **errp)
 -{
--    guest_suspend(SUSPEND_MODE_RAM, errp);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -}
 -
 -void qmp_guest_suspend_hybrid(Error **errp)
 -{
--    guest_suspend(SUSPEND_MODE_HYBRID, errp);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -}
 -
- #endif /* __linux__ */
+-GuestLogicalProcessorList *qmp_guest_get_vcpus(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return -1;
+-}
+-
+-GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestMemoryBlockResponseList *
+-qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-#endif
+-
+ #ifdef HAVE_GETIFADDRS
+ static GuestNetworkInterface *
+ guest_find_interface(GuestNetworkInterfaceList *head,
+@@ -1272,22 +1222,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+ /* add unsupported commands to the list of blocked RPCs */
+ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+ {
+-#if !defined(__linux__)
+-    {
+-        const char *list[] = {
+-            "guest-suspend-disk", "guest-suspend-ram",
+-            "guest-suspend-hybrid", "guest-get-vcpus", "guest-set-vcpus",
+-            "guest-get-memory-blocks", "guest-set-memory-blocks",
+-            "guest-get-memory-block-info",
+-            NULL};
+-        const char **p = list;
+-
+-        while (*p) {
+-            blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
+-        }
+-    }
+-#endif
+-
+ #if !defined(HAVE_GETIFADDRS)
+     blockedrpcs = g_list_append(blockedrpcs,
+                               g_strdup("guest-network-get-interfaces"));
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 2f0215afc7..38483652ac 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -566,7 +566,8 @@
+ #
+ # Since: 1.1
+ ##
+-{ 'command': 'guest-suspend-disk', 'success-response': false }
++{ 'command': 'guest-suspend-disk', 'success-response': false,
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
  
- #if defined(__linux__) || defined(__FreeBSD__)
+ ##
+ # @guest-suspend-ram:
+@@ -602,7 +603,8 @@
+ #
+ # Since: 1.1
+ ##
+-{ 'command': 'guest-suspend-ram', 'success-response': false }
++{ 'command': 'guest-suspend-ram', 'success-response': false,
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-suspend-hybrid:
+@@ -638,7 +640,7 @@
+ # Since: 1.1
+ ##
+ { 'command': 'guest-suspend-hybrid', 'success-response': false,
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestIpAddressType:
+@@ -751,7 +753,8 @@
+ { 'struct': 'GuestLogicalProcessor',
+   'data': {'logical-id': 'int',
+            'online': 'bool',
+-           '*can-offline': 'bool'} }
++           '*can-offline': 'bool'},
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-get-vcpus:
+@@ -766,7 +769,8 @@
+ # Since: 1.5
+ ##
+ { 'command': 'guest-get-vcpus',
+-  'returns': ['GuestLogicalProcessor'] }
++  'returns': ['GuestLogicalProcessor'],
++  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
+ 
+ ##
+ # @guest-set-vcpus:
+@@ -809,7 +813,7 @@
+ { 'command': 'guest-set-vcpus',
+   'data':    {'vcpus': ['GuestLogicalProcessor'] },
+   'returns': 'int',
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestDiskBusType:
+@@ -1103,7 +1107,7 @@
+   'data': {'phys-index': 'uint64',
+            'online': 'bool',
+            '*can-offline': 'bool'},
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-memory-blocks:
+@@ -1120,7 +1124,7 @@
+ ##
+ { 'command': 'guest-get-memory-blocks',
+   'returns': ['GuestMemoryBlock'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockResponseType:
+@@ -1144,7 +1148,7 @@
+ { 'enum': 'GuestMemoryBlockResponseType',
+   'data': ['success', 'not-found', 'operation-not-supported',
+            'operation-failed'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockResponse:
+@@ -1163,7 +1167,7 @@
+   'data': { 'phys-index': 'uint64',
+             'response': 'GuestMemoryBlockResponseType',
+             '*error-code': 'int' },
+-  'if': 'CONFIG_POSIX'}
++  'if': 'CONFIG_LINUX'}
+ 
+ ##
+ # @guest-set-memory-blocks:
+@@ -1195,7 +1199,7 @@
+ { 'command': 'guest-set-memory-blocks',
+   'data':    {'mem-blks': ['GuestMemoryBlock'] },
+   'returns': ['GuestMemoryBlockResponse'],
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestMemoryBlockInfo:
+@@ -1208,7 +1212,7 @@
+ ##
+ { 'struct': 'GuestMemoryBlockInfo',
+   'data': {'size': 'uint64'},
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @guest-get-memory-block-info:
+@@ -1221,7 +1225,7 @@
+ ##
+ { 'command': 'guest-get-memory-block-info',
+   'returns': 'GuestMemoryBlockInfo',
+-  'if': 'CONFIG_POSIX' }
++  'if': 'CONFIG_LINUX' }
+ 
+ ##
+ # @GuestExecStatus:
 -- 
 2.45.2
 
