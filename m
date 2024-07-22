@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64820C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9A9C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrWL-0001WG-5E; Mon, 22 Jul 2024 07:48:01 -0400
+	id 1sVrWx-0004Uy-CR; Mon, 22 Jul 2024 07:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVrW8-0000cz-QG
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:47:58 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1sVrWt-0004IK-Vb
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:48:35 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sVrW3-0003BR-K5
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:47:46 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5a88be88a3aso572574a12.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:47:43 -0700 (PDT)
+ id 1sVrWs-0003JW-DS
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:48:35 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5a20de39cfbso3325776a12.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721648862; x=1722253662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721648913; x=1722253713; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rqZt2GBDBlRHU2MNPIjWXtmJTTnY6Ryl785kfDf2JBY=;
- b=VgE/dP7xezEcMQmohkE6dmwihylU6GLJvkla1pmy1HFJkXUWQS4fvcZGd8lpj0QOI1
- wQ+EKBXt1JJDa9hgpcMa3SK3g7Z1NlZYiYjmA/LC5q/baa8Djw/81pGsRqfrJCNgFXBv
- EIarZq+tWOi5TB94tKQHr2VUkDeBzBETZ3GOok01rgtTCg+uFwb63qFhsmfhqmAI3qA+
- fxvD5ya6g4zD4iJ+HMHqFTJUlRzVt+RCgvla21LJauS3c5VIETO28Q1wXFB6DtVG71Q1
- WpwqrYnysFjFshopoR25CY0Nk0k69n8VSvAP4m/J5vWqV0cUVJbJPo94m656JaqQYQpk
- wieg==
+ bh=agF2o56NVMWoQLSkbiU99Lwva4Y5FPNElLfY3+x3OvQ=;
+ b=vf8Oj/TLojG3vvYe9M2tVoOUSNDlTB4urPSV2O6nmbGl5yJXM/T3kdsOc04YyEbAAV
+ aHtId2vdlVVecZ5qYASZNmxpGHILzdMyOodIn2h0ZRfgdNxq5NcgtggkAT5FJGjKrC/E
+ JWAozNp+Gu/0gXecsAinYBKd6xa4CuLc99LJruoBb93oDcxKGU5sOAgpbVhMwKrTn8Zj
+ K56zmeYup+7EE8hLzT1tm0k3gUO5YoT6L++FHOWCREnr0bczWzedhCTFSsscE1//+LDh
+ nnt1AnrPLTDKeZ04wdjIAYf6sWtY91f2DUE8XRkBMFTNt7ASenJOM65D9dHLbnmpjWBY
+ tJ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721648862; x=1722253662;
+ d=1e100.net; s=20230601; t=1721648913; x=1722253713;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rqZt2GBDBlRHU2MNPIjWXtmJTTnY6Ryl785kfDf2JBY=;
- b=GrwtVMT9dn6Psz0ow0kfUNZdGk9yQ3/dvN7RbtVKXmgu0WTIGU8ZyYDowJdV8O7Q3V
- Ci5jLjUjfzA3ZyHMplbPoEruW+rMll+J1XP/PM/8/X5O8MxHw6eIdbzcvWF+kdLWOXAU
- dwaHl9GWpfatJYb148t1mb/fZ+oVZVuz2LgsJAtOqu8QD4qSjeNCq7eo+LDe6cY3oEh6
- iPQDZniMqfDxYO2LWZEH9V+QOTbPBCajV55qSANfmBezYOdOrgpzCsQMwsyuFWq4IJ7j
- D+bkSz0v7gIQe/hHGO0gI9xmV8psFhLovqMj6nCxIZv+1KxBDuWjO03dkhkb6rxMD2mg
- U8PQ==
-X-Gm-Message-State: AOJu0YwsAly3x0cDaUh8RoDsRBChRiC2dLLQLoSCdBR6H4O34xc+PSSO
- E6ro/75PHCLKPd3+PY+io0+X0rkcQpB8E49fCem1PMWMkaMau7+eyy3as2LJF9E6ThAkaWAwaZS
- 2gboRCBiMd/iLTbjSJu4ydKkvfoo3iD8XM9ESUQ==
-X-Google-Smtp-Source: AGHT+IEx8mRQyp963eeXXdoV+BXKAU7bLrV30LptSyhYM2vBHx7uGr9vEf/gx1mCsDuaMBMONGysXyfnnaxRXKtLMQo=
-X-Received: by 2002:a50:9fa8:0:b0:5a2:6e1c:91ed with SMTP id
- 4fb4d7f45d1cf-5a47a61f401mr4248220a12.27.1721648861960; Mon, 22 Jul 2024
- 04:47:41 -0700 (PDT)
+ bh=agF2o56NVMWoQLSkbiU99Lwva4Y5FPNElLfY3+x3OvQ=;
+ b=kiC5u7wZBCZ7Kc01MljpWdNFgz6Fki1sW8AFnRbXt4aKB15kGoSaeREelQ3spe+5DS
+ Oz2XaRfI0jjsSsLmf2qa+1DpYGF6Vz6HVNp516X8cqohuQYBZqxBPYeT6HjA3vjM4iT5
+ 9iUJQYQLnhq25mBbaHqNIql4Pqli5JdOjLovYTOCsG7nMG2HKbKQtqrRCjq04DnEcnjg
+ j6QxCl3tVn+nh7oagGZ29gUXr6gPq6/xRh8Y+TDKLHHaUMa0/Uu9V5w+iMvj7Selv9TM
+ RjjlWIrpT041DWlLB2DXrqEJBwDW4vj4f6XX6wyjBXPW2qs6/Ud0gs/HnONtH+FlbqsE
+ ABKA==
+X-Gm-Message-State: AOJu0YzrFIUXAgA+SbEt4CzPYULWXdvPOx7aLUnYdpc4LpbGcMIjtKan
+ JmumrOWUbJn6+Ieuj8y7wi1xGCUUD5byL3ayHY3IWDRkzOXxcDDCPR2AvMCvtgMoUBihDHtpEYR
+ Z+DAEtKGVM5fUeYSo32opYqvZew8WPtLoXFrRKw==
+X-Google-Smtp-Source: AGHT+IGDqENqOnqAs2bUVY+MbHZjzOD7nfyCm6i+tXQmOqvbGwaWjC8gU9u9bZTyESosfuiKI59t3z/6zC27RF62EHY=
+X-Received: by 2002:a50:9982:0:b0:5a1:1:27ad with SMTP id
+ 4fb4d7f45d1cf-5a3eee84c46mr4528335a12.16.1721648912794; 
+ Mon, 22 Jul 2024 04:48:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240722091728.4334-1-yaoxt.fnst@fujitsu.com>
- <20240722091728.4334-2-yaoxt.fnst@fujitsu.com>
-In-Reply-To: <20240722091728.4334-2-yaoxt.fnst@fujitsu.com>
+ <20240722091728.4334-3-yaoxt.fnst@fujitsu.com>
+In-Reply-To: <20240722091728.4334-3-yaoxt.fnst@fujitsu.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Jul 2024 12:47:30 +0100
-Message-ID: <CAFEAcA9_Q91hj7=Zok2de7ekqz+YQ+Jit7MBxYQ1aPZah9PgeQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] mips/loongson3_virt: remove useless type cast
+Date: Mon, 22 Jul 2024 12:48:22 +0100
+Message-ID: <CAFEAcA8LQ1ofPxjnFQtfCaL5HDnULbcCZ1HZWC98-17+RVpxDw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] nvme/ctrl: remove useless type cast
 To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Cc: qemu-devel@nongnu.org, Huacai Chen <chenhuacai@kernel.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,30 +92,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 22 Jul 2024 at 10:19, Yao Xingtao via <qemu-devel@nongnu.org> wrote:
 >
-> The type of kernel_entry, kernel_low and kernel_high is uint64_t, cast
-> the pointer of this type to uint64_t* is useless.
+> The type of req->cmd is NvmeCmd, cast the pointer of this type to
+> NvmeCmd* is useless.
 >
 > Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 > ---
->  hw/mips/loongson3_virt.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/nvme/ctrl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-> index 4ad36f0c5b64..408e3d7054cd 100644
-> --- a/hw/mips/loongson3_virt.c
-> +++ b/hw/mips/loongson3_virt.c
-> @@ -355,8 +355,8 @@ static uint64_t load_kernel(CPUMIPSState *env)
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 5b1b0cabcfc3..221818f551cd 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -4167,7 +4167,7 @@ static bool nvme_zone_matches_filter(uint32_t zafs, NvmeZone *zl)
 >
->      kernel_size = load_elf(loaderparams.kernel_filename, NULL,
->                             cpu_mips_kseg0_to_phys, NULL,
-> -                           (uint64_t *)&kernel_entry,
-> -                           (uint64_t *)&kernel_low, (uint64_t *)&kernel_high,
-> +                           &kernel_entry,
-> +                           &kernel_low, &kernel_high,
->                             NULL, 0, EM_MIPS, 1, 0);
->      if (kernel_size < 0) {
->          error_report("could not load kernel '%s': %s",
+>  static uint16_t nvme_zone_mgmt_recv(NvmeCtrl *n, NvmeRequest *req)
+>  {
+> -    NvmeCmd *cmd = (NvmeCmd *)&req->cmd;
+> +    NvmeCmd *cmd = &req->cmd;
+>      NvmeNamespace *ns = req->ns;
+>      /* cdw12 is zero-based number of dwords to return. Convert to bytes */
+>      uint32_t data_size = (le32_to_cpu(cmd->cdw12) + 1) << 2;
 > --
+> 2.41.0
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
