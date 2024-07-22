@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14667C3DA63
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F438C3DA7F
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 16:08:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVvZf-0004n6-5b; Mon, 22 Jul 2024 12:07:46 -0400
+	id 1sVvZx-0005Z3-Rl; Mon, 22 Jul 2024 12:08:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sVvZY-0004cY-LW
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:37 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVvZu-0005NJ-N3
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:59 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sVvZW-0007dw-0X
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:36 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fd69e44596so19208445ad.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:07:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVvZs-0007gS-P9
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 12:07:58 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-367990aaef3so2359060f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 09:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721664451; x=1722269251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721664474; x=1722269274; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y1ZIker/Na8GmtNzPBdUPRkmdrALyxwwToEGtVfZGu8=;
- b=ooyFylc/qaquLHgSfvm+j2hTCjcPza5Jmm9RNweq0LTlfGoS3nsecYNoDVaEp63h9Y
- RputhuP9kYCCt4EODZCQo/7P3oNDx/9Mjcutg9+yl7R7LRURHgHan/BmPnx5B+Ynn/T+
- HplyAR84yy6+CYiHEIWASou9cUv/GVJrso9j/N8cD9pQK+u2cG2HQw8Y+B1cW+m6Ac4r
- II+VcT5zSdInXt0j2SgV2xCd87csIRPVLj/JG/3sna1Ho1Ihe1cEqJ0gSTYVwk3HTBmT
- XJU/rt+jwNNwX9+8+eQnKpfYh4yt3Y/ISBYoisCE5AkgxIEtL9Tp6MKTzlRHzRpmbUqQ
- 8wlQ==
+ bh=Qcm1dWrebznI1t8ebTrFn2d5NidY82tKkmYUS0FD2gQ=;
+ b=NLV8eCeEiYdnLs8qvOnojSPbb3yEkQyxJY7ossDISd215Lb+4C4m9MnbsOvrR/OEkF
+ njJw9aazeaFsET3BcQqW3VQ965dXapeQQzT4U6rdV7lnxdhOG3amI7IIqfqsox4OKCcK
+ Po/E0iJkai2HDfh/NZJvDCFQH4ZjdfINvy/KHf2KQuCQeC5MUG08Vre37g0OxvmZfUI0
+ eEjyEUGrsmqskI+bRH+JSNfY/Lk/gbzO6/EdR/FqguNRdKBLzBCJKUFl9ZNW65u1NmPm
+ k2hNKG51CztPX4+lc2S4VDF/kFArQEofD84bssQP2JlQz6hltol73gZwAvAJOM8HhWZJ
+ f9yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721664451; x=1722269251;
+ d=1e100.net; s=20230601; t=1721664474; x=1722269274;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y1ZIker/Na8GmtNzPBdUPRkmdrALyxwwToEGtVfZGu8=;
- b=lzc5cMaSXa9XFq+xR6tz1npgz0lVArIqJcSdOMDiVG8+wtyDpjWkXOKFbSafArUr+3
- yZA82yPGldBcLgjxTLJcGT9JnGRFf+VHqdbzmwY3r9599TCfhXvM1au1rIzGdppl7gAT
- bB4eZFkPJY1XcUWQXwdaqWnOVSG31TXzuPpetgacC+l9n+A4K6xUCEzUVKOFItKwyt8W
- uoiKRPrfp0UpYKXg8mw/NFycuC+yx18PDKCbaQllqmBpQIHe5pQaXQTOJFuSJfWivb2g
- t6ZYXgsY1K+MVJqkDhOgoavrSsP11r3uisJTQAINIOAe32ANF/TLp2mv59APVOwzPnTM
- scTQ==
-X-Gm-Message-State: AOJu0Yx+UJjnsjy30vyppisf9vacSsjJs7GDC2mk20kOquJV9mM9SQm4
- 1cwx4BeqrpaRakI8pbOgbl5EXlbiFdls+j4svTZIobb4SPDwOlWVIzV0H5txAMz42p/bUiM7wMO
- J
-X-Google-Smtp-Source: AGHT+IE9yvGdPnxbjV8DbKhMPkuDp90ILAo/+TuVSJz2JYtUr/vfUD5A7J5F/4A6i7dgrHYs+5bDAg==
-X-Received: by 2002:a17:902:e746:b0:1fd:6f24:efad with SMTP id
- d9443c01a7336-1fd6f24f2e6mr154949855ad.26.1721664450656; 
- Mon, 22 Jul 2024 09:07:30 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b402:9243:3e7c:3fff:fe7a:e83b])
+ bh=Qcm1dWrebznI1t8ebTrFn2d5NidY82tKkmYUS0FD2gQ=;
+ b=ecRYQKlRq1764sy8VWQ5PGnQw8tvdCto7or0v7cok5kXrcplOoWo/oJ+8XTQNEK3D5
+ AR7ecRzPjg0YNtuBWcCmgxdxk1KiNvyzrgO3JG2vIgGUWKBUCq7C29bpR+LsjZ2V0ejP
+ k9KVWgKQpMuEaKJcQZXixpLLFoNl3NAnhsViNzoD2ogO0zf7/EczkF3tQ2xSw73pr7HG
+ pp0TN9UKjcCK9Kh7tEa2rE2k6YllGQ2YHienbzJn0eVmLLAU7QHVJjlAAis4Q+xxjmXY
+ FLmU92WI5hCbrc3crpgxRJxAjMOc4d72cGMycW6skeT5ovdAPCMs72Ur0hEsvPVCxirl
+ vyZw==
+X-Gm-Message-State: AOJu0YyANUqmKnX6EqIoh3FGG15GxRd3Eb1ALquC1GxWIiGhweDUWzxW
+ Bx1wA/0vhP0czcDtwD8k8PH8sc5BfnWE6M0ti6x4gupQfzRyZN5Ljoa47gcMcVDxdcFmHZj2WD8
+ w
+X-Google-Smtp-Source: AGHT+IHUiOdd5zhKEM8wd0wDnkyHCYq8h5McOhCLMzlh0XaA3hJKKozIc1odihHXY0dc7Ih77ZpZEQ==
+X-Received: by 2002:a5d:6b02:0:b0:368:420e:b790 with SMTP id
+ ffacd0b85a97d-369debf8ba2mr218506f8f.14.1721664474403; 
+ Mon, 22 Jul 2024 09:07:54 -0700 (PDT)
+Received: from localhost.localdomain
+ (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr. [176.184.20.254])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f2ac8eesm56533165ad.118.2024.07.22.09.07.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 09:07:30 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH 2/4] gdbstub: Add support for MTE in system mode
-Date: Mon, 22 Jul 2024 16:07:07 +0000
-Message-Id: <20240722160709.1677430-3-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240722160709.1677430-1-gustavo.romero@linaro.org>
-References: <20240722160709.1677430-1-gustavo.romero@linaro.org>
+ ffacd0b85a97d-368787cec6bsm8920870f8f.71.2024.07.22.09.07.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 22 Jul 2024 09:07:54 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/7] chardev/char-fe: Document returned value on error
+Date: Mon, 22 Jul 2024 18:07:39 +0200
+Message-ID: <20240722160745.67904-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240722160745.67904-1-philmd@linaro.org>
+References: <20240722160745.67904-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,48 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit makes handle_q_memtag, handle_q_isaddresstagged, and
-handle_Q_memtag stubs build for system mode, allowing all GDB
-'memory-tag' subcommands to work with QEMU gdbstub on aarch64 system
-mode.
+qemu_chr_fe_add_watch() and qemu_chr_fe_write[_all]()
+return -1 on error. Mention it in the documentation.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- target/arm/gdbstub64.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/chardev/char-fe.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index d59272fdbb..fd5a9d0609 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -426,6 +426,7 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index ecef182835..3310449eaf 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -228,6 +228,7 @@ guint qemu_chr_fe_add_watch(CharBackend *be, GIOCondition cond,
+  * is thread-safe.
+  *
+  * Returns: the number of bytes consumed (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
  
-     return 1;
- }
-+#endif /* CONFIG_USER_ONLY */
+@@ -242,6 +243,7 @@ int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
+  * attempted to be written.  This function is thread-safe.
+  *
+  * Returns: the number of bytes consumed (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
  
- static void handle_q_memtag(GArray *params, void *user_ctx)
- {
-@@ -596,12 +597,10 @@ static GdbCmdParseEntry cmd_handler_table[NUM_CMDS] = {
-         .need_cpu_context = true
-     },
- };
--#endif /* CONFIG_USER_ONLY */
+@@ -253,6 +255,7 @@ int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
+  * Read data to a buffer from the back end.
+  *
+  * Returns: the number of bytes read (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_read_all(CharBackend *be, uint8_t *buf, int len);
  
- void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
-                                        GArray *qtable, GArray *stable)
- {
--#ifdef CONFIG_USER_ONLY
-     /* MTE */
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         g_string_append(qsupported, ";memory-tagging+");
-@@ -611,5 +610,4 @@ void aarch64_cpu_register_gdb_commands(ARMCPU *cpu, GString *qsupported,
- 
-         g_array_append_val(stable, cmd_handler_table[QMemTags]);
-     }
--#endif
- }
 -- 
-2.34.1
+2.41.0
 
 
