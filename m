@@ -4,62 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 391D0C3DA59
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC490C3DA59
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 06:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVmoi-0001Nw-Q9; Mon, 22 Jul 2024 02:46:40 -0400
+	id 1sVmw4-0000yY-7C; Mon, 22 Jul 2024 02:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoW-00014p-Vu; Mon, 22 Jul 2024 02:46:29 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoU-0003f8-Uv; Mon, 22 Jul 2024 02:46:28 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id F3375CE0AFF;
- Mon, 22 Jul 2024 06:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4741EC4AF0A;
- Mon, 22 Jul 2024 06:46:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1721630776;
- bh=3+tNSaQ8a39Ggzkv/WVrggnD0uGXWcuNnDojR+LSc44=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oVL2WE7OZyykfjc+U2h2ZDFYoXmJtfncWZ00gq3o3UjqBibGgSeFarIwrqFI2rh5F
- fWU37+OYJd9BVpLWc8QGKcjj26Jl41p3Ixybo90RMiN9czMab0tZjslu8tLdMuy7cb
- L/5pz4+gZ6qJoNpGuaLvJvneqkTsmM+t4FcCFekjJhgI0hswZ7JhbdoJKtmXcNrHLm
- pA7bKJzR5nshm4UvQcDZbbyJXKg3clgCcdRQviH+9N9WDQQvwuI6/7WgLWEgJbn2Br
- w5TTtEMBnbcRyfZlWOtGFkV9U2G1kMSOog/hLMYKZPT32MwV6Gjt5fJpE/u7zw3Wt8
- OAesAlhtMmIAA==
-Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1sVmoI-00000000WQo-12C9; Mon, 22 Jul 2024 08:46:14 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: 
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH v3 3/7] acpi/ghes: Support GPIO error source.
-Date: Mon, 22 Jul 2024 08:45:55 +0200
-Message-ID: <64a31a09fe6b11bebad1c592ad20071a9d93fee5.1721630625.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <cover.1721630625.git.mchehab+huawei@kernel.org>
-References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmvy-0000il-Jd
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:54:10 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sVmvw-00055K-U5
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 02:54:10 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-36887ca3da2so1483825f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 21 Jul 2024 23:54:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721631246; x=1722236046; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DPfGU/BA/sxZ2gzNfCsAG12BfIJbzay3LRA9fySmEkc=;
+ b=sSv8H9rPrlZ3JJcZlDhLBIWwvZepObrNnHPzwAT0oNTD9Rc0mcUmJ9Fn/M2Xt57z6D
+ Lwk2pDQ9gMuWlyadB4P6BZOo840VBP91x/uY9FZG6MD/EnfwbP7vKxaG3/3RpPzKnIou
+ IUJuNQ0/MX+8nq/NNSUV/XuNk4aavK13wYZOHKNORLki9Vxa1A+ndRPiwS4vYpiLoXXG
+ p11YQmQqk96BssA7L5sdf4xl1mbwLZLEtNB2unEncU1uHr5f43vwCDQKFe7Ucx28AJj7
+ p7H5QLlBaobSZUnO9tMPMF25v/dEgy8OFNf/u47xn13WcL/qBqx29tMR1WH74rxTyYiY
+ FLwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721631246; x=1722236046;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DPfGU/BA/sxZ2gzNfCsAG12BfIJbzay3LRA9fySmEkc=;
+ b=bf2ytnlC6meSPt6Vd8q0VvgN8AVk57yxPj7+MLzGVbGiP1aWYitJeJVPpuKpxyUI5Y
+ zQjAPpWe3oaXC08rTscq6AW8A2d4ew+HsIiDSMptObVOcFldV90nWiA8I1PcmkaLfLxj
+ g8YnrQy7Hw98OmE69Q1TON7EUbqAWrEM6xW+jaythnbJjl3jxAEsKl5QyScB6dXmrb5w
+ rHsIPtG+Xo9zhLzvTcFrsnWJPdkbmkYbhzB9DRSu+CI8h0SU30glmDbYsSlTBgxyL8cM
+ jtLd1/bNXJZMYsLrpOzASnfeIL2UFteLYl9XXhpvwL1seKaKx7UEHhtDSNk6YVipKFls
+ VHKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZ0WKt+jqTuJm4kjuLKCV+F9JA8Zh5tEZjePTVEqcMgdeWJRzaK/zs4M76wk94z5HRtRWCrn5sJmL8IQqUAcT6kUMhyeg=
+X-Gm-Message-State: AOJu0YyVwok9AsvAas5CH+pSHTkkZFoPMtuPjAwG0ghX1NvVG78EIMXv
+ L1N5jKDGIT2uxuMfHKGqDaDqDH4nlwGQ4H0eRChwYdvIiNHEPvgsYhXD0XqTKWg=
+X-Google-Smtp-Source: AGHT+IGC7xP3zmDxOcjY0gQkIum0D1XdWmh5K4L+Xlwa8VLgUVyr3znNy62dt3/bPVhxbZ1mB/EzrA==
+X-Received: by 2002:a5d:42c3:0:b0:368:48e6:5056 with SMTP id
+ ffacd0b85a97d-369bbbbf9dfmr3170797f8f.22.1721631246446; 
+ Sun, 21 Jul 2024 23:54:06 -0700 (PDT)
+Received: from [192.168.69.100] (gen92-h02-176-184-20-254.dsl.sta.abo.bbox.fr.
+ [176.184.20.254]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787ed595sm7622630f8f.107.2024.07.21.23.54.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 21 Jul 2024 23:54:06 -0700 (PDT)
+Message-ID: <e3ff47be-6316-4db6-84bd-53bc39c42e7e@linaro.org>
+Date: Mon, 22 Jul 2024 08:54:03 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] range: Make ranges_overlap() return bool
+To: Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
+ <20240722040742.11513-2-yaoxt.fnst@fujitsu.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240722040742.11513-2-yaoxt.fnst@fujitsu.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,63 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+On 22/7/24 06:07, Yao Xingtao via wrote:
+> Just like range_overlaps_range(), use the returned bool value
+> to check whether 2 given ranges overlap.
+> 
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+> ---
+>   include/qemu/range.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Add error notification to GHES v2 using the GPIO source.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- hw/acpi/ghes.c         | 8 ++++++--
- include/hw/acpi/ghes.h | 1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index e9511d9b8f71..5b8bc6eeb437 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -34,8 +34,8 @@
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
- 
--/* Now only support ARMv8 SEA notification type error source */
--#define ACPI_GHES_ERROR_SOURCE_COUNT        1
-+/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
-+#define ACPI_GHES_ERROR_SOURCE_COUNT        2
- 
- /* Generic Hardware Error Source version 2 */
- #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
-@@ -327,6 +327,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-          */
-         build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
-         break;
-+    case ACPI_HEST_SRC_ID_GPIO:
-+        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
-+        break;
-     default:
-         error_report("Not support this error source");
-         abort();
-@@ -370,6 +373,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
-     build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GPIO, linker);
- 
-     acpi_table_end(linker, &table);
- }
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 674f6958e905..4f1ab1a73a06 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -58,6 +58,7 @@ enum AcpiGhesNotifyType {
- 
- enum {
-     ACPI_HEST_SRC_ID_SEA = 0,
-+    ACPI_HEST_SRC_ID_GPIO = 1,
-     /* future ids go here */
-     ACPI_HEST_SRC_ID_RESERVED,
- };
--- 
-2.45.2
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
