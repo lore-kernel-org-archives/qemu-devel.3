@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CACC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0EFC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 11:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sVrSr-0000zg-4w; Mon, 22 Jul 2024 07:44:25 -0400
+	id 1sVrSe-0000Eb-8d; Mon, 22 Jul 2024 07:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sVrSj-0000Ye-4u
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:18 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1sVrSY-0008MN-7z
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:06 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sVrSe-0002QH-D4
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:16 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3686b554cfcso1929409f8f.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:44:12 -0700 (PDT)
+ id 1sVrSP-0002Or-Ql
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 07:44:04 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-368313809a4so1822669f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 04:43:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721648650; x=1722253450; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OVLGD6KIEzAVggABsFYZeBPl3B+hTeGtDK8Ro+VkMEw=;
- b=Y6FeaJGMVo0Pk2s6+ZwZjpn6fn+wwkvw0iyMEvEvx1iBHFbILy18ffMK++WMEPOb5A
- Y0nmZvhHbvO7fU05n1n4TpvhO8snGlLV8APS98NEmjCSgkLzQSOwA81I+QAuERz7QAVt
- vaajnVRl1bcTu2zlCYBAG0dOZrk6QKdplcdc/yu54LBfSKtrOhp7FsJqrb3ucW+bbgOG
- VjcPD/C3mBclEFypsuQQr/bCh1IwowgZF00Nt823RnvsePWhZt3QljIHniweHlnQEIUO
- w7QdJEJ2OJkfqOWGwb2UdynceaD7VvVPSeaxXlvF1rRex91UNLPX5uEnNiImaFuH0Gsd
- JjWw==
+ d=linaro.org; s=google; t=1721648633; x=1722253433; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/pWfCTv2sM3dKzljLIOmXsuSD0XnK1wvluLJ5rjof10=;
+ b=CToyXIyUv5w06AOFpwzqmUCE6fBv99mOZRen6jqc/0Iob1uuTkZMIac55cag9xS0Jy
+ I6E2pUXi2jFFbacTA5mN9IAuHkAlnyHHcbqq1BzEH8oxH+ddI7ckB95u5+B5baqfRM6z
+ LUmD8wmdqZeisuhVLbwlp3GWkZ+/USjAzUCLjBgjdgvJ5vpujA9782BKKV9pyXwlJdPJ
+ P1VzOyix2iArppsseIhObhxTwdawDpUXlwr0DyBbcees75nl7XONzOue4fmeX8qeOUPQ
+ DC2cRsRBlJcb1NG6wWvxku6wt7j3nFW5qT9QQ+fgvFPNOrL9J6jFNU6QG1nNix+blFzl
+ IOkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721648650; x=1722253450;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OVLGD6KIEzAVggABsFYZeBPl3B+hTeGtDK8Ro+VkMEw=;
- b=bsScChN/2NR3PF2tgA9g1N7S7NglnPSBq9FhRDLNyzqihnsKLdS4bOik4LY82zC2MV
- LQ3Dm6qlgVjAVK+6V8nivVWd0kCcv5zFQJpCeV42olX7v6sqgmYun+At74UoFORNGvlC
- hL6kCFU76doeInTOcXwzBVcD4GDV9Z91DBhQkyT3yA4R2N2NIkoVL3w5rn1k95c97nXt
- ZCZXR/76Mq/rgWL1sfLoTlaCiQozuCiAIyZRB51SSRdmUFHW837sVOI2W0HAjzhnWqBR
- vD4CyhyRKtsnoqNHz8Up643uek/U4W5cck8dJknu5jbdpUR8Hl2bNKS3pAAVrtlVm49g
- hL4g==
-X-Gm-Message-State: AOJu0YzlAxYLev3OvmLG29AKHt/n4AEBIuCejycHMYZCkcMzWZhWjEK5
- I1KKeQw91OgDLhpFb5k273WMtPTKAlEc/BTWSzlC31ShFoc5B8SxeWs2XmMVQ8E6rHglo8ezxv/
- 4rh0=
-X-Google-Smtp-Source: AGHT+IFOjG96H258P5BGAEOpEnwrH+tHdP4vI7NIc3XHb9cX2gkQUmoT4hURn2SjXhYpaQ/f72dSxw==
-X-Received: by 2002:a5d:42c3:0:b0:368:48e6:5056 with SMTP id
- ffacd0b85a97d-369bbbbf9dfmr3658676f8f.22.1721648649723; 
- Mon, 22 Jul 2024 04:44:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721648633; x=1722253433;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/pWfCTv2sM3dKzljLIOmXsuSD0XnK1wvluLJ5rjof10=;
+ b=CH+JcD4il+/sIntdP4sxrjLn5k8hKjiQYMqMtHs7vLZPXXQdfb53szbZ1M3fuACLnS
+ 3osHc0AhPNksZhlb82KFKAr2FdB8OZ8/U8Rx8+vU/9YdVkiu3X+OO8ER+Y6S4ohV7IkM
+ fZhCikAsXToDCVuzbIRYDOgHN1bNdXwzPMGaHfHN6wMJKzBZzRO9cX4bc4/7mlCo4lgN
+ kRcpMmYm6jUsWOfQI/vA8Zs+qOO2pX+5fIhyYoJA4NNOMFa+zI3sDSNds3ppM9oK4w7X
+ 994zQ9oz3uZN1JI+lruLxhfhKKBK1QHdvbXP3IeWneSk4gBe/AE/CsqJ67FjW64rBeQt
+ 4OuQ==
+X-Gm-Message-State: AOJu0YzbZVRkLAK6JbhPdmXS3CtkKUFRhiyp43+LB8bY0Xd+nliBrf0i
+ 8cXoRUCr5oIjUi7Z+0/aeKkK849cXJC9n2HPCuy83Qt5WydgglqA7NzAmw946hFNr+qR6nAfkUf
+ cW+k=
+X-Google-Smtp-Source: AGHT+IGrUnQrcguwFZTupKRQLTsE6dDVJWVfXFBtEZbLZH7ln63gVNemtSEIsJ+oEmYoqPuCciPq+g==
+X-Received: by 2002:a5d:6644:0:b0:366:eadc:573f with SMTP id
+ ffacd0b85a97d-3687402460bmr6316035f8f.27.1721648632887; 
+ Mon, 22 Jul 2024 04:43:52 -0700 (PDT)
 Received: from localhost.localdomain (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787eba8csm8323513f8f.91.2024.07.22.04.44.07
+ ffacd0b85a97d-368787eba8csm8323513f8f.91.2024.07.22.04.43.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 04:44:09 -0700 (PDT)
+ Mon, 22 Jul 2024 04:43:52 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
@@ -70,26 +69,23 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
-Subject: [RFC PATCH v5 7/8] rust: add PL011 device model
-Date: Mon, 22 Jul 2024 14:43:37 +0300
-Message-ID: <a9edaf0a253b15af1d8270ab17ca20410c4e395d.1721648163.git.manos.pitsidianakis@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
+Date: Mon, 22 Jul 2024 14:43:30 +0300
+Message-ID: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,37 +101,499 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a re-implementation of hw/char/pl011.c in Rust.
+Changes from v4->v5:
+- Added CI patch from Alex Benee
+- Removed all cargo use, use meson rust support
+- Added Kconfig logic
 
-How to build:
+Changes from v3->v4:
+- Add rust-specific files to .gitattributes
+- Added help text to scripts/cargo_wrapper.py arguments (thanks Stephan)
+- Split bindings separate crate
+- Add declarative macros for symbols exported to QEMU to said crate
+- Lowered MSRV to 1.77.2
+- Removed auto-download and install of bindgen-cli
+- Fixed re-compilation of Rust objects in case they are missing from 
+  filesystem
+- Fixed optimized builds by adding #[used] (thanks Pierrick for the help 
+  debugging this)
 
-1. Configure a QEMU build with:
-   --enable-system --target-list=aarch64-softmmu --enable-rust
-2. Launching a VM with qemu-system-aarch64 should use the Rust version
-   of the pl011 device
+Also, Pierrick helped confirming it works on Windows with some 
+windows-specific changes. I confirmed it works on macos by allowing 
+bindgen to detect system paths for clang, which is a workaround and not 
+a solution. However this series doesn't have the windows changes 
+integrated.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- MAINTAINERS                            |   5 +
- hw/arm/Kconfig                         |  33 +-
- rust/Kconfig                           |   1 +
- rust/hw/Kconfig                        |   2 +
- rust/hw/char/Kconfig                   |   3 +
- rust/hw/char/meson.build               |   1 +
- rust/hw/char/pl011/.gitignore          |   2 +
- rust/hw/char/pl011/Cargo.lock          | 123 ++++++
- rust/hw/char/pl011/Cargo.toml          |  26 ++
- rust/hw/char/pl011/README.md           |  31 ++
- rust/hw/char/pl011/meson.build         |  24 +
- rust/hw/char/pl011/rustfmt.toml        |   1 +
- rust/hw/char/pl011/src/definitions.rs  |  48 ++
- rust/hw/char/pl011/src/device.rs       | 541 +++++++++++++++++++++++
- rust/hw/char/pl011/src/device_class.rs |  58 +++
- rust/hw/char/pl011/src/lib.rs          | 584 +++++++++++++++++++++++++
- rust/hw/char/pl011/src/memory_ops.rs   |  45 ++
- rust/hw/meson.build                    |   1 +
- rust/meson.build                       |   2 +
- 19 files changed, 1520 insertions(+), 11 deletions(-)
+Changes from v2->v3:
+- Addressed minor mistakes (thanks Stefan)
+- Setup supported version checks for cargo, rustc and bindgen (thanks 
+  everyone who pointed it out / suggested it)
+- Fixed problem with bindgen failing if certain system headers where 
+  needed by defining an allowlist for headers instead of a blocklist for 
+  what we don't want (thanks Alex Bennée for reporting it)
+- Cleaned up bindgen target/dependendy definition in meson.build by 
+  removing unnecessary bits
+
+Changes from v1->v2:
+- Create bindgen target first, then add commit for device (thanks 
+  Pierrick)
+- Create a special named generated.rs for each target as compilation 
+  would fail if more than one targets were defined. The generated.rs 
+  target names would clash.
+- Add more descriptive commit messages
+- Update MAINTAINERS
+- Cleanup patch order for better review, hopefully
+
+
+Alex Bennée (1):
+  build deps: update lcitool to include rust bits
+
+Manos Pitsidianakis (7):
+  build-sys: Add rust feature option
+  CI: Add build-system-rust-debian job
+  rust: add bindgen step as a meson dependency
+  .gitattributes: add Rust diff and merge attributes
+  rust: add crate to expose bindings and interfaces
+  rust: add PL011 device model
+  rust/pl011: vendor dependencies
+
+ MAINTAINERS                                   |   20 +
+ rust/hw/char/pl011/vendor/either/README.rst   |  185 +
+ configure                                     |   12 +
+ meson.build                                   |   73 +-
+ rust/wrapper.h                                |   39 +
+ .gitattributes                                |    3 +
+ .gitlab-ci.d/buildtest.yml                    |   11 +
+ .gitlab-ci.d/cirrus/freebsd-13.vars           |    2 +-
+ .gitlab-ci.d/cirrus/macos-13.vars             |    2 +-
+ .gitlab-ci.d/cirrus/macos-14.vars             |    2 +-
+ Kconfig                                       |    1 +
+ Kconfig.host                                  |    3 +
+ hw/arm/Kconfig                                |   33 +-
+ meson_options.txt                             |    5 +
+ rust/.gitignore                               |    3 +
+ rust/Kconfig                                  |    1 +
+ rust/hw/Kconfig                               |    2 +
+ rust/hw/char/Kconfig                          |    3 +
+ rust/hw/char/meson.build                      |    1 +
+ rust/hw/char/pl011/.gitignore                 |    2 +
+ rust/hw/char/pl011/Cargo.lock                 |  123 +
+ rust/hw/char/pl011/Cargo.toml                 |   26 +
+ rust/hw/char/pl011/README.md                  |   31 +
+ rust/hw/char/pl011/meson.build                |   24 +
+ rust/hw/char/pl011/rustfmt.toml               |    1 +
+ rust/hw/char/pl011/src/definitions.rs         |   48 +
+ rust/hw/char/pl011/src/device.rs              |  541 ++
+ rust/hw/char/pl011/src/device_class.rs        |   58 +
+ rust/hw/char/pl011/src/lib.rs                 |  584 ++
+ rust/hw/char/pl011/src/memory_ops.rs          |   45 +
+ .../vendor/arbitrary-int/.cargo-checksum.json |    1 +
+ .../pl011/vendor/arbitrary-int/CHANGELOG.md   |   47 +
+ .../pl011/vendor/arbitrary-int/Cargo.toml     |   54 +
+ .../pl011/vendor/arbitrary-int/LICENSE.txt    |   21 +
+ .../char/pl011/vendor/arbitrary-int/README.md |   72 +
+ .../pl011/vendor/arbitrary-int/meson.build    |   14 +
+ .../pl011/vendor/arbitrary-int/src/lib.rs     | 1489 +++++
+ .../pl011/vendor/arbitrary-int/tests/tests.rs | 1913 ++++++
+ .../vendor/bilge-impl/.cargo-checksum.json    |    1 +
+ .../char/pl011/vendor/bilge-impl/Cargo.toml   |   54 +
+ .../hw/char/pl011/vendor/bilge-impl/README.md |  327 ++
+ .../char/pl011/vendor/bilge-impl/meson.build  |   24 +
+ .../pl011/vendor/bilge-impl/src/bitsize.rs    |  187 +
+ .../vendor/bilge-impl/src/bitsize/split.rs    |  185 +
+ .../vendor/bilge-impl/src/bitsize_internal.rs |  235 +
+ .../src/bitsize_internal/struct_gen.rs        |  402 ++
+ .../pl011/vendor/bilge-impl/src/debug_bits.rs |   55 +
+ .../vendor/bilge-impl/src/default_bits.rs     |   92 +
+ .../pl011/vendor/bilge-impl/src/fmt_bits.rs   |  112 +
+ .../pl011/vendor/bilge-impl/src/from_bits.rs  |  222 +
+ .../char/pl011/vendor/bilge-impl/src/lib.rs   |   79 +
+ .../pl011/vendor/bilge-impl/src/shared.rs     |  196 +
+ .../src/shared/discriminant_assigner.rs       |   56 +
+ .../vendor/bilge-impl/src/shared/fallback.rs  |   92 +
+ .../vendor/bilge-impl/src/shared/util.rs      |   91 +
+ .../vendor/bilge-impl/src/try_from_bits.rs    |  143 +
+ .../pl011/vendor/bilge/.cargo-checksum.json   |    1 +
+ rust/hw/char/pl011/vendor/bilge/Cargo.toml    |   69 +
+ .../hw/char/pl011/vendor/bilge/LICENSE-APACHE |  176 +
+ rust/hw/char/pl011/vendor/bilge/LICENSE-MIT   |   17 +
+ rust/hw/char/pl011/vendor/bilge/README.md     |  327 ++
+ rust/hw/char/pl011/vendor/bilge/meson.build   |   17 +
+ rust/hw/char/pl011/vendor/bilge/src/lib.rs    |   80 +
+ .../pl011/vendor/either/.cargo-checksum.json  |    1 +
+ rust/hw/char/pl011/vendor/either/Cargo.toml   |   54 +
+ .../char/pl011/vendor/either/LICENSE-APACHE   |  201 +
+ rust/hw/char/pl011/vendor/either/LICENSE-MIT  |   25 +
+ .../pl011/vendor/either/README-crates.io.md   |   10 +
+ rust/hw/char/pl011/vendor/either/meson.build  |   16 +
+ .../pl011/vendor/either/src/into_either.rs    |   64 +
+ .../char/pl011/vendor/either/src/iterator.rs  |  315 +
+ rust/hw/char/pl011/vendor/either/src/lib.rs   | 1519 +++++
+ .../pl011/vendor/either/src/serde_untagged.rs |   69 +
+ .../either/src/serde_untagged_optional.rs     |   74 +
+ .../vendor/itertools/.cargo-checksum.json     |    1 +
+ .../char/pl011/vendor/itertools/CHANGELOG.md  |  409 ++
+ .../hw/char/pl011/vendor/itertools/Cargo.lock |  681 +++
+ .../hw/char/pl011/vendor/itertools/Cargo.toml |  101 +
+ .../pl011/vendor/itertools/LICENSE-APACHE     |  201 +
+ .../char/pl011/vendor/itertools/LICENSE-MIT   |   25 +
+ rust/hw/char/pl011/vendor/itertools/README.md |   44 +
+ .../pl011/vendor/itertools/benches/bench1.rs  |  877 +++
+ .../vendor/itertools/benches/combinations.rs  |  125 +
+ .../benches/combinations_with_replacement.rs  |   40 +
+ .../vendor/itertools/benches/extra/mod.rs     |    2 +
+ .../itertools/benches/extra/zipslices.rs      |  188 +
+ .../itertools/benches/fold_specialization.rs  |   73 +
+ .../vendor/itertools/benches/powerset.rs      |   44 +
+ .../vendor/itertools/benches/tree_fold1.rs    |  144 +
+ .../itertools/benches/tuple_combinations.rs   |  113 +
+ .../pl011/vendor/itertools/benches/tuples.rs  |  213 +
+ .../pl011/vendor/itertools/examples/iris.data |  150 +
+ .../pl011/vendor/itertools/examples/iris.rs   |  137 +
+ .../char/pl011/vendor/itertools/meson.build   |   18 +
+ .../vendor/itertools/src/adaptors/coalesce.rs |  235 +
+ .../vendor/itertools/src/adaptors/map.rs      |  124 +
+ .../vendor/itertools/src/adaptors/mod.rs      | 1151 ++++
+ .../itertools/src/adaptors/multi_product.rs   |  230 +
+ .../vendor/itertools/src/combinations.rs      |  128 +
+ .../src/combinations_with_replacement.rs      |  109 +
+ .../pl011/vendor/itertools/src/concat_impl.rs |   23 +
+ .../vendor/itertools/src/cons_tuples_impl.rs  |   64 +
+ .../char/pl011/vendor/itertools/src/diff.rs   |   61 +
+ .../vendor/itertools/src/duplicates_impl.rs   |  216 +
+ .../vendor/itertools/src/either_or_both.rs    |  495 ++
+ .../vendor/itertools/src/exactly_one_err.rs   |  110 +
+ .../pl011/vendor/itertools/src/extrema_set.rs |   48 +
+ .../pl011/vendor/itertools/src/flatten_ok.rs  |  165 +
+ .../char/pl011/vendor/itertools/src/format.rs |  168 +
+ .../char/pl011/vendor/itertools/src/free.rs   |  286 +
+ .../pl011/vendor/itertools/src/group_map.rs   |   32 +
+ .../pl011/vendor/itertools/src/groupbylazy.rs |  579 ++
+ .../vendor/itertools/src/grouping_map.rs      |  535 ++
+ .../pl011/vendor/itertools/src/impl_macros.rs |   29 +
+ .../pl011/vendor/itertools/src/intersperse.rs |  118 +
+ .../pl011/vendor/itertools/src/k_smallest.rs  |   20 +
+ .../pl011/vendor/itertools/src/kmerge_impl.rs |  227 +
+ .../pl011/vendor/itertools/src/lazy_buffer.rs |   63 +
+ .../hw/char/pl011/vendor/itertools/src/lib.rs | 3967 +++++++++++++
+ .../pl011/vendor/itertools/src/merge_join.rs  |  220 +
+ .../char/pl011/vendor/itertools/src/minmax.rs |  115 +
+ .../vendor/itertools/src/multipeek_impl.rs    |  101 +
+ .../pl011/vendor/itertools/src/pad_tail.rs    |   96 +
+ .../pl011/vendor/itertools/src/peek_nth.rs    |  102 +
+ .../itertools/src/peeking_take_while.rs       |  177 +
+ .../vendor/itertools/src/permutations.rs      |  277 +
+ .../pl011/vendor/itertools/src/powerset.rs    |   90 +
+ .../itertools/src/process_results_impl.rs     |   68 +
+ .../vendor/itertools/src/put_back_n_impl.rs   |   61 +
+ .../pl011/vendor/itertools/src/rciter_impl.rs |   99 +
+ .../pl011/vendor/itertools/src/repeatn.rs     |   59 +
+ .../pl011/vendor/itertools/src/size_hint.rs   |  119 +
+ .../pl011/vendor/itertools/src/sources.rs     |  183 +
+ .../itertools/src/take_while_inclusive.rs     |   68 +
+ .../hw/char/pl011/vendor/itertools/src/tee.rs |   78 +
+ .../pl011/vendor/itertools/src/tuple_impl.rs  |  331 ++
+ .../pl011/vendor/itertools/src/unique_impl.rs |  179 +
+ .../pl011/vendor/itertools/src/unziptuple.rs  |   80 +
+ .../vendor/itertools/src/with_position.rs     |   88 +
+ .../pl011/vendor/itertools/src/zip_eq_impl.rs |   60 +
+ .../pl011/vendor/itertools/src/zip_longest.rs |   83 +
+ .../pl011/vendor/itertools/src/ziptuple.rs    |  138 +
+ .../itertools/tests/adaptors_no_collect.rs    |   46 +
+ .../vendor/itertools/tests/flatten_ok.rs      |   76 +
+ .../vendor/itertools/tests/macros_hygiene.rs  |   13 +
+ .../vendor/itertools/tests/merge_join.rs      |  108 +
+ .../itertools/tests/peeking_take_while.rs     |   69 +
+ .../pl011/vendor/itertools/tests/quick.rs     | 1849 ++++++
+ .../vendor/itertools/tests/specializations.rs |  153 +
+ .../pl011/vendor/itertools/tests/test_core.rs |  317 +
+ .../pl011/vendor/itertools/tests/test_std.rs  | 1184 ++++
+ .../pl011/vendor/itertools/tests/tuples.rs    |   86 +
+ .../char/pl011/vendor/itertools/tests/zip.rs  |   77 +
+ rust/hw/char/pl011/vendor/meson.build         |   18 +
+ .../.cargo-checksum.json                      |    1 +
+ .../vendor/proc-macro-error-attr/Cargo.toml   |   33 +
+ .../proc-macro-error-attr/LICENSE-APACHE      |  201 +
+ .../vendor/proc-macro-error-attr/LICENSE-MIT  |   21 +
+ .../vendor/proc-macro-error-attr/build.rs     |    5 +
+ .../vendor/proc-macro-error-attr/meson.build  |   20 +
+ .../vendor/proc-macro-error-attr/src/lib.rs   |  121 +
+ .../vendor/proc-macro-error-attr/src/parse.rs |   89 +
+ .../proc-macro-error-attr/src/settings.rs     |   72 +
+ .../proc-macro-error/.cargo-checksum.json     |    1 +
+ .../vendor/proc-macro-error/CHANGELOG.md      |  162 +
+ .../pl011/vendor/proc-macro-error/Cargo.toml  |   56 +
+ .../vendor/proc-macro-error/LICENSE-APACHE    |  201 +
+ .../pl011/vendor/proc-macro-error/LICENSE-MIT |   21 +
+ .../pl011/vendor/proc-macro-error/README.md   |  258 +
+ .../pl011/vendor/proc-macro-error/build.rs    |   11 +
+ .../pl011/vendor/proc-macro-error/meson.build |   22 +
+ .../vendor/proc-macro-error/src/diagnostic.rs |  349 ++
+ .../vendor/proc-macro-error/src/dummy.rs      |  150 +
+ .../proc-macro-error/src/imp/delegate.rs      |   69 +
+ .../proc-macro-error/src/imp/fallback.rs      |   30 +
+ .../pl011/vendor/proc-macro-error/src/lib.rs  |  560 ++
+ .../vendor/proc-macro-error/src/macros.rs     |  288 +
+ .../vendor/proc-macro-error/src/sealed.rs     |    3 +
+ .../proc-macro-error/tests/macro-errors.rs    |    8 +
+ .../pl011/vendor/proc-macro-error/tests/ok.rs |   10 +
+ .../proc-macro-error/tests/runtime-errors.rs  |   13 +
+ .../vendor/proc-macro-error/tests/ui/abort.rs |   11 +
+ .../proc-macro-error/tests/ui/abort.stderr    |   48 +
+ .../proc-macro-error/tests/ui/append_dummy.rs |   13 +
+ .../tests/ui/append_dummy.stderr              |    5 +
+ .../tests/ui/children_messages.rs             |    6 +
+ .../tests/ui/children_messages.stderr         |   23 +
+ .../vendor/proc-macro-error/tests/ui/dummy.rs |   13 +
+ .../proc-macro-error/tests/ui/dummy.stderr    |    5 +
+ .../vendor/proc-macro-error/tests/ui/emit.rs  |    7 +
+ .../proc-macro-error/tests/ui/emit.stderr     |   48 +
+ .../tests/ui/explicit_span_range.rs           |    6 +
+ .../tests/ui/explicit_span_range.stderr       |    5 +
+ .../proc-macro-error/tests/ui/misuse.rs       |   11 +
+ .../proc-macro-error/tests/ui/misuse.stderr   |   13 +
+ .../tests/ui/multiple_tokens.rs               |    6 +
+ .../tests/ui/multiple_tokens.stderr           |    5 +
+ .../tests/ui/not_proc_macro.rs                |    4 +
+ .../tests/ui/not_proc_macro.stderr            |   10 +
+ .../proc-macro-error/tests/ui/option_ext.rs   |    6 +
+ .../tests/ui/option_ext.stderr                |    7 +
+ .../tests/ui/proc_macro_hack.rs               |   10 +
+ .../tests/ui/proc_macro_hack.stderr           |   26 +
+ .../proc-macro-error/tests/ui/result_ext.rs   |    7 +
+ .../tests/ui/result_ext.stderr                |   11 +
+ .../tests/ui/to_tokens_span.rs                |    6 +
+ .../tests/ui/to_tokens_span.stderr            |   11 +
+ .../tests/ui/unknown_setting.rs               |    4 +
+ .../tests/ui/unknown_setting.stderr           |    5 +
+ .../tests/ui/unrelated_panic.rs               |    6 +
+ .../tests/ui/unrelated_panic.stderr           |    7 +
+ .../vendor/proc-macro2/.cargo-checksum.json   |    1 +
+ .../char/pl011/vendor/proc-macro2/Cargo.toml  |  104 +
+ .../pl011/vendor/proc-macro2/LICENSE-APACHE   |  176 +
+ .../char/pl011/vendor/proc-macro2/LICENSE-MIT |   23 +
+ .../char/pl011/vendor/proc-macro2/README.md   |   94 +
+ .../hw/char/pl011/vendor/proc-macro2/build.rs |  227 +
+ .../pl011/vendor/proc-macro2/build/probe.rs   |   25 +
+ .../char/pl011/vendor/proc-macro2/meson.build |   19 +
+ .../vendor/proc-macro2/rust-toolchain.toml    |    2 +
+ .../pl011/vendor/proc-macro2/src/detection.rs |   75 +
+ .../pl011/vendor/proc-macro2/src/extra.rs     |  151 +
+ .../pl011/vendor/proc-macro2/src/fallback.rs  | 1226 ++++
+ .../char/pl011/vendor/proc-macro2/src/lib.rs  | 1369 +++++
+ .../pl011/vendor/proc-macro2/src/location.rs  |   29 +
+ .../pl011/vendor/proc-macro2/src/marker.rs    |   17 +
+ .../pl011/vendor/proc-macro2/src/parse.rs     |  996 ++++
+ .../pl011/vendor/proc-macro2/src/rcvec.rs     |  145 +
+ .../pl011/vendor/proc-macro2/src/wrapper.rs   |  993 ++++
+ .../vendor/proc-macro2/tests/comments.rs      |  105 +
+ .../vendor/proc-macro2/tests/features.rs      |    8 +
+ .../pl011/vendor/proc-macro2/tests/marker.rs  |  100 +
+ .../pl011/vendor/proc-macro2/tests/test.rs    |  905 +++
+ .../vendor/proc-macro2/tests/test_fmt.rs      |   28 +
+ .../vendor/proc-macro2/tests/test_size.rs     |   73 +
+ .../pl011/vendor/quote/.cargo-checksum.json   |    1 +
+ rust/hw/char/pl011/vendor/quote/Cargo.toml    |   50 +
+ .../hw/char/pl011/vendor/quote/LICENSE-APACHE |  176 +
+ rust/hw/char/pl011/vendor/quote/LICENSE-MIT   |   23 +
+ rust/hw/char/pl011/vendor/quote/README.md     |  272 +
+ rust/hw/char/pl011/vendor/quote/meson.build   |   17 +
+ .../pl011/vendor/quote/rust-toolchain.toml    |    2 +
+ rust/hw/char/pl011/vendor/quote/src/ext.rs    |  110 +
+ rust/hw/char/pl011/vendor/quote/src/format.rs |  168 +
+ .../pl011/vendor/quote/src/ident_fragment.rs  |   88 +
+ rust/hw/char/pl011/vendor/quote/src/lib.rs    | 1464 +++++
+ .../hw/char/pl011/vendor/quote/src/runtime.rs |  530 ++
+ .../hw/char/pl011/vendor/quote/src/spanned.rs |   50 +
+ .../char/pl011/vendor/quote/src/to_tokens.rs  |  209 +
+ .../pl011/vendor/quote/tests/compiletest.rs   |    7 +
+ rust/hw/char/pl011/vendor/quote/tests/test.rs |  549 ++
+ .../ui/does-not-have-iter-interpolated-dup.rs |    9 +
+ ...does-not-have-iter-interpolated-dup.stderr |   11 +
+ .../ui/does-not-have-iter-interpolated.rs     |    9 +
+ .../ui/does-not-have-iter-interpolated.stderr |   11 +
+ .../tests/ui/does-not-have-iter-separated.rs  |    5 +
+ .../ui/does-not-have-iter-separated.stderr    |   10 +
+ .../quote/tests/ui/does-not-have-iter.rs      |    5 +
+ .../quote/tests/ui/does-not-have-iter.stderr  |   10 +
+ .../vendor/quote/tests/ui/not-quotable.rs     |    7 +
+ .../vendor/quote/tests/ui/not-quotable.stderr |   20 +
+ .../vendor/quote/tests/ui/not-repeatable.rs   |    8 +
+ .../quote/tests/ui/not-repeatable.stderr      |   34 +
+ .../vendor/quote/tests/ui/wrong-type-span.rs  |    7 +
+ .../quote/tests/ui/wrong-type-span.stderr     |   10 +
+ .../pl011/vendor/syn/.cargo-checksum.json     |    1 +
+ rust/hw/char/pl011/vendor/syn/Cargo.toml      |  260 +
+ rust/hw/char/pl011/vendor/syn/LICENSE-APACHE  |  176 +
+ rust/hw/char/pl011/vendor/syn/LICENSE-MIT     |   23 +
+ rust/hw/char/pl011/vendor/syn/README.md       |  284 +
+ rust/hw/char/pl011/vendor/syn/benches/file.rs |   57 +
+ rust/hw/char/pl011/vendor/syn/benches/rust.rs |  182 +
+ rust/hw/char/pl011/vendor/syn/meson.build     |   24 +
+ rust/hw/char/pl011/vendor/syn/src/attr.rs     |  793 +++
+ rust/hw/char/pl011/vendor/syn/src/bigint.rs   |   66 +
+ rust/hw/char/pl011/vendor/syn/src/buffer.rs   |  434 ++
+ rust/hw/char/pl011/vendor/syn/src/classify.rs |  377 ++
+ .../pl011/vendor/syn/src/custom_keyword.rs    |  260 +
+ .../vendor/syn/src/custom_punctuation.rs      |  304 +
+ rust/hw/char/pl011/vendor/syn/src/data.rs     |  423 ++
+ rust/hw/char/pl011/vendor/syn/src/derive.rs   |  259 +
+ .../char/pl011/vendor/syn/src/discouraged.rs  |  225 +
+ rust/hw/char/pl011/vendor/syn/src/drops.rs    |   58 +
+ rust/hw/char/pl011/vendor/syn/src/error.rs    |  467 ++
+ rust/hw/char/pl011/vendor/syn/src/export.rs   |   73 +
+ rust/hw/char/pl011/vendor/syn/src/expr.rs     | 3960 +++++++++++++
+ rust/hw/char/pl011/vendor/syn/src/ext.rs      |  136 +
+ rust/hw/char/pl011/vendor/syn/src/file.rs     |  130 +
+ rust/hw/char/pl011/vendor/syn/src/fixup.rs    |  218 +
+ .../hw/char/pl011/vendor/syn/src/gen/clone.rs | 2209 +++++++
+ .../hw/char/pl011/vendor/syn/src/gen/debug.rs | 3160 ++++++++++
+ rust/hw/char/pl011/vendor/syn/src/gen/eq.rs   | 2242 +++++++
+ rust/hw/char/pl011/vendor/syn/src/gen/fold.rs | 3779 ++++++++++++
+ rust/hw/char/pl011/vendor/syn/src/gen/hash.rs | 2807 +++++++++
+ .../hw/char/pl011/vendor/syn/src/gen/visit.rs | 3858 ++++++++++++
+ .../pl011/vendor/syn/src/gen/visit_mut.rs     | 3855 ++++++++++++
+ rust/hw/char/pl011/vendor/syn/src/generics.rs | 1286 ++++
+ rust/hw/char/pl011/vendor/syn/src/group.rs    |  291 +
+ rust/hw/char/pl011/vendor/syn/src/ident.rs    |  108 +
+ rust/hw/char/pl011/vendor/syn/src/item.rs     | 3441 +++++++++++
+ rust/hw/char/pl011/vendor/syn/src/lib.rs      | 1019 ++++
+ rust/hw/char/pl011/vendor/syn/src/lifetime.rs |  156 +
+ rust/hw/char/pl011/vendor/syn/src/lit.rs      | 1830 ++++++
+ .../hw/char/pl011/vendor/syn/src/lookahead.rs |  169 +
+ rust/hw/char/pl011/vendor/syn/src/mac.rs      |  223 +
+ rust/hw/char/pl011/vendor/syn/src/macros.rs   |  166 +
+ rust/hw/char/pl011/vendor/syn/src/meta.rs     |  427 ++
+ rust/hw/char/pl011/vendor/syn/src/op.rs       |  219 +
+ rust/hw/char/pl011/vendor/syn/src/parse.rs    | 1397 +++++
+ .../pl011/vendor/syn/src/parse_macro_input.rs |  128 +
+ .../char/pl011/vendor/syn/src/parse_quote.rs  |  210 +
+ rust/hw/char/pl011/vendor/syn/src/pat.rs      |  953 +++
+ rust/hw/char/pl011/vendor/syn/src/path.rs     |  886 +++
+ .../char/pl011/vendor/syn/src/precedence.rs   |  163 +
+ rust/hw/char/pl011/vendor/syn/src/print.rs    |   16 +
+ .../char/pl011/vendor/syn/src/punctuated.rs   | 1132 ++++
+ .../char/pl011/vendor/syn/src/restriction.rs  |  176 +
+ rust/hw/char/pl011/vendor/syn/src/sealed.rs   |    4 +
+ rust/hw/char/pl011/vendor/syn/src/span.rs     |   63 +
+ rust/hw/char/pl011/vendor/syn/src/spanned.rs  |  118 +
+ rust/hw/char/pl011/vendor/syn/src/stmt.rs     |  481 ++
+ rust/hw/char/pl011/vendor/syn/src/thread.rs   |   60 +
+ rust/hw/char/pl011/vendor/syn/src/token.rs    | 1138 ++++
+ rust/hw/char/pl011/vendor/syn/src/tt.rs       |  107 +
+ rust/hw/char/pl011/vendor/syn/src/ty.rs       | 1216 ++++
+ rust/hw/char/pl011/vendor/syn/src/verbatim.rs |   33 +
+ .../char/pl011/vendor/syn/src/whitespace.rs   |   65 +
+ .../char/pl011/vendor/syn/tests/common/eq.rs  |  900 +++
+ .../char/pl011/vendor/syn/tests/common/mod.rs |   28 +
+ .../pl011/vendor/syn/tests/common/parse.rs    |   49 +
+ .../char/pl011/vendor/syn/tests/debug/gen.rs  | 5163 +++++++++++++++++
+ .../char/pl011/vendor/syn/tests/debug/mod.rs  |  147 +
+ .../char/pl011/vendor/syn/tests/macros/mod.rs |   93 +
+ .../char/pl011/vendor/syn/tests/regression.rs |    5 +
+ .../vendor/syn/tests/regression/issue1108.rs  |    5 +
+ .../vendor/syn/tests/regression/issue1235.rs  |   32 +
+ .../char/pl011/vendor/syn/tests/repo/mod.rs   |  461 ++
+ .../pl011/vendor/syn/tests/repo/progress.rs   |   37 +
+ .../pl011/vendor/syn/tests/test_asyncness.rs  |   43 +
+ .../pl011/vendor/syn/tests/test_attribute.rs  |  225 +
+ .../vendor/syn/tests/test_derive_input.rs     |  781 +++
+ .../char/pl011/vendor/syn/tests/test_expr.rs  |  692 +++
+ .../pl011/vendor/syn/tests/test_generics.rs   |  282 +
+ .../pl011/vendor/syn/tests/test_grouping.rs   |   53 +
+ .../char/pl011/vendor/syn/tests/test_ident.rs |   87 +
+ .../char/pl011/vendor/syn/tests/test_item.rs  |  332 ++
+ .../pl011/vendor/syn/tests/test_iterators.rs  |   70 +
+ .../char/pl011/vendor/syn/tests/test_lit.rs   |  331 ++
+ .../char/pl011/vendor/syn/tests/test_meta.rs  |  154 +
+ .../vendor/syn/tests/test_parse_buffer.rs     |  103 +
+ .../vendor/syn/tests/test_parse_quote.rs      |  166 +
+ .../vendor/syn/tests/test_parse_stream.rs     |  187 +
+ .../char/pl011/vendor/syn/tests/test_pat.rs   |  152 +
+ .../char/pl011/vendor/syn/tests/test_path.rs  |  130 +
+ .../pl011/vendor/syn/tests/test_precedence.rs |  537 ++
+ .../pl011/vendor/syn/tests/test_receiver.rs   |  321 +
+ .../pl011/vendor/syn/tests/test_round_trip.rs |  253 +
+ .../pl011/vendor/syn/tests/test_shebang.rs    |   67 +
+ .../char/pl011/vendor/syn/tests/test_size.rs  |   36 +
+ .../char/pl011/vendor/syn/tests/test_stmt.rs  |  322 +
+ .../vendor/syn/tests/test_token_trees.rs      |   32 +
+ .../hw/char/pl011/vendor/syn/tests/test_ty.rs |  397 ++
+ .../pl011/vendor/syn/tests/test_visibility.rs |  185 +
+ .../char/pl011/vendor/syn/tests/zzz_stable.rs |   33 +
+ .../vendor/unicode-ident/.cargo-checksum.json |    1 +
+ .../pl011/vendor/unicode-ident/Cargo.toml     |   63 +
+ .../pl011/vendor/unicode-ident/LICENSE-APACHE |  176 +
+ .../pl011/vendor/unicode-ident/LICENSE-MIT    |   23 +
+ .../vendor/unicode-ident/LICENSE-UNICODE      |   46 +
+ .../char/pl011/vendor/unicode-ident/README.md |  283 +
+ .../pl011/vendor/unicode-ident/benches/xid.rs |  124 +
+ .../pl011/vendor/unicode-ident/meson.build    |   14 +
+ .../pl011/vendor/unicode-ident/src/lib.rs     |  269 +
+ .../pl011/vendor/unicode-ident/src/tables.rs  |  651 +++
+ .../vendor/unicode-ident/tests/compare.rs     |   67 +
+ .../vendor/unicode-ident/tests/fst/mod.rs     |   11 +
+ .../unicode-ident/tests/fst/xid_continue.fst  |  Bin 0 -> 73249 bytes
+ .../unicode-ident/tests/fst/xid_start.fst     |  Bin 0 -> 65487 bytes
+ .../vendor/unicode-ident/tests/roaring/mod.rs |   21 +
+ .../vendor/unicode-ident/tests/static_size.rs |   95 +
+ .../vendor/unicode-ident/tests/tables/mod.rs  |    7 +
+ .../unicode-ident/tests/tables/tables.rs      |  347 ++
+ .../vendor/unicode-ident/tests/trie/mod.rs    |    7 +
+ .../vendor/unicode-ident/tests/trie/trie.rs   |  445 ++
+ .../vendor/version_check/.cargo-checksum.json |    1 +
+ .../pl011/vendor/version_check/Cargo.toml     |   24 +
+ .../pl011/vendor/version_check/LICENSE-APACHE |  201 +
+ .../pl011/vendor/version_check/LICENSE-MIT    |   19 +
+ .../char/pl011/vendor/version_check/README.md |   80 +
+ .../pl011/vendor/version_check/meson.build    |   14 +
+ .../pl011/vendor/version_check/src/channel.rs |  193 +
+ .../pl011/vendor/version_check/src/date.rs    |  203 +
+ .../pl011/vendor/version_check/src/lib.rs     |  493 ++
+ .../pl011/vendor/version_check/src/version.rs |  316 +
+ rust/hw/meson.build                           |    1 +
+ rust/meson.build                              |   15 +
+ rust/qemu-api/.gitignore                      |    2 +
+ rust/qemu-api/Cargo.lock                      |    7 +
+ rust/qemu-api/Cargo.toml                      |   23 +
+ rust/qemu-api/README.md                       |   17 +
+ rust/qemu-api/build.rs                        |   13 +
+ rust/qemu-api/meson.build                     |   19 +
+ rust/qemu-api/rustfmt.toml                    |    1 +
+ rust/qemu-api/src/bindings.rs                 |    7 +
+ rust/qemu-api/src/definitions.rs              |  107 +
+ rust/qemu-api/src/device_class.rs             |  128 +
+ rust/qemu-api/src/lib.rs                      |  100 +
+ rust/qemu-api/src/tests.rs                    |   48 +
+ rust/rustfmt.toml                             |    7 +
+ .../ci/setup/ubuntu/ubuntu-2204-aarch64.yaml  |    3 +
+ .../ci/setup/ubuntu/ubuntu-2204-s390x.yaml    |    3 +
+ scripts/meson-buildoptions.sh                 |    3 +
+ scripts/rustc_args.py                         |   84 +
+ tests/docker/dockerfiles/alpine.docker        |    3 +
+ tests/docker/dockerfiles/centos9.docker       |    3 +
+ .../dockerfiles/debian-amd64-cross.docker     |    4 +
+ .../dockerfiles/debian-arm64-cross.docker     |    4 +
+ .../dockerfiles/debian-armel-cross.docker     |    4 +
+ .../dockerfiles/debian-armhf-cross.docker     |    4 +
+ .../dockerfiles/debian-i686-cross.docker      |    4 +
+ .../dockerfiles/debian-mips64el-cross.docker  |    4 +
+ .../dockerfiles/debian-mipsel-cross.docker    |    4 +
+ .../dockerfiles/debian-ppc64el-cross.docker   |    4 +
+ .../dockerfiles/debian-s390x-cross.docker     |    4 +
+ tests/docker/dockerfiles/debian.docker        |    3 +
+ .../dockerfiles/fedora-win64-cross.docker     |    3 +
+ tests/docker/dockerfiles/fedora.docker        |    3 +
+ tests/docker/dockerfiles/opensuse-leap.docker |    2 +
+ tests/docker/dockerfiles/ubuntu2204.docker    |    3 +
+ tests/lcitool/libvirt-ci                      |    2 +-
+ tests/lcitool/projects/qemu.yml               |    3 +
+ tests/vm/generated/freebsd.json               |    2 +
+ 432 files changed, 111104 insertions(+), 16 deletions(-)
+ create mode 100644 rust/hw/char/pl011/vendor/either/README.rst
+ create mode 100644 rust/wrapper.h
+ create mode 100644 rust/.gitignore
+ create mode 100644 rust/Kconfig
  create mode 100644 rust/hw/Kconfig
  create mode 100644 rust/hw/char/Kconfig
  create mode 100644 rust/hw/char/meson.build
@@ -150,1735 +608,389 @@ Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
  create mode 100644 rust/hw/char/pl011/src/device_class.rs
  create mode 100644 rust/hw/char/pl011/src/lib.rs
  create mode 100644 rust/hw/char/pl011/src/memory_ops.rs
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/CHANGELOG.md
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/LICENSE.txt
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/arbitrary-int/tests/tests.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/bitsize.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/bitsize/split.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/bitsize_internal.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/bitsize_internal/struct_gen.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/debug_bits.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/default_bits.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/fmt_bits.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/from_bits.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/shared.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/shared/discriminant_assigner.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/shared/fallback.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/shared/util.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge-impl/src/try_from_bits.rs
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/bilge/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/either/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/either/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/either/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/either/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/either/README-crates.io.md
+ create mode 100644 rust/hw/char/pl011/vendor/either/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/either/src/into_either.rs
+ create mode 100644 rust/hw/char/pl011/vendor/either/src/iterator.rs
+ create mode 100644 rust/hw/char/pl011/vendor/either/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/either/src/serde_untagged.rs
+ create mode 100644 rust/hw/char/pl011/vendor/either/src/serde_untagged_optional.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/CHANGELOG.md
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/Cargo.lock
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/bench1.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/combinations.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/combinations_with_replacement.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/extra/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/extra/zipslices.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/fold_specialization.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/powerset.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/tree_fold1.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/tuple_combinations.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/benches/tuples.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/examples/iris.data
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/examples/iris.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/adaptors/coalesce.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/adaptors/map.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/adaptors/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/adaptors/multi_product.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/combinations.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/combinations_with_replacement.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/concat_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/cons_tuples_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/diff.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/duplicates_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/either_or_both.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/exactly_one_err.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/extrema_set.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/flatten_ok.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/format.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/free.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/group_map.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/groupbylazy.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/grouping_map.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/impl_macros.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/intersperse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/k_smallest.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/kmerge_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/lazy_buffer.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/merge_join.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/minmax.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/multipeek_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/pad_tail.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/peek_nth.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/peeking_take_while.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/permutations.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/powerset.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/process_results_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/put_back_n_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/rciter_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/repeatn.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/size_hint.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/sources.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/take_while_inclusive.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/tee.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/tuple_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/unique_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/unziptuple.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/with_position.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/zip_eq_impl.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/zip_longest.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/src/ziptuple.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/adaptors_no_collect.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/flatten_ok.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/macros_hygiene.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/merge_join.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/peeking_take_while.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/quick.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/specializations.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/test_core.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/test_std.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/tuples.rs
+ create mode 100644 rust/hw/char/pl011/vendor/itertools/tests/zip.rs
+ create mode 100644 rust/hw/char/pl011/vendor/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/build.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/src/parse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error-attr/src/settings.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/CHANGELOG.md
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/build.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/diagnostic.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/dummy.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/imp/delegate.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/imp/fallback.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/macros.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/src/sealed.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/macro-errors.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ok.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/runtime-errors.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/abort.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/abort.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/append_dummy.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/append_dummy.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/children_messages.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/children_messages.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/dummy.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/dummy.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/emit.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/emit.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/explicit_span_range.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/explicit_span_range.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/misuse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/misuse.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/multiple_tokens.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/multiple_tokens.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/not_proc_macro.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/not_proc_macro.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/option_ext.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/option_ext.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/proc_macro_hack.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/proc_macro_hack.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/result_ext.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/result_ext.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/to_tokens_span.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/to_tokens_span.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/unknown_setting.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/unknown_setting.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/unrelated_panic.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro-error/tests/ui/unrelated_panic.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/build.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/build/probe.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/rust-toolchain.toml
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/detection.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/extra.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/fallback.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/location.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/marker.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/parse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/rcvec.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/src/wrapper.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/comments.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/features.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/marker.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/test.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/test_fmt.rs
+ create mode 100644 rust/hw/char/pl011/vendor/proc-macro2/tests/test_size.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/quote/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/quote/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/quote/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/quote/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/quote/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/quote/rust-toolchain.toml
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/ext.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/format.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/ident_fragment.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/runtime.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/spanned.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/src/to_tokens.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/compiletest.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/test.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-interpolated-dup.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-interpolated-dup.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-interpolated.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-interpolated.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-separated.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter-separated.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/does-not-have-iter.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/not-quotable.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/not-quotable.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/not-repeatable.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/not-repeatable.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/wrong-type-span.rs
+ create mode 100644 rust/hw/char/pl011/vendor/quote/tests/ui/wrong-type-span.stderr
+ create mode 100644 rust/hw/char/pl011/vendor/syn/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/syn/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/syn/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/syn/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/syn/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/syn/benches/file.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/benches/rust.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/attr.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/bigint.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/buffer.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/classify.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/custom_keyword.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/custom_punctuation.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/data.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/derive.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/discouraged.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/drops.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/error.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/export.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/expr.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/ext.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/file.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/fixup.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/clone.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/debug.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/eq.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/fold.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/hash.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/visit.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/gen/visit_mut.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/generics.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/group.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/ident.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/item.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/lifetime.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/lit.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/lookahead.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/mac.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/macros.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/meta.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/op.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/parse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/parse_macro_input.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/parse_quote.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/pat.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/path.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/precedence.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/print.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/punctuated.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/restriction.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/sealed.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/span.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/spanned.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/stmt.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/thread.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/token.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/tt.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/ty.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/verbatim.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/src/whitespace.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/common/eq.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/common/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/common/parse.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/debug/gen.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/debug/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/macros/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/regression.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/regression/issue1108.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/regression/issue1235.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/repo/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/repo/progress.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_asyncness.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_attribute.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_derive_input.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_expr.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_generics.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_grouping.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_ident.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_item.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_iterators.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_lit.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_meta.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_parse_buffer.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_parse_quote.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_parse_stream.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_pat.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_path.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_precedence.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_receiver.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_round_trip.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_shebang.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_size.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_stmt.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_token_trees.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_ty.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/test_visibility.rs
+ create mode 100644 rust/hw/char/pl011/vendor/syn/tests/zzz_stable.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/LICENSE-UNICODE
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/benches/xid.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/src/tables.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/compare.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/fst/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/fst/xid_continue.fst
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/fst/xid_start.fst
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/roaring/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/static_size.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/tables/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/tables/tables.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/trie/mod.rs
+ create mode 100644 rust/hw/char/pl011/vendor/unicode-ident/tests/trie/trie.rs
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/.cargo-checksum.json
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/Cargo.toml
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/LICENSE-APACHE
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/LICENSE-MIT
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/README.md
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/meson.build
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/src/channel.rs
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/src/date.rs
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/src/lib.rs
+ create mode 100644 rust/hw/char/pl011/vendor/version_check/src/version.rs
  create mode 100644 rust/hw/meson.build
+ create mode 100644 rust/meson.build
+ create mode 100644 rust/qemu-api/.gitignore
+ create mode 100644 rust/qemu-api/Cargo.lock
+ create mode 100644 rust/qemu-api/Cargo.toml
+ create mode 100644 rust/qemu-api/README.md
+ create mode 100644 rust/qemu-api/build.rs
+ create mode 100644 rust/qemu-api/meson.build
+ create mode 120000 rust/qemu-api/rustfmt.toml
+ create mode 100644 rust/qemu-api/src/bindings.rs
+ create mode 100644 rust/qemu-api/src/definitions.rs
+ create mode 100644 rust/qemu-api/src/device_class.rs
+ create mode 100644 rust/qemu-api/src/lib.rs
+ create mode 100644 rust/qemu-api/src/tests.rs
+ create mode 100644 rust/rustfmt.toml
+ create mode 100644 scripts/rustc_args.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1789bcfd9b..0af4ef58ed 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1187,6 +1187,11 @@ F: include/hw/*/microbit*.h
- F: tests/qtest/microbit-test.c
- F: docs/system/arm/nrf.rst
- 
-+ARM PL011 Rust device
-+M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+S: Maintained
-+F: rust/hw/char/pl011/
-+
- AVR Machines
- -------------
- 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 1ad60da7aa..45438c1bc4 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -20,7 +20,8 @@ config ARM_VIRT
-     select PCI_EXPRESS
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     select PFLASH_CFI01
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031 # RTC
-     select PL061 # GPIO
-     select GPIO_PWR
-@@ -80,7 +81,8 @@ config HIGHBANK
-     select AHCI
-     select ARM_TIMER # sp804
-     select ARM_V7M
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL022 # SPI
-     select PL031 # RTC
-     select PL061 # GPIO
-@@ -93,7 +95,8 @@ config INTEGRATOR
-     depends on TCG && ARM
-     select ARM_TIMER
-     select INTEGRATOR_DEBUG
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031 # RTC
-     select PL041 # audio
-     select PL050 # keyboard/mouse
-@@ -119,7 +122,8 @@ config MUSCA
-     default y
-     depends on TCG && ARM
-     select ARMSSE
--    select PL011
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031
-     select SPLIT_IRQ
-     select UNIMP
-@@ -228,7 +232,8 @@ config Z2
-     depends on TCG && ARM
-     select PFLASH_CFI01
-     select WM8750
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PXA2XX
- 
- config REALVIEW
-@@ -248,7 +253,8 @@ config REALVIEW
-     select WM8750 # audio codec
-     select LSI_SCSI_PCI
-     select PCI
--    select PL011  # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031  # RTC
-     select PL041  # audio codec
-     select PL050  # keyboard/mouse
-@@ -273,7 +279,8 @@ config SBSA_REF
-     select PCI_EXPRESS
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     select PFLASH_CFI01
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL031 # RTC
-     select PL061 # GPIO
-     select USB_XHCI_SYSBUS
-@@ -297,7 +304,8 @@ config STELLARIS
-     select ARM_V7M
-     select CMSDK_APB_WATCHDOG
-     select I2C
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL022 # SPI
-     select PL061 # GPIO
-     select SSD0303 # OLED display
-@@ -356,7 +364,8 @@ config VEXPRESS
-     select ARM_TIMER # sp804
-     select LAN9118
-     select PFLASH_CFI01
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select PL041 # audio codec
-     select PL181  # display
-     select REALVIEW
-@@ -440,7 +449,8 @@ config RASPI
-     default y
-     depends on TCG && ARM
-     select FRAMEBUFFER
--    select PL011 # UART
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select SDHCI
-     select USB_DWC2
-     select BCM2835_SPI
-@@ -515,7 +525,8 @@ config XLNX_VERSAL
-     select ARM_GIC
-     select CPU_CLUSTER
-     select DEVICE_TREE
--    select PL011
-+    select PL011 if !HAVE_RUST # UART
-+    select X_PL011_RUST if HAVE_RUST # UART
-     select CADENCE
-     select VIRTIO_MMIO
-     select UNIMP
-diff --git a/rust/Kconfig b/rust/Kconfig
-index e69de29bb2..f9f5c39098 100644
---- a/rust/Kconfig
-+++ b/rust/Kconfig
-@@ -0,0 +1 @@
-+source hw/Kconfig
-diff --git a/rust/hw/Kconfig b/rust/hw/Kconfig
-new file mode 100644
-index 0000000000..4d934f30af
---- /dev/null
-+++ b/rust/hw/Kconfig
-@@ -0,0 +1,2 @@
-+# devices Kconfig
-+source char/Kconfig
-diff --git a/rust/hw/char/Kconfig b/rust/hw/char/Kconfig
-new file mode 100644
-index 0000000000..a1732a9e97
---- /dev/null
-+++ b/rust/hw/char/Kconfig
-@@ -0,0 +1,3 @@
-+config X_PL011_RUST
-+    bool
-+    default y if HAVE_RUST
-diff --git a/rust/hw/char/meson.build b/rust/hw/char/meson.build
-new file mode 100644
-index 0000000000..5716dc43ef
---- /dev/null
-+++ b/rust/hw/char/meson.build
-@@ -0,0 +1 @@
-+subdir('pl011')
-diff --git a/rust/hw/char/pl011/.gitignore b/rust/hw/char/pl011/.gitignore
-new file mode 100644
-index 0000000000..71eaff2035
---- /dev/null
-+++ b/rust/hw/char/pl011/.gitignore
-@@ -0,0 +1,2 @@
-+# Ignore generated bindings file overrides.
-+src/bindings.rs.inc
-diff --git a/rust/hw/char/pl011/Cargo.lock b/rust/hw/char/pl011/Cargo.lock
-new file mode 100644
-index 0000000000..1af92fb16b
---- /dev/null
-+++ b/rust/hw/char/pl011/Cargo.lock
-@@ -0,0 +1,123 @@
-+# This file is automatically @generated by Cargo.
-+# It is not intended for manual editing.
-+version = 3
-+
-+[[package]]
-+name = "arbitrary-int"
-+version = "1.2.7"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d"
-+
-+[[package]]
-+name = "bilge"
-+version = "0.2.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57"
-+dependencies = [
-+ "arbitrary-int",
-+ "bilge-impl",
-+]
-+
-+[[package]]
-+name = "bilge-impl"
-+version = "0.2.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8"
-+dependencies = [
-+ "itertools",
-+ "proc-macro-error",
-+ "proc-macro2",
-+ "quote",
-+ "syn",
-+]
-+
-+[[package]]
-+name = "either"
-+version = "1.12.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b"
-+
-+[[package]]
-+name = "itertools"
-+version = "0.11.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
-+dependencies = [
-+ "either",
-+]
-+
-+[[package]]
-+name = "pl011"
-+version = "0.1.0"
-+dependencies = [
-+ "bilge",
-+ "qemu_api",
-+]
-+
-+[[package]]
-+name = "proc-macro-error"
-+version = "1.0.4"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
-+dependencies = [
-+ "proc-macro-error-attr",
-+ "proc-macro2",
-+ "quote",
-+ "version_check",
-+]
-+
-+[[package]]
-+name = "proc-macro-error-attr"
-+version = "1.0.4"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "version_check",
-+]
-+
-+[[package]]
-+name = "proc-macro2"
-+version = "1.0.84"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
-+dependencies = [
-+ "unicode-ident",
-+]
-+
-+[[package]]
-+name = "qemu_api"
-+version = "0.1.0"
-+
-+[[package]]
-+name = "quote"
-+version = "1.0.36"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
-+dependencies = [
-+ "proc-macro2",
-+]
-+
-+[[package]]
-+name = "syn"
-+version = "2.0.66"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "unicode-ident",
-+]
-+
-+[[package]]
-+name = "unicode-ident"
-+version = "1.0.12"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
-+
-+[[package]]
-+name = "version_check"
-+version = "0.9.4"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-new file mode 100644
-index 0000000000..67a6973da6
---- /dev/null
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -0,0 +1,26 @@
-+[package]
-+name = "pl011"
-+version = "0.1.0"
-+edition = "2021"
-+authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
-+license = "GPL-2.0 OR GPL-3.0-or-later"
-+readme = "README.md"
-+homepage = "https://www.qemu.org"
-+description = "pl011 device model for QEMU"
-+repository = "https://gitlab.com/epilys/rust-for-qemu"
-+resolver = "2"
-+publish = false
-+keywords = []
-+categories = []
-+
-+[lib]
-+crate-type = ["staticlib"]
-+
-+[dependencies]
-+arbitrary-int = { version = "1.2.7" }
-+bilge = { version = "0.2.0" }
-+bilge-impl = { version = "0.2.0" }
-+qemu_api = { path = "../../../qemu-api" }
-+
-+# Do not include in any global workspace
-+[workspace]
-diff --git a/rust/hw/char/pl011/README.md b/rust/hw/char/pl011/README.md
-new file mode 100644
-index 0000000000..cd7dea3163
---- /dev/null
-+++ b/rust/hw/char/pl011/README.md
-@@ -0,0 +1,31 @@
-+# PL011 QEMU Device Model
-+
-+This library implements a device model for the PrimeCell® UART (PL011)
-+device in QEMU.
-+
-+## Build static lib
-+
-+Host build target must be explicitly specified:
-+
-+```sh
-+cargo build --target x86_64-unknown-linux-gnu
-+```
-+
-+Replace host target triplet if necessary.
-+
-+## Generate Rust documentation
-+
-+To generate docs for this crate, including private items:
-+
-+```sh
-+cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
-+```
-+
-+To include direct dependencies like `bilge` (bitmaps for register types):
-+
-+```sh
-+cargo tree --depth 1 -e normal --prefix none \
-+ | cut -d' ' -f1 \
-+ | xargs printf -- '-p %s\n' \
-+ | xargs cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
-+```
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-new file mode 100644
-index 0000000000..427788da6e
---- /dev/null
-+++ b/rust/hw/char/pl011/meson.build
-@@ -0,0 +1,24 @@
-+if not config_host_data.get('CONFIG_HAVE_RUST')
-+  subdir_done()
-+endif
-+
-+add_languages('rust', required: true)
-+subdir('vendor')
-+
-+_libpl011_rs = static_library(
-+  'pl011',
-+  files('src/lib.rs'),
-+  rust_abi: 'c',
-+  rust_args: rust_args + [
-+    '--edition', '2021',
-+  ],
-+  dependencies: [
-+    dep_bilge,
-+    dep_bilge_impl,
-+    qemu_api,
-+  ],
-+)
-+
-+specific_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
-+  link_whole: [_libpl011_rs],
-+)])
-diff --git a/rust/hw/char/pl011/rustfmt.toml b/rust/hw/char/pl011/rustfmt.toml
-new file mode 120000
-index 0000000000..39f97b043b
---- /dev/null
-+++ b/rust/hw/char/pl011/rustfmt.toml
-@@ -0,0 +1 @@
-+../rustfmt.toml
-\ No newline at end of file
-diff --git a/rust/hw/char/pl011/src/definitions.rs b/rust/hw/char/pl011/src/definitions.rs
-new file mode 100644
-index 0000000000..d7958baa83
---- /dev/null
-+++ b/rust/hw/char/pl011/src/definitions.rs
-@@ -0,0 +1,48 @@
-+// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
-+
-+//! Definitions required by QEMU when registering the device.
-+
-+use core::{mem::MaybeUninit, ptr::NonNull};
-+
-+use qemu_api::bindings::*;
-+
-+use crate::{device::PL011State, device_class::pl011_class_init};
-+
-+#[used]
-+#[no_mangle]
-+pub static TYPE_PL011: &std::ffi::CStr = c"pl011";
-+
-+qemu_api::type_info! {
-+    PL011_ARM_INFO: PL011State,
-+    name: c"pl011",
-+    parent: TYPE_SYS_BUS_DEVICE,
-+    instance_init: Some(pl011_init),
-+    abstract_: false,
-+    class_init: Some(pl011_class_init),
-+}
-+
-+#[used]
-+pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
-+    name: PL011_ARM_INFO.name,
-+    unmigratable: true,
-+    ..unsafe { MaybeUninit::<VMStateDescription>::zeroed().assume_init() }
-+};
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_init(obj: *mut Object) {
-+    assert!(!obj.is_null());
-+    let mut state = NonNull::new_unchecked(obj.cast::<PL011State>());
-+    state.as_mut().init();
-+}
-+
-+qemu_api::module_init! {
-+    qom: register_type => {
-+        type_register_static(&PL011_ARM_INFO);
-+    }
-+}
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-new file mode 100644
-index 0000000000..3643b7bdee
---- /dev/null
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -0,0 +1,541 @@
-+// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
-+
-+use core::{
-+    ffi::{c_int, c_uchar, c_uint, c_void, CStr},
-+    ptr::{addr_of, addr_of_mut, NonNull},
-+};
-+
-+use qemu_api::bindings::{self, *};
-+
-+use crate::{
-+    definitions::PL011_ARM_INFO,
-+    memory_ops::PL011_OPS,
-+    registers::{self, Interrupt},
-+    RegisterOffset,
-+};
-+
-+static PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
-+
-+const DATA_BREAK: u32 = 1 << 10;
-+
-+/// QEMU sourced constant.
-+pub const PL011_FIFO_DEPTH: usize = 16_usize;
-+
-+#[repr(C)]
-+#[derive(Debug)]
-+/// PL011 Device Model in QEMU
-+pub struct PL011State {
-+    pub parent_obj: SysBusDevice,
-+    pub iomem: MemoryRegion,
-+    pub readbuff: u32,
-+    #[doc(alias = "fr")]
-+    pub flags: registers::Flags,
-+    #[doc(alias = "lcr")]
-+    pub line_control: registers::LineControl,
-+    #[doc(alias = "rsr")]
-+    pub receive_status_error_clear: registers::ReceiveStatusErrorClear,
-+    #[doc(alias = "cr")]
-+    pub control: registers::Control,
-+    pub dmacr: u32,
-+    pub int_enabled: u32,
-+    pub int_level: u32,
-+    pub read_fifo: [u32; PL011_FIFO_DEPTH],
-+    pub ilpr: u32,
-+    pub ibrd: u32,
-+    pub fbrd: u32,
-+    pub ifl: u32,
-+    pub read_pos: usize,
-+    pub read_count: usize,
-+    pub read_trigger: usize,
-+    #[doc(alias = "chr")]
-+    pub char_backend: CharBackend,
-+    /// QEMU interrupts
-+    ///
-+    /// ```text
-+    ///  * sysbus MMIO region 0: device registers
-+    ///  * sysbus IRQ 0: `UARTINTR` (combined interrupt line)
-+    ///  * sysbus IRQ 1: `UARTRXINTR` (receive FIFO interrupt line)
-+    ///  * sysbus IRQ 2: `UARTTXINTR` (transmit FIFO interrupt line)
-+    ///  * sysbus IRQ 3: `UARTRTINTR` (receive timeout interrupt line)
-+    ///  * sysbus IRQ 4: `UARTMSINTR` (momem status interrupt line)
-+    ///  * sysbus IRQ 5: `UARTEINTR` (error interrupt line)
-+    /// ```
-+    #[doc(alias = "irq")]
-+    pub interrupts: [qemu_irq; 6usize],
-+    #[doc(alias = "clk")]
-+    pub clock: NonNull<Clock>,
-+    #[doc(alias = "migrate_clk")]
-+    pub migrate_clock: bool,
-+}
-+
-+#[used]
-+pub static CLK_NAME: &CStr = c"clk";
-+
-+impl PL011State {
-+    pub fn init(&mut self) {
-+        // SAFETY:
-+        //
-+        // self and self.iomem are guaranteed to be valid at this point since callers
-+        // must make sure the `self` reference is valid.
-+        unsafe {
-+            memory_region_init_io(
-+                addr_of_mut!(self.iomem),
-+                addr_of_mut!(*self).cast::<Object>(),
-+                &PL011_OPS,
-+                addr_of_mut!(*self).cast::<c_void>(),
-+                PL011_ARM_INFO.name,
-+                0x1000,
-+            );
-+            let sbd = addr_of_mut!(*self).cast::<SysBusDevice>();
-+            let dev = addr_of_mut!(*self).cast::<DeviceState>();
-+            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
-+            for irq in self.interrupts.iter_mut() {
-+                sysbus_init_irq(sbd, irq);
-+            }
-+            self.clock = NonNull::new(qdev_init_clock_in(
-+                dev,
-+                CLK_NAME.as_ptr(),
-+                None, /* pl011_clock_update */
-+                addr_of_mut!(*self).cast::<c_void>(),
-+                ClockEvent_ClockUpdate,
-+            ))
-+            .unwrap();
-+        }
-+    }
-+
-+    pub fn read(&mut self, offset: hwaddr, _size: core::ffi::c_uint) -> u64 {
-+        use RegisterOffset::*;
-+
-+        match RegisterOffset::try_from(offset) {
-+            Err(v) if (0x3f8..0x400).contains(&v) => {
-+                u64::from(PL011_ID_ARM[((offset - 0xfe0) >> 2) as usize])
-+            }
-+            Err(_) => {
-+                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-+                0
-+            }
-+            Ok(DR) => {
-+                // s->flags &= ~PL011_FLAG_RXFF;
-+                self.flags.set_receive_fifo_full(false);
-+                let c = self.read_fifo[self.read_pos];
-+                if self.read_count > 0 {
-+                    self.read_count -= 1;
-+                    self.read_pos = (self.read_pos + 1) & (self.fifo_depth() - 1);
-+                }
-+                if self.read_count == 0 {
-+                    // self.flags |= PL011_FLAG_RXFE;
-+                    self.flags.set_receive_fifo_empty(true);
-+                }
-+                if self.read_count + 1 == self.read_trigger {
-+                    //self.int_level &= ~ INT_RX;
-+                    self.int_level &= !registers::INT_RX;
-+                }
-+                // Update error bits.
-+                self.receive_status_error_clear = c.to_be_bytes()[3].into();
-+                self.update();
-+                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
-+                // initialized in realize().
-+                unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
-+                c.into()
-+            }
-+            Ok(RSR) => u8::from(self.receive_status_error_clear).into(),
-+            Ok(FR) => u16::from(self.flags).into(),
-+            Ok(FBRD) => self.fbrd.into(),
-+            Ok(ILPR) => self.ilpr.into(),
-+            Ok(IBRD) => self.ibrd.into(),
-+            Ok(LCR_H) => u16::from(self.line_control).into(),
-+            Ok(CR) => {
-+                // We exercise our self-control.
-+                u16::from(self.control).into()
-+            }
-+            Ok(FLS) => self.ifl.into(),
-+            Ok(IMSC) => self.int_enabled.into(),
-+            Ok(RIS) => self.int_level.into(),
-+            Ok(MIS) => u64::from(self.int_level & self.int_enabled),
-+            Ok(ICR) => {
-+                // "The UARTICR Register is the interrupt clear register and is write-only"
-+                // Source: ARM DDI 0183G 3.3.13 Interrupt Clear Register, UARTICR
-+                0
-+            }
-+            Ok(DMACR) => self.dmacr.into(),
-+        }
-+    }
-+
-+    pub fn write(&mut self, offset: hwaddr, value: u64) {
-+        // eprintln!("write offset {offset} value {value}");
-+        use RegisterOffset::*;
-+        let value: u32 = value as u32;
-+        match RegisterOffset::try_from(offset) {
-+            Err(_bad_offset) => {
-+                eprintln!("write bad offset {offset} value {value}");
-+            }
-+            Ok(DR) => {
-+                // ??? Check if transmitter is enabled.
-+                let ch: u8 = value as u8;
-+                // XXX this blocks entire thread. Rewrite to use
-+                // qemu_chr_fe_write and background I/O callbacks
-+
-+                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
-+                // initialized in realize().
-+                unsafe {
-+                    qemu_chr_fe_write_all(addr_of_mut!(self.char_backend), &ch, 1);
-+                }
-+                self.loopback_tx(value);
-+                self.int_level |= registers::INT_TX;
-+                self.update();
-+            }
-+            Ok(RSR) => {
-+                self.receive_status_error_clear = 0.into();
-+            }
-+            Ok(FR) => {
-+                // flag writes are ignored
-+            }
-+            Ok(ILPR) => {
-+                self.ilpr = value;
-+            }
-+            Ok(IBRD) => {
-+                self.ibrd = value;
-+            }
-+            Ok(FBRD) => {
-+                self.fbrd = value;
-+            }
-+            Ok(LCR_H) => {
-+                let value = value as u16;
-+                let new_val: registers::LineControl = value.into();
-+                // Reset the FIFO state on FIFO enable or disable
-+                if bool::from(self.line_control.fifos_enabled())
-+                    ^ bool::from(new_val.fifos_enabled())
-+                {
-+                    self.reset_fifo();
-+                }
-+                if self.line_control.send_break() ^ new_val.send_break() {
-+                    let mut break_enable: c_int = new_val.send_break().into();
-+                    // SAFETY: self.char_backend is a valid CharBackend instance after it's been
-+                    // initialized in realize().
-+                    unsafe {
-+                        qemu_chr_fe_ioctl(
-+                            addr_of_mut!(self.char_backend),
-+                            CHR_IOCTL_SERIAL_SET_BREAK as i32,
-+                            addr_of_mut!(break_enable).cast::<c_void>(),
-+                        );
-+                    }
-+                    self.loopback_break(break_enable > 0);
-+                }
-+                self.line_control = new_val;
-+                self.set_read_trigger();
-+            }
-+            Ok(CR) => {
-+                // ??? Need to implement the enable bit.
-+                let value = value as u16;
-+                self.control = value.into();
-+                self.loopback_mdmctrl();
-+            }
-+            Ok(FLS) => {
-+                self.ifl = value;
-+                self.set_read_trigger();
-+            }
-+            Ok(IMSC) => {
-+                self.int_enabled = value;
-+                self.update();
-+            }
-+            Ok(RIS) => {}
-+            Ok(MIS) => {}
-+            Ok(ICR) => {
-+                self.int_level &= !value;
-+                self.update();
-+            }
-+            Ok(DMACR) => {
-+                self.dmacr = value;
-+                if value & 3 > 0 {
-+                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
-+                    eprintln!("pl011: DMA not implemented");
-+                }
-+            }
-+        }
-+    }
-+
-+    #[inline]
-+    fn loopback_tx(&mut self, value: u32) {
-+        if !self.loopback_enabled() {
-+            return;
-+        }
-+
-+        // Caveat:
-+        //
-+        // In real hardware, TX loopback happens at the serial-bit level
-+        // and then reassembled by the RX logics back into bytes and placed
-+        // into the RX fifo. That is, loopback happens after TX fifo.
-+        //
-+        // Because the real hardware TX fifo is time-drained at the frame
-+        // rate governed by the configured serial format, some loopback
-+        // bytes in TX fifo may still be able to get into the RX fifo
-+        // that could be full at times while being drained at software
-+        // pace.
-+        //
-+        // In such scenario, the RX draining pace is the major factor
-+        // deciding which loopback bytes get into the RX fifo, unless
-+        // hardware flow-control is enabled.
-+        //
-+        // For simplicity, the above described is not emulated.
-+        self.put_fifo(value);
-+    }
-+
-+    fn loopback_mdmctrl(&mut self) {
-+        if !self.loopback_enabled() {
-+            return;
-+        }
-+
-+        /*
-+         * Loopback software-driven modem control outputs to modem status inputs:
-+         *   FR.RI  <= CR.Out2
-+         *   FR.DCD <= CR.Out1
-+         *   FR.CTS <= CR.RTS
-+         *   FR.DSR <= CR.DTR
-+         *
-+         * The loopback happens immediately even if this call is triggered
-+         * by setting only CR.LBE.
-+         *
-+         * CTS/RTS updates due to enabled hardware flow controls are not
-+         * dealt with here.
-+         */
-+
-+        //fr = s->flags & ~(PL011_FLAG_RI | PL011_FLAG_DCD |
-+        //                  PL011_FLAG_DSR | PL011_FLAG_CTS);
-+        //fr |= (cr & CR_OUT2) ? PL011_FLAG_RI  : 0;
-+        //fr |= (cr & CR_OUT1) ? PL011_FLAG_DCD : 0;
-+        //fr |= (cr & CR_RTS)  ? PL011_FLAG_CTS : 0;
-+        //fr |= (cr & CR_DTR)  ? PL011_FLAG_DSR : 0;
-+        //
-+        self.flags.set_ring_indicator(self.control.out_2());
-+        self.flags.set_data_carrier_detect(self.control.out_1());
-+        self.flags.set_clear_to_send(self.control.request_to_send());
-+        self.flags
-+            .set_data_set_ready(self.control.data_transmit_ready());
-+
-+        // Change interrupts based on updated FR
-+        let mut il = self.int_level;
-+
-+        il &= !Interrupt::MS;
-+        //il |= (fr & PL011_FLAG_DSR) ? INT_DSR : 0;
-+        //il |= (fr & PL011_FLAG_DCD) ? INT_DCD : 0;
-+        //il |= (fr & PL011_FLAG_CTS) ? INT_CTS : 0;
-+        //il |= (fr & PL011_FLAG_RI)  ? INT_RI  : 0;
-+
-+        if self.flags.data_set_ready() {
-+            il |= Interrupt::DSR as u32;
-+        }
-+        if self.flags.data_carrier_detect() {
-+            il |= Interrupt::DCD as u32;
-+        }
-+        if self.flags.clear_to_send() {
-+            il |= Interrupt::CTS as u32;
-+        }
-+        if self.flags.ring_indicator() {
-+            il |= Interrupt::RI as u32;
-+        }
-+        self.int_level = il;
-+        self.update();
-+    }
-+
-+    fn loopback_break(&mut self, enable: bool) {
-+        if enable {
-+            self.loopback_tx(DATA_BREAK);
-+        }
-+    }
-+
-+    fn set_read_trigger(&mut self) {
-+        //#if 0
-+        //    /* The docs say the RX interrupt is triggered when the FIFO exceeds
-+        //       the threshold.  However linux only reads the FIFO in response to an
-+        //       interrupt.  Triggering the interrupt when the FIFO is non-empty seems
-+        //       to make things work.  */
-+        //    if (s->lcr & LCR_FEN)
-+        //        s->read_trigger = (s->ifl >> 1) & 0x1c;
-+        //    else
-+        //#endif
-+        self.read_trigger = 1;
-+    }
-+
-+    pub fn realize(&mut self) {
-+        // SAFETY: self.char_backend has the correct size and alignment for a
-+        // CharBackend object, and its callbacks are of the correct types.
-+        unsafe {
-+            qemu_chr_fe_set_handlers(
-+                addr_of_mut!(self.char_backend),
-+                Some(pl011_can_receive),
-+                Some(pl011_receive),
-+                Some(pl011_event),
-+                None,
-+                addr_of_mut!(*self).cast::<c_void>(),
-+                core::ptr::null_mut(),
-+                true,
-+            );
-+        }
-+    }
-+
-+    pub fn reset(&mut self) {
-+        self.line_control.reset();
-+        self.receive_status_error_clear.reset();
-+        self.dmacr = 0;
-+        self.int_enabled = 0;
-+        self.int_level = 0;
-+        self.ilpr = 0;
-+        self.ibrd = 0;
-+        self.fbrd = 0;
-+        self.read_trigger = 1;
-+        self.ifl = 0x12;
-+        self.control.reset();
-+        self.flags = 0.into();
-+        self.reset_fifo();
-+    }
-+
-+    pub fn reset_fifo(&mut self) {
-+        self.read_count = 0;
-+        self.read_pos = 0;
-+
-+        /* Reset FIFO flags */
-+        self.flags.reset();
-+    }
-+
-+    pub fn can_receive(&self) -> bool {
-+        // trace_pl011_can_receive(s->lcr, s->read_count, r);
-+        self.read_count < self.fifo_depth()
-+    }
-+
-+    pub fn event(&mut self, event: QEMUChrEvent) {
-+        if event == bindings::QEMUChrEvent_CHR_EVENT_BREAK && !self.fifo_enabled() {
-+            self.put_fifo(DATA_BREAK);
-+            self.receive_status_error_clear.set_break_error(true);
-+        }
-+    }
-+
-+    #[inline]
-+    pub fn fifo_enabled(&self) -> bool {
-+        matches!(self.line_control.fifos_enabled(), registers::Mode::FIFO)
-+    }
-+
-+    #[inline]
-+    pub fn loopback_enabled(&self) -> bool {
-+        self.control.enable_loopback()
-+    }
-+
-+    #[inline]
-+    pub fn fifo_depth(&self) -> usize {
-+        // Note: FIFO depth is expected to be power-of-2
-+        if self.fifo_enabled() {
-+            return PL011_FIFO_DEPTH;
-+        }
-+        1
-+    }
-+
-+    pub fn put_fifo(&mut self, value: c_uint) {
-+        let depth = self.fifo_depth();
-+        assert!(depth > 0);
-+        let slot = (self.read_pos + self.read_count) & (depth - 1);
-+        self.read_fifo[slot] = value;
-+        self.read_count += 1;
-+        // s->flags &= ~PL011_FLAG_RXFE;
-+        self.flags.set_receive_fifo_empty(false);
-+        if self.read_count == depth {
-+            //s->flags |= PL011_FLAG_RXFF;
-+            self.flags.set_receive_fifo_full(true);
-+        }
-+
-+        if self.read_count == self.read_trigger {
-+            self.int_level |= registers::INT_RX;
-+            self.update();
-+        }
-+    }
-+
-+    pub fn update(&mut self) {
-+        let flags = self.int_level & self.int_enabled;
-+        for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
-+            // SAFETY: self.interrupts have been initialized in init().
-+            unsafe { qemu_set_irq(*irq, i32::from(flags & i != 0)) };
-+        }
-+    }
-+}
-+
-+/// Which bits in the interrupt status matter for each outbound IRQ line ?
-+pub const IRQMASK: [u32; 6] = [
-+    /* combined IRQ */
-+    Interrupt::E
-+        | Interrupt::MS
-+        | Interrupt::RT as u32
-+        | Interrupt::TX as u32
-+        | Interrupt::RX as u32,
-+    Interrupt::RX as u32,
-+    Interrupt::TX as u32,
-+    Interrupt::RT as u32,
-+    Interrupt::MS,
-+    Interrupt::E,
-+];
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_can_receive(opaque: *mut c_void) -> c_int {
-+    assert!(!opaque.is_null());
-+    let state = NonNull::new_unchecked(opaque.cast::<PL011State>());
-+    state.as_ref().can_receive().into()
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+///
-+/// The buffer and size arguments must also be valid.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_receive(
-+    opaque: *mut core::ffi::c_void,
-+    buf: *const u8,
-+    size: core::ffi::c_int,
-+) {
-+    assert!(!opaque.is_null());
-+    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
-+    if state.as_ref().loopback_enabled() {
-+        return;
-+    }
-+    if size > 0 {
-+        assert!(!buf.is_null());
-+        state.as_mut().put_fifo(*buf.cast::<c_uint>())
-+    }
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_event(opaque: *mut core::ffi::c_void, event: QEMUChrEvent) {
-+    assert!(!opaque.is_null());
-+    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
-+    state.as_mut().event(event)
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer for `chr`.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_create(
-+    addr: u64,
-+    irq: qemu_irq,
-+    chr: *mut Chardev,
-+) -> *mut DeviceState {
-+    let dev: *mut DeviceState = unsafe { qdev_new(PL011_ARM_INFO.name) };
-+    assert!(!dev.is_null());
-+    let sysbus: *mut SysBusDevice = dev as *mut SysBusDevice;
-+
-+    qdev_prop_set_chr(dev, bindings::TYPE_CHARDEV.as_ptr(), chr);
-+    sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
-+    sysbus_mmio_map(sysbus, 0, addr);
-+    sysbus_connect_irq(sysbus, 0, irq);
-+    dev
-+}
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-new file mode 100644
-index 0000000000..6b99239133
---- /dev/null
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -0,0 +1,58 @@
-+// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
-+
-+use core::ptr::NonNull;
-+
-+use qemu_api::bindings::*;
-+
-+use crate::{definitions::VMSTATE_PL011, device::PL011State};
-+
-+qemu_api::declare_properties! {
-+    PL011_PROPERTIES,
-+    qemu_api::define_property!(
-+        c"chardev",
-+        PL011State,
-+        char_backend,
-+        unsafe { &qdev_prop_chr },
-+        CharBackend
-+    ),
-+    qemu_api::define_property!(
-+        c"migrate-clk",
-+        PL011State,
-+        migrate_clock,
-+        unsafe { &qdev_prop_bool },
-+        bool
-+    ),
-+}
-+
-+qemu_api::device_class_init! {
-+    pl011_class_init,
-+    props => PL011_PROPERTIES,
-+    realize_fn => Some(pl011_realize),
-+    reset_fn => Some(pl011_reset),
-+    vmsd => VMSTATE_PL011,
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_realize(dev: *mut DeviceState, _errp: *mut *mut Error) {
-+    assert!(!dev.is_null());
-+    let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
-+    state.as_mut().realize();
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer, that has
-+/// the same size as [`PL011State`]. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+#[no_mangle]
-+pub unsafe extern "C" fn pl011_reset(dev: *mut DeviceState) {
-+    assert!(!dev.is_null());
-+    let mut state = NonNull::new_unchecked(dev.cast::<PL011State>());
-+    state.as_mut().reset();
-+}
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-new file mode 100644
-index 0000000000..697d2ef5a6
---- /dev/null
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -0,0 +1,584 @@
-+// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
-+//
-+// PL011 QEMU Device Model
-+//
-+// This library implements a device model for the PrimeCell® UART (PL011)
-+// device in QEMU.
-+//
-+#![doc = include_str!("../README.md")]
-+//! # Library crate
-+//!
-+//! See [`PL011State`](crate::device::PL011State) for the device model type and
-+//! the [`registers`] module for register types.
-+
-+#![deny(
-+    rustdoc::broken_intra_doc_links,
-+    rustdoc::redundant_explicit_links,
-+    clippy::correctness,
-+    clippy::suspicious,
-+    clippy::complexity,
-+    clippy::perf,
-+    clippy::cargo,
-+    clippy::nursery,
-+    clippy::style,
-+    // restriction group
-+    clippy::dbg_macro,
-+    clippy::as_underscore,
-+    clippy::assertions_on_result_states,
-+    // pedantic group
-+    clippy::doc_markdown,
-+    clippy::borrow_as_ptr,
-+    clippy::cast_lossless,
-+    clippy::option_if_let_else,
-+    clippy::missing_const_for_fn,
-+    clippy::cognitive_complexity,
-+    clippy::missing_safety_doc,
-+    )]
-+
-+extern crate bilge;
-+extern crate bilge_impl;
-+extern crate qemu_api;
-+
-+pub mod definitions;
-+pub mod device;
-+pub mod device_class;
-+pub mod memory_ops;
-+
-+/// Offset of each register from the base memory address of the device.
-+///
-+/// # Source
-+/// ARM DDI 0183G, Table 3-1 p.3-3
-+#[doc(alias = "offset")]
-+#[allow(non_camel_case_types)]
-+#[repr(u64)]
-+#[derive(Debug)]
-+pub enum RegisterOffset {
-+    /// Data Register
-+    ///
-+    /// A write to this register initiates the actual data transmission
-+    #[doc(alias = "UARTDR")]
-+    DR = 0x000,
-+    /// Receive Status Register or Error Clear Register
-+    #[doc(alias = "UARTRSR")]
-+    #[doc(alias = "UARTECR")]
-+    RSR = 0x004,
-+    /// Flag Register
-+    ///
-+    /// A read of this register shows if transmission is complete
-+    #[doc(alias = "UARTFR")]
-+    FR = 0x018,
-+    /// Fractional Baud Rate Register
-+    ///
-+    /// responsible for baud rate speed
-+    #[doc(alias = "UARTFBRD")]
-+    FBRD = 0x028,
-+    /// `IrDA` Low-Power Counter Register
-+    #[doc(alias = "UARTILPR")]
-+    ILPR = 0x020,
-+    /// Integer Baud Rate Register
-+    ///
-+    /// Responsible for baud rate speed
-+    #[doc(alias = "UARTIBRD")]
-+    IBRD = 0x024,
-+    /// line control register (data frame format)
-+    #[doc(alias = "UARTLCR_H")]
-+    LCR_H = 0x02C,
-+    /// Toggle UART, transmission or reception
-+    #[doc(alias = "UARTCR")]
-+    CR = 0x030,
-+    /// Interrupt FIFO Level Select Register
-+    #[doc(alias = "UARTIFLS")]
-+    FLS = 0x034,
-+    /// Interrupt Mask Set/Clear Register
-+    #[doc(alias = "UARTIMSC")]
-+    IMSC = 0x038,
-+    /// Raw Interrupt Status Register
-+    #[doc(alias = "UARTRIS")]
-+    RIS = 0x03C,
-+    /// Masked Interrupt Status Register
-+    #[doc(alias = "UARTMIS")]
-+    MIS = 0x040,
-+    /// Interrupt Clear Register
-+    #[doc(alias = "UARTICR")]
-+    ICR = 0x044,
-+    /// DMA control Register
-+    #[doc(alias = "UARTDMACR")]
-+    DMACR = 0x048,
-+    ///// Reserved, offsets `0x04C` to `0x07C`.
-+    //Reserved = 0x04C,
-+}
-+
-+impl core::convert::TryFrom<u64> for RegisterOffset {
-+    type Error = u64;
-+
-+    fn try_from(value: u64) -> Result<Self, Self::Error> {
-+        macro_rules! case {
-+            ($($discriminant:ident),*$(,)*) => {
-+                /* check that matching on all macro arguments compiles, which means we are not
-+                 * missing any enum value; if the type definition ever changes this will stop
-+                 * compiling.
-+                 */
-+                const fn _assert_exhaustive(val: RegisterOffset) {
-+                    match val {
-+                        $(RegisterOffset::$discriminant => (),)*
-+                    }
-+                }
-+
-+                match value {
-+                    $(x if x == Self::$discriminant as u64 => Ok(Self::$discriminant),)*
-+                     _ => Err(value),
-+                }
-+            }
-+        }
-+        case! { DR, RSR, FR, FBRD, ILPR, IBRD, LCR_H, CR, FLS, IMSC, RIS, MIS, ICR, DMACR }
-+    }
-+}
-+
-+pub mod registers {
-+    //! Device registers exposed as typed structs which are backed by arbitrary
-+    //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
-+    //!
-+    //! All PL011 registers are essentially 32-bit wide, but are typed here as
-+    //! bitmaps with only the necessary width. That is, if a struct bitmap
-+    //! in this module is for example 16 bits long, it should be conceived
-+    //! as a 32-bit register where the unmentioned higher bits are always
-+    //! unused thus treated as zero when read or written.
-+    use bilge::prelude::*;
-+
-+    // TODO: FIFO Mode has different semantics
-+    /// Data Register, `UARTDR`
-+    ///
-+    /// The `UARTDR` register is the data register.
-+    ///
-+    /// For words to be transmitted:
-+    ///
-+    /// - if the FIFOs are enabled, data written to this location is pushed onto
-+    ///   the transmit
-+    /// FIFO
-+    /// - if the FIFOs are not enabled, data is stored in the transmitter
-+    ///   holding register (the
-+    /// bottom word of the transmit FIFO).
-+    ///
-+    /// The write operation initiates transmission from the UART. The data is
-+    /// prefixed with a start bit, appended with the appropriate parity bit
-+    /// (if parity is enabled), and a stop bit. The resultant word is then
-+    /// transmitted.
-+    ///
-+    /// For received words:
-+    ///
-+    /// - if the FIFOs are enabled, the data byte and the 4-bit status (break,
-+    ///   frame, parity,
-+    /// and overrun) is pushed onto the 12-bit wide receive FIFO
-+    /// - if the FIFOs are not enabled, the data byte and status are stored in
-+    ///   the receiving
-+    /// holding register (the bottom word of the receive FIFO).
-+    ///
-+    /// The received data byte is read by performing reads from the `UARTDR`
-+    /// register along with the corresponding status information. The status
-+    /// information can also be read by a read of the `UARTRSR/UARTECR`
-+    /// register.
-+    ///
-+    /// # Note
-+    ///
-+    /// You must disable the UART before any of the control registers are
-+    /// reprogrammed. When the UART is disabled in the middle of
-+    /// transmission or reception, it completes the current character before
-+    /// stopping.
-+    ///
-+    /// # Source
-+    /// ARM DDI 0183G 3.3.1 Data Register, UARTDR
-+    #[bitsize(16)]
-+    #[derive(Clone, Copy, DebugBits, FromBits)]
-+    #[doc(alias = "UARTDR")]
-+    pub struct Data {
-+        _reserved: u4,
-+        pub data: u8,
-+        pub framing_error: bool,
-+        pub parity_error: bool,
-+        pub break_error: bool,
-+        pub overrun_error: bool,
-+    }
-+
-+    // TODO: FIFO Mode has different semantics
-+    /// Receive Status Register / Error Clear Register, `UARTRSR/UARTECR`
-+    ///
-+    /// The UARTRSR/UARTECR register is the receive status register/error clear
-+    /// register. Receive status can also be read from the `UARTRSR`
-+    /// register. If the status is read from this register, then the status
-+    /// information for break, framing and parity corresponds to the
-+    /// data character read from the [Data register](Data), `UARTDR` prior to
-+    /// reading the UARTRSR register. The status information for overrun is
-+    /// set immediately when an overrun condition occurs.
-+    ///
-+    ///
-+    /// # Note
-+    /// The received data character must be read first from the [Data
-+    /// Register](Data), `UARTDR` before reading the error status associated
-+    /// with that data character from the `UARTRSR` register. This read
-+    /// sequence cannot be reversed, because the `UARTRSR` register is
-+    /// updated only when a read occurs from the `UARTDR` register. However,
-+    /// the status information can also be obtained by reading the `UARTDR`
-+    /// register
-+    ///
-+    /// # Source
-+    /// ARM DDI 0183G 3.3.2 Receive Status Register/Error Clear Register,
-+    /// UARTRSR/UARTECR
-+    #[bitsize(8)]
-+    #[derive(Clone, Copy, DebugBits, FromBits)]
-+    pub struct ReceiveStatusErrorClear {
-+        pub framing_error: bool,
-+        pub parity_error: bool,
-+        pub break_error: bool,
-+        pub overrun_error: bool,
-+        _reserved_unpredictable: u4,
-+    }
-+
-+    impl ReceiveStatusErrorClear {
-+        pub fn reset(&mut self) {
-+            // All the bits are cleared to 0 on reset.
-+            *self = 0.into();
-+        }
-+    }
-+
-+    impl Default for ReceiveStatusErrorClear {
-+        fn default() -> Self {
-+            0.into()
-+        }
-+    }
-+
-+    #[bitsize(16)]
-+    #[derive(Clone, Copy, DebugBits, FromBits)]
-+    /// Flag Register, `UARTFR`
-+    #[doc(alias = "UARTFR")]
-+    pub struct Flags {
-+        /// CTS Clear to send. This bit is the complement of the UART clear to
-+        /// send, `nUARTCTS`, modem status input. That is, the bit is 1
-+        /// when `nUARTCTS` is LOW.
-+        pub clear_to_send: bool,
-+        /// DSR Data set ready. This bit is the complement of the UART data set
-+        /// ready, `nUARTDSR`, modem status input. That is, the bit is 1 when
-+        /// `nUARTDSR` is LOW.
-+        pub data_set_ready: bool,
-+        /// DCD Data carrier detect. This bit is the complement of the UART data
-+        /// carrier detect, `nUARTDCD`, modem status input. That is, the bit is
-+        /// 1 when `nUARTDCD` is LOW.
-+        pub data_carrier_detect: bool,
-+        /// BUSY UART busy. If this bit is set to 1, the UART is busy
-+        /// transmitting data. This bit remains set until the complete
-+        /// byte, including all the stop bits, has been sent from the
-+        /// shift register. This bit is set as soon as the transmit FIFO
-+        /// becomes non-empty, regardless of whether the UART is enabled
-+        /// or not.
-+        pub busy: bool,
-+        /// RXFE Receive FIFO empty. The meaning of this bit depends on the
-+        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
-+        /// is disabled, this bit is set when the receive holding
-+        /// register is empty. If the FIFO is enabled, the RXFE bit is
-+        /// set when the receive FIFO is empty.
-+        pub receive_fifo_empty: bool,
-+        /// TXFF Transmit FIFO full. The meaning of this bit depends on the
-+        /// state of the FEN bit in the UARTLCR_H register. If the FIFO
-+        /// is disabled, this bit is set when the transmit holding
-+        /// register is full. If the FIFO is enabled, the TXFF bit is
-+        /// set when the transmit FIFO is full.
-+        pub transmit_fifo_full: bool,
-+        /// RXFF Receive FIFO full. The meaning of this bit depends on the state
-+        /// of the FEN bit in the UARTLCR_H register. If the FIFO is
-+        /// disabled, this bit is set when the receive holding register
-+        /// is full. If the FIFO is enabled, the RXFF bit is set when
-+        /// the receive FIFO is full.
-+        pub receive_fifo_full: bool,
-+        /// Transmit FIFO empty. The meaning of this bit depends on the state of
-+        /// the FEN bit in the [Line Control register](LineControl),
-+        /// `UARTLCR_H`. If the FIFO is disabled, this bit is set when the
-+        /// transmit holding register is empty. If the FIFO is enabled,
-+        /// the TXFE bit is set when the transmit FIFO is empty. This
-+        /// bit does not indicate if there is data in the transmit shift
-+        /// register.
-+        pub transmit_fifo_empty: bool,
-+        /// `RI`, is `true` when `nUARTRI` is `LOW`.
-+        pub ring_indicator: bool,
-+        _reserved_zero_no_modify: u7,
-+    }
-+
-+    impl Flags {
-+        pub fn reset(&mut self) {
-+            // After reset TXFF, RXFF, and BUSY are 0, and TXFE and RXFE are 1
-+            self.set_receive_fifo_full(false);
-+            self.set_transmit_fifo_full(false);
-+            self.set_busy(false);
-+            self.set_receive_fifo_empty(true);
-+            self.set_transmit_fifo_empty(true);
-+        }
-+    }
-+
-+    impl Default for Flags {
-+        fn default() -> Self {
-+            let mut ret: Self = 0.into();
-+            ret.reset();
-+            ret
-+        }
-+    }
-+
-+    #[bitsize(16)]
-+    #[derive(Clone, Copy, DebugBits, FromBits)]
-+    /// Line Control Register, `UARTLCR_H`
-+    #[doc(alias = "UARTLCR_H")]
-+    pub struct LineControl {
-+        /// 15:8 - Reserved, do not modify, read as zero.
-+        _reserved_zero_no_modify: u8,
-+        /// 7 SPS Stick parity select.
-+        /// 0 = stick parity is disabled
-+        /// 1 = either:
-+        /// • if the EPS bit is 0 then the parity bit is transmitted and checked
-+        /// as a 1 • if the EPS bit is 1 then the parity bit is
-+        /// transmitted and checked as a 0. This bit has no effect when
-+        /// the PEN bit disables parity checking and generation. See Table 3-11
-+        /// on page 3-14 for the parity truth table.
-+        pub sticky_parity: bool,
-+        /// WLEN Word length. These bits indicate the number of data bits
-+        /// transmitted or received in a frame as follows: b11 = 8 bits
-+        /// b10 = 7 bits
-+        /// b01 = 6 bits
-+        /// b00 = 5 bits.
-+        pub word_length: WordLength,
-+        /// FEN Enable FIFOs:
-+        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
-+        /// 1-byte-deep holding registers 1 = transmit and receive FIFO
-+        /// buffers are enabled (FIFO mode).
-+        pub fifos_enabled: Mode,
-+        /// 3 STP2 Two stop bits select. If this bit is set to 1, two stop bits
-+        /// are transmitted at the end of the frame. The receive
-+        /// logic does not check for two stop bits being received.
-+        pub two_stops_bits: bool,
-+        /// EPS Even parity select. Controls the type of parity the UART uses
-+        /// during transmission and reception:
-+        /// - 0 = odd parity. The UART generates or checks for an odd number of
-+        ///   1s in the data and parity bits.
-+        /// - 1 = even parity. The UART generates or checks for an even number
-+        ///   of 1s in the data and parity bits.
-+        /// This bit has no effect when the `PEN` bit disables parity checking
-+        /// and generation. See Table 3-11 on page 3-14 for the parity
-+        /// truth table.
-+        pub parity: Parity,
-+        /// 1 PEN Parity enable:
-+        ///
-+        /// - 0 = parity is disabled and no parity bit added to the data frame
-+        /// - 1 = parity checking and generation is enabled.
-+        ///
-+        /// See Table 3-11 on page 3-14 for the parity truth table.
-+        pub parity_enabled: bool,
-+        /// BRK Send break.
-+        ///
-+        /// If this bit is set to `1`, a low-level is continually output on the
-+        /// `UARTTXD` output, after completing transmission of the
-+        /// current character. For the proper execution of the break command,
-+        /// the software must set this bit for at least two complete
-+        /// frames. For normal use, this bit must be cleared to `0`.
-+        pub send_break: bool,
-+    }
-+
-+    impl LineControl {
-+        pub fn reset(&mut self) {
-+            // All the bits are cleared to 0 when reset.
-+            *self = 0.into();
-+        }
-+    }
-+
-+    impl Default for LineControl {
-+        fn default() -> Self {
-+            0.into()
-+        }
-+    }
-+
-+    #[bitsize(1)]
-+    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-+    /// `EPS` "Even parity select", field of [Line Control
-+    /// register](LineControl).
-+    pub enum Parity {
-+        /// - 0 = odd parity. The UART generates or checks for an odd number of
-+        ///   1s in the data and parity bits.
-+        Odd = 0,
-+        /// - 1 = even parity. The UART generates or checks for an even number
-+        ///   of 1s in the data and parity bits.
-+        Even = 1,
-+    }
-+
-+    #[bitsize(1)]
-+    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-+    /// `FEN` "Enable FIFOs" or Device mode, field of [Line Control
-+    /// register](LineControl).
-+    pub enum Mode {
-+        /// 0 = FIFOs are disabled (character mode) that is, the FIFOs become
-+        /// 1-byte-deep holding registers
-+        Character = 0,
-+        /// 1 = transmit and receive FIFO buffers are enabled (FIFO mode).
-+        FIFO = 1,
-+    }
-+
-+    impl From<Mode> for bool {
-+        fn from(val: Mode) -> Self {
-+            matches!(val, Mode::FIFO)
-+        }
-+    }
-+
-+    #[bitsize(2)]
-+    #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-+    /// `WLEN` Word length, field of [Line Control register](LineControl).
-+    ///
-+    /// These bits indicate the number of data bits transmitted or received in a
-+    /// frame as follows:
-+    pub enum WordLength {
-+        /// b11 = 8 bits
-+        _8Bits = 0b11,
-+        /// b10 = 7 bits
-+        _7Bits = 0b10,
-+        /// b01 = 6 bits
-+        _6Bits = 0b01,
-+        /// b00 = 5 bits.
-+        _5Bits = 0b00,
-+    }
-+
-+    /// Control Register, `UARTCR`
-+    ///
-+    /// The `UARTCR` register is the control register. All the bits are cleared
-+    /// to `0` on reset except for bits `9` and `8` that are set to `1`.
-+    ///
-+    /// # Source
-+    /// ARM DDI 0183G, 3.3.8 Control Register, `UARTCR`, Table 3-12
-+    #[bitsize(16)]
-+    #[doc(alias = "UARTCR")]
-+    #[derive(Clone, Copy, DebugBits, FromBits)]
-+    pub struct Control {
-+        /// `UARTEN` UART enable: 0 = UART is disabled. If the UART is disabled
-+        /// in the middle of transmission or reception, it completes the current
-+        /// character before stopping. 1 = the UART is enabled. Data
-+        /// transmission and reception occurs for either UART signals or SIR
-+        /// signals depending on the setting of the SIREN bit.
-+        pub enable_uart: bool,
-+        /// `SIREN` `SIR` enable: 0 = IrDA SIR ENDEC is disabled. `nSIROUT`
-+        /// remains LOW (no light pulse generated), and signal transitions on
-+        /// SIRIN have no effect. 1 = IrDA SIR ENDEC is enabled. Data is
-+        /// transmitted and received on nSIROUT and SIRIN. UARTTXD remains HIGH,
-+        /// in the marking state. Signal transitions on UARTRXD or modem status
-+        /// inputs have no effect. This bit has no effect if the UARTEN bit
-+        /// disables the UART.
-+        pub enable_sir: bool,
-+        /// `SIRLP` SIR low-power IrDA mode. This bit selects the IrDA encoding
-+        /// mode. If this bit is cleared to 0, low-level bits are transmitted as
-+        /// an active high pulse with a width of 3/ 16th of the bit period. If
-+        /// this bit is set to 1, low-level bits are transmitted with a pulse
-+        /// width that is 3 times the period of the IrLPBaud16 input signal,
-+        /// regardless of the selected bit rate. Setting this bit uses less
-+        /// power, but might reduce transmission distances.
-+        pub sir_lowpower_irda_mode: u1,
-+        /// Reserved, do not modify, read as zero.
-+        _reserved_zero_no_modify: u4,
-+        /// `LBE` Loopback enable. If this bit is set to 1 and the SIREN bit is
-+        /// set to 1 and the SIRTEST bit in the Test Control register, UARTTCR
-+        /// on page 4-5 is set to 1, then the nSIROUT path is inverted, and fed
-+        /// through to the SIRIN path. The SIRTEST bit in the test register must
-+        /// be set to 1 to override the normal half-duplex SIR operation. This
-+        /// must be the requirement for accessing the test registers during
-+        /// normal operation, and SIRTEST must be cleared to 0 when loopback
-+        /// testing is finished. This feature reduces the amount of external
-+        /// coupling required during system test. If this bit is set to 1, and
-+        /// the SIRTEST bit is set to 0, the UARTTXD path is fed through to the
-+        /// UARTRXD path. In either SIR mode or UART mode, when this bit is set,
-+        /// the modem outputs are also fed through to the modem inputs. This bit
-+        /// is cleared to 0 on reset, to disable loopback.
-+        pub enable_loopback: bool,
-+        /// `TXE` Transmit enable. If this bit is set to 1, the transmit section
-+        /// of the UART is enabled. Data transmission occurs for either UART
-+        /// signals, or SIR signals depending on the setting of the SIREN bit.
-+        /// When the UART is disabled in the middle of transmission, it
-+        /// completes the current character before stopping.
-+        pub enable_transmit: bool,
-+        /// `RXE` Receive enable. If this bit is set to 1, the receive section
-+        /// of the UART is enabled. Data reception occurs for either UART
-+        /// signals or SIR signals depending on the setting of the SIREN bit.
-+        /// When the UART is disabled in the middle of reception, it completes
-+        /// the current character before stopping.
-+        pub enable_receive: bool,
-+        /// `DTR` Data transmit ready. This bit is the complement of the UART
-+        /// data transmit ready, `nUARTDTR`, modem status output. That is, when
-+        /// the bit is programmed to a 1 then `nUARTDTR` is LOW.
-+        pub data_transmit_ready: bool,
-+        /// `RTS` Request to send. This bit is the complement of the UART
-+        /// request to send, `nUARTRTS`, modem status output. That is, when the
-+        /// bit is programmed to a 1 then `nUARTRTS` is LOW.
-+        pub request_to_send: bool,
-+        /// `Out1` This bit is the complement of the UART Out1 (`nUARTOut1`)
-+        /// modem status output. That is, when the bit is programmed to a 1 the
-+        /// output is 0. For DTE this can be used as Data Carrier Detect (DCD).
-+        pub out_1: bool,
-+        /// `Out2` This bit is the complement of the UART Out2 (`nUARTOut2`)
-+        /// modem status output. That is, when the bit is programmed to a 1, the
-+        /// output is 0. For DTE this can be used as Ring Indicator (RI).
-+        pub out_2: bool,
-+        /// `RTSEn` RTS hardware flow control enable. If this bit is set to 1,
-+        /// RTS hardware flow control is enabled. Data is only requested when
-+        /// there is space in the receive FIFO for it to be received.
-+        pub rts_hardware_flow_control_enable: bool,
-+        /// `CTSEn` CTS hardware flow control enable. If this bit is set to 1,
-+        /// CTS hardware flow control is enabled. Data is only transmitted when
-+        /// the `nUARTCTS` signal is asserted.
-+        pub cts_hardware_flow_control_enable: bool,
-+    }
-+
-+    impl Control {
-+        pub fn reset(&mut self) {
-+            *self = 0.into();
-+            self.set_enable_receive(true);
-+            self.set_enable_transmit(true);
-+        }
-+    }
-+
-+    impl Default for Control {
-+        fn default() -> Self {
-+            let mut ret: Self = 0.into();
-+            ret.reset();
-+            ret
-+        }
-+    }
-+
-+    /// Interrupt status bits in UARTRIS, UARTMIS, UARTIMSC
-+    pub const INT_OE: u32 = 1 << 10;
-+    pub const INT_BE: u32 = 1 << 9;
-+    pub const INT_PE: u32 = 1 << 8;
-+    pub const INT_FE: u32 = 1 << 7;
-+    pub const INT_RT: u32 = 1 << 6;
-+    pub const INT_TX: u32 = 1 << 5;
-+    pub const INT_RX: u32 = 1 << 4;
-+    pub const INT_DSR: u32 = 1 << 3;
-+    pub const INT_DCD: u32 = 1 << 2;
-+    pub const INT_CTS: u32 = 1 << 1;
-+    pub const INT_RI: u32 = 1 << 0;
-+    pub const INT_E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
-+    pub const INT_MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
-+
-+    #[repr(u32)]
-+    pub enum Interrupt {
-+        OE = 1 << 10,
-+        BE = 1 << 9,
-+        PE = 1 << 8,
-+        FE = 1 << 7,
-+        RT = 1 << 6,
-+        TX = 1 << 5,
-+        RX = 1 << 4,
-+        DSR = 1 << 3,
-+        DCD = 1 << 2,
-+        CTS = 1 << 1,
-+        RI = 1 << 0,
-+    }
-+
-+    impl Interrupt {
-+        pub const E: u32 = INT_OE | INT_BE | INT_PE | INT_FE;
-+        pub const MS: u32 = INT_RI | INT_DSR | INT_DCD | INT_CTS;
-+    }
-+}
-+
-+// TODO: You must disable the UART before any of the control registers are
-+// reprogrammed. When the UART is disabled in the middle of transmission or
-+// reception, it completes the current character before stopping
-diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
-new file mode 100644
-index 0000000000..6144d28586
---- /dev/null
-+++ b/rust/hw/char/pl011/src/memory_ops.rs
-@@ -0,0 +1,45 @@
-+// Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+// SPDX-License-Identifier: GPL-2.0 OR GPL-3.0-or-later
-+
-+use core::{mem::MaybeUninit, ptr::NonNull};
-+
-+use qemu_api::bindings::*;
-+
-+use crate::device::PL011State;
-+
-+pub static PL011_OPS: MemoryRegionOps = MemoryRegionOps {
-+    read: Some(pl011_read),
-+    write: Some(pl011_write),
-+    read_with_attrs: None,
-+    write_with_attrs: None,
-+    endianness: device_endian_DEVICE_NATIVE_ENDIAN,
-+    valid: unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_1>::zeroed().assume_init() },
-+    impl_: MemoryRegionOps__bindgen_ty_2 {
-+        min_access_size: 4,
-+        max_access_size: 4,
-+        ..unsafe { MaybeUninit::<MemoryRegionOps__bindgen_ty_2>::zeroed().assume_init() }
-+    },
-+};
-+
-+#[no_mangle]
-+unsafe extern "C" fn pl011_read(
-+    opaque: *mut core::ffi::c_void,
-+    addr: hwaddr,
-+    size: core::ffi::c_uint,
-+) -> u64 {
-+    assert!(!opaque.is_null());
-+    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
-+    state.as_mut().read(addr, size)
-+}
-+
-+#[no_mangle]
-+unsafe extern "C" fn pl011_write(
-+    opaque: *mut core::ffi::c_void,
-+    addr: hwaddr,
-+    data: u64,
-+    _size: core::ffi::c_uint,
-+) {
-+    assert!(!opaque.is_null());
-+    let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
-+    state.as_mut().write(addr, data)
-+}
-diff --git a/rust/hw/meson.build b/rust/hw/meson.build
-new file mode 100644
-index 0000000000..860196645e
---- /dev/null
-+++ b/rust/hw/meson.build
-@@ -0,0 +1 @@
-+subdir('char')
-diff --git a/rust/meson.build b/rust/meson.build
-index a903c7c602..4c858e9d1f 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -11,3 +11,5 @@ _lib_bindings_rs = static_library(
- )
- 
- subdir('qemu-api')
-+
-+subdir('hw')
+
+base-commit: a7ddb48bd1363c8bcdf42776d320289c42191f01
 -- 
 γαῖα πυρί μιχθήτω
 
