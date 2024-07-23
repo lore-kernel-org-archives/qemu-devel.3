@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE79C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B7FC3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDTX-0008WU-Jr; Tue, 23 Jul 2024 07:14:35 -0400
+	id 1sWDoz-0001Gp-62; Tue, 23 Jul 2024 07:36:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWDTT-0008Ne-Ra
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:14:31 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWDTJ-0006OV-Ef
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:14:24 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42793fc0a6dso38564665e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721733259; x=1722338059; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mzdAeTmVzX5BA7pT+fF+VfrDZygQBDin0XNPxTXT+RQ=;
- b=rOPMod1u3Bedw6L3xu1mo9/cpuVyApsKS0//4nf77Vp8kz4z9QhzLHJkzoAPspbOdK
- WuTFP4AI+DfAUWEMvlsVfEQBILVELxqlMyZKsmy/ZMQx5L66UF/v1oDwVAMC+P4epbSq
- WU+uJQcO4R7/wuu5nkuNHQb1hUOMpANeEyRmqIKszvarvNMbdpeUfvxYAhTKoytYbRtP
- GV5b6lEiQQ/XxBwuVuEbpGj26eEx60VGy4hFMS41L26TTOTmd/ZjPWySy+lC2iXGv8WK
- V69K5K66qAlpoU5rq6azJ4BjbGsYeD+1XTRFduKu/2bN/JWiyRds2nJgBSLELLqNjtz9
- dvvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721733259; x=1722338059;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mzdAeTmVzX5BA7pT+fF+VfrDZygQBDin0XNPxTXT+RQ=;
- b=JwhiCsXgz0zuFyFNej49Tig5SrqEfSDR6WpIVITDfHzOI6m5ln3x8QozWXS/jK2rnz
- CSpknSSYzhdGvJo0Rsiqj9bLNDFS0R1E2eH5KXaSnAIpOR9sxYpaXTsbovO1d8lVeku8
- AxwrIVUUoaxOeOh7AGHA0tIpwGldOzYnaIFBQldr3rVxWI6QsUOFxVE/VMNhDuEjfIX8
- 7CUC+Pdf8Aur0xjEJB0FUU8e3Vk8VvcbiQUwyCUXVwknIFh9rDRKvS2iL2O4kDN8yKG3
- ICOX1HE/EM/XEQOP+x3M+u4tgfddxDh3IPAl74JR1knW7QItkThRfVbO/Kw8qoy55cVk
- BqRA==
-X-Gm-Message-State: AOJu0YwrknkUAqi/Bk3oB30E4jU8q4Nw6IAv8PHtPwMSnv6MTNi2wxNT
- 6oZQRHqkZN2aU8g9tIlMuoNcnQNJSuNHdZn3Je2sqcoQxBtTNBtq9VQFsgGlUTwMLy+D3rpb7jD
- 3UMY=
-X-Google-Smtp-Source: AGHT+IGlWSkIIEysLGKW/3ShrI0yzetSGAdLm6xZhsixenICE0r2XqtTojMLhsBH/zwZxnxctxGR0g==
-X-Received: by 2002:a05:6000:507:b0:369:b838:9155 with SMTP id
- ffacd0b85a97d-369dee579cbmr1777349f8f.40.1721733259656; 
- Tue, 23 Jul 2024 04:14:19 -0700 (PDT)
-Received: from localhost.localdomain (5.red-95-127-46.staticip.rima-tde.net.
- [95.127.46.5]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787eced0sm11128295f8f.98.2024.07.23.04.14.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 04:14:19 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH 2/2] hw/intc/loongson_ipi: Fix resource leak
-Date: Tue, 23 Jul 2024 13:14:05 +0200
-Message-ID: <20240723111405.14208-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240723111405.14208-1-philmd@linaro.org>
-References: <20240723111405.14208-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWDoy-0001E9-82
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:36:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWDow-00031B-AF
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:36:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721734600;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qwo9o2hK11YlOWWF7FwRS7b28LoxIw1TvvLmmMzaC8M=;
+ b=JcWyiNWS8/c0odMiDGvpZkAi08HYu/gi982wCTd79lLJKN+/R7O5iZr6y6f3IPvn6rUyMi
+ l213rIjWBlAaAix67dHMC98x4j6BBbMUrAMgTCT7ZYIL454ULzksp96Gw0FT+M/zUUQDNK
+ zzHHQQeinONUX6WIP3wFVYmCIzCy+3A=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-pamfHetuO3qV3qWXsEajOQ-1; Tue,
+ 23 Jul 2024 07:36:37 -0400
+X-MC-Unique: pamfHetuO3qV3qWXsEajOQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4DE321955D5A; Tue, 23 Jul 2024 11:36:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6955719560B2; Tue, 23 Jul 2024 11:36:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1BFFC21E668F; Tue, 23 Jul 2024 13:36:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/5] qapi: allow for g_autoptr(Error) usage
+In-Reply-To: <20240722131611.2820041-2-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 22 Jul 2024 14:16:07
+ +0100")
+References: <20240722131611.2820041-1-berrange@redhat.com>
+ <20240722131611.2820041-2-berrange@redhat.com>
+Date: Tue, 23 Jul 2024 13:36:32 +0200
+Message-ID: <87jzhcuypr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,65 +88,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Once initialised, QOM objects can be realized and
-unrealized multiple times before being finalized.
-Resources allocated in REALIZE must be deallocated
-in an equivalent UNREALIZE handler.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Free the CPU array in loongson_ipi_unrealize()
-instead of loongson_ipi_finalize().
+> While common error propagation practice does not require manually
+> free'ing of local 'Error' objects, there are some cases where this
+> is needed. One example is where the 'Error' object is only used
+> for providing info to a trace event probe. Supporting g_autoptr
+> avoids the need to manually call 'error_free'.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  include/qapi/error.h | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/include/qapi/error.h b/include/qapi/error.h
+> index 71f8fb2c50..6e429809d8 100644
+> --- a/include/qapi/error.h
+> +++ b/include/qapi/error.h
+> @@ -437,6 +437,8 @@ Error *error_copy(const Error *err);
+>   */
+>  void error_free(Error *err);
+>=20=20
+> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free);
+> +
+>  /*
+>   * Convenience function to assert that *@errp is set, then silently free=
+ it.
+>   */
 
-Cc: qemu-stable@nongnu.org
-Fixes: 5e90b8db382 ("hw/loongarch: Set iocsr address space per-board rather than percpu")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/intc/loongson_ipi.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+The Error interface is designed for a certain way of using it: an Error
+object flows from the spot detecting the error to a spot handling it.
+Failure to handle the error is a memory leak.  Our tooling can help with
+tracking these down.
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index e7979dbdd8b..4013f81745e 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -318,6 +318,13 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+static void loongson_ipi_unrealize(DeviceState *dev)
-+{
-+    LoongsonIPI *s = LOONGSON_IPI(dev);
-+
-+    g_free(s->cpu);
-+}
-+
- static const VMStateDescription vmstate_ipi_core = {
-     .name = "ipi-single",
-     .version_id = 2,
-@@ -353,23 +360,16 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = loongson_ipi_realize;
-+    dc->unrealize = loongson_ipi_unrealize;
-     device_class_set_props(dc, ipi_properties);
-     dc->vmsd = &vmstate_loongson_ipi;
- }
- 
--static void loongson_ipi_finalize(Object *obj)
--{
--    LoongsonIPI *s = LOONGSON_IPI(obj);
--
--    g_free(s->cpu);
--}
--
- static const TypeInfo loongson_ipi_info = {
-     .name          = TYPE_LOONGSON_IPI,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(LoongsonIPI),
-     .class_init    = loongson_ipi_class_init,
--    .instance_finalize = loongson_ipi_finalize,
- };
- 
- static void loongson_ipi_register_types(void)
--- 
-2.41.0
+The interface tries to make the intended use easy: functions that report
+an error consume the Error object.  Explicit error_free() should only
+needed when you handle an error in some other way.
+
+When such an explicit error_free() is needed on all paths to return,
+then replacing it with auto-freeing is nice.  But what if it isn't?
+
+Say we add a new error path and use error_report_err(err) there.  This
+has always been just fine.  No more: if @err is auto-freed, this is a
+double-free.  We have to also add err =3D NULL.  Feels like a trap for
+developers to me.
+
+Your use of auto-freeing is in the next patch.  It's this pattern:
+
+    g_autoptr(Error) err =3D NULL;
+
+    if (!frobnicate(args, &err)) {
+        trace_frobnicate_err(..., error_get_pretty(err));
+    }
+
+You want to report the error to a trace point.  That's perfectly
+legitimate.  The problem is that this kind of error reporting function
+does not free, unlike the ones provided by qapi/error.h.
+
+We could extend tracing to accept Error values, so that
+
+        trace_frobnicate_err(..., err);
+
+does free.  Doesn't seem worthwhile unless we find quite a few more uses
+for it.
+
+If we conclude we want to provide auto-free as an option, we at least
+need to point out the trap in a comment.  A bit of a pain to write, and
+whether people will read, understand, and remember it is uncertain.
+
+My gut feeling right now: stick to the design, and free manually.  If
+you think my gut is wrong, tell me.
 
 
