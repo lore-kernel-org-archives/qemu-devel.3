@@ -4,109 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92784C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 189C4C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 06:01:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW8In-0000tK-De; Tue, 23 Jul 2024 01:43:10 -0400
+	id 1sW8ZC-0007MU-Ey; Tue, 23 Jul 2024 02:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sW8Ij-0000sQ-MT; Tue, 23 Jul 2024 01:43:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sW8Ih-000664-4C; Tue, 23 Jul 2024 01:43:05 -0400
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46N5RJvm023231;
- Tue, 23 Jul 2024 05:42:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=1
- 4j+UDxVeoBtxNh4WE2yyVn12DFxpXjR2B3+LHYQlB0=; b=GNK2cGtprnMCyLy3r
- teIFu21brvTQu+nwhC9hntrf37Fmowtlc+s13IfCgeCn01hQbc0AM8O5ZfzGvMYW
- Kl8UH2AFJnsyfnOM3xKeNjk8cJYRkiNjKCrZWxqsVrJAxWfWsDU39lzgVvE+ubim
- beSFJhbUOn3bZuXyXvS1bfgtb3SOlDBMlEbAwOVS34oGS8mpbpALs7y7rh98Kw1g
- WQq1/73VEvnyKrzIDKCW9phOKvGKzU+Ktsc9Fp7t45lNJ3Apai5Oyp9ahH4XjEJ+
- qjssxRFhpX3Dna4qxE/NqmmBUrmX79BpEWvLbs435Wq5xvfZppPOWYBc2jPUZR/i
- bb7Hg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j53385k5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jul 2024 05:42:52 +0000 (GMT)
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46N5gqD6012920;
- Tue, 23 Jul 2024 05:42:52 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j53385k4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jul 2024 05:42:52 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46N4pFW3007087; Tue, 23 Jul 2024 05:42:51 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gx72h17n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jul 2024 05:42:51 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46N5gjQO18874866
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jul 2024 05:42:47 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B73432005A;
- Tue, 23 Jul 2024 05:42:45 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1EB52004D;
- Tue, 23 Jul 2024 05:42:43 +0000 (GMT)
-Received: from [9.109.199.72] (unknown [9.109.199.72])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jul 2024 05:42:43 +0000 (GMT)
-Message-ID: <626b1b13-6b35-417a-8625-9564d269f719@linux.ibm.com>
-Date: Tue, 23 Jul 2024 11:12:42 +0530
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW8Yu-0007Jz-L1
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:59:52 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW8Ys-0004u4-RA
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:59:48 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70d1a74a43bso1263507b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 22:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721714385; x=1722319185; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Zfqy+KQKyoi2Q8Kn/90Lwx07X5p6KKXjr7MHcp1h5h0=;
+ b=Bm/XggqO95paUVEujtTojrq/co9AQ8GYhnAzyMbo2H5wTm7YTCCLdjNHBI9mJtbvJj
+ tqjcdU0tCN9Unke3BaVeHbwm1CTAVfGJXUOIEohtDn6Y3CI7MuZSqCdKc8GRmzd//054
+ KkRyDCUWS+2Iu0RHA19oI4jAz8FmUt4aTTMjwcEmh9okEbIbJ5V5OrFKf97phQ2fT9YQ
+ pGYxrYYjRDZMHrz2RJnI96pyOVxvfHVKHHj4m0Ur5mBiKgh/Yee5QA7BOHOYQjMGb5dw
+ 07AhQ3Bsmlko67v4VmNDyUvHjf553tp71zxtSLXMtVf9wPL46CumAC9cFje9SMkSu8ZJ
+ z7Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721714385; x=1722319185;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zfqy+KQKyoi2Q8Kn/90Lwx07X5p6KKXjr7MHcp1h5h0=;
+ b=BWHOXuey4FBEn5DF40MqfBRlW7DVKa/j107EOZvTm3xa5zNbFDDp6TO2bqYocPBoHs
+ zIlQNrg+xS9rZiQesJfAVQb9uZ5dxunDyZyMaaXOArbUOAnwSCBfAzSLQ0C/f5y+dX0L
+ 08/2kaFpCnYpgXZjRGX7GQDH6DQPJsTqAyd7U5ceap9JInFSRdtvkD1GBLmnfxyH+dFI
+ 0QSJ1i2mS24y8RltPpW7q//YNVXfq7f9fdQGKBM6Tf1mzQhXX7F3q4KmQ73bbIsVci5E
+ iPWNVYHjBU//Ks1ipCJw1EWuZ8Y6HwB4du8udV4vdCpVUd4lW+yx3nlNdiDnNdiF0zE/
+ nWew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpNlTmmSPGjud72NduhwDOPpnmyd4woPqMn7WnqI2HLojtmIYM0vFkVnugnrgsdk/k6GMkEJVzHet6T5FFaQ2IkHZ8UY0=
+X-Gm-Message-State: AOJu0YyUsllJNPKBZ7Pg5LxPJujmYYTemG1oKphIfs5HlKoUkHgn3G2M
+ CJRuFMmuJ+9HGYWtokcawG0iGJQTqFBRkTCu2CEd6JiwsUG6rKOMhtwecSE8tc3a+ACgOMAWAMo
+ Mdcm4BQ==
+X-Google-Smtp-Source: AGHT+IEMO8eILTuyHzWn5WGfeVw74N7mimmUn05HTdbNPzCoQss52bzypyRGYQTzug+e6FgqPc8H9w==
+X-Received: by 2002:a05:6a20:842a:b0:1c0:f677:e98f with SMTP id
+ adf61e73a8af0-1c4229b453emr9967283637.46.1721714384680; 
+ Mon, 22 Jul 2024 22:59:44 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-79f0af5e618sm5591652a12.25.2024.07.22.22.59.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 22:59:44 -0700 (PDT)
+Message-ID: <8d12202f-7170-4127-a1a6-c23c03835cf6@linaro.org>
+Date: Tue, 23 Jul 2024 15:59:35 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] target/ppc: Introduce
- 'PowerPCCPUClass::logical_pvr'
-To: Nicholas Piggin <npiggin@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <20240606121657.254308-1-adityag@linux.ibm.com>
- <20240606121657.254308-5-adityag@linux.ibm.com>
- <D2WNU7STYWG0.326OR9H3OWQHK@gmail.com>
+Subject: Re: [PATCH 1/1] target/riscv: Remove redundant insn length check for
+ zama16b
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
+References: <20240723013012.1443-1-zhiwei_liu@linux.alibaba.com>
+ <dea63117-cabd-4669-bffd-e8c0cb8d9147@linaro.org>
+ <df37fdc2-79c6-420c-bcf4-e7c3649fe446@linux.alibaba.com>
 Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <D2WNU7STYWG0.326OR9H3OWQHK@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <df37fdc2-79c6-420c-bcf4-e7c3649fe446@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: AFx-szpBSe-DFwnUO0UVaoReEwm9-y1g
-X-Proofpoint-GUID: H3q6GVvdj3T0gu-iN6DnI-LxuNhrae8z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 bulkscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2407230038
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,99 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/23/24 15:29, LIU Zhiwei wrote:
+> The more detailed information about its meaning is in priviledged 1.13 specification. More 
+> exactly, in 3.6.4. Misaligned Atomicity Granule PMA.
+> 
+> The specification said:
+> 
+> "The misaligned atomicity granule PMA applies only to AMOs, loads and stores defined in the base
+> ISAs, and loads and stores of no more than MXLEN bits defined in the F, D, and Q extensions. For an
+> instruction in that set, if all accessed bytes lie within the same misaligned atomicity granule, the
+> instruction will not raise an exception for reasons of address alignment, and the instruction will give
+> rise to only one memory operation for the purposes of RVWMO—i.e., it will execute atomically."
+> 
+> That's the reason why I do not apply zama16b to compressed instructions.
+Given the non-specificity of this paragraph, I think not specifically calling out 
+compressed forms of the base ISA is simply a documentation error.  In general, the 
+compressed ISA is supposed to be a smaller encoding of the exact same instruction as the 
+standard ISA.
 
-On 23/07/24 10:43, Nicholas Piggin wrote:
-> On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
->> Introduce 'PnvChipClass::logical_pvr' to know corresponding logical PVR
->> of a PowerPC CPU.
->> This helps to have a one-to-one mapping between PVR and logical PVR for
->> a CPU, and used in a later commit to handle cases where PCR of two
->> generations of Power chip is same, which causes regressions with compat-mode.
->> Cc: Cédric Le Goater <clg@kaod.org>
->> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
->> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
->> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
->> Cc: Nicholas Piggin <npiggin@gmail.com>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
->> ---
->>   target/ppc/cpu.h      | 1 +
->>   target/ppc/cpu_init.c | 5 +++++
->>   2 files changed, 6 insertions(+)
->>
->> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
->> index 2015e603d4e0..ff43e3645228 100644
->> --- a/target/ppc/cpu.h
->> +++ b/target/ppc/cpu.h
->> @@ -1504,6 +1504,7 @@ struct PowerPCCPUClass {
->>       void (*parent_parse_features)(const char *type, char *str, Error **errp);
->>   
->>       uint32_t pvr;
->> +    uint32_t logical_pvr;
->>       /*
->>        * If @best is false, match if pcc is in the family of pvr
->>        * Else match only if pcc is the best match for pvr in this family.
-> I suppose so. pvr_match() is for hardware PVR, not logical. It's all
-> quite a maze.
->
-> I'll get you to re-post the series with paches 4-5 reordered ahead
-> of the power11 addition, so you can do the renaming and tweaking :)
-> Maybe call this 'spapr_logical_pvr' so it's clearly separate from the
-> other pvr matching.
+However!  It does explicitly say "no more than MXLEN bits", which means that an RV32/RV64 
+check is appropriate for FLD/FSD, since MXLEN may be less than 64.
 
-Sure, I am reading your reviews about the renaming. Will do them, should 
-send next version by today.
+In addition, your change for AMOs is incomplete.  From the text:
 
-Thanks for all reviews !
+   If a misaligned AMO accesses a region that does not specify a misaligned
+   atomicity granule PMA, or if not all accessed bytes lie within the same
+   misaligned atomicity granule, then an exception is raised.
+
+The second clause corresponds exactly with the Arm FEAT_LSE2.
+See check_lse2_align in target/arm/tcg/translate-a64.c.
 
 
-- Aditya Gupta
+r~
 
->
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
->
->> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
->> index 9aa098935d05..50f136cca7f0 100644
->> --- a/target/ppc/cpu_init.c
->> +++ b/target/ppc/cpu_init.c
->> @@ -6152,6 +6152,7 @@ POWERPC_FAMILY(POWER7)(ObjectClass *oc, void *data)
->>   
->>       dc->fw_name = "PowerPC,POWER7";
->>       dc->desc = "POWER7";
->> +    pcc->logical_pvr = CPU_POWERPC_LOGICAL_2_06_PLUS;
->>       pcc->pvr_match = ppc_pvr_match_power7;
->>       pcc->pcr_mask = PCR_VEC_DIS | PCR_VSX_DIS | PCR_COMPAT_2_05;
->>       pcc->pcr_supported = PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->> @@ -6315,6 +6316,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, void *data)
->>   
->>       dc->fw_name = "PowerPC,POWER8";
->>       dc->desc = "POWER8";
->> +    pcc->logical_pvr = CPU_POWERPC_LOGICAL_2_07;
->>       pcc->pvr_match = ppc_pvr_match_power8;
->>       pcc->pcr_mask = PCR_TM_DIS | PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->>       pcc->pcr_supported = PCR_COMPAT_2_07 | PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->> @@ -6508,6 +6510,7 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void *data)
->>   
->>       dc->fw_name = "PowerPC,POWER9";
->>       dc->desc = "POWER9";
->> +    pcc->logical_pvr = CPU_POWERPC_LOGICAL_3_00;
->>       pcc->pvr_match = ppc_pvr_match_power9;
->>       pcc->pcr_mask = POWERPC_POWER9_PCC_PCR_MASK;
->>       pcc->pcr_supported = POWERPC_POWER9_PCC_PCR_SUPPORTED;
->> @@ -6642,6 +6645,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
->>   
->>       dc->fw_name = "PowerPC,POWER10";
->>       dc->desc = "POWER10";
->> +    pcc->logical_pvr = CPU_POWERPC_LOGICAL_3_10;
->>       pcc->pvr_match = ppc_pvr_match_power10;
->>       pcc->pcr_mask = POWERPC_POWER10_PCC_PCR_MASK;
->>       pcc->pcr_supported = POWERPC_POWER10_PCC_PCR_SUPPORTED;
->> @@ -6696,6 +6700,7 @@ POWERPC_FAMILY(POWER11)(ObjectClass *oc, void *data)
->>   
->>       dc->fw_name = "PowerPC,POWER11";
->>       dc->desc = "POWER11";
->> +    pcc->logical_pvr = CPU_POWERPC_LOGICAL_3_10_PLUS;
->>       pcc->pvr_match = ppc_pvr_match_power11;
->>       pcc->pcr_mask = POWERPC_POWER10_PCC_PCR_MASK;
->>       pcc->pcr_supported = POWERPC_POWER10_PCC_PCR_SUPPORTED;
+
+PS: The first clause is similar to Arm access to pages marked as Device memory, for which 
+all misaligned accesses trap.  I didn't dig deep enough to see how PMAs are defined to 
+suggest how that might be applied.
 
