@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E61C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39870C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWOtK-0001u7-OX; Tue, 23 Jul 2024 19:25:58 -0400
+	id 1sWOvg-0006CL-2M; Tue, 23 Jul 2024 19:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWOtG-0001tJ-8p
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:25:55 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sWOvd-0006Bl-Q3
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:28:21 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWOtE-00073T-4M
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:25:53 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1fc611a0f8cso3649175ad.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:25:51 -0700 (PDT)
+ id 1sWOvc-0007Gt-9l
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:28:21 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70d19c525b5so2077856b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721777150; x=1722381950; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TrboRlYsOao0nujSfq684rYB4Yz0DhtTuq11rQRcUno=;
- b=wNEuINhQJ8L1lQrWf+7UmqUe9a2UE4B4uTZ1VP2GKInum3LjF1BBtqFYf1AIlaRTeS
- upw0ES9v34vMT19BVtxJoAZH2EAoP217VKXSYdc3tLAuEGFDARBKPWKf4fta+Srnta+f
- ZzFfnpoPQPh5IpCOgmfcmER7fqY0PLs40Urde5RcgopbwfkVYEF7+5QGyF9OxHecSTao
- RTvziB1S8Pbn59rt33GRBFU0KKLYxLE8uCH59tValLyw509y6ZWpHbb2h1/Wqs7evU5H
- cSuXOCMikGnnRnfNI+ErHpiD3Ucbg6T0tP6KbYYPVn6ejZ17KuS4Ofw6Ev+dhDi9p/48
- fJwg==
+ d=linaro.org; s=google; t=1721777298; x=1722382098; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lTsGOF6/1RIFxHctUvcrMWWp+gPobBdnA85lEzkM4ns=;
+ b=rx7RSTmO6j5D5P6ditWUK6fReU/Hdes72LI9Nygiz0TFP+cODHivioAVkTUEUQcZ83
+ Eby3sPoOmjXdorZcMlPJSfnWTYO4nX7A/LBLaTqA4Ela7gvspgNmFf8vFFM2N87EP3xy
+ Yq4aSHXWbOdKJeqOVStSfmakmVGEy1xBNc/1SoTqVZatJqE0d3GB+y5ZPiUGKOuGMcE6
+ kyDQh7/a2M03IR77JQ2lxE+xUMFq0uyb/r96l0JCuln0IgkT7DWpIaXgM3adieRgMtik
+ HqjyS1Ub26nS7fIhhRtYAQTLCAmmQ1bBLXZSVEZ6c144bGPBuV+BFC7HH8ke9KKEhEbt
+ PXUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721777150; x=1722381950;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TrboRlYsOao0nujSfq684rYB4Yz0DhtTuq11rQRcUno=;
- b=d2jyV3ffNwfW7PYHtP1083S5W3KUfC7+ym+/aY79tI9NmnR4x4X66MlMGTqxrgx9gy
- A1/cfxDlMiEcRl4cGWHaQvMoYAMUyta6sfVpmqYTF3aPusCWW6LPr//aFsYOqusi7S4j
- MMABHWowanvv59SWOC9poMUhC8Mg3j4Q0J7KKOzIZRO7Ox2G7OB4sOll9NxeWLtjHUZV
- Q2Jicpkn7FyyUb0KvqQ2KMSLEYqm1GtNGOvZVq83/fyEhdXGZPpYZDdR8zeYJQaBwDoK
- bt3DqiQoRfmKQ8niSQVZLrrcUajMrim9mHcZ7BihHVmUe+xwWwRIvWT5qyRjlP9Gmiae
- OU9A==
-X-Gm-Message-State: AOJu0YyOyljOci98Jnb0rK7s455iPWqq/DYpJBXnN2aPILeO0E7wFl0R
- 4mo/cVHTfNefoew35zuVELjmx6O5rDcy98d14DDSgwxrIPdB6hb7ljj+rXerurmSCq2jPmWb4nG
- TY665CA==
-X-Google-Smtp-Source: AGHT+IFeeawvA79X7kbN0qoQjZ8B9jeENRGVen5fGhsngBZlK/mwlbCF7+XunUEDToLsrnCccoDS3w==
-X-Received: by 2002:a17:903:40c2:b0:1fd:510a:3096 with SMTP id
- d9443c01a7336-1fd74676cb6mr82694315ad.62.1721777149964; 
- Tue, 23 Jul 2024 16:25:49 -0700 (PDT)
-Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f31a3ecsm80799405ad.177.2024.07.23.16.25.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 16:25:49 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com,
-	berrange@redhat.com,
-	alex.bennee@linaro.org
-Subject: [PATCH] gitlab-ci: Use -fno-sanitize=function in the clang-user job
-Date: Wed, 24 Jul 2024 09:25:42 +1000
-Message-ID: <20240723232543.18093-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1721777298; x=1722382098;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lTsGOF6/1RIFxHctUvcrMWWp+gPobBdnA85lEzkM4ns=;
+ b=ihTP9OXNh/Z9aVSBIhVjNQHgT7NDcg3D8n94DBvabmMEdnECVfSDeOZVOufQi1Vuqq
+ /2anFUvincPnm2gCNjoAIY6np7gMMGlj2fO/S9cTR8AvjwRxE3i0FEP6M4C7jBCYOpf6
+ vkV/cbs/mJipM8926CbwqkyUW2rfHXXVaDcdzC67tRwM7mYZWl00WzOgTdt9fpwTl4NS
+ gtIHnfvUPAd8XlOUGfjE2Oju6ftZsp9NOKdew2CxP2LW85isvIZ8MlhxdaQTyoS1pIAk
+ VWIxkTXn/HsP7x+xhkaw7bDvKrn/8NIjorw1r46rT3uzilYnS7NE2RZG2Wrdt+HpGrGJ
+ 14OA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeVylAVB0Z+/90Phv81IXUxc3ndZSrvwGlrK5YlM9kMCJxQC2XuG7/qll8u+zwqbvhcMOx0zvTcli1rxvzEcBN30d3Hzs=
+X-Gm-Message-State: AOJu0YzvM+0BqhWkzt1X3e1jej9ZXfNFnGyaofVkMkHfcIhtx/AEI9yq
+ 7AMtekwZQozTRuqva5wGlCtK0n9U3JAVwgyW2Rd0JnT+Q7vH+0l/w+GqZ+QHFIDqgXnTJQfgHgM
+ CcdnF/A==
+X-Google-Smtp-Source: AGHT+IHvvx4lFm5/yS8feRXkKpk2J0yqjAP7gvialn+0eQnZP9f+F5N9epGVg96YCjeGFFJRYNhSGQ==
+X-Received: by 2002:a05:6a00:244f:b0:70d:3354:a194 with SMTP id
+ d2e1a72fcca58-70e996739f5mr1399477b3a.2.1721777298358; 
+ Tue, 23 Jul 2024 16:28:18 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70d191ff0f3sm5213911b3a.11.2024.07.23.16.28.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 16:28:17 -0700 (PDT)
+Message-ID: <31514acf-13b6-4af5-903b-eba410d2de67@linaro.org>
+Date: Wed, 24 Jul 2024 09:28:13 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/tricore: Use unsigned types for bitops in
+ helper_eq_b()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+References: <20240723151042.1396610-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240723151042.1396610-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,46 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With -fsanitize=undefined, which implies -fsanitize=function,
-clang will add a "type signature" before functions.
-It accesses funcptr-8 and funcptr-4 to do so.
+On 7/24/24 01:10, Peter Maydell wrote:
+> Coverity points out that in helper_eq_b() we have an int32_t 'msk'
+> and we end up shifting into its sign bit. This is OK for QEMU because
+> we use -fwrapv to give this well defined semantics, but when you look
+> at what this function is doing it's doing bit operations, so we
+> should be using an unsigned variable anyway. This also matches the
+> return type of the function.
+> 
+> Make 'ret' and 'msk' uint32_t.
+> 
+> Resolves: Coverity CID 1547758
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/tricore/op_helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-The generated TCG prologue is directly on a page boundary,
-so these accesses segfault.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
-
-Does anyone know why we're using --extra-cflags for the clang-user
-and clang-system jobs, as opposed to --enable-sanitizers?  It
-certainly seems like regular users who use the normal configure
-flag are going to run into this as well.
-
-Anyway, this is why the clang-user job is failing at the momemnt.
-I can only assume that changes to our docker file, or upstream
-distro updates have pulled in a new compiler version, because this
-wasn't failing in this way last week.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
----
- .gitlab-ci.d/buildtest.yml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index e3a0758bd9..aa32782405 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -444,6 +444,7 @@ clang-user:
-     CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system
-       --target-list-exclude=alpha-linux-user,microblazeel-linux-user,aarch64_be-linux-user,i386-linux-user,m68k-linux-user,mipsn32el-linux-user,xtensaeb-linux-user
-       --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
-+      --extra-cflags=-fno-sanitize=function
-     MAKE_CHECK_ARGS: check-unit check-tcg
- 
- # Set LD_JOBS=1 because this requires LTO and ld consumes a large amount of memory.
--- 
-2.43.0
-
 
