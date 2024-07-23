@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498A3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDC9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDCt-0007kD-9P; Tue, 23 Jul 2024 06:57:23 -0400
+	id 1sWDDK-0004Rf-CD; Tue, 23 Jul 2024 06:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCc-0006gb-Ma
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDDH-00043V-Tm
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCY-0001nJ-TH
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDDG-0001uy-98
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732222;
+ s=mimecast20190719; t=1721732265;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Kj1I/08pd2fWVIr2fyGlScWsVaYM95BuB4yW1kFmRKk=;
- b=HhkN6j1TUamlZYS2pNnZ1MwtU0UISzRtgkwth6Cs7b1kN8YvtICeYtBWXtoNDgPxrV3jLp
- r/+iihxHM5/bSTwJfzd+0Gu6S/330VuqX6bfsOyILUAt04hzC0i5dnzBeJN0x5h5d+DDNe
- tQIwddFk+86Q9TsqKhUy44eCDKNs58w=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DoP8zpcWwKhsBbn/dEN5fS4FX6tEBJxOhfXfCwMS67w=;
+ b=RnT5chH9gEV7x5r+TLRalWaAJ84lFaEVhlODwhXmsUNE9bKbVXo8PRj5egVtkdebT1l1sQ
+ kfJmsR4WkJS13h3CSx7NKNCo8KT/auCQqnybesSGd+4ZVQ7GRajhrp+c2O+ODQSyiL47S0
+ yKV3uHB9ERFKi/6YtS7VT6g8q9bvQg4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-gCzwjs6uN0a7ROcBD6BD1g-1; Tue, 23 Jul 2024 06:56:59 -0400
-X-MC-Unique: gCzwjs6uN0a7ROcBD6BD1g-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52f02833519so2403657e87.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:58 -0700 (PDT)
+ us-mta-49-3XUBFoKbOIiuEusXqvRiHQ-1; Tue, 23 Jul 2024 06:57:44 -0400
+X-MC-Unique: 3XUBFoKbOIiuEusXqvRiHQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a77c6ea022fso115023866b.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:57:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732217; x=1722337017;
+ d=1e100.net; s=20230601; t=1721732262; x=1722337062;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kj1I/08pd2fWVIr2fyGlScWsVaYM95BuB4yW1kFmRKk=;
- b=s49UZNT4y2Hy4JHxlw4Dw2FmgraVZ+RLqkVVPDHd5jzjdKjnTewR96XOMJxog6IdqA
- B+ycTRRZ5bfNZBBTHPF1Wu8lLq1tFjiv9SL6ucCbSlgnV1pxEG1NWTir4eBaRa8v7jey
- haI+gvi9JlfoGNohrzLAmPzWIICrO0DumpTor3U3oHWwiQjTZcJly3r2FTx9Bawsk0H+
- JxYTE1xkk4y0SF2FiXu/O5deSEUQZIA9fhzLeZIjAj/Uc54BKHr7yZV6vFm39iNCgrVA
- 196XReZPnJfxiNDPX3UDs0G0xad6IDMVYmk40ddci84vwMaSo7aMQ8KSt9lfLmRJCENP
- 6Gew==
-X-Gm-Message-State: AOJu0YwW2wTZUgG/UBEq6Q6SoHL+J1Dbc0xbt1iOXtcpDf76pP814UVY
- ulkLz6daCsTd6IiADRCuZf49a96cpR7l8kIKzsRG2CT0WrG7ftCuEFKl30ta6mdYgg/75mb+8OB
- 24Im8wZzDY0d559qJ/iJ9QCpELBHCW0R5crOJtjGbaIWASWhqdcIZNlQGELUo0Kw5tPsp5yVDut
- mlpaG8GRc5u2TLw4SWNeU9O4IOwoVPgQ==
-X-Received: by 2002:a05:6512:ea0:b0:52c:dac3:392b with SMTP id
- 2adb3069b0e04-52fc404bbbemr1763546e87.33.1721732217162; 
- Tue, 23 Jul 2024 03:56:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGA/nkg2nG+CmFagKaSvPvSmjfuzyLxQzejYMP7Lxd8rCbJUCC7UtdqL0qn+BYoEb0VUjTf1Q==
-X-Received: by 2002:a05:6512:ea0:b0:52c:dac3:392b with SMTP id
- 2adb3069b0e04-52fc404bbbemr1763516e87.33.1721732216378; 
- Tue, 23 Jul 2024 03:56:56 -0700 (PDT)
+ bh=DoP8zpcWwKhsBbn/dEN5fS4FX6tEBJxOhfXfCwMS67w=;
+ b=aric/AkE6M5beGpnKCD1jC6N7aFdP+n+wkclYFMJufKBSU4Ikf9MWDtmWB+KiYM3Hd
+ gZTKfbnBHYSP1avnjqR3N/0V8QLIMkb+PDeDlUz5Fw2GXYSNgpo9ofnjtxMA97IWz5kn
+ hQB1Dd1P9WCcnUjs5opbdnii+PzM2WiaAR0pOi3lylI5rLqIwZsMlAfxrsHE+RvkgYSH
+ y7yiHSHUyTD77i7d8t4iLupr7B15yvdmr+Q5ajG6bZi7kbYgltS/il3ayZRlmnw++PzM
+ C4+eZkSByn1Aq/XvLfpUBEOWAd6/NzBcIZk4/7KYh+vPPHxgHARo4MIiS+7NaqBHbSgC
+ 0J4A==
+X-Gm-Message-State: AOJu0YyqguIDXAJRD2KGGIbve0oOw5iIPAYn6RtfawrbMpHfUTbNIeiv
+ km/xaW+NUYRoWRmCKew0UdNU+tXYFjwRjx6oUV8Y+HhNzF5mQGguu+uJ8RqjPClmClMTiES6Cyp
+ dxVRz5Ooi6K6Dyk0VJiGljBDW24dR+xVGm1W4JnNIuyED4Wot7gbKsP2cXXL+myfMLxyqxYx8aN
+ qr1va+Zbrwu75SJl0rb8RoVObDvZgIjg==
+X-Received: by 2002:a17:907:7d8e:b0:a77:d9b5:ad4b with SMTP id
+ a640c23a62f3a-a7a9424ec2dmr182119066b.9.1721732262497; 
+ Tue, 23 Jul 2024 03:57:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEB6lXnvla0A7/BGaTicXR+yl9n6GLM/shEz2UcbCs5L5zya+ff8MnsMI2uJag6zk6cTyQf1Q==
+X-Received: by 2002:a17:907:7d8e:b0:a77:d9b5:ad4b with SMTP id
+ a640c23a62f3a-a7a9424ec2dmr182116566b.9.1721732261858; 
+ Tue, 23 Jul 2024 03:57:41 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5a30c3f0673sm7298041a12.61.2024.07.23.03.56.53
+ a640c23a62f3a-a7a3c8bed67sm523190266b.124.2024.07.23.03.57.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:56:55 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:56:51 -0400
+ Tue, 23 Jul 2024 03:57:41 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:57:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Minwoo Im <minwoo.im@samsung.com>, Yi Liu <yi.l.liu@intel.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL v2 19/61] intel_iommu: move VTD_FRCD_PV and VTD_FRCD_PP
- declarations
-Message-ID: <3a23554f91c01cf75705a36a5eed3ebef6636d41.1721731723.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL v2 27/61] virtio: Add VIRTIO_F_IN_ORDER property definition
+Message-ID: <0b0bb34f342f04ab8255a64edb7c6aec7105dc94.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -85,14 +80,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721731723.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,38 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-These 2 macros are for high 64-bit of the FRCD registers.
-Declarations have to be moved accordingly.
+Extend the virtio device property definitions to include the
+VIRTIO_F_IN_ORDER feature.
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Message-Id: <20240709142557.317271-3-clement.mathieu--drif@eviden.com>
+The default state of this feature is disabled, allowing it to be
+explicitly enabled where it's supported.
+
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240710125522.4168043-7-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/hw/virtio/virtio.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index cbc4030031..faea23e8d6 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -264,10 +264,10 @@
- #define VTD_FRCD_FR(val)        (((val) & 0xffULL) << 32)
- #define VTD_FRCD_SID_MASK       0xffffULL
- #define VTD_FRCD_SID(val)       ((val) & VTD_FRCD_SID_MASK)
--/* For the low 64-bit of 128-bit */
--#define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
- #define VTD_FRCD_PV(val)        (((val) & 0xffffULL) << 40)
- #define VTD_FRCD_PP(val)        (((val) & 0x1ULL) << 31)
-+/* For the low 64-bit of 128-bit */
-+#define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
- #define VTD_FRCD_IR_IDX(val)    (((val) & 0xffffULL) << 48)
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index fdc827f82e..d2a1938757 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -373,7 +373,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+     DEFINE_PROP_BIT64("packed", _state, _field, \
+                       VIRTIO_F_RING_PACKED, false), \
+     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+-                      VIRTIO_F_RING_RESET, true)
++                      VIRTIO_F_RING_RESET, true), \
++    DEFINE_PROP_BIT64("in_order", _state, _field, \
++                      VIRTIO_F_IN_ORDER, false)
  
- /* DMA Remapping Fault Conditions */
+ hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+ bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
 -- 
 MST
 
