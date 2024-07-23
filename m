@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68ABDC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 13:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39212C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 14:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWFgW-0002sN-EV; Tue, 23 Jul 2024 09:36:08 -0400
+	id 1sWG4J-00081K-UO; Tue, 23 Jul 2024 10:00:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWFgV-0002n3-0m
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 09:36:07 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWFgS-0006jU-BJ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 09:36:06 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ef2ed59200so28433821fa.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 06:36:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721741762; x=1722346562; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=azOBo8n7PTI1z8TaVTvpugK+dx9lsNzTIbJJ+xk/hOc=;
- b=BKveFRRgXA5nOM4Ayok8cVE7e1kKr6bxmmR0096RwL2MgGMchWE4BbFXM3z8Qch6eH
- DKJBNw4q/xueZ0ia0cxalZ7mUcLvY7xdx1NnCnyreYQleoERNMmxPrfb9xkvQfLEX4Z0
- giyk1pZyTjy/3l5Wqcq4JMOnOPEWUiyoe2RskWqyrqG1U1ADEQ3oHZJSzSihTZiNp79i
- 1mt/I2iErcV62mMVsqA/X48B6dxyPnDIbNLykQVu1nfL9eAr/EVtnAq6QG5gv5OZ2myt
- LWNuVnf3uQF9b0vvH8cdB/BE1SANYvzCoc3foBcAkfMOG7RlLUKjHb9TKeEdBcPMjfLp
- TsWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721741762; x=1722346562;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=azOBo8n7PTI1z8TaVTvpugK+dx9lsNzTIbJJ+xk/hOc=;
- b=fMghdE+VVURXPP904Jpeo0JAOPM6te8HfN6LL8VgYiF5XCEnDVujXwUfpqC0kqM5WV
- +f3HtF+S27qGEQANwLZpJf//YTsBBre3wMO07g8Kkc3VaxS7gVxQTxq+grletjSJ91m7
- 9mdw3flSwL6SPnr5O6xo7K0/VFME0d3osar139L2RXT1XqPPyYpySq47AGNQmKTsTBsW
- K1pactQ3mSVBQmodWxWi3gLZTCI7jQHaZx0JxZSQYTJfzbQ6mh5whu3oIjWpFVebMyzP
- jfpmFxJFuPL3S/JP13MMLNWo12dyUNLy2NTsdJrZq60NcAwU2RMTsqHiRRSmDRGXLqxg
- 4jjg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKCFccDs5QXt4EfurFJTC82XxbJ1EKi9g0sc+YsoXLgwaRWvRoQ/pbi6r5yGbhob6TGcmxyXkeMscGtg4zlIyoiZYqXqo=
-X-Gm-Message-State: AOJu0YzK5d2I+8M4vIV/nXGv1lc3N35ybahWC22gkcPaqIGzV/Eav2yA
- GTvehwDbNWaAt+X81t4fRqJx36MTKwM5YmATlyymsTEAhyayV4a4gd6IMExUQ50=
-X-Google-Smtp-Source: AGHT+IGYr8mbOlChhljYpDlrWpLH9oe8lvXe9307lziGOLW2iXNL5kziXjQtJrvtHuluQAwMuurIlA==
-X-Received: by 2002:a2e:bc26:0:b0:2ef:316e:8930 with SMTP id
- 38308e7fff4ca-2f01eacebe2mr26197591fa.42.1721741762348; 
- Tue, 23 Jul 2024 06:36:02 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.14])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a94380sm202242665e9.39.2024.07.23.06.36.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 06:36:01 -0700 (PDT)
-Message-ID: <16970204-0835-4747-a8f1-798d77a74f42@linaro.org>
-Date: Tue, 23 Jul 2024 15:36:00 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWG49-0007ua-TO
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:00:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWG47-0003dM-1D
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:00:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721743229;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=esh1iTdtJx4nft1i0P1aTCOC7MXk7/MsPbP6oG1wC6s=;
+ b=JVMJTZrxD0ndxLHQdaan1mhk6S30TQC7V+qJDciKg5CO1uomARp8Ya5zjZcQ3V1hE4nO9K
+ F9Uns0HUGKj+N5gu/2dD+WdI1MdOng0/W0JAcBFzUcLIQDzOFcE8li+ogfdnPQEeef97Ag
+ PR/uOlqwn39SO9OgClfGf2b+fzwJLb4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-zkFElvWIMDeZ87N0L59uTQ-1; Tue,
+ 23 Jul 2024 10:00:27 -0400
+X-MC-Unique: zkFElvWIMDeZ87N0L59uTQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3850D1944A98; Tue, 23 Jul 2024 14:00:26 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.91])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D93D6195605A; Tue, 23 Jul 2024 14:00:23 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PULL 01/16] hw/vfio/container: Fix SIGSEV on
+ vfio_container_instance_finalize()
+Date: Tue, 23 Jul 2024 16:00:04 +0200
+Message-ID: <20240723140019.387786-2-clg@redhat.com>
+In-Reply-To: <20240723140019.387786-1-clg@redhat.com>
+References: <20240723140019.387786-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/misc/bcm2835_property: Restrict scope of
- start_num, number, otp_row
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240723131029.1159908-1-peter.maydell@linaro.org>
- <20240723131029.1159908-4-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240723131029.1159908-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,21 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 15:10, Peter Maydell wrote:
-> In the long function bcm2835_property_mbox_push(), the variables
-> start_num, number and otp_row are used only in the four cases which
-> access OTP data, and their uses don't overlap with each other.
-> 
-> Make these variables have scope restricted to the cases where they're
-> used, so it's easier to read each individual case without having to
-> cross-refer up to the variable declaration at the top of the function
-> and check whether the variable is also used later in the loop.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/misc/bcm2835_property.c | 34 ++++++++++++++++++++--------------
->   1 file changed, 20 insertions(+), 14 deletions(-)
+From: Eric Auger <eric.auger@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In vfio_connect_container's error path, the base container is
+removed twice form the VFIOAddressSpace QLIST: first on the
+listener_release_exit label and second, on free_container_exit
+label, through object_unref(container), which calls
+vfio_container_instance_finalize().
+
+Let's remove the first instance.
+
+Fixes: 938026053f4 ("vfio/container: Switch to QOM")
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/vfio/container.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 38a9df34964a4e5a4d349c14d54f66585728d5ca..ce9a858e56218a9e9c803b4f5cf4c9f7cfc4edda 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -656,7 +656,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     return true;
+ listener_release_exit:
+     QLIST_REMOVE(group, container_next);
+-    QLIST_REMOVE(bcontainer, next);
+     vfio_kvm_device_del_group(group);
+     memory_listener_unregister(&bcontainer->listener);
+     if (vioc->release) {
+-- 
+2.45.2
 
 
