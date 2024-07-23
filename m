@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21FFC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 15:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79293C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 15:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWHje-0001TG-QV; Tue, 23 Jul 2024 11:47:30 -0400
+	id 1sWHnq-0006ea-In; Tue, 23 Jul 2024 11:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sWHjb-0001Gt-6N
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:47:29 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1sWHni-0006bR-Rs
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:51:44 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sWHjZ-0000EG-FT
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:47:26 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5a2ffc3447fso4985811a12.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 08:47:24 -0700 (PDT)
+ id 1sWHng-00017e-BX
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:51:41 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673d8so69193861fa.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 08:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721749643; x=1722354443; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=izglbQ3GIU3BgoiYPKz5MZLD67lW8yYEtKCC5ugJN/8=;
- b=nHXMBm+Nw9BETC80xppggULiCAtfJ9MJMli1raZSFur8pZUaJzvP208BERDgenI9kX
- XZKRfwg+/ohfDWWG6i1kgGOMB3rdBYIf4vtkMSxLamqRXmij1/O+aI0bdkznB7QRmL1T
- c24Cpq5LRNS0PblYk6nBeVJ5YbRnle/jdEGGnht6HHdzKDvFWbyysxnXybr/8SYKhlje
- 6gCVzB8kQ+85jfj/tlP4n0G70yh7x6JW82mQF6zOWRZEgQ/AyrjDjyp5vNWMmUhFG+Xz
- 7Crb5RE/BZiyBJVynJlMz85dYCub0RuuKbNBCJIeyrzbNFk86OfTIVyKNrHpsL/Ughll
- 2Qdw==
+ d=linaro.org; s=google; t=1721749898; x=1722354698; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9o1sQd07hPkXNaVq14CpeNbX7Vyqu9hfz6trrLrRT2o=;
+ b=Aiag1ueCDZu8DKBawl3OY/Ax+cTcR8poBneJqRDnWM36hfPdkAflZaejZy96neEb61
+ LEqyLT5xrl4X2MqtCo7xRADpoKy2H0sYOo+yzr+J92KhQs68UJMFEqypwI97aL0uMRYu
+ 2NDBrvLrXgfXyXEi1Ml9xBLbjrUwt+WCOCwcS3VrqGHaMLi2yx5Ws6KdXWfjjpg+V9Ko
+ GAo9CUkWnLqsvXrz1u7KC/obX++7jlihdI8VZNBSLhn8qj6+tkcdjUTqLt/vCnN547ND
+ dsqUBHbyrbCD6XrVyWb1KJ431nfOdqr3OrVMciAZhrnmgLB5cji2MCUnhkgQFgMiUYBh
+ 3fnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721749643; x=1722354443;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=izglbQ3GIU3BgoiYPKz5MZLD67lW8yYEtKCC5ugJN/8=;
- b=vNIWl3H+jeARuxGnOXprMkoPrVzcwVukPzaSFYrh9tJEY3Eb6XOxcqCPwdgYU+lXGo
- 56F/SkVinu2NIdRyw1889lZC7RUcbhjfhdBPwie9M3dw0AZl0Dg9QpPPwl0gpvaBdTzP
- iClkqjlC+I7JFQ6qyuy1JOAzCl2tYe0mtHRJGCdZFGY1rGpMfIdQSPc0QwjYHUTyL2e8
- zP3a8o4p8aPWCV8+nYdd1NjFHRuGu3pKlK6LBiPdZi1gdrd3ZWjXfTZhlHqUC0BHiUQZ
- SK3pBl9ZPQVg48ydwrcC40ltPnXSWzKvNDmt5jJbGviY676xSg4iGLU5vDTks6BrEcSm
- z7Sw==
-X-Gm-Message-State: AOJu0YzubRq5RzISz+wlHS17fTwSAs6hvDLDeMvNbgRpmINMA+nJ/BcB
- FYY9J32ZtuVZ0sJBNbj5UWdogH6AQLX4AaSHxu1C8nEwctccNjEmf/8GJ4c3r6Syup8AUMajgd2
- e4qlO/t488oudoPobGvmtv+qiaANrMQfg/fpgrw==
-X-Google-Smtp-Source: AGHT+IHjvcs4kBjCIXL9Fa0Gtpo8eVkzDilu9OCCQvM4tgeF/pIEicwFMPrIRtbP8zeCroKBjib1QFHAm98V8GrIIYk=
-X-Received: by 2002:a50:a6c8:0:b0:5a7:7f0f:b706 with SMTP id
- 4fb4d7f45d1cf-5a77f0fb816mr4636776a12.16.1721749643442; Tue, 23 Jul 2024
- 08:47:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721749898; x=1722354698;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9o1sQd07hPkXNaVq14CpeNbX7Vyqu9hfz6trrLrRT2o=;
+ b=TdceQx9efzZGr7deg0ivM3prPRu4eoEvzl0FvTw1waUIBztoeX0msDWf+i11jQc38C
+ BsSifP+XLWgtN/yN6hrtMM+vggbz0KkwjkPjrgKj5ZxquYf4dOsYPRDlnQ0YNvzQKHlt
+ /2a6fesNmnIR1nONpY1y0O18u4Pi2+d4V4ZrSkKnyzORHyf5uEonA4/B75+EKKcsaw0I
+ 9wByYwBOtpaJcB2pFddx2b/2Yxvhd+0lqekHocDdD8UvvV7Wosdv3pbHZDa3xqor8Z8/
+ b0oCO2UD3zzJ8g6J/idrshMbBvvcMn0FBaO9k5fTxmncLz+xIPQZMYBdEwtomgJH5Jjt
+ hKBA==
+X-Gm-Message-State: AOJu0YwL0/J+LbHlserzY13ltP6i4HS5RvYbqnL+mGi/0uMd2t70ybYS
+ cnQjjY+lF0GSyJ87f2EcK8i++uEDk7LVXJ3+W9NY28JvrwK+BVc820fMOMjahYgVifYAE3YP62e
+ 4B3BRqRDtpRlrOoBoOLkfQGHNnKgYFSVZfRHxog==
+X-Google-Smtp-Source: AGHT+IHzZ82CEzxp6QaBEbfDQl1/mUv7KBvJ154QSqMKejQJNW6LZiCs2UxD7vL3x9BGtLOHs955w8M8uqs56cSZLFk=
+X-Received: by 2002:a2e:8505:0:b0:2ef:2d58:ec24 with SMTP id
+ 38308e7fff4ca-2ef2d58f07bmr47738081fa.17.1721749898490; Tue, 23 Jul 2024
+ 08:51:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240320024010.1659193-1-gaosong@loongson.cn>
- <20240320024010.1659193-3-gaosong@loongson.cn>
-In-Reply-To: <20240320024010.1659193-3-gaosong@loongson.cn>
+References: <20240723150927.1396456-1-peter.maydell@linaro.org>
+ <331c454b-56f1-485b-bc70-c1b433db20f7@linaro.org>
+In-Reply-To: <331c454b-56f1-485b-bc70-c1b433db20f7@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jul 2024 16:47:11 +0100
-Message-ID: <CAFEAcA_8TvbqwUhDsvZm+oi0mj2zGbkFmMuKO+cFqAX-dm5S-g@mail.gmail.com>
-Subject: Re: [PULL 2/3] target/loongarch: Fix tlb huge page loading issue
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>, 
- Richard Henderson <richard.henderson@linaro.org>
+Date: Tue, 23 Jul 2024 16:51:27 +0100
+Message-ID: <CAFEAcA_HoeDYvjVsbkMJqYxEWh5nE1Y9hRLkeOhfVqX8=r=H=g@mail.gmail.com>
+Subject: Re: [PATCH] util/async.c: Forbid negative min/max in
+ aio_context_set_thread_pool_params()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,65 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 Mar 2024 at 02:40, Song Gao <gaosong@loongson.cn> wrote:
+On Tue, 23 Jul 2024 at 16:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> From: Xianglai Li <lixianglai@loongson.cn>
+> On 23/7/24 17:09, Peter Maydell wrote:
+> > aio_context_set_thread_pool_params() takes two int64_t arguments to
+> > set the minimum and maximum number of threads in the pool.  We do
+> > some bounds checking on these, but we don't catch the case where the
+> > inputs are negative.  This means that later in the function when we
+> > assign these inputs to the AioContext::thread_pool_min and
+> > ::thread_pool_max fields, which are of type int, the values might
+> > overflow the smaller type.
+> >
+> > A negative number of threads is meaningless, so make
+> > aio_context_set_thread_pool_params() return an error if either min or
+> > max are negative.
+> >
+> > Resolves: Coverity CID 1547605
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   util/async.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/util/async.c b/util/async.c
+> > index 0467890052a..3e3e4fc7126 100644
+> > --- a/util/async.c
+> > +++ b/util/async.c
+> > @@ -746,7 +746,7 @@ void aio_context_set_thread_pool_params(AioContext =
+*ctx, int64_t min,
+> >                                           int64_t max, Error **errp)
+> >   {
+> >
+> > -    if (min > max || !max || min > INT_MAX || max > INT_MAX) {
+> > +    if (min > max || max <=3D 0 || min < 0 || min > INT_MAX || max > I=
+NT_MAX) {
+> >           error_setg(errp, "bad thread-pool-min/thread-pool-max values"=
+);
+> >           return;
+> >       }
 >
-> When we use qemu tcg simulation, the page size of bios is 4KB.
-> When using the level 2 super huge page (page size is 1G) to create the page table,
-> it is found that the content of the corresponding address space is abnormal,
-> resulting in the bios can not start the operating system and graphical interface normally.
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 >
-> The lddir and ldpte instruction emulation has
-> a problem with the use of super huge page processing above level 2.
-> The page size is not correctly calculated,
-> resulting in the wrong page size of the table entry found by tlb.
->
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240318070332.1273939-1-lixianglai@loongson.cn>
+> I don't get the point of using signed min/max here...
 
-Hi; Coverity points out an issue with this patch (Coverity
-CID 1547717):
-
-
-> @@ -485,7 +513,25 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
->      target_ulong badvaddr, index, phys, ret;
->      int shift;
->      uint64_t dir_base, dir_width;
-> -    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
-> +
-> +    if (unlikely((level == 0) || (level > 4))) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Attepted LDDIR with level %"PRId64"\n", level);
-> +        return base;
-> +    }
-> +
-> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-> +        if (unlikely(level == 4)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "Attempted use of level 4 huge page\n");
-
-Here we log level == 4 as being a guest error, but there is no
-early "return <something>" the way the previous error-exit
-codepath did above...
-
-> +        }
-> +
-> +        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
-> +            return base;
-> +        } else {
-> +            return FIELD_DP64(base, TLBENTRY, LEVEL, level);
-
-...so Coverity complains that here we will try to put that value 4
-into a field in the TLBENTRY that is only 2 bits wide.
-
-> +        }
-> +    }
-
-Should the level == 4 if() do a "return base" like the
-error cases for level == 0 or > 4 ?
+I think this is because those values may originate in a
+QAPI command structure (EventLoopBaseProperties), where
+they are defined as "int" rather than a specifically
+unsigned type. So we carry them around as int64_t until
+they get to here, where we do the validation of whether
+they're sensible or not.
 
 thanks
 -- PMM
