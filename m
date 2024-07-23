@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F016C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43206C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDFd-0004px-EU; Tue, 23 Jul 2024 07:00:13 -0400
+	id 1sWDGI-0008BU-AN; Tue, 23 Jul 2024 07:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFZ-0004Wg-OH
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFm-00060f-AP
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFW-0002i2-Jg
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFk-0002te-4w
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732405;
+ s=mimecast20190719; t=1721732418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=69G17GN4Uq3+tY5aOWicSxywkAKy5R3rr33OsIJt9PA=;
- b=E+jNNbPz35RAf1J88zZ8LBs10MaOWfGVxn2CxdP3p8iV1nEYCEk3bVFmubhvD2lV81injZ
- Sse7jnUYt+V33AFP+f5CjgC7Zv2rHofpwDKYCaLtsb7kPh0tx8NUPZIUJDvKUMlf9Gf1DT
- 9jImuYwud7HxxtgLodIhGkU3Knywzo4=
+ bh=qrDoyOU8aLoqXDosKSDaANOTDQMMjAFfwW6ZQlvyVxk=;
+ b=Ead2z9nvYNb8s9hcP5ksBaLOVJ1vt1xLuQXulzCNsFf4FmbIvYUhnbrZwChviLFjoKQpTC
+ c17pHxjnRiKe7fztIo+qDAGbXnAb4afM4MOTSwa8QqX1KzXXSSNAdsrMa4kn+UZc2KZ99f
+ XcnNnEOC9rLBd2PBtl40VP2wiLmwRps=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-hEIhuPr3OG-Aqi8TmJWyLw-1; Tue, 23 Jul 2024 07:00:03 -0400
-X-MC-Unique: hEIhuPr3OG-Aqi8TmJWyLw-1
+ us-mta-360-SlcFmwKOMvyCU1XHAg1jMg-1; Tue, 23 Jul 2024 07:00:17 -0400
+X-MC-Unique: SlcFmwKOMvyCU1XHAg1jMg-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-426703ac975so24145875e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:00:03 -0700 (PDT)
+ 5b1f17b1804b1-427a7a65e7dso21580245e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:00:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732401; x=1722337201;
+ d=1e100.net; s=20230601; t=1721732415; x=1722337215;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=69G17GN4Uq3+tY5aOWicSxywkAKy5R3rr33OsIJt9PA=;
- b=qMVWQmK6oTyDH9/Mgrw7Kl9B0KIv748XdNUimDJCESPzzoNgR/ymLQMXfUK0wtBpPL
- MsnZyzsLfS/CtxLrwiPDqya7sxCTHCHSuybGsDU//pvFRKIbtQPeuho3yNxHA4r74SrL
- B0SZItxr5uThUzSqCwJCvrkfitJydPoeTrVnpFGZh1cuWFSvNUj5h33I1RRgGsE20i4N
- xTpLA92EoGdJU9P7t39vJZ/o2ULApTQJv208eR0P63YqJVAo4c27lki9sBo6ICauQhzh
- Wr6Sl+nxQqTYSu2ZMRdrgrH17lKMOx9Fxy+Qdo0ZF63oS7gRjYI9yQzVCyP4YZ0JsFNd
- bAMg==
-X-Gm-Message-State: AOJu0YwgtI9nycNGjHuOo+3JTzK8yDlP1wWUIVYZvB0ltInb5OchyprE
- cxaf59D+hu3nicS2QeIBhqzC6wOVCfEtcRjSiQECCufJZHo/yujJo7UMkeCHl3JtJnFT+yUIA00
- v4HF/c4VSLGEncJN3MeotphxSEMwNvygODgernd9QswcOItbGHMclbwO4ul4N49/dlhQyhN7xVv
- 7yXD/y9gP3f6qh81MdI0DGY8Mir0TQnQ==
-X-Received: by 2002:a05:600c:4451:b0:426:65b0:3035 with SMTP id
- 5b1f17b1804b1-427ef3b6278mr12057205e9.15.1721732401695; 
- Tue, 23 Jul 2024 04:00:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0zdZsfiKSFMmQvEeoFmScvb/ZeaA3Kanjiif1CQiLfWsajwyEszs2WSl8si8hMQkPkDxihw==
-X-Received: by 2002:a05:600c:4451:b0:426:65b0:3035 with SMTP id
- 5b1f17b1804b1-427ef3b6278mr12057005e9.15.1721732401158; 
- Tue, 23 Jul 2024 04:00:01 -0700 (PDT)
+ bh=qrDoyOU8aLoqXDosKSDaANOTDQMMjAFfwW6ZQlvyVxk=;
+ b=TLJAXPi0G6HSocF72tVZrSxanT3Gtf6SXgAK1GuU0Ng/b3Xo2pSG3frW12OB5Uiad0
+ Yn/AmrdzqHYpatAGlB1OItFFV2XV8wzhMezzkkrtttCx+MQTQN2EN7C6mkle7xKZ5MHH
+ y/LPIId53hn77VWRDgF2OFHrFlz19Lp+ReO3YBfMuxceuRQKcoFvC6f1TfibU9fupM8Q
+ hyPSNOEtKcqspkTizZpq3XOqOA/3UlDV8OCCk81rE6Hr1plPXAHkHR0+XTkHKWZQbusA
+ lB6oVX/HmHVYSssbsowQ1KUuz0bH+brn0JR5mlGpIoRZcj1ak3yvSDRq3K2M9cJH7FhJ
+ lfWA==
+X-Gm-Message-State: AOJu0YyMg4XZ336kAr59ExhptKTvX4j98cDoCEuHQJrxnZ/7PKw0hVhx
+ jpYAzfrWcjBcrh87JzoTFSWvRUp/hhgJmX3/B73rBE4XW3isi/zdjWQDYT2eL+hdUYUjT+rAw71
+ N/Xlfd03GJkdNXnhxDCa4cub544p34LWJ9Q8rN0C5mBOfsM/OJYpKHBG6kpQiqEWqTnfi5jdeDT
+ Ne7GeKAamR57EES6ED3BTnEQGL7X5NVQ==
+X-Received: by 2002:a05:600c:3504:b0:426:6eb6:1374 with SMTP id
+ 5b1f17b1804b1-427eef58c6fmr14045925e9.0.1721732415776; 
+ Tue, 23 Jul 2024 04:00:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfafN4lDxgYgbXHTAVzIRDQhBtOA3sYlDRqUCS/oFzlj1zIkomEFRXOFphrBxX18vIr79fYA==
+X-Received: by 2002:a05:600c:3504:b0:426:6eb6:1374 with SMTP id
+ 5b1f17b1804b1-427eef58c6fmr14045525e9.0.1721732415220; 
+ Tue, 23 Jul 2024 04:00:15 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d8fbacc8sm154791575e9.28.2024.07.23.03.59.59
+ 5b1f17b1804b1-427d7263687sm166867875e9.4.2024.07.23.04.00.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 04:00:00 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:59:57 -0400
+ Tue, 23 Jul 2024 04:00:14 -0700 (PDT)
+Date: Tue, 23 Jul 2024 07:00:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Eric Auger <eric.auger@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL v2 45/61] virtio-iommu: Remove probe_done
-Message-ID: <3745768918c2528f2b00b63bb3a764c458364f70.1721731723.git.mst@redhat.com>
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: [PULL v2 48/61] hw/vfio/common: Add vfio_listener_region_del_iommu
+ trace event
+Message-ID: <a6586419a13ec9698428d9585ef8540c594f978f.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -106,68 +108,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Auger <eric.auger@redhat.com>
 
-Now we have switched to PCIIOMMUOps to convey host IOMMU information,
-the host reserved regions are transmitted when the PCIe topology is
-built. This happens way before the virtio-iommu driver calls the probe
-request. So let's remove the probe_done flag that allowed to check
-the probe was not done before the IOMMU MR got enabled. Besides this
-probe_done flag had a flaw wrt migration since it was not saved/restored.
-
-The only case at risk is if 2 devices were plugged to a
-PCIe to PCI bridge and thus aliased. First of all we
-discovered in the past this case was not properly supported for
-neither SMMU nor virtio-iommu on guest kernel side: see
-
-[RFC] virtio-iommu: Take into account possible aliasing in virtio_iommu_mr()
-https://lore.kernel.org/all/20230116124709.793084-1-eric.auger@redhat.com/
-
-If this were supported by the guest kernel, it is unclear what the call
-sequence would be from a virtio-iommu driver point of view.
+Trace when VFIO gets notified about the deletion of an IOMMU MR.
+Also trace the name of the region in the add_iommu trace message.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20240716094619.1713905-3-eric.auger@redhat.com>
+Message-Id: <20240716094619.1713905-6-eric.auger@redhat.com>
 Tested-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-iommu.h | 1 -
- hw/virtio/virtio-iommu.c         | 3 ---
- 2 files changed, 4 deletions(-)
+ hw/vfio/common.c     | 3 ++-
+ hw/vfio/trace-events | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index bdb3da72d0..7db4210b16 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -43,7 +43,6 @@ typedef struct IOMMUDevice {
-     MemoryRegion bypass_mr;     /* The alias of shared memory MR */
-     GList *resv_regions;
-     GList *host_resv_ranges;
--    bool probe_done;
- } IOMMUDevice;
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 6d15b36e0b..cfc44a4569 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -599,7 +599,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
+         IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+         int iommu_idx;
  
- typedef struct IOMMUPciBus {
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 4e34dacd6e..2c54c0d976 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -555,8 +555,6 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
+-        trace_vfio_listener_region_add_iommu(iova, end);
++        trace_vfio_listener_region_add_iommu(section->mr->name, iova, end);
+         /*
+          * FIXME: For VFIO iommu types which have KVM acceleration to
+          * avoid bouncing all map/unmaps through qemu this way, this
+@@ -725,6 +725,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     if (memory_region_is_iommu(section->mr)) {
+         VFIOGuestIOMMU *giommu;
  
-     current_ranges = sdev->host_resv_ranges;
- 
--    g_assert(!sdev->probe_done);
--
-     /* check that each new resv region is included in an existing one */
-     if (sdev->host_resv_ranges) {
-         range_inverse_array(iova_ranges,
-@@ -956,7 +954,6 @@ static int virtio_iommu_probe(VirtIOIOMMU *s,
-     }
-     buf += count;
-     free -= count;
--    sdev->probe_done = true;
- 
-     return VIRTIO_IOMMU_S_OK;
- }
++        trace_vfio_listener_region_del_iommu(section->mr->name);
+         QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
+             if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
+                 giommu->n.start == section->offset_within_region) {
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index e16179b507..98bd4dccea 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -95,7 +95,8 @@ vfio_region_read(char *name, int index, uint64_t addr, unsigned size, uint64_t d
+ vfio_iommu_map_notify(const char *op, uint64_t iova_start, uint64_t iova_end) "iommu %s @ 0x%"PRIx64" - 0x%"PRIx64
+ vfio_listener_region_skip(const char *name, uint64_t start, uint64_t end) "SKIPPING %s 0x%"PRIx64" - 0x%"PRIx64
+ vfio_spapr_group_attach(int groupfd, int tablefd) "Attached groupfd %d to liobn fd %d"
+-vfio_listener_region_add_iommu(uint64_t start, uint64_t end) "region_add [iommu] 0x%"PRIx64" - 0x%"PRIx64
++vfio_listener_region_add_iommu(const char* name, uint64_t start, uint64_t end) "region_add [iommu] %s 0x%"PRIx64" - 0x%"PRIx64
++vfio_listener_region_del_iommu(const char *name) "region_del [iommu] %s"
+ vfio_listener_region_add_ram(uint64_t iova_start, uint64_t iova_end, void *vaddr) "region_add [ram] 0x%"PRIx64" - 0x%"PRIx64" [%p]"
+ vfio_known_safe_misalignment(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
+ vfio_listener_region_add_no_dma_map(const char *name, uint64_t iova, uint64_t size, uint64_t page_size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" is not aligned to 0x%"PRIx64" and cannot be mapped for DMA"
 -- 
 MST
 
