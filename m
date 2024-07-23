@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C498C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A000CC3DA63
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:13:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWJxR-0002Pf-Bj; Tue, 23 Jul 2024 14:09:53 -0400
+	id 1sWJxX-0002ng-89; Tue, 23 Jul 2024 14:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwv-0001Hk-EA
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwx-0001JL-IW
  for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:09:25 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwo-0001Do-Me
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:09:19 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-376069031c7so21280905ab.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:09:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwr-0001D8-PE
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:09:23 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-39948831566so11381695ab.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721758150; x=1722362950;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721758146; x=1722362946;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sKGM9WxUN43+saolT8pUI05xHvMsh3XU6bG+jc3msxQ=;
- b=hlLf+C4beHtkT9fCT/JoDVVeCW8mgKuuj03OrHB3LNun0s09Jlnvh7hdelQ5hvEDZ0
- 69lkEMn44A73xklZN8TrUwKk0AIJ6Zn2nmVvLiPPEzUpG4UCgdRMtFV25OZiSC+85eZm
- 6NFlc1e7wh3teXm5ncW8RJRXOE3Y9gASfgnaDuyrEgobz8t8ragvhAODasLwtV+GKyob
- bMl/P5JYH0oSHZYykUC7yg6f9fADHyukSJ7LTGFzBK8uCSJI2XbsJc26LBYUqDOElJVx
- ptfDC7QS3OWZjfgWispLKKkev3nlO2t1JRF8zMujNsR6gfUuZ+yLckL80R4ra6DodJ2o
- 2E2w==
+ bh=7Whe4XPbca7lrsBGH9KDOzbYV/caOsn/K1GjqT+CBVQ=;
+ b=AHm70aKqq9olJXcLfcOzSXgVjD/0QCrFL7zES63TZof2USPSNiP1VtvfmfzYnKtedu
+ TkY5u/0yPYCfL1mxqcGp2mObP3oMddhA08JTZKr8SoS/DVJvXTBNPe2u51aax0eX+5uo
+ Him/vIxHNFvyfYYWKa4Pyfsajh/qYaor6+rUJ9nAajfPGR/FOljtmLt+9kWZCtqGu5K+
+ /VuStATNh/yjCBDQ2IAaPqLiWLGNDPAwtP/uWRLe62NjLnyvyKPgYrx5sFN8OUjsR8WU
+ eOu+Bx+3qJilgWeUyVDc6UBZUGkXb3Jq/a/cU0Z2Jx3MzhBolc2jqdyJsAYo/Aj1eK0J
+ tNOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721758150; x=1722362950;
+ d=1e100.net; s=20230601; t=1721758146; x=1722362946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sKGM9WxUN43+saolT8pUI05xHvMsh3XU6bG+jc3msxQ=;
- b=WFuzz1DQtQK2icS4g6VlGfSZkmBUixWMYjuRx+PIppTu4LREr+iuRTQnZyHPjwSVPO
- eDunnd+81vWw9RlAbdK5sU9dJdHmTj/53t/p/9ODzwjRyZzpZERWeYgQRSFUIVSJr+lq
- 8tntup/FZG7L63aQ7DhDaoQpQM+j92YnWYFqgjZtNKnjr4lqvnV/blPBuaEW7rW7oJ62
- qX56xRWjB/NezVWHziq8IZgK1GK269WZCAqp1T6kYW+4HPNd9O+uFXOf92um9r6YiF2Z
- bosENTzDO0CfHbouCTeVfgiC9PPDSTSJeOJPR8K/eB9sUktSrENyPGk+erp9VV9MuvoI
- c2QQ==
-X-Gm-Message-State: AOJu0Yy/gFYFU2Ke05YPJer+C5qOYzx27jxok5bkTChCK5LFvL33bTeH
- 3g8tG/9o2desCl2WfzE+G1n0NGqU/ntsAVkU21HC9xD77DFmG7koqBF44E0Lir6H2wPJrOilRDy
- NO3c=
-X-Google-Smtp-Source: AGHT+IGbsUUhEiJEC1G3Fl1Gg/nabeaaMDK7/JM9PitUoHMoK17o5Fdym5Fu58UFP845dXpZSHqvZg==
-X-Received: by 2002:a05:6e02:13a6:b0:398:54dc:1408 with SMTP id
- e9e14a558f8ab-39a0c93d842mr44229435ab.23.1721758150198; 
- Tue, 23 Jul 2024 11:09:10 -0700 (PDT)
+ bh=7Whe4XPbca7lrsBGH9KDOzbYV/caOsn/K1GjqT+CBVQ=;
+ b=BHQFSbW4zR3BblwoWdnPKdWAhVsweXURcG2JDOCY5EJGIwFavArZfuJCu+kMOHXn/I
+ 1Y5aF6uAbrKqrpc0zSSOgNgKZ91UEeIFzwBTFdRjVyPONJ4aJUXPBFAp1eaicyqNpTOA
+ YyM5r+qmVXrHD8/0iqZBnLrGOqsCERQoYORUvKfHrLwuQ8iOixxJNorEjNqgwn2eh0GD
+ VcOHDK7pQfo6LQKCaqw7aUS71/aAe4YkP2jQccwrBAzMHEyPOjXo9XQgSdJIegONU+PB
+ hPgfAHhMfpIyqaPEF0PLRJuD9SAMlc2GFLXSXBqBpUG2pEUCrX2QFB8GV22u3Js3/tFQ
+ wY3A==
+X-Gm-Message-State: AOJu0YwxtTRodaXuHhNFfNRVNgNZvvQUI1Vwle9Styc/2NUuW9HREYyD
+ EF0iX/nz78igl1xuJuLRvuLa5cGWS+b55oFgYo0/LsLMdD701I8FT9Kosr1Ptstu7TlSWC2859Z
+ zT0c=
+X-Google-Smtp-Source: AGHT+IHMUen2Xdb3r8qPCmkW11eiNdEHwu/n5pw+WlgkqGQToeFwtRvz6wG2KQKvcystj13B4J0dYg==
+X-Received: by 2002:a05:6e02:18c7:b0:383:4a12:b77c with SMTP id
+ e9e14a558f8ab-3993ff8615bmr127566505ab.8.1721758146426; 
+ Tue, 23 Jul 2024 11:09:06 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-397f7a2827csm33361775ab.53.2024.07.23.11.09.09
+ e9e14a558f8ab-397f7a2827csm33361775ab.53.2024.07.23.11.09.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 11:09:09 -0700 (PDT)
+ Tue, 23 Jul 2024 11:09:05 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Peter Maydell <peter.maydell@linaro.org>,
  Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Doug Rabson <dfr@rabson.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/14] bsd-user: Make compile for non-linux user-mode stuff
-Date: Tue, 23 Jul 2024 12:07:24 -0600
-Message-ID: <20240723180725.99114-14-imp@bsdimp.com>
+Subject: [PULL 09/14] bsd-user: Simplify the implementation of execve
+Date: Tue, 23 Jul 2024 12:07:20 -0600
+Message-ID: <20240723180725.99114-10-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240723180725.99114-1-imp@bsdimp.com>
 References: <20240723180725.99114-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::130;
- envelope-from=imp@bsdimp.com; helo=mail-il1-x130.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,40 +95,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We include the files that define PR_MTE_TCF_SHIFT only on Linux, but use
-them unconditionally. Restrict its use to Linux-only.
+From: Doug Rabson <dfr@rabson.org>
 
-"It's ugly, but it's not actually wrong."
+This removes the logic which prepends the emulator to each call to
+execve and fexecve. This is not necessary with the existing
+imgact_binmisc support and it avoids the need to install the emulator
+binary into jail environments when using 'binmiscctl --pre-open'.
 
+Signed-off-by: Doug Rabson <dfr@rabson.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/gdbstub64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ bsd-user/freebsd/os-proc.c | 118 +------------------------------------
+ bsd-user/main.c            |  18 ------
+ 2 files changed, 3 insertions(+), 133 deletions(-)
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index c8cef8cbc0e..5221381cc85 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -404,6 +404,7 @@ int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, int reg)
+diff --git a/bsd-user/freebsd/os-proc.c b/bsd-user/freebsd/os-proc.c
+index e0203e259b0..bf993f1b662 100644
+--- a/bsd-user/freebsd/os-proc.c
++++ b/bsd-user/freebsd/os-proc.c
+@@ -26,65 +26,13 @@ struct kinfo_proc;
  
- int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+ #include "qemu.h"
+ 
+-/*
+- * Get the filename for the given file descriptor.
+- * Note that this may return NULL (fail) if no longer cached in the kernel.
+- */
+-static char *
+-get_filename_from_fd(pid_t pid, int fd, char *filename, size_t len)
+-{
+-    char *ret = NULL;
+-    unsigned int cnt;
+-    struct procstat *procstat = NULL;
+-    struct kinfo_proc *kp = NULL;
+-    struct filestat_list *head = NULL;
+-    struct filestat *fst;
+-
+-    procstat = procstat_open_sysctl();
+-    if (procstat == NULL) {
+-        goto out;
+-    }
+-
+-    kp = procstat_getprocs(procstat, KERN_PROC_PID, pid, &cnt);
+-    if (kp == NULL) {
+-        goto out;
+-    }
+-
+-    head = procstat_getfiles(procstat, kp, 0);
+-    if (head == NULL) {
+-        goto out;
+-    }
+-
+-    STAILQ_FOREACH(fst, head, next) {
+-        if (fd == fst->fs_fd) {
+-            if (fst->fs_path != NULL) {
+-                (void)strlcpy(filename, fst->fs_path, len);
+-                ret = filename;
+-            }
+-            break;
+-        }
+-    }
+-
+-out:
+-    if (head != NULL) {
+-        procstat_freefiles(procstat, head);
+-    }
+-    if (kp != NULL) {
+-        procstat_freeprocs(procstat, kp);
+-    }
+-    if (procstat != NULL) {
+-        procstat_close(procstat);
+-    }
+-    return ret;
+-}
+-
+ /*
+  * execve/fexecve
+  */
+ abi_long freebsd_exec_common(abi_ulong path_or_fd, abi_ulong guest_argp,
+         abi_ulong guest_envp, int do_fexec)
  {
-+#if defined(CONFIG_LINUX)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
+-    char **argp, **envp, **qargp, **qarg1, **qarg0, **qargend;
++    char **argp, **envp, **qarg0;
+     int argc, envc;
+     abi_ulong gp;
+     abi_ulong addr;
+@@ -117,9 +65,7 @@ abi_long freebsd_exec_common(abi_ulong path_or_fd, abi_ulong guest_argp,
+     qarg0 = argp = g_new0(char *, argc + 9);
+     /* save the first argument for the emulator */
+     *argp++ = (char *)getprogname();
+-    qargp = argp;
+     *argp++ = (char *)getprogname();
+-    qarg1 = argp;
+     envp = g_new0(char *, envc + 1);
+     for (gp = guest_argp, q = argp; gp; gp += sizeof(abi_ulong), q++) {
+         if (get_user_ual(addr, gp)) {
+@@ -137,7 +83,6 @@ abi_long freebsd_exec_common(abi_ulong path_or_fd, abi_ulong guest_argp,
+         total_size += strlen(*q) + 1;
+     }
+     *q++ = NULL;
+-    qargend = q;
  
-@@ -425,6 +426,9 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-     arm_set_mte_tcf0(env, tcf);
+     for (gp = guest_envp, q = envp; gp; gp += sizeof(abi_ulong), q++) {
+         if (get_user_ual(addr, gp)) {
+@@ -166,71 +111,14 @@ abi_long freebsd_exec_common(abi_ulong path_or_fd, abi_ulong guest_argp,
+     }
  
-     return 1;
-+#else
-+    return 0;
-+#endif
+     if (do_fexec) {
+-        if (((int)path_or_fd > 0 &&
+-            is_target_elf_binary((int)path_or_fd)) == 1) {
+-            char execpath[PATH_MAX];
+-
+-            /*
+-             * The executable is an elf binary for the target
+-             * arch.  execve() it using the emulator if we can
+-             * determine the filename path from the fd.
+-             */
+-            if (get_filename_from_fd(getpid(), (int)path_or_fd, execpath,
+-                        sizeof(execpath)) != NULL) {
+-                memmove(qarg1 + 2, qarg1, (qargend - qarg1) * sizeof(*qarg1));
+-                qarg1[1] = qarg1[0];
+-                qarg1[0] = (char *)"-0";
+-                qarg1 += 2;
+-                qargend += 2;
+-                *qarg1 = execpath;
+-#ifndef DONT_INHERIT_INTERP_PREFIX
+-                memmove(qarg1 + 2, qarg1, (qargend - qarg1) * sizeof(*qarg1));
+-                *qarg1++ = (char *)"-L";
+-                *qarg1++ = (char *)interp_prefix;
+-#endif
+-                ret = get_errno(execve(qemu_proc_pathname, qargp, envp));
+-            } else {
+-                /* Getting the filename path failed. */
+-                ret = -TARGET_EBADF;
+-                goto execve_end;
+-            }
+-        } else {
+-            ret = get_errno(fexecve((int)path_or_fd, argp, envp));
+-        }
++        ret = get_errno(fexecve((int)path_or_fd, argp, envp));
+     } else {
+-        int fd;
+-
+         p = lock_user_string(path_or_fd);
+         if (p == NULL) {
+             ret = -TARGET_EFAULT;
+             goto execve_end;
+         }
+-
+-        /*
+-         * Check the header and see if it a target elf binary.  If so
+-         * then execute using qemu user mode emulator.
+-         */
+-        fd = open(p, O_RDONLY | O_CLOEXEC);
+-        if (fd > 0 && is_target_elf_binary(fd) == 1) {
+-            close(fd);
+-            /* execve() as a target binary using emulator. */
+-            memmove(qarg1 + 2, qarg1, (qargend - qarg1) * sizeof(*qarg1));
+-            qarg1[1] = qarg1[0];
+-            qarg1[0] = (char *)"-0";
+-            qarg1 += 2;
+-            qargend += 2;
+-            *qarg1 = (char *)p;
+-#ifndef DONT_INHERIT_INTERP_PREFIX
+-            memmove(qarg1 + 2, qarg1, (qargend - qarg1) * sizeof(*qarg1));
+-            *qarg1++ = (char *)"-L";
+-            *qarg1++ = (char *)interp_prefix;
+-#endif
+-            ret = get_errno(execve(qemu_proc_pathname, qargp, envp));
+-        } else {
+-            close(fd);
+-            /* Execve() as a host native binary. */
+-            ret = get_errno(execve(p, argp, envp));
+-        }
++        ret = get_errno(execve(p, argp, envp));
+         unlock_user(p, path_or_fd, 0);
+     }
+ 
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index dcad266c2c9..82e94a03160 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -90,7 +90,6 @@ unsigned long reserved_va;
+ 
+ const char *interp_prefix = CONFIG_QEMU_INTERP_PREFIX;
+ const char *qemu_uname_release;
+-char qemu_proc_pathname[PATH_MAX];  /* full path to exeutable */
+ 
+ unsigned long target_maxtsiz = TARGET_MAXTSIZ;   /* max text size */
+ unsigned long target_dfldsiz = TARGET_DFLDSIZ;   /* initial data size limit */
+@@ -247,22 +246,6 @@ adjust_ssize(void)
+     setrlimit(RLIMIT_STACK, &rl);
  }
  
- static void handle_q_memtag(GArray *params, void *user_ctx)
+-static void save_proc_pathname(char *argv0)
+-{
+-    int mib[4];
+-    size_t len;
+-
+-    mib[0] = CTL_KERN;
+-    mib[1] = KERN_PROC;
+-    mib[2] = KERN_PROC_PATHNAME;
+-    mib[3] = -1;
+-
+-    len = sizeof(qemu_proc_pathname);
+-    if (sysctl(mib, 4, qemu_proc_pathname, &len, NULL, 0)) {
+-        perror("sysctl");
+-    }
+-}
+-
+ int main(int argc, char **argv)
+ {
+     const char *filename;
+@@ -292,7 +275,6 @@ int main(int argc, char **argv)
+         usage();
+     }
+ 
+-    save_proc_pathname(argv[0]);
+ 
+     error_init(argv[0]);
+     module_call_init(MODULE_INIT_TRACE);
 -- 
 2.45.1
 
