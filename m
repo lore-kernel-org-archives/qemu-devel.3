@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87462C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 08:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D4FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 08:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWAw7-0006cd-Ph; Tue, 23 Jul 2024 04:31:55 -0400
+	id 1sWAwN-0006uX-Jp; Tue, 23 Jul 2024 04:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sWAvv-0006Z0-DJ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:31:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sWAvs-0002GF-Qb
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:31:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721723496;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/qmr5qSrBZ6TnpL+CuUCxr4sdnsirmzJ/74xLXvxHCQ=;
- b=P766gXLzApw6yawLgk9USPzsdyCkt6lOdv9217tVE8p5ci33/Zf9E9bBlKdTEN18WHVy/o
- 0omHVcYp1xNixNH49ytbJYuruTu87OQogF2gaM2vZkwY6o1VINt+6dQaegZzYKlcNKehRl
- XMmfNcY+U7NnnvvIK3vRwovPAITLsbk=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-ot1e28PzPRedlxF2xvpfDg-1; Tue, 23 Jul 2024 04:31:32 -0400
-X-MC-Unique: ot1e28PzPRedlxF2xvpfDg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3687f5a2480so3018285f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 01:31:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWAwK-0006tC-Tu
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:32:08 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWAwJ-0002IV-4E
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:32:08 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-70d138e06e3so2077985b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 01:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721723524; x=1722328324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KJI6LNdjtvgr2e+iR67OLl6kh+iH+Zs0QBBjycyQLyM=;
+ b=za/PL4kUeKhpXGGLXRbf+3wf5cYW1Q7wsd9Zq9HxAYZ1tQFhaDRQt/lHJFOiwFmE8o
+ sXdP88xUtv8B8sEgkcb8lFcJcM6ub4/5e6cyFgs36B8+0fLOwcyVnNxSOZ80QHKytzzq
+ 4NJWNQfWWFMTRvdHLaM6YYS9mqe0DjMGBD8Ua6+ttMaq9600zFPaGdkCcdu9rtoIPxHu
+ Gp5oaVSsMjwx9Z6JM4e9YKIl0DPN4Qe9TJgFXUDEPWNdpoQaStdbwiGJPKSQaPzNYD4y
+ BMH+rOtgE246w78w4MyJyp2ZkNkf4bnnGSlUpzCzWMRbthcXAb7RtyqSHzvo3H04Tvzz
+ q/dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721723492; x=1722328292;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/qmr5qSrBZ6TnpL+CuUCxr4sdnsirmzJ/74xLXvxHCQ=;
- b=rtfh0M2CCUqS4O+MKN4PIdu6uvUUM+MnDl+60XUMgrHjcoCO+l1ZrRJesaFd61PMTp
- jK8I5LPYn1d3jiUn+0Q6OhK6g4WirpiZda4GTIRE+yAg4Yj5kHZMoD1wv0uOuB+2u+2V
- QrUmBIcCUhQnsF7utOZOyrZR3mmN68GRHcSu3KaLTJxt2vKVCBe/lSec/Xy/FZtsbnSW
- HqwpW7Z7pBkjMC6RgVyC/DrycDmpoDXerFMNgkpM2o6PBvJxYmKa/KRPi+cvdV2ySIQy
- LvhcS6/E4o60M1421GPTcnLhFmsTCYZpPnl/XC4ypnbFMcp/HnThV7Toe/JaEyJwCHMY
- PMZQ==
+ d=1e100.net; s=20230601; t=1721723524; x=1722328324;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KJI6LNdjtvgr2e+iR67OLl6kh+iH+Zs0QBBjycyQLyM=;
+ b=g0jdqaeiElaP7C5StYP5qPDusfFlJ6DbSlz0RB3Ktfk6z6lZthSwUJSTf/Xdo8FZPl
+ Yc9CGRCsr86j4MdCS5SUdFx3BEQMWPN76x7Ltpn8QkoAizUCiYSVbuYh4mgiqIgv3kpz
+ kJlFPMmgjc/8kRBeT9TpkdUeQ1s6aBzrwHKZ4YgPbCwZqYh+PtlVxHf/xoYsYvh1Q8Vn
+ 0TaR0N+4PyB/911wtcDWLQ1w6EBvwlIAlHef4P6zLlj9ysNNJhSavwErZv2M5MazIFpx
+ eowNoAbYKDyWIanWpv8MCTxXks2rdU3waGzoNXVX08N/DT+dPOgALtO1wAaqU1MmphtR
+ bCaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2sR+dw4/gnfakDlvwCV+2bzZvS5757kSYFVqBJL1JwwviNQFS3GDt0kSp/BJmCsQ7WG6/mk7v+qjpti1wWgKKmyfjStc=
-X-Gm-Message-State: AOJu0Yy4O5c4hVpB8+SaezLmfC1Tr14nELY+Wi2dJoKftg1MnqSWDUan
- CEp20jUlokH994YeP2mtALOOLMX8t6ZePyiBmrankKjpmKs99GsXgr6WZfBbRNn8iN29/tKUxaw
- iJZU6TVOeqhg6kRVGWPM8wbCu7PoL6t3l8DqbrpLE1n8sxl8MBVCP
-X-Received: by 2002:a05:6000:154d:b0:368:4e2e:7596 with SMTP id
- ffacd0b85a97d-369dec1e50cmr2338296f8f.37.1721723491650; 
- Tue, 23 Jul 2024 01:31:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFv51reHqk8FmCCJ8ZMhwHhhl7QxmSUgJZw/L18Jl5rp1ISnJzFhYnz3gXKoddzgoyWm2Nm9Q==
-X-Received: by 2002:a05:6000:154d:b0:368:4e2e:7596 with SMTP id
- ffacd0b85a97d-369dec1e50cmr2338271f8f.37.1721723491243; 
- Tue, 23 Jul 2024 01:31:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ AJvYcCXiYdgBpDQHl4seYJCBHqESfSRwtoJ55iOpgb/LHqgkJ9j6VS5mDKwOtb43AwgRnSwZMT9afzmiiIz+Xmp5dBg1b16TGWc=
+X-Gm-Message-State: AOJu0YxO5F/apaef0x7BjwPI0HAKsMhS7UJcipC/wtROC0AZ98sGY1Nn
+ X7+5ggOtcg/AS7rZ8U9pDfB3ijDoiLkTD7uj3F3eGMxKZxUdZqKp6643VKmhr/7uhmfGMrwSiGZ
+ 2vgg=
+X-Google-Smtp-Source: AGHT+IEypBjnlujltk7VEmOfDKlCU+SLR6+Zv9DfM5CSr0Ode4ZCDZ2gqez6oWri98Ekmzb3FcVSAQ==
+X-Received: by 2002:a05:6a00:1950:b0:70d:2837:6089 with SMTP id
+ d2e1a72fcca58-70d2837cb61mr8079219b3a.11.1721723524505; 
+ Tue, 23 Jul 2024 01:32:04 -0700 (PDT)
+Received: from ?IPV6:2403:580a:f89b:0:3c7e:f232:ff2a:defe?
+ (2403-580a-f89b-0-3c7e-f232-ff2a-defe.ip6.aussiebb.net.
+ [2403:580a:f89b:0:3c7e:f232:ff2a:defe])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36878684801sm10781098f8f.11.2024.07.23.01.31.30
+ 41be03b00d2f7-79f0a3ded2bsm5857726a12.19.2024.07.23.01.32.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 01:31:30 -0700 (PDT)
-Message-ID: <787e5d32-652c-4663-8a03-ce9b6f1a66ce@redhat.com>
-Date: Tue, 23 Jul 2024 10:31:28 +0200
+ Tue, 23 Jul 2024 01:32:04 -0700 (PDT)
+Message-ID: <3514d341-f41c-4723-8306-691734f7ff6f@linaro.org>
+Date: Tue, 23 Jul 2024 18:31:59 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 9/9] vfio/common: Allow disabling device dirty page
- tracking
+Subject: Re: [RFC PATCH v5 2/8] build deps: update lcitool to include rust bits
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <49e451adf4a3203760fb671e7509b24a7e31976f.1721648163.git.manos.pitsidianakis@linaro.org>
 Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240722211326.70162-1-joao.m.martins@oracle.com>
- <20240722211326.70162-10-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240722211326.70162-10-joao.m.martins@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <49e451adf4a3203760fb671e7509b24a7e31976f.1721648163.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,89 +97,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/22/24 21:43, Manos Pitsidianakis wrote:
+> From: Alex Bennée<alex.bennee@linaro.org>
+> 
+> For rust development we need cargo, rustc and bindgen in our various
+> development environments. Update the libvirt-ci project to (!495) and
+> regenerate the containers and other dependency lists.
+
+The cover letter for v5 says use of cargo eliminated.
+Therefore no need to add to qemu.yml, correct?
 
 
-On 7/22/24 23:13, Joao Martins wrote:
-> The property 'x-pre-copy-dirty-page-tracking' allows disabling the whole
-> tracking of VF pre-copy phase of dirty page tracking, though it means
-> that it will only be used at the start of the switchover phase.
->
-> Add an option that disables the VF dirty page tracking, and fall
-> back into container-based dirty page tracking. This also allows to
-> use IOMMU dirty tracking even on VFs with their own dirty
-> tracker scheme.
-
-Forced ON value isn't really meaningful though. I mean only valid values
-are AUTO and OFF, correct?
-
-Eric
->
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> ---
->  include/hw/vfio/vfio-common.h | 1 +
->  hw/vfio/common.c              | 3 +++
->  hw/vfio/migration.c           | 4 +++-
->  hw/vfio/pci.c                 | 3 +++
->  4 files changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 1e02c98b09ba..fed499b199f0 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -138,6 +138,7 @@ typedef struct VFIODevice {
->      VFIOMigration *migration;
->      Error *migration_blocker;
->      OnOffAuto pre_copy_dirty_page_tracking;
-> +    OnOffAuto device_dirty_page_tracking;
->      bool dirty_pages_supported;
->      bool dirty_tracking;
->      bool iommu_dirty_tracking;
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index da12cbd56408..36d0cf6585b2 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -199,6 +199,9 @@ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
->      VFIODevice *vbasedev;
->  
->      QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
-> +        if (vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) {
-> +            return false;
-> +        }
->          if (!vbasedev->dirty_pages_supported) {
->              return false;
->          }
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index cbfaef7afffe..262d42a46e58 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -1036,7 +1036,9 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
->          return !vfio_block_migration(vbasedev, err, errp);
->      }
->  
-> -    if (!vbasedev->dirty_pages_supported && !vbasedev->iommu_dirty_tracking) {
-> +    if ((!vbasedev->dirty_pages_supported ||
-> +         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
-> +        !vbasedev->iommu_dirty_tracking) {
->          if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
->              error_setg(&err,
->                         "%s: VFIO device doesn't support device and "
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 8c0f212a163e..a0767de54b8d 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3364,6 +3364,9 @@ static Property vfio_pci_dev_properties[] = {
->      DEFINE_PROP_ON_OFF_AUTO("x-pre-copy-dirty-page-tracking", VFIOPCIDevice,
->                              vbasedev.pre_copy_dirty_page_tracking,
->                              ON_OFF_AUTO_ON),
-> +    DEFINE_PROP_ON_OFF_AUTO("x-device-dirty-page-tracking", VFIOPCIDevice,
-> +                            vbasedev.device_dirty_page_tracking,
-> +                            ON_OFF_AUTO_ON),
->      DEFINE_PROP_ON_OFF_AUTO("display", VFIOPCIDevice,
->                              display, ON_OFF_AUTO_OFF),
->      DEFINE_PROP_UINT32("xres", VFIOPCIDevice, display_xres, 0),
-
+r~
 
