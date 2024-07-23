@@ -4,88 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E2D1C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 21:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CA3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 22:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWN2D-0004qi-TO; Tue, 23 Jul 2024 17:27:01 -0400
+	id 1sWNch-00083t-Sb; Tue, 23 Jul 2024 18:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sWN2C-0004pg-AA
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 17:27:00 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sWN2A-000404-Fj
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 17:27:00 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7a2123e9ad5so178275a12.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 14:26:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721770016; x=1722374816; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QGUNEapNRTLn2xmOyDa8BjUOFOZRV6WkBqacHrqi2fo=;
- b=VD+rY0tibTmrjG9F3ItdnNTMDs4qrHMX/l9WMWuF86pg3w7ZP78wnvsAZXf85sJvOW
- iwppPuXrmHTFQAZswn6H/qqWhKtN/jMVxbTtMn2RTgXx9tz2lncV/Pkh1TM5+BTS6v/A
- dvyncK0TGQ9FDTIEGTdmyvwe0qSGimphCwnmmEWtBHXQhSmmDVwAdbxE87ROuToaVYBO
- 29WpBq+0BNQbHtDgq4eMuNvQbFInWTNuBGc/FfFLcQZBv7kCLZh0nnIJyI98DbTJfi0L
- 6EMvwmZCImtPIQB+XszlUCbnfPeAkw9EWYMRDIfdd/yxC9prQYtrovd5f5c+kBcp+4ek
- Bh/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721770016; x=1722374816;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QGUNEapNRTLn2xmOyDa8BjUOFOZRV6WkBqacHrqi2fo=;
- b=pfKU/wHy7t9/apXNok+RKuLoVudbHqzJwqcW3hlDgB9LsfBJkp+V3CJtOALme1SEUU
- RNaAlm3APD0ppysEbEOR4CvyT2VglEBG4omIjwOPB+/qer5VLin+HgW3UF+/6dAF1ZsN
- Bw7CRUwzLrT47MbWoVn/bg2KG43NEad3onhTUnw7QEotxAFSd9lahYfgDWwmvIwtGVeS
- z5mAvDwCa1ElknWegyeqDpTnckHI8IEhuA6g+xaHu8/gZBrrGrdRc/tS+huMig5meyi6
- KVD+wkcVb+JLSswiHivYpuwu5sFUSDpd+DwnbCBpP14YhF0I6ABVIUUxLp9gIiwxSbdW
- HGuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKHMixGf7qhjTwmHNbSXQ4FMmTkoNe1Bcl4qibDZyNZEtB8OfRQeiWDqCthxLNHtyPEjzgvgjQLP/ndOSdc7o7AhyfvGE=
-X-Gm-Message-State: AOJu0YyX/ylUn3FJsT21LPSpkFDsiwNNxXIOy6zl10FevPybPGDSusdh
- XA2BMphD2nGEeSUSy+OjMHw4wxbiFhIg3MgmQ/HIuYqJK1GPrQq+aq9QrpMfVf4=
-X-Google-Smtp-Source: AGHT+IE3GU94kJU+9/KDHB6coyttrNsdsKTE4aCYxho3I3k6ua4O69nstYOxidwWV3k/28/eAKlz3w==
-X-Received: by 2002:a17:90a:9a4:b0:2c9:75a7:5c25 with SMTP id
- 98e67ed59e1d1-2cd8d0e1e08mr5303427a91.15.1721770016402; 
- Tue, 23 Jul 2024 14:26:56 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb743219csm63752a91.25.2024.07.23.14.26.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 14:26:55 -0700 (PDT)
-Message-ID: <353e33d8-f766-40c7-b371-331d14b6a1a2@linaro.org>
-Date: Tue, 23 Jul 2024 14:26:54 -0700
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sWNcg-00083A-Po
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 18:04:42 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sWNcd-0002Cd-N3
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 18:04:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721772280; x=1753308280;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=2o7EpBrugvip8Wb2QdZuFTyqxUu/ox4on/OQ3lk0LKQ=;
+ b=T92C1W7u+eeYPG1cvVx5K79YPwEjRSBa3Pemd/gyNxGAk/N7FX0XbEdQ
+ f61RXRaBYaiq0dq3WEIsKSml/GUP2P3qCxCBEvN348+tscktii9YEAzwa
+ 3z5ft4SN4CvXGMZ8DWqLolv2wwx+8TeBk7n2KKnPUxGc/RLRy4zLkjvzK
+ HwzfRpyWLTUqaKIY6EaEk1FzCcWiicQy6CBwJyAKjBnz4Ae5d9KqsaWr1
+ pRO/JG9wZ8eCnc3B0M4LbFGIVHrbd8N0GLBK5++2WfNeHonKYvyb0M5rL
+ USvaMTcCBBPZye+NLxCAyt1OA2FpRF8/vXVCNMw1oX8GIc0Y1A5rD5TOA Q==;
+X-CSE-ConnectionGUID: DN9x6N32Q8mnH4VkxcYjtw==
+X-CSE-MsgGUID: LpFT1IzsTCaIwZtuyfPI5w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11142"; a="19298441"
+X-IronPort-AV: E=Sophos;i="6.09,231,1716274800"; d="scan'208";a="19298441"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2024 15:04:34 -0700
+X-CSE-ConnectionGUID: BFFibzbcTI2UZLT0IdHS7w==
+X-CSE-MsgGUID: wJQpCdDKTFuWVmxvW92dBQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,231,1716274800"; d="scan'208";a="57198645"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by orviesa003.jf.intel.com with ESMTP; 23 Jul 2024 15:04:33 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v3 0/2] Consolidate create-sync and create-fence
+Date: Tue, 23 Jul 2024 15:02:56 -0700
+Message-Id: <20240723220258.3170957-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel: update tcg-plugins page
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240723205451.504193-1-pierrick.bouvier@linaro.org>
- <06420e5f-a493-44b0-8d32-1a4dc2a9db59@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <06420e5f-a493-44b0-8d32-1a4dc2a9db59@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.17;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,37 +78,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNy8yMy8yNCAxMzo1OSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDIzLzcvMjQgMjI6NTQsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBSZWZsZWN0IHJl
-Y2VudCBjaGFuZ2VzIG9uIEFQSSAoaW5saW5lIG9wcykgYW5kIG5ldyBwbHVnaW5zLg0KPj4N
-Cj4+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJA
-bGluYXJvLm9yZz4NCj4+IC0tLQ0KPj4gICAgZG9jcy9kZXZlbC90Y2ctcGx1Z2lucy5yc3Qg
-fCAxMDEgKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLQ0KPj4gICAgMSBm
-aWxlIGNoYW5nZWQsIDYzIGluc2VydGlvbnMoKyksIDM4IGRlbGV0aW9ucygtKQ0KPiANCj4g
-DQo+PiAgICAgICRRRU1VICRPVEhFUl9RRU1VX0FSR1MgXA0KPj4gLSAgICAgIC1wbHVnaW4g
-Y29udHJpYi9wbHVnaW4vbGliaG93dmVjLnNvLGlubGluZT1vbixjb3VudD1oaW50IFwNCj4+
-IC0gICAgICAtcGx1Z2luIGNvbnRyaWIvcGx1Z2luL2xpYmhvdGJsb2Nrcy5zbw0KPj4gKyAg
-ICAgIC1wbHVnaW4gY29udHJpYi9wbHVnaW5zL2xpYmhvd3ZlYy5zbyxpbmxpbmU9b24sY291
-bnQ9aGludCBcDQo+PiArICAgICAgLXBsdWdpbiBjb250cmliL3BsdWdpbnMvbGliaG90Ymxv
-Y2tzLnNvDQo+IA0KPiANCj4+IC0tIHRlc3RzL3BsdWdpbnMvZW1wdHkuYw0KPj4gKy0gdGVz
-dHMvcGx1Z2luL2VtcHR5LmMNCj4gDQo+IA0KPiBDb3VsZCB3ZSB1c2UgdGhlIHNhbWUgZGly
-ZWN0b3J5IG5hbWUgZm9yIGNvbnRyaWIvIGFuZCB0ZXN0cy8NCj4gdG8gYXZvaWQgdGhhdCBr
-aW5kIG9mIGNvbmZ1c2lvbj8NCg0KSSBhZ3JlZSB3aXRoIHRoYXQsIGJ1dCBpdCdzIG91dCBv
-ZiB0aGUgc2NvcGUgZm9yIHRoaXMgc2ltcGxlIHBhdGNoIChqdXN0IA0Kd2FudCB0byB1cGRh
-dGUgZG9jIGZvciA5LjEgcmVsZWFzZSB0aGF0IGlzIGNvbWluZykuIFRoYXQgc2FpZDoNCg0K
-QSB0aGluZyB0aGF0IGFzIGJlZW4gYXNrZWQgc29tZSB0aW1lIGFnbyB3YXMgdG8gYnVpbGQg
-Y29udHJpYiBwbHVnaW5zIA0KdXNpbmcgbWVzb24gdG9vLg0KKHNlZTogaHR0cHM6Ly9naXRs
-YWIuY29tL3FlbXUtcHJvamVjdC9xZW11Ly0vaXNzdWVzLzE3MTApLg0KSSBzZWUgdGhhdCBh
-cyBhIGdvb2Qgb3Bwb3J0dW5pdHkgdG8gc29sdmUgYm90aCBpc3N1ZXMsIGJ5IGtlZXBpbmcg
-YWxsIA0KcGx1Z2lucyBpbiBhIHNpbmdsZSBmb2xkZXIgKHRlc3RzL3BsdWdpbiksIGV2ZW50
-dWFsbHkgd2l0aCANCnRlc3RzL3BsdWdpbi9jb250cmliIGlmIHByZWZlcnJlZC4NCg0KVXBk
-YXRpbmcgQVBJIHdpdGggdGhlIGNvbnRyaWIgZm9sZGVyIGJlaW5nIGJ1aWx0IHdpdGggYSBt
-YWtlZmlsZSBpcyBhIA0KcGFpbiwgYW5kIHNvbWUgdGFyZ2V0IGFyY2ggaGF2ZSB3YXJuaW5n
-cyB3aGVuIGJ1aWxkaW5nIHRoZW0sIHNvIGl0IHdvdWxkIA0KYmUgYSBnb29kIG1vdmUuIEFu
-ZCBwZW9wbGUgY2FuIHN0aWxsIGJ1aWxkIHRoZW0gb3V0IG9mIHRyZWUgbWFudWFsbHkgaWYg
-DQp0aGV5IHdhbnQuIFBsdXMsIHRob3NlIHBsdWdpbnMgd291bGQgcnVuIGluIENJLCBzbyB0
-aGV5IHdvdWxkIGJlIG1vcmUgDQpyb2J1c3QuDQoNCkBBbGV4OiB3b3VsZCB5b3UgYmUga2Vl
-biB0byBzZWUgdGhvc2UgY2hhbmdlcyAoZm9yIDkuMik/DQpJJ20ga2VlbiB0byBtYWtlIGl0
-LCBhbmQgZml4IGFsbCB3YXJuaW5ncywgYXMgc29vbiBhcyB3ZSBhZ3JlZSB3aGVyZSB0byAN
-Cm1vdmUgdGhvc2UgbmljZSBsaXR0bGUgcGx1Z2lucy4NCg==
+From: Dongwon Kim <dongwon.kim@intel.com>
+
+Sync object itself is never used as is so can be removed
+from QemuDmaBuf struct. So now sync is only temporarily needed
+when creating fence for the object which means what was done in
+egl_dmabuf_create_sync can now be a part of egl_dmabuf_create_fence
+function. And egl_dmabuf_create_fence returns fence_fd so the
+better function name will be egl_dmabuf_create_fence_fd.
+
+v3: create fence only if current QemuDmaBuf->fence_fd = -1
+    to make sure there is no fence currently bound to the
+    QemuDmaBuf
+
+Dongwon Kim (2):
+  ui/egl-helpers: Consolidates create-sync and create-fence
+  ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
+
+ include/ui/dmabuf.h      |  2 --
+ include/ui/egl-helpers.h |  3 +--
+ ui/dmabuf.c              | 14 --------------
+ ui/egl-helpers.c         | 24 +++++++++---------------
+ ui/gtk-egl.c             | 17 ++++-------------
+ ui/gtk-gl-area.c         | 12 +++---------
+ 6 files changed, 17 insertions(+), 55 deletions(-)
+
+-- 
+2.43.0
+
 
