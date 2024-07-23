@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15038C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 09:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A947AC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 09:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWBVk-0003uj-4K; Tue, 23 Jul 2024 05:08:44 -0400
+	id 1sWBX5-0006mb-QY; Tue, 23 Jul 2024 05:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWBVi-0003tW-JJ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 05:08:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWBVf-00021r-KX
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 05:08:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721725717;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tWXepFXEMQwgQdJ9vP+tEGWvhxEy37MSzkWIEppp70I=;
- b=ZT7breX0rHhoqtXs1E4O2yHi1UtFIGkW2mQTzTOuRKY6tqDQatoNleAToeqAWk6Fa3Kv2g
- E+fLs9Fr3ow8rzzrx3Bsa4QnaNTO5qf2vqv9HP2bjkqvbdN0YSKVSb8y2HUhG8B0jXmmQq
- mNQboAgmtxiA8EELabWCebFs/uMrYQQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-115-m7kJjy0gNs2vpU-eOc4tAg-1; Tue, 23 Jul 2024 05:08:35 -0400
-X-MC-Unique: m7kJjy0gNs2vpU-eOc4tAg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4279c75c44dso37733595e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 02:08:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sWBX3-0006eT-3s
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 05:10:05 -0400
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sWBWy-00029i-Hx
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 05:10:04 -0400
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4928fb6fdceso902132137.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 02:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1721725797; x=1722330597;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xrTcZcCQTfrwQTMiEVQL0wH3s9wf348RiRKQQ3JBNBE=;
+ b=mQWKGvL8yt11Sfg9Z1/j2oXsKqFU/KsQRunfpxF0e2AoeT8nst08/Tw3Nk4chEMPvu
+ WFzkN0piZueoAc+eOp+BVIp6ME0s8opC7r9Ntex7AiwTxhUVGNzcMJGTNjDwYCLXXrxx
+ h11F8rd3IpX0tMGXAEk3KAoWdj9tuO7X0OmGWq9pfMv2a51VPm7O4FfjRdxc08tsTCJm
+ PDmJm5kdDlm8Muf6zcda0nX1831QYV8DReJJUrOHK9nokYjmDtSsPoSuMQqkFEqmFj0+
+ 59Btqo+7KmCDwVm+GuwzNsMndWHa2PXF5AGOtMXJuaqdaQglP5btAKyhPGAddGt9xmal
+ zChg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721725714; x=1722330514;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tWXepFXEMQwgQdJ9vP+tEGWvhxEy37MSzkWIEppp70I=;
- b=AHbKn9kHOMscj3oU3AOSpnYaTYOsiGa8osXVoqJ5gOUGKgV+ZLJNP9PpbVTe5PTsbl
- 97Xcs5jKZgs6zqZWV6q+V/V7S346gXi9Mm+EBa7REWlqzgzHFxRBn70diJrxv/kSTtDp
- meNX4ZHZlLOaQWBbfxgNvk+CawNATaP3217lKvv5/x8+7D6FHs5KuiiMNK/JFVh8be/d
- +/TV7Bq+qW6GqPlu5KI0TBh3soUVDr0Zh1VUj9HbGXGMWbSSd/t7n68vU0nIoicLlp42
- 3akaizVMKucdVNrbwourauJEjOMGFtSMJjs2T90lwaMTioHG8D34pAcwPg8KlLNGVKkW
- TpZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWHWtQ2Dxmpi+lIhrp5jFkygCslD+4ZVnZtRO1hPnqvq4KXKbKXLYp46pyigCDbrdTV4cSzMUXs/Qq7VwgKlq1HJloEtE=
-X-Gm-Message-State: AOJu0Yx/B3GIhPMza1+DATM4dVyjixf61c9xopukNfEQqStSGzFpQVcE
- B9Zv4ETEWB60tZ2iqcjMYRYXxr/N4p/dI0hHhuqkilBUfDmQYw8wcXpQh4r10oXKGapLcRSa6Mp
- 12kG3PO4yzCicqq2KBspnDtiZE4v0/J1eCduuJHawL3VnnQo5o+BjuxAKBca4
-X-Received: by 2002:a05:600c:1906:b0:426:4765:16f7 with SMTP id
- 5b1f17b1804b1-427dc529337mr58947395e9.21.1721725714076; 
- Tue, 23 Jul 2024 02:08:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQheCZyrBFS7GMr6pPy3U5qvnRC4ol3Hsmd5L3qcAPnRF7/CVLTWthxDfeqBsnGrTFpFvdOg==
-X-Received: by 2002:a05:600c:1906:b0:426:4765:16f7 with SMTP id
- 5b1f17b1804b1-427dc529337mr58947235e9.21.1721725713586; 
- Tue, 23 Jul 2024 02:08:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
- ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a3b763sm191518885e9.10.2024.07.23.02.08.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 02:08:33 -0700 (PDT)
-Message-ID: <566d3ebb-4999-4ffb-a18c-b6721abed5c5@redhat.com>
-Date: Tue, 23 Jul 2024 11:08:31 +0200
+ d=1e100.net; s=20230601; t=1721725797; x=1722330597;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xrTcZcCQTfrwQTMiEVQL0wH3s9wf348RiRKQQ3JBNBE=;
+ b=qPbJfY50hAmCtS2yK1vTMpKaH57J4yl4tkwBm/KqjJ1Uq0t1b3StiYgjdVm/C8TFIY
+ g5XTMDfccpc3E2/wEIYoQRYoIdRNoYJA6DanAXCVQbqOO6AD4s+SyZNnwMbJQAQfzbw+
+ lHIrXDFQyE5nDTspycZieYA/EJVsPoy/SOho5mPrGguVWFjq09j+5cOlmFpOcpcfa7UH
+ Bxc9m3LUSKrGHMqKMgDKuRJN8vX9CkHCU8ZPK6M45k3H0uNZ15aZG60tGRYYrw0eDFhF
+ waxjqEJIT9rkd+mOIoRhOcYDmnSAi8ROlHXDrtnU6rm0Z4OG5+yuL5eXFj0MgGBiZQ53
+ 2I1w==
+X-Gm-Message-State: AOJu0Ywkgu+M31eewRC8cKFRpw6QVJrTMsbvNJF6mIu0wWQvsG+cWKis
+ Ju36SMNVFjaX8BFZj+0BACIRXf4jJ5RmByslutgWviLxGUwDOHJnDhRgO7iC5ZevaQdZpP1Q3BR
+ YMRENq6uv8Ekps+hUbPOcybSCYCFYijy7NTKp
+X-Google-Smtp-Source: AGHT+IHl/eTJDwvy+ylxN0SaljYAxj6ZpojduHUMbdNpcsO0Vg+U/BwVUWDXyhQmhqjQXqEkUwQ4SAl6wTQhmTxIlOQ=
+X-Received: by 2002:a05:6102:149a:b0:48f:c2dd:3520 with SMTP id
+ ada2fe7eead31-4928b9b0d5amr12582336137.11.1721725797241; Tue, 23 Jul 2024
+ 02:09:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/9] hw/iommufd: IOMMUFD Dirty Tracking
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240722211326.70162-1-joao.m.martins@oracle.com>
- <11941abb-d401-4056-b293-ef5f1fd3756d@redhat.com>
- <511424c2-90e3-4751-9776-1a677b6ecf15@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <511424c2-90e3-4751-9776-1a677b6ecf15@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240723085902.98572-1-philmd@linaro.org>
+In-Reply-To: <20240723085902.98572-1-philmd@linaro.org>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 23 Jul 2024 11:09:46 +0200
+Message-ID: <CAAibmn1U=47wJOYhhpETHZihTu-aHcohm4eHK0JqK3epSEB8jQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] macos: Allow coredump generation
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Cameron Esfahani <dirty@apple.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Roman Bolshakov <roman@roolebo.dev>, 
+ Francesco Cagnin <fcagnin@quarkslab.com>
+Content-Type: multipart/alternative; boundary="0000000000008baf1d061de686e1"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=phil@philjordan.eu; helo=mail-vs1-xe30.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,197 +96,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/24 10:56, Joao Martins wrote:
-> On 23/07/2024 09:35, Cédric Le Goater wrote:
->> On 7/22/24 23:13, Joao Martins wrote:
->>> This small series adds support for IOMMU dirty tracking support via the
->>> IOMMUFD backend. The hardware capability is available on most recent x86
->>> hardware (and these SMMUv3 in upcoming v6.11). The series is divided
->>> organized as follows:
->>>
->>> * Patches 1 - 7: IOMMUFD backend support for dirty tracking;
->>>
->>> Introduce auto domains -- Patch 3 goes into more detail, but the gist is that
->>> we will find and attach a device to a compatible IOMMU domain, or allocate a new
->>> hardware pagetable *or* rely on kernel IOAS attach (for mdevs). Afterwards the
->>> workflow is relatively simple:
->>>
->>> 1) Probe device and allow dirty tracking in the HWPT
->>> 2) Toggling dirty tracking on/off
->>> 3) Read-and-clear of Dirty IOVAs
->>>
->>> The heuristics selected for (1) were to always request the HWPT for
->>> dirty tracking if supported, or rely on device dirty page tracking. This
->>> is a little simplistic and we aren't necessarily utilizing IOMMU dirty
->>> tracking even if we ask during hwpt allocation.
->>>
->>> The unmap case is deferred until further vIOMMU support with migration
->>> is added[3] which will then introduce the usage of
->>> IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR in GET_DIRTY_BITMAP ioctl in the
->>> dma unmap bitmap flow.
->>>
->>> * Patches 8 - 9: Don't block live migration where there's no VF dirty
->>> tracker, considering that we have IOMMU dirty tracking.
->>>
->>> Comments and feedback appreciated (on patches 1, 5, 8, 9)
->>>
->>> Cheers,
->>>       Joao
->>>
->>> P.S. Suggest v6.11-rc as hypervisor kernel as there's
->>> some bugs fixed there with regards to IOMMU hugepage dirty tracking.
->>>
->>> Changes since v5[6]:
->>> * Remove patches 1-4 as these were commited to vfio-next
->>> * Add the Rb by Cedric and Zhenzhong (previously patches 7, 8, 10, 11)
->>> * Introduce VFIODevice::iommu_dirty_tracking and use it on patch 5, 8
->>> to store whether we can use IOMMU dirty tracking.
->>>
->>> Changes since v4[5]:
->>> * Add various Reviewed-by in patches 2,3,4,6,8,11
->>> * Change error messages to mention IOMMU (Zhenzhong)
->>> * Better improve the checking of dirty page tracking in
->>>     vfio_migration_realize() to detect per-device IOMMU instead of using
->>>     container dirty_page_supported().
->>> * Improve various commit messages (Eric)
->>> * Extract the caps::hw_caps into its own patch as it was miosleading to
->>> be hidden in another patch (new patch 7)
->>> * Restructure patch 1 helper to be vfio_device_is_mdev() and use
->>> vfio::mdev directly in rest of patches (Cedric)
->>> * Improve error messages of set,query dirty tracking (Cedric)
->>> * Add missing casts to uintptr and uint64_t* (Cedric)
->>> * Add missing commens to struct doc from aw_bits removal (and hw_caps
->>> addition) (Eric)
->>> * Fix the detach flow in auto domains (Eric)
->>> * Set hwpt to NULL on detach (Eric)
->>> * Spurious line (Eric)
->>>
->>> Changes since v3[5]:
->>> * Skip HostIOMMUDevice::realize for mdev, and introduce a helper to check if
->>> the VFIO
->>>     device is mdev. (Zhenzhong)
->>> * Skip setting IOMMU device for mdev (Zhenzhong)
->>> * Add Zhenzhong review tag in patch 3
->>> * Utilize vbasedev::bcontainer::dirty_pages_supported instead of introducing
->>>     a new HostIOMMUDevice capability and thus remove the cap patch from the
->>> series (Zhenzhong)
->>> * Move the HostIOMMUDevice::realize() to be part of VFIODevice initialization
->>> in attach_device()
->>> while skipping it all together for mdev. (Cedric)
->>> * Due to the previous item, had to remove aw_bits because it depends on device
->>> attach being
->>> finished, instead defer it to when get_cap() gets called.
->>> * Skip auto domains for mdev instead of purposedly erroring out (Zhenzhong)
->>> * Pass errp in all cases, and instead just free the error in case of -EINVAL
->>>     in most of all patches, and also pass Error* in
->>> iommufd_backend_alloc_hwpt() amd
->>>     set/query dirty. This is made better thanks in part to skipping auto
->>> domains for mdev (Cedric)
->>>
->>> Changes since RFCv2[4]:
->>> * Always allocate hwpt with IOMMU_HWPT_ALLOC_DIRTY_TRACKING even if
->>> we end up not actually toggling dirty tracking. (Avihai)
->>> * Fix error handling widely in auto domains logic and all patches (Avihai)
->>> * Reuse iommufd_backend_get_device_info() for capabilities (Zhenzhong)
->>> * New patches 1 and 2 taking into consideration previous comments.
->>> * Store hwpt::flags to know if we have dirty tracking (Avihai)
->>> * New patch 8, that allows to query dirty tracking support after
->>> provisioning. This is a cleaner way to check IOMMU dirty tracking support
->>> when vfio::migration is iniitalized, as opposed to RFCv2 via device caps.
->>> device caps way is still used because at vfio attach we aren't yet with
->>> a fully initialized migration state.
->>> * Adopt error propagation in query,set dirty tracking
->>> * Misc improvements overall broadly and Avihai
->>> * Drop hugepages as it's a bit unrelated; I can pursue that patch
->>> * separately. The main motivation is to provide a way to test
->>> without hugepages similar to what vfio_type1_iommu.disable_hugepages=1
->>> does.
->>>
->>> Changes since RFCv1[2]:
->>> * Remove intel/amd dirty tracking emulation enabling
->>> * Remove the dirtyrate improvement for VF/IOMMU dirty tracking
->>> [Will pursue these two in separate series]
->>> * Introduce auto domains support
->>> * Enforce dirty tracking following the IOMMUFD UAPI for this
->>> * Add support for toggling hugepages in IOMMUFD
->>> * Auto enable support when VF supports migration to use IOMMU
->>> when it doesn't have VF dirty tracking
->>> * Add a parameter to toggle VF dirty tracking
->>>
->>> [0]
->>> https://lore.kernel.org/qemu-devel/20240201072818.327930-1-zhenzhong.duan@intel.com/
->>> [1]
->>> https://lore.kernel.org/qemu-devel/20240201072818.327930-10-zhenzhong.duan@intel.com/
->>> [2]
->>> https://lore.kernel.org/qemu-devel/20220428211351.3897-1-joao.m.martins@oracle.com/
->>> [3]
->>> https://lore.kernel.org/qemu-devel/20230622214845.3980-1-joao.m.martins@oracle.com/
->>> [4]
->>> https://lore.kernel.org/qemu-devel/20240212135643.5858-1-joao.m.martins@oracle.com/
->>> [5]
->>> https://lore.kernel.org/qemu-devel/20240708143420.16953-1-joao.m.martins@oracle.com/
->>> [6]
->>> https://lore.kernel.org/qemu-devel/20240719120501.81279-1-joao.m.martins@oracle.com/
->>>
->>> Joao Martins (9):
->>>     vfio/iommufd: Introduce auto domain creation
->>>     vfio/{iommufd,container}: Remove caps::aw_bits
->>>     vfio/iommufd: Add hw_caps field to HostIOMMUDeviceCaps
->>>     vfio/{iommufd,container}: Invoke HostIOMMUDevice::realize() during
->>>       attach_device()
->>>     vfio/iommufd: Probe and request hwpt dirty tracking capability
->>>     vfio/iommufd: Implement VFIOIOMMUClass::set_dirty_tracking support
->>>     vfio/iommufd: Implement VFIOIOMMUClass::query_dirty_bitmap support
->>>     vfio/migration: Don't block migration device dirty tracking is
->>>       unsupported
->>>     vfio/common: Allow disabling device dirty page tracking
->>>
->>>    include/hw/vfio/vfio-common.h      |  13 +++
->>>    include/sysemu/host_iommu_device.h |   5 +-
->>>    include/sysemu/iommufd.h           |  11 ++
->>>    backends/iommufd.c                 |  85 ++++++++++++++-
->>>    hw/vfio/common.c                   |  19 ++--
->>>    hw/vfio/container.c                |   9 +-
->>>    hw/vfio/helpers.c                  |  11 ++
->>>    hw/vfio/iommufd.c                  | 170 ++++++++++++++++++++++++++++-
->>>    hw/vfio/migration.c                |  12 +-
->>>    hw/vfio/pci.c                      |   3 +
->>>    backends/trace-events              |   3 +
->>>    11 files changed, 318 insertions(+), 23 deletions(-)
->>
->> Applied to vfio-next with the changes that were discussed this morning.
->> Please check.
->>
-> 
-> I think the only thing missing is in the fourth patch to add the comment Eric
-> suggested (see below). Other than that, looks good to me.
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 50ffa4b77090..abb6f1a4b4a8 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -488,6 +488,13 @@ static bool iommufd_cdev_attach(const char *name,
-> VFIODevice *vbasedev,
-> 
->       space = vfio_get_address_space(as);
-> 
-> +    /*
-> +     * The HostIOMMUDevice data from legacy backend is static and doesn't need
-> +     * any information from the (type1-iommu) backend to be initialized. In
-> +     * contrast however, the IOMMUFD HostIOMMUDevice data requires the iommufd
-> +     * FD to be connected and having a devid to be able to successfully call
-> +     * iommufd_backend_get_device_info().
-> +     */
->       if (!vfio_device_hiod_realize(vbasedev, errp)) {
->           goto err_alloc_ioas;
->       }
-> 
+--0000000000008baf1d061de686e1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yep. This is fixed now. I will send a vfio PR in a couple of hours.
+This can certainly be useful in various situations! However, wholesale
+enabling get-task-allow will enable other processes on the system to inject
+code, connect a debugger, etc. to the Qemu process. Normally, this is only
+something you'd enable for builds that are specifically intended for
+debugging. I'm not sure users running Qemu in production environments will
+necessarily appreciate this - do we perhaps want to gate this behind a
+build configuration flag?
 
-Thanks,
+(Related: Would it perhaps make more sense to dynamically
+generate/preprocess the entitlements file based on configuration flags than
+have a bunch of variants of the file? You'll end up with a combinatorial
+explosion sooner or later - I'm also thinking of com.apple.vm.networking
+and com.apple.vm.device-access which we can't enable by default because
+they require Apple to grant the entitlement but which currently require
+patching if you have those entitlements.)
 
-C.
+What do you think?
+
+Phil
 
 
+On Tue, 23 Jul 2024 at 10:59, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g>
+wrote:
+
+> QEMU is allowed to generate coredump on other POSIX OSes,
+> bring that functionality to macOS. Admin users still need
+> to enable the kern.coredump sysctl manually running:
+>
+>   % sudo sysctl kern.coredump=3D1
+>
+> the normal users have to enable their shell running:
+>
+>   % ulimit -c unlimited
+>
+> Reference used:
+>
+> https://nasa.github.io/trick/howto_guides/How-to-dump-core-file-on-MacOS.=
+html
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> Cc: Alexander Graf <agraf@csgraf.de>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Phil Dennis-Jordan <phil@philjordan.eu>
+> Cc: Roman Bolshakov <roman@roolebo.dev>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Francesco Cagnin <fcagnin@quarkslab.com>
+> ---
+>  MAINTAINERS                  | 2 ++
+>  meson.build                  | 6 ++++--
+>  accel/hvf/entitlements.plist | 2 ++
+>  accel/tcg/entitlements.plist | 8 ++++++++
+>  4 files changed, 16 insertions(+), 2 deletions(-)
+>  create mode 100644 accel/tcg/entitlements.plist
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d5ff6c2498e..c6f57d77b19 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -611,6 +611,8 @@ M: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>  S: Odd Fixes
+>  F: .gitlab-ci.d/cirrus/macos-*
+>  F: */*.m
+> +F: accel/tcg/entitlements.plist
+> +F: accel/hvf/entitlements.plist
+>  F: scripts/entitlement.sh
+>
+>  Alpha Machines
+> diff --git a/meson.build b/meson.build
+> index a1e51277b09..aae35e93420 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3983,9 +3983,11 @@ foreach target : target_dirs
+>        ]
+>        if 'CONFIG_HVF' in config_target
+>          entitlements =3D 'accel/hvf/entitlements.plist'
+> -        build_input +=3D files(entitlements)
+> -        install_input +=3D meson.current_source_dir() / entitlements
+> +      else
+> +        entitlements =3D 'accel/tcg/entitlements.plist'
+>        endif
+> +      build_input +=3D files(entitlements)
+> +      install_input +=3D meson.current_source_dir() / entitlements
+>
+>        emulators +=3D {exe['name'] : custom_target(exe['name'],
+>                     input: build_input,
+> diff --git a/accel/hvf/entitlements.plist b/accel/hvf/entitlements.plist
+> index 154f3308ef2..af4bb45dbea 100644
+> --- a/accel/hvf/entitlements.plist
+> +++ b/accel/hvf/entitlements.plist
+> @@ -4,5 +4,7 @@
+>  <dict>
+>      <key>com.apple.security.hypervisor</key>
+>      <true/>
+> +    <key>com.apple.security.get-task-allow</key>
+> +    <true/>
+>  </dict>
+>  </plist>
+> diff --git a/accel/tcg/entitlements.plist b/accel/tcg/entitlements.plist
+> new file mode 100644
+> index 00000000000..9acd12816c9
+> --- /dev/null
+> +++ b/accel/tcg/entitlements.plist
+> @@ -0,0 +1,8 @@
+> +<?xml version=3D"1.0" encoding=3D"UTF-8"?>
+> +<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "
+> http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+> +<plist version=3D"1.0">
+> +<dict>
+> +    <key>com.apple.security.get-task-allow</key>
+> +    <true/>
+> +</dict>
+> +</plist>
+> --
+> 2.41.0
+>
+>
+
+--0000000000008baf1d061de686e1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>This can certainly be useful in various situations! H=
+owever, wholesale enabling get-task-allow will enable other processes on th=
+e system to inject code, connect a debugger, etc. to the Qemu process. Norm=
+ally, this is only something you&#39;d enable for builds that are specifica=
+lly intended for debugging. I&#39;m not sure users running Qemu in producti=
+on environments will necessarily appreciate this - do we perhaps want to ga=
+te this behind a build configuration flag?</div><div><br></div><div>(Relate=
+d: Would it perhaps make more sense to dynamically generate/preprocess the =
+entitlements file based on configuration flags than have a bunch of variant=
+s of the file? You&#39;ll end up with a combinatorial explosion sooner or l=
+ater - I&#39;m also thinking of com.apple.vm.networking and com.apple.vm.de=
+vice-access which we can&#39;t enable by default because they require Apple=
+ to grant the entitlement but which currently require patching if you have =
+those entitlements.)</div><div><br></div><div>What do you think?</div><div>=
+<br></div><div>Phil</div><div><br></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Tue, 23 Jul 2024 at 10:59, Philippe Ma=
+thieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org=
+</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+QEMU is allowed to generate coredump on other POSIX OSes,<br>
+bring that functionality to macOS. Admin users still need<br>
+to enable the kern.coredump sysctl manually running:<br>
+<br>
+=C2=A0 % sudo sysctl kern.coredump=3D1<br>
+<br>
+the normal users have to enable their shell running:<br>
+<br>
+=C2=A0 % ulimit -c unlimited<br>
+<br>
+Reference used:<br>
+<a href=3D"https://nasa.github.io/trick/howto_guides/How-to-dump-core-file-=
+on-MacOS.html" rel=3D"noreferrer" target=3D"_blank">https://nasa.github.io/=
+trick/howto_guides/How-to-dump-core-file-on-MacOS.html</a><br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+Cc: Alexander Graf &lt;<a href=3D"mailto:agraf@csgraf.de" target=3D"_blank"=
+>agraf@csgraf.de</a>&gt;<br>
+Cc: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D=
+"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
+Cc: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D=
+"_blank">peter.maydell@linaro.org</a>&gt;<br>
+Cc: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu" target=3D"=
+_blank">phil@philjordan.eu</a>&gt;<br>
+Cc: Roman Bolshakov &lt;<a href=3D"mailto:roman@roolebo.dev" target=3D"_bla=
+nk">roman@roolebo.dev</a>&gt;<br>
+Cc: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_bla=
+nk">pbonzini@redhat.com</a>&gt;<br>
+Cc: Francesco Cagnin &lt;<a href=3D"mailto:fcagnin@quarkslab.com" target=3D=
+"_blank">fcagnin@quarkslab.com</a>&gt;<br>
+---<br>
+=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 | 2 ++<br>
+=C2=A0meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 | 6 ++++--<br>
+=C2=A0accel/hvf/entitlements.plist | 2 ++<br>
+=C2=A0accel/tcg/entitlements.plist | 8 ++++++++<br>
+=C2=A04 files changed, 16 insertions(+), 2 deletions(-)<br>
+=C2=A0create mode 100644 accel/tcg/entitlements.plist<br>
+<br>
+diff --git a/MAINTAINERS b/MAINTAINERS<br>
+index d5ff6c2498e..c6f57d77b19 100644<br>
+--- a/MAINTAINERS<br>
++++ b/MAINTAINERS<br>
+@@ -611,6 +611,8 @@ M: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:ph=
+ilmd@linaro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+=C2=A0S: Odd Fixes<br>
+=C2=A0F: .gitlab-ci.d/cirrus/macos-*<br>
+=C2=A0F: */*.m<br>
++F: accel/tcg/entitlements.plist<br>
++F: accel/hvf/entitlements.plist<br>
+=C2=A0F: scripts/entitlement.sh<br>
+<br>
+=C2=A0Alpha Machines<br>
+diff --git a/meson.build b/meson.build<br>
+index a1e51277b09..aae35e93420 100644<br>
+--- a/meson.build<br>
++++ b/meson.build<br>
+@@ -3983,9 +3983,11 @@ foreach target : target_dirs<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0]<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0if &#39;CONFIG_HVF&#39; in config_target<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0entitlements =3D &#39;accel/hvf/entitleme=
+nts.plist&#39;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 build_input +=3D files(entitlements)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 install_input +=3D meson.current_source_dir() =
+/ entitlements<br>
++=C2=A0 =C2=A0 =C2=A0 else<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 entitlements =3D &#39;accel/tcg/entitlements.p=
+list&#39;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0endif<br>
++=C2=A0 =C2=A0 =C2=A0 build_input +=3D files(entitlements)<br>
++=C2=A0 =C2=A0 =C2=A0 install_input +=3D meson.current_source_dir() / entit=
+lements<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0emulators +=3D {exe[&#39;name&#39;] : custom_tar=
+get(exe[&#39;name&#39;],<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 input=
+: build_input,<br>
+diff --git a/accel/hvf/entitlements.plist b/accel/hvf/entitlements.plist<br=
+>
+index 154f3308ef2..af4bb45dbea 100644<br>
+--- a/accel/hvf/entitlements.plist<br>
++++ b/accel/hvf/entitlements.plist<br>
+@@ -4,5 +4,7 @@<br>
+=C2=A0&lt;dict&gt;<br>
+=C2=A0 =C2=A0 =C2=A0&lt;key&gt;com.apple.security.hypervisor&lt;/key&gt;<br=
+>
+=C2=A0 =C2=A0 =C2=A0&lt;true/&gt;<br>
++=C2=A0 =C2=A0 &lt;key&gt;com.apple.security.get-task-allow&lt;/key&gt;<br>
++=C2=A0 =C2=A0 &lt;true/&gt;<br>
+=C2=A0&lt;/dict&gt;<br>
+=C2=A0&lt;/plist&gt;<br>
+diff --git a/accel/tcg/entitlements.plist b/accel/tcg/entitlements.plist<br=
+>
+new file mode 100644<br>
+index 00000000000..9acd12816c9<br>
+--- /dev/null<br>
++++ b/accel/tcg/entitlements.plist<br>
+@@ -0,0 +1,8 @@<br>
++&lt;?xml version=3D&quot;1.0&quot; encoding=3D&quot;UTF-8&quot;?&gt;<br>
++&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;<a=
+ href=3D"http://www.apple.com/DTDs/PropertyList-1.0.dtd" rel=3D"noreferrer"=
+ target=3D"_blank">http://www.apple.com/DTDs/PropertyList-1.0.dtd</a>&quot;=
+&gt;<br>
++&lt;plist version=3D&quot;1.0&quot;&gt;<br>
++&lt;dict&gt;<br>
++=C2=A0 =C2=A0 &lt;key&gt;com.apple.security.get-task-allow&lt;/key&gt;<br>
++=C2=A0 =C2=A0 &lt;true/&gt;<br>
++&lt;/dict&gt;<br>
++&lt;/plist&gt;<br>
+-- <br>
+2.41.0<br>
+<br>
+</blockquote></div></div>
+
+--0000000000008baf1d061de686e1--
 
