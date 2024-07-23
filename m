@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C60C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D49B9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWOy9-00034p-L9; Tue, 23 Jul 2024 19:30:57 -0400
+	id 1sWOxr-00025V-92; Tue, 23 Jul 2024 19:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxz-0002Tk-TA
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:47 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1sWOxa-00020J-Op
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:22 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxt-0007zf-Pn
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:45 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2cb5243766dso3597498a91.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:40 -0700 (PDT)
+ id 1sWOxX-0007nM-Vb
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:22 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2cdadce1a57so323964a91.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777439; x=1722382239;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777417; x=1722382217;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xoi8tQlmstuJQE5BtIWLC+NlXYaPeyqDg2JVEoxweos=;
- b=gGqnxuWvMvnUep896uXT7C50W3a4UdQRkZV36bHbxKdScPrRQOU7SfszWdb3gJSQ9F
- ellMISAEhvZKfIXzKkVh0SN1LcAfNeMcdJTa+R1q3D9InSrwWmy8IABwiP9587Cwv4Ej
- ZYoEO+PfueQMT/zr2faK8+W7EvlCtLIQxHhm7ZCNiClDT4bI2uM+CyAJ/w151/snPCK+
- /7jQMu+bQv6A5AXVP5zD4Ry6n+2IcRWnXFuIPgM/aOR3an7n+w1fRlW1FqaYZdHco2Xg
- mAqjJjC4irxzm2tb6+CuVtavcrF+a9ukiOQqSnSXMvaqlA8oaOiwAJUsrsrM6VZRxbvC
- +Ddw==
+ :reply-to; bh=lNRGvwJvd6a6G7pngvPVFSLDlElUvvSu62TJByB++KY=;
+ b=S95pfgR6z4BcF3q9Fg8PDl8MQZCuGqvMNJVjcUi4VUx0LVQbTx/24yY6etmWo25Yz7
+ 0K4e7IuJrr5wO05CRghN4cBb+bBsMh4wnOIuv+E6Ba3/71zu0yCswfLyYtlmLcZuccb5
+ oxRWSoT5j4EZS/iYYDr2tObchdr/i0uFXqfEplklJvwqglQXDJwLFozyuurq777q00ym
+ xuBCxvaWpqDwLuvxcKS+lPSBY9iVNqiLlmM0ef9nRcMGms9GLo3nF+42U7QtQf/nSlHc
+ 4NigQT+Zlv6zIkY9GRksjw89ZzzelbFrXNZdiotrVQz+URKG4gO+C5cLg9UUpNW/XaYP
+ PH9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721777439; x=1722382239;
+ d=1e100.net; s=20230601; t=1721777417; x=1722382217;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xoi8tQlmstuJQE5BtIWLC+NlXYaPeyqDg2JVEoxweos=;
- b=nTKPCLjuDIbdKJdkGTrUOAPdOPxh56hB/iTMiKv2dvdf00uYGrh9GBSvh1kvmA0BHp
- /ozMjCN/qAADy3sD6CklUu9fM0hZDEcQWI6NoxDO5NNdeGcUwonZ+x7ZctpKNGtvN+lJ
- p5dQzcx0MBokRJw37uYaAR3eoa2RUWcKA2V/U4VZmGVx43YKd0r2/EpSzkVQSG3CmqRS
- f6Wnyep7YeCR1I2liMb8J5zkWWVirIBjn4CcrKg1yT5j/QSbJw2FAhijGM5OrFmK7LGZ
- w6Qdz8atyIe/aYCRbVxw4wKt3/rJQBNBenxXieFNYMS3DhcgoU2tu+y3PzhiQ0J1Xdvn
- mNCQ==
+ bh=lNRGvwJvd6a6G7pngvPVFSLDlElUvvSu62TJByB++KY=;
+ b=dksnEZFbfGyn1DH/xLof9bwz543xbMi/W2K4P6RYR1olH5HeJzJqrxa0aMSU2T9xTx
+ k8/DRx2W3AWm+rBu0XOQkieRTNDvOHohzZIU4caIosrAwQfZVreHqQs54ZQLwv0NLXXz
+ aWT2ftJYvIudtaN68rrewGHBGI62vLiXVab2gf4209mgsf80JYTe/GHxu0KVYx7cD2gz
+ zuWM67ABlxMv6NFQpFPt+YeAoKtaDCiYyBNQuTeemax5mmo2eP6TSw878aeUlJHJVBQx
+ JW2l2T4s57N63urRAXiEtoMm/u6GFLANDkAvwfvwDuRl0h6RUxd9hhZ4zWMleEVdgd8X
+ prHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1Uhf0oU7JTm57LFKW4F0Of+sVlWXWUb6lYHy3jVKLYu7Dpqr9+2ArFPlG3kjkDV/qJfUMfvCKzXtHhFQ5XMGzk5e8tmo=
-X-Gm-Message-State: AOJu0YzOeMs4Z8sQCkFC8NUeCx8/YfIEe/1Kb73AMW3m/ykNbeQ8G0Cw
- 4B1flj58J3kz08eLaM071pFQROk+Ims3cUtA78DegBkjT4u1WE2VBqgf4/5M3Mg=
-X-Google-Smtp-Source: AGHT+IF6UbMkHQ+IeO2x0d8mYCC8dzs0JCjlRdGh0Lg3sEh4YYIWpQwu3frc/rBq7VIcgYvwRWOJnQ==
-X-Received: by 2002:a17:90a:f28e:b0:2cb:e429:f525 with SMTP id
- 98e67ed59e1d1-2cdb51a6543mr585954a91.33.1721777439152; 
- Tue, 23 Jul 2024 16:30:39 -0700 (PDT)
+ AJvYcCXExXaQaiDbAeBXhjBnkzOVvKL1TotK7WwZMsJoKaVvX0xAYtpwxgjB2TLgc1TbP2MTM0PuPkiLJJP9xtGdF7sjImVrd4s=
+X-Gm-Message-State: AOJu0YzUtKG+EN2D8Ebey48MN+8iwk6/JVuwG2sgHjfspwzYTb+3XNsc
+ /VpeVY+27SRvDNJ4kaZpWMA6RLS03zlscxS+Pbb4Wdb49Z7cwPMcKq3AykJeT8Y=
+X-Google-Smtp-Source: AGHT+IF1w8noqVocF3lV+ZJLzFoeKSDfbDj1N65r4YOPVLI1PEnkezhMXL/JyxsvzL5DhFsShYmkyA==
+X-Received: by 2002:a17:90a:f10a:b0:2c8:f3b4:425 with SMTP id
+ 98e67ed59e1d1-2cdb515ea88mr613216a91.23.1721777417650; 
+ Tue, 23 Jul 2024 16:30:17 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.37
+ 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 16:30:38 -0700 (PDT)
+ Tue, 23 Jul 2024 16:30:16 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Tue, 23 Jul 2024 16:30:10 -0700
-Subject: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
- preferred rule
+Date: Tue, 23 Jul 2024 16:29:58 -0700
+Subject: [PATCH v2 01/13] target/riscv: Add properties for Indirect CSR
+ Access extension
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
+Message-Id: <20240723-counter_delegation-v2-1-c4170a5348ca@rivosinc.com>
 References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 In-Reply-To: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=atishp@rivosinc.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=atishp@rivosinc.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,52 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Counter delegation/configuration extension requires the following
-extensions to be enabled.
+From: Kaiwen Xue <kaiwenx@rivosinc.com>
 
-1. Smcdeleg - To enable counter delegation from M to S
-2. S[m|s]csrind - To enable indirect access CSRs
-3. Smstateen - Indirect CSR extensions depend on it.
-4. Sscofpmf - To enable counter overflow feature
-5. S[m|s]aia - To enable counter overflow feature in virtualization
-6. Smcntrpmf - To enable privilege mode filtering for cycle/instret
-
-While first 3 are mandatory to enable the counter delegation,
-next 3 set of extension are preferred to enable all the PMU related
-features. That's why, enable all of these if Ssccfg extension is
-enabled from the commandline.
+This adds the properties for sxcsrind. Definitions of new registers and
+implementations will come with future patches.
 
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
 ---
- target/riscv/cpu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c     | 2 ++
+ target/riscv/cpu_cfg.h | 2 ++
+ 2 files changed, 4 insertions(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 22ba43c7ff2a..abebfcc46dea 100644
+index a90808a3bace..ebc19090b40d 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2665,8 +2665,20 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     NULL
- };
- 
-+static RISCVCPUPreferredExtsRule SSCCFG_PREFERRED = {
-+    .ext = CPU_CFG_OFFSET(ext_ssccfg),
-+    .preferred_multi_exts = {
-+        CPU_CFG_OFFSET(ext_smcsrind), CPU_CFG_OFFSET(ext_sscsrind),
-+        CPU_CFG_OFFSET(ext_ssaia), CPU_CFG_OFFSET(ext_smaia),
-+        CPU_CFG_OFFSET(ext_smstateen), CPU_CFG_OFFSET(ext_sscofpmf),
-+        CPU_CFG_OFFSET(ext_smcntrpmf), CPU_CFG_OFFSET(ext_smcdeleg),
-+
-+        RISCV_PREFRRED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUPreferredExtsRule *riscv_multi_ext_preferred_rules[] = {
--    NULL
-+    &SSCCFG_PREFERRED, NULL
- };
- 
- static Property riscv_cpu_properties[] = {
+@@ -183,12 +183,14 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+     ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+     ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
++    ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_12_0, ext_smcsrind),
+     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+     ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+     ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
++    ISA_EXT_DATA_ENTRY(sscsrind, PRIV_VERSION_1_12_0, ext_sscsrind),
+     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+     ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+     ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 8b272fb826ef..b8a5174bc871 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -77,6 +77,8 @@ struct RISCVCPUConfig {
+     bool ext_smstateen;
+     bool ext_sstc;
+     bool ext_smcntrpmf;
++    bool ext_smcsrind;
++    bool ext_sscsrind;
+     bool ext_svadu;
+     bool ext_svinval;
+     bool ext_svnapot;
 
 -- 
 2.34.1
