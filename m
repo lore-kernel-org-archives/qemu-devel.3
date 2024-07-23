@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326AAC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 16:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC65C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 16:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWHzB-0001vG-Md; Tue, 23 Jul 2024 12:03:33 -0400
+	id 1sWI5f-0007TL-3Q; Tue, 23 Jul 2024 12:10:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWHz3-0001G0-6d
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:03:27 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI5e-0007Sh-2Z
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:10:14 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWHyy-0003DL-Of
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:03:24 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52f01993090so3535964e87.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 09:03:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI5b-0004P5-Tt
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:10:13 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3684e8220f9so2295963f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 09:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721750599; x=1722355399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721751010; x=1722355810; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CuoFuE/etZCROEXlIiPDQu1xFLj9jT2GBkXbshljb78=;
- b=OHfU2g8urFNXH4RxXZQa3cRW/0vGfCDZ1Sdzs59W2ZYeP+WHeAGdzB6UvRgcoRpHt1
- Cx+UsYwzZulWf1ZNwjWeICr7gcEw5JVdWliMN1lY+jDnh+GjG1TId2xoXLnO33RCKdbj
- mqRahXlJGxjL7wg72LHCpRRYP1ry5cIN5njyc/GRaKGodgdAC5VoqycE6atJE/7o9khp
- U5jltu0xzqHo49oRHMuGYNiXw826RF2GKOP5k13qv8lUP1JfNX0rwNIxGekIoemTD8mF
- QCtsPTSAss6CAt75GMqSdwzkFSv5v5p1Krh0i7r9BlHYm3ZFAZd2cvRbbG1Lh41NsgOR
- y0sA==
+ bh=P/qGxzWVKwBzyns7uKu0Csr6qKZITAaEc42aAQP0aWs=;
+ b=X0DY09cRrxkUULc3zNy4UmstTkUM4kOxXdDYuPyu/aQwd5eUpwrJg4GrlvNVqtx9ZX
+ urc3ptZvm3v9mnnzywbxD2bvEuRQsQpKi36OeewPJh+5cuiT4kMdhHvB8wmsc6RzAXKp
+ Gq5yujBqy4jMI+AM4h87lFkVZbXVn7J9rbauyRZObZMK1k4tnA7LAS85M6XCqhTEtFuk
+ mjOtUC0LOWNW61kwozaa9XEu3udnZqoWffYvNSCK9no+z7b5YYP1Li0w1GOS6GJb9sb+
+ grnyVEnRqCwS22MykXcb0C4oWehYMAFPnxWYPEQ8PBSC5JmONNrmzcPNGEyXlKWYGGe2
+ kegA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721750599; x=1722355399;
+ d=1e100.net; s=20230601; t=1721751010; x=1722355810;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CuoFuE/etZCROEXlIiPDQu1xFLj9jT2GBkXbshljb78=;
- b=jOV3xN/0JWpjGN8J5KAfUr4RvVTLpEeOEgUribKYQDf2df18cBCFQ7HhA/kyVlV8E3
- BaRQamZu8hQZQ9qL8e5ZnCDqVAWs76uu99haORV0QQzLK8w7dJcvzSKZhhN5lWlOA0La
- FYUBLp2goHVb30tPncoY2E9TCNXLHQhe88vHTN+ql2rfZUA6vJY6h2n2AE5J/1nkjF0D
- LctNINOaERLOxwYGlApKHy9/jZ6Nqe0II14cbSqAZ+rsccjLb85VxXXwp/zrCvPz24ws
- IyM1BjFOyPMUE6tfxWqX3p+jkmmbrv79Ux1vuCKoyhHmct0dut4vwjeRx3Ru4PX0aQOS
- JH4w==
-X-Gm-Message-State: AOJu0YzlP+bhrYYdIcD2aoo0sC4+djLqAgcDkV8MXMj5eEyy7NFBLAtq
- t0M69Y7GW9WknJMN1FRlSTS0tn3r+QIAiI/YxYRPp6e8UVg91ciU25ySMPwOusY=
-X-Google-Smtp-Source: AGHT+IGZYYhG9EOBZ7U0v/hugn/01yclQwXYi36SsR1sn6O+a3b5ahzvMKPvzK7iUEFYEJJghTpioA==
-X-Received: by 2002:a05:6512:2316:b0:52e:9d28:c28a with SMTP id
- 2adb3069b0e04-52fcda31d37mr25040e87.26.1721750598597; 
- Tue, 23 Jul 2024 09:03:18 -0700 (PDT)
+ bh=P/qGxzWVKwBzyns7uKu0Csr6qKZITAaEc42aAQP0aWs=;
+ b=hwm4VQb8b74nM6zpG9LDJJbWLNKBq5mkzMrZb3zWcJmcaUtNxrybI2eJtcJg2oeKNo
+ HOv1z9oJFIjLH6N3Nn9WdZJoWGqURgVl4fVTak3B9n24J1LOzOYXti/uAEfuwWykUUW5
+ c4utFGr1frSUuIyB3FdoycQP1gIV+4ouML3b0N/dsWHvHAhZoa6AUK7Kkv7MyPRZpbpU
+ TTAuX2M4KxB3ZoLOGVNiQndkykTVC3PEVT2p839nvr0S9wUJgdzXXtH7NIIP1Li9jiZ5
+ IgYeUhmyjTWL09eBC8Ik/luObSIeznvrlm5h6zDycEdqOZggCWbSOZ4neEUzJQiRgTaL
+ rRaA==
+X-Gm-Message-State: AOJu0Yxgr5q7lHmnL5teNAFysXqwBMC9yA968pWY41kMQGczV7nsdPTd
+ IrXQ5hOWlIEFVOjfc4JtF8/BXQrGzMqF/NwQj43VmVFg0O+hdLCL1OMnvNJdZpE=
+X-Google-Smtp-Source: AGHT+IGRWRMRpWe3TtlASdkMT8qfu3aV65Qt6vH5KJECQNLcVk8r7HUnHJaXgrSrviGOhET+8y/QRg==
+X-Received: by 2002:a05:6000:4021:b0:367:8f89:f7c9 with SMTP id
+ ffacd0b85a97d-369e3f2f62bmr2036633f8f.33.1721751009980; 
+ Tue, 23 Jul 2024 09:10:09 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.208.14])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a95530sm196303185e9.45.2024.07.23.09.03.16
+ ffacd0b85a97d-368787ecec0sm11895692f8f.105.2024.07.23.09.10.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 09:03:17 -0700 (PDT)
-Message-ID: <1d0069cd-891a-4ce8-8759-375493906f55@linaro.org>
-Date: Tue, 23 Jul 2024 18:03:15 +0200
+ Tue, 23 Jul 2024 09:10:09 -0700 (PDT)
+Message-ID: <de954795-ecec-435e-8166-989296c56bfd@linaro.org>
+Date: Tue, 23 Jul 2024 18:10:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/async.c: Forbid negative min/max in
- aio_context_set_thread_pool_params()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-References: <20240723150927.1396456-1-peter.maydell@linaro.org>
- <331c454b-56f1-485b-bc70-c1b433db20f7@linaro.org>
- <CAFEAcA_HoeDYvjVsbkMJqYxEWh5nE1Y9hRLkeOhfVqX8=r=H=g@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD()
+ in nubus_virtio_mmio_realize()
+To: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240723161802.1377985-1-zhao1.liu@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_HoeDYvjVsbkMJqYxEWh5nE1Y9hRLkeOhfVqX8=r=H=g@mail.gmail.com>
+In-Reply-To: <20240723161802.1377985-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +95,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 17:51, Peter Maydell wrote:
-> On Tue, 23 Jul 2024 at 16:44, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 23/7/24 17:09, Peter Maydell wrote:
->>> aio_context_set_thread_pool_params() takes two int64_t arguments to
->>> set the minimum and maximum number of threads in the pool.  We do
->>> some bounds checking on these, but we don't catch the case where the
->>> inputs are negative.  This means that later in the function when we
->>> assign these inputs to the AioContext::thread_pool_min and
->>> ::thread_pool_max fields, which are of type int, the values might
->>> overflow the smaller type.
->>>
->>> A negative number of threads is meaningless, so make
->>> aio_context_set_thread_pool_params() return an error if either min or
->>> max are negative.
->>>
->>> Resolves: Coverity CID 1547605
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>>    util/async.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/util/async.c b/util/async.c
->>> index 0467890052a..3e3e4fc7126 100644
->>> --- a/util/async.c
->>> +++ b/util/async.c
->>> @@ -746,7 +746,7 @@ void aio_context_set_thread_pool_params(AioContext *ctx, int64_t min,
->>>                                            int64_t max, Error **errp)
->>>    {
->>>
->>> -    if (min > max || !max || min > INT_MAX || max > INT_MAX) {
->>> +    if (min > max || max <= 0 || min < 0 || min > INT_MAX || max > INT_MAX) {
->>>            error_setg(errp, "bad thread-pool-min/thread-pool-max values");
->>>            return;
->>>        }
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> I don't get the point of using signed min/max here...
+On 23/7/24 18:18, Zhao Liu wrote:
+> According to the comment in qapi/error.h, dereferencing @errp requires
+> ERRP_GUARD():
 > 
-> I think this is because those values may originate in a
-> QAPI command structure (EventLoopBaseProperties), where
-> they are defined as "int" rather than a specifically
-> unsigned type. So we carry them around as int64_t until
-> they get to here, where we do the validation of whether
-> they're sensible or not.
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> * - It must not be dereferenced, because it may be null.
+> ...
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> *
+> * Using it when it's not needed is safe, but please avoid cluttering
+> * the source with useless code.
+> 
+> In nubus_virtio_mmio_realize(), @errp is dereferenced without
+> ERRP_GUARD().
+> 
+> Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
+> method - is never passed a null @errp argument, it should follow the
+> rules on @errp usage.  Add the ERRP_GUARD() there.
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> v2: Used Markus' words in commit message and added his r/b tag.
+> ---
+>   hw/nubus/nubus-virtio-mmio.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-Ah indeed. Probably very old code hard to change now
-(QAPI does support unsigned types).
-
+Patch queued, thanks!
 
