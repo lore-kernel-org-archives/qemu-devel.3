@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D213AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498A3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDGK-0008P8-Cc; Tue, 23 Jul 2024 07:00:56 -0400
+	id 1sWDCt-0007kD-9P; Tue, 23 Jul 2024 06:57:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFo-00068J-CE
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCc-0006gb-Ma
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFm-0002ul-OO
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCY-0001nJ-TH
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732422;
+ s=mimecast20190719; t=1721732222;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lNaBRV7Yd2JZRWzu6CicjU/g67eykdpgIsM3nElPwyU=;
- b=iQXpH2uhgOsSZ1oISXXRH6VHD2luYIhA2zBW2E00Gk7S8y/ACXRSZtOO2fTqjEsLVZX567
- iScZPWQMIk6d88fqvcuOtXM7Q/qdhk0HJ9JYtRiCW2qbrNw9qyYJ8G0LymIH5hFVvc7O7X
- i/AxbIrJPNAy06i3qSJHKkxT87uPiu0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Kj1I/08pd2fWVIr2fyGlScWsVaYM95BuB4yW1kFmRKk=;
+ b=HhkN6j1TUamlZYS2pNnZ1MwtU0UISzRtgkwth6Cs7b1kN8YvtICeYtBWXtoNDgPxrV3jLp
+ r/+iihxHM5/bSTwJfzd+0Gu6S/330VuqX6bfsOyILUAt04hzC0i5dnzBeJN0x5h5d+DDNe
+ tQIwddFk+86Q9TsqKhUy44eCDKNs58w=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-458-Tp-q91B-MrGLniD9WERHRQ-1; Tue, 23 Jul 2024 07:00:20 -0400
-X-MC-Unique: Tp-q91B-MrGLniD9WERHRQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-427df7c3a2aso20047725e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:00:20 -0700 (PDT)
+ us-mta-538-gCzwjs6uN0a7ROcBD6BD1g-1; Tue, 23 Jul 2024 06:56:59 -0400
+X-MC-Unique: gCzwjs6uN0a7ROcBD6BD1g-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52f02833519so2403657e87.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732419; x=1722337219;
+ d=1e100.net; s=20230601; t=1721732217; x=1722337017;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lNaBRV7Yd2JZRWzu6CicjU/g67eykdpgIsM3nElPwyU=;
- b=lhuFzYJa2FN+xAiiVlfWOqlFQawOPnpIu5tJ9mSN8TRVNpNLUFojnTTWaHMibfOoCT
- 1lrJYfm5OlN3+t7LumLvSIThPvXq9gtadCjrrutGjjH6ZGC+0ebKAwMLTpJJ4FU6Iw4g
- 3KkbmwfQjqtGsMu7yx9w+xP/al9O0+U3PTLWLsVnZrZtC6jH4Ks64gsApL0rj2JZqVGn
- +kOY9lnfY+SliV9z2a8uUPi827mBxEY6Ry+EvfycU+p7XXK+6y7RHOb3hJ44NJVcR4zM
- NzCIBr61IqERk/oCRvNZdTPiTBCAqZMvGGxh1Z15dZmO4p5q4LSH1gOVpo9kNpGSrgeR
- CUWw==
-X-Gm-Message-State: AOJu0YxXvBrshfvKM5gUN7RBgtA99cjd6sJ714eL9y9M0B3enbwnIXhy
- blx/xvmmcwpuNQ3szHi77Ppgp/uS/6GTyx/qnHWnsKYsk1hxPCo5R7oLqDSjZwGyIlV/5vJxNcF
- Ifkf9UQ03FIBZpEf2YRolUcd8fReh9UPu1eBXg/9duji6a2WUfPafkoBAvAuX2L0wiDDt6JWV1Q
- 8rLt6TMg7dk7OfcbrFdXZRBAbEtAwkag==
-X-Received: by 2002:a05:600c:138b:b0:426:6edf:6597 with SMTP id
- 5b1f17b1804b1-427dc5290ffmr59045985e9.19.1721732419412; 
- Tue, 23 Jul 2024 04:00:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvzJmZOxWpQRfFBp7VjshzP9XB2kRIrkzhmIipSXjNXt7fmpkYodRBPdoUm4jhQhtLWf4rNg==
-X-Received: by 2002:a05:600c:138b:b0:426:6edf:6597 with SMTP id
- 5b1f17b1804b1-427dc5290ffmr59045665e9.19.1721732418897; 
- Tue, 23 Jul 2024 04:00:18 -0700 (PDT)
+ bh=Kj1I/08pd2fWVIr2fyGlScWsVaYM95BuB4yW1kFmRKk=;
+ b=s49UZNT4y2Hy4JHxlw4Dw2FmgraVZ+RLqkVVPDHd5jzjdKjnTewR96XOMJxog6IdqA
+ B+ycTRRZ5bfNZBBTHPF1Wu8lLq1tFjiv9SL6ucCbSlgnV1pxEG1NWTir4eBaRa8v7jey
+ haI+gvi9JlfoGNohrzLAmPzWIICrO0DumpTor3U3oHWwiQjTZcJly3r2FTx9Bawsk0H+
+ JxYTE1xkk4y0SF2FiXu/O5deSEUQZIA9fhzLeZIjAj/Uc54BKHr7yZV6vFm39iNCgrVA
+ 196XReZPnJfxiNDPX3UDs0G0xad6IDMVYmk40ddci84vwMaSo7aMQ8KSt9lfLmRJCENP
+ 6Gew==
+X-Gm-Message-State: AOJu0YwW2wTZUgG/UBEq6Q6SoHL+J1Dbc0xbt1iOXtcpDf76pP814UVY
+ ulkLz6daCsTd6IiADRCuZf49a96cpR7l8kIKzsRG2CT0WrG7ftCuEFKl30ta6mdYgg/75mb+8OB
+ 24Im8wZzDY0d559qJ/iJ9QCpELBHCW0R5crOJtjGbaIWASWhqdcIZNlQGELUo0Kw5tPsp5yVDut
+ mlpaG8GRc5u2TLw4SWNeU9O4IOwoVPgQ==
+X-Received: by 2002:a05:6512:ea0:b0:52c:dac3:392b with SMTP id
+ 2adb3069b0e04-52fc404bbbemr1763546e87.33.1721732217162; 
+ Tue, 23 Jul 2024 03:56:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGA/nkg2nG+CmFagKaSvPvSmjfuzyLxQzejYMP7Lxd8rCbJUCC7UtdqL0qn+BYoEb0VUjTf1Q==
+X-Received: by 2002:a05:6512:ea0:b0:52c:dac3:392b with SMTP id
+ 2adb3069b0e04-52fc404bbbemr1763516e87.33.1721732216378; 
+ Tue, 23 Jul 2024 03:56:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a3b8ccsm199501005e9.2.2024.07.23.04.00.17
+ 4fb4d7f45d1cf-5a30c3f0673sm7298041a12.61.2024.07.23.03.56.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 04:00:18 -0700 (PDT)
-Date: Tue, 23 Jul 2024 07:00:15 -0400
+ Tue, 23 Jul 2024 03:56:55 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:56:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL v2 49/61] virtio-iommu: Add trace point on
- virtio_iommu_detach_endpoint_from_domain
-Message-ID: <6c027a9de3fae3b8a3a4868e17c7a28ba5372463.1721731723.git.mst@redhat.com>
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Minwoo Im <minwoo.im@samsung.com>, Yi Liu <yi.l.liu@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL v2 19/61] intel_iommu: move VTD_FRCD_PV and VTD_FRCD_PP
+ declarations
+Message-ID: <3a23554f91c01cf75705a36a5eed3ebef6636d41.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -105,45 +109,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-Add a trace point on virtio_iommu_detach_endpoint_from_domain().
+These 2 macros are for high 64-bit of the FRCD registers.
+Declarations have to be moved accordingly.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20240716094619.1713905-7-eric.auger@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-Id: <20240709142557.317271-3-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 1 +
- hw/virtio/trace-events   | 1 +
- 2 files changed, 2 insertions(+)
+ hw/i386/intel_iommu_internal.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 440dfa6e92..59ef4fb217 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -308,6 +308,7 @@ static void virtio_iommu_detach_endpoint_from_domain(VirtIOIOMMUEndpoint *ep)
-     if (!ep->domain) {
-         return;
-     }
-+    trace_virtio_iommu_detach_endpoint_from_domain(domain->id, ep->id);
-     g_tree_foreach(domain->mappings, virtio_iommu_notify_unmap_cb,
-                    ep->iommu_mr);
-     QLIST_REMOVE(ep, next);
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index b7c04f0856..04e36ae047 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -116,6 +116,7 @@ virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, u
- virtio_iommu_set_config(uint8_t bypass) "bypass=0x%x"
- virtio_iommu_attach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
- virtio_iommu_detach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
-+virtio_iommu_detach_endpoint_from_domain(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
- virtio_iommu_map(uint32_t domain_id, uint64_t virt_start, uint64_t virt_end, uint64_t phys_start, uint32_t flags) "domain=%d virt_start=0x%"PRIx64" virt_end=0x%"PRIx64 " phys_start=0x%"PRIx64" flags=%d"
- virtio_iommu_unmap(uint32_t domain_id, uint64_t virt_start, uint64_t virt_end) "domain=%d virt_start=0x%"PRIx64" virt_end=0x%"PRIx64
- virtio_iommu_unmap_done(uint32_t domain_id, uint64_t virt_start, uint64_t virt_end) "domain=%d virt_start=0x%"PRIx64" virt_end=0x%"PRIx64
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index cbc4030031..faea23e8d6 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -264,10 +264,10 @@
+ #define VTD_FRCD_FR(val)        (((val) & 0xffULL) << 32)
+ #define VTD_FRCD_SID_MASK       0xffffULL
+ #define VTD_FRCD_SID(val)       ((val) & VTD_FRCD_SID_MASK)
+-/* For the low 64-bit of 128-bit */
+-#define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
+ #define VTD_FRCD_PV(val)        (((val) & 0xffffULL) << 40)
+ #define VTD_FRCD_PP(val)        (((val) & 0x1ULL) << 31)
++/* For the low 64-bit of 128-bit */
++#define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
+ #define VTD_FRCD_IR_IDX(val)    (((val) & 0xffffULL) << 48)
+ 
+ /* DMA Remapping Fault Conditions */
 -- 
 MST
 
