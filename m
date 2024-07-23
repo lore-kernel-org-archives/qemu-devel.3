@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB69C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11502C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW9Z0-0000AQ-Ep; Tue, 23 Jul 2024 03:03:58 -0400
+	id 1sW9Yb-0006Ll-A3; Tue, 23 Jul 2024 03:03:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sW9Yr-0007ui-1H
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:50 -0400
+ id 1sW9YZ-0006Dc-CW
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1sW9Yp-0000uw-E2
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:48 -0400
+ id 1sW9YX-0000sx-Ru
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721718226;
+ s=mimecast20190719; t=1721718209;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tPSSyS6bfmr01ci0SFl0dV6durr2CWQnch75LoI9BkI=;
- b=NCkE3ateg8QBdlwEg2I9DGg0/KGpN0Yi07kzWBRaU1wf1oOQtBwREOEK4rAjU1R68FZcHt
- BI/UIeKaTOTcoGroMDyMj2zJhHOMlYkjdXkJmFNyOD0RLA8NWNdHdCbc125SYIjxHeMboy
- MQ0tZxZFkUI1oUhx6F1FrF+YCX2iXgI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dfA1AIhnaodupyeke/XSvXwEWxdqwDhPzBrAZ19WWi4=;
+ b=ErsUcXl/OwBUwTo0nhbfZ8VtgNTqia++/3wqzE5Yce46OsWlo5mDd7WbT5xnaC4r2jYakf
+ sDhGSrmSTB+rS3Iy1DzQ+yZ7cBZd2N20x+al7obKtBxV99x70aWVJ1UIIXWHiS/jRAb8oG
+ w9VGO4OyUrf2gVCxvfTr2yHmrI7gB3Q=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-w7QnTF-eP9WObh9HYGIbew-1; Tue,
- 23 Jul 2024 03:03:44 -0400
-X-MC-Unique: w7QnTF-eP9WObh9HYGIbew-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-JYJPgLX_M7ywBw4qLxWCUg-1; Tue,
+ 23 Jul 2024 03:03:24 -0400
+X-MC-Unique: JYJPgLX_M7ywBw4qLxWCUg-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 785951955F43; Tue, 23 Jul 2024 07:03:43 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01F791955D45; Tue, 23 Jul 2024 07:03:24 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.224.211])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EE0E3000197; Tue, 23 Jul 2024 07:03:41 +0000 (UTC)
+ id 9CEFC3000197; Tue, 23 Jul 2024 07:03:22 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL v2 24/25] guest-agent: document allow-rpcs in config file
- section
-Date: Tue, 23 Jul 2024 10:02:50 +0300
-Message-ID: <20240723070251.25575-25-kkostiuk@redhat.com>
+Subject: [PULL v2 14/25] qga: conditionalize schema for commands requiring
+ fstrim
+Date: Tue, 23 Jul 2024 10:02:40 +0300
+Message-ID: <20240723070251.25575-15-kkostiuk@redhat.com>
 In-Reply-To: <20240723070251.25575-1-kkostiuk@redhat.com>
 References: <20240723070251.25575-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
@@ -82,37 +83,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-While the `allow-rpcs` option is documented in the CLI options
-section, it was missing in the section about the configuration file
-syntax.
+Rather than creating stubs for every command that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the filesystem trimming commands
+on POSIX platforms lacking required APIs.
 
-And while it's mentioned that "the list of keys follows the command line
-options", having `block-rpcs` there but not `allow-rpcs` seems like
-being a potential source of confusion; and as it's cheap to add let's
-just do so.
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+This changes the error message for affected commands from
 
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+    {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+
+to
+
+    {"class": "CommandNotFound", "desc": "The command FOO has not been found"}
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-Message-ID: <20240718140407.444160-1-t.lamprecht@proxmox.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20240712132459.3974109-15-berrange@redhat.com>
 Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 ---
- docs/interop/qemu-ga.rst | 1 +
- 1 file changed, 1 insertion(+)
+ qga/commands-posix.c | 13 -------------
+ qga/qapi-schema.json |  9 ++++++---
+ 2 files changed, 6 insertions(+), 16 deletions(-)
 
-diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
-index fb75cfd8d4..9c7380896a 100644
---- a/docs/interop/qemu-ga.rst
-+++ b/docs/interop/qemu-ga.rst
-@@ -150,6 +150,7 @@ fsfreeze-hook  string
- statedir       string
- verbose        boolean
- block-rpcs     string list
-+allow-rpcs     string list
- =============  ===========
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 9207cb7a8f..d92fa0ec87 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1144,22 +1144,9 @@ error:
  
- See also
+ #endif /* HAVE_GETIFADDRS */
+ 
+-#if !defined(CONFIG_FSTRIM)
+-GuestFilesystemTrimResponse *
+-qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-#endif
+-
+ /* add unsupported commands to the list of blocked RPCs */
+ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+ {
+-#if !defined(CONFIG_FSTRIM)
+-    blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-fstrim"));
+-#endif
+-
+     return blockedrpcs;
+ }
+ 
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 62462f092c..21c65d1806 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -510,7 +510,8 @@
+ ##
+ { 'struct': 'GuestFilesystemTrimResult',
+   'data': {'path': 'str',
+-           '*trimmed': 'int', '*minimum': 'int', '*error': 'str'} }
++           '*trimmed': 'int', '*minimum': 'int', '*error': 'str'},
++  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+ 
+ ##
+ # @GuestFilesystemTrimResponse:
+@@ -520,7 +521,8 @@
+ # Since: 2.4
+ ##
+ { 'struct': 'GuestFilesystemTrimResponse',
+-  'data': {'paths': ['GuestFilesystemTrimResult']} }
++  'data': {'paths': ['GuestFilesystemTrimResult']},
++  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+ 
+ ##
+ # @guest-fstrim:
+@@ -542,7 +544,8 @@
+ ##
+ { 'command': 'guest-fstrim',
+   'data': { '*minimum': 'int' },
+-  'returns': 'GuestFilesystemTrimResponse' }
++  'returns': 'GuestFilesystemTrimResponse',
++  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSTRIM'] } }
+ 
+ ##
+ # @guest-suspend-disk:
 -- 
 2.45.2
 
