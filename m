@@ -4,82 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE57C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1ECAC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW7li-0001Cv-OR; Tue, 23 Jul 2024 01:08:58 -0400
+	id 1sW7m5-0001bw-5Y; Tue, 23 Jul 2024 01:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7lh-0001C9-7M
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:08:57 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7le-0000Xe-SP
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:08:56 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70d153fec2fso1869455b3a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 22:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721711333; x=1722316133;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zpOWw/bJUfiZK8AILZ4TKX1VQHY3jjXvXT4UPa/o0p8=;
- b=CH+IpMhwLKkWO0XL3QN/dj5NUDYhv82q8C3bqIUXVgkO2kL7eMwfKJUMsr1FT7dnYm
- k+OqoP1JpzdUn7GEolCj1NLg+3cO4cDatcIX6q/SNolpTK9NVntSKM5w08px7CnGUWpl
- /jnuRRHA/Hm61kpCRo3Q2ZfuOyr2Re3O4rTAid+tesFR49iOLw6gVB//NNrMtqXPKqcc
- tP11NgLiq7NJ4je6sf68pgHacKumN36CKV55gWnlONdCJlmg0hweVXhn7z38UdDSUjvt
- psXE+p/lBOevs+QxzwCr+xax3hsnUTLKtbwLZNgeWuZQOM0rOGpj0sNz0ApV4mmp29ul
- wedA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721711333; x=1722316133;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zpOWw/bJUfiZK8AILZ4TKX1VQHY3jjXvXT4UPa/o0p8=;
- b=L9pYIcedqOsVZ+JA2lt400w9qPVAkf2YBtajvafbQcf9bme+CtLo9ZIAXj/oGASIQ9
- MMIGyTqwa14jsmJGoMF5klQ1XK1i4074GPiKPj8LMopju3+N1tDMv671BwkYZ7W+HWhb
- lWojbPdpevCSFGaxgeCWx9dIc0fl/y1EU51f82O/BHuXnPI3XaQaAHWj/XJt0Is9tREy
- DaA5Gd4TUDKlNjcrWo32Rs7JJoWgmmMwF2eLKn9hG15W1fNbSYxLt5y08vUyiby9w786
- idsZuzIqK6RGLGT8xLMaMERc/WJXx4E/qYaAf9im2T9eVlZE/iDuBAnfkKelw5TSWJzf
- fKng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjSUbtGTW7tfgkYIAG4c+fdutvDRHLYbXl2hW5DVh3KDPMccfn+sn24KXskiW0QKROP7eLvRglv0ZpxcUlRJcWfx+TghY=
-X-Gm-Message-State: AOJu0YysEMWG3bPOkaDYk17wFxV4N+GnjHHk6K0wGJtXGXnZFasyn1nG
- /hoQlzHKd+UZfZEtIgewBI4sggMKBWc04ZkKa1vAyVjJxjqEwUzr9kJWwkLLuuux9mDIZvQ9xfS
- Afetel/hey/pQuyEv/chMO6LcQw67vCY2gYIpxw==
-X-Google-Smtp-Source: AGHT+IEcjJw+DP15EeW+2dOAfqEKuqbgLCKHa9RiqYhqVZ5FBTgCJgesamELH0BUiqdAx5kv/QPEmmDDXJK1HQxS+FU=
-X-Received: by 2002:a05:6a00:2192:b0:707:ffa4:de3f with SMTP id
- d2e1a72fcca58-70d0efee5d1mr12582439b3a.17.1721711333238; Mon, 22 Jul 2024
- 22:08:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sW7lu-0001Ot-CY; Tue, 23 Jul 2024 01:09:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sW7ls-0000bi-Bb; Tue, 23 Jul 2024 01:09:10 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46N4uldF007226;
+ Tue, 23 Jul 2024 05:08:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=m
+ DGaJ2vYJsy9EGmZmeOdy97xMhH7nAC2byoDtnEiwLs=; b=bzqymvSsim2z72wMJ
+ WCwp1DlGmiOxXFjOu0HDdTSmoIjhUqNYYgYFWrkX/EC4H/7+PCX9IJpjaHK7Mc/j
+ 6xphV67FqutLWD7OzN+QcVV/Io4HCE/KVJxvzd7eUxwEF0Cb2sfUnH61FEuirec9
+ fNcpCZloRZtWEiB8y6xRJ16pJZrJY1Nb8J1qZJFicclsFu06j+9E72426rS7tztV
+ oXxPgRFZVKLtCGWMOXs0s55Lx5J9gZ8VLubwzJ0ksVLcVGP3x5KzSA4ZZt4/LL4+
+ ZIENLzm4PRimv10Q6T6SgnTEV4JWII7K1oyA+R3PHDHaAJLYngDnOgakE0KUi7jP
+ 1koug==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j3atg9jp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:08:59 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46N58wfd024505;
+ Tue, 23 Jul 2024 05:08:58 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j3atg9jn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:08:58 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46N4pFOt007087; Tue, 23 Jul 2024 05:08:57 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gx72gwkn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:08:57 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46N58qjL54460794
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jul 2024 05:08:54 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F0FA20043;
+ Tue, 23 Jul 2024 05:08:52 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EAF6620040;
+ Tue, 23 Jul 2024 05:08:49 +0000 (GMT)
+Received: from [9.109.199.72] (unknown [9.109.199.72])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jul 2024 05:08:49 +0000 (GMT)
+Message-ID: <55aacd7e-1591-4fa4-adc4-99b1e71d661f@linux.ibm.com>
+Date: Tue, 23 Jul 2024 10:38:49 +0530
 MIME-Version: 1.0
-References: <20240722214313.89503-1-imp@bsdimp.com>
- <20240722214313.89503-15-imp@bsdimp.com>
- <f3c9d0c0-1cfd-46c8-8524-cffbe5180d3f@linaro.org>
- <CANCZdfpPrjt8G5WWRPdMNWyb=hskk7ZCVS3HEAcway=XO=K3ng@mail.gmail.com>
- <f2f6c27e-7625-471f-b888-0f3a870bb0c4@linaro.org>
- <0b7514dc-f9ed-4c48-be37-5a5de7b26229@linaro.org>
-In-Reply-To: <0b7514dc-f9ed-4c48-be37-5a5de7b26229@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 22 Jul 2024 23:08:41 -0600
-Message-ID: <CANCZdfo0cw-T29wTg9dQVOE1zmyOxdm_DnxT+GvbPVGE7OWvzw@mail.gmail.com>
-Subject: Re: [PATCH 14/14] bsd-user: Add aarch64 build to tree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006c88ab061de328e3"
-Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/5] target/ppc: Fix regression due to Power10 and
+ Power11 having same PCR
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240606121657.254308-1-adityag@linux.ibm.com>
+ <20240606121657.254308-6-adityag@linux.ibm.com>
+ <D2WNIPIYCNGA.2WYVT9ZXPW78Y@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D2WNIPIYCNGA.2WYVT9ZXPW78Y@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 06-1i4gJU5mag63lSTNwbfiV3WOrOrcL
+X-Proofpoint-ORIG-GUID: OnNzs-P4KIgYLXGqkF8jtETeyQ0dRNqy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0
+ spamscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407230034
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,124 +122,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006c88ab061de328e3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 22, 2024 at 7:17=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+On 23/07/24 10:28, Nicholas Piggin wrote:
+> On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
+>> Power11 has the same PCR (Processor Compatibility Register) value, as
+>> Power10.
+>>
+>> Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
+>> ie. earlier it was possible to run QEMU with '-M pseries,max-compat-mode=power11 --cpu power10'
+> Isn't this expected to work, or no?
 
-> On 7/23/24 08:11, Philippe Mathieu-Daud=C3=A9 wrote:
-> > On 23/7/24 00:06, Warner Losh wrote:
-> >>
-> >>
-> >> On Mon, Jul 22, 2024 at 3:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
-> philmd@linaro.org
-> >> <mailto:philmd@linaro.org>> wrote:
-> >>
-> >>     Hi Warner,
-> >>
-> >>     On 22/7/24 23:43, Warner Losh wrote:
-> >>      > Add the aarch64 bsd-user fragments needed to build the new
-> >>     aarch64 code.
-> >>      >
-> >>      > Signed-off-by: Warner Losh <imp@bsdimp.com <mailto:
-> imp@bsdimp.com>>
-> >>      > ---
-> >>      >   configs/targets/aarch64-bsd-user.mak | 3 +++
-> >>      >   1 file changed, 3 insertions(+)
-> >>      >   create mode 100644 configs/targets/aarch64-bsd-user.mak
-> >>
-> >>     Can we build aarch64 on Cirrus-CI? (not clear on
-> >>     https://cirrus-ci.org/guide/FreeBSD/
-> >>     <https://cirrus-ci.org/guide/FreeBSD/>). If so, could you add
-> >>     a follow-up patch to build that on our CI, patching
-> >>     .gitlab-ci.d/cirrus.yml?
-> >>
-> >>
-> >> We can build aarch64 host for bsd-user for sure. I'll see if we can do
-> it in cirrus CI.
-> >> If so, I'll try to add it to cirrus.yml.
-> >>
-> >> This patch series adds aarch64 guest...
-> >
-> > Yes, we want to use a aarch64 FreeBSD host to build your FreeBSD
-> > aarch64 bsd-user guest and test it. Am I wrong?
-> >
+It works, but it didn't feel logical to be able to boot an older CPU in 
+a compat mode of a newer CPU.
+
+Major reason though, it caused regression where `-M pseries --cpu 
+power10` was booting as Power11, since Power11 was the highest PCR it 
+found as compatible.
+
+The only issue I see in this patch is the assumption that a newer 
+processor must always have a higher PVR value, which is true as of now.
+
+
 >
-> This is adding guest support, so your suggestion is orthogonal.
+>> Same PCR also introduced a regression where `-M pseries --cpu power10`
+>> boots as Power11 (ie. logical PVR is of Power11, even though PVR is Power10).
+>> The regression was due to 'do_client_architecture_support' checking for
+>> valid compat modes and finding Power11 to be a valid compat mode for
+>> Power10 (it happens even without passing 'max-compat-mode' explicitly).
+>>
+>> Fix compat-mode issue and regression, by ensuring a future Power
+>> processor (with a higher logical_pvr value, eg. P11) cannot be valid
+>> compat-mode for an older Power processor (eg. P10)
+> This should be done before introducing the Power11 CPU so there's no
+> regression inside the series.
+
+Sure, I will move it before the 'Add Power11 DD2.0 processor' patch.
+
+>> Cc: Cédric Le Goater <clg@kaod.org>
+>> Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+>> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> ---
+>>   target/ppc/compat.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+>> index 12dd8ae290ca..168a3c06316f 100644
+>> --- a/target/ppc/compat.c
+>> +++ b/target/ppc/compat.c
+>> @@ -139,6 +139,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
+>>           /* Outside specified range */
+>>           return false;
+>>       }
+>> +    if (compat->pvr > pcc->logical_pvr) {
+>> +        /* Older CPU cannot support a newer processor's compat mode */
+>> +        return false;
+>> +    }
+> Hmm. I suppose this is the right way to fix it.
 >
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-Yea...  It's a good suggestion, but not what I'm working on right now...
+Thank you for the tag, Nick !
 
-Warner
 
---0000000000006c88ab061de328e3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+- Aditya Gupta
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 22, 2024 at 7:17=E2=80=AF=
-PM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">ri=
-chard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On 7/23/24 08:11, Philippe Mathieu-Daud=C3=A9 wro=
-te:<br>
-&gt; On 23/7/24 00:06, Warner Losh wrote:<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; On Mon, Jul 22, 2024 at 3:54=E2=80=AFPM Philippe Mathieu-Daud=C3=
-=A9 &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@linar=
-o.org</a> <br>
-&gt;&gt; &lt;mailto:<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">=
-philmd@linaro.org</a>&gt;&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 Hi Warner,<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 On 22/7/24 23:43, Warner Losh wrote:<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; Add the aarch64 bsd-user fragments n=
-eeded to build the new<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 aarch64 code.<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; Signed-off-by: Warner Losh &lt;<a hr=
-ef=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a> &lt;mailt=
-o:<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a>&gt=
-;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; ---<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A0configs/targets/aarch64-=
-bsd-user.mak | 3 +++<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A01 file changed, 3 insert=
-ions(+)<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A0create mode 100644 confi=
-gs/targets/aarch64-bsd-user.mak<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 Can we build aarch64 on Cirrus-CI? (not clear o=
-n<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 <a href=3D"https://cirrus-ci.org/guide/FreeBSD/=
-" rel=3D"noreferrer" target=3D"_blank">https://cirrus-ci.org/guide/FreeBSD/=
-</a><br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &lt;<a href=3D"https://cirrus-ci.org/guide/Free=
-BSD/" rel=3D"noreferrer" target=3D"_blank">https://cirrus-ci.org/guide/Free=
-BSD/</a>&gt;). If so, could you add<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 a follow-up patch to build that on our CI, patc=
-hing<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 .gitlab-ci.d/cirrus.yml?<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; We can build aarch64 host for bsd-user for sure. I&#39;ll see if w=
-e can do it in cirrus CI.<br>
-&gt;&gt; If so, I&#39;ll try to add it to cirrus.yml.<br>
-&gt;&gt;<br>
-&gt;&gt; This patch series adds aarch64 guest...<br>
-&gt; <br>
-&gt; Yes, we want to use a aarch64 FreeBSD host to build your FreeBSD<br>
-&gt; aarch64 bsd-user guest and test it. Am I wrong?<br>
-&gt; <br>
-<br>
-This is adding guest support, so your suggestion is orthogonal.<br></blockq=
-uote><div><br></div><div>Yea...=C2=A0 It&#39;s a good suggestion, but not w=
-hat I&#39;m working on right now...</div><div><br></div><div>Warner <br></d=
-iv></div></div>
-
---0000000000006c88ab061de328e3--
+>>       if (!(pcc->pcr_supported & compat->pcr_level)) {
+>>           /* Not supported by this CPU */
+>>           return false;
 
