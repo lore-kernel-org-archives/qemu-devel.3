@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8618C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4677EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDF7-0000VM-1k; Tue, 23 Jul 2024 06:59:41 -0400
+	id 1sWDGG-0007xc-5n; Tue, 23 Jul 2024 07:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDEq-0008P8-Cn
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:59:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFe-00059w-Pc
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDEn-0002LO-I6
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:59:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFb-0002mw-5H
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732360;
+ s=mimecast20190719; t=1721732409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T+5K6DenD/BNBvf8O7CFbeMuv8YmbqeLYA/hq2CgnkY=;
- b=hG9fCVv1qjBeZ6VhDAZa212tt0TiZjelbvYUsT/5G7ivbuqLfp8ukQPG2FPwAX75vVr9Vs
- brr25rWBMlORJCu+bFBxPSb693a3Fouyd3H4HsGl0GAa1+33cEzmSAo34ka42M1QLOvEJz
- M08EUVNfdTfcXmGE55UX630j6FBhcQM=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RRfxJi15v0LjYUfndDtOwJPZVyigXXbxUoHPnTtDziA=;
+ b=Oo1rKhzEwgpFBD+V4bpKSuflUt/av0NHnpfCYa9QWJc6BlD0UxsfajkSepZVSPIWiUer66
+ Gr4fhoEMiRHPcUO4Sr3u8vMgsUplBJT68NJp7Ujj64fXeMCQxlJDlQRXuoPjQzsutJ7Y6N
+ pufUEv4/X5akMoJKMiI8uTQ2CoOPPSw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-b_sODgK-OkemPukwQ_Ex7w-1; Tue, 23 Jul 2024 06:59:19 -0400
-X-MC-Unique: b_sODgK-OkemPukwQ_Ex7w-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a77f0eca759so399699966b.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:59:18 -0700 (PDT)
+ us-mta-151-jNiqqswuOdahHBROYyDtdQ-1; Tue, 23 Jul 2024 07:00:08 -0400
+X-MC-Unique: jNiqqswuOdahHBROYyDtdQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42667cc80e8so40125375e9.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:00:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732357; x=1722337157;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T+5K6DenD/BNBvf8O7CFbeMuv8YmbqeLYA/hq2CgnkY=;
- b=b8KfkegxTwRdY1DiqQpj+KO5BtTnxNHbMV/HkzV/fulOnWOAffgqKTMBs8TDteWSXf
- DIq7q/gmmJXKRyhU+Go+18cU8HyfXrPAq1M0WlBaLJlChu4/LRv6UOc/zK7+uiytjLTz
- phPSGBSZqTrosKXCB9Skp1LH1rXyhaB2lsZTLSG1d+/grvLA07jcmTfYSECXL17A44xp
- juxj3GHGGJoOBYv88F+0+ETnPQ6ILR5rEULK2ulI6D2tB61Tm4BXv1l1d+gu3zSOeyIS
- JtNVFAkNdnsIvwQblBh3AkxN9BPZsWFviRj0fqhs0Laoe0EoLV6v6Q1ew+PJKeBOBh5v
- kiBQ==
-X-Gm-Message-State: AOJu0Yx8O3ciBZpCyUtfHx0wVnHS6bqQhcV5mQxH98JLi8Duis/p2/KD
- G9Ch0Fu6CTy7v+MKTEVcD9X12WyVsDX0RUT99xXpteIFsctGzP6rf26qbPwMT4IZI2yWG79nmcM
- 2A3FdiQeKKKfclt0N/aowHFIz0+9TllMKJEHyY9ESOtKsfRVUNpHDzwX9sDofFveUYXRuI5HcVn
- Fg4LK7p59A+iQI+RrSHCC04mVTIjnJFA==
-X-Received: by 2002:a17:907:3f0a:b0:a7a:a138:dbc5 with SMTP id
- a640c23a62f3a-a7aa138e2e2mr76768966b.65.1721732357589; 
- Tue, 23 Jul 2024 03:59:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLpCrlLhamV0OrNTZjlgfyDV53/NhAPnUho+nlyyFEhzDphz9o/9Xmz/lTg/1zhuphCywJjA==
-X-Received: by 2002:a17:907:3f0a:b0:a7a:a138:dbc5 with SMTP id
- a640c23a62f3a-a7aa138e2e2mr76766266b.65.1721732356989; 
- Tue, 23 Jul 2024 03:59:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721732407; x=1722337207;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RRfxJi15v0LjYUfndDtOwJPZVyigXXbxUoHPnTtDziA=;
+ b=K2SrzxIERDgeoQflxJzv2yjVwHxlB7qfGG25EnJSvAnrmyLBTPToW8P7m4w8zkI5aq
+ WvxLhISWYDpfO35b6aALWYfG5cT9HnCQJ02pLMFKlB9yOv4cNT2+AACMJsnfRJca5fBX
+ LHGqmzZWSwInxB/NkB8csoSu+M7u783BZyDejwigN7DoQqzC8UDHj5sefIpuAlzh0kHV
+ YRhXgQvBSD4CBKCE/X6LU2LVb3yocYvKPzOI9xhgajJEMwMS58cTTSJ1dghDlMoof80S
+ DCfqIuXK4wQOCRkhsacSmyRnnrBevg9UST2k88U2UksGoo14m+T2i79jZxmy5BCeychd
+ UdJA==
+X-Gm-Message-State: AOJu0Ywvue8/KoUgR8+hDFJpTwms3b5qwERShdktlIqvYN5Qr077LeQX
+ nzcAjp6hOlCSQBvkWJqP3S2Sgsjd7SSbMPXsTcQZjAoKV9ZExdSomfmNfkdWZTgEYsID/cb/p7d
+ ULyoPb2uqQ4qzq+nX+VvNUpUrRa0rrhgrIbM87yNbst4F3uzHvo8xPhEhYr5WRMMwqIEcmiT0Yt
+ 072lAB1XT8lQ+OO3cvyECfS3SvSt1t4Q==
+X-Received: by 2002:adf:a3d2:0:b0:367:9903:a81 with SMTP id
+ ffacd0b85a97d-369dee57a01mr1656352f8f.43.1721732406696; 
+ Tue, 23 Jul 2024 04:00:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEs4ZaqvDfD4PGNpyQFZizlutPINy7iS7blsqX23Oh2qTn92E6vzYIzyMcF8jI5zDmzLyyP1A==
+X-Received: by 2002:adf:a3d2:0:b0:367:9903:a81 with SMTP id
+ ffacd0b85a97d-369dee57a01mr1656328f8f.43.1721732406036; 
+ Tue, 23 Jul 2024 04:00:06 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c9510fcsm525971766b.218.2024.07.23.03.59.07
+ ffacd0b85a97d-36878811bedsm11225122f8f.117.2024.07.23.04.00.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:59:16 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:59:04 -0400
+ Tue, 23 Jul 2024 04:00:05 -0700 (PDT)
+Date: Tue, 23 Jul 2024 07:00:01 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Salil Mehta <salil.mehta@huawei.com>, Keqian Zhu <zhukeqian1@huawei.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Gavin Shan <gshan@redhat.com>, David Hildenbrand <david@redhat.com>,
- Shaoqin Huang <shahuang@redhat.com>,
- Vishnu Pajjuri <vishnu@os.amperecomputing.com>,
- Xianglai Li <lixianglai@loongson.cn>, Miguel Luis <miguel.luis@oracle.com>,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v2 39/61] hw/acpi: Update ACPI GED framework to support vCPU
- Hotplug
-Message-ID: <06f1f4958be70f14f527d1f03d1e9a141650bbc5.1721731723.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL v2 46/61] virtio-iommu: Free [host_]resv_ranges on
+ unset_iommu_devices
+Message-ID: <62ac01d1de5096022e08355f8df47bf1191a3ed1.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721731723.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -109,213 +105,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Salil Mehta <salil.mehta@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-ACPI GED (as described in the ACPI 6.4 spec) uses an interrupt listed in the
-_CRS object of GED to intimate OSPM about an event. Later then demultiplexes the
-notified event by evaluating ACPI _EVT method to know the type of event. Use
-ACPI GED to also notify the guest kernel about any CPU hot(un)plug events.
+We are currently missing the deallocation of the [host_]resv_regions
+in case of hot unplug. Also to make things more simple let's rule
+out the case where multiple HostIOMMUDevices would be aliased and
+attached to the same IOMMUDevice. This allows to remove the handling
+of conflicting Host reserved regions. Anyway this is not properly
+supported at guest kernel level. On hotunplug the reserved regions
+are reset to the ones set by virtio-iommu property.
 
-Note, GED interface is used by many hotplug events like memory hotplug, NVDIMM
-hotplug and non-hotplug events like system power down event. Each of these can
-be selected using a bit in the 32 bit GED IO interface. A bit has been reserved
-for the CPU hotplug event.
-
-ACPI CPU hotplug related initialization should only happen if ACPI_CPU_HOTPLUG
-support has been enabled for particular architecture. Add cpu_hotplug_hw_init()
-stub to avoid compilation break.
-
-Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Tested-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240716111502.202344-4-salil.mehta@huawei.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Message-Id: <20240716094619.1713905-4-eric.auger@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
 ---
- include/hw/acpi/generic_event_device.h |  4 +++
- hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++++
- hw/acpi/generic_event_device.c         | 47 ++++++++++++++++++++++++++
- docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
- 4 files changed, 59 insertions(+), 1 deletion(-)
+ hw/virtio/virtio-iommu.c | 62 ++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 34 deletions(-)
 
-diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-index ba84ce0214..e091ac2108 100644
---- a/include/hw/acpi/generic_event_device.h
-+++ b/include/hw/acpi/generic_event_device.h
-@@ -62,6 +62,7 @@
- #include "hw/sysbus.h"
- #include "hw/acpi/memory_hotplug.h"
- #include "hw/acpi/ghes.h"
-+#include "hw/acpi/cpu.h"
- #include "qom/object.h"
- 
- #define ACPI_POWER_BUTTON_DEVICE "PWRB"
-@@ -95,6 +96,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
- #define ACPI_GED_MEM_HOTPLUG_EVT   0x1
- #define ACPI_GED_PWR_DOWN_EVT      0x2
- #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
-+#define ACPI_GED_CPU_HOTPLUG_EVT    0x8
- 
- typedef struct GEDState {
-     MemoryRegion evt;
-@@ -106,6 +108,8 @@ struct AcpiGedState {
-     SysBusDevice parent_obj;
-     MemHotplugState memhp_state;
-     MemoryRegion container_memhp;
-+    CPUHotplugState cpuhp_state;
-+    MemoryRegion container_cpuhp;
-     GEDState ged_state;
-     uint32_t ged_event_bitmap;
-     qemu_irq irq;
-diff --git a/hw/acpi/acpi-cpu-hotplug-stub.c b/hw/acpi/acpi-cpu-hotplug-stub.c
-index 3fc4b14c26..c6c61bb9cd 100644
---- a/hw/acpi/acpi-cpu-hotplug-stub.c
-+++ b/hw/acpi/acpi-cpu-hotplug-stub.c
-@@ -19,6 +19,12 @@ void legacy_acpi_cpu_hotplug_init(MemoryRegion *parent, Object *owner,
-     return;
- }
- 
-+void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
-+                         CPUHotplugState *state, hwaddr base_addr)
-+{
-+    return;
-+}
-+
- void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list)
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 2c54c0d976..2de41ab412 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -538,8 +538,6 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
  {
-     return;
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 2d6e91b124..4641933a0f 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -25,6 +25,7 @@ static const uint32_t ged_supported_events[] = {
-     ACPI_GED_MEM_HOTPLUG_EVT,
-     ACPI_GED_PWR_DOWN_EVT,
-     ACPI_GED_NVDIMM_HOTPLUG_EVT,
-+    ACPI_GED_CPU_HOTPLUG_EVT,
- };
+     IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
+     IOMMUDevice *sdev;
+-    GList *current_ranges;
+-    GList *l, *tmp, *new_ranges = NULL;
+     int ret = -EINVAL;
  
- /*
-@@ -234,6 +235,8 @@ static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
-         } else {
-             acpi_memory_plug_cb(hotplug_dev, &s->memhp_state, dev, errp);
-         }
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        acpi_cpu_plug_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
-     } else {
-         error_setg(errp, "virt: device plug request for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -248,6 +251,8 @@ static void acpi_ged_unplug_request_cb(HotplugHandler *hotplug_dev,
-     if ((object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) &&
-                        !(object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM)))) {
-         acpi_memory_unplug_request_cb(hotplug_dev, &s->memhp_state, dev, errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        acpi_cpu_unplug_request_cb(hotplug_dev, &s->cpuhp_state, dev, errp);
-     } else {
-         error_setg(errp, "acpi: device unplug request for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -261,6 +266,8 @@ static void acpi_ged_unplug_cb(HotplugHandler *hotplug_dev,
- 
-     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
-         acpi_memory_unplug_cb(&s->memhp_state, dev, errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        acpi_cpu_unplug_cb(&s->cpuhp_state, dev, errp);
-     } else {
-         error_setg(errp, "acpi: device unplug for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -272,6 +279,7 @@ static void acpi_ged_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list)
-     AcpiGedState *s = ACPI_GED(adev);
- 
-     acpi_memory_ospm_status(&s->memhp_state, list);
-+    acpi_cpu_ospm_status(&s->cpuhp_state, list);
- }
- 
- static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-@@ -286,6 +294,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-         sel = ACPI_GED_PWR_DOWN_EVT;
-     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
-         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
-+    } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
-+        sel = ACPI_GED_CPU_HOTPLUG_EVT;
-     } else {
-         /* Unknown event. Return without generating interrupt. */
-         warn_report("GED: Unsupported event %d. No irq injected", ev);
-@@ -371,6 +381,42 @@ static const VMStateDescription vmstate_acpi_ged = {
+     if (!sbus) {
+@@ -553,33 +551,10 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
+         return ret;
      }
- };
  
-+static void acpi_ged_realize(DeviceState *dev, Error **errp)
+-    current_ranges = sdev->host_resv_ranges;
+-
+-    /* check that each new resv region is included in an existing one */
+     if (sdev->host_resv_ranges) {
+-        range_inverse_array(iova_ranges,
+-                            &new_ranges,
+-                            0, UINT64_MAX);
+-
+-        for (tmp = new_ranges; tmp; tmp = tmp->next) {
+-            Range *newr = (Range *)tmp->data;
+-            bool included = false;
+-
+-            for (l = current_ranges; l; l = l->next) {
+-                Range * r = (Range *)l->data;
+-
+-                if (range_contains_range(r, newr)) {
+-                    included = true;
+-                    break;
+-                }
+-            }
+-            if (!included) {
+-                goto error;
+-            }
+-        }
+-        /* all new reserved ranges are included in existing ones */
+-        ret = 0;
+-        goto out;
++        error_setg(errp, "%s virtio-iommu does not support aliased BDF",
++                   __func__);
++        return ret;
+     }
+ 
+     range_inverse_array(iova_ranges,
+@@ -588,14 +563,31 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
+     rebuild_resv_regions(sdev);
+ 
+     return 0;
+-error:
+-    error_setg(errp, "%s Conflicting host reserved ranges set!",
+-               __func__);
+-out:
+-    g_list_free_full(new_ranges, g_free);
+-    return ret;
+ }
+ 
++static void virtio_iommu_unset_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
++                                                int devfn)
 +{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AcpiGedState *s = ACPI_GED(dev);
-+    uint32_t ged_events;
-+    int i;
++    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
++    IOMMUDevice *sdev;
 +
-+    ged_events = ctpop32(s->ged_event_bitmap);
-+
-+    for (i = 0; i < ARRAY_SIZE(ged_supported_events) && ged_events; i++) {
-+        uint32_t event = s->ged_event_bitmap & ged_supported_events[i];
-+
-+        if (!event) {
-+            continue;
-+        }
-+
-+        switch (event) {
-+        case ACPI_GED_CPU_HOTPLUG_EVT:
-+            /* initialize CPU Hotplug related regions */
-+            memory_region_init(&s->container_cpuhp, OBJECT(dev),
-+                                "cpuhp container",
-+                                ACPI_CPU_HOTPLUG_REG_LEN);
-+            sysbus_init_mmio(sbd, &s->container_cpuhp);
-+            cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
-+                                &s->cpuhp_state, 0);
-+            break;
-+        }
-+        ged_events--;
++    if (!sbus) {
++        return;
 +    }
 +
-+    if (ged_events) {
-+        error_report("Unsupported events specified");
-+        abort();
++    sdev = sbus->pbdev[devfn];
++    if (!sdev) {
++        return;
 +    }
++
++    g_list_free_full(g_steal_pointer(&sdev->host_resv_ranges), g_free);
++    g_list_free_full(sdev->resv_regions, g_free);
++    sdev->host_resv_ranges = NULL;
++    sdev->resv_regions = NULL;
++    add_prop_resv_regions(sdev);
 +}
 +
- static void acpi_ged_initfn(Object *obj)
++
+ static bool check_page_size_mask(VirtIOIOMMU *viommu, uint64_t new_mask,
+                                  Error **errp)
  {
-     DeviceState *dev = DEVICE(obj);
-@@ -411,6 +457,7 @@ static void acpi_ged_class_init(ObjectClass *class, void *data)
-     dc->desc = "ACPI Generic Event Device";
-     device_class_set_props(dc, acpi_ged_properties);
-     dc->vmsd = &vmstate_acpi_ged;
-+    dc->realize = acpi_ged_realize;
+@@ -704,6 +696,8 @@ virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+     if (!hiod) {
+         return;
+     }
++    virtio_iommu_unset_host_iova_ranges(viommu, hiod->aliased_bus,
++                                        hiod->aliased_devfn);
  
-     hc->plug = acpi_ged_device_plug_cb;
-     hc->unplug_request = acpi_ged_unplug_request_cb;
-diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
-index 0bd3f9399f..3acd6fcd8b 100644
---- a/docs/specs/acpi_hw_reduced_hotplug.rst
-+++ b/docs/specs/acpi_hw_reduced_hotplug.rst
-@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
-        0: Memory hotplug event
-        1: System power down event
-        2: NVDIMM hotplug event
--    3-31: Reserved
-+       3: CPU hotplug event
-+    4-31: Reserved
- 
- **write_access:**
- 
+     g_hash_table_remove(viommu->host_iommu_devices, &key);
+ }
 -- 
 MST
 
