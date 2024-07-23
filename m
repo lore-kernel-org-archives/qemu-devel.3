@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D78C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 12:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5244C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 12:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWEng-0008M3-KE; Tue, 23 Jul 2024 08:39:28 -0400
+	id 1sWEwu-0005j2-Tu; Tue, 23 Jul 2024 08:49:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sWEnf-0008KL-A9
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 08:39:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sWEwt-0005i3-8q; Tue, 23 Jul 2024 08:48:59 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1sWEnc-0000WQ-TH
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 08:39:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721738362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyj+SjRC+xai/hCiaIYcUU5asoCXnVFwo+h7pf6eV0M=;
- b=HlGjLJrc6TRMyzk0qmNZ0nKyVjQaohvPTbW69u9suDDLoHX3v3k4L3JQPbJDnokDyOVCR2
- RFr3r3jCpAZSWG//l6F/UTt5KZzBizoG4fhRSmzryb8CZSeIJfZRUMVHDpGK3DuzOhouHR
- eDb5FC21bQXV7Yq8Gmw9GRK4p6++TP0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-Gq-LtjWbPMquLi7g9rFglw-1; Tue, 23 Jul 2024 08:39:20 -0400
-X-MC-Unique: Gq-LtjWbPMquLi7g9rFglw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6b7a6d56e53so106429966d6.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 05:39:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721738360; x=1722343160;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vyj+SjRC+xai/hCiaIYcUU5asoCXnVFwo+h7pf6eV0M=;
- b=SigRryWVsOmd8wAmNmUJ61wgJshxN0PARNP6Ev02riV1f30NZ72Rla95m0yPYvzJlw
- azNCJh4QssqYwmXK0u1M6PHXWCx0sbC0kVmJ0lfi0cmfeLiHfLxfoJoM6xO0pRaFDUgh
- 5ugSKfrjtuDstb8Iz+IBrOQnwAc01STVFf0ohQYbgLz3i+I2r3SLnkFZ9U/D9WEhkK0v
- UQQqzK/VKgODgMiEyJqkSiwEyvRnnA1D7e7Dg+61kUjmG8F93o4MitfByWxM1qtFhZQ5
- I4fDyaItjH7TOpFzMcUucXP0DbkWTKahmYRobqVK5MrIBKDF+H+XYsS5jMnPVSYgCFWT
- r0xQ==
-X-Gm-Message-State: AOJu0Yzf1xjEKmKYU1m9vsLIEKWLwnnGiChZQQQnmPP2D5Y3ObDbLMWT
- wN5zxFJjWMV7L/hWkizduosAjVPgfZMW7eim0Wj2PzOX9Dg+xkQ/sHx/UcCofMlXeOcdiAU10rG
- JhsnOhBY5TtxmderHpmPpOkDK8g+DH4l6incFNNQIwLB9pYG3iKlfTieWygTnaO6MLR41zM9Dxa
- zeJlYyv/rkCdzuFC5TnygbTGnE1IE=
-X-Received: by 2002:ad4:5f4f:0:b0:6b5:8913:d63a with SMTP id
- 6a1803df08f44-6b984330bc3mr31953466d6.12.1721738360439; 
- Tue, 23 Jul 2024 05:39:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEum9BqgCoy0kPjf6ENDt2OOHXt0/t4DmR2IT0slpRcxNMnGTerfS7DPMWjkEGmEcMqQFIZOTphSSU5+YKfAuQ=
-X-Received: by 2002:ad4:5f4f:0:b0:6b5:8913:d63a with SMTP id
- 6a1803df08f44-6b984330bc3mr31953286d6.12.1721738360048; Tue, 23 Jul 2024
- 05:39:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sWEwq-0002dT-Pg; Tue, 23 Jul 2024 08:48:58 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46NCQdOE018309;
+ Tue, 23 Jul 2024 12:48:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=Q
+ FzMd2TJmCQ5HsUO39RGB19Ufl1GTTxPL3PFFUNsfrI=; b=T2LHpMVszv3Jn2q8a
+ ePSAYYg2Tmd9JS/hDb7yaYDWRoc1Voq+Z9gMbRESp/ByBNh1WbVM/XgK2DdLd0Ma
+ XVyPMZsM5WNEEw9HrAHP3fqGtKI4o01qhg04/3IHfa0liUucS0fe5UuPTOba31R6
+ LyZ+em1xtMENiUp94qCi0qXX50n1MNzZZve06mL3nNGGxjlA2vtPcvY8Ik0CJhfn
+ DL7SrLH1ccrV22I+4HJERKwZomMCGAMrudUHn2Xt010dOZspqXJXjN1OWRhgEfGW
+ 5Ca7KwIc3sJ7GLWwhdd8bwK5VDDfUz8cT2azd3D8jlsRUdmUyvVOhbgHp0ZDULQS
+ 0Z17Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j9fq8eqc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 12:48:46 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46NCiSr0011523;
+ Tue, 23 Jul 2024 12:48:45 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j9fq8eq8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 12:48:45 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46NAqPPv006227; Tue, 23 Jul 2024 12:48:44 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gqjubvf6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 12:48:44 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46NCmgUd23659124
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jul 2024 12:48:44 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2BCEB5809C;
+ Tue, 23 Jul 2024 12:48:42 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E2AC580C5;
+ Tue, 23 Jul 2024 12:46:20 +0000 (GMT)
+Received: from [9.67.89.214] (unknown [9.67.89.214])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 23 Jul 2024 12:46:20 +0000 (GMT)
+Message-ID: <9636c2af-7708-4aa3-99ab-ffaff4680b01@linux.ibm.com>
+Date: Tue, 23 Jul 2024 08:46:19 -0400
 MIME-Version: 1.0
-References: <20240723103542.2998235-1-berrange@redhat.com>
-In-Reply-To: <20240723103542.2998235-1-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jul 2024 16:39:09 +0400
-Message-ID: <CAMxuvawXVSJq82BCBH0+MvA2b0wQcSH1pgUTF-DAuH713sWquw@mail.gmail.com>
-Subject: Re: [PATCH] meson: build chardev trace files when have_block
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000058e84f061de97399"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/s390x: filter deprecated properties based on
+ model expansion type
+To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, david@redhat.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, Jiri Denemark <jdenemar@redhat.com>
+References: <20240719181741.35146-1-walling@linux.ibm.com>
+ <87h6cksk4h.fsf@pond.sub.org>
+ <28ea8260-a411-4651-8e2a-1fcc009f5043@linux.ibm.com>
+ <58178bd0-4e7d-4770-aa54-5bd2811dcb39@redhat.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <58178bd0-4e7d-4770-aa54-5bd2811dcb39@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: FnMkMdTD4WrPFM0YhYMyfmmqWXBm9EH5
+X-Proofpoint-ORIG-GUID: ECHkJecNC68Sj_aF6_FjW6AdqfNGbY8K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-23_01,2024-07-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ phishscore=0 suspectscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407230089
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,124 +120,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000058e84f061de97399
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/23/24 5:23 AM, Thomas Huth wrote:
+> On 22/07/2024 16.50, Collin Walling wrote:
+>> On 7/20/24 1:33 AM, Markus Armbruster wrote:
+>>> Collin Walling <walling@linux.ibm.com> writes:
+>>>
+>>>> Currently, there is no way to execute the query-cpu-model-expansion
+>>>> command to retrieve a comprehenisve list of deprecated properties, as
+>>>> the result is dependent per-model. To enable this, the expansion output
+>>>> is modified as such:
+>>>>
+>>>> When reporting a "full" CPU model, show the *entire* list of deprecated
+>>>> properties regardless if they are supported on the model. A full
+>>>> expansion outputs all known CPU model properties anyway, so it makes
+>>>> sense to report all deprecated properties here too.
+>>>>
+>>>> This allows management apps to query a single model (e.g. host) to
+>>>> acquire the full list of deprecated properties.
+>>>>
+>>>> Additionally, when reporting a "static" CPU model, the command will
+>>>> only show deprecated properties that are a subset of the model's
+>>>> *enabled* properties. This is more accurate than how the query was
+>>>> handled before, which blindly reported deprecated properties that
+>>>> were never otherwise introduced for certain models.
+>>>>
+>>>> Acked-by: David Hildenbrand <david@redhat.com>
+>>>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+>>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>>> ---
+>>>>
+>>>> Changelog:
+>>>>
+>>>>      v3
+>>>>      - Removed the 'note' and cleaned up documentation
+>>>>      - Revised commit message
+>>>>
+>>>>      v2
+>>>>      - Changed commit message
+>>>>      - Added documentation reflecting this change
+>>>>      - Made code changes that more accurately filter the deprecated
+>>>>          properties based on expansion type.  This change makes it
+>>>>          so that the deprecated-properties reported for a static model
+>>>>          expansion are a subset of the model's properties instead of
+>>>>          the model's full-definition properties.
+>>>>
+>>>> ---
+>>>>   qapi/machine-target.json         |  5 +++--
+>>>>   target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
+>>>>   2 files changed, 12 insertions(+), 9 deletions(-)
+>>>>
+>>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>>> index a8d9ec87f5..67086f006f 100644
+>>>> --- a/qapi/machine-target.json
+>>>> +++ b/qapi/machine-target.json
+>>>> @@ -21,8 +21,9 @@
+>>>>   # @props: a dictionary of QOM properties to be applied
+>>>>   #
+>>>>   # @deprecated-props: a list of properties that are flagged as deprecated
+>>>> -#     by the CPU vendor.  These props are a subset of the full model's
+>>>> -#     definition list of properties. (since 9.1)
+>>>> +#     by the CPU vendor.  These properties are either a subset of the
+>>>> +#     properties enabled on the CPU model, or a set of properties
+>>>> +#     deprecated across all models for the architecture.
+>>>
+>>>
+>>> When is it "a subset of the properties enabled on the CPU model", and
+>>> when is it "a set of properties deprecated across all models for the
+>>> architecture"?
+> ...
+>>
+>> Thanks for the feedback!  Pending your response to the above, I'll post
+>> a v4.
+> 
+> Since we've got soft-freeze for 9.1 today, I went ahead and put v3 into my 
+> last pull-request before the freeze period starts already. Please post the 
+> update to the comments as diff on top of that instead - updates to comments 
+> should still be fine for merging during the freeze period.
+> 
+>   Thanks,
+>    Thomas
+> 
+> 
 
-On Tue, Jul 23, 2024 at 2:35=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
+This is greatly appreciated, Thomas.  Thank you!
 
-> The QSD depends on chardev code, and is built when have_tools is
-> true. This means conditionalizing chardev trace on have_system
-> is wrong, we need have_block which is set have_system || have_tools.
->
-> This latent bug was historically harmless because only the spice
-> chardev included tracing, which wasn't built in a !have_system
-> scenario.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
-> ---
->  meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> This is an add-on needed for:
->
->   https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg05068.html
->
-> since I discovered a tools-only build fails
->
-> diff --git a/meson.build b/meson.build
-> index a1e51277b0..d3850a8c0f 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3327,6 +3327,7 @@ if have_block
->    trace_events_subdirs +=3D [
->      'authz',
->      'block',
-> +    'chardev',
->      'io',
->      'nbd',
->      'scsi',
-> @@ -3338,7 +3339,6 @@ if have_system
->      'audio',
->      'backends',
->      'backends/tpm',
-> -    'chardev',
->      'ebpf',
->      'hw/9pfs',
->      'hw/acpi',
-> --
-> 2.45.2
->
->
-
---00000000000058e84f061de97399
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 23, 2024 at 2:35=E2=80=AF=
-PM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berra=
-nge@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">The QSD depends on chardev code, and is built when have_tools=
- is<br>
-true. This means conditionalizing chardev trace on have_system<br>
-is wrong, we need have_block which is set have_system || have_tools.<br>
-<br>
-This latent bug was historically harmless because only the spice<br>
-chardev included tracing, which wasn&#39;t built in a !have_system<br>
-scenario.<br>
-<br>
-Signed-off-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
-t.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:mar=
-candre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=
-=A0<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0meson.build | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-This is an add-on needed for:<br>
-<br>
-=C2=A0 <a href=3D"https://lists.nongnu.org/archive/html/qemu-devel/2024-07/=
-msg05068.html" rel=3D"noreferrer" target=3D"_blank">https://lists.nongnu.or=
-g/archive/html/qemu-devel/2024-07/msg05068.html</a><br>
-<br>
-since I discovered a tools-only build fails<br>
-<br>
-diff --git a/meson.build b/meson.build<br>
-index a1e51277b0..d3850a8c0f 100644<br>
---- a/meson.build<br>
-+++ b/meson.build<br>
-@@ -3327,6 +3327,7 @@ if have_block<br>
-=C2=A0 =C2=A0trace_events_subdirs +=3D [<br>
-=C2=A0 =C2=A0 =C2=A0&#39;authz&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;block&#39;,<br>
-+=C2=A0 =C2=A0 &#39;chardev&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;io&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;nbd&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;scsi&#39;,<br>
-@@ -3338,7 +3339,6 @@ if have_system<br>
-=C2=A0 =C2=A0 =C2=A0&#39;audio&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;backends&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;backends/tpm&#39;,<br>
--=C2=A0 =C2=A0 &#39;chardev&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;ebpf&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;hw/9pfs&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0&#39;hw/acpi&#39;,<br>
--- <br>
-2.45.2<br>
-<br>
-</blockquote></div></div>
-
---00000000000058e84f061de97399--
+-- 
+Regards,
+  Collin
 
 
