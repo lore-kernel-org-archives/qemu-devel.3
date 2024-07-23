@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F6AC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE90EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMHv-0003IU-3A; Tue, 23 Jul 2024 16:39:11 -0400
+	id 1sWMJc-0003Ga-Ca; Tue, 23 Jul 2024 16:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMHr-0003HS-V6
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:08 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJa-0002u3-1r
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:54 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMHq-0003un-9s
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:07 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4277a5ed48bso44882085e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJY-0004Sr-39
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:53 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3686b285969so2782382f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767144; x=1722371944; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767250; x=1722372050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sVpySpyrjhMtcWBGxVtjyNF2MUS6wyprjn1PN1O1F+w=;
- b=aT+LAzluqB7+nCIMVw4o7j9fOk36aFCuzlxdVIbf+DA+y11sEAl8/7GFQrgSNj6eDF
- 8I6vUEHxE2v3YpzIo5xD9vu56ernbBJ93AkA0UU9qNwe3cTYVyLhxY+OdGb/66Ar+3vj
- pasLf1iK8fVUsIZj9WOHNRKrfbkEyYECzO0y3AaFPslLzgX6MVvr1goPrg9iOuG2tRpp
- kJk3zS9gY9GGIYOzpBYOc2RSJriJzpc2BwUKhXzHwRYbaVwxUrJRVUjy/ERTlXxBADCz
- qOWcI1LjRFwKtLSJzV64zeVnXfUaqNLYFLqJ5kYPEcq5Q/Th3jR5IFKiCeJ/9qAbNSf4
- Y3RQ==
+ bh=EVi4ymf0JUdrFDuvhHPunTPbRwIlHUJLlhZi+FT5T80=;
+ b=zdc+VbyXDGJRJwBdwYlWWJKy7XoHXoBDDIprf6Hll5uLnmkG4osvo6naDOpCbSksp5
+ +c9iWwFdHdV6x0xD6R/AIlg+zEj9MusQyWtdUGqYAXLLNrOTu4AMGRg1RDSQn6QrXq95
+ bBRF46wO9u70W9bl1jbsmVgEF/wqKqMojFTPzAj0Euf60mOeEOw+SKLErMhKIdLxiCv1
+ sbtS5hy5Pno6dtUsd3Mzyekv4klk8YP0MBg0NybYZkvi50E7fz8dLdihGflE7zDYdfbb
+ 6f+UTzJrHFGye2T0RigJc/oqeQlszWxo6RsTwLr+++PffhVhRIPZwVNdyb+PuRZxF9F6
+ Zt1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767144; x=1722371944;
+ d=1e100.net; s=20230601; t=1721767250; x=1722372050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sVpySpyrjhMtcWBGxVtjyNF2MUS6wyprjn1PN1O1F+w=;
- b=lI5e8sRHtgWEPOx9lfndxRm42GsSAsauatGN1opavkJQlquFTmL8EoZ9AgS9d9R3tQ
- g0umCQLwzbJPtHnAfPYYK4wCVYF37HCnVt3oGtEpofhop+TY4xMm7cr+MrHPVOgJMcGb
- t4xCNboE6R91VA/ksxFmXVwGBxeChmEIMDqP3yWUAjTGQLkgRqzukCY37Z/c/tWsaSO+
- RqSt1nPDmaaKJ1FgOzC+bhPdUsmphLY8xcNOv3o2WJcbNzNhJ+sGIgHJY88+jFTVVdHL
- SOltvnCfgO2Hyr6U33PdKPdQN1y9cPIMEEdBK8uZ7KiKQ7A3i+fy1ySkpe0hBC4IIed+
- 6Qdg==
-X-Gm-Message-State: AOJu0Yyc9+73fXocfIgw7mq9WRgNcKu/LczNbxbkCDLXwCZhXwg+5TrB
- leiZx20ut28gv2g/FiRoFAKeH/qx8ftUaWOiEEXFrMqL7FewwM3MkcosE5099+S43+/MobO67gs
- mjhs=
-X-Google-Smtp-Source: AGHT+IGI0VXaOZnQDIADJZ/nJrjJPvXOn4YNqkpnolIPyChdlEgfLD/HF4jqqe7/7SeagPdHLOVkFg==
-X-Received: by 2002:a05:600c:4ecc:b0:426:6921:e3e5 with SMTP id
- 5b1f17b1804b1-427f95af393mr5855e9.24.1721767144522; 
- Tue, 23 Jul 2024 13:39:04 -0700 (PDT)
+ bh=EVi4ymf0JUdrFDuvhHPunTPbRwIlHUJLlhZi+FT5T80=;
+ b=uo84XhpgN+5EYKYvhivKmpObOUerQfT54YJ/OPgis+p2zh7iXSsUBHburJ6tqYhbdJ
+ cyucPw12R/3U5pxmXc3K2qqKi9qbZfDMj6wBHWTiq6rF7PLycFEkBahR4/fYODrddTAo
+ A1TClSAwPTZ8QZrLho4Ptxnnw80T6qb0PXt5maDtC9ftj2OjQRqrFcxiK1S4RmfskQX3
+ X8LXQomzsvEJPQ3blJc/6Fg6Df5djXcKkO18pIbsDPqCJv2cFQX0zvZVd5LgGDhNjdko
+ qZrlxlabvTV0eRHZnM/BmT7mf7KP2RFMONrHP7km5mxOHBZkLsZsJpZIUAS3G87Z6H/p
+ 7mwQ==
+X-Gm-Message-State: AOJu0YxlSeDpSvjLA8+9zf5XxOqZaBuvvm0gLS1/IS1Bf0yWwm4bUQUS
+ wX6dUAFYz0Wypl+sJKHy/5LJPydPSueMSI46X4WwzZyP6xWicCuBHjNJOEa1C8hrycDc4+osIGh
+ BKwk=
+X-Google-Smtp-Source: AGHT+IEJA35PdPkt4JsORHnb2C8/7l7/PbA++LorrZk8MT/FzrVx6WNAtSsHXFMnUqSEERdoDjx5QA==
+X-Received: by 2002:adf:ed8d:0:b0:368:664a:d4f9 with SMTP id
+ ffacd0b85a97d-369bae3654fmr8624996f8f.28.1721767250112; 
+ Tue, 23 Jul 2024 13:40:50 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f9399b13sm458445e9.27.2024.07.23.13.39.03
+ ffacd0b85a97d-368787ec979sm12392870f8f.94.2024.07.23.13.40.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:39:04 -0700 (PDT)
+ Tue, 23 Jul 2024 13:40:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/28] accel: Restrict probe_access*() functions to TCG
-Date: Tue, 23 Jul 2024 22:38:28 +0200
-Message-ID: <20240723203855.65033-2-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 20/28] chardev/char-fe: Document returned value on error
+Date: Tue, 23 Jul 2024 22:38:47 +0200
+Message-ID: <20240723203855.65033-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This API is specific to TCG (already handled by hardware
-accelerators), so restrict it with #ifdef'ry. Remove
-unnecessary stubs.
+qemu_chr_fe_add_watch() and qemu_chr_fe_write[_all]()
+return -1 on error. Mention it in the documentation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240529155918.6221-1-philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240722160745.67904-2-philmd@linaro.org>
 ---
- include/exec/exec-all.h |  7 ++++++-
- accel/stubs/tcg-stub.c  | 14 --------------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ include/chardev/char-fe.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index b6b46ad13c7..72240ef4263 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -301,6 +301,9 @@ static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
- {
- }
- #endif
-+
-+#if defined(CONFIG_TCG)
-+
- /**
-  * probe_access:
-  * @env: CPUArchState
-@@ -357,6 +360,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-                        bool nonfault, void **phost, uintptr_t retaddr);
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index ecef1828355..3310449eaf0 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -228,6 +228,7 @@ guint qemu_chr_fe_add_watch(CharBackend *be, GIOCondition cond,
+  * is thread-safe.
+  *
+  * Returns: the number of bytes consumed (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
  
- #ifndef CONFIG_USER_ONLY
-+
- /**
-  * probe_access_full:
-  * Like probe_access_flags, except also return into @pfull.
-@@ -392,7 +396,8 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
-                           MMUAccessType access_type, int mmu_idx,
-                           void **phost, CPUTLBEntryFull **pfull);
+@@ -242,6 +243,7 @@ int qemu_chr_fe_write(CharBackend *be, const uint8_t *buf, int len);
+  * attempted to be written.  This function is thread-safe.
+  *
+  * Returns: the number of bytes consumed (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
  
--#endif
-+#endif /* !CONFIG_USER_ONLY */
-+#endif /* CONFIG_TCG */
+@@ -253,6 +255,7 @@ int qemu_chr_fe_write_all(CharBackend *be, const uint8_t *buf, int len);
+  * Read data to a buffer from the back end.
+  *
+  * Returns: the number of bytes read (0 if no associated Chardev)
++ *          or -1 on error.
+  */
+ int qemu_chr_fe_read_all(CharBackend *be, uint8_t *buf, int len);
  
- static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
- {
-diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
-index dd890d6cf69..7f4208fddf2 100644
---- a/accel/stubs/tcg-stub.c
-+++ b/accel/stubs/tcg-stub.c
-@@ -18,20 +18,6 @@ void tb_flush(CPUState *cpu)
- {
- }
- 
--int probe_access_flags(CPUArchState *env, vaddr addr, int size,
--                       MMUAccessType access_type, int mmu_idx,
--                       bool nonfault, void **phost, uintptr_t retaddr)
--{
--     g_assert_not_reached();
--}
--
--void *probe_access(CPUArchState *env, vaddr addr, int size,
--                   MMUAccessType access_type, int mmu_idx, uintptr_t retaddr)
--{
--     /* Handled by hardware accelerator. */
--     g_assert_not_reached();
--}
--
- G_NORETURN void cpu_loop_exit(CPUState *cpu)
- {
-     g_assert_not_reached();
 -- 
 2.41.0
 
