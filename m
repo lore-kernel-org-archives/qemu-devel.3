@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BBA0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E88C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDBm-0008Iw-2N; Tue, 23 Jul 2024 06:56:14 -0400
+	id 1sWDBY-00075Q-Sj; Tue, 23 Jul 2024 06:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBk-00083d-Ew
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBI-0006ps-Tf
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:55:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBi-0001ep-Fs
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBG-0001bQ-JH
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:55:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732169;
+ s=mimecast20190719; t=1721732141;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CYkvuehHMuB8FFNUkACRvfP0TVqplBGSaMD83Q0lWBg=;
- b=dduTp5wcYjo09vfpghdORbOgCkDoPTC+bHFvhS4/wSgw2Bla3eKaPt1UsLNt12/r/xR8WA
- uoB54iZtDkOUEmEzxrS5QQfbVGgcgL/c8IUKaJfsJDZ8i4gabTbLdC7wq/+1nvE+CDFDJ9
- q6tk2VNJJQYKt7w6ZryhAdz9MDZyOeY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hZD245xzKw4cLzLRxCGiV82CoDTUudcvSV2j3dFC7Ks=;
+ b=D8ec92uoQvkCNvCNPjP+DnoxQQU04YBrkQ3+C/PqKvfQg+QG6mYFzhE/o/zZXbtjp0q9oz
+ Gcp7jzW8m25qYMCsvYeSoV/QXSkQz91pqumCBFbGcOGqK7p5IOmWGzL0hPOvrKJpoOtNYt
+ V9Ot+TsITN3EGIk6ez4SfOTR0bzQx2s=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-134-4ZVNCmOrOROvaIvjdyJSgg-1; Tue, 23 Jul 2024 06:56:07 -0400
-X-MC-Unique: 4ZVNCmOrOROvaIvjdyJSgg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a77e024eaa4so457963466b.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:07 -0700 (PDT)
+ us-mta-447-iJ1wGkcEP5e-098yrsaRGQ-1; Tue, 23 Jul 2024 06:55:40 -0400
+X-MC-Unique: iJ1wGkcEP5e-098yrsaRGQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a77e024eaa4so457928066b.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:55:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732165; x=1722336965;
+ d=1e100.net; s=20230601; t=1721732138; x=1722336938;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CYkvuehHMuB8FFNUkACRvfP0TVqplBGSaMD83Q0lWBg=;
- b=b8Q0I2OwzKYscqBgvWtHkGePdN/BUs2MJ/kms2KLEkl7Gonn/tv4gWTyvEin9z3B7w
- ihMVbRuhMRAHMh7bXBYiHjSdr2uarQAyroq1tKYHkSTt9xXZLt5CtAlWNhqN88Jd8+oA
- rC7sdboljW759uLKa40zLIvp1uzmTrgM2DexRS8pqn510TfP2rZO985b7yTyPbPC+DQk
- vk2b6N3X22gsJWjAxokM6gDCJNcIvaMe6knK38pNrbhvgusjrc5duhW8xjc6GmupiGI7
- 3aUH2X0U37L1g9WOJjOSVl4+3K1/X642snM0YwjAfmeviVtj0inMGwSQdnEYFZCxzpZp
- 9K2g==
-X-Gm-Message-State: AOJu0Yzxy0NxCxHZokl/CKNHBdTk9UjaLso5sEVu3lwbgauYyk+OXJk8
- H//6qTNGkFglv/r5030H4AKuxZogkodJvgm+jLPidGCTZchNBLzGUxk+Q6T6G1oQxPEj7wSKTqI
- M5kEtGcSybmQXMCeqbUvU+CUObZHUgIUmk0jnuyPiDIvdfD/jKeNd+dyjcc1jS7IPMjq+ihPk2e
- eSNFDjz9s/lBWHhWM0i11WH9G5YvPWSA==
-X-Received: by 2002:a17:907:72c9:b0:a7a:8da1:eb00 with SMTP id
- a640c23a62f3a-a7a8da1ec15mr165797366b.7.1721732165415; 
- Tue, 23 Jul 2024 03:56:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrSalsGqBYZzhHzVrVAS1CkYT3XspGDskbnbFFcL86VZL18zWZPZEMi+Az6S5Y+oLZtwLHHQ==
-X-Received: by 2002:a17:907:72c9:b0:a7a:8da1:eb00 with SMTP id
- a640c23a62f3a-a7a8da1ec15mr165793866b.7.1721732164662; 
- Tue, 23 Jul 2024 03:56:04 -0700 (PDT)
+ bh=hZD245xzKw4cLzLRxCGiV82CoDTUudcvSV2j3dFC7Ks=;
+ b=JXWNObgo5K70xT585NeIY0uq9BaefwsSQFeRLYFjgLRT7o2i3oFxouiKI37xblLnXO
+ eaAzBf2F8M5i8w7++ycjmLMRx4WJxgKuVgJRKvubc3rBLz2dhNF4oLqnLNupCfLWZyCk
+ YUdly5JyXEQh0RawlAabT4EYJByt3WWY0E6I2RenMtjbO3/RkBqNCFH5vd0YvVzGWKBa
+ A3eT5qr4Wn1jb8fI41T4rLFR2z2HNWQsL+NGFv04FRnccOh1Yqqv9q8t3UMi/FPe8mm9
+ +KcOLpntEJFfFoBM6DaQRjLs/E1eEC1Kp45lF0mWA+Ttc44P29RXEccr8wFl01LLwRRF
+ N5iQ==
+X-Gm-Message-State: AOJu0YytLHYqFKfDMmt7VGzCts4o/TzP2gfIyx+O9/0dRmNmGX4Bhf20
+ aOumV4/wUczHXDl6aqZbgiR+ID+MHaGvob2ohE3CYYRIOpt46B2oGuVT5sBuypkZh3Es58+ec7T
+ uhieMA7cHVwFddX2/rxSyF7XOCO3KctKWhMErb8Na31+iXrIBGixR7LDZnZ0hrlMDQ5GjgeaH1w
+ Sqp+WuX3tqRmqiBNgET0cSwXzOhPUINw==
+X-Received: by 2002:a17:907:3da5:b0:a6f:52db:7e5e with SMTP id
+ a640c23a62f3a-a7a87c3c2camr214360266b.19.1721732138355; 
+ Tue, 23 Jul 2024 03:55:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkYgoi+jSTMgVfZHdQoMeqYb5pIm3jrabdzUx7D3NnuJ2NQ8XzBLnQXM7L2S5D+Oh8GGtcfg==
+X-Received: by 2002:a17:907:3da5:b0:a6f:52db:7e5e with SMTP id
+ a640c23a62f3a-a7a87c3c2camr214357166b.19.1721732137698; 
+ Tue, 23 Jul 2024 03:55:37 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c926bc8sm528401166b.157.2024.07.23.03.56.02
+ a640c23a62f3a-a7a3c91713bsm527286966b.150.2024.07.23.03.55.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:56:04 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:56:00 -0400
+ Tue, 23 Jul 2024 03:55:37 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:55:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gourry.memverge@gmail.com>,
- Gregory Price <gregory.price@memverge.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL v2 10/61] cxl/mailbox: move mailbox effect definitions to a
- header
-Message-ID: <25da36d5d04deb8869bd6ad1223832f09f3efe79.1721731723.git.mst@redhat.com>
+Subject: [PULL v2 05/61] hw/cxl/cxl-host: Fix segmentation fault when getting
+ cxl-fmw property
+Message-ID: <a207d5f87d66f7933b50677e047498fc4af63e1f.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,14 +80,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1721731723.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,155 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Preparation for allowing devices to define their own CCI commands
+QEMU crashes (Segmentation fault) when getting cxl-fmw property via
+qmp:
 
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Link: https://lore.kernel.org/r/20230906001517.324380-2-gregory.price@memverge.com
+(QEMU) qom-get path=machine property=cxl-fmw
+
+This issue is caused by accessing wrong callback (opaque) type in
+machine_get_cfmw().
+
+cxl_machine_init() sets the callback as `CXLState *` type but
+machine_get_cfmw() treats the callback as
+`CXLFixedMemoryWindowOptionsList **`.
+
+Fix this error by casting opaque to `CXLState *` type in
+machine_get_cfmw().
+
+Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter.")
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Link: https://lore.kernel.org/r/20240704093404.1848132-1-zhao1.liu@linux.intel.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240705123039.963781-2-Jonathan.Cameron@huawei.com>
+Message-Id: <20240705113956.941732-2-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_mailbox.h | 18 ++++++++++++++++++
- hw/cxl/cxl-mailbox-utils.c   | 34 +++++++++++++++-------------------
- 2 files changed, 33 insertions(+), 19 deletions(-)
- create mode 100644 include/hw/cxl/cxl_mailbox.h
+ hw/cxl/cxl-host.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
-new file mode 100644
-index 0000000000..beb048052e
---- /dev/null
-+++ b/include/hw/cxl/cxl_mailbox.h
-@@ -0,0 +1,18 @@
-+/*
-+ * QEMU CXL Mailbox
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2. See the
-+ * COPYING file in the top-level directory.
-+ */
-+
-+#ifndef CXL_MAILBOX_H
-+#define CXL_MAILBOX_H
-+
-+#define CXL_MBOX_IMMEDIATE_CONFIG_CHANGE (1 << 1)
-+#define CXL_MBOX_IMMEDIATE_DATA_CHANGE (1 << 2)
-+#define CXL_MBOX_IMMEDIATE_POLICY_CHANGE (1 << 3)
-+#define CXL_MBOX_IMMEDIATE_LOG_CHANGE (1 << 4)
-+#define CXL_MBOX_SECURITY_STATE_CHANGE (1 << 5)
-+#define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
-+
-+#endif
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 82120a6e7b..dbaa83a110 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -12,6 +12,7 @@
- #include "hw/pci/msix.h"
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_events.h"
-+#include "hw/cxl/cxl_mailbox.h"
- #include "hw/pci/pci.h"
- #include "hw/pci-bridge/cxl_upstream_port.h"
- #include "qemu/cutils.h"
-@@ -2095,28 +2096,21 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index c5f5fcfd64..e9f2543c43 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -315,7 +315,8 @@ static void machine_set_cxl(Object *obj, Visitor *v, const char *name,
+ static void machine_get_cfmw(Object *obj, Visitor *v, const char *name,
+                              void *opaque, Error **errp)
+ {
+-    CXLFixedMemoryWindowOptionsList **list = opaque;
++    CXLState *state = opaque;
++    CXLFixedMemoryWindowOptionsList **list = &state->cfmw_list;
+ 
+     visit_type_CXLFixedMemoryWindowOptionsList(v, name, list, errp);
  }
- 
--#define IMMEDIATE_CONFIG_CHANGE (1 << 1)
--#define IMMEDIATE_DATA_CHANGE (1 << 2)
--#define IMMEDIATE_POLICY_CHANGE (1 << 3)
--#define IMMEDIATE_LOG_CHANGE (1 << 4)
--#define SECURITY_STATE_CHANGE (1 << 5)
--#define BACKGROUND_OPERATION (1 << 6)
--
- static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [EVENTS][GET_RECORDS] = { "EVENTS_GET_RECORDS",
-         cmd_events_get_records, 1, 0 },
-     [EVENTS][CLEAR_RECORDS] = { "EVENTS_CLEAR_RECORDS",
--        cmd_events_clear_records, ~0, IMMEDIATE_LOG_CHANGE },
-+        cmd_events_clear_records, ~0, CXL_MBOX_IMMEDIATE_LOG_CHANGE },
-     [EVENTS][GET_INTERRUPT_POLICY] = { "EVENTS_GET_INTERRUPT_POLICY",
-                                       cmd_events_get_interrupt_policy, 0, 0 },
-     [EVENTS][SET_INTERRUPT_POLICY] = { "EVENTS_SET_INTERRUPT_POLICY",
-                                       cmd_events_set_interrupt_policy,
--                                      ~0, IMMEDIATE_CONFIG_CHANGE },
-+                                      ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE },
-     [FIRMWARE_UPDATE][GET_INFO] = { "FIRMWARE_UPDATE_GET_INFO",
-         cmd_firmware_update_get_info, 0, 0 },
-     [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
-     [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set,
--                         8, IMMEDIATE_POLICY_CHANGE },
-+                         8, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
-     [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported,
-                               0, 0 },
-     [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-@@ -2126,9 +2120,11 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-         cmd_ccls_get_partition_info, 0, 0 },
-     [CCLS][GET_LSA] = { "CCLS_GET_LSA", cmd_ccls_get_lsa, 8, 0 },
-     [CCLS][SET_LSA] = { "CCLS_SET_LSA", cmd_ccls_set_lsa,
--        ~0, IMMEDIATE_CONFIG_CHANGE | IMMEDIATE_DATA_CHANGE },
-+        ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE | CXL_MBOX_IMMEDIATE_DATA_CHANGE },
-     [SANITIZE][OVERWRITE] = { "SANITIZE_OVERWRITE", cmd_sanitize_overwrite, 0,
--        IMMEDIATE_DATA_CHANGE | SECURITY_STATE_CHANGE | BACKGROUND_OPERATION },
-+        (CXL_MBOX_IMMEDIATE_DATA_CHANGE |
-+         CXL_MBOX_SECURITY_STATE_CHANGE |
-+         CXL_MBOX_BACKGROUND_OPERATION)},
-     [PERSISTENT_MEM][GET_SECURITY_STATE] = { "GET_SECURITY_STATE",
-         cmd_get_security_state, 0, 0 },
-     [MEDIA_AND_POISON][GET_POISON_LIST] = { "MEDIA_AND_POISON_GET_POISON_LIST",
-@@ -2141,7 +2137,7 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-         "MEDIA_AND_POISON_GET_SCAN_MEDIA_CAPABILITIES",
-         cmd_media_get_scan_media_capabilities, 16, 0 },
-     [MEDIA_AND_POISON][SCAN_MEDIA] = { "MEDIA_AND_POISON_SCAN_MEDIA",
--        cmd_media_scan_media, 17, BACKGROUND_OPERATION },
-+        cmd_media_scan_media, 17, CXL_MBOX_BACKGROUND_OPERATION },
-     [MEDIA_AND_POISON][GET_SCAN_MEDIA_RESULTS] = {
-         "MEDIA_AND_POISON_GET_SCAN_MEDIA_RESULTS",
-         cmd_media_get_scan_media_results, 0, 0 },
-@@ -2155,10 +2151,10 @@ static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
-         8, 0 },
-     [DCD_CONFIG][ADD_DYN_CAP_RSP] = {
-         "DCD_ADD_DYNAMIC_CAPACITY_RESPONSE", cmd_dcd_add_dyn_cap_rsp,
--        ~0, IMMEDIATE_DATA_CHANGE },
-+        ~0, CXL_MBOX_IMMEDIATE_DATA_CHANGE },
-     [DCD_CONFIG][RELEASE_DYN_CAP] = {
-         "DCD_RELEASE_DYNAMIC_CAPACITY", cmd_dcd_release_dyn_cap,
--        ~0, IMMEDIATE_DATA_CHANGE },
-+        ~0, CXL_MBOX_IMMEDIATE_DATA_CHANGE },
- };
- 
- static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-@@ -2166,8 +2162,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-     [INFOSTAT][BACKGROUND_OPERATION_STATUS] = { "BACKGROUND_OPERATION_STATUS",
-         cmd_infostat_bg_op_sts, 0, 0 },
-     [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
--    [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set, 0,
--                         IMMEDIATE_POLICY_CHANGE },
-+    [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set, 8,
-+                         CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
-     [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
-                               0 },
-     [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-@@ -2210,7 +2206,7 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
-     }
- 
-     /* Only one bg command at a time */
--    if ((cxl_cmd->effect & BACKGROUND_OPERATION) &&
-+    if ((cxl_cmd->effect & CXL_MBOX_BACKGROUND_OPERATION) &&
-         cci->bg.runtime > 0) {
-         return CXL_MBOX_BUSY;
-     }
-@@ -2235,7 +2231,7 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
-     }
- 
-     ret = (*h)(cxl_cmd, pl_in, len_in, pl_out, len_out, cci);
--    if ((cxl_cmd->effect & BACKGROUND_OPERATION) &&
-+    if ((cxl_cmd->effect & CXL_MBOX_BACKGROUND_OPERATION) &&
-         ret == CXL_MBOX_BG_STARTED) {
-         *bg_started = true;
-     } else {
 -- 
 MST
 
