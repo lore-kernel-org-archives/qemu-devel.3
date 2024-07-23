@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C7FC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jul 2024 23:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4777DC3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 00:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW2XO-00020j-Gd; Mon, 22 Jul 2024 19:33:52 -0400
+	id 1sW3Bm-00066n-PK; Mon, 22 Jul 2024 20:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sW2XM-0001uz-IA
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:33:48 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sW2XK-00087o-Ak
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 19:33:48 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5d5846f799dso573399eaf.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 16:33:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721691225; x=1722296025;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hT7MlqZ5AaRuqDebjgpCuaxPw7ec43i1jGDC4q7j0rU=;
- b=WCykGJitauQC8AaXStGVML2b7YR2bqwcWu1Lak2L7mDEqXkavw5QuewRT93S20CoQr
- 3xM7tUsFpsMpctEM/snL47uQ+2cIDL/6LgBpbI9HXcWgaNoJ5AYbArhRdqzi7JMhHkTM
- IllrHICOsmdAgUmAa7QBz+pHcJFBlJz4XsqJpsL1yeBdY2ycqYimk7n/mKvcMbGrlCbW
- TonfgaK0+C9fyNB4pNim8Wt7nxqf/juzvCeDVItkhrUXxXH7tl5t6kfTLQMgzcHrCgBe
- oo/Kp+i11hNKZUGx6sT3hbL9SA4RPFsNnylH2w8bKxNhe3yCQ8Y4YslV2x0gIDRm/4MG
- 8Bsg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Bk-00063k-6q
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:15:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Bh-00084O-E6
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:15:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721693727;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LsnU3HfXMnpZU1qCXgFM1zlQJvg45ejDgk0Ol1zkG7M=;
+ b=J9ABE6f/0W1LSkUSbG6aDU8cq4j1FpUpSX1+csjcOffODNsc0IGaOen13Kp/yBtTcRlPmy
+ RTnsUvW+ogpZLGi7Cd8ARg2w6i1c6PgTzp8KcZLOQIxfsE8sEeNtQ6SKoVsfl3CchoyXg1
+ Ck1WjggZ7P73TlsqbiNltUsgoRvm5sk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-391-dquOrR3fPlyZYM57my-s-A-1; Mon, 22 Jul 2024 20:15:25 -0400
+X-MC-Unique: dquOrR3fPlyZYM57my-s-A-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-427df7b6879so16592915e9.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 17:15:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721691225; x=1722296025;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hT7MlqZ5AaRuqDebjgpCuaxPw7ec43i1jGDC4q7j0rU=;
- b=geAspXHjd+jr1/Q/Db08krtQq98lCasXUirzPn62AhV7BtLlyL36UPJ/q3fxA6ZpFD
- ujVBpW4auS/xQ8im/xHaeeqwe7d8uEAPiTIoFqY6dTTnJyTZTkaQRgqAVFeNGqbBTFtC
- Vg0GIrNNwJxgRdEGCki1nflGDvcdqP7ym7iMq2fhzajuN+BJsDa13q8yfz7NI+yECs0n
- IrXNbYZ/RAzR75hTMJVQH0iJZgDnsSK+hgYCp87OXDnCl6UYiqasrf0xCyXxI+PB5VNm
- 12BgYxZxJ5r6tnFof8r5AUwqh5bHJ2C5242lAT1DNK5YDU77F8v3K9+YyCpsQhqH4eVY
- OItw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsV0IT34Tt+omwYtK/OOnF+XSCGD5U2pZ3qo1X+oSOEBUyZbslLJZTSeGZDGH9/1Soo2lGLZUUMT9G9HK8JZAMStF+D+0=
-X-Gm-Message-State: AOJu0Yzp/0XrQ/RZX4DAYeYKSs7KHrThJE+uuFNPsV+A5yIw1d93wQ55
- C/iX7hWx895FxtCTXvzEHoeGe3pUdAONpIZ252neL/oNcxWjnXxVZ5Kx7hPt3c7oWj1wOW0TyHN
- KNS+CWydWqTbNrdHM927fbfv3WwParBu3xI2f+Q==
-X-Google-Smtp-Source: AGHT+IEoJjAj43igifRS0yDqQIg1j4fdre39Uy6fAtNBWDJJheMpxiyO/oWQwqFNVCBhbVZBxegkIp77EHuloOP3hZM=
-X-Received: by 2002:a05:6870:4723:b0:250:7dba:9501 with SMTP id
- 586e51a60fabf-2612169af82mr8731511fac.41.1721691224928; Mon, 22 Jul 2024
- 16:33:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721693724; x=1722298524;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LsnU3HfXMnpZU1qCXgFM1zlQJvg45ejDgk0Ol1zkG7M=;
+ b=jkd0Ma2Y/zIX38vaPQKRmglYpHTtmtnzhSr6NEU9rbzRQE7zKntDapsVNsdGz/xYBF
+ MU8DLLvYD3TUvLs6/uqx26iBlfPdFay4Czxs/5nALi9zhdkAHpw2jQvApF5hXxhSyWCO
+ 5fqhrGSUwYsujaBjWECvDRg6KskBBSq5iLw15o9D4mz1XPsEsVZVfTKmCeorygPKdzVT
+ 6lzbgXGbr7OUZoOE3+nlIKutTfmrqeNnTQv45JAaSvNB/G8tbHrMJjawm6qnrMkWHfDs
+ Xgj4VL7kqW63D/Ab79FXBTpMmI8I6r7Ziyp0TwDhKBtEbjQf5+V3Gha6XMgdDNt0v0qR
+ eAJg==
+X-Gm-Message-State: AOJu0YwkhW+dTAUpJxIbY3ikGMfvoPQmMKmmdkyxNEPg0fdyB9aEI7mD
+ iTbLujTlPHy3HGXPlfFBVSRjRjz9ECXqNZnK1bwcJey+ZDNyDBtP8e0JE8AnnB5l0CtfrDPpKWn
+ FtA54Y0BGwV27neaD6MGEae2oRH8c7ue66fmbQ+y/qYBRXX6+TZ3o
+X-Received: by 2002:a05:600c:a41:b0:425:69b7:3361 with SMTP id
+ 5b1f17b1804b1-427e373fcaemr43795195e9.18.1721693724363; 
+ Mon, 22 Jul 2024 17:15:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvDONw8SVo8q10EcwPZB3HM+8yFyubnH0/tqVdmyc821v1z6cgUdHQ7BrDiTeBRz3+Z+T/xg==
+X-Received: by 2002:a05:600c:a41:b0:425:69b7:3361 with SMTP id
+ 5b1f17b1804b1-427e373fcaemr43794945e9.18.1721693723423; 
+ Mon, 22 Jul 2024 17:15:23 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:5415:9d1e:913c:6f61:614e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d2a8e436sm173212335e9.33.2024.07.22.17.15.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jul 2024 17:15:22 -0700 (PDT)
+Date: Mon, 22 Jul 2024 20:15:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Yui Washizu <yui.washidu@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PULL 29/63] hw/pci: Do not add ROM BAR for SR-IOV VF
+Message-ID: <20240722201505-mutt-send-email-mst@kernel.org>
+References: <cover.1721607331.git.mst@redhat.com>
+ <54f3a29f08900bef796953971d2482d64ddf9969.1721607331.git.mst@redhat.com>
+ <943d2a14-f4cb-4169-a7ac-bbe38a0e9abd@daynix.com>
 MIME-Version: 1.0
-References: <20240718021012.2057986-1-alistair.francis@wdc.com>
- <20240718021012.2057986-27-alistair.francis@wdc.com>
- <CAFEAcA-Lrnt30uvR5k+GVsM-goKuD7ZQzzxOpxocBf3C6BzvMg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-Lrnt30uvR5k+GVsM-goKuD7ZQzzxOpxocBf3C6BzvMg@mail.gmail.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Mon, 22 Jul 2024 16:33:33 -0700
-Message-ID: <CAHBxVyHZ1_zgg-V2aKMcYsZjWHwcfndt-rbTa0h8mp_Ufe7hjw@mail.gmail.com>
-Subject: Re: [PULL 26/30] target/riscv: Do not setup pmu timer if OF is
- disabled
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=atishp@rivosinc.com; helo=mail-oo1-xc31.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <943d2a14-f4cb-4169-a7ac-bbe38a0e9abd@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,87 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 20, 2024 at 8:19=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Thu, 18 Jul 2024 at 03:15, Alistair Francis <alistair23@gmail.com> wro=
-te:
-> >
-> > From: Atish Patra <atishp@rivosinc.com>
-> >
-> > The timer is setup function is invoked in both hpmcounter
-> > write and mcountinhibit write path. If the OF bit set, the
-> > LCOFI interrupt is disabled. There is no benefitting in
-> > setting up the qemu timer until LCOFI is cleared to indicate
-> > that interrupts can be fired again.
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> > Message-ID: <20240711-smcntrpmf_v7-v8-12-b7c38ae7b263@rivosinc.com>
-> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+On Mon, Jul 22, 2024 at 11:21:13PM +0900, Akihiko Odaki wrote:
+> On 2024/07/22 9:17, Michael S. Tsirkin wrote:
+> > From: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > 
+> > A SR-IOV VF cannot have a ROM BAR.
+> > 
+> > Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Message-Id: <20240715-sriov-v5-1-3f5539093ffc@daynix.com>
+> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 > > ---
-> >  target/riscv/pmu.c | 56 ++++++++++++++++++++++++++++++++++++----------
-> >  1 file changed, 44 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> > index a4729f6c53..3cc0b3648c 100644
-> > --- a/target/riscv/pmu.c
-> > +++ b/target/riscv/pmu.c
-> > @@ -416,14 +416,49 @@ int riscv_pmu_update_event_map(CPURISCVState *env=
-, uint64_t value,
-> >      return 0;
-> >  }
->
-> Hi; I was looking at an issue Coverity flagged up with this code (CID
-> 1558461, 1558463):
->
-> > +static bool pmu_hpmevent_is_of_set(CPURISCVState *env, uint32_t ctr_id=
-x)
-> > +{
-> > +    target_ulong mhpmevent_val;
-> > +    uint64_t of_bit_mask;
-> > +
-> > +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> > +        mhpmevent_val =3D env->mhpmeventh_val[ctr_idx];
-> > +        of_bit_mask =3D MHPMEVENTH_BIT_OF;
-> > +     } else {
-> > +        mhpmevent_val =3D env->mhpmevent_val[ctr_idx];
-> > +        of_bit_mask =3D MHPMEVENT_BIT_OF;
->
-> MHPMEVENT_BIT_OF is defined as BIT_ULL(63)...
->
-> > +    }
-> > +
-> > +    return get_field(mhpmevent_val, of_bit_mask);
->
-> ...but we pass it to get_field(), whose definition is:
->
-> #define get_field(reg, mask) (((reg) & \
->                  (uint64_t)(mask)) / ((mask) & ~((mask) << 1)))
->
-> Notice that part of this expression is "(mask) << 1". So Coverity complai=
-ns
-> that we took a constant value and shifted it right off the top.
->
-> I think this is probably a false positive, but why is target/riscv
-> using its own ad-hoc macros for extracting bitfields? We have
-> a standard set of extract/deposit macros in bitops.h, and not
+> >   hw/pci/pci.c | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index 4c7be52951..bd956637bc 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -2359,6 +2359,14 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+> >           return;
+> >       }
+> > +    if (pci_is_vf(pdev)) {
+> > +        if (pdev->rom_bar == ON_OFF_AUTO_ON) {
+> 
+> This requires:
+> https://lore.kernel.org/r/20240714-rombar-v2-0-af1504ef55de@daynix.com
+> ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+> 
+> However it does not seem included in this pull request.
+> 
+> Regards,
+> Akihiko Odaki
 
-Thanks for pointing those out. I checked the get_field usage from the
-beginning of riscv support 6 years back.
-There are tons of users of get_field in a bunch of riscv sources. I
-guess it was just added once and everybody kept using it
-without switching to generic functions.
 
-@Alistair Francis : Are there any other reasons ?
+good point, dropped for now.
 
-If not, I can take a stab at fixing those if nobody is looking at them alre=
-ady.
-
-> using them makes the riscv code harder to read for people who
-> are used to the rest of the codebase (e.g. to figure out if this
-> Coverity issue is a false positive I would need to look at these
-> macros to figure out what exactly they're doing).
->
-> thanks
-> -- PMM
 
