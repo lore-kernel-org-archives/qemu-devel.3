@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07618C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A53C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDBa-0007EA-1R; Tue, 23 Jul 2024 06:56:02 -0400
+	id 1sWDD9-0002kn-Hs; Tue, 23 Jul 2024 06:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBZ-000793-85
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDD5-0001zd-2N
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBX-0001dN-DZ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDD2-0001sw-RM
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732158;
+ s=mimecast20190719; t=1721732252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EH7iZz7W3GpWmzCfYcERS56IxpqGZ9YSdfDypAnOEA4=;
- b=D9j5OSNI0ISnUerZj/8BSLe/TAV9X3DBkQV3r6O/UQf4v4p02xLClPjDa8ykjCOgvIGIOr
- gw89QJUR5gd2/Hc1vozQjrC4BHbVT+LO7AlOqY8dAIKk/vMwapoK0IfePRK3WcLIosC4GS
- m9uaAu5gN3/J6SLxw7a3W7FOY8jWmhw=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qh9R5tJPsU6nQaE9x9stYdkZI3361sYm/2KiRgpRciY=;
+ b=DB7B4Gjwk0ntAzqJC0vFgXXe1bD2LnE+Y5FKAzbrB4tJyTImnlL8/wGv5oXrLqJee7hMz8
+ 93Vv1kipt81tM3WaXgVfrrVhgyfaZFFDd6SBNCML863gJVolW+iqM708vv8aYxgnEZv7qM
+ ycb3rJExRJy0HNN3BI4GybvHmmkB9oU=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-D2PsyTSQPW60N7kFZnADlw-1; Tue, 23 Jul 2024 06:55:57 -0400
-X-MC-Unique: D2PsyTSQPW60N7kFZnADlw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a7a822ee907so49682866b.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:55:57 -0700 (PDT)
+ us-mta-306-_zXZJW8qNFKqBFN-AonMSg-1; Tue, 23 Jul 2024 06:57:28 -0400
+X-MC-Unique: _zXZJW8qNFKqBFN-AonMSg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5a25d0755f3so3236057a12.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:57:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732155; x=1722336955;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EH7iZz7W3GpWmzCfYcERS56IxpqGZ9YSdfDypAnOEA4=;
- b=U7BlELdAEHh35bOW5NHN4juq6EpHGNnFgPyoXvbY5ECRLGo0T3WCYgZRjSSQEPd2ZM
- 58kjaTdn7TzoDD2HynQogbPzcwZg4Oy4tHaHtjv6+86PlcwaQdY6PSs8Ylvxf8T+iiPp
- NkHZ3Cg9XenCoGVUCkU9FIgrUTSDldDJdRBUKNQGT8nVra81toYGH24NILgNXktb6eCe
- 7zFHUV7v1ZBdZIdBvPfwl1FFE0Go44k39zcZSWFlbGQhrIT+oGsPbiCkTScrW/IBfPed
- m0nv9rhFr4NkMiUfNy3d4grB97HmdwwD9FmhQ8ngitipJYG+ijSJljrpDHNxcef87dAX
- 0qYg==
-X-Gm-Message-State: AOJu0YwIhQ4julKcn3tfVf3zv5XXtUaKveMZIlIZ9w5jgkrzEZxfogK9
- Nu4zuMM2jYDZWCTn6boj8QkV0qJZzPGhwWSqDk8Mtyff/GNl4nMGhmS0W00YglXr3NH5PauhtcG
- HQkTssABblgxQxoPwgn2UxB4SDqGWZnhD8CUPSqxW3tFJX0JbClYRRzO4+pik+tvyA9gm88e52r
- K7RCE5cQDd/cBrk1Cze+mWZCW3ZIdVuw==
-X-Received: by 2002:a17:906:6a2a:b0:a77:cf9d:f498 with SMTP id
- a640c23a62f3a-a7a4c034e10mr616138366b.40.1721732155631; 
- Tue, 23 Jul 2024 03:55:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElq73L5/g3H/MTcz1j7Pp0I7Y1Z4gghK+5DeH3+uYuyC0JGBC91N4G0sz73VHT8MYfkzHYww==
-X-Received: by 2002:a17:906:6a2a:b0:a77:cf9d:f498 with SMTP id
- a640c23a62f3a-a7a4c034e10mr616134466b.40.1721732154920; 
- Tue, 23 Jul 2024 03:55:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721732247; x=1722337047;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qh9R5tJPsU6nQaE9x9stYdkZI3361sYm/2KiRgpRciY=;
+ b=dGgXCUkjxH3+enAoZDsxA8r4JYfEolKpDZH0tu/aNiRIxiZiivGMEcUh0XQFLpjgrs
+ wLi9z/bkNi43AOcAwGSY8rR8KV/4eJqm8f/HAuj/4dCrWd80pAvE5CtLQ4H47NcoUJQr
+ 9RHXDKd160IZNCedSO0Tniq59woa+H8ikp35LFiuir/RNGsK5nM5GH13h3szzHuFuJ00
+ +KeQsdRO85OV0y2BabBWjtHrliZK1htfDBd5rXwYoO2kUpbzUWoi3fWv+r0ewXeVRjXC
+ 4nLkEZHLqCyzR5EOIoym+UbM/GPU0pCfchH6SDfAlJguZJ0HsKMWI/eI91Ewp20+Rzoz
+ uoSw==
+X-Gm-Message-State: AOJu0YzplaYcnknuXoZQmpW2piIbVDQJq/aI1jFo1A5pG6k4T8TvjakD
+ /UgJ32LcR+IFkZMkmq88hAn237fYO6370SyDfKsTo50E/6wyq5/hNDlrhC/wzwXz8NT8yQNIeh4
+ 3hDfJLbMmldA2TCE31+8ZZE19M98iMtzVfKJvCtuSr/btIwBwhNwiJoogRfMWHzqJ0Lh83w0yoY
+ DGwXaNlQHZQmVqcGdudkcMLKe/Mri2pw==
+X-Received: by 2002:a05:6402:3546:b0:5a2:1f7b:dffa with SMTP id
+ 4fb4d7f45d1cf-5a941a3b8efmr2343590a12.3.1721732247224; 
+ Tue, 23 Jul 2024 03:57:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpfts+xPIp1bMaRTQsfI3VQT9rHvUAt79xd2cpBbDz9kAKi1U+YS1AYWowlYiTHFtKDyTG8Q==
+X-Received: by 2002:a05:6402:3546:b0:5a2:1f7b:dffa with SMTP id
+ 4fb4d7f45d1cf-5a941a3b8efmr2343553a12.3.1721732246195; 
+ Tue, 23 Jul 2024 03:57:26 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7aa5b165c9sm3089366b.210.2024.07.23.03.55.51
+ 4fb4d7f45d1cf-5a30c2f86d1sm7280295a12.73.2024.07.23.03.57.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:55:54 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:55:49 -0400
+ Tue, 23 Jul 2024 03:57:25 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:57:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>, Davidlohr Bueso <dave@stgolabs.net>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL v2 08/61] hw/cxl/events: discard all event records during
- sanitation
-Message-ID: <7d65874ba0ea8cdb2a5ac51c397d721d7d49d828.1721731723.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL v2 25/61] virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER
+ support
+Message-ID: <844619147c5110f335cbbbad51cda6a898c7ef33.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721731723.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,75 +105,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-Per CXL r3.1 Section 8.2.9.9.5.1: Sanitize (Opcode 4400h), the
-sanitize command should delete all event logs. Introduce
-cxl_discard_all_event_logs() and call
-this in __do_sanitization().
+Add VIRTIO_F_IN_ORDER feature support for the virtqueue_flush operation.
 
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Link: https://lore.kernel.org/r/20231222090051.3265307-5-42.hyeyoo@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The goal of the virtqueue_ordered_flush operation when the
+VIRTIO_F_IN_ORDER feature has been negotiated is to write elements to
+the used/descriptor ring in-order and then update used_idx.
 
-Message-Id: <20240705120643.959422-4-Jonathan.Cameron@huawei.com>
+The function iterates through the VirtQueueElement used_elems array
+in-order starting at vq->used_idx. If the element is valid (filled), the
+element is written to the used/descriptor ring. This process continues
+until we find an invalid (not filled) element.
+
+For packed VQs, the first entry (at vq->used_idx) is written to the
+descriptor ring last so the guest doesn't see any invalid descriptors.
+
+If any elements were written, the used_idx is updated.
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240710125522.4168043-5-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  1 +
- hw/cxl/cxl-events.c         | 13 +++++++++++++
- hw/cxl/cxl-mailbox-utils.c  |  1 +
- 3 files changed, 15 insertions(+)
+ hw/virtio/virtio.c | 71 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 70 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 42a622197e..0509d961c3 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -562,6 +562,7 @@ CXLRetCode cxl_event_get_records(CXLDeviceState *cxlds, CXLGetEventPayload *pl,
-                                  size_t *len);
- CXLRetCode cxl_event_clear_records(CXLDeviceState *cxlds,
-                                    CXLClearEventPayload *pl);
-+void cxl_discard_all_event_records(CXLDeviceState *cxlds);
- 
- void cxl_event_irq_assert(CXLType3Dev *ct3d);
- 
-diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-index d397718b1b..12dee2e467 100644
---- a/hw/cxl/cxl-events.c
-+++ b/hw/cxl/cxl-events.c
-@@ -139,6 +139,19 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
-     return cxl_event_count(log) == 1;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 0000a7b41c..397c261c3c 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1023,6 +1023,73 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
+     }
  }
  
-+void cxl_discard_all_event_records(CXLDeviceState *cxlds)
++static void virtqueue_ordered_flush(VirtQueue *vq)
 +{
-+    CXLEventLogType log_type;
-+    CXLEventLog *log;
++    unsigned int i = vq->used_idx % vq->vring.num;
++    unsigned int ndescs = 0;
++    uint16_t old = vq->used_idx;
++    uint16_t new;
++    bool packed;
++    VRingUsedElem uelem;
 +
-+    for (log_type = 0; log_type < CXL_EVENT_TYPE_MAX; log_type++) {
-+        log = &cxlds->event_logs[log_type];
-+        while (!cxl_event_empty(log)) {
-+            cxl_event_delete_head(cxlds, log_type, log);
++    packed = virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED);
++
++    if (packed) {
++        if (unlikely(!vq->vring.desc)) {
++            return;
++        }
++    } else if (unlikely(!vq->vring.used)) {
++        return;
++    }
++
++    /* First expected in-order element isn't ready, nothing to do */
++    if (!vq->used_elems[i].in_order_filled) {
++        return;
++    }
++
++    /* Search for filled elements in-order */
++    while (vq->used_elems[i].in_order_filled) {
++        /*
++         * First entry for packed VQs is written last so the guest
++         * doesn't see invalid descriptors.
++         */
++        if (packed && i != vq->used_idx) {
++            virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
++        } else if (!packed) {
++            uelem.id = vq->used_elems[i].index;
++            uelem.len = vq->used_elems[i].len;
++            vring_used_write(vq, &uelem, i);
++        }
++
++        vq->used_elems[i].in_order_filled = false;
++        ndescs += vq->used_elems[i].ndescs;
++        i += vq->used_elems[i].ndescs;
++        if (i >= vq->vring.num) {
++            i -= vq->vring.num;
 +        }
 +    }
++
++    if (packed) {
++        virtqueue_packed_fill_desc(vq, &vq->used_elems[vq->used_idx], 0, true);
++        vq->used_idx += ndescs;
++        if (vq->used_idx >= vq->vring.num) {
++            vq->used_idx -= vq->vring.num;
++            vq->used_wrap_counter ^= 1;
++            vq->signalled_used_valid = false;
++        }
++    } else {
++        /* Make sure buffer is written before we update index. */
++        smp_wmb();
++        new = old + ndescs;
++        vring_used_idx_set(vq, new);
++        if (unlikely((int16_t)(new - vq->signalled_used) <
++                     (uint16_t)(new - old))) {
++            vq->signalled_used_valid = false;
++        }
++    }
++    vq->inuse -= ndescs;
 +}
 +
- CXLRetCode cxl_event_get_records(CXLDeviceState *cxlds, CXLGetEventPayload *pl,
-                                  uint8_t log_type, int max_recs,
-                                  size_t *len)
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 522d9aa589..3c9600c39c 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -949,6 +949,7 @@ static void __do_sanitization(CXLType3Dev *ct3d)
-             memset(lsa, 0, memory_region_size(mr));
-         }
+ void virtqueue_flush(VirtQueue *vq, unsigned int count)
+ {
+     if (virtio_device_disabled(vq->vdev)) {
+@@ -1030,7 +1097,9 @@ void virtqueue_flush(VirtQueue *vq, unsigned int count)
+         return;
      }
-+    cxl_discard_all_event_records(&ct3d->cxl_dstate);
- }
  
- /*
+-    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
++        virtqueue_ordered_flush(vq);
++    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+         virtqueue_packed_flush(vq, count);
+     } else {
+         virtqueue_split_flush(vq, count);
 -- 
 MST
 
