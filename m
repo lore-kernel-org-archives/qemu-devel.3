@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820D7C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 08:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6C5C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 08:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWAaP-0004h1-WD; Tue, 23 Jul 2024 04:09:30 -0400
+	id 1sWAbW-0000KC-0E; Tue, 23 Jul 2024 04:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sWAaN-0004Ym-2W
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:09:27 -0400
+ id 1sWAbV-0000GZ-64
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:10:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sWAaK-0005qS-O8
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:09:26 -0400
+ id 1sWAbP-0006DT-A9
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 04:10:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721722162;
+ s=mimecast20190719; t=1721722230;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+jP8uwunWmSmVeVAUrQ97enG+K92ZmNif+KnYjksLYc=;
- b=K3PeWDOBT0GY/2MT1MkkC0m/w2rF4WqUzVLNiYOAsxr/n7H0H/98JnIoS78rjfTDtHaGx1
- 1mkJiyre4QW83TTu2/LqcfU9+Hj8Wr6iWT8Qhqq7Y8K/NmvBa5lQRNKXjFWWKRKze6kyrD
- SMS4RdPNy/62pCTA5Sn+ZbxPhnkChg8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=L7I5F9iM/Upxm5GQhGDtAiuUoLIRrA1Ko1Oij4y+/6I=;
+ b=YS1GO3Yc0Q4TQfdQDGB3Rbceaaywo8TIRgPi2mEFssvIpl01oDZxrxOH1o4IltpakBhkBH
+ m7UwR40Ekpfp4aBbxqPnU24pEt7g9nHmdZtPDL8kmpLkWl2aPI9x4fq5WRX8MJ83AEUiCf
+ vJ43XpTAMdJDHbqm3D2KCzemlmjZ9A8=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-l_AKM7uQMaaRsjUJx3Lx1Q-1; Tue, 23 Jul 2024 04:09:19 -0400
-X-MC-Unique: l_AKM7uQMaaRsjUJx3Lx1Q-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-79f18746082so745051885a.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 01:09:19 -0700 (PDT)
+ us-mta-513-S11mfXK5NbKltcBarWSzPA-1; Tue, 23 Jul 2024 04:10:28 -0400
+X-MC-Unique: S11mfXK5NbKltcBarWSzPA-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-5d5545ca462so3121033eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 01:10:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721722158; x=1722326958;
+ d=1e100.net; s=20230601; t=1721722227; x=1722327027;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+jP8uwunWmSmVeVAUrQ97enG+K92ZmNif+KnYjksLYc=;
- b=KCqCQd9WRJ/MtuuqlMMo5COEkmct1f08rr0Q/KJc3TyFhbU7OvciiG4mFBP2kJHOzl
- 7DRmTr4yQgv3QjXCnUiGqmGEvte+SfD9mUVLpa85+crUg3mYOThm0Q/KiOGs6F53tNic
- lDdi/lAE1Y+5SmgKH2u964qgtO6TpRYmrUGAJK7VEtOxfJlpqrGo5XMaDZG10kachfPj
- Lcr8cuKQK65glLjjdNdZ5aE2hb67GPyFYYwMFsu+7HjTt3PiVL2+e5rzD8crnB4O6OSO
- NQ9asmKdIgVOhEOk0Qo4PEZZ8Yxq83HszsrKMkWeCwg6PmRjNYhlEMJccGX3jk+CjDh6
- DjCA==
+ bh=L7I5F9iM/Upxm5GQhGDtAiuUoLIRrA1Ko1Oij4y+/6I=;
+ b=A2L77Rv/pTQ/yez4UYDmoZz+7U+TiLM1EgPa4+ycyVc8/lhin7pcWOv79ULsPnaybh
+ jcwlMUYblVEkYbIpeH2SPT9OHp44cbbfb1VR1uQVEjJrBfYDv2liYfzi1tXqVh6nyxrH
+ P2zWqD7TDMBcxO/SfGDZnFg+VwUWgl7+YACcdUWGTiqkYVBZx5fO4MGZv5w4K8TkS871
+ uDUZ8tR/y3H1eQWEiLRZnV1xmmBbaEWYdycIaUtIhI/vPgxdXEx04DgpHx8K3jyI0A+L
+ exKhbjPxI1U03wfCwgvw81O3X24SfAjAZOfjY2IgbKIVb8Gql6u1Mddu/Jq61FDmxkWK
+ KNdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeOVUwC94j638uQeiShYD6fnjK5qmz8GnQf1G/jCJwoUboh3HGGgd9RebZk8v/NpgWc0Uw+uRiMUUpFZdbztgXBbBAbQ4=
-X-Gm-Message-State: AOJu0YzlbIgIb8+BPKX5wdSZ4F/dmYNrcgYpVj8HzGA0XMtApQerJzYO
- X0RDAmjPZV9NqMBT4oCySgBeitmwEknVwrdJqjhwD0r+RfoAztJMIQJj7BLhZN448v8iRaWtmju
- km9EBWEBXOsk53lVtHLj70YaXfu+YdmZnjvYwEQAardof/ldgr8iz
-X-Received: by 2002:a05:6214:f2d:b0:6b0:90d8:b698 with SMTP id
- 6a1803df08f44-6b95a6e9b14mr145750026d6.45.1721722158569; 
- Tue, 23 Jul 2024 01:09:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvfBIcmrXTE76TdpiRPU0mWRQ/eaDTPlhvLVYrQkDrDFNaN8Yqo5wbXYNTvLfRtdPfwJOA2Q==
-X-Received: by 2002:a05:6214:f2d:b0:6b0:90d8:b698 with SMTP id
- 6a1803df08f44-6b95a6e9b14mr145749816d6.45.1721722158115; 
- Tue, 23 Jul 2024 01:09:18 -0700 (PDT)
+ AJvYcCVmidosbpGNmLIyw/K6rf28LhAQFUDGYf7hzvZMnRWau+nNCmqP+iwZfy2AOfCDNK5vN85l7ZNwpvUDU38W43gL4G6xteU=
+X-Gm-Message-State: AOJu0YyhnkRzFkj2yj/xxR8/MpvSnuEDTCUSbdBEy8FS4ZS/WtQ4Dkqu
+ wC+TurNEc67i08ZQStNY7p1fYXWtw3WnkwX3KcZhBynAfoRsji4oUUWgZyNy9Q8Ec4bhXf0P+dD
+ hbe45uUvCUSspaL3/5l7AMsqSPIBvm42oFTaIm+CzohRdY/nNKM+X
+X-Received: by 2002:a4a:e90a:0:b0:5c6:9293:ed9d with SMTP id
+ 006d021491bc7-5d564f774c8mr14372986eaf.4.1721722227572; 
+ Tue, 23 Jul 2024 01:10:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFe8FTKdlIAZObcEIfJOA5sgMtT+D27zXEPzZOXn2NeglMlVhv2cyIOeRbbz5LxnTeEjv/ZwA==
+X-Received: by 2002:a4a:e90a:0:b0:5c6:9293:ed9d with SMTP id
+ 006d021491bc7-5d564f774c8mr14372964eaf.4.1721722227142; 
+ Tue, 23 Jul 2024 01:10:27 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b7b467ff80sm41153226d6.124.2024.07.23.01.09.15
+ 6a1803df08f44-6b7b467ff80sm41153226d6.124.2024.07.23.01.10.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 01:09:17 -0700 (PDT)
-Message-ID: <9245593d-4347-422d-8cd1-d1e694e93562@redhat.com>
-Date: Tue, 23 Jul 2024 10:09:13 +0200
+ Tue, 23 Jul 2024 01:10:26 -0700 (PDT)
+Message-ID: <bdcf91a8-7d3c-4b5d-bd41-3b74df88aaa4@redhat.com>
+Date: Tue, 23 Jul 2024 10:10:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/9] vfio/iommufd: Probe and request hwpt dirty
- tracking capability
+Subject: Re: [PATCH v6 4/9] vfio/{iommufd,container}: Invoke
+ HostIOMMUDevice::realize() during attach_device()
 Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+To: Joao Martins <joao.m.martins@oracle.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
 References: <20240722211326.70162-1-joao.m.martins@oracle.com>
- <20240722211326.70162-6-joao.m.martins@oracle.com>
- <2fd72e9b-c3b1-488c-a532-546ddf3612e0@redhat.com>
- <832a6eab-1f63-411c-a827-018b12264513@oracle.com>
+ <20240722211326.70162-5-joao.m.martins@oracle.com>
+ <a1cc917a-7fa7-43da-b7b7-1b69308400b0@redhat.com>
+ <eae669f6-f24f-4573-9934-2c6fb5b364ad@redhat.com>
+ <8405600f-ffa2-43c2-8e51-7b6674de11ae@redhat.com>
+ <e0ad88d2-c78d-4d28-9655-08fd5a92fe2b@oracle.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <832a6eab-1f63-411c-a827-018b12264513@oracle.com>
+In-Reply-To: <e0ad88d2-c78d-4d28-9655-08fd5a92fe2b@oracle.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -117,125 +119,178 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 7/23/24 10:00, Joao Martins wrote:
-> On 23/07/2024 08:50, Eric Auger wrote:
->> Hi Joao,
+On 7/23/24 10:05, Joao Martins wrote:
+> On 23/07/2024 08:55, Eric Auger wrote:
 >>
->> On 7/22/24 23:13, Joao Martins wrote:
->>> In preparation to using the dirty tracking UAPI, probe whether the IOMMU
->>> supports dirty tracking. This is done via the data stored in
->>> hiod::caps::hw_caps initialized from GET_HW_INFO.
+>> On 7/23/24 09:44, Cédric Le Goater wrote:
+>>> On 7/23/24 09:38, Eric Auger wrote:
+>>>> Hi Joao,
+>>>>
+>>>> On 7/22/24 23:13, Joao Martins wrote:
+>>>>> Move the HostIOMMUDevice::realize() to be invoked during the attach
+>>>>> of the device
+>>>>> before we allocate IOMMUFD hardware pagetable objects (HWPT). This
+>>>>> allows the use
+>>>>> of the hw_caps obtained by IOMMU_GET_HW_INFO that essentially tell
+>>>>> if the IOMMU
+>>>>> behind the device supports dirty tracking.
+>>>>>
+>>>>> Note: The HostIOMMUDevice data from legacy backend is static and
+>>>>> doesn't
+>>>>> need any information from the (type1-iommu) backend to be initialized.
+>>>>> In contrast however, the IOMMUFD HostIOMMUDevice data requires the
+>>>>> iommufd FD to be connected and having a devid to be able to
+>>>>> successfully
+>>>> Nit: maybe this comment shall be also added in iommufd.c before the call
+>>>> to vfio_device_hiod_realize() to avoid someone else to move that call
+>>>> earlier at some point
+>>>>> GET_HW_INFO. This means vfio_device_hiod_realize() is called in
+>>>>> different places within the backend .attach_device() implementation.
+>>>>>
+>>>>> Suggested-by: Cédric Le Goater <clg@redhat.cm>
+>>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>>>>> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>>> ---
+>>>>>   include/hw/vfio/vfio-common.h |  1 +
+>>>>>   hw/vfio/common.c              | 16 ++++++----------
+>>>>>   hw/vfio/container.c           |  4 ++++
+>>>>>   hw/vfio/helpers.c             | 11 +++++++++++
+>>>>>   hw/vfio/iommufd.c             |  4 ++++
+>>>>>   5 files changed, 26 insertions(+), 10 deletions(-)
+>>>>>
+>>>>> diff --git a/include/hw/vfio/vfio-common.h
+>>>>> b/include/hw/vfio/vfio-common.h
+>>>>> index 1a96678f8c38..4e44b26d3c45 100644
+>>>>> --- a/include/hw/vfio/vfio-common.h
+>>>>> +++ b/include/hw/vfio/vfio-common.h
+>>>>> @@ -242,6 +242,7 @@ void vfio_region_finalize(VFIORegion *region);
+>>>>>   void vfio_reset_handler(void *opaque);
+>>>>>   struct vfio_device_info *vfio_get_device_info(int fd);
+>>>>>   bool vfio_device_is_mdev(VFIODevice *vbasedev);
+>>>>> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
+>>>>>   bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>>>>>                           AddressSpace *as, Error **errp);
+>>>>>   void vfio_detach_device(VFIODevice *vbasedev);
+>>>>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>>>>> index 784e266e6aab..da12cbd56408 100644
+>>>>> --- a/hw/vfio/common.c
+>>>>> +++ b/hw/vfio/common.c
+>>>>> @@ -1537,7 +1537,7 @@ bool vfio_attach_device(char *name, VFIODevice
+>>>>> *vbasedev,
+>>>>>   {
+>>>>>       const VFIOIOMMUClass *ops =
+>>>>>          
+>>>>> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+>>>>> -    HostIOMMUDevice *hiod;
+>>>>> +    HostIOMMUDevice *hiod = NULL;
+>>>>>         if (vbasedev->iommufd) {
+>>>>>           ops =
+>>>>> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+>>>>> @@ -1545,21 +1545,17 @@ bool vfio_attach_device(char *name,
+>>>>> VFIODevice *vbasedev,
+>>>>>         assert(ops);
+>>>>>   -    if (!ops->attach_device(name, vbasedev, as, errp)) {
+>>>>> -        return false;
+>>>>> -    }
+>>>>>   -    if (vbasedev->mdev) {
+>>>>> -        return true;
+>>>>> +    if (!vbasedev->mdev) {
+>>>>> +        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>>>>> +        vbasedev->hiod = hiod;
+>>>>>       }
+>>>>>   -    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>>>>> -    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev,
+>>>>> errp)) {
+>>>>> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
+>>>>>           object_unref(hiod);
+>>>>> -        ops->detach_device(vbasedev);
+>>>>> +        vbasedev->hiod = NULL;
+>>>>>           return false;
+>>>>>       }
+>>>>> -    vbasedev->hiod = hiod;
+>>>>>         return true;
+>>>>>   }
+>>>>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>>>>> index 10cb4b4320ac..9ccdb639ac84 100644
+>>>>> --- a/hw/vfio/container.c
+>>>>> +++ b/hw/vfio/container.c
+>>>>> @@ -914,6 +914,10 @@ static bool vfio_legacy_attach_device(const
+>>>>> char *name, VFIODevice *vbasedev,
+>>>>>         trace_vfio_attach_device(vbasedev->name, groupid);
+>>>>>   +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
+>>>>> +        return false;
+>>>> don't you want to go to err_alloc_ioas instead?
+>>> hmm, the err_alloc_ioas label is in a different function
+>>> iommufd_cdev_attach().
 >>>
->>> Qemu doesn't know if VF dirty tracking is supported when allocating
->>> hardware pagetable in iommufd_cdev_autodomains_get(). This is because
->>> VFIODevice migration state hasn't been initialized *yet* hence it can't pick
->>> between VF dirty tracking vs IOMMU dirty tracking. So, if IOMMU supports
->>> dirty tracking it always creates HWPTs with IOMMU_HWPT_ALLOC_DIRTY_TRACKING
->>> even if later on VFIOMigration decides to use VF dirty tracking instead.
+>>> may be you meant the comment for routine iommufd_cdev_attach() and
+>>> label err_connect_bind ?
 >>>
->>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->>> ---
->>>  include/hw/vfio/vfio-common.h |  2 ++
->>>  hw/vfio/iommufd.c             | 20 ++++++++++++++++++++
->>>  2 files changed, 22 insertions(+)
 >>>
->>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->>> index 4e44b26d3c45..1e02c98b09ba 100644
->>> --- a/include/hw/vfio/vfio-common.h
->>> +++ b/include/hw/vfio/vfio-common.h
->>> @@ -97,6 +97,7 @@ typedef struct IOMMUFDBackend IOMMUFDBackend;
->>>  
->>>  typedef struct VFIOIOASHwpt {
->>>      uint32_t hwpt_id;
->>> +    uint32_t hwpt_flags;
->>>      QLIST_HEAD(, VFIODevice) device_list;
->>>      QLIST_ENTRY(VFIOIOASHwpt) next;
->>>  } VFIOIOASHwpt;
->>> @@ -139,6 +140,7 @@ typedef struct VFIODevice {
->>>      OnOffAuto pre_copy_dirty_page_tracking;
->>>      bool dirty_pages_supported;
->>>      bool dirty_tracking;
->>> +    bool iommu_dirty_tracking;
->>>      HostIOMMUDevice *hiod;
->>>      int devid;
->>>      IOMMUFDBackend *iommufd;
->>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->>> index 2324bf892c56..7afea0b041ed 100644
->>> --- a/hw/vfio/iommufd.c
->>> +++ b/hw/vfio/iommufd.c
->>> @@ -110,6 +110,11 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
->>>      iommufd_backend_disconnect(vbasedev->iommufd);
->>>  }
->>>  
->>> +static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
->>> +{
->>> +    return hwpt && hwpt->hwpt_flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>> +}
->>> +
->>>  static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->>>  {
->>>      ERRP_GUARD();
->>> @@ -246,6 +251,17 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>>          }
->>>      }
->>>  
->>> +    /*
->>> +     * This is quite early and VFIO Migration state isn't yet fully
->>> +     * initialized, thus rely only on IOMMU hardware capabilities as to
->>> +     * whether IOMMU dirty tracking is going to be requested. Later
->>> +     * vfio_migration_realize() may decide to use VF dirty tracking
->>> +     * instead.
->>> +     */
->>> +    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
->>> +        flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>> +    }
->>> +
->>>      if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
->>>                                      container->ioas_id, flags,
->>>                                      IOMMU_HWPT_DATA_NONE, 0, NULL,
->>> @@ -255,6 +271,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>>  
->>>      hwpt = g_malloc0(sizeof(*hwpt));
->>>      hwpt->hwpt_id = hwpt_id;
->>> +    hwpt->hwpt_flags = flags;
->>>      QLIST_INIT(&hwpt->device_list);
->>>  
->>>      ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
->>> @@ -265,8 +282,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>>      }
->>>  
->>>      vbasedev->hwpt = hwpt;
->>> +    vbasedev->iommu_dirty_tracking = iommufd_hwpt_dirty_tracking(hwpt);
->>>      QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
->>>      QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
->>> +    container->bcontainer.dirty_pages_supported |=
->>> +                                vbasedev->iommu_dirty_tracking;
->> Is it possible to have several devices with different
+>>> Thanks,
+>>>
+>>> C.
+>>>
+>>>
+>>>>> +    }
+>>>>> +
+>>>>>       group = vfio_get_group(groupid, as, errp);
+>>>>>       if (!group) {
+>>>>>           return false;
+>>>>> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+>>>>> index 7e23e9080c9d..ea15c79db0a3 100644
+>>>>> --- a/hw/vfio/helpers.c
+>>>>> +++ b/hw/vfio/helpers.c
+>>>>> @@ -689,3 +689,14 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev)
+>>>>>       subsys = realpath(tmp, NULL);
+>>>>>       return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
+>>>>>   }
+>>>>> +
+>>>>> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
+>>>>> +{
+>>>>> +    HostIOMMUDevice *hiod = vbasedev->hiod;
+>>>>> +
+>>>>> +    if (!hiod) {
+>>>>> +        return true;
+>>>>> +    }
+>>>>> +
+>>>>> +    return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod,
+>>>>> vbasedev, errp);
+>>>>> +}
+>>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>>>> index 5e2fc1ce089d..2324bf892c56 100644
+>>>>> --- a/hw/vfio/iommufd.c
+>>>>> +++ b/hw/vfio/iommufd.c
+>>>>> @@ -403,6 +403,10 @@ static bool iommufd_cdev_attach(const char
+>>>>> *name, VFIODevice *vbasedev,
+>>>>>         space = vfio_get_address_space(as);
+>>>>>   +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
+>>>>> +        return false;
+>> Hum sorry my previous comment was targetting that place. I think
+>> unrolling is needed up to put_address_space
 >>
->> iommu_dirty_tracking value in the same container? In other words would they be attached to different container/ioas?
+>> so effectively this does not match err_alloc_ioas but I guess we would
+>> need another label
 >>
-> In theory, yes, they can be in the same container/ioas. But I guess with IOMMUFD
-> it's possible that we can allocate different containers for different devices
-> given that we can manipulate/pass a different IOMMUFD object.
-Yes I would have suspected they would end up in different
-containers/ioas but I am not sure.
+> You're right. We haven't yet attached rthe device and that's what err_alloc_ioas
+> would do. Adding another label not sure would make things cleaner given the
+> ordering requirement. So maybe this instead?
 >
-> In pratice I don't know if such HW platforms even exist where different IOMMU
-> instances present different value of dirty tracking, given that this is a IOMMU
-> feature, rather than endpoint dependent. In x86 it's homogeneous, and likely on
-> smmuv3 server too. There are indeed endpoint related features which may be
-on ARM you may have several SMMU instances. I do agree that the
-likelyhood of those instances having heterogeneous dirty page tracking
-support is low but well I don't know. Maybe we should add a wanrning at
-least, later on if this case arises.
+> @@ -482,7 +483,8 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice
+> *vbasedev,
+>      space = vfio_get_address_space(as);
+>
+>      if (!vfio_device_hiod_realize(vbasedev, errp)) {
+> -        return false;
+> +        vfio_put_address_space(space);
+> +        goto err_connect_bind;
+>      }
+>
+>      /* try to attach to an existing container in this space */
+>
+With that addition
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 Eric
-> different in IOMMU instances, but those only reflect on logic that the device
-> needs to implement (e.g. PCIe PRS).
->
-> Having said that I can only think of mdevs, where the realize() will block
-> migration because the vbasedev->iommu_dirty_tracking is 0 should the mdev not
-> support dma-logging vfio (but it doesn't go via this codepath above anyhow).
->
 
 
