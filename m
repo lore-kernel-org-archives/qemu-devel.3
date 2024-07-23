@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955FBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6517C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWJxX-0002vy-G4; Tue, 23 Jul 2024 14:09:59 -0400
+	id 1sWK6I-0002M5-E8; Tue, 23 Jul 2024 14:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwv-0001Ik-Oj
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:09:25 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWK6F-0002BW-O5
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:18:59 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWJwr-0001Db-N0
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:09:21 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3970f9331deso23590735ab.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:09:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWK6D-0003Py-Mt
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:18:59 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-368f92df172so2748481f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721758149; x=1722362949;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6NVVykiWpqYjvD45AibIwwzA8pM6gZ3sTQWN+WDs9eM=;
- b=vy9IW+yb5ZvHlHDXR9l27hPTuodJP9CYJbLIRqWQl7M/1ho9EsDYDpSnsrkH6kyWer
- HFf28khJCxKhqkg073Le9G4NpH1jq+LA22FtdCTyePDTCjaI0Y/tXujarAcs2+n2qU3D
- Ln2JiJGzwzFhNfFmpP2+ATjPpWkDqw5yqg20tJQVq2GON08UujeR+zyEDhK8gUSOXnM3
- hmn+QrxKKqoWvS0qJHdBMIvLjGHCpgKXE3S9CN3b209ZHTyWTBzk7Wk5x0hm8YPNwqF7
- xFaWPF1w8KcFzdr+5TLvqdz9OMnEhrPYxjeHVp55Q68W9NzEL1hxClq22NFlFTUJeopL
- qz2w==
+ d=linaro.org; s=google; t=1721758734; x=1722363534; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vG3d6DT4g3RTpV52ZpbZlI+FaEaMRrTOU5HFxUCX76U=;
+ b=tMjlGTxyeboy5TTnnJRSldCg3E4nVZKFnTcwKZVv+hfQHDNA9rop/jZpeEegUAe7sZ
+ vle7kA7ZWdQCYfKIIO5uBt/FSZUYYwWUo+Hzj8VsZEKpc5AlesSLmu/+bClzPpPvKy6O
+ 8C3cRCAgX9lOSPPpufgPBLWIm0AksXXU9xWgFvjVEHjo+y41B5ihTNNHLy0FkVyVHWqf
+ NpNMAyfMc2chp9fgKHkUMU8aEB8uVRMEr5Len/SfT5Fx1zuJszIIAy2iVLctD6EnP+nY
+ d6pI5nbFdkcsgyI135ZRrqi/iMIA8z1ok6pMLCK5JE5lA0wPsMkKQRstO04B8uAI2g6h
+ RCaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721758149; x=1722362949;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6NVVykiWpqYjvD45AibIwwzA8pM6gZ3sTQWN+WDs9eM=;
- b=BEuAt07ViAjZT3BEHu2vucQq+WKl8FJfgKGRxtmrgkfWSM9iu8SPEX9z/j9lXtPjcp
- Fe1QwtfmAv1GcyjRvRgfTodhto8mmcPdjru+sMvyj5BcJTeJOVQSH5Q3zMO/vStnF7lY
- cR1CoaBtBSJ00aYFsHYjPL/WSC8aDX8A8aSZlKrRrm9KK2DXEHYzkLEiRjxajBA1QFYk
- uBDeaq0CLue7M8nW9iAJAPESAXKWDGUYMBrlE9G2SowNbXHi2oqxB5RuSJcn1wCY/swg
- JwVqQH2amFUh61SPBkB9qy/rU7iO2apBwLgic81gWGch7jFh1X/1YmH0mfwNUuojQK8I
- kQng==
-X-Gm-Message-State: AOJu0YxBp8wnviAho0F2v64jrFGrdUe9Jg0R0UQI4xaDwTilA1gNS+bP
- UoX09wmmtL0N6cJ8phdk1HhIandqABXNHz26zDcScun2taQdeUo1lLqchF37E1qLbiWbkfjyo50
- UmPQ=
-X-Google-Smtp-Source: AGHT+IFPR3Z1Mqosu+CCA9S4Eug3U3NuMK9ezFvt29IY5WO/HvW8TZGbm5vXooT5dMVU3JykdlaqIQ==
-X-Received: by 2002:a05:6e02:1a6a:b0:376:410b:ae67 with SMTP id
- e9e14a558f8ab-3993ffa3d27mr116355045ab.16.1721758149299; 
- Tue, 23 Jul 2024 11:09:09 -0700 (PDT)
-Received: from dune.bsdimp.com ([50.253.99.174])
+ d=1e100.net; s=20230601; t=1721758734; x=1722363534;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vG3d6DT4g3RTpV52ZpbZlI+FaEaMRrTOU5HFxUCX76U=;
+ b=rqCy+ZfRX2OsmkOv7naQ4C7fEDr5lUKx9qV9nsjI7IfqwXKz/Nx78kVy/lb7rh9UVg
+ xwz90IOnOi7CpnIE4KyvUDNKUXozYirtnnEGsNRAgMjRHwjv4oDsHq33rny97xdqwE6W
+ 2E53B/P444jlGJvq4q6JfetFT0ryIHJt0IW20TlQ12XYX8EvlMjT/DOd0ZpLYTOkjixV
+ w1ptWi7uYTThu85LWW4lYDqqQZl/krvBiOLb7s6VKw+3Rky91nyA5cSdq3kXQlqpiDjt
+ a98ryKEwbv1g0lA38V0JFFHstCUBM0MlZaWIbhZHM7AxHEPn+rkA1X+nWNreJzCCYkU5
+ h48g==
+X-Gm-Message-State: AOJu0YyM/hLmxx5hf4jjtndU4lMgYQ7tlHBIdUJE4Xun1Kk+shE1iEhe
+ 7EwR5v0ZK4ZCXaBaQQFmbsMbpeCTypDcqRe8ZkGOOB1gELn2GHbYA0pV7Bx4owwE3kfTX36kgWH
+ w04c=
+X-Google-Smtp-Source: AGHT+IGj05aWK5QgZFj/2geDfW+a04XjSDDnF+6EyisVXheXj8dQzdOsjk+iJa/2UzCRBAdI6Uu3hA==
+X-Received: by 2002:a05:6000:2c5:b0:368:665a:4c64 with SMTP id
+ ffacd0b85a97d-369bae30740mr6539755f8f.5.1721758734031; 
+ Tue, 23 Jul 2024 11:18:54 -0700 (PDT)
+Received: from localhost.localdomain ([176.187.208.14])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-397f7a2827csm33361775ab.53.2024.07.23.11.09.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 11:09:08 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
+ ffacd0b85a97d-3687868ac48sm12216796f8f.29.2024.07.23.11.18.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 23 Jul 2024 11:18:53 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Peter Maydell <peter.maydell@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/14] bsd-user: Define TARGET_SIGSTACK_ALIGN and use it to
- round stack
-Date: Tue, 23 Jul 2024 12:07:23 -0600
-Message-ID: <20240723180725.99114-13-imp@bsdimp.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240723180725.99114-1-imp@bsdimp.com>
-References: <20240723180725.99114-1-imp@bsdimp.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/char/goldfish: Use DMA memory API
+Date: Tue, 23 Jul 2024 20:18:50 +0200
+Message-ID: <20240723181850.46000-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::12f;
- envelope-from=imp@bsdimp.com; helo=mail-il1-x12f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,85 +95,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most (all?) targets require stacks to be properly aligned. Rather than a
-series of ifdefs in bsd-user/signal.h, instead use a manditory #define
-for all architectures.
+Rather than using address_space_rw(..., 0 or 1),
+use the simpler DMA memory API which expand to
+the same code. This allows removing a cast on
+the 'buf' variable which is really const. Since
+'buf' is only used in the CMD_READ_BUFFER case,
+we can reduce its scope.
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- bsd-user/aarch64/target_arch_signal.h | 2 ++
- bsd-user/arm/target_arch_signal.h     | 2 ++
- bsd-user/i386/target_arch_signal.h    | 2 ++
- bsd-user/signal.c                     | 9 +--------
- bsd-user/x86_64/target_arch_signal.h  | 2 ++
- 5 files changed, 9 insertions(+), 8 deletions(-)
+ hw/char/goldfish_tty.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/bsd-user/aarch64/target_arch_signal.h b/bsd-user/aarch64/target_arch_signal.h
-index bff752a67ab..b72ba7aa504 100644
---- a/bsd-user/aarch64/target_arch_signal.h
-+++ b/bsd-user/aarch64/target_arch_signal.h
-@@ -77,4 +77,6 @@ struct target_sigframe {
-     target_ucontext_t   sf_uc;  /* saved ucontext */
- };
+diff --git a/hw/char/goldfish_tty.c b/hw/char/goldfish_tty.c
+index f8ff043c396..cdff46bc13b 100644
+--- a/hw/char/goldfish_tty.c
++++ b/hw/char/goldfish_tty.c
+@@ -16,6 +16,7 @@
+ #include "qemu/log.h"
+ #include "trace.h"
+ #include "exec/address-spaces.h"
++#include "sysemu/dma.h"
+ #include "hw/char/goldfish_tty.h"
  
-+#define TARGET_SIGSTACK_ALIGN 16
+ #define GOLDFISH_TTY_VERSION 1
+@@ -69,7 +70,6 @@ static uint64_t goldfish_tty_read(void *opaque, hwaddr addr,
+ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
+ {
+     uint32_t to_copy;
+-    uint8_t *buf;
+     uint8_t data_out[GOLFISH_TTY_BUFFER_SIZE];
+     int len;
+     uint64_t ptr;
+@@ -97,8 +97,8 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
+         while (len) {
+             to_copy = MIN(GOLFISH_TTY_BUFFER_SIZE, len);
+ 
+-            address_space_rw(&address_space_memory, ptr,
+-                             MEMTXATTRS_UNSPECIFIED, data_out, to_copy, 0);
++            dma_memory_read_relaxed(&address_space_memory, ptr,
++                                    data_out, to_copy);
+             qemu_chr_fe_write_all(&s->chr, data_out, to_copy);
+ 
+             len -= to_copy;
+@@ -109,9 +109,9 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
+         len = s->data_len;
+         ptr = s->data_ptr;
+         while (len && !fifo8_is_empty(&s->rx_fifo)) {
+-            buf = (uint8_t *)fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
+-            address_space_rw(&address_space_memory, ptr,
+-                            MEMTXATTRS_UNSPECIFIED, buf, to_copy, 1);
++            const uint8_t *buf = fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
 +
- #endif /* TARGET_ARCH_SIGNAL_H */
-diff --git a/bsd-user/arm/target_arch_signal.h b/bsd-user/arm/target_arch_signal.h
-index 02b2b33e07a..10f96b8bfc9 100644
---- a/bsd-user/arm/target_arch_signal.h
-+++ b/bsd-user/arm/target_arch_signal.h
-@@ -86,4 +86,6 @@ struct target_sigframe {
-     target_mcontext_vfp_t sf_vfp; /* actual saved VFP context */
- };
++            dma_memory_write_relaxed(&address_space_memory, ptr, buf, to_copy);
  
-+#define TARGET_SIGSTACK_ALIGN 8
-+
- #endif /* TARGET_ARCH_SIGNAL_H */
-diff --git a/bsd-user/i386/target_arch_signal.h b/bsd-user/i386/target_arch_signal.h
-index 279dadc22c7..2c14153ab6b 100644
---- a/bsd-user/i386/target_arch_signal.h
-+++ b/bsd-user/i386/target_arch_signal.h
-@@ -88,4 +88,6 @@ struct target_sigframe {
-     uint32_t    __spare__[2];
- };
- 
-+#define TARGET_SIGSTACK_ALIGN 8
-+
- #endif /* TARGET_ARCH_SIGNAL_H */
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index 8b6654b91da..da49b9bffc1 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -728,14 +728,7 @@ static inline abi_ulong get_sigframe(struct target_sigaction *ka,
-         sp = ts->sigaltstack_used.ss_sp + ts->sigaltstack_used.ss_size;
-     }
- 
--/* TODO: make this a target_arch function / define */
--#if defined(TARGET_ARM)
--    return (sp - frame_size) & ~7;
--#elif defined(TARGET_AARCH64)
--    return (sp - frame_size) & ~15;
--#else
--    return sp - frame_size;
--#endif
-+    return ROUND_DOWN(sp - frame_size, TARGET_SIGSTACK_ALIGN);
- }
- 
- /* compare to $M/$M/exec_machdep.c sendsig and sys/kern/kern_sig.c sigexit */
-diff --git a/bsd-user/x86_64/target_arch_signal.h b/bsd-user/x86_64/target_arch_signal.h
-index ca24bf1e7f7..f833ee66cef 100644
---- a/bsd-user/x86_64/target_arch_signal.h
-+++ b/bsd-user/x86_64/target_arch_signal.h
-@@ -97,4 +97,6 @@ struct target_sigframe {
-     uint32_t    __spare__[2];
- };
- 
-+#define TARGET_SIGSTACK_ALIGN 16
-+
- #endif /* TARGET_ARCH_SIGNAL_H */
+             len -= to_copy;
+             ptr += to_copy;
 -- 
-2.45.1
+2.41.0
 
 
