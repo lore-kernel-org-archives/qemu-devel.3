@@ -4,83 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9263FC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C86BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWKDI-0004tr-Gy; Tue, 23 Jul 2024 14:26:16 -0400
+	id 1sWKKu-0003ly-CO; Tue, 23 Jul 2024 14:34:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWKDG-0004oE-U0
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:26:14 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWKDF-0004vH-4S
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:26:14 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4266ea6a488so51131545e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721759171; x=1722363971; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=wTe0tRatMOKSj/e9qM1gwluwhZ4Ul7UXApUU9qBO4AY=;
- b=rspqBeGr9hsIEoI8TEbvX0lFqMONd0MfEJlswiJeSpl/9qeI8eNkBJTJV+VVkvloYi
- JrtPbClh/xUNxjqQeiHIURFpXNjz3ZbAZhKLoOH+PsEWjBa9AlHWdlSk4GkYn/LQz/va
- 9pbGjFA2+jQ7YkrDiwkoQbIjbNHfT0AhDuZnt5c6omq5DB3nhNBxb6Zu/qYJdCtVSdlY
- dnxeY8v4TG8r1XtP0KgptghbOwM06BBc0WklfGljl5T59aBZHNr9FOQjkt8UNfxyE0IU
- QOeOb3Z15AYXHcBwfEemWHyFEoijXYZBSnQOtvUCmbiqIizOLYZYVUKjOqosoIfIDE8R
- kwxA==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWKKs-0003jL-St
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:34:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWKKp-0005rU-UN
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:34:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721759641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=eLbGcfNo7N1HpqiSwiBbnDz11SGNDsqj0d8vOjoNlmo=;
+ b=Y478uy2Kl8tybpIcM20MitUpX7gf/8Pr0r+maHxT7Ej5DGkdMTFxXw4d1xlrmYypiGGeqv
+ zNb4RNoxWmbn5DglZjfGhQFv4wnZMnXPIcEAT5VDSSVkq2HEU7eXtG4j44X07f7a+ln6xH
+ kNTUEWFv8bxrhrN3Jgzsz3nqLJB9VPY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-392-Da4KVcRwPNOz3Xr9UBBAFQ-1; Tue, 23 Jul 2024 14:33:55 -0400
+X-MC-Unique: Da4KVcRwPNOz3Xr9UBBAFQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3687f5a2480so3397234f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:33:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721759171; x=1722363971;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wTe0tRatMOKSj/e9qM1gwluwhZ4Ul7UXApUU9qBO4AY=;
- b=eIgc7Mokz20CqrgEmAG4ugTD3dwPLngLQdxMC0VydqCazoNwebDpZFPallQ7qAjO4z
- jFYpYYJ8aq2FPbNAKYwYYq0swOHEOYq0DeIba0mkfaGQQHXjHgdIIS7Qk9EmBKXBK6bH
- hOO3FMjMNx2FlnKSBPrq4TVTwI8+4x26B6MKO66EI1jwXQc4MPAe/pnhEdmFHxgVT4XX
- Tf8mgNMNn68/61r4b7AFxb9PCHSNxWo6Gl/Cv/z7zdBbEnMUDRN68Kl+TJAIDCVX1RTF
- rafaEYREiKCCi3k/1CQF4x70ilBNyWJSV10l2EigTWAgfy5b4x/KiTIi1sdgka0AEukC
- yyVg==
-X-Gm-Message-State: AOJu0YwZiDl8/Yz4bqesXhV+Bvm3nJoRGp5f52/zWj4ZG28sOHlqtbdN
- 4gysv/4tTLlsbdxrdSaitBE38PSlv9UAOYLetk6Qgm728YR4mpM9A4O6n+cjM2M=
-X-Google-Smtp-Source: AGHT+IH3nOPDWEXwuyaqgdBzi2M4vJLy8+TL1hDDZ9NouR/FSBqmGMMIAwlK2JxKajGQcaB8gkXMlw==
-X-Received: by 2002:a05:600c:511d:b0:426:545b:ec00 with SMTP id
- 5b1f17b1804b1-427f7ac24fdmr2763695e9.19.1721759170988; 
- Tue, 23 Jul 2024 11:26:10 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.14])
+ d=1e100.net; s=20230601; t=1721759634; x=1722364434;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=eLbGcfNo7N1HpqiSwiBbnDz11SGNDsqj0d8vOjoNlmo=;
+ b=EjeRW/GCukHE8k76lXVsqQFS8LgoDXSlAHKbfgoRxeexQ2DMdNi/dyaG+G5o+vOHQe
+ raoqWvKOzPH1K6WsvGDL95CXi8kksJ00aqL4iQ3nUKUC6A5Kiwf/RiHAov4TkZiy1gQi
+ xmfRRbvUfmijnStlwuTzGWdMrJKRNHw1OuoiSG+WNZla+WnneyIgwZubhkRg6TiijpIK
+ dBHo1eaj72zdH9qbWkubwvrTgkfO7RhRYSRe3RYh3cJxplDnSsFE766PPgaiyqRuBT0a
+ BGt/U9oazPO4YlXdAK6zU70d6CaMS3SCCLLxnctLTVcvklEOO9OfpTc/Dz7olPASFK78
+ d7ZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKBlvZRllGM0txln6hht0CHOMqr832KgDj7fanQMsGQssfNm2lVSPJrz3hoGNeSa3p2SxdJ39/bB/iV5NRg2dzbmRgEec=
+X-Gm-Message-State: AOJu0YxsJz8ZXh0JuMRudqEl7NOELXH7e7hL4hyDA4Zv8GFfnU2TIK3k
+ kzfq1wbDq/NyV8waS6LKWWtyM5wF3jw9exX5S9eRzoUyGsnf/DHMJQ4PQfCLSxKNWOF4RuNAOuV
+ Bgir3PNtYYWJ3d3J/uZfW5aGpshtyMwBgVMELe77XrFANbyycLE9R
+X-Received: by 2002:a5d:6489:0:b0:368:4e38:a349 with SMTP id
+ ffacd0b85a97d-369dec0ae25mr2798717f8f.22.1721759633962; 
+ Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyWbFRXM430QEn7kKHL/FUsAofc23rZt35KUmz7VM8k18p5j/h7nsJhC5q5v5N2A3+oD2jUw==
+X-Received: by 2002:a5d:6489:0:b0:368:4e38:a349 with SMTP id
+ ffacd0b85a97d-369dec0ae25mr2798707f8f.22.1721759633554; 
+ Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c72f:ed00:9dc2:1adb:d133:4434?
+ (p200300cbc72fed009dc21adbd1334434.dip0.t-ipconnect.de.
+ [2003:cb:c72f:ed00:9dc2:1adb:d133:4434])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d69070desm185376015e9.24.2024.07.23.11.26.09
+ 5b1f17b1804b1-427d2a53ccfsm209878455e9.11.2024.07.23.11.33.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 11:26:10 -0700 (PDT)
-Message-ID: <bc14cdd1-35ca-4fc8-b67b-57856c49b7d4@linaro.org>
-Date: Tue, 23 Jul 2024 20:26:08 +0200
+ Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
+Message-ID: <dbfa188d-a7cd-4036-897b-f59307ec8fcb@redhat.com>
+Date: Tue, 23 Jul 2024 20:33:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD()
- in nubus_virtio_mmio_realize()
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240723161802.1377985-1-zhao1.liu@intel.com>
- <de954795-ecec-435e-8166-989296c56bfd@linaro.org>
+Subject: Re: [PATCH] system/physmem: Where we assume we have a RAM MR, assert
+ it
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240723170513.1676453-1-peter.maydell@linaro.org>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-In-Reply-To: <de954795-ecec-435e-8166-989296c56bfd@linaro.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240723170513.1676453-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,70 +152,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 18:10, Philippe Mathieu-Daudé wrote:
-> On 23/7/24 18:18, Zhao Liu wrote:
->> According to the comment in qapi/error.h, dereferencing @errp requires
->> ERRP_GUARD():
->>
->> * = Why, when and how to use ERRP_GUARD() =
->> *
->> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
->> * - It must not be dereferenced, because it may be null.
->> ...
->> * ERRP_GUARD() lifts these restrictions.
->> *
->> * To use ERRP_GUARD(), add it right at the beginning of the function.
->> * @errp can then be used without worrying about the argument being
->> * NULL or &error_fatal.
->> *
->> * Using it when it's not needed is safe, but please avoid cluttering
->> * the source with useless code.
->>
->> In nubus_virtio_mmio_realize(), @errp is dereferenced without
->> ERRP_GUARD().
->>
->> Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
->> method - is never passed a null @errp argument, it should follow the
->> rules on @errp usage.  Add the ERRP_GUARD() there.
->>
->> Reviewed-by: Markus Armbruster <armbru@redhat.com>
->> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
->> ---
->> v2: Used Markus' words in commit message and added his r/b tag.
->> ---
->>   hw/nubus/nubus-virtio-mmio.c | 1 +
->>   1 file changed, 1 insertion(+)
+On 23.07.24 19:05, Peter Maydell wrote:
+> In the functions invalidate_and_set_dirty() and
+> cpu_physical_memory_snapshot_and_clear_dirty(), we assume that we
+> are dealing with RAM memory regions. In this case we know that
+> memory_region_get_ram_addr() will succeed. Assert this before we
+> use the returned ram_addr_t in arithmetic.
 > 
-> Patch queued, thanks!
+> This makes Coverity happier about these functions: it otherwise
+> complains that we might have an arithmetic overflow that stems
+> from the possible -1 return from memory_region_get_ram_addr().
+> 
+> Resolves: Coverity CID 1547629, 1547715
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-Squashing:
+-- 
+Cheers,
 
--- >8 --
-diff --git a/hw/nubus/nubus-virtio-mmio.c b/hw/nubus/nubus-virtio-mmio.c
-index a5558d3ec28..7a98731c451 100644
---- a/hw/nubus/nubus-virtio-mmio.c
-+++ b/hw/nubus/nubus-virtio-mmio.c
-@@ -7,6 +7,7 @@
-   */
+David / dhildenb
 
-  #include "qemu/osdep.h"
-+#include "qapi/error.h"
-  #include "hw/nubus/nubus-virtio-mmio.h"
-
----
-
-to avoid:
-
-../hw/nubus/nubus-virtio-mmio.c:26:5: error: call to undeclared function 
-'ERRP_GUARD'; ISO C99 and later do not support implicit function 
-declarations [-Wimplicit-function-declaration]
-     ERRP_GUARD();
-     ^
-1 error generated.
-
-Better to test your patches ;)
-
-Regards,
-
-Phil.
 
