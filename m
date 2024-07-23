@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765E1C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759B8C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWCW6-0001rY-G7; Tue, 23 Jul 2024 06:13:10 -0400
+	id 1sWCXj-0000De-RR; Tue, 23 Jul 2024 06:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWCW4-0001ls-Um
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:13:08 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sWCXi-000094-PZ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:14:50 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWCW3-00009S-DZ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:13:08 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3687ea0521cso3706808f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:13:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sWCXg-0000ec-JL
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:14:50 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70d18112b60so1665549b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721729586; x=1722334386; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=XOOYb6uJD6xuI2PBiQx7StOwg7J+ymIXxQsLdRfFK8c=;
- b=F1rJfObqXxjjEyr5nZ+bgVTJN/e/3gjEmOZkup9J6JDeg1oLG4CmqMPHunejwB2v5M
- s0Mxi2wY5k7uzeCDVnSu/ERYRuL8xVzwVrobUEaUD6BVD8HPLSbkwHS5TdzHzazfGlXd
- ovlyC4ObkhJvBvcJzxEWwM+aLoQ/XWcubtxVq5OLIvk9daIxeNpbwomCwklPR/524Mwc
- KfYrvEIVnJvbUPuf1vtYrTwA1I9WFu1zPtifuVZsC/BvY3bWr92F0pC6Wnq1HaAcuk0+
- 9NXRPcERbWDXqR/SrwGrkGqDs67jPGZy2dLeS6GeQowiJvVSObm3zyZAC4Cv9hjetWeF
- vifg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721729586; x=1722334386;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721729686; x=1722334486;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XOOYb6uJD6xuI2PBiQx7StOwg7J+ymIXxQsLdRfFK8c=;
- b=bsPLfT3+I9zU2mttEDN+OnsXH4S2HwNMzySC9DUdl9QNSY1+CMSHeZlCJjjY/zePaD
- b2QR6P3Db+ghNGf5gnKpMWJCn2/8q5mZ0aatgODxqm9h+bMwQggmFiVvgiLRfGQbJXZ8
- 0kIb682kQkS6rFZd/XzD+/yVNmcAwB/1XPFDOV9cobNh7m+tkp84FZyU6pORQtelpEWK
- 2MPsO1Yk+mDjC3C9OSywoIM5b5lkB/KlMHfcL1U54DfQKMgd5q0WbgrjvQ3A/bZ5aPip
- 0v/GVbbXOyiIaMIgVZbzxYUJsemoOzHnrlfTdag85EkeDJVESBgZSHJ45M9gCqVdxP0X
- QvcQ==
+ bh=h/Jhl9q3azKsjjZoesAFf4VCmBVR9zWjLPQ4d9xRNnk=;
+ b=vZcSjkwyYZrD2aOtFJC+AVa3m63dVsFnWD+fObSJhMFWMH4VwWwlyn4UslpZ+oNa5x
+ 2MwUhVP83PaNdo0iYvINsFV3r1NcI7n8VncXNW/O8HJjNAU7UtMwsbgN7jvDaVbXPZD6
+ MpaPCqxqO7wbYT9SCyt/Bx+kuXL+SFODaq7mLGAC0AItoyuwG2EKN23tJ2ZJ7Oj5HDdZ
+ aqENpCkRCovCElfljbyotTBZ4NWZHuLg91qk5o7g0pzGRHd1tjRY9pZQJq80M2EyNXd2
+ gXWFljnghXGicUKBJRKG1G2TcoV3wa0HtMemiYe3AWiDR0gTBMX2HfxMbB0Tt0SgFu6E
+ Gflw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721729686; x=1722334486;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h/Jhl9q3azKsjjZoesAFf4VCmBVR9zWjLPQ4d9xRNnk=;
+ b=s1iFZw1wJeU2Ju6SK9kShz14bABMBGOLS4p0JyqswRnHygp1rPpW4rS/20Aiz9xkib
+ gv+dk78IELbBkx2Em2N9EYkwIbyUnB+uVQ8i7k/XEK7nAyGvXu2zzcW6KXNQdBZovJMU
+ Q/80nb8aCo918ZbmYGdE1pbi81QXVB4IMIuKpAs/5rm7PAf96bkmdcit0xdzS9kcI8Pg
+ V+M3mQVTsezx3yqraM5+FipS+0itCfRHv+Y0V+yDb6E63zzjGZnaTQo2LY1+WqtoAcGr
+ wBZl4aeVMOXk733f17sRB5W3HA4nxljI5UkURTXh7ANQFdl1rYqizFY1VEZe0dOYXJt/
+ XGRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1MN2pU1MQw+8gccN0H4dYAMhoXo0qneJXHS/DstnYAfqHoeNIDCR+16XE/LzUJrnx14WjMKprJaGmzJ53ZN7/i/4hsLg=
-X-Gm-Message-State: AOJu0YyOY+AMDJE4GwaNJU8+sjjbyI6nBJqiTMJbnb0RPak29QLrKOC5
- +MG6/j2GlI9VWXdl+5Vf63P1xzWVma2IqGSzilSiOeejvX77eIj83KTrU5G0Dk0=
-X-Google-Smtp-Source: AGHT+IFVhuwP/f4UkcV+G8Xbfy5tY/Tj9itNsu2zPijgU+fg7ZqMwU2RLMl4u6pUt2IiHGVXojGG1g==
-X-Received: by 2002:a5d:6911:0:b0:368:e634:1520 with SMTP id
- ffacd0b85a97d-369bb2d54cfmr6758456f8f.59.1721729585739; 
- Tue, 23 Jul 2024 03:13:05 -0700 (PDT)
-Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
+ AJvYcCUAoaELASJLA1GnPbYzp5lfnSJH2x14kVCJhVGivUzTCJ6FLF+Orz0+SVZAGARiPaoVHDfJcrkwxjP3/DGu/XfxQd2GnkI=
+X-Gm-Message-State: AOJu0YweVoG1hOslKkpeyMORlr9y6wQkI761OvVjzQsocuGvJgSQb9RS
+ yQ1R73LWL4by17Pv4wAwyIMQW6XVoQxvBGB6DhxgSgDYnHH5KMQB4np2cqGx3EU=
+X-Google-Smtp-Source: AGHT+IH/Qot6Zuf134F0i500oPjr91m9fDEVOI1/EDPUO6MrBzG3m6rwcGQ89nboVrmMI6K1gH0eIg==
+X-Received: by 2002:aa7:90d2:0:b0:70d:15a1:f052 with SMTP id
+ d2e1a72fcca58-70e80753666mr2347610b3a.1.1721729686399; 
+ Tue, 23 Jul 2024 03:14:46 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ed580sm10983707f8f.112.2024.07.23.03.13.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:13:05 -0700 (PDT)
-Date: Tue, 23 Jul 2024 13:11:15 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: 
-Subject: Re: [RFC PATCH v5 2/8] build deps: update lcitool to include rust bits
-User-Agent: meli 0.8.6
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <49e451adf4a3203760fb671e7509b24a7e31976f.1721648163.git.manos.pitsidianakis@linaro.org>
- <3514d341-f41c-4723-8306-691734f7ff6f@linaro.org>
-In-Reply-To: <3514d341-f41c-4723-8306-691734f7ff6f@linaro.org>
-Message-ID: <h2n1s.s6ji1hlyfity@linaro.org>
+ d2e1a72fcca58-70cff5a149csm6637963b3a.169.2024.07.23.03.14.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 03:14:46 -0700 (PDT)
+Message-ID: <d5f7e8f5-9085-4330-9408-f3ecab3d3883@daynix.com>
+Date: Tue, 23 Jul 2024 19:14:43 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] ui: fixes for dbus clipboard hanling
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240717171541.201525-1-marcandre.lureau@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240717171541.201525-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,25 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Richard,
+On 2024/07/18 2:15, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> -display dbus clipboard is broken after a client reconnection. The two main
+> issues are capabilities not renegotiated (and thus guest agent not fully
+> functional), and qemu clipboard serial not correctly reset.
+> 
+> Marc-André Lureau (4):
+>    ui: add more tracing for dbus
+>    ui/vdagent: improve vdagent_fe_open() trace
+>    ui/vdagent: notify clipboard peers of serial reset
+>    ui/vdagent: send caps on fe_open
+> 
+>   audio/dbusaudio.c   |  2 +-
+>   ui/clipboard.c      |  2 ++
+>   ui/dbus-clipboard.c |  4 ++++
+>   ui/vdagent.c        | 11 ++++++++---
+>   audio/trace-events  |  2 +-
+>   ui/trace-events     |  5 ++++-
+>   6 files changed, 20 insertions(+), 6 deletions(-)
+> 
 
-On Tue, 23 Jul 2024 11:31, Richard Henderson <richard.henderson@linaro.org> wrote:
->On 7/22/24 21:43, Manos Pitsidianakis wrote:
->> From: Alex Bennée<alex.bennee@linaro.org>
->> 
->> For rust development we need cargo, rustc and bindgen in our various
->> development environments. Update the libvirt-ci project to (!495) and
->> regenerate the containers and other dependency lists.
->
->The cover letter for v5 says use of cargo eliminated.
->Therefore no need to add to qemu.yml, correct?
->
->
->r~
-
-Yes that is correct, thank you for pointing it out. If we end up using 
-only meson and not cargo, like it is done in this version, cargo can be 
-removed from this diff.
-
-Manos
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
