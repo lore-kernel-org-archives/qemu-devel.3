@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CA5C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E61C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWOlh-0004o6-Ac; Tue, 23 Jul 2024 19:18:05 -0400
+	id 1sWOtK-0001u7-OX; Tue, 23 Jul 2024 19:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWOlg-0004nS-B0
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:18:04 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sWOtG-0001tJ-8p
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:25:55 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWOle-0004ji-If
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:18:04 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fd70ba6a15so10297825ad.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:18:02 -0700 (PDT)
+ id 1sWOtE-00073T-4M
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:25:53 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fc611a0f8cso3649175ad.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721776681; x=1722381481; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=e+bU3aS7EUD2K3dWQABqEG2pBbwAfVn3dX7jYchowhY=;
- b=D/RdW+GT5yz6m428RLcz8In8rxA8RKqcEADyRaVoefricf8bu9l3soFKH0wwpw5wXx
- 2lT6ywWVZwQjL/fB5rWT3v9aGj5L6cAIneqKpmtFE51bTwiue0bAni/J+nujGYBI4cij
- lzEwtQAy+ILc1qIXVwtiof6ppIK99MMZodVtjyVmUZanyX0+djYuYm9b7ziQIGjNa5Gi
- roLB/SrKcAMWOx5vH0WkDweq6CRHT+Doyg0UGg6nw8FObDvET1q8FCwRLr1KEF8DR78p
- DpTp+Mi+MGUa9VS1K77bkQVGyzxf8QDueiM6QA46kQKLAQXpKdSlEM+FoT7+UuxPkn12
- biYw==
+ d=linaro.org; s=google; t=1721777150; x=1722381950; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TrboRlYsOao0nujSfq684rYB4Yz0DhtTuq11rQRcUno=;
+ b=wNEuINhQJ8L1lQrWf+7UmqUe9a2UE4B4uTZ1VP2GKInum3LjF1BBtqFYf1AIlaRTeS
+ upw0ES9v34vMT19BVtxJoAZH2EAoP217VKXSYdc3tLAuEGFDARBKPWKf4fta+Srnta+f
+ ZzFfnpoPQPh5IpCOgmfcmER7fqY0PLs40Urde5RcgopbwfkVYEF7+5QGyF9OxHecSTao
+ RTvziB1S8Pbn59rt33GRBFU0KKLYxLE8uCH59tValLyw509y6ZWpHbb2h1/Wqs7evU5H
+ cSuXOCMikGnnRnfNI+ErHpiD3Ucbg6T0tP6KbYYPVn6ejZ17KuS4Ofw6Ev+dhDi9p/48
+ fJwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721776681; x=1722381481;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e+bU3aS7EUD2K3dWQABqEG2pBbwAfVn3dX7jYchowhY=;
- b=NQ+P966UVdCVsKCjVXsOWFBipDO4SR1x8Jn5OWPNfYUBBio2b7vnrmlGyqppzmH6I2
- 6KS2MBXR9Vlb2rUp7UAiSbenMHnfDxMbem0AKEWhf3ujmJOT40c+5KIQgOoBYmMbOh63
- TwoRhiJ6JqC/vL5uaqR7JU+nqZSyeQYBN8cv7tYobCE0EZD9agXCta5RpEqbOZM3CJmR
- Bz6AUipXe//8VsPAkViart8BmgFszM7+m2M5r9FS+PapuXiamqsb9AgivmzgP7ow2y9c
- urwD7Kom8vzQ0CKlp2OhxkH8kNI10J7Y/FFknVfPTSl/yN7HzBN2XezMyTHnMxaUdMPn
- mEug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjy9b+EYDwPJwVVV8BDIroYXpT66HCp5kSA1vr/OLWLNzWBW9Zfzb9LmaJINvims0CBKwVhlr68jt7l0m165MzvpQIkTs=
-X-Gm-Message-State: AOJu0YyCLFm7TL1CbNX9P61ljewf8gTurZ3PVZXkK0qb4Fq1K1Yoz6km
- QZRpZ2d260nR/M+DOnxsU4HB4F9IjdCW5jPU+b2XpCUgF2pKDpfLEMKs3V4fPnA=
-X-Google-Smtp-Source: AGHT+IFLcvVFRHM4dRBnHL7YxttzkDXZQY7FtVPXto+ZjZ3P8vtAva/8Zp2ATpUD3vxLtd5p3S8fuQ==
-X-Received: by 2002:a17:902:dad1:b0:1fd:6669:a847 with SMTP id
- d9443c01a7336-1fdd214fd53mr12737245ad.24.1721776680462; 
- Tue, 23 Jul 2024 16:18:00 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f48875esm80392115ad.287.2024.07.23.16.17.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 16:18:00 -0700 (PDT)
-Message-ID: <c9f2eb38-d448-4593-b3ca-6dd076dcccee@linaro.org>
-Date: Wed, 24 Jul 2024 09:17:53 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/25] Misc QEMU-GA patches 2024-07-22
-To: Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240723070251.25575-1-kkostiuk@redhat.com>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1721777150; x=1722381950;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TrboRlYsOao0nujSfq684rYB4Yz0DhtTuq11rQRcUno=;
+ b=d2jyV3ffNwfW7PYHtP1083S5W3KUfC7+ym+/aY79tI9NmnR4x4X66MlMGTqxrgx9gy
+ A1/cfxDlMiEcRl4cGWHaQvMoYAMUyta6sfVpmqYTF3aPusCWW6LPr//aFsYOqusi7S4j
+ MMABHWowanvv59SWOC9poMUhC8Mg3j4Q0J7KKOzIZRO7Ox2G7OB4sOll9NxeWLtjHUZV
+ Q2Jicpkn7FyyUb0KvqQ2KMSLEYqm1GtNGOvZVq83/fyEhdXGZPpYZDdR8zeYJQaBwDoK
+ bt3DqiQoRfmKQ8niSQVZLrrcUajMrim9mHcZ7BihHVmUe+xwWwRIvWT5qyRjlP9Gmiae
+ OU9A==
+X-Gm-Message-State: AOJu0YyOyljOci98Jnb0rK7s455iPWqq/DYpJBXnN2aPILeO0E7wFl0R
+ 4mo/cVHTfNefoew35zuVELjmx6O5rDcy98d14DDSgwxrIPdB6hb7ljj+rXerurmSCq2jPmWb4nG
+ TY665CA==
+X-Google-Smtp-Source: AGHT+IFeeawvA79X7kbN0qoQjZ8B9jeENRGVen5fGhsngBZlK/mwlbCF7+XunUEDToLsrnCccoDS3w==
+X-Received: by 2002:a17:903:40c2:b0:1fd:510a:3096 with SMTP id
+ d9443c01a7336-1fd74676cb6mr82694315ad.62.1721777149964; 
+ Tue, 23 Jul 2024 16:25:49 -0700 (PDT)
+Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fd6f31a3ecsm80799405ad.177.2024.07.23.16.25.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 16:25:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240723070251.25575-1-kkostiuk@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com,
+	berrange@redhat.com,
+	alex.bennee@linaro.org
+Subject: [PATCH] gitlab-ci: Use -fno-sanitize=function in the clang-user job
+Date: Wed, 24 Jul 2024 09:25:42 +1000
+Message-ID: <20240723232543.18093-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,26 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/24 17:02, Konstantin Kostiuk wrote:
-> The following changes since commit 23fa74974d8c96bc95cbecc0d4e2d90f984939f6:
-> 
->    Merge tag 'pull-target-arm-20240718' ofhttps://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-19 07:02:17 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-07-23
-> 
-> for you to fetch changes up to 8e326d36dd16b91d9abc4963b5f75b8f637c2312:
-> 
->    qga/linux: Add new api 'guest-network-get-route' (2024-07-23 09:49:07 +0300)
-> 
-> ----------------------------------------------------------------
-> qga-pull-2024-07-23
-> 
-> v1->v2:
->    Fix clang build failure of qga/linux: Add new api 'guest-network-get-route'
+With -fsanitize=undefined, which implies -fsanitize=function,
+clang will add a "type signature" before functions.
+It accesses funcptr-8 and funcptr-4 to do so.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+The generated TCG prologue is directly on a page boundary,
+so these accesses segfault.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+
+Does anyone know why we're using --extra-cflags for the clang-user
+and clang-system jobs, as opposed to --enable-sanitizers?  It
+certainly seems like regular users who use the normal configure
+flag are going to run into this as well.
+
+Anyway, this is why the clang-user job is failing at the momemnt.
+I can only assume that changes to our docker file, or upstream
+distro updates have pulled in a new compiler version, because this
+wasn't failing in this way last week.
+
 
 r~
+
+---
+ .gitlab-ci.d/buildtest.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index e3a0758bd9..aa32782405 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -444,6 +444,7 @@ clang-user:
+     CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system
+       --target-list-exclude=alpha-linux-user,microblazeel-linux-user,aarch64_be-linux-user,i386-linux-user,m68k-linux-user,mipsn32el-linux-user,xtensaeb-linux-user
+       --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
++      --extra-cflags=-fno-sanitize=function
+     MAKE_CHECK_ARGS: check-unit check-tcg
+ 
+ # Set LD_JOBS=1 because this requires LTO and ld consumes a large amount of memory.
+-- 
+2.43.0
+
 
