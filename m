@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6517C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8117CC3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWK6I-0002M5-E8; Tue, 23 Jul 2024 14:19:02 -0400
+	id 1sWK8S-0002f9-Ah; Tue, 23 Jul 2024 14:21:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWK6F-0002BW-O5
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:18:59 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWK6D-0003Py-Mt
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:18:59 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-368f92df172so2748481f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:18:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721758734; x=1722363534; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vG3d6DT4g3RTpV52ZpbZlI+FaEaMRrTOU5HFxUCX76U=;
- b=tMjlGTxyeboy5TTnnJRSldCg3E4nVZKFnTcwKZVv+hfQHDNA9rop/jZpeEegUAe7sZ
- vle7kA7ZWdQCYfKIIO5uBt/FSZUYYwWUo+Hzj8VsZEKpc5AlesSLmu/+bClzPpPvKy6O
- 8C3cRCAgX9lOSPPpufgPBLWIm0AksXXU9xWgFvjVEHjo+y41B5ihTNNHLy0FkVyVHWqf
- NpNMAyfMc2chp9fgKHkUMU8aEB8uVRMEr5Len/SfT5Fx1zuJszIIAy2iVLctD6EnP+nY
- d6pI5nbFdkcsgyI135ZRrqi/iMIA8z1ok6pMLCK5JE5lA0wPsMkKQRstO04B8uAI2g6h
- RCaQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sWK8M-0002Hk-5x
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:21:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sWK8F-0003t2-BR
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:21:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721758853;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CW+DLmFs3Dm4MuLIbq/di9q7c20LsMFnV8+gxYu1EDY=;
+ b=QAqnh6pbQaFOf1Ngr0gLvguZtxCDKZvJZSYxgM82BUQcjRhClMf9f3Ppru5rUA7fcGueYg
+ m81HqG0CelWKUa1Fg7H5bm1Hg4YZ26986A04JLudNDGfnA/yLUEuEXV7NwNyM3LEsW37xV
+ aniT88wtPwO7wn0tWVysSAO2b6yCAw4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613--XWgfYJ4MF6q9QcahSB0aw-1; Tue, 23 Jul 2024 14:20:49 -0400
+X-MC-Unique: -XWgfYJ4MF6q9QcahSB0aw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b7b1d79bacso12525276d6.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:20:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721758734; x=1722363534;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vG3d6DT4g3RTpV52ZpbZlI+FaEaMRrTOU5HFxUCX76U=;
- b=rqCy+ZfRX2OsmkOv7naQ4C7fEDr5lUKx9qV9nsjI7IfqwXKz/Nx78kVy/lb7rh9UVg
- xwz90IOnOi7CpnIE4KyvUDNKUXozYirtnnEGsNRAgMjRHwjv4oDsHq33rny97xdqwE6W
- 2E53B/P444jlGJvq4q6JfetFT0ryIHJt0IW20TlQ12XYX8EvlMjT/DOd0ZpLYTOkjixV
- w1ptWi7uYTThu85LWW4lYDqqQZl/krvBiOLb7s6VKw+3Rky91nyA5cSdq3kXQlqpiDjt
- a98ryKEwbv1g0lA38V0JFFHstCUBM0MlZaWIbhZHM7AxHEPn+rkA1X+nWNreJzCCYkU5
- h48g==
-X-Gm-Message-State: AOJu0YyM/hLmxx5hf4jjtndU4lMgYQ7tlHBIdUJE4Xun1Kk+shE1iEhe
- 7EwR5v0ZK4ZCXaBaQQFmbsMbpeCTypDcqRe8ZkGOOB1gELn2GHbYA0pV7Bx4owwE3kfTX36kgWH
- w04c=
-X-Google-Smtp-Source: AGHT+IGj05aWK5QgZFj/2geDfW+a04XjSDDnF+6EyisVXheXj8dQzdOsjk+iJa/2UzCRBAdI6Uu3hA==
-X-Received: by 2002:a05:6000:2c5:b0:368:665a:4c64 with SMTP id
- ffacd0b85a97d-369bae30740mr6539755f8f.5.1721758734031; 
- Tue, 23 Jul 2024 11:18:54 -0700 (PDT)
-Received: from localhost.localdomain ([176.187.208.14])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868ac48sm12216796f8f.29.2024.07.23.11.18.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 11:18:53 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/char/goldfish: Use DMA memory API
-Date: Tue, 23 Jul 2024 20:18:50 +0200
-Message-ID: <20240723181850.46000-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1721758849; x=1722363649;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CW+DLmFs3Dm4MuLIbq/di9q7c20LsMFnV8+gxYu1EDY=;
+ b=JPqFmS3Zea1DhR3Fzv4J9vDPjSJxFEbQ6Q46TuBds0aY69iTbdW7SZH0HB3DawQsm5
+ TH4+c84wMcWZoFz0+oomFJUolVOmbWlsQBa3mjy4Ax+4cOBtuyIHsSKWuj7/XLPVfYYE
+ jpbQhT/9zbqKZa1Rz3TVDozToGq56L/YTpguKxgdcgfI9FKb7LP4GGmMmhX41zHKz+qk
+ AQAwFfUv3TlqiqGLSbpAXO/Oql3ECWlU2Y49lQc4BYOva/yyCLjzgKz9/d9iVfmd9NNw
+ /gv9WSIGlcoDWX7nEazVX7n3SFubp/PrFRbJfOnleLTlKNUaRi5dkKFohvNeE97ZNoBX
+ 5c2w==
+X-Gm-Message-State: AOJu0YysFvoF/Jt2WYhSiKbhslLrSQPlrF7Z0WRMuXscq262H9NaA6+p
+ 0JJ0Ce6BnSj8D9l6++TO7eLMeK5SfBIWR6FzfVc7ZdSm4ad2UCfWc1P+vIrSgAn95VBfBdCCs8Y
+ hQqJMqnDGAIyL6Sc1kp7BsM9+r5vnZZj+3s2EW7QDAsE5hwxP+tf/a94fKnTJ
+X-Received: by 2002:a05:622a:1b9e:b0:44e:d016:ef9 with SMTP id
+ d75a77b69052e-44fa5387fb4mr85634651cf.9.1721758848742; 
+ Tue, 23 Jul 2024 11:20:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFLopSp6C08NVdZ/UAHsDW4/CrY2yOQ+FRZTyHGzJah+Sq5QmDRzwZL+7xn1rP7sWXWV2VUA==
+X-Received: by 2002:a05:622a:1b9e:b0:44e:d016:ef9 with SMTP id
+ d75a77b69052e-44fa5387fb4mr85634421cf.9.1721758848181; 
+ Tue, 23 Jul 2024 11:20:48 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44f9cd06244sm46840891cf.34.2024.07.23.11.20.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 11:20:47 -0700 (PDT)
+Date: Tue, 23 Jul 2024 14:20:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH v2 0/9] migration/multifd: Remove
+ multifd_send_state->pages
+Message-ID: <Zp_0fFCJ3Ca2MvuV@x1n>
+References: <20240722175914.24022-1-farosas@suse.de> <Zp65zvb9oy9my-qY@x1n>
+ <87msm9yy77.fsf@suse.de> <Zp7HH6-WeYKXQ-fy@x1n>
+ <87a5i9yvhf.fsf@suse.de> <Zp7k4wF1W6Fzp7YW@x1n>
+ <8734o0yp6n.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8734o0yp6n.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,63 +101,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than using address_space_rw(..., 0 or 1),
-use the simpler DMA memory API which expand to
-the same code. This allows removing a cast on
-the 'buf' variable which is really const. Since
-'buf' is only used in the CMD_READ_BUFFER case,
-we can reduce its scope.
+On Tue, Jul 23, 2024 at 02:48:48PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Mon, Jul 22, 2024 at 06:20:28PM -0300, Fabiano Rosas wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > On Mon, Jul 22, 2024 at 05:21:48PM -0300, Fabiano Rosas wrote:
+> >> >> Peter Xu <peterx@redhat.com> writes:
+> >> >> 
+> >> >> > On Mon, Jul 22, 2024 at 02:59:05PM -0300, Fabiano Rosas wrote:
+> >> >> >> Hi,
+> >> >> >> 
+> >> >> >> In this v2 I took Peter's suggestion of keeping the channels' pointers
+> >> >> >> and moving only the extra slot. The major changes are in patches 5 and
+> >> >> >> 9. Patch 3 introduces the structure:
+> >> >> >> 
+> >> >> >> typedef enum {
+> >> >> >>     MULTIFD_PAYLOAD_NONE,
+> >> >> >>     MULTIFD_PAYLOAD_RAM,
+> >> >> >> } MultiFDPayloadType;
+> >> >> >> 
+> >> >> >> struct MultiFDSendData {
+> >> >> >>     MultiFDPayloadType type;
+> >> >> >>     union {
+> >> >> >>         MultiFDPages_t ram;
+> >> >> >>     } u;
+> >> >> >> };
+> >> >> >> 
+> >> >> >> I added a NONE type so we can use it to tell when the channel has
+> >> >> >> finished sending a packet, since we'll need to switch types between
+> >> >> >> clients anyway. This avoids having to introduce a 'size', or 'free'
+> >> >> >> variable.
+> >> >> >
+> >> >> > This at least looks better to me, thanks.
+> >> >> >
+> >> >> >> 
+> >> >> >> WHAT'S MISSING:
+> >> >> >> 
+> >> >> >> - The support for calling multifd_send() concurrently. Maciej has this
+> >> >> >>   in his series so I didn't touch it.
+> >> >> >> 
+> >> >> >> - A way of adding methods for the new payload type. Currently, the
+> >> >> >>   compression methods are somewhat coupled with ram migration, so I'm
+> >> >> >>   not sure how to proceed.
+> >> >> >
+> >> >> > What is this one?  Why compression methods need new payload?  Aren't they
+> >> >> > ram-typed?
+> >> >> 
+> >> >> The data we transport is MultiFDPages_t, yes, but the MultiFDMethods are
+> >> >> either nocomp, or the compression-specific methods
+> >> >> (e.g. zlib_send_prepare).
+> >> >> 
+> >> >> How do we add methods for the upcoming new payload types? I don't expect
+> >> >> us to continue using nocomp and then do "if (ram)... else if
+> >> >> (device_state) ..." inside of them. I would expect us to rename
+> >> >> s/nocomp/ram/ and add a new set of MultiFDMethods for the new data type
+> >> >> (e.g. vfio_send_prepare, vmstate_send_prepare, etc).
+> >> >> 
+> >> >> multifd_nocomp_ops -> multifd_ram_ops // rename
+> >> >> multifd_zlib_ops   // existing
+> >> >> multifd_device_ops // new
+> >> >> 
+> >> >> The challenge here is that the current framework is nocomp
+> >> >> vs. compression. It needs to become ram + compression vs. other types.
+> >> >
+> >> > IMHO we can keep multifd_ops[] only for RAM.  There's only send_prepare()
+> >> > that device state will need, and so far it's only (referring Maciej's
+> >> > code):
+> >> >
+> >> > static int nocomp_send_prepare_device_state(MultiFDSendParams *p,
+> >> >                                             Error **errp)
+> >> > {
+> >> >     multifd_send_prepare_header_device_state(p);
+> >> >
+> >> >     assert(!(p->flags & MULTIFD_FLAG_SYNC));
+> >> >
+> >> >     p->next_packet_size = p->device_state->buf_len;
+> >> >     if (p->next_packet_size > 0) {
+> >> >         p->iov[p->iovs_num].iov_base = p->device_state->buf;
+> >> >         p->iov[p->iovs_num].iov_len = p->next_packet_size;
+> >> >         p->iovs_num++;
+> >> >     }
+> >> >
+> >> >     p->flags |= MULTIFD_FLAG_NOCOMP | MULTIFD_FLAG_DEVICE_STATE;
+> >> >
+> >> >     multifd_send_fill_packet_device_state(p);
+> >> >
+> >> >     return 0;
+> >> > }
+> >> >
+> >> > None of other multifd_ops are used.
+> >> 
+> >> There's also a conditional around device_state when calling
+> >> ->recv(). That could seems like it could go to a hook.
+> >> 
+> >> https://lore.kernel.org/r/41dedaf2c9abebb5e45f88c052daa26320715a92.1718717584.git.maciej.szmigiero@oracle.com
+> >
+> > Actually that's exactly what I think is right.. it looks to me now that we
+> > could bypass anything in MultifdOps (including recv()) but let device state
+> > be a parallel layer of MultifdOps itself, leaving MultifdOps only for
+> > compressors.
+> >
+> > And yeah, I still remember you just renamed it from recv_pages() to
+> > recv()..  it's just that now when think it again it looks like cleaner to
+> > make it only about pages..
+> >
+> >> 
+> >> >
+> >> > I think we can directly invoke this part of device state code in
+> >> > multifd_send_thread() for now.  So far I think it should be ok.
+> >> 
+> >> It's not just that. There's also a check for "if (ram)" at every call to
+> >> multifd_ops to avoid calling the ram code when doing the device
+> >> migration. It would be way easier to just set noop functions for those.
+> >> 
+> >> static MultiFDMethods multifd_devstate_ops = {
+> >>     .send_setup = noop_send_setup,
+> >>     .send_cleanup = noop_send_cleanup,
+> >>     .send_prepare = devstate_send_prepare,
+> >>     .recv_setup = noop_recv_setup,
+> >>     .recv_cleanup = noop_recv_cleanup,
+> >>     .recv = devstate_recv
+> >> };
+> >> 
+> >> I'm not saying this needs to be done in this series though. But I do
+> >> think that's the correct design choice for the long term.
+> >
+> > Yes it should be separate.
+> >
+> > And what I meant is we don't need all these noops, but recv() keeps being
+> > ignored just like above, then for sender side, right now it's:
+> >
+> >             ret = multifd_send_state->ops->send_prepare(p, &local_err);
+> >             if (migrate_mapped_ram()) {
+> >                 file_write_ramblock_iov();
+> >             } else {
+> >                 ret = qio_channel_writev_full_all();
+> >             }
+> >
+> > VFIO can process device state in parallel, so:
+> >
+> >     if (ram) {
+> >         ret = multifd_send_state->ops->send_prepare(p, &local_err);
+> >         if (migrate_mapped_ram()) {
+> >                 file_write_ramblock_iov();
+> >         } else {
+> >                 qio_channel_writev_full_all();
+> >         }
+> >     } else {
+> >         // device state handling
+> >         multifd_send_device_prepare(...);
+> >         ...
+> >         qio_channel_writev_full_all();
+> >     }
+> >
+> > Then MultifdOps doesn't apply to device states.
+> 
+> To avoid getting into bikeshed territory, I think we should postpone
+> this discussion until after Maciej's series is merged, so we can speak
+> more concretely about the implications. It's easy enough to go from your
+> suggestion to mine than the other way around, so let's leave at that.
+> 
+> I had it already written, so more of my reasoning below, if you're
+> interested.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/char/goldfish_tty.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+I never thought this is bikeshedding.. What we're discussing now is exactly
+what should appear in Maciej's code, am I right?  I thought we should
+figure it out before it's merged, if that's the case..
 
-diff --git a/hw/char/goldfish_tty.c b/hw/char/goldfish_tty.c
-index f8ff043c396..cdff46bc13b 100644
---- a/hw/char/goldfish_tty.c
-+++ b/hw/char/goldfish_tty.c
-@@ -16,6 +16,7 @@
- #include "qemu/log.h"
- #include "trace.h"
- #include "exec/address-spaces.h"
-+#include "sysemu/dma.h"
- #include "hw/char/goldfish_tty.h"
- 
- #define GOLDFISH_TTY_VERSION 1
-@@ -69,7 +70,6 @@ static uint64_t goldfish_tty_read(void *opaque, hwaddr addr,
- static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
- {
-     uint32_t to_copy;
--    uint8_t *buf;
-     uint8_t data_out[GOLFISH_TTY_BUFFER_SIZE];
-     int len;
-     uint64_t ptr;
-@@ -97,8 +97,8 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
-         while (len) {
-             to_copy = MIN(GOLFISH_TTY_BUFFER_SIZE, len);
- 
--            address_space_rw(&address_space_memory, ptr,
--                             MEMTXATTRS_UNSPECIFIED, data_out, to_copy, 0);
-+            dma_memory_read_relaxed(&address_space_memory, ptr,
-+                                    data_out, to_copy);
-             qemu_chr_fe_write_all(&s->chr, data_out, to_copy);
- 
-             len -= to_copy;
-@@ -109,9 +109,9 @@ static void goldfish_tty_cmd(GoldfishTTYState *s, uint32_t cmd)
-         len = s->data_len;
-         ptr = s->data_ptr;
-         while (len && !fifo8_is_empty(&s->rx_fifo)) {
--            buf = (uint8_t *)fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
--            address_space_rw(&address_space_memory, ptr,
--                            MEMTXATTRS_UNSPECIFIED, buf, to_copy, 1);
-+            const uint8_t *buf = fifo8_pop_buf(&s->rx_fifo, len, &to_copy);
-+
-+            dma_memory_write_relaxed(&address_space_memory, ptr, buf, to_copy);
- 
-             len -= to_copy;
-             ptr += to_copy;
+And whose suggestion isn't that important, IMO.  We simply try to discuss
+this technically and reach a consensus.. no matter who proposed what.
+
+> ======
+> 
+> We already have the send/recv threads structured in relation to what we
+> do inside the hooks. You're just defining a function that's not a hook,
+> but it has the same signature and responsibilities and needs to be
+> called at the same moment.
+> 
+> I think the dissonance here is that you don't see the multifd thread
+> code and the payloads (ram, device) as separate layers. Payload-specific
+> code should not be at top level. Otherwise, it breaks any semblance of
+> proper layering:
+> 
+> - payload code will have access to MultiFD*Params, which has a bunch of
+>   control variables for the loop, the semaphores, etc. that should not
+>   be touched;
+> 
+> - payload code ends up influencing the flow of the thread
+>   function. E.g. when zero_copy_send used to dictate whether we'd have
+>   separate IO for the packet or not.
+> 
+> - temporary variables needed by the payload code will have to be
+>   declared inside the thread funcion, which makes tempting to use them
+>   across payload types and also in the thread code itself;
+> 
+> - it creates doubt as to whether new changes go inside the hooks, in the
+>   if/else or outside of it;
+> 
+> Think about how easy it has has been to review and merge the various
+> compression features we had. It doesn't matter how much they mess up
+> inside the hooks, it will never cause the dreaded "Memory content
+> inconsistency at ..." error from check_guest_ram(). At least not in a
+> way that affects other people. Now compare that with for instance the
+> zero-page work, or even mapped-ram, that required a bunch of changes to
+> the multifd control flow itself (e.g. all of the sync changes w/
+> mapped-ram).
+
+I think there's one issue where we only support one MultiFDMethods as of
+now to be active, while the "clients" of multifd can be >1 from payload
+POV.  It means I'm not sure how VFIO can provide a MultiFDMethods if it
+will overwrite what should be there to define how to process RAM..
+
+Then, we should logically allow VFIO migration to happen with RAM being
+compressed with ZSTD/ZLIB/whatever, right?  The question is which
+MultiFDMethods we should assign if they're the same layer in this case..
+
 -- 
-2.41.0
+Peter Xu
 
 
