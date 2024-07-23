@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 189C4C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 06:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D2EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 06:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW8ZC-0007MU-Ey; Tue, 23 Jul 2024 02:00:08 -0400
+	id 1sW8fO-0006uR-NB; Tue, 23 Jul 2024 02:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW8Yu-0007Jz-L1
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:59:52 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sW8Ys-0004u4-RA
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:59:48 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-70d1a74a43bso1263507b3a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 22:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721714385; x=1722319185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zfqy+KQKyoi2Q8Kn/90Lwx07X5p6KKXjr7MHcp1h5h0=;
- b=Bm/XggqO95paUVEujtTojrq/co9AQ8GYhnAzyMbo2H5wTm7YTCCLdjNHBI9mJtbvJj
- tqjcdU0tCN9Unke3BaVeHbwm1CTAVfGJXUOIEohtDn6Y3CI7MuZSqCdKc8GRmzd//054
- KkRyDCUWS+2Iu0RHA19oI4jAz8FmUt4aTTMjwcEmh9okEbIbJ5V5OrFKf97phQ2fT9YQ
- pGYxrYYjRDZMHrz2RJnI96pyOVxvfHVKHHj4m0Ur5mBiKgh/Yee5QA7BOHOYQjMGb5dw
- 07AhQ3Bsmlko67v4VmNDyUvHjf553tp71zxtSLXMtVf9wPL46CumAC9cFje9SMkSu8ZJ
- z7Tg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sW8fM-0006tN-Uf
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:06:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sW8fK-0007UC-MQ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:06:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721714781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YJGd0D9AyQAfkXVpMbUmcXD0kdGs2RBaCJVY12tAzfM=;
+ b=BAvPAY0sH2xBA6kKyh5LKhnWLyDO7UWRIr7Q+zDXPJcKAfnHYbKiYs91qqplE2iYmmDslu
+ s9m/XOmFI/0em12eLgkhS4ha079sbZzllmkXTy7dUb3mim8scFPZBxhwBCgeQ/Iq7uFD17
+ /TBESZwRUs1L11eaJNuE+8CrOtV7gSg=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-325-fltTg4IcM9-ovBdqDRcfFQ-1; Tue, 23 Jul 2024 02:06:19 -0400
+X-MC-Unique: fltTg4IcM9-ovBdqDRcfFQ-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2cb81c562edso3798732a91.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 23:06:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721714385; x=1722319185;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zfqy+KQKyoi2Q8Kn/90Lwx07X5p6KKXjr7MHcp1h5h0=;
- b=BWHOXuey4FBEn5DF40MqfBRlW7DVKa/j107EOZvTm3xa5zNbFDDp6TO2bqYocPBoHs
- zIlQNrg+xS9rZiQesJfAVQb9uZ5dxunDyZyMaaXOArbUOAnwSCBfAzSLQ0C/f5y+dX0L
- 08/2kaFpCnYpgXZjRGX7GQDH6DQPJsTqAyd7U5ceap9JInFSRdtvkD1GBLmnfxyH+dFI
- 0QSJ1i2mS24y8RltPpW7q//YNVXfq7f9fdQGKBM6Tf1mzQhXX7F3q4KmQ73bbIsVci5E
- iPWNVYHjBU//Ks1ipCJw1EWuZ8Y6HwB4du8udV4vdCpVUd4lW+yx3nlNdiDnNdiF0zE/
- nWew==
+ d=1e100.net; s=20230601; t=1721714779; x=1722319579;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YJGd0D9AyQAfkXVpMbUmcXD0kdGs2RBaCJVY12tAzfM=;
+ b=KPHhdgjPn7noB7h7RaR1TaQy5baxeZU5HI9kqsYoxl2/4gXNu7tbie0TE5m0ihWstE
+ EZHa8S46u5xgin5s0izAvdCD/ajElYLLxUKhRBNUYHyRyxSP8Zlca31p9wfDKMDqcr1j
+ RmHocRtr3YeaDDZqbAdWr8Wrgnd6zG0sSOq393D5fDrnHAuUFvA65HXZfoBv3P975Pat
+ 5Kpm+kRmb8HY7GRiHTuhzAffMd31VsxkD+wkT1WwjtB5+4Pf+1M4ebnJeRkTiffYWtlm
+ 0FgPRhFalyk2a6gUbN48ch4jxEuEZgEtHKkgoksN0m25cCAkfgn8xF9fDB7JK9hDv6LM
+ PprA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpNlTmmSPGjud72NduhwDOPpnmyd4woPqMn7WnqI2HLojtmIYM0vFkVnugnrgsdk/k6GMkEJVzHet6T5FFaQ2IkHZ8UY0=
-X-Gm-Message-State: AOJu0YyUsllJNPKBZ7Pg5LxPJujmYYTemG1oKphIfs5HlKoUkHgn3G2M
- CJRuFMmuJ+9HGYWtokcawG0iGJQTqFBRkTCu2CEd6JiwsUG6rKOMhtwecSE8tc3a+ACgOMAWAMo
- Mdcm4BQ==
-X-Google-Smtp-Source: AGHT+IEMO8eILTuyHzWn5WGfeVw74N7mimmUn05HTdbNPzCoQss52bzypyRGYQTzug+e6FgqPc8H9w==
-X-Received: by 2002:a05:6a20:842a:b0:1c0:f677:e98f with SMTP id
- adf61e73a8af0-1c4229b453emr9967283637.46.1721714384680; 
- Mon, 22 Jul 2024 22:59:44 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-79f0af5e618sm5591652a12.25.2024.07.22.22.59.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 22:59:44 -0700 (PDT)
-Message-ID: <8d12202f-7170-4127-a1a6-c23c03835cf6@linaro.org>
-Date: Tue, 23 Jul 2024 15:59:35 +1000
+ AJvYcCVgBI6TtQV68KjxYY7VAcvWI3ajObYpPJa4359wF86Z0CWlJkFOVmYKV1X75gjgaQs75DMGW2JRA943bMxPEcCTYy43ITc=
+X-Gm-Message-State: AOJu0YxZt89jCDoxp89kJv24u0d16fZMpYR8s05zio9OynYMPe6ZyAJq
+ eAFgQ08zKUyP9hF+nTbVFy/W3P28AJLpK3GP/SYTIs/p6wffNkhzOtEYYUXdxD0UMnPAICCTWqk
+ TIkle++k5m/VokqM7E2GMPmXrxDLx0RvOQJeuV38rU0DLVEKbSn5evJAvVil6yOpsrly28KOlVO
+ 6axm0l18kiCvKNEoKBKhKO3AQlZyI=
+X-Received: by 2002:a17:90a:4d89:b0:2c9:df1c:4a58 with SMTP id
+ 98e67ed59e1d1-2cd274367e0mr5041843a91.23.1721714778718; 
+ Mon, 22 Jul 2024 23:06:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMZPH47oHi6bQPuGQ7rsOPMcofrPqjxpU1K6Poh+5MyMNpXnnqD+F0B85ueQE3y/Gr+nKVoWfhj8Z2k8Naz68=
+X-Received: by 2002:a17:90a:4d89:b0:2c9:df1c:4a58 with SMTP id
+ 98e67ed59e1d1-2cd274367e0mr5041822a91.23.1721714778179; Mon, 22 Jul 2024
+ 23:06:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] target/riscv: Remove redundant insn length check for
- zama16b
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
-References: <20240723013012.1443-1-zhiwei_liu@linux.alibaba.com>
- <dea63117-cabd-4669-bffd-e8c0cb8d9147@linaro.org>
- <df37fdc2-79c6-420c-bcf4-e7c3649fe446@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <df37fdc2-79c6-420c-bcf4-e7c3649fe446@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240719052531.926801-1-lulu@redhat.com>
+ <CACGkMEtauhCfYSfFHc-GXAzvXm78fodTpDb-JcoGwfVjCD1qvw@mail.gmail.com>
+ <CACLfguWc-jNvdo02hrJaiU7epY_d3WOWkurHj7yW0-onfMFSwQ@mail.gmail.com>
+In-Reply-To: <CACLfguWc-jNvdo02hrJaiU7epY_d3WOWkurHj7yW0-onfMFSwQ@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 23 Jul 2024 14:06:05 +0800
+Message-ID: <CACGkMEuS2Yua6jS3i1ChtJv91Lm8A2r61AJrOMrmLbOcWStnsQ@mail.gmail.com>
+Subject: Re: [PATCH v5] virtio-pci: Fix the use of an uninitialized irqfd
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,41 +100,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/24 15:29, LIU Zhiwei wrote:
-> The more detailed information about its meaning is in priviledged 1.13 specification. More 
-> exactly, in 3.6.4. Misaligned Atomicity Granule PMA.
-> 
-> The specification said:
-> 
-> "The misaligned atomicity granule PMA applies only to AMOs, loads and stores defined in the base
-> ISAs, and loads and stores of no more than MXLEN bits defined in the F, D, and Q extensions. For an
-> instruction in that set, if all accessed bytes lie within the same misaligned atomicity granule, the
-> instruction will not raise an exception for reasons of address alignment, and the instruction will give
-> rise to only one memory operation for the purposes of RVWMO—i.e., it will execute atomically."
-> 
-> That's the reason why I do not apply zama16b to compressed instructions.
-Given the non-specificity of this paragraph, I think not specifically calling out 
-compressed forms of the base ISA is simply a documentation error.  In general, the 
-compressed ISA is supposed to be a smaller encoding of the exact same instruction as the 
-standard ISA.
+On Mon, Jul 22, 2024 at 4:42=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>
+>
+>
+> On Mon, 22 Jul 2024 at 15:24, Jason Wang <jasowang@redhat.com> wrote:
+> >
+> > Hi Cindy
+> >
+> > On Fri, Jul 19, 2024 at 1:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrot=
+e:
+> > >
+> > > The crash was reported in MAC OS and NixOS, here is the link for this=
+ bug
+> > > https://gitlab.com/qemu-project/qemu/-/issues/2334
+> > > https://gitlab.com/qemu-project/qemu/-/issues/2321
+> > >
+> > > In this bug, they are using the virtio_input device. The guest notifi=
+er was
+> > > not supported for this device, The function virtio_pci_set_guest_noti=
+fiers()
+> > > was not called, and the vector_irqfd was not initialized.
+> > >
+> > > So the fix is adding the check for vector_irqfd in virtio_pci_get_not=
+ifier()
+> > >
+> > > But The function virtio_pci_get_notifier(),it can also be used in all=
+ kinds of device.
+> > > If the vector_irqfd still didn't initial after the VIRTIO_CONFIG_S_DR=
+IVER_OK is set
+> > > means this device is not using guest notifier. We can let the check f=
+ail here
+> > >
+> > > This fix is verified in vyatta,MacOS,NixOS,fedora system.
+> > >
+> > > The bt tree for this bug is:
+> > > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+> > > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+> > > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci=
+.c:817
+> > > 817         if (irqfd->users =3D=3D 0) {
+> > > (gdb) thread apply all bt
+> > > ...
+> > > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+> > > 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-=
+pci.c:817
+> > > 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio=
+-pci.c:893
+> > > 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9=
+.0.0/system/memory.c:497
+> > > 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.=
+0/system/memory.c:573
+> > > 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9=
+.0.0/system/memory.c:1528
+> > > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ..=
+/qemu-9.0.0/system/physmem.c:2713
+> > > 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/=
+system/physmem.c:2743
+> > > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+> > > 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/syst=
+em/physmem.c:2894
+> > > 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/=
+physmem.c:2904
+> > > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+> > > 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel=
+/kvm/kvm-accel-ops.c:50
+> > > 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/q=
+emu-thread-posix.c:541
+> > > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+> > > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+> > >
+> > > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+> > > Cc: qemu-stable@nongnu.org
+> > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > ---
+> > >  hw/virtio/virtio-pci.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > >
+> > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > > index 592fdaa10f..dc31a37ec0 100644
+> > > --- a/hw/virtio/virtio-pci.c
+> > > +++ b/hw/virtio/virtio-pci.c
+> > > @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy=
+ *proxy, int queue_no,
+> > >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+> > >      VirtQueue *vq;
+> > >
+> > > +    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVE=
+R_OK)
+> > > +        return -1;
+> > > +
+> >
+> > Did this mean !proxy->vector_irqfd && !(vdev->status &
+> > VIRTIO_CONFIG_S_DRIVER_OK)) is legal?
+> >
+> > Thanks
+> >
+> yes, for my test, I didn't meet this kind of environment.
 
-However!  It does explicitly say "no more than MXLEN bits", which means that an RV32/RV64 
-check is appropriate for FLD/FSD, since MXLEN may be less than 64.
+This needs to be checked, we can use qtest to poc this condition if you wis=
+h.
 
-In addition, your change for AMOs is incomplete.  From the text:
+But I meant we need to explain why there is a check for DRIVER_OK
+here. For example, did the current Qemu guarantee that?
 
-   If a misaligned AMO accesses a region that does not specify a misaligned
-   atomicity granule PMA, or if not all accessed bytes lie within the same
-   misaligned atomicity granule, then an exception is raised.
+> However, since this function is used widely in many environments, I canno=
+t cover all devices for testing.
+>
+> I think we can change the patch back to the first version, which is to ch=
+eck the proxy->vector_irqfd in virtio_pci_set_vector(). This will have a lo=
+wer risk and make more sense
+> thanks
+> cindy
 
-The second clause corresponds exactly with the Arm FEAT_LSE2.
-See check_lse2_align in target/arm/tcg/translate-a64.c.
+Thanks
 
+>
+>
+> On Mon, 22 Jul 2024 at 15:24, Jason Wang <jasowang@redhat.com> wrote:
+>>
+>> Hi Cindy
+>>
+>> On Fri, Jul 19, 2024 at 1:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote=
+:
+>> >
+>> > The crash was reported in MAC OS and NixOS, here is the link for this =
+bug
+>> > https://gitlab.com/qemu-project/qemu/-/issues/2334
+>> > https://gitlab.com/qemu-project/qemu/-/issues/2321
+>> >
+>> > In this bug, they are using the virtio_input device. The guest notifie=
+r was
+>> > not supported for this device, The function virtio_pci_set_guest_notif=
+iers()
+>> > was not called, and the vector_irqfd was not initialized.
+>> >
+>> > So the fix is adding the check for vector_irqfd in virtio_pci_get_noti=
+fier()
+>> >
+>> > But The function virtio_pci_get_notifier(),it can also be used in all =
+kinds of device.
+>> > If the vector_irqfd still didn't initial after the VIRTIO_CONFIG_S_DRI=
+VER_OK is set
+>> > means this device is not using guest notifier. We can let the check fa=
+il here
+>> >
+>> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
+>> >
+>> > The bt tree for this bug is:
+>> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+>> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+>> > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.=
+c:817
+>> > 817         if (irqfd->users =3D=3D 0) {
+>> > (gdb) thread apply all bt
+>> > ...
+>> > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+>> > 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-p=
+ci.c:817
+>> > 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-=
+pci.c:893
+>> > 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.=
+0.0/system/memory.c:497
+>> > 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0=
+/system/memory.c:573
+>> > 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.=
+0.0/system/memory.c:1528
+>> > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../=
+qemu-9.0.0/system/physmem.c:2713
+>> > 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/s=
+ystem/physmem.c:2743
+>> > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+>> > 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/syste=
+m/physmem.c:2894
+>> > 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/p=
+hysmem.c:2904
+>> > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+>> > 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/=
+kvm/kvm-accel-ops.c:50
+>> > 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qe=
+mu-thread-posix.c:541
+>> > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+>> > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+>> >
+>> > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+>> > Cc: qemu-stable@nongnu.org
+>> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+>> > ---
+>> >  hw/virtio/virtio-pci.c | 3 +++
+>> >  1 file changed, 3 insertions(+)
+>> >
+>> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> > index 592fdaa10f..dc31a37ec0 100644
+>> > --- a/hw/virtio/virtio-pci.c
+>> > +++ b/hw/virtio/virtio-pci.c
+>> > @@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy =
+*proxy, int queue_no,
+>> >      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
+>> >      VirtQueue *vq;
+>> >
+>> > +    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER=
+_OK)
+>> > +        return -1;
+>> > +
+>>
+>> Did this mean !proxy->vector_irqfd && !(vdev->status &
+>> VIRTIO_CONFIG_S_DRIVER_OK)) is legal?
+>>
+>> Thanks
+>>
+>> >      if (queue_no =3D=3D VIRTIO_CONFIG_IRQ_IDX) {
+>> >          *n =3D virtio_config_get_guest_notifier(vdev);
+>> >          *vector =3D vdev->config_vector;
+>> > --
+>> > 2.45.0
+>> >
+>>
 
-r~
-
-
-PS: The first clause is similar to Arm access to pages marked as Device memory, for which 
-all misaligned accesses trap.  I didn't dig deep enough to see how PMAs are defined to 
-suggest how that might be applied.
 
