@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FB5C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB328C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMIL-0004XQ-Ex; Tue, 23 Jul 2024 16:39:37 -0400
+	id 1sWMKp-0003Rw-Fg; Tue, 23 Jul 2024 16:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIK-0004Uy-4j
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:36 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMK8-0008W3-VM
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:30 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMII-0003xK-Hy
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:35 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3686b554cfcso2898473f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMK4-0004Wa-Um
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:27 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4266ea6a488so52257015e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767172; x=1722371972; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767283; x=1722372083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mAWB86PPkrxBCeTbR27TWMyKaulXnrAS2NRotSYIsdM=;
- b=GrDVkwtL1XQYfkDs7gWiFxfboUJl0stRVHNg+1Er2v6VoUzGBJQK+smVLwPU0Ae3x6
- lo1pESbNo/SIowKNvfEe7Jvk1KjkWbps5yx4Q9KKGOhDeC9Uf9bQxx8rXqFTERXkECw0
- kaBnV4F0aeDKfpqYdbssvnjaYTelnv9hIU7SQXPkzueVzAeJxB/sVhTloMxrQrU21maP
- jwy7l90lVrPaqdExIWPplnv5kH24VT2W7sQx5gCIEb33eNKgDC5pbOtmo4LOlDatYnix
- PLejprUUA38MhrJNLQeAFqJXMAjJQfdAKYLAMM+UKDLhIQ4g/tvukZwh7REbRZ2Fanlt
- 7rRQ==
+ bh=edehD0KtGJ7psWAUTWuwqxCMF33mNrSx960MdEztH2M=;
+ b=vag+/qlONDv73l2xtzfaO5MXyl9llE2JAgw8zhlFG7KtSPkSDHity8oDZlRijD1OS6
+ +pMg0KJ7H8ehLmei39ZDZ4DNfwAGmMAlECDXDNsVtm8wyHAgLcViLXQmf0TDkxoz6aH8
+ luufZOedVG0qtiR7aEdb8GQZHTHpbT4YyZeEUOGxBFYh8zE+NC0dPYKQ26qknst02Nya
+ rIcUpnF/mbpJVJi3BD+BJ4Dq4UIrpcd5FntCvjUuMSN48F72f7G/w3MOp5j/D0QUC+15
+ pVztovDzg2k/idQ9F62pd9B1Vq3Vi/lGDsNa1crf9Z5KAnwno5xY8+LkZGMEcLx/ul9/
+ Z2NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767172; x=1722371972;
+ d=1e100.net; s=20230601; t=1721767283; x=1722372083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mAWB86PPkrxBCeTbR27TWMyKaulXnrAS2NRotSYIsdM=;
- b=h/Az2F2cTEfLY1nH1u1czAHGsVEk1Kym4FmXI3lqUSPQJN/qcRhc+xAlD6W2LCTpt+
- Pcd//zegpVFveHNiDpUdptwwLgVAd7G8OwXLdhUIgP0o3HyCiUd5JQ0Bc0toOOK/hE2U
- b2mzDFz5uYGBA+h19lnEG7m+g9mvWWmVLObC2QRHRxqhSnpyMsZpB5zTXM5+Uh+97d4F
- IqekJ0ptsE8Tml+ioQ3oUz344+dk6/Ci9eSL60uCNapvqVE0X3yA8terfXkIjFrBWmMN
- 9CmuAVp0zGCbZNFzJ8nV3Y0Kt7GbXHTFhlvGfbjpA8P1fqY2/jgv4JuIqrRsPpXCt78D
- hn1Q==
-X-Gm-Message-State: AOJu0Yw/A3Vba8YgtOj3Nj9TOTGGj5OU7+PwzpqXkbknIfNyZhilsRC5
- pkrjLclQG+UtTFv8EVXCI2ZR3yBhX/+AvtUoDM15qWTC6IArbfDC5Isa7mBweAU5mueYEwmChVy
- URi8=
-X-Google-Smtp-Source: AGHT+IHw/i222pDAcGyYQI8uppF0fFUZwINVRbOj8+ub+D7NNjE+u6ksBQZ2RPTYluT9BDgGr9VL4g==
-X-Received: by 2002:a5d:4d01:0:b0:367:923b:656b with SMTP id
- ffacd0b85a97d-369f5b0b8c5mr36823f8f.54.1721767172756; 
- Tue, 23 Jul 2024 13:39:32 -0700 (PDT)
+ bh=edehD0KtGJ7psWAUTWuwqxCMF33mNrSx960MdEztH2M=;
+ b=Km7wOqiAykMRRvAiD/+8ud7qxxesTJt+kB8lqWcFraL5T1GDzYZQUGS3YqMJ7mJg9J
+ qnGuD6BGLYodHhEVyF19YyynTokkjjindObaVlCVUc+QkxDfIiZdkrlBQETo1Ij6F/yu
+ CBcktoReITRNmG97U5yf/ccG0Q8GTKVz/DIH5tqqbp296V4FQqAGAzr2/ufgzOyxeRY3
+ 5p4FJXMn8vkWCS8G4WNrXyP5CpOcOaeBWkryZUfPsbCmOkC3jBZjg8bzYhMKVn6Ugk3a
+ /mlo5E5sfRT0HLHjulAsGpX8IfwFnfL7hJkUek6PVtgI3REdaXBy1p5re92RSdgvvoa3
+ MqZg==
+X-Gm-Message-State: AOJu0YwzIgSvw9SnVUZsvfJBvEoq04G9Y5whGO7jKPDVCEVxui8O1waq
+ 1KySttMvriyMBIFLddFr6PpS8BOGJtAqrfSZeUSv9qTyM7kYyZxzw1/LjSoTGpMjJo2QSVaXiGd
+ YcYY=
+X-Google-Smtp-Source: AGHT+IHfiMIerRfkNnqj78mw4GHum7yCps2MykY5abNv3AQZOeoYzpsWQZ/RX8wkZoB8cfudZEMdOg==
+X-Received: by 2002:a05:600c:3ac5:b0:426:673a:2904 with SMTP id
+ 5b1f17b1804b1-427f7adf206mr4570065e9.36.1721767282776; 
+ Tue, 23 Jul 2024 13:41:22 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f93bc977sm373015e9.42.2024.07.23.13.39.31
+ 5b1f17b1804b1-427f935dd83sm598555e9.5.2024.07.23.13.41.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:39:32 -0700 (PDT)
+ Tue, 23 Jul 2024 13:41:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 06/28] docs: Correct Loongarch -> LoongArch
-Date: Tue, 23 Jul 2024 22:38:33 +0200
-Message-ID: <20240723203855.65033-7-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 26/28] util/fifo8: Introduce fifo8_drop()
+Date: Tue, 23 Jul 2024 22:38:53 +0200
+Message-ID: <20240723203855.65033-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,41 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-Id: <20240718133312.10324-20-philmd@linaro.org>
----
- docs/about/emulation.rst | 2 +-
- hw/rtc/ls7a_rtc.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Add the fifo8_drop() helper for clarity.
+It is a simple wrapper over fifo8_pop_buf().
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index b5ff9c5f696..3bfe8cc14a2 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -42,7 +42,7 @@ depending on the guest architecture.
-     - :ref:`Yes<QEMU-PC-System-emulator>`
-     - Yes
-     - The ubiquitous desktop PC CPU architecture, 32 and 64 bit.
--  * - Loongarch
-+  * - LoongArch
-     - Yes
-     - Yes
-     - A MIPS-like 64bit RISC architecture developed in China
-diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
-index 052201c2cd5..3226b6105e8 100644
---- a/hw/rtc/ls7a_rtc.c
-+++ b/hw/rtc/ls7a_rtc.c
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- /*
-- * Loongarch LS7A Real Time Clock emulation
-+ * LoongArch LS7A Real Time Clock emulation
-  *
-  * Copyright (C) 2021 Loongson Technology Corporation Limited
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240722160745.67904-8-philmd@linaro.org>
+---
+ include/qemu/fifo8.h | 9 +++++++++
+ hw/scsi/esp.c        | 2 +-
+ util/fifo8.c         | 6 ++++++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
+index bca6da306f7..d1d06754d84 100644
+--- a/include/qemu/fifo8.h
++++ b/include/qemu/fifo8.h
+@@ -131,6 +131,15 @@ const uint8_t *fifo8_pop_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
   */
+ const uint8_t *fifo8_peek_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
+ 
++/**
++ * fifo8_drop:
++ * @fifo: FIFO to drop bytes
++ * @len: number of bytes to drop
++ *
++ * Drop (consume) bytes from a FIFO.
++ */
++void fifo8_drop(Fifo8 *fifo, uint32_t len);
++
+ /**
+  * fifo8_reset:
+  * @fifo: FIFO to reset
+diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+index 04c9a557b69..b7af8256232 100644
+--- a/hw/scsi/esp.c
++++ b/hw/scsi/esp.c
+@@ -351,7 +351,7 @@ static void do_message_phase(ESPState *s)
+     /* Ignore extended messages for now */
+     if (s->cmdfifo_cdb_offset) {
+         int len = MIN(s->cmdfifo_cdb_offset, fifo8_num_used(&s->cmdfifo));
+-        fifo8_pop_buf(&s->cmdfifo, NULL, len);
++        fifo8_drop(&s->cmdfifo, len);
+         s->cmdfifo_cdb_offset = 0;
+     }
+ }
+diff --git a/util/fifo8.c b/util/fifo8.c
+index a250ea9f804..1ffa19d900e 100644
+--- a/util/fifo8.c
++++ b/util/fifo8.c
+@@ -131,6 +131,12 @@ uint32_t fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, uint32_t destlen)
+     return n1 + n2;
+ }
+ 
++void fifo8_drop(Fifo8 *fifo, uint32_t len)
++{
++    len -= fifo8_pop_buf(fifo, NULL, len);
++    assert(len == 0);
++}
++
+ bool fifo8_is_empty(Fifo8 *fifo)
+ {
+     return (fifo->num == 0);
 -- 
 2.41.0
 
