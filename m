@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E64F9C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01329C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWCQx-0004xU-EN; Tue, 23 Jul 2024 06:07:51 -0400
+	id 1sWCSi-0004Em-Qp; Tue, 23 Jul 2024 06:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sWCQs-0004jx-Ff
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:07:46 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWCSh-0004C7-Sr
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:09:39 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sWCQq-0007WB-DI
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:07:46 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fb3b7d0d56so26996805ad.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:07:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWCSg-0007jH-6D
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:09:39 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-426526d30aaso39783455e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1721729263; x=1722334063;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0hWNd38hpN/Oe3dGKzEQXzpH/NbA1TscT1qkScfx6B4=;
- b=zkuOiTyZ2xKE68SyO+eLqgoQ6LzNxW+0C6HR1D8ZVCRmcQSL1E0XXm7sXIICZr59TJ
- kT6YGp4tvdn5rCeNwubP+kLjffky4TFHQVEUQil4niTQLX5VaqGNcjcdf9K4IS19QSyN
- OfSh8ZWVH33zS9EV9MbgYMBShFDBNDrl3TAtafedeYOjnSFv/ZwUyWMq2AZyKu0r/BCn
- 2GPNd3HPNCSGkiMEVrglirh+SQjZl+b0GgIrqqsRV2h/pk5KKfYK/SyHNhLkP6hbeDIH
- OcWaLGPPtnNdR3rMhdjXk4ynb50qxcQjp7C4yUQYnaystyeTySGrgrlVzFCv5s2kYwaz
- 2Fjw==
+ d=linaro.org; s=google; t=1721729376; x=1722334176; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ZeYcvyWXqPhEuJ9a6QTqyD4r5ZT63GH0kkiojce9fe8=;
+ b=N9t+88+Re6/XMUnkbHRNXlK/LCg25MERgK6v2SAp/vxX0JaWmVpi6df3vXRojBOJ+r
+ 97Xwzmjwz3AyjD24l2gWxBqAOYfxFbuaMyR6uchLGyl3jozcHB8OLLDKmbK/qduoUN1G
+ aZ+D9dyaOFEFvj7DEmv1atmX8HrQSwR7sVoiUUBntZdZwhi0h70CRmfZHV6xEa57+yfq
+ H/6hZNFpELQ6iqAKUz4nVJO739Gi6IDdade423ieFfvqWACKhQ1qoqRkSs4F+PD8vvRF
+ emjvhRAjlAM5VyVLgcfDoem4ZX7gwATSz63EsC/oTIKGQEgPgzRqjyErP64OWNg8dxHc
+ 8v4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721729263; x=1722334063;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0hWNd38hpN/Oe3dGKzEQXzpH/NbA1TscT1qkScfx6B4=;
- b=sCzJLP6bYfv8dKWhAH1i4lrFdPjPCAQRTJzJTukC/I/v7K5cIUFxlFto4oM80LN5w8
- /BsF/RDJMK6R9cnW+d3OEIGmWZs0cxg2Yk3W9RWdIA61YQ///QGAKARyH/RkCG6pIvO/
- qPwAa+ZejIFExeqswmT3ySO8QwyoGt4qqqUNE0ogOR8mSQsZ2h2IpuSiDAiTdZHHgefw
- xGwUgA+zm4OThSqINg8g2gXCApnIJu0Lmf9aEDfd+TytwBaLpV6yDAlgnd+Ji7gKwPQJ
- z/WHAm8068dFiJ/DdcAyd1/Xhm17uofKlrsQv2C6GTV0IjvWHFLUZ4SUc2pPVJXndxEN
- PGEg==
-X-Gm-Message-State: AOJu0Yz1Nbhg4RJetoBx9i5q23TF4Yt3Kr+kWHEG5GS3GCy2Iw2XCA17
- Uuo0+uwFtNCmN9kcy0sMd5NkvJEMQnITPXkxY2nDD66/MGntHm4x1u1ILzfHPX4=
-X-Google-Smtp-Source: AGHT+IGlU2X6XOsS8rei3ZaUUwyxQkBc/N+uIzikQdYUWX4JIwLcB6ABqopHtRQm58DMjuhUTeB7aw==
-X-Received: by 2002:a17:903:32cf:b0:1fb:19d1:707 with SMTP id
- d9443c01a7336-1fd745735edmr70726925ad.11.1721729262808; 
- Tue, 23 Jul 2024 03:07:42 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
+ d=1e100.net; s=20230601; t=1721729376; x=1722334176;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZeYcvyWXqPhEuJ9a6QTqyD4r5ZT63GH0kkiojce9fe8=;
+ b=W72JJnVWtunYFc3UuYvIpPrvKXYBmIcnir/WW8Hxjkl/k9A1dxJE900k1jcriniavN
+ FFCpwZwiZ/vOUxbzgd+eXMbEhvxiWuQtaFRLkvnJdHv62VA21agQNRAzu90zceK76SLZ
+ T5csnhfgpL5L/2ka3L8fUvuBUyEznLSnTTGTr15ssihQ4XNnH9L24qsKlxE7QuiQW4D/
+ m2P8LI9rE8qDkceR1mCoMstS8yBb48ZshpWy9PqmB+ZgJ2D3gLmkOzgfIatcnxDCg1Xp
+ igm5X/HegMLWh99CAd6Slej5nIzr0ZhAozmNKoJ3DGa0TQzZVhrn3oXu3mDy9KIcW5Vz
+ as5Q==
+X-Gm-Message-State: AOJu0Yzy4tTWzQNRRD+2fetX6cwCeizeyCu4hbAPhY9TTdYUSjQZpVeV
+ 29RiMm+hh21b8aM49CUd7kx7qStvyEpifw2/ph9B5GTsui5ZehOxYWsMg6YZea0=
+X-Google-Smtp-Source: AGHT+IEgeg1SXGq+lv/LqFewMySRPXTkYqPi9Ph3KNtJgR8CWcbYp+wEW8p9fkWESwmY3omJScxWdQ==
+X-Received: by 2002:a05:600c:4586:b0:426:6822:855 with SMTP id
+ 5b1f17b1804b1-427dc575129mr51461795e9.36.1721729375599; 
+ Tue, 23 Jul 2024 03:09:35 -0700 (PDT)
+Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f473909sm70325105ad.261.2024.07.23.03.07.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 03:07:42 -0700 (PDT)
-Message-ID: <7f34567a-cb23-40de-9d86-33b37e887360@daynix.com>
-Date: Tue, 23 Jul 2024 19:07:38 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] macos: Allow coredump generation
-To: Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ 5b1f17b1804b1-427d6929981sm166303485e9.36.2024.07.23.03.09.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 03:09:35 -0700 (PDT)
+Date: Tue, 23 Jul 2024 13:06:20 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
  Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <roman@roolebo.dev>, Francesco Cagnin <fcagnin@quarkslab.com>
-References: <20240723085902.98572-1-philmd@linaro.org>
- <CAAibmn1U=47wJOYhhpETHZihTu-aHcohm4eHK0JqK3epSEB8jQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAAibmn1U=47wJOYhhpETHZihTu-aHcohm4eHK0JqK3epSEB8jQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: Re: [RFC PATCH v5 3/8] CI: Add build-system-rust-debian job
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <ef587f7f38ad5714d5c8eeb05448d19a6130799e.1721648163.git.manos.pitsidianakis@linaro.org>
+ <Zp9sOsyefNXsgiXA@redhat.com>
+In-Reply-To: <Zp9sOsyefNXsgiXA@redhat.com>
+Message-ID: <h2mvx.gsw7w2v0uuew@linaro.org>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,56 +106,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/23 18:09, Phil Dennis-Jordan wrote:
-> This can certainly be useful in various situations! However, wholesale 
-> enabling get-task-allow will enable other processes on the system to 
-> inject code, connect a debugger, etc. to the Qemu process. Normally, 
-> this is only something you'd enable for builds that are specifically 
-> intended for debugging. I'm not sure users running Qemu in production 
-> environments will necessarily appreciate this - do we perhaps want to 
-> gate this behind a build configuration flag?
+On Tue, 23 Jul 2024 11:39, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+>On Mon, Jul 22, 2024 at 02:43:33PM +0300, Manos Pitsidianakis wrote:
+>> Add job that builds with rust support enabled on debian.
+>> 
+>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> ---
+>>  .gitlab-ci.d/buildtest.yml | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+>> 
+>> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+>> index e3a0758bd9..e025e2cbf6 100644
+>> --- a/.gitlab-ci.d/buildtest.yml
+>> +++ b/.gitlab-ci.d/buildtest.yml
+>> @@ -107,6 +107,17 @@ crash-test-debian:
+>>      - make NINJA=":" check-venv
+>>      - pyvenv/bin/python3 scripts/device-crash-test -q --tcg-only ./qemu-system-i386
+>>  
+>> +build-system-rust-debian:
+>> +  extends:
+>> +    - .native_build_job_template
+>> +    - .native_build_artifact_template
+>> +  needs:
+>> +    job: amd64-debian-container
+>> +  variables:
+>> +    IMAGE: debian
+>> +    CONFIGURE_ARGS: --enable-rust
+>> +    TARGETS: aarch64-softmmu
+>> +
+>
+>Do we actually want to do this ?  With the updated lcitool containers,
+>any of the existing build-system-XXXX jobs ought to be able to detect
+>availability of rust and build with it. Re-using existing jobs means
+>we burn less CI time.
+>
+>With regards,
+>Daniel
 
-Yes, it is useful but shouldn't be enabled by default for a non-debug build.
+Hello Daniel,
 
-> 
-> (Related: Would it perhaps make more sense to dynamically 
-> generate/preprocess the entitlements file based on configuration flags 
-> than have a bunch of variants of the file? You'll end up with a 
-> combinatorial explosion sooner or later - I'm also thinking of 
-> com.apple.vm.networking and com.apple.vm.device-access which we can't 
-> enable by default because they require Apple to grant the entitlement 
-> but which currently require patching if you have those entitlements.)
+I think we do, as long as a rust toolchain is not required to build QEMU 
+by default. The other jobs could detect availability of Rust but we 
+don't have a way to check if it works and not fallback to compiling 
+without Rust.
 
-I agree. It's better to generate a plist.
+Could we force enable Rust in one of the existing jobs?
 
-> 
-> What do you think?
-> 
-> Phil
-> 
-> 
-> On Tue, 23 Jul 2024 at 10:59, Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> wrote:
-> 
->     QEMU is allowed to generate coredump on other POSIX OSes,
->     bring that functionality to macOS. Admin users still need
-
-
-
->     to enable the kern.coredump sysctl manually running:
-> 
->        % sudo sysctl kern.coredump=1
-> 
->     the normal users have to enable their shell running:
-> 
->        % ulimit -c unlimited
-> 
->     Reference used:
->     https://nasa.github.io/trick/howto_guides/How-to-dump-core-file-on-MacOS.html <https://nasa.github.io/trick/howto_guides/How-to-dump-core-file-on-MacOS.html>
-
-It is better to note the implication of adding 
-com.apple.security.get-task-allow in the commit message.
-
-Regards,
-Akihiko Odaki
+Manos
 
