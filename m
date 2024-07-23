@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E272C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 04:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0E7C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 04:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW7Au-0006rh-HW; Tue, 23 Jul 2024 00:30:56 -0400
+	id 1sW7Ej-0003iB-7f; Tue, 23 Jul 2024 00:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sW7Ar-0006oy-U6; Tue, 23 Jul 2024 00:30:54 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sW7Ef-0003gv-Dl; Tue, 23 Jul 2024 00:34:49 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sW7Ao-0003EN-Op; Tue, 23 Jul 2024 00:30:53 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70d1fb6c108so1219270b3a.3; 
- Mon, 22 Jul 2024 21:30:46 -0700 (PDT)
+ id 1sW7Eb-0003h2-I7; Tue, 23 Jul 2024 00:34:47 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-708e75d8d7cso2878040a34.3; 
+ Mon, 22 Jul 2024 21:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721709046; x=1722313846; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1721709284; x=1722314084; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hixnnyt27NZOhXKWyY1NGsYhXS/o3nkcp7aEeomOxGo=;
- b=WD2jSJ5KwhNbQyEaaZ4kiQabkt9up2xYyKXMbXKDShWovZ7QcaI7SfKN60yAB1K9PP
- pthtpCtMI6AeUAap+qebdnmLuM6MCgrdulFxERYfHGxMMKAvEAsv2CsRSdSSHq8pG0Yj
- 21LxfTMiPC1lQTdMupF1qhC/1FpXInkjX/vTCwp+ZCo5HfbDxbad0mUsr8UtZa8kYV+7
- dmwZH+T68SMZNylA8LUFV1ZZuJZIp13eylBWT3w9GQuX9sac0/qxki/DpjH9HwvpoKjE
- sVWwOw8N0JXllP2pqK0ZCuNJd0zDbDKFf0IFntPIbYHIYuqEguyCQZzuZlzeBcRobpcA
- 8JSA==
+ bh=XJqtxH+xLomgK6cyzTS1mP9hjGARTIHCrzsiwdkA8ek=;
+ b=N9nOgI1uJigHwSaTITRKov2PNnl8B+fNQtyt0iQdIeVZXU3xQiwnHPnnIYsIlUAdW4
+ 67uwRowk3w3VNpnk4UqchtAHsU749pNKaFV30eWiGQCakkvXg57kGYIN9yXyEu7mlFFI
+ iqp/GX7+G53lllSLNbQLJGYNJfZk+GI9xIMG/Jc3lGEKuP91CHv8iuoSBm6spCiCvwmO
+ XoiXsANuaq9IqNLaKZvQZNGTEugMoyncV1JqguclmyYhbckJEFWmsP3pADp6JMobiBaB
+ 1aIWXALtdtIxYudFrpZUt0qr3VeKADoUeodzGh9lG3OSc4ifZtjJRFOdigTiwCe4bI07
+ uNoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721709046; x=1722313846;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1721709284; x=1722314084;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hixnnyt27NZOhXKWyY1NGsYhXS/o3nkcp7aEeomOxGo=;
- b=ok63rZjfPtwdkm6y2qBaxpgAsFIa8OkfC24W4neKLanhQXOwS+yFRcAm0x+8NKy1zR
- q88CBUAxcGI+X12aNAI0eybRXs5e6MiajxbWoa+23rUkgIRQkuZVbVyPCM30zFzNJIwb
- xaq7CkEoOwOKoSRrznan5aN1crZypfAV7x9zU+HMw4A2GGfrfFsAUL+AWirfZi9RUeY+
- RvDbCYcZE1W6z9eSfQ8wXGM6XJh2cC1EvFXghAy4TVQvPbvpD9QUsk/vQNNVk1wx8A9a
- ZHxH3F16DnHF5k0Fj2plQ4GtPx1l4SbsUjZjnhvZbT+9h3BNRRzb4WTV63VyqL/N4dQ8
- 14XA==
+ bh=XJqtxH+xLomgK6cyzTS1mP9hjGARTIHCrzsiwdkA8ek=;
+ b=PCSkjgR12JuXiO3zfcCCnaxP8M66RK49Rd8zqnIBjr+MK6o4s9G9tCsQpPofLZXHLe
+ yfhvRM7935Bhauw/0VVgzZZahSE25gov8lifPdYW1+JLuLiQjrsTkpYfCvK/ZVQJjd6u
+ TndGhi7PgIgYVN3xegfu3BKWmDBG5NIzGOTDwsX9syeeJP4jyEQtYsPEUvGG8K/LEd1w
+ UMk9KwKiR6mUb6ipVY9bQJvLDB3QXvrkypKEMr0fNxFRWhTgkEtihN+xj7czPVWXg8k0
+ PLuu4JlGc1l0PU7bUTS3+Vtc6VyERUcgZQPjG8ixJ9EkhY/QnASC7dFBczskygYC8da0
+ fi5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhs/6BRqwoRNzNN9EhaaCMrlYJDHGuv0Q3f7NKaJzV18B7D+CfYShN0WcRQvsNoZwag3xS8YA2AYtTXOeFZS0VRM5Q
-X-Gm-Message-State: AOJu0YyjzAa9lOY9kZRp/HnZqdjl0OyMS9yF/HDGvUiVsh/FIOuwF9VU
- j2BT4D9gdED92de54uY4R+9J/ara9wOaQmO1aU3ME6g6Vj872eU6
-X-Google-Smtp-Source: AGHT+IFeYE7xIocUE6Hs91KRdvyVGI1wLyBMq7CVUk2Vp8NZX85rYNBwgekDDQWPQ+RSsk3YZWxvOA==
-X-Received: by 2002:a05:6a00:3ccf:b0:70d:3587:c665 with SMTP id
- d2e1a72fcca58-70d3587c806mr3759089b3a.2.1721709045536; 
- Mon, 22 Jul 2024 21:30:45 -0700 (PDT)
+ AJvYcCUShmHHdMRJNn6oFdrq7SqM6+4Tjo7anqGAFP4B37uA76GnlTlMivcWG8fQPqrKJvTkibPXXhBe6x9b8Ri2fhsH6BAT
+X-Gm-Message-State: AOJu0Yxe4/QZiulXjY2rbffXo5oIdKMotblZcJVSvF+DiN+VoUWFxzhW
+ 8SmQg3Ato+qZ3gIs0P4zC10tP5kE+RzAs54ZyoImrkj5fm6e+xQ+
+X-Google-Smtp-Source: AGHT+IG3N+5YYGWbp9IpEHQ9a7zlfFNJxZk8KviPYMFH2ABgsoTHG05K59i4skVILh8yoDs2JbTIkw==
+X-Received: by 2002:a05:6830:6a96:b0:703:5c2b:9024 with SMTP id
+ 46e09a7af769-709008d11d0mr11064960a34.16.1721709283930; 
+ Mon, 22 Jul 2024 21:34:43 -0700 (PDT)
 Received: from localhost ([203.220.44.216]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70d27485721sm2691689b3a.8.2024.07.22.21.30.41
+ d2e1a72fcca58-70d2801e3b8sm2595900b3a.212.2024.07.22.21.34.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jul 2024 21:30:45 -0700 (PDT)
+ Mon, 22 Jul 2024 21:34:43 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 23 Jul 2024 14:30:38 +1000
-Message-Id: <D2WMX1EEJ7PM.11W1PP8D9HCUN@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
- Barboza" <danielhb413@gmail.com>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
- <fbarrat@linux.ibm.com>
-Subject: Re: [PATCH v5 2/5] target/ppc: Add Power11 DD2.0 processor
-From: "Nicholas Piggin" <npiggin@gmail.com>
+Date: Tue, 23 Jul 2024 14:34:37 +1000
+Message-Id: <D2WN02YAGFCD.3MQREU9GFBJT5@gmail.com>
 To: "Aditya Gupta" <adityag@linux.ibm.com>, "Mahesh J Salgaonkar"
  <mahesh@linux.ibm.com>, "Madhavan Srinivasan" <maddy@linux.ibm.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, "Harsh Prateek Bora"
  <harshpb@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "David Gibson"
+ <david@gibson.dropbear.id.au>, "Daniel Henrique Barboza"
+ <danielhb413@gmail.com>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
+ <fbarrat@linux.ibm.com>
+Subject: Re: [PATCH v5 3/5] ppc/pseries: Add Power11 cpu type
+From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.18.0
 References: <20240606121657.254308-1-adityag@linux.ibm.com>
- <20240606121657.254308-3-adityag@linux.ibm.com>
-In-Reply-To: <20240606121657.254308-3-adityag@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+ <20240606121657.254308-4-adityag@linux.ibm.com>
+In-Reply-To: <20240606121657.254308-4-adityag@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=npiggin@gmail.com; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,11 +101,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
-> Add CPU target code to add support for new Power11 Processor.
+> Add sPAPR CPU Core definition for Power11
 >
-> Power11 core is same as Power10, hence reuse functions defined for
-> Power10.
->
+> Cc: David Gibson <david@gibson.dropbear.id.au> (reviewer:sPAPR (pseries))
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com> (reviewer:sPAPR (pseries))
 > Cc: C=C3=A9dric Le Goater <clg@kaod.org>
 > Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
 > Cc: Fr=C3=A9d=C3=A9ric Barrat <fbarrat@linux.ibm.com>
@@ -112,161 +112,60 @@ On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
 > Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
 > Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 > Cc: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->  target/ppc/compat.c     |  7 ++++++
->  target/ppc/cpu-models.c |  3 +++
->  target/ppc/cpu-models.h |  3 +++
->  target/ppc/cpu_init.c   | 54 +++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 67 insertions(+)
->
-> diff --git a/target/ppc/compat.c b/target/ppc/compat.c
-> index ebef2cccecf3..12dd8ae290ca 100644
-> --- a/target/ppc/compat.c
-> +++ b/target/ppc/compat.c
-> @@ -100,6 +100,13 @@ static const CompatInfo compat_table[] =3D {
->          .pcr_level =3D PCR_COMPAT_3_10,
->          .max_vthreads =3D 8,
->      },
-> +    { /* POWER11, ISA3.10 */
-> +        .name =3D "power11",
-> +        .pvr =3D CPU_POWERPC_LOGICAL_3_10_PLUS,
-
-Might call that _P11 rather than _PLUS, but I can fold that in my tree.
-
-> +        .pcr =3D PCR_COMPAT_3_10,
-> +        .pcr_level =3D PCR_COMPAT_3_10,
-> +        .max_vthreads =3D 8,
-> +    },
->  };
-> =20
->  static const CompatInfo *compat_by_pvr(uint32_t pvr)
-> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index f2301b43f78b..ece348178188 100644
-> --- a/target/ppc/cpu-models.c
-> +++ b/target/ppc/cpu-models.c
-> @@ -734,6 +734,8 @@
->                  "POWER9 v2.2")
->      POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POW=
-ER10,
->                  "POWER10 v2.0")
-> +    POWERPC_DEF("power11_v2.0",  CPU_POWERPC_POWER11_DD20,           POW=
-ER11,
-> +                "POWER11_v2.0")
->  #endif /* defined (TARGET_PPC64) */
-> =20
->  /***********************************************************************=
-****/
-> @@ -909,6 +911,7 @@ PowerPCCPUAlias ppc_cpu_aliases[] =3D {
->      { "power8nvl", "power8nvl_v1.0" },
->      { "power9", "power9_v2.2" },
->      { "power10", "power10_v2.0" },
-> +    { "power11", "power11_v2.0" },
->  #endif
-> =20
->      /* Generic PowerPCs */
-> diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
-> index 0229ef3a9a5c..ef74e387b047 100644
-> --- a/target/ppc/cpu-models.h
-> +++ b/target/ppc/cpu-models.h
-> @@ -354,6 +354,8 @@ enum {
->      CPU_POWERPC_POWER10_BASE       =3D 0x00800000,
->      CPU_POWERPC_POWER10_DD1        =3D 0x00801100,
->      CPU_POWERPC_POWER10_DD20       =3D 0x00801200,
-> +    CPU_POWERPC_POWER11_BASE       =3D 0x00820000,
-> +    CPU_POWERPC_POWER11_DD20       =3D 0x00821200,
->      CPU_POWERPC_970_v22            =3D 0x00390202,
->      CPU_POWERPC_970FX_v10          =3D 0x00391100,
->      CPU_POWERPC_970FX_v20          =3D 0x003C0200,
-> @@ -391,6 +393,7 @@ enum {
->      CPU_POWERPC_LOGICAL_2_07       =3D 0x0F000004,
->      CPU_POWERPC_LOGICAL_3_00       =3D 0x0F000005,
->      CPU_POWERPC_LOGICAL_3_10       =3D 0x0F000006,
-> +    CPU_POWERPC_LOGICAL_3_10_PLUS  =3D 0x0F000007,
->  };
-> =20
->  /* System version register (used on MPC 8xxx)                           =
-     */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 3d8a112935ae..9aa098935d05 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6669,6 +6669,60 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *dat=
-a)
->      pcc->l1_icache_size =3D 0x8000;
->  }
-> =20
-> +static bool ppc_pvr_match_power11(PowerPCCPUClass *pcc, uint32_t pvr, bo=
-ol best)
-> +{
-> +    uint32_t base =3D pvr & CPU_POWERPC_POWER_SERVER_MASK;
-> +    uint32_t pcc_base =3D pcc->pvr & CPU_POWERPC_POWER_SERVER_MASK;
-> +
-> +    if (!best && (base =3D=3D CPU_POWERPC_POWER11_BASE)) {
-> +        return true;
-> +    }
-> +
-> +    if (base !=3D pcc_base) {
-> +        return false;
-> +    }
-> +
-> +    if ((pvr & 0x0f00) =3D=3D (pcc->pvr & 0x0f00)) {
-> +        return true;
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +POWERPC_FAMILY(POWER11)(ObjectClass *oc, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(oc);
-> +    PowerPCCPUClass *pcc =3D POWERPC_CPU_CLASS(oc);
-> +
-> +    dc->fw_name =3D "PowerPC,POWER11";
-> +    dc->desc =3D "POWER11";
-> +    pcc->pvr_match =3D ppc_pvr_match_power11;
-> +    pcc->pcr_mask =3D POWERPC_POWER10_PCC_PCR_MASK;
-> +    pcc->pcr_supported =3D POWERPC_POWER10_PCC_PCR_SUPPORTED;
-> +    pcc->init_proc =3D init_proc_POWER10;
-> +    pcc->check_pow =3D check_pow_nocheck;
-> +    pcc->check_attn =3D check_attn_hid0_power9;
-> +    pcc->insns_flags =3D POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as P=
-9 */
-> +    pcc->insns_flags2 =3D POWERPC_FAMILY_POWER10_INSNS_FLAGS2;
-> +    pcc->msr_mask =3D POWERPC_POWER10_PCC_MSR_MASK;
-> +    pcc->lpcr_mask =3D POWERPC_POWER10_PCC_LPCR_MASK;
-
-BTW., I still think all these new macros should be named after the exact
-CPU, e.g., all these should be called POWER11 and the differences or
-sameness should be handled in cpu_init.h.
-
-I might tweak that and the names a bit locally (e.g., why is one type of
-define called POWERPC_FAMILY_x and another called POWERPC_x_PCC), but
-that's not a big deal and mostly an exercise in bike shed painting. The
-functionality of the patch looks okay.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-> +
-> +    pcc->lpcr_pm =3D LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | LPCR_=
-OEE;
-> +    pcc->mmu_model =3D POWERPC_MMU_3_00;
-> +#if !defined(CONFIG_USER_ONLY)
-> +    /* segment page size remain the same */
-> +    pcc->hash64_opts =3D &ppc_hash64_opts_POWER7;
-> +    pcc->radix_page_info =3D &POWER10_radix_page_info;
-> +    pcc->lrg_decr_bits =3D 56;
-> +#endif
-> +    pcc->excp_model =3D POWERPC_EXCP_POWER10;
-> +    pcc->bus_model =3D PPC_FLAGS_INPUT_POWER9;
-> +    pcc->bfd_mach =3D bfd_mach_ppc64;
-> +    pcc->flags =3D POWERPC_POWER10_PCC_FLAGS;
-> +    pcc->l1_dcache_size =3D 0x8000;
-> +    pcc->l1_icache_size =3D 0x8000;
-> +}
-> +
->  #if !defined(CONFIG_USER_ONLY)
->  void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHypervisor *vhyp)
->  {
+> ---
+>  docs/system/ppc/pseries.rst | 17 +++++++++++++----
+>  hw/ppc/spapr_cpu_core.c     |  1 +
+>  2 files changed, 14 insertions(+), 4 deletions(-)
+>
+> diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+> index a876d897b6e4..bbc51aa7fcdb 100644
+> --- a/docs/system/ppc/pseries.rst
+> +++ b/docs/system/ppc/pseries.rst
+> @@ -14,10 +14,19 @@ virtualization capabilities.
+>  Supported devices
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> =20
+> - * Multi processor support for many Power processors generations: POWER7=
+,
+> -   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ =
+exists,
+> -   but its state is unknown.
+> - * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
+> + * Multi processor support for many Power processors generations:
+> +   - POWER7, POWER7+
+> +   - POWER8, POWER8NVL
+> +   - POWER9
+> +   - Power10
+> +   - Power11
+> +   - Support for POWER5+ also exists, works with correct kernel/userspac=
+e
+> + * Interrupt Controller
+> +    - XICS (POWER8)
+> +    - XIVE (Supported by below:)
+> +        - POWER9
+> +        - Power10
+> +        - Power11
+>   * vPHB PCIe Host bridge.
+>   * vscsi and vnet devices, compatible with the same devices available on=
+ a
+>     PowerVM hypervisor with VIOS managing LPARs.
+> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+> index e7c9edd033c8..62416b7e0a7e 100644
+> --- a/hw/ppc/spapr_cpu_core.c
+> +++ b/hw/ppc/spapr_cpu_core.c
+> @@ -401,6 +401,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] =3D=
+ {
+>      DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+>      DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+>      DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+> +    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
+>  #ifdef CONFIG_KVM
+>      DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+>  #endif
 
 
