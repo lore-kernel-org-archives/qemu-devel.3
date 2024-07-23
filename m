@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4777DC3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 00:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25013C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 00:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW3Bm-00066n-PK; Mon, 22 Jul 2024 20:15:34 -0400
+	id 1sW3Gl-0002rX-CD; Mon, 22 Jul 2024 20:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Bk-00063k-6q
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:15:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Gi-0002qp-1R
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:20:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Bh-00084O-E6
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:15:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sW3Gd-0000gl-ST
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 20:20:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721693727;
+ s=mimecast20190719; t=1721694033;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LsnU3HfXMnpZU1qCXgFM1zlQJvg45ejDgk0Ol1zkG7M=;
- b=J9ABE6f/0W1LSkUSbG6aDU8cq4j1FpUpSX1+csjcOffODNsc0IGaOen13Kp/yBtTcRlPmy
- RTnsUvW+ogpZLGi7Cd8ARg2w6i1c6PgTzp8KcZLOQIxfsE8sEeNtQ6SKoVsfl3CchoyXg1
- Ck1WjggZ7P73TlsqbiNltUsgoRvm5sk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IDWc/d7nncXUPkfXNVMX4RyT95orJUOO1z4lWmuviBg=;
+ b=gsboBADCEyiUUqjaZBDvYA21WQBiWMURCqYNaSLWljdlL5OA+WEgPDfgY/qdW7gWKUD3xi
+ ETyp2Lqk1ZYCOeCdVoM0AkIvEvHQ7br7BKOW6iJDtAgO/jdsf6EVYkBODWRxdKkM55E9xe
+ tCqYSTxDYHB91AVhP5CzFcBKk4ucxLc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-391-dquOrR3fPlyZYM57my-s-A-1; Mon, 22 Jul 2024 20:15:25 -0400
-X-MC-Unique: dquOrR3fPlyZYM57my-s-A-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-427df7b6879so16592915e9.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 17:15:25 -0700 (PDT)
+ us-mta-484-q075c4a-PGm15po8xfoaVQ-1; Mon, 22 Jul 2024 20:20:28 -0400
+X-MC-Unique: q075c4a-PGm15po8xfoaVQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-426679bc120so32932055e9.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 17:20:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721693724; x=1722298524;
+ d=1e100.net; s=20230601; t=1721694027; x=1722298827;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LsnU3HfXMnpZU1qCXgFM1zlQJvg45ejDgk0Ol1zkG7M=;
- b=jkd0Ma2Y/zIX38vaPQKRmglYpHTtmtnzhSr6NEU9rbzRQE7zKntDapsVNsdGz/xYBF
- MU8DLLvYD3TUvLs6/uqx26iBlfPdFay4Czxs/5nALi9zhdkAHpw2jQvApF5hXxhSyWCO
- 5fqhrGSUwYsujaBjWECvDRg6KskBBSq5iLw15o9D4mz1XPsEsVZVfTKmCeorygPKdzVT
- 6lzbgXGbr7OUZoOE3+nlIKutTfmrqeNnTQv45JAaSvNB/G8tbHrMJjawm6qnrMkWHfDs
- Xgj4VL7kqW63D/Ab79FXBTpMmI8I6r7Ziyp0TwDhKBtEbjQf5+V3Gha6XMgdDNt0v0qR
- eAJg==
-X-Gm-Message-State: AOJu0YwkhW+dTAUpJxIbY3ikGMfvoPQmMKmmdkyxNEPg0fdyB9aEI7mD
- iTbLujTlPHy3HGXPlfFBVSRjRjz9ECXqNZnK1bwcJey+ZDNyDBtP8e0JE8AnnB5l0CtfrDPpKWn
- FtA54Y0BGwV27neaD6MGEae2oRH8c7ue66fmbQ+y/qYBRXX6+TZ3o
-X-Received: by 2002:a05:600c:a41:b0:425:69b7:3361 with SMTP id
- 5b1f17b1804b1-427e373fcaemr43795195e9.18.1721693724363; 
- Mon, 22 Jul 2024 17:15:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvDONw8SVo8q10EcwPZB3HM+8yFyubnH0/tqVdmyc821v1z6cgUdHQ7BrDiTeBRz3+Z+T/xg==
-X-Received: by 2002:a05:600c:a41:b0:425:69b7:3361 with SMTP id
- 5b1f17b1804b1-427e373fcaemr43794945e9.18.1721693723423; 
- Mon, 22 Jul 2024 17:15:23 -0700 (PDT)
+ bh=IDWc/d7nncXUPkfXNVMX4RyT95orJUOO1z4lWmuviBg=;
+ b=wkjQ+KbE4Ya2AXarsrCw0Jl4CdOwzHY7Q0tuSdjbHcaMiR2ljXmxziEsGmY8Sv0PCM
+ G//25nLuHIQJ/+Y1PV4r8q5Az5N2D6YWgDQ2tz8GdpvMq4a17GlFwlyhBS43Wrtq8JsK
+ jA22ejnd6Kl3zBk/P2qfHLaMgkMHzKIu2dHi7VMLMXlYMRNZja6uXXTApWgAXhVTetaT
+ zOrfkfKfgsZwyAJcER/bzsTu5a/C1p+NJI52d5e6sQdfG+ZBifx6Vrq9bJSb5Rzmm8ay
+ 8vVKj3b5/MM+otOvlzyGH1kpDr8gbCKY9qPTzSUPRa1gJpEBgMW77b3pGZfPxgVNG3vA
+ SxCg==
+X-Gm-Message-State: AOJu0Yxsi7ncfOM9KrsMPJdqdkLM8kn+GGvhsOZZ12kR3gmk+hJ3USuD
+ gM0FWkFh5fnJTbhes0lg3xDWDOI0wXX/jXs8UQeLP41JKg5BEPbQD9R/fDHkhSFn+4j8oEhD3IN
+ 133QN7Ip2gZs0MyzX2SSdrxfzoLRNZW1PkWvNYHaP9EEJXSU2YVAm
+X-Received: by 2002:a05:600c:358d:b0:426:6353:4b7c with SMTP id
+ 5b1f17b1804b1-427ed918ae7mr8417575e9.8.1721694026899; 
+ Mon, 22 Jul 2024 17:20:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEt+ii/4X0QeYiYZOD4XMdpCWE0TbIaKFPPbORI5TWdQAHTC+vfxHvfYiN0yjyNjhWzStgjrA==
+X-Received: by 2002:a05:600c:358d:b0:426:6353:4b7c with SMTP id
+ 5b1f17b1804b1-427ed918ae7mr8417435e9.8.1721694026335; 
+ Mon, 22 Jul 2024 17:20:26 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f0:5415:9d1e:913c:6f61:614e])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a8e436sm173212335e9.33.2024.07.22.17.15.21
+ ffacd0b85a97d-36878694833sm9820812f8f.55.2024.07.22.17.20.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 17:15:22 -0700 (PDT)
-Date: Mon, 22 Jul 2024 20:15:18 -0400
+ Mon, 22 Jul 2024 17:20:25 -0700 (PDT)
+Date: Mon, 22 Jul 2024 20:20:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Yui Washizu <yui.washidu@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PULL 29/63] hw/pci: Do not add ROM BAR for SR-IOV VF
-Message-ID: <20240722201505-mutt-send-email-mst@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL 00/63] virtio,pci,pc: features,fixes
+Message-ID: <20240722201719-mutt-send-email-mst@kernel.org>
 References: <cover.1721607331.git.mst@redhat.com>
- <54f3a29f08900bef796953971d2482d64ddf9969.1721607331.git.mst@redhat.com>
- <943d2a14-f4cb-4169-a7ac-bbe38a0e9abd@daynix.com>
+ <438af529-ad2e-4500-9347-387317255ae0@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <943d2a14-f4cb-4169-a7ac-bbe38a0e9abd@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <438af529-ad2e-4500-9347-387317255ae0@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,41 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 11:21:13PM +0900, Akihiko Odaki wrote:
-> On 2024/07/22 9:17, Michael S. Tsirkin wrote:
-> > From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Tue, Jul 23, 2024 at 07:32:56AM +1000, Richard Henderson wrote:
+> On 7/22/24 10:16, Michael S. Tsirkin wrote:
+> > A couple of fixes are outstanding, will merge later.
 > > 
-> > A SR-IOV VF cannot have a ROM BAR.
 > > 
-> > Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
-> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > Message-Id: <20240715-sriov-v5-1-3f5539093ffc@daynix.com>
-> > Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >   hw/pci/pci.c | 8 ++++++++
-> >   1 file changed, 8 insertions(+)
+> > The following changes since commit a87a7c449e532130d4fa8faa391ff7e1f04ed660:
 > > 
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index 4c7be52951..bd956637bc 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -2359,6 +2359,14 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-> >           return;
-> >       }
-> > +    if (pci_is_vf(pdev)) {
-> > +        if (pdev->rom_bar == ON_OFF_AUTO_ON) {
+> >    Merge tag 'pull-loongarch-20240719' ofhttps://gitlab.com/gaosong/qemu into staging (2024-07-19 16:28:28 +1000)
+> > 
+> > are available in the Git repository at:
+> > 
+> >    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> > 
+> > for you to fetch changes up to 67d834362c55d6fca6504975bc34755606f17cf2:
+> > 
+> >    virtio: Always reset vhost devices (2024-07-21 14:45:56 -0400)
+> > 
+> > ----------------------------------------------------------------
+> > virtio,pci,pc: features,fixes
+> > 
+> > pci: Initial support for SPDM Responders
+> > cxl: Add support for scan media, feature commands, device patrol scrub
+> >      control, DDR5 ECS control, firmware updates
+> > virtio: in-order support
+> > virtio-net: support for SR-IOV emulation (note: known issues on s390,
+> >                                            might get reverted if not fixed)
+> > smbios: memory device size is now configurable per Machine
+> > cpu: architecture agnostic code to support vCPU Hotplug
+> > 
+> > Fixes, cleanups all over the place.
+> > 
+> > Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
 > 
-> This requires:
-> https://lore.kernel.org/r/20240714-rombar-v2-0-af1504ef55de@daynix.com
-> ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+> Fails ubsan testing:
 > 
-> However it does not seem included in this pull request.
+> https://gitlab.com/qemu-project/qemu/-/jobs/7397450714
 > 
-> Regards,
-> Akihiko Odaki
+> ../publish/hw/net/virtio-net.c:3895:18: runtime error: member access within
+> null pointer of type 'struct vhost_net'
+> 
+> 
+> r~
 
-
-good point, dropped for now.
+Thanks! this is just make check under ubsan build, right?
 
 
