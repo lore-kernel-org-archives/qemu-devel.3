@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC03C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 01:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7069C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 01:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW3yj-00027P-6R; Mon, 22 Jul 2024 21:06:09 -0400
+	id 1sW3ye-0001n8-2i; Mon, 22 Jul 2024 21:06:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sW3yg-0001yM-Qa
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 21:06:07 -0400
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sW3yc-0001il-RH
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 21:06:02 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sW3yd-0008Pz-Kx
- for qemu-devel@nongnu.org; Mon, 22 Jul 2024 21:06:06 -0400
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3daf0e73a62so1239823b6e.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 18:06:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sW3ya-0008PR-PS
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 21:06:02 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-79efbc9328bso289981585a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 18:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cs.unc.edu; s=google; t=1721696762; x=1722301562; darn=nongnu.org;
+ d=cs.unc.edu; s=google; t=1721696758; x=1722301558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I1vAWukA7skXvo38uXnn+rRVz1qXPJidwroYA3B/VcE=;
- b=NdxLX70oVFXTMZXASMkxXddfqEBTQLHYAGLFcgdppxyqt5oIl3UjrzjvHmNKltRMpm
- gWhtCMzA3V7Zyrr+fOAlU1mHBdLWP2ft1EZ9R8SO/kT45xm0qJQLc6RDkk8UhlSsS/TE
- QRhtuzWEbP311Ukz1QCdsfsHJ9IXsX6cMTg16cdbRJ0EfScwT7Pz8TIM8sMejTA3MbZ2
- Acy/rE32dsvSnUyLluxaII9WJIY4oXAXbJ4y1KyHiHijD6ruEe3CbT4Tclc0PmjgtU/Q
- laRSBZ7ehkDQx9FOOwjDGVXMQn0/l5cVRa5oN4azalIGpY5P+35rvelUQhP+5Wae3XEW
- Y2Mg==
+ bh=NtpcxD+hVAJHL0wI1O+3ONDgQ3GWnMejKdakkXVeoP4=;
+ b=AoiS2Vi6Bd+sgIy8kyCgkFhmpz2oYTng7rPeZDulbNj/HFtS0zHWMdRa0/J6RwN5Ex
+ pqUbP3aeBVmPvLZO5nauOxcZvT++A8zQTV+cr/6u13uNICmHpsG8ZhasAWcDmH7+GYVT
+ 4guXLzJVgEWInF6P2llkQkAvQrYdTOhW3PMzquDQ/onfUK2mu3ymxtrdlnjQjJ+hoUVl
+ 7hF/cFi5vynO198/9+Taa4FK1Wmc5NRN+zGmY1DT7cJDo3aqLR9207wMK0DGS0lWHxCB
+ G3UEWZu96BKc3F4yK5MFb3PYVdYg3IidA2EOvUiI30N9+IZ63x7A74cLjWaOohrf1Odx
+ +IbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721696762; x=1722301562;
+ d=1e100.net; s=20230601; t=1721696758; x=1722301558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I1vAWukA7skXvo38uXnn+rRVz1qXPJidwroYA3B/VcE=;
- b=QVHxpsMrypr06P4/ifJEY4nzAnQkPNnA/tb2Ok/Z+yZmRbwzEtwDgDksINSiXAcOZp
- OSMa1jlQcft2x+CMknnlzQtW1CTbs+QxIT6Czoxvv9L8aL+rZ1VfBK3YBhGQDHVHWmjY
- jV8TVmcuggj0g3T2SejuvXXVCX1NUXUbV3INhCkaw1NLRg9CFJKyXQoR/JbqyiqkWq2f
- 9ES1uWmjuVRbzbA/hS4RPCzmReC+jNMoyEMNDO7AsGdjNTvBIEEDA7J5/MKrfqcub2pN
- 3XrDXi5omZeTBy0TlVK2q8NqjnW1P5myt6Xeh8uKr2CgqDzAyjipxRhGJgmGdmJNLagH
- nMtw==
-X-Gm-Message-State: AOJu0Yz4CDhHUcFh5C94qxTwFH6v52dDCHuy77F9UZ/1667BTyR6unKP
- YTrEwlml/VKLiCV41aFriTxTA2ZGoOreM6t0lmogdnr8hh39n6a1g5x99PuRqPzD3JrIPdJr5u8
- K8p176UdPRIDEwR4kXbqo1+pvRx1Qf45NGdoBoe9qDVpFxpt8c2cKZhFFUvifexD9cfQod4eRs1
- /CknPMH0Wkol8gMKWyzzrwQPWHCmXm
-X-Google-Smtp-Source: AGHT+IFZjplj2BlS0CUke0Xi6NgQdzK8CxyQafZOIjSnguJ6OD0QAEFgeKTdGA3pumBnq++PxS+bew==
-X-Received: by 2002:a05:6871:54e:b0:260:e611:c09 with SMTP id
- 586e51a60fabf-2646932e43cmr1229980fac.47.1721696761536; 
- Mon, 22 Jul 2024 18:06:01 -0700 (PDT)
+ bh=NtpcxD+hVAJHL0wI1O+3ONDgQ3GWnMejKdakkXVeoP4=;
+ b=QsXtE4atysKqEwmIxKd1d2sgbq7LYQwTOJekyuG25se69b4D8s/tQHx5HFaHXwvO7w
+ 3UgrafKZEMmug80R/4nHJVAF+knjtUO9BvIOgyf2Ss+cWwsoM7xVWsW+ivtnXVzVxTrS
+ kToJajNvsg8YPnliLu7Qjswpz2uYukFJcZJL8Rhxlu9OpsbL7GqnL3dGw0CQpydbO1PR
+ aKsA7p4i3Ryds932tWIMJJlwAqsiCIBdCKv60DSiz9KC3g7aELBQZCf70TSVE+fA0wtH
+ 3N8caLiZ8UELk9YTl2yCAkU4DEETshmZYnk5fgVBw+wQPXnNdEOBoaiTv7Naxr0vo+oG
+ qo1Q==
+X-Gm-Message-State: AOJu0YzC4qJg7wRBQOTuNW8AqBiFnQqeMQMufPpXkZVnUHNGe8SKQpiX
+ i2qloXxyGydyQm/3UEorGxT2JQuHpNHz8VmI6I6KxOdjBxFInI+CRJdcDQ34ey0QpBBU7swKrbv
+ /xM5RAJqgEqCOBo89Z1urECFxu3Op3v0OAjBaJx+MBz/nNA1EmYG0G5Ih7J3rWzzMisCYHFIsi1
+ i2a5AvMl8m0B3rtV0JQJcA0g1gLQP3
+X-Google-Smtp-Source: AGHT+IELTaY9CeaJzxVZdEQMmc4dnw4/2gRkZNQ/W0GtL0FGO03MqACt+lshZ+e8giBVy45L/iP3gA==
+X-Received: by 2002:a05:620a:3951:b0:79f:5d5:f03e with SMTP id
+ af79cd13be357-7a1c06bb790mr183518985a.17.1721696758195; 
+ Mon, 22 Jul 2024 18:05:58 -0700 (PDT)
 Received: from kermit.cs.unc.edu (kermit.cs.unc.edu. [152.2.133.133])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44f9cdc0cbdsm37953601cf.92.2024.07.22.18.06.00
+ d75a77b69052e-44f9cdc0cbdsm37953601cf.92.2024.07.22.18.05.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jul 2024 18:06:01 -0700 (PDT)
+ Mon, 22 Jul 2024 18:05:57 -0700 (PDT)
 From: Don Porter <porter@cs.unc.edu>
 To: qemu-devel@nongnu.org
 Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
  richard.henderson@linaro.org, philmd@linaro.org, berrange@redhat.com,
  Don Porter <porter@cs.unc.edu>
-Subject: [PATCH v4 4/7] Convert 'info tlb' to use generic iterator.
-Date: Mon, 22 Jul 2024 21:05:42 -0400
-Message-Id: <20240723010545.3648706-5-porter@cs.unc.edu>
+Subject: [PATCH v4 2/7] Import vmcs12 definition from Linux/KVM
+Date: Mon, 22 Jul 2024 21:05:40 -0400
+Message-Id: <20240723010545.3648706-3-porter@cs.unc.edu>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240723010545.3648706-1-porter@cs.unc.edu>
 References: <20240723010545.3648706-1-porter@cs.unc.edu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=porter@cs.unc.edu; helo=mail-oi1-x235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=porter@cs.unc.edu; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -94,350 +94,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the the guest is using nested page tables, change the output format
-slightly, to first show guest virtual to guest physical, then guest
-physical to host physical, as below:
-
-(qemu) info tlb
-Info guest TLB (guest virtual to guest physical):
-0000008000800000: 000000000076a000  -------U-P
-0000008000801000: 000000000076b000  -------U-P
-0000008000802000: 000000000076c000  -------U-P
-0000008000803000: 000000000076d000  -------U-P
-[...]
-0000008004ffd000: 0000000000ffd000  --------WP
-0000008004ffe000: 0000000000ffe000  --------WP
-0000008004fff000: 0000000000fff000  --------WP
-Info host TLB, (guest physical to host physical):
-0000000000001000: 0000000001b20000  ----XWR
-0000000000002000: 0000000001b21000  ----XWR
-0000000000003000: 0000000001b22000  ----XWR
-0000000000004000: 0000000001b23000  ----XWR
-0000000000005000: 0000000001b24000  ----XWR
-[...]
-
 Signed-off-by: Don Porter <porter@cs.unc.edu>
 ---
- include/hw/core/sysemu-cpu-ops.h |   7 +
- target/i386/cpu.c                |   1 +
- target/i386/cpu.h                |   2 +
- target/i386/monitor.c            | 233 +++++++++----------------------
- 4 files changed, 75 insertions(+), 168 deletions(-)
+ target/i386/kvm/vmcs12.h | 213 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 213 insertions(+)
+ create mode 100644 target/i386/kvm/vmcs12.h
 
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index d0e939def8..083df4717c 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -225,6 +225,13 @@ typedef struct SysemuCPUOps {
-     bool (*mon_flush_page_print_state)(CPUState *cs,
-                                        struct mem_print_state *state);
- 
-+    /**
-+     * @mon_print_pte: Hook called by the monitor to print a page
-+     * table entry at address addr, with contents pte.
-+     */
-+    void (*mon_print_pte) (CPUState *cs, GString *buf, hwaddr addr,
-+                           hwaddr pte, uint64_t prot, int mmu_idx);
+diff --git a/target/i386/kvm/vmcs12.h b/target/i386/kvm/vmcs12.h
+new file mode 100644
+index 0000000000..c7b139f4db
+--- /dev/null
++++ b/target/i386/kvm/vmcs12.h
+@@ -0,0 +1,213 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef QEMU_KVM_X86_VMX_VMCS12_H
++#define QEMU_KVM_X86_VMX_VMCS12_H
 +
- } SysemuCPUOps;
- 
- int compressing_iterator(CPUState *cs, void *data, DecodedPTE *pte,
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ec419e0ef0..030198497a 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8388,6 +8388,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
-     .mon_init_page_table_iterator = &x86_mon_init_page_table_iterator,
-     .mon_info_pg_print_header = &x86_mon_info_pg_print_header,
-     .mon_flush_page_print_state = &x86_mon_flush_print_pg_state,
-+    .mon_print_pte = &x86_mon_print_pte,
- };
- #endif
- 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4e5877f41d..413c743c1a 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2264,6 +2264,8 @@ bool x86_mon_init_page_table_iterator(CPUState *cpu, GString *buf, int mmu_idx,
-                                       struct mem_print_state *state);
- void x86_mon_info_pg_print_header(struct mem_print_state *state);
- bool x86_mon_flush_print_pg_state(CPUState *cs, struct mem_print_state *state);
-+void x86_mon_print_pte(CPUState *cs, GString *out_buf, hwaddr addr,
-+                       hwaddr child, uint64_t prot, int mmu_idx);
- bool x86_ptw_translate(CPUState *cs, vaddr vaddress, hwaddr *hpa,
-                        bool debug, int mmu_idx, bool user_access,
-                        const MMUAccessType access_type, uint64_t *page_size,
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index 8ef92e7c42..d88347684b 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -224,201 +224,98 @@ static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
-     return addr;
- }
- 
--static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
--                      hwaddr pte, hwaddr mask)
-+void x86_mon_print_pte(CPUState *cs, GString *out_buf, hwaddr addr,
-+                       hwaddr child, uint64_t prot, int mmu_idx)
- {
-+    CPUX86State *env = cpu_env(cs);
-+    g_autoptr(GString) buf = g_string_new("");
++#include <linux/kvm.h>
 +
-     addr = addr_canonical(env, addr);
- 
--    monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
--                   " %c%c%c%c%c%c%c%c%c\n",
--                   addr,
--                   pte & mask,
--                   pte & PG_NX_MASK ? 'X' : '-',
--                   pte & PG_GLOBAL_MASK ? 'G' : '-',
--                   pte & PG_PSE_MASK ? 'P' : '-',
--                   pte & PG_DIRTY_MASK ? 'D' : '-',
--                   pte & PG_ACCESSED_MASK ? 'A' : '-',
--                   pte & PG_PCD_MASK ? 'C' : '-',
--                   pte & PG_PWT_MASK ? 'T' : '-',
--                   pte & PG_USER_MASK ? 'U' : '-',
--                   pte & PG_RW_MASK ? 'W' : '-');
--}
-+    g_string_append_printf(buf, HWADDR_FMT_plx ": " HWADDR_FMT_plx " ",
-+                           addr, child);
- 
--static void tlb_info_32(Monitor *mon, CPUArchState *env)
--{
--    unsigned int l1, l2;
--    uint32_t pgd, pde, pte;
-+    g_string_append_printf(buf, " %s", pg_bits(cs, prot, mmu_idx));
- 
--    pgd = env->cr[3] & ~0xfff;
--    for(l1 = 0; l1 < 1024; l1++) {
--        cpu_physical_memory_read(pgd + l1 * 4, &pde, 4);
--        pde = le32_to_cpu(pde);
--        if (pde & PG_PRESENT_MASK) {
--            if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
--                /* 4M pages */
--                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
--            } else {
--                for(l2 = 0; l2 < 1024; l2++) {
--                    cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
--                    pte = le32_to_cpu(pte);
--                    if (pte & PG_PRESENT_MASK) {
--                        print_pte(mon, env, (l1 << 22) + (l2 << 12),
--                                  pte & ~PG_PSE_MASK,
--                                  ~0xfff);
--                    }
--                }
--            }
--        }
--    }
--}
--
--static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
--{
--    unsigned int l1, l2, l3;
--    uint64_t pdpe, pde, pte;
--    uint64_t pdp_addr, pd_addr, pt_addr;
-+    /* Trim line to fit screen */
-+    g_string_truncate(buf, 79);
- 
--    pdp_addr = env->cr[3] & ~0x1f;
--    for (l1 = 0; l1 < 4; l1++) {
--        cpu_physical_memory_read(pdp_addr + l1 * 8, &pdpe, 8);
--        pdpe = le64_to_cpu(pdpe);
--        if (pdpe & PG_PRESENT_MASK) {
--            pd_addr = pdpe & 0x3fffffffff000ULL;
--            for (l2 = 0; l2 < 512; l2++) {
--                cpu_physical_memory_read(pd_addr + l2 * 8, &pde, 8);
--                pde = le64_to_cpu(pde);
--                if (pde & PG_PRESENT_MASK) {
--                    if (pde & PG_PSE_MASK) {
--                        /* 2M pages with PAE, CR4.PSE is ignored */
--                        print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
--                                  ~((hwaddr)(1 << 20) - 1));
--                    } else {
--                        pt_addr = pde & 0x3fffffffff000ULL;
--                        for (l3 = 0; l3 < 512; l3++) {
--                            cpu_physical_memory_read(pt_addr + l3 * 8, &pte, 8);
--                            pte = le64_to_cpu(pte);
--                            if (pte & PG_PRESENT_MASK) {
--                                print_pte(mon, env, (l1 << 30) + (l2 << 21)
--                                          + (l3 << 12),
--                                          pte & ~PG_PSE_MASK,
--                                          ~(hwaddr)0xfff);
--                            }
--                        }
--                    }
--                }
--            }
--        }
--    }
-+    g_string_append_printf(out_buf, "%s\n", buf->str);
- }
- 
--#ifdef TARGET_X86_64
--static void tlb_info_la48(Monitor *mon, CPUArchState *env,
--        uint64_t l0, uint64_t pml4_addr)
-+static
-+int mem_print_tlb(CPUState *cs, void *data, DecodedPTE *pte, int height,
-+                  int offset, int mmu_idx, const PageTableLayout *layout)
- {
--    uint64_t l1, l2, l3, l4;
--    uint64_t pml4e, pdpe, pde, pte;
--    uint64_t pdp_addr, pd_addr, pt_addr;
--
--    for (l1 = 0; l1 < 512; l1++) {
--        cpu_physical_memory_read(pml4_addr + l1 * 8, &pml4e, 8);
--        pml4e = le64_to_cpu(pml4e);
--        if (!(pml4e & PG_PRESENT_MASK)) {
--            continue;
--        }
--
--        pdp_addr = pml4e & 0x3fffffffff000ULL;
--        for (l2 = 0; l2 < 512; l2++) {
--            cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
--            pdpe = le64_to_cpu(pdpe);
--            if (!(pdpe & PG_PRESENT_MASK)) {
--                continue;
--            }
-+    struct mem_print_state *state = (struct mem_print_state *) data;
-+    CPUClass *cc = CPU_GET_CLASS(cs);
- 
--            if (pdpe & PG_PSE_MASK) {
--                /* 1G pages, CR4.PSE is ignored */
--                print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
--                        pdpe, 0x3ffffc0000000ULL);
--                continue;
--            }
--
--            pd_addr = pdpe & 0x3fffffffff000ULL;
--            for (l3 = 0; l3 < 512; l3++) {
--                cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
--                pde = le64_to_cpu(pde);
--                if (!(pde & PG_PRESENT_MASK)) {
--                    continue;
--                }
-+    cc->sysemu_ops->mon_print_pte(cs, state->buf, pte->bits_translated,
-+                                  pte->child, pte->prot, mmu_idx);
- 
--                if (pde & PG_PSE_MASK) {
--                    /* 2M pages, CR4.PSE is ignored */
--                    print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
--                            (l3 << 21), pde, 0x3ffffffe00000ULL);
--                    continue;
--                }
--
--                pt_addr = pde & 0x3fffffffff000ULL;
--                for (l4 = 0; l4 < 512; l4++) {
--                    cpu_physical_memory_read(pt_addr
--                            + l4 * 8,
--                            &pte, 8);
--                    pte = le64_to_cpu(pte);
--                    if (pte & PG_PRESENT_MASK) {
--                        print_pte(mon, env, (l0 << 48) + (l1 << 39) +
--                                (l2 << 30) + (l3 << 21) + (l4 << 12),
--                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
--                    }
--                }
--            }
--        }
--    }
-+    return 0;
- }
- 
--static void tlb_info_la57(Monitor *mon, CPUArchState *env)
-+static
-+void helper_hmp_info_tlb(CPUState *cs, Monitor *mon, int mmu_idx)
- {
--    uint64_t l0;
--    uint64_t pml5e;
--    uint64_t pml5_addr;
-+    struct mem_print_state state;
-+    g_autoptr(GString) buf = g_string_new("");
-+    CPUClass *cc = CPU_GET_CLASS(cs);
- 
--    pml5_addr = env->cr[3] & 0x3fffffffff000ULL;
--    for (l0 = 0; l0 < 512; l0++) {
--        cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
--        pml5e = le64_to_cpu(pml5e);
--        if (pml5e & PG_PRESENT_MASK) {
--            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
--        }
-+    if (!cc->sysemu_ops->mon_init_page_table_iterator(cs, buf, mmu_idx,
-+                                                      &state)) {
-+        monitor_printf(mon, "Unable to initialize page table iterator\n");
-+        return;
-     }
++/* XXX: Stolen from Linux with light edits, for now */
 +
-+    /**
-+     * 'info tlb' visits only leaf PTEs marked present.
-+     * It does not check other protection bits.
-+     */
-+    for_each_pte(cs, &mem_print_tlb, &state, false, false, false,  mmu_idx);
++typedef uint64_t u64;
++typedef uint32_t u32;
++typedef uint16_t u16;
 +
-+    monitor_printf(mon, "%s", buf->str);
- }
--#endif /* TARGET_X86_64 */
- 
- void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- {
--    CPUArchState *env;
-+    CPUState *cs = mon_get_cpu(mon);
-+    bool nested;
- 
--    env = mon_get_cpu_env(mon);
--    if (!env) {
--        monitor_printf(mon, "No CPU available\n");
-+    if (!cs) {
-+        monitor_printf(mon, "Unable to get CPUState.  Internal error\n");
-         return;
-     }
- 
--    if (!(env->cr[0] & CR0_PG_MASK)) {
-+    if (!cpu_paging_enabled(cs, 0)) {
-         monitor_printf(mon, "PG disabled\n");
-         return;
-     }
--    if (env->cr[4] & CR4_PAE_MASK) {
--#ifdef TARGET_X86_64
--        if (env->hflags & HF_LMA_MASK) {
--            if (env->cr[4] & CR4_LA57_MASK) {
--                tlb_info_la57(mon, env);
--            } else {
--                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
--            }
--        } else
--#endif
--        {
--            tlb_info_pae32(mon, env);
--        }
--    } else {
--        tlb_info_32(mon, env);
++/*
++ * struct vmcs12 describes the state that our guest hypervisor (L1) keeps for a
++ * single nested guest (L2), hence the name vmcs12. Any VMX implementation has
++ * a VMCS structure, and vmcs12 is our emulated VMX's VMCS. This structure is
++ * stored in guest memory specified by VMPTRLD, but is opaque to the guest,
++ * which must access it using VMREAD/VMWRITE/VMCLEAR instructions.
++ * More than one of these structures may exist, if L1 runs multiple L2 guests.
++ * nested_vmx_run() will use the data here to build the vmcs02: a VMCS for the
++ * underlying hardware which will be used to run L2.
++ * This structure is packed to ensure that its layout is identical across
++ * machines (necessary for live migration).
++ *
++ * IMPORTANT: Changing the layout of existing fields in this structure
++ * will break save/restore compatibility with older kvm releases. When
++ * adding new fields, either use space in the reserved padding* arrays
++ * or add the new fields to the end of the structure.
++ */
++typedef u64 natural_width;
 +
-+    CPUClass *cc = CPU_GET_CLASS(cs);
 +
-+    if (!cc->sysemu_ops->mon_print_pte
-+        || !cc->sysemu_ops->mon_init_page_table_iterator) {
-+        monitor_printf(mon, "Info tlb unsupported on this ISA\n");
-+        return;
-+    }
++struct vmcs_hdr {
++    u32 revision_id : 31;
++    u32 shadow_vmcs : 1;
++};
 +
-+    nested = cpu_paging_enabled(cs, 1);
++struct __attribute__ ((__packed__)) vmcs12 {
++        /*
++         * According to the Intel spec, a VMCS region must start with the
++         * following two fields. Then follow implementation-specific data.
++         */
++        struct vmcs_hdr hdr;
++        u32 abort;
 +
-+    if (nested) {
-+        monitor_printf(mon,
-+                       "Info guest TLB (guest virtual to guest physical):\n");
-+    }
++        u32 launch_state; /* set to 0 by VMCLEAR, to 1 by VMLAUNCH */
++        u32 padding[7]; /* room for future expansion */
 +
-+    helper_hmp_info_tlb(cs, mon, 0);
++        u64 io_bitmap_a;
++        u64 io_bitmap_b;
++        u64 msr_bitmap;
++        u64 vm_exit_msr_store_addr;
++        u64 vm_exit_msr_load_addr;
++        u64 vm_entry_msr_load_addr;
++        u64 tsc_offset;
++        u64 virtual_apic_page_addr;
++        u64 apic_access_addr;
++        u64 posted_intr_desc_addr;
++        u64 ept_pointer;
++        u64 eoi_exit_bitmap0;
++        u64 eoi_exit_bitmap1;
++        u64 eoi_exit_bitmap2;
++        u64 eoi_exit_bitmap3;
++        u64 xss_exit_bitmap;
++        u64 guest_physical_address;
++        u64 vmcs_link_pointer;
++        u64 guest_ia32_debugctl;
++        u64 guest_ia32_pat;
++        u64 guest_ia32_efer;
++        u64 guest_ia32_perf_global_ctrl;
++        u64 guest_pdptr0;
++        u64 guest_pdptr1;
++        u64 guest_pdptr2;
++        u64 guest_pdptr3;
++        u64 guest_bndcfgs;
++        u64 host_ia32_pat;
++        u64 host_ia32_efer;
++        u64 host_ia32_perf_global_ctrl;
++        u64 vmread_bitmap;
++        u64 vmwrite_bitmap;
++        u64 vm_function_control;
++        u64 eptp_list_address;
++        u64 pml_address;
++        u64 encls_exiting_bitmap;
++        u64 tsc_multiplier;
++        u64 padding64[1]; /* room for future expansion */
++        /*
++         * To allow migration of L1 (complete with its L2 guests) between
++         * machines of different natural widths (32 or 64 bit), we cannot have
++         * unsigned long fields with no explicit size. We use u64 (aliased
++         * natural_width) instead. Luckily, x86 is little-endian.
++         */
++        natural_width cr0_guest_host_mask;
++        natural_width cr4_guest_host_mask;
++        natural_width cr0_read_shadow;
++        natural_width cr4_read_shadow;
++        /* Last remnants of cr3_target_value[0-3]. */
++        natural_width dead_space[4];
++        natural_width exit_qualification;
++        natural_width guest_linear_address;
++        natural_width guest_cr0;
++        natural_width guest_cr3;
++        natural_width guest_cr4;
++        natural_width guest_es_base;
++        natural_width guest_cs_base;
++        natural_width guest_ss_base;
++        natural_width guest_ds_base;
++        natural_width guest_fs_base;
++        natural_width guest_gs_base;
++        natural_width guest_ldtr_base;
++        natural_width guest_tr_base;
++        natural_width guest_gdtr_base;
++        natural_width guest_idtr_base;
++        natural_width guest_dr7;
++        natural_width guest_rsp;
++        natural_width guest_rip;
++        natural_width guest_rflags;
++        natural_width guest_pending_dbg_exceptions;
++        natural_width guest_sysenter_esp;
++        natural_width guest_sysenter_eip;
++        natural_width host_cr0;
++        natural_width host_cr3;
++        natural_width host_cr4;
++        natural_width host_fs_base;
++        natural_width host_gs_base;
++        natural_width host_tr_base;
++        natural_width host_gdtr_base;
++        natural_width host_idtr_base;
++        natural_width host_ia32_sysenter_esp;
++        natural_width host_ia32_sysenter_eip;
++        natural_width host_rsp;
++        natural_width host_rip;
++        natural_width paddingl[8]; /* room for future expansion */
++        u32 pin_based_vm_exec_control;
++        u32 cpu_based_vm_exec_control;
++        u32 exception_bitmap;
++        u32 page_fault_error_code_mask;
++        u32 page_fault_error_code_match;
++        u32 cr3_target_count;
++        u32 vm_exit_controls;
++        u32 vm_exit_msr_store_count;
++        u32 vm_exit_msr_load_count;
++        u32 vm_entry_controls;
++        u32 vm_entry_msr_load_count;
++        u32 vm_entry_intr_info_field;
++        u32 vm_entry_exception_error_code;
++        u32 vm_entry_instruction_len;
++        u32 tpr_threshold;
++        u32 secondary_vm_exec_control;
++        u32 vm_instruction_error;
++        u32 vm_exit_reason;
++        u32 vm_exit_intr_info;
++        u32 vm_exit_intr_error_code;
++        u32 idt_vectoring_info_field;
++        u32 idt_vectoring_error_code;
++        u32 vm_exit_instruction_len;
++        u32 vmx_instruction_info;
++        u32 guest_es_limit;
++        u32 guest_cs_limit;
++        u32 guest_ss_limit;
++        u32 guest_ds_limit;
++        u32 guest_fs_limit;
++        u32 guest_gs_limit;
++        u32 guest_ldtr_limit;
++        u32 guest_tr_limit;
++        u32 guest_gdtr_limit;
++        u32 guest_idtr_limit;
++        u32 guest_es_ar_bytes;
++        u32 guest_cs_ar_bytes;
++        u32 guest_ss_ar_bytes;
++        u32 guest_ds_ar_bytes;
++        u32 guest_fs_ar_bytes;
++        u32 guest_gs_ar_bytes;
++        u32 guest_ldtr_ar_bytes;
++        u32 guest_tr_ar_bytes;
++        u32 guest_interruptibility_info;
++        u32 guest_activity_state;
++        u32 guest_sysenter_cs;
++        u32 host_ia32_sysenter_cs;
++        u32 vmx_preemption_timer_value;
++        u32 padding32[7]; /* room for future expansion */
++        u16 virtual_processor_id;
++        u16 posted_intr_nv;
++        u16 guest_es_selector;
++        u16 guest_cs_selector;
++        u16 guest_ss_selector;
++        u16 guest_ds_selector;
++        u16 guest_fs_selector;
++        u16 guest_gs_selector;
++        u16 guest_ldtr_selector;
++        u16 guest_tr_selector;
++        u16 guest_intr_status;
++        u16 host_es_selector;
++        u16 host_cs_selector;
++        u16 host_ss_selector;
++        u16 host_ds_selector;
++        u16 host_fs_selector;
++        u16 host_gs_selector;
++        u16 host_tr_selector;
++        u16 guest_pml_index;
++};
 +
-+    if (nested) {
-+        monitor_printf(mon,
-+                       "Info host TLB, (guest physical to host physical):\n");
++/*
++ * VMCS12_REVISION is an arbitrary id that should be changed if the content or
++ * layout of struct vmcs12 is changed. MSR_IA32_VMX_BASIC returns this id, and
++ * VMPTRLD verifies that the VMCS region that L1 is loading contains this id.
++ *
++ * IMPORTANT: Changing this value will break save/restore compatibility with
++ * older kvm releases.
++ */
++#define VMCS12_REVISION 0x11e57ed0
 +
-+        helper_hmp_info_tlb(cs, mon, 1);
-+
-     }
- }
- 
++#endif
 -- 
 2.34.1
 
