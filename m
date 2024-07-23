@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7924AC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56A7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDCy-0000TG-OL; Tue, 23 Jul 2024 06:57:28 -0400
+	id 1sWDCO-0004tG-Nz; Tue, 23 Jul 2024 06:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCk-0007Jd-Na
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCJ-0004Ki-99
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCi-0001p9-DF
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:57:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDCH-0001kH-BJ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732231;
+ s=mimecast20190719; t=1721732204;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y5oJRr4r3YF/yxB2ziPoT4Qctv1Z09qYy5SwcSzq9dE=;
- b=f7PgfjR90IluEk5/oUicWFAV1co/i1Lw0jq4WKI6tNB1oCm4eFjfhQp5pRKdUj3HKGR1wl
- 2eliOAddH5eHERXj2S7IArgo5m2KAR2YreFiiZcT+PKpHwKRXhsNX2JD2UOBFj9UlsO2tg
- KQjq21LTs1jaofyAe8756+PHKZHrVjI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zREGtvMmaAWc2fUmFmGbArMdM6d/DlgtDgvgzTwqaes=;
+ b=ew+8NrDRlBjXidqWohQvNRrzbxcDmLes9Hq4DFgMTMbrNmx6ZZWh1L+qVoihYTYk+5ZA9W
+ 7psABuKMZZOO9CkDzASsNL6/Ogt0BaE5j9MJFtj1LMZ3cl4ECVK/MS5h+bVHYXTlkrEL8O
+ yxA3DEQPNFZ/DyOJMMQprM30L95/01o=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-259-GbKX1lkWNKqmO3pb2-HCoQ-1; Tue, 23 Jul 2024 06:57:09 -0400
-X-MC-Unique: GbKX1lkWNKqmO3pb2-HCoQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6f571c3eefso47958966b.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:57:08 -0700 (PDT)
+ us-mta-661-aDQvbWMrMYW28nFPRlKDGA-1; Tue, 23 Jul 2024 06:56:43 -0400
+X-MC-Unique: aDQvbWMrMYW28nFPRlKDGA-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ef2018bb2dso26349621fa.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732227; x=1722337027;
+ d=1e100.net; s=20230601; t=1721732201; x=1722337001;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y5oJRr4r3YF/yxB2ziPoT4Qctv1Z09qYy5SwcSzq9dE=;
- b=oMLxQtesteecibGPK1MzIqjWzfXXcTubxBH1nTe3DjbSAhttmolhnAkhGpa9TkhICS
- jKYDprKy3dXxxvGnE6PaGH7IhjD3uSOzKf3yZZsx6SAveMrH/N0ojVkk6JEkIpM2oe9E
- pWsy0meQonh1VSFvC8fRapTnblhuIbkXYI3bylHyL69xU+sUhyuqtHEedUVk/JFs8Vxt
- 8pn4Zu2T2Z4MbVKy9mcDWU8Nv+dQ05uKafEnxyRdX9G+Xb017mI/kwEEKH2yj+7bZtXA
- fOOa9LeWYC9w5EayvwFgnRSKEl+TASRk9PcH7T3BfrJBkYrtiu9ZOl4tWgOyFlnIJvYm
- rJFQ==
-X-Gm-Message-State: AOJu0Yxre7/cWF8kOA2GBB+59mVigSLjeAeqxpanG/YgsRZnAiX9Quqc
- zBWZ/VAhxHkt5Mkbt36ZyMqepWLSAYmMvU2dzZ7GdTZOoI7hN/kqOZhj9BkrMYFfuSMDNOGZDuX
- ZhEGFo3Tp6SozUqURep4zQ+TlPKKyssbrjarU95dv37b4LJvEI7aulMwpOYY9SA3id2LnJZAmNL
- mijqP4PjfHnT2ZcWo4AchOUr95zhXXlA==
-X-Received: by 2002:a17:907:d8e:b0:a77:eb34:3b4b with SMTP id
- a640c23a62f3a-a7a87c006e3mr208357666b.11.1721732227410; 
- Tue, 23 Jul 2024 03:57:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEx7tvHe+yWAO1iXftKoVDSyAZJFbauRNkPZtPTlgWz5Ug1UR82mHbjHEXMSJooAXJRVukIw==
-X-Received: by 2002:a17:907:d8e:b0:a77:eb34:3b4b with SMTP id
- a640c23a62f3a-a7a87c006e3mr208355366b.11.1721732226874; 
- Tue, 23 Jul 2024 03:57:06 -0700 (PDT)
+ bh=zREGtvMmaAWc2fUmFmGbArMdM6d/DlgtDgvgzTwqaes=;
+ b=qGveR6qTQ1nUswJh8BlzjvgKZy1sZF6T799WosWZensOMpGHTKgi/7Vrdko9+lWY+w
+ 18+rGkdEVhT4D7KNKdsS5BA97DrVfKDwL5jYZr+QX+3gTVqV8o6Iw0yaB+AUk/veRgBX
+ ao7449TVje0LFKrOqXlKxd0Rl/JUIkh3XwfefcbNnwSfxFMdOy8/MlJSchrO0i2h3GmN
+ jIaWlwluARtIsTBkDoFHSe5I0HM0NoHDT5vK+QB1dj49H0R76otTIbV0lC8ZWvCr101/
+ Mf2zngg4LUMCSuX9OtBQ0FG27m6maC1ON/95SmbfP4sJ8qrdWvhqORkqxufZ3WujQGCE
+ jU1A==
+X-Gm-Message-State: AOJu0YwnE6wv3UUJ7niSUZlhex7+8O1xLUNKIHyOWfv1YVhEEs4fKL6g
+ xeIgUMIHnpACchlt8WneVdw1UgwFm56KYhD5CdeA7T8vNdcZ3LTDhq2fz/nlSPP1xPoXk31vKZB
+ 5795E570S95IdqAg4MPOZCzGqVUjLv27EZuUEIKTonsM/svNy/XzwzJpbBWue5/dA6lOojJpZ9A
+ XxVlsiTXv3YV+u+Xg81Ff0kS6MCqabsA==
+X-Received: by 2002:a2e:b554:0:b0:2ef:2dfd:15dc with SMTP id
+ 38308e7fff4ca-2f01ea4b5f7mr17443541fa.9.1721732201291; 
+ Tue, 23 Jul 2024 03:56:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH5HdpyqHIKsj0FNrdF5wVYLLwxlqzQkGqXzwbx3/cb8qu/uj4paqtIC0zuSfQoowfZM50yKw==
+X-Received: by 2002:a2e:b554:0:b0:2ef:2dfd:15dc with SMTP id
+ 38308e7fff4ca-2f01ea4b5f7mr17443251fa.9.1721732200568; 
+ Tue, 23 Jul 2024 03:56:40 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c926bc8sm528496166b.157.2024.07.23.03.57.03
+ 4fb4d7f45d1cf-5a30a4d6c17sm7384250a12.5.2024.07.23.03.56.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:57:06 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:57:02 -0400
+ Tue, 23 Jul 2024 03:56:40 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:56:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL v2 21/61] intel_iommu: make type match
-Message-ID: <bb3a23d5b0b43bed3c9a6ecf5a6871e2871be883.1721731723.git.mst@redhat.com>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 16/61] virtio-snd: add max size bounds check in input cb
+Message-ID: <98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -108,35 +106,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-The 'level' field in vtd_iotlb_key is an unsigned integer.
-We don't need to store level as an int in vtd_lookup_iotlb.
+When reading input audio in the virtio-snd input callback,
+virtio_snd_pcm_in_cb(), we do not check whether the iov can actually fit
+the data buffer. This is because we use the buffer->size field as a
+total-so-far accumulator instead of byte-size-left like in TX buffers.
 
-This is not an issue by itself, but using unsigned here seems cleaner.
+This triggers an out of bounds write if the size of the virtio queue
+element is equal to virtio_snd_pcm_status, which makes the available
+space for audio data zero. This commit adds a check for reaching the
+maximum buffer size before attempting any writes.
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Message-Id: <20240709142557.317271-5-clement.mathieu--drif@eviden.com>
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2427
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <virtio-snd-fuzz-2427-fix-v1-manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/audio/virtio-snd.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 37c21a0aec..be0cb39b5c 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -358,7 +358,7 @@ static VTDIOTLBEntry *vtd_lookup_iotlb(IntelIOMMUState *s, uint16_t source_id,
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 5993f4f040..e6432ac959 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -1261,7 +1261,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
  {
-     struct vtd_iotlb_key key;
-     VTDIOTLBEntry *entry;
--    int level;
-+    unsigned level;
+     VirtIOSoundPCMStream *stream = data;
+     VirtIOSoundPCMBuffer *buffer;
+-    size_t size;
++    size_t size, max_size;
  
-     for (level = VTD_SL_PT_LEVEL; level < VTD_SL_PML4_LEVEL; level++) {
-         key.gfn = vtd_get_iotlb_gfn(addr, level);
+     WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
+         while (!QSIMPLEQ_EMPTY(&stream->queue)) {
+@@ -1275,7 +1275,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+                 continue;
+             }
+ 
++            max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
+             for (;;) {
++                if (buffer->size >= max_size) {
++                    return_rx_buffer(stream, buffer);
++                    break;
++                }
+                 size = AUD_read(stream->voice.in,
+                         buffer->data + buffer->size,
+                         MIN(available, (stream->params.period_bytes -
 -- 
 MST
 
