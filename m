@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC113C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73757C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWOy7-0002xM-7S; Tue, 23 Jul 2024 19:30:55 -0400
+	id 1sWOy7-0002yJ-Di; Tue, 23 Jul 2024 19:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxr-00029U-VI
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:41 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sWOxz-0002Tt-U2
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:47 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxl-0007xS-P1
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:38 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70d138e06e3so2756219b3a.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:31 -0700 (PDT)
+ id 1sWOxr-0007zF-Mo
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:43 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2cb5243766dso3597476a91.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777430; x=1722382230;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777437; x=1722382237;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jI6U0BvTHQQ9+y5jpbqfCCV572dEAtDwxnif55veu+c=;
- b=0Yf1ipVjQvWy+fkEylTF3+W0hd+MoUCbRP0ISzY5CVG0H4tozC8WE2rBvlHWkoysWa
- qr43C9/5nueGKbC2Fjpp84L7yWqMCWsUwQ467KF/WepJm8ymSVBtMhrJv3Ekr9Bmq57D
- JI/C+mERktfmpWax2UgrkThhHv0DzPXl4dsZ9WpQglXru2B1l30gUKbd232xbPz3ziDX
- L9vTygu4pgywq9jipZlt7hhIbNVVrEZzPNFzlEoVCVr/Q0wnCxsgBEuLl5PmrpI27a12
- XwChulEf2FC5B1f7ituq2pRJbZJJKFoeXFeINknM9OVCIOOp6NulYdvxgKCKdue1h5Cf
- j17A==
+ :reply-to; bh=8g3egpPSQQCB4Jzut23yj1uXHYNkJTWfJCb9u6Ykb48=;
+ b=BwXSjbXAXBx+ee0YqPviF7GoXGbJGZwnzlHtbjG3DgT3TT4w43AUfRwAa68OHx4rVD
+ FoafECMyKihPatUBZQTPmJVok4O18rR/l8Wbzj8FQ0XvgNpjxqgnkTBPhQ9fJx0Lhi5t
+ sl5/Qd4jsZxtbcdYgRCzXF8BW1B2ctHw0QbSEv5z04p1Bd3dW5+etgZ7jpdiR0r5wiX+
+ /5jgOtLPksBkKw+2649h68z0P6/fRWYP7eBcUoiISILI7PyTE2OXYN5RRa3ZtOGf6gio
+ xGAKo6iP7JxrSm/oS13O7bBswbcjNF4c4Z8Jg/zZc2yMlqJUGmU+PWY1ww3R131bICoj
+ snwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721777430; x=1722382230;
+ d=1e100.net; s=20230601; t=1721777437; x=1722382237;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jI6U0BvTHQQ9+y5jpbqfCCV572dEAtDwxnif55veu+c=;
- b=E4MJn3mzknKr4qyMgon4dbRfmACv7vd5V5YxsMSfSV6+ml51UUlTMuD0ecBklaN7GY
- Y1ABzodKc+Q1NRn7xX8+3u4egeyAE+TzhuTKnoMF06kp+JXBLrS6grzItsda5V0KtTs3
- x2GKFfO/XtvS7VgCCqku9A4AnHgn0uTnK5ccEMt+K4bSL9GkuehU/vrZLoNX+O3DPliC
- j5IUG688DCw6xHDZzCvUYLp0GbWqpKWK/lLNIObWM83pk2S/P4sY/htcBRvZ+LFUmm5j
- Ni+Z6iQCrJZj+VZut1fSS1XkTk5N+L2Z21pI2wml+AhPJvjZkm7sG02WS7Ns0xveTXmi
- XvCQ==
+ bh=8g3egpPSQQCB4Jzut23yj1uXHYNkJTWfJCb9u6Ykb48=;
+ b=AwrmE4E7fsxZKJkjsphLrAgXLf5WnmTUfqLWrwr6vEv9PMA+Y8vuk+uIlG1hTjN56W
+ ZZMJ/m2TRVg8Sool6R2DtJoU6qIzRxYzWO5Tkm8LmCn3m5Fri564czJKiO4aPyvcLALD
+ AV/KLHanLJ7icPEyCOEJztMS8D8ujUi83UitqANmQlaoLUuUBbI2KC/yy/BIlzBUa+3X
+ 1C3t+MMDOGsDkulvqyYcGHA9WzC1BzgweoEeAXcjKhkBXZAV3FL/55QKcdgHlV/wG1O6
+ MugyQJ6gWU2H3g+sBAoEQvfYFMBXZlgTjeRzoXz6FhgWmiEKc93z214HivEz/n938x6n
+ X6vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7AxMphuDeo4H2QoFb2FSBm38oJ/01OMV2vuoERQWR5mHH1lRTHNr8Y3hxSqSuR03ts8JFrZgKFIj0H/yb/bJFwxyjy/4=
-X-Gm-Message-State: AOJu0YwyrKz5Xer6bF7eWMwZgF7jUEoq4NXXQ7/QnZOWes8yCg7O5VxZ
- sTjXNH0LxOCxW4VgPOsvBMq6u/urI63W/61401X5/GHzXB8KyFzliaceuW4OQSg=
-X-Google-Smtp-Source: AGHT+IEMB/uTTk7trNXTFSXtM++S7cdg97r/VHKtFqFK5NEizxBks1RXkuGIK3pPek9tQcksCjsYMQ==
-X-Received: by 2002:a05:6a21:3390:b0:1c1:e75a:5504 with SMTP id
- adf61e73a8af0-1c42287f402mr17626902637.15.1721777430306; 
- Tue, 23 Jul 2024 16:30:30 -0700 (PDT)
+ AJvYcCWGqtkNxdOU2HSKe6uc7uE2Zs1xRQyUVXT3YBHCGu4+nfY/awJDAILPadZczgfFEQ1ekefT3fAvtXi6H3yaHbfS0ck1gF0=
+X-Gm-Message-State: AOJu0YwLkYk6nbezE0bY8PCcVlB8x+gbuFnrHzgOk2JSS6t0ArOByJuw
+ oDxaJt4hrERYHtXo06S5J+Zw75z+y+zoImS/rI6zX8iQmQIWKCuIyy5rV97EP958j2lxWbbEvEg
+ v
+X-Google-Smtp-Source: AGHT+IHpOiDxe5VD8grEVKf0ieVZookbXdlomlpuMXrUs3iJpeqcWgNUeQ2jb0KHLHpKiVed0Q3AGg==
+X-Received: by 2002:a17:90b:494:b0:2c9:6d07:18f4 with SMTP id
+ 98e67ed59e1d1-2cdb51bc73fmr614420a91.35.1721777434217; 
+ Tue, 23 Jul 2024 16:30:34 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.28
+ 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 16:30:29 -0700 (PDT)
+ Tue, 23 Jul 2024 16:30:33 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Tue, 23 Jul 2024 16:30:06 -0700
-Subject: [PATCH v2 09/13] target/riscv: Invoke pmu init after feature
- enable
+Date: Tue, 23 Jul 2024 16:30:09 -0700
+Subject: [PATCH v2 12/13] target/riscv: Add a preferred ISA extension rule
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240723-counter_delegation-v2-9-c4170a5348ca@rivosinc.com>
+Message-Id: <20240723-counter_delegation-v2-12-c4170a5348ca@rivosinc.com>
 References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 In-Reply-To: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=atishp@rivosinc.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=atishp@rivosinc.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,68 +97,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dependant ISA features are enabled at the end of cpu_realize
-in finalize_features. Thus, PMU init should be invoked after that
-only. Move the init invocation to riscv_tcg_cpu_finalize_features.
+In addition to the implied rule, a preferred rule will be useful
+where an ISA extension may require a list of ISA extension to be
+enabled to use all the features defined in that extension. All
+these extensions may not be implied in the ISA.
+
+This patch just introduces a new preferred rule which allows
+to enable multiple extensions together without burdening the qemu
+commandline user.
 
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ target/riscv/cpu.c         |  4 ++++
+ target/riscv/cpu.h         | 17 ++++++++++++++
+ target/riscv/tcg/tcg-cpu.c | 57 ++++++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 71 insertions(+), 7 deletions(-)
 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 393d1d67120e..22ba43c7ff2a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2665,6 +2665,10 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+     NULL
+ };
+ 
++RISCVCPUPreferredExtsRule *riscv_multi_ext_preferred_rules[] = {
++    NULL
++};
++
+ static Property riscv_cpu_properties[] = {
+     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
+ 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index af25550a4a54..d775866344f5 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -142,10 +142,27 @@ typedef struct riscv_cpu_implied_exts_rule {
+     const uint32_t implied_multi_exts[];
+ } RISCVCPUImpliedExtsRule;
+ 
++typedef struct riscv_cpu_preferred_exts_rule {
++#ifndef CONFIG_USER_ONLY
++    /*
++     * Bitmask indicates the rule enabled status for the harts.
++     * This enhancement is only available in system-mode QEMU,
++     * as we don't have a good way (e.g. mhartid) to distinguish
++     * the SMP cores in user-mode QEMU.
++     */
++    unsigned long *enabled;
++#endif
++    /* multi extension offset. */
++    const uint32_t ext;
++    const uint32_t preferred_multi_exts[];
++} RISCVCPUPreferredExtsRule;
++
+ extern RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[];
+ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
++extern RISCVCPUPreferredExtsRule *riscv_multi_ext_preferred_rules[];
+ 
+ #define RISCV_IMPLIED_EXTS_RULE_END -1
++#define RISCV_PREFRRED_EXTS_RULE_END RISCV_IMPLIED_EXTS_RULE_END
+ 
+ #define MMU_USER_IDX 3
+ 
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b8814ab753bd..d78d5960cf30 100644
+index 1c9a87029423..d8f74720815a 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -898,6 +898,20 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-         error_propagate(errp, local_err);
-         return;
+@@ -32,6 +32,7 @@
+ #include "hw/core/accel-cpu.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "tcg/tcg.h"
++#include <stdio.h>
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/boards.h"
+ #endif
+@@ -733,6 +734,7 @@ static void riscv_cpu_validate_profiles(RISCVCPU *cpu)
+ static void riscv_cpu_init_ext_rules(void)
+ {
+     RISCVCPUImpliedExtsRule *rule;
++    RISCVCPUPreferredExtsRule *prule;
+ #ifndef CONFIG_USER_ONLY
+     MachineState *ms = MACHINE(qdev_get_machine());
+ #endif
+@@ -760,22 +762,40 @@ static void riscv_cpu_init_ext_rules(void)
+                             GUINT_TO_POINTER(rule->ext), (gpointer)rule);
      }
+ 
++    for (i = 0; (prule = riscv_multi_ext_preferred_rules[i]); i++) {
 +#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.pmu_mask) {
-+        riscv_pmu_init(cpu, &local_err);
-+        if (local_err != NULL) {
-+            error_propagate(errp, local_err);
-+            return;
-+        }
-+
-+        if (cpu->cfg.ext_sscofpmf) {
-+            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                          riscv_pmu_timer_cb, cpu);
-+        }
-+    }
++        prule->enabled = bitmap_new(ms->smp.cpus);
 +#endif
++        g_hash_table_insert(multi_ext_enabling_rules,
++                            GUINT_TO_POINTER(prule->ext), (gpointer)prule);
++    }
++
+     initialized = true;
  }
  
- void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
-@@ -945,7 +959,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
+ static void cpu_enable_ext_rule(RISCVCPU *cpu,
+-                                    RISCVCPUImpliedExtsRule *rule)
++                                RISCVCPUImpliedExtsRule *rule,
++                                RISCVCPUPreferredExtsRule *prule)
+ {
+     CPURISCVState *env = &cpu->env;
+     RISCVCPUImpliedExtsRule *ir;
++    RISCVCPUPreferredExtsRule *pr;
+     bool enabled = false;
+     int i;
  
  #ifndef CONFIG_USER_ONLY
-     CPURISCVState *env = &cpu->env;
--    Error *local_err = NULL;
+-    enabled = test_bit(cpu->env.mhartid, rule->enabled);
++    if (rule) {
++        enabled = test_bit(cpu->env.mhartid, rule->enabled);
++    } else if (prule) {
++        enabled = test_bit(cpu->env.mhartid, prule->enabled);
++    } else {
++        return;
++    }
+ #endif
++    if (enabled)
++        return;
  
-     tcg_cflags_set(CPU(cs), CF_PCREL);
+-    if (!enabled) {
++    if (rule) {
+         /* Enable the implied MISAs. */
+         if (rule->implied_misa_exts) {
+             riscv_cpu_set_misa_ext(env,
+@@ -787,7 +807,7 @@ static void cpu_enable_ext_rule(RISCVCPU *cpu,
+                                              GUINT_TO_POINTER(misa_bits[i]));
  
-@@ -953,19 +966,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
-         riscv_timer_init(cpu);
+                     if (ir) {
+-                        cpu_enable_ext_rule(cpu, ir);
++                        cpu_enable_ext_rule(cpu, ir, NULL);
+                     }
+                 }
+             }
+@@ -803,12 +823,27 @@ static void cpu_enable_ext_rule(RISCVCPU *cpu,
+                                             rule->implied_multi_exts[i]));
+ 
+             if (ir) {
+-                cpu_enable_ext_rule(cpu, ir);
++                cpu_enable_ext_rule(cpu, ir, NULL);
+             }
+         }
+ 
+ #ifndef CONFIG_USER_ONLY
+         bitmap_set(rule->enabled, cpu->env.mhartid, 1);
++#endif
++    } else if (prule) {
++        /* Enable the preferred extensions. */
++        for (i = 0;
++          prule->preferred_multi_exts[i] != RISCV_PREFRRED_EXTS_RULE_END; i++) {
++            cpu_cfg_ext_auto_update(cpu, prule->preferred_multi_exts[i], true);
++            pr = g_hash_table_lookup(multi_ext_enabling_rules,
++                                     GUINT_TO_POINTER(
++                                     prule->preferred_multi_exts[i]));
++            if (pr) {
++                cpu_enable_ext_rule(cpu, NULL, prule);
++            }
++        }
++#ifndef CONFIG_USER_ONLY
++        bitmap_set(prule->enabled, cpu->env.mhartid, 1);
+ #endif
+     }
+ }
+@@ -847,6 +882,7 @@ static void cpu_enable_zc_implied_rules(RISCVCPU *cpu)
+ static void riscv_cpu_enable_ext_rules(RISCVCPU *cpu)
+ {
+     RISCVCPUImpliedExtsRule *rule;
++    RISCVCPUPreferredExtsRule *prule;
+     int i;
+ 
+     /* Enable the implied extensions for Zc. */
+@@ -855,14 +891,21 @@ static void riscv_cpu_enable_ext_rules(RISCVCPU *cpu)
+     /* Enable the implied MISAs. */
+     for (i = 0; (rule = riscv_misa_ext_implied_rules[i]); i++) {
+         if (riscv_has_ext(&cpu->env, rule->ext)) {
+-            cpu_enable_ext_rule(cpu, rule);
++            cpu_enable_ext_rule(cpu, rule, NULL);
+         }
      }
  
--    if (cpu->cfg.pmu_mask) {
--        riscv_pmu_init(cpu, &local_err);
--        if (local_err != NULL) {
--            error_propagate(errp, local_err);
--            return false;
--        }
--
--        if (cpu->cfg.ext_sscofpmf) {
--            cpu->pmu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                          riscv_pmu_timer_cb, cpu);
--        }
--    }
--
-     /* With H-Ext, VSSIP, VSTIP, VSEIP and SGEIP are hardwired to one. */
-     if (riscv_has_ext(env, RVH)) {
-         env->mideleg = MIP_VSSIP | MIP_VSTIP | MIP_VSEIP | MIP_SGEIP;
+     /* Enable the implied extensions. */
+     for (i = 0; (rule = riscv_multi_ext_implied_rules[i]); i++) {
+         if (isa_ext_is_enabled(cpu, rule->ext)) {
+-            cpu_enable_ext_rule(cpu, rule);
++            cpu_enable_ext_rule(cpu, rule, NULL);
++        }
++    }
++
++    /* Enable the preferred extensions. */
++    for (i = 0; (prule = riscv_multi_ext_preferred_rules[i]); i++) {
++        if (isa_ext_is_enabled(cpu, prule->ext)) {
++            cpu_enable_ext_rule(cpu, NULL, prule);
+         }
+     }
+ }
 
 -- 
 2.34.1
