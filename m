@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA75C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CD2C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMJH-0000tM-Eo; Tue, 23 Jul 2024 16:40:36 -0400
+	id 1sWMIu-0006q8-7R; Tue, 23 Jul 2024 16:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJ8-0008Op-B3
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:30 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIf-00063G-Tg
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:59 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJ6-0004Iv-HN
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:25 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3684407b2deso3281156f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:40:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIe-00041A-Ad
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:57 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-368663d7f80so3241745f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767223; x=1722372023; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767194; x=1722371994; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QlBR/BeAgLJfmHQZz0VW3T3k1ZaI6aRPlMOhtzIdfss=;
- b=vz3J4jLz71NQbBchq1lHvyHCwrOAUm6OqB2vsCk8PSQjuj7afSttTTjLmvi8FQBHmO
- 4aITS38TiIBXSbnzEhreJXIoJgquKxAu5+AWaYBWei//AkIvI8ceT4ziVM7hqeJoxLJN
- X9D9EkpBmx2+x3snc7TjwXJ66L9o0xDvY/P5WBxWh4Z9m708Au+1PNw9qb4GNT+CUy3Q
- iRhfc2098THUHje5zDGN59HRs6AQfV/5oWpW0EWopKTQFLdDK/Su29ZLJnAKaD5hOTAw
- 4VupYByd9Qo3fqrPs45ExKLOAhD7vlUqe4ClyAYUoXCa2URGDmyYs3ngPOWk2bwQGchM
- r8Jg==
+ bh=+hMaqq/BTdi6PrKr3cYrZxRyWg7HqfkCm9irnu5mKRU=;
+ b=e8dv81d4GETIhKjz02U2Qj/VXej0lWG70HkJKws/gKIh0vBvftL2e5b09BHrbbXUES
+ ZFzDakkLq0gHU06/zRYtTh18StG8M+2fEe9KUPnfXEom2USB+is5iTmXVyh16tKT8UG1
+ OHuU5JA1DUV083gWW+wYUwK7MwBQknVWU2QY8aYYdvc50aoh5MFgwXEDoy/xnZHDTKTJ
+ I0hshvtRiZTOGSF05wzUffeH94si7mOfBfSnyCxj7ldy7Zdr6DwyMBzIa5GnOBhHtu2P
+ QFxy/aOgxeRZawzCr9fFfp2+p/7CGMwmj4vcJEVBAUmFk+BVFaOpHPQ5DUk2T86eeiGm
+ ihjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767223; x=1722372023;
+ d=1e100.net; s=20230601; t=1721767194; x=1722371994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QlBR/BeAgLJfmHQZz0VW3T3k1ZaI6aRPlMOhtzIdfss=;
- b=mWVuCYduALVGAiRFhqAYq1NcVLOc71SJHEFDj6DjWNWPHX8WCrqBapdCiBMISVFO7e
- 5s6ffwPnsAKYrHLnFFPxnB/eUWYupLvFF9fMM2xdCT3Tg+Ym0d97SssCBZdb/lAp4iD6
- AEQF74dHBBdrOW67ihyI6FXchcMb2XM2j/I5kqvyHvw1R0h8FXzJIMTEHD4JD0/h0BRM
- A6cXW3BvxzQV1njOx2YZX0hyebOczxbko0k3GCwB08t/ADHDXPUFIxobG2bthxw9LhAf
- iuyix4DTYDj616Pa11LcL87JE2+tvcZnDPBGq3CQghf5qxc+h+WaU4vEYFLIBHJcgJ/y
- woVg==
-X-Gm-Message-State: AOJu0YyY4bPCGmOxW6c1OL1qE7cb5AMIaYI3WVYTSw73/ipjM7PZc0Fb
- lHJpb74L1FeER1AA4W+RA2x8/2TNk7pYcCJ2PZQxJLmgwz5RtdJBG/TXQybG572K6oykrNSGGP6
- 0auU=
-X-Google-Smtp-Source: AGHT+IEnz+rDcxL3ZYWG1WFGKucBEjEh8YbrVtMFT5aABbwvdCRis0lKzfVckOVdvUfnRvM5kPkkvA==
-X-Received: by 2002:adf:e605:0:b0:367:96d6:4c2d with SMTP id
- ffacd0b85a97d-369bae35a62mr7181631f8f.25.1721767222666; 
- Tue, 23 Jul 2024 13:40:22 -0700 (PDT)
+ bh=+hMaqq/BTdi6PrKr3cYrZxRyWg7HqfkCm9irnu5mKRU=;
+ b=kpnZQaBcGTiFIjahmsbi5Y/Sjr/hB2ycjy+8IEGTPtAonJeB3RJNa7J2KBIvVchnJC
+ jS1COoo7v0P2QlTiGtt9sSp/jimnIvxV8IdfjvMoIBlwd6rdSHKm3TGVf00kO1kpWNSf
+ 5hHdGYTsteXAKvfsc6osgOwWc5W/yrhK3NXuf2l2Ip0mDqp3jIvNBq1RgfDpTZgB+FCP
+ i6NXRiXvJK0WeKicC2nFuh9mbncmCh9PO8pV5cBFtoQ20zZel/HqbcZsHOTu0IIW0nPa
+ H7hTG7xDJQl4J/UbUwCRxfZsUVZ/vDcxuSxm+TTWdCjTMxlG9qSd98r9bhlSm0X1US7B
+ 435Q==
+X-Gm-Message-State: AOJu0YzqjkX2xv/QUYLoEnvV4Bnl2vtaidbHIgr9PFl7aGNpSdS2k2Zb
+ 5pDABIcF9xvij++9heuRxWJfCIXP6HWnPyIurqNPqeR+opNsuzCnLqO49FkdT5JYjdmnBms5Zgi
+ DZMs=
+X-Google-Smtp-Source: AGHT+IG57LI5YWyZHVY+kl90wAv5lE9l7oJ9B0qwyRPR4wxUqd35iJDfJuVsGFBnhz88AsrCOTWPBg==
+X-Received: by 2002:a05:6000:d85:b0:368:66b7:621d with SMTP id
+ ffacd0b85a97d-369f5b2c80fmr38100f8f.18.1721767194455; 
+ Tue, 23 Jul 2024 13:39:54 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868ac54sm12427512f8f.28.2024.07.23.13.40.21
+ ffacd0b85a97d-36878694833sm12408147f8f.55.2024.07.23.13.39.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:40:22 -0700 (PDT)
+ Tue, 23 Jul 2024 13:39:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 15/28] system/memory_mapping: make range overlap check more
- readable
-Date: Tue, 23 Jul 2024 22:38:42 +0200
-Message-ID: <20240723203855.65033-16-philmd@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/28] hw/i2c/mpc_i2c: Fix mmio region size
+Date: Tue, 23 Jul 2024 22:38:37 +0200
+Message-ID: <20240723203855.65033-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,43 +95,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-use ranges_overlap() instead of open-coding the overlap check to improve
-the readability of the code.
+The last register of this device is at offset 0x14 occupying 8 bits so
+to cover it the mmio region needs to be 0x15 bytes long. Also correct
+the name of the field storing this register value to match the
+register name.
 
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Fixes: 7abb479c7a ("PPC: E500: Add FSL I2C controller")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Message-ID: <20240722040742.11513-10-yaoxt.fnst@fujitsu.com>
+Message-ID: <20240721225506.B32704E6039@zero.eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/memory_mapping.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/i2c/mpc_i2c.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/system/memory_mapping.c b/system/memory_mapping.c
-index 6f884c5b90c..ca2390eb804 100644
---- a/system/memory_mapping.c
-+++ b/system/memory_mapping.c
-@@ -12,6 +12,7 @@
-  */
+diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
+index cb051a520f7..06d4ce7d68d 100644
+--- a/hw/i2c/mpc_i2c.c
++++ b/hw/i2c/mpc_i2c.c
+@@ -82,7 +82,7 @@ struct MPCI2CState {
+     uint8_t cr;
+     uint8_t sr;
+     uint8_t dr;
+-    uint8_t dfssr;
++    uint8_t dfsrr;
+ };
  
- #include "qemu/osdep.h"
-+#include "qemu/range.h"
- #include "qapi/error.h"
- 
- #include "sysemu/memory_mapping.h"
-@@ -353,8 +354,7 @@ void memory_mapping_filter(MemoryMappingList *list, int64_t begin,
-     MemoryMapping *cur, *next;
- 
-     QTAILQ_FOREACH_SAFE(cur, &list->head, next, next) {
--        if (cur->phys_addr >= begin + length ||
--            cur->phys_addr + cur->length <= begin) {
-+        if (!ranges_overlap(cur->phys_addr, cur->length, begin, length)) {
-             QTAILQ_REMOVE(&list->head, cur, next);
-             g_free(cur);
-             list->num--;
+ static bool mpc_i2c_is_enabled(MPCI2CState *s)
+@@ -293,7 +293,7 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
+         }
+         break;
+     case MPC_I2C_DFSRR:
+-        s->dfssr = value;
++        s->dfsrr = value;
+         break;
+     default:
+         DPRINTF("ERROR: Bad write addr 0x%x\n", (unsigned int)addr);
+@@ -319,7 +319,7 @@ static const VMStateDescription mpc_i2c_vmstate = {
+         VMSTATE_UINT8(cr, MPCI2CState),
+         VMSTATE_UINT8(sr, MPCI2CState),
+         VMSTATE_UINT8(dr, MPCI2CState),
+-        VMSTATE_UINT8(dfssr, MPCI2CState),
++        VMSTATE_UINT8(dfsrr, MPCI2CState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -329,7 +329,7 @@ static void mpc_i2c_realize(DeviceState *dev, Error **errp)
+     MPCI2CState  *i2c = MPC_I2C(dev);
+     sysbus_init_irq(SYS_BUS_DEVICE(dev), &i2c->irq);
+     memory_region_init_io(&i2c->iomem, OBJECT(i2c), &i2c_ops, i2c,
+-                          "mpc-i2c", 0x14);
++                          "mpc-i2c", 0x15);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &i2c->iomem);
+     i2c->bus = i2c_init_bus(dev, "i2c");
+ }
 -- 
 2.41.0
 
