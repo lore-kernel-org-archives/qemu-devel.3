@@ -4,131 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C86BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21C9C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWKKu-0003ly-CO; Tue, 23 Jul 2024 14:34:08 -0400
+	id 1sWKMq-00006C-C8; Tue, 23 Jul 2024 14:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWKKs-0003jL-St
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:34:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sWKMm-0008VI-1I
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:36:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWKKp-0005rU-UN
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:34:05 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sWKMj-0006VQ-QL
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:36:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721759641;
+ s=mimecast20190719; t=1721759761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eLbGcfNo7N1HpqiSwiBbnDz11SGNDsqj0d8vOjoNlmo=;
- b=Y478uy2Kl8tybpIcM20MitUpX7gf/8Pr0r+maHxT7Ej5DGkdMTFxXw4d1xlrmYypiGGeqv
- zNb4RNoxWmbn5DglZjfGhQFv4wnZMnXPIcEAT5VDSSVkq2HEU7eXtG4j44X07f7a+ln6xH
- kNTUEWFv8bxrhrN3Jgzsz3nqLJB9VPY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=rO49+1Ol3/GcmN9bhJXXgVAFGN391SmMx2XTs4GUXAE=;
+ b=N0tqF0R2t++IbrAt7YSQc4/rDC6+VaL+D7D9Qx+IAPX9blRp7MCjGgyGbPxZWqm42s1ygv
+ LglUsqnkJgHTkPlnecYxWZBttIuknkmqBJBdAfevPme5wimf4/BnOPleDCFJ+MtzrBt+RK
+ zPKoOafjzv0f75Bi+Zcf0wcAust9f1o=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-Da4KVcRwPNOz3Xr9UBBAFQ-1; Tue, 23 Jul 2024 14:33:55 -0400
-X-MC-Unique: Da4KVcRwPNOz3Xr9UBBAFQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3687f5a2480so3397234f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:33:54 -0700 (PDT)
+ us-mta-96-Z7XgghNTM-iKAiIU_exVrg-1; Tue, 23 Jul 2024 14:35:58 -0400
+X-MC-Unique: Z7XgghNTM-iKAiIU_exVrg-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3d9404e1d54so693681b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:35:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721759634; x=1722364434;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=eLbGcfNo7N1HpqiSwiBbnDz11SGNDsqj0d8vOjoNlmo=;
- b=EjeRW/GCukHE8k76lXVsqQFS8LgoDXSlAHKbfgoRxeexQ2DMdNi/dyaG+G5o+vOHQe
- raoqWvKOzPH1K6WsvGDL95CXi8kksJ00aqL4iQ3nUKUC6A5Kiwf/RiHAov4TkZiy1gQi
- xmfRRbvUfmijnStlwuTzGWdMrJKRNHw1OuoiSG+WNZla+WnneyIgwZubhkRg6TiijpIK
- dBHo1eaj72zdH9qbWkubwvrTgkfO7RhRYSRe3RYh3cJxplDnSsFE766PPgaiyqRuBT0a
- BGt/U9oazPO4YlXdAK6zU70d6CaMS3SCCLLxnctLTVcvklEOO9OfpTc/Dz7olPASFK78
- d7ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVKBlvZRllGM0txln6hht0CHOMqr832KgDj7fanQMsGQssfNm2lVSPJrz3hoGNeSa3p2SxdJ39/bB/iV5NRg2dzbmRgEec=
-X-Gm-Message-State: AOJu0YxsJz8ZXh0JuMRudqEl7NOELXH7e7hL4hyDA4Zv8GFfnU2TIK3k
- kzfq1wbDq/NyV8waS6LKWWtyM5wF3jw9exX5S9eRzoUyGsnf/DHMJQ4PQfCLSxKNWOF4RuNAOuV
- Bgir3PNtYYWJ3d3J/uZfW5aGpshtyMwBgVMELe77XrFANbyycLE9R
-X-Received: by 2002:a5d:6489:0:b0:368:4e38:a349 with SMTP id
- ffacd0b85a97d-369dec0ae25mr2798717f8f.22.1721759633962; 
- Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyWbFRXM430QEn7kKHL/FUsAofc23rZt35KUmz7VM8k18p5j/h7nsJhC5q5v5N2A3+oD2jUw==
-X-Received: by 2002:a5d:6489:0:b0:368:4e38:a349 with SMTP id
- ffacd0b85a97d-369dec0ae25mr2798707f8f.22.1721759633554; 
- Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c72f:ed00:9dc2:1adb:d133:4434?
- (p200300cbc72fed009dc21adbd1334434.dip0.t-ipconnect.de.
- [2003:cb:c72f:ed00:9dc2:1adb:d133:4434])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d2a53ccfsm209878455e9.11.2024.07.23.11.33.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 11:33:53 -0700 (PDT)
-Message-ID: <dbfa188d-a7cd-4036-897b-f59307ec8fcb@redhat.com>
-Date: Tue, 23 Jul 2024 20:33:52 +0200
+ d=1e100.net; s=20230601; t=1721759758; x=1722364558;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rO49+1Ol3/GcmN9bhJXXgVAFGN391SmMx2XTs4GUXAE=;
+ b=XC6VM5ZaD5LNch0JJKE9YA+l4kzPETojCs/OF74pTnDwfRY+v+3gkoFuV7HjlrKpyQ
+ c/dHhGZjgoxp7QEQSv1oUzjil0yPtfpM2qBOW7yVBI6bNprjkM6CemmXfKonsh2Wk3ph
+ KkgaUnUUUBh/zNTD2PdkQjLBa/FJ2roLpq/s+ZIm7IpaEWzeC1MN5MH7CtaOkQmsORH1
+ 3PDUP2bFQVlF0RlnZkgFgcWcC8Z+Q0+3bmVKwN4YJ0KOV0rxwhcUiaooVJe29Y5TStzB
+ /LClBL+xi5cO8x/qqgd3+nXdIEfDRQC8XWcJ+yBQ2ofdTqz0zZbsPd+LqWZ8onCtOmUO
+ lMVA==
+X-Gm-Message-State: AOJu0Yz5vbneWAcTPM720go8C4G4KRJrK2NGtAtM5/qd2Q/kSinYwNAh
+ lxl7RHuNt/nGDkYn1D28TQ44en9VNZeRW6wW741UAvAa80fo+ViyTcRZu9QO+ejRVAjN5mMdaF2
+ E42Cl6Ldev/AXXk6IVQog6rieM/WN+QLG2Z3ISE+QzauzEe4golDa
+X-Received: by 2002:a05:6830:46a4:b0:706:d9dc:f109 with SMTP id
+ 46e09a7af769-708fda7cf96mr5654789a34.1.1721759757556; 
+ Tue, 23 Jul 2024 11:35:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVbk7EdILPtzy1Xt+GSq7WFAC+AcSw/p7pz+VZJ927RhCZn1fDbIzQcqrg2miTylSu7F+TwQ==
+X-Received: by 2002:a05:6830:46a4:b0:706:d9dc:f109 with SMTP id
+ 46e09a7af769-708fda7cf96mr5654771a34.1.1721759757162; 
+ Tue, 23 Jul 2024 11:35:57 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b95ddc9254sm37831216d6.106.2024.07.23.11.35.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 11:35:56 -0700 (PDT)
+Date: Tue, 23 Jul 2024 14:35:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/char/goldfish: Use DMA memory API
+Message-ID: <Zp_4CiTghaq_ABLi@x1n>
+References: <20240723181850.46000-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: Where we assume we have a RAM MR, assert
- it
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240723170513.1676453-1-peter.maydell@linaro.org>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240723170513.1676453-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240723181850.46000-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -152,26 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.07.24 19:05, Peter Maydell wrote:
-> In the functions invalidate_and_set_dirty() and
-> cpu_physical_memory_snapshot_and_clear_dirty(), we assume that we
-> are dealing with RAM memory regions. In this case we know that
-> memory_region_get_ram_addr() will succeed. Assert this before we
-> use the returned ram_addr_t in arithmetic.
+On Tue, Jul 23, 2024 at 08:18:50PM +0200, Philippe Mathieu-Daudé wrote:
+> Rather than using address_space_rw(..., 0 or 1),
+> use the simpler DMA memory API which expand to
+> the same code. This allows removing a cast on
+> the 'buf' variable which is really const. Since
+> 'buf' is only used in the CMD_READ_BUFFER case,
+> we can reduce its scope.
 > 
-> This makes Coverity happier about these functions: it otherwise
-> complains that we might have an arithmetic overflow that stems
-> from the possible -1 return from memory_region_get_ram_addr().
-> 
-> Resolves: Coverity CID 1547629, 1547715
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-Reviewed-by: David Hildenbrand <david@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
-Cheers,
-
-David / dhildenb
+Peter Xu
 
 
