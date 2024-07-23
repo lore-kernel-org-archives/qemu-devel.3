@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD65C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 17:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FE6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 18:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWJlz-0003JO-4c; Tue, 23 Jul 2024 13:58:03 -0400
+	id 1sWJqT-00007d-Uf; Tue, 23 Jul 2024 14:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sWJlx-0003Il-AA
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 13:58:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sWJll-0007XZ-2f
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 13:57:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721757465;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ac2783x/eg0zfc9rf6gO49Lir82wvpPftV7kyDe/2Tw=;
- b=FGna8N/zmOFJXAcsPcHRvbySG/gw7sC6WEap3spIAK2VFsR//AMt88nSgfFHL/koSFzSoD
- 0D9+Pl5/KaXbKvBLBVx9h18lb+DDagJyfItO6d172qeX9MZI5AE5jLVTyvzWSQjhKWLcpE
- 9rL/N6vl/f56woEAuUK0RHdxqNXaKy8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-286-sEmX2-ThMIW9okj4S-kwtw-1; Tue, 23 Jul 2024 13:57:43 -0400
-X-MC-Unique: sEmX2-ThMIW9okj4S-kwtw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-426703ac88dso39552495e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 10:57:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWJqP-00005L-2b
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:02:37 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWJqJ-0008Ul-Sh
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 14:02:36 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3684eb5be64so3001009f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 11:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721757750; x=1722362550; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7S3a2md43hb4zNMQ55AJJzTFm+D1MhDeY6mpisPvLAs=;
+ b=YkxOKZwBE947A+zYX/IKwL2trU3qM0iX2tZN2ZN1F7dvZ0gHRuOfGyymTdyt0wY5Tc
+ 4QhfzheYChW6VDLS5W3CF0jAt10EJwrEYyeWbexDQ5uXX9fSIWSDQXcEcx+cDFy19mHb
+ e/S8JAM/enNgHMFDGQ6HQg5qVlRNr07b7m5vlMBdKj4Oi9v9Nbk5QTkd3Hkf6ww3bWWB
+ Qxv8bRz2kK3VDI7e3Ony6a9o7iDpQDAMTBqHAapuHaOXzfVaUwyNNuqHxyfkaX4l0wTV
+ rB3Nn6o2QFzbiRzEByODlQL4mFESr6nkHU1eQ/c11o7Uun4yhSVugWT9vNAC7Oj+Jzkz
+ erSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721757459; x=1722362259;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ac2783x/eg0zfc9rf6gO49Lir82wvpPftV7kyDe/2Tw=;
- b=OkDH84wYxJgsaz/zJ7ral41HuDaJ64rBXpkheVfL+nMBCYo2tvVkkSp1HNSBm15xUs
- LE3eeNw2Egby9yhTTetZAJyED46PqZKbcE/luwv3+kif6aKqwXFwCLmQIcWaFdDYdzCI
- H++PAhwwp11bh/4tpZhL/PDJ9KzLiEAJ1wE2IrvFWT59cfZ1dVUr6Y63IF/HHF9Sbc4j
- iaczsKJKRFt1kTtmM3PS9DwkrKQn2RJ2TMg4AKeRHNDTsVxcQ3NoySRYemLzB4fUgtJT
- cucANaM9B3EAvEmHhEoNGZMi7jGcaKEQedUX+oBtIXXWctQ2I1a6J94akW4R37rR71Zk
- nKsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8dHssJxT46Do8Rj6WzbmuetLWwRGOomkA0rXoxvzrqemYp9W/GObYcQFx4eZzaXNSuL5wyjG5mitCWgVFjbteHQo4T6s=
-X-Gm-Message-State: AOJu0Yytt+vG7uqSWlbOTBmmX2MzU4aWohphIcUPMJD/tjDE2Lurdd1R
- x0auGR7IcW+mqhVcdViWYaXOG6h44HuBtca0cS3VjNrnFkz828iwuLLltTNuoVYGY1S4+703bmH
- vtEhxInEEN42kCdl2Q6wlUX95LjxrJKs549RLqH+bCRW9ZeJny9Tc+HzJQVKPLacgQaEDUT2xhg
- LsvUQV9KvsNAS0ZxDx5O9aJFX/osgO9+Kwe07RrA==
-X-Received: by 2002:a05:600c:3502:b0:426:654e:16da with SMTP id
- 5b1f17b1804b1-427f7a1ec21mr2459875e9.0.1721757459427; 
- Tue, 23 Jul 2024 10:57:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEz8NQriQ2WPxsM7L6f2KIwUOHljySj4S1zutt4y8ccWEZoS4j6bu3sgvpxMiwOqwC7c6E9G+/aQcaovjpAOQM=
-X-Received: by 2002:a05:600c:3502:b0:426:654e:16da with SMTP id
- 5b1f17b1804b1-427f7a1ec21mr2459745e9.0.1721757459050; Tue, 23 Jul 2024
- 10:57:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721757750; x=1722362550;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7S3a2md43hb4zNMQ55AJJzTFm+D1MhDeY6mpisPvLAs=;
+ b=gIdlVY48oHoFD80lzFP5hwlcqxUvTEwUgzxyGfqEnUzcMpbloC+wEmjsR6W3go3MFF
+ 3Fp5Jbwx2A3y0DBz95tduXmbSjYTFjlW9xqjho76Xm7QbitImqywj/ko76g7KfULRp2o
+ c9lvED2XRQNomWaPuBkunEW+mSvT2LVJyFZvlDEdl5VkU6ohSRPIDE1fOlJz6/E72AMb
+ x4CCwhIUU/Dr1RHoQBu2FDWJfQcQ2Dyit3adFaG5bIe7vqtOEL7L18wpvNB8rvaYwRDk
+ 80Sw8EADkFmMCyv/ye2kzcPFcb4YXkljtF2OLdM27jyUYCZLs5nxddYmsmfxLFbEFNUG
+ +rQA==
+X-Gm-Message-State: AOJu0YyuqZ7nfM8h6hpJb4nGxpA+YdPTFvDoGMGprkVsIhrDLFbl6oHO
+ Fe/fNjr1HPwa7tF1BsRS0rQNmahpOO0cfZv0rRVz+TIA/vW6Gl/17eWUhNW6tSTTH9NfSfIWacS
+ 8/lc=
+X-Google-Smtp-Source: AGHT+IFUeI0Zjy2nfRwYaAVd7jdvXj9nkUZDII/GiPETjFdDDMinEzyXd/gwc6DxVhxT+8e48m7HSA==
+X-Received: by 2002:a5d:6206:0:b0:368:7ee2:b7c8 with SMTP id
+ ffacd0b85a97d-369dec047bdmr2794723f8f.1.1721757749784; 
+ Tue, 23 Jul 2024 11:02:29 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.14])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d68fa171sm184554195e9.1.2024.07.23.11.02.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 11:02:29 -0700 (PDT)
+Message-ID: <aeb3b761-7a74-45c0-bc6b-87e4f6eb1527@linaro.org>
+Date: Tue, 23 Jul 2024 20:02:27 +0200
 MIME-Version: 1.0
-References: <20240711131424.181615-1-ppandit@redhat.com> <Zo_8fpKH8oBA8WV1@x1n>
- <CAE8KmOzsGaPtTFsjcRkyd8n_fPzXeFd+c38Eb=aLG0_MdO+yKw@mail.gmail.com>
- <ZpUmrTrEnx0RcO2y@x1n>
- <CAE8KmOxY_LQ9vNjvmPyRgk_dcnEZFG6_M1q14473NQoBUSM4ow@mail.gmail.com>
- <ZpbuChi9QMIogmuS@x1n> <20240717045335-mutt-send-email-mst@kernel.org>
- <ZpfIDUwS9vawpzT5@x1n> <20240717093911-mutt-send-email-mst@kernel.org>
- <ZpfLZbiJ3cn6fEba@x1n> <20240720154116-mutt-send-email-mst@kernel.org>
- <CAE8KmOwv-NiXwmeCAjFNu=R67D2GcNLffV8NedfMBXhY9ODh8w@mail.gmail.com>
-In-Reply-To: <CAE8KmOwv-NiXwmeCAjFNu=R67D2GcNLffV8NedfMBXhY9ODh8w@mail.gmail.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 23 Jul 2024 23:27:21 +0530
-Message-ID: <CAE8KmOx3VeyX-_xYNuD5rFak1jjKPPm4TsuuOMV=yx_gW=XgOw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Postcopy migration and vhost-user errors
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Jason Wang <jasowang@redhat.com>,
- mcoqueli@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] util/fifo8: Rework fifo8_pop_buf()
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20240722160745.67904-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240722160745.67904-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +98,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 22/7/24 18:07, Philippe Mathieu-Daudé wrote:
+> Rename current fifo8_pop_buf() as fifo8_pop_constbuf()
+> and expose ESP's fifo8_pop_buf() which takes care of
+> wrapped FIFO buffer.
+> 
+> Supersedes: <20240719151628.46253-1-philmd@linaro.org>
+>    util/fifo8: Introduce fifo8_change_capacity()
+> 
+> Philippe Mathieu-Daudé (7):
+>    chardev/char-fe: Document returned value on error
+>    util/fifo8: Fix style
+>    util/fifo8: Use fifo8_reset() in fifo8_create()
+>    util/fifo8: Rename fifo8_peek_buf() -> fifo8_peek_constbuf()
+>    util/fifo8: Rename fifo8_pop_buf() -> fifo8_pop_constbuf()
+>    util/fifo8: Expose fifo8_pop_buf()
+>    util/fifo8: Introduce fifo8_discard()
 
-On Tue, 23 Jul 2024 at 10:33, Prasad Pandit <ppandit@redhat.com> wrote:
-> On Sun, 21 Jul 2024 at 01:11, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > > > On Wed, Jul 17, 2024 at 04:55:52AM -0400, Michael S. Tsirkin wrote:
-> > > > > > I just want to understand how we managed to have two threads
-> > > > > > talking in parallel. BQL is normally enough, which path
-> > > > > > manages to invoke vhost-user with BQL not taken?
-> > > > > > Just check BQL taken on each vhost user invocation and
-> > > > > > you will figure it out.
-> > > > >
-> > > > OK, so postcopy_ram_ things run without the BQL?
->
-> I'll check the postcopy_ram_* functions to see what's happening there.
-===
-2024-07-23T17:11:25.934756Z qemu-kvm: vhost_user_postcopy_end:
-161184:161213: BQL not taken
-2024-07-23T17:11:25.934994Z qemu-kvm: vhost_user_postcopy_end:
-161184:161213: BQL not taken
-2024-07-23T17:11:25.935095Z qemu-kvm: vhost_user_postcopy_end:
-161184:161213: BQL not taken
-===
-* postcopy_ram_listen_thread() does not take the BQL. Trying to see
-where to take it.
-
-Thank you.
----
-  - Prasad
+Series queued, thanks.
 
 
