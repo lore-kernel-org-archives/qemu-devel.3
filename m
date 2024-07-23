@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B18C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 06:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03FB6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 06:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW8ut-00031E-8E; Tue, 23 Jul 2024 02:22:31 -0400
+	id 1sW8wp-0007HO-7z; Tue, 23 Jul 2024 02:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sW8un-0002z3-CT
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:22:25 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sW8ui-0001uB-9Z
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:22:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721715740; x=1753251740;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nxr7+tBuqop0Fy0B97ZVAaydhGMKvdSjcyv2uVlr4Zo=;
- b=hY+gheDkXve5iKRreCmWi+iNXrufEb9XbJtzR9mcK6IsXyDDkpUNkiwR
- HPlXN659CbHfCOh4p+7h+w/en5MIUvvahPl9IdiWe6nRK/rNLndqRATAa
- eLQz9oZfbpypJjaI8v6mwy26DY0g/19j7wmuUTT2GWjj+qcjY4h+tT1mz
- sUXUzWewGxqILeudBNecbPd08k/du0VN2cwjufoaxIysOHeI3ZRWckx9b
- +QtKeXYT6APyq0runeVwS5Z/WKaHcEuNXaytrGBbKlfijx0ndNcLafXMP
- E2sP4V5ZEI+TdA4YRjll8Ri7/0NE/kgRbX6xeyPRZBHNqialcDxXStwd6 g==;
-X-CSE-ConnectionGUID: NvWoyEjiRmCiXZK7h8tkBQ==
-X-CSE-MsgGUID: CpLElBibS7+m2jCilFZt4w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11141"; a="12661105"
-X-IronPort-AV: E=Sophos;i="6.09,230,1716274800"; d="scan'208";a="12661105"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2024 23:22:16 -0700
-X-CSE-ConnectionGUID: JFPvfVizQcmZcKB7UswOQw==
-X-CSE-MsgGUID: pJznqixsTTCO4fSl/Nq5hw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,230,1716274800"; d="scan'208";a="56682032"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 22 Jul 2024 23:22:13 -0700
-Date: Tue, 23 Jul 2024 14:37:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC PATCH v5 1/8] build-sys: Add rust feature option
-Message-ID: <Zp9PxB4ZyLDgWGtM@intel.com>
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <cdba13875d38feb836468a73509d24a88c8332ca.1721648163.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW8wn-0007FX-0G
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:24:29 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sW8wk-0002EH-TS
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 02:24:28 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4266182a9d7so34012395e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 23:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721715865; x=1722320665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AfED/y769uK7eoMyRRRpd1y0vNBFKwtZuKlaY7VNFII=;
+ b=s7NSS/0p3CyybZEnTHiw860DhwxEofCjC4TGdVLN9BFKQi7wpHgmByH0a1lKyvvcur
+ B9yFNPL3k5ids+bDjHijExe1C3I/a1hApIWqA8jXCFPvB9ffaff+eojMBP+H/RPMobGx
+ EfswE1H9ZtMW/wOmciuqpHUCzCTpttC9oTux8PI1SlFaA0AICLDJXckZ7UY7wJyxTt2H
+ /IqxbVf4E40Wn1X9myCGI5ASlWFtTd5QuyRYGbfjJ+5jNE/WTelyS9mRq3m3IB+Xblwh
+ 6TV0ySnjSLH7dUkWfsakglQbE0Sc17/FFyU5AaEFYMVN59fnG0CokuZrgrHLiy/RUm3H
+ 7s8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721715865; x=1722320665;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AfED/y769uK7eoMyRRRpd1y0vNBFKwtZuKlaY7VNFII=;
+ b=W3tyY5jo9qrlK+ncM82P9VNaXAbYrQjqqtvI87bDOgrsS8ji5IcA8lXBahpUvlVfFq
+ t7iG2vIatL6HAoXUnXj3cZlI5hHg7xupOZ934R+TWMfG2eNCtjZtZIxHW5auE++CkP3z
+ 8AFlPiqSMtxNH7Wi3+YjQlVxYEA00HtNYtOFjCFjro9XxoIHZdpaIExpv2gTFqt0jzq6
+ 4fsJvz+1TGeRI1muvhjVaxpqIN0U8gn/RdlH5AM4cGkRrAnEAJsAoC2NpOVo9IEixncb
+ m1lPA+2f9xEu/4IFvPD70ScdGZDyDGw7qRsEl27u8q1XnBTYYRFSw2J2s/9syIFIoiiz
+ FciQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrsV07PXhTFIJtHXu27eGooiroKZn1ydtuK6uidCuwDWjhZ7ZSYS7u1UD0jtzXRmZaYalDiUsnmlXY+Eq0nMMjn/u3NNc=
+X-Gm-Message-State: AOJu0YwW2qSTlXXSSqw8LEfbApKiLxKkrYcM4/Vuqu0HiU4u3mOkEyOV
+ saPLZ9aOYL/GAGW483bWIX3Soq5UyLvEjiKEgAkEuts7MnwHQWit9wRkhX/OEcc=
+X-Google-Smtp-Source: AGHT+IEdFWwnQ6jZapN0wLYqvpZaFIclVG1TZq38xHAjeFnF8sO6c4raIm4wBqxXNCYIAtfQ8TTNFQ==
+X-Received: by 2002:a05:600c:1382:b0:426:59fe:ac2d with SMTP id
+ 5b1f17b1804b1-427daa67bf1mr77228225e9.32.1721715865255; 
+ Mon, 22 Jul 2024 23:24:25 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.14])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427e5803bb0sm71381755e9.45.2024.07.22.23.24.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 23:24:24 -0700 (PDT)
+Message-ID: <c2085e4c-d2af-4ea1-9a04-f523c94a7315@linaro.org>
+Date: Tue, 23 Jul 2024 08:24:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cdba13875d38feb836468a73509d24a88c8332ca.1721648163.git.manos.pitsidianakis@linaro.org>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] osdep: add a qemu_close_all_open_fd() helper
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240717124534.1200735-1-cleger@rivosinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240717124534.1200735-1-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,54 +98,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manos,
+Hi Clément,
 
-On Mon, Jul 22, 2024 at 02:43:31PM +0300, Manos Pitsidianakis wrote:
-> Date: Mon, 22 Jul 2024 14:43:31 +0300
-> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Subject: [RFC PATCH v5 1/8] build-sys: Add rust feature option
-> X-Mailer: git-send-email 2.44.0
+On 17/7/24 14:45, Clément Léger wrote:
+> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+> POSIX"), the maximum number of file descriptors that can be opened are
+> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+> of 1073741816 file descriptors. Now, when forking to start
+> qemu-bridge-helper, this actually calls close() on the full possible file
+> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+> takes a considerable amount of time. In order to reduce that time,
+> factorize existing code to close all open files descriptors in a new
+> qemu_close_all_open_fd() function. This function uses various methods
+> to close all the open file descriptors ranging from the most efficient
+> one to the least one. It also accepts an ordered array of file
+> descriptors that should not be closed since this is required by the
+> callers that calls it after forking.
 > 
-> Add rust feature in meson.build, configure, to prepare for adding Rust
-> code in the followup commits.
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  MAINTAINERS                   |  5 +++++
->  configure                     | 12 ++++++++++++
->  meson.build                   | 17 ++++++++++++++++-
->  Kconfig                       |  1 +
->  Kconfig.host                  |  3 +++
->  meson_options.txt             |  5 +++++
->  rust/Kconfig                  |  0
->  scripts/meson-buildoptions.sh |  3 +++
->  8 files changed, 45 insertions(+), 1 deletion(-)
->  create mode 100644 rust/Kconfig
-> 
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ----
 
-[snip]
+FYI git tools parse 3 '-', not 4.
 
-> diff --git a/meson.build b/meson.build
-> index a1e51277b0..a3f346ab3c 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -70,6 +70,14 @@ if host_os == 'darwin' and \
->    all_languages += ['objc']
->    objc = meson.get_compiler('objc')
->  endif
-> +if get_option('have_rust') and meson.version().version_compare('<1.0.0')
-> +  error('Rust support requires Meson version >=1.0.0')
-> +endif
-> +have_rust = false
-> +if not get_option('disable_rust') and add_languages('rust', required: get_option('have_rust'), native: false)
-> +  rustc = meson.get_compiler('rust')
-> +  have_rust = true
-> +endif
+> v4:
+>   - Add a comment saying that qemu_close_all_fds() can take a NULL skip
+>     array and nskip == 0
+>   - Added an assert in qemu_close_all_fds() to check for skip/nskip
+>     parameters
+>   - Fix spurious tabs instead of spaces
+>   - Applied checkpatch
+>   - v3: https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
 
-Only a nit, "disable_rust" seems redundant, and "have_rust" is enough.
 
-Others LGTM,
+> +void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+> +{
+> +    int open_max = sysconf(_SC_OPEN_MAX);
+> +    unsigned int cur_skip = 0;
+> +    int i;
+> +
+> +    assert(skip != NULL || nskip == 0);
+> +
+> +    if (qemu_close_all_open_fd_close_range(skip, nskip)) {
+> +        return;
+> +    }
+> +
+> +    if (qemu_close_all_open_fd_proc(skip, nskip)) {
+> +        return;
+> +    }
+> +
+> +    /* Fallback */
+> +    for (i = 0; i < open_max; i++) {
+> +        if (cur_skip < nskip && i == skip[cur_skip]) {
+> +            cur_skip++;
+> +            continue;
+> +        }
+> +        close(i);
+> +    }
+> +}
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Build failure on windows:
+
+../util/osdep.c: In function 'qemu_close_all_open_fd':
+../util/osdep.c:725:20: error: implicit declaration of function 
+'sysconf'; did you mean 'swscanf'? [-Wimplicit-function-declaration]
+   725 |     int open_max = sysconf(_SC_OPEN_MAX);
+       |                    ^~~~~~~
+       |                    swscanf
+../util/osdep.c:725:20: error: nested extern declaration of 'sysconf' 
+[-Werror=nested-externs]
+../util/osdep.c:725:28: error: '_SC_OPEN_MAX' undeclared (first use in 
+this function); did you mean 'FOPEN_MAX'?
+   725 |     int open_max = sysconf(_SC_OPEN_MAX);
+       |                            ^~~~~~~~~~~~
+       |                            FOPEN_MAX
+../util/osdep.c:725:28: note: each undeclared identifier is reported 
+only once for each function it appears in
 
 
