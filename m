@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA945C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1347AC3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:04:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDGh-00029j-Pv; Tue, 23 Jul 2024 07:01:19 -0400
+	id 1sWDFr-000657-Ro; Tue, 23 Jul 2024 07:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDGZ-0001K3-TG
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:01:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFa-0004b1-Iv
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDGX-00034G-UM
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:01:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFX-0002kY-H9
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732469;
+ s=mimecast20190719; t=1721732405;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MeXmlkXUO1c12DbabmZ2BwxdEJDDqafMQQCrC5Sf5B0=;
- b=WrxhFKCRwxQ3be9QrNOeGnF/sX9Gw962dcVN1eb+5i9Dhw35ketMsJiR8Ma6uEwDd1gnKt
- CnqoPZ/mQx5ej3KrTxaEaQQ8EyP8idX5F/ChgUrT/vgeCYuXXhPLVIAcT9vifRnPM9bgh5
- g5atlO0Qnx1khlR0qT1hJ64FCtSeX8s=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=i33/3Qja9OS3einDB0z9RqroZS7tFHAamIIdFj14KsM=;
+ b=YDuN0lM0M+oD7D3Qa5v7n6TmqR6tdC0YJg/sX4PQ8BQI3EuKBtEnSSiObXmZwOoMcQzsvD
+ TOTkxlhu0zhopET4mPt6W+wF9NCWnu1qeu4A/+/AVfm9AOSURtGueYdWasmJKyahlx7T/1
+ SpPwC4QNrFHHRIyEiS0QTQ/5Vt0p93c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-Cv0cazVyNzikwozuR2Qxkg-1; Tue, 23 Jul 2024 07:01:07 -0400
-X-MC-Unique: Cv0cazVyNzikwozuR2Qxkg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ef311ad4bcso17984551fa.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:01:07 -0700 (PDT)
+ us-mta-255-iuLz5_mCM52gRKNQtxwjuA-1; Tue, 23 Jul 2024 07:00:02 -0400
+X-MC-Unique: iuLz5_mCM52gRKNQtxwjuA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3687f5a2480so3115211f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:59:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732465; x=1722337265;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MeXmlkXUO1c12DbabmZ2BwxdEJDDqafMQQCrC5Sf5B0=;
- b=anrKIizCZ25AuiP0llJbs9KxNIGNqNFuvoeU1c2kF+No79rxIY1x21+Wi/iH1zlXQ3
- Lb3izXzhQShOqZDqABl0wS6Bt2aNb/CcfXCQfbMGCRY8JWIwbVLm9j6KaPAxRPEqSH6Q
- zygDd+/arFxtj2dKwM+PtyUF2vI3MpTwuGn4tZYXrGaQIKnErIpE3UxuW3+FIlEYWJ2/
- cyAiq0jFIivbeH/TijQ6vWCb5LCh9+mvOTXR+Z7Cp+FyPnaAc6g0acFcI/lxY9DP1LvM
- HYjDFbn6ksblkJ9Ib4sQkZrrzleW+j7/wnYRkgA2X8PoOwHUvxSgvBP4PpcBavlBXaz1
- 7g3A==
-X-Gm-Message-State: AOJu0YzhvLZKhaqSvGXWB1dyxCsfYZ/RNQC45/PixHoA+4Gz2krLLFeE
- fIqXG0jtzb2Wdjw/UIovFIqgWDXNzPq2OHW1NLou8TBKPF7m0BAF4OifsYqBzVbdhWn9vURLD6g
- XLX3EPgqAZbs4DzoVzwJ8SYdss8g+mzZudYCQV1sFLnYvfJKK/53dAdLIpdNjVl8pCPRupZsvGs
- iXzpSg92W043YpYFEG8YR/rij85Rzy0Q==
-X-Received: by 2002:a2e:b5b7:0:b0:2ef:18b7:440b with SMTP id
- 38308e7fff4ca-2ef18b7487cmr57324851fa.12.1721732464981; 
- Tue, 23 Jul 2024 04:01:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGk4nm09xoUh8cIMmS3LS83RAFgUA+XZw7BRqAtMwF4Omqwx0DD5SaIbJEssNRSdJx3QuDPVA==
-X-Received: by 2002:a2e:b5b7:0:b0:2ef:18b7:440b with SMTP id
- 38308e7fff4ca-2ef18b7487cmr57324471fa.12.1721732464078; 
- Tue, 23 Jul 2024 04:01:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721732398; x=1722337198;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=i33/3Qja9OS3einDB0z9RqroZS7tFHAamIIdFj14KsM=;
+ b=oNpGkjPwyz6DstI+qiNyHlrvjFLXDv9SQY3MCWf2nLnSaBR9qZrjk9L4KU3IBOczGM
+ hBIUphBJgi/YKg65t/JLAQqQZA30mTton/gtQUa4Wxz8iX+3eS/8W4WR2Hz+aAonxbDj
+ zKKXegTbm1qtHApzGkkPuywizW3bHsMsGV6k3CxKecotj6MrWqVXUyA6op4o4KqwQLDp
+ MeNlfeV0SCTfolgxDXFhB26SvybvYK5czpiXqHGqkOIMHMuicinrYArYUv24vze+MMaz
+ yBY0pRW+fj8Gdx6pBdmFAanoWIMMV+nFDC0PMW6t8i72NKiuXDxdWu30U3U14ahld18R
+ szhg==
+X-Gm-Message-State: AOJu0Yzhizv2kOqlHEAGhwnsXb8Fi+D0vS9v2J8zvWkut0tes2i58eBr
+ /odwInz1o9aS+cxijtDrhfqZrY6r1U2KnkOFhhEpfUwwxVH0leOYp/NPdnGXBgkM1qNBWjlzm/i
+ hhy5m5iUpsUSC4GNpuHR3VjqFAoLR4ArWya4x+azaCIY28x+JcGFARa5g2DucfzLnTuH2BKlr9i
+ 2mAwXJpFvN15kr1WAjpUKMwbnui0kpjg==
+X-Received: by 2002:a05:6000:881:b0:367:916e:4206 with SMTP id
+ ffacd0b85a97d-369dee46164mr2209256f8f.46.1721732397773; 
+ Tue, 23 Jul 2024 03:59:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHG7bO1brr7fBBfuIFQuCndrMWRKXgHwfHk2CN0x441KigocNiTbuJ3MnvX6kS7QgPStArrVg==
+X-Received: by 2002:a05:6000:881:b0:367:916e:4206 with SMTP id
+ ffacd0b85a97d-369dee46164mr2209228f8f.46.1721732397002; 
+ Tue, 23 Jul 2024 03:59:57 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5a30af83177sm7419744a12.42.2024.07.23.04.01.02
+ ffacd0b85a97d-3687868b262sm11156565f8f.30.2024.07.23.03.59.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 04:01:03 -0700 (PDT)
-Date: Tue, 23 Jul 2024 07:01:00 -0400
+ Tue, 23 Jul 2024 03:59:56 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:59:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v2 58/61] tests/acpi: Add expected ACPI AML files for RISC-V
-Message-ID: <e9c0d54f4aebeeeebf1124d6acd607e3015e0a51.1721731723.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL v2 44/61] Revert "virtio-iommu: Clear IOMMUDevice when VFIO
+ device is unplugged"
+Message-ID: <935c3914184c4ebb1a4c545fc77fe2f0b24645c2.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1721731723.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,128 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-As per the step 5 in the process documented in bios-tables-test.c,
-generate the expected ACPI AML data files for RISC-V using the
-rebuild-expected-aml.sh script and update the
-bios-tables-test-allowed-diff.h.
+This reverts commit 1b889d6e39c32d709f1114699a014b381bcf1cb1.
+There are different problems with that tentative fix:
+- Some resources are left dangling (resv_regions,
+  host_resv_ranges) and memory subregions are left attached to
+  the root MR although freed as embedded in the sdev IOMMUDevice.
+  Finally the sdev->as is not destroyed and associated listeners
+  are left.
+- Even when fixing the above we observe a memory corruption
+  associated with the deallocation of the IOMMUDevice. This can
+  be observed when a VFIO device is hotplugged, hot-unplugged
+  and a system reset is issued. At this stage we have not been
+  able to identify the root cause (IOMMU MR or as structs beeing
+  overwritten and used later on?).
+- Another issue is HostIOMMUDevice are indexed by non aliased
+  BDF whereas the IOMMUDevice is indexed by aliased BDF - yes the
+  current naming is really misleading -. Given the state of the
+  code I don't think the virtio-iommu device works in non
+  singleton group case though.
 
-These are all new files being added for the first time. Hence, iASL diff
-output is not added.
+So let's revert the patch for now. This means the IOMMU MR/as survive
+the hotunplug. This is what is done in the intel_iommu for instance.
+It does not sound very logical to keep those but currently there is
+no symetric function to pci_device_iommu_address_space().
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240716144306.2432257-10-sunilvl@ventanamicro.com>
+probe_done issue will be handled in a subsequent patch. Also
+resv_regions and host_resv_regions will be deallocated separately.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Message-Id: <20240716094619.1713905-2-eric.auger@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   6 ------
- tests/data/acpi/riscv64/virt/APIC           | Bin 0 -> 116 bytes
- tests/data/acpi/riscv64/virt/DSDT           | Bin 0 -> 3576 bytes
- tests/data/acpi/riscv64/virt/FACP           | Bin 0 -> 276 bytes
- tests/data/acpi/riscv64/virt/MCFG           | Bin 0 -> 60 bytes
- tests/data/acpi/riscv64/virt/RHCT           | Bin 0 -> 332 bytes
- tests/data/acpi/riscv64/virt/SPCR           | Bin 0 -> 80 bytes
- 7 files changed, 6 deletions(-)
+ hw/virtio/virtio-iommu.c | 21 ---------------------
+ 1 file changed, 21 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 70474a097f..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,7 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/APIC",
--"tests/data/acpi/riscv64/virt/DSDT",
--"tests/data/acpi/riscv64/virt/FACP",
--"tests/data/acpi/riscv64/virt/MCFG",
--"tests/data/acpi/riscv64/virt/RHCT",
--"tests/data/acpi/riscv64/virt/SPCR",
-diff --git a/tests/data/acpi/riscv64/virt/APIC b/tests/data/acpi/riscv64/virt/APIC
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..66a25dfd2d6ea2b607c024722b2eab95873a01e9 100644
-GIT binary patch
-literal 116
-zcmZ<^@N_O=U|?X|;^gn_5v<@85#X$#prF9Wz`y`vgJ>9#P+??1=7Rt_Us?qr5)aeJ
-KkN{%wz_<X^jtBt&
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..6a33f5647ddd6de3a0f000f718b58f6fff44f0fd 100644
-GIT binary patch
-literal 3576
-zcmZwK&u`mg7zgmjiJLf%lR7`zq;1+{Fo^@2^d_OS7etfS?V2fRL!7NhLGq-k6C-Gp
-zF^~pAOg%8DxNJpSxD?U90wICKi5oX25JxWj18_5X{3G*svn#pr+xPjt@8_-EzP4;@
-z{9leJakslKckM>^&7o{G8V!Yr_%nYu<zH_(cGsDl?5a`-p*g!fE7y_3o)BV#H0OHH
-zBF!0e#)X&k%hk&YaaHtq_Ih%%xpN?Q{Gd0s2iJuVEz%r&+|jd|BV|X?967QJ1wH?H
-zhRaQ}N<{Z*a<b8r;S@%;ydi{W&ZcnH?$R@bWDwo-3T0aE4}!@DmF-z254NmV{K3fN
-zA-_zKqUheJnq%2kv6U#4bhG@#{o{u_Uky$l{rK%q*S=SZD@w7N$Q{1>-r@Aht-D9>
-ze|U7~@ID!|wMmncj(TGhPPe}|+808sKOJ=D42L$oFMnuWGzNPSO@FO0f*0wzh(;tL
-z5kz!(7Ol7lJrS27A{ohOMmshm8JDpY$xx#iuf%4kaT&u%##}UGJvL)5F5_k-BNfef
-zH8vv^mvJ1)NJld^Vl&cl84n^ET9DCG`?Ke1xHlA1?96VC;m9uJ^{jUnHoX4+osDhf
-zlw*%<W#UH#cL_u(8bn=+iSpZKQP+4@!QBE;e6vKS^+HUR--cPiU4vOk%z7~<%Ws=y
-z^}im<Uhn{OR!3~|n)IyTil1hC`zmQpx4So6M|(Uf)b-ksB=zWs8YHMe79G(?bej(8
-zh=@bH$7nbjm--**4~khe>$=3h8}dIZef~33G`L+)@bZKg$-WS6D&|zfbrs^8=In~A
-zT2##YKlAF^PcOMr1bq`;WovfDm0{O}Unzph1bLO=C`qp}oI%p747(=%%4SfR^ee+r
-zRIf6ef$CL;T~)s_oV@B+hNH}Za}Jzy=$!K_!%<S;Oo20n&J;S+;7o%vjm|VWHE?R+
-z)X=G+GXu^HI5X(Xpi>8@4o)4NIy$r9%z`tE&MZ0&a2nt=&}pDE2hJQgbLh;WGY`%@
-zIP>VtqjMgd^WdCE=R7)1aGKyW(P^Ty0L}t93+ODMvk1;2IE&~kqO%0f5;#lfETOXu
-z&N4X5=q#gi0h|lqTtMdnIv2sY2+l=xE~2vn&I&jy=&Yc#3eGAxtLUtva|xVF;9NrI
-z5;~W`xeU%_bS|TF1)MA3TtVjwI&0vpfwP9r8ah|OxeCrzbgrUv4V-J>Ttnv?I_u!9
-zgR_p#dgv@0j_h{m!XP5y?^brx`n@l5l;9>Jmru&W3Xu`M5^TAy`&sa=u=TJ)ioqLB
-z?{K~Dlq6E<^yNs6ckrIlbzT0)0EfTV)a>iSA!%|v>Qi|q<Lui~J)M%Y4w~n?>9e<a
-zCqEhd+5Wd)+xq6<Ugzi6e!q1()m3R7v`(kGCar_^F<)>Fe`s^mCw$WDd_FfHpWRkI
-z<v_1@^L+8~S=i5SHu;Cg+?m@irr+iLb{?d8F)d$lEPJ4yU-D=3+s3bd+v^_>9##Gs
-zEd3$}=b5v2=%SER6h6`9WT1|=?a1~=daq3U;?mZ|bL%5`QC!!39TtaQZM==v|D}}K
-A9{>OV
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/riscv64/virt/FACP b/tests/data/acpi/riscv64/virt/FACP
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..a5276b65ea8ce46cc9b40d96d98f0669c9089ed4 100644
-GIT binary patch
-literal 276
-zcmZ>BbPf<<WME(ucJg=j2v%^42yj+VP*7lGU|;~TK{R!N0J?Fk=mG-;0$qJWL3RTG
-D;^qed
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/riscv64/virt/MCFG b/tests/data/acpi/riscv64/virt/MCFG
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..37eb923a9320f5573c0c2cdb90bd98409cc7eb6f 100644
-GIT binary patch
-literal 60
-tcmeZuc5}C3U|?Y6aq@Te2v%^42yj+VP*7lGU|;~TK{OIDfU^ICXaEdF2LS*8
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/riscv64/virt/RHCT b/tests/data/acpi/riscv64/virt/RHCT
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4f231735abad925435c3cd052e6641b1b4187278 100644
-GIT binary patch
-literal 332
-zcmXBQu}TCn5C-5sDu-BDTQ1g?$6<ZfTp=iGVK+>&SuVKAE}7g4Q~4C)^I7^5Cy7(c
-z_YX|<Kks+14+b#T+sEDhrQ5ze?Yge(41k)ebw0non->7?Tl$5;5Aw2EhsZ<kNQ2v~
-zZN*OUpZOoHIF1vy5QfGm?aO8H^-d*Mr0&5d=L2atgj8lewvWRcNn<>Yq`X;YA!Uve
-zDUVqk>2Qc4kvb-IJ*j0<Ye}t;z84a4ZZ5ex9aHhyrw<Y-3y<9Nt|wWz_asY53y&nr
-fY-54J6%4S#>I|1P;dHuz!Fg+;c5!QfI|KXypVnys
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4da9daf65f71a13ac2b488d4e9728f194b569a43 100644
-GIT binary patch
-literal 80
-zcmWFza1IJ!U|?X{>E!S15v<@85#X$#prF9Wz`y`vgJ>{NU;r@%Kx_d9E(Qh$c8~z`
-M|NsC0LsftQ0Q@}*0RR91
-
-literal 0
-HcmV?d00001
-
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 33ae61c4a6..4e34dacd6e 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -467,26 +467,6 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
+     return &sdev->as;
+ }
+ 
+-static void virtio_iommu_device_clear(VirtIOIOMMU *s, PCIBus *bus, int devfn)
+-{
+-    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
+-    IOMMUDevice *sdev;
+-
+-    if (!sbus) {
+-        return;
+-    }
+-
+-    sdev = sbus->pbdev[devfn];
+-    if (!sdev) {
+-        return;
+-    }
+-
+-    g_list_free_full(sdev->resv_regions, g_free);
+-    sdev->resv_regions = NULL;
+-    g_free(sdev);
+-    sbus->pbdev[devfn] = NULL;
+-}
+-
+ static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
+ {
+     const struct hiod_key *key1 = v1;
+@@ -728,7 +708,6 @@ virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+     }
+ 
+     g_hash_table_remove(viommu->host_iommu_devices, &key);
+-    virtio_iommu_device_clear(viommu, bus, devfn);
+ }
+ 
+ static const PCIIOMMUOps virtio_iommu_ops = {
 -- 
 MST
 
