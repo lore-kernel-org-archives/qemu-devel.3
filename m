@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1741DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC88CC3DA7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMJb-00036i-Gi; Tue, 23 Jul 2024 16:40:55 -0400
+	id 1sWMJs-0006GB-Fc; Tue, 23 Jul 2024 16:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJK-0001I6-5u
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:42 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJq-00062Y-Qd
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:11 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJI-0004Ne-25
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:37 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-367963ea053so4295768f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:40:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJo-0004Vs-QJ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:10 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-367940c57ddso3144279f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767234; x=1722372034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767267; x=1722372067; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2N8bD0EiQwQSfnPzHE5ISzd574iE9UTxrUPygv1PgWk=;
- b=X6CifGpN5f7R3sDxPih/4GB9XCUk2rV/FSV675VobXIQ3u+IGjRkO15SFAzgbivmmt
- IStqD4XS/KuuYvPamc60xPK9LXAz9oNHDa691sI1X+jEf/t235JtOK+CGatIJUsMFnQm
- GdaI6k4Fkr/D+UWEObuIBbYAvKry7sPvGBV4zO5pfI750p20MrbKWFs4J82MSGgRghLj
- meE1FVLgrUU0pSEKf4IJhfoiH0mKZDL8f0U9oQ3O4jQN3+5vJr5SXZO9adgdpZiBW3nN
- T9VRy6KgVrT1bHcz9c4CfuaE74tAG09bC/hsVg88I7sUPAjr78KLZ9IZXoCtNWJ60kNc
- ynwQ==
+ bh=dSCWBLk+dTPyKUi346CpD+A3ideUlHg+vbcXd5eth70=;
+ b=qapZBxDWb//CkAlAcCV2eDsSeTAadPyUoxa9ROkt43zyWWoX01SRKCXrb2QUdHTbI+
+ 0CFqoD6gGfw1U/eo8xPK0Z1kkYOk65BgGMLklrh+3dfvatyrlwK+4RarmDjBfArTCv2N
+ FrlnemUB64CVzbXQE/fXca3R7/QeYCYtIKx/LvCcIQ96rBYgG5DvjjD6aWRmGgS/i5+2
+ 4sdvcO0noNDvBpVMt61gjElJhUDpsXvO/LLM0sNOxAsbllFTIJajoEW3WW6MqL1mC0vE
+ QY9TZ0+Tm763/NDOcWFunNwcPHz+JNjWkTXnHl+J+NF17Tt6ivF5PWIPFPdedeZbATUs
+ MwXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767234; x=1722372034;
+ d=1e100.net; s=20230601; t=1721767267; x=1722372067;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2N8bD0EiQwQSfnPzHE5ISzd574iE9UTxrUPygv1PgWk=;
- b=sd0eD4pNQBKPrPfzC2XJMr+RR037nX5JTZY2gqTAdJt5D13jMSVVqedgMVBOR9bEwF
- hsGkMNuB626XgYoO3r1skcclbZYK/Ml1/0h6k3cpLf4B1xXP4gJo3e4LQSxSShesGTT8
- rWE2BnFW3L2tg0upDYCDVslt4uEHUDh/s7uNp7LSoertISZp/cO/aZW0SDow7arxC8lf
- 77ohg9Q3LoAau+M5TN0fLu2Il9SZ6GC1IPSUhT0ixDYVT0SPK2DUxUHvK4JOFxSG/yrn
- hnibJ3MYgVDiLdNFNE4k2wxDraOCPNR9zlbOpQOX1gg2kvHLyEOowQQTgLnWzZ1zLYwT
- 52oA==
-X-Gm-Message-State: AOJu0Yxj4J2tX5KIbTAs855uiYII6J/rmPcy2+pk8TDavgBAtkWaUA2P
- sSTzNJdKSQ4XQlDaJY27FgQ7qENtEnDCxgHx1BI4/tiPVhUNQUaL9ygILSJa23JMc5/W+UpnrsX
- clCU=
-X-Google-Smtp-Source: AGHT+IFmvp7Mu6eu4KTV8dwUEh3RqzCxejJRvzau7t9u+3Y3aZp10BJ7wrGiVrFgKgctY2kCOoGpZQ==
-X-Received: by 2002:a5d:5751:0:b0:367:9d4e:8861 with SMTP id
- ffacd0b85a97d-369f0a994acmr632762f8f.57.1721767234014; 
- Tue, 23 Jul 2024 13:40:34 -0700 (PDT)
+ bh=dSCWBLk+dTPyKUi346CpD+A3ideUlHg+vbcXd5eth70=;
+ b=nHFaDLATtcHeQLCCgp3SCJFx+n+x31cQNfBWGLssR1c1wJ2i8VRgN09oyAINCTaDNn
+ o8B/p5nqKz3/D3BjyuyqnO9a0nS6dYHAPzSlqDlbR3sjqE7nxaz7UFsC6vHr0FDGdgiw
+ 1frObyT87S7/hCTowGZ44hjXSyx1awi/x7egbEm+mOaT1yyFRZakQIMIRIBXVc/AWBoU
+ kn/TCNd924LIfbilemgpSKMZsrcDZyYxTfI2DzRx39pdA4lmtKb/utPEPzAMuagQzNTg
+ T2kS4AwXzkgJTlctE32sXYANG3bpmyemp5358O5ZkFW6dAcBrxl71n/dFnEPeaaKbIOU
+ SWQw==
+X-Gm-Message-State: AOJu0YwRRltk07VaCcwUs6UeDg/DOTf/wuahKFaw7U8oelmEMHKugjqX
+ HsujcO6O0g0dl+dF+CDVn/xgcpyx87eOW0Z60WRzBp4ugox4/jofuOwv92h9MVwnbSP4BWVlmfl
+ +W7M=
+X-Google-Smtp-Source: AGHT+IFG2nm/lCT+8XjPxSNVK/q+eDv/M6vNHUpHyX6B6M8b0aVz9Nezc15d/G2ixdfU4CsbQQhhiA==
+X-Received: by 2002:a5d:6a47:0:b0:368:4ed7:2acb with SMTP id
+ ffacd0b85a97d-369bae01e22mr5450473f8f.5.1721767266672; 
+ Tue, 23 Jul 2024 13:41:06 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787cee03sm12462353f8f.76.2024.07.23.13.40.32
+ ffacd0b85a97d-368787eced0sm12312095f8f.98.2024.07.23.13.41.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:40:33 -0700 (PDT)
+ Tue, 23 Jul 2024 13:41:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/28] dump: make range overlap check more readable
-Date: Tue, 23 Jul 2024 22:38:44 +0200
-Message-ID: <20240723203855.65033-18-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 23/28] util/fifo8: Rename fifo8_peek_buf() ->
+ fifo8_peek_bufptr()
+Date: Tue, 23 Jul 2024 22:38:50 +0200
+Message-ID: <20240723203855.65033-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,56 +97,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Since fifo8_peek_buf() return a const buffer (which points
+directly into the FIFO backing store). Rename it using the
+'bufptr' suffix to better reflect that it is a pointer to
+the internal buffer that is being returned. This will help
+differentiate with methods *copying* the FIFO data.
 
-use ranges_overlap() instead of open-coding the overlap check to improve
-the readability of the code.
-
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240722040742.11513-13-yaoxt.fnst@fujitsu.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240722160745.67904-5-philmd@linaro.org>
 ---
- dump/dump.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/qemu/fifo8.h | 11 ++++++-----
+ hw/scsi/esp.c        |  2 +-
+ util/fifo8.c         |  2 +-
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/dump/dump.c b/dump/dump.c
-index 84064d890d2..45e84428aea 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -30,6 +30,7 @@
- #include "migration/blocker.h"
- #include "hw/core/cpu.h"
- #include "win_dump.h"
-+#include "qemu/range.h"
+diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
+index 2692d6bfdaa..e287e871190 100644
+--- a/include/qemu/fifo8.h
++++ b/include/qemu/fifo8.h
+@@ -89,16 +89,17 @@ uint8_t fifo8_pop(Fifo8 *fifo);
+ const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
  
- #include <zlib.h>
- #ifdef CONFIG_LZO
-@@ -574,8 +575,10 @@ static void get_offset_range(hwaddr phys_addr,
+ /**
+- * fifo8_peek_buf: read upto max bytes from the fifo
++ * fifo8_peek_bufptr: read upto max bytes from the fifo
+  * @fifo: FIFO to read from
+  * @max: maximum number of bytes to peek
+  * @numptr: pointer filled with number of bytes returned (can be NULL)
+  *
+  * Peek into a number of elements from the FIFO up to a maximum of @max.
+  * The buffer containing the data peeked into is returned. This buffer points
+- * directly into the FIFO backing store. Since data is invalidated once any
+- * of the fifo8_* APIs are called on the FIFO, it is the caller responsibility
+- * to access it before doing further API calls.
++ * directly into the internal FIFO backing store (without checking for
++ * overflow!). Since data is invalidated once any of the fifo8_* APIs are
++ * called on the FIFO, it is the caller responsibility to access it before
++ * doing further API calls.
+  *
+  * The function may return fewer bytes than requested when the data wraps
+  * around in the ring buffer; in this case only a contiguous part of the data
+@@ -113,7 +114,7 @@ const uint8_t *fifo8_pop_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
+  *
+  * Returns: A pointer to peekable data.
+  */
+-const uint8_t *fifo8_peek_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
++const uint8_t *fifo8_peek_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr);
  
-     QTAILQ_FOREACH(block, &s->guest_phys_blocks.head, next) {
-         if (dump_has_filter(s)) {
--            if (block->target_start >= s->filter_area_begin + s->filter_area_length ||
--                block->target_end <= s->filter_area_begin) {
-+            if (!ranges_overlap(block->target_start,
-+                                block->target_end - block->target_start,
-+                                s->filter_area_begin,
-+                                s->filter_area_length)) {
-                 /* This block is out of the range */
-                 continue;
-             }
-@@ -734,8 +737,9 @@ int64_t dump_filtered_memblock_start(GuestPhysBlock *block,
+ /**
+  * fifo8_reset:
+diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+index 8504dd30a0d..412c8cf2260 100644
+--- a/hw/scsi/esp.c
++++ b/hw/scsi/esp.c
+@@ -486,7 +486,7 @@ static bool esp_cdb_ready(ESPState *s)
+         return false;
+     }
+ 
+-    pbuf = fifo8_peek_buf(&s->cmdfifo, len, &n);
++    pbuf = fifo8_peek_bufptr(&s->cmdfifo, len, &n);
+     if (n < len) {
+         /*
+          * In normal use the cmdfifo should never wrap, but include this check
+diff --git a/util/fifo8.c b/util/fifo8.c
+index 2925fe56119..566b0893441 100644
+--- a/util/fifo8.c
++++ b/util/fifo8.c
+@@ -92,7 +92,7 @@ static const uint8_t *fifo8_peekpop_buf(Fifo8 *fifo, uint32_t max,
+     return ret;
+ }
+ 
+-const uint8_t *fifo8_peek_buf(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
++const uint8_t *fifo8_peek_bufptr(Fifo8 *fifo, uint32_t max, uint32_t *numptr)
  {
-     if (filter_area_length) {
-         /* return -1 if the block is not within filter area */
--        if (block->target_start >= filter_area_start + filter_area_length ||
--            block->target_end <= filter_area_start) {
-+        if (!ranges_overlap(block->target_start,
-+                            block->target_end - block->target_start,
-+                            filter_area_start, filter_area_length)) {
-             return -1;
-         }
- 
+     return fifo8_peekpop_buf(fifo, max, numptr, false);
+ }
 -- 
 2.41.0
 
