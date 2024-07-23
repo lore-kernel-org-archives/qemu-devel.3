@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC65C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 16:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA81C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 16:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWI5f-0007TL-3Q; Tue, 23 Jul 2024 12:10:15 -0400
+	id 1sWI6p-0007zd-RO; Tue, 23 Jul 2024 12:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI5e-0007Sh-2Z
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:10:14 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI6X-0007nS-AG
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:11:11 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI5b-0004P5-Tt
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:10:13 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3684e8220f9so2295963f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 09:10:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWI6V-0004Z0-Bc
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 12:11:09 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-42793fc0a6dso41138385e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 09:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721751010; x=1722355810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721751062; x=1722355862; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=P/qGxzWVKwBzyns7uKu0Csr6qKZITAaEc42aAQP0aWs=;
- b=X0DY09cRrxkUULc3zNy4UmstTkUM4kOxXdDYuPyu/aQwd5eUpwrJg4GrlvNVqtx9ZX
- urc3ptZvm3v9mnnzywbxD2bvEuRQsQpKi36OeewPJh+5cuiT4kMdhHvB8wmsc6RzAXKp
- Gq5yujBqy4jMI+AM4h87lFkVZbXVn7J9rbauyRZObZMK1k4tnA7LAS85M6XCqhTEtFuk
- mjOtUC0LOWNW61kwozaa9XEu3udnZqoWffYvNSCK9no+z7b5YYP1Li0w1GOS6GJb9sb+
- grnyVEnRqCwS22MykXcb0C4oWehYMAFPnxWYPEQ8PBSC5JmONNrmzcPNGEyXlKWYGGe2
- kegA==
+ bh=OteKzwqLKkOLffUUjRoUJNuuM6gG72vsNnpLPqKxmbI=;
+ b=HODP++lJiFITqExvVmxU8qaen+SGVtmKrlpWnOdX0W9Hn8/DFIB8O5LlxWAI8nh7Nc
+ uywkQHUiQcmUlQSeImSpNa+/+ekIiAnymMNivyNYdOEyz6dRc45zll+Hv8hc3QXSxzMN
+ NV6IlrarnGbE91UYo+oNQm3t1QHZwYsapMAd5CJNO94WYpwuwbSjG+Pg5JK33tahehrf
+ RMPthr06tPHzIJU3oN8mNMTjJILfa1klRPc/4BKsKzcu1BatDpMY3EiBDNTpHTYxiBKK
+ XnwCIX7Lj23HhtyYgXMv8muboHqRR248naaU6J9CxB0KL4CkcAoBp4zX6TXO+cIVAWmg
+ Q+DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721751010; x=1722355810;
+ d=1e100.net; s=20230601; t=1721751062; x=1722355862;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P/qGxzWVKwBzyns7uKu0Csr6qKZITAaEc42aAQP0aWs=;
- b=hwm4VQb8b74nM6zpG9LDJJbWLNKBq5mkzMrZb3zWcJmcaUtNxrybI2eJtcJg2oeKNo
- HOv1z9oJFIjLH6N3Nn9WdZJoWGqURgVl4fVTak3B9n24J1LOzOYXti/uAEfuwWykUUW5
- c4utFGr1frSUuIyB3FdoycQP1gIV+4ouML3b0N/dsWHvHAhZoa6AUK7Kkv7MyPRZpbpU
- TTAuX2M4KxB3ZoLOGVNiQndkykTVC3PEVT2p839nvr0S9wUJgdzXXtH7NIIP1Li9jiZ5
- IgYeUhmyjTWL09eBC8Ik/luObSIeznvrlm5h6zDycEdqOZggCWbSOZ4neEUzJQiRgTaL
- rRaA==
-X-Gm-Message-State: AOJu0Yxgr5q7lHmnL5teNAFysXqwBMC9yA968pWY41kMQGczV7nsdPTd
- IrXQ5hOWlIEFVOjfc4JtF8/BXQrGzMqF/NwQj43VmVFg0O+hdLCL1OMnvNJdZpE=
-X-Google-Smtp-Source: AGHT+IGRWRMRpWe3TtlASdkMT8qfu3aV65Qt6vH5KJECQNLcVk8r7HUnHJaXgrSrviGOhET+8y/QRg==
-X-Received: by 2002:a05:6000:4021:b0:367:8f89:f7c9 with SMTP id
- ffacd0b85a97d-369e3f2f62bmr2036633f8f.33.1721751009980; 
- Tue, 23 Jul 2024 09:10:09 -0700 (PDT)
+ bh=OteKzwqLKkOLffUUjRoUJNuuM6gG72vsNnpLPqKxmbI=;
+ b=aPtWw/hmVJ4XI2qSdBkhOm4vtSv3eeqr3/fMzqD5Gco1+9S8qqONXpMRmCqlt0HVrr
+ U5aI+OVsAq5Ps6z+0yyjRDR8SnP1ywvp8X5TAfZXKvCrscSs2ARzMvVnjzmfKUm2rbgm
+ UxdAiYYkaBrodRUx+6ad5aVoS9Pi7LZ6Fn86WW0+IF09f0YrO5kEbKLz1/ogOZBREDiJ
+ MbS6V5UiXQ2YImK960dHa1dSNkk23eH/DS0E1CoYap44BZQpZ6rlIIiIG9sse2Tu8Tw0
+ 6CT0wi6XFsS7Qrn1sKYuFCmfA4up3Tk58sbMN154skBgXW6ObjzwsZdCGutIx6KBjKGi
+ QBMg==
+X-Gm-Message-State: AOJu0YyEGSdy7QnoLoLxkULIg/2M0Y3gXbEZ7AP8Lw62uC2fXewTB1gL
+ 0L1G3hazvXerysK4VSIdlQHC3Nu3w4bX2xcve9RD5lHiWckY/28Kr7+BEseqDZMaeHpPuEO7B+Y
+ tCjk=
+X-Google-Smtp-Source: AGHT+IFsmc/AdE1cdw6StpkbYJwy10Gc0PkwGlinRKSLE1UDFEA/CYF/9dVSiSVFQMXTh6ovYYidIA==
+X-Received: by 2002:a05:600c:198f:b0:426:54c9:dfed with SMTP id
+ 5b1f17b1804b1-427ed059c10mr23280815e9.28.1721751061787; 
+ Tue, 23 Jul 2024 09:11:01 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.208.14])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ecec0sm11895692f8f.105.2024.07.23.09.10.09
+ ffacd0b85a97d-36878684839sm11981124f8f.22.2024.07.23.09.11.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 09:10:09 -0700 (PDT)
-Message-ID: <de954795-ecec-435e-8166-989296c56bfd@linaro.org>
-Date: Tue, 23 Jul 2024 18:10:08 +0200
+ Tue, 23 Jul 2024 09:11:01 -0700 (PDT)
+Message-ID: <299aaf66-64a3-49b0-9b31-97513e0b6f4c@linaro.org>
+Date: Tue, 23 Jul 2024 18:10:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD()
- in nubus_virtio_mmio_realize()
-To: Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240723161802.1377985-1-zhao1.liu@intel.com>
+Subject: Re: [PATCH 0/2] hw/intc/loongson_ipi: Fixes for qemu-stable
+To: qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240723111405.14208-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240723161802.1377985-1-zhao1.liu@intel.com>
+In-Reply-To: <20240723111405.14208-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +95,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 18:18, Zhao Liu wrote:
-> According to the comment in qapi/error.h, dereferencing @errp requires
-> ERRP_GUARD():
+On 23/7/24 13:14, Philippe Mathieu-Daudé wrote:
+> - Fix endianness
+> - Fix resource leak
 > 
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> * - It must not be dereferenced, because it may be null.
-> ...
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
-> *
-> * Using it when it's not needed is safe, but please avoid cluttering
-> * the source with useless code.
+> Bibo Mao (1):
+>    hw/intc/loongson_ipi: Access memory in little endian
 > 
-> In nubus_virtio_mmio_realize(), @errp is dereferenced without
-> ERRP_GUARD().
-> 
-> Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
-> method - is never passed a null @errp argument, it should follow the
-> rules on @errp usage.  Add the ERRP_GUARD() there.
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
-> v2: Used Markus' words in commit message and added his r/b tag.
-> ---
->   hw/nubus/nubus-virtio-mmio.c | 1 +
->   1 file changed, 1 insertion(+)
+> Philippe Mathieu-Daudé (1):
+>    hw/intc/loongson_ipi: Fix resource leak
 
-Patch queued, thanks!
+Series queued, thanks.
+
 
