@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04ACC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB2FC3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMI5-0003ke-6o; Tue, 23 Jul 2024 16:39:21 -0400
+	id 1sWMJJ-0001C9-Ph; Tue, 23 Jul 2024 16:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMI3-0003hh-CT
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:19 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJE-0000be-TZ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:33 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMI1-0003va-OF
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:19 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4266ea6a412so43216515e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMJC-0004M5-EA
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:40:32 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4266eda81c5so52350225e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767156; x=1722371956; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767228; x=1722372028; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rrr8U9MJkVqXeBeQIRhzeP4hlOkJzQZ2EPAVbiwALWY=;
- b=uu+kCSWUxkbHbQCPsXA1lfKP0oaO/kWX5NBaK4t5h3qxK5XqYbV0KvXi2SoR5wAlG0
- tU6iTKRZeNC4HdTLCkds88CF9Aev6OxN6Qu5zRCMEJ33K9hliY8PkaJLfPMk1iSMwOz/
- 5GotqIT3JcU2ENIs4HhlIPLgEZlUMol8LwwgUlRkkVQCoH+FNbf15Ri4vL1smJE7SDsM
- wWTy7wCc8XymaqGNHs5dqh2xRSLpnTF+jpF/P5zW4nWWWLvc5ZzPeej6vK0w/Pml+BfP
- lrBpYURkZV2QC6wvlkGsS7U4xW2KAFDEWTqU/zkhe6+OpCaRlf+g2FcDi/sce59Su/4B
- tRXA==
+ bh=bELfHk4oMv9ib41OJIdVRWkzH2ywz3o3d2vSZHxMu3U=;
+ b=RK+UIhVtK8hxHlkoBAmgJcTms9ifmyMR+w1i3VlRsCkDVAOB7vVQ9BPe8Q4wHxMBVE
+ pmlHZk6MHoob8y21NL3t+bxkIEjXsXg03qn8RvXI5mh9Ih4PejDFJ1gtqYTu18dGsXE8
+ cBx5HDwyEm7NtCKPAZSWw3S7pcRM/jbn13xdlDfeBKiuPE7JNe1F+r0PyeXaILhZQ56X
+ oRmfCsMyL0ZYVm27R0yTozYFxlwRO8bh33gSym+X/Z+yiiTfLkHdnXNGXZpHwX+OXATm
+ biMpin/xjzsAD+2q3hD5fxx9BBXDvYmTV0e0l+MYPRWKbqGOIihB/xMyx17qAyNdKSWL
+ zXag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767156; x=1722371956;
+ d=1e100.net; s=20230601; t=1721767228; x=1722372028;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rrr8U9MJkVqXeBeQIRhzeP4hlOkJzQZ2EPAVbiwALWY=;
- b=fElR0E9HbxKL9ViheK5aS/NCs+yvs6S9WkNGYLYKhWxDVYqqFJNWc9bsJiu5DwjEwr
- roiNMmMVTFR2hZ1Ls0h399NQmsJIwwbqRDOO/TPY8Rc4gRG4GFWFUmoXeBrC3BifrlL1
- WXYzzbEfkz6a+qC0QeTOJVeLd3tCtYGRaI823wB8ap40L3KNL3OqMQ5i1z5ix2Q+i042
- zvBNBuZogDsdW0jaoSbk5dBb0lY44r0qQIbKrlFfBd5K8hflOD3Y/9EhPJ9vCNTar12k
- b1eU0aOL8MkSAKbEvqAaNPDEMwLaI5rDONYVvw0U76tTNBbHqbtE9O7oU/zryX4w2+Fy
- PvRQ==
-X-Gm-Message-State: AOJu0YxN8dGKSxVI/WRZOg+zi1sTynADwd3HRXqjCEnlCMAdqb6MMeIf
- SP2ntgCfBpOSZsCJBZv8VMC2K/2rEUUBLhswFNI5ukTTBw97cNYXTB9+jYiuJIYglAFNZOzdsAQ
- r7k0=
-X-Google-Smtp-Source: AGHT+IF38NEHrloe4WJCVqJkOGfytDDebvQOmzI0hSvr9MRxWG5qQfuMtnfYADvRMUbtZ9RkSj2V9w==
-X-Received: by 2002:a05:600c:a42:b0:426:54c9:dfe5 with SMTP id
- 5b1f17b1804b1-427eab7c129mr43548945e9.10.1721767155936; 
- Tue, 23 Jul 2024 13:39:15 -0700 (PDT)
+ bh=bELfHk4oMv9ib41OJIdVRWkzH2ywz3o3d2vSZHxMu3U=;
+ b=Wjr9tpxKa54/eJCVOdbqZ/EEhRxwoD+pokqZ8rYBu1hU9Yw1qCK+nyaVgXGJQ+vkPo
+ 6TbHc1P2qZOAejQTSBVwMXXfXhJd48ldkzSnOmlDQK5mqavzRM7eSMBnvCkJuTBfQpeK
+ jYIcQDQsA10WurXDGnQShu0OydH1+7hZ9fw6sSaI23bT57K8pRRCb33Jgl6Atm4ztTMH
+ 1g6tAffrK7s/8floQrT8qZUXhABeETG72IANZJEgPt4EhPNaBceU6P6bRlFyFXs/RYwm
+ bec9b8xzWJxsYbv1e74Ft6QKnIPsV58wx1D/u8IbFNdAtUCxVW0PIKDH+5bYKIUs4u4J
+ jO/A==
+X-Gm-Message-State: AOJu0YyiTohyy98aeSGjhPAZ/LK4KyUWfmjhcQfQJA4t8cnFlHzTYmFr
+ wLX4izZyRvD0IpsFk8X7W4EQZ13TMxEHIHF1c1+qkIv9BEB5BELtBCcKrDcecnid8WN3f3xAw0D
+ h0yo=
+X-Google-Smtp-Source: AGHT+IEXQVGc+DMr9iNCRoC3AXhORrn+nS/1uuISM9fIH4K/vryx23FDxBGUNc+zAQMZWl+nrA1PLw==
+X-Received: by 2002:a05:600c:1d24:b0:426:6416:aa83 with SMTP id
+ 5b1f17b1804b1-427f7ab6468mr4940655e9.6.1721767228163; 
+ Tue, 23 Jul 2024 13:40:28 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f937e274sm512615e9.14.2024.07.23.13.39.14
+ 5b1f17b1804b1-427f93e5eeasm362685e9.38.2024.07.23.13.40.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:39:15 -0700 (PDT)
+ Tue, 23 Jul 2024 13:40:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, qemu-stable@nongnu.org,
+Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 03/28] hw/intc/loongson_ipi: Access memory in little endian
-Date: Tue, 23 Jul 2024 22:38:30 +0200
-Message-ID: <20240723203855.65033-4-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 16/28] crypto/block-luks: make range overlap check more readable
+Date: Tue, 23 Jul 2024 22:38:43 +0200
+Message-ID: <20240723203855.65033-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,59 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 
-Loongson IPI is only available in little-endian,
-so use that to access the guest memory (in case
-we run on a big-endian host).
+use ranges_overlap() instead of open-coding the overlap check to improve
+the readability of the code.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Fixes: f6783e3438 ("hw/loongarch: Add LoongArch ipi interrupt support")
-[PMD: Extracted from bigger commit, added commit description]
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240722040742.11513-12-yaoxt.fnst@fujitsu.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Tested-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-Id: <20240718133312.10324-3-philmd@linaro.org>
 ---
- hw/intc/loongson_ipi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ crypto/block-luks.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index e6a7142480c..e7979dbdd8b 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -14,6 +14,7 @@
- #include "qapi/error.h"
- #include "qemu/log.h"
- #include "exec/address-spaces.h"
-+#include "exec/memory.h"
- #include "migration/vmstate.h"
- #ifdef TARGET_LOONGARCH64
- #include "target/loongarch/cpu.h"
-@@ -102,7 +103,7 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
-      * if the mask is 0, we need not to do anything.
-      */
-     if ((val >> 27) & 0xf) {
--        data = address_space_ldl(iocsr_as, addr, attrs, NULL);
-+        data = address_space_ldl_le(iocsr_as, addr, attrs, NULL);
-         for (i = 0; i < 4; i++) {
-             /* get mask for byte writing */
-             if (val & (0x1 << (27 + i))) {
-@@ -113,7 +114,7 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
+diff --git a/crypto/block-luks.c b/crypto/block-luks.c
+index 5b777c15d3c..45347adeeb7 100644
+--- a/crypto/block-luks.c
++++ b/crypto/block-luks.c
+@@ -33,6 +33,7 @@
+ #include "qemu/uuid.h"
  
-     data &= mask;
-     data |= (val >> 32) & ~mask;
--    address_space_stl(iocsr_as, addr, data, attrs, NULL);
-+    address_space_stl_le(iocsr_as, addr, data, attrs, NULL);
+ #include "qemu/bitmap.h"
++#include "qemu/range.h"
  
-     return MEMTX_OK;
- }
+ /*
+  * Reference for the LUKS format implemented here is
+@@ -572,7 +573,7 @@ qcrypto_block_luks_check_header(const QCryptoBlockLUKS *luks,
+                                                        header_sectors,
+                                                        slot2->stripes);
+ 
+-            if (start1 + len1 > start2 && start2 + len2 > start1) {
++            if (ranges_overlap(start1, len1, start2, len2)) {
+                 error_setg(errp,
+                            "Keyslots %zu and %zu are overlapping in the header",
+                            i, j);
 -- 
 2.41.0
 
