@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875A5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF13C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 21:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMZz-0004md-Tu; Tue, 23 Jul 2024 16:57:53 -0400
+	id 1sWMc3-0004fw-FJ; Tue, 23 Jul 2024 16:59:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMZv-0004dU-Ry
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:57:47 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMbu-0004RM-Sp
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:59:52 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMZs-0007Uu-3J
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:57:47 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-36868fcb919so2870672f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:57:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMbs-0007et-Kz
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:59:50 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4266182a9d7so40189135e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721768260; x=1722373060; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721768387; x=1722373187; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WgGHxjZPhlctoelwvMgxWGChoJau4/Y6c8l3JtInLWo=;
- b=SjTbYhRn7Zd33Gwg+u8xEwAF5QoDci2elvQSIykESUxk0b1lWvuhSEAicTuZ61sL7V
- xZyHUV0li2gIY2xkHUlG3nx2eAkOQJ/DWRYx3iTausZp+eXkVHdok1dLyAWYxGwjHdZv
- inwDdn4ODV2drSgCvzme9dFpxX/asXpe7TthIIKO47ZHgh18wv+ApHIdVwCSrzA3WbW3
- u+YpzH0Ns9s934RKMAliKJxeBarhhIF5VVugxgGqYQhfseu0+0TxVlZJUZI2GkiR/nFn
- rvXkVnBPCRZUlamPeYilDC9ZeDph3uXpjxkdCRRP13JWyPFwJay54e90kLGBG+Q7Rkfj
- KxlA==
+ bh=aFgVYa1v2h146HihTeurtxVbFu/ulYYaQPwRUdyz9X4=;
+ b=u7dlU5icfbUm97/2mPCNLYcSgEG7hCVJ3JwOISYChJGmNidcT9EV5PR5V9uBOBSZ3X
+ 8iaj6rxf8H60zsOKYy/8/8nvlzvYNttNTrxsCa6ZnRIJcq1l4WYeU+bcQ20dp5+WUMT0
+ lu4/zqF+XIiQQSbbKCZY6UwDg6uM1N68MJ4IlC5o3JLlm1xhIA3kUgYbfZ91mn1YnLd/
+ pyj6BVJvX1zCZGUCmPzo3cPBvaZqhlh6h9XnmyNTAKKBQxaO+AfYmKy2NXidwdWXknQ5
+ 0jBB1z9OVBhONcH9bu9+ulpw3J5GjwgxKEd8+HC8Qpc6kYbH46zwNTPiVm9SL5aGXJCZ
+ L+KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721768260; x=1722373060;
+ d=1e100.net; s=20230601; t=1721768387; x=1722373187;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WgGHxjZPhlctoelwvMgxWGChoJau4/Y6c8l3JtInLWo=;
- b=oKIFaRbkBGh1uA4xPQNxKnAjLCxvuHuf02LhW7PrlzJtPHxYz7843YAcRsCSLHaYrP
- oL0pQr//5xRlVkUsrbJ7DDIrCMsgEKQxpi7/7VhvLr+MkSJoVvHkrZ0s5AGwkrE+qdvB
- svnbA8jU2Z+q0WE+nkjcjPgo9mbXoqp/tOZIzky08nCY9DOoxTDUO5FJ8vpHOW7eGcnp
- eQmT9szGrn6dcG6WNl6hghaZnbe2EuhaS3bnYDq8A5LK6sUHKNRDh1caiDLl5QoPDZAF
- 4Puq48gAEoR3wTASxBdM2Px51zUGNji4/CszTSnwZPX8j6vW59/9xS2l5vMJfGN0j4nc
- c8Lw==
+ bh=aFgVYa1v2h146HihTeurtxVbFu/ulYYaQPwRUdyz9X4=;
+ b=rg52P3TjeJaxI0Yoshnpxpt3TBjoOoyU87diq9wLpLDdBRHpxOUQuhKcT7d7w/um01
+ JL5QKrQ+eTnlrlUyvplnygJD59w+g8KxiAKOX108+gtrybIUeHdhVh849hNhTXnT2Rdj
+ gOM86tmMV/WG1Lcs3JjBfy4Qvw63WAM8wFYAjFd4xnUca7xM26OaZST+SBJnlVzgrhn5
+ iYOn8F0aAtUg/pDGpPD41ksHg/LSfclThC8EKk158yQx/u+SXpLQdLFtt5tJ7uYOaxli
+ Nhm86OEWb+OjEe0aOTkDrMY49lEKE+u+5pXZQ0k7PNsQ2Dceh0opqr+rl10INqACxSb1
+ uR1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqk6CvKjH8JjNX3p/sSxUXlqpEDf/Aac5jZ9Pvlk5MVzvfyPbdpinWBCVnFbeymoOgR0qW/nPm2tb37h14pV40GGF3618=
-X-Gm-Message-State: AOJu0YwDMuByUQhP5DQggQm7dGdC6x5o3XrnNXO4AJCUipZrVMHcoyCz
- OQ3zp/HsF0mbSxxE9TpOk3Gx4LqQ41Kz2ArSYOQacY1gFI17QXgQB3CjkiooOkA=
-X-Google-Smtp-Source: AGHT+IECoLRmK3EenYxNHRXDQlG8Q9XPjW9yvDtAMrOaj/+fkVq/e4Pw6HrWCZ5A8Bl1kw/gNMjtLA==
-X-Received: by 2002:a5d:6350:0:b0:367:947a:a491 with SMTP id
- ffacd0b85a97d-369f5b1a2d1mr46980f8f.26.1721768260267; 
- Tue, 23 Jul 2024 13:57:40 -0700 (PDT)
+ AJvYcCX8iGCBplw7oRslpMd3xYLwYIv2EHQc4Bq6nQcxFOh+6lx/IEUMqnuFAq3b0z7xx6zvHuP9ytA0Cjs3AJqzfjegXyYte7I=
+X-Gm-Message-State: AOJu0YzRPVuzcvdsfPr7eIPS+/kYulrwMdZ+cpAWQDOhjJktydLLJg1w
+ P7E4cJMCYTrvh3awBD2v1xIY+NbQ/oPEP+BCjHasQdpS2LAeuVVnoLWeWEIuJkA=
+X-Google-Smtp-Source: AGHT+IEiaVkB/7r8twb+Op6bL6DnZrxSV1RSJnyxoo/dCCwpIi+lYoay/WArP1MJf4r1E3j0BoO3cA==
+X-Received: by 2002:adf:9dc6:0:b0:368:785f:b78e with SMTP id
+ ffacd0b85a97d-369f5b0f1eamr61001f8f.13.1721768386782; 
+ Tue, 23 Jul 2024 13:59:46 -0700 (PDT)
 Received: from [192.168.69.100] (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr.
  [176.184.50.4]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f9372a6asm997335e9.12.2024.07.23.13.57.39
+ 5b1f17b1804b1-427f939aafdsm1000025e9.28.2024.07.23.13.59.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 13:57:39 -0700 (PDT)
-Message-ID: <3741f4e6-34ad-4d2b-8ff0-92534f7e248e@linaro.org>
-Date: Tue, 23 Jul 2024 22:57:38 +0200
+ Tue, 23 Jul 2024 13:59:46 -0700 (PDT)
+Message-ID: <06420e5f-a493-44b0-8d32-1a4dc2a9db59@linaro.org>
+Date: Tue, 23 Jul 2024 22:59:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sh4: Avoid shift into sign bit in update_itlb_use()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-References: <20240723172431.1757296-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] docs/devel: update tcg-plugins page
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240723205451.504193-1-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240723172431.1757296-1-peter.maydell@linaro.org>
+In-Reply-To: <20240723205451.504193-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,20 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 19:24, Peter Maydell wrote:
-> In update_itlb_use() the variables or_mask and and_mask are uint8_t,
-> which means that in expressions like "and_mask << 24" the usual C
-> arithmetic conversions will result in the shift being done as a
-> signed int type, and so we will shift into the sign bit. For QEMU
-> this isn't undefined behaviour because we use -fwrapv; but we can
-> avoid it anyway by using uint32_t types for or_mask and and_mask.
+On 23/7/24 22:54, Pierrick Bouvier wrote:
+> Reflect recent changes on API (inline ops) and new plugins.
 > 
-> Resolves: Coverity CID 1547628
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/sh4/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   docs/devel/tcg-plugins.rst | 101 +++++++++++++++++++++++--------------
+>   1 file changed, 63 insertions(+), 38 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+>     $QEMU $OTHER_QEMU_ARGS \
+> -      -plugin contrib/plugin/libhowvec.so,inline=on,count=hint \
+> -      -plugin contrib/plugin/libhotblocks.so
+> +      -plugin contrib/plugins/libhowvec.so,inline=on,count=hint \
+> +      -plugin contrib/plugins/libhotblocks.so
+
+
+> -- tests/plugins/empty.c
+> +- tests/plugin/empty.c
+
+
+Could we use the same directory name for contrib/ and tests/
+to avoid that kind of confusion?
 
