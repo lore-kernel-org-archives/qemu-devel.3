@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CD2C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0F8C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMIu-0006q8-7R; Tue, 23 Jul 2024 16:40:12 -0400
+	id 1sWMIA-0003zM-PB; Tue, 23 Jul 2024 16:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIf-00063G-Tg
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:59 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMI9-0003wc-2O
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:25 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIe-00041A-Ad
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:57 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-368663d7f80so3241745f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMI7-0003w8-GS
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:24 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4277a5ed48bso44883335e9.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767194; x=1722371994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767162; x=1722371962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+hMaqq/BTdi6PrKr3cYrZxRyWg7HqfkCm9irnu5mKRU=;
- b=e8dv81d4GETIhKjz02U2Qj/VXej0lWG70HkJKws/gKIh0vBvftL2e5b09BHrbbXUES
- ZFzDakkLq0gHU06/zRYtTh18StG8M+2fEe9KUPnfXEom2USB+is5iTmXVyh16tKT8UG1
- OHuU5JA1DUV083gWW+wYUwK7MwBQknVWU2QY8aYYdvc50aoh5MFgwXEDoy/xnZHDTKTJ
- I0hshvtRiZTOGSF05wzUffeH94si7mOfBfSnyCxj7ldy7Zdr6DwyMBzIa5GnOBhHtu2P
- QFxy/aOgxeRZawzCr9fFfp2+p/7CGMwmj4vcJEVBAUmFk+BVFaOpHPQ5DUk2T86eeiGm
- ihjw==
+ bh=SEw2US0MusaevsyReo4Qy9oebugC1Q09g9E1j6NjCoM=;
+ b=YkfBe30eIKZlLqI1KrdgrBb36cSgtV1XZNT0ah+gTUvYC84wCgkVRjcRictcqO6eUM
+ CIPqcv1F8Nq1BEChvhXu9MWdx9BTAL7TtZXBLeyHUeF5i5OB3QMzQ3oRe/BxnCXZx7vQ
+ /MAoN+pVQli1Ns9v/7DfoGKaFVLgPyE7MPQ/8aCxj06fjUJtF5703PLr51lxHzUigsrL
+ FWxy7LnUgFnnGN71ovlawJtXYvP4mUGNAXCPC8g9IQEhKS22Y8aTebWH/iMaOBydUZZc
+ OqdQfrgQ3YzCLSznQAxyjaKosZtoT+RlwpfTRy71vhvcnHxwz1r9j1hj4zyA6p7crBe+
+ Vlcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767194; x=1722371994;
+ d=1e100.net; s=20230601; t=1721767162; x=1722371962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+hMaqq/BTdi6PrKr3cYrZxRyWg7HqfkCm9irnu5mKRU=;
- b=kpnZQaBcGTiFIjahmsbi5Y/Sjr/hB2ycjy+8IEGTPtAonJeB3RJNa7J2KBIvVchnJC
- jS1COoo7v0P2QlTiGtt9sSp/jimnIvxV8IdfjvMoIBlwd6rdSHKm3TGVf00kO1kpWNSf
- 5hHdGYTsteXAKvfsc6osgOwWc5W/yrhK3NXuf2l2Ip0mDqp3jIvNBq1RgfDpTZgB+FCP
- i6NXRiXvJK0WeKicC2nFuh9mbncmCh9PO8pV5cBFtoQ20zZel/HqbcZsHOTu0IIW0nPa
- H7hTG7xDJQl4J/UbUwCRxfZsUVZ/vDcxuSxm+TTWdCjTMxlG9qSd98r9bhlSm0X1US7B
- 435Q==
-X-Gm-Message-State: AOJu0YzqjkX2xv/QUYLoEnvV4Bnl2vtaidbHIgr9PFl7aGNpSdS2k2Zb
- 5pDABIcF9xvij++9heuRxWJfCIXP6HWnPyIurqNPqeR+opNsuzCnLqO49FkdT5JYjdmnBms5Zgi
- DZMs=
-X-Google-Smtp-Source: AGHT+IG57LI5YWyZHVY+kl90wAv5lE9l7oJ9B0qwyRPR4wxUqd35iJDfJuVsGFBnhz88AsrCOTWPBg==
-X-Received: by 2002:a05:6000:d85:b0:368:66b7:621d with SMTP id
- ffacd0b85a97d-369f5b2c80fmr38100f8f.18.1721767194455; 
- Tue, 23 Jul 2024 13:39:54 -0700 (PDT)
+ bh=SEw2US0MusaevsyReo4Qy9oebugC1Q09g9E1j6NjCoM=;
+ b=S9fJqyawedkOAr8e4yJEzzDiwqRn1TzeUYWfLZgQ6KXZaqJkS2Ztclla4xpHbzEhcV
+ Ywz1xrBUjrarEydKd++RecRp3FbtpfwXC75As/n1Swm10vo0HoZ1PvLidff7zlSAur56
+ IhFcQTdOYbZZjB7098iA4FCIqNld0AQ5j3KRbDxq8oG7MXsymzoUKQxfIAzxWx3v1NTq
+ pr+2k+cPi5Fm7/88DJVAMrvyMxXFvLshfyaHGFbwKGkkvYa60HgCQx5Yz5ot10Czf5dB
+ V/lsm41tEaOOP/WB/uweBZkMVJu3nL5XS550jT/qRNSneJ3yEZao58bc3sMJvoukY9x8
+ PcDw==
+X-Gm-Message-State: AOJu0YyQrYQ8MCdEWmlgbFoW9tuh4lJ3K9BrgRBC0yCvXbZ/Ol0Eo77n
+ kqa3bhB/14IhTxbWV6OcQKl+fGhmfOO/Xqq/6uyIwO/vR2MaHm1jjUn9tKVevwPfv9itomx1Fbk
+ rz5I=
+X-Google-Smtp-Source: AGHT+IHxcOkhf0+BkIPgdu2V5qPDwcP/E8xsbMKL5oTz99VsZvIHXCMmfubEBbbB6nZr/VrTr4wGMg==
+X-Received: by 2002:adf:ee48:0:b0:367:8383:6305 with SMTP id
+ ffacd0b85a97d-369f5b14530mr35690f8f.55.1721767161794; 
+ Tue, 23 Jul 2024 13:39:21 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36878694833sm12408147f8f.55.2024.07.23.13.39.53
+ 5b1f17b1804b1-427f93e65a7sm319175e9.33.2024.07.23.13.39.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:39:54 -0700 (PDT)
+ Tue, 23 Jul 2024 13:39:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/28] hw/i2c/mpc_i2c: Fix mmio region size
-Date: Tue, 23 Jul 2024 22:38:37 +0200
-Message-ID: <20240723203855.65033-11-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Song Gao <gaosong@loongson.cn>
+Subject: [PULL 04/28] hw/intc/loongson_ipi: Fix resource leak
+Date: Tue, 23 Jul 2024 22:38:31 +0200
+Message-ID: <20240723203855.65033-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,62 +95,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Once initialised, QOM objects can be realized and
+unrealized multiple times before being finalized.
+Resources allocated in REALIZE must be deallocated
+in an equivalent UNREALIZE handler.
 
-The last register of this device is at offset 0x14 occupying 8 bits so
-to cover it the mmio region needs to be 0x15 bytes long. Also correct
-the name of the field storing this register value to match the
-register name.
+Free the CPU array in loongson_ipi_unrealize()
+instead of loongson_ipi_finalize().
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Fixes: 7abb479c7a ("PPC: E500: Add FSL I2C controller")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240721225506.B32704E6039@zero.eik.bme.hu>
+Cc: qemu-stable@nongnu.org
+Fixes: 5e90b8db382 ("hw/loongarch: Set iocsr address space per-board rather than percpu")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240723111405.14208-3-philmd@linaro.org>
 ---
- hw/i2c/mpc_i2c.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/intc/loongson_ipi.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/hw/i2c/mpc_i2c.c b/hw/i2c/mpc_i2c.c
-index cb051a520f7..06d4ce7d68d 100644
---- a/hw/i2c/mpc_i2c.c
-+++ b/hw/i2c/mpc_i2c.c
-@@ -82,7 +82,7 @@ struct MPCI2CState {
-     uint8_t cr;
-     uint8_t sr;
-     uint8_t dr;
--    uint8_t dfssr;
-+    uint8_t dfsrr;
+diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+index e7979dbdd8b..4013f81745e 100644
+--- a/hw/intc/loongson_ipi.c
++++ b/hw/intc/loongson_ipi.c
+@@ -318,6 +318,13 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static void loongson_ipi_unrealize(DeviceState *dev)
++{
++    LoongsonIPI *s = LOONGSON_IPI(dev);
++
++    g_free(s->cpu);
++}
++
+ static const VMStateDescription vmstate_ipi_core = {
+     .name = "ipi-single",
+     .version_id = 2,
+@@ -353,23 +360,16 @@ static void loongson_ipi_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->realize = loongson_ipi_realize;
++    dc->unrealize = loongson_ipi_unrealize;
+     device_class_set_props(dc, ipi_properties);
+     dc->vmsd = &vmstate_loongson_ipi;
+ }
+ 
+-static void loongson_ipi_finalize(Object *obj)
+-{
+-    LoongsonIPI *s = LOONGSON_IPI(obj);
+-
+-    g_free(s->cpu);
+-}
+-
+ static const TypeInfo loongson_ipi_info = {
+     .name          = TYPE_LOONGSON_IPI,
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(LoongsonIPI),
+     .class_init    = loongson_ipi_class_init,
+-    .instance_finalize = loongson_ipi_finalize,
  };
  
- static bool mpc_i2c_is_enabled(MPCI2CState *s)
-@@ -293,7 +293,7 @@ static void mpc_i2c_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case MPC_I2C_DFSRR:
--        s->dfssr = value;
-+        s->dfsrr = value;
-         break;
-     default:
-         DPRINTF("ERROR: Bad write addr 0x%x\n", (unsigned int)addr);
-@@ -319,7 +319,7 @@ static const VMStateDescription mpc_i2c_vmstate = {
-         VMSTATE_UINT8(cr, MPCI2CState),
-         VMSTATE_UINT8(sr, MPCI2CState),
-         VMSTATE_UINT8(dr, MPCI2CState),
--        VMSTATE_UINT8(dfssr, MPCI2CState),
-+        VMSTATE_UINT8(dfsrr, MPCI2CState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -329,7 +329,7 @@ static void mpc_i2c_realize(DeviceState *dev, Error **errp)
-     MPCI2CState  *i2c = MPC_I2C(dev);
-     sysbus_init_irq(SYS_BUS_DEVICE(dev), &i2c->irq);
-     memory_region_init_io(&i2c->iomem, OBJECT(i2c), &i2c_ops, i2c,
--                          "mpc-i2c", 0x14);
-+                          "mpc-i2c", 0x15);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &i2c->iomem);
-     i2c->bus = i2c_init_bus(dev, "i2c");
- }
+ static void loongson_ipi_register_types(void)
 -- 
 2.41.0
 
