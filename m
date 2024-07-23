@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8705EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C60C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 23:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWOy2-0002ed-Gq; Tue, 23 Jul 2024 19:30:50 -0400
+	id 1sWOy9-00034p-L9; Tue, 23 Jul 2024 19:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxo-00024n-5f
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:36 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sWOxz-0002Tk-TA
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:47 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sWOxd-0007qu-U2
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:29 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2cb566d528aso3858724a91.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:25 -0700 (PDT)
+ id 1sWOxt-0007zf-Pn
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 19:30:45 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2cb5243766dso3597498a91.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 16:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777424; x=1722382224;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721777439; x=1722382239;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QmaN8kFgJMv1sx+5f9CLn6Vn3miNSyaJkILJElq5Mo0=;
- b=CxCpIiiAGsulUAV1hvwIgnDUxszWNkXD7VA6gsVbdLBaUDYt2NgensEA/0V7HpBwi1
- 0Wn+OretYNTXn2XHLDgHfzqyM6HJtXu9BiPUUO38VaQql+st9xIErH6xkKHhE7OGvRuO
- KaDu3MGf5kcHiaocULRlzEMkYgGfU2x3rBO2pZR1f23TNlqDZ9QiQgO+WrgX5qRgWtqs
- RLrcEkrGKU+H2Q6I8UI+iqvvm0eXsQ1DHi3zu5zKEZSuqc1aMfNjNsNRVwhAeq299813
- 4+LRRIW2+vxXYzJ228HFs8wYZVXGgLbp1HmL1TQj4mpZgoYvV9M5DDIFT0wVpctYU3yp
- 3CJg==
+ :reply-to; bh=xoi8tQlmstuJQE5BtIWLC+NlXYaPeyqDg2JVEoxweos=;
+ b=gGqnxuWvMvnUep896uXT7C50W3a4UdQRkZV36bHbxKdScPrRQOU7SfszWdb3gJSQ9F
+ ellMISAEhvZKfIXzKkVh0SN1LcAfNeMcdJTa+R1q3D9InSrwWmy8IABwiP9587Cwv4Ej
+ ZYoEO+PfueQMT/zr2faK8+W7EvlCtLIQxHhm7ZCNiClDT4bI2uM+CyAJ/w151/snPCK+
+ /7jQMu+bQv6A5AXVP5zD4Ry6n+2IcRWnXFuIPgM/aOR3an7n+w1fRlW1FqaYZdHco2Xg
+ mAqjJjC4irxzm2tb6+CuVtavcrF+a9ukiOQqSnSXMvaqlA8oaOiwAJUsrsrM6VZRxbvC
+ +Ddw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721777424; x=1722382224;
+ d=1e100.net; s=20230601; t=1721777439; x=1722382239;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QmaN8kFgJMv1sx+5f9CLn6Vn3miNSyaJkILJElq5Mo0=;
- b=WbI3EfJ0DFgLvi7D5hBtCMLIrl3foxpyjwxxicHjq5vP7aCg1JDpbSN/q6m3leNi8x
- R/1eXaMTOwJJLUMussFFlm5Axpm4oMTyWBJ/ChopSnPFl5YVWIUEomEGB+k/6TLoWm/G
- 7ml4hM9bztzJYdTsA+/k0v4OGV7ItH6zlOrvlA+uyFuF00AQMwgSONfp13unChrRIAt8
- VQgro12vIYFdEVSrtuhAlw1OZ8hL/flQUaw3oG7/rnkcAGNhrCC8uhhqtfzoegSVBTBM
- fgh+NAoWRloi+2i1dITB42tr7Rmy4bwc2T5Rzh9A5LQeYSbCw/l3b7d4h/6oD7wZ4Zye
- ck5w==
+ bh=xoi8tQlmstuJQE5BtIWLC+NlXYaPeyqDg2JVEoxweos=;
+ b=nTKPCLjuDIbdKJdkGTrUOAPdOPxh56hB/iTMiKv2dvdf00uYGrh9GBSvh1kvmA0BHp
+ /ozMjCN/qAADy3sD6CklUu9fM0hZDEcQWI6NoxDO5NNdeGcUwonZ+x7ZctpKNGtvN+lJ
+ p5dQzcx0MBokRJw37uYaAR3eoa2RUWcKA2V/U4VZmGVx43YKd0r2/EpSzkVQSG3CmqRS
+ f6Wnyep7YeCR1I2liMb8J5zkWWVirIBjn4CcrKg1yT5j/QSbJw2FAhijGM5OrFmK7LGZ
+ w6Qdz8atyIe/aYCRbVxw4wKt3/rJQBNBenxXieFNYMS3DhcgoU2tu+y3PzhiQ0J1Xdvn
+ mNCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbKjMMc8dDS2IZD8iqSxFfnuDZIEaFAVdIz8ucnlGhzVAqs6kodTa3+d06/tlJLJeiy5W+8vbWoNIOuiNRcbcGHMlGJeI=
-X-Gm-Message-State: AOJu0Yx3S7rqUuV6Hxd8WU59MApcW8MKTd+PrQ9oA5FIG/XIE02xyqL6
- 27W7/oWFBtj8TfOhikMFBeubUlztGtHRHQyAUGA2jQqWCCt2DB8PwalPAj1Scng=
-X-Google-Smtp-Source: AGHT+IH/izxjqUyzzk6c4iK0HboPOdJIfcGvrcdbaoBpHTc/U+VcDkr1UC3pRjTRnW+P/HsaTwNO1Q==
-X-Received: by 2002:a17:90a:2c01:b0:2cd:49c6:e2d7 with SMTP id
- 98e67ed59e1d1-2cdae337b80mr1318316a91.19.1721777423925; 
- Tue, 23 Jul 2024 16:30:23 -0700 (PDT)
+ AJvYcCX1Uhf0oU7JTm57LFKW4F0Of+sVlWXWUb6lYHy3jVKLYu7Dpqr9+2ArFPlG3kjkDV/qJfUMfvCKzXtHhFQ5XMGzk5e8tmo=
+X-Gm-Message-State: AOJu0YzOeMs4Z8sQCkFC8NUeCx8/YfIEe/1Kb73AMW3m/ykNbeQ8G0Cw
+ 4B1flj58J3kz08eLaM071pFQROk+Ims3cUtA78DegBkjT4u1WE2VBqgf4/5M3Mg=
+X-Google-Smtp-Source: AGHT+IF6UbMkHQ+IeO2x0d8mYCC8dzs0JCjlRdGh0Lg3sEh4YYIWpQwu3frc/rBq7VIcgYvwRWOJnQ==
+X-Received: by 2002:a17:90a:f28e:b0:2cb:e429:f525 with SMTP id
+ 98e67ed59e1d1-2cdb51a6543mr585954a91.33.1721777439152; 
+ Tue, 23 Jul 2024 16:30:39 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.22
+ 98e67ed59e1d1-2cdb74e894csm179217a91.41.2024.07.23.16.30.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 16:30:23 -0700 (PDT)
+ Tue, 23 Jul 2024 16:30:38 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Tue, 23 Jul 2024 16:30:02 -0700
-Subject: [PATCH v2 05/13] target/riscv: Add counter delegation definitions
+Date: Tue, 23 Jul 2024 16:30:10 -0700
+Subject: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
+ preferred rule
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240723-counter_delegation-v2-5-c4170a5348ca@rivosinc.com>
+Message-Id: <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
 References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 In-Reply-To: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=atishp@rivosinc.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=atishp@rivosinc.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,76 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kaiwen Xue <kaiwenx@rivosinc.com>
+Counter delegation/configuration extension requires the following
+extensions to be enabled.
 
-This adds definitions for counter delegation, including the new
-scountinhibit register and the mstateen.CD bit.
+1. Smcdeleg - To enable counter delegation from M to S
+2. S[m|s]csrind - To enable indirect access CSRs
+3. Smstateen - Indirect CSR extensions depend on it.
+4. Sscofpmf - To enable counter overflow feature
+5. S[m|s]aia - To enable counter overflow feature in virtualization
+6. Smcntrpmf - To enable privilege mode filtering for cycle/instret
+
+While first 3 are mandatory to enable the counter delegation,
+next 3 set of extension are preferred to enable all the PMU related
+features. That's why, enable all of these if Ssccfg extension is
+enabled from the commandline.
 
 Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
 ---
- target/riscv/cpu.h      | 1 +
- target/riscv/cpu_bits.h | 8 +++++++-
- target/riscv/machine.c  | 1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 1619c3acb666..af25550a4a54 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -368,6 +368,7 @@ struct CPUArchState {
-     uint32_t scounteren;
-     uint32_t mcounteren;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 22ba43c7ff2a..abebfcc46dea 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2665,8 +2665,20 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+     NULL
+ };
  
-+    uint32_t scountinhibit;
-     uint32_t mcountinhibit;
- 
-     /* PMU cycle & instret privilege mode filtering */
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 2a8b53a6622e..d20468412dca 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -207,6 +207,9 @@
- #define CSR_SSTATEEN2       0x10E
- #define CSR_SSTATEEN3       0x10F
- 
-+/* Supervisor Counter Delegation */
-+#define CSR_SCOUNTINHIBIT   0x120
++static RISCVCPUPreferredExtsRule SSCCFG_PREFERRED = {
++    .ext = CPU_CFG_OFFSET(ext_ssccfg),
++    .preferred_multi_exts = {
++        CPU_CFG_OFFSET(ext_smcsrind), CPU_CFG_OFFSET(ext_sscsrind),
++        CPU_CFG_OFFSET(ext_ssaia), CPU_CFG_OFFSET(ext_smaia),
++        CPU_CFG_OFFSET(ext_smstateen), CPU_CFG_OFFSET(ext_sscofpmf),
++        CPU_CFG_OFFSET(ext_smcntrpmf), CPU_CFG_OFFSET(ext_smcdeleg),
 +
- /* Supervisor Trap Handling */
- #define CSR_SSCRATCH        0x140
- #define CSR_SEPC            0x141
-@@ -778,6 +781,7 @@ typedef enum RISCVException {
- #define MENVCFG_CBIE                       (3UL << 4)
- #define MENVCFG_CBCFE                      BIT(6)
- #define MENVCFG_CBZE                       BIT(7)
-+#define MENVCFG_CDE                        (1ULL << 60)
- #define MENVCFG_ADUE                       (1ULL << 61)
- #define MENVCFG_PBMTE                      (1ULL << 62)
- #define MENVCFG_STCE                       (1ULL << 63)
-@@ -869,7 +873,9 @@ typedef enum RISCVException {
- #define ISELECT_IMSIC_LAST                 ISELECT_IMSIC_EIE63
- #define ISELECT_MASK_AIA                   0x1ff
++        RISCV_PREFRRED_EXTS_RULE_END
++    },
++};
++
+ RISCVCPUPreferredExtsRule *riscv_multi_ext_preferred_rules[] = {
+-    NULL
++    &SSCCFG_PREFERRED, NULL
+ };
  
--/* MISELECT, SISELECT, and VSISELECT bits (AIA) */
-+/* [M|S|VS]SELCT value for Indirect CSR Access Extension */
-+#define ISELECT_CD_FIRST                   0x40
-+#define ISELECT_CD_LAST                    0x5f
- #define ISELECT_MASK_SXCSRIND              0xfff
- 
- /* Dummy [M|S|VS]ISELECT value for emulating [M|S|VS]TOPEI CSRs */
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 492c2c6d9d79..1a2a68407852 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -398,6 +398,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.siselect, RISCVCPU),
-         VMSTATE_UINT32(env.scounteren, RISCVCPU),
-         VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
-         VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-                              vmstate_pmu_ctr_state, PMUCTRState),
+ static Property riscv_cpu_properties[] = {
 
 -- 
 2.34.1
