@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53851C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EC5C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 20:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWMKP-0001Ms-RE; Tue, 23 Jul 2024 16:41:49 -0400
+	id 1sWMIr-0006XG-JE; Tue, 23 Jul 2024 16:40:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMKJ-0000i8-6F
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:41 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIb-0005fK-38
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:56 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMKF-0004XF-22
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:41:37 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-36868fcb919so2866360f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:41:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWMIZ-00040d-H2
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 16:39:52 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4277a5ed48bso44885285e9.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 13:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721767293; x=1722372093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721767189; x=1722371989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9AGqT/HuIbzxdWkOMa17Gjd1RtMZJ6gzAqRn/Fh0hIA=;
- b=QJ7DzPGYx8lYZ7zWiSFofL/ij7iEymKpUQwaEls3qyK5rIP5NbOjsVII1nTkQ3kUdk
- W+SucUUzgg4hxi1CpsQZ/iLDTJgPlC2TcS8te7wBT4YP1tADfw1FZ1qqbJr762VpZOcN
- fdoCIvfyb7/SJD/E12ZV0x+H0NWXGVrsbI1h5SPAWn8rJdKCR929BjTeE5MTMc161Vl9
- 4BXqCftbNcMD2tABzAdrQHz1/mRRLca9JJXouKA0hP7BmUC5MI5rY/HbBY3fcsYlbTyN
- Mt5vG15Y0BcfYnUvg+30ubJhhP1+xtKh7ACVBvp6ytpQ/l/6d7eA4DtSlJjTwocssdUG
- 6jqA==
+ bh=3JNSLq3T/DO8Fim2AW30tyDDzF8z85BC5OXkOQl9TDE=;
+ b=faTz0xwKPZfA3940EgucNLTQArqTbQKKfytHgThB0DMssfffqkCFTnWNUXy9fb00Py
+ 5V138fA35RmcNBCN1PKJvRfzgQ5OoxcV6E2/oF15mFyrJqZXjRO0Yj8YCOnl4lR4ijWJ
+ yHb7EYXWvEJXhajlqM1L/eQ1Lp4rMTrHk4rCsDiR932e135/FRjxaOCu/9knpu+5Ld2R
+ zvC49vPSdV6gcnkVALb+/aXJVyKMOeg1mMU2aXFQwH+zrM8r2GWb59jfxZTjq0HsJplH
+ 3YK181nfdldFJ1c21YttbsuC7A4dhst/ScO4BZft1HHpRbeLCAfsLqxxiMH7XvDjYm5F
+ CBPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721767293; x=1722372093;
+ d=1e100.net; s=20230601; t=1721767189; x=1722371989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9AGqT/HuIbzxdWkOMa17Gjd1RtMZJ6gzAqRn/Fh0hIA=;
- b=MHE+PaG1xgv9gFveQ+hiPZP2rSLCw3e1BwUJ25iLn9lDFgULpjYSr1VedfsY3m9+NG
- uoLJl+CxYk7B/Pllf4gXfiG6P+B3X+D6qyp03OzrIzcWVdlTn9ZGsW6AsVOgmhLzwsht
- sqnDxF3+VnQXa/+DQVkoaM0GBggljxaQ9sPqKQbdV8c0Z5R8KRQYw7GoniDbkWm80XxJ
- th2RZtQR9Yl3JjC4uFp7Efq6xXzWWA5wXDsr9VisKdUXbRhUW3jPD6tveZTV/1SK8IF/
- AvnGMJ2ud3RjoOMtoSnY26cOgLyF0Nu38I8M7J1FkikBoiNc4vZn8ERrxb71jQ7tbEhl
- zgkw==
-X-Gm-Message-State: AOJu0YyhdLY438ZD6l1VqIcPHQji40pvrZOA5oNIcskIIU3RKd6JxlnM
- VoGgyz9nk2IsPw/Qm2HySJVY8iZPb32TaaUztwC9IydcmU2DaR+5oaFRSOcwkFhLKpb00/uO1NZ
- Uagc=
-X-Google-Smtp-Source: AGHT+IHpO+edb2z/rqnljhNasjGftnMbopGoGS+FoHzexXbjYv+z1EGuHf7PET4boFUtrHppf1byMQ==
-X-Received: by 2002:a5d:4148:0:b0:368:3079:427f with SMTP id
- ffacd0b85a97d-369f5b2b9d1mr33585f8f.30.1721767293382; 
- Tue, 23 Jul 2024 13:41:33 -0700 (PDT)
+ bh=3JNSLq3T/DO8Fim2AW30tyDDzF8z85BC5OXkOQl9TDE=;
+ b=J3dLtmc0CVlWmf+MDHGOrOpUQ4BII8ShNdD+aQyAXWm/XBtBN9TE/KUr2GnrQktQMW
+ 5QjwwWHbyF1dR0cq2smeCuJik23IgeFcRI1whulwUNK2I/Pt3ooNQqB02BxjwkGpKPOT
+ tvwoAemSKykfDupLie8Tj5vfkORD3pv/bllqJuFe1KzinLtAwYw209IjOSm3w2T6hgx+
+ PKvdOnOYiM4I7y8DVIryenqR4c0GuHyFBBJy1DrNmTh7dxA0q3MA3HiyFXGpvTfsdFtc
+ Jhb46vHiCFvlf763YAHGRrXx1XyIW4X/or1liDT8PMUYwoTiKSz7fAUboZMY/gnu9TB5
+ nBzA==
+X-Gm-Message-State: AOJu0Yyp0rMccwG+bb7Brr2ZB++OGlQorFHdE+j/QWODV900jCPtfFpk
+ cLgCqpZIQDR//gIgwHC6ZqMAHUY4IP9YjNYIsHH43FOWhkni3H2ikRv3qF0Ztvby6EmFfh3Cw17
+ GP+4=
+X-Google-Smtp-Source: AGHT+IGAGzFqxFEqdjKwZQoZWYOrGqX7dkGdleVM4L1x2Szly4d1pLFg84uaAhDyyrl70ORwMSTX0Q==
+X-Received: by 2002:adf:f250:0:b0:368:6633:c547 with SMTP id
+ ffacd0b85a97d-369f5ac3e00mr32939f8f.37.1721767189140; 
+ Tue, 23 Jul 2024 13:39:49 -0700 (PDT)
 Received: from localhost.localdomain
  (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f939aafdsm523495e9.28.2024.07.23.13.41.32
+ 5b1f17b1804b1-427f9398497sm483755e9.25.2024.07.23.13.39.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jul 2024 13:41:33 -0700 (PDT)
+ Tue, 23 Jul 2024 13:39:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 28/28] MAINTAINERS: Add myself as a reviewer of machine core
-Date: Tue, 23 Jul 2024 22:38:55 +0200
-Message-ID: <20240723203855.65033-29-philmd@linaro.org>
+Subject: [PULL 09/28] docs/interop/firmware.json: convert "Example" section
+Date: Tue, 23 Jul 2024 22:38:36 +0200
+Message-ID: <20240723203855.65033-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240723203855.65033-1-philmd@linaro.org>
 References: <20240723203855.65033-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-While working on a series of CPU/cache topology work, I became
-interested in the machine core component and would like to help to
-review more related patches.
+Since commit 3c5f6114d9ff ("qapi: remove "Example" doc section")
+the "Example" section is not valid anymore.
+It has been replaced by the "qmp-example" directive.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240722164412.1163414-1-zhao1.liu@intel.com>
+This was not detected earlier as firmware.json was not validated.
+As this validation is about to be added, adapt firmware.json.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Message-ID: <20240719-qapi-firmware-json-v6-3-c2e3de390b58@linutronix.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ docs/interop/firmware.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8c048782a6d..a8e9d1b0010 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1878,6 +1878,7 @@ M: Eduardo Habkost <eduardo@habkost.net>
- M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Yanan Wang <wangyanan55@huawei.com>
-+R: Zhao Liu <zhao1.liu@intel.com>
- S: Supported
- F: hw/core/cpu-common.c
- F: hw/core/cpu-sysemu.c
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index ae417999447..57f55f6c545 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -470,7 +470,7 @@
+ #
+ # Since: 3.0
+ #
+-# Examples:
++# .. qmp-example::
+ #
+ #     {
+ #         "description": "SeaBIOS",
 -- 
 2.41.0
 
