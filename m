@@ -4,83 +4,184 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE4EC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E47C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW7nB-0006nU-3P; Tue, 23 Jul 2024 01:10:29 -0400
+	id 1sW7oS-0003Xg-8d; Tue, 23 Jul 2024 01:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7n9-0006hK-BS
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:10:27 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7n5-00016T-Be
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:10:27 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fc47abc040so2493025ad.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 22:10:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721711418; x=1722316218;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vyq2wUMKyYXpntLfe5MN1knz1P5z94GusgZyzfTU9xk=;
- b=O4Lkkj5A4iCamyIzHkRAMs+2c/9HM3LPYUJu6P9CX4eYBg11ymNEIlS5MiIYMccZ5p
- kuROQvYazhSFh09GcL+c2eSupxuPN4bDEokXGIdzNLOOSx3o0ghgJPPho40HqneIVkfU
- Uvmd3EC/jp4SgItFF7dEviWBmNjgDTqtRHm9M42o5e3dANnUDqfGIC9M6bzPu0NeTbBl
- NvY5O7Xc3vCK1+ld+T3qWeauZQPiFAdSXxIih1C5puymDZE2AkkPTGBXXO6WeQj5wWot
- NzZYJbttSWz6gCVvr3YHcqFE1cKVZBcOnY0TIGWfZR/iKePjpUQ7mrAW/IBWv+GULnc3
- RdyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721711418; x=1722316218;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Vyq2wUMKyYXpntLfe5MN1knz1P5z94GusgZyzfTU9xk=;
- b=kwIltCu8pWSn8KyLxrFh68zEhSWsFS4gCZLCqleoypcxcCUgYgfzwY6sMoRzl4PQRs
- rTypNxLIgRYIrAEEhub4VcJyf2mtsRMYNcM857dlDGm/RYeKEtukCBSfKfZNzXlDOEv8
- 5eZnYYiGJpDr6XueQynFpxiaGJzZZVCEzI8AOYdFdzLBtKz16zvsvcuqR3i9iqk25sxn
- At/Z2TwFl2EVr72yFn+ce/+aSuYPWw9J/qEH7seGYhbwE7HMutBeHj0I1oHvylAfgwYJ
- 1j2Kcl0SrQo8xv8Ns7ObQcv/I08odbEsB1NEa3sacoJSwMcmgMQfKPDZNV2zY6oiCApj
- HlCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAw1MBFkJmrT9QX7vbMgCP9NOkyNcKLnCLFPbH8G0lNgTgDnEiZl8hpa9LVSK7ONo+1yzKeBk6PU2Sfhk1N5rnBKmYOMI=
-X-Gm-Message-State: AOJu0YwiZWjwKypoVswl05kOmLuBS8t9Fh2MGPuTBQjDRZt2JyKKKGc0
- OJxqzzCBPvg68fwfHQhdakEsym0R7BuSdnfrwsl1LDvtSY36GAwGTtlY4NGLbz1d2e/gklmTcAN
- FxTDigcioB6DEigBvKebq+HxAO75XvAvrSnaD6Jj2iCrBqTmw3Ds=
-X-Google-Smtp-Source: AGHT+IFPqW1D2fPDaPuRJoCueVD921UUplV/yKIBRZVmXVeSBS2joqwf18ufuBJAsrk4q4ZxcL4EP7h5wPrXdS36f/I=
-X-Received: by 2002:a17:90b:10b:b0:2c9:a015:ac2e with SMTP id
- 98e67ed59e1d1-2cd2740f73cmr5192544a91.14.1721711417863; Mon, 22 Jul 2024
- 22:10:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sW7oC-0002t7-Ux
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:11:34 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sW7oA-0001c0-15
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:11:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721711490; x=1753247490;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=cB2bnkVfrZtp8CbCLmQrU8deZ2uiM2DTvf9E78wQ0hA=;
+ b=RiwfyUvY0XmP4paZiUlv4FaGJG+s04UYICvWtF4VUkZfJIwJCtck3SH9
+ MXv1z1sl7+Yn3gGf6kVDR9r2emU0KPaQU2KCfG3pbjNx3QhhfnwlrzNOQ
+ V9PlTzdhldQRKS2gjYmPDB9hR5R058d6Nc/pJ07a97pxxN2BSvy17Ol+9
+ OdO8rnNFad52CM6eSttljsy7HGhINm8ph3MjRnqO7Cnji44Z2Rka9LcGf
+ ueJw3eX3Jp8f7nJ1KEbF/EgTFTWNMZek2UX8sg/9AAMvRgapZdfjQ6p7X
+ 5/G6PO17+K9xP3pemiH/0OnF78EEMsov9c3aQr+GV0wdV9MhkBXsLQN3Q w==;
+X-CSE-ConnectionGUID: 3sb4mnr7QryZoEiIOgEaoQ==
+X-CSE-MsgGUID: rVb/s9M2Qne7WmhYwTkVew==
+X-IronPort-AV: E=McAfee;i="6700,10204,11141"; a="36835934"
+X-IronPort-AV: E=Sophos;i="6.09,229,1716274800"; d="scan'208";a="36835934"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2024 22:11:28 -0700
+X-CSE-ConnectionGUID: Bgx3IvPvR8+KS4H1K541Ww==
+X-CSE-MsgGUID: E4+N1oVTSXKoZQmO/4Ecsw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,229,1716274800"; d="scan'208";a="56954216"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+ by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 22 Jul 2024 22:11:27 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 22 Jul 2024 22:11:26 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 22 Jul 2024 22:11:26 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 22 Jul 2024 22:11:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c64IrucXpNDq8+3uFFDFlfKqiVH0Eom8S6dhP+9dFOr994PdC2fnfLRmrcinoZev/CDXWW05+VApg24nWZ4S83GM1+4t4HyiyCHik3xpNpyIXLbT92VGJ3/wF0QZGMC1aKKNusswqL2xQ3F7fAUg7jUh5UEZ0TAWeqGZ/jFg3qgyGTSCGUhZipxTcSXY1+XR1c0Zw22rsM78l+rl16RhWVxiK8cT4YxfwL0qYMuWEYNcw+DbAqnTIM/3ox8HoY/4TdaQTmddTBRnKV4fGqGECkECR1oTkcqq/ma2kDYpdcyeh92GMZvysVRQTQkCk3/McZpTupDTjJZ3UPYqS6UFxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wr9fFWthEmLUIdTh+NV7TdgeGHZIJXVhgo+aX3+e9Ic=;
+ b=yD1ucBtJp/Dxjt7iKY8SIa0Y2ngA3WVSdn8CBTr1FEuUk97B8tS+SjvNiEj0x6kPS9RMT/DBUzfQp0hC3B3bT67AKQNBuQ6n1X2KB8DdUopEcfYA0iN+AcgWwXWrBAYWwwyQjO9l67Wk01KOlrn+aWL1tGGZGlzrqWWYOMjhEcjHtM3Moohe6TJoNGLQhNExK8JnWDH71fNbmhISStd7CGeKXIKc9Y1vLakkj1qOcmmXe9uc0uELfSudxZCeOaz78tK7XGm0peaqzyk4YeC8aPVGqTOSs+IXkT+SdzD0FtgybPv1H+JICms6Q8MVmo1R57JFlEvPgXJkF0GuNuI3yw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by PH7PR11MB6931.namprd11.prod.outlook.com (2603:10b6:510:206::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.29; Tue, 23 Jul
+ 2024 05:11:19 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7784.016; Tue, 23 Jul 2024
+ 05:11:19 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Joao Martins <joao.m.martins@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>, Alex
+ Williamson <alex.williamson@redhat.com>, Cedric Le Goater <clg@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: RE: [PATCH v6 5/9] vfio/iommufd: Probe and request hwpt dirty
+ tracking capability
+Thread-Topic: [PATCH v6 5/9] vfio/iommufd: Probe and request hwpt dirty
+ tracking capability
+Thread-Index: AQHa3HwbkOv4L/RGkU2FXdaMlUqNeLIDxF8g
+Date: Tue, 23 Jul 2024 05:11:18 +0000
+Message-ID: <SJ0PR11MB6744237AD1896B5EFA8E045B92A92@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240722211326.70162-1-joao.m.martins@oracle.com>
+ <20240722211326.70162-6-joao.m.martins@oracle.com>
+In-Reply-To: <20240722211326.70162-6-joao.m.martins@oracle.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|PH7PR11MB6931:EE_
+x-ms-office365-filtering-correlation-id: eb5947f3-d5d3-4b08-805f-08dcaad5e2df
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?3HkIlurSWPZ6SorCShn9lYKip9fv6LddTRZZu0CbvsiiI3cWqIUoz1ulF0Wk?=
+ =?us-ascii?Q?WWucYWIRecAglZ8WpSeoL7VZGYjJUXRs4met7H8G9v9IKJ+Qt2JLJxjdH8Zj?=
+ =?us-ascii?Q?EjtA0+eUSdIXH7AkxqrBDcqpuY24Us1JCPZtrh8XzfIK9Mn5+lGI0xHy07Mt?=
+ =?us-ascii?Q?TKdJuxQy6jKDMyaZ5+i8ZoJKB1I/+ne+AtpY1bqjjkX0OG0Y1PHjdyM028vL?=
+ =?us-ascii?Q?ME68CPEwu4NhcYWlJf6VbP+DxqBAgcN+IsAiJvEQrxrXcYw0a983g2LrFkph?=
+ =?us-ascii?Q?hkM2TE42Nm6fkjHVzcIDW30B6uUO3Hi2Yh+taQm9QMlY0WLWuzCcmYWUJWtL?=
+ =?us-ascii?Q?bJpfDU1rrGuYv+nuzifpFzX6DxLj5WKCDXCgAB6El//HOduSbFR9rei89fxs?=
+ =?us-ascii?Q?s5ibg2nuUMfi7DgSC0mK7e1pIjjvlsAsoOVORXkSf7HcFks5icYOfF0wZ43a?=
+ =?us-ascii?Q?h1hyNQHsb+ot1UXeJas6/1CA0RB2sK9srdSq9PfbcVZAJmnOEA3MbwSdkDjg?=
+ =?us-ascii?Q?zpkDxJHb9d04ld9MP858GSXPMZlr0vwbNSEWFFWmIAvjso/bNxKDMn8rKTi2?=
+ =?us-ascii?Q?Kcorqn9es/gfydNN/edB8vYUBrDzFEU0jOMSDk9ZI4AXqhPXvuS1UNcQThK/?=
+ =?us-ascii?Q?mbCjTdDyGN0K23wJjJThEr1QnlpU6CJOqm9qvDJMaU9KBlXoDxxzYjrb6C2Y?=
+ =?us-ascii?Q?rvbqDo285MciYSAyQLKrVTAfPDBor6BQD2xeTYHsyutmGFN/wCmK+9iIaPe1?=
+ =?us-ascii?Q?HT0riCe90yHo/YiagB4sBoaC8iFeksgtUYYQNRRUQDxYwYcj8LGSTYqZtwaz?=
+ =?us-ascii?Q?WexssBNrPvcl5nJxzfMNJqVp9Ehv87a+q+4VjLn6Zo3qey2aslMKdGyI1P2F?=
+ =?us-ascii?Q?Efb9wfKPPXMhCAzO+6k13J2ojAzY3uw3mnp1npmLjyH9Ae5TAmSWCaNlmM0t?=
+ =?us-ascii?Q?nxnQzyA2AKfsRT6Am203LLndd2lAL0RwDu3AvPDNwbH1TxNVVy29w6F5kB5y?=
+ =?us-ascii?Q?KZ/68lVmas6IUz26T71HwBteYsaGRHjIDbT1NBDwCxah5WK8EXtc7BVjXo3U?=
+ =?us-ascii?Q?gsn/pFr34gwrob38Iz0lKHLZGWWcTk1x0ATdZ8gHqli3VwSlYlbzUTP5co1i?=
+ =?us-ascii?Q?tSnVwch6ALhRewUHIG/3XJsaaM9njokwZiby5PP8qN1bYMAJYpukJePf0zsA?=
+ =?us-ascii?Q?SaZhfVk1XHfDMbZjheInloFHuxTYfusYEQl+U9MfNkG8IMXik1skAK8MJvJO?=
+ =?us-ascii?Q?4KSiusMG8sLwif9zYaasGVCIWtohcuUya0XNYjxkahajs5PMqcpaQHB9wcor?=
+ =?us-ascii?Q?EpCXGFjMojG90gpueXIW0zKexyp+g3eUVV9EJPcZRiDIs/TDeWbT6ZGs7Hek?=
+ =?us-ascii?Q?wSvm3GrZvP7VnaIREHrfroP5puGOgZfV1mAwfrYqq2J7SdZcug=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?q7ecApCifx09CPJGjy8aMafvL8kadBCG0qnzhFn692rVh7dRdjiCDSCpCVdi?=
+ =?us-ascii?Q?HSWUSojC3rrG9bKAZ+SbEAU2Y8h4AqxiZM0NRkQAZOBYjnzankDLRpgbALbE?=
+ =?us-ascii?Q?j5y7/BkBiiylT811VWUO+0O/ydRmCiDgPSZOy2ZFPvlW0wWG8veZfd6jrYzN?=
+ =?us-ascii?Q?3z3I1DTluQXXfFSAIsqI7XKR6YWtj5m29HvYVxgPHzXA1np0OMoUUfs7A5wj?=
+ =?us-ascii?Q?WFeqp5FSOCsV4hoEoFKX6xDT23mPX3YnNVHGnedKlpyt4IM+bRC3zcrVH65K?=
+ =?us-ascii?Q?BrxoxzWsETgXJ6o9yzbKRKzhsDEYJIouj1zPPPVkpWP9lKcXrwwsVuNazAz3?=
+ =?us-ascii?Q?Y4bfW71ixUW3ymTVhIGWfYTpoEiO/6dU9xo5iT5ExBnlc5FefK+iE+jzpRUH?=
+ =?us-ascii?Q?SKQqazxYcA/YGZja2TxryuaMWEwybe9U4UEvWOa1FThuGDpHIMNlsYW76M5M?=
+ =?us-ascii?Q?HCIVkRMWKh6OxuB/F69x/YpUXMZNAtSA9KqHWOkKMKvzOhEjUP0buHywSJnI?=
+ =?us-ascii?Q?gmfsTyg3AfRE20LyOFDvtY/RghQ2PAKqg6FGfjiiMORdRFdQZY/Ag/nE+ipz?=
+ =?us-ascii?Q?0KD+StS9LKhK5AU3N5fQGrhAaag0QLuYWl7K+sxyCb5n/Jg5a2C4piZoXcve?=
+ =?us-ascii?Q?hhfY5lT+tFbDqNfgUoYKkNcBrS0SuoPkOWarnwMJKiKF3oJ5U+n/i7V6lXbZ?=
+ =?us-ascii?Q?gkSdZAKGPxoFSwz9uOEYQzNTwwAODaEt3CKEFfaQaygMqfxI11v9lwY2I4O1?=
+ =?us-ascii?Q?zE5dPDI9e3w6ic5LYksFfz7LqfpY0OFGAlLD/DYPezsPrqxsoElspA1RA9EO?=
+ =?us-ascii?Q?B+pU0HMwrpNl1LjpyHEWYYIL8DkeJE12TIBW7Z5Re9D3e6Q9KhOyVeWOSj0e?=
+ =?us-ascii?Q?9alNsoL9DEDzTSorZN+w8Ki4BTGT+bsrhWHcrkB1iJ1jcxi+L8I1IavF7Bw4?=
+ =?us-ascii?Q?fttAIu6yM7ezZIh9T6MEETfHdmCip0Z6ZquZCsm/VtxoXbILLEo9vfH9inUY?=
+ =?us-ascii?Q?wMoXAwUuzacHq2AFkbsmy27sSsu8oxpqQcKOVaZUkYLm8kZR+OFJhWr3AA3i?=
+ =?us-ascii?Q?Rui68Rr92q2CP9aej1ijzJY8de+1q0iQMrGK98JEwWJUtuoQZfPb966bHDej?=
+ =?us-ascii?Q?Rw9rTDUChTOKRzYHh0d+F46n3kDaLfG9VNR1E1wsh16MT0QOqXDQD3gmdvSu?=
+ =?us-ascii?Q?1ghTtLAGUKO3wncJRIyp7ynS7tKdQoCCt0DdxtwSZ9euMe6A4KfWRJL6BN59?=
+ =?us-ascii?Q?0NMtps7mXYQpLFL1njPB8j81UUM4BHj23GBKfej+uDmfH2RJUUL0FEQwJ1D4?=
+ =?us-ascii?Q?tMxWSUu6XZRZ7Bo7wUmwpnCow0bS0JTzuY0CWj67YNLhGq27be8PBqhIi5eG?=
+ =?us-ascii?Q?OKX4PevJoiUF0yzJZh26R9Un3O+kkJO0R2mhPqyhM/0XTATM/fZ4hHXEcxE8?=
+ =?us-ascii?Q?uRdNWpfF8eQDjjxlagaITsr9107G9ITNp442OPGB3H+F8zz4DXL3tCzITpD3?=
+ =?us-ascii?Q?7jzrMlxV5Bc9ILLr/vPjLCq+OKupr7ZjyGegnXXdVIc7M/qNPvrTgrwzehGf?=
+ =?us-ascii?Q?3nnGhlLFsF8l6B/xN2+L7wx5GeqYwpUhWsgKyRZa?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20240722214313.89503-1-imp@bsdimp.com>
- <20240722214313.89503-15-imp@bsdimp.com>
- <f3c9d0c0-1cfd-46c8-8524-cffbe5180d3f@linaro.org>
- <CANCZdfpPrjt8G5WWRPdMNWyb=hskk7ZCVS3HEAcway=XO=K3ng@mail.gmail.com>
- <f2f6c27e-7625-471f-b888-0f3a870bb0c4@linaro.org>
- <0b7514dc-f9ed-4c48-be37-5a5de7b26229@linaro.org>
- <CANCZdfo0cw-T29wTg9dQVOE1zmyOxdm_DnxT+GvbPVGE7OWvzw@mail.gmail.com>
-In-Reply-To: <CANCZdfo0cw-T29wTg9dQVOE1zmyOxdm_DnxT+GvbPVGE7OWvzw@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 22 Jul 2024 23:10:06 -0600
-Message-ID: <CANCZdfo6xycbtvP5=ZnTyRFuQT42ZtqOo_=n7d0B8PQCMqsCBw@mail.gmail.com>
-Subject: Re: [PATCH 14/14] bsd-user: Add aarch64 build to tree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000077cb42061de32d3b"
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb5947f3-d5d3-4b08-805f-08dcaad5e2df
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jul 2024 05:11:19.0334 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EOLTrOXdh0lyhgi7/Qg+imjs7kulMQdhjUbrE1H5FGD22XXvmV6NC7KYvynZFvY4W6clgFtODmzT37dVvHcIuJJ8xz0qhfFgV4db39Hl7DI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6931
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.8;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,142 +197,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000077cb42061de32d3b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Oh, also, can I get a reviewed-by?
 
-Warner
-
-On Mon, Jul 22, 2024 at 11:08=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote=
-:
-
+>-----Original Message-----
+>From: Joao Martins <joao.m.martins@oracle.com>
+>Subject: [PATCH v6 5/9] vfio/iommufd: Probe and request hwpt dirty
+>tracking capability
 >
+>In preparation to using the dirty tracking UAPI, probe whether the IOMMU
+>supports dirty tracking. This is done via the data stored in
+>hiod::caps::hw_caps initialized from GET_HW_INFO.
 >
-> On Mon, Jul 22, 2024 at 7:17=E2=80=AFPM Richard Henderson <
-> richard.henderson@linaro.org> wrote:
+>Qemu doesn't know if VF dirty tracking is supported when allocating
+>hardware pagetable in iommufd_cdev_autodomains_get(). This is because
+>VFIODevice migration state hasn't been initialized *yet* hence it can't pi=
+ck
+>between VF dirty tracking vs IOMMU dirty tracking. So, if IOMMU supports
+>dirty tracking it always creates HWPTs with
+>IOMMU_HWPT_ALLOC_DIRTY_TRACKING
+>even if later on VFIOMigration decides to use VF dirty tracking instead.
 >
->> On 7/23/24 08:11, Philippe Mathieu-Daud=C3=A9 wrote:
->> > On 23/7/24 00:06, Warner Losh wrote:
->> >>
->> >>
->> >> On Mon, Jul 22, 2024 at 3:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
->> philmd@linaro.org
->> >> <mailto:philmd@linaro.org>> wrote:
->> >>
->> >>     Hi Warner,
->> >>
->> >>     On 22/7/24 23:43, Warner Losh wrote:
->> >>      > Add the aarch64 bsd-user fragments needed to build the new
->> >>     aarch64 code.
->> >>      >
->> >>      > Signed-off-by: Warner Losh <imp@bsdimp.com <mailto:
->> imp@bsdimp.com>>
->> >>      > ---
->> >>      >   configs/targets/aarch64-bsd-user.mak | 3 +++
->> >>      >   1 file changed, 3 insertions(+)
->> >>      >   create mode 100644 configs/targets/aarch64-bsd-user.mak
->> >>
->> >>     Can we build aarch64 on Cirrus-CI? (not clear on
->> >>     https://cirrus-ci.org/guide/FreeBSD/
->> >>     <https://cirrus-ci.org/guide/FreeBSD/>). If so, could you add
->> >>     a follow-up patch to build that on our CI, patching
->> >>     .gitlab-ci.d/cirrus.yml?
->> >>
->> >>
->> >> We can build aarch64 host for bsd-user for sure. I'll see if we can d=
-o
->> it in cirrus CI.
->> >> If so, I'll try to add it to cirrus.yml.
->> >>
->> >> This patch series adds aarch64 guest...
->> >
->> > Yes, we want to use a aarch64 FreeBSD host to build your FreeBSD
->> > aarch64 bsd-user guest and test it. Am I wrong?
->> >
->>
->> This is adding guest support, so your suggestion is orthogonal.
->>
+>Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>---
+> include/hw/vfio/vfio-common.h |  2 ++
+> hw/vfio/iommufd.c             | 20 ++++++++++++++++++++
+> 2 files changed, 22 insertions(+)
 >
-> Yea...  It's a good suggestion, but not what I'm working on right now...
+>diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
+>common.h
+>index 4e44b26d3c45..1e02c98b09ba 100644
+>--- a/include/hw/vfio/vfio-common.h
+>+++ b/include/hw/vfio/vfio-common.h
+>@@ -97,6 +97,7 @@ typedef struct IOMMUFDBackend IOMMUFDBackend;
 >
-> Warner
+> typedef struct VFIOIOASHwpt {
+>     uint32_t hwpt_id;
+>+    uint32_t hwpt_flags;
+>     QLIST_HEAD(, VFIODevice) device_list;
+>     QLIST_ENTRY(VFIOIOASHwpt) next;
+> } VFIOIOASHwpt;
+>@@ -139,6 +140,7 @@ typedef struct VFIODevice {
+>     OnOffAuto pre_copy_dirty_page_tracking;
+>     bool dirty_pages_supported;
+>     bool dirty_tracking;
+>+    bool iommu_dirty_tracking;
+>     HostIOMMUDevice *hiod;
+>     int devid;
+>     IOMMUFDBackend *iommufd;
+>diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>index 2324bf892c56..7afea0b041ed 100644
+>--- a/hw/vfio/iommufd.c
+>+++ b/hw/vfio/iommufd.c
+>@@ -110,6 +110,11 @@ static void
+>iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+>     iommufd_backend_disconnect(vbasedev->iommufd);
+> }
 >
+>+static bool iommufd_hwpt_dirty_tracking(VFIOIOASHwpt *hwpt)
+>+{
+>+    return hwpt && hwpt->hwpt_flags &
+>IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>+}
+>+
+> static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+> {
+>     ERRP_GUARD();
+>@@ -246,6 +251,17 @@ static bool
+>iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>         }
+>     }
+>
+>+    /*
+>+     * This is quite early and VFIO Migration state isn't yet fully
+>+     * initialized, thus rely only on IOMMU hardware capabilities as to
+>+     * whether IOMMU dirty tracking is going to be requested. Later
+>+     * vfio_migration_realize() may decide to use VF dirty tracking
+>+     * instead.
+>+     */
+>+    if (vbasedev->hiod->caps.hw_caps &
+>IOMMU_HW_CAP_DIRTY_TRACKING) {
+>+        flags =3D IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>+    }
+>+
+>     if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
+>                                     container->ioas_id, flags,
+>                                     IOMMU_HWPT_DATA_NONE, 0, NULL,
+>@@ -255,6 +271,7 @@ static bool
+>iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>
+>     hwpt =3D g_malloc0(sizeof(*hwpt));
+>     hwpt->hwpt_id =3D hwpt_id;
+>+    hwpt->hwpt_flags =3D flags;
+>     QLIST_INIT(&hwpt->device_list);
+>
+>     ret =3D iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
+>@@ -265,8 +282,11 @@ static bool
+>iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>     }
+>
+>     vbasedev->hwpt =3D hwpt;
+>+    vbasedev->iommu_dirty_tracking =3D
+>iommufd_hwpt_dirty_tracking(hwpt);
 
---00000000000077cb42061de32d3b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Don't we need to do same if attach to existing hwpt?
 
-<div dir=3D"ltr"><div>Oh, also, can I get a reviewed-by?</div><div><br></di=
-v><div>Warner<br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr=
-" class=3D"gmail_attr">On Mon, Jul 22, 2024 at 11:08=E2=80=AFPM Warner Losh=
- &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div =
-dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Mon, Jul 22, 2024 at 7:17=E2=80=AFPM Richard Henderson &=
-lt;<a href=3D"mailto:richard.henderson@linaro.org" target=3D"_blank">richar=
-d.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">On 7/23/24 08:11, Philippe Mathieu-Daud=C3=A9 wrote:<=
-br>
-&gt; On 23/7/24 00:06, Warner Losh wrote:<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; On Mon, Jul 22, 2024 at 3:54=E2=80=AFPM Philippe Mathieu-Daud=C3=
-=A9 &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@linar=
-o.org</a> <br>
-&gt;&gt; &lt;mailto:<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">=
-philmd@linaro.org</a>&gt;&gt; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 Hi Warner,<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 On 22/7/24 23:43, Warner Losh wrote:<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; Add the aarch64 bsd-user fragments n=
-eeded to build the new<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 aarch64 code.<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; Signed-off-by: Warner Losh &lt;<a hr=
-ef=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a> &lt;mailt=
-o:<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a>&gt=
-;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt; ---<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A0configs/targets/aarch64-=
-bsd-user.mak | 3 +++<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A01 file changed, 3 insert=
-ions(+)<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0 &gt;=C2=A0 =C2=A0create mode 100644 confi=
-gs/targets/aarch64-bsd-user.mak<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 Can we build aarch64 on Cirrus-CI? (not clear o=
-n<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 <a href=3D"https://cirrus-ci.org/guide/FreeBSD/=
-" rel=3D"noreferrer" target=3D"_blank">https://cirrus-ci.org/guide/FreeBSD/=
-</a><br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &lt;<a href=3D"https://cirrus-ci.org/guide/Free=
-BSD/" rel=3D"noreferrer" target=3D"_blank">https://cirrus-ci.org/guide/Free=
-BSD/</a>&gt;). If so, could you add<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 a follow-up patch to build that on our CI, patc=
-hing<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 .gitlab-ci.d/cirrus.yml?<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; We can build aarch64 host for bsd-user for sure. I&#39;ll see if w=
-e can do it in cirrus CI.<br>
-&gt;&gt; If so, I&#39;ll try to add it to cirrus.yml.<br>
-&gt;&gt;<br>
-&gt;&gt; This patch series adds aarch64 guest...<br>
-&gt; <br>
-&gt; Yes, we want to use a aarch64 FreeBSD host to build your FreeBSD<br>
-&gt; aarch64 bsd-user guest and test it. Am I wrong?<br>
-&gt; <br>
-<br>
-This is adding guest support, so your suggestion is orthogonal.<br></blockq=
-uote><div><br></div><div>Yea...=C2=A0 It&#39;s a good suggestion, but not w=
-hat I&#39;m working on right now...</div><div><br></div><div>Warner <br></d=
-iv></div></div>
-</blockquote></div>
+>     QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
+>     QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
+>+    container->bcontainer.dirty_pages_supported |=3D
+>+                                vbasedev->iommu_dirty_tracking;
+>     return true;
+> }
+>
+>--
+>2.17.2
 
---00000000000077cb42061de32d3b--
 
