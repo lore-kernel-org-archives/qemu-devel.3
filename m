@@ -4,75 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F78AC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB16EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 05:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW7ev-0004GQ-SO; Tue, 23 Jul 2024 01:01:57 -0400
+	id 1sW7fI-0004qk-Vr; Tue, 23 Jul 2024 01:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7et-0004E5-F9
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:01:55 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sW7er-00069i-75
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 01:01:55 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7a0c6ab3354so1301716a12.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 22:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721710911; x=1722315711;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qz/OcFwqVgU0/Dz3ngh1jGLeo5eueOn8viJ12CZYnIY=;
- b=C6yQjnmdgF0EXTuiCygSF9jmAT/AoXBZxQVvkHrlzkjy+J7E1bP7lzqKDqW3YFYY70
- 1VxqEz7RKCOhvUaSkmnHo9Bm6wFKfoseDS4YgsGawtD/Cz+XBxTXLmADZO+Hn47ychOQ
- ECroqjM40/97sci3zVULV26pBuWujmbPhe7sguv7l+/CPnyeeBYkXnoECAehGEuh94u2
- m8Cs64uG6u98IOAZj+O7SJYV51G62bJLkGbGEWMC1xYKm3naLLXnP1DcltCB0POeWs6Y
- Uscu+hSRTcEAUhgnUQsI0UutqDQjZG46E/oYLiyfx+bZEGiOskYHJ9xp+TYNjikcJbGE
- 3JVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721710911; x=1722315711;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qz/OcFwqVgU0/Dz3ngh1jGLeo5eueOn8viJ12CZYnIY=;
- b=Lyn+uWuTynQrM+/Qt176SaG7dvNTVEoEC6X2ESOs4eklS/9Ew2MUrSAeVZ1ZzeU9NR
- rdU0IOvmiLMX9+60/A6NCd0yUSdvj3a+19MHGUWGvmWEt/39YtrHmHwiw41lme6EtE1E
- VYVaN1dpnF3yRQIiZRr0Yp60XI/aAdj3M2hhfXN7Bgz4R+DjhjNK2tHf8etJQh1LPETm
- eJKxUJlAAcKjsXhkP7AlSWvXz5OrpJJ5g+NpsJRVuoagSwnOoNQylhlIUAJ0bWa7Vhh6
- xXo81T2mVakPNQBd6Zff2o5LtiBoneJE3uu+l5QCfWv5gXFIn4bMUYhrXvJVmkdh0hio
- +uSA==
-X-Gm-Message-State: AOJu0Yz3e+iuRE1PDJyP2wDZjRWv8FLoFErQQdiDSF1h5MfMfR6jlFsO
- ADJDy9Pl58qpe0avoFILCLFw3SNTkwNx6WRlcdtJH6xm6AnLjyroQmqEVAvu/1bSOV2797b3dQL
- 0uMhS5ZEnAzfGzzU+Povxgn3owyf4O4oTP2McTg==
-X-Google-Smtp-Source: AGHT+IE3k5wBzUgReZHaFwZzwZCQHiowm+tWwVXQh1otAzAPtQO8RjVblCudk/XTR3aJHR45WU6nGIbZW5UVVc+5zG4=
-X-Received: by 2002:a05:6a21:99a5:b0:1c0:f2d9:a44a with SMTP id
- adf61e73a8af0-1c4228d03e6mr9885508637.22.1721710910744; Mon, 22 Jul 2024
- 22:01:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sW7fE-0004eJ-RV; Tue, 23 Jul 2024 01:02:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sW7fC-0006Im-GT; Tue, 23 Jul 2024 01:02:16 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46N3e26F004202;
+ Tue, 23 Jul 2024 05:02:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=D
+ fR2pGyshMGVWkHCWAjjKn7FXXSQROJVrvCt0iaBFyc=; b=L3DCswCMV9D+Cejup
+ /lzKJLd/xoQF6Yqrb8PxuUUJ5ZYIv9yITybhA7k06GCA7fSt/y6ys6vMwvLcVLsD
+ JT7BYM4rCOfLsNRuxhGs5vrtJhj16x0EJ6mghhkSEnbNIoxsYMnScN+xHOiJJMUj
+ 0ZooABPmx0nRXfLRHHYxXslpHpzHs17eWxwVqPBJIVZwXTaceQR/8jtkjV8uo9gT
+ c1so/YzWTLpXEvxtoNlaks7kVU60yBQGu1DV723RrwKWPnp89aEnJot2oGYh1Y+P
+ r2ocSyJY8lnT35kBiX7IVkZ+sHt6IodzxLdC1AQ82Z6/zitnj9QdFV1kL07zb1zl
+ PTDlQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j3rv07qc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:02:04 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46N523s3024358;
+ Tue, 23 Jul 2024 05:02:03 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40j3rv07qb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:02:03 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46N2KtHq006250; Tue, 23 Jul 2024 05:02:02 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gqjua7qp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jul 2024 05:02:02 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46N51vop31719770
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jul 2024 05:01:59 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2D9DD2005A;
+ Tue, 23 Jul 2024 05:01:57 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D5DF220040;
+ Tue, 23 Jul 2024 05:01:54 +0000 (GMT)
+Received: from [9.109.199.72] (unknown [9.109.199.72])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jul 2024 05:01:54 +0000 (GMT)
+Message-ID: <c700721a-d45d-4ea4-a034-fb4c7a79f198@linux.ibm.com>
+Date: Tue, 23 Jul 2024 10:31:53 +0530
 MIME-Version: 1.0
-References: <20240722214313.89503-1-imp@bsdimp.com>
- <20240722214313.89503-11-imp@bsdimp.com>
- <11297acc-de3d-4e74-9e1c-5f08ed219269@linaro.org>
-In-Reply-To: <11297acc-de3d-4e74-9e1c-5f08ed219269@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 22 Jul 2024 23:01:39 -0600
-Message-ID: <CANCZdfptOuaNavrM-rYgqOhgwATeY7vaNUrAMCEgm9ySFQP3wA@mail.gmail.com>
-Subject: Re: [PATCH 10/14] bsd-user: Hard wire aarch64 to be 4k pages only
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000003dc494061de30f5d"
-Received-SPF: none client-ip=2607:f8b0:4864:20::532;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/5] target/ppc: Add Power11 DD2.0 processor
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+References: <20240606121657.254308-1-adityag@linux.ibm.com>
+ <20240606121657.254308-3-adityag@linux.ibm.com>
+ <D2WMX1EEJ7PM.11W1PP8D9HCUN@gmail.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <D2WMX1EEJ7PM.11W1PP8D9HCUN@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xFTH97NMHFcTgzsWAfqPZsTEK78r6-cS
+X-Proofpoint-GUID: O7_uiAeDI4mYdPpXFhZxI7lR7CIQA1LN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0
+ clxscore=1015 mlxlogscore=744 impostorscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407230034
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,124 +122,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003dc494061de30f5d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Nick,
 
-On Mon, Jul 22, 2024 at 7:10=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
 
-> On 7/23/24 07:43, Warner Losh wrote:
-> > Only support 4k pages for aarch64 binaries. The variable page size stuf=
-f
-> > isn't working just yet, so put in this lessor-of-evils kludge until tha=
-t
-> > is complete.
+On 23/07/24 10:00, Nicholas Piggin wrote:
+>> <...snip...>
+>>
+>> +    { /* POWER11, ISA3.10 */
+>> +        .name = "power11",
+>> +        .pvr = CPU_POWERPC_LOGICAL_3_10_PLUS,
+> Might call that _P11 rather than _PLUS, but I can fold that in my tree.
+Sure, makes sense, I can make these changes, and send a v2 soon.
+>> <...snip...>
+>>
+>> +
+>> +POWERPC_FAMILY(POWER11)(ObjectClass *oc, void *data)
+>> +{
+>> +    DeviceClass *dc = DEVICE_CLASS(oc);
+>> +    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
+>> +
+>> +    dc->fw_name = "PowerPC,POWER11";
+>> +    dc->desc = "POWER11";
+>> +    pcc->pvr_match = ppc_pvr_match_power11;
+>> +    pcc->pcr_mask = POWERPC_POWER10_PCC_PCR_MASK;
+>> +    pcc->pcr_supported = POWERPC_POWER10_PCC_PCR_SUPPORTED;
+>> +    pcc->init_proc = init_proc_POWER10;
+>> +    pcc->check_pow = check_pow_nocheck;
+>> +    pcc->check_attn = check_attn_hid0_power9;
+>> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as P9 */
+>> +    pcc->insns_flags2 = POWERPC_FAMILY_POWER10_INSNS_FLAGS2;
+>> +    pcc->msr_mask = POWERPC_POWER10_PCC_MSR_MASK;
+>> +    pcc->lpcr_mask = POWERPC_POWER10_PCC_LPCR_MASK;
+> BTW., I still think all these new macros should be named after the exact
+> CPU, e.g., all these should be called POWER11 and the differences or
+> sameness should be handled in cpu_init.h.
+
+Got it, can create macros for the Power11 things also.
+
+
+Regarding this:
+
+> +    pcc->check_attn = check_attn_hid0_power9;
+> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as P9 */
+
+Should I keep them same, or have *_POWER11_* counterparts ?
 >
-> Hmm.  In what way is it not working?
+> I might tweak that and the names a bit locally (e.g., why is one type of
+> define called POWERPC_FAMILY_x and another called POWERPC_x_PCC), but
+> that's not a big deal and mostly an exercise in bike shed painting. The
+> functionality of the patch looks okay.
+I am okay if you want to do it, or i can do it in a separate follow up 
+patch.
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
+Thanks for the tag Nick !
+
+
+- Aditya Gupta
+
 >
-> What if we limit this to bsd-user/main.c instead?
->
->    set_preferred_target_page_bits(TARGET_PAGE_BITS_MIN);
->
-
-It's a compile issue that this won't solve:
-In file included from ../bsd-user/aarch64/signal.c:21:
-../bsd-user/qemu.h:146:20: warning: variable length array used [-Wvla]
-  146 |         void *page[MAX_ARG_PAGES];
-      |                    ^~~~~~~~~~~~~
-../bsd-user/qemu.h:138:23: note: expanded from macro 'MAX_ARG_PAGES'
-  138 | #define MAX_ARG_PAGES (TARGET_ARG_MAX / TARGET_PAGE_SIZE)
-      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../bsd-user/qemu.h:146:20: note: initializer of 'target_page' is unknown
-../bsd-user/qemu.h:138:41: note: expanded from macro 'MAX_ARG_PAGES'
-  138 | #define MAX_ARG_PAGES (TARGET_ARG_MAX / TARGET_PAGE_SIZE)
-      |                                         ^
-/dune/imp/git/qemu/include/exec/cpu-all.h:152:37: note: expanded from macro
-'TARGET_PAGE_SIZE'
-  152 | # define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
-      |                                     ^
-/dune/imp/git/qemu/include/exec/cpu-all.h:150:44: note: expanded from macro
-'TARGET_PAGE_MASK'
-  150 | #  define TARGET_PAGE_MASK   ((target_long)target_page.mask)
-      |                                            ^
-/dune/imp/git/qemu/include/exec/cpu-all.h:142:29: note: declared here
-  142 | extern const TargetPageBits target_page;
-      |                             ^
-In file included from ../bsd-user/aarch64/signal.c:21:
-../bsd-user/qemu.h:146:15: error: fields must have a constant size:
-'variable length array in structure' extension will never be supported
-  146 |         void *page[MAX_ARG_PAGES];
-      |               ^
-1 warning and 1 error generated.
-ninja: build stopped: subcommand failed.
-gmake: *** [Makefile:167: run-ninja] Error 1
-
-that have a couple of additional levels after those issues are fixed...
-It's fixable, but will take a fair amount more time that I have before the
-deadline...
-
-Warner
-
---0000000000003dc494061de30f5d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 22, 2024 at 7:10=E2=80=AF=
-PM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">ri=
-chard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On 7/23/24 07:43, Warner Losh wrote:<br>
-&gt; Only support 4k pages for aarch64 binaries. The variable page size stu=
-ff<br>
-&gt; isn&#39;t working just yet, so put in this lessor-of-evils kludge unti=
-l that<br>
-&gt; is complete.<br>
-<br>
-Hmm.=C2=A0 In what way is it not working?<br>
-<br>
-What if we limit this to bsd-user/main.c instead?<br>
-<br>
-=C2=A0 =C2=A0set_preferred_target_page_bits(TARGET_PAGE_BITS_MIN);<br></blo=
-ckquote><div><br></div><div>It&#39;s a compile issue that this won&#39;t so=
-lve:</div><div>In file included from ../bsd-user/aarch64/signal.c:21:<br>..=
-/bsd-user/qemu.h:146:20: warning: variable length array used [-Wvla]<br>=C2=
-=A0 146 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 void *page[MAX_ARG_PAGES];<br>=C2=A0 =
-=C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0^~~~~~~~~~~~~<br>../bsd-user/qemu.h:138:23: note: expanded from m=
-acro &#39;MAX_ARG_PAGES&#39;<br>=C2=A0 138 | #define MAX_ARG_PAGES (TARGET_=
-ARG_MAX / TARGET_PAGE_SIZE)<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~~~~~~~=
-~~~~~~~~~~~~~~~~<br>../bsd-user/qemu.h:146:20: note: initializer of &#39;ta=
-rget_page&#39; is unknown<br>../bsd-user/qemu.h:138:41: note: expanded from=
- macro &#39;MAX_ARG_PAGES&#39;<br>=C2=A0 138 | #define MAX_ARG_PAGES (TARGE=
-T_ARG_MAX / TARGET_PAGE_SIZE)<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^<br>/dune/imp/git/qemu/in=
-clude/exec/cpu-all.h:152:37: note: expanded from macro &#39;TARGET_PAGE_SIZ=
-E&#39;<br>=C2=A0 152 | # define TARGET_PAGE_SIZE =C2=A0 =C2=A0(-(int)TARGET=
-_PAGE_MASK)<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 ^<br>/dune/imp/git/qemu/include/exec/cpu-all.h:150:44: no=
-te: expanded from macro &#39;TARGET_PAGE_MASK&#39;<br>=C2=A0 150 | # =C2=A0=
-define TARGET_PAGE_MASK =C2=A0 ((target_long)target_page.mask)<br>=C2=A0 =
-=C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0^<br>/dune/imp/git/qemu/include/exec/cpu-all.h:142:29: =
-note: declared here<br>=C2=A0 142 | extern const TargetPageBits target_page=
-;<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^<br>In file included =
-from ../bsd-user/aarch64/signal.c:21:<br>../bsd-user/qemu.h:146:15: error: =
-fields must have a constant size: &#39;variable length array in structure&#=
-39; extension will never be supported<br>=C2=A0 146 | =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 void *page[MAX_ARG_PAGES];<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^<br>1 warning and 1 error generated.<br=
->ninja: build stopped: subcommand failed.<br>gmake: *** [Makefile:167: run-=
-ninja] Error 1<br></div><div><br></div><div>that have a couple of additiona=
-l levels after those issues are fixed... It&#39;s fixable, but will take a =
-fair amount more time that I have before the deadline...<br></div><div><br>=
-</div><div>Warner<br></div></div></div>
-
---0000000000003dc494061de30f5d--
+>> +
+>> +    pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | LPCR_OEE;
+>> +    pcc->mmu_model = POWERPC_MMU_3_00;
+>> +#if !defined(CONFIG_USER_ONLY)
+>> +    /* segment page size remain the same */
+>> +    pcc->hash64_opts = &ppc_hash64_opts_POWER7;
+>> +    pcc->radix_page_info = &POWER10_radix_page_info;
+>> +    pcc->lrg_decr_bits = 56;
+>> +#endif
+>> +    pcc->excp_model = POWERPC_EXCP_POWER10;
+>> +    pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
+>> +    pcc->bfd_mach = bfd_mach_ppc64;
+>> +    pcc->flags = POWERPC_POWER10_PCC_FLAGS;
+>> +    pcc->l1_dcache_size = 0x8000;
+>> +    pcc->l1_icache_size = 0x8000;
+>> +}
+>> +
+>>   #if !defined(CONFIG_USER_ONLY)
+>>   void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHypervisor *vhyp)
+>>   {
 
