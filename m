@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58596C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867F9C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWAAx-0008PW-5L; Tue, 23 Jul 2024 03:43:11 -0400
+	id 1sWAH9-0004lP-At; Tue, 23 Jul 2024 03:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sWAAv-0008P0-OU
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:43:09 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sWAAs-0000iw-Af
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:43:09 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-44926081beaso25593321cf.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 00:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721720584; x=1722325384; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WND7s4nNccBkVuBfGiOgfgHb4sPvfvPCZCtaYL3Uq8E=;
- b=m00e1Qt+k2fpxCONxs+3+TSjeAAtusFha6tg9Tr0PDe8Nq/9Dswei931qBaGIdKQVZ
- FsR3ryJcE966htnxzBnbg/TLGwIJDoiogIrW2sgQUl+ih76EjoSPskVkKyXebYiUUcmt
- e6YZ6Zmvkc2tKbTqiUSp1cPbDqZqjqJTsBowIvY5GRD3IDtaxHQOveTqjhqud2pGbVZk
- oZ0zxmp4klmmh9r1Ee6flaCRKIT1Eu+40cSIrD4v5ydD3AShZHvO2IOiWACRfUbifhXZ
- HjMbWupCFNZT00/2r46sN8DiMX0fWmctiFy2EHUUWAs/cGg1WPmkIB6txo2dD1jRXsez
- Bl6g==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWAH4-0004kl-Rz
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:49:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sWAH2-0001gO-T9
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:49:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721720966;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rw3nFtm9zegoBN8YX4JTW36pDU9NtWxu/T39TQmQ3M8=;
+ b=f4wIIa9GBwKzA5PKkzhEf1T7e3nELEu1KaMcMGjTN2MvYoTbFCLdgEdD6M2m5OCqi2d4Lp
+ uf4cPSE9+dRHxqlnZvHZ0UeMOSwEw9Di3uATCs3s0HBmjUaMnDO0VvyP8Jo8UbM+nJ7k0z
+ ciLvIlj5qR3iWq0tVb+6mNshKLD55Zs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-184--XDLejKbMTu57VfQQtRrOg-1; Tue, 23 Jul 2024 03:45:02 -0400
+X-MC-Unique: -XDLejKbMTu57VfQQtRrOg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4279418eb2bso35529695e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 00:45:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721720584; x=1722325384;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WND7s4nNccBkVuBfGiOgfgHb4sPvfvPCZCtaYL3Uq8E=;
- b=RJ0bj0o3ISRw1Agq5jRZ/SAcsUvYVRTGBDgg9pvGZtDYKM1jHPPtdbjBMKY2bPJjHN
- B6diG3vvzS6lNE5tMbI04o3JKDHaqP6x3uAMU2WamYFskX7BlHiKNGRd3IeJGh3PbM5a
- gKVGELwZzKj202+8nvI2Ka7ETHQBTxHVoqZed/Kd9kPM09FCTLZ48Ka5l/udn/4GDOUl
- fbhcHVGO6pOgi50I5+PRBjgpM8VxYH54xbRRtcCRrQyf4t0sZlc1lEWoBnKDXYZj1WHz
- HANlqGV1BX14r9zK47I9IxJ1X/xA7yt5kti0jmLlnAyHOZYQNVfXn4YZEDA1pFyEXGOG
- IJDw==
-X-Gm-Message-State: AOJu0YyKyGztu7loG5Pubickm036jQXS1VXHlHBf79X0hsPMyUGWZ3Os
- BIXgbXDMnBXrqZ9lCkscWZNxXEJDhkJc+zaRGjPOHs0H6zeHetA6ztyWxfdzzce8CN9PXA3+5fS
- gY/gBo2EMHvqM3UaVVPHpabctA1A=
-X-Google-Smtp-Source: AGHT+IE1XLWeNWR4syyx1Ap4t4LbH8lrOGFvdXrBT5AHpPCc+7YIqGTM/KOUV5Yl0nvqcqDokfbRT5DrC9dQyNmHvp8=
-X-Received: by 2002:ac8:5983:0:b0:446:5c60:b348 with SMTP id
- d75a77b69052e-44fc559c0eemr26403411cf.56.1721720583983; Tue, 23 Jul 2024
- 00:43:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721720701; x=1722325501;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rw3nFtm9zegoBN8YX4JTW36pDU9NtWxu/T39TQmQ3M8=;
+ b=V5ycDGzNBtFj0XJc44sEeeOSdQD8hQOnMSTVZ1qAdPLOAcJT3NUwpt2XWJGgkxyYC+
+ E6XDQrxW229Vj37Hss04hMx4PeErfdLv0ps03xQmMwetZri7Opg+90dNg91QyPk8XyQL
+ Mf1yWDD45Yv/dLSG0mRbtmQ6yXMCO9iNBT89prqdsF4Vw8UtrSS99YKrdiQIJA+LZfC7
+ LvieZFDpV3PhLaN0v+W8gVvy2Ho32ctKWqJL8kUVxWUc2h6KEa+XKbwnrmrZSkPe2G57
+ 3ZBACzJ+mPab0Gtp2IrPwiZ01c9z9czIuhusTiAQ9tPuQRt4HqpRXAmxEZBFt4CBNEJg
+ ifGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPlctEs+w4Jbc31J7Mp0jyl8R/VwPJECUkUa2DAVhfMhP8MZaADDugfliJx/pqXo+Dryrj/xUQhQl65sj0E/oOqbpZgiw=
+X-Gm-Message-State: AOJu0Yy3qUFeneiUUQwTd3k3CVJlRLMu9ert3S/AD99kBV4Z/loNhkMK
+ 6eJW3uVWeLyA/CpOlgJyEHRketHSRNqJ8nRjgkctlvxZM6DrtY7kIkTYrzqQaVn6MeOu9u3AMOn
+ NPV22uaMLJiqlLvuSzVFoCdD3QrFAD9M1XaZN1lGz8AMImsaYZTDE
+X-Received: by 2002:a05:600c:4e8b:b0:427:9db3:46ad with SMTP id
+ 5b1f17b1804b1-427dc532266mr62651005e9.23.1721720701454; 
+ Tue, 23 Jul 2024 00:45:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUJ6pr3RnPfdXf0CYY1vFJ70pb8mDpnBkWiDCRljtD8E3UKqDeMX1fZexGPl73gwsIERvj6w==
+X-Received: by 2002:a05:600c:4e8b:b0:427:9db3:46ad with SMTP id
+ 5b1f17b1804b1-427dc532266mr62650865e9.23.1721720701059; 
+ Tue, 23 Jul 2024 00:45:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e?
+ ([2a01:e0a:9e2:9000:bed7:42c6:fb19:d12e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427d692977asm159878035e9.31.2024.07.23.00.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 00:45:00 -0700 (PDT)
+Message-ID: <eae669f6-f24f-4573-9934-2c6fb5b364ad@redhat.com>
+Date: Tue, 23 Jul 2024 09:44:59 +0200
 MIME-Version: 1.0
-References: <20240717124534.1200735-1-cleger@rivosinc.com>
-In-Reply-To: <20240717124534.1200735-1-cleger@rivosinc.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 23 Jul 2024 11:42:52 +0400
-Message-ID: <CAJ+F1CJApZ+xj=PSLJ+gBfENeZFLPBVMV969-tU-+CbPjEmKDQ@mail.gmail.com>
-Subject: Re: [PATCH v4] osdep: add a qemu_close_all_open_fd() helper
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000cf9962061de54f9c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 4/9] vfio/{iommufd,container}: Invoke
+ HostIOMMUDevice::realize() during attach_device()
+To: eric.auger@redhat.com, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240722211326.70162-1-joao.m.martins@oracle.com>
+ <20240722211326.70162-5-joao.m.martins@oracle.com>
+ <a1cc917a-7fa7-43da-b7b7-1b69308400b0@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <a1cc917a-7fa7-43da-b7b7-1b69308400b0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,83 +109,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cf9962061de54f9c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/23/24 09:38, Eric Auger wrote:
+> Hi Joao,
+> 
+> On 7/22/24 23:13, Joao Martins wrote:
+>> Move the HostIOMMUDevice::realize() to be invoked during the attach of the device
+>> before we allocate IOMMUFD hardware pagetable objects (HWPT). This allows the use
+>> of the hw_caps obtained by IOMMU_GET_HW_INFO that essentially tell if the IOMMU
+>> behind the device supports dirty tracking.
+>>
+>> Note: The HostIOMMUDevice data from legacy backend is static and doesn't
+>> need any information from the (type1-iommu) backend to be initialized.
+>> In contrast however, the IOMMUFD HostIOMMUDevice data requires the
+>> iommufd FD to be connected and having a devid to be able to successfully
+> Nit: maybe this comment shall be also added in iommufd.c before the call
+> to vfio_device_hiod_realize() to avoid someone else to move that call
+> earlier at some point
+>> GET_HW_INFO. This means vfio_device_hiod_realize() is called in
+>> different places within the backend .attach_device() implementation.
+>>
+>> Suggested-by: Cédric Le Goater <clg@redhat.cm>
+>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> ---
+>>   include/hw/vfio/vfio-common.h |  1 +
+>>   hw/vfio/common.c              | 16 ++++++----------
+>>   hw/vfio/container.c           |  4 ++++
+>>   hw/vfio/helpers.c             | 11 +++++++++++
+>>   hw/vfio/iommufd.c             |  4 ++++
+>>   5 files changed, 26 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+>> index 1a96678f8c38..4e44b26d3c45 100644
+>> --- a/include/hw/vfio/vfio-common.h
+>> +++ b/include/hw/vfio/vfio-common.h
+>> @@ -242,6 +242,7 @@ void vfio_region_finalize(VFIORegion *region);
+>>   void vfio_reset_handler(void *opaque);
+>>   struct vfio_device_info *vfio_get_device_info(int fd);
+>>   bool vfio_device_is_mdev(VFIODevice *vbasedev);
+>> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
+>>   bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>>                           AddressSpace *as, Error **errp);
+>>   void vfio_detach_device(VFIODevice *vbasedev);
+>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>> index 784e266e6aab..da12cbd56408 100644
+>> --- a/hw/vfio/common.c
+>> +++ b/hw/vfio/common.c
+>> @@ -1537,7 +1537,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>>   {
+>>       const VFIOIOMMUClass *ops =
+>>           VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+>> -    HostIOMMUDevice *hiod;
+>> +    HostIOMMUDevice *hiod = NULL;
+>>   
+>>       if (vbasedev->iommufd) {
+>>           ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+>> @@ -1545,21 +1545,17 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>>   
+>>       assert(ops);
+>>   
+>> -    if (!ops->attach_device(name, vbasedev, as, errp)) {
+>> -        return false;
+>> -    }
+>>   
+>> -    if (vbasedev->mdev) {
+>> -        return true;
+>> +    if (!vbasedev->mdev) {
+>> +        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>> +        vbasedev->hiod = hiod;
+>>       }
+>>   
+>> -    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>> -    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
+>> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
+>>           object_unref(hiod);
+>> -        ops->detach_device(vbasedev);
+>> +        vbasedev->hiod = NULL;
+>>           return false;
+>>       }
+>> -    vbasedev->hiod = hiod;
+>>   
+>>       return true;
+>>   }
+>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>> index 10cb4b4320ac..9ccdb639ac84 100644
+>> --- a/hw/vfio/container.c
+>> +++ b/hw/vfio/container.c
+>> @@ -914,6 +914,10 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>>   
+>>       trace_vfio_attach_device(vbasedev->name, groupid);
+>>   
+>> +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
+>> +        return false;
+> don't you want to go to err_alloc_ioas instead?
 
-Hi
+hmm, the err_alloc_ioas label is in a different function iommufd_cdev_attach().
 
-On Wed, Jul 17, 2024 at 4:48=E2=80=AFPM Cl=C3=A9ment L=C3=A9ger <cleger@riv=
-osinc.com> wrote:
-
-> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
-> POSIX"), the maximum number of file descriptors that can be opened are
-> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
-> of 1073741816 file descriptors. Now, when forking to start
-> qemu-bridge-helper, this actually calls close() on the full possible file
-> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
-> takes a considerable amount of time. In order to reduce that time,
-> factorize existing code to close all open files descriptors in a new
-> qemu_close_all_open_fd() function. This function uses various methods
-> to close all the open file descriptors ranging from the most efficient
-> one to the least one. It also accepts an ordered array of file
-> descriptors that should not be closed since this is required by the
-> callers that calls it after forking.
->
-> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <cleger@rivosinc.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
+may be you meant the comment for routine iommufd_cdev_attach() and
+label err_connect_bind ?
 
 
-GLib already implemented those kinds of portable facilities.
+Thanks,
 
-I wonder why launch_script() is not using glib gspawn API.
+C.
 
-async-teardown should use g_clownfrom() when glib >=3D 2.80.
 
-my 2c
+>> +    }
+>> +
+>>       group = vfio_get_group(groupid, as, errp);
+>>       if (!group) {
+>>           return false;
+>> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+>> index 7e23e9080c9d..ea15c79db0a3 100644
+>> --- a/hw/vfio/helpers.c
+>> +++ b/hw/vfio/helpers.c
+>> @@ -689,3 +689,14 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev)
+>>       subsys = realpath(tmp, NULL);
+>>       return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
+>>   }
+>> +
+>> +bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp)
+>> +{
+>> +    HostIOMMUDevice *hiod = vbasedev->hiod;
+>> +
+>> +    if (!hiod) {
+>> +        return true;
+>> +    }
+>> +
+>> +    return HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp);
+>> +}
+>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>> index 5e2fc1ce089d..2324bf892c56 100644
+>> --- a/hw/vfio/iommufd.c
+>> +++ b/hw/vfio/iommufd.c
+>> @@ -403,6 +403,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>>   
+>>       space = vfio_get_address_space(as);
+>>   
+>> +    if (!vfio_device_hiod_realize(vbasedev, errp)) {
+>> +        return false;
+>> +    }
+>> +
+>>       /* try to attach to an existing container in this space */
+>>       QLIST_FOREACH(bcontainer, &space->containers, next) {
+>>           container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> Eric
+> 
 
---=20
-Marc-Andr=C3=A9 Lureau
-
---000000000000cf9962061de54f9c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 17, 2024 at 4:48=E2=80=
-=AFPM Cl=C3=A9ment L=C3=A9ger &lt;<a href=3D"mailto:cleger@rivosinc.com">cl=
-eger@rivosinc.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">Since commit 03e471c41d8b (&quot;qemu_init: increase NOFIL=
-E soft limit on<br>
-POSIX&quot;), the maximum number of file descriptors that can be opened are=
-<br>
-raised to nofile.rlim_max. On recent debian distro, this yield a maximum<br=
->
-of 1073741816 file descriptors. Now, when forking to start<br>
-qemu-bridge-helper, this actually calls close() on the full possible file<b=
-r>
-descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which<br>
-takes a considerable amount of time. In order to reduce that time,<br>
-factorize existing code to close all open files descriptors in a new<br>
-qemu_close_all_open_fd() function. This function uses various methods<br>
-to close all the open file descriptors ranging from the most efficient<br>
-one to the least one. It also accepts an ordered array of file<br>
-descriptors that should not be closed since this is required by the<br>
-callers that calls it after forking.<br>
-<br>
-Signed-off-by: Cl=C3=A9ment L=C3=A9ger &lt;<a href=3D"mailto:cleger@rivosin=
-c.com" target=3D"_blank">cleger@rivosinc.com</a>&gt;<br>
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br></blockqu=
-ote><div><br></div><div><br></div><div>GLib already implemented those kinds=
- of portable facilities.<br></div><div><br></div><div>I wonder why launch_s=
-cript() is not using glib gspawn API.<br></div><div><br></div><div>async-te=
-ardown should use g_clownfrom() when glib &gt;=3D 2.80.</div><div><br></div=
-></div>my 2c<br clear=3D"all"><div><br><span class=3D"gmail_signature_prefi=
-x">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=A9=
- Lureau<br></div></div></div>
-
---000000000000cf9962061de54f9c--
 
