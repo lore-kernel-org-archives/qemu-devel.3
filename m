@@ -4,73 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259A7C3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6395C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWCeN-0000bo-P8; Tue, 23 Jul 2024 06:21:44 -0400
+	id 1sWCgR-0006SL-8P; Tue, 23 Jul 2024 06:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWCeC-0008Lo-WE
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:21:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWCe8-00029E-9Z
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:21:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721730087;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3QkTOKAdtLriMcyGBCy4XsaAoDURVVMm3riVjUxKckA=;
- b=HoO9QFRFyz9OEI54v9iQbt4xpLnFJdDfxiIT30VkMbKnpJqD+bBGacFbIi0T02l9/mjDVN
- PDjGqBGABTivisP0BaEcJWMcs6qRFZ8QG2vxqq+MgPel0SguSFCnrQK13uM5AT6/72o9jZ
- CcLLrzsFKKRLWO++ZlbL1zI4Oh856is=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-Y7z4xClrMmW8RquI2JTNBA-1; Tue,
- 23 Jul 2024 06:21:23 -0400
-X-MC-Unique: Y7z4xClrMmW8RquI2JTNBA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D99B1955D62; Tue, 23 Jul 2024 10:21:21 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FDA91955F65; Tue, 23 Jul 2024 10:21:20 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B1D1121E6682; Tue, 23 Jul 2024 12:21:17 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWCgP-0006RF-EH
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:23:49 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWCgN-0002Wy-9x
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:23:48 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-368712acb8dso2547175f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721730225; x=1722335025; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=tuuK+ryP31133oSbBAqOaBIHpGXexOtkpqc+JniZM5o=;
+ b=Csq2bRlpg3Vppv3KAwqe5L5e74rAI588G016e5S62DOTX38KRRRbmAzTexqiQGDDhd
+ WWu+S0sECqj+rVm1Sk0UPfa3ZWvC922BL3nxgicUnSIIxrOWioHy5kM9qHzFyVm9H6ud
+ uT1Kiitq5iA18pNAGWFiaiDExlVJVb0U/hiW1DjqttCzjNU6Zn2fF23/rFqXSyBIjbRf
+ If741LQOfTDE0yk9zdIWQLzf9cWYXZTRjwlsQvOtPgaC/XoUkiaj/polXKgg/sj1EEkj
+ cb1nJ6S6vIMW6PLV3lThbi/LbrUzgR+flyyqrt8wVbdkbYJVJ4rdEYN+vQC2yH/npnT0
+ Lb8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721730225; x=1722335025;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tuuK+ryP31133oSbBAqOaBIHpGXexOtkpqc+JniZM5o=;
+ b=NVz+l5Y7AE6vXeY19gAQ5cW8TCGZRJ08xgS98U/qL7hhgo1tPFFoqwEOKTWHIFemEv
+ Ari1+kiw+L/nzX5jq6bHCV1vFw5V1WcWB5VfbZWOnOgpK6OclpmwTLpMQTCqz0rKs1F6
+ 2c3hXp4dGII2ytpD6MBYCMw0iXI+523zq4Km+pQ0coyat9K1u71d+tdnuDlx48lEcYch
+ qx4B4WO3/HSsLpnKRu/cnPZUx+iMFUXQeccC6Wr9cFKPyqUp0VEyUGIb6KU9CTv6NiSF
+ 4THTx9FN+6rs7ZQIG9ORUUgKXX0+5gcwPbtNEYwkBmUDx5p0bjoSkG2GWXvuZ5uxmoct
+ axNw==
+X-Gm-Message-State: AOJu0YwQR9QBjge0ubvKejzyldV2DGfzn8b9hmXAE7YhgO2aFF5a2lDW
+ lUGyuwab575SaYhSWuUpjPu0moSAvUCxxkNtc9NKw7NAP8EqVmaMGsg+5wEwe44=
+X-Google-Smtp-Source: AGHT+IHMmuSbX3zXj7dJYXkfFZnimEXiGYl7HHoD+oj9/iK40e3Axcte/j52b5OXJadA7xN/P0G9yg==
+X-Received: by 2002:adf:a3d2:0:b0:367:91d6:e12e with SMTP id
+ ffacd0b85a97d-369dee43ec5mr1686544f8f.44.1721730225413; 
+ Tue, 23 Jul 2024 03:23:45 -0700 (PDT)
+Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-368787eceb0sm11164298f8f.99.2024.07.23.03.23.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 03:23:45 -0700 (PDT)
+Date: Tue, 23 Jul 2024 13:19:07 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] hw/nubus/nubus-virtio-mmio: Fix missing ERRP_GUARD() in
- nubus_virtio_mmio_realize()
-In-Reply-To: <20240715095939.72492-1-zhao1.liu@intel.com> (Zhao Liu's message
- of "Mon, 15 Jul 2024 17:59:37 +0800")
-References: <20240715095939.72492-1-zhao1.liu@intel.com>
-Date: Tue, 23 Jul 2024 12:21:17 +0200
-Message-ID: <878qxswgrm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v5 8/8] rust/pl011: vendor dependencies
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <43d9c3f65224f28f78f28d15e67b999d84a3b66f.1721648163.git.manos.pitsidianakis@linaro.org>
+ <Zp9r59I4Uy655+4L@intel.com>
+In-Reply-To: <Zp9r59I4Uy655+4L@intel.com>
+Message-ID: <h2njj.c64x848hvert@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,79 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
-
-> As the comment in qapi/error, dereferencing @errp requires
-
-Suggest "According to the comment in qapi/error.h".
-
-> ERRP_GUARD():
+On Tue, 23 Jul 2024 11:37, Zhao Liu <zhao1.liu@intel.com> wrote:
+>Hi Manos,
 >
-> * =3D Why, when and how to use ERRP_GUARD() =3D
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> * - It must not be dereferenced, because it may be null.
-> ...
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
-> *
-> * Using it when it's not needed is safe, but please avoid cluttering
-> * the source with useless code.
+>(This patch contains too many codes so that mail list rejects to display
+>it at https://lore.kernel.org/qemu-devel)
 >
-> But in nubus_virtio_mmio_realize(), @errp is dereferenced without
-> ERRP_GUARD().
-
-Suggest to scratch "But".
-
-> Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
-> method - doesn't get the NULL @errp parameter, it hasn't triggered the
-> bug that dereferencing the NULL @errp. It's still necessary to follow
-> the requirement of @errp, so add missing ERRP_GUARD() in
-> nubus_virtio_mmio_realize().
-
-Suggest
-
-  Although nubus_virtio_mmio_realize() - as a DeviceClass.realize()
-  method - is never passed a null @errp argument, it should follow the
-  rules on @errp usage.  Add the ERRP_GUARD() there.
-=20=20
-> Cc: Laurent Vivier <laurent@vivier.eu>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  hw/nubus/nubus-virtio-mmio.c | 1 +
->  1 file changed, 1 insertion(+)
+>Please correct me if I'm wrong...
 >
-> diff --git a/hw/nubus/nubus-virtio-mmio.c b/hw/nubus/nubus-virtio-mmio.c
-> index 58a63c84d0be..a5558d3ec28b 100644
-> --- a/hw/nubus/nubus-virtio-mmio.c
-> +++ b/hw/nubus/nubus-virtio-mmio.c
-> @@ -23,6 +23,7 @@ static void nubus_virtio_mmio_set_input_irq(void *opaqu=
-e, int n, int level)
->=20=20
->  static void nubus_virtio_mmio_realize(DeviceState *dev, Error **errp)
->  {
-> +    ERRP_GUARD();
->      NubusVirtioMMIODeviceClass *nvmdc =3D NUBUS_VIRTIO_MMIO_GET_CLASS(de=
-v);
->      NubusVirtioMMIO *s =3D NUBUS_VIRTIO_MMIO(dev);
->      NubusDevice *nd =3D NUBUS_DEVICE(dev);
-       SysBusDevice *sbd;
-       int i, offset;
+>Is the reason for not using git submodules here because v5 abandoned
+>compilation through Cargo, so it’s necessary to add meson.build to the
+>code repository of each dependency, and consequently, all code must be
+>loaded into QEMU?
+>
+>It looks like will be difficult to synchronize the dependency changes
+>in the future.
 
-       nvmdc->parent_realize(dev, errp);
+Yes, ideally we want meson wrap files (git submodules were removed in 
+2019cabfee). Meson support for that is a bit buggy and might require 
+bleeding edge versions, so for the time being I vendored the 
+dependencies. Otherwise I'd keep getting delayed posting a new patch 
+series and I wanted to have feedback coming in the mean time :)
 
-Here's the dereference:
+Manos
 
-       if (*errp) {
-           return;
-       }
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
-Thanks!
-
+>
+>Best Regards,
+>Zhao
+>
 
