@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1347AC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 252B9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 11:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDFr-000657-Ro; Tue, 23 Jul 2024 07:00:31 -0400
+	id 1sWDI2-0003sA-Rs; Tue, 23 Jul 2024 07:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFa-0004b1-Iv
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDHt-00036k-0V
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:02:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDFX-0002kY-H9
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:00:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDHr-0003MI-8V
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 07:02:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732405;
+ s=mimecast20190719; t=1721732550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i33/3Qja9OS3einDB0z9RqroZS7tFHAamIIdFj14KsM=;
- b=YDuN0lM0M+oD7D3Qa5v7n6TmqR6tdC0YJg/sX4PQ8BQI3EuKBtEnSSiObXmZwOoMcQzsvD
- TOTkxlhu0zhopET4mPt6W+wF9NCWnu1qeu4A/+/AVfm9AOSURtGueYdWasmJKyahlx7T/1
- SpPwC4QNrFHHRIyEiS0QTQ/5Vt0p93c=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IT1q+ndAF7/G1yTMy+JX4lYogGoMzMPsKs7/eXYu52g=;
+ b=bPun50pW6x7W6gxCFvbB26CSt6y2OqQMBc1n5eXIAiQQNxY2vgL/4pbYiRZhBTtupwoRkj
+ 7UJlY3ofAVZOusAXGLRwUYAtjtCjYBywmv3TZJHQQ7Hml2EbFwc8htpmazn2U3T2fKdkAt
+ S43FEtu1GHjO0ywmQ4S36bbBUS3IXgU=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-255-iuLz5_mCM52gRKNQtxwjuA-1; Tue, 23 Jul 2024 07:00:02 -0400
-X-MC-Unique: iuLz5_mCM52gRKNQtxwjuA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3687f5a2480so3115211f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:59:59 -0700 (PDT)
+ us-mta-669-17mg-QhqMQaLMhF_3Nm5Zw-1; Tue, 23 Jul 2024 07:02:29 -0400
+X-MC-Unique: 17mg-QhqMQaLMhF_3Nm5Zw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a77c9c6bdadso49664966b.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 04:02:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732398; x=1722337198;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i33/3Qja9OS3einDB0z9RqroZS7tFHAamIIdFj14KsM=;
- b=oNpGkjPwyz6DstI+qiNyHlrvjFLXDv9SQY3MCWf2nLnSaBR9qZrjk9L4KU3IBOczGM
- hBIUphBJgi/YKg65t/JLAQqQZA30mTton/gtQUa4Wxz8iX+3eS/8W4WR2Hz+aAonxbDj
- zKKXegTbm1qtHApzGkkPuywizW3bHsMsGV6k3CxKecotj6MrWqVXUyA6op4o4KqwQLDp
- MeNlfeV0SCTfolgxDXFhB26SvybvYK5czpiXqHGqkOIMHMuicinrYArYUv24vze+MMaz
- yBY0pRW+fj8Gdx6pBdmFAanoWIMMV+nFDC0PMW6t8i72NKiuXDxdWu30U3U14ahld18R
- szhg==
-X-Gm-Message-State: AOJu0Yzhizv2kOqlHEAGhwnsXb8Fi+D0vS9v2J8zvWkut0tes2i58eBr
- /odwInz1o9aS+cxijtDrhfqZrY6r1U2KnkOFhhEpfUwwxVH0leOYp/NPdnGXBgkM1qNBWjlzm/i
- hhy5m5iUpsUSC4GNpuHR3VjqFAoLR4ArWya4x+azaCIY28x+JcGFARa5g2DucfzLnTuH2BKlr9i
- 2mAwXJpFvN15kr1WAjpUKMwbnui0kpjg==
-X-Received: by 2002:a05:6000:881:b0:367:916e:4206 with SMTP id
- ffacd0b85a97d-369dee46164mr2209256f8f.46.1721732397773; 
- Tue, 23 Jul 2024 03:59:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHG7bO1brr7fBBfuIFQuCndrMWRKXgHwfHk2CN0x441KigocNiTbuJ3MnvX6kS7QgPStArrVg==
-X-Received: by 2002:a05:6000:881:b0:367:916e:4206 with SMTP id
- ffacd0b85a97d-369dee46164mr2209228f8f.46.1721732397002; 
- Tue, 23 Jul 2024 03:59:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721732548; x=1722337348;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IT1q+ndAF7/G1yTMy+JX4lYogGoMzMPsKs7/eXYu52g=;
+ b=xSUa+jupLeX3CUUjwnkSXVnGDbc/remrO6m7zlboIjlgbITJc/XsZP66BwlGiNT0ty
+ Tu4i8sIEdULO6mQoLW5BiqCpm4TjWc45VzDmQjf+h3vSKHouEVGqLPeEJp//kQ7XHI6O
+ xjgzOefbMGCdbuvmt5l1Z+Xq7l+eTWxfWyRUh5P+UAuacAiOJW94meecK0Em0V+aFxof
+ RhpCqogy+IbCLFe5WLaNG7qHdh1qb59sRiSc0yLzzr8Hb3kMVWICq+CjjlyIV9gNp8kz
+ W3XFDRYRHHcIkPYWKBZ7U8Qmey9J6lQ5W57WsZC/MImghe+6Pm4Cd2LhedA1l+aUtH8h
+ 151g==
+X-Gm-Message-State: AOJu0Yx2Uf2KDB1xTV+efA+llQrhWXqHNflsjQodhd8GXK+W6L+1PIMs
+ 18EpV1KH14oG1UiIZNi2bN/pRcWSXfIG+9y7rHds92zYyqSIh8Iu68sqhsE8w4C3/P7hMtwlX09
+ aiUjV1QvZJxmZW+avayXUpGHLhPBaEzbtINmA1ih/37S2BL7SYtDL
+X-Received: by 2002:a17:907:940e:b0:a7a:a33e:47b8 with SMTP id
+ a640c23a62f3a-a7aa33e4e08mr42086066b.66.1721732547880; 
+ Tue, 23 Jul 2024 04:02:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhFFUtGXOCyf2FNeZea+Pgsi+CNp6azqhJ3uoZljEIBV4nLiVhV95J7Bk1JUioBRC6Kp2qbw==
+X-Received: by 2002:a17:907:940e:b0:a7a:a33e:47b8 with SMTP id
+ a640c23a62f3a-a7aa33e4e08mr42083866b.66.1721732547257; 
+ Tue, 23 Jul 2024 04:02:27 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3687868b262sm11156565f8f.30.2024.07.23.03.59.54
+ a640c23a62f3a-a7a3c7e7871sm530553566b.96.2024.07.23.04.02.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:59:56 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:59:52 -0400
+ Tue, 23 Jul 2024 04:02:26 -0700 (PDT)
+Date: Tue, 23 Jul 2024 07:02:23 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL v2 44/61] Revert "virtio-iommu: Clear IOMMUDevice when VFIO
- device is unplugged"
-Message-ID: <935c3914184c4ebb1a4c545fc77fe2f0b24645c2.1721731723.git.mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL v2 34/61] virtio-net: Implement SR-IOV VF
+Message-ID: <20240723070146-mutt-send-email-mst@kernel.org>
 References: <cover.1721731723.git.mst@redhat.com>
+ <c2d6db6a1f39780b24538440091893f9fbe060a7.1721731723.git.mst@redhat.com>
+ <a034545a-287e-4320-8bb3-57937f431cbe@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1721731723.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
+In-Reply-To: <a034545a-287e-4320-8bb3-57937f431cbe@daynix.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -105,85 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+On Tue, Jul 23, 2024 at 08:00:57PM +0900, Akihiko Odaki wrote:
+> On 2024/07/23 19:58, Michael S. Tsirkin wrote:
+> > From: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > 
+> > A virtio-net device can be added as a SR-IOV VF to another virtio-pci
+> > device that will be the PF.
+> 
+> This does not work without patch "hw/pci: Do not add ROM BAR for SR-IOV VF"
+> because virtio-net-pci has a ROM file. Sorry, I should have noted that.
+> 
+> Regards,
+> Akihiko Odaki
 
-This reverts commit 1b889d6e39c32d709f1114699a014b381bcf1cb1.
-There are different problems with that tentative fix:
-- Some resources are left dangling (resv_regions,
-  host_resv_ranges) and memory subregions are left attached to
-  the root MR although freed as embedded in the sdev IOMMUDevice.
-  Finally the sdev->as is not destroyed and associated listeners
-  are left.
-- Even when fixing the above we observe a memory corruption
-  associated with the deallocation of the IOMMUDevice. This can
-  be observed when a VFIO device is hotplugged, hot-unplugged
-  and a system reset is issued. At this stage we have not been
-  able to identify the root cause (IOMMU MR or as structs beeing
-  overwritten and used later on?).
-- Another issue is HostIOMMUDevice are indexed by non aliased
-  BDF whereas the IOMMUDevice is indexed by aliased BDF - yes the
-  current naming is really misleading -. Given the state of the
-  code I don't think the virtio-iommu device works in non
-  singleton group case though.
-
-So let's revert the patch for now. This means the IOMMU MR/as survive
-the hotunplug. This is what is done in the intel_iommu for instance.
-It does not sound very logical to keep those but currently there is
-no symetric function to pci_device_iommu_address_space().
-
-probe_done issue will be handled in a subsequent patch. Also
-resv_regions and host_resv_regions will be deallocated separately.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-Id: <20240716094619.1713905-2-eric.auger@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/virtio/virtio-iommu.c | 21 ---------------------
- 1 file changed, 21 deletions(-)
-
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 33ae61c4a6..4e34dacd6e 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -467,26 +467,6 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
-     return &sdev->as;
- }
- 
--static void virtio_iommu_device_clear(VirtIOIOMMU *s, PCIBus *bus, int devfn)
--{
--    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
--    IOMMUDevice *sdev;
--
--    if (!sbus) {
--        return;
--    }
--
--    sdev = sbus->pbdev[devfn];
--    if (!sdev) {
--        return;
--    }
--
--    g_list_free_full(sdev->resv_regions, g_free);
--    sdev->resv_regions = NULL;
--    g_free(sdev);
--    sbus->pbdev[devfn] = NULL;
--}
--
- static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
- {
-     const struct hiod_key *key1 = v1;
-@@ -728,7 +708,6 @@ virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
-     }
- 
-     g_hash_table_remove(viommu->host_iommu_devices, &key);
--    virtio_iommu_device_clear(viommu, bus, devfn);
- }
- 
- static const PCIIOMMUOps virtio_iommu_ops = {
--- 
-MST
+right, but it's harmless since sriov is off by default -
+so you can just send a patch on top.
 
 
