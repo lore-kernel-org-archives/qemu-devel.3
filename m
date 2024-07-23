@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E672C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 14:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D330C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 14:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWGJK-0005pB-7h; Tue, 23 Jul 2024 10:16:16 -0400
+	id 1sWGIp-0003W4-S9; Tue, 23 Jul 2024 10:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWGJ6-0004n1-BL
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:16:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sWGIn-0003O4-RE
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:15:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWGJ4-0007Cf-GD
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:15:59 -0400
+ id 1sWGIl-000761-CL
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 10:15:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721744157;
+ s=mimecast20190719; t=1721744137;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
- b=U3wU4ZYFLyhz4Wespq0Y5VKIr6vRXRVq/frBwNV8Rds9xeOIKJ9Bda7pgopIveHb3phgny
- ZJTRODG2nEQmJtZjgyKK8rJM23I58Fj6TBlxLdq1Z5eOnBOc5Rfd3DISyHhd25WRji1s9C
- 5G/z8YWm4y3tMf1nMZZUriVDFvMl5HA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mKFZHRAaNx5SH+JoVPvMhA+txKbl3gPY3EVh/Uef8VU=;
+ b=du+1IeJqsZq3ZwBaiwMGmOYRoXAALqNdc46/wq00S0IJB5cohFoa0gn/ayShXyDM1tNpJC
+ kTnv2qODnDmU8GI3fk0xy7Y+xFDZDj4PY9hjVg8tb+xXg6JEHwFz4ETRBYDfQwkUIZXiHC
+ UxQo4RnWvREGpT3p3wJVf29zGGG58FY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-QP2sPeAlPYG5L11ZrGhasw-1; Tue, 23 Jul 2024 10:15:55 -0400
-X-MC-Unique: QP2sPeAlPYG5L11ZrGhasw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42660bca669so37990285e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 07:15:55 -0700 (PDT)
+ us-mta-85-n4SHEXKOMNa2J8i0M2CyFQ-1; Tue, 23 Jul 2024 10:15:36 -0400
+X-MC-Unique: n4SHEXKOMNa2J8i0M2CyFQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3688010b3bfso3905477f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 07:15:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721744154; x=1722348954;
+ d=1e100.net; s=20230601; t=1721744135; x=1722348935;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SH5zwolTSCtrBQQLhcJsS5itYtwTMNlK41Ys5KgMIiY=;
- b=wDf0u4IzsppdHRZ/tBdjHPO4kxdK27VlAkvxam9EkmgguYUVh3tHhsAUtajoJD82X5
- aBN0d6F+MX8tIowJp5GLc6efUurgGXe+X8P5LfksxQ+57496AE5lc8iTy2mYMaWvSJUp
- DkJK8cBh5+enhsigpHJJhD0hLrLb0Sm6153RYrfOvFjiCxsgGRR8LA8175nqIOI1KcGE
- nCU37pcjiwry6e4603dzkC70xg17a5wKhjWcd4C/PWtjjPzTnpNhQ93IJz6/mFFGwVGp
- 4iLAAL5RW2UoLGbGroOeNM60ruXWrq8s+qcwjWsGTI914yPICSbFounW/ISVQAfml0yi
- D9nw==
-X-Gm-Message-State: AOJu0Yxu4tcnny8wQc74osTY9Nz/w3iVbF1AVjTUffNnO7B/KjL/8vPr
- kFQHV/K4zaUywxhx7/NLhEsfWKqoggJewhxCY/mfcB0IaiSOzrK5UayaUlFSho1Dsh20+Hybnr/
- UsAomI3HigqhMX4rIboCKcFsR7Ot+vD2hq81OHzhb+0Ist+i8kNrNW7UyDvtxsliTy2UhsQPsk+
- 1et2o6U0ze+s5dH/DOf/YtO4N8h7JXRQDgI5qZ
-X-Received: by 2002:a05:600c:4f0d:b0:426:5ee5:3129 with SMTP id
- 5b1f17b1804b1-427dc515367mr69171435e9.2.1721744153773; 
- Tue, 23 Jul 2024 07:15:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNOp9d6hFP+NpQkNTRYrKZVdTtf3UQ/unBSjrGHXaiLoEkZb6Lmaz0CmtgiyEXACIChg3xZg==
-X-Received: by 2002:a05:600c:4f0d:b0:426:5ee5:3129 with SMTP id
- 5b1f17b1804b1-427dc515367mr69171335e9.2.1721744153444; 
- Tue, 23 Jul 2024 07:15:53 -0700 (PDT)
+ bh=mKFZHRAaNx5SH+JoVPvMhA+txKbl3gPY3EVh/Uef8VU=;
+ b=aJHzKpanxy9zKxxyu2mirjXqWWrBSQTlOHMHVHCuJ5RGGGb6BFcTGGfoCIgocsY3GI
+ jP9jlMLglPuX396V1/uylV2HgxvkKE/1Ie7lCM1HVvUEr0+PFdYqxc5hECV9ya/dqB97
+ /RsozR5vgDTpi0o3OJlCW46ypNPS8qCE0pSprmzB8f4l/JGjfOpw4KP6Yg67JEuMtdwt
+ dib4xtBXYWVMFXLvNtN04V/oOzPy7HRL7/bBartzCWF2TC67xe2Wo+78n3DASfeyCrmt
+ U38HNeudmGtTDKrhjvZbkbRdrHON+mIM+g2jfl+Mk5M56hoa1LiVdvxRGAGBAoZBBjlW
+ Rudg==
+X-Gm-Message-State: AOJu0YzSfag8qlKYIRC9Qvziy5czcja8gWCTA3n+zG1s2Ig8vlGFWduW
+ D13BzWiRq1b+phawx1lt92rEnhp3cVPItQFYN0FcyOVMdBsrQRUT6AdZlcdT9XSGhwmGrrn2IHf
+ 12ivDqtM0aaHdsuFiXwMMztVrUs34lyFU2gPa6mwUDaUnux/h0mLHxiZydjmWQLxuq1b9PfCSsO
+ btArPh9UK59Zi4rWPGTJYDxWqEzWVzPMudUIyi
+X-Received: by 2002:a5d:5f84:0:b0:368:3f5b:2ae7 with SMTP id
+ ffacd0b85a97d-369bae4ce9bmr9044108f8f.24.1721744134648; 
+ Tue, 23 Jul 2024 07:15:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFu03skEy5KoGckN7VOYKRL7fUjzaBpx1R3byVezDDiNsStsAtQ8yP5eG2RT8Csix728vOlw==
+X-Received: by 2002:a5d:5f84:0:b0:368:3f5b:2ae7 with SMTP id
+ ffacd0b85a97d-369bae4ce9bmr9044075f8f.24.1721744134200; 
+ Tue, 23 Jul 2024 07:15:34 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-368787ec6e5sm11638830f8f.96.2024.07.23.07.15.52
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3687868ac48sm11710596f8f.29.2024.07.23.07.15.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 07:15:53 -0700 (PDT)
+ Tue, 23 Jul 2024 07:15:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/11] hpet: place read-only bits directly in "new_val"
-Date: Tue, 23 Jul 2024 16:15:26 +0200
-Message-ID: <20240723141529.551737-9-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org
+Subject: [PULL 01/11] target/i386: do not crash if microvm guest uses SGX
+ CPUID leaves
+Date: Tue, 23 Jul 2024 16:15:19 +0200
+Message-ID: <20240723141529.551737-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723141529.551737-1-pbonzini@redhat.com>
 References: <20240723141529.551737-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,70 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The variable "val" is used for two different purposes.  As an intermediate
-value when writing configuration registers, and to store the cleared bits
-when writing ISR.
+sgx_epc_get_section assumes a PC platform is in use:
 
-Use "new_val" for the former, and rename the variable so that it is clearer
-for the latter case.
+bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+{
+    PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
 
+However, sgx_epc_get_section is called by CPUID regardless of whether
+SGX state has been initialized or which platform is in use.  Check
+whether the machine has the right QOM class and if not behave as if
+there are no EPC sections.
+
+Fixes: 1dec2e1f19f ("i386: Update SGX CPUID info according to hardware/KVM/user input", 2021-09-30)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2142
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/timer/hpet.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ hw/i386/sgx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 380e272fbeb..831e5a95b09 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -510,7 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
- {
-     int i;
-     HPETState *s = opaque;
--    uint64_t old_val, new_val, val;
-+    uint64_t old_val, new_val, cleared;
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index a14a84bc6f6..849472a1286 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -268,10 +268,12 @@ void hmp_info_sgx(Monitor *mon, const QDict *qdict)
  
-     trace_hpet_ram_write(addr, value);
-     old_val = hpet_ram_read(opaque, addr, 4);
-@@ -536,13 +536,12 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-                  */
-                 update_irq(timer, 0);
-             }
--            val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
--            timer->config = (timer->config & 0xffffffff00000000ULL) | val;
-+            new_val = hpet_fixup_reg(new_val, old_val, HPET_TN_CFG_WRITE_MASK);
-+            timer->config = (timer->config & 0xffffffff00000000ULL) | new_val;
-             if (activating_bit(old_val, new_val, HPET_TN_ENABLE)
-                 && (s->isr & (1 << timer_id))) {
-                 update_irq(timer, 1);
-             }
--
-             if (new_val & HPET_TN_32BIT) {
-                 timer->cmp = (uint32_t)timer->cmp;
-                 timer->period = (uint32_t)timer->period;
-@@ -623,8 +622,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-         case HPET_ID:
-             return;
-         case HPET_CFG:
--            val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
--            s->config = (s->config & 0xffffffff00000000ULL) | val;
-+            new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
-+            s->config = (s->config & 0xffffffff00000000ULL) | new_val;
-             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
-                 /* Enable main counter and interrupt generation. */
-                 s->hpet_offset =
-@@ -658,9 +657,9 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-             trace_hpet_invalid_hpet_cfg(4);
-             break;
-         case HPET_STATUS:
--            val = new_val & s->isr;
-+            cleared = new_val & s->isr;
-             for (i = 0; i < s->num_timers; i++) {
--                if (val & (1 << i)) {
-+                if (cleared & (1 << i)) {
-                     update_irq(&s->timer[i], 0);
-                 }
-             }
+ bool sgx_epc_get_section(int section_nr, uint64_t *addr, uint64_t *size)
+ {
+-    PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
++    PCMachineState *pcms =
++        (PCMachineState *)object_dynamic_cast(qdev_get_machine(),
++                                              TYPE_PC_MACHINE);
+     SGXEPCDevice *epc;
+ 
+-    if (pcms->sgx_epc.size == 0 || pcms->sgx_epc.nr_sections <= section_nr) {
++    if (!pcms || pcms->sgx_epc.size == 0 || pcms->sgx_epc.nr_sections <= section_nr) {
+         return true;
+     }
+ 
 -- 
 2.45.2
 
