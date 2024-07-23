@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C959C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 03:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102E7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 03:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW6Xv-0007zp-S5; Mon, 22 Jul 2024 23:50:39 -0400
+	id 1sW6cL-0004vU-UH; Mon, 22 Jul 2024 23:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sW6Xv-0007yu-0r; Mon, 22 Jul 2024 23:50:39 -0400
-Received: from mail-vs1-xe2e.google.com ([2607:f8b0:4864:20::e2e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW6cJ-0004ui-8q
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 23:55:11 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sW6Xt-00052e-Af; Mon, 22 Jul 2024 23:50:38 -0400
-Received: by mail-vs1-xe2e.google.com with SMTP id
- ada2fe7eead31-492a01bce97so593640137.2; 
- Mon, 22 Jul 2024 20:50:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sW6cG-0005km-GM
+ for qemu-devel@nongnu.org; Mon, 22 Jul 2024 23:55:11 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70d150e8153so1527287b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jul 2024 20:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721706636; x=1722311436; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TY2F/ZSPeN36+ezoauhtgQTbsqUJjegQlVcrfaa/MO8=;
- b=j+e07wPak01AuylhXJ6dzaZ2SvGxrV6ecvtUBwdqe6Jw1cjpTXYLlgFjL62/lBxpee
- mYGO4l4PEx4CfrCo6JKwNGQ2tFCt1KG+uMiyG7y7f6I1RgLopHehCumBJwaT8f+Y125f
- 6GHIxxkqPVlQ1DUKX/kZSwYbYWk4O22KI/wKL+S78gPKWED2UCie1Hhjix2WKHyvRnl4
- TQPIb6mXj9OUUKSwtp932xJMZCciDZXPp6SlaOqv0khfxlKBTPemboQlzGu8E1WVWNqi
- 1t5eOx+IXvO13pm8nY3r6RKP1jTNVWLcaJYttvfTk/WEHsjjfxgfyU/eOqMIWxwnyANk
- ac9A==
+ d=linaro.org; s=google; t=1721706905; x=1722311705; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1eoic1U8m1HOXGhnul3aYFHyQK5Snvw6/hPHlywAWT4=;
+ b=ElFT3ctuyXBYfjBPipz2DI0uSvuqHwN/GGtheXoXYuNZheV6LT61oHGc4bGJAc6oSh
+ hfD/h6wGpDVMrH653A4x/lVhrZ9lPjZbwYATbwZiuzcESEwmkJgce9R7OuKVFsM4Jz8h
+ a17vvDChp/6+Mex5r5wiJsPQT3w77r9mwcGu3ztONPXZIn60hI7oiqs4uA/F+c0aOyqg
+ BTLirU2/VBMIN5DFVJO2BX+cOqxp6eRnWJtZqTvuj3Hc+jHuNNI4/ZWDIlW5dnyYaYnn
+ OGBqjTw/ZHC6l5vrZ5cbB9a7XUQirZW2hlOQJS550PrZWM7ECyTuxti998xSKASfdR/i
+ 1FYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721706636; x=1722311436;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TY2F/ZSPeN36+ezoauhtgQTbsqUJjegQlVcrfaa/MO8=;
- b=h0LQ0LsUBUOAPNM3Co70SbRUH+cViDXgC1wOVx+/hp+Fki1WGOVeoRK2LifMCzN4Vy
- MBJPvm8OrIUiCL8z2+9H9ggRmn4p10zZvQcMQKEn3kILEvMr6nys+uDsE5iKYzWTNgMj
- t1e91SdO2qJleqam7RxOLpcEkPBH7A0Ckb11V5fVszSlf+1uO2QW73OdkkqlmyZuhPcg
- FcKQw0L3ZXfWFoUlBQ+072TyWz+NaQWhxuZZSIOASI+vN/2QEOyFlqtSNGrBR4cC0Rk5
- YVkmlE/NwQK1IQuG1NpbGlf8be3kw52rpw4hkbDR90NsMG8DQa4k9vYpvuaB8xD2ogdM
- 4cbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjlN0IlwWwo1MndxMkqp2pUzxGresfqrzSg/9PHfp39+vkJS2+pcEcn4S7IEcOOy7GZbOiFuDcMe9WCsUliByIT+gk2+E2yLM+19VjvJHMsffOvqhAwMPN7J7Ifw==
-X-Gm-Message-State: AOJu0YzD2Gc/cYnM1uw8Y5wMZoNwn/MyF4xXFyug+6fCFZ981OPnH23p
- uyOWETccixcCRxXka387+t423bIj9mLyWZazJV819CqNzJtFWHqp/qe9g7tkmsUhRQbOiORuYhQ
- 8S1oZv0qZWH0lIv//u8nRcZiHO+c=
-X-Google-Smtp-Source: AGHT+IFCaiS2yHfSMWcY4cyP1I0Pap3bS+CpXzIxClXyKsSEny5RTI+tn1iDILFlYNS6/RoPZ+we7TP2CF5p9X4vj48=
-X-Received: by 2002:a05:6102:3c8b:b0:493:b4e1:634a with SMTP id
- ada2fe7eead31-493b4e16bbemr1318452137.8.1721706635845; Mon, 22 Jul 2024
- 20:50:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721706905; x=1722311705;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1eoic1U8m1HOXGhnul3aYFHyQK5Snvw6/hPHlywAWT4=;
+ b=VB4F1CnBw1eSyUG4eB1o4T/VqZNR+DGSGfHnvGplfD6zKMmItJs/wAgUi+04aiZ+Yw
+ MI/aO8JT52Vrf1U3f4pcGPdu8fwF3MnIMcP5k7hSTdHJwo55LOIXvFBqt2r1rFajH+l1
+ VHw76NCnKJ8dw2YxqHGhD1Y/7XdbC3birkqGnOjkSFTGzPv2IEQ2uqIqrtvOFiVl54D1
+ mYhwdTIvhFFP7vbqcD1kNflmtpcfPo8NptWUbPk8cOvNYvjy8gwqYcEIm8/FULe7/W5T
+ hLOd3+L4wc44cqlsBpNrpfes7GjVD8AkZO5R3bbFOogVbuX2Pvs8vO/QApimCjuL1HeP
+ hpHw==
+X-Gm-Message-State: AOJu0Yx6AX+nqs0FoByi8CB5k4SEy6us8OIOsBBA76wy5YFvNYR+b/lV
+ kAb723zVnhBtTqYsq8MEHd8s87uR9xuu54UshtKTYft3pXJm2Yr0M8sIf7d8rDJPfMpKFN+OcLX
+ XOcly9Q==
+X-Google-Smtp-Source: AGHT+IHseLzmaYiWvwDNXVrOXtZUYf9AZUTJQ+bzMK84A4D14VvA+FANIKhdQlGwiTxj3gT1pUx51g==
+X-Received: by 2002:a05:6a00:4b14:b0:70d:3395:d03 with SMTP id
+ d2e1a72fcca58-70e807500b2mr1332377b3a.1.1721706904826; 
+ Mon, 22 Jul 2024 20:55:04 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70d2a34b18esm2399437b3a.125.2024.07.22.20.55.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jul 2024 20:55:04 -0700 (PDT)
+Message-ID: <c4ac5ef6-2a15-493d-93c2-1e8b0dc09993@linaro.org>
+Date: Tue, 23 Jul 2024 13:54:59 +1000
 MIME-Version: 1.0
-References: <20240723013012.1443-1-zhiwei_liu@linux.alibaba.com>
- <dea63117-cabd-4669-bffd-e8c0cb8d9147@linaro.org>
-In-Reply-To: <dea63117-cabd-4669-bffd-e8c0cb8d9147@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 23 Jul 2024 13:50:09 +1000
-Message-ID: <CAKmqyKPAeXbRpFYFsypmw8GqOcysNEy=C+XBysz6X9veRLbr+w@mail.gmail.com>
-Subject: Re: [PATCH 1/1] target/riscv: Remove redundant insn length check for
- zama16b
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2e;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/16] Final bits for 9.1-rc0 (docker, plugins, gdbstub, 
+ semihosting)
+To: qemu-devel@nongnu.org
+References: <20240722230406.369447-1-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240722230406.369447-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,38 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 23, 2024 at 12:13=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 7/23/24 11:30, LIU Zhiwei wrote:
-> > Both trans_fld/fsd/flw/fsw and gen_load/store will never be a
-> > translation function for compressed instructions, thus we can
-> > remove instruction length check for them.
-> >
-> > Suggested-by: Alistair Francis <alistair.francis@wdc.com>
-> > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->
-> That is both false (trans_fld is used from trans_c_fld), and not the take=
-away you should
-> have gotten (the operation of "fld" should not depend on the encoding).
->
-> Perhaps FLD/FSD should depend on the ISA (RV32 vs RV64), but perhaps not.=
-  I cannot tell
-> because I don't see a specification for Zama16b in
+On 7/23/24 09:04, Alex Bennée wrote:
+> The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
+> 
+>    Merge tag 'pull-aspeed-20240721' ofhttps://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-9.1-rc0-230724-1
+> 
+> for you to fetch changes up to c135d5eaafe7aa2533da663d8e5a34a424b71eb9:
+> 
+>    tests/tcg/aarch64: Fix test-mte.py (2024-07-22 09:38:17 +0100)
+> 
+> ----------------------------------------------------------------
+> Maintainer updates for testing, gdbstub, semihosting, plugins
+> 
+>    - bump python in *BSD images via libvirt-ci
+>    - remove old unused Leon3 Avocado test
+>    - re-factor gdb command extension
+>    - add stoptrigger plugin to contrib
+>    - ensure plugin mem callbacks properly sized
+>    - reduce check-tcg noise of inline plugin test
+>    - fix register dumping in execlog plugin
+>    - restrict semihosting to TCG builds
+>    - fix regex in MTE test
 
-It doesn't seem to depend on the ISA xlen.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-The whole spec is just a simple one liner. Apparently that is an extension
-
-https://github.com/riscv/riscv-profiles/blob/1fe6f65f130c219c761142e74742d2=
-409c173c40/src/rva23-profile.adoc?plain=3D1#L176
-
-Alistair
-
->
->    https://wiki.riscv.org/display/HOME/RISC-V+Specification+Status
->
->
-> r~
->
+r~
 
