@@ -4,91 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1672C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938D1C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 07:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sW9W7-0008Ok-UD; Tue, 23 Jul 2024 03:00:59 -0400
+	id 1sW9YC-0004nO-Qo; Tue, 23 Jul 2024 03:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sW9W7-0008OH-1I
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:00:59 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sW9YA-0004lt-Ke
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sW9W4-0000RV-Ql
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:00:58 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sW9Y8-0000j7-IH
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 03:03:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721718054;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nFl3HrwLjoySraknE8EuzIsY/PKufmEFbFHCeaLFeYM=;
- b=KHuBPdvG3eW/8TawW0LaLc1BYzTfwllxhn2J5GxY4mte9gHQ0+mjLViW0e0DePULhgjcom
- l4oiNC1tgEM6Z5QH8h6VOBVN+4fmjPTRh59FPWM5n668jaDaMPD8vszQBPsXtpPvAcEak9
- ITVVO49PpzLqCF7FXgi7HahOsXEsrME=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-4tD9g351MY2Nr8m0cI7y9g-1; Tue, 23 Jul 2024 03:00:51 -0400
-X-MC-Unique: 4tD9g351MY2Nr8m0cI7y9g-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-79f19f19b11so718693585a.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 00:00:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721718051; x=1722322851;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nFl3HrwLjoySraknE8EuzIsY/PKufmEFbFHCeaLFeYM=;
- b=gg/ytc0EYlPK4cek1kOJO89K0uw475bNcmN4yW7A2hwXi+PZw0SJZBeLeGPpKWFG6M
- 0dPUUuDDyLqk8GE1ScMar9JCvbYCZJwoAFe8NbbedZxeBS3DD8uU4iQntR5cKANVWrfA
- PenKIuy/qWF+MGXNjd1gjvVWkHtSpyJdCj7Pcf5k2SMNo7SFwhPi/qaiF6sZEa/KFjOT
- yIok/DEb0Gy4qhJlVwrTcDRwPwklD2E8JsNseQ+izC1mq9oLraFstAi32PCcPhEmxMea
- 6vPLeMdlSnIoB4G7XkHsMhI0Qu7HKWsBVLi1cQNeWqYigDSA51khuC9Mhjn3iCFRki0i
- 19kA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrWNK6/IlZ0+F4v0snwEnJGtyLAbgSEG/ASgObgBvGE8QOFqK8OLj/bqeCqCeS7Z8n8GlObv/fIUiTaIrNdOfO0w5414U=
-X-Gm-Message-State: AOJu0Yx8N9GblNNF7MKUwlxxgfAp7NVIp74KfWyxQKD1W/+PqToLWI/j
- VvwFOkISR4rnSlZ7vrOwX/my7WMBj6IeXWltwDvyKMBe3xc01/7svjyuU9bymYthynC642hhOW6
- 6tcP2y/6Htzz/2wzIZ+lQDAlzTYtXJqq5SrjPy6wRNR6dpFf7tLvL
-X-Received: by 2002:ad4:574e:0:b0:6b7:a7b7:de9b with SMTP id
- 6a1803df08f44-6b98192b449mr27583286d6.20.1721718050926; 
- Tue, 23 Jul 2024 00:00:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHaCh794YKi6Z3rcVVxFy13yO9HITLNgjKeS2Deve3pWLGrskD45GhL3RPqdjxhJOYod3Bd8Q==
-X-Received: by 2002:ad4:574e:0:b0:6b7:a7b7:de9b with SMTP id
- 6a1803df08f44-6b98192b449mr27582876d6.20.1721718050472; 
- Tue, 23 Jul 2024 00:00:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b7ac7e9fffsm43556976d6.63.2024.07.23.00.00.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 00:00:49 -0700 (PDT)
-Message-ID: <50cf5507-ca71-47ac-bc24-8845982b99ad@redhat.com>
-Date: Tue, 23 Jul 2024 09:00:40 +0200
+ s=mimecast20190719; t=1721718181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CsyoIEmBuQrxO80/rU4EaR1vIYtVxKGK4ng5xPeAhWQ=;
+ b=LeRCvrFx6xwIK1LMF/HJgcFWSUgEllk6lkj29Pw5/tk6ajFiHMBIlIXHmcI9WduvWj9w1e
+ 3QE2V3+826zlDyRZBKhIS4Z1oFupMhwN6dUTKGNOYIYif5OhpPB80Vqee0srfxqNpDvy8Z
+ uqlbiz6N5r4Kldb1ul+TrSBqlGlcwVM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-H488ZNsmMVq4lcFmhNv4nw-1; Tue,
+ 23 Jul 2024 03:02:57 -0400
+X-MC-Unique: H488ZNsmMVq4lcFmhNv4nw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B81FB19560BF; Tue, 23 Jul 2024 07:02:56 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.224.211])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CED163000192; Tue, 23 Jul 2024 07:02:54 +0000 (UTC)
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL v2 00/25] Misc QEMU-GA patches 2024-07-22
+Date: Tue, 23 Jul 2024 10:02:26 +0300
+Message-ID: <20240723070251.25575-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/13] vfio/pci: Extract mdev check into an helper
-Content-Language: en-US
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Avihai Horon <avihaih@nvidia.com>
-References: <20240719120501.81279-1-joao.m.martins@oracle.com>
- <20240719120501.81279-2-joao.m.martins@oracle.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240719120501.81279-2-joao.m.martins@oracle.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -108,105 +76,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 23fa74974d8c96bc95cbecc0d4e2d90f984939f6:
 
+  Merge tag 'pull-target-arm-20240718' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-19 07:02:17 +1000)
 
-On 7/19/24 14:04, Joao Martins wrote:
-> In preparation to skip initialization of the HostIOMMUDevice for mdev,
-> extract the checks that validate if a device is an mdev into helpers.
->
-> A vfio_device_is_mdev() is created, and subsystems consult VFIODevice::mdev
-> to check if it's mdev or not.
->
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+are available in the Git repository at:
 
-Eric
-> ---
->  include/hw/vfio/vfio-common.h |  2 ++
->  hw/vfio/helpers.c             | 14 ++++++++++++++
->  hw/vfio/pci.c                 | 12 +++---------
->  3 files changed, 19 insertions(+), 9 deletions(-)
->
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index e8ddf92bb185..98acae8c1c97 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -116,6 +116,7 @@ typedef struct VFIODevice {
->      DeviceState *dev;
->      int fd;
->      int type;
-> +    bool mdev;
->      bool reset_works;
->      bool needs_reset;
->      bool no_mmap;
-> @@ -231,6 +232,7 @@ void vfio_region_exit(VFIORegion *region);
->  void vfio_region_finalize(VFIORegion *region);
->  void vfio_reset_handler(void *opaque);
->  struct vfio_device_info *vfio_get_device_info(int fd);
-> +bool vfio_device_is_mdev(VFIODevice *vbasedev);
->  bool vfio_attach_device(char *name, VFIODevice *vbasedev,
->                          AddressSpace *as, Error **errp);
->  void vfio_detach_device(VFIODevice *vbasedev);
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index b14edd46edc9..7e23e9080c9d 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -675,3 +675,17 @@ int vfio_device_get_aw_bits(VFIODevice *vdev)
->  
->      return HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX;
->  }
-> +
-> +bool vfio_device_is_mdev(VFIODevice *vbasedev)
-> +{
-> +    g_autofree char *subsys = NULL;
-> +    g_autofree char *tmp = NULL;
-> +
-> +    if (!vbasedev->sysfsdev) {
-> +        return false;
-> +    }
-> +
-> +    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
-> +    subsys = realpath(tmp, NULL);
-> +    return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
-> +}
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index e03d9f3ba546..b34e91468a53 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2963,12 +2963,9 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->      ERRP_GUARD();
->      VFIOPCIDevice *vdev = VFIO_PCI(pdev);
->      VFIODevice *vbasedev = &vdev->vbasedev;
-> -    char *subsys;
->      int i, ret;
-> -    bool is_mdev;
->      char uuid[UUID_STR_LEN];
->      g_autofree char *name = NULL;
-> -    g_autofree char *tmp = NULL;
->  
->      if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
->          if (!(~vdev->host.domain || ~vdev->host.bus ||
-> @@ -2997,14 +2994,11 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->       * stays in sync with the active working set of the guest driver.  Prevent
->       * the x-balloon-allowed option unless this is minimally an mdev device.
->       */
-> -    tmp = g_strdup_printf("%s/subsystem", vbasedev->sysfsdev);
-> -    subsys = realpath(tmp, NULL);
-> -    is_mdev = subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
-> -    free(subsys);
-> +    vbasedev->mdev = vfio_device_is_mdev(vbasedev);
->  
-> -    trace_vfio_mdev(vbasedev->name, is_mdev);
-> +    trace_vfio_mdev(vbasedev->name, vbasedev->mdev);
->  
-> -    if (vbasedev->ram_block_discard_allowed && !is_mdev) {
-> +    if (vbasedev->ram_block_discard_allowed && !vbasedev->mdev) {
->          error_setg(errp, "x-balloon-allowed only potentially compatible "
->                     "with mdev devices");
->          goto error;
+  https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-07-23
+
+for you to fetch changes up to 8e326d36dd16b91d9abc4963b5f75b8f637c2312:
+
+  qga/linux: Add new api 'guest-network-get-route' (2024-07-23 09:49:07 +0300)
+
+----------------------------------------------------------------
+qga-pull-2024-07-23
+
+v1->v2:
+  Fix clang build failure of qga/linux: Add new api 'guest-network-get-route'
+
+----------------------------------------------------------------
+Daniel P. Berrangé (22):
+      qga: drop blocking of guest-get-memory-block-size command
+      qga: move linux vcpu command impls to commands-linux.c
+      qga: move linux suspend command impls to commands-linux.c
+      qga: move linux fs/disk command impls to commands-linux.c
+      qga: move linux disk/cpu stats command impls to commands-linux.c
+      qga: move linux memory block command impls to commands-linux.c
+      qga: move CONFIG_FSFREEZE/TRIM to be meson defined options
+      qga: conditionalize schema for commands unsupported on Windows
+      qga: conditionalize schema for commands unsupported on non-Linux POSIX
+      qga: conditionalize schema for commands requiring getifaddrs
+      qga: conditionalize schema for commands requiring linux/win32
+      qga: conditionalize schema for commands only supported on Windows
+      qga: conditionalize schema for commands requiring fsfreeze
+      qga: conditionalize schema for commands requiring fstrim
+      qga: conditionalize schema for commands requiring libudev
+      qga: conditionalize schema for commands requiring utmpx
+      qga: conditionalize schema for commands not supported on other UNIX
+      qga: don't disable fsfreeze commands if vss_init fails
+      qga: move declare of QGAConfig struct to top of file
+      qga: remove pointless 'blockrpcs_key' variable
+      qga: allow configuration file path via the cli
+      qga: centralize logic for disabling/enabling commands
+
+Dehan Meng (1):
+      qga/linux: Add new api 'guest-network-get-route'
+
+Thomas Lamprecht (1):
+      guest-agent: document allow-rpcs in config file section
+
+Zhao Liu (1):
+      qga/commands-posix: Make ga_wait_child() return boolean
+
+ docs/interop/qemu-ga.rst |   20 +
+ meson.build              |   16 +
+ qga/commands-bsd.c       |   24 -
+ qga/commands-common.h    |    9 -
+ qga/commands-linux.c     | 1938 +++++++++++++++++++++++++++++++++++++
+ qga/commands-posix.c     | 2383 ++++------------------------------------------
+ qga/commands-win32.c     |   78 +-
+ qga/main.c               |  224 ++---
+ qga/qapi-schema.json     |  226 ++++-
+ 9 files changed, 2452 insertions(+), 2466 deletions(-)
+
+--
+2.45.2
 
 
