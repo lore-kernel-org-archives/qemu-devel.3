@@ -4,76 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB510C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 15:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42ABFC3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 15:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWHZk-0007px-BU; Tue, 23 Jul 2024 11:37:16 -0400
+	id 1sWHeY-0004b3-LD; Tue, 23 Jul 2024 11:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWHZi-0007nc-OS
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:37:14 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWHeW-0004aH-S6
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:42:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWHZg-0006iv-Jj
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:37:14 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-52efaae7edfso2923327e87.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 08:37:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWHeV-0007qs-4V
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 11:42:12 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso2868261f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 08:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721749029; x=1722353829; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n91GRGqIm3DCerbqoVmbxxcgccj2pxp6vBJiaLeyOJI=;
- b=ZZER7p/GSxjFPNVLE5R+hKrPjcYA5csmjG0L+btDt/3NPSdzeQ1/dl3cqkkQS/NWdG
- pwCDMlNUwMAM/Fne5+PguWc9YYKGbYkV0J31vvGbBf84sOnYoKP/U2R9WCs5Fzdy3mq4
- BK0aAYnfLWk+BtZWRniluYgOJ3JXPQwUfhp2De8gpIEHAkOy6RJ28Qxw04zSUyqaZ13x
- d8JOXsaHd4WU03kZdfx9HrAiOz5wMUkT0hCQ1/Q5mNQ6usPnLWRAxbaGn8BK7MP3A6Ge
- ez++pbaYA51JlkwtARGIhDxFjsKrAFA9SUEVYOeTR/N5ScDQpn+0e25FqIUauJ34iC6W
- 6Y8Q==
+ d=linaro.org; s=google; t=1721749329; x=1722354129; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=z+QzS9QA9QvOiWnY8XIiTLDO7LUpB/9AuTBIybu/pEo=;
+ b=KJckQogUKng5Dy38/H9ru4LZj9tdySsM/Wee3FcckjmqRpjOlE0xim4jKjkWujx0vC
+ +fsPKksko/k7tz+pY912/l0905G+pwS2WA+Fp9DRP/EIufG2QJFmYKk/jKWeMwMafEkF
+ 53U19xcu/YXLRn03yHVbHMNoaTIu/W6XKH0davUc0KcQC9Hsqp1sc6bd6ks8uAXGkTiY
+ Irg8GehmUmO8s0yrBXNJm9yxphXJOw+sZe4hNdk8pq/Mb9W6IVPsSqvUnjohJlwOF1XL
+ 8sp+6vkl9J7jgK7nrtwwpCFpr4SqEyKWZPl/3gFhmQJAplUdo6vfriEfvENfXpucfY7X
+ eb/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721749029; x=1722353829;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n91GRGqIm3DCerbqoVmbxxcgccj2pxp6vBJiaLeyOJI=;
- b=sxRt0Qts3DSifjLscklH0tpdcUzUd2XjAA0uwBcTwNMweq9dlVcXg5b0VQAeGO68AU
- kh+MRqaQrwAp1yqS5uiddn79KUNYSRaA3+LwktLQTehDVz49iG7vkuBKzO3eL/UzxFwt
- uLMIMJlQhhyt2OH6C8JAAaE0PjkTYDB/H/hBaJ3pZeuPzoANUZqXX/rdWGUYF+hs4UDI
- 0z4fYWv/Zk2/tJ6eheDHL2buIAGTarzSRR5AsvIsrRbq+U75HDR8tw1g2Prf+z4H1mUY
- 7iXOn4EpFf5x/ysRqFEA7JdQDVw0AkQrhz2TOldhtpXLy/+9dwabRq52PJWBnSHCzxu1
- Pdlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9HQ4EjdsqISNAo64ybtJZjdY4opSurqfb0T/Cv/Wt0k5/P4m+3V8QaW8gXTzPv+OsIlvh16HFXd2dGYhx6PTZQu5Zdsg=
-X-Gm-Message-State: AOJu0Yz3oFbu0+sOSuqYS2vej84iuA6wSo7wDmmcSvoJ46kA66LfQToj
- aldneFlUAC6+W2F+l7Bho6vC+7kgB+zvkZ4FXoYNfrx/yFNMps3wfVck1h5KiXc=
-X-Google-Smtp-Source: AGHT+IFOjqrVn+hBe54kUtayeME9x9gskul2HfudPBGCQHh+j1H80w6TTD68saRfBVcKeZxlNQC7Og==
-X-Received: by 2002:a05:6512:1250:b0:52e:e3c3:6476 with SMTP id
- 2adb3069b0e04-52efb895e52mr5890951e87.42.1721749028640; 
- Tue, 23 Jul 2024 08:37:08 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.14])
+ d=1e100.net; s=20230601; t=1721749329; x=1722354129;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z+QzS9QA9QvOiWnY8XIiTLDO7LUpB/9AuTBIybu/pEo=;
+ b=Yl+8KHJNFXJ/C19HdvtEScir2EFfkmsc4vKAOylNi3B/fnrbVYR2KtMpy/kUwSRvNY
+ O1dAXG9RfqurRCwgBPi2DjELS9PTOvuWF7hM/ytE9ombLmA2ID9t2wZ9yDJDg3NIKktA
+ nnvXKLcVq7zQj1X3CWz0Togzf4vZP4wdmQcvrLQIJHDqJ5wwoGpkn9ivlByGQNRr/6sW
+ uZpgqdNNwuW4ABu62pXgBsgfi2rKgvoNrhkgYIp/tjhDmuDnNvTqF9IVbXoUWFEI4UX+
+ GgCdEhfoLUVvG8ULc/Lp9ntnAHQXSBhgAZds8J6AeybxTNIFrXq7U3MZZ9rGSlnHbBEV
+ TK8Q==
+X-Gm-Message-State: AOJu0Yw5jBa899EJ9tcYurS4uVX7FD2Gm+lypEbLD5fW3hnbOKjXI/IY
+ MzvsGCztC+OnEcKmjdouf3WQCxLl14jXdKPZEm8FtPOVcXg9qCkbIJe+oBCxDidX4r4eo1HTCv1
+ 2
+X-Google-Smtp-Source: AGHT+IFRlXsHz++WfB7YODqOIAi6LA4seUVxC0ISLmd3ZvoOX59FqKWcmPto1nmLFADTZymRJeLleA==
+X-Received: by 2002:a5d:64ac:0:b0:367:8e52:3bb9 with SMTP id
+ ffacd0b85a97d-369e3f179b3mr2443752f8f.22.1721749328939; 
+ Tue, 23 Jul 2024 08:42:08 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427d6929827sm178049935e9.34.2024.07.23.08.37.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 08:37:08 -0700 (PDT)
-Message-ID: <f3558004-946e-4620-924d-5e6e2402a259@linaro.org>
-Date: Tue, 23 Jul 2024 17:37:06 +0200
+ ffacd0b85a97d-36878694833sm11858198f8f.55.2024.07.23.08.42.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 08:42:08 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH] target/m68k: avoid shift into sign bit in dump_address_map()
+Date: Tue, 23 Jul 2024 16:42:07 +0100
+Message-Id: <20240723154207.1483665-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/tricore: Use unsigned types for bitops in
- helper_eq_b()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-References: <20240723151042.1396610-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240723151042.1396610-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +91,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 17:10, Peter Maydell wrote:
-> Coverity points out that in helper_eq_b() we have an int32_t 'msk'
-> and we end up shifting into its sign bit. This is OK for QEMU because
-> we use -fwrapv to give this well defined semantics, but when you look
-> at what this function is doing it's doing bit operations, so we
-> should be using an unsigned variable anyway. This also matches the
-> return type of the function.
-> 
-> Make 'ret' and 'msk' uint32_t.
-> 
-> Resolves: Coverity CID 1547758
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/tricore/op_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/tricore/op_helper.c b/target/tricore/op_helper.c
-> index ba9c4444b39..a0d5a0da1df 100644
-> --- a/target/tricore/op_helper.c
-> +++ b/target/tricore/op_helper.c
-> @@ -1505,8 +1505,8 @@ uint32_t helper_sub_h(CPUTriCoreState *env, target_ulong r1, target_ulong r2)
->   
->   uint32_t helper_eq_b(target_ulong r1, target_ulong r2)
->   {
-> -    int32_t ret;
-> -    int32_t i, msk;
-> +    uint32_t ret, msk;
-> +    int32_t i;
+Coverity complains (CID 1547592) that in dump_address_map() we take a
+value stored in a signed integer variable 'i' and shift it by enough
+to shift into the sign bit when we construct the value 'logical'.
+This isn't a bug for QEMU because we use -fwrapv semantics, but
+we can make Coverity happy by using an unsigned type for the loop
+variables i, j, k in this function.
 
-We could even reduce 'i' scope to the for().
+While we're changing the declaration of the variables, put them
+in the for() loops so their scope is the minimum required (a style
+now permitted by our coding style guide).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: Coverity CID 1547592
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I could have just marked this as a false-positive, but it
+just about seemed worth making the change overall.
+---
+ target/m68k/helper.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 7967ad13cbf..4c85badd5d3 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -479,7 +479,6 @@ static void print_address_zone(uint32_t logical, uint32_t physical,
+ 
+ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+ {
+-    int i, j, k;
+     int tic_size, tic_shift;
+     uint32_t tib_mask;
+     uint32_t tia, tib, tic;
+@@ -502,19 +501,19 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+         tic_shift = 12;
+         tib_mask = M68K_4K_PAGE_MASK;
+     }
+-    for (i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
++    for (unsigned i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
+         tia = address_space_ldl(cs->as, M68K_POINTER_BASE(root_pointer) + i * 4,
+                                 MEMTXATTRS_UNSPECIFIED, &txres);
+         if (txres != MEMTX_OK || !M68K_UDT_VALID(tia)) {
+             continue;
+         }
+-        for (j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
++        for (unsigned j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
+             tib = address_space_ldl(cs->as, M68K_POINTER_BASE(tia) + j * 4,
+                                     MEMTXATTRS_UNSPECIFIED, &txres);
+             if (txres != MEMTX_OK || !M68K_UDT_VALID(tib)) {
+                 continue;
+             }
+-            for (k = 0; k < tic_size; k++) {
++            for (unsigned k = 0; k < tic_size; k++) {
+                 tic = address_space_ldl(cs->as, (tib & tib_mask) + k * 4,
+                                         MEMTXATTRS_UNSPECIFIED, &txres);
+                 if (txres != MEMTX_OK || !M68K_PDT_VALID(tic)) {
+-- 
+2.34.1
 
 
