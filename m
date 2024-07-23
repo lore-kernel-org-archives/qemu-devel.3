@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BBEC3DA63
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3C8C3DA63
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jul 2024 10:56:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWDC9-00034s-Bk; Tue, 23 Jul 2024 06:56:37 -0400
+	id 1sWDBw-0001Vs-Li; Tue, 23 Jul 2024 06:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDC7-0002pe-9Q
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBu-0001CU-BM
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDC4-0001iW-Oc
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWDBs-0001fr-2p
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 06:56:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721732192;
+ s=mimecast20190719; t=1721732179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qcwAVQlpIclpTqaGgIStn6XGFvx5TOswyNM1MDIov58=;
- b=bweogRqnx3PCECCs62pe9P+vtFzYQP0SyMr3minTO0bpuUXdreUNjIox5twfAnTdZlSgxe
- wAD6VCh+MJ+UJ2iIEoBSHTbR2YR1Xuv/jTrIX4FgYCHP2pOnkhO0ADEu+vjuebRFLHYaU6
- gljrnRmF80cDZ2Y2wHxqyDd+Z9woP0c=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=D6a6rs+lqNePMYg6fXsfNOdsN7cy/NFFK4flSLPM9E4=;
+ b=i4WzW+kBf6TRNsqthDeFzrE/cejVcVY8won2Nr4waP8lwO8/c7CzzwSm1YR7Kp6ppsN/TC
+ NYuBA1t3Q/7zW49vtpmCK7G1Cb45TV0D8/8yq8R0MiWWQ5GdWnutaivZ5Ag2FdhmXuacBR
+ Kk+3oBSshoirguZaz5AQcY//70hjXKw=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-7rnGWBXNMB2FbSX766miUQ-1; Tue, 23 Jul 2024 06:56:30 -0400
-X-MC-Unique: 7rnGWBXNMB2FbSX766miUQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a7aa56d8b14so3855366b.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:30 -0700 (PDT)
+ us-mta-679-QrKLZB1aMm-lsend54fwfw-1; Tue, 23 Jul 2024 06:56:17 -0400
+X-MC-Unique: QrKLZB1aMm-lsend54fwfw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7275e17256so66446566b.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 03:56:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721732189; x=1722336989;
+ d=1e100.net; s=20230601; t=1721732176; x=1722336976;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qcwAVQlpIclpTqaGgIStn6XGFvx5TOswyNM1MDIov58=;
- b=TSqmvFE0c29jOoJreLRpp9ZLaVT3avn0fOdwsMp0ogYRJqZ9h92mw81FHdlvDeFXWM
- LsEu24I/+X+byA0E8MN6mQyYMFtQ9T9CzioE5bSvOmiqDu9zfBaxZZvWaALyhvYeTvxx
- /Dw2FSU4mcpo0upoKrpmFzv8xW2BY2um6dZVla6BvPb4b67wczoQsPMRPNa23L4DbDED
- TDghby3PkrrrgOkR88hwZ/yOJ/dlvOBFWRFy50TJojO9CcX73TRtTI2xQ4pJanm4zTF5
- VmEskgL9kOjEJvRlGAaT48sbnNG0f4kAtKmRsoy0J3WNsOqlBkxiUZFHP6LsJIz+OjiU
- XHTw==
-X-Gm-Message-State: AOJu0YypV1g7wGbkN2A3v/rLsTkqlcR04K+2B9pSJFoqmTLimIWiGUuw
- duzuKuDHQZhO1+BMmM6wWkd2ISsVVApO97C5tKDLGJfaLpj4YApSBQnaZNQe/idurmD5+nxj77E
- +zOXxRMWNSc8qJMJbrn9QKh9cV6ajWhTVTiWA5VOJ/DqVHNkrNRr+5nOCA0pZWoQ6KBmLLUjGUC
- OxUNpfmmwWvyvUh0oZTgq/fkLktlXqQw==
-X-Received: by 2002:a17:907:7244:b0:a77:e48d:bc2 with SMTP id
- a640c23a62f3a-a7a4bfbdd2amr701568066b.3.1721732188859; 
- Tue, 23 Jul 2024 03:56:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHf+miQGCVRG1jmn9x+RTL/R3CVN6tV/LegxzmAHCZ9fZe0CjwURjHc3usx6/AR5EKEY/xaBQ==
-X-Received: by 2002:a17:907:7244:b0:a77:e48d:bc2 with SMTP id
- a640c23a62f3a-a7a4bfbdd2amr701565166b.3.1721732187897; 
- Tue, 23 Jul 2024 03:56:27 -0700 (PDT)
+ bh=D6a6rs+lqNePMYg6fXsfNOdsN7cy/NFFK4flSLPM9E4=;
+ b=fQsU9NKPYCOzFkLcb1DjqO9OZkBp89Sc1aZ5IPUfN1G4Lvr0Xwx5m3Zj0+9fA+zG7K
+ FLcvxuji7Ixu3qoIrspJHMViPRSFs/5HzdsW/HPA8iIsueoCSd3oTCPxp/oNd9ngB7Hk
+ iEDRrfeI1IfeckdWvDgiLwPuGe1GbU37mn77YAdQ3F+qrXnTcXyPtwEFz78EaG+kdfYe
+ 9BgMME6izfBVss5s8iXr22nOw8dxIv02TR7cWxkLEYJ2CRvgzG8OqkIRuvMHVch/2rPJ
+ 65O27MbtSagUxA4t/XJcqh8DWydHPApc09+JMWDg3Ey9SkNMbflzE/nQznJ/bwN1Se51
+ lrNQ==
+X-Gm-Message-State: AOJu0YwhlF3S6T4GV3HEbLO8Z+jeUuypcIjp4j6quy0rBmHA5NjLsfHr
+ Szy7z58T5zbtYewLizE5sNZCdCE4P3l6D7E2o+C+M3jHfeHq4+a+LIYISzADhiAVX8Vy+czJZzn
+ fLIwuTfDRbG1zCrVOLLv401z81Nv4y/MbdDu35kh5WMwfrFHqPju8vJLVc1ktlPTF0dj6tz+OMp
+ izC7M9HJmo1xRfMjNyrvxMNyeTrwUnRg==
+X-Received: by 2002:a17:907:7202:b0:a7a:9d74:21c3 with SMTP id
+ a640c23a62f3a-a7a9d742b08mr90207266b.35.1721732175757; 
+ Tue, 23 Jul 2024 03:56:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG47+ya0PgifbhX+BSVJkLIaa7YW60xII+d2HO7Tj5KHfVg/jYPCrSOMoa7tBRV0SdaVDxRVA==
+X-Received: by 2002:a17:907:7202:b0:a7a:9d74:21c3 with SMTP id
+ a640c23a62f3a-a7a9d742b08mr90204966b.35.1721732175178; 
+ Tue, 23 Jul 2024 03:56:15 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:9c9a:ffee:509d:1766:aa7f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7a3c94edb4sm523962266b.196.2024.07.23.03.56.25
+ a640c23a62f3a-a7a92b11f7fsm70739466b.30.2024.07.23.03.56.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 03:56:27 -0700 (PDT)
-Date: Tue, 23 Jul 2024 06:56:22 -0400
+ Tue, 23 Jul 2024 03:56:14 -0700 (PDT)
+Date: Tue, 23 Jul 2024 06:56:10 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Davidlohr Bueso <dave@stgolabs.net>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL v2 14/61] hw/cxl: Support firmware updates
-Message-ID: <3c1e1e5e240e683f0611b96cd325471639f22c6d.1721731723.git.mst@redhat.com>
+ Shiju Jose <shiju.jose@huawei.com>,
+ Davidlohr Bueso <dave@stgolabs.net>, Fan Ni <fan.ni@samsung.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL v2 12/61] hw/cxl/cxl-mailbox-utils: Add device patrol scrub
+ control feature
+Message-ID: <d88f667414106c7216485774293d0831c2482d20.1721731723.git.mst@redhat.com>
 References: <cover.1721731723.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -102,351 +104,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-Implement transfer and activate functionality per 3.1 spec for
-supporting update metadata (no actual buffers). Transfer times
-are arbitrarily set to ten and two seconds for full and part
-transfers, respectively.
+CXL spec 3.1 section 8.2.9.9.11.1 describes the device patrol scrub control
+feature. The device patrol scrub proactively locates and makes corrections
+to errors in regular cycle. The patrol scrub control allows the request to
+configure patrol scrub input configurations.
 
-cxl update-firmware mem0 -F fw.img
+The patrol scrub control allows the requester to specify the number of
+hours for which the patrol scrub cycles must be completed, provided that
+the requested number is not less than the minimum number of hours for the
+patrol scrub cycle that the device is capable of. In addition, the patrol
+scrub controls allow the host to disable and enable the feature in case
+disabling of the feature is needed for other purposes such as
+performance-aware operations which require the background operations to be
+turned off.
 
-<on-going fw update>
-
-cxl update-firmware mem0
-  "memdev":"mem0",
-  "pmem_size":"1024.00 MiB (1073.74 MB)",
-  "serial":"0",
-  "host":"0000:0d:00.0",
-  "firmware":{
-    "num_slots":2,
-    "active_slot":1,
-    "online_activate_capable":true,
-    "slot_1_version":"BWFW VERSION 0",
-    "fw_update_in_progress":true,
-    "remaining_size":22400
-  }
-}
-
-<completed fw update>
-
-cxl update-firmware mem0
-{
-  "memdev":"mem0",
-  "pmem_size":"1024.00 MiB (1073.74 MB)",
-  "serial":"0",
-  "host":"0000:0d:00.0",
-  "firmware":{
-    "num_slots":2,
-    "active_slot":1,
-    "staged_slot":2,
-    "online_activate_capable":true,
-    "slot_1_version":"BWFW VERSION 0",
-    "slot_2_version":"BWFW VERSION 1",
-    "fw_update_in_progress":false
-  }
-}
-
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Link: https://lore.kernel.org/r/20240627164912.25630-1-dave@stgolabs.net
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Link: https://lore.kernel.org/r/20240223085902.1549-3-shiju.jose@huawei.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240705125915.991672-2-Jonathan.Cameron@huawei.com>
+Message-Id: <20240705123039.963781-4-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  15 +++
- hw/cxl/cxl-mailbox-utils.c  | 205 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 215 insertions(+), 5 deletions(-)
+ include/hw/cxl/cxl_device.h | 24 +++++++++++
+ hw/cxl/cxl-mailbox-utils.c  | 79 ++++++++++++++++++++++++++++++++++---
+ hw/mem/cxl_type3.c          |  9 +++++
+ 3 files changed, 107 insertions(+), 5 deletions(-)
 
 diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 5cae7159e6..fdd0f4e62b 100644
+index 48ed0d9240..2c1df25453 100644
 --- a/include/hw/cxl/cxl_device.h
 +++ b/include/hw/cxl/cxl_device.h
-@@ -181,6 +181,21 @@ typedef struct CXLCCI {
-         uint64_t runtime;
-         QEMUTimer *timer;
-     } bg;
+@@ -427,6 +427,26 @@ typedef struct CXLPoison {
+ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
+ #define CXL_POISON_LIST_LIMIT 256
+ 
++/* CXL memory device patrol scrub control attributes */
++typedef struct CXLMemPatrolScrubReadAttrs {
++        uint8_t scrub_cycle_cap;
++        uint16_t scrub_cycle;
++        uint8_t scrub_flags;
++} QEMU_PACKED CXLMemPatrolScrubReadAttrs;
 +
-+    /* firmware update */
-+    struct {
-+        uint8_t active_slot;
-+        uint8_t staged_slot;
-+        bool slot[4];
-+        uint8_t curr_action;
-+        uint8_t curr_slot;
-+        /* handle partial transfers */
-+        bool transferring;
-+        size_t prev_offset;
-+        size_t prev_len;
-+        time_t last_partxfer;
-+    } fw;
++typedef struct CXLMemPatrolScrubWriteAttrs {
++    uint8_t scrub_cycle_hr;
++    uint8_t scrub_flags;
++} QEMU_PACKED CXLMemPatrolScrubWriteAttrs;
 +
-     size_t payload_max;
-     /* Pointer to device hosting the CCI */
-     DeviceState *d;
++#define CXL_MEMDEV_PS_GET_FEATURE_VERSION    0x01
++#define CXL_MEMDEV_PS_SET_FEATURE_VERSION    0x01
++#define CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT    BIT(0)
++#define CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT    BIT(1)
++#define CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT    12
++#define CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT    1
++#define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
++
+ #define DCD_MAX_NUM_REGION 8
+ 
+ typedef struct CXLDCExtentRaw {
+@@ -511,6 +531,10 @@ struct CXLType3Dev {
+ 
+     CXLSetFeatureInfo set_feat_info;
+ 
++    /* Patrol scrub control attributes */
++    CXLMemPatrolScrubReadAttrs patrol_scrub_attrs;
++    CXLMemPatrolScrubWriteAttrs patrol_scrub_wr_attrs;
++
+     struct dynamic_capacity {
+         HostMemoryBackend *host_dc;
+         AddressSpace host_dc_as;
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 0621f686f4..b752920ec8 100644
+index 7b7d8e5eae..485beb9dba 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -63,6 +63,8 @@ enum {
-         #define SET_INTERRUPT_POLICY   0x3
-     FIRMWARE_UPDATE = 0x02,
-         #define GET_INFO      0x0
-+        #define TRANSFER      0x1
-+        #define ACTIVATE      0x2
-     TIMESTAMP   = 0x03,
-         #define GET           0x0
-         #define SET           0x1
-@@ -622,6 +624,9 @@ static CXLRetCode cmd_infostat_bg_op_sts(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
+@@ -824,6 +824,7 @@ typedef struct CXLSupportedFeatureEntry {
+ #define CXL_FEAT_ENTRY_SFE_CONFIG_CHANGE_CXL_RESET BIT(11)
  
-+#define CXL_FW_SLOTS 2
-+#define CXL_FW_SIZE  0x02000000 /* 32 mb */
-+
- /* CXL r3.1 Section 8.2.9.3.1: Get FW Info (Opcode 0200h) */
- static CXLRetCode cmd_firmware_update_get_info(const struct cxl_cmd *cmd,
-                                                uint8_t *payload_in,
-@@ -652,15 +657,192 @@ static CXLRetCode cmd_firmware_update_get_info(const struct cxl_cmd *cmd,
+ enum CXL_SUPPORTED_FEATURES_LIST {
++    CXL_FEATURE_PATROL_SCRUB = 0,
+     CXL_FEATURE_MAX
+ };
  
-     fw_info = (void *)payload_out;
+@@ -865,6 +866,17 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
+ };
+ #define CXL_SET_FEAT_DATA_SAVED_ACROSS_RESET BIT(3)
  
--    fw_info->slots_supported = 2;
--    fw_info->slot_info = BIT(0) | BIT(3);
--    fw_info->caps = 0;
--    pstrcpy(fw_info->fw_rev1, sizeof(fw_info->fw_rev1), "BWFW VERSION 0");
-+    fw_info->slots_supported = CXL_FW_SLOTS;
-+    fw_info->slot_info = (cci->fw.active_slot & 0x7) |
-+            ((cci->fw.staged_slot & 0x7) << 3);
-+    fw_info->caps = BIT(0);  /* online update supported */
++/* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
++static const QemuUUID patrol_scrub_uuid = {
++    .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
++                 0x75, 0x77, 0x4e, 0x06, 0xdb, 0x8a)
++};
 +
-+    if (cci->fw.slot[0]) {
-+        pstrcpy(fw_info->fw_rev1, sizeof(fw_info->fw_rev1), "BWFW VERSION 0");
-+    }
-+    if (cci->fw.slot[1]) {
-+        pstrcpy(fw_info->fw_rev2, sizeof(fw_info->fw_rev2), "BWFW VERSION 1");
-+    }
++typedef struct CXLMemPatrolScrubSetFeature {
++        CXLSetFeatureInHeader hdr;
++        CXLMemPatrolScrubWriteAttrs feat_data;
++} QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
++
+ /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
+ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+                                              uint8_t *payload_in,
+@@ -890,11 +902,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+         return CXL_MBOX_UNSUPPORTED;
+     }
+     if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
+-        /*
+-         * Temporary: suppress compiler error due to unsigned
+-         * comparioson to zero.
+-         */
+-        true /*get_feats_in->start_index >= CXL_FEATURE_MAX*/) {
++        get_feats_in->start_index >= CXL_FEATURE_MAX) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
  
-     *len_out = sizeof(*fw_info);
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.1 section 8.2.9.3.2: Transfer FW (Opcode 0201h) */
-+#define CXL_FW_XFER_ALIGNMENT   128
-+
-+#define CXL_FW_XFER_ACTION_FULL     0x0
-+#define CXL_FW_XFER_ACTION_INIT     0x1
-+#define CXL_FW_XFER_ACTION_CONTINUE 0x2
-+#define CXL_FW_XFER_ACTION_END      0x3
-+#define CXL_FW_XFER_ACTION_ABORT    0x4
-+
-+static CXLRetCode cmd_firmware_update_transfer(const struct cxl_cmd *cmd,
-+                                               uint8_t *payload_in,
-+                                               size_t len,
-+                                               uint8_t *payload_out,
-+                                               size_t *len_out,
-+                                               CXLCCI *cci)
-+{
-+    struct {
-+        uint8_t action;
-+        uint8_t slot;
-+        uint8_t rsvd1[2];
-+        uint32_t offset;
-+        uint8_t rsvd2[0x78];
-+        uint8_t data[];
-+    } QEMU_PACKED *fw_transfer = (void *)payload_in;
-+    size_t offset, length;
-+
-+    if (fw_transfer->action == CXL_FW_XFER_ACTION_ABORT) {
-+        /*
-+         * At this point there aren't any on-going transfers
-+         * running in the bg - this is serialized before this
-+         * call altogether. Just mark the state machine and
-+         * disregard any other input.
-+         */
-+        cci->fw.transferring = false;
-+        return CXL_MBOX_SUCCESS;
-+    }
-+
-+    offset = fw_transfer->offset * CXL_FW_XFER_ALIGNMENT;
-+    length = len - sizeof(*fw_transfer);
-+    if (offset + length > CXL_FW_SIZE) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    if (cci->fw.transferring) {
-+        if (fw_transfer->action == CXL_FW_XFER_ACTION_FULL ||
-+            fw_transfer->action == CXL_FW_XFER_ACTION_INIT) {
-+            return CXL_MBOX_FW_XFER_IN_PROGRESS;
-+        }
-+        /*
-+         * Abort partitioned package transfer if over 30 secs
-+         * between parts. As opposed to the explicit ABORT action,
-+         * semantically treat this condition as an error - as
-+         * if a part action were passed without a previous INIT.
-+         */
-+        if (difftime(time(NULL), cci->fw.last_partxfer) > 30.0) {
-+            cci->fw.transferring = false;
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+    } else if (fw_transfer->action == CXL_FW_XFER_ACTION_CONTINUE ||
-+               fw_transfer->action == CXL_FW_XFER_ACTION_END) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    /* allow back-to-back retransmission */
-+    if ((offset != cci->fw.prev_offset || length != cci->fw.prev_len) &&
-+        (fw_transfer->action == CXL_FW_XFER_ACTION_CONTINUE ||
-+         fw_transfer->action == CXL_FW_XFER_ACTION_END)) {
-+        /* verify no overlaps */
-+        if (offset < cci->fw.prev_offset + cci->fw.prev_len) {
-+            return CXL_MBOX_FW_XFER_OUT_OF_ORDER;
-+        }
-+    }
-+
-+    switch (fw_transfer->action) {
-+    case CXL_FW_XFER_ACTION_FULL: /* ignores offset */
-+    case CXL_FW_XFER_ACTION_END:
-+        if (fw_transfer->slot == 0 ||
-+            fw_transfer->slot == cci->fw.active_slot ||
-+            fw_transfer->slot > CXL_FW_SLOTS) {
-+            return CXL_MBOX_FW_INVALID_SLOT;
-+        }
-+
-+        /* mark the slot used upon bg completion */
-+        break;
-+    case CXL_FW_XFER_ACTION_INIT:
-+        if (offset != 0) {
-+            return CXL_MBOX_INVALID_INPUT;
-+        }
-+
-+        cci->fw.transferring = true;
-+        cci->fw.prev_offset = offset;
-+        cci->fw.prev_len = length;
-+        break;
-+    case CXL_FW_XFER_ACTION_CONTINUE:
-+        cci->fw.prev_offset = offset;
-+        cci->fw.prev_len = length;
-+        break;
-+    default:
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    if (fw_transfer->action == CXL_FW_XFER_ACTION_FULL) {
-+        cci->bg.runtime = 10 * 1000UL;
-+    } else {
-+        cci->bg.runtime = 2 * 1000UL;
-+    }
-+    /* keep relevant context for bg completion */
-+    cci->fw.curr_action = fw_transfer->action;
-+    cci->fw.curr_slot = fw_transfer->slot;
-+    *len_out = 0;
-+
-+    return CXL_MBOX_BG_STARTED;
-+}
-+
-+static void __do_firmware_xfer(CXLCCI *cci)
-+{
-+    switch (cci->fw.curr_action) {
-+    case CXL_FW_XFER_ACTION_FULL:
-+    case CXL_FW_XFER_ACTION_END:
-+        cci->fw.slot[cci->fw.curr_slot - 1] = true;
-+        cci->fw.transferring = false;
-+        break;
-+    case CXL_FW_XFER_ACTION_INIT:
-+    case CXL_FW_XFER_ACTION_CONTINUE:
-+        time(&cci->fw.last_partxfer);
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+/* CXL r3.1 section 8.2.9.3.3: Activate FW (Opcode 0202h) */
-+static CXLRetCode cmd_firmware_update_activate(const struct cxl_cmd *cmd,
-+                                               uint8_t *payload_in,
-+                                               size_t len,
-+                                               uint8_t *payload_out,
-+                                               size_t *len_out,
-+                                               CXLCCI *cci)
-+{
-+    struct {
-+        uint8_t action;
-+        uint8_t slot;
-+    } QEMU_PACKED *fw_activate = (void *)payload_in;
-+    QEMU_BUILD_BUG_ON(sizeof(*fw_activate) != 0x2);
-+
-+    if (fw_activate->slot == 0 ||
-+        fw_activate->slot == cci->fw.active_slot ||
-+        fw_activate->slot > CXL_FW_SLOTS) {
-+        return CXL_MBOX_FW_INVALID_SLOT;
-+    }
-+
-+    /* ensure that an actual fw package is there */
-+    if (!cci->fw.slot[fw_activate->slot - 1]) {
-+        return CXL_MBOX_FW_INVALID_SLOT;
-+    }
-+
-+    switch (fw_activate->action) {
-+    case 0: /* online */
-+        cci->fw.active_slot = fw_activate->slot;
-+        break;
-+    case 1: /* reset */
-+        cci->fw.staged_slot = fw_activate->slot;
-+        break;
-+    default:
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- /* CXL r3.1 Section 8.2.9.4.1: Get Timestamp (Opcode 0300h) */
- static CXLRetCode cmd_timestamp_get(const struct cxl_cmd *cmd,
-                                     uint8_t *payload_in,
-@@ -2494,6 +2676,10 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-                                       ~0, CXL_MBOX_IMMEDIATE_CONFIG_CHANGE },
-     [FIRMWARE_UPDATE][GET_INFO] = { "FIRMWARE_UPDATE_GET_INFO",
-         cmd_firmware_update_get_info, 0, 0 },
-+    [FIRMWARE_UPDATE][TRANSFER] = { "FIRMWARE_UPDATE_TRANSFER",
-+        cmd_firmware_update_transfer, ~0, CXL_MBOX_BACKGROUND_OPERATION },
-+    [FIRMWARE_UPDATE][ACTIVATE] = { "FIRMWARE_UPDATE_ACTIVATE",
-+        cmd_firmware_update_activate, 2, CXL_MBOX_BACKGROUND_OPERATION },
-     [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
-     [TIMESTAMP][SET] = { "TIMESTAMP_SET", cmd_timestamp_set,
-                          8, CXL_MBOX_IMMEDIATE_POLICY_CHANGE },
-@@ -2622,7 +2808,9 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
-                 h == cmd_media_get_poison_list ||
-                 h == cmd_media_inject_poison ||
-                 h == cmd_media_clear_poison ||
--                h == cmd_sanitize_overwrite) {
-+                h == cmd_sanitize_overwrite ||
-+                h == cmd_firmware_update_transfer ||
-+                h == cmd_firmware_update_activate) {
-                 return CXL_MBOX_MEDIA_DISABLED;
-             }
-         }
-@@ -2667,6 +2855,9 @@ static void bg_timercb(void *opaque)
-         cci->bg.complete_pct = 100;
-         cci->bg.ret_code = ret;
-         switch (cci->bg.opcode) {
-+        case 0x0201: /* fw transfer */
-+            __do_firmware_xfer(cci);
+@@ -907,6 +915,21 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+     for (entry = 0, index = get_feats_in->start_index;
+          entry < req_entries; index++) {
+         switch (index) {
++        case  CXL_FEATURE_PATROL_SCRUB:
++            /* Fill supported feature entry for device patrol scrub control */
++            get_feats_out->feat_entries[entry++] =
++                           (struct CXLSupportedFeatureEntry) {
++                .uuid = patrol_scrub_uuid,
++                .feat_index = index,
++                .get_feat_size = sizeof(CXLMemPatrolScrubReadAttrs),
++                .set_feat_size = sizeof(CXLMemPatrolScrubWriteAttrs),
++                .attr_flags = CXL_FEAT_ENTRY_ATTR_FLAG_CHANGABLE,
++                .get_feat_version = CXL_MEMDEV_PS_GET_FEATURE_VERSION,
++                .set_feat_version = CXL_MEMDEV_PS_SET_FEATURE_VERSION,
++                .set_feat_effects = CXL_FEAT_ENTRY_SFE_IMMEDIATE_CONFIG_CHANGE |
++                                    CXL_FEAT_ENTRY_SFE_CEL_VALID,
++            };
 +            break;
-         case 0x4400: /* sanitize */
-         {
-             CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-@@ -2738,6 +2929,10 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-     cci->bg.runtime = 0;
-     cci->bg.timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-                                  bg_timercb, cci);
-+
-+    memset(&cci->fw, 0, sizeof(cci->fw));
-+    cci->fw.active_slot = 1;
-+    cci->fw.slot[cci->fw.active_slot - 1] = true;
- }
+         default:
+             __builtin_unreachable();
+         }
+@@ -956,6 +979,20 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
+         return CXL_MBOX_INVALID_INPUT;
+     }
  
- static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[256])
++    if (qemu_uuid_is_equal(&get_feature->uuid, &patrol_scrub_uuid)) {
++        if (get_feature->offset >= sizeof(CXLMemPatrolScrubReadAttrs)) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        bytes_to_copy = sizeof(CXLMemPatrolScrubReadAttrs) -
++                                             get_feature->offset;
++        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
++        memcpy(payload_out,
++               (uint8_t *)&ct3d->patrol_scrub_attrs + get_feature->offset,
++               bytes_to_copy);
++    } else {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
+     *len_out = bytes_to_copy;
+ 
+     return CXL_MBOX_SUCCESS;
+@@ -970,7 +1007,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+                                            CXLCCI *cci)
+ {
+     CXLSetFeatureInHeader *hdr = (void *)payload_in;
++    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
++    CXLMemPatrolScrubSetFeature *ps_set_feature;
+     CXLSetFeatureInfo *set_feat_info;
++    uint16_t bytes_to_copy = 0;
+     uint8_t data_transfer_flag;
+     CXLType3Dev *ct3d;
+ 
+@@ -999,11 +1039,40 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+     }
+     set_feat_info->data_transfer_flag = data_transfer_flag;
+     set_feat_info->data_offset = hdr->offset;
++    bytes_to_copy = len_in - sizeof(CXLSetFeatureInHeader);
++
++    if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
++        if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        ps_set_feature = (void *)payload_in;
++        ps_write_attrs = &ps_set_feature->feat_data;
++        memcpy((uint8_t *)&ct3d->patrol_scrub_wr_attrs + hdr->offset,
++               ps_write_attrs,
++               bytes_to_copy);
++        set_feat_info->data_size += bytes_to_copy;
++
++        if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
++            data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
++            ct3d->patrol_scrub_attrs.scrub_cycle &= ~0xFF;
++            ct3d->patrol_scrub_attrs.scrub_cycle |=
++                          ct3d->patrol_scrub_wr_attrs.scrub_cycle_hr & 0xFF;
++            ct3d->patrol_scrub_attrs.scrub_flags &= ~0x1;
++            ct3d->patrol_scrub_attrs.scrub_flags |=
++                          ct3d->patrol_scrub_wr_attrs.scrub_flags & 0x1;
++        }
++    } else {
++        return CXL_MBOX_UNSUPPORTED;
++    }
+ 
+     if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER ||
+         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER) {
+         memset(&set_feat_info->uuid, 0, sizeof(QemuUUID));
++        if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
++            memset(&ct3d->patrol_scrub_wr_attrs, 0, set_feat_info->data_size);
++        }
+         set_feat_info->data_transfer_flag = 0;
+         set_feat_info->data_saved_across_reset = false;
+         set_feat_info->data_offset = 0;
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index c7910687ae..7c583d80f5 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -908,6 +908,15 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     }
+     cxl_event_init(&ct3d->cxl_dstate, 2);
+ 
++    /* Set default value for patrol scrub attributes */
++    ct3d->patrol_scrub_attrs.scrub_cycle_cap =
++                           CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT |
++                           CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT;
++    ct3d->patrol_scrub_attrs.scrub_cycle =
++                           CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
++                           (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
++    ct3d->patrol_scrub_attrs.scrub_flags = CXL_MEMDEV_PS_ENABLE_DEFAULT;
++
+     return;
+ 
+ err_release_cdat:
 -- 
 MST
 
