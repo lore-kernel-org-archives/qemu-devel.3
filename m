@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DE0C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF32C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWk8H-0001eY-LK; Wed, 24 Jul 2024 18:06:49 -0400
+	id 1sWk8N-0002L7-Kr; Wed, 24 Jul 2024 18:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk8E-0001XJ-Ro
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:47 -0400
-Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk8H-0001h6-07
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:49 -0400
+Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk8D-0006eh-7i
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:46 -0400
-Received: by mail-io1-xd30.google.com with SMTP id
- ca18e2360f4ac-7f97e794f34so11561339f.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk8F-0006fQ-Ai
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:48 -0400
+Received: by mail-io1-xd2e.google.com with SMTP id
+ ca18e2360f4ac-816b627a7b6so11563439f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858804; x=1722463604;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858806; x=1722463606;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sKGM9WxUN43+saolT8pUI05xHvMsh3XU6bG+jc3msxQ=;
- b=fj0DpHg4ax3OrtyshVGMggH2e9cZJw2LH+0ojPaVgcqKZWQE2pSA9JMy031cRpldl8
- kGXOJkLfBqAfwHKPhu0T5v+V4Cqir9Uv/JdZyIQzAySbVx66xkrLbnl3fPc2CPS0sThQ
- 3dfvqi8fcPHBDzAORCixXraDV/fd5+I6usOLJXdnoFajrfl6cOOhoJ7Bqa0B5JWJHuZ5
- L4jrhQrolV1m3aUo7pqLUqoq6B9CMOpynd8vEFP7svtE0l6if7+9DxHeF4+4zeNC0nVh
- nlumkNKglAEhcsIx28l22AGS3ocZA/1FfG89mFvI6YDzq4Sh+0OqoDN4U6eusNlHDKB3
- FKLg==
+ bh=tYJVjZqOXEiJ+YQNx+XkrkSOeWdwAX68dW81gy1dzYg=;
+ b=p5CmUrShRpFYoxMZRHsdg0U8AowhqNCq1m0f+xYJ+98p2GFKV4fs1feTeCjknjVeIY
+ r/PtaV1dHDFhFs8dx/6FV3I5X6djjR2HaW1kjBtwrKP9mkIfCRhe2/YHK4b1gI5cZ4xF
+ 5+b1NI9+UTB1C3DBkv/B2IwDMw8SzGzNS0gBk0lKSAlIWIu/FxmQQ8HK9dHmziG/UnEW
+ 4QxbNP9MSixln5PolTTfMrDdcyO/EHCgWa36y587QT5hVZX9Y9oTsY8AP7POvUbikj79
+ TsTqMRfwtPrmxcUirdzfSD5Rrr2KOI5Kk6UipEBXhyfZ0DDCeLQFb+QR+JIcWzcq4gRj
+ /1Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721858804; x=1722463604;
+ d=1e100.net; s=20230601; t=1721858806; x=1722463606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sKGM9WxUN43+saolT8pUI05xHvMsh3XU6bG+jc3msxQ=;
- b=btlEqQ8K2fWuLUbJdilg4NNBDwOtD6PZqm+/Q/2aFk1Td4hrk1yoaAUS7hWaPjO9uX
- mVMd7R9VSsbRqVjVtGIqXAbylIIcq7F81jWY7CUEcPu5AlQzxA93HYWCrSUozVVQaliA
- W+6KAvMR2tYitYFXkdUp2AX+K9o/gtRwdSvA1ahrGWCzNIZtuRu0HIZRVRN4Mb4N2X0g
- 3GyFIUvvJ5HFNPa65wLxsClW9sl6ls62X4xOjRHY/1O4sgjEOX0s63TGA7xwD2fQlQmo
- P0AuYJZCn9cppzJSY3PyZ4e7IEpT2CrsgFYTLyCGQ9NXVwPArae6Wpx+b9Qktf5fqbid
- ASmg==
-X-Gm-Message-State: AOJu0YzZkQqi2OCsy7i2Ve459F4F3qkFBA3cdmn7c/g6PBSBnWNRaG9o
- an9sHCFhDFz5TlVcsmMCmClFjAVEwU4P4kgpCO+2EmgsZHBpHNuFEAQQgPPCWuR76VECTIczTFw
- gWvw=
-X-Google-Smtp-Source: AGHT+IEnnOcG3amLwauDTAEsZVbqMoLajLr1bsbICTS01m0+c0LN7TKLMm9Wcy4TgoKOqRk7nYyN/A==
-X-Received: by 2002:a05:6602:6417:b0:816:ec51:f415 with SMTP id
- ca18e2360f4ac-81f7ba78fb7mr165580839f.0.1721858803744; 
- Wed, 24 Jul 2024 15:06:43 -0700 (PDT)
+ bh=tYJVjZqOXEiJ+YQNx+XkrkSOeWdwAX68dW81gy1dzYg=;
+ b=Nq5/m9wEU5Fjhg3xXXQoYgpkJqGLXWcjhpBQ/972myhW2v89rt2obA5YYEITl6rbjw
+ mvXDFxCsiyAyDVsy/jYK0yHG0FgU/2jYuUb8hplD8RuwJZoELZAplUNL9ELsudczzRPu
+ d+nGPWqwDwpCPol4EDW1zwNltj4cFBSe+51nPhkKRp9xGjse1gPR/wkuAG70aIzqpoTu
+ nUj/LVmfUf6n8NJZV7czQXd7TPwYLbrYZlNWevZMVuh2X3s1s4D6z28KqHIqV4PToUCT
+ ir6oiuRj7hz529O3dgCCvNnF3kpOvP6CwU+ezHdiZBczFZ04Smt0D7JBR0aOIR5cYfWQ
+ /H1g==
+X-Gm-Message-State: AOJu0YxvFRl8Z9TpNSdPwW5kE1pYTdos5Jyt9WE+0pB4Z8yiX7gykLtN
+ 9Nst0St5bVQK47XEk1rvy26XhDLNHBMepa4lx8Bi4A7QTDr87jBGlr8Dcj13ylxQYwWGrP7Pcqz
+ 98pQ=
+X-Google-Smtp-Source: AGHT+IF1fs6xm7NZeRcOfJN8VAgGfFJDqOkSx5P+hYIzovJkARiaW7A6EHwSUZmwMg6OSd/ETYikCQ==
+X-Received: by 2002:a05:6602:27d1:b0:7f7:d2c7:3b7a with SMTP id
+ ca18e2360f4ac-81f7e2f0af6mr22411639f.0.1721858805960; 
+ Wed, 24 Jul 2024 15:06:45 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.42
+ 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 15:06:42 -0700 (PDT)
+ Wed, 24 Jul 2024 15:06:45 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/15] bsd-user: Make compile for non-linux user-mode stuff
-Date: Wed, 24 Jul 2024 16:04:46 -0600
-Message-ID: <20240724220449.10398-14-imp@bsdimp.com>
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>
+Subject: [PULL 15/15] bsd-user: Add target.h for aarch64.
+Date: Wed, 24 Jul 2024 16:04:48 -0600
+Message-ID: <20240724220449.10398-16-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240724220449.10398-1-imp@bsdimp.com>
 References: <20240724220449.10398-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d30;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd30.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::d2e;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd2e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,40 +93,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We include the files that define PR_MTE_TCF_SHIFT only on Linux, but use
-them unconditionally. Restrict its use to Linux-only.
-
-"It's ugly, but it's not actually wrong."
+For aarch64, it's a 64-bit API, so there's no pairing of registers for
+64-bit values.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/gdbstub64.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ bsd-user/aarch64/target.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 bsd-user/aarch64/target.h
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index c8cef8cbc0e..5221381cc85 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -404,6 +404,7 @@ int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, int reg)
- 
- int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
- {
-+#if defined(CONFIG_LINUX)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
- 
-@@ -425,6 +426,9 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-     arm_set_mte_tcf0(env, tcf);
- 
-     return 1;
-+#else
-+    return 0;
-+#endif
- }
- 
- static void handle_q_memtag(GArray *params, void *user_ctx)
+diff --git a/bsd-user/aarch64/target.h b/bsd-user/aarch64/target.h
+new file mode 100644
+index 00000000000..702aeb7fc57
+--- /dev/null
++++ b/bsd-user/aarch64/target.h
+@@ -0,0 +1,20 @@
++/*
++ * Aarch64 general target stuff that's common to all aarch details
++ *
++ * Copyright (c) 2022 M. Warner Losh <imp@bsdimp.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef TARGET_H
++#define TARGET_H
++
++/*
++ * aaarch64 ABI does not 'lump' the registers for 64-bit args.
++ */
++static inline bool regpairs_aligned(void *cpu_env)
++{
++    return false;
++}
++
++#endif /* TARGET_H */
 -- 
 2.45.1
 
