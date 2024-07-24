@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6003C3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 10:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9EFC3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 10:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWZLA-0005wp-4I; Wed, 24 Jul 2024 06:35:24 -0400
+	id 1sWZNi-000260-6V; Wed, 24 Jul 2024 06:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWZL5-0005vu-0Q
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 06:35:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWZL2-0000QO-1U
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 06:35:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721817314;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9Dcz0jkcgeBEvszNeBkU11UrpFXkznp5mSctsUeH2Io=;
- b=dqd/XBIohs7INyPoXFUSWcKCmPUeMyRkuvc2WBwnGuRGa1MkYj96s0IOyvv53C43yi8doy
- bCuoxnDom7d2pSOXmMCu+j0q6qejPUKkTo4/gzU8nCrHgJnAH3vywoEEgCFcxMIzoTlmZo
- pCh5dwS2xWGeMysfpNZ9FRTsVGVbur8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-7rxgPZ9VMBWLeH-NGtnaeg-1; Wed, 24 Jul 2024 06:34:58 -0400
-X-MC-Unique: 7rxgPZ9VMBWLeH-NGtnaeg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36832c7023bso3856119f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 03:34:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sWZNf-00025R-Uo
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 06:38:00 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sWZNe-00018y-8i
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 06:37:59 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e0885b4f1d5so3848494276.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 03:37:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721817477; x=1722422277; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ei5UjbnrtX7qsuankbPZDqqT6CsIuKjvGfdSX4MUYkc=;
+ b=mih7/z/roxse3ILHxwKGvK9Ikj5JzfG7lfYGD8oQSkr3rsLKJY6vFUUC1SGdGWug25
+ XoVv/6+W7CH8Dxk8VKekbyZgt8vopCbqrUD22cWQvEunrrE/zmKyamyE2thiYpmJz6VC
+ ACtziSGXu4l3Ga78Fzb3gMo6FKJ1leM60FqmDH2j8zRTT+JgLuYef98CVRnt5ydbt5b6
+ gKda2S+QwQHc1sJo7kG3vv17qSFxR11cQtSekLXq2AW/bOKtMTohgALg1jWEC0BNj1qI
+ cxuJ0BhJ6kH7/kYWGcmsmIbzlJgywE8Jx7eUQ3AAWMOomlkmdNali6pk3w0rXC8Vg4yb
+ 2udw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721817297; x=1722422097;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9Dcz0jkcgeBEvszNeBkU11UrpFXkznp5mSctsUeH2Io=;
- b=WP+Kik4iKTSN1vuV0bV1h8NhAgau2/+iSFYkKqoYnK5OkdfycstkZpXA5E4nJnlEzD
- MEjNsP2REpTUlGlBjFXa21J1VagvXu5uXxHy85ygtUFTMRnB3oRWZWHYiRjLekVeCIoQ
- omt5adaPB2KySeN5IVZOPy+ceRnBy3Hk93bhrm1S1Lyf+Kb9pgiNxACgOKjKK3utl7iR
- DNu8QWPuN7EtqsqB4ZWvsxclVkwvgQVO8f4JwTxYij7NhzlXbZfY6fJCZskcWEdmX5rO
- fd0WjS8fgc/XzYd/QiEEc5kV2JmhVoDZygCORfWa8zGsb0aZmMa/dvz2DLyi2HJCsGyE
- tgBQ==
-X-Gm-Message-State: AOJu0YyAXmmtkk3/T/poErMYzRmQZdSFYtpAPtIijJmHd4Uafc3npkuG
- lSnHavm4iECqDQLrhTtAdYeiD0EbKGtK4XKaweoQtNLJc2ct73dSyzN+pJhIc0VC/qJUyUVw9hb
- gZifWdZdT57IDVyqKpTH8UIsePWzKbBTNnq/zu07f6MmlxTQn3YFnvD4bWGlUQTBGpnL8H7mxr4
- 3qkDT+DFumqA3/CsCKw+5nbqzfdYY=
-X-Received: by 2002:adf:e641:0:b0:367:a4c7:a134 with SMTP id
- ffacd0b85a97d-369bae49780mr9589118f8f.40.1721817297033; 
- Wed, 24 Jul 2024 03:34:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpQ51Ydtha84hA2BYkYdw+tfnIWRcxrOkzLlfvsIY5lhnUL1jMJwfK9/Dp6+3vb2ogvU5zw1R153Cow2elMi0=
-X-Received: by 2002:adf:e641:0:b0:367:a4c7:a134 with SMTP id
- ffacd0b85a97d-369bae49780mr9589093f8f.40.1721817296563; Wed, 24 Jul 2024
- 03:34:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721817477; x=1722422277;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ei5UjbnrtX7qsuankbPZDqqT6CsIuKjvGfdSX4MUYkc=;
+ b=FtgXBULp5SeaB2TBVwskG55ktq3DScl/bmeJ8FH0bDK6lISvXIMM5Hifv0CPnteA1f
+ 28Q4rxx+8s+LthzfNI2LLSpti8HUwZ1x7ApeXY8avkze5tAIswqhw+DuUbqhdhTrSudp
+ sbd63LmPDJYHdT8VBR+bJYYWiyKCLUKUGLRNp3cIbx5lY4VBPEotRl2W/0zPS/rUiID1
+ 8DWeWPvV+bNgHwnAdbPgDenOz8EApXzKeNYDyHOnehKShMX1f3nmnww7boYdO1m3JWim
+ MwHXNK7RJ0aOthA7BTUo4z67HaGtFarpsRe4TIiWBnq44ItmkEgzxgZYXn/rUDn6SOmt
+ IemA==
+X-Gm-Message-State: AOJu0Yz1RKAMoZMq6blRscX2d5+mXKLAJzxVGAxxH64sqkvNUwPou/2G
+ WvWiTCmuTXYAeg1LEN0cA+5etHq94nHoA/TP/CFzhfXSOF6FKXUbSf1LD0JzxCUUN23mtVal8Mt
+ dx108ZiTY6BQNd62tl2KCgSU239k=
+X-Google-Smtp-Source: AGHT+IGO+U8RCUDd3XCZMDS8AVSleTwRsHCh0iIorfFQ3fzFAOzbOufwccQNIOcsJ37714bxupXcIhyP0kXsf3mJNwY=
+X-Received: by 2002:a05:6902:178d:b0:e08:664c:dd36 with SMTP id
+ 3f1490d57ef6-e087b921d5bmr12213982276.36.1721817472377; Wed, 24 Jul 2024
+ 03:37:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
- <h4gxy.dr366knvycy@linaro.org>
-In-Reply-To: <h4gxy.dr366knvycy@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 24 Jul 2024 12:34:43 +0200
-Message-ID: <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240723220258.3170957-1-dongwon.kim@intel.com>
+In-Reply-To: <20240723220258.3170957-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 24 Jul 2024 14:37:41 +0400
+Message-ID: <CAJ+F1C+kk4ZBjf8bq2haA4WgzEoSrN2GBYoC5Lc-r17VmRNA6g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Consolidate create-sync and create-fence
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000cf2c83061dfbde9b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yb1-xb2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,178 +87,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 11:58=E2=80=AFAM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
+--000000000000cf2c83061dfbde9b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+On Wed, Jul 24, 2024 at 2:05=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+
+> From: Dongwon Kim <dongwon.kim@intel.com>
 >
-> Hello Paolo, thank you for the thorough response,
+> Sync object itself is never used as is so can be removed
+> from QemuDmaBuf struct. So now sync is only temporarily needed
+> when creating fence for the object which means what was done in
+> egl_dmabuf_create_sync can now be a part of egl_dmabuf_create_fence
+> function. And egl_dmabuf_create_fence returns fence_fd so the
+> better function name will be egl_dmabuf_create_fence_fd.
 >
-> On Tue, 23 Jul 2024 18:07, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >On 7/22/24 13:43, Manos Pitsidianakis wrote:
-> >> Changes from v4->v5:
-> >> - Added CI patch from Alex Benee
-> >> - Removed all cargo use, use meson rust support
-> >> - Added Kconfig logic
-> >
-> >The following requests from the v4 review have also been evaluated (good=
-!):
-> >
-> >=E2=9C=85 module structure should resemble the C part of the tree
+> v3: create fence only if current QemuDmaBuf->fence_fd =3D -1
+>     to make sure there is no fence currently bound to the
+>     QemuDmaBuf
 >
-> To expand on this, I tried really hard to make the rust code live along
-> the c files
 
-Yes, I don't think it's a requirement that they live along the C
-files. Using rust/hw/... as you did is fine.
+Why not check it from egl_dmabuf_create_fence_fd() ? calling the function
+twice can still potentially leak.
 
-> I agree. I personally prefer using meson wraps and fetch the
-> dependencies via network to be honest. While also providing Cargo.toml
-> and Cargo.lock manifests for developers.
+Also, please gather the v1/v2/v3/... summary on the cover letter.
 
-Ok, it's good that you agree because that's what I was worried about. :)
+thanks
 
-> >
-> >In my opinion we should start with cargo workspaces as the
-> >known-imperfect (but good enough) solution, so that it could be evolved
-> >later.  It is important that any change that deviates from common Rust
-> >conventions is documented, and v4 provided a nice basis to build upon,
-> >with documentation coming as things settle.  This is why I explicitly
-> >didn't include Kconfig in the TODO list in my review of v4.
+
+> Dongwon Kim (2):
+>   ui/egl-helpers: Consolidates create-sync and create-fence
+>   ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
 >
-> After working with the latest meson releases, it seems we will soon have
-> a good enough way of handling all this with meson. It makes me sceptical
-> of adding cargo wrappers and using a build system out of meson when we
-> might be able to drop all that soonish. We might as well bite the bullet
-> now to avoid working on something we know we will remove.
-
-Ehh, as you say below it's complicated. Sometimes worse is better.
-Personally I wouldn't have minded keeping the v4 approach as a "known
-evil"; but if you can make the Cargo subprojects work, that would be
-fine for me. What I don't like is the vendoring and handwritten (I
-think?) meson.build, I think that's worse than the v4.
-
-> >Also, of the code changes (as opposed to the build system changes) that
-> >I had asked for in the review of v4, almost none of them have been
-> >applied.  I'm copying them here for future reference:
+>  include/ui/dmabuf.h      |  2 --
+>  include/ui/egl-helpers.h |  3 +--
+>  ui/dmabuf.c              | 14 --------------
+>  ui/egl-helpers.c         | 24 +++++++++---------------
+>  ui/gtk-egl.c             | 17 ++++-------------
+>  ui/gtk-gl-area.c         | 12 +++---------
+>  6 files changed, 17 insertions(+), 55 deletions(-)
 >
-> Thanks, this helps a lot.
+> --
+> 2.43.0
 >
-> >=E2=9D=8C TODO comments when the code is doing potential undefined behav=
-ior
 >
-> Do you mean like Rust's safety comments?
-
-No I meant comments where we have known instances of undefined
-behavior. The two I had in my emails are
-
-(in pl011_init):
-// TODO: this assumes that "all zeroes" is a valid state for all fields of
-// PL011State. This is not necessarily true of any #[repr(Rust)] structs,
-// including bilge-generated types. It should instead use MaybeUninit.
-
-(before the call to qemu_chr_fe_accept_input):
-// TODO: this causes a callback that creates another "&mut self".
-// This is forbidden by Rust aliasing rules and has to be fixed
-// using interior mutability.
-
-> https://std-dev-guide.rust-lang.org/policy/safety-comments.html
 >
-> These can be required by lints which is really helpful. At this point
-> the UART library has safety comments (which needs to be reviewed for
-> validity). I plan on adding some at the macros in qemu-api as well.
->
-> >
-> >=E2=9D=8C a trait to store the CStr corresponding to the structs
->
-> I don't know yet if that is helpful in our usecase, because the strings
-> must be visible from C, thus be (rust, not c) statics, unmangled and
-> marked as #[used] for the linker. It makes sense from the Rust POV but
-> must also be FFI-accessible.
 
-Why do they have to be #[used]? You have
+--=20
+Marc-Andr=C3=A9 Lureau
 
-+                #[used]
-+                static TYPE_NAME: &::core::ffi::CStr =3D $tname;
-+                $tname.as_ptr()
+--000000000000cf2c83061dfbde9b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-but since the cstr crate (and c"" literal) promise to return a
-&'static CStr, I thought it could be just
+<div dir=3D"ltr"><div>Hi<br></div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Wed, Jul 24, 2024 at 2:05=E2=80=AFAM &lt;<=
+a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim@intel.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">From: Dongwon =
+Kim &lt;<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">dongwon.=
+kim@intel.com</a>&gt;<br>
+<br>
+Sync object itself is never used as is so can be removed<br>
+from QemuDmaBuf struct. So now sync is only temporarily needed<br>
+when creating fence for the object which means what was done in<br>
+egl_dmabuf_create_sync can now be a part of egl_dmabuf_create_fence<br>
+function. And egl_dmabuf_create_fence returns fence_fd so the<br>
+better function name will be egl_dmabuf_create_fence_fd.<br>
+<br>
+v3: create fence only if current QemuDmaBuf-&gt;fence_fd =3D -1<br>
+=C2=A0 =C2=A0 to make sure there is no fence currently bound to the<br>
+=C2=A0 =C2=A0 QemuDmaBuf<br></blockquote><div><br></div><div>Why not check =
+it from=C2=A0egl_dmabuf_create_fence_fd() ? calling the function twice can =
+still potentially leak. <br></div><div><br></div><div>Also, please gather t=
+he v1/v2/v3/... summary on the cover letter.</div><div><br></div><div>thank=
+s</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Dongwon Kim (2):<br>
+=C2=A0 ui/egl-helpers: Consolidates create-sync and create-fence<br>
+=C2=A0 ui/dmabuf: Remove &#39;sync&#39; from QemuDmaBuf struct<br>
+<br>
+=C2=A0include/ui/dmabuf.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 --<br>
+=C2=A0include/ui/egl-helpers.h |=C2=A0 3 +--<br>
+=C2=A0ui/dmabuf.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 14 ----=
+----------<br>
+=C2=A0ui/egl-helpers.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 24 +++++++++-----=
+----------<br>
+=C2=A0ui/gtk-egl.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 17 ++++=
+-------------<br>
+=C2=A0ui/gtk-gl-area.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 12 +++---------<b=
+r>
+=C2=A06 files changed, 17 insertions(+), 55 deletions(-)<br>
+<br>
+-- <br>
+2.43.0<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
 
-    $tname.as_ptr()
-
-About traits, I meant something like
-
-pub unsafe trait ObjectType: Sized {
-     const TYPE_NAME: &'static CStr;
-}
-
-So that you can put the trait declaration in the pl011 crate and the
-type_info! macro can do
-
-<$t as ObjectType>::TYPE_NAME.as_ptr()
-
-(also for the parent).
-
-> >=E2=9D=8C a trait to generate all-zero structs without having to type "u=
-nsafe {
-> >MaybeUninit::zeroed().assume_init() }"
->
-> Traits cannot have const fns at the moment (traits cannot have
-> type-level effects like const or async but it's WIP to get them into
-> rustc), so this cannot be used for statics and consts.
-
-Ah, I see. Anyhow, I've been looking at the Linux kernel's pinned-init
-crate (https://rust-for-linux.com/pinned-init) and it provides a
-Zeroable macro including #[derive] support. So that has gone lower in
-my priority.
-
-> >=E2=9D=8C I'd like to use ctor instead of non-portable linker magic,
->
-> The linker sections are pretty much standard and in fact ctor uses the
-> same linker attributes. Would writing our own constructor macro be a
-> solution for you? My reasoning is that 1) we support our own specific
-> platforms and it's better for portability to reflect that in our source
-> tree and 2) it avoids the external dependency, linker sections do not
-> change so any ctor update would be in the API or adding more platform
-> support,  not fixes in what we target.
-
-I'd still like to give someone else the burden. :) Writing our own
-constructor macro would be more work for little gain.
-
-> >and the cstr crate instead of CStr statics or c""
->
-> Oh yes, the c"" literals must be replaced. The cstr! macro is the same,
-> semantically, can you explain what you mean by "CStr statics"?
-
-Ah, I meant that it applies to both direct use:
-
-pub static CLK_NAME: &CStr =3D c"clk";
-
-and arguments to macros (for example type_info).
-
-> >My suggestion is to do one of the following, or both:
-> >
-> >- start from this version; try using Cargo subproject support in 1.5.0
-> >and see if it works, so that vendoring can be dropped.  We can require
-> >Meson 1.5.0 to work on Rust support.  In this case it's okay not to do
-> >any further code changes (the four that were marked =E2=9D=8C above).
->
-> This is my preference as stated above, if everyone also agrees.
-
-I think it's worth trying it anyway.
-
-> >- go back to the build system integration of v4, and do *only* the
-> >changes that were requested during review (in this case, all of them
-> >except link_whole, with you checked it does not work).
-> >
-> >If you try using Cargo subproject support, please provide the running
-> >time for configure and make, for both "v4" and "v5+subproject".  When I
-> >tried it, the processing of the subprojects was very slow.
->
-> Hmmm thanks for mentioning that, I did not notice any slow times
-> locally. Will check.
-
-Ok, thanks!
-
-Paolo
-
+--000000000000cf2c83061dfbde9b--
 
