@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDF6C3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEB9C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 18:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWgDY-0004bm-62; Wed, 24 Jul 2024 13:56:00 -0400
+	id 1sWgdP-0004HI-Gw; Wed, 24 Jul 2024 14:22:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgCq-0000lM-1u
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:55:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgCg-0006CX-J8
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:55:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721843703;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/iVwrkfmrnEA9+FpEN+ehUGiwQgBnydQFBz8T0Xrytk=;
- b=gqRmFTBOPgJYVdAF0u++Fx0Db9lttVoX5ENtmVRXrxjsJ/BQe+1LHaf2bMtRafCmqTwRq7
- b2oE3kVTZQZH6OwUKuckkwpQagFcHACZ8Xa5myRA4h+stuzsJUWcfRmpLUsGODVfhdz+Gd
- oDzvfOA3eUixbgZKnytD88kFnETnLP4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-bXfHVF7dMeKDgxMY40a6oQ-1; Wed,
- 24 Jul 2024 13:55:02 -0400
-X-MC-Unique: bXfHVF7dMeKDgxMY40a6oQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF163195421A; Wed, 24 Jul 2024 17:55:00 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.144])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 795141955D42; Wed, 24 Jul 2024 17:54:55 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 22/23] tests/functional: Convert the rx_gdbsim avocado test
- into a standalone test
-Date: Wed, 24 Jul 2024 19:52:40 +0200
-Message-ID: <20240724175248.1389201-23-thuth@redhat.com>
-In-Reply-To: <20240724175248.1389201-1-thuth@redhat.com>
-References: <20240724175248.1389201-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWgdK-0004Fs-Ri
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 14:22:39 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWgdJ-0005iy-CG
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 14:22:38 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5a10835480bso164415a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 11:22:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721845355; x=1722450155; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ri1NeKHc3gnHRiGYRMIlqRBDF/XXK7ZLi/6gMp+tvBs=;
+ b=THDoHkHD2q/OeoPqbqw64yeVUzAdxOflq2bxHG8AyWcuRNzR7VddL8I4YD9fL0MqBa
+ IC4Y+4cYz7ty39B1dd8VvLLMQIZ/8pxXBR05c0Lm6CK7/xpve45m6itI1BQGfcYqAX4H
+ 1pdyeG5D9Z3DD/5kWXNsy/nIpK4ujmphnolxsYajOXgR99D5tnphBORqLhKeGA6KTLeZ
+ kBYFOjF1s4Nmoc/DrsxbZNBiYmLvwzhjD24n9lFdWfJWBwYzAtJmiroy3IK6LhzFrgMo
+ axcPW+G+3H12n5HKWombIUAUC8+EhQF/YqRW4gPC7OV1IWDUE2H1cGym2e5jHZnt9cNV
+ f1Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721845355; x=1722450155;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ri1NeKHc3gnHRiGYRMIlqRBDF/XXK7ZLi/6gMp+tvBs=;
+ b=ckO3AcFXIo3Iz8LAqyUaYHp2LaQsVPOKMfZ1F3/mNTEbxQ+qfpX9/L4YoOjor3paKd
+ W40DDyETeeU+TJwN5TaKgskXLBUuO/OaJqwU1nrGaKStr2x8mVpAZtOHQ4eTUE5UBG5I
+ D/2qcDUCW1EAvp+dbAVxkDJe5q7/IeuHnpxyRDPzgMlYLXE1V8GzvpgrdFu1eZ5WKQgj
+ baIsitLE/y1nYnIAYtK77y2Yn8B6rgn8Z3rc9cGejV48ysxdfwiP1yuCyyzrNBbBmQi5
+ pCqrIF6cnhzlhRB1imcK5+6BYinlZyZYsCvJFhQAv1QmE8e2nJlkgf+l/Y+jYNJJVFlc
+ wpKA==
+X-Gm-Message-State: AOJu0YxrDCZN5jpEBTMJfDDGmsEUp9RFNet2X/iB0m3jDaT2R7dfIu+F
+ pDjWv5HjS/U7aKT+TAX2Bt7o/RwmKynVbU5hUPUZo0IEbjNMUd8Mb+2ze94taPMtZDVh1xi3uSB
+ 4RIqVlHswYp5TyI6NGW4r5Zeq5JEX3xNajB3KKg==
+X-Google-Smtp-Source: AGHT+IHTHhzZAKfH7hgPApaXnojvF7GbCkocb11op7fAD2RMnhX31MbmDVXBm1UkP+f/h7OUIvJCqgu65DQJxB5n2Kg=
+X-Received: by 2002:a50:d61a:0:b0:5a0:f0c4:aa7b with SMTP id
+ 4fb4d7f45d1cf-5ac2c1c79abmr120633a12.27.1721845355383; Wed, 24 Jul 2024
+ 11:22:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
+ <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 24 Jul 2024 19:22:24 +0100
+Message-ID: <CAFEAcA8pdw1zUxMXD1g08TedNo7MizUXOSJF6eciuCU=c2zx7Q@mail.gmail.com>
+Subject: Re: [PATCH v6 7/8] target/riscv: Add any32 and max32 CPU for RV64 QEMU
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ bmeng.cn@gmail.com, philmd@linaro.org, alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,143 +90,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a "gzip_uncompress" function based on the standard "gzip" module
-to avoid the usage of avocado.utils here.
+On Sat, 20 Jul 2024 at 00:18, LIU Zhiwei <zhiwei_liu@linux.alibaba.com> wrote:
+>
+> We may need 32-bit max or 32-bit any CPU for RV64 QEMU. Thus we add
+> these two CPUs for RV64 QEMU.
+>
+> The reason we don't expose them to RV32 QEMU is that we already have
+> max or any cpu with the same configuration. Another reason is that
+> we want to follow the RISC-V custom where addw instruction doesn't
+> exist in RV32 CPU.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- Note: Make sure to apply this fix first before running this test:
- https://lore.kernel.org/qemu-devel/20240724045659.160684-1-richard.henderson@linaro.org/
+You might want to consider whether you'd rather have this be
+"-cpu max,64=off" (replace "64" with whatever feature name the
+architecture uses for 64-bit support). That's the way I would plan
+to handle it for Arm (with "-cpu max,aarch64=off"; that works for
+KVM right now and if we ever wanted to handle it for TCG would be how
+I'd want the command line syntax to go).
 
- tests/functional/meson.build                  |  4 +++
- tests/functional/qemu_test/utils.py           | 12 +++++++
- .../test_rx_gdbsim.py}                        | 34 +++++++++----------
- 3 files changed, 33 insertions(+), 17 deletions(-)
- rename tests/{avocado/machine_rx_gdbsim.py => functional/test_rx_gdbsim.py} (78%)
- mode change 100644 => 100755
-
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 52328f44b6..3ae169897f 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -79,6 +79,10 @@ tests_riscv64_quick = [
-   'riscv_opensbi',
- ]
- 
-+tests_rx_thorough = [
-+  'rx_gdbsim',
-+]
-+
- tests_s390x_thorough = [
-   's390x_ccw_virtio',
-   's390x_topology',
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index a12dac51b6..99eae5fc45 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -8,6 +8,7 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
-+import gzip
- import lzma
- import os
- import shutil
-@@ -23,6 +24,17 @@ def archive_extract(archive, dest_dir, member=None):
-         else:
-             tf.extractall(path=dest_dir)
- 
-+def gzip_uncompress(gz_path, output_path):
-+    if os.path.exists(output_path):
-+        return
-+    with gzip.open(gz_path, 'rb') as gz_in:
-+        try:
-+            with open(output_path, 'wb') as raw_out:
-+                shutil.copyfileobj(gz_in, raw_out)
-+        except:
-+            os.remove(output_path)
-+            raise
-+
- def lzma_uncompress(xz_path, output_path):
-     if os.path.exists(output_path):
-         return
-diff --git a/tests/avocado/machine_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
-old mode 100644
-new mode 100755
-similarity index 78%
-rename from tests/avocado/machine_rx_gdbsim.py
-rename to tests/functional/test_rx_gdbsim.py
-index 412a7a5089..ebb8bd5631
---- a/tests/avocado/machine_rx_gdbsim.py
-+++ b/tests/functional/test_rx_gdbsim.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional test that boots a Linux kernel and checks the console
- #
- # Copyright (c) 2018 Red Hat, Inc.
-@@ -10,11 +12,11 @@
- 
- import os
- 
--from avocado import skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
-+from unittest import skipUnless
-+from qemu_test import QemuSystemTest
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import gzip_uncompress
- 
- 
- class RxGdbSimMachine(QemuSystemTest):
-@@ -27,16 +29,14 @@ class RxGdbSimMachine(QemuSystemTest):
-     def test_uboot(self):
-         """
-         U-Boot and checks that the console is operational.
--
--        :avocado: tags=arch:rx
--        :avocado: tags=machine:gdbsim-r5f562n8
--        :avocado: tags=endian:little
--        :avocado: tags=flaky
-         """
-+        self.set_machine('gdbsim-r5f562n8')
-+
-         uboot_url = ('https://acc.dl.osdn.jp/users/23/23888/u-boot.bin.gz')
-         uboot_hash = '9b78dbd43b40b2526848c0b1ce9de02c24f4dcdb'
--        uboot_path = self.fetch_asset(uboot_url, asset_hash=uboot_hash)
--        uboot_path = archive.uncompress(uboot_path, self.workdir)
-+        uboot_path_gz = self.fetch_asset(uboot_url, asset_hash=uboot_hash)
-+        uboot_path = os.path.join(self.workdir, 'u-boot.bin')
-+        gzip_uncompress(uboot_path_gz, uboot_path)
- 
-         self.vm.set_console()
-         self.vm.add_args('-bios', uboot_path,
-@@ -53,12 +53,9 @@ def test_uboot(self):
-     def test_linux_sash(self):
-         """
-         Boots a Linux kernel and checks that the console is operational.
--
--        :avocado: tags=arch:rx
--        :avocado: tags=machine:gdbsim-r5f562n7
--        :avocado: tags=endian:little
--        :avocado: tags=flaky
-         """
-+        self.set_machine('gdbsim-r5f562n7')
-+
-         dtb_url = ('https://acc.dl.osdn.jp/users/23/23887/rx-virt.dtb')
-         dtb_hash = '7b4e4e2c71905da44e86ce47adee2210b026ac18'
-         dtb_path = self.fetch_asset(dtb_url, asset_hash=dtb_hash)
-@@ -75,3 +72,6 @@ def test_linux_sash(self):
-         wait_for_console_pattern(self, 'Sash command shell (version 1.1.1)',
-                                  failure_message='Kernel panic - not syncing')
-         exec_command_and_wait_for_pattern(self, 'printenv', 'TERM=linux')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.45.2
-
+-- PMM
 
