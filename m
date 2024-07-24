@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D80C3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4C0C3DA64
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWgAt-0000k5-6E; Wed, 24 Jul 2024 13:53:15 -0400
+	id 1sWgAy-00011S-Gq; Wed, 24 Jul 2024 13:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgAs-0000gF-5y
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgAx-0000zZ-2G
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgAm-0005cj-GD
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgAu-0005eX-Nr
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721843587;
+ s=mimecast20190719; t=1721843596;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bFlCPERrA8XbHL2WbrXxbY4UFojl/kmqfg7LiLdQJco=;
- b=WJjWXjqlaV961f567bobSJkc0IEm7/ep0VDf+pdpdNt3/h+umBBIEdLfUAlOEaV82TeNqW
- PigxwTLvOF9uhasX6nbpQSTh9BVHCBxCbFMdAGSMbedjQM1LeWQFAcBQwViwgy/k8mBikf
- lcuRjS7VyxkwKo/4yYEGBR2hfWIBNSw=
+ bh=DmQsgSX7jl7NTuJIloLRRrenRMGjIKlxkwYa1Gv9huk=;
+ b=dy+Xvf+qkVH/yVawIrI6vy9oa3RLXls6249qQxyag0UjmacEmrxdqUx2+dUTCiNXB9B367
+ UOf24zSJcoHN9Izdt7K9VOMPSbTKy/+DsWBWmMlp4TBUs73XB3WLMeBHRvIVlEyCAQtF8b
+ UeyIQY9Wf+rBZW9WXYomW8nRk0FS6sE=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-jsbfeNnWM3S371C9ilHCXg-1; Wed,
- 24 Jul 2024 13:53:05 -0400
-X-MC-Unique: jsbfeNnWM3S371C9ilHCXg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-BepPRmVVOXeYR8Mb25b_FQ-1; Wed,
+ 24 Jul 2024 13:53:13 -0400
+X-MC-Unique: BepPRmVVOXeYR8Mb25b_FQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5CDE1955D55; Wed, 24 Jul 2024 17:53:03 +0000 (UTC)
+ id 8449D1955D56; Wed, 24 Jul 2024 17:53:09 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.144])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D87A91955D42; Wed, 24 Jul 2024 17:52:58 +0000 (UTC)
+ id 742FB1955D42; Wed, 24 Jul 2024 17:53:04 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -53,9 +53,10 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 01/23] python: Install pycotap in our venv if necessary
-Date: Wed, 24 Jul 2024 19:52:19 +0200
-Message-ID: <20240724175248.1389201-2-thuth@redhat.com>
+Subject: [PATCH v2 02/23] tests/functional: Add base classes for the upcoming
+ pytest-based tests
+Date: Wed, 24 Jul 2024 19:52:20 +0200
+Message-ID: <20240724175248.1389201-3-thuth@redhat.com>
 In-Reply-To: <20240724175248.1389201-1-thuth@redhat.com>
 References: <20240724175248.1389201-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -69,7 +70,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,119 +86,353 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upcoming functional tests will require pycotap for providing
-TAP output from the python-based tests. Since we want to be able
-to run some of the tests offline by default, too, let's install
-it along with meson in our venv if necessary (it's size is only
-5 kB, so adding the wheel here should not really be a problem).
+The file is mostly a copy of the tests/avocado/avocado_qemu/__init__.py
+file with some adjustments to get rid of the Avocado dependencies (i.e.
+we also have to drop the LinuxSSHMixIn and LinuxTest for now).
 
-The wheel file has been obtained with:
-
- pip download --only-binary :all: --dest . --no-cache pycotap
+The emulator binary and build directory are now passed via
+environment variables that will be set via meson.build later.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- python/wheels/pycotap-1.3.1-py3-none-any.whl | Bin 0 -> 5119 bytes
- pythondeps.toml                              |   1 +
- 2 files changed, 1 insertion(+)
- create mode 100644 python/wheels/pycotap-1.3.1-py3-none-any.whl
+ tests/functional/qemu_test/__init__.py | 328 +++++++++++++++++++++++++
+ 1 file changed, 328 insertions(+)
+ create mode 100644 tests/functional/qemu_test/__init__.py
 
-diff --git a/python/wheels/pycotap-1.3.1-py3-none-any.whl b/python/wheels/pycotap-1.3.1-py3-none-any.whl
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
 new file mode 100644
-index 0000000000000000000000000000000000000000..9c2c7d259365c8a0487228c6878e2c0b10ba6bdd
-GIT binary patch
-literal 5119
-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
-a`M=gRMNm<H|DFb*0Z`-skj4D{@BaZhvADJX
-
-literal 0
-HcmV?d00001
-
-diff --git a/pythondeps.toml b/pythondeps.toml
-index f6e590fdd8..0bc4144d4b 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -20,6 +20,7 @@
- [meson]
- # The install key should match the version in python/wheels/
- meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
-+pycotap = { accepted = ">=1.1.0", installed = "1.3.1" }
- 
- [docs]
- # Please keep the installed versions in sync with docs/requirements.txt
+index 0000000000..fc98222c52
+--- /dev/null
++++ b/tests/functional/qemu_test/__init__.py
+@@ -0,0 +1,328 @@
++# Test class and utilities for functional tests
++#
++# Copyright 2018, 2024 Red Hat, Inc.
++#
++# Original Author (Avocado-based tests):
++#  Cleber Rosa <crosa@redhat.com>
++#
++# Adaption for standalone version:
++#  Thomas Huth <thuth@redhat.com>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++import logging
++import os
++import pycotap
++import shutil
++import subprocess
++import sys
++import tempfile
++import time
++import uuid
++import unittest
++
++from pathlib import Path
++from qemu.machine import QEMUMachine
++from qemu.utils import kvm_available, tcg_available
++
++def _source_dir():
++    # Determine top-level directory of the QEMU sources
++    return Path(__file__).parent.parent.parent.parent
++
++def _build_dir():
++    root = os.getenv('QEMU_BUILD_ROOT')
++    if root is not None:
++        return Path(root)
++    # Makefile.mtest only exists in build dir, so if it is available, use CWD
++    if os.path.exists('Makefile.mtest'):
++        return Path(os.getcwd())
++
++    root = os.path.join(_source_dir(), 'build')
++    if os.path.exists(root):
++        return Path(root)
++
++    raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
++
++BUILD_DIR = _build_dir()
++
++def has_cmd(name, args=None):
++    """
++    This function is for use in a @skipUnless decorator, e.g.:
++
++        @skipUnless(*has_cmd('sudo -n', ('sudo', '-n', 'true')))
++        def test_something_that_needs_sudo(self):
++            ...
++    """
++
++    if args is None:
++        args = ('which', name)
++
++    try:
++        _, stderr, exitcode = run_cmd(args)
++    except Exception as e:
++        exitcode = -1
++        stderr = str(e)
++
++    if exitcode != 0:
++        cmd_line = ' '.join(args)
++        err = f'{name} required, but "{cmd_line}" failed: {stderr.strip()}'
++        return (False, err)
++    else:
++        return (True, '')
++
++def has_cmds(*cmds):
++    """
++    This function is for use in a @skipUnless decorator and
++    allows checking for the availability of multiple commands, e.g.:
++
++        @skipUnless(*has_cmds(('cmd1', ('cmd1', '--some-parameter')),
++                              'cmd2', 'cmd3'))
++        def test_something_that_needs_cmd1_and_cmd2(self):
++            ...
++    """
++
++    for cmd in cmds:
++        if isinstance(cmd, str):
++            cmd = (cmd,)
++
++        ok, errstr = has_cmd(*cmd)
++        if not ok:
++            return (False, errstr)
++
++    return (True, '')
++
++def run_cmd(args):
++    subp = subprocess.Popen(args,
++                            stdout=subprocess.PIPE,
++                            stderr=subprocess.PIPE,
++                            universal_newlines=True)
++    stdout, stderr = subp.communicate()
++    ret = subp.returncode
++
++    return (stdout, stderr, ret)
++
++def is_readable_executable_file(path):
++    return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
++
++def _console_interaction(test, success_message, failure_message,
++                         send_string, keep_sending=False, vm=None):
++    assert not keep_sending or send_string
++    if vm is None:
++        vm = test.vm
++    console = vm.console_file
++    console_logger = logging.getLogger('console')
++    while True:
++        if send_string:
++            vm.console_socket.sendall(send_string.encode())
++            if not keep_sending:
++                send_string = None # send only once
++        try:
++            msg = console.readline().decode().strip()
++        except UnicodeDecodeError:
++            msg = None
++        if not msg:
++            continue
++        console_logger.debug(msg)
++        if success_message is None or success_message in msg:
++            break
++        if failure_message and failure_message in msg:
++            console.close()
++            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
++                    (failure_message, success_message)
++            test.fail(fail)
++
++def interrupt_interactive_console_until_pattern(test, success_message,
++                                                failure_message=None,
++                                                interrupt_string='\r'):
++    """
++    Keep sending a string to interrupt a console prompt, while logging the
++    console output. Typical use case is to break a boot loader prompt, such:
++
++        Press a key within 5 seconds to interrupt boot process.
++        5
++        4
++        3
++        2
++        1
++        Booting default image...
++
++    :param test: a  test containing a VM that will have its console
++                 read and probed for a success or failure message
++    :type test: :class:`qemu_test.QemuSystemTest`
++    :param success_message: if this message appears, test succeeds
++    :param failure_message: if this message appears, test fails
++    :param interrupt_string: a string to send to the console before trying
++                             to read a new line
++    """
++    _console_interaction(test, success_message, failure_message,
++                         interrupt_string, True)
++
++def wait_for_console_pattern(test, success_message, failure_message=None,
++                             vm=None):
++    """
++    Waits for messages to appear on the console, while logging the content
++
++    :param test: a test containing a VM that will have its console
++                 read and probed for a success or failure message
++    :type test: :class:`qemu_test.QemuSystemTest`
++    :param success_message: if this message appears, test succeeds
++    :param failure_message: if this message appears, test fails
++    """
++    _console_interaction(test, success_message, failure_message, None, vm=vm)
++
++def exec_command(test, command):
++    """
++    Send a command to a console (appending CRLF characters), while logging
++    the content.
++
++    :param test: a test containing a VM.
++    :type test: :class:`qemu_test.QemuSystemTest`
++    :param command: the command to send
++    :type command: str
++    """
++    _console_interaction(test, None, None, command + '\r')
++
++def exec_command_and_wait_for_pattern(test, command,
++                                      success_message, failure_message=None):
++    """
++    Send a command to a console (appending CRLF characters), then wait
++    for success_message to appear on the console, while logging the.
++    content. Mark the test as failed if failure_message is found instead.
++
++    :param test: a test containing a VM that will have its console
++                 read and probed for a success or failure message
++    :type test: :class:`qemu_test.QemuSystemTest`
++    :param command: the command to send
++    :param success_message: if this message appears, test succeeds
++    :param failure_message: if this message appears, test fails
++    """
++    _console_interaction(test, success_message, failure_message, command + '\r')
++
++class QemuBaseTest(unittest.TestCase):
++
++    qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
++    arch = None
++
++    workdir = None
++    log = logging.getLogger('qemu-test')
++
++    def setUp(self, bin_prefix):
++        self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
++        self.arch = self.qemu_bin.split('-')[-1]
++
++        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
++                                    self.id())
++        if not os.path.exists(self.workdir):
++            os.makedirs(self.workdir)
++
++    def main():
++        tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
++                                   test_output_log = pycotap.LogMode.LogToError)
++        path = os.path.basename(sys.argv[0])[:-3]
++        unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
++
++
++class QemuSystemTest(QemuBaseTest):
++    """Facilitates system emulation tests."""
++
++    cpu = None
++    machine = None
++    _machinehelp = None
++
++    def setUp(self):
++        self._vms = {}
++
++        super().setUp('qemu-system-')
++
++    def set_machine(self, machinename):
++        # TODO: We should use QMP to get the list of available machines
++        if not self._machinehelp:
++            self._machinehelp = run_cmd([self.qemu_bin, '-M', 'help'])[0];
++        if self._machinehelp.find(machinename) < 0:
++            self.skipTest('no support for machine ' + machinename)
++        self.machine = machinename
++
++    def require_accelerator(self, accelerator):
++        """
++        Requires an accelerator to be available for the test to continue
++
++        It takes into account the currently set qemu binary.
++
++        If the check fails, the test is canceled.  If the check itself
++        for the given accelerator is not available, the test is also
++        canceled.
++
++        :param accelerator: name of the accelerator, such as "kvm" or "tcg"
++        :type accelerator: str
++        """
++        checker = {'tcg': tcg_available,
++                   'kvm': kvm_available}.get(accelerator)
++        if checker is None:
++            self.skipTest("Don't know how to check for the presence "
++                          "of accelerator %s" % accelerator)
++        if not checker(qemu_bin=self.qemu_bin):
++            self.skipTest("%s accelerator does not seem to be "
++                          "available" % accelerator)
++
++    def require_netdev(self, netdevname):
++        netdevhelp = run_cmd([self.qemu_bin,
++                             '-M', 'none', '-netdev', 'help'])[0];
++        if netdevhelp.find('\n' + netdevname + '\n') < 0:
++            self.skipTest('no support for " + netdevname + " networking')
++
++    def require_device(self, devicename):
++        devhelp = run_cmd([self.qemu_bin,
++                           '-M', 'none', '-device', 'help'])[0];
++        if devhelp.find(devicename) < 0:
++            self.skipTest('no support for device ' + devicename)
++
++    def _new_vm(self, name, *args):
++        vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir)
++        self.log.debug('QEMUMachine "%s" created', name)
++        self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
++        self.log.debug('QEMUMachine "%s" log_dir: %s', name, vm.log_dir)
++        if args:
++            vm.add_args(*args)
++        return vm
++
++    @property
++    def vm(self):
++        return self.get_vm(name='default')
++
++    def get_vm(self, *args, name=None):
++        if not name:
++            name = str(uuid.uuid4())
++        if self._vms.get(name) is None:
++            self._vms[name] = self._new_vm(name, *args)
++            if self.cpu is not None:
++                self._vms[name].add_args('-cpu', self.cpu)
++            if self.machine is not None:
++                self._vms[name].set_machine(self.machine)
++        return self._vms[name]
++
++    def set_vm_arg(self, arg, value):
++        """
++        Set an argument to list of extra arguments to be given to the QEMU
++        binary. If the argument already exists then its value is replaced.
++
++        :param arg: the QEMU argument, such as "-cpu" in "-cpu host"
++        :type arg: str
++        :param value: the argument value, such as "host" in "-cpu host"
++        :type value: str
++        """
++        if not arg or not value:
++            return
++        if arg not in self.vm.args:
++            self.vm.args.extend([arg, value])
++        else:
++            idx = self.vm.args.index(arg) + 1
++            if idx < len(self.vm.args):
++                self.vm.args[idx] = value
++            else:
++                self.vm.args.append(value)
++
++    def tearDown(self):
++        for vm in self._vms.values():
++            vm.shutdown()
++        super().tearDown()
 -- 
 2.45.2
 
