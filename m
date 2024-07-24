@@ -4,72 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42E2C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C9FC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWePj-0005vr-46; Wed, 24 Jul 2024 12:00:27 -0400
+	id 1sWepZ-0001C2-IC; Wed, 24 Jul 2024 12:27:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWePa-0005sc-Bm; Wed, 24 Jul 2024 12:00:18 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWepY-0001BX-1z
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:27:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWePX-0001G8-UE; Wed, 24 Jul 2024 12:00:17 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C766F7D644;
- Wed, 24 Jul 2024 18:59:58 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 59EE2112D04;
- Wed, 24 Jul 2024 19:00:10 +0300 (MSK)
-Message-ID: <bfa1bc39-9efe-4880-a4d0-4cb9d5b44918@tls.msk.ru>
-Date: Wed, 24 Jul 2024 19:00:10 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWepV-0002Wy-DG
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:27:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721838423;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=s4U6m+38PTY1pm9G8WHo3AGMZVn7OqUwMTywSICKYVw=;
+ b=bNl7XbSiu146oGzqlXDQdrQSMikWvgfqd5oHGOGS440xfZYMv+dggUyfYi++a6xw4SP4HS
+ UdHuPTDape39Uf70a1w4b72pzUUAMHnjIiJYIx0lpmaK9T8nWZc9fWeMcvjSrQFHjRuFYQ
+ /f5jx2Xtg3ZrrW+Rr0nsbTrtlUi7enc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-OLXnul61MtKfJ9w60vwC5A-1; Wed,
+ 24 Jul 2024 12:27:01 -0400
+X-MC-Unique: OLXnul61MtKfJ9w60vwC5A-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D5F891955D56; Wed, 24 Jul 2024 16:26:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.141])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BA9519560AE; Wed, 24 Jul 2024 16:26:49 +0000 (UTC)
+Date: Wed, 24 Jul 2024 17:26:46 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v4 01/17] meson: Add optional dependency on IGVM library
+Message-ID: <ZqErRoSUknD26cbI@redhat.com>
+References: <cover.1720004383.git.roy.hopkins@suse.com>
+ <0f377bfb248db9d33cf8ec1758b231137b0de437.1720004383.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] chardev/char-win-stdio.c: restore old console mode
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: songziming <s.ziming@hotmail.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
- <9dfc4a6a-da91-4185-a800-40c80dd9a0f6@tls.msk.ru>
- <CAJ+F1CKm891c5-QLPqVYzzykufpbFvMCxPZKfkuYHh1trztQ8w@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CAJ+F1CKm891c5-QLPqVYzzykufpbFvMCxPZKfkuYHh1trztQ8w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0f377bfb248db9d33cf8ec1758b231137b0de437.1720004383.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,32 +91,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-24.07.2024 13:25, Marc-André Lureau wrote:
-> Hi
+On Wed, Jul 03, 2024 at 12:05:39PM +0100, Roy Hopkins wrote:
+> The IGVM library allows Independent Guest Virtual Machine files to be
+> parsed and processed. IGVM files are used to configure guest memory
+> layout, initial processor state and other configuration pertaining to
+> secure virtual machines.
 > 
-> On Wed, Jul 24, 2024 at 8:48 AM Michael Tokarev <mjt@tls.msk.ru <mailto:mjt@tls.msk.ru>> wrote:
+> This adds the --enable-igvm configure option, enabled by default, which
+> attempts to locate and link against the IGVM library via pkgconfig and
+> sets CONFIG_IGVM if found.
 > 
->     22.07.2024 12:52, songziming wrote:
->      > If I use `-serial stdio` on Windows, after QEMU exits, the terminal
->      > could not handle arrow keys and tab any more. Because stdio backend
->      > on Windows sets console mode to virtual terminal input when starts,
->      > but does not restore the old mode when finalize.
->      >
->      > This small patch saves the old console mode and set it back.
+> The library is added to the system_ss target in backends/meson.build
+> where the IGVM parsing will be performed by the ConfidentialGuestSupport
+> object.
 > 
->     Is this a stable@ material?
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+>  meson.build                   | 8 ++++++++
+>  backends/meson.build          | 3 +++
+>  meson_options.txt             | 2 ++
+>  scripts/meson-buildoptions.sh | 3 +++
+>  4 files changed, 16 insertions(+)
 > 
-> 
-> It should be safe, but I don't think it deserves a stable backport: it always had that behaviour before.
+> diff --git a/meson.build b/meson.build
+> index 54e6b09f4f..e2f7752636 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1276,6 +1276,12 @@ if host_os == 'linux' and (have_system or have_tools)
+>                         method: 'pkg-config',
+>                         required: get_option('libudev'))
+>  endif
+> +igvm = not_found
+> +if not get_option('igvm').auto() or have_system
+> +  igvm = dependency('igvm',
+> +                       method: 'pkg-config',
+> +                       required: get_option('igvm'))
 
-Well. "It was always wrong" does not mean it shouldn't be fixed, I'd say :)
-In my view, a bug is a bug and it's okay to fix it even if it was here since
-the day one.
+nit-picking, the indentation for these 2 lines is out of
+alginment with the first line.
 
-Thanks,
+We probably ought to add a min version number to the
+check too. IIUC, to get the namespace pollution fixes
+you did, we'll want >= 0.3.0 ?
 
-/mjt
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
