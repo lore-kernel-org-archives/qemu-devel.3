@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B55AC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 03:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28C2C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 03:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWSTB-0003VJ-La; Tue, 23 Jul 2024 23:15:13 -0400
+	id 1sWSWl-0007zn-CC; Tue, 23 Jul 2024 23:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWST9-0003UY-5d
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:15:11 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ id 1sWSWh-0007z3-Hn
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:18:51 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWST3-0007As-64
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:15:10 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-396db51d140so25979475ab.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 20:15:04 -0700 (PDT)
+ id 1sWSWf-0007gm-HA
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:18:51 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-7163489149eso976245a12.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 20:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721790903; x=1722395703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721791126; x=1722395926; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dltiC3OUiAjOYgzf0qYPrSt+GBhiKyY416unGLV2rVc=;
- b=i3X3Q/Lt8Y/wtFbz8ucCvyKYZjqIb9lyvMClIsY38xr2dSQ0zYEF52mT7meE7EYNCp
- kbq1SXF9G3FSJDPUz0RKhK/IsbLR+K+j9CsSfpyV/ztDxnYzEjD5heX+wLM+4OnFP2Hi
- 8yyDq85DwYnWirGX265n8I36uMLG+K+2QX+ji/jJcI/GvcPew8DfAcROEAjOEiYB8Jwe
- tvOf1S31fbX1NSjhxFYtIf/kAi/lbhD4HtQQR/MX27VEow/ujyJsvphFmzHOBGdyuE4q
- Toh6ezRmkL+0BFmIsevrADbhQ0or1BWC4X1eYyAiVhPu7TCkbkkNmQjO36wxzA0jCPEZ
- Tk0Q==
+ bh=+q06mC/pXDtbKsoZjtWgJHTY2fPJp1SIdLdVjtB5AdA=;
+ b=YPEOHsikBRGie2wdmVIdZ4Nr3Q9IcOd7qpzTllk5ktZvWKuqZePzWkJB4VZWmVxLkx
+ mGFRuNaCFhHP2QfkJfVSHmNZszp9Ieu38WPoBSuFOGXnBrgmMRBxYIomiYgLr51R/DbH
+ 5pFZYQo0DH+nb1QtwSVfyIh6EtKKAvYU7g37ryYWDAJU4nKblZbiCDPaLOvpc5lU+Ei2
+ 5Mwyi8gs5n4ecMsxvctDRpjUJKYtATZtT3lJ8z5HXSzTJXVxOLg0EPjoppBKZhXaEOPo
+ HUn5T1MXtYQ0VH0YtOwx2jMputgwsEGdPLV1qQ6nvcIjx7uKRvy1rm2k5eSlRq5LVGae
+ TSvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721790903; x=1722395703;
+ d=1e100.net; s=20230601; t=1721791126; x=1722395926;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dltiC3OUiAjOYgzf0qYPrSt+GBhiKyY416unGLV2rVc=;
- b=tlgro5Zh1KEznN7xwa29Yf2I8OmxLa6/EuMgddFeqoSUGgF8Z58erNTdKnw/A1IpfE
- xmOJIwUeSYxqG0qOulU4tPHx7VYWXKm6XJ8u4j88ilOWYqanLsN63/NjbSgTkRv8noHB
- SpdR8SvGc13R1gbyulR+TqNpKOIAjkGib+gNr5MX5tXMxWGvRfAN2NBIqmErFDk0A9dY
- yYo0f0b3QY1wwBmgdv4eoz7Nm0xrm9WZoG8/LQd4qrYSbWcPdVCmkQjIb8T8CUu0dFhZ
- fBKf4Di1/Wfb2MH8JlndyCrxLwQA1jHlEDbeCHfDLRV9GEVhEP0W3ATdolTRghkU9Px/
- 7uFA==
+ bh=+q06mC/pXDtbKsoZjtWgJHTY2fPJp1SIdLdVjtB5AdA=;
+ b=lRmx1H1Ryn2WyRywluskotuCsnGk9Gl50KJ/FNo4rkTk9X/Dts4UD4MZEzgTItJubc
+ Rft4MfXUq/9WkC9dTv+RuV0hsrOk1DyPfv5xqfEd8coeqmzIP428TObilORbXwRHDnEo
+ quFB1WZk+3dmTTEcLqP/rGilGghVIo5R6o4wMFw2tOlouLfsCKw/hj9sHV8igCkAOtHa
+ +hmJa+qbfe3ALlezACWTsfLCywBwcLdHpLeodUst5+hfHVsTTOM+W/EDAKoWHLYXrax9
+ fGe/YtRWjz4JIgLDPWj3jr28Qxdmgo8BmvD+xw+pO8qEo5GrjbsXugW57tZMK6Ll64wf
+ evSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQGphpwB9RP4xf5+mc/z/8UranYVeZECG5DyLwmCjhKnk0scKTwIohvWsOCkysNPw503GtiEWIX3Brsybp63YhMCC8QAE=
-X-Gm-Message-State: AOJu0YyT03uBbTO0698ealLLfV2z9GWqdamu2FPYfQ7fxH/KLQWe93UA
- aWY4fA8RWfvqLopVSGyy8qZaZupAU/DMGoFZFRmFrnM/6M7XbKnNP42QFV63Y2s=
-X-Google-Smtp-Source: AGHT+IFughL6qsJBoK7Uc6hmvlRUgq0hiD7tjTfy3xJ+T634h4oujXDyDns8hhdnF92VN5fJlZIS1w==
-X-Received: by 2002:a92:d2cb:0:b0:377:14a7:fc99 with SMTP id
- e9e14a558f8ab-39a16d486c4mr15377635ab.24.1721790902895; 
- Tue, 23 Jul 2024 20:15:02 -0700 (PDT)
+ AJvYcCX/yENfdvii0p6dcCrIpvVuOapmKnoylK8AzrzTVu1STGiDAYLyNEtIOfzlJRBnvY3oPtUia9ga4d55r+cQFf01P2YyVcs=
+X-Gm-Message-State: AOJu0Ywav6L9EWN4aQZpuGh6LqMPy+fPWQpAQRd161lvYIWWL/+L9Fvz
+ jAEe+rXp1Y3yhsB+bnRM9PO50KDYKIkn3YkFMaOqOG45fFoj0C4Ni+ncFaDhbzU=
+X-Google-Smtp-Source: AGHT+IFJdXZrT73TIHX6Rf+r/FRLRhR0sAneLE15sQ2LIXXtTzd6EuzXbbHaGXgaSNTAAaN4LhR6TA==
+X-Received: by 2002:a05:6a20:2587:b0:1c0:f5c1:8083 with SMTP id
+ adf61e73a8af0-1c45e6fd3d0mr2337054637.41.1721791125488; 
+ Tue, 23 Jul 2024 20:18:45 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70d27fa2b30sm4094484b3a.38.2024.07.23.20.14.59
+ d2e1a72fcca58-70cff59dff4sm7651061b3a.152.2024.07.23.20.18.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 20:15:02 -0700 (PDT)
-Message-ID: <7708addb-1c74-4d9b-acda-a46c5f15509f@linaro.org>
-Date: Wed, 24 Jul 2024 13:14:54 +1000
+ Tue, 23 Jul 2024 20:18:45 -0700 (PDT)
+Message-ID: <a74fa25d-435b-4b9f-ad93-fbb268ad274e@linaro.org>
+Date: Wed, 24 Jul 2024 13:18:39 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] Code motion: expose some TCG definitions for page
- table walk consolidation.
+Subject: Re: [PATCH v4 2/7] Import vmcs12 definition from Linux/KVM
 To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
 Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
  philmd@linaro.org, berrange@redhat.com
 References: <20240723010545.3648706-1-porter@cs.unc.edu>
- <20240723010545.3648706-2-porter@cs.unc.edu>
+ <20240723010545.3648706-3-porter@cs.unc.edu>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240723010545.3648706-2-porter@cs.unc.edu>
+In-Reply-To: <20240723010545.3648706-3-porter@cs.unc.edu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +102,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/23/24 11:05, Don Porter wrote:
 > Signed-off-by: Don Porter <porter@cs.unc.edu>
 > ---
->   include/hw/core/sysemu-cpu-ops.h     |  6 +++++
->   target/i386/cpu.h                    |  5 ++--
->   target/i386/helper.c                 | 36 +++++++++++++++++++++++++++
->   target/i386/tcg/helper-tcg.h         | 32 ++++++++++++++++++++++++
->   target/i386/tcg/seg_helper.c         | 36 ---------------------------
->   target/i386/tcg/sysemu/excp_helper.c | 37 +---------------------------
->   6 files changed, 77 insertions(+), 75 deletions(-)
-> 
-> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-> index 24d003fe04..4c94e51267 100644
-> --- a/include/hw/core/sysemu-cpu-ops.h
-> +++ b/include/hw/core/sysemu-cpu-ops.h
-> @@ -12,6 +12,12 @@
->   
->   #include "hw/core/cpu.h"
->   
-> +typedef enum TranslateFaultStage2 {
-> +    S2_NONE,
-> +    S2_GPA,
-> +    S2_GPT,
-> +} TranslateFaultStage2;
+>   target/i386/kvm/vmcs12.h | 213 +++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 213 insertions(+)
+>   create mode 100644 target/i386/kvm/vmcs12.h
 
-No, you can't move an x86-specific item like this into common code.
-You're doing something wrong in the abstraction.
+I don't think you actually need this.
+I'll comment on that vs patch 3.
 
 
 r~
