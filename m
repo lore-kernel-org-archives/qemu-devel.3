@@ -4,197 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8320AC3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 19:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82040C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 19:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWhVN-00043n-9L; Wed, 24 Jul 2024 15:18:29 -0400
+	id 1sWhsU-0005tU-7E; Wed, 24 Jul 2024 15:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1sWhVL-00042L-Iz
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 15:18:27 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sWhsS-0005sW-2d; Wed, 24 Jul 2024 15:42:20 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1sWhVJ-00065q-3S
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 15:18:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721848705; x=1753384705;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=A6LxjGpuZeEPRCD1WgnUBmGprr4BotEFLs6ADTYa9TI=;
- b=E4uZQLC1pZHVv8UFXydwH7OuH3+9qtoPe7ufh42fibg5I7lshm7yBSQz
- OTkmnmuwbJ6NSDBSs42j7Ge2wRUVkYukQAOG13VuP6mposQz5bKs5BAT+
- qBj3xyMaIjH0wqfIc0BJUHu7J+YPlAzrqXWtctysg6NAZ0NnOCL3THUq4
- TxTIrlyqcX066i37CxGE7fZ7mVhJIh/k4GNouEYVhjJH8wUBtMY4Gf8hn
- TBtCbpftPOPBumtBSt4pdJ0MDOLLF2NS4ekhRsnAhZlrS9/wJMFV+v8U0
- m04iUtondkGGFMo1Qc/XiLxE7pHkR0bCsRQS3tso7HRJOxkggl9xRoII/ A==;
-X-CSE-ConnectionGUID: RyXvmJsuRn2bzgz6DQYvDw==
-X-CSE-MsgGUID: tSTvdyVgRnKlfPOkLMdwgg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30970066"
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; d="scan'208";a="30970066"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jul 2024 12:18:22 -0700
-X-CSE-ConnectionGUID: 5ulJFFR4T8GKtB8Y9bY28Q==
-X-CSE-MsgGUID: fakqK0hfS9Khs6y+U2qiwg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; d="scan'208";a="52716340"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
- by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 24 Jul 2024 12:18:22 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 24 Jul 2024 12:18:20 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 24 Jul 2024 12:18:20 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 24 Jul 2024 12:18:20 -0700
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.44) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 24 Jul 2024 12:18:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JctBb4O1VbQsFa/OM5aRB5Whwj5ubBT8cuAyr8QLGPHGK53JJTjq/Xe1aNTc22eXPHYhVm5ZPpaOKymNaG/fXVRWMGN4lj3vcYbm9DM4In02BdmoStUlhmP27/4DeZp1k1yDhywSwPVnrs+ja9aUvIYa5/YjET7e9OeBxEqCIP7jic2bXJ25RWR+6f1rGoRV4HXyU5PJSSIeR6Dz49Xh2l3dP624Npa5vfHo7WHnmKqLXubXq09uUpHdsmPhWmFR2Ro/2WhCiiJz/W0LqzZeoQoq5M1D4lTty6R51JDSQD0B+FjlCMbAaJSCnlKJhNvWxnOpq62Kqthz2u0dq4CIHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=W1MwLp75/Pd8Hm0f5ktPyLJ7dm3qzBVmDZQaB1x6pr8=;
- b=mRvp2MCurdtIBjtU9zvWfDfS9I6yipn6m5zsUHR2+lErGKhievQK8kJ7ArWBVlA4T+pgM9XvudvPwZMNOIsG2Em4NdHuFSLXfJdexMzmiKW4cBUQj332YqDZUtiYJdky54ERuvPvdS42EIht4tZM3MQXLdj/vZzuPCB3e66u1wpIVgqHrObL9STWg5pKCcaJ6dBLgh0anQyCUUhZr4BWSdYcWzILoUmyqXNFfSTRb3pyNxclPGxXGacNQv7CiiLYhtzf+XozwEXe2s+7WwisPbGLCh3iHGoDCS9y5Gqd6roOqMT4xMTylGWC3gnQdi04KhE8W9O+4Dv/FgD2qjnvcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
- by PH7PR11MB6379.namprd11.prod.outlook.com (2603:10b6:510:1f9::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.17; Wed, 24 Jul
- 2024 19:18:18 +0000
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::bd3d:59f2:9d29:346]) by PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::bd3d:59f2:9d29:346%4]) with mapi id 15.20.7762.027; Wed, 24 Jul 2024
- 19:18:18 +0000
-Message-ID: <cc8bbebd-5f86-47ed-9c11-fdaa792518b6@intel.com>
-Date: Wed, 24 Jul 2024 12:18:15 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] Consolidate create-sync and create-fence
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-CC: <qemu-devel@nongnu.org>
-References: <20240723220258.3170957-1-dongwon.kim@intel.com>
- <CAJ+F1C+kk4ZBjf8bq2haA4WgzEoSrN2GBYoC5Lc-r17VmRNA6g@mail.gmail.com>
-Content-Language: en-US
-From: "Kim, Dongwon" <dongwon.kim@intel.com>
-In-Reply-To: <CAJ+F1C+kk4ZBjf8bq2haA4WgzEoSrN2GBYoC5Lc-r17VmRNA6g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0103.namprd03.prod.outlook.com
- (2603:10b6:a03:333::18) To PH8PR11MB6879.namprd11.prod.outlook.com
- (2603:10b6:510:229::22)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1sWhsP-0004Vr-62; Wed, 24 Jul 2024 15:42:19 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OJP0J4015086;
+ Wed, 24 Jul 2024 19:42:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=V
+ KpNJvi1ceeUf4Mup5glbUF7/HsMe4e66Uwyw1DrtSI=; b=kl1eYke1vLZYVc0jp
+ yF12Lg7XGG0AONDlyDnncmmuRtLlHl+zJY0WIBUFsci1jAvdWJIE2Har2pYyHMph
+ cb3NV+ykeP+KUFDnHtAe+cGskuntJAdN5fFOj6VQM3XNj/Hsx5pnsPatcUCtyzNf
+ pMjcosKyRYw+4G2SA0xA9lh9TfyPfEW0pVVyYgIlUrvTsqoo4H5wb38kKojfMFmr
+ /L6kb/pwZGdcfk8SmXtkYxJWpWmND52sbRl/s0jSqdd5urog0NwN5qAntsqpys/v
+ RvfYTh+ENJEreCmfrmkMydriXbJode25Uejv4dxiQ6pmrBQ+PsX0/UR+UqX6w8xx
+ 6z0Qw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k6208bhy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 19:42:06 +0000 (GMT)
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46OJg5UJ012338;
+ Wed, 24 Jul 2024 19:42:05 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k6208bhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 19:42:05 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46OJFDcJ007861; Wed, 24 Jul 2024 19:42:04 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxna1p0r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 19:42:04 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46OJg1Wm49414450
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jul 2024 19:42:04 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CC1EF5805F;
+ Wed, 24 Jul 2024 19:42:01 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D95505805E;
+ Wed, 24 Jul 2024 19:42:00 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 24 Jul 2024 19:42:00 +0000 (GMT)
+Message-ID: <9f8023a4-3edd-476f-9243-677138be3921@linux.ibm.com>
+Date: Wed, 24 Jul 2024 15:42:00 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR11MB6879:EE_|PH7PR11MB6379:EE_
-X-MS-Office365-Filtering-Correlation-Id: e2bfbda6-2d31-49d9-bcd8-08dcac155fc8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aktuSWd0S2J0VERrV3M4ZmRMOEJ2V1J5NklXRklqM0pac1UyL2pIRXVOa0pQ?=
- =?utf-8?B?dW80bGtuU016UjA4bndBUFVOd1FIZTZ2SEpkQ2prNDdsZjd0OXlOd2QyVW5z?=
- =?utf-8?B?TzY2eENxYVhPNW1yMTZCaUpkNlFPTHk3Z092aXEzVHF6MHVvS204KzdFQ3pM?=
- =?utf-8?B?R0s3dVlpem11bDFQdXZXa3IwTG9XcmprSUxxUVpUTjdRY1J6NTB3RFNsNnVY?=
- =?utf-8?B?VW9zMkVBZnNVRlIrRW1MRHVmV2pwejROSFJtMEk5ajRmUjVWOUgzczk1OThq?=
- =?utf-8?B?eUJCdWh3Y3h4NjFuUnlTazhvM1Q5V0Jvb1dTUnlLWnRBaE5xem1Lc0JGbXIy?=
- =?utf-8?B?WnNMYnR5K1A4MThzVFEyelhLUUlkN2JteTJDMWR6QkQyY0ZxQWhVSThCdE9F?=
- =?utf-8?B?OVRuMHozQkpsY0ZtZm1MdkkxOUpPL2RGZmxqR3ZwQ2xyc2ZoYzBLNjFDcFFa?=
- =?utf-8?B?WXdranl3bmdRcVVQNHhUUjFFRlluRXJ4dWtkbGd0Snd0NkczY0xxdklmVlNT?=
- =?utf-8?B?eDhERzNRYXdFblRtQTk5Ni9FVnhGVnZsZ0hmTTh6dmM2ZU5XTjFCTXNGSFRL?=
- =?utf-8?B?QlR2WXlrNDZaQURZdDNqMkxER3JERTZTeThRNi9kalMvWmlhVmh4SU96RUdY?=
- =?utf-8?B?dytUeTJnVndKUTlRODRobS8yM3FjWnJYUWc5WHNxb3JHMkxsYXoyUDFoZm5n?=
- =?utf-8?B?STFlNGxpaUovVHlLaWlmRHM1MDFmZWlPNDFUWUplNEJzTkl1WWQ2OXc5RE1z?=
- =?utf-8?B?Y2xjd1BzOGRFcGpUajc3RjB4RkJNS2pKWWJEeW1zVHpjNEpraVc3QVpSL0Vn?=
- =?utf-8?B?WkdpazhYRk1IcjJ3YTVXeHpKaG8vZDVFUDc5ZVhMYVF4Zmo2WldLL2xkcm94?=
- =?utf-8?B?S04yMThzNGhxM0JuSHVoZjlZbXZZalRuNUpiQmFBOUFFSVBBWHM1RGJIOUZV?=
- =?utf-8?B?NHNwZUZyTE5aNWZuVDlBZWRpcVlLS0xPL0ZPRCs5cjNZRE40ZWhQTXl1RjdL?=
- =?utf-8?B?OXBBbVozVkZaSDJubDh1U2tqOUZKdmE4SGYwWm55b0REKzRXNEpVNVNLMDBH?=
- =?utf-8?B?TitRSVpjK0pqOUFRaWpkdmRVVGNZOUpuRTNFb2xBYURSZEE5TXZKM3EydE4w?=
- =?utf-8?B?eFF4ckhCMm1Ud2VLM1NhQUpOUXNaQWlpSlZPZThsT2VWWHl0czY1UkJSQ3Jw?=
- =?utf-8?B?ODRYNmp2VXdHekNMdUF1OEl1Q3FEQS9pclJtTnRiT2dmMUV1WmVJVVdLbDlw?=
- =?utf-8?B?Qkx3cFhnWW5ZRDBHZWhub1BYeDlWNzl1UGlqYXZNWU5NMndIYStTc2tUTHRi?=
- =?utf-8?B?aGtkZlBVdmQxS053bmhrQkt0QUxFamxNZ09nOWJGdk9ETHlMMjRUazRGcFFC?=
- =?utf-8?B?VHYyVmlUY2diRW9RYkZRZFBCT3dYczhtajhjaWgxekRTRGxsTkx6MWlKZ3E5?=
- =?utf-8?B?bG5KQ09tSmg2MWV1YkR4R0VCTXRHdW1EdDhYais2Zm1EYVZZV2JRR29WNGZi?=
- =?utf-8?B?YjhraXpZaS9rNHJ3YkZwQk9pOU9YWk8yTXJMREhWbDZQRkdwYlV2ODBGMWd1?=
- =?utf-8?B?Qm5TTDlzTmErVFpTRGlhTHJ2RmIrZVN1b2NsUHhtRWV0bzd5Y3B2NndTanc2?=
- =?utf-8?B?NjNHbGRLWTRhRWc0N0VBbmhYTk1mN0oydkJKb0VpbWgvbC8vV2djdFVLeGVD?=
- =?utf-8?B?ZzAyd0V0eXRyb1lva09Gdm55RHErSWtqUzhic1ExdHV2cG1ZM2lZSU44MlZN?=
- =?utf-8?B?ZXlVN2FhMHEyUzl5bnYxWnFBTWZnMWpMVHhZVkg0WkJscDQwLzJ4NGxtaDZo?=
- =?utf-8?B?QW10Ni93OTBNNVhUSG1UQT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a2xHb2lGWmZLTHNWRWNjc1gxREU1MTBBcTBQTmR1WDJNMWVtcTE5TlovMDc5?=
- =?utf-8?B?akZIL3RBcE8xMG9SUWFCWFZPTVZhVXlxWTBBVU8wZ2ZzTEpLMjhHMnhaUjhP?=
- =?utf-8?B?RndWSlYyVTVjOTdGVmFQL1VVaFg4ODRwUUZhVzZQdnErbkNiMmZ4aTNzSlY2?=
- =?utf-8?B?ME5tcTRXdGs4RlRyUGkxNVNCRVdjakZOWHlwMG9GWDJrOGw4RTgxSGd6Rm9H?=
- =?utf-8?B?em8yRVVOazN0VjI4dThLNWFzSmdpQmFFS3oxdExCclhjOWZHZFVNVUZLSmxY?=
- =?utf-8?B?MEZ3aWlFbXovTkdhTkh5dzFiQVVlV0Q5Q28yYTBpRWQrZ0oyMEorOHlBUEVH?=
- =?utf-8?B?M25URzJNL0VWOENxVXdZaVlqZFdjbzREdFJzL1pLbEVYSjBzMk42WHlBV2Nk?=
- =?utf-8?B?emlnWFlVQS9ER2t0UWE3eTAyT2xpU3FFSUdwYWIwcTE2YU5USGJCc0lhVlds?=
- =?utf-8?B?WnFnMmRVOCtVVXJnMjhXam1kZEMwMUR1RmxXZi9OM2FQa3VTeFA2TE9oNGVv?=
- =?utf-8?B?SVRFN3NKTHU1cC95TENKZXY3ZXY5bVFNUmljdnYxZElKL3BLY2ZNMmQ4SWp3?=
- =?utf-8?B?RTN0S0ZJNTNCeDRoVmNseHYzQUMwNlREbkl4SE1rS001ZTJPWkx1M0Z4RUl3?=
- =?utf-8?B?TFhLUFk4UFR4bGlKN2VlM1VzZ2k1YnV5THVQQ1JzN0oyL2krYnpoRjlWdXRv?=
- =?utf-8?B?SDlDbGU2NGJnTjdGdVoybWw3cFA1Mm4wTDVPRlZmcmdQLzBTdFNBUFFBZXNR?=
- =?utf-8?B?STRWekhNdk9Xa0ZvNENyQ3BOdGRUd1pHNGdXNXlacGIxRVJHZHFpOEVKVEtl?=
- =?utf-8?B?bjAweUhZV0RlbVhEM1JKbEgvbHZ3S0tJWGhIempoVTdnL1E2TndVZVFTOWFI?=
- =?utf-8?B?TnI0VnZOeDVpQ3JpaHZDUFc1KzNpbllxbmlkZ09TZU9ESTc4TzZSSXlBWFB2?=
- =?utf-8?B?aDJwdlkwQThpbTR1bDcxbVhNcTh1WnpJUlhKNVJHeUhkTHNnU2dTRlNid0lR?=
- =?utf-8?B?NzY0ZU1iVVhMR00zQ1IvT2NXd3Bxc0VqcVZnaEpSSkNzZm1zMnJkc2pITkY4?=
- =?utf-8?B?Tk5BZzcweUpPTXJKUjU5Q0RhYmx2bE84MEpuUjJrcTd4R05hV2dKMGFDVWdp?=
- =?utf-8?B?TklOaElNcUZ0ZFkrbmM3dkhxbmxIVk0yeGU3b1BiUklRa3FGN1N3WDd3UU9M?=
- =?utf-8?B?VGVHTklIbnlvOVFZcWxPZUdxcVJlRVJPUUtudWlHekN4Z3ZLZytreEZDcXFK?=
- =?utf-8?B?N211d1BUSnQ4ZjNhcHFJMVc4OXdOVVpuRmd5TWc3anRLVDAybU94MU9qWjhY?=
- =?utf-8?B?cytqNkp4Mk5nVll6aU1nOEM2dEZENzVQRm1kQnR2Q2tVMTB6MkVyU2QzMVlF?=
- =?utf-8?B?NHNhTUNBRlBSRzFMN1RLM3hSZlpOM2JnN2d3VDJ6SzBkdnphWTMvYXR3c25W?=
- =?utf-8?B?bGd2VkVJY2dRNlZHWFJheWsvVUlNSnlmRTcrNXdTa0t3ejFjNy9TL29VbHRD?=
- =?utf-8?B?c0tDR1lSY0hyVHg2dnkvYXd2SXIyaEFFNHc2L1l1ZjM4alBManMwYVdRVDlU?=
- =?utf-8?B?Q2xhZnZ3Z0RYZWkvWmhsaHFkaGtVMlhRZXdLNXhjSnFOaURsc1JqbnZqR3Vn?=
- =?utf-8?B?a0lSL3YzemNaZTlTOXFpbk5sLzcvbnNCMTlsdHZiaXBPN2dmdUFzTFo0dm5K?=
- =?utf-8?B?ZkRkZnpuVzFYMVRpR0FZZUVueHJEdlRzNk5jbityTmYwQUt4Tlp5UTdTMFhp?=
- =?utf-8?B?Smc4blk4d3hRWE9talVPSHRZNFgybWxjM1lUeU9rc08wRlZ6bTNLdndCZFI0?=
- =?utf-8?B?K0hpVUF6M1dUMmtIWldxQXZFY2hUUGVUOHZGcHBVVmV6Uk9qbjh4ZkMvOUZW?=
- =?utf-8?B?N2lDTWhhWHp5UExubUlPczRNTFR4MXZ0dG82cG5mY3FxNWpEcUJRWUNZR0FV?=
- =?utf-8?B?TFBtOW1qM3l2cU8yNThRdUt5WW1zNC9HZlA4M2IxRTVOcmZ0VS9uNjJVUlVy?=
- =?utf-8?B?Z2JCOFRiR2xYWGhNVFZES1hwejk0d1JhMldaME5qdkV6VTBBdnA1ekVrMmtB?=
- =?utf-8?B?T3hBRTZuaHArbm56QUMyY2NtbjNDdEF3MGluY2RmQm0rSWx6a0Z1ZjEvZWxP?=
- =?utf-8?Q?0Lt6pAeypHht3cL7RSXGqzCL1?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: e2bfbda6-2d31-49d9-bcd8-08dcac155fc8
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2024 19:18:18.1831 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xE+N7dtYluLtjsdwC6AETyOMXNRIP7PzPyKrbQGEJtNRYWerU6TH40fMuuSWcnD57XZkCzrfATlqfFlSVORXfg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6379
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/s390x: filter deprecated properties based on
+ model expansion type
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
+ david@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20240719181741.35146-1-walling@linux.ibm.com>
+ <87h6cksk4h.fsf@pond.sub.org>
+ <28ea8260-a411-4651-8e2a-1fcc009f5043@linux.ibm.com>
+ <87bk2nrzou.fsf@pond.sub.org>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <87bk2nrzou.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: VG5paRh5nK4slt0I1_2kmzFUDTd8BaEd
+X-Proofpoint-GUID: uzD6kWLiGSuinlCiWm8yVYZRhn1sNnii
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-24_21,2024-07-24_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 adultscore=0 phishscore=0 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407240139
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -211,64 +121,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Marc-André,
+On 7/24/24 3:56 AM, Markus Armbruster wrote:
+> Collin Walling <walling@linux.ibm.com> writes:
+> 
+>> On 7/20/24 1:33 AM, Markus Armbruster wrote:
+>>> Collin Walling <walling@linux.ibm.com> writes:
+>>>
+>>>> Currently, there is no way to execute the query-cpu-model-expansion
+>>>> command to retrieve a comprehenisve list of deprecated properties, as
+>>>> the result is dependent per-model. To enable this, the expansion output
+>>>> is modified as such:
+>>>>
+>>>> When reporting a "full" CPU model, show the *entire* list of deprecated
+>>>> properties regardless if they are supported on the model. A full
+>>>> expansion outputs all known CPU model properties anyway, so it makes
+>>>> sense to report all deprecated properties here too.
+>>>>
+>>>> This allows management apps to query a single model (e.g. host) to
+>>>> acquire the full list of deprecated properties.
+>>>>
+>>>> Additionally, when reporting a "static" CPU model, the command will
+>>>> only show deprecated properties that are a subset of the model's
+>>>> *enabled* properties. This is more accurate than how the query was
+>>>> handled before, which blindly reported deprecated properties that
+>>>> were never otherwise introduced for certain models.
+>>>>
+>>>> Acked-by: David Hildenbrand <david@redhat.com>
+>>>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+>>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>>> ---
+>>>>
+>>>> Changelog:
+>>>>
+>>>>     v3
+>>>>     - Removed the 'note' and cleaned up documentation
+>>>>     - Revised commit message
+>>>>
+>>>>     v2
+>>>>     - Changed commit message
+>>>>     - Added documentation reflecting this change
+>>>>     - Made code changes that more accurately filter the deprecated
+>>>>         properties based on expansion type.  This change makes it
+>>>>         so that the deprecated-properties reported for a static model
+>>>>         expansion are a subset of the model's properties instead of
+>>>>         the model's full-definition properties.
+>>>>
+>>>> ---
+>>>>  qapi/machine-target.json         |  5 +++--
+>>>>  target/s390x/cpu_models_sysemu.c | 16 +++++++++-------
+>>>>  2 files changed, 12 insertions(+), 9 deletions(-)
+>>>>
+>>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>>> index a8d9ec87f5..67086f006f 100644
+>>>> --- a/qapi/machine-target.json
+>>>> +++ b/qapi/machine-target.json
+>>>> @@ -21,8 +21,9 @@
+>>>>  # @props: a dictionary of QOM properties to be applied
+>>>>  #
+>>>>  # @deprecated-props: a list of properties that are flagged as deprecated
+>>>> -#     by the CPU vendor.  These props are a subset of the full model's
+>>>> -#     definition list of properties. (since 9.1)
+>>>> +#     by the CPU vendor.  These properties are either a subset of the
+>>>> +#     properties enabled on the CPU model, or a set of properties
+>>>> +#     deprecated across all models for the architecture.
+>>>
+>>>
+>>> When is it "a subset of the properties enabled on the CPU model", and
+>>> when is it "a set of properties deprecated across all models for the
+>>> architecture"?
+>>>
+>>> My guess based on the commit message: it's the former when
+>>> query-cpu-model-expansion's type is "static", and the latter when it's
+>>> "full".
+>>>
+>>
+>> Correct.  I'm not confident where or how to document this dependency
+>> since cross-referencing commands/data structures does not seem to be the
+>> convention here.  My first thought is to mention how deprecated
+>> properties are expanded under the @CpuModelExpansionType.  Something like:
+>>
+>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>> index 67086f006f..3f38c5229f 100644
+>> --- a/qapi/machine-target.json
+>> +++ b/qapi/machine-target.json
+>> @@ -44,11 +44,15 @@
+>>  #     options, and accelerator options.  Therefore, the resulting
+>>  #     model can be used by tooling without having to specify a
+>>  #     compatibility machine - e.g. when displaying the "host" model.
+>> -#     The @static CPU models are migration-safe.
+>> +#     The @static CPU models are migration-safe.  Deprecated
+>> +#     properties are a subset of the properties enabled for the
+>> +#     expanded model.
+>>  #
+>>  # @full: Expand all properties.  The produced model is not guaranteed
+>>  #     to be migration-safe, but allows tooling to get an insight and
+>> -#     work with model details.
+>> +#     work with model details.  Deprecated properties are a set of
+>> +#     properties that are deprecated across all models for the
+>> +#     architecture.
+>>  #
+>>  # .. note:: When a non-migration-safe CPU model is expanded in static
+>>  #    mode, some features enabled by the CPU model may be omitted,
+>>
+>> Thoughts?
+> 
+> The distance between @deprecated-props and parts of its documentation
+> bothers me a bit.
 
-On 7/24/2024 3:37 AM, Marc-André Lureau wrote:
-> Hi
-> 
-> On Wed, Jul 24, 2024 at 2:05 AM <dongwon.kim@intel.com 
-> <mailto:dongwon.kim@intel.com>> wrote:
-> 
->     From: Dongwon Kim <dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>>
-> 
->     Sync object itself is never used as is so can be removed
->     from QemuDmaBuf struct. So now sync is only temporarily needed
->     when creating fence for the object which means what was done in
->     egl_dmabuf_create_sync can now be a part of egl_dmabuf_create_fence
->     function. And egl_dmabuf_create_fence returns fence_fd so the
->     better function name will be egl_dmabuf_create_fence_fd.
-> 
->     v3: create fence only if current QemuDmaBuf->fence_fd = -1
->          to make sure there is no fence currently bound to the
->          QemuDmaBuf
-> 
-> 
-> Why not check it from egl_dmabuf_create_fence_fd() ? calling the 
-> function twice can still potentially leak.
+Let me try to explain the purpose of @deprecated-props and see if it
+helps bring us closer to some semblance of a mutual understanding so we
+can work together on a concise documentation for this field.
 
-It is called from only two locations in gtk-egl.c and gtk-gl-draw.c
-and dmabuf->fence_fd == -1 is checked beforehand so I thought it's
-not needed but I think your point is the completeness of the function
-itself. Do you think we can do assert 'dmabuf->fence_fd >= 0'?
+s390 has been announcing features as deprecated for some time now, which
+was fine as a way to let users know that they should tune their guests
+to no longer user these features.  Now that we are approaching the
+release of generations that will drop these deprecated features
+outright, we encounter an issue: if users have not been mindful with
+disabling these announced-deprecated-features, then their guests running
+on older models will not be able to migrate to machines running on newer
+hardware.
 
-> 
-> Also, please gather the v1/v2/v3/... summary on the cover letter.
+To alleviate this, I've added the @deprecated-props array to the
+CpuModelInfo struct, and this field is populated by a
+query-cpu-model-expansion* return.  It is up the the user/management app
+to make use of this data.
 
-Sure
+On the libvirt side (currently in development), I am able to easily
+retrieve the host-model with a full expansion, parse the
+@deprecated-props, and then cache them for later use (e.g. when
+reporting the host-model with these features disabled, or enabling a
+user to define their domain with deprecated-features disabled via a
+convenient XML attribute).
+
+tl;dr @deprecated-props is only reported via a
+query-cpu-model-expansion, and it is up to the user/management app to
+figure out what to do with them.
 
 > 
-> thanks
+> On closer examination, more questions on CpuModelInfo emerge.  Uses:
+> 
+
+I will attempt to expand on each input @model (CpuModelInfo) as if they
+were documented in the file.
+
+> * query-cpu-model-comparison both arguments
+> 
+>   Documentation doesn't say how exactly the command uses the members of
+>   CpuModelInfo, i.e. @name, @props, @deprecated-props.  Can you tell me?
+> 
+
+Note: Compares ModelA and ModelB.
+
+Both @models must include @name.  @props is optional.  @deprecated-props
+is ignored.
+
+@name: the name of the CPU model definition to look up.  The definition
+will be compared against the generation, GA level, and a static set of
+properties of the opposing model.
+
+@props: a set of additional properties to include in the model's set of
+properties to be compared.
+
+@deprecated-props: ignored.  The user should consider these properties
+beforehand and decide if these properties should be disabled/omitted on
+the respective model.
+
+> * query-cpu-model-expansion argument @model and return value member
+>   @model.
+> 
+>   The other argument is the expansion type, on which the value of return
+>   value model.deprecated-props depends, I believe.  Fine.
+> 
+>   Documentation doesn't say how exactly the command uses the members of
+>   CpuModelInfo arguments, i.e. @name, @props, @deprecated-props.  Can
+>   you tell me?
+> 
+
+The @model must include @name.  @props is optional.  @deprecated-props
+is ignored.
+
+@name: the name of the CPU model definition to look up.  The definition
+is associated with a set of properties that will populate the return data.
+
+@props: a set of additional properties to include in the model's set of
+expanded properties.
+
+@deprecated-props: ignored.  The user should consider these properties
+beforehand and decide if these properties should be disabled/omitted on
+the model.
+
+> * query-cpu-model-baseline both arguments and return value member
+>   @model.
+> 
+>   Same, except we don't have an expansion type here.  So same question,
+>   plus another one: how does return value model.deprecated-props behave?
+> 
+
+Note: Creates a baseline model based on ModelA and ModelB.
+
+The @models must include @name.  @props is optional.  @deprecated-props
+is ignored.
+
+@name: the name of the CPU model definition to look up.  The definition,
+GA level, and a static set of properties will be used to determine the
+maximum model between ModelA and ModelB.
+
+@props: a set of additional properties to include in the model's set of
+properties to be baselined.
+
+@deprecated-props: ignored.  The user should consider these properties
+beforehand and decide if these properties should be disabled/omitted on
+the respective model.
+
+> If you can't answer my questions, we need to find someone who can.
+> 
+
+Hopefully this provides clarity on how CpuModelInfo and its respective
+fields are used in each command.  @David should be able to fill in any
+missing areas / expand / offer corrections.
+
+> [...]
 > 
 > 
->     Dongwon Kim (2):
->        ui/egl-helpers: Consolidates create-sync and create-fence
->        ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
-> 
->       include/ui/dmabuf.h      |  2 --
->       include/ui/egl-helpers.h |  3 +--
->       ui/dmabuf.c              | 14 --------------
->       ui/egl-helpers.c         | 24 +++++++++---------------
->       ui/gtk-egl.c             | 17 ++++-------------
->       ui/gtk-gl-area.c         | 12 +++---------
->       6 files changed, 17 insertions(+), 55 deletions(-)
-> 
->     -- 
->     2.43.0
-> 
-> 
-> 
-> 
-> -- 
-> Marc-André Lureau
+
+-- 
+Regards,
+  Collin
 
 
