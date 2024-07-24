@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDA6C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C346C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWk8B-0001Hq-BV; Wed, 24 Jul 2024 18:06:43 -0400
+	id 1sWk8B-0001IJ-Dh; Wed, 24 Jul 2024 18:06:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7y-0000SR-K7
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:31 -0400
-Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk81-0000dh-BW
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:34 -0400
+Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7v-0006a7-JA
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:30 -0400
-Received: by mail-il1-x12b.google.com with SMTP id
- e9e14a558f8ab-39834949e42so968045ab.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7y-0006d3-Tl
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:32 -0400
+Received: by mail-il1-x132.google.com with SMTP id
+ e9e14a558f8ab-36da84df7adso1184125ab.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858786; x=1722463586;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858789; x=1722463589;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iERzhBKroDxEdhIs7F3pdJn/htP75xFz5hRc3MKZk4Y=;
- b=UxYhLUdcHd6n7SKHosDRcGhbIN02cEgr/b+kz/A4/DN//3Her9CfZidjXvN6W1DIUl
- hQKq0i21JNCH9ZmsOZBD6XL1mxGXZM5A/KsmP22JGxkVY5UCcvSnUcFWuSA+QTmDOwQ5
- G+aA6ienxzdkkFmz2ipgdCd/4tahNida+rhUKnTL35XAr9ii7sJyfBpH6yq5d2HlUHz3
- OmvIi/bIXXIAitxMPwHkTjytHg8Ob4GwOtoJX0OLi4mcq9mzeVZA5zypprPtpIAo/gMp
- NAqqOJc+wgaHwZ9Sr+8nADIWi+zxstFh/kjcPijmWkv/4AAac/OPQnmPbbtcWcRYNtbM
- Vlgw==
+ bh=Fc1iffmEOa89zbsiVdbsLtEsb0Kc5g9RfeOgTm7uMho=;
+ b=Eah7PvgJ9L5+MbPzgxGgfSChOJ1sAeZuYPsHl3ReguNbhkxAlJ4ElwsV2oPM5Ep+vH
+ gPCTHsH1hW0XqDbE4JDf1UVls/oKNtr2f6RgJgo6Ruuw5egKWtBeI3Eu5TvwnsAS+b1S
+ hMXyWY86toqg27zozf7f02O8kWmMH7FYrkohzC7ghnIcQJm3Qm0lWl1Gvr4gbvEtFGbe
+ gbjN414ZHo4B17BSjFM223RYaQVHeCv/F2o8EQW6MfP/z+njPEhIjt9XHm2IYSMaedSp
+ uPxMuOIM8R6VU70rNUg7FzCKoGETfeF6Mjl/ONmwhAQ8aDa1W2txBONihqa1baDGxmTv
+ M+LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721858786; x=1722463586;
+ d=1e100.net; s=20230601; t=1721858789; x=1722463589;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iERzhBKroDxEdhIs7F3pdJn/htP75xFz5hRc3MKZk4Y=;
- b=OZJhSzdQsqlywVc219gjyac3p+bKeQ1qpL2a4TLO/u+6fGdRYUsmTvvzyrkpaWrfx9
- LcQASrSJKnDpu/mvbZuXADw2aKuB9R2vklRZShkwPQJWOZ0Qu4QaOg6ezQdmpDXYkAsK
- A2fKvs5OXHmnEUOpLccDVPTbuDjDLqHMjfN+fcVUu1r1kVB3z0zBVzYlr5DxnSDxAlP9
- mH7PenKgkOOjDs19KbKlnJkF0KIOkICH24ZLkuw1W9MzqggZ6f2vRieejaa/nMImv81y
- CIm0ZviiCWvCZrNlsvnFY0Gajxa5Lacb9I2bWE0Qq5vXQwt5PfoxP9D3ZVCODklgqnpS
- 2CJg==
-X-Gm-Message-State: AOJu0YwQR95JYQ/Rl/pjhpJxx81rvv+RU/2DFj7EP7ZSSjbndSyxHEpq
- kfmviekI9w36nJko5i3Xsv45F2wHNnKLNFkVXmdaf9GRSlTZuJtBMdJHuSFHXDkmi1dE5AN9v7s
- ZGTQ=
-X-Google-Smtp-Source: AGHT+IGa5fTpFiHxKCT6/SGoRPHYxcIs0fmJ+6muI+wlrwdecOpzQs0Y2S8KmVKpYOLMe2AwC1vq/w==
-X-Received: by 2002:a05:6602:1404:b0:817:49a2:fcf7 with SMTP id
- ca18e2360f4ac-81f7e4dce37mr15371939f.17.1721858785765; 
- Wed, 24 Jul 2024 15:06:25 -0700 (PDT)
+ bh=Fc1iffmEOa89zbsiVdbsLtEsb0Kc5g9RfeOgTm7uMho=;
+ b=r6ckKiyq8X7Q4WQzCUIaRl1maQF6lVko9XmPRbR9BDLIzql44xouB42lG/+kAVDDAL
+ lwFANe24J2SLfxN60Wl5p8SNLauCVaHMCEG/HoEU+0MWEMm9HEFrQbxcpY3U8CTp+o2v
+ /2atbi9QUaSezTBJPhTrb2a+vPUK5NSOpXdKx75O67AcbXaw0rustdLUZqJNJleC5miK
+ AmvpDG0+a3sfWlSTmQye3WsbT/YcYAWobKjY+42u8n1rC5iaKNdaYkwABBGzHm5mbNsD
+ Ku/KxHoXCE1Oq5Qmh8SL5B/Xrj90ZcEAJda/afSsFElNHHqlRZ1i+dMUwNO59espVgTo
+ N00w==
+X-Gm-Message-State: AOJu0YyVwfyjKug5AsrBRFzPFHQkptMLzDdyymcTWi4/CsDPaz6G6RDl
+ d0POHdKzfS8ZjFoDB0nX7UrDBTEOlYQ/S5Q1S+FO++rqIk65bVg+H8wwse1TlIZa6l06KE1BuKt
+ xbL4=
+X-Google-Smtp-Source: AGHT+IGfkLj37XGIgliMA/Pu4ftXFL8Z062WQDYV+jpGi/63t1+iyN7gHgu2F45GQWYl0/LZREiu0g==
+X-Received: by 2002:a05:6e02:12e7:b0:396:788:f4ef with SMTP id
+ e9e14a558f8ab-39a1a80ef7fmr25654185ab.14.1721858789352; 
+ Wed, 24 Jul 2024 15:06:29 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.24
+ 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 15:06:25 -0700 (PDT)
+ Wed, 24 Jul 2024 15:06:28 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
+ Jessica Clarke <jrtc27@jrtc27.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/15] bsd-user:Add AArch64 improvements and signal handling
- functions
-Date: Wed, 24 Jul 2024 16:04:41 -0600
-Message-ID: <20240724220449.10398-9-imp@bsdimp.com>
+Subject: [PULL 11/15] bsd-user: Sync fork_start/fork_end with linux-user
+Date: Wed, 24 Jul 2024 16:04:44 -0600
+Message-ID: <20240724220449.10398-12-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240724220449.10398-1-imp@bsdimp.com>
 References: <20240724220449.10398-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::12b;
- envelope-from=imp@bsdimp.com; helo=mail-il1-x12b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::132;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x132.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,135 +95,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+From: Jessica Clarke <jrtc27@jrtc27.com>
 
-Added get_ucontext_sigreturn function to check processor state ensuring current execution mode is EL0 and no flags
-indicating interrupts or exceptions are set.
-Updated AArch64 code to use CF directly without reading/writing the entire processor state, improving efficiency.
-Changed FP data structures to use Int128 instead of __uint128_t, leveraging QEMU's generic mechanism for referencing this type.
+This reorders some of the calls, deduplicates code between branches and,
+most importantly, fixes a double end_exclusive call in the parent that
+will cause exclusive_context_count to go negative.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Pull-Request: https://github.com/qemu-bsd-user/qemu-bsd-user/pull/52
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240707191128.10509-9-itachis@FreeBSD.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/aarch64/signal.c             | 20 +++++++++++++++++++-
- bsd-user/aarch64/target_arch_cpu.h    |  7 ++-----
- bsd-user/aarch64/target_arch_reg.h    |  2 +-
- bsd-user/aarch64/target_arch_signal.h |  2 +-
- bsd-user/qemu.h                       |  3 +++
- 5 files changed, 26 insertions(+), 8 deletions(-)
+ bsd-user/main.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
-index 13faac8ce60..6bc73a798f3 100644
---- a/bsd-user/aarch64/signal.c
-+++ b/bsd-user/aarch64/signal.c
-@@ -21,7 +21,7 @@
- #include "qemu.h"
- 
- /*
-- * Compare to sendsig() in sys/arm64/arm64/machdep.c
-+ * Compare to sendsig() in sys/arm64/arm64/exec_machdep.c
-  * Assumes that target stack frame memory is locked.
-  */
- abi_long set_sigtramp_args(CPUARMState *regs, int sig,
-@@ -117,3 +117,21 @@ abi_long set_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int srflag)
- 
-     return err;
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 82e94a03160..cc980e6f401 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -35,6 +35,7 @@
+ #include "qemu/path.h"
+ #include "qemu/help_option.h"
+ #include "qemu/module.h"
++#include "qemu/plugin.h"
+ #include "exec/exec-all.h"
+ #include "user/guest-base.h"
+ #include "tcg/startup.h"
+@@ -103,8 +104,9 @@ unsigned long target_sgrowsiz = TARGET_SGROWSIZ; /* amount to grow stack */
+ void fork_start(void)
+ {
+     start_exclusive();
+-    cpu_list_lock();
+     mmap_fork_start();
++    cpu_list_lock();
++    qemu_plugin_user_prefork_lock();
+     gdbserver_fork_start();
  }
-+
-+/* Compare to sys_sigreturn() in  arm64/arm64/machdep.c */
-+abi_long get_ucontext_sigreturn(CPUARMState *regs, abi_ulong target_sf,
-+                                abi_ulong *target_uc)
-+{
-+    uint32_t pstate = pstate_read(regs);
-+
-+    *target_uc = 0;
-+
-+    if ((pstate & PSTATE_M) != PSTATE_MODE_EL0t  ||
-+        (pstate & (PSTATE_F | PSTATE_I | PSTATE_A | PSTATE_D)) != 0) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    *target_uc = target_sf;
-+
-+    return 0;
-+}
-diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
-index 5c150bb7e9c..b288e0d069b 100644
---- a/bsd-user/aarch64/target_arch_cpu.h
-+++ b/bsd-user/aarch64/target_arch_cpu.h
-@@ -48,7 +48,6 @@ static inline void target_cpu_loop(CPUARMState *env)
-     CPUState *cs = env_cpu(env);
-     int trapnr, ec, fsc, si_code, si_signo;
-     uint64_t code, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8;
--    uint32_t pstate;
-     abi_long ret;
  
-     for (;;) {
-@@ -88,18 +87,16 @@ static inline void target_cpu_loop(CPUARMState *env)
-              * The carry bit is cleared for no error; set for error.
-              * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
-              */
--            pstate = pstate_read(env);
-             if (ret >= 0) {
--                pstate &= ~PSTATE_C;
-+                env->CF = 0;
-                 env->xregs[0] = ret;
-             } else if (ret == -TARGET_ERESTART) {
-                 env->pc -= 4;
-                 break;
-             } else if (ret != -TARGET_EJUSTRETURN) {
--                pstate |= PSTATE_C;
-+                env->CF = 1;
-                 env->xregs[0] = -ret;
+@@ -112,31 +114,31 @@ void fork_end(pid_t pid)
+ {
+     bool child = pid == 0;
+ 
++    qemu_plugin_user_postfork(child);
++    mmap_fork_end(child);
+     if (child) {
+         CPUState *cpu, *next_cpu;
+         /*
+-         * Child processes created by fork() only have a single thread.  Discard
+-         * information about the parent threads.
++         * Child processes created by fork() only have a single thread.
++         * Discard information about the parent threads.
+          */
+         CPU_FOREACH_SAFE(cpu, next_cpu) {
+             if (cpu != thread_cpu) {
+                 QTAILQ_REMOVE_RCU(&cpus_queue, cpu, node);
              }
--            pstate_write(env, pstate);
-             break;
+         }
+-        mmap_fork_end(child);
+-        /*
+-         * qemu_init_cpu_list() takes care of reinitializing the exclusive
+-         * state, so we don't need to end_exclusive() here.
+-         */
+         qemu_init_cpu_list();
+         get_task_state(thread_cpu)->ts_tid = qemu_get_thread_id();
+-        gdbserver_fork_end(thread_cpu, pid);
+     } else {
+-        mmap_fork_end(child);
+         cpu_list_unlock();
+-        gdbserver_fork_end(thread_cpu, pid);
+-        end_exclusive();
+     }
++    gdbserver_fork_end(thread_cpu, pid);
++    /*
++     * qemu_init_cpu_list() reinitialized the child exclusive state, but we
++     * also need to keep current_cpu consistent, so call end_exclusive() for
++     * both child and parent.
++     */
++    end_exclusive();
+ }
  
-         case EXCP_INTERRUPT:
-diff --git a/bsd-user/aarch64/target_arch_reg.h b/bsd-user/aarch64/target_arch_reg.h
-index 5c7154f0c18..b53302e7f7a 100644
---- a/bsd-user/aarch64/target_arch_reg.h
-+++ b/bsd-user/aarch64/target_arch_reg.h
-@@ -31,7 +31,7 @@ typedef struct target_reg {
- } target_reg_t;
- 
- typedef struct target_fpreg {
--    __uint128_t     fp_q[32];
-+    Int128          fp_q[32];
-     uint32_t        fp_sr;
-     uint32_t        fp_cr;
- } target_fpreg_t;
-diff --git a/bsd-user/aarch64/target_arch_signal.h b/bsd-user/aarch64/target_arch_signal.h
-index df171733166..bff752a67ab 100644
---- a/bsd-user/aarch64/target_arch_signal.h
-+++ b/bsd-user/aarch64/target_arch_signal.h
-@@ -49,7 +49,7 @@ struct target_gpregs {
- };
- 
- struct target_fpregs {
--    __uint128_t fp_q[32];
-+    Int128      fp_q[32];
-     uint32_t    fp_sr;
-     uint32_t    fp_cr;
-     uint32_t    fp_flags;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 9d2fc7148eb..3736c417860 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -17,6 +17,9 @@
- #ifndef QEMU_H
- #define QEMU_H
- 
-+#include <sys/param.h>
-+
-+#include "qemu/int128.h"
- #include "cpu.h"
- #include "qemu/units.h"
- #include "exec/cpu_ldst.h"
+ void cpu_loop(CPUArchState *env)
 -- 
 2.45.1
 
