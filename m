@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E9AC3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 11:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422AAC3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 12:03:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWaeF-00033K-Aw; Wed, 24 Jul 2024 07:59:12 -0400
+	id 1sWah2-0007H5-1a; Wed, 24 Jul 2024 08:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sWaeC-00030M-EQ; Wed, 24 Jul 2024 07:59:08 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from
+ <BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWagh-0006Bn-4U; Wed, 24 Jul 2024 08:01:43 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sWae9-0000U6-AO; Wed, 24 Jul 2024 07:59:08 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7DB004E601B;
- Wed, 24 Jul 2024 13:58:58 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id UJFcjy1cN0aD; Wed, 24 Jul 2024 13:58:56 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3BC474E6000; Wed, 24 Jul 2024 13:58:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 39766746E3B;
- Wed, 24 Jul 2024 13:58:56 +0200 (CEST)
-Date: Wed, 24 Jul 2024 13:58:56 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Huacai Chen <chenhuacai@kernel.org>
-Subject: Re: [PATCH 0/3] Resolve vt82c686 and piix4 qemu_irq memory leaks
-In-Reply-To: <8EA0DE3E-ACC4-4164-BAEE-C1AF2FB0F9A0@gmail.com>
-Message-ID: <f0d3ea3a-1bcc-b1db-0e8e-6a34712225ef@eik.bme.hu>
-References: <20240704205854.18537-1-shentey@gmail.com>
- <20240720143745-mutt-send-email-mst@kernel.org>
- <184E18CE-C4DF-4DEA-A20A-84B31833093F@gmail.com>
- <20240722202107-mutt-send-email-mst@kernel.org>
- <8EA0DE3E-ACC4-4164-BAEE-C1AF2FB0F9A0@gmail.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWagc-0002Jj-DZ; Wed, 24 Jul 2024 08:01:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=VbKSqgi+HawCvCHG5um8KTW5cx8R3B2m+Wjszm8HgRI=; b=RpVOJRcU+DnkrWQPub0p1j/6Rd
+ YeMBStMCMP1tn8lATQgKgIKgQpkuYx9ZFOa4yaz/AQLSOzZUF0aExORJhGdzoFLwob9kBLzYE42x4
+ WV0rBjqoTZpHqSgkPf0Gwpe8D6TGkjQcZ4dUZMzVc7jKaSNhBmXwN/1nJMwYv/5i9li9vCyVTEiNf
+ 9xaNJ74t1sdnx72sCvpufcxDnWCHW+FHmjLKkF1Vy3OOy4pTXYMDkZjlcQYPJTk8Sh9o0q5YYmLJe
+ y7usJDei63YEMBzNXgyO+pQZXwMguCQEgk2Lc/Cv2g/R8guVpvSGyqQd1z+eSaO1htQ7ls/eCiGlX
+ P5+dvlSA==;
+Received: from [2001:8b0:10b:5:6c80:46ed:51d:4ac6]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sWagU-00000007nSx-3yXW; Wed, 24 Jul 2024 12:01:31 +0000
+Message-ID: <5a32fc454f87e1af0adafc65a26ee55e76404c15.camel@infradead.org>
+Subject: Re: [PATCH] net: Reinstate '-net nic, model=help' output as
+ documented in man page
+From: David Woodhouse <dwmw2@infradead.org>
+To: Michael Tokarev <mjt@tls.msk.ru>, Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+Date: Wed, 24 Jul 2024 13:01:30 +0100
+In-Reply-To: <d149921b-8d44-4d0c-af56-b6b2d53797c0@tls.msk.ru>
+References: <20240709123444.6933-1-dwmw2@infradead.org>
+ <d149921b-8d44-4d0c-af56-b6b2d53797c0@tls.msk.ru>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-tNdR34Ec99hOLZlLX3n/"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,134 +76,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jul 2024, Bernhard Beschow wrote:
-> Am 23. Juli 2024 00:21:32 UTC schrieb "Michael S. Tsirkin" <mst@redhat.com>:
->> On Mon, Jul 22, 2024 at 10:21:30PM +0000, Bernhard Beschow wrote:
->>>
->>>
->>> Am 20. Juli 2024 18:38:42 UTC schrieb "Michael S. Tsirkin" <mst@redhat.com>:
->>>> On Thu, Jul 04, 2024 at 10:58:51PM +0200, Bernhard Beschow wrote:
->>>>> This series first turns vt82c686's "INTR" pin into a named GPIO for better
->>>>> comprehensibility. It then continues fixing qemu_irq memory leaks in vt82c686
->>>>> and piix4 by connecting out IRQs of the south bridges before they get realized.
->>>>> This approach is already used in the pc machines after it had been discussed at
->>>>> KVM forum `23.
->>>>>
->>>>> Observe that out IRQs are callbacks such as an INTR IRQ handler in a CPU which a
->>>>> south bridge wants to trigger. If, as an implementation detail, the south bridge
->>>>> wants to pass this callback to a child device, such as the PIC, then this
->>>>> callback must be known to the south bridge before it gets realized. Otherwise
->>>>> board code had to wire the PIC device itself, breaking encapsulation. This means
->>>>> that qdev_connect_gpio_out*() has to be called before realize() which this
->>>>> series implements. Another way to look at it is that callbacks apparently are
->>>>> resouces such as memory regions which are also populated before realize().
->>>>>
->>>>> Please check if above paragraph makes sense.
->>>>>
->>>>> Best regards,
->>>>> Bernhard
->>>>
->>>>
->>>> Bernhard, do you intend to resolve Zoltan's comments on this
->>>> patchset?
->>>
->>> Hi Michael,
->>>
->>> I was hoping for some more comments on the last two commits. These resolve various issues in one go, some of which have been addressed in the past. Since this is apparently a new style to handle out-GPIOs, I'd like to get an OK from the community.
->>>
->>> As Zoltan writes the ideal solution might be to qdev'ify the PIC. This is a bigger task which is more than I intended to do in this series.
->>>
->>> Best regards,
->>> Bernhard
->>
->>
->> ATM I'm just looking at whether we can fix any bugs for the coming
->> release.
->
-> Yes, makes sense. Both Zoltan's and my proposal qualify for bug fixing 
-> IMO, and both are an improvement over the current code (fixing memory 
-> leaks). I'm not too attached to either proposal, but I'd prefer a third
 
-Maybe there is no real bugs to fix. We don't allocate these devices other 
-than creating it once in the beginning with the machine that lives 
-throughout the QEMU session. So plugging memory leaks is only to silence 
-some analysers that complain about this but it won't fix any real bug. 
-It's still good to silence the warnings which may even lead to failed 
-compilation with some compilers.
+--=-tNdR34Ec99hOLZlLX3n/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> opinion on the matter. @Phil: As maintainer and one who worked on the 
-> very same issues before you look like a good candidate. Though I'm not 
-> sure if your time and focus allows for that right now.
+On Tue, 2024-07-09 at 15:46 +0300, Michael Tokarev wrote:
+> 09.07.2024 15:34, David Woodhouse wrote:
+> > From: David Woodhouse <dwmw@amazon.co.uk>
+> >=20
+> > While refactoring the NIC initialization code, I broke '-net nic,model=
+=3Dhelp'
+> > which no longer outputs a list of available NIC models.
+> >=20
+> > Fixes: 2cdeca04adab ("net: report list of available models according to=
+ platform")
+> > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+>=20
+> Cc: qemu-stable@nongnu.org
+> Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-I already said that my problem with your approach is that it relies on 
-confusing rules for using gpio outs and gpio ins (one would need to be 
-connected before realize and the other one after). I think qemu_irq is 
-already a confusing part of QEMU hiding a pointer, qemu_gpio adds another 
-level of complexity to thar and adding more rules making it inconsistent 
-and behave differently in hard to remember ways is too much for anybody to 
-use it correctly. So instead of making this more complex for users and 
-changing all the call sites, it's better to fix it at the root and allow 
-users to simply use it. Currently closest to the root is within vt82c686 
-as i8259 isn't yet completely QDev-ified (some very old code that is used 
-by a lot of other devices like i8259 is still pre QDev using legacy init).
+Ping?
 
-The qemu_gpio is a QDev thing and QDev is meant to model devices so they 
-can eventually be combined into a machine without board code just using a 
-declarative description. So gpios should be used for outside facing pins 
-of the device and it's more intuitive to connect these pins after the 
-device is realized than to connect some of them before realize and some of 
-them after. Using gpio for internal connections just because it's freed 
-with the device is also wrong. For that embedding qemu_irq would be the 
-way that's currently used for similar cases of one device internally using 
-another (like SoCs). (I have a problem with embedding devices too as that 
-exposes their state struct and thus implementation details outside of 
-object implementation but that's another issue. Maybe the best solution 
-would be creating resources and objects as children of the device so it 
-would be freed with the device but some of these can be used outside of 
-the device so then those places would need to reatain/release or ref/unref 
-them which we likely forget to do so it would break either way.)
+--=-tNdR34Ec99hOLZlLX3n/
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-Regards,
-BALATON Zoltan
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzI0MTIwMTMwWjAvBgkqhkiG9w0BCQQxIgQgza7+Aie9
+C/bCPWphwUPZx7cyhOK5nZNqsk6bWTTq7Lgwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgB//n3fHHlC1VhE+iuaQU04I4igifAMQO0u
+KFBsr0s7ezA6TZ5WVJaUuywaQPPLQeRhcmQjnKuEiHV1C4VGytj4Cu0WewI0pFb8YPCnRBq7wYL4
+egeu0AbS03+cs9Bhf/jk67/XR8I0v05fUKHj0EOirHJLJ2kb2wIwmzTZvfm4CzFB/Rfzrwprb+3x
+sgkvue9LefcTw2EA5+rtstTINp4bfqoqok4oxAhzfSwy9M9munBGb28kOAS7wWDO71iha2OiBZ31
+ynKWBNnuvpx8ypFxUykFdVPC90cgEIMiaHIPfVff6SuIL+jiyubIz4VagYKuoo7xNEfuHyOnUXs8
+xZGfiDR9qz4yyZrnoWdIsUBZAl/nBRS2HL5kUL8GCXYIEl5kVme3Iy7amiMmOk+WlnSH4i+B+VdA
+Hq2A1Wg49uKI+TtgmtVS7F87/WuhxK115Ob40jFq/QfQ93dZ8YdZMYOB86Wf6EaoMnkGs8U/L69P
+lOw7Enfs7gaC3sbP/VfsSTWR9o7ajzrSlSw/3DNUe2uVX/rxJ+W33WRqIMp6J/A9ntMrBK2zaur8
+fpZvKwJKXIWJogP1F3N+tTAgc9yaG+CKj+zME4QmrRNP7Wg73hzwOMIjuvr/neLxBwIQZ9+80yMZ
+BTOTGLANnoK582URCjt5WOsfMgKSwgzlvC2ndNcB4wAAAAAAAA==
 
-> Best regards,
-> Bernhard
->
->>
->>>>
->>>> Thanks!
->>>>
->>>>
->>>>> See also:
->>>>> * https://lore.kernel.org/qemu-devel/0FFB5FD2-08CE-4CEC-9001-E7AC24407A44@gmail.
->>>>> com/
->>>>> * "Remove intermediate IRQ forwarder" patches in
->>>>> https://lore.kernel.org/qemu-devel/20230210163744.32182-1-philmd@linaro.org/
->>>>>
->>>>> Testing done:
->>>>> * Boot amigaone machine into Linux
->>>>> * Boot pegasos2 machine into MorphOS
->>>>> * Start fuloong2e machine and check that it doesn't abort
->>>>> * Boot malta machine with https://people.debian.org/~gio/dqib/
->>>>>
->>>>> Bernhard Beschow (3):
->>>>>   hw/isa/vt82c686: Turn "intr" irq into a named gpio
->>>>>   hw/isa/vt82c686: Resolve intermediate IRQ forwarder
->>>>>   hw/isa/piix: Resolve intermediate IRQ forwarder
->>>>>
->>>>>  hw/isa/piix.c       | 13 ++-----------
->>>>>  hw/isa/vt82c686.c   | 12 ++----------
->>>>>  hw/mips/fuloong2e.c |  2 +-
->>>>>  hw/mips/malta.c     |  4 +---
->>>>>  hw/ppc/amigaone.c   |  8 ++++----
->>>>>  hw/ppc/pegasos2.c   |  4 ++--
->>>>>  6 files changed, 12 insertions(+), 31 deletions(-)
->>>>>
->>>>> --
->>>>> 2.45.2
->>>>>
->>>>
->>
->
->
+
+--=-tNdR34Ec99hOLZlLX3n/--
 
