@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C93BC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BE0C3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWgCN-0006c1-LH; Wed, 24 Jul 2024 13:54:47 -0400
+	id 1sWgDP-00033l-Vm; Wed, 24 Jul 2024 13:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBq-0003ys-52
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:54:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgCi-0000B2-D8
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:55:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBh-0005sk-Jm
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:54:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgCa-00061A-Fd
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:55:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721843644;
+ s=mimecast20190719; t=1721843697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gdqvsjUKcWdH1tPK679PEDrN1Tih06VHUDQPpYRXTm8=;
- b=SnhYectATObk1fYmuTVAFhMqYeNr9nqHsvwuGTVbfJca7VM19a1RAA9CeQoeFH8xkav9R3
- DVzPTpbNZpuE65Z4vtemnovMTkAWpoc5yIcp7mQ+yiC/a4be6E5hnN6BtzFZNTZN24nlys
- QNZ/G/n9a2vQptLr99VAqqJyO0xWq1o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HG7eUfDGlcxerSL0HZi4cDvZ7LNvLXtyR8x7NMPMCLg=;
+ b=ZeQbAm3knNZPLgXpr7R5QXQf1xC0lZdmekc8JUBbSwNUVMfTBRCqtBL/dG8gcgmNX9sVtA
+ DiNstpUblO7Q76ErPcpIpra1HXvZOE1r/0yoo15ig+sJPDGu0sYXYV97X5lpA1ssfmA9Gc
+ uEXSluRLsp51MBsQCjcXvXTSfPyk3tE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-t4gKU7T1O-qEoEdFpqxQmA-1; Wed,
- 24 Jul 2024 13:54:03 -0400
-X-MC-Unique: t4gKU7T1O-qEoEdFpqxQmA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-U809HdEuN3uKshoVw5vnZw-1; Wed,
+ 24 Jul 2024 13:54:50 -0400
+X-MC-Unique: U809HdEuN3uKshoVw5vnZw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F14811955BF4; Wed, 24 Jul 2024 17:54:01 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00AC01979201; Wed, 24 Jul 2024 17:54:49 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.144])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B60D81955D42; Wed, 24 Jul 2024 17:53:56 +0000 (UTC)
+ id 262721955D42; Wed, 24 Jul 2024 17:54:43 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -53,23 +53,24 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 12/23] tests/functional: Convert the s390x avocado tests
- into standalone tests
-Date: Wed, 24 Jul 2024 19:52:30 +0200
-Message-ID: <20240724175248.1389201-13-thuth@redhat.com>
+Subject: [PATCH v2 20/23] tests/functional: Convert the m68k nextcube test
+ with tesseract
+Date: Wed, 24 Jul 2024 19:52:38 +0200
+Message-ID: <20240724175248.1389201-21-thuth@redhat.com>
 In-Reply-To: <20240724175248.1389201-1-thuth@redhat.com>
 References: <20240724175248.1389201-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,364 +87,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These tests use archive.lzma_uncompress() from the Avocado utils,
-so provide a small helper function for this, based on the
-standard lzma module from Python instead.
-
-And while we're at it, replace the MD5 hashes in the topology test
-with proper SHA256 hashes, since MD5 should not be used anymore
-nowadays.
+The code that handles running of tesseract needs to be tweaked a little
+bit to be able to run without the functions from avocado.utils, and
+while we're at it, drop some legacy stuff that was still there due to
+Tesseract 3 support that we already dropped a while ago.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  4 +-
- tests/functional/meson.build                  |  6 ++
- tests/functional/qemu_test/utils.py           | 14 ++++
- .../test_s390x_ccw_virtio.py}                 | 32 ++++-----
- .../test_s390x_topology.py}                   | 70 +++++++------------
- 5 files changed, 59 insertions(+), 67 deletions(-)
- rename tests/{avocado/machine_s390_ccw_virtio.py => functional/test_s390x_ccw_virtio.py} (95%)
- mode change 100644 => 100755
- rename tests/{avocado/s390_topology.py => functional/test_s390x_topology.py} (90%)
+ tests/avocado/tesseract_utils.py              | 46 -------------------
+ tests/functional/meson.build                  |  4 ++
+ tests/functional/qemu_test/tesseract.py       | 35 ++++++++++++++
+ .../test_m68k_nextcube.py}                    | 20 ++++----
+ 4 files changed, 50 insertions(+), 55 deletions(-)
+ delete mode 100644 tests/avocado/tesseract_utils.py
+ create mode 100644 tests/functional/qemu_test/tesseract.py
+ rename tests/{avocado/machine_m68k_nextcube.py => functional/test_m68k_nextcube.py} (86%)
  mode change 100644 => 100755
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f107b8eb20..209fe0f728 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1739,7 +1739,7 @@ S: Supported
- F: hw/s390x/
- F: include/hw/s390x/
- F: configs/devices/s390x-softmmu/default.mak
--F: tests/avocado/machine_s390_ccw_virtio.py
-+F: tests/functional/test_s390x_ccw_virtio.py
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
-@@ -1802,7 +1802,7 @@ F: hw/s390x/cpu-topology.c
- F: target/s390x/kvm/stsi-topology.c
- F: docs/devel/s390-cpu-topology.rst
- F: docs/system/s390x/cpu-topology.rst
--F: tests/avocado/s390_topology.py
-+F: tests/functional/test_s390x_topology.py
- 
- X86 Machines
- ------------
+diff --git a/tests/avocado/tesseract_utils.py b/tests/avocado/tesseract_utils.py
+deleted file mode 100644
+index 476f528147..0000000000
+--- a/tests/avocado/tesseract_utils.py
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# ...
+-#
+-# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later. See the COPYING file in the top-level directory.
+-
+-import re
+-import logging
+-
+-from avocado.utils import process
+-from avocado.utils.path import find_command, CmdNotFoundError
+-
+-def tesseract_available(expected_version):
+-    try:
+-        find_command('tesseract')
+-    except CmdNotFoundError:
+-        return False
+-    res = process.run('tesseract --version')
+-    try:
+-        version = res.stdout_text.split()[1]
+-    except IndexError:
+-        version = res.stderr_text.split()[1]
+-    return int(version.split('.')[0]) >= expected_version
+-
+-    match = re.match(r'tesseract\s(\d)', res)
+-    if match is None:
+-        return False
+-    # now this is guaranteed to be a digit
+-    return int(match.groups()[0]) >= expected_version
+-
+-
+-def tesseract_ocr(image_path, tesseract_args='', tesseract_version=3):
+-    console_logger = logging.getLogger('tesseract')
+-    console_logger.debug(image_path)
+-    if tesseract_version == 4:
+-        tesseract_args += ' --oem 1'
+-    proc = process.run("tesseract {} {} stdout".format(tesseract_args,
+-                                                       image_path))
+-    lines = []
+-    for line in proc.stdout_text.split('\n'):
+-        sline = line.strip()
+-        if len(sline):
+-            console_logger.debug(sline)
+-            lines += [sline]
+-    return lines
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 5615a5b2fd..ddbb59604b 100644
+index 74347cf545..109e0408e4 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -12,6 +12,7 @@ endif
- # Timeouts for individual tests that can be slow e.g. with debugging enabled
- test_timeouts = {
-   'netdev_ethtool' : 180,
-+  's390x_ccw_virtio' : 180,
- }
- 
- tests_generic = [
-@@ -46,6 +47,11 @@ tests_ppc_thorough = [
-   'ppc_bamboo',
+@@ -36,6 +36,10 @@ tests_loongarch64_thorough = [
+   'loongarch64_virt',
  ]
  
-+tests_s390x_thorough = [
-+  's390x_ccw_virtio',
-+  's390x_topology',
++tests_m68k_thorough = [
++  'm68k_nextcube'
 +]
 +
- tests_sparc64_thorough = [
-   'sparc64_sun4u',
+ tests_microblaze_thorough = [
+   'microblaze_s3adsp1800'
  ]
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 4eb5e5d5e5..a12dac51b6 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -8,6 +8,9 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
-+import lzma
-+import os
-+import shutil
- import tarfile
- 
- def archive_extract(archive, dest_dir, member=None):
-@@ -19,3 +22,14 @@ def archive_extract(archive, dest_dir, member=None):
-             tf.extract(member=member, path=dest_dir)
-         else:
-             tf.extractall(path=dest_dir)
+diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
+new file mode 100644
+index 0000000000..c4087b7c11
+--- /dev/null
++++ b/tests/functional/qemu_test/tesseract.py
+@@ -0,0 +1,35 @@
++# ...
++#
++# Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later. See the COPYING file in the top-level directory.
 +
-+def lzma_uncompress(xz_path, output_path):
-+    if os.path.exists(output_path):
-+        return
-+    with lzma.open(xz_path, 'rb') as lzma_in:
-+        try:
-+            with open(output_path, 'wb') as raw_out:
-+                shutil.copyfileobj(lzma_in, raw_out)
-+        except:
-+            os.remove(output_path)
-+            raise
-diff --git a/tests/avocado/machine_s390_ccw_virtio.py b/tests/functional/test_s390x_ccw_virtio.py
++import re
++import logging
++
++from . import has_cmd, run_cmd
++
++def tesseract_available(expected_version):
++    if not has_cmd('tesseract'):
++        return False
++    (stdout, stderr, ret) = run_cmd([ 'tesseract', '--version'])
++    if ret:
++        return False
++    version = stdout.split()[1]
++    return int(version.split('.')[0]) >= expected_version
++
++def tesseract_ocr(image_path, tesseract_args=''):
++    console_logger = logging.getLogger('console')
++    console_logger.debug(image_path)
++    (stdout, stderr, ret) = run_cmd(['tesseract', image_path,
++                                     'stdout'])
++    if ret:
++        return None
++    lines = []
++    for line in stdout.split('\n'):
++        sline = line.strip()
++        if len(sline):
++            console_logger.debug(sline)
++            lines += [sline]
++    return lines
+diff --git a/tests/avocado/machine_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
 old mode 100644
 new mode 100755
-similarity index 95%
-rename from tests/avocado/machine_s390_ccw_virtio.py
-rename to tests/functional/test_s390x_ccw_virtio.py
-index 26e938c9e9..b2cbaacd21
---- a/tests/avocado/machine_s390_ccw_virtio.py
-+++ b/tests/functional/test_s390x_ccw_virtio.py
+similarity index 86%
+rename from tests/avocado/machine_m68k_nextcube.py
+rename to tests/functional/test_m68k_nextcube.py
+index 1f3c883910..4595032af5
+--- a/tests/avocado/machine_m68k_nextcube.py
++++ b/tests/functional/test_m68k_nextcube.py
 @@ -1,3 +1,5 @@
 +#!/usr/bin/env python3
 +#
- # Functional test that boots an s390x Linux guest with ccw and PCI devices
- # attached and checks whether the devices are recognized by Linux
+ # Functional test that boots a VM and run OCR on the framebuffer
  #
-@@ -12,11 +14,10 @@
+ # Copyright (c) 2019 Philippe Mathieu-Daudé <f4bug@amsat.org>
+@@ -8,10 +10,10 @@
  import os
- import tempfile
- 
--from avocado import skipUnless
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
-+from qemu_test import QemuSystemTest
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import lzma_uncompress
- 
- class S390CCWVirtioMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-@@ -41,11 +42,7 @@ def clear_guest_dmesg(self):
-         self.dmesg_clear_count += 1
- 
-     def test_s390x_devices(self):
--
--        """
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
--        """
-+        self.set_machine('s390-ccw-virtio')
- 
-         kernel_url = ('https://snapshot.debian.org/archive/debian/'
-                       '20201126T092837Z/dists/buster/main/installer-s390x/'
-@@ -160,15 +157,7 @@ def test_s390x_devices(self):
- 
- 
-     def test_s390x_fedora(self):
--
--        """
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
--        :avocado: tags=device:virtio-gpu
--        :avocado: tags=device:virtio-crypto
--        :avocado: tags=device:virtio-net
--        :avocado: tags=flaky
--        """
-+        self.set_machine('s390-ccw-virtio')
- 
-         kernel_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/31/Server/s390x/os'
-@@ -182,7 +171,7 @@ def test_s390x_fedora(self):
-         initrd_hash = '3de45d411df5624b8d8ef21cd0b44419ab59b12f'
-         initrd_path_xz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-         initrd_path = os.path.join(self.workdir, 'initrd-raw.img')
--        archive.lzma_uncompress(initrd_path_xz, initrd_path)
-+        lzma_uncompress(initrd_path_xz, initrd_path)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE + ' audit=0 '
-@@ -275,3 +264,6 @@ def test_s390x_fedora(self):
-         exec_command_and_wait_for_pattern(self,
-                         'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
-                         ' sleep 1 ; done', 'Start virtcrypto_remove.')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/s390_topology.py b/tests/functional/test_s390x_topology.py
-old mode 100644
-new mode 100755
-similarity index 90%
-rename from tests/avocado/s390_topology.py
-rename to tests/functional/test_s390x_topology.py
-index 9154ac8776..39c5ce0b3d
---- a/tests/avocado/s390_topology.py
-+++ b/tests/functional/test_s390x_topology.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Functional test that boots a Linux kernel and checks the console
- #
- # Copyright IBM Corp. 2023
-@@ -9,16 +11,13 @@
- # later.  See the COPYING file in the top-level directory.
- 
- import os
--import shutil
  import time
  
 -from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import interrupt_interactive_console_until_pattern
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import process
--from avocado.utils import archive
+-from avocado import skipUnless
 +from qemu_test import QemuSystemTest
-+from qemu_test import exec_command
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import lzma_uncompress
++from unittest import skipUnless
+ 
+-from tesseract_utils import tesseract_available, tesseract_ocr
++from qemu_test.tesseract import tesseract_available, tesseract_ocr
+ 
+ PIL_AVAILABLE = True
+ try:
+@@ -21,11 +23,6 @@
  
  
- class S390CPUTopology(QemuSystemTest):
-@@ -81,18 +80,16 @@ def kernel_init(self):
-         kernel_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/35/Server/s390x/os'
-                       '/images/kernel.img')
--        kernel_hash = '0d1aaaf303f07cf0160c8c48e56fe638'
--        kernel_path = self.fetch_asset(kernel_url, algorithm='md5',
--                                       asset_hash=kernel_hash)
-+        kernel_hash = '1f2dddfd11bb1393dd2eb2e784036fbf6fc11057a6d7d27f9eb12d3edc67ef73'
-+        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+ class NextCubeMachine(QemuSystemTest):
+-    """
+-    :avocado: tags=arch:m68k
+-    :avocado: tags=machine:next-cube
+-    :avocado: tags=device:framebuffer
+-    """
  
-         initrd_url = ('https://archives.fedoraproject.org/pub/archive'
-                       '/fedora-secondary/releases/35/Server/s390x/os'
-                       '/images/initrd.img')
--        initrd_hash = 'a122057d95725ac030e2ec51df46e172'
--        initrd_path_xz = self.fetch_asset(initrd_url, algorithm='md5',
--                                          asset_hash=initrd_hash)
-+        initrd_hash = '1100145fbca00240c8c372ae4b89b48c99844bc189b3dfbc3f481dc60055ca46'
-+        initrd_path_xz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-         initrd_path = os.path.join(self.workdir, 'initrd-raw.img')
--        archive.lzma_uncompress(initrd_path_xz, initrd_path)
-+        lzma_uncompress(initrd_path_xz, initrd_path)
+     timeout = 15
  
-         self.vm.set_console()
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-@@ -115,10 +112,8 @@ def system_init(self):
-     def test_single(self):
-         """
-         This test checks the simplest topology with a single CPU.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -127,10 +122,8 @@ def test_single(self):
-     def test_default(self):
-         """
-         This test checks the implicit topology.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '13,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -154,10 +147,8 @@ def test_move(self):
-         """
-         This test checks the topology modification by moving a CPU
-         to another socket: CPU 0 is moved from socket 0 to socket 2.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '1,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -174,10 +165,8 @@ def test_dash_device(self):
-         """
-         This test verifies that a CPU defined with the '-device'
-         command line option finds its right place inside the topology.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '1,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -221,10 +210,8 @@ def test_polarization(self):
-         """
-         This test verifies that QEMU modifies the entitlement change after
-         several guest polarization change requests.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -267,10 +254,8 @@ def test_entitlement(self):
-         """
-         This test verifies that QEMU modifies the entitlement
-         after a guest request and that the guest sees the change.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -313,10 +298,8 @@ def test_dedicated(self):
-         CPU is made dedicated.
-         QEMU retains the entitlement value when horizontal polarization is in effect.
-         For the guest, the field shows the effective value of the entitlement.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -345,10 +328,8 @@ def test_socket_full(self):
-         This test verifies that QEMU does not accept to overload a socket.
-         The socket-id 0 on book-id 0 already contains CPUs 0 and 1 and can
-         not accept any new CPU while socket-id 0 on book-id 1 is free.
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.add_args('-smp',
-                          '3,drawers=2,books=2,sockets=3,cores=2,maxcpus=24')
-@@ -369,10 +350,8 @@ def test_dedicated_error(self):
-         """
-         This test verifies that QEMU refuses to lower the entitlement
-         of a dedicated CPU
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -417,10 +396,8 @@ def test_move_error(self):
-         """
-         This test verifies that QEMU refuses to move a CPU to an
-         nonexistent location
--
--        :avocado: tags=arch:s390x
--        :avocado: tags=machine:s390-ccw-virtio
-         """
-+        self.set_machine('s390-ccw-virtio')
-         self.kernel_init()
-         self.vm.launch()
-         self.wait_until_booted()
-@@ -437,3 +414,6 @@ def test_move_error(self):
-         self.assertEqual(res['error']['class'], 'GenericError')
+@@ -48,6 +45,7 @@ def check_bootrom_framebuffer(self, screenshot_path):
  
-         self.check_topology(0, 0, 0, 0, 'medium', False)
+     @skipUnless(PIL_AVAILABLE, 'Python PIL not installed')
+     def test_bootrom_framebuffer_size(self):
++        self.set_machine('next-cube')
+         screenshot_path = os.path.join(self.workdir, "dump.ppm")
+         self.check_bootrom_framebuffer(screenshot_path)
+ 
+@@ -60,11 +58,15 @@ def test_bootrom_framebuffer_size(self):
+     # that it is still alpha-level software.
+     @skipUnless(tesseract_available(4), 'tesseract OCR tool not available')
+     def test_bootrom_framebuffer_ocr_with_tesseract(self):
++        self.set_machine('next-cube')
+         screenshot_path = os.path.join(self.workdir, "dump.ppm")
+         self.check_bootrom_framebuffer(screenshot_path)
+-        lines = tesseract_ocr(screenshot_path, tesseract_version=4)
++        lines = tesseract_ocr(screenshot_path)
+         text = '\n'.join(lines)
+         self.assertIn('Testing the FPU', text)
+         self.assertIn('System test failed. Error code', text)
+         self.assertIn('Boot command', text)
+         self.assertIn('Next>', text)
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
