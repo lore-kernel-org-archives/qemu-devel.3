@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2E5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 03:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C767FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 03:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWSkn-0005Iv-8T; Tue, 23 Jul 2024 23:33:25 -0400
+	id 1sWSqV-0001T7-Im; Tue, 23 Jul 2024 23:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWSkl-0005IE-Ty
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:33:23 -0400
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ id 1sWSqU-0001SS-DZ
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:39:18 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWSkj-0003KW-T4
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:33:23 -0400
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3dab2bb288aso3459308b6e.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 20:33:20 -0700 (PDT)
+ id 1sWSqS-0004zO-RS
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:39:18 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-70aec66c936so3631905b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 20:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721791999; x=1722396799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721792355; x=1722397155; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D1PGRn7lMb1NeIrC3MzsFfvMABnPG6v/ZPvg1Mv6iX4=;
- b=RUdYuEUTdaAMszznBu5eAUGjQi1haoVYGCY0TFkMRvGfTKK6Xlc8VWOFIouK/tRwUj
- 91M6gqCuMs7/uqhBBRGC69Mqzsp1JNkY90zsk3PbXTP1mgP1rgSrKLjaLwmSxMDKmj5j
- 6hs4CuckbTRjFwtB58V6N/uy52QlkxensT8M5B20t6m/EWik10ZuGU4nYlvtNgYW6u+r
- Wu2W7/1k1CLHqdotIAb5nRGPHiQWoR0sK160lvef0qqmCbeTgJC0FvpUPfiD8roPrhj0
- m0bUdlAIOSlFIOR3MI5Bb6Oq18bOxxNnrUoFwmXsAHoRs7sYrwKw7d16DNitSyF9oy+y
- Xxog==
+ bh=MwX86XiSvrSMbaVVwsHL6ma4G90RROhSkri1L+buda4=;
+ b=OnE4ZMPfU6tt6A3rg5vI91tHzbNIZEiZ6Ybza97KaGVm5V1M0+9eDpGvHOarOWro4V
+ 3VVUjeXUYL80gKg3uYxrgZZCMlknqQ4Tz2w36GaMlY89qaQPYMd/JFQt6IVLti4eVVDK
+ LHUKpahpt4RSAzW4i0kmHQUvKCHDwJUMRQzqUaDVwyOB4eEFED4LaQhM3qPWxABAtg7z
+ 6t+n8VswAX4/Kd9nbN0qsaTx8lDWVBwm1WrSIxqsToIdsl6yyB6aZZqUNKC6HHQVAQ/K
+ s2YW7VRpi735Bafpr+e7+Uic336os4vlzANV/FPjAhoTM0ITFG7G1uUo1rjhg0WgOJkC
+ hPFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721791999; x=1722396799;
+ d=1e100.net; s=20230601; t=1721792355; x=1722397155;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D1PGRn7lMb1NeIrC3MzsFfvMABnPG6v/ZPvg1Mv6iX4=;
- b=AlrKPFpN/SAabD2tWv7W7BN0KiCs9JhO4jTrxG+BFUFuSp9I8+KhC0Yqk2gglUM+zX
- 660V2imDWQ82BgOzqvRNvR8XEuYpn0dEWPc+vjsINYlZWD8eBHojbhnMcswTDMB0F/1s
- yQmEKcSibqnYGrThrY6FHVtmAGre+jqlRKhYftcFNIWM0MKhHMF4Sk18DZW4/9C/pNk+
- XHbSEtq4Boy9aO2nmyUvicYrY18kdidvJB6M+jgSOOgUi/C/dJPsOR2E5a88PerDfnRd
- d7llRACFwheFerkwb1zOVWm2szs73fZwjtPAdIe9yFSXY7UkFeSBwgXSF1N4AQoij10l
- hQYQ==
+ bh=MwX86XiSvrSMbaVVwsHL6ma4G90RROhSkri1L+buda4=;
+ b=VJok5CAF5LVR46uzS8DdLv3VcS8LBa28jDrb0JN1vu7keD78+l+GzaOVrClYxNRfUw
+ 48Y3m/S/95yso1/6oG/C9hzkVHyUjIWwdNFnt9vQ58XLa06t1/kvNsvcybJTH5yB4IJ3
+ j0ZSMVUMfmw6ohvuiRXTgpRWMs/ONNl4ErM9hxiXN2EC3n6LRI7i9KDNJAZCC+dJ54iU
+ gAs+2KQdGkNEAvpvasNx6XV0dRkTOxyA+wjgJdgJ9UFshNU7NBzhRLuFdBzMAZHlRCIH
+ GbORl8FYkLRcaWKNGhGV+aVXDC08Zsrh5tXFO8gdPq3gbvV/QMQE7og/wpAv58ofbL0N
+ tBqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXI3bstQwebwPvXUbYMi8BbILp7F9FtI+jFwtWPk6WKpb5zhqDf2B8NQ956fFq1xkL+FyN4U13a5412eAXhhwDgXgxA+As=
-X-Gm-Message-State: AOJu0Yy4nRXqv9nEmihbBBQ2K49se74gVi8YVA91mX5DK1EuHypIenEO
- B2OjDJE4xWNmQ5SeHeTE8Gk/TlZuv2of8okTXBPV2Vwbl3FuZbvulNSJkoA6DPM=
-X-Google-Smtp-Source: AGHT+IEyTMQhiHPJzQzZza+tq+iuv7FSy3HPHoL8KfzUVDvtva0XcIuaLl8ruvRYIkyAyvBv+9S6gg==
-X-Received: by 2002:a05:6870:169e:b0:261:1339:1cb8 with SMTP id
- 586e51a60fabf-263ab5f1a6cmr10700597fac.35.1721791999279; 
- Tue, 23 Jul 2024 20:33:19 -0700 (PDT)
+ AJvYcCVjjebkKKx450Pp5XY6C+aHIFrRzu1Y3J1cCGGaNqWBkp/B2W8mqH4keAySzL5SWuYe9h5lxn2SiZ2UPXIiET7/btSTLdk=
+X-Gm-Message-State: AOJu0YynSFN6xmfU/NWhW/2RXQ3w6nnDtWYbluq946wqyFCySWg2xF7d
+ hCodqW4t3+nMvCp9OG/I/iMrTFiyCu/EAS8X601W7+q/1r18r2EKGSbPfW3tHxE=
+X-Google-Smtp-Source: AGHT+IG4NjgDcDidp3cxV2YsbaHU7MJudmVgEYwzUvhajeTebc5hP3iHRmWSgrQkpmO8M9wEIw5BgQ==
+X-Received: by 2002:a05:6a21:2986:b0:1c2:8e96:f767 with SMTP id
+ adf61e73a8af0-1c46197307fmr932012637.31.1721792354692; 
+ Tue, 23 Jul 2024 20:39:14 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70d16cc50d7sm5407371b3a.202.2024.07.23.20.33.16
+ d9443c01a7336-1fd6f44f26esm82872415ad.211.2024.07.23.20.39.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 20:33:18 -0700 (PDT)
-Message-ID: <d3316e48-e601-4a43-b77e-2bf127d91a7a@linaro.org>
-Date: Wed, 24 Jul 2024 13:33:13 +1000
+ Tue, 23 Jul 2024 20:39:14 -0700 (PDT)
+Message-ID: <a90225a0-b945-4bc9-8ddb-e3f595ef0f6c@linaro.org>
+Date: Wed, 24 Jul 2024 13:39:08 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] Add an "info pg" command that prints the current
- page tables
+Subject: Re: [PATCH v4 0/7] Rework x86 page table walks
 To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
 Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
  philmd@linaro.org, berrange@redhat.com
 References: <20240723010545.3648706-1-porter@cs.unc.edu>
- <20240723010545.3648706-4-porter@cs.unc.edu>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240723010545.3648706-4-porter@cs.unc.edu>
+In-Reply-To: <20240723010545.3648706-1-porter@cs.unc.edu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,182 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/24 11:05, Don Porter wrote:
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index d946161717..c70d31433d 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -605,10 +605,11 @@ extern bool mttcg_enabled;
->   /**
->    * cpu_paging_enabled:
->    * @cpu: The CPU whose state is to be inspected.
-> + * @mmu_idx: 0 == traditional paging, 1 == nested paging
->    *
->    * Returns: %true if paging is enabled, %false otherwise.
->    */
-> -bool cpu_paging_enabled(const CPUState *cpu);
-> +bool cpu_paging_enabled(const CPUState *cpu, int mmu_idx);
+Hi Don.
 
-mmu_idx already means something very different to TCG.
-You will only confuse matters by using this name for a different concept here.
+In addition to the other issues, this really needs to be broken up into many more patches.
 
+Every patch should do *one* thing:
 
-> @@ -671,9 +672,82 @@ int cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
->    * Caller is responsible for freeing the data.
->    */
->   GuestPanicInformation *cpu_get_crash_info(CPUState *cpu);
-> -
->   #endif /* !CONFIG_USER_ONLY */
->   
-> +/* Maximum supported page table height - currently x86 at 5 */
-> +#define MAX_HEIGHT 5
-> +
-> +typedef struct PageTableLayout {
-> +    int height; /* Height of the page table */
-> +    int entries_per_node[MAX_HEIGHT + 1];
-> +} PageTableLayout;
-> +
-> +typedef struct DecodedPTE {
-> +    int prot; /* Always populated, arch-specific, decoded flags */
-> +    bool present;
-> +    bool leaf; /* Only valid if present */
-> +    bool reserved_bits_ok;
-> +    bool user_read_ok;
-> +    bool user_write_ok;
-> +    bool user_exec_ok;
-> +    bool super_read_ok;
-> +    bool super_write_ok;
-> +    bool super_exec_ok;
-> +    bool dirty;
-> +    hwaddr child; /* Only valid if present and !leaf */
-> +    uint64_t leaf_page_size; /* Only valid if present and leaf */
-> +    uint64_t nested_page_size; /*
-> +                                * If nested paging, the page size of the host
-> +                                * page storing the data, versus the size of the
-> +                                * guest page frame in leaf_page_size
-> +                                */
-> +    vaddr bits_translated; /*
-> +                            * The virtual address bits translated in walking
-> +                            * the page table to node[i].
-> +                            */
-> +    hwaddr pte_addr; /* (guest) physical address of the PTE */
-> +    hwaddr pte_host_addr; /* (host) physical address of the PTE */
-> +    uint64_t pte_contents; /* Raw contents of the pte */
-> +} DecodedPTE;
-> +
-> +typedef int (*qemu_page_walker_for_each)(CPUState *cs, void *data,
-> +                                         DecodedPTE *pte,
-> +                                         int height, int offset, int mmu_idx,
-> +                                         const PageTableLayout *layout);
-> +
-> +/**
-> + * for_each_pte - iterate over a page table, and
-> + *                call fn on each entry
-> + *
-> + * @cs - CPU state
-> + * @fn(cs, data, pte, height, offset, layout) - User-provided function to call
-> + *                                              on each pte.
-> + *   * @cs - pass through cs
-> + *   * @data - user-provided, opaque pointer
-> + *   * @pte - current pte, decoded
-> + *   * @height - height in the tree of pte
-> + *   * @offset - offset within the page tabe node
-> + *   * @layout - pointer to a PageTableLayout for this tree
-> + * @data - opaque pointer; passed through to fn
-> + * @visit_interior_nodes - if true, call fn() on interior entries in
-> + *                         page table; if false, visit only leaf entries.
-> + * @visit_not_present - if true, call fn() on entries that are not present.
-> + *                         if false, visit only present entries.
-> + * @mmu_idx - Which level of the mmu we are interested in:
-> + *            0 == user mode, 1 == nested page table
-> + *            Note that MMU_*_IDX macros are not consistent across
-> + *            architectures.
-> + *
-> + * Returns true on success, false on error.
-> + *
-> + * We assume all callers of this function are in debug mode, and do not
-> + * want to synthesize, say, a user-mode load, on each page in the address
-> + * space.
-> + */
-> +bool for_each_pte(CPUState *cs, qemu_page_walker_for_each fn, void *data,
-> +                  bool visit_interior_nodes, bool visit_not_present,
-> +                  bool visit_malformed, int mmu_idx);
-> +
+   - Code motion
+   - Introduce an API
+   - Introduce target-specific support for an API
+   - Use an API to implement a monitor command
+   - etc
 
-None of this should be in hw/core/cpu.h.
-Isolate it somewhere else, not included by 80% of QEMU.
-
-
-> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-> index 4c94e51267..d0e939def8 100644
-> --- a/include/hw/core/sysemu-cpu-ops.h
-> +++ b/include/hw/core/sysemu-cpu-ops.h
-> @@ -12,6 +12,43 @@
->   
->   #include "hw/core/cpu.h"
->   
-> +/*
-> + * struct mem_print_state: Used by qmp in walking page tables.
-> + */
-> +struct mem_print_state {
-> +    GString *buf;
-> +    CPUArchState *env;
-> +    int vaw, paw; /* VA and PA width in characters */
-> +    int max_height;
-> +    int mmu_idx; /* 0 == user mode, 1 == nested page table */
-> +    bool (*flusher)(CPUState *cs, struct mem_print_state *state);
-> +    bool flush_interior; /* If false, only call flusher() on leaves */
-> +    bool require_physical_contiguity;
-> +    /*
-> +     * The height at which we started accumulating ranges, i.e., the
-> +     * next height we need to print once we hit the end of a
-> +     * contiguous range.
-> +     */
-> +    int start_height;
-> +    int leaf_height; /* The height at which we found a leaf, or -1 */
-> +    /*
-> +     * For compressing contiguous ranges, track the
-> +     * start and end of the range
-> +     */
-> +    hwaddr vstart[MAX_HEIGHT + 1]; /* Starting virt. addr. of open pte range */
-> +    hwaddr vend[MAX_HEIGHT + 1]; /* Ending virtual address of open pte range */
-> +    hwaddr pstart; /* Starting physical address of open pte range */
-> +    hwaddr pend; /* Ending physical address of open pte range */
-> +
-> +    /* PTE protection flags current root->leaf path */
-> +    uint64_t prot[MAX_HEIGHT + 1];
-> +
-> +    /* Page size (leaf) or address range covered (non-leaf). */
-> +    uint64_t pg_size[MAX_HEIGHT + 1];
-> +    int offset[MAX_HEIGHT + 1]; /* PTE range starting offsets */
-> +    int last_offset[MAX_HEIGHT + 1]; /* PTE range ending offsets */
-> +};
-
-Likewise.
-Also, CamelCase for typedefs, per coding style.
-
-
-> +    if (env->hflags & HF_GUEST_MASK) {
-> +
-> +        /* Extract the EPTP value from vmcs12 structure, store in arch state */
-> +        if (env->nested_state->format == KVM_STATE_NESTED_FORMAT_VMX) {
-> +            struct vmcs12 *vmcs =
-> +                (struct vmcs12 *) env->nested_state->data.vmx->vmcs12;
-
-This is not required.  You appear to be confused by nested paging.
-
-First: nested paging is how hardware virtualization works.  When we are *using* hardware 
-virtualization, all of that is the kernel's job.  Our job as hypervisor is to give a bag 
-of pages to the kernel and have it map them into the guest intermediate address space.
-
-When we are *using* hardware virtualization, we are only ever concerned with one level of 
-paging: from the guest to the intermediate address space.  From there we use QEMU data 
-structures to map to QEMU virtual address space (address_space_ld/st, etc).
-
-This is all we will ever see from KVM, HVF etc.
-
-With TCG, we can *emulate* hardware virtualization.  It is at this point where we are 
-concerned about two levels of paging, because QEMU is handling both.
+Patch 3, 'Add an "info pg" command ...' attempts to do all of these at once, and so is at 
+least 2000 lines too long, which makes the whole thing extraordinarily hard to review.
 
 
 r~
