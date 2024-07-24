@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03997C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DDB3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWQND-00077m-MG; Tue, 23 Jul 2024 21:00:55 -0400
+	id 1sWQTo-0003UP-Fu; Tue, 23 Jul 2024 21:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sWQNA-00076p-Dj
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:00:52 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sWQN5-0007lT-JM
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:00:51 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxW+o4UqBmh74AAA--.2942S3;
- Wed, 24 Jul 2024 09:00:41 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDMc1UqBmAIxWAA--.60723S3; 
- Wed, 24 Jul 2024 09:00:39 +0800 (CST)
-Subject: Re: [PULL 2/3] target/loongarch: Fix tlb huge page loading issue
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240320024010.1659193-1-gaosong@loongson.cn>
- <20240320024010.1659193-3-gaosong@loongson.cn>
- <CAFEAcA_8TvbqwUhDsvZm+oi0mj2zGbkFmMuKO+cFqAX-dm5S-g@mail.gmail.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <15e258e6-dc19-5c93-13d1-98af2c601298@loongson.cn>
-Date: Wed, 24 Jul 2024 09:00:51 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWQTm-0003Tk-Ta
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:07:42 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWQTl-0001u5-B0
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:07:42 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3dae221e42dso2662284b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 18:07:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721783259; x=1722388059; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DeAgii3n/BHhvuLBkCk7o4Q4OJQ51qy21pRxeXkI7zk=;
+ b=aoTf2G0RTk3sqRpDzXHAR5Jd3sTQXPWWJj9truzZK/C7L4+0AuaY2xIJG4Er4qY/YS
+ LfiWTUwFV9rMgeNyvCrmBCQ8wbzU+6tpSaFVffVDZTsrgVjnnz8IpO2mjANl9DYwVWSn
+ x6nstXwsebqy9g4vIpzsAZnquDVgCbkT3b0cXRS1TQo9FlHzXYNfy/z3wSZpbv9ImNIP
+ +ND1+xniG0mUjqXTy2n7nfA3L9esHGHILqS0AoyD9LZD/weS6Scsen3JyqhKgxW3b/ri
+ dMyyKNIdrcIfFMRveY9hfnF77Nz9jyK88FK8VWOEX8YnNzPvYS4YWZShf3XcUpz0rVRF
+ Ps4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721783259; x=1722388059;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DeAgii3n/BHhvuLBkCk7o4Q4OJQ51qy21pRxeXkI7zk=;
+ b=JdbtyLVg6IaF5Dg24rxtYJdX0gwY2qBU8wDi/JIp8XWm/FcSggOgN/o4x71YYRt+cc
+ tfy8AzcWJjWFa4RZ0XFlOqi1lDMdu6wtwaKsKlX8jV0djZETdzjvdfQCmlLjGGhpLPAn
+ c8Cwtt7K+5tSY6/bMC3K8xdm0Zx/IlqUSEPbOBfZDQHVs67Mv08MwNV00tAp0CycN526
+ uT+/cCoO3PRixI5MA/XAzfLWR1Q8zDMmJ0lIbb8uw2cTFV6dcO13Paz4ZjrGe1uMs7uQ
+ UJvwXCNKC7/btyhg/bTa6j+PHAAS0VqGoo4W+fmMYZXFLZlXwlg6ypENX5fGV0CVT6dj
+ LJOw==
+X-Gm-Message-State: AOJu0Ywd5ekbudd+ghk3h5A8DnzzsREHijm1r3hbT4WPUdvbywFqrMQE
+ TRJkCVBCqBo7om8dUo0PhY0iPnNmP0Gs0WY7kDXa8NfgazcpX3u4Q5S/egAXHQA7QuapZEDo5q8
+ qyx1uiQ==
+X-Google-Smtp-Source: AGHT+IEixmMl8eyGSr4WMxkjX0tpiL77aqNQZPx0XAeKBEGptfqS6oz093/iTRQjv9YxSEdNdB5yeA==
+X-Received: by 2002:a05:6870:15d5:b0:25e:bd3d:635e with SMTP id
+ 586e51a60fabf-2648769307amr1649103fac.13.1721783259403; 
+ Tue, 23 Jul 2024 18:07:39 -0700 (PDT)
+Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-79f0e6c947esm6961093a12.74.2024.07.23.18.07.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jul 2024 18:07:39 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+Subject: [PATCH 0/2] tests/tcg: Fix new cross-compiler warnings
+Date: Wed, 24 Jul 2024 11:07:31 +1000
+Message-ID: <20240724010733.22129-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-In-Reply-To: <CAFEAcA_8TvbqwUhDsvZm+oi0mj2zGbkFmMuKO+cFqAX-dm5S-g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8AxDMc1UqBmAIxWAA--.60723S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CF1kJr43GF4fAF1kur1Utwc_yoW8tF45pF
- WfAanxGF4DtFy7GFsxX34vkr13Zr97GFZ7ZrW0yry0k34qyF93WrW8trWayFy7AF1Fka1I
- vrZrtFy7Can5WFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.04,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,64 +90,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/7/23 下午11:47, Peter Maydell 写道:
-> On Wed, 20 Mar 2024 at 02:40, Song Gao <gaosong@loongson.cn> wrote:
->> From: Xianglai Li <lixianglai@loongson.cn>
->>
->> When we use qemu tcg simulation, the page size of bios is 4KB.
->> When using the level 2 super huge page (page size is 1G) to create the page table,
->> it is found that the content of the corresponding address space is abnormal,
->> resulting in the bios can not start the operating system and graphical interface normally.
->>
->> The lddir and ldpte instruction emulation has
->> a problem with the use of super huge page processing above level 2.
->> The page size is not correctly calculated,
->> resulting in the wrong page size of the table entry found by tlb.
->>
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> Message-Id: <20240318070332.1273939-1-lixianglai@loongson.cn>
-> Hi; Coverity points out an issue with this patch (Coverity
-> CID 1547717):
->
->
->> @@ -485,7 +513,25 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
->>       target_ulong badvaddr, index, phys, ret;
->>       int shift;
->>       uint64_t dir_base, dir_width;
->> -    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
->> +
->> +    if (unlikely((level == 0) || (level > 4))) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "Attepted LDDIR with level %"PRId64"\n", level);
->> +        return base;
->> +    }
->> +
->> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->> +        if (unlikely(level == 4)) {
->> +            qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "Attempted use of level 4 huge page\n");
-> Here we log level == 4 as being a guest error, but there is no
-> early "return <something>" the way the previous error-exit
-> codepath did above...
->
->> +        }
->> +
->> +        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
->> +            return base;
->> +        } else {
->> +            return FIELD_DP64(base, TLBENTRY, LEVEL, level);
-> ...so Coverity complains that here we will try to put that value 4
-> into a field in the TLBENTRY that is only 2 bits wide.
->
->> +        }
->> +    }
-> Should the level == 4 if() do a "return base" like the
-> error cases for level == 0 or > 4 ?
-Yes,  we should,  I will send a patch to fix it.
+Recent updates to debian cross-compilers have enabled some
+new warnings by default, which encourage good behaviour for
+userland binaries.
 
-Thanks.
-Song Gao
+Neither are applicable for our system mode kernel images,
+but we do have a few userland tests that are affected.
+
+The --noexecstack assembler flag takes care of adding the
+appropriate .note.GNU-stack elf note for us, rather than
+writing a dozen lines of assembly template, and so is a
+true fix rather than merely disabling the linker warning.
+
+
+r~
+
+
+Richard Henderson (2):
+  tests/tcg: Use --noexecstack with assembler files
+  tests/tcg/loongarch64: Use --no-warn-rwx-segments to link system tests
+
+ tests/tcg/Makefile.target                     | 2 +-
+ tests/tcg/aarch64/Makefile.softmmu-target     | 2 +-
+ tests/tcg/alpha/Makefile.softmmu-target       | 2 +-
+ tests/tcg/arm/Makefile.softmmu-target         | 2 +-
+ tests/tcg/arm/Makefile.target                 | 2 +-
+ tests/tcg/i386/Makefile.softmmu-target        | 2 +-
+ tests/tcg/loongarch64/Makefile.softmmu-target | 4 ++--
+ tests/tcg/riscv64/Makefile.softmmu-target     | 2 +-
+ tests/tcg/s390x/Makefile.softmmu-target       | 2 +-
+ tests/tcg/x86_64/Makefile.softmmu-target      | 2 +-
+ 10 files changed, 11 insertions(+), 11 deletions(-)
+
+-- 
+2.43.0
 
 
