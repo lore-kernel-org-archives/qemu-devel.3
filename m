@@ -4,77 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771D5C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E83AC3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWfpT-0006RV-9F; Wed, 24 Jul 2024 13:31:07 -0400
+	id 1sWgBL-0002DT-6i; Wed, 24 Jul 2024 13:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWfpJ-0006HZ-GW
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:30:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBJ-00025m-3b
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWfpH-0006Xx-Bh
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:30:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBH-0005pY-3k
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721842254;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1721843618;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jtnBnkuTEbXwz90vOlBMiF/7QjITpWM8J5xpedSDoTA=;
- b=Ivx8NNc09jIDzMFnj6uezD/ed6CJiONjq4ZpxsvOq0byF1QZEvQ+i8YYnzFHdl79asj271
- YLCS919vcPYB5KVuMiLyQxuouJkUEtaXIyuJN8q+BkYzggbMCFMF/kVvx02+c1ZXhy4V4l
- Nw1H7X3i+usEArxXNVl5tuMmkJddiDs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4uh5HIE7LxeUMRDV8ia87pDEPYeNXwYlljr6cCuptJo=;
+ b=Ky49JwjvN3knT5ZaGGvf/7NaiXZYxqL43THmiZjUQKC1kuS/ZcOXM7lZFkgTycXra1Pp8g
+ sLLCCYOhUYuE2BIGKvFxOKVMBd288GmIYKl3tzGSas19PweF0inrd+TreZFPWn6UnifFZM
+ QhH2H0R2wW/f19P6CNPygFptd5jnwBw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-4LWG5sxNNkyEDxhNUUY-Nw-1; Wed,
- 24 Jul 2024 13:30:50 -0400
-X-MC-Unique: 4LWG5sxNNkyEDxhNUUY-Nw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-Uh7lMIMxMGyQ8M0M7-JUsQ-1; Wed,
+ 24 Jul 2024 13:53:35 -0400
+X-MC-Unique: Uh7lMIMxMGyQ8M0M7-JUsQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C44791955BF4; Wed, 24 Jul 2024 17:30:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.141])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 741061955F40; Wed, 24 Jul 2024 17:30:41 +0000 (UTC)
-Date: Wed, 24 Jul 2024 18:30:37 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v4 13/17] backends/confidential-guest-support: Add
- set_guest_policy() function
-Message-ID: <ZqE6PQI6eocQCf6t@redhat.com>
-References: <cover.1720004383.git.roy.hopkins@suse.com>
- <d6a395d11bd044906885a21040ff2c73db2b08a1.1720004383.git.roy.hopkins@suse.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BDE631955F66; Wed, 24 Jul 2024 17:53:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.144])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CE8241955D48; Wed, 24 Jul 2024 17:53:29 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v2 07/23] tests/functional: Implement fetch_asset() method for
+ downloading assets
+Date: Wed, 24 Jul 2024 19:52:25 +0200
+Message-ID: <20240724175248.1389201-8-thuth@redhat.com>
+In-Reply-To: <20240724175248.1389201-1-thuth@redhat.com>
+References: <20240724175248.1389201-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d6a395d11bd044906885a21040ff2c73db2b08a1.1720004383.git.roy.hopkins@suse.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -95,35 +83,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 12:05:51PM +0100, Roy Hopkins wrote:
-> For confidential guests a policy can be provided that defines the
-> security level, debug status, expected launch measurement and other
-> parameters that define the configuration of the confidential platform.
-> 
-> This commit adds a new function named set_guest_policy() that can be
-> implemented by each confidential platform, such as AMD SEV to set the
-> policy. This will allow configuration of the policy from a
-> multi-platform resource such as an IGVM file without the IGVM processor
-> requiring specific implementation details for each platform.
-> 
-> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> ---
->  include/exec/confidential-guest-support.h | 21 +++++++++++++++++++++
->  backends/confidential-guest-support.c     | 12 ++++++++++++
->  2 files changed, 33 insertions(+)
+In the new python test framework, we cannot use the fetch_asset()
+function from Avocado anymore, so we have to provide our own
+implementation now instead. Thus add such a function based on the
+urllib python module for this purpose.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/qemu_test/__init__.py | 41 ++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-
-With regards,
-Daniel
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index fc98222c52..40a81c3927 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -11,6 +11,8 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
++import hashlib
++import urllib.request
+ import logging
+ import os
+ import pycotap
+@@ -23,6 +25,7 @@
+ import unittest
+ 
+ from pathlib import Path
++from shutil import copyfileobj
+ from qemu.machine import QEMUMachine
+ from qemu.utils import kvm_available, tcg_available
+ 
+@@ -216,6 +219,44 @@ def setUp(self, bin_prefix):
+         if not os.path.exists(self.workdir):
+             os.makedirs(self.workdir)
+ 
++    def check_hash(self, file_name, expected_hash):
++        if not expected_hash:
++            return True
++        if len(expected_hash) == 40:
++            sum_prog = 'sha1sum'
++        elif len(expected_hash) == 64:
++            sum_prog = 'sha256sum'
++        elif len(expected_hash) == 128:
++            sum_prog = 'sha512sum'
++        else:
++            raise Exception("unknown hash type")
++        checksum = subprocess.check_output([sum_prog, file_name]).split()[0]
++        return expected_hash == checksum.decode("utf-8")
++
++    def fetch_asset(self, url, asset_hash):
++        cache_dir = os.path.expanduser("~/.cache/qemu/download")
++        if not os.path.exists(cache_dir):
++            os.makedirs(cache_dir)
++        fname = os.path.join(cache_dir,
++                             hashlib.sha256(url.encode("utf-8")).hexdigest())
++        if os.path.exists(fname) and self.check_hash(fname, asset_hash):
++            self.log.debug("Using cached assed %s for %s", fname, url)
++            return fname
++        self.log.info("Downloading %s to %s...", url, fname)
++        dl_fname = fname + ".download"
++        with urllib.request.urlopen(url) as src:
++            try:
++                with open(dl_fname, "wb+") as dst:
++                    copyfileobj(src, dst)
++            except:
++                os.remove(dl_fname)
++                raise
++        if not self.check_hash(dl_fname, asset_hash):
++            os.remove(dl_fname)
++            raise Exception("Hash of " + url + " does not match")
++        os.rename(dl_fname, fname)
++        return fname
++
+     def main():
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
