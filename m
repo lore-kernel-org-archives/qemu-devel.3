@@ -4,101 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1310C3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 21:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1B2C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 21:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWjVS-0006Bd-4f; Wed, 24 Jul 2024 17:26:42 -0400
+	id 1sWjZI-0006Hc-LN; Wed, 24 Jul 2024 17:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sWjVQ-00061p-M6; Wed, 24 Jul 2024 17:26:40 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sWjVP-0003Ux-1P; Wed, 24 Jul 2024 17:26:40 -0400
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OLQVKf029958;
- Wed, 24 Jul 2024 21:26:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- PdDRIuGeXlNvzJRQPVXTUMUgezPQgIJP4jmrlsyMHNM=; b=MNVYPk2ihDrtp9jn
- 0AWqHFH4daWyhbGztNp0bEHfQMRtZn0FY7IxOZxnZU9RICL6gzD90950uyNIRAUt
- Q/zxfGwbllMDsfiAxlwHiQFuGBYWMqh4JS4o54ojq2CfqiyWygnCl1sgBLbL4xwK
- 1vRXb2SZr9f2CTatL2DpMEbm7HkzfvCNxcLgMoZA2KeWED00pIQKxfkXWAd+VuVe
- XAm1bzLpjFjLTZ+Dj60+jyn2KcVu2AtV8d2dHFdp9wvzq3uH9/37eRnkptQZ4fG8
- 0maO7ERPXqXZP0NijFygcmO0vrP30Nybo51i2scAv0z+oc6gQ5loH+JfR7Gpofms
- qvMfDA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k49w8xtu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2024 21:26:34 +0000 (GMT)
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46OLQY6T030032;
- Wed, 24 Jul 2024 21:26:34 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k49w8xqe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2024 21:26:34 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46OJpTRL007907; Wed, 24 Jul 2024 21:21:56 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxna23d9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2024 21:21:55 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46OLLoe520316438
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jul 2024 21:21:52 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B47F2006E;
- Wed, 24 Jul 2024 21:21:50 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F06E520065;
- Wed, 24 Jul 2024 21:21:48 +0000 (GMT)
-Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jul 2024 21:21:48 +0000 (GMT)
-From: Michael Kowal <kowal@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v4 08/11] pnv/xive2: Fail VST entry address computation if
- table has no VSD
-Date: Wed, 24 Jul 2024 16:21:27 -0500
-Message-Id: <20240724212130.26811-9-kowal@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240724212130.26811-1-kowal@linux.ibm.com>
-References: <20240724212130.26811-1-kowal@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWjZE-00060B-IZ
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 17:30:38 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWjZC-0004Jv-C9
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 17:30:35 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-7515437ff16so194511a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 14:30:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721856632; x=1722461432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SJMfIRMTGd52AACNjEtiq5ND9xq+s+LRPLRHrb+eX24=;
+ b=ujRREkjLxlcVOWqQt0CuMJOOO0Ji5lCdnDRdaOjtQpdCOyFuGVIHV7c1n6VT/Y1E/w
+ zdLFONdsa2PXzotMKBvNSPBDJDpbU2FQpV/qHuLboMXPq5ns0/8u66Dy84laS2H5nYJk
+ i2RJXsr3RG3cCAlf+u2a/uB+CvURZhrh0n8vBTxfHS5yBGnxJBYghezT7xlfl4SF55Il
+ Wwd6iGeog49I/G4eyJKzbHCclm6p6CnwYmhBTUlTfq5MKGfUOCIOqLKZIfHjdkkBCiGI
+ 0IX3ed4GwUqpW/9I78gKk+j6ZqKI3oFNRZOJp0bcTrMgdQ1P0uH5EcpItFxoyB3hS7Yp
+ fmaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721856632; x=1722461432;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SJMfIRMTGd52AACNjEtiq5ND9xq+s+LRPLRHrb+eX24=;
+ b=Yd2nWei5kt4IgqDbWQboBlBxpWPNn+aGhquDQX+2OSczfX/f4+mnTvbCj/3b8i28VN
+ N7O7YeS4d2/2oDMHeB0NRY8MmQSnugp0vhXssBzjmI4Wny2PEzT8X6bcJFnqZ2LlFvxw
+ h85ZaNq413tiOy0bc9qyPhph2voGZOYRkC5sk+KvmkWOmc/fREBG32y2IlRIGmSohQ3w
+ DSfuk2/25i4ACsZJktBjPBEIdlEKSdfkwZfifh8qSNJEFyCDnHFetWB+99cAT82SOugX
+ RfHh2M4KXMjlP2mw7FZk1i/xbgK9sIDt8Wk5oVX7KH22P+y/osgZUpFyBx9W4OluBR90
+ XykA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnNWoFkMaXUI0TmmSLoZF4r2GIuxrHyT7ObML58H7FWLJjzwle0hgk4TX0SdnD3dzjoNAH7ybiNPg+jXMsISb3HsWNfUE=
+X-Gm-Message-State: AOJu0YyNL4fvrUkKtYJmDL6bWmCK+uXDegUkRodGtyOaG9FMP3VSsBT/
+ dSqYwXzqA971E6CmGuEPD6PpJU7wH4/jkZFuaUUvr3tD1jSJB4K5EMtnRw+kl40=
+X-Google-Smtp-Source: AGHT+IEoxglnXzE2DV0XCr30dvQsrOfNud3IJuBVK4P+B27X27h88rRw1gT9jCPuSZVMSzcS/3mMKw==
+X-Received: by 2002:a05:6a20:840c:b0:1c0:f2d9:a441 with SMTP id
+ adf61e73a8af0-1c4732cf063mr1480132637.39.1721856632352; 
+ Wed, 24 Jul 2024 14:30:32 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead6e1af8sm23700b3a.24.2024.07.24.14.30.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jul 2024 14:30:31 -0700 (PDT)
+Message-ID: <a3f44122-c3c8-452a-94fd-e02165c00289@linaro.org>
+Date: Thu, 25 Jul 2024 07:30:25 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CT_ouyY5EeAdvNTnqYsoaCFjZ7yImZSZ
-X-Proofpoint-ORIG-GUID: 8V-Z2O87XJMBnZkZRoEKat3EGJupxcBi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-24_24,2024-07-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=814 mlxscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407240152
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 26/30] target/riscv: Do not setup pmu timer if OF is
+ disabled
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Atish Kumar Patra <atishp@rivosinc.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240718021012.2057986-1-alistair.francis@wdc.com>
+ <20240718021012.2057986-27-alistair.francis@wdc.com>
+ <CAFEAcA-Lrnt30uvR5k+GVsM-goKuD7ZQzzxOpxocBf3C6BzvMg@mail.gmail.com>
+ <CAHBxVyHZ1_zgg-V2aKMcYsZjWHwcfndt-rbTa0h8mp_Ufe7hjw@mail.gmail.com>
+ <c6aade3f-4320-4089-9c76-7054f9850274@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <c6aade3f-4320-4089-9c76-7054f9850274@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,37 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+On 7/25/24 05:00, Daniel Henrique Barboza wrote:
+> I'm not sure about which generic functions we're supposed to use in replace of
+> get_field/set_field, at least as far as bitops.h goes. extract64/deposit64 has a
+> different API (it uses start bit + length, not a mask) and it would require
+> a lot of RISC-V code to be adapted to this format.
+> 
+> Looking a little further I see that registerfields.h has the equivalent of what
+> we're using here: FIELD_EX64 / FIELD_SEX64. But these macros seems to be tied with
+> the abstractions used in the header, i.e. registers created with REG32/REG64 and
+> fields/masks created with the FIELD() macro. The header smmuv3-internal.h makes
+> use of them so we could use that as a base.
+> 
+> Hopefully Peter/Richard can correct me if I'm wrong and point to the right
+> direction. Thanks,
 
-Fail VST entry address computation if firmware doesn't define a descriptor
-for one of the Virtualization Structure Tables (VST), there's no point in
-trying to compute the address of its entry.  Abort the operation and log
-an error.
+Yes, registerfields.h is the proper replacement.
 
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
----
- hw/intc/pnv_xive2.c | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index dab4c169a4..9fe3ec9a67 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -244,6 +244,11 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
-     }
- 
-     vsd = xive->vsds[type][blk];
-+    if (vsd == 0) {
-+        xive2_error(xive, "VST: vsd == 0 block id %d for VST %s %d !?",
-+                   blk, info->name, idx);
-+        return 0;
-+    }
- 
-     /* Remote VST access */
-     if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
--- 
-2.43.0
-
+r~
 
