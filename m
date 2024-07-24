@@ -4,51 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B753DC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A430C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWRYL-000678-9L; Tue, 23 Jul 2024 22:16:29 -0400
+	id 1sWRvo-00060N-FM; Tue, 23 Jul 2024 22:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sWRYH-00066Q-QA
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:16:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sWRYF-0007By-11
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:16:25 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx7erxY6BmE8gAAA--.3201S3;
- Wed, 24 Jul 2024 10:16:17 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx78fwY6Bm959WAA--.60948S2; 
- Wed, 24 Jul 2024 10:16:16 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn,
-	maobibo@loongson.cn
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, philmd@redhat.com
-Subject: [PATCH] target/loongarch: Fix helper_lddir() a CID INTEGER_OVERFLOW
- issue
-Date: Wed, 24 Jul 2024 09:58:53 +0800
-Message-Id: <20240724015853.1317396-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sWRvl-0005uV-V4; Tue, 23 Jul 2024 22:40:42 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sWRvk-0005cQ-F9; Tue, 23 Jul 2024 22:40:41 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4e1c721c040so2013751e0c.3; 
+ Tue, 23 Jul 2024 19:40:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721788836; x=1722393636; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B5KTnrMAGB3rDMjIul2jMjaJ1uqO0Z/YlMwc8yvIK+U=;
+ b=NkxiTZMX0a679Flo0YdhynNlqMcnYmvdeHqLwZwEXBxE+neoAXjpNQheZDsyeJDZIF
+ 0NwiIStvWFahGOAd6E0S3PRsLJ8cRTMDvFENTeNedvecYtd40FcM67yd7VfuJXfbNOO7
+ rVi7W/sPthJAD/R4Bbt+LpZctB0hQf/46CUeJikTzdZherIhZZ8yMemTiOqERMZw2A03
+ uZAgQuC7/URpN7TyP+AadKnKEZWDNcJs5bU9Y2CmiJa7J3xyNuwRWPvUASxZ5GsQ56Rb
+ Gl1vOc8xEWkeVRxdvw/Po+7jqsPHZ1I19fCHZPfNpg5+I8nS1UcI7ihHd/lhGaSIVGWQ
+ GGsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721788836; x=1722393636;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B5KTnrMAGB3rDMjIul2jMjaJ1uqO0Z/YlMwc8yvIK+U=;
+ b=g6Zwmo8N4MNpNiD00kmOUTjQULNS/JJUYGEgovbkcW8Hgc1Yr2e7ktTyTm3o3oXFER
+ 9zxBF9yJZaOY7YbJhwD37IkabBYEq9Z10zW7qBJWlxGAslgAfCTi3igPEYyMVm7Ocq/w
+ Gd6++sbFGjTrruEWiaPwB+mnodhKQazhQZFzLiEv3QiRR3uo7MWmwmZCSH+zsq9irkJV
+ szzGAR+8XsrgmL8DYr94JeaLzNZx6x5VSmngQ01YEHMRF+zgQrbGfsOGhAqDZ4Bj8aBd
+ p8WJ8D+mv3P1pAdwiOckjvtBwz6ZEezetQL8Vu+T9KJAcVDLa34056R9IXKem9w7WG1C
+ VHqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfWZp/3/ih1mBhlCZKRFK+RdzDNlHTAFeQTc9OgVwDmHZIzJL5Cmemo0gVOVNLQJtMdC3X1SN2OQVcugpw9upHsbMs3d8=
+X-Gm-Message-State: AOJu0Ywfcez6qjMhnDFIJJqp9NMyGE1oVVBFs1yNPMF1QutFuSiAjFbc
+ xlsJORQF3ej57GTNDsGnFgApVICB1oKAZcC31fGOOj580zd7tyMkmXGuZElhskfrTed8t7YVcPg
+ vID7dXfzn7Wwp32fj7mcwxCefUZE=
+X-Google-Smtp-Source: AGHT+IETC/V93rL2RjZbRrYANq0lXKSListyRkZGzcAlxwC4cT5r3r1x6T21dEPvzNcMVgBPp+jFlFZC+cDtE4HEHL8=
+X-Received: by 2002:a05:6102:8084:b0:48f:4bba:778c with SMTP id
+ ada2fe7eead31-493c198b65bmr2032774137.8.1721788836205; Tue, 23 Jul 2024
+ 19:40:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cx78fwY6Bm959WAA--.60948S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240721072422.1377506-1-alvinga@andestech.com>
+In-Reply-To: <20240721072422.1377506-1-alvinga@andestech.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 24 Jul 2024 12:40:10 +1000
+Message-ID: <CAKmqyKN2hnN+wQzx3bdcFjEpo1R_rW23mR9OiCE8goJJ198-xw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] RISC-V: Add preliminary textra trigger CSR
+ functions
+To: Alvin Chang <alvinga@andestech.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,29 +93,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the lddir level is 4 and the base is a HugePage, we may try to put value 4
-into a field in the TLBENTRY that is only 2 bits wide.
+On Sun, Jul 21, 2024 at 5:26=E2=80=AFPM Alvin Chang via <qemu-devel@nongnu.=
+org> wrote:
+>
+> According to RISC-V Debug specification, the optional textra32 and textra=
+64
+> trigger CSRs can be used to configure additional matching conditions for =
+the
+> triggers.
+>
+> This series support to write MHVALUE and MHSELECT fields into textra32 an=
+d
+> textra64 trigger CSRs. Besides, the additional matching condition between
+> textra.MHVALUE and mcontext CSR is also implemented.
+>
+> Changes from v2:
+> - Remove redundant log
+>
+> Changes from v1:
+> - Log that mhselect only supports 0 or 4 for now
+> - Simplify writing of tdata3
+>
+> Alvin Chang (2):
+>   target/riscv: Preliminary textra trigger CSR writting support
+>   target/riscv: Add textra matching condition for the triggers
 
-Fixes: Coverity CID 1547717
-Fixes: 9c70db9a43388 ("target/loongarch: Fix tlb huge page loading issue")
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/tcg/tlb_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+Thanks!
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index d6331f9b0b..97f38fc391 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -525,6 +525,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-         if (unlikely(level == 4)) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "Attempted use of level 4 huge page\n");
-+            return base;
-         }
- 
-         if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
--- 
-2.34.1
+Applied to riscv-to-apply.next
 
+Alistair
+
+>
+>  target/riscv/cpu_bits.h |  10 +++
+>  target/riscv/debug.c    | 132 +++++++++++++++++++++++++++++++++++++---
+>  target/riscv/debug.h    |   3 +
+>  3 files changed, 138 insertions(+), 7 deletions(-)
+>
+> --
+> 2.34.1
+>
+>
 
