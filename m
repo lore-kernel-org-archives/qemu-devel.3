@@ -4,81 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6B4C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B753DC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWRMf-0000ki-Nc; Tue, 23 Jul 2024 22:04:26 -0400
+	id 1sWRYL-000678-9L; Tue, 23 Jul 2024 22:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sWRMa-0000k9-Ka
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:04:21 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sWRMX-0002Zy-EH
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:04:20 -0400
-X-ASG-Debug-ID: 1721786631-1eb14e4056969b0001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx2.zhaoxin.com with ESMTP id I6AMgsLmGBtq0PJ1 (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Wed, 24 Jul 2024 10:03:51 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 24 Jul
- 2024 10:03:51 +0800
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 24 Jul
- 2024 10:03:50 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Message-ID: <a8f89526-5226-4859-98ef-5342c360d7db@zhaoxin.com>
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
-Date: Tue, 23 Jul 2024 22:03:49 -0400
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sWRYH-00066Q-QA
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:16:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sWRYF-0007By-11
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:16:25 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Bx7erxY6BmE8gAAA--.3201S3;
+ Wed, 24 Jul 2024 10:16:17 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx78fwY6Bm959WAA--.60948S2; 
+ Wed, 24 Jul 2024 10:16:16 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn,
+	maobibo@loongson.cn
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, philmd@redhat.com
+Subject: [PATCH] target/loongarch: Fix helper_lddir() a CID INTEGER_OVERFLOW
+ issue
+Date: Wed, 24 Jul 2024 09:58:53 +0800
+Message-Id: <20240724015853.1317396-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting
- for backward compatibility
-CC: Xiaoyao Li <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
- <mtosatti@redhat.com>, <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>,
- <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>
-References: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
- <ZnqSj4PGrUeZ7OT1@intel.com>
- <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
- <ZnrPdZdgcBSY1sMi@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <ZnrPdZdgcBSY1sMi@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1721786631
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1991
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128040
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Cx78fwY6Bm959WAA--.60948S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,59 +65,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Maintainers and Paolo,
+When the lddir level is 4 and the base is a HugePage, we may try to put value 4
+into a field in the TLBENTRY that is only 2 bits wide.
 
-I hope this message finds you well. I am writing to inquire about the 
-status of
-the patch I submitted a month ago. Could you please provide any updates or
-addtional comments regarding its review?
+Fixes: Coverity CID 1547717
+Fixes: 9c70db9a43388 ("target/loongarch: Fix tlb huge page loading issue")
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/tcg/tlb_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you for your time and assistance.
-
-Best regards,
-Ewan
-
-On 6/25/24 10:08, Zhao Liu wrote:
->>> Additionally, has_msr_vmx_vmfunc has the similar compat issue. I think
->>> it deserves a fix, too.
->>>
->>> -Zhao
->> Thanks for your reply. In fact, I've tried to process has_msr_vmx_vmfunc in
->> the same
->> way as has_msr_vmx_procbased_ctls in this patch, but when I tested on Linux
->> kernel
->> 4.19.67, I encountered an "error: failed to set MSR 0x491 to 0x***".
->>
->> This issue is due to Linux kernel commit 27c42a1bb ("KVM: nVMX: Enable
->> VMFUNC
->> for the L1 hypervisor", 2017-08-03) exposing VMFUNC to the QEMU guest
->> without
->> corresponding VMFUNC MSR modification code, leading to an error when QEMU
->> attempts
->> to set the VMFUNC MSR. This bug affects kernels from 4.14 to 5.2, with a fix
->> introduced
->> in 5.3 by Paolo (e8a70bd4e "KVM: nVMX: allow setting the VMFUNC controls
->> MSR", 2019-07-02).
-> It looks like this fix was not ported to the 4.19 stable kernel.
->
->> So the fix for has_msr_vmx_vmfunc is clearly different from
->> has_msr_vmx_procbased_ctls2.
->> However, due to the different kernel support situations, I have not yet come
->> up with a suitable
->> way to handle the compatibility of has_msr_vmx_procbased_ctls2 across
->> different kernel versions.
->>
->> Therefore, should we consider only fixing has_msr_vmx_procbased_ctls2 this
->> time and addressing
->> has_msr_vmx_vmfunc in a future patch when the timing is more appropriate?
->>
-> I agree this fix should focus on MSR_IA32_VMX_PROCBASED_CTLS2.
->
-> But I think at least we need a comment (maybe a TODO) to note the case of
-> has_msr_vmx_vmfunc in a followup patch.
->
-> Let's wait and see what Paolo will say.
->
-> -Zhao
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index d6331f9b0b..97f38fc391 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -525,6 +525,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+         if (unlikely(level == 4)) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "Attempted use of level 4 huge page\n");
++            return base;
+         }
+ 
+         if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
+-- 
+2.34.1
 
 
