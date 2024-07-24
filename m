@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B9EC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 15:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA65BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 15:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWdUe-00058Y-VJ; Wed, 24 Jul 2024 11:01:29 -0400
+	id 1sWdW7-0000Ql-5H; Wed, 24 Jul 2024 11:02:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sWdUc-000570-Kb
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:01:27 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sWdUa-0000RA-S5
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:01:26 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-447dec80899so28639601cf.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 08:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721833282; x=1722438082; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=mUcgQnbk9+Lhuv4RqW24kBuIhcVeQSMiKcEY1fW1j+I=;
- b=mJYE0DSmhFBNT/2evcxq9y93LfyJktWqdl713rxM5lO0Lkk4tcKzhyn9j2SjTPCGPr
- 9lS03AwUY0wpoTEHg/cLFVoCZ6OWpAM5FfeENv2o0u6nnfb2c7OcBRdFZMZeh2F84pNI
- CzLPaeAUBc6dCl13RgLUcOd+dQLu2U4BHzy4oqtRqbucZruGOQxp74S5V2BSxuwSPr/T
- aIBSU4pzQw20bhq1webBi3AznlR0FV9tYGKusXUUi8sreZDSVBNV+eiTwGGt1FhPmL4L
- jDkHyrVrbOg6SYs3BtOwwTnO6LRTSH+mKz9wC7nq4StPHUu6oC5O0EFaK/wWuzw/KHda
- 6+Xg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sWdW2-00008U-AP
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:02:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sWdVz-0000Xb-AS
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:02:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721833369;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zoge/yJFeeViXjSex+u5bq32QmDqGoP9ZYclm6j+h44=;
+ b=GsD+aBYIzJK8nnLyFlnp1m5QbGy1JV4dA97Glx0T32lR7aDKSB3293oVbZzoQ5vokGkSkr
+ f4j0B36o6nHpJkBBoKLf2klp2JbnG21pvH8pEt5QczsROTISNUXRbvp5l715PhrdIqzKsI
+ SZ/i5nSC1xdomIE7j/mHeTefXR7e8LI=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-36-oCiTokiCNr6PdQTQTi3-lA-1; Wed, 24 Jul 2024 11:02:47 -0400
+X-MC-Unique: oCiTokiCNr6PdQTQTi3-lA-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ef2a44c3dfso36174491fa.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 08:02:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721833282; x=1722438082;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mUcgQnbk9+Lhuv4RqW24kBuIhcVeQSMiKcEY1fW1j+I=;
- b=VLPXsxRTcYPiGla09f8i+44enDjbJ8Jb2WF5s0p5plpW0JUdpnhY0OFu5bRl1Oyme6
- ht+SGke+FWFXVkV8cVABXSPVJAIl/S4Wlrb2F8lxynJfyOoNKQXCd9a1AVkv5ukbUts6
- dZNucjCJfUp6BH5A8bboYaN8j8UCz8+TgmhDAdPl5mwQZmLzUkAXC29BLFKVkLxhtA3I
- ZZ3CGR93zm+Nzt8BKhpNIE1qofrATNF8qWrMLv1i5WGIcAyA6XeNs7NGWaofUpFIDZz5
- wTc13pzIEn+7TRb/uDq8yVGvr+ir0rN0ZgU8bQEYiCVysIMvmWO0cSncdzO5Qk0dd6vr
- YOaw==
-X-Gm-Message-State: AOJu0YzW2QTU/DkXAgayKAHeE0D4fEiIw5L0LLhRLI0AlIz512kT3oXk
- SfyZaxR8on4orU5odQ+yr95foIL+/ObBY7ec8z7huWxDtwWSjBycsjzJcuRjTS4=
-X-Google-Smtp-Source: AGHT+IEZUpyayi4/xAQTGgufL3ZkRJQv+8SMJ1gjVuuZZkqCUh3AsbTN8VbFFBBFwwbcHmbFcpPfow==
-X-Received: by 2002:a05:6214:493:b0:6b5:7fb9:747 with SMTP id
- 6a1803df08f44-6b98ed245c1mr34824466d6.2.1721833281506; 
- Wed, 24 Jul 2024 08:01:21 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b7ac7e5fdcsm59275936d6.50.2024.07.24.08.01.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 08:01:21 -0700 (PDT)
-Date: Wed, 24 Jul 2024 10:01:18 -0500
-From: Andrew Jones <ajones@ventanamicro.com>
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v6 7/8] target/riscv: Add any32 and max32 CPU for RV64 QEMU
-Message-ID: <20240724-ef8cf69388fb767b6710b48f@orel>
-References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
- <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
+ d=1e100.net; s=20230601; t=1721833363; x=1722438163;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zoge/yJFeeViXjSex+u5bq32QmDqGoP9ZYclm6j+h44=;
+ b=E2hHCoxvqgeCXnnft9XBrVFnZpuCBRVPXBeRVrXAhrQ5MtJ4dEKOOsYGfkFB77zjCo
+ r311BTLKHRWIpt6ZUta8nKULyyTFm7KfJOs6ecN/WzPWduRiyyJaLUIbEHOHFPEJWcZr
+ gSJ1klxPYuZpo6BvChlMjmQNsaNJUAGyt9iyEwZ1WHk9N/JF9lb23r47Gtryb6naNgmj
+ CNxE5y0AZcBw7zGEa9nJvKWrrd3si9Lq/5bsXFocp86O/cawvsO0yksryloy0uertdVL
+ COY2uWdXmDs5XZWWN2PwrzYnG9IkY2A7zeCA4ZftPsf8udUsu3XZYSwwnJhWXdFdydzq
+ sUBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4ogDmpcl71itz4XcT/pMjHPz/Sx6uoPwXiS3kFqm5fiaEb9A9/v/DnNtllcmHj5bAE9aj4G0pA4VDLhYJptgcMuUPIIY=
+X-Gm-Message-State: AOJu0Yy0ssyFwny+n0BwySfCy6jyh+0XAJiwNTodK+nme7yTR7RVHFn/
+ 8qd2oe9+Il8Laon2HB0AhBFIgIeZJ03rDVptSvTw2dYjwB9rEVeoepwE/IIybTQxHLyRYk/7Gni
+ pJc+SsUUbgGzYZa70bd4Q787WiHkGf9b04stfoz8HA8WfZkYvbu9v1EaIqbeCgBnlZVD9BTddzd
+ Vwn+hjt4rdCQQuEl5IPkhGLlZ2Ymg=
+X-Received: by 2002:a2e:b177:0:b0:2ef:2e59:11dc with SMTP id
+ 38308e7fff4ca-2f039ea7e78mr473131fa.25.1721833361937; 
+ Wed, 24 Jul 2024 08:02:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz21slK5EjDe5XNiZaFmx/2TgdS8UQyCtQItTYlVoejwIOUapJGaRf7U/R2/HBOVDs7AueJD6OaQoGJlbCvbY=
+X-Received: by 2002:a2e:b177:0:b0:2ef:2e59:11dc with SMTP id
+ 38308e7fff4ca-2f039ea7e78mr472811fa.25.1721833361454; Wed, 24 Jul 2024
+ 08:02:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=ajones@ventanamicro.com; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240724080858.46609-1-lei4.wang@intel.com>
+In-Reply-To: <20240724080858.46609-1-lei4.wang@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 24 Jul 2024 17:02:28 +0200
+Message-ID: <CABgObfYHK+N68pOamxA4nT6iZUvEDeUN-AkNwEE9jgnig3AfNw@mail.gmail.com>
+Subject: Re: [PATCH] target/i386: Raise the highest index value used for any
+ VMCS encoding
+To: Lei Wang <lei4.wang@intel.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, Xin Li <xin3.li@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,37 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 20, 2024 at 07:11:48AM GMT, LIU Zhiwei wrote:
-> We may need 32-bit max or 32-bit any CPU for RV64 QEMU. Thus we add
-> these two CPUs for RV64 QEMU.
-> 
-> The reason we don't expose them to RV32 QEMU is that we already have
-> max or any cpu with the same configuration. Another reason is that
-> we want to follow the RISC-V custom where addw instruction doesn't
-> exist in RV32 CPU.
-> 
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Suggested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu-qom.h |  2 ++
->  target/riscv/cpu.c     | 13 ++++++++-----
->  2 files changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 3670cfe6d9..9f91743b78 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -31,6 +31,8 @@
->  
->  #define TYPE_RISCV_CPU_ANY              RISCV_CPU_TYPE_NAME("any")
->  #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
-> +#define TYPE_RISCV_CPU_ANY32            RISCV_CPU_TYPE_NAME("any32")
+On Wed, Jul 24, 2024 at 10:09=E2=80=AFAM Lei Wang <lei4.wang@intel.com> wro=
+te:
+> Because the index value of the VMCS field encoding of Secondary VM-exit
+> controls, 0x44, is larger than any existing index value, raise the highes=
+t
+> index value used for any VMCS encoding to 0x44.
+>
+> Because the index value of the VMCS field encoding of FRED injected-event
+> data (one of the newly added VMCS fields for FRED transitions), 0x52, is
+> larger than any existing index value, raise the highest index value used
+> for any VMCS encoding to 0x52.
 
-'any' is on its way out[1], so we probably shouldn't bother adding any32
-at all with this series
-
-[1] https://lore.kernel.org/all/20240724130717.95629-1-philmd@linaro.org/
+Hi, can you put together a complete series that includes all that's
+needed for nested FRED support?
 
 Thanks,
-drew
+
+Paolo
+
+> Co-developed-by: Xin Li <xin3.li@intel.com>
+> Signed-off-by: Xin Li <xin3.li@intel.com>
+> Signed-off-by: Lei Wang <lei4.wang@intel.com>
+> ---
+>  target/i386/cpu.h     | 1 +
+>  target/i386/kvm/kvm.c | 9 ++++++++-
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index c6cc035df3..5604cc2994 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -1192,6 +1192,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU =
+*cpu, FeatureWord w);
+>  #define VMX_VM_EXIT_PT_CONCEAL_PIP                  0x01000000
+>  #define VMX_VM_EXIT_CLEAR_IA32_RTIT_CTL             0x02000000
+>  #define VMX_VM_EXIT_LOAD_IA32_PKRS                  0x20000000
+> +#define VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS     0x80000000
+>
+>  #define VMX_VM_ENTRY_LOAD_DEBUG_CONTROLS            0x00000004
+>  #define VMX_VM_ENTRY_IA32E_MODE                     0x00000200
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index b4aab9a410..7c8cb16675 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -3694,7 +3694,14 @@ static void kvm_msr_entry_add_vmx(X86CPU *cpu, Fea=
+tureWordArray f)
+>      kvm_msr_entry_add(cpu, MSR_IA32_VMX_CR4_FIXED0,
+>                        CR4_VMXE_MASK);
+>
+> -    if (f[FEAT_VMX_SECONDARY_CTLS] & VMX_SECONDARY_EXEC_TSC_SCALING) {
+> +    if (f[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
+> +        /* FRED injected-event data (0x2052).  */
+> +        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x52);
+> +    } else if (f[FEAT_VMX_EXIT_CTLS] &
+> +               VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS) {
+> +        /* Secondary VM-exit controls (0x2044).  */
+> +        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x44);
+> +    } else if (f[FEAT_VMX_SECONDARY_CTLS] & VMX_SECONDARY_EXEC_TSC_SCALI=
+NG) {
+>          /* TSC multiplier (0x2032).  */
+>          kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x32);
+>      } else {
+> --
+> 2.39.3
+>
+
 
