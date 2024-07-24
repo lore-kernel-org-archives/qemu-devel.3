@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41981C3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A60C3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWesU-00062j-48; Wed, 24 Jul 2024 12:30:10 -0400
+	id 1sWf9q-0008Hz-Uf; Wed, 24 Jul 2024 12:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWesR-00061b-FE
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:30:08 -0400
+ id 1sWf9o-0008HH-3C
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:48:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWesN-0002wj-3J
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:30:05 -0400
+ id 1sWf9l-0000Dl-FQ
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:48:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721838601;
+ s=mimecast20190719; t=1721839679;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Ym1qwqBZWCJfpPM0NvDbjxdfJA0bxBNWmqm/5ZRmQCA=;
- b=I8VT4z8f5ugiFW0dT6QH1PiZyTk5KDUEWu7IWf/C0xdubQHFsH5wR/pN4Nbq3AbuiIMcGQ
- NWx8gTD2Bkyt0nDxHdlTGdFWrjW3tEp/Hukzw/yQOjWhNDOrycWMprJGrBBdtEiCoNqBX2
- cBoHzmxy+irMeu5NVZ7K+PC4Is/HfeQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qhkTJGtPwP8eNQpkONkMQaSkCkLhtQ9pwHosUujZJAQ=;
+ b=TgtrYJeBg9ES6FOuKd6LBloQChCnSKWwk3sGccv751Ambg6ewvhI32mMHDibZ8DbWGcPWV
+ K324I6HNBzRV7hmVK86p6XAjjDptXkmtEtc2I9hpu4Nj78MY5EnUobJrLB7wBYyvRU7Ltr
+ 0eAcqXzk9D57j9htDkk9fjcp7V9edfo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-XsdbTAy2Moe31Kg256X4aw-1; Wed,
- 24 Jul 2024 12:29:57 -0400
-X-MC-Unique: XsdbTAy2Moe31Kg256X4aw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-Hbu9VewjNkmEJ9QbE8eahQ-1; Wed,
+ 24 Jul 2024 12:47:55 -0400
+X-MC-Unique: Hbu9VewjNkmEJ9QbE8eahQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C35F91955D48; Wed, 24 Jul 2024 16:29:55 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3ED191955F6A; Wed, 24 Jul 2024 16:47:54 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.141])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 549481955F6B; Wed, 24 Jul 2024 16:29:49 +0000 (UTC)
-Date: Wed, 24 Jul 2024 17:29:45 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A8941955D42; Wed, 24 Jul 2024 16:47:41 +0000 (UTC)
+Date: Wed, 24 Jul 2024 17:47:38 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Roy Hopkins <roy.hopkins@suse.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -60,15 +60,17 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v4 00/17] Introduce support for IGVM files
-Message-ID: <ZqEr-YpjHHM5cT07@redhat.com>
+Subject: Re: [PATCH v4 02/17] backends/confidential-guest-support: Add
+ functions to support IGVM
+Message-ID: <ZqEwKsGFyHQZNFUn@redhat.com>
 References: <cover.1720004383.git.roy.hopkins@suse.com>
+ <c07dcfe9496a8682bf262bfa6caa180e0eefcce4.1720004383.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1720004383.git.roy.hopkins@suse.com>
+In-Reply-To: <c07dcfe9496a8682bf262bfa6caa180e0eefcce4.1720004383.git.roy.hopkins@suse.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,29 +96,138 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 12:05:38PM +0100, Roy Hopkins wrote:
-> Here is v4 of the set of patches to add support for IGVM files to QEMU. This is
-> based on commit 1a2d52c7fc of qemu.
+On Wed, Jul 03, 2024 at 12:05:40PM +0100, Roy Hopkins wrote:
+> In preparation for supporting the processing of IGVM files to configure
+> guests, this adds a set of functions to ConfidentialGuestSupport
+> allowing configuration of secure virtual machines that can be
+> implemented for each supported isolation platform type such as Intel TDX
+> or AMD SEV-SNP. These functions will be called by IGVM processing code
+> in subsequent patches.
 > 
-> This version addresses all of the review comments from v3 along with a couple of
-> small bug fixes. This is a much smaller increment than in the previous version
-> of the series [1]. Thanks once again to the reviewers that have been looking at
-> this series. This v4 patch series is also available on github: [2]
+> This commit provides a default implementation of the functions that
+> either perform no action or generate an error when they are called.
+> Targets that support ConfidentalGuestSupport should override these
+> implementations.
 > 
-> The previous version had a build issue when building without debug enabled.
-> Patch 8/17 has been added to fix this and I've updated my own process to test
-> both debug and release builds of QEMU.
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+>  include/exec/confidential-guest-support.h | 75 +++++++++++++++++++++++
+>  backends/confidential-guest-support.c     | 31 ++++++++++
+>  2 files changed, 106 insertions(+)
 > 
-> For testing IGVM support in QEMU you need to generate an IGVM file that is
-> configured for the platform you want to launch. You can use the `buildigvm`
-> test tool [3] to allow generation of IGVM files for all currently supported
-> platforms. Patch 11/17 contains information on how to generate an IGVM file
-> using this tool.
+> diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
+> index 02dc4e518f..4834efbe38 100644
+> --- a/include/exec/confidential-guest-support.h
+> +++ b/include/exec/confidential-guest-support.h
+> @@ -21,6 +21,7 @@
+>  #ifndef CONFIG_USER_ONLY
+>  
+>  #include "qom/object.h"
+> +#include "exec/hwaddr.h"
+>  
+>  #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
+>  OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
+> @@ -28,6 +29,36 @@ OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
+>                      CONFIDENTIAL_GUEST_SUPPORT)
+>  
+>  
+> +typedef enum ConfidentialGuestPlatformType {
+> +    CGS_PLATFORM_SEV,
+> +    CGS_PLATFORM_SEV_ES,
+> +    CGS_PLATFORM_SEV_SNP,
+> +} ConfidentialGuestPlatformType;
+> +
+> +typedef enum ConfidentialGuestMemoryType {
+> +    CGS_MEM_RAM,
+> +    CGS_MEM_RESERVED,
+> +    CGS_MEM_ACPI,
+> +    CGS_MEM_NVS,
+> +    CGS_MEM_UNUSABLE,
+> +} ConfidentialGuestMemoryType;
+> +
+> +typedef struct ConfidentialGuestMemoryMapEntry {
+> +    uint64_t gpa;
+> +    uint64_t size;
+> +    ConfidentialGuestMemoryType type;
+> +} ConfidentialGuestMemoryMapEntry;
+> +
+> +typedef enum ConfidentialGuestPageType {
+> +    CGS_PAGE_TYPE_NORMAL,
+> +    CGS_PAGE_TYPE_VMSA,
+> +    CGS_PAGE_TYPE_ZERO,
+> +    CGS_PAGE_TYPE_UNMEASURED,
+> +    CGS_PAGE_TYPE_SECRETS,
+> +    CGS_PAGE_TYPE_CPUID,
+> +    CGS_PAGE_TYPE_REQUIRED_MEMORY,
+> +} ConfidentialGuestPageType;
+> +
+>  struct ConfidentialGuestSupport {
+>      Object parent;
+>  
+> @@ -66,6 +97,40 @@ typedef struct ConfidentialGuestSupportClass {
+>  
+>      int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
+>      int (*kvm_reset)(ConfidentialGuestSupport *cgs, Error **errp);
+> +
+> +    /*
+> +     * Check for to see if this confidential guest supports a particular
+> +     * platform or configuration
+> +     */
+> +    int (*check_support)(ConfidentialGuestPlatformType platform,
+> +                         uint16_t platform_version, uint8_t highest_vtl,
+> +                         uint64_t shared_gpa_boundary);
+> +
+> +    /*
+> +     * Configure part of the state of a guest for a particular set of data, page
+> +     * type and gpa. This can be used for example to pre-populate and measure
+> +     * guest memory contents, define private ranges or set the initial CPU state
+> +     * for one or more CPUs.
+> +     *
+> +     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
+> +     * context for a virtual CPU. The format of the data depends on the type of
+> +     * confidential virtual machine. For example, for SEV-ES ptr will point to a
+> +     * vmcb_save_area structure that should be copied into guest memory at the
+> +     * address specified in gpa. The cpu_index parameter contains the index of
+> +     * the CPU the VMSA applies to.
+> +     */
+> +    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
+> +                           ConfidentialGuestPageType memory_type,
+> +                           uint16_t cpu_index, Error **errp);
+> +
+> +    /*
+> +     * Iterate the system memory map, getting the entry with the given index
+> +     * that can be populated into guest memory.
+> +     *
+> +     * Returns 0 for ok, 1 if the index is out of range and -1 on error.
+> +     */
+> +    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
+> +                             Error **errp);
+>  } ConfidentialGuestSupportClass;
+>  
+>  static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
+> @@ -94,6 +159,16 @@ static inline int confidential_guest_kvm_reset(ConfidentialGuestSupport *cgs,
+>      return 0;
+>  }
+>  
+> +#define CONFIDENTIAL_GUEST_SUPPORT_CLASS(klass)                \
+> +    OBJECT_CLASS_CHECK(ConfidentialGuestSupportClass, (klass), \
+> +                       TYPE_CONFIDENTIAL_GUEST_SUPPORT)
+> +#define CONFIDENTIAL_GUEST_SUPPORT(obj)           \
+> +    OBJECT_CHECK(ConfidentialGuestSupport, (obj), \
+> +                 TYPE_CONFIDENTIAL_GUEST_SUPPORT)
+> +#define CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(obj)          \
+> +    OBJECT_GET_CLASS(ConfidentialGuestSupportClass, (obj), \
+> +                     TYPE_CONFIDENTIAL_GUEST_SUPPORT)
 
-Am I right that, currently, we can only use this IGVM support for plain
-SEV/SNP boot *without*  SVSM ?  I'm told SVSM has a dependency on host
-kernel KVM features not yet upstream, and I presume this means also needs
-further QEMU patches ?
+Are you sure these are needed ? Earlier in this header have
+
+  OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
+                      ConfidentialGuestSupportClass,
+                      CONFIDENTIAL_GUEST_SUPPORT)
+
+which calls DECLARE_INSTANCE_CHECKER and
+DECLARE_CLASS_CHECKERS, which should define these
+very same macros.
 
 
 With regards,
