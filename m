@@ -4,85 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C767FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 03:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FE2C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 04:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWSqV-0001T7-Im; Tue, 23 Jul 2024 23:39:19 -0400
+	id 1sWTQh-0002Mm-W4; Wed, 24 Jul 2024 00:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWSqU-0001SS-DZ
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:39:18 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWSqS-0004zO-RS
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 23:39:18 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70aec66c936so3631905b3a.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 20:39:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721792355; x=1722397155; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MwX86XiSvrSMbaVVwsHL6ma4G90RROhSkri1L+buda4=;
- b=OnE4ZMPfU6tt6A3rg5vI91tHzbNIZEiZ6Ybza97KaGVm5V1M0+9eDpGvHOarOWro4V
- 3VVUjeXUYL80gKg3uYxrgZZCMlknqQ4Tz2w36GaMlY89qaQPYMd/JFQt6IVLti4eVVDK
- LHUKpahpt4RSAzW4i0kmHQUvKCHDwJUMRQzqUaDVwyOB4eEFED4LaQhM3qPWxABAtg7z
- 6t+n8VswAX4/Kd9nbN0qsaTx8lDWVBwm1WrSIxqsToIdsl6yyB6aZZqUNKC6HHQVAQ/K
- s2YW7VRpi735Bafpr+e7+Uic336os4vlzANV/FPjAhoTM0ITFG7G1uUo1rjhg0WgOJkC
- hPFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721792355; x=1722397155;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MwX86XiSvrSMbaVVwsHL6ma4G90RROhSkri1L+buda4=;
- b=VJok5CAF5LVR46uzS8DdLv3VcS8LBa28jDrb0JN1vu7keD78+l+GzaOVrClYxNRfUw
- 48Y3m/S/95yso1/6oG/C9hzkVHyUjIWwdNFnt9vQ58XLa06t1/kvNsvcybJTH5yB4IJ3
- j0ZSMVUMfmw6ohvuiRXTgpRWMs/ONNl4ErM9hxiXN2EC3n6LRI7i9KDNJAZCC+dJ54iU
- gAs+2KQdGkNEAvpvasNx6XV0dRkTOxyA+wjgJdgJ9UFshNU7NBzhRLuFdBzMAZHlRCIH
- GbORl8FYkLRcaWKNGhGV+aVXDC08Zsrh5tXFO8gdPq3gbvV/QMQE7og/wpAv58ofbL0N
- tBqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjjebkKKx450Pp5XY6C+aHIFrRzu1Y3J1cCGGaNqWBkp/B2W8mqH4keAySzL5SWuYe9h5lxn2SiZ2UPXIiET7/btSTLdk=
-X-Gm-Message-State: AOJu0YynSFN6xmfU/NWhW/2RXQ3w6nnDtWYbluq946wqyFCySWg2xF7d
- hCodqW4t3+nMvCp9OG/I/iMrTFiyCu/EAS8X601W7+q/1r18r2EKGSbPfW3tHxE=
-X-Google-Smtp-Source: AGHT+IG4NjgDcDidp3cxV2YsbaHU7MJudmVgEYwzUvhajeTebc5hP3iHRmWSgrQkpmO8M9wEIw5BgQ==
-X-Received: by 2002:a05:6a21:2986:b0:1c2:8e96:f767 with SMTP id
- adf61e73a8af0-1c46197307fmr932012637.31.1721792354692; 
- Tue, 23 Jul 2024 20:39:14 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fd6f44f26esm82872415ad.211.2024.07.23.20.39.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 20:39:14 -0700 (PDT)
-Message-ID: <a90225a0-b945-4bc9-8ddb-e3f595ef0f6c@linaro.org>
-Date: Wed, 24 Jul 2024 13:39:08 +1000
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sWTQe-0002Ld-1v; Wed, 24 Jul 2024 00:16:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sWTQa-0008FC-KC; Wed, 24 Jul 2024 00:16:39 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46O3ed8Y027431;
+ Wed, 24 Jul 2024 04:16:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=W
+ tcR//9Kw7Y5GshFx+L4YhZ0uZTrg3PXiySdROsuFI4=; b=A0N7KCUs46WnAo5Jn
+ VOQkHkiuhYJ1N8hqQ2xzjXxcEUJ5tRxilMmw4t/UjHcpaggRJ0d41D8608uZakwT
+ XfGtfNiZelwY4Y/nuf1WELpjDOY/iZ7M3132B5llepFrLZkrtu3rOjyHenAOKTgJ
+ 4CSMfcxj9ur2r3CYe58W08D473r3QCpq7yFqYP7qcXo3vEyxtxP1JSWCBkKjWYOr
+ EFmCx81/l/Bg582g464D1ApWjt5cRHCeG6Zco9z2sSBUXMi3Q8zSoS9aBq7I0a41
+ nAsiUlnsagTCnEXAcWc20SKPaTXIA4wtbVWjLgY2OMCEaADODj4DEp4bFr53gQ0x
+ Y0vAg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40js9y03yd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 04:16:23 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46O4GMNq000923;
+ Wed, 24 Jul 2024 04:16:22 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40js9y03yc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 04:16:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46O0p02p007908; Wed, 24 Jul 2024 04:16:21 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxn9wsgd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jul 2024 04:16:21 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46O4GIG864815550
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jul 2024 04:16:20 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 760B25805D;
+ Wed, 24 Jul 2024 04:16:18 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E8C35805A;
+ Wed, 24 Jul 2024 04:16:15 +0000 (GMT)
+Received: from [9.195.35.215] (unknown [9.195.35.215])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 24 Jul 2024 04:16:15 +0000 (GMT)
+Message-ID: <c1c44c18-051b-49cc-bfe9-4f5dce63818d@linux.ibm.com>
+Date: Wed, 24 Jul 2024 09:46:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] Rework x86 page table walks
-To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
-Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
- philmd@linaro.org, berrange@redhat.com
-References: <20240723010545.3648706-1-porter@cs.unc.edu>
+Subject: Re: [PATCH v5 1/5] target/ppc: reduce code duplication across
+ Power9/10 init code
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240606121657.254308-1-adityag@linux.ibm.com>
+ <20240606121657.254308-2-adityag@linux.ibm.com>
+ <D2WO0N28SBFF.DGV2VYFLHR8K@gmail.com>
+ <f328a6a9-25d7-4250-8d30-40c45c355b6d@linux.ibm.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240723010545.3648706-1-porter@cs.unc.edu>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <f328a6a9-25d7-4250-8d30-40c45c355b6d@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 5k90Stn8s-IMNsNNlgoe73ySRP9WUcBd
+X-Proofpoint-ORIG-GUID: _cKiYK8bkyAlp30jiYitQmF1Gh_Avru9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-24_01,2024-07-23_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 mlxscore=0
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407240028
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,21 +122,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Don.
+Hi Aditya,
 
-In addition to the other issues, this really needs to be broken up into many more patches.
+On 7/23/24 20:43, Aditya Gupta wrote:
+> Hi Harsh,
+> 
+> 
+> Is it okay if I do, the changes in your patch ?
+> 
 
-Every patch should do *one* thing:
+Sure, feel free to update as suggested and add your sob mentioning the 
+summary of updates.
 
-   - Code motion
-   - Introduce an API
-   - Introduce target-specific support for an API
-   - Use an API to implement a monitor command
-   - etc
+Thanks
+Harsh
 
-Patch 3, 'Add an "info pg" command ...' attempts to do all of these at once, and so is at 
-least 2000 lines too long, which makes the whole thing extraordinarily hard to review.
-
-
-r~
+> 
+> Thanks,
+> 
+> Aditya Gupta
+> 
+> 
+> On 23/07/24 10:52, Nicholas Piggin wrote:
+>> On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
+>>> From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>>
+>>> Power9/10 initialization code consists of a lot of logical OR of
+>>> various flag bits as supported by respective Power platform during its
+>>> initialization, most of which is duplicated and only selected bits are
+>>> added or removed as needed with each new platform support being added.
+>>> Remove the duplicate code and share using common macros.
+>>>
+>>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> ---
+>>>   target/ppc/cpu_init.c | 124 +++++-------------------------------------
+>>>   target/ppc/cpu_init.h |  78 ++++++++++++++++++++++++++
+>>>   2 files changed, 93 insertions(+), 109 deletions(-)
+>>>   create mode 100644 target/ppc/cpu_init.h
+>>>
+>>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+>>> index 01e358a4a5ac..3d8a112935ae 100644
+>>> --- a/target/ppc/cpu_init.c
+>>> +++ b/target/ppc/cpu_init.c
+>>> @@ -51,6 +51,7 @@
+>>>   #include "kvm_ppc.h"
+>>>   #endif
+>>> +#include "cpu_init.h"
+>>>   /* #define PPC_DEBUG_SPR */
+>>>   /* #define USE_APPLE_GDB */
+>>> @@ -6508,58 +6509,15 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void 
+>>> *data)
+>>>       dc->fw_name = "PowerPC,POWER9";
+>>>       dc->desc = "POWER9";
+>>>       pcc->pvr_match = ppc_pvr_match_power9;
+>>> -    pcc->pcr_mask = PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | 
+>>> PCR_COMPAT_2_07;
+>>> -    pcc->pcr_supported = PCR_COMPAT_3_00 | PCR_COMPAT_2_07 | 
+>>> PCR_COMPAT_2_06 |
+>>> -                         PCR_COMPAT_2_05;
+>>> +    pcc->pcr_mask = POWERPC_POWER9_PCC_PCR_MASK;
+>>> +    pcc->pcr_supported = POWERPC_POWER9_PCC_PCR_SUPPORTED;
+>>>       pcc->init_proc = init_proc_POWER9;
+>>>       pcc->check_pow = check_pow_nocheck;
+>>>       pcc->check_attn = check_attn_hid0_power9;
+>>> -    pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | 
+>>> PPC_MFTB |
+>>> -                       PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
+>>> -                       PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
+>>> -                       PPC_FLOAT_FRSQRTES |
+>>> -                       PPC_FLOAT_STFIWX |
+>>> -                       PPC_FLOAT_EXT |
+>>> -                       PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ |
+>>> -                       PPC_MEM_SYNC | PPC_MEM_EIEIO |
+>>> -                       PPC_MEM_TLBIE | PPC_MEM_TLBSYNC |
+>>> -                       PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |
+>>> -                       PPC_SEGMENT_64B | PPC_SLBI |
+>>> -                       PPC_POPCNTB | PPC_POPCNTWD |
+>>> -                       PPC_CILDST;
+>>> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
+>>> -                        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
+>>> -                        PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
+>>> -                        PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
+>>> -                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
+>>> -                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
+>>> -                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | 
+>>> PPC2_MEM_LWSYNC |
+>>> -                        PPC2_BCDA_ISA206;
+>>> -    pcc->msr_mask = (1ull << MSR_SF) |
+>>> -                    (1ull << MSR_HV) |
+>>> -                    (1ull << MSR_TM) |
+>>> -                    (1ull << MSR_VR) |
+>>> -                    (1ull << MSR_VSX) |
+>>> -                    (1ull << MSR_EE) |
+>>> -                    (1ull << MSR_PR) |
+>>> -                    (1ull << MSR_FP) |
+>>> -                    (1ull << MSR_ME) |
+>>> -                    (1ull << MSR_FE0) |
+>>> -                    (1ull << MSR_SE) |
+>>> -                    (1ull << MSR_DE) |
+>>> -                    (1ull << MSR_FE1) |
+>>> -                    (1ull << MSR_IR) |
+>>> -                    (1ull << MSR_DR) |
+>>> -                    (1ull << MSR_PMM) |
+>>> -                    (1ull << MSR_RI) |
+>>> -                    (1ull << MSR_LE);
+>>> -    pcc->lpcr_mask = LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
+>>> -        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
+>>> -        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
+>>> -        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
+>>> -                             LPCR_DEE | LPCR_OEE))
+>>> -        | LPCR_MER | LPCR_GTSE | LPCR_TC |
+>>> -        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
+>>> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS;
+>>> +    pcc->insns_flags2 = POWERPC_FAMILY_POWER9_INSNS_FLAGS2;
+>>> +    pcc->msr_mask = POWERPC_POWER9_PCC_MSR_MASK;
+>>> +    pcc->lpcr_mask = POWERPC_POWER9_PCC_LPCR_MASK;
+>>>       pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | 
+>>> LPCR_OEE;
+>>>       pcc->mmu_model = POWERPC_MMU_3_00;
+>>>   #if !defined(CONFIG_USER_ONLY)
+>>> @@ -6572,10 +6530,7 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void 
+>>> *data)
+>>>       pcc->excp_model = POWERPC_EXCP_POWER9;
+>>>       pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
+>>>       pcc->bfd_mach = bfd_mach_ppc64;
+>>> -    pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
+>>> -                 POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
+>>> -                 POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
+>>> -                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
+>>> +    pcc->flags = POWERPC_POWER9_PCC_FLAGS;
+>>>       pcc->l1_dcache_size = 0x8000;
+>>>       pcc->l1_icache_size = 0x8000;
+>>>   }
+>>> @@ -6688,60 +6643,15 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void 
+>>> *data)
+>>>       dc->fw_name = "PowerPC,POWER10";
+>>>       dc->desc = "POWER10";
+>>>       pcc->pvr_match = ppc_pvr_match_power10;
+>>> -    pcc->pcr_mask = PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | 
+>>> PCR_COMPAT_2_07 |
+>>> -                    PCR_COMPAT_3_00;
+>>> -    pcc->pcr_supported = PCR_COMPAT_3_10 | PCR_COMPAT_3_00 | 
+>>> PCR_COMPAT_2_07 |
+>>> -                         PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
+>>> +    pcc->pcr_mask = POWERPC_POWER10_PCC_PCR_MASK;
+>>> +    pcc->pcr_supported = POWERPC_POWER10_PCC_PCR_SUPPORTED;
+>>>       pcc->init_proc = init_proc_POWER10;
+>>>       pcc->check_pow = check_pow_nocheck;
+>>>       pcc->check_attn = check_attn_hid0_power9;
+>>> -    pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | 
+>>> PPC_MFTB |
+>>> -                       PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
+>>> -                       PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
+>>> -                       PPC_FLOAT_FRSQRTES |
+>>> -                       PPC_FLOAT_STFIWX |
+>>> -                       PPC_FLOAT_EXT |
+>>> -                       PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ |
+>>> -                       PPC_MEM_SYNC | PPC_MEM_EIEIO |
+>>> -                       PPC_MEM_TLBIE | PPC_MEM_TLBSYNC |
+>>> -                       PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |
+>>> -                       PPC_SEGMENT_64B | PPC_SLBI |
+>>> -                       PPC_POPCNTB | PPC_POPCNTWD |
+>>> -                       PPC_CILDST;
+>>> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
+>>> -                        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
+>>> -                        PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
+>>> -                        PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
+>>> -                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
+>>> -                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
+>>> -                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
+>>> -                        PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
+>>> -    pcc->msr_mask = (1ull << MSR_SF) |
+>>> -                    (1ull << MSR_HV) |
+>>> -                    (1ull << MSR_VR) |
+>>> -                    (1ull << MSR_VSX) |
+>>> -                    (1ull << MSR_EE) |
+>>> -                    (1ull << MSR_PR) |
+>>> -                    (1ull << MSR_FP) |
+>>> -                    (1ull << MSR_ME) |
+>>> -                    (1ull << MSR_FE0) |
+>>> -                    (1ull << MSR_SE) |
+>>> -                    (1ull << MSR_DE) |
+>>> -                    (1ull << MSR_FE1) |
+>>> -                    (1ull << MSR_IR) |
+>>> -                    (1ull << MSR_DR) |
+>>> -                    (1ull << MSR_PMM) |
+>>> -                    (1ull << MSR_RI) |
+>>> -                    (1ull << MSR_LE);
+>>> -    pcc->lpcr_mask = LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
+>>> -        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
+>>> -        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
+>>> -        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
+>>> -                             LPCR_DEE | LPCR_OEE))
+>>> -        | LPCR_MER | LPCR_GTSE | LPCR_TC |
+>>> -        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
+>>> -    /* DD2 adds an extra HAIL bit */
+>>> -    pcc->lpcr_mask |= LPCR_HAIL;
+>>> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as 
+>>> P9 */
+>>> +    pcc->insns_flags2 = POWERPC_FAMILY_POWER10_INSNS_FLAGS2;
+>>> +    pcc->msr_mask = POWERPC_POWER10_PCC_MSR_MASK;
+>>> +    pcc->lpcr_mask = POWERPC_POWER10_PCC_LPCR_MASK;
+>>>       pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | 
+>>> LPCR_OEE;
+>>>       pcc->mmu_model = POWERPC_MMU_3_00;
+>>> @@ -6754,11 +6664,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void 
+>>> *data)
+>>>       pcc->excp_model = POWERPC_EXCP_POWER10;
+>>>       pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
+>>>       pcc->bfd_mach = bfd_mach_ppc64;
+>>> -    pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
+>>> -                 POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
+>>> -                 POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
+>>> -                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV |
+>>> -                 POWERPC_FLAG_BHRB;
+>>> +    pcc->flags = POWERPC_POWER10_PCC_FLAGS;
+>>>       pcc->l1_dcache_size = 0x8000;
+>>>       pcc->l1_icache_size = 0x8000;
+>>>   }
+>>> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
+>>> new file mode 100644
+>>> index 000000000000..e04be6a655d8
+>>> --- /dev/null
+>>> +++ b/target/ppc/cpu_init.h
+>>> @@ -0,0 +1,78 @@
+>>> +#ifndef TARGET_PPC_CPU_INIT_H
+>>> +#define TARGET_PPC_CPU_INIT_H
+>>> +
+>>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS                           \
+>> I would call this PPC_INSNS_FLAGS_POWER9
+>>
+>>> +    PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB |             \
+>>> +    PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |                   \
+>>> +    PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE | PPC_FLOAT_FRSQRTES |      \
+>>> +    PPC_FLOAT_STFIWX | PPC_FLOAT_EXT |PPC_CACHE | PPC_CACHE_ICBI |  \
+>>> +    PPC_CACHE_DCBZ | PPC_MEM_SYNC | PPC_MEM_EIEIO | PPC_MEM_TLBIE | \
+>>> +    PPC_MEM_TLBSYNC | PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |  \
+>>> +    PPC_SEGMENT_64B | PPC_SLBI | PPC_POPCNTB | PPC_POPCNTWD |       \
+>>> +    PPC_CILDST
+>> Add this here
+>>
+>> #define PPC_INSNS_FLAGS_POWER10 PPC_INSNS_FLAGS_POWER9
+>>
+>>> +
+>>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON                   \
+>> Suggest some other name change -
+>>
+>>             PPC_INSNS_FLAGS2_POWER_COMMON
+>>
+>>> +    PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |                 \
+>>> +    PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
+>>> +    PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |   \
+>>> +    PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
+>>> +    PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
+>>> +    PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206
+>>> +
+>>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2                          \
+>>> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_TM
+>>> +#define POWERPC_FAMILY_POWER10_INSNS_FLAGS2                         \
+>>> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_ISA310
+>>> +
+>>> +#define POWERPC_POWER9_COMMON_PCC_MSR_MASK \
+>> PPC_MSR_MASK_POWER_COMMON
+>>
+>>> +    (1ull << MSR_SF) |                     \
+>>> +    (1ull << MSR_HV) |                     \
+>>> +    (1ull << MSR_VR) |                     \
+>>> +    (1ull << MSR_VSX) |                    \
+>>> +    (1ull << MSR_EE) |                     \
+>>> +    (1ull << MSR_PR) |                     \
+>>> +    (1ull << MSR_FP) |                     \
+>>> +    (1ull << MSR_ME) |                     \
+>>> +    (1ull << MSR_FE0) |                    \
+>>> +    (1ull << MSR_SE) |                     \
+>>> +    (1ull << MSR_DE) |                     \
+>>> +    (1ull << MSR_FE1) |                    \
+>>> +    (1ull << MSR_IR) |                     \
+>>> +    (1ull << MSR_DR) |                     \
+>>> +    (1ull << MSR_PMM) |                    \
+>>> +    (1ull << MSR_RI) |                     \
+>>> +    (1ull << MSR_LE)
+>>> +
+>>> +#define POWERPC_POWER9_PCC_MSR_MASK \
+>>> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK | (1ull << MSR_TM)
+>> PPC_MSR_MASK_POWER9
+>>
+>>> +#define POWERPC_POWER10_PCC_MSR_MASK \
+>>> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK
+>>> +#define POWERPC_POWER9_PCC_PCR_MASK \
+>> PPC_PCR_MASK_POWER9
+>>
+>>> +    PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07
+>>> +#define POWERPC_POWER10_PCC_PCR_MASK \
+>>> +    POWERPC_POWER9_PCC_PCR_MASK | PCR_COMPAT_3_00
+>>> +#define POWERPC_POWER9_PCC_PCR_SUPPORTED \
+>> PPC_PCR_SUPPORED_POWER9
+>>
+>> etc
+>>
+>>> +    PCR_COMPAT_3_00 | PCR_COMPAT_2_07 | PCR_COMPAT_2_06 | 
+>>> PCR_COMPAT_2_05
+>>> +#define POWERPC_POWER10_PCC_PCR_SUPPORTED \
+>>> +    POWERPC_POWER9_PCC_PCR_SUPPORTED | PCR_COMPAT_3_10
+>>> +#define 
+>>> POWERPC_POWER9_PCC_LPCR_MASK                                        \
+>>> +    LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD 
+>>> |                           \
+>>> +    (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL 
+>>> |                  \
+>>> +    LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD 
+>>> |                 \
+>>> +    (LPCR_PECE_L_MASK & 
+>>> (LPCR_PDEE|LPCR_HDEE|LPCR_EEE|LPCR_DEE|LPCR_OEE)) | \
+>>> +    LPCR_MER | LPCR_GTSE | LPCR_TC | LPCR_HEIC | LPCR_LPES0 | 
+>>> LPCR_HVICE |  \
+>>> +    LPCR_HDICE
+>>> +/* DD2 adds an extra HAIL bit */
+>>> +#define POWERPC_POWER10_PCC_LPCR_MASK \
+>>> +    POWERPC_POWER9_PCC_LPCR_MASK | LPCR_HAIL
+>>> +#define 
+>>> POWERPC_POWER9_PCC_FLAGS_COMMON                                 \
+>> POWERPC_FLAG_POWER9
+>>
+>>> +    POWERPC_FLAG_VRE | POWERPC_FLAG_SE | POWERPC_FLAG_BE 
+>>> |              \
+>>> +    POWERPC_FLAG_PMM | POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR 
+>>> |       \
+>>> +    POWERPC_FLAG_VSX | POWERPC_FLAG_SCV
+>>> +
+>>> +#define POWERPC_POWER9_PCC_FLAGS  \
+>>> +    POWERPC_POWER9_PCC_FLAGS_COMMON | POWERPC_FLAG_TM
+>>> +#define POWERPC_POWER10_PCC_FLAGS \
+>>> +    POWERPC_POWER9_PCC_FLAGS_COMMON | POWERPC_FLAG_BHRB
+>>> +
+>>> +#endif /* TARGET_PPC_CPU_INIT_H */
+> 
 
