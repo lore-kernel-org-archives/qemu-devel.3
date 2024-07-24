@@ -4,59 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C83C3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 12:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E24C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 12:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWajA-0007Je-P9; Wed, 24 Jul 2024 08:04:18 -0400
+	id 1sWaml-00043Q-Oz; Wed, 24 Jul 2024 08:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sWaj8-0007Il-4P; Wed, 24 Jul 2024 08:04:14 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from
+ <BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWamh-000421-HJ
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 08:07:55 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sWaj4-000366-SL; Wed, 24 Jul 2024 08:04:13 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 61FCD4E6004;
- Wed, 24 Jul 2024 14:04:08 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id vpUDfrxmVjlg; Wed, 24 Jul 2024 14:04:06 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6EA8F4E6000; Wed, 24 Jul 2024 14:04:06 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6C65D746E3B;
- Wed, 24 Jul 2024 14:04:06 +0200 (CEST)
-Date: Wed, 24 Jul 2024 14:04:06 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Aditya Gupta <adityag@linux.ibm.com>
-cc: Nicholas Piggin <npiggin@gmail.com>, 
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
- Madhavan Srinivasan <maddy@linux.ibm.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH v5 1/5] target/ppc: reduce code duplication across
- Power9/10 init code
-In-Reply-To: <19c97ff6-6e25-4ae0-aab7-bbb3aa9ab3a8@linux.ibm.com>
-Message-ID: <73f56a6d-3e0f-3b72-ef24-7280e8809f17@eik.bme.hu>
-References: <20240606121657.254308-1-adityag@linux.ibm.com>
- <20240606121657.254308-2-adityag@linux.ibm.com>
- <D2WO0N28SBFF.DGV2VYFLHR8K@gmail.com>
- <19c97ff6-6e25-4ae0-aab7-bbb3aa9ab3a8@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWame-0004I7-L9
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 08:07:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=KengXMNm7vthw/AXqE+efLUHwi588seo4wDSjrgCg5Y=; b=blEIZtKpcHNBfq3FKxQGAem/YZ
+ owTtb1EMeAl6WsR4ukB/sorRvmFcxaOyoEx9eEIuE7wEWLtdH+FuR2slApClFimaWhhCkaucMy3cU
+ 8IXIhJMQtWkrbRIqyDHHYxy0PmbahOWkfE1+dwdDWM1FfhqjtbbBv0njevoeowDsj7MVO+MbIwrhv
+ 7Kzkn4NXCJd5KHJTbMteibBXe9uTJrhJtTat+SqwHwE0krV3h01cuYlf7iajbNlgfzAo38u/dP4jA
+ cINrx8WxVHCoIgtea4uy6TBJT1YHaiLpnEf7BNQ0jNZlj8XqGy1NwuT9QEvpN6sxJ18isl4/Jj2nr
+ SqeaRf2A==;
+Received: from [2001:8b0:10b:5:6c80:46ed:51d:4ac6]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sWama-00000007nhe-3mBn; Wed, 24 Jul 2024 12:07:49 +0000
+Message-ID: <6913716c615aaeef146bfd06771ee1d0c6fd352a.camel@infradead.org>
+Subject: Re: [PATCH] hw/intc/ioapic: Delete a wrong IRQ redirection on I/O APIC
+From: David Woodhouse <dwmw2@infradead.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, TaiseiIto <taisei1212@outlook.jp>
+Cc: qemu-devel@nongnu.org, mst@redhat.com
+Date: Wed, 24 Jul 2024 13:07:48 +0100
+In-Reply-To: <CABgObfahS8SsZmOGoy4XWiZ8vrtYZz6HNX7gJhgKeO=+ziUsgQ@mail.gmail.com>
+References: <TY0PR0101MB42850337F8917D1F514107FBA4D52@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
+ <CABgObfahS8SsZmOGoy4XWiZ8vrtYZz6HNX7gJhgKeO=+ziUsgQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-HYAGthwSXsEcf+EcDcD4"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1495921255-1721822646=:4640"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+4a029e35608e1ffcd358+7640+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,361 +77,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1495921255-1721822646=:4640
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+--=-HYAGthwSXsEcf+EcDcD4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 24 Jul 2024, Aditya Gupta wrote:
-> Hi Nick,
->
->
-> While doing the renaming, codes similar to this come up:
->
->
->> #define PPC_INSNS_FLAGS_POWER9                                      \
->>      PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB |             \
->>      PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |                   \
->>      PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE | PPC_FLOAT_FRSQRTES |      \
->>     PPC_FLOAT_STFIWX | PPC_FLOAT_EXT |PPC_CACHE | PPC_CACHE_ICBI |  \
->>      PPC_CACHE_DCBZ | PPC_MEM_SYNC | PPC_MEM_EIEIO | PPC_MEM_TLBIE | \
->>      PPC_MEM_TLBSYNC | PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |  \
->>      PPC_SEGMENT_64B | PPC_SLBI | PPC_POPCNTB | PPC_POPCNTWD |       \
->>     PPC_CILDST
->
-> Will flag names starting with POWERPC_* be better ? (eg. 
-> POWERPC_INSNS_FLAGS_POWER9)
->
-> Idea behind that is, that POWERPC_* are the ones expected to be used in code, 
-> and the PPC_* are the flags that can be used in header files like this to 
-> make up some complex flags.
->
-> In above case, `PPC_INSNS_FLAGS_POWER9` and `PPC_INSNS_BASE` seem somewhat 
-> similar to me, but are very different considering the values.
->
-> What do you think ?
+On Tue, 2024-07-23 at 16:15 +0200, Paolo Bonzini wrote:
+> On Tue, Jun 25, 2024 at 2:03=E2=80=AFPM TaiseiIto <taisei1212@outlook.jp>=
+ wrote:
+> > Before this commit, interruptions from i8254 which should be sent to IR=
+Q0
+> > were sent to IRQ2. After this commit, these are correctly sent to IRQ0.=
+ When
+> > I had an HPET timer generate interruptions once per second to test an H=
+PET
+> > driver in my operating system on QEMU, I observed more frequent
+> > interruptions than I configured on the HPET timer. I investigated the c=
+ause
+> > and found that not only interruptions from HPET but also interruptions =
+from
+> > i8254 were sent to IRQ2 because of a redirection from IRQ0 to IRQ2. Thi=
+s
+> > redirection is added in hw/apic.c at commit
+> > 16b29ae1807b024bd5052301550f5d47dae958a2 but this redirection caused wr=
+ong
+> > interruptions. So I deleted the redirection. Finally, I confirmed there=
+ is
+> > no problem on 'make check' results and that interruptions from i8254 an=
+d
+> > interruptions from HPET are correclty sent to IRQ0 and IRQ2 respectivel=
+y.
+>=20
+> Hi, did you set the legacy replacement route bit on the HPET?
+>=20
+> My understanding is that:
+> - if you enable legacy-replacement routing, the HPET will take care of
+> dropping all i8254 interrupts
+> - if you disable legacy-replacement routing, the i8254 will still
+> generate interrupts on ISA IRQ 0. If you then enable the IO-APIC and
+> program the routes according to the ACPI MADT table, the interrupt
+> from the i8254 (ISA IRQ 0) will be redirected to the IO-APIC's GSI2.
+>=20
+> So the solutions would be one of the following if you use HPET timer 0:
+> - disable the i8254
+> - enable legacy-replacement routing
+> - mask GSI2 on the IO-APIC and use a different route for the HPET
+> (worse, but should also work)
 
-These are already prefixed with PPC_INSNS_ instead of just PPC_ so they 
-are already distinguished enough IMO. Having mixed POWERPC_ and PPC_ 
-prefix might be more confusing than helpful but that's just my opinion.
+Or we delete the existing hack which redirects IRQ0=E2=86=92IRQ2 in the I/O=
+APIC
+and replace it with an IRQ2=E2=86=92IRQ0 hack in gsi_handler(), as seen in
+https://mail.gnu.org/archive/html/qemu-devel/2023-10/msg06163.html
 
-Regards,
-BALATON Zoltan
+--=-HYAGthwSXsEcf+EcDcD4
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
->
->
-> - Aditya Gupta
->
->
-> On 23/07/24 10:52, Nicholas Piggin wrote:
->> On Thu Jun 6, 2024 at 10:16 PM AEST, Aditya Gupta wrote:
->>> From: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> 
->>> Power9/10 initialization code consists of a lot of logical OR of
->>> various flag bits as supported by respective Power platform during its
->>> initialization, most of which is duplicated and only selected bits are
->>> added or removed as needed with each new platform support being added.
->>> Remove the duplicate code and share using common macros.
->>> 
->>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> ---
->>>   target/ppc/cpu_init.c | 124 +++++-------------------------------------
->>>   target/ppc/cpu_init.h |  78 ++++++++++++++++++++++++++
->>>   2 files changed, 93 insertions(+), 109 deletions(-)
->>>   create mode 100644 target/ppc/cpu_init.h
->>> 
->>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
->>> index 01e358a4a5ac..3d8a112935ae 100644
->>> --- a/target/ppc/cpu_init.c
->>> +++ b/target/ppc/cpu_init.c
->>> @@ -51,6 +51,7 @@
->>>   #include "kvm_ppc.h"
->>>   #endif
->>>   +#include "cpu_init.h"
->>>   /* #define PPC_DEBUG_SPR */
->>>   /* #define USE_APPLE_GDB */
->>>   @@ -6508,58 +6509,15 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void 
->>> *data)
->>>       dc->fw_name = "PowerPC,POWER9";
->>>       dc->desc = "POWER9";
->>>       pcc->pvr_match = ppc_pvr_match_power9;
->>> -    pcc->pcr_mask = PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07;
->>> -    pcc->pcr_supported = PCR_COMPAT_3_00 | PCR_COMPAT_2_07 | 
->>> PCR_COMPAT_2_06 |
->>> -                         PCR_COMPAT_2_05;
->>> +    pcc->pcr_mask = POWERPC_POWER9_PCC_PCR_MASK;
->>> +    pcc->pcr_supported = POWERPC_POWER9_PCC_PCR_SUPPORTED;
->>>       pcc->init_proc = init_proc_POWER9;
->>>       pcc->check_pow = check_pow_nocheck;
->>>       pcc->check_attn = check_attn_hid0_power9;
->>> -    pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB 
->>> |
->>> -                       PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->>> -                       PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
->>> -                       PPC_FLOAT_FRSQRTES |
->>> -                       PPC_FLOAT_STFIWX |
->>> -                       PPC_FLOAT_EXT |
->>> -                       PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ |
->>> -                       PPC_MEM_SYNC | PPC_MEM_EIEIO |
->>> -                       PPC_MEM_TLBIE | PPC_MEM_TLBSYNC |
->>> -                       PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |
->>> -                       PPC_SEGMENT_64B | PPC_SLBI |
->>> -                       PPC_POPCNTB | PPC_POPCNTWD |
->>> -                       PPC_CILDST;
->>> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
->>> -                        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->>> -                        PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
->>> -                        PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
->>> -                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
->>> -                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
->>> -                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | 
->>> PPC2_MEM_LWSYNC |
->>> -                        PPC2_BCDA_ISA206;
->>> -    pcc->msr_mask = (1ull << MSR_SF) |
->>> -                    (1ull << MSR_HV) |
->>> -                    (1ull << MSR_TM) |
->>> -                    (1ull << MSR_VR) |
->>> -                    (1ull << MSR_VSX) |
->>> -                    (1ull << MSR_EE) |
->>> -                    (1ull << MSR_PR) |
->>> -                    (1ull << MSR_FP) |
->>> -                    (1ull << MSR_ME) |
->>> -                    (1ull << MSR_FE0) |
->>> -                    (1ull << MSR_SE) |
->>> -                    (1ull << MSR_DE) |
->>> -                    (1ull << MSR_FE1) |
->>> -                    (1ull << MSR_IR) |
->>> -                    (1ull << MSR_DR) |
->>> -                    (1ull << MSR_PMM) |
->>> -                    (1ull << MSR_RI) |
->>> -                    (1ull << MSR_LE);
->>> -    pcc->lpcr_mask = LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
->>> -        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
->>> -        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
->>> -        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
->>> -                             LPCR_DEE | LPCR_OEE))
->>> -        | LPCR_MER | LPCR_GTSE | LPCR_TC |
->>> -        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
->>> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS;
->>> +    pcc->insns_flags2 = POWERPC_FAMILY_POWER9_INSNS_FLAGS2;
->>> +    pcc->msr_mask = POWERPC_POWER9_PCC_MSR_MASK;
->>> +    pcc->lpcr_mask = POWERPC_POWER9_PCC_LPCR_MASK;
->>>       pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | 
->>> LPCR_OEE;
->>>       pcc->mmu_model = POWERPC_MMU_3_00;
->>>   #if !defined(CONFIG_USER_ONLY)
->>> @@ -6572,10 +6530,7 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void *data)
->>>       pcc->excp_model = POWERPC_EXCP_POWER9;
->>>       pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
->>>       pcc->bfd_mach = bfd_mach_ppc64;
->>> -    pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
->>> -                 POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
->>> -                 POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
->>> -                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
->>> +    pcc->flags = POWERPC_POWER9_PCC_FLAGS;
->>>       pcc->l1_dcache_size = 0x8000;
->>>       pcc->l1_icache_size = 0x8000;
->>>   }
->>> @@ -6688,60 +6643,15 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void 
->>> *data)
->>>       dc->fw_name = "PowerPC,POWER10";
->>>       dc->desc = "POWER10";
->>>       pcc->pvr_match = ppc_pvr_match_power10;
->>> -    pcc->pcr_mask = PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07 |
->>> -                    PCR_COMPAT_3_00;
->>> -    pcc->pcr_supported = PCR_COMPAT_3_10 | PCR_COMPAT_3_00 | 
->>> PCR_COMPAT_2_07 |
->>> -                         PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
->>> +    pcc->pcr_mask = POWERPC_POWER10_PCC_PCR_MASK;
->>> +    pcc->pcr_supported = POWERPC_POWER10_PCC_PCR_SUPPORTED;
->>>       pcc->init_proc = init_proc_POWER10;
->>>       pcc->check_pow = check_pow_nocheck;
->>>       pcc->check_attn = check_attn_hid0_power9;
->>> -    pcc->insns_flags = PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB 
->>> |
->>> -                       PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |
->>> -                       PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE |
->>> -                       PPC_FLOAT_FRSQRTES |
->>> -                       PPC_FLOAT_STFIWX |
->>> -                       PPC_FLOAT_EXT |
->>> -                       PPC_CACHE | PPC_CACHE_ICBI | PPC_CACHE_DCBZ |
->>> -                       PPC_MEM_SYNC | PPC_MEM_EIEIO |
->>> -                       PPC_MEM_TLBIE | PPC_MEM_TLBSYNC |
->>> -                       PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |
->>> -                       PPC_SEGMENT_64B | PPC_SLBI |
->>> -                       PPC_POPCNTB | PPC_POPCNTWD |
->>> -                       PPC_CILDST;
->>> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
->>> -                        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->>> -                        PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
->>> -                        PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
->>> -                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
->>> -                        PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
->>> -                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
->>> -                        PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
->>> -    pcc->msr_mask = (1ull << MSR_SF) |
->>> -                    (1ull << MSR_HV) |
->>> -                    (1ull << MSR_VR) |
->>> -                    (1ull << MSR_VSX) |
->>> -                    (1ull << MSR_EE) |
->>> -                    (1ull << MSR_PR) |
->>> -                    (1ull << MSR_FP) |
->>> -                    (1ull << MSR_ME) |
->>> -                    (1ull << MSR_FE0) |
->>> -                    (1ull << MSR_SE) |
->>> -                    (1ull << MSR_DE) |
->>> -                    (1ull << MSR_FE1) |
->>> -                    (1ull << MSR_IR) |
->>> -                    (1ull << MSR_DR) |
->>> -                    (1ull << MSR_PMM) |
->>> -                    (1ull << MSR_RI) |
->>> -                    (1ull << MSR_LE);
->>> -    pcc->lpcr_mask = LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
->>> -        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
->>> -        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
->>> -        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
->>> -                             LPCR_DEE | LPCR_OEE))
->>> -        | LPCR_MER | LPCR_GTSE | LPCR_TC |
->>> -        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
->>> -    /* DD2 adds an extra HAIL bit */
->>> -    pcc->lpcr_mask |= LPCR_HAIL;
->>> +    pcc->insns_flags = POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as P9 
->>> */
->>> +    pcc->insns_flags2 = POWERPC_FAMILY_POWER10_INSNS_FLAGS2;
->>> +    pcc->msr_mask = POWERPC_POWER10_PCC_MSR_MASK;
->>> +    pcc->lpcr_mask = POWERPC_POWER10_PCC_LPCR_MASK;
->>>         pcc->lpcr_pm = LPCR_PDEE | LPCR_HDEE | LPCR_EEE | LPCR_DEE | 
->>> LPCR_OEE;
->>>       pcc->mmu_model = POWERPC_MMU_3_00;
->>> @@ -6754,11 +6664,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void 
->>> *data)
->>>       pcc->excp_model = POWERPC_EXCP_POWER10;
->>>       pcc->bus_model = PPC_FLAGS_INPUT_POWER9;
->>>       pcc->bfd_mach = bfd_mach_ppc64;
->>> -    pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
->>> -                 POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
->>> -                 POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
->>> -                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV |
->>> -                 POWERPC_FLAG_BHRB;
->>> +    pcc->flags = POWERPC_POWER10_PCC_FLAGS;
->>>       pcc->l1_dcache_size = 0x8000;
->>>       pcc->l1_icache_size = 0x8000;
->>>   }
->>> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
->>> new file mode 100644
->>> index 000000000000..e04be6a655d8
->>> --- /dev/null
->>> +++ b/target/ppc/cpu_init.h
->>> @@ -0,0 +1,78 @@
->>> +#ifndef TARGET_PPC_CPU_INIT_H
->>> +#define TARGET_PPC_CPU_INIT_H
->>> +
->>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS                           \
->> I would call this PPC_INSNS_FLAGS_POWER9
->> 
->>> +    PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB |             \
->>> +    PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |                   \
->>> +    PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE | PPC_FLOAT_FRSQRTES |      \
->>> +    PPC_FLOAT_STFIWX | PPC_FLOAT_EXT |PPC_CACHE | PPC_CACHE_ICBI |  \
->>> +    PPC_CACHE_DCBZ | PPC_MEM_SYNC | PPC_MEM_EIEIO | PPC_MEM_TLBIE | \
->>> +    PPC_MEM_TLBSYNC | PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |  \
->>> +    PPC_SEGMENT_64B | PPC_SLBI | PPC_POPCNTB | PPC_POPCNTWD |       \
->>> +    PPC_CILDST
->> Add this here
->> 
->> #define PPC_INSNS_FLAGS_POWER10 PPC_INSNS_FLAGS_POWER9
->> 
->>> +
->>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON                   \
->> Suggest some other name change -
->>
->>             PPC_INSNS_FLAGS2_POWER_COMMON
->> 
->>> +    PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |                 \
->>> +    PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
->>> +    PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |   \
->>> +    PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
->>> +    PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
->>> +    PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206
->>> +
->>> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2                          \
->>> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_TM
->>> +#define POWERPC_FAMILY_POWER10_INSNS_FLAGS2                         \
->>> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_ISA310
->>> +
->>> +#define POWERPC_POWER9_COMMON_PCC_MSR_MASK \
->> PPC_MSR_MASK_POWER_COMMON
->> 
->>> +    (1ull << MSR_SF) |                     \
->>> +    (1ull << MSR_HV) |                     \
->>> +    (1ull << MSR_VR) |                     \
->>> +    (1ull << MSR_VSX) |                    \
->>> +    (1ull << MSR_EE) |                     \
->>> +    (1ull << MSR_PR) |                     \
->>> +    (1ull << MSR_FP) |                     \
->>> +    (1ull << MSR_ME) |                     \
->>> +    (1ull << MSR_FE0) |                    \
->>> +    (1ull << MSR_SE) |                     \
->>> +    (1ull << MSR_DE) |                     \
->>> +    (1ull << MSR_FE1) |                    \
->>> +    (1ull << MSR_IR) |                     \
->>> +    (1ull << MSR_DR) |                     \
->>> +    (1ull << MSR_PMM) |                    \
->>> +    (1ull << MSR_RI) |                     \
->>> +    (1ull << MSR_LE)
->>> +
->>> +#define POWERPC_POWER9_PCC_MSR_MASK \
->>> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK | (1ull << MSR_TM)
->> PPC_MSR_MASK_POWER9
->> 
->>> +#define POWERPC_POWER10_PCC_MSR_MASK \
->>> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK
->>> +#define POWERPC_POWER9_PCC_PCR_MASK \
->> PPC_PCR_MASK_POWER9
->> 
->>> +    PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07
->>> +#define POWERPC_POWER10_PCC_PCR_MASK \
->>> +    POWERPC_POWER9_PCC_PCR_MASK | PCR_COMPAT_3_00
->>> +#define POWERPC_POWER9_PCC_PCR_SUPPORTED \
->> PPC_PCR_SUPPORED_POWER9
->> 
->> etc
->> 
->>> +    PCR_COMPAT_3_00 | PCR_COMPAT_2_07 | PCR_COMPAT_2_06 | PCR_COMPAT_2_05
->>> +#define POWERPC_POWER10_PCC_PCR_SUPPORTED \
->>> +    POWERPC_POWER9_PCC_PCR_SUPPORTED | PCR_COMPAT_3_10
->>> +#define POWERPC_POWER9_PCC_LPCR_MASK 
->>> \
->>> +    LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD | 
->>> \
->>> +    (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL | 
->>> \
->>> +    LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD | 
->>> \
->>> +    (LPCR_PECE_L_MASK & (LPCR_PDEE|LPCR_HDEE|LPCR_EEE|LPCR_DEE|LPCR_OEE)) 
->>> | \
->>> +    LPCR_MER | LPCR_GTSE | LPCR_TC | LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE 
->>> |  \
->>> +    LPCR_HDICE
->>> +/* DD2 adds an extra HAIL bit */
->>> +#define POWERPC_POWER10_PCC_LPCR_MASK \
->>> +    POWERPC_POWER9_PCC_LPCR_MASK | LPCR_HAIL
->>> +#define POWERPC_POWER9_PCC_FLAGS_COMMON                                 \
->> POWERPC_FLAG_POWER9
->> 
->>> +    POWERPC_FLAG_VRE | POWERPC_FLAG_SE | POWERPC_FLAG_BE |              \
->>> +    POWERPC_FLAG_PMM | POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |       \
->>> +    POWERPC_FLAG_VSX | POWERPC_FLAG_SCV
->>> +
->>> +#define POWERPC_POWER9_PCC_FLAGS  \
->>> +    POWERPC_POWER9_PCC_FLAGS_COMMON | POWERPC_FLAG_TM
->>> +#define POWERPC_POWER10_PCC_FLAGS \
->>> +    POWERPC_POWER9_PCC_FLAGS_COMMON | POWERPC_FLAG_BHRB
->>> +
->>> +#endif /* TARGET_PPC_CPU_INIT_H */
->
->
---3866299591-1495921255-1721822646=:4640--
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzI0MTIwNzQ4WjAvBgkqhkiG9w0BCQQxIgQgtaO9VVx4
+SdfI63CyGrK65UNK67Gy7vA5fJNFxG23mL0wgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBSFDnRnwLuQgCs96fsV/cH8SZVgIGEXk8v
+bjtsPZ/f9y+cKSyvNwNj1Ql2W5ephy33jaSJgzoydqM2GKo0gewdKuwh5rDeWU5dRn2DKf+rk5lH
+G4hUvcKQMqXZMdv1+MteixXZYOYb+WOkZjEUvkdD8reHoZ6TfpR6R+t9SSHI2+mXfZAouLjWNyh1
+bCAS6IIGtmi/WZ7knvEUPDTlKFhEBAmj1ZAGJP6KcVgqnH1MUWtscN2VTxYSGfOs2460XOAJwEN2
+7myAF0b+4lMbkodZN80N6dx8Jsw7sPTFfCsKzTlyv5xTunofrWXZTxP+U1wVO8wuRJrS5CxuH1bA
+F+7owC3190hr/xPmyUssbYFqwiCQRJ40WHlzhogyFwRuCpPNBYdFsdpHDG4fhgopHuEBuo8Qb9SH
+LEOeR1xiSKh9XvhVfc65QstqEzwVDyR/VXMoVmahUW0T9HIARmiyIqQPkwaN+8nldlM58pIM/zRr
+sYCuTJQ4hUFxyvjwzY05p6Zf0G0JQckpvsAWU/OkiTMsjKWA+79EXKCdP1xHR9qqWyTotm62XRAl
+EEhRQeL0qPkrOgDDW31PxraXZPYFE0tjUqaweqEzdtILz6wd8iD3kqzyHsnovkOnSe1OG/Yu61Jn
+mhmE4LU0ho5zBvQ/rxWP8dtcZ1hMG7pJUWy2yteGDwAAAAAAAA==
+
+
+--=-HYAGthwSXsEcf+EcDcD4--
 
