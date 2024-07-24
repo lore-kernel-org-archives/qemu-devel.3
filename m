@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C9FC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41981C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 16:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWepZ-0001C2-IC; Wed, 24 Jul 2024 12:27:09 -0400
+	id 1sWesU-00062j-48; Wed, 24 Jul 2024 12:30:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWepY-0001BX-1z
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:27:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sWesR-00061b-FE
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:30:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWepV-0002Wy-DG
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:27:07 -0400
+ id 1sWesN-0002wj-3J
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 12:30:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721838423;
+ s=mimecast20190719; t=1721838601;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=s4U6m+38PTY1pm9G8WHo3AGMZVn7OqUwMTywSICKYVw=;
- b=bNl7XbSiu146oGzqlXDQdrQSMikWvgfqd5oHGOGS440xfZYMv+dggUyfYi++a6xw4SP4HS
- UdHuPTDape39Uf70a1w4b72pzUUAMHnjIiJYIx0lpmaK9T8nWZc9fWeMcvjSrQFHjRuFYQ
- /f5jx2Xtg3ZrrW+Rr0nsbTrtlUi7enc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Ym1qwqBZWCJfpPM0NvDbjxdfJA0bxBNWmqm/5ZRmQCA=;
+ b=I8VT4z8f5ugiFW0dT6QH1PiZyTk5KDUEWu7IWf/C0xdubQHFsH5wR/pN4Nbq3AbuiIMcGQ
+ NWx8gTD2Bkyt0nDxHdlTGdFWrjW3tEp/Hukzw/yQOjWhNDOrycWMprJGrBBdtEiCoNqBX2
+ cBoHzmxy+irMeu5NVZ7K+PC4Is/HfeQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-OLXnul61MtKfJ9w60vwC5A-1; Wed,
- 24 Jul 2024 12:27:01 -0400
-X-MC-Unique: OLXnul61MtKfJ9w60vwC5A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-XsdbTAy2Moe31Kg256X4aw-1; Wed,
+ 24 Jul 2024 12:29:57 -0400
+X-MC-Unique: XsdbTAy2Moe31Kg256X4aw-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5F891955D56; Wed, 24 Jul 2024 16:26:56 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C35F91955D48; Wed, 24 Jul 2024 16:29:55 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.141])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0BA9519560AE; Wed, 24 Jul 2024 16:26:49 +0000 (UTC)
-Date: Wed, 24 Jul 2024 17:26:46 +0100
+ id 549481955F6B; Wed, 24 Jul 2024 16:29:49 +0000 (UTC)
+Date: Wed, 24 Jul 2024 17:29:45 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Roy Hopkins <roy.hopkins@suse.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -60,24 +60,23 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v4 01/17] meson: Add optional dependency on IGVM library
-Message-ID: <ZqErRoSUknD26cbI@redhat.com>
+Subject: Re: [PATCH v4 00/17] Introduce support for IGVM files
+Message-ID: <ZqEr-YpjHHM5cT07@redhat.com>
 References: <cover.1720004383.git.roy.hopkins@suse.com>
- <0f377bfb248db9d33cf8ec1758b231137b0de437.1720004383.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0f377bfb248db9d33cf8ec1758b231137b0de437.1720004383.git.roy.hopkins@suse.com>
+In-Reply-To: <cover.1720004383.git.roy.hopkins@suse.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,48 +94,30 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 12:05:39PM +0100, Roy Hopkins wrote:
-> The IGVM library allows Independent Guest Virtual Machine files to be
-> parsed and processed. IGVM files are used to configure guest memory
-> layout, initial processor state and other configuration pertaining to
-> secure virtual machines.
+On Wed, Jul 03, 2024 at 12:05:38PM +0100, Roy Hopkins wrote:
+> Here is v4 of the set of patches to add support for IGVM files to QEMU. This is
+> based on commit 1a2d52c7fc of qemu.
 > 
-> This adds the --enable-igvm configure option, enabled by default, which
-> attempts to locate and link against the IGVM library via pkgconfig and
-> sets CONFIG_IGVM if found.
+> This version addresses all of the review comments from v3 along with a couple of
+> small bug fixes. This is a much smaller increment than in the previous version
+> of the series [1]. Thanks once again to the reviewers that have been looking at
+> this series. This v4 patch series is also available on github: [2]
 > 
-> The library is added to the system_ss target in backends/meson.build
-> where the IGVM parsing will be performed by the ConfidentialGuestSupport
-> object.
+> The previous version had a build issue when building without debug enabled.
+> Patch 8/17 has been added to fix this and I've updated my own process to test
+> both debug and release builds of QEMU.
 > 
-> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> ---
->  meson.build                   | 8 ++++++++
->  backends/meson.build          | 3 +++
->  meson_options.txt             | 2 ++
->  scripts/meson-buildoptions.sh | 3 +++
->  4 files changed, 16 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index 54e6b09f4f..e2f7752636 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1276,6 +1276,12 @@ if host_os == 'linux' and (have_system or have_tools)
->                         method: 'pkg-config',
->                         required: get_option('libudev'))
->  endif
-> +igvm = not_found
-> +if not get_option('igvm').auto() or have_system
-> +  igvm = dependency('igvm',
-> +                       method: 'pkg-config',
-> +                       required: get_option('igvm'))
+> For testing IGVM support in QEMU you need to generate an IGVM file that is
+> configured for the platform you want to launch. You can use the `buildigvm`
+> test tool [3] to allow generation of IGVM files for all currently supported
+> platforms. Patch 11/17 contains information on how to generate an IGVM file
+> using this tool.
 
-nit-picking, the indentation for these 2 lines is out of
-alginment with the first line.
+Am I right that, currently, we can only use this IGVM support for plain
+SEV/SNP boot *without*  SVSM ?  I'm told SVSM has a dependency on host
+kernel KVM features not yet upstream, and I presume this means also needs
+further QEMU patches ?
 
-We probably ought to add a min version number to the
-check too. IIUC, to get the namespace pollution fixes
-you did, we'll want >= 0.3.0 ?
 
 With regards,
 Daniel
