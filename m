@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2078BC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9900DC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 22:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWk7v-0000HC-RD; Wed, 24 Jul 2024 18:06:27 -0400
+	id 1sWk7x-0000MR-28; Wed, 24 Jul 2024 18:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7t-0000A6-Rx
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:25 -0400
-Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7v-0000I2-TU
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:27 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7o-0006RQ-3D
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:25 -0400
-Received: by mail-io1-xd35.google.com with SMTP id
- ca18e2360f4ac-81477e9fd89so10703339f.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sWk7r-0006WF-Bz
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 18:06:27 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-80464a42081so41799439f.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 15:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858777; x=1722463577;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1721858781; x=1722463581;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9RgA/sQrSqu0rivwfkVX+vpcUdtyuMUfMJ/jiDAmIes=;
- b=PjL1+JtoOqmWBg4bOQLNtGvS9kFOZRCqd6ApWkleJf0+Gw8AP9t09GIlpm3HwmAhzE
- FB9nnNgba9OqXT0nBZq3O0Jqy7Y5cmwPLhb5REP/OoQA15fiBioJnrk5dTt2Mm6XpxjE
- CP2JMArQYnmsNCq/y0f7i1ZtL4xyWB84LpvYhVhimBrw2vUxxAm+PmXjhAKLX1di9FIy
- nYHK/r3AesDdfAllrWnf5YZXC5oGXOIbPPBjfBDVdBmm8nPTTtErjDRY+DW8Inrab0jo
- JBVRKxU6ozygfl+33jYMa8+4OoJVax//AjAye6n5LcKaVEF515A6/QdU63gq0qePLPuG
- T/nQ==
+ bh=W3XlKNMv+/RjVBRuGDBQWo+adXw6lKr/2b70+lGZd98=;
+ b=qZWPIx44hpwe2ifsO+Uhx69jn0YnQLoRUMsFDb+7WcJtCZDvgDeXwvPu5OB3Z/7Pik
+ K9S8T4YFfgcotO86Lam4SBRkNLSXxj/5lJuy33bhiipE7PX5zwOPNc2xnMJescrRh4Rs
+ P9tIElsaxr3I29+bCJyQihSP4zRGhZOUr0diUdSFLR6V3vRABWw+89PS5gZNCDt0xJTw
+ Fb7tMErlTfiIHuBq3Hn/kJOKg/Y6yRI84zeqKR8+uwVyHKgAYaY6YIQIelxesokcvFJM
+ LJy8ofm7LnbJReC/T/kSPZdVhfOTcJKPgl/ly/lDS2wbKplQn5E9Il90jFyFcVKY3Qp8
+ 5QSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721858777; x=1722463577;
+ d=1e100.net; s=20230601; t=1721858781; x=1722463581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9RgA/sQrSqu0rivwfkVX+vpcUdtyuMUfMJ/jiDAmIes=;
- b=S/6W9swnU/uqi/7w3EvF63RcwcQO1rIANYwd+oHMDbDAjHMBekS4NV8rPmGkjmZedn
- 9hCi0t8KyM1fdDuqeFOKMtMeGxJeYNciS2Un2ZleR+d877aqG3pWq30UxoKKpoxJ6WXn
- v7R3oiix3cBFfVQJ+20pgJHKUCcJNZ+G69z1NrKWaXOSbfHASesWzr2lA6rlX39DX2t6
- 7wYD+EOZm9jupQ8iuU5Rb25740BGJLMksfo2dvP/wkBe2taTDotXVc8nse1EaBVN4NQt
- mt+KzVB+aIo8qwTbUr3+SkseNRyrjqQhlqy8747M6CdXQUfQ62cJhIhZEOA2yFLq0v5K
- XgTw==
-X-Gm-Message-State: AOJu0Yz27EI/w/OnS8pkCEQnxtE3cSJZMZJoo8j5mO0ZzhDrXhHxXNRn
- jeF6mXnQUBrKzh9T6HOuActBjnqoolNjRkmwMgWw8IDpZhUzky3jTaBUnWeUcLEUi+Cem84jTe/
- Xvpc=
-X-Google-Smtp-Source: AGHT+IGdwHlLAfkbdrQ91sKgktBmxpXZU84mIgqFZG38Cc0hlZjgd9TntmoCrsz9qAF4NWFnM+n2OA==
-X-Received: by 2002:a05:6602:6395:b0:7f8:c131:3bde with SMTP id
- ca18e2360f4ac-81f72f47f01mr239482839f.5.1721858777134; 
- Wed, 24 Jul 2024 15:06:17 -0700 (PDT)
+ bh=W3XlKNMv+/RjVBRuGDBQWo+adXw6lKr/2b70+lGZd98=;
+ b=Ycas7SoshehCmC7sp7Htu5HsWleKnsn1pSodux6ZTtgD804j3f6jeAUFxfwf369iDo
+ YJjaVWMLaXLGZwb/UVFxWO6tXtpJrM2qp9+f/U+j4lpFmGcKdWTJjQ5CtP8RFi93cQcw
+ IqZ8w9Q6T7dAecsiVQov8iuIzbLy0E1CSiYVb6aEhkoSbmnkgVMRL0RxF1tLgjNB28zP
+ Yu/a1VnfnwZwhXe/QuLUe7ALsuGD5huwfDXcOLsjpBsK+xep6+1C1Siok8d4YOcZHZFH
+ yqkE9PKu7IfpGW/nH0Q03sREpOXGKCCb4wmKfn/cYoFFj/UDoJHSFV9i0rN28zuZH243
+ FvUw==
+X-Gm-Message-State: AOJu0Yy5NJcIR4dD2FMWcrEWvucGCsPBxG8xThbQfVU6GQH3lA6SoNE6
+ tfvDRRfuOU+CF2l2WEBcR0OH5PEPRfGAHJrvbGzuM3Izz0+sEjkcYqYwW1xDK0j3ZgeLafHZy2d
+ KI6s=
+X-Google-Smtp-Source: AGHT+IGKDkV1WNUzOabqhtsKcrd6qieUi0wiz3ZTqENvbRlez0o3UA40UgrE8ztLIw4eph4rclMo2A==
+X-Received: by 2002:a05:6e02:12e7:b0:396:788:f4ef with SMTP id
+ e9e14a558f8ab-39a1a80ef7fmr25651355ab.14.1721858781062; 
+ Wed, 24 Jul 2024 15:06:21 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.16
+ 8926c6da1cb9f-4c29fa983f8sm10086173.47.2024.07.24.15.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 15:06:16 -0700 (PDT)
+ Wed, 24 Jul 2024 15:06:20 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
  Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
- Sean Bruno <sbruno@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/15] bsd-user:Add CPU initialization and management functions
-Date: Wed, 24 Jul 2024 16:04:34 -0600
-Message-ID: <20240724220449.10398-2-imp@bsdimp.com>
+Subject: [PULL 04/15] bsd-user:Add ARM AArch64 signal handling support
+Date: Wed, 24 Jul 2024 16:04:37 -0600
+Message-ID: <20240724220449.10398-5-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240724220449.10398-1-imp@bsdimp.com>
 References: <20240724220449.10398-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d35;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd35.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,41 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Added function to initialize ARM CPU and check if it supports 64-bit mode.
-Implemented CPU loop function to handle exceptions and emulate execution of instructions.
-Added function to clone CPU state to create a new thread.
-Included AArch64 specific CPU functions for bsd-user to set and receive thread-local-storage
-value from the tpidr_el0 register.
-Introduced structure for storing CPU register states for BSD-USER.
+Added sigcode setup function for signal trampoline which initializes a sequence of instructions
+to handle signal returns and exits, copying this code to the target offset.
+Defined ARM AArch64 specific signal definitions including register indices and sizes,
+and introduced structures to represent general purpose registers, floating point registers, and machine context.
+Added function to set up signal handler arguments, populating register values in `CPUARMState`
+based on the provided signal, signal frame, signal action, and frame address.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Kyle Evans <kevans@freebsd.org>
-Co-authored-by: Sean Bruno <sbruno@freebsd.org>
-Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240707191128.10509-2-itachis@FreeBSD.org>
+Message-Id: <20240707191128.10509-5-itachis@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/aarch64/target_arch_cpu.c |  31 +++++
- bsd-user/aarch64/target_arch_cpu.h | 192 +++++++++++++++++++++++++++++
- bsd-user/aarch64/target_syscall.h  |  51 ++++++++
- 3 files changed, 274 insertions(+)
- create mode 100644 bsd-user/aarch64/target_arch_cpu.c
- create mode 100644 bsd-user/aarch64/target_arch_cpu.h
- create mode 100644 bsd-user/aarch64/target_syscall.h
+ bsd-user/aarch64/signal.c               | 53 ++++++++++++++++
+ bsd-user/aarch64/target_arch_signal.h   | 80 +++++++++++++++++++++++++
+ bsd-user/aarch64/target_arch_sigtramp.h | 48 +++++++++++++++
+ 3 files changed, 181 insertions(+)
+ create mode 100644 bsd-user/aarch64/signal.c
+ create mode 100644 bsd-user/aarch64/target_arch_signal.h
+ create mode 100644 bsd-user/aarch64/target_arch_sigtramp.h
 
-diff --git a/bsd-user/aarch64/target_arch_cpu.c b/bsd-user/aarch64/target_arch_cpu.c
+diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
 new file mode 100644
-index 00000000000..b2fa59efaf6
+index 00000000000..98861f9ab3b
 --- /dev/null
-+++ b/bsd-user/aarch64/target_arch_cpu.c
-@@ -0,0 +1,31 @@
++++ b/bsd-user/aarch64/signal.c
+@@ -0,0 +1,53 @@
 +/*
-+ * ARM AArch64 specific CPU for bsd-user
++ * ARM AArch64 specific signal definitions for bsd-user
 + *
-+ * Copyright (c) 2015 Stacey Son
++ * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
 + *
 + * This library is free software; you can redistribute it and/or
 + * modify it under the terms of the GNU Lesser General Public
@@ -148,28 +145,50 @@ index 00000000000..b2fa59efaf6
 + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 + */
 +#include "qemu/osdep.h"
-+#include "target_arch.h"
 +
-+/* See cpu_set_user_tls() in arm64/arm64/vm_machdep.c */
-+void target_cpu_set_tls(CPUARMState *env, target_ulong newtls)
-+{
-+    env->cp15.tpidr_el[0] = newtls;
-+}
++#include "qemu.h"
 +
-+target_ulong target_cpu_get_tls(CPUARMState *env)
-+{
-+    return env->cp15.tpidr_el[0];
-+}
-diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
-new file mode 100644
-index 00000000000..5c150bb7e9c
---- /dev/null
-+++ b/bsd-user/aarch64/target_arch_cpu.h
-@@ -0,0 +1,192 @@
 +/*
-+ *  ARM AArch64 cpu init and loop
++ * Compare to sendsig() in sys/arm64/arm64/machdep.c
++ * Assumes that target stack frame memory is locked.
++ */
++abi_long set_sigtramp_args(CPUARMState *regs, int sig,
++                           struct target_sigframe *frame,
++                           abi_ulong frame_addr,
++                           struct target_sigaction *ka)
++{
++    /*
++     * Arguments to signal handler:
++     *  x0 = signal number
++     *  x1 = siginfo pointer
++     *  x2 = ucontext pointer
++     *  pc/elr = signal handler pointer
++     *  sp = sigframe struct pointer
++     *  lr = sigtramp at base of user stack
++     */
++
++    regs->xregs[0] = sig;
++    regs->xregs[1] = frame_addr +
++        offsetof(struct target_sigframe, sf_si);
++    regs->xregs[2] = frame_addr +
++        offsetof(struct target_sigframe, sf_uc);
++
++    regs->pc = ka->_sa_handler;
++    regs->xregs[TARGET_REG_SP] = frame_addr;
++    regs->xregs[TARGET_REG_LR] = TARGET_PS_STRINGS - TARGET_SZSIGCODE;
++
++    return 0;
++}
+diff --git a/bsd-user/aarch64/target_arch_signal.h b/bsd-user/aarch64/target_arch_signal.h
+new file mode 100644
+index 00000000000..df171733166
+--- /dev/null
++++ b/bsd-user/aarch64/target_arch_signal.h
+@@ -0,0 +1,80 @@
++/*
++ * ARM AArch64 specific signal definitions for bsd-user
 + *
-+ * Copyright (c) 2015 Stacey Son
++ * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
 + *
 + * This library is free software; you can redistribute it and/or
 + * modify it under the terms of the GNU Lesser General Public
@@ -185,236 +204,121 @@ index 00000000000..5c150bb7e9c
 + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
-+#ifndef TARGET_ARCH_CPU_H
-+#define TARGET_ARCH_CPU_H
++#ifndef TARGET_ARCH_SIGNAL_H
++#define TARGET_ARCH_SIGNAL_H
 +
-+#include "target_arch.h"
-+#include "signal-common.h"
-+#include "target/arm/syndrome.h"
++#include "cpu.h"
 +
-+#define TARGET_DEFAULT_CPU_MODEL "any"
++#define TARGET_REG_X0   0
++#define TARGET_REG_X30  30
++#define TARGET_REG_X31  31
++#define TARGET_REG_LR   TARGET_REG_X30
++#define TARGET_REG_SP   TARGET_REG_X31
 +
-+static inline void target_cpu_init(CPUARMState *env,
-+    struct target_pt_regs *regs)
-+{
-+    int i;
++#define TARGET_INSN_SIZE    4       /* arm64 instruction size */
 +
-+    if (!(arm_feature(env, ARM_FEATURE_AARCH64))) {
-+        fprintf(stderr, "The selected ARM CPU does not support 64 bit mode\n");
-+        exit(1);
-+    }
-+    for (i = 0; i < 31; i++) {
-+        env->xregs[i] = regs->regs[i];
-+    }
-+    env->pc = regs->pc;
-+    env->xregs[31] = regs->sp;
-+}
++/* Size of the signal trampolin code. See _sigtramp(). */
++#define TARGET_SZSIGCODE    ((abi_ulong)(9 * TARGET_INSN_SIZE))
 +
++/* compare to sys/arm64/include/_limits.h */
++#define TARGET_MINSIGSTKSZ  (1024 * 4)                  /* min sig stack size */
++#define TARGET_SIGSTKSZ     (TARGET_MINSIGSTKSZ + 32768)  /* recommended size */
 +
-+static inline void target_cpu_loop(CPUARMState *env)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int trapnr, ec, fsc, si_code, si_signo;
-+    uint64_t code, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8;
-+    uint32_t pstate;
-+    abi_long ret;
++/* struct __mcontext in sys/arm64/include/ucontext.h */
 +
-+    for (;;) {
-+        cpu_exec_start(cs);
-+        trapnr = cpu_exec(cs);
-+        cpu_exec_end(cs);
-+        process_queued_cpu_work(cs);
-+
-+        switch (trapnr) {
-+        case EXCP_SWI:
-+            /* See arm64/arm64/trap.c cpu_fetch_syscall_args() */
-+            code = env->xregs[8];
-+            if (code == TARGET_FREEBSD_NR_syscall ||
-+                code == TARGET_FREEBSD_NR___syscall) {
-+                code = env->xregs[0];
-+                arg1 = env->xregs[1];
-+                arg2 = env->xregs[2];
-+                arg3 = env->xregs[3];
-+                arg4 = env->xregs[4];
-+                arg5 = env->xregs[5];
-+                arg6 = env->xregs[6];
-+                arg7 = env->xregs[7];
-+                arg8 = 0;
-+            } else {
-+                arg1 = env->xregs[0];
-+                arg2 = env->xregs[1];
-+                arg3 = env->xregs[2];
-+                arg4 = env->xregs[3];
-+                arg5 = env->xregs[4];
-+                arg6 = env->xregs[5];
-+                arg7 = env->xregs[6];
-+                arg8 = env->xregs[7];
-+            }
-+            ret = do_freebsd_syscall(env, code, arg1, arg2, arg3,
-+                    arg4, arg5, arg6, arg7, arg8);
-+            /*
-+             * The carry bit is cleared for no error; set for error.
-+             * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
-+             */
-+            pstate = pstate_read(env);
-+            if (ret >= 0) {
-+                pstate &= ~PSTATE_C;
-+                env->xregs[0] = ret;
-+            } else if (ret == -TARGET_ERESTART) {
-+                env->pc -= 4;
-+                break;
-+            } else if (ret != -TARGET_EJUSTRETURN) {
-+                pstate |= PSTATE_C;
-+                env->xregs[0] = -ret;
-+            }
-+            pstate_write(env, pstate);
-+            break;
-+
-+        case EXCP_INTERRUPT:
-+            /* Just indicate that signals should be handle ASAP. */
-+            break;
-+
-+        case EXCP_UDEF:
-+            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->pc);
-+            break;
-+
-+
-+        case EXCP_PREFETCH_ABORT:
-+        case EXCP_DATA_ABORT:
-+            /* We should only arrive here with EC in {DATAABORT, INSNABORT}. */
-+            ec = syn_get_ec(env->exception.syndrome);
-+            assert(ec == EC_DATAABORT || ec == EC_INSNABORT);
-+
-+            /* Both EC have the same format for FSC, or close enough. */
-+            fsc = extract32(env->exception.syndrome, 0, 6);
-+            switch (fsc) {
-+            case 0x04 ... 0x07: /* Translation fault, level {0-3} */
-+                si_signo = TARGET_SIGSEGV;
-+                si_code = TARGET_SEGV_MAPERR;
-+                break;
-+            case 0x09 ... 0x0b: /* Access flag fault, level {1-3} */
-+            case 0x0d ... 0x0f: /* Permission fault, level {1-3} */
-+                si_signo = TARGET_SIGSEGV;
-+                si_code = TARGET_SEGV_ACCERR;
-+                break;
-+            case 0x11: /* Synchronous Tag Check Fault */
-+                si_signo = TARGET_SIGSEGV;
-+                si_code = /* TARGET_SEGV_MTESERR; */ TARGET_SEGV_ACCERR;
-+                break;
-+            case 0x21: /* Alignment fault */
-+                si_signo = TARGET_SIGBUS;
-+                si_code = TARGET_BUS_ADRALN;
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
-+            force_sig_fault(si_signo, si_code, env->exception.vaddress);
-+            break;
-+
-+        case EXCP_DEBUG:
-+        case EXCP_BKPT:
-+            force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->pc);
-+            break;
-+
-+        case EXCP_ATOMIC:
-+            cpu_exec_step_atomic(cs);
-+            break;
-+
-+        case EXCP_YIELD:
-+            /* nothing to do here for user-mode, just resume guest code */
-+            break;
-+        default:
-+            fprintf(stderr, "qemu: unhandled CPU exception 0x%x - aborting\n",
-+                    trapnr);
-+            cpu_dump_state(cs, stderr, 0);
-+            abort();
-+        } /* switch() */
-+        process_pending_signals(env);
-+        /*
-+         * Exception return on AArch64 always clears the exclusive
-+         * monitor, so any return to running guest code implies this.
-+         * A strex (successful or otherwise) also clears the monitor, so
-+         * we don't need to specialcase EXCP_STREX.
-+         */
-+        env->exclusive_addr = -1;
-+    } /* for (;;) */
-+}
-+
-+
-+/* See arm64/arm64/vm_machdep.c cpu_fork() */
-+static inline void target_cpu_clone_regs(CPUARMState *env, target_ulong newsp)
-+{
-+    if (newsp) {
-+        env->xregs[31] = newsp;
-+    }
-+    env->regs[0] = 0;
-+    env->regs[1] = 0;
-+    pstate_write(env, 0);
-+}
-+
-+static inline void target_cpu_reset(CPUArchState *env)
-+{
-+}
-+
-+
-+#endif /* TARGET_ARCH_CPU_H */
-diff --git a/bsd-user/aarch64/target_syscall.h b/bsd-user/aarch64/target_syscall.h
-new file mode 100644
-index 00000000000..08ae913c42e
---- /dev/null
-+++ b/bsd-user/aarch64/target_syscall.h
-@@ -0,0 +1,51 @@
-+/*
-+ * ARM AArch64 specific CPU for bsd-user
-+ *
-+ * Copyright (c) 2015 Stacey D. Son <sson at Freebsd>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef BSD_USER_AARCH64_TARGET_SYSCALL_H
-+#define BSD_USER_AARCH64_TARGET_SYSCALL_H
-+
-+/*
-+ * The aarch64 registers are named:
-+ *
-+ * x0 through x30 - for 64-bit-wide access (same registers)
-+ * Register '31' is one of two registers depending on the instruction context:
-+ *  For instructions dealing with the stack, it is the stack pointer, named rsp
-+ *  For all other instructions, it is a "zero" register, which returns 0 when
-+ *  read and discards data when written - named rzr (xzr, wzr)
-+ *
-+ * Usage during syscall/function call:
-+ * r0-r7 are used for arguments and return values
-+ * For syscalls, the syscall number is in r8
-+ * r9-r15 are for temporary values (may get trampled)
-+ * r16-r18 are used for intra-procedure-call and platform values (avoid)
-+ * The called routine is expected to preserve r19-r28
-+ * r29 and r30 are used as the frame register and link register (avoid)
-+ * See the ARM Procedure Call Reference for details.
-+ */
-+struct target_pt_regs {
-+    uint64_t    regs[31];
-+    uint64_t    sp;
-+    uint64_t    pc;
-+    uint64_t    pstate;
++struct target_gpregs {
++    uint64_t    gp_x[30];
++    uint64_t    gp_lr;
++    uint64_t    gp_sp;
++    uint64_t    gp_elr;
++    uint32_t    gp_spsr;
++    uint32_t    gp_pad;
 +};
 +
-+#define TARGET_HW_MACHINE       "arm64"
-+#define TARGET_HW_MACHINE_ARCH  "aarch64"
++struct target_fpregs {
++    __uint128_t fp_q[32];
++    uint32_t    fp_sr;
++    uint32_t    fp_cr;
++    uint32_t    fp_flags;
++    uint32_t    fp_pad;
++};
 +
-+#endif /* BSD_USER_AARCH64_TARGET_SYSCALL_H */
++struct target__mcontext {
++    struct target_gpregs mc_gpregs;
++    struct target_fpregs mc_fpregs;
++    uint32_t    mc_flags;
++#define TARGET_MC_FP_VALID  0x1
++    uint32_t    mc_pad;
++    uint64_t    mc_spare[8];
++};
++
++typedef struct target__mcontext target_mcontext_t;
++
++#define TARGET_MCONTEXT_SIZE 880
++#define TARGET_UCONTEXT_SIZE 960
++
++#include "target_os_ucontext.h"
++
++struct target_sigframe {
++    target_siginfo_t    sf_si;  /* saved siginfo */
++    target_ucontext_t   sf_uc;  /* saved ucontext */
++};
++
++#endif /* TARGET_ARCH_SIGNAL_H */
+diff --git a/bsd-user/aarch64/target_arch_sigtramp.h b/bsd-user/aarch64/target_arch_sigtramp.h
+new file mode 100644
+index 00000000000..8cdd33b621d
+--- /dev/null
++++ b/bsd-user/aarch64/target_arch_sigtramp.h
+@@ -0,0 +1,48 @@
++/*
++ * ARM AArch64 sigcode for bsd-user
++ *
++ * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_SIGTRAMP_H
++#define TARGET_ARCH_SIGTRAMP_H
++
++/* Compare to ENTRY(sigcode) in arm64/arm64/locore.S */
++static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_uc,
++        unsigned sys_sigreturn)
++{
++    int i;
++    uint32_t sys_exit = TARGET_FREEBSD_NR_exit;
++
++    uint32_t sigtramp_code[] = {
++    /* 1 */ 0x910003e0,                 /* mov x0, sp */
++    /* 2 */ 0x91000000 + (sigf_uc << 10), /* add x0, x0, #SIGF_UC */
++    /* 3 */ 0xd2800000 + (sys_sigreturn << 5) + 0x8, /* mov x8, #SYS_sigreturn */
++    /* 4 */ 0xd4000001,                 /* svc #0 */
++    /* 5 */ 0xd2800028 + (sys_exit << 5) + 0x8, /* mov x8, #SYS_exit */
++    /* 6 */ 0xd4000001,                 /* svc #0 */
++    /* 7 */ 0x17fffffc,                 /* b -4 */
++    /* 8 */ sys_sigreturn,
++    /* 9 */ sys_exit
++    };
++
++    for (i = 0; i < 9; i++) {
++        tswap32s(&sigtramp_code[i]);
++    }
++
++    return memcpy_to_target(offset, sigtramp_code, TARGET_SZSIGCODE);
++}
++#endif /* TARGET_ARCH_SIGTRAMP_H */
 -- 
 2.45.1
 
