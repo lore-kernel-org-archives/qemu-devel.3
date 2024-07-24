@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61704C3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 12:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315FEC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 13:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWbXd-0007cS-Lu; Wed, 24 Jul 2024 08:56:25 -0400
+	id 1sWbiN-0006U5-4B; Wed, 24 Jul 2024 09:07:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sWbXb-0007b6-NT
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 08:56:24 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWbiI-0006Sw-Bg
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 09:07:27 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sWbXZ-000398-EZ
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 08:56:23 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70d1d6369acso623735b3a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 05:56:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWbiG-0006cd-BS
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 09:07:26 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4265b7514fcso5122015e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 06:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721825779; x=1722430579; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b55Bv/fMkliL5N9hJdd9Czd8pHs3GomAs0nqsc/QVek=;
- b=MKOLhdODoCjZJAWOXr5g1V3GgQrvTU8I5PCsk9x7/DKMHS8P5fVn83VnOsh5ttUX8x
- /469zn1zrftRFQNCnhrEfnso2I7OUAbx+3hpB+pWn2UWBycHT/XP6xEOpR8Y0NcFDsV4
- vHwFsMBYO64u3hgO442Vw9Gu4XUqOUbG9cFmuvj11zg68tSs+ia9JfscIxe08g3MPofs
- iuPo483IpNFuCDO/rpreJAiU82AqwZPbFG2VHLGegVUWhMcI1jI8TfWqMA9fa2cSPJq8
- 28zjneDlT03KP0xQKcbQeJhYd11jQJ0zVwE/9u4Z8u1+r5oIc+JSaZgVVYNpNVUhw0De
- RyMQ==
+ d=linaro.org; s=google; t=1721826442; x=1722431242; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UtsY1bvw8cza1TfxQVby+OILiLbukpOWIF0kGG2aS/I=;
+ b=cYdGDtCcKAfZkZmOCzA3Jj5fhfAJzXWWlhKdMz5rS/EhwWx9GUTALM/W6fXQwN65bL
+ SXstTzyx12crh3M16HmYHx41cdPwTsxdADOyJ+80TztyauTeWWKJD2nsXCwP7F8rpcAc
+ WJdJvfigYYjq4bePLe0BI07yJ26BBtCi8rPuAHRjXjOyZ/2SYlnqu/LsipVVOO2uGJwS
+ lyal732tGdMK6KpS8zzH6G08w09BiqnggJWTLwth24ytmwplMjZqmoPCJcZ/+HS+Zs5h
+ 2mirN2URwiw8A1eLj7ElZOdWQmHqTS5noIGucjxLJ32L+gNyIQHtAOFDBPNvyV+/rujF
+ vTmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721825779; x=1722430579;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b55Bv/fMkliL5N9hJdd9Czd8pHs3GomAs0nqsc/QVek=;
- b=Xk6QpqWcoPBfdglVm8wvzoHr7UVakAu0brbNfo17epEmZk0hgwbMjgYP4+8S/0ozUI
- ZcnocFYtB4aBEFKwTjetPCNVuoZQVedU8r0BrlS+/v643kbjaMbWaYCl+8FDglQl3bj/
- Gc4s3e3QSQe3yhMGfQWHzcwYC2PwtAbDZP+FsE0dmXRH+Gnm/u771UMkeSVXGxPSGnQQ
- 7FSGcBrWNOAkMhk8m00Pl8LXnHyKZc2y1/5JPknzdx/nEhZpwELHENb2wktfDG+kOoua
- CaSD4vBjrvkMnT9UQ2BXtQicci/A4ZfsJnFLNhFXNLGXjdv2ADuPJKSoY75sOQ/Q6tH9
- gpNg==
-X-Gm-Message-State: AOJu0YwHlJGClEuOAgWFTqJgMdd6dypYVpjyrRVdiGZDEJNtO3AZgaIa
- n//Fe4gFypxbhgctGKmuA2tM2cjnd+IWpRx1grzumdXaQWRZJDVd2EEvHcIxMFA=
-X-Google-Smtp-Source: AGHT+IEDRUXWG4IW2DT8AWE0+DJFPSdT6N3NN0lqvMyFFKIVievYpd4wS/CXMyzFHHzAGP8ukh8dIw==
-X-Received: by 2002:a05:6a00:9296:b0:70d:2ab5:8677 with SMTP id
- d2e1a72fcca58-70e9ee90bcemr2854324b3a.10.1721825779002; 
- Wed, 24 Jul 2024 05:56:19 -0700 (PDT)
-Received: from [192.168.68.110] ([179.193.8.144])
+ d=1e100.net; s=20230601; t=1721826442; x=1722431242;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UtsY1bvw8cza1TfxQVby+OILiLbukpOWIF0kGG2aS/I=;
+ b=GgRT9ZJczNXzO+0nyDm7qW/fZbQ7LOufp4AdlDCgV/fhPFf772LceVRDOKurhkwVal
+ ypPL8/+CDPB6OZlbFsuGejvzfaE7TuFDZMYdqu7sWzoJj52BIkQVD/QoMVZc5arVHfE4
+ JOEbRwweP0S1b4B1q5njHU/XjFSnX8be+b3dY5T43Vm7k1WdihjNolDO4Fta8+vIL2xN
+ PC6JZ72eyUqWazR+cXWcp6cdUhe80yiSIY/nCNQohC1RTd5jlhyPBnFl1dNwmpWUemST
+ X77iM+sYy1y3IVMMRhqhA+tzUG5N6OKzlKRICv0eeRvd7IWP8YtLtKnfAC7+GVC/rEjw
+ zrPg==
+X-Gm-Message-State: AOJu0YwsGASQNDj2yBKGC2Gs8y59YmgvB3+z0DxJuZC59z5gONdEsuBs
+ eYaE0tAYQG/kYct0+raW4gGrWReAWzUIWHiMjPMRRIYY8PKgG3l2yAJlpOcE9XgkOaQ0QvPS9Up
+ C
+X-Google-Smtp-Source: AGHT+IEqgKVH1y9yUO4WI4o72OCI6xYvXOOky0qFlrlGvFTd+zBXA2w7MY2tkYWjnPS1M1U+VDiEKQ==
+X-Received: by 2002:a05:600c:138b:b0:426:5b19:d2b3 with SMTP id
+ 5b1f17b1804b1-427f9a20aecmr14565075e9.14.1721826441516; 
+ Wed, 24 Jul 2024 06:07:21 -0700 (PDT)
+Received: from localhost.localdomain
+ (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr. [176.184.50.4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70cff4b2e31sm8503009b3a.78.2024.07.24.05.56.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 05:56:18 -0700 (PDT)
-Message-ID: <ff35d3bb-b4d3-4a28-848c-1bd6668c35ec@ventanamicro.com>
-Date: Wed, 24 Jul 2024 09:56:14 -0300
+ 5b1f17b1804b1-427f93e6021sm30000985e9.35.2024.07.24.06.07.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 24 Jul 2024 06:07:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, devel@lists.libvirt.org,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1] target/riscv: Remove the deprecated 'any' CPU type
+Date: Wed, 24 Jul 2024 15:07:17 +0200
+Message-ID: <20240724130717.95629-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/13] docs/specs: add riscv-iommu
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, frank.chang@sifive.com, tjeznach@rivosinc.com,
- jason.chien@sifive.com
-References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
- <20240708173501.426225-14-dbarboza@ventanamicro.com>
- <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,138 +97,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The 'any' CPU is deprecated since commit f57d5f8004b
+("target/riscv: deprecate the 'any' CPU type"). Users
+are better off using the default CPUs or the 'max' CPU.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/deprecated.rst       | 13 -------------
+ docs/about/removed-features.rst |  8 ++++++++
+ target/riscv/cpu-qom.h          |  1 -
+ target/riscv/cpu.c              | 28 ----------------------------
+ 4 files changed, 8 insertions(+), 42 deletions(-)
 
-On 7/19/24 6:34 AM, Alistair Francis wrote:
-> On Tue, Jul 9, 2024 at 3:37 AM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
->>
->> Add a simple guideline to use the existing RISC-V IOMMU support we just
->> added.
->>
->> This doc will be updated once we add the riscv-iommu-sys device.
->>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   docs/specs/index.rst       |  1 +
->>   docs/specs/riscv-iommu.rst | 55 ++++++++++++++++++++++++++++++++++++++
->>   docs/system/riscv/virt.rst | 13 +++++++++
->>   3 files changed, 69 insertions(+)
->>   create mode 100644 docs/specs/riscv-iommu.rst
->>
->> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
->> index 1484e3e760..c68cd9ae6c 100644
->> --- a/docs/specs/index.rst
->> +++ b/docs/specs/index.rst
->> @@ -33,3 +33,4 @@ guest hardware that is specific to QEMU.
->>      virt-ctlr
->>      vmcoreinfo
->>      vmgenid
->> +   riscv-iommu
->> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
->> new file mode 100644
->> index 0000000000..fa38ff7667
->> --- /dev/null
->> +++ b/docs/specs/riscv-iommu.rst
->> @@ -0,0 +1,55 @@
->> +.. _riscv-iommu:
->> +
->> +RISC-V IOMMU support for RISC-V machines
->> +========================================
->> +
->> +QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
->> +version 1.0 [1].
->> +
->> +The emulation includes a PCI reference device, riscv-iommu-pci, that QEMU
->> +RISC-V boards can use.  The 'virt' RISC-V machine is compatible with this
->> +device.
->> +
->> +A platform device that implements the RISC-V IOMMU will be added in the
->> +future.
->> +
->> +
->> +riscv-iommu-pci reference device
->> +--------------------------------
->> +
->> +This device implements the RISC-V IOMMU emulation as recommended by the section
->> +"Integrating an IOMMU as a PCIe device" of [1]: a PCI device with base class 08h,
->> +sub-class 06h and programming interface 00h.
->> +
->> +As a reference device it doesn't implement anything outside of the specification,
->> +so it uses a generic default PCI ID given by QEMU: 1b36:0014.
->> +
->> +To include the device in the 'virt' machine:
->> +
->> +.. code-block:: bash
->> +
->> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
-> 
-> We should add a sentence saying what this does. As in what should a
-> user expect after they have done this
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 88f0f037865..0ac49b15b44 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -347,19 +347,6 @@ QEMU's ``vhost`` feature, which would eliminate the high latency costs under
+ which the 9p ``proxy`` backend currently suffers. However as of to date nobody
+ has indicated plans for such kind of reimplementation unfortunately.
+ 
+-RISC-V 'any' CPU type ``-cpu any`` (since 8.2)
+-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-
+-The 'any' CPU type was introduced back in 2018 and has been around since the
+-initial RISC-V QEMU port. Its usage has always been unclear: users don't know
+-what to expect from a CPU called 'any', and in fact the CPU does not do anything
+-special that isn't already done by the default CPUs rv32/rv64.
+-
+-After the introduction of the 'max' CPU type, RISC-V now has a good coverage
+-of generic CPUs: rv32 and rv64 as default CPUs and 'max' as a feature complete
+-CPU for both 32 and 64 bit builds. Users are then discouraged to use the 'any'
+-CPU type starting in 8.2.
+-
+ RISC-V CPU properties which start with capital 'Z' (since 8.2)
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index fc7b28e6373..f3e9474a73e 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -850,6 +850,14 @@ The RISC-V no MMU cpus have been removed. The two CPUs: ``rv32imacu-nommu`` and
+ ``rv64imacu-nommu`` can no longer be used. Instead the MMU status can be specified
+ via the CPU ``mmu`` option when using the ``rv32`` or ``rv64`` CPUs.
+ 
++RISC-V 'any' CPU type ``-cpu any`` (removed in 9.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The 'any' CPU type was introduced back in 2018 and was around since the
++initial RISC-V QEMU port. Its usage was always been unclear: users don't know
++what to expect from a CPU called 'any', and in fact the CPU does not do anything
++special that isn't already done by the default CPUs rv32/rv64.
++
+ ``compat`` property of server class POWER CPUs (removed in 6.0)
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 3670cfe6d9a..4464c0fd7a3 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -29,7 +29,6 @@
+ #define RISCV_CPU_TYPE_SUFFIX "-" TYPE_RISCV_CPU
+ #define RISCV_CPU_TYPE_NAME(name) (name RISCV_CPU_TYPE_SUFFIX)
+ 
+-#define TYPE_RISCV_CPU_ANY              RISCV_CPU_TYPE_NAME("any")
+ #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
+ #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
+ #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a90808a3bac..4bda754b013 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -438,27 +438,6 @@ static void set_satp_mode_default_map(RISCVCPU *cpu)
+ }
+ #endif
+ 
+-static void riscv_any_cpu_init(Object *obj)
+-{
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-    CPURISCVState *env = &cpu->env;
+-    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVF | RVD | RVC | RVU);
+-
+-#ifndef CONFIG_USER_ONLY
+-    set_satp_mode_max_supported(RISCV_CPU(obj),
+-        riscv_cpu_mxl(&RISCV_CPU(obj)->env) == MXL_RV32 ?
+-        VM_1_10_SV32 : VM_1_10_SV57);
+-#endif
+-
+-    env->priv_ver = PRIV_VERSION_LATEST;
+-
+-    /* inherited from parent obj via riscv_cpu_init() */
+-    cpu->cfg.ext_zifencei = true;
+-    cpu->cfg.ext_zicsr = true;
+-    cpu->cfg.mmu = true;
+-    cpu->cfg.pmp = true;
+-}
+-
+ static void riscv_max_cpu_init(Object *obj)
+ {
+     RISCVCPU *cpu = RISCV_CPU(obj);
+@@ -1161,11 +1140,6 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
+     Error *local_err = NULL;
+ 
+-    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_CPU_ANY) != NULL) {
+-        warn_report("The 'any' CPU is deprecated and will be "
+-                    "removed in the future.");
+-    }
+-
+     cpu_exec_realizefn(cs, &local_err);
+     if (local_err != NULL) {
+         error_propagate(errp, local_err);
+@@ -2952,7 +2926,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .abstract = true,
+     },
+ #if defined(TARGET_RISCV32)
+-    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV32,  riscv_any_cpu_init),
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV32,  riscv_max_cpu_init),
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE32,    MXL_RV32,  rv32_base_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cpu_init),
+@@ -2962,7 +2935,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32I,        MXL_RV32,  rv32i_bare_cpu_init),
+     DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_cpu_init),
+ #elif defined(TARGET_RISCV64)
+-    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV64,  riscv_any_cpu_init),
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cpu_init),
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_e_cpu_init),
+-- 
+2.45.2
 
-I suppose we can add a boilerplate sentence about what an IOMMU does, but aside
-from that I'm not sure what to say about user expectation. If you're adding an
-IOMMU (or any device in QEMU) it's expected that the user has some idea of what
-the device is supposed to do in the board and so on hehe
-
-
-Thanks,
-
-Daniel
-
-> 
-> Alistair
-> 
->> +
->> +As of this writing the existing Linux kernel support [2], not yet merged, is being
->> +created as a Rivos device, i.e. it uses Rivos vendor ID.  To use the riscv-iommu-pci
->> +device with the existing kernel support we need to emulate a Rivos PCI IOMMU by
->> +setting 'vendor-id' and 'device-id':
->> +
->> +.. code-block:: bash
->> +
->> +  $ qemu-system-riscv64 -M virt        \
->> +     -device riscv-iommu-pci,vendor-id=0x1efd,device-id=0xedf1 (...)
->> +
->> +Several options are available to control the capabilities of the device, namely:
->> +
->> +- "bus"
->> +- "ioatc-limit"
->> +- "intremap"
->> +- "ats"
->> +- "off" (Out-of-reset translation mode: 'on' for DMA disabled, 'off' for 'BARE' (passthrough))
->> +- "s-stage"
->> +- "g-stage"
->> +
->> +
->> +[1] https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
->> +[2] https://lore.kernel.org/linux-riscv/cover.1718388908.git.tjeznach@rivosinc.com/
->> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
->> index 9a06f95a34..8e9a2e4dda 100644
->> --- a/docs/system/riscv/virt.rst
->> +++ b/docs/system/riscv/virt.rst
->> @@ -84,6 +84,19 @@ none``, as in
->>
->>   Firmware images used for pflash must be exactly 32 MiB in size.
->>
->> +riscv-iommu support
->> +-------------------
->> +
->> +The board has support for the riscv-iommu-pci device by using the following
->> +command line:
->> +
->> +.. code-block:: bash
->> +
->> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
->> +
->> +Refer to :ref:`riscv-iommu` for more information on how the RISC-V IOMMU support
->> +works.
->> +
->>   Machine-specific options
->>   ------------------------
->>
->> --
->> 2.45.2
->>
->>
 
