@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A944C3DA63
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6FDC3DA61
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 06:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWVwV-0000Xj-96; Wed, 24 Jul 2024 02:57:43 -0400
+	id 1sWVwo-0000n8-1k; Wed, 24 Jul 2024 02:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWVwT-0000X7-HJ
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 02:57:41 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWVwm-0000ku-4b
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 02:58:00 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWVwR-0002HA-U4
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 02:57:41 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-368440b073bso314703f8f.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 23:57:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWVwi-0002I6-R4
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 02:57:59 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-427edcc207cso13858935e9.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 23:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721804257; x=1722409057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721804275; x=1722409075; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DIvfOOUAYFXCaM90OssFmwuwWDYBLk24BiRg9gWNqhI=;
- b=kgxPTW0s45iqbrSBNQxSods65QbSX0QR+YbYF3xOXiub4yEt7iLIDp+hdaNLlqpgVa
- a3iN1ww7uyhJGx0RGQzcPTViAwTP/6GgCq9TncfTQjOKfnnyoRzXVasiUmy8/h9rvLNq
- 98TtKIEycVqYrAKGaO1G/CYiJTmxwhKa8r/AemC8Xcljr0BjsGpoo+dC8/J+3unQnYXy
- Y2IQdlkceoxMlhKYFH5dmYjiGN4GQ6/WwXSsWN4xw8IWdAWc1Wn/AyHCW01x9kBvNRkd
- RA2OJybvYCBBJDTyi6l4DB9OwPa8VTqXFlNXgJyHB4eEqKErPIriVB9yZWMGTBg8KGdc
- 8Irw==
+ bh=lfpyUM9uNhrIiakDM85MnHl0o0QwRdZzU2dzqsg2eV8=;
+ b=H73/xsNWd/ZDB54e7PIcA09C3UBCGxxbXaY/EVusOGwuaxQlW3WTbP1jtQuTTKnJ3b
+ 3+3E5wLYRkUxiM+htC7ezQVmPHKcPPRf079mbfgxfdY1rZp6esK2YFYorkbLlqwYoyYT
+ by5hGnECEpccqc74UGkviVsfAU967nnkX05rvWNwJI5/KBBMp3gsp96XgRamqvM+QFR8
+ vu5tFYgETq1GJsM3hEnZH6uS4dM0Yea+sjug3U8TwMt86H/UMr5/hOgc9wg8msEvuYqY
+ e/CkDmFXrVovA8mn+wfAINA0hF2HuZoCRFHHd2rPweYbt5vaiNXMgc+6jOTfiVJCPhdE
+ e/EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721804257; x=1722409057;
+ d=1e100.net; s=20230601; t=1721804275; x=1722409075;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DIvfOOUAYFXCaM90OssFmwuwWDYBLk24BiRg9gWNqhI=;
- b=Qz2NeA0SuS5IaPs/QdWLTWMG98YFnhbGHbHnd/gOfKf71xaHzZxM4XJ4o+7+8sozup
- gdFX7Nfrw8N0QyC2/DVhBqmnvR5cu1PUvP/XpZfC8hgAQEMl6IHB+G0KLNepo9oPIFFF
- /wT3NjeWlcxVXjOmXEvfb8zP3SEust0ktVFkDpAO19cNXoOmS+G/O8NgtsrO/kS+Az7m
- KLaye7P1VbJXvyK1bTt+qxpnm+/CJJAPLKh1ISgtXGmnCRV2DvLH9/uTycC4MilPFrQX
- NDSkHJOkQDNMS7AYIyQBu5ZEzjkIIc0/cxkGid1XTu/VO7QKq1vzsCqEko201wBsEG7Z
- 6QKQ==
+ bh=lfpyUM9uNhrIiakDM85MnHl0o0QwRdZzU2dzqsg2eV8=;
+ b=VB5qblf98xNKRo/Es5Zb/WiAXayrZoLT5o7mhxDJg7E922fNhap78vi3lQAPobvInj
+ GCpLk1UaL/C6tevecX+wH8gv8M9n3vBGZ2iW4BspXsbdF5yTymFK7EuWTUz1HS8F2TIH
+ OgvC53Gm4cHhg099FuYynt5UvndJSAFtVdndq6VT/TKm/+8BQpGh8Zq0YvlypHw1K405
+ HdSiolciaxqJlC9hcykcNV3cBV3gfLu7kGmeMjZ5c9MMZRh/2qtDGULZn6JpViN11/X0
+ Z+NGxJLZ7vbukMcUuKeilDn1Upn41D4HZWnr3oJfo4lTeOayTO1+hyXIETzLqK6mRnKF
+ mOEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0l/srUXB7h4A3Gjxp4CTR1A1mAT210Qdvy3U9kY/jsO0nXGCX/rQVIm2S+5ZAaHMa/mQ2SO7xo5VvdoMMJ4AY5AoNrco=
-X-Gm-Message-State: AOJu0YwSpwTNZJO9VzGX/G/W0+WOfzvo9HOcpLp7neWqN/34OllPj6H+
- nD3LnZJiTnEppCk88RD+Dr9SVtnrUBJP+LMr5IoBryveBc9UOpJTQ1ieFV85NBM=
-X-Google-Smtp-Source: AGHT+IEUNWYyswNnVYa/jUrV00IPbS9oLJ+pF+yvTcTZQ2UiiNORNDmZ5YM6a3g8i0wC6lP2CMDvUw==
-X-Received: by 2002:a05:6000:c92:b0:366:ee84:6a77 with SMTP id
- ffacd0b85a97d-369f666825amr614057f8f.3.1721804257652; 
- Tue, 23 Jul 2024 23:57:37 -0700 (PDT)
+ AJvYcCVzv/x6WPkU6iFpT6RyKjx15YLJpytfPjcEG6dmNtyKuG/W7zT5ral9SA5xftniB3R+qMOzFpBXL3wLYIkvJwpAoKo/sNE=
+X-Gm-Message-State: AOJu0YzTFWnuVi2Eb3Md/NtG+BM1s6wk6CNuy2t0ZJGaMGqWDgomUXbu
+ UOrSq95RAKrt9F6KMydsr/b25KxGyDg9eEz4CpWYYxxX/6zfQcaC6/caKIMORf8=
+X-Google-Smtp-Source: AGHT+IF8dReDjHXH5KnLHpRPDRkWYUmC0psx1eGcFp+sp9Ko2djaosafVa/cQ0o+q0Z4oWHcilpXhw==
+X-Received: by 2002:adf:ed05:0:b0:368:2f01:307a with SMTP id
+ ffacd0b85a97d-369f5b810dcmr799059f8f.46.1721804275137; 
+ Tue, 23 Jul 2024 23:57:55 -0700 (PDT)
 Received: from [192.168.69.100] (vbo91-h01-176-184-50-4.dsl.sta.abo.bbox.fr.
  [176.184.50.4]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f93594e7sm15148175e9.8.2024.07.23.23.57.36
+ 5b1f17b1804b1-427f93e6871sm15029275e9.30.2024.07.23.23.57.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jul 2024 23:57:37 -0700 (PDT)
-Message-ID: <7a4504de-1f34-467f-84d4-549e83c164cb@linaro.org>
-Date: Wed, 24 Jul 2024 08:57:35 +0200
+ Tue, 23 Jul 2024 23:57:54 -0700 (PDT)
+Message-ID: <4ef1c80b-17e2-497b-9af7-c7f4224be48a@linaro.org>
+Date: Wed, 24 Jul 2024 08:57:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Remove dead assignment to ss in
- do_interrupt64()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240723162525.1585743-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH 1/2] tests/tcg: Use --noexecstack with assembler files
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+References: <20240724010733.22129-1-richard.henderson@linaro.org>
+ <20240724010733.22129-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240723162525.1585743-1-peter.maydell@linaro.org>
+In-Reply-To: <20240724010733.22129-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,22 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/24 18:25, Peter Maydell wrote:
-> Coverity points out that in do_interrupt64() in the "to inner
-> privilege" codepath we set "ss = 0", but because we also set
-> "new_stack = 1" there, later in the function we will always override
-> that value of ss with "ss = 0 | dpl".
+On 24/7/24 03:07, Richard Henderson wrote:
+> Add the --noexecstack assembler command-line option to avoid:
 > 
-> Remove the unnecessary initialization of ss, which allows us to
-> reduce the scope of the variable to only where it is used.  Borrow a
-> comment from helper_lcall_protected() that explains what "0 | dpl"
-> means here.
+>    /usr/bin/ld: warning: boot.o: missing .note.GNU-stack section implies executable stack
+>    /usr/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
 > 
-> Resolves: Coverity CID 1527395
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> which is enabled by default with current debian cross toolchains.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/i386/tcg/seg_helper.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+>   tests/tcg/Makefile.target                     | 2 +-
+>   tests/tcg/aarch64/Makefile.softmmu-target     | 2 +-
+>   tests/tcg/alpha/Makefile.softmmu-target       | 2 +-
+>   tests/tcg/arm/Makefile.softmmu-target         | 2 +-
+>   tests/tcg/arm/Makefile.target                 | 2 +-
+>   tests/tcg/i386/Makefile.softmmu-target        | 2 +-
+>   tests/tcg/loongarch64/Makefile.softmmu-target | 2 +-
+>   tests/tcg/riscv64/Makefile.softmmu-target     | 2 +-
+>   tests/tcg/s390x/Makefile.softmmu-target       | 2 +-
+>   tests/tcg/x86_64/Makefile.softmmu-target      | 2 +-
+>   10 files changed, 10 insertions(+), 10 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
