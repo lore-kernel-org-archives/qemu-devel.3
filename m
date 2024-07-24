@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D5DAC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 14:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B9EC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 15:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWdOH-0007MT-Ro; Wed, 24 Jul 2024 10:54:53 -0400
+	id 1sWdUe-00058Y-VJ; Wed, 24 Jul 2024 11:01:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWdOF-0007Kd-DO; Wed, 24 Jul 2024 10:54:51 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWdOC-0005WT-Re; Wed, 24 Jul 2024 10:54:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721832889; x=1753368889;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nhEKDuTNwPMDwruusMMbK1Dm5j0cygvuqJe3rM266dI=;
- b=PtPqeffwaEUFWuACVlHCZbT9q+1vgiT8Ety7iA3SlkK/baVQbagSCxzx
- XSk5vcuNOkJwnN2TYJul12MJW9cFkFuR4WgRDLT/5MAywJxWi7P3P+lrR
- liDbq/06ef7Xfol0CJT/W5HeYzK2j9vXb5uGU3l5OYX5OLwl9VqNB4Tqx
- ESZG8DBBcIO47uLtt2enastdf5r4WBN2wwC3SEoTTz0S2KQxVhoeFlXva
- sGTOLsJbAzDCHo/UvqKhWdyFEXKHYIlYunT4NUc4uZgLaDnVBTDSkcZDd
- FUdEEIZrGBtIfd6UbDO3+f5OWvtmONqeg9ujmuVsI5BuPk0UmsgDq8KJL A==;
-X-CSE-ConnectionGUID: 7p0CC7XLS3mAiyjN8qlW1A==
-X-CSE-MsgGUID: 4knbuwtXTEeU/8pKmaQ0jA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="44941943"
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; d="scan'208";a="44941943"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jul 2024 07:54:45 -0700
-X-CSE-ConnectionGUID: SQlBHtnfSNazf+k8B1Ve8g==
-X-CSE-MsgGUID: gsHTaE3GT0aVEU/MKedVwA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; d="scan'208";a="57749094"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 24 Jul 2024 07:54:40 -0700
-Date: Wed, 24 Jul 2024 23:10:24 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ++/vQ==?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
-Message-ID: <ZqEZYEAkMhqBRtbx@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-3-zhao1.liu@intel.com>
- <87wmld361y.fsf@pond.sub.org> <Zp5tBHBoeXZy44ys@intel.com>
- <87h6cfowei.fsf@pond.sub.org> <ZqD31Oj5P0uDMs-I@redhat.com>
- <ZqEJlmR3U6g8zq0z@intel.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sWdUc-000570-Kb
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:01:27 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sWdUa-0000RA-S5
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 11:01:26 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-447dec80899so28639601cf.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 08:01:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721833282; x=1722438082; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=mUcgQnbk9+Lhuv4RqW24kBuIhcVeQSMiKcEY1fW1j+I=;
+ b=mJYE0DSmhFBNT/2evcxq9y93LfyJktWqdl713rxM5lO0Lkk4tcKzhyn9j2SjTPCGPr
+ 9lS03AwUY0wpoTEHg/cLFVoCZ6OWpAM5FfeENv2o0u6nnfb2c7OcBRdFZMZeh2F84pNI
+ CzLPaeAUBc6dCl13RgLUcOd+dQLu2U4BHzy4oqtRqbucZruGOQxp74S5V2BSxuwSPr/T
+ aIBSU4pzQw20bhq1webBi3AznlR0FV9tYGKusXUUi8sreZDSVBNV+eiTwGGt1FhPmL4L
+ jDkHyrVrbOg6SYs3BtOwwTnO6LRTSH+mKz9wC7nq4StPHUu6oC5O0EFaK/wWuzw/KHda
+ 6+Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721833282; x=1722438082;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mUcgQnbk9+Lhuv4RqW24kBuIhcVeQSMiKcEY1fW1j+I=;
+ b=VLPXsxRTcYPiGla09f8i+44enDjbJ8Jb2WF5s0p5plpW0JUdpnhY0OFu5bRl1Oyme6
+ ht+SGke+FWFXVkV8cVABXSPVJAIl/S4Wlrb2F8lxynJfyOoNKQXCd9a1AVkv5ukbUts6
+ dZNucjCJfUp6BH5A8bboYaN8j8UCz8+TgmhDAdPl5mwQZmLzUkAXC29BLFKVkLxhtA3I
+ ZZ3CGR93zm+Nzt8BKhpNIE1qofrATNF8qWrMLv1i5WGIcAyA6XeNs7NGWaofUpFIDZz5
+ wTc13pzIEn+7TRb/uDq8yVGvr+ir0rN0ZgU8bQEYiCVysIMvmWO0cSncdzO5Qk0dd6vr
+ YOaw==
+X-Gm-Message-State: AOJu0YzW2QTU/DkXAgayKAHeE0D4fEiIw5L0LLhRLI0AlIz512kT3oXk
+ SfyZaxR8on4orU5odQ+yr95foIL+/ObBY7ec8z7huWxDtwWSjBycsjzJcuRjTS4=
+X-Google-Smtp-Source: AGHT+IEZUpyayi4/xAQTGgufL3ZkRJQv+8SMJ1gjVuuZZkqCUh3AsbTN8VbFFBBFwwbcHmbFcpPfow==
+X-Received: by 2002:a05:6214:493:b0:6b5:7fb9:747 with SMTP id
+ 6a1803df08f44-6b98ed245c1mr34824466d6.2.1721833281506; 
+ Wed, 24 Jul 2024 08:01:21 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b7ac7e5fdcsm59275936d6.50.2024.07.24.08.01.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jul 2024 08:01:21 -0700 (PDT)
+Date: Wed, 24 Jul 2024 10:01:18 -0500
+From: Andrew Jones <ajones@ventanamicro.com>
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ bmeng.cn@gmail.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v6 7/8] target/riscv: Add any32 and max32 CPU for RV64 QEMU
+Message-ID: <20240724-ef8cf69388fb767b6710b48f@orel>
+References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
+ <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZqEJlmR3U6g8zq0z@intel.com>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+In-Reply-To: <20240719231149.1364-8-zhiwei_liu@linux.alibaba.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=ajones@ventanamicro.com; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,54 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On Sat, Jul 20, 2024 at 07:11:48AM GMT, LIU Zhiwei wrote:
+> We may need 32-bit max or 32-bit any CPU for RV64 QEMU. Thus we add
+> these two CPUs for RV64 QEMU.
+> 
+> The reason we don't expose them to RV32 QEMU is that we already have
+> max or any cpu with the same configuration. Another reason is that
+> we want to follow the RISC-V custom where addw instruction doesn't
+> exist in RV32 CPU.
+> 
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Suggested-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu-qom.h |  2 ++
+>  target/riscv/cpu.c     | 13 ++++++++-----
+>  2 files changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 3670cfe6d9..9f91743b78 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -31,6 +31,8 @@
+>  
+>  #define TYPE_RISCV_CPU_ANY              RISCV_CPU_TYPE_NAME("any")
+>  #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
+> +#define TYPE_RISCV_CPU_ANY32            RISCV_CPU_TYPE_NAME("any32")
 
-On Wed, Jul 24, 2024 at 10:03:02PM +0800, Zhao Liu wrote:
-> Date: Wed, 24 Jul 2024 22:03:02 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
-> 
-> On Wed, Jul 24, 2024 at 01:47:16PM +0100, Daniel P. Berrang? wrote:
-> > Date: Wed, 24 Jul 2024 13:47:16 +0100
-> > From: "Daniel P. Berrang?" <berrange@redhat.com>
-> > Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
-> > 
-> > On Wed, Jul 24, 2024 at 01:35:17PM +0200, Markus Armbruster wrote:
-> > > Zhao Liu <zhao1.liu@intel.com> writes:
-> > > 
-> > > > Hi Markus,
-> > > >> SmpCachesProperties and SmpCacheProperties would put the singular
-> > > >> vs. plural where it belongs.  Sounds a bit awkward to me, though.
-> > > >> Naming is hard.
-> > > >
-> > > > For SmpCachesProperties, it's easy to overlook the first "s".
-> > > >
-> > > >> Other ideas, anybody?
-> > > >
-> > > > Maybe SmpCacheOptions or SmpCachesPropertyWrapper?
-> > > 
-> > > I wonder why we have a single QOM object to configure all caches, and
-> > > not one QOM object per cache.
-> > 
-> > Previous versions of this series were augmenting the existing
-> > -smp command line.
-> 
-> Ah, yes, since -smp, as a sugar option of -machine, doesn't support
-> JSON. In -smp, we need to use keyval's style to configure as:
-> 
-> -smp caches.0.name=l1i,caches.0.topo=core
-> 
-> I think JSON is the more elegant way to go, so I chose -object.
+'any' is on its way out[1], so we probably shouldn't bother adding any32
+at all with this series
 
-I may have to retract this assertion considering more issues, I could
-fall back to -smp and support it in keyval format, I think it's also ok
-for me if you also like keyval format, sorry for my repetition, we can
-discuss this in this thread:
-
-https://lore.kernel.org/qemu-devel/20240704031603.1744546-1-zhao1.liu@intel.com/T/#m8adba8ba14ebac0c9935fbf45983cc71e53ccf45
+[1] https://lore.kernel.org/all/20240724130717.95629-1-philmd@linaro.org/
 
 Thanks,
-Zhao
-
-
+drew
 
