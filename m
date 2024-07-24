@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB7EEC49EA1
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20424C3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 17:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWgBF-0001pf-3p; Wed, 24 Jul 2024 13:53:37 -0400
+	id 1sWgBh-0003G6-KL; Wed, 24 Jul 2024 13:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBD-0001hK-64
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBS-0002gL-8i
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgB9-0005iI-JX
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sWgBP-0005qn-QF
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 13:53:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721843610;
+ s=mimecast20190719; t=1721843627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HeZWgxpbVL9Kd+oEfmtTt5bE7D+IKlCryWpytvp/8Ik=;
- b=BPayGv+RIRReqdeOG0/SQyW+6WyIUnNrQ0UA9kTT/84UYbT0O35wwrZWGq4DJBOFj2LHCu
- QqONvH8LgnXpQIfni/y8VRSLFhyBoEsrCJVQbdN1aE8geCiXEAf/0mrt1U2mh58Yfb9Zwl
- NTBwfUf773zi4I1RqzzJRk+BxaLcYuM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=17UMQK5kf3N6bpcwBCqkiO/abnN+i7/ZXXlyCB1AGEQ=;
+ b=gyp/A3j8PT9IKO2AqbdjfH9Ht2wqWxWtaoqSsDzjBJ9t/EyvRmRwLdPLHTuNUtChUnfZbi
+ a91+FIzZbR1tf80Ty/HDCSPx4mQmVGl7KSKRvJUILVrteDLCpDQDSQtNLXl9QtxndtlECw
+ BEdLpUe1lyTbcX1ynWTdD6nRf/8FLrs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-mHF-MV6kO5ed4Qx_UK6pCg-1; Wed,
- 24 Jul 2024 13:53:28 -0400
-X-MC-Unique: mHF-MV6kO5ed4Qx_UK6pCg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-fMhF-bhCPPOqhTlkCIFsqw-1; Wed,
+ 24 Jul 2024 13:53:41 -0400
+X-MC-Unique: fMhF-bhCPPOqhTlkCIFsqw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE2661944B33; Wed, 24 Jul 2024 17:53:24 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 258D81956095; Wed, 24 Jul 2024 17:53:39 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.144])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 21FF61955D4A; Wed, 24 Jul 2024 17:53:19 +0000 (UTC)
+ id 39C3F1955D42; Wed, 24 Jul 2024 17:53:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org,
@@ -53,10 +53,10 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 05/23] tests/functional: Convert simple avocado tests into
- standalone python tests
-Date: Wed, 24 Jul 2024 19:52:23 +0200
-Message-ID: <20240724175248.1389201-6-thuth@redhat.com>
+Subject: [PATCH v2 08/23] tests/functional: Convert some tests that download
+ files via fetch_asset()
+Date: Wed, 24 Jul 2024 19:52:26 +0200
+Message-ID: <20240724175248.1389201-9-thuth@redhat.com>
 In-Reply-To: <20240724175248.1389201-1-thuth@redhat.com>
 References: <20240724175248.1389201-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -87,367 +87,472 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These test are rather simple and don't need any modifications apart
-from adjusting the "from avocado_qemu" line. To ease debugging, make
-the files executable and add a shebang line and Python '__main__'
-handling, too, so that these tests can now be run by executing them
-directly.
+Now that we've got a working fetch_asset() function, we can convert
+some Avocado tests that use this function for downloading their
+required files.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/meson.build                  |  5 ++
- .../test_cpu_queries.py}                      |  7 ++-
- .../test_empty_cpu_model.py}                  |  7 ++-
- .../test_mem_addr_space.py}                   | 52 +++----------------
- .../test_pc_cpu_hotplug_props.py}             | 11 ++--
- .../test_virtio_version.py}                   |  8 +--
- 6 files changed, 34 insertions(+), 56 deletions(-)
- rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
+ MAINTAINERS                                   | 12 +++----
+ tests/functional/meson.build                  | 22 +++++++++++++
+ .../test_arm_n8x0.py}                         | 25 +++++++--------
+ .../test_avr_mega2560.py}                     | 11 ++++---
+ .../test_loongarch64_virt.py}                 | 16 ++++++----
+ .../test_mips64el_loongson3v.py}              | 26 +++++++--------
+ .../test_netdev_ethtool.py}                   | 32 ++++++-------------
+ .../ppc_405.py => functional/test_ppc_405.py} | 19 ++++++-----
+ 8 files changed, 86 insertions(+), 77 deletions(-)
+ rename tests/{avocado/machine_arm_n8x0.py => functional/test_arm_n8x0.py} (71%)
  mode change 100644 => 100755
- rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
+ rename tests/{avocado/machine_avr6.py => functional/test_avr_mega2560.py} (90%)
  mode change 100644 => 100755
- rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
+ rename tests/{avocado/machine_loongarch.py => functional/test_loongarch64_virt.py} (89%)
  mode change 100644 => 100755
- rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
+ rename tests/{avocado/machine_mips_loongson3v.py => functional/test_mips64el_loongson3v.py} (55%)
  mode change 100644 => 100755
- rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
+ rename tests/{avocado/netdev-ethtool.py => functional/test_netdev_ethtool.py} (81%)
+ mode change 100644 => 100755
+ rename tests/{avocado/ppc_405.py => functional/test_ppc_405.py} (73%)
  mode change 100644 => 100755
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index dd01288992..d69de11cfc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -222,7 +222,7 @@ S: Maintained
+ F: docs/system/target-avr.rst
+ F: gdb-xml/avr-cpu.xml
+ F: target/avr/
+-F: tests/avocado/machine_avr6.py
++F: tests/functional/test_avr_mega2560.py
+ 
+ CRIS TCG CPUs
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+@@ -265,7 +265,7 @@ M: Song Gao <gaosong@loongson.cn>
+ S: Maintained
+ F: target/loongarch/
+ F: tests/tcg/loongarch64/
+-F: tests/avocado/machine_loongarch.py
++F: tests/functional/test_loongarch64_virt.py
+ 
+ M68K TCG CPUs
+ M: Laurent Vivier <laurent@vivier.eu>
+@@ -884,7 +884,7 @@ F: include/hw/display/blizzard.h
+ F: include/hw/input/lm832x.h
+ F: include/hw/input/tsc2xxx.h
+ F: include/hw/misc/cbus.h
+-F: tests/avocado/machine_arm_n8x0.py
++F: tests/functional/test_arm_n8x0.py
+ F: docs/system/arm/nseries.rst
+ 
+ Palm
+@@ -1393,7 +1393,7 @@ F: hw/mips/loongson3_bootp.h
+ F: hw/mips/loongson3_virt.c
+ F: include/hw/intc/loongson_ipi.h
+ F: include/hw/intc/loongson_liointc.h
+-F: tests/avocado/machine_mips_loongson3v.py
++F: tests/functional/test_mips64el_loongson3v.py
+ 
+ Boston
+ M: Paul Burton <paulburton@kernel.org>
+@@ -1419,7 +1419,7 @@ PowerPC Machines
+ L: qemu-ppc@nongnu.org
+ S: Orphan
+ F: hw/ppc/ppc405*
+-F: tests/avocado/ppc_405.py
++F: tests/functional/test_ppc_405.py
+ 
+ Bamboo
+ L: qemu-ppc@nongnu.org
+@@ -2486,7 +2486,7 @@ R: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+ S: Maintained
+ F: docs/system/devices/igb.rst
+ F: hw/net/igb*
+-F: tests/avocado/netdev-ethtool.py
++F: tests/functional/test_netdev_ethtool.py
+ F: tests/qtest/igb-test.c
+ F: tests/qtest/libqos/igb.c
+ 
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 7fc9c4e513..a8cc0e6330 100644
+index 8a8fa0ab99..7eb5dbfe31 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -14,9 +14,14 @@ test_timeouts = {
+@@ -11,6 +11,7 @@ endif
+ 
+ # Timeouts for individual tests that can be slow e.g. with debugging enabled
+ test_timeouts = {
++  'netdev_ethtool' : 180,
  }
  
  tests_generic = [
-+  'empty_cpu_model',
+@@ -19,10 +20,30 @@ tests_generic = [
+   'version',
  ]
  
++tests_arm_thorough = [
++  'arm_n8x0',
++]
++
++tests_avr_thorough = [
++  'avr_mega2560',
++]
++
++tests_loongarch64_thorough = [
++  'loongarch64_virt',
++]
++
++tests_mips64el_thorough = [
++  'mips64el_loongson3v',
++]
++
+ tests_ppc_quick = [
+   'ppc_74xx',
+ ]
+ 
++tests_ppc_thorough = [
++  'ppc_405',
++]
++
  tests_x86_64_quick = [
-+  'cpu_queries',
-+  'mem_addr_space',
-+  'pc_cpu_hotplug_props',
-+  'virtio_version',
+   'cpu_queries',
+   'mem_addr_space',
+@@ -31,6 +52,7 @@ tests_x86_64_quick = [
  ]
  
  tests_x86_64_thorough = [
-diff --git a/tests/avocado/cpu_queries.py b/tests/functional/test_cpu_queries.py
++  'netdev_ethtool',
+ ]
+ 
+ foreach speed : ['quick', 'thorough']
+diff --git a/tests/avocado/machine_arm_n8x0.py b/tests/functional/test_arm_n8x0.py
 old mode 100644
 new mode 100755
-similarity index 89%
-rename from tests/avocado/cpu_queries.py
-rename to tests/functional/test_cpu_queries.py
-index d3faa14720..97dd600c01
---- a/tests/avocado/cpu_queries.py
-+++ b/tests/functional/test_cpu_queries.py
+similarity index 71%
+rename from tests/avocado/machine_arm_n8x0.py
+rename to tests/functional/test_arm_n8x0.py
+index 12e9a6803b..d451c80a73
+--- a/tests/avocado/machine_arm_n8x0.py
++++ b/tests/functional/test_arm_n8x0.py
 @@ -1,3 +1,5 @@
 +#!/usr/bin/env python3
 +#
- # Sanity check of query-cpu-* results
+ # Functional test that boots a Linux kernel and checks the console
  #
- # Copyright (c) 2019 Red Hat, Inc.
-@@ -8,7 +10,7 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
+ # Copyright (c) 2020 Red Hat, Inc.
+@@ -10,9 +12,9 @@
  
+ import os
+ 
+-from avocado import skipUnless
 -from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from unittest import skipUnless
 +from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
  
- class QueryCPUModelExpansion(QemuSystemTest):
-     """
-@@ -33,3 +35,6 @@ def test(self):
-             e = self.vm.cmd('query-cpu-model-expansion', model=model,
-                             type='full')
-             self.assertEqual(e['model']['name'], c['name'])
+ class N8x0Machine(QemuSystemTest):
+     """Boots the Linux kernel and checks that the console is operational"""
+@@ -32,18 +34,15 @@ def __do_test_n8x0(self):
+         self.vm.launch()
+         wait_for_console_pattern(self, 'TSC2005 driver initializing')
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     def test_n800(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:n800
+-        """
++        self.set_machine('n800')
+         self.__do_test_n8x0()
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     def test_n810(self):
+-        """
+-        :avocado: tags=arch:arm
+-        :avocado: tags=machine:n810
+-        """
++        self.set_machine('n810')
+         self.__do_test_n8x0()
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
-diff --git a/tests/avocado/empty_cpu_model.py b/tests/functional/test_empty_cpu_model.py
-old mode 100644
-new mode 100755
-similarity index 84%
-rename from tests/avocado/empty_cpu_model.py
-rename to tests/functional/test_empty_cpu_model.py
-index d906ef3d3c..0081b06d85
---- a/tests/avocado/empty_cpu_model.py
-+++ b/tests/functional/test_empty_cpu_model.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Check for crash when using empty -cpu option
- #
- # Copyright (c) 2019 Red Hat, Inc.
-@@ -7,7 +9,7 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- class EmptyCPUModel(QemuSystemTest):
-     def test(self):
-@@ -17,3 +19,6 @@ def test(self):
-         self.vm.wait()
-         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
-         self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/mem-addr-space-check.py b/tests/functional/test_mem_addr_space.py
-old mode 100644
-new mode 100755
-similarity index 93%
-rename from tests/avocado/mem-addr-space-check.py
-rename to tests/functional/test_mem_addr_space.py
-index d3974599f4..bb0cf062ca
---- a/tests/avocado/mem-addr-space-check.py
-+++ b/tests/functional/test_mem_addr_space.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Check for crash when using memory beyond the available guest processor
- # address space.
- #
-@@ -8,7 +10,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- import time
- 
- class MemAddrCheck(QemuSystemTest):
-@@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
-     # for all 32-bit cases, pci64_hole_size is 0.
-     def test_phybits_low_pse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         With pse36 feature ON, a processor has 36 bits of addressing. So it can
-         access up to a maximum of 64GiB of memory. Memory hotplug region begins
-         at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
-@@ -52,9 +51,6 @@ def test_phybits_low_pse36(self):
- 
-     def test_phybits_low_pae(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         With pae feature ON, a processor has 36 bits of addressing. So it can
-         access up to a maximum of 64GiB of memory. Rest is the same as the case
-         with pse36 above.
-@@ -72,9 +68,6 @@ def test_phybits_low_pae(self):
- 
-     def test_phybits_ok_pentium_pse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Setting maxmem to 59.5G and making sure that QEMU can start with the
-         same options as the failing case above with pse36 cpu feature.
-         """
-@@ -91,9 +84,6 @@ def test_phybits_ok_pentium_pse36(self):
- 
-     def test_phybits_ok_pentium_pae(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Test is same as above but now with pae cpu feature turned on.
-         Setting maxmem to 59.5G and making sure that QEMU can start fine
-         with the same options as the case above.
-@@ -111,9 +101,6 @@ def test_phybits_ok_pentium_pae(self):
- 
-     def test_phybits_ok_pentium2(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Pentium2 has 36 bits of addressing, so its same as pentium
-         with pse36 ON.
-         """
-@@ -130,9 +117,6 @@ def test_phybits_ok_pentium2(self):
- 
-     def test_phybits_low_nonpse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Pentium processor has 32 bits of addressing without pse36 or pae
-         so it can access physical address up to 4 GiB. Setting maxmem to
-         4 GiB should make QEMU fail to start with "phys-bits too low"
-@@ -153,9 +137,6 @@ def test_phybits_low_nonpse36(self):
-     # now lets test some 64-bit CPU cases.
-     def test_phybits_low_tcg_q35_70_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         For q35 7.1 machines and above, there is a HT window that starts at
-         1024 GiB and ends at 1 TiB - 1. If the max GPA falls in this range,
-         "above_4G" memory is adjusted to start at 1 TiB boundary for AMD cpus
-@@ -182,9 +163,6 @@ def test_phybits_low_tcg_q35_70_amd(self):
- 
-     def test_phybits_low_tcg_q35_71_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD_HT_START is defined to be at 1012 GiB. So for q35 machines
-         version > 7.0 and AMD cpus, instead of 1024 GiB limit for 40 bit
-         processor address space, it has to be 1012 GiB , that is 12 GiB
-@@ -205,9 +183,6 @@ def test_phybits_low_tcg_q35_71_amd(self):
- 
-     def test_phybits_ok_tcg_q35_70_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as q35-7.0 AMD case except that here we check that QEMU can
-         successfully start when maxmem is < 988G.
-         """
-@@ -224,9 +199,6 @@ def test_phybits_ok_tcg_q35_70_amd(self):
- 
-     def test_phybits_ok_tcg_q35_71_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as q35-7.1 AMD case except that here we check that QEMU can
-         successfully start when maxmem is < 976G.
-         """
-@@ -243,9 +215,6 @@ def test_phybits_ok_tcg_q35_71_amd(self):
- 
-     def test_phybits_ok_tcg_q35_71_intel(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same parameters as test_phybits_low_tcg_q35_71_amd() but use
-         Intel cpu instead. QEMU should start fine in this case as
-         "above_4G" memory starts at 4G.
-@@ -264,9 +233,6 @@ def test_phybits_ok_tcg_q35_71_intel(self):
- 
-     def test_phybits_low_tcg_q35_71_amd_41bits(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
-         By setting maxram above 1012 GiB  - 32 GiB - 4 GiB = 976 GiB, we can
-         force "above_4G" memory to start at 1 TiB for q35-7.1 machines
-@@ -291,9 +257,6 @@ def test_phybits_low_tcg_q35_71_amd_41bits(self):
- 
-     def test_phybits_ok_tcg_q35_71_amd_41bits(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
-         Same as above but by setting maxram between 976 GiB and 992 Gib,
-         QEMU should start fine.
-@@ -312,9 +275,6 @@ def test_phybits_ok_tcg_q35_71_amd_41bits(self):
- 
-     def test_phybits_low_tcg_q35_intel_cxl(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         cxl memory window starts after memory device range. Here, we use 1 GiB
-         of cxl window memory. 4G_mem end aligns at 4G. pci64_hole is 32 GiB and
-         starts after the cxl memory window.
-@@ -335,9 +295,6 @@ def test_phybits_low_tcg_q35_intel_cxl(self):
- 
-     def test_phybits_ok_tcg_q35_intel_cxl(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as above but here we do not reserve any cxl memory window. Hence,
-         with the exact same parameters as above, QEMU should start fine even
-         with cxl enabled.
-@@ -352,3 +309,6 @@ def test_phybits_ok_tcg_q35_intel_cxl(self):
-         time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
-         self.vm.shutdown()
-         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/pc_cpu_hotplug_props.py b/tests/functional/test_pc_cpu_hotplug_props.py
+diff --git a/tests/avocado/machine_avr6.py b/tests/functional/test_avr_mega2560.py
 old mode 100644
 new mode 100755
 similarity index 90%
-rename from tests/avocado/pc_cpu_hotplug_props.py
-rename to tests/functional/test_pc_cpu_hotplug_props.py
-index 4bd3e02665..9d5a37cb17
---- a/tests/avocado/pc_cpu_hotplug_props.py
-+++ b/tests/functional/test_pc_cpu_hotplug_props.py
+rename from tests/avocado/machine_avr6.py
+rename to tests/functional/test_avr_mega2560.py
+index 5485db79c6..b9b89367c6
+--- a/tests/avocado/machine_avr6.py
++++ b/tests/functional/test_avr_mega2560.py
 @@ -1,3 +1,4 @@
 +#!/usr/bin/env python3
  #
- # Ensure CPU die-id can be omitted on -device
+ # QEMU AVR integration tests
  #
-@@ -20,16 +21,16 @@
- # License along with this library; if not, see <http://www.gnu.org/licenses/>.
- #
+@@ -19,16 +20,12 @@
+ 
+ import time
  
 -from avocado_qemu import QemuSystemTest
 +from qemu_test import QemuSystemTest
  
- class OmittedCPUProps(QemuSystemTest):
--    """
--    :avocado: tags=arch:x86_64
--    :avocado: tags=cpu:qemu64
--    """
-+
-     def test_no_die_id(self):
-         self.vm.add_args('-nodefaults', '-S')
-         self.vm.add_args('-smp', '1,sockets=2,cores=2,threads=2,maxcpus=8')
-         self.vm.add_args('-device', 'qemu64-x86_64-cpu,socket-id=1,core-id=0,thread-id=0')
+ class AVR6Machine(QemuSystemTest):
+     timeout = 5
+ 
+     def test_freertos(self):
+-        """
+-        :avocado: tags=arch:avr
+-        :avocado: tags=machine:arduino-mega-2560-v3
+-        """
+         """
+         https://github.com/seharris/qemu-avr-tests/raw/master/free-rtos/Demo/AVR_ATMega2560_GCC/demo.elf
+         constantly prints out 'ABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWX'
+@@ -39,6 +36,7 @@ def test_freertos(self):
+         rom_hash = '7eb521f511ca8f2622e0a3c5e8dd686efbb911d4'
+         rom_path = self.fetch_asset(rom_url, asset_hash=rom_hash)
+ 
++        self.set_machine('arduino-mega-2560-v3')
+         self.vm.add_args('-bios', rom_path)
+         self.vm.add_args('-nographic')
          self.vm.launch()
-         self.assertEqual(len(self.vm.cmd('query-cpus-fast')), 2)
+@@ -48,3 +46,6 @@ def test_freertos(self):
+ 
+         self.assertIn('ABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWX',
+                 self.vm.get_log())
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
-diff --git a/tests/avocado/virtio_version.py b/tests/functional/test_virtio_version.py
+diff --git a/tests/avocado/machine_loongarch.py b/tests/functional/test_loongarch64_virt.py
 old mode 100644
 new mode 100755
-similarity index 98%
-rename from tests/avocado/virtio_version.py
-rename to tests/functional/test_virtio_version.py
-index afe5e828b5..eb23060564
---- a/tests/avocado/virtio_version.py
-+++ b/tests/functional/test_virtio_version.py
-@@ -1,3 +1,4 @@
+similarity index 89%
+rename from tests/avocado/machine_loongarch.py
+rename to tests/functional/test_loongarch64_virt.py
+index 8de308f2d6..3dc8bb3516
+--- a/tests/avocado/machine_loongarch.py
++++ b/tests/functional/test_loongarch64_virt.py
+@@ -1,3 +1,5 @@
 +#!/usr/bin/env python3
- """
- Check compatibility of virtio device types
- """
-@@ -12,7 +13,7 @@
- import os
++#
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ #
+ # LoongArch virt test.
+@@ -5,9 +7,9 @@
+ # Copyright (c) 2023 Loongson Technology Corporation Limited
+ #
  
- from qemu.machine import QEMUMachine
 -from avocado_qemu import QemuSystemTest
+-from avocado_qemu import exec_command_and_wait_for_pattern
+-from avocado_qemu import wait_for_console_pattern
 +from qemu_test import QemuSystemTest
++from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
  
- # Virtio Device IDs:
- VIRTIO_NET = 1
-@@ -60,8 +61,6 @@ class VirtioVersionCheck(QemuSystemTest):
-     Check if virtio-version-specific device types result in the
-     same device tree created by `disable-modern` and
-     `disable-legacy`.
--
+ class LoongArchMachine(QemuSystemTest):
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+@@ -21,10 +23,7 @@ def wait_for_console_pattern(self, success_message, vm=None):
+ 
+     def test_loongarch64_devices(self):
+ 
+-        """
+-        :avocado: tags=arch:loongarch64
+-        :avocado: tags=machine:virt
+-        """
++        self.set_machine('virt')
+ 
+         kernel_url = ('https://github.com/yangxiaojuan-loongson/qemu-binary/'
+                       'releases/download/2024-05-30/vmlinuz.efi')
+@@ -56,3 +55,6 @@ def test_loongarch64_devices(self):
+         self.wait_for_console_pattern('Run /sbin/init as init process')
+         exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
+                                           'processor		: 3')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/machine_mips_loongson3v.py b/tests/functional/test_mips64el_loongson3v.py
+old mode 100644
+new mode 100755
+similarity index 55%
+rename from tests/avocado/machine_mips_loongson3v.py
+rename to tests/functional/test_mips64el_loongson3v.py
+index 5194cf18c9..f8d40b48a9
+--- a/tests/avocado/machine_mips_loongson3v.py
++++ b/tests/functional/test_mips64el_loongson3v.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional tests for the Generic Loongson-3 Platform.
+ #
+ # Copyright (c) 2021 Jiaxun Yang <jiaxun.yang@flygoat.com>
+@@ -10,30 +12,26 @@
+ import os
+ import time
+ 
+-from avocado import skipUnless
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from unittest import skipUnless
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
+ 
+ class MipsLoongson3v(QemuSystemTest):
+     timeout = 60
+ 
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+     def test_pmon_serial_console(self):
+-        """
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=endian:little
+-        :avocado: tags=machine:loongson3-virt
+-        :avocado: tags=cpu:Loongson-3A1000
+-        :avocado: tags=device:liointc
+-        :avocado: tags=device:goldfish_rtc
+-        """
++        self.set_machine('loongson3-virt')
+ 
+-        pmon_hash = '7c8b45dd81ccfc55ff28f5aa267a41c3'
++        pmon_hash = 'fcdf6bb2cb7885a4a62f31fcb0d5e368bac7b6cea28f40c6dfa678af22fea20a'
+         pmon_path = self.fetch_asset('https://github.com/loongson-community/pmon/'
+                                     'releases/download/20210112/pmon-3avirt.bin',
+-                                     asset_hash=pmon_hash, algorithm='md5')
++                                     asset_hash=pmon_hash)
+ 
+         self.vm.set_console()
+         self.vm.add_args('-bios', pmon_path)
+         self.vm.launch()
+         wait_for_console_pattern(self, 'CPU GODSON3 BogoMIPS:')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/netdev-ethtool.py b/tests/functional/test_netdev_ethtool.py
+old mode 100644
+new mode 100755
+similarity index 81%
+rename from tests/avocado/netdev-ethtool.py
+rename to tests/functional/test_netdev_ethtool.py
+index 5f33288f81..341c087e36
+--- a/tests/avocado/netdev-ethtool.py
++++ b/tests/functional/test_netdev_ethtool.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # ethtool tests for emulated network devices
+ #
+ # This test leverages ethtool's --test sequence to validate network
+@@ -5,15 +7,11 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-late
+ 
+-from avocado import skip
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from unittest import skip
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
+ 
+ class NetDevEthtool(QemuSystemTest):
+-    """
 -    :avocado: tags=arch:x86_64
-     """
+-    :avocado: tags=machine:q35
+-    """
  
-     # just in case there are failures, show larger diff:
-@@ -173,3 +172,6 @@ def test_modern_only_devs(self):
-         self.check_modern_only('virtio-mouse-pci', VIRTIO_INPUT)
-         self.check_modern_only('virtio-tablet-pci', VIRTIO_INPUT)
-         self.check_modern_only('virtio-keyboard-pci', VIRTIO_INPUT)
+     # Runs in about 17s under KVM, 19s under TCG, 25s under GCOV
+     timeout = 45
+@@ -25,11 +23,10 @@ def get_asset(self, name, sha1):
+                     'kE4nCFLdQcoBF9t/download?'
+                     'path=%2Fnetdev-ethtool&files=' )
+         url = base_url + name
+-        # use explicit name rather than failing to neatly parse the
+-        # URL into a unique one
+-        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
++        return self.fetch_asset(url, asset_hash=sha1)
+ 
+     def common_test_code(self, netdev, extra_args=None):
++        self.set_machine('q35')
+ 
+         # This custom kernel has drivers for all the supported network
+         # devices we can emulate in QEMU
+@@ -68,15 +65,9 @@ def common_test_code(self, netdev, extra_args=None):
+         self.vm.kill()
+ 
+     def test_igb(self):
+-        """
+-        :avocado: tags=device:igb
+-        """
+         self.common_test_code("igb")
+ 
+     def test_igb_nomsi(self):
+-        """
+-        :avocado: tags=device:igb
+-        """
+         self.common_test_code("igb", "pci=nomsi")
+ 
+     # It seems the other popular cards we model in QEMU currently fail
+@@ -88,14 +79,11 @@ def test_igb_nomsi(self):
+ 
+     @skip("Incomplete reg 0x00178 support")
+     def test_e1000(self):
+-        """
+-        :avocado: tags=device:e1000
+-        """
+         self.common_test_code("e1000")
+ 
+     @skip("Incomplete reg 0x00178 support")
+     def test_i82550(self):
+-        """
+-        :avocado: tags=device:i82550
+-        """
+         self.common_test_code("i82550")
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/ppc_405.py b/tests/functional/test_ppc_405.py
+old mode 100644
+new mode 100755
+similarity index 73%
+rename from tests/avocado/ppc_405.py
+rename to tests/functional/test_ppc_405.py
+index 4e7e01aa76..f2368ada80
+--- a/tests/avocado/ppc_405.py
++++ b/tests/functional/test_ppc_405.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Test that the U-Boot firmware boots on ppc 405 machines and check the console
+ #
+ # Copyright (c) 2021 Red Hat, Inc.
+@@ -5,10 +7,9 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado.utils import archive
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado_qemu import exec_command_and_wait_for_pattern
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
+ 
+ class Ppc405Machine(QemuSystemTest):
+ 
+@@ -26,11 +27,9 @@ def do_test_ppc405(self):
+         exec_command_and_wait_for_pattern(self, 'reset', 'AMCC PowerPC 405EP')
+ 
+     def test_ppc_ref405ep(self):
+-        """
+-        :avocado: tags=arch:ppc
+-        :avocado: tags=machine:ref405ep
+-        :avocado: tags=cpu:405ep
+-        :avocado: tags=accel:tcg
+-        """
+         self.require_accelerator("tcg")
++        self.set_machine('ref405ep')
+         self.do_test_ppc405()
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
