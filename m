@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FBDC3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC60C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWQTx-0003em-43; Tue, 23 Jul 2024 21:07:53 -0400
+	id 1sWQkj-0000jU-9h; Tue, 23 Jul 2024 21:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWQTs-0003dg-9n
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:07:49 -0400
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ id 1sWQkg-0000iH-K6
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:25:10 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWQTp-0001um-9S
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:07:48 -0400
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3d9400a1ad9so3505543b6e.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 18:07:44 -0700 (PDT)
+ id 1sWQke-0007fO-O3
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:25:10 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1fc5296e214so4871325ad.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 18:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721783264; x=1722388064; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gUPoT7+GTGCB/rwxHsxEdqLi/GCEVozJp9dhj9QBUo4=;
- b=VN92iA0pmGfcSfIMePXswYjoAu1OQXPLheKGvNp7Qm1qUTK71iTbgg0D2CJbnN6s24
- QElhSPd2Iyb1lO479R2PtRVWWcgffvszsO5BGXrqmjtdLlHyyQjiKT9/aGEU9CdZUs3G
- mJrhzf+xLglSdfxBdFhlyf7PQuFOyBmnpn5yPiAKwocWuHd43J2KAmXxgo67h9O/mfDV
- FSqnfXlSFQcQOw3x+axSgShu3KOKhr2BwzwNBhypjff8q0J246P9SdKo/LJRl854CKDn
- NaRMzZFmq41K/wza9TcGMb1lyMWTzjHcja8GBHk9vLdxrrtoBQpMTA4UK5zERzuI3pIu
- uTIg==
+ d=linaro.org; s=google; t=1721784305; x=1722389105; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9xRqWbOHwUPm6fyXbXbkTNzpkPrKCWETUbO9wuE5Bl4=;
+ b=YkLsoxesnuIHUo4jCWfMiFHpRT6PiJGTHddSeRvifmqqXj0LDJOlU++7Ex+qx71Ln1
+ ndSGyFMpsBTEyy+lBrvE83LoBjcAYdj9fYo7Gtu7UwPO5S1mClMY1indSeytE6ER2L8G
+ tZsNPb5qn28gaHreF3KEIEYinnY0KnTP09JfHUBjs2iI2kJ6fkBlN6LfpFE3gO0Ki8Wn
+ cdtUDnF/VHGjq7kVkQh4FOpjvrwFtoKAyrYLggGE3YLGvB/T6T17EKLdOybeBaSaD41f
+ lf8eOhsV6UTZMjFfvT7OqI3OUGSFRhHCd48+VcFRc6nsoF+e9tnlXzeXY/M7REI1jqtc
+ C1+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721783264; x=1722388064;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gUPoT7+GTGCB/rwxHsxEdqLi/GCEVozJp9dhj9QBUo4=;
- b=Va/3qVGpc5TvnLkDVtLuJ+VxGZAO1dnXGbZDN6FSHK4WB+c47PMb1VikmmRpue+Ovk
- QQ2UFEklPagilL91XUi/FCQU2lQhSwVlvpkYYlDtrMrI/rOEtC7rtwHFD5QXqUtiiJuF
- 9aOXenvuzaaVEHBwtN+K7n5iDoXWvu4zLE0O5YQUbXkxn1aIIVTc5tvPQsRn8xNjCCNd
- usLTiGH+yF5ZBcYvLhJN6GEQAuuFDj9VaQslIlY44ius7ElUHE0jxqk6s3taC5eKhAIV
- EcbLcwTgg74ovo4gJPhR9AvC+BNkBueOszEeoU8vxNOSoQs//IGOzad0FZZdmiee7Le4
- fpaQ==
-X-Gm-Message-State: AOJu0YxAjRt2B0WfqYCutkT6nF+my5Q0RA1c1jhL1uDv+sAquECD4IDe
- GFLCMDLbyuVyhjjxuQ1Ba5bsxcQWyI8HqxcEnAkmd1GuhK9Q+W7POMeuEJQOl1KI9IVMbChR+FY
- DmbzoZg==
-X-Google-Smtp-Source: AGHT+IFbYVr/2YapyDMJAw0pWHHQ4wos23QHaqfg0nZrisd7G5ty+ILd/5zqmScvwD72dPKtgmS2cw==
-X-Received: by 2002:a05:6808:1809:b0:3d9:3f3f:9cd0 with SMTP id
- 5614622812f47-3dae5d2d7f4mr17225794b6e.0.1721783263939; 
- Tue, 23 Jul 2024 18:07:43 -0700 (PDT)
-Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-79f0e6c947esm6961093a12.74.2024.07.23.18.07.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jul 2024 18:07:43 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-Subject: [PATCH 2/2] tests/tcg/loongarch64: Use --no-warn-rwx-segments to link
- system tests
-Date: Wed, 24 Jul 2024 11:07:33 +1000
-Message-ID: <20240724010733.22129-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240724010733.22129-1-richard.henderson@linaro.org>
-References: <20240724010733.22129-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1721784305; x=1722389105;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9xRqWbOHwUPm6fyXbXbkTNzpkPrKCWETUbO9wuE5Bl4=;
+ b=l4zd3xtYo4v/t6i7o+nSqERkL1Vsorgv0RrnvKWiNc0rdP77CBiIHKGd+heZmE5aN+
+ 7j7xIf8UkT8HupupW5sEYijK5c0HmmRFZ7dbel9ohpEuOAVg3vLo9AqK5HtUoPHUuUZf
+ OYl3iV+o8BiB6O1T5r2Gk5ixpi5KEMGLoD7GT450S97pX4pCCFGw/Q9FvkXbQNC0x6Oe
+ cU+2otNENolDlMPQLHgiHntXdkvjc58N3L48y9tm5jP1qecQMlzan9P/vilhHEBAlCPu
+ Wy3ReipydSM50eCJ+haF0GKYkkogvACghXknPe++Kxssi4FzMkdxI/SQl29bR2hp1FOX
+ bI+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwDviMhE1k4Yh9lEQ2thOHg9zxoC8Q5bXhBY7hNtWd4aAGtKvi91VKdJ6Aqw9ekdbAQizVkzCPAq4VHAJw88gqu0hWUac=
+X-Gm-Message-State: AOJu0Yy531qTCykLJ45zz/ybIAWa2z1s6LOX9lwIMuD0Kfmsj8g55MRk
+ KmHVolKd9Q6M3X6lOfX/jgeKUy6YUnszyfwq9tvy+081i6wCJP9+/W8dlbB9Ls0=
+X-Google-Smtp-Source: AGHT+IGTBw9RPnaEIGTCwHXLVO6rNhr/bWm8cn3b74svAit8xjc7hLJZi1aFv755Aq3R35wu7rpzvA==
+X-Received: by 2002:a17:902:c950:b0:1fd:a942:1558 with SMTP id
+ d9443c01a7336-1fda9421858mr70103515ad.40.1721784304405; 
+ Tue, 23 Jul 2024 18:25:04 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fd6f487857sm81789165ad.281.2024.07.23.18.25.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 18:25:03 -0700 (PDT)
+Message-ID: <cbcda096-252f-4a68-be0a-26db086c091b@linaro.org>
+Date: Wed, 24 Jul 2024 11:24:56 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/61] virtio,pci,pc: features,fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <cover.1721731723.git.mst@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <cover.1721731723.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,33 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent debian cross-linker for loongarch issues
+On 7/23/24 20:55, Michael S. Tsirkin wrote:
+> changes from v1:
+>      dropped two patches:
+>          hw/pci: Do not add ROM BAR for SR-IOV VF
+>          virtio: Always reset vhost devices
+>      at author's request
+> 
+> Akiko, I think the on/off rework is a bit risky so close
+> to the release. So pls rework your patch not to depend on that.
+> Also pls note you still need to fix s390, if that does
+> not happen by say rc1 I'll have to revert all this stuff
+> by rc2, and defer to the next release.
+> 
+> Thanks!
+> 
+> The following changes since commit a87a7c449e532130d4fa8faa391ff7e1f04ed660:
+> 
+>    Merge tag 'pull-loongarch-20240719' ofhttps://gitlab.com/gaosong/qemu into staging (2024-07-19 16:28:28 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> 
+> for you to fetch changes up to 4f947b10d525958578002848a92eeb6152ffbf0d:
+> 
+>    hw/nvme: Add SPDM over DOE support (2024-07-22 20:15:42 -0400)
+> 
+> ----------------------------------------------------------------
+> virtio,pci,pc: features,fixes
+> 
+> pci: Initial support for SPDM Responders
+> cxl: Add support for scan media, feature commands, device patrol scrub
+>      control, DDR5 ECS control, firmware updates
+> virtio: in-order support
+> virtio-net: support for SR-IOV emulation (note: known issues on s390,
+>                                            might get reverted if not fixed)
+> smbios: memory device size is now configurable per Machine
+> cpu: architecture agnostic code to support vCPU Hotplug
+> 
+> Fixes, cleanups all over the place.
 
-  ld: warning: hello has a LOAD segment with RWX permissions
 
-This is partially related to tests/tcg/loongarch64/system/kernel.ld,
-but is not fixed by explicitly adding a single LOAD PHDR.
-Disable the warning, since it does not apply to kernel images.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/tcg/loongarch64/Makefile.softmmu-target | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-index d5d5c1a7f6..6d4a20fde7 100644
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
-+++ b/tests/tcg/loongarch64/Makefile.softmmu-target
-@@ -16,7 +16,7 @@ LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
- TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
- CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
-+LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
- 
- # building head blobs
- .PRECIOUS: $(CRT_OBJS)
--- 
-2.43.0
-
+r~
 
