@@ -4,43 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C7EC3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 04:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15FEC3DA61
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 04:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWTos-00024K-5Z; Wed, 24 Jul 2024 00:41:42 -0400
+	id 1sWTub-0007Eu-RA; Wed, 24 Jul 2024 00:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWTom-00022v-TP; Wed, 24 Jul 2024 00:41:38 -0400
+ id 1sWTuZ-0007DF-Oj; Wed, 24 Jul 2024 00:47:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWTok-0006fD-Gj; Wed, 24 Jul 2024 00:41:36 -0400
+ id 1sWTuX-0007d7-NU; Wed, 24 Jul 2024 00:47:35 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 67B8C7D26C;
- Wed, 24 Jul 2024 07:41:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C9F97D270;
+ Wed, 24 Jul 2024 07:47:20 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 360411121EC;
- Wed, 24 Jul 2024 07:41:18 +0300 (MSK)
-Message-ID: <d30828a1-1402-48e3-a091-1a83c5d77765@tls.msk.ru>
-Date: Wed, 24 Jul 2024 07:41:18 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 41F661121F8;
+ Wed, 24 Jul 2024 07:47:31 +0300 (MSK)
+Message-ID: <9dfc4a6a-da91-4185-a800-40c80dd9a0f6@tls.msk.ru>
+Date: Wed, 24 Jul 2024 07:47:31 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 18/61] intel_iommu: fix FRCD construction macro
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Minwoo Im <minwoo.im@samsung.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <cover.1721731723.git.mst@redhat.com>
- <a3c8d7e38550c3d5a46e6fa94ffadfa625a4861d.1721731723.git.mst@redhat.com>
+Subject: Re: [PATCH v2] chardev/char-win-stdio.c: restore old console mode
+To: songziming <s.ziming@hotmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -67,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <a3c8d7e38550c3d5a46e6fa94ffadfa625a4861d.1721731723.git.mst@redhat.com>
+In-Reply-To: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -92,39 +84,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.07.2024 13:56, Michael S. Tsirkin wrote:
-> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+22.07.2024 12:52, songziming wrote:
+> If I use `-serial stdio` on Windows, after QEMU exits, the terminal
+> could not handle arrow keys and tab any more. Because stdio backend
+> on Windows sets console mode to virtual terminal input when starts,
+> but does not restore the old mode when finalize.
 > 
-> The constant must be unsigned, otherwise the two's complement
-> overrides the other fields when a PASID is present.
-> 
-> Fixes: 1b2b12376c8a ("intel-iommu: PASID support")
-> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
-> Message-Id: <20240709142557.317271-2-clement.mathieu--drif@eviden.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->   hw/i386/intel_iommu_internal.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index f8cf99bddf..cbc4030031 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -267,7 +267,7 @@
->   /* For the low 64-bit of 128-bit */
->   #define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
->   #define VTD_FRCD_PV(val)        (((val) & 0xffffULL) << 40)
-> -#define VTD_FRCD_PP(val)        (((val) & 0x1) << 31)
-> +#define VTD_FRCD_PP(val)        (((val) & 0x1ULL) << 31)
->   #define VTD_FRCD_IR_IDX(val)    (((val) & 0xffffULL) << 48)
+> This small patch saves the old console mode and set it back.
 
-Is this qemu-stable material?
-(for 7.2 and 9.0)
+Is this a stable@ material?
+
+Thanks,
 
 /mjt
-
 
