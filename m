@@ -4,71 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CEBC3DA63
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A34CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 01:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWQs4-00060r-R8; Tue, 23 Jul 2024 21:32:48 -0400
+	id 1sWQu7-0001or-NX; Tue, 23 Jul 2024 21:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWQs3-0005zo-39
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:32:47 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sWQu5-0001nt-DU
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:34:53 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWQs0-0001Bh-3o
- for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:32:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721784764; x=1753320764;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=xfMHhgnY8eZoEe6mJ03x810FiukPz2W30lNDfnQmhYs=;
- b=ctTnQTdGGVow2A7C4HUVLLIaUPmw0lOUEa4yI0N+HAz/0PyCok08msQT
- gOICWq3MmacJZLpPt5bVwC8igJXtM5+3pasadJECk7WB7waeGRNG3mJqg
- mVesNwJMvVKpVTzm48UBSd6wJ05ZsfPSTQCfFTN/rPN4CGFKnnfRvLSPZ
- tCzjfsPsD4xq1JagpAEjxlHKVbcHlK1sbW6ccJOl4h7vHEPPsB8X5z8I4
- owA+QqN0BGhaaXdQidB5yq5wCl62Q4IbLcovpkGAJOqLFX3sAp+5bjXBh
- fB/48EOySihSCNyvh9gKAOda9pZmFMQ5rHUpSvWgKrerWJULQkgTifVJO w==;
-X-CSE-ConnectionGUID: ghfEA3M1Q1uYb4sJTQ1oVQ==
-X-CSE-MsgGUID: mTI0JN5oQDGL+MZTzeNEXg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11142"; a="19566731"
-X-IronPort-AV: E=Sophos;i="6.09,232,1716274800"; d="scan'208";a="19566731"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jul 2024 18:32:40 -0700
-X-CSE-ConnectionGUID: PaBD2msKSHuG+c3pAafgag==
-X-CSE-MsgGUID: TjZuhKMkS2qMQGBb2GTXeA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,232,1716274800"; d="scan'208";a="57538089"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 23 Jul 2024 18:32:38 -0700
-Date: Wed, 24 Jul 2024 09:48:22 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: "manish.mishra" <manish.mishra@nutanix.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, bob.ball@nutanix.com,
- prerna.saxena@nutanix.com, john.levon@nutanix.com
-Subject: Re: [PATCH] target/i386: Always set leaf 0x1f
-Message-ID: <ZqBdZrDhZHw1wq1J@intel.com>
-References: <20240722101859.47408-1-manish.mishra@nutanix.com>
- <Zp+9gOESPaUi8ATT@intel.com>
- <8323044a-8f96-4c23-8475-dc5cc4797fdc@intel.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sWQu2-0001X4-GT
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 21:34:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=V3z+7mL5cGbAkRPBPA0cHgyvDq4mVo0ShDkQAVYd530=; b=QKZNNXd25X/louBT
+ FXyDMNR052ki333+lq8CcZ3IN4qzUnDzsTywBkwTzGsONJuodJqKYU+tUZWjUtVFFqeqoPq92yk1D
+ zlulM65vPk2vHBtlWfoY/OluhBozW+Wlp1ydpwn+Z7z+Jy+yIBXuW5BnZLghqP9wyyJWJB72jBOzC
+ BSISZOgp0Lz8ZeCVC1xCjy4hM2zSBYMDl1haAEqSehvKUEaYduDwtbxAK9uMI+icbgaJgHhNR72Az
+ T21ggwGoTCIKjPFfOMw5xxA/pNtBnrfaBbAigAD/GMNiYThJ5Jo/VLTJo1NywVydk0Fnh6JqBnuwm
+ sxAZ4pGxb1dtegpN3g==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sWQty-00Cwvh-2j;
+ Wed, 24 Jul 2024 01:34:46 +0000
+Date: Wed, 24 Jul 2024 01:34:46 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Don Porter <porter@cs.unc.edu>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
+ richard.henderson@linaro.org, philmd@linaro.org, berrange@redhat.com
+Subject: Re: [PATCH v4 2/7] Import vmcs12 definition from Linux/KVM
+Message-ID: <ZqBaNmVRc5DAI8k4@gallifrey>
+References: <20240723010545.3648706-1-porter@cs.unc.edu>
+ <20240723010545.3648706-3-porter@cs.unc.edu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <8323044a-8f96-4c23-8475-dc5cc4797fdc@intel.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.133,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+In-Reply-To: <20240723010545.3648706-3-porter@cs.unc.edu>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 01:33:18 up 76 days, 12:47, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,247 +70,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 08:25:12AM +0800, Xiaoyao Li wrote:
-> Date: Wed, 24 Jul 2024 08:25:12 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH] target/i386: Always set leaf 0x1f
+* Don Porter (porter@cs.unc.edu) wrote:
+> Signed-off-by: Don Porter <porter@cs.unc.edu>
+> ---
+>  target/i386/kvm/vmcs12.h | 213 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 213 insertions(+)
+>  create mode 100644 target/i386/kvm/vmcs12.h
 > 
-> On 7/23/2024 10:26 PM, Zhao Liu wrote:
-> > (+Xiaoyao, whose TDX work may also be related with this.)
-> 
-> I have a similar patch for TDX because TDX requires CPUID leaf 0x1f to
-> configure topology as a must.
-> 
-> (I haven't post to QEMU community yet. I'm not sure how people want to
-> proceed, refine this patch or I can post my version?)
-> 
-> https://github.com/intel-staging/qemu-tdx/commit/de08fd30926bc9d7997af6bd12cfff1b998da8b7
+> diff --git a/target/i386/kvm/vmcs12.h b/target/i386/kvm/vmcs12.h
+> new file mode 100644
+> index 0000000000..c7b139f4db
+> --- /dev/null
+> +++ b/target/i386/kvm/vmcs12.h
+> @@ -0,0 +1,213 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef QEMU_KVM_X86_VMX_VMCS12_H
+> +#define QEMU_KVM_X86_VMX_VMCS12_H
+> +
+> +#include <linux/kvm.h>
+> +
+> +/* XXX: Stolen from Linux with light edits, for now */
+> +
+> +typedef uint64_t u64;
+> +typedef uint32_t u32;
+> +typedef uint16_t u16;
 
-Hi Xiaoyao, the logic is similar, if Manish is willing to keep iterating,
-we can help him improve to cover all the cases we need, then TDX and his
-case could both benefit.
+Hmm, it's a pity that scripts/update-linux-headers.sh can't be used
+for this file; I don't think there are any cases of it doing things
+out side linux's include?
+Anyway, it has a big scary sed for fixing all of the kernel types,
+so it's probably best to use that at least if you're copying it.
 
-> https://github.com/intel-staging/qemu-tdx/commit/f81d2bcb67e4b01577723cc621099b0c6d558334
+Dave
+
+> +/*
+> + * struct vmcs12 describes the state that our guest hypervisor (L1) keeps for a
+> + * single nested guest (L2), hence the name vmcs12. Any VMX implementation has
+> + * a VMCS structure, and vmcs12 is our emulated VMX's VMCS. This structure is
+> + * stored in guest memory specified by VMPTRLD, but is opaque to the guest,
+> + * which must access it using VMREAD/VMWRITE/VMCLEAR instructions.
+> + * More than one of these structures may exist, if L1 runs multiple L2 guests.
+> + * nested_vmx_run() will use the data here to build the vmcs02: a VMCS for the
+> + * underlying hardware which will be used to run L2.
+> + * This structure is packed to ensure that its layout is identical across
+> + * machines (necessary for live migration).
+> + *
+> + * IMPORTANT: Changing the layout of existing fields in this structure
+> + * will break save/restore compatibility with older kvm releases. When
+> + * adding new fields, either use space in the reserved padding* arrays
+> + * or add the new fields to the end of the structure.
+> + */
+> +typedef u64 natural_width;
+> +
+> +
+> +struct vmcs_hdr {
+> +    u32 revision_id : 31;
+> +    u32 shadow_vmcs : 1;
+> +};
+> +
+> +struct __attribute__ ((__packed__)) vmcs12 {
+> +        /*
+> +         * According to the Intel spec, a VMCS region must start with the
+> +         * following two fields. Then follow implementation-specific data.
+> +         */
+> +        struct vmcs_hdr hdr;
+> +        u32 abort;
+> +
+> +        u32 launch_state; /* set to 0 by VMCLEAR, to 1 by VMLAUNCH */
+> +        u32 padding[7]; /* room for future expansion */
+> +
+> +        u64 io_bitmap_a;
+> +        u64 io_bitmap_b;
+> +        u64 msr_bitmap;
+> +        u64 vm_exit_msr_store_addr;
+> +        u64 vm_exit_msr_load_addr;
+> +        u64 vm_entry_msr_load_addr;
+> +        u64 tsc_offset;
+> +        u64 virtual_apic_page_addr;
+> +        u64 apic_access_addr;
+> +        u64 posted_intr_desc_addr;
+> +        u64 ept_pointer;
+> +        u64 eoi_exit_bitmap0;
+> +        u64 eoi_exit_bitmap1;
+> +        u64 eoi_exit_bitmap2;
+> +        u64 eoi_exit_bitmap3;
+> +        u64 xss_exit_bitmap;
+> +        u64 guest_physical_address;
+> +        u64 vmcs_link_pointer;
+> +        u64 guest_ia32_debugctl;
+> +        u64 guest_ia32_pat;
+> +        u64 guest_ia32_efer;
+> +        u64 guest_ia32_perf_global_ctrl;
+> +        u64 guest_pdptr0;
+> +        u64 guest_pdptr1;
+> +        u64 guest_pdptr2;
+> +        u64 guest_pdptr3;
+> +        u64 guest_bndcfgs;
+> +        u64 host_ia32_pat;
+> +        u64 host_ia32_efer;
+> +        u64 host_ia32_perf_global_ctrl;
+> +        u64 vmread_bitmap;
+> +        u64 vmwrite_bitmap;
+> +        u64 vm_function_control;
+> +        u64 eptp_list_address;
+> +        u64 pml_address;
+> +        u64 encls_exiting_bitmap;
+> +        u64 tsc_multiplier;
+> +        u64 padding64[1]; /* room for future expansion */
+> +        /*
+> +         * To allow migration of L1 (complete with its L2 guests) between
+> +         * machines of different natural widths (32 or 64 bit), we cannot have
+> +         * unsigned long fields with no explicit size. We use u64 (aliased
+> +         * natural_width) instead. Luckily, x86 is little-endian.
+> +         */
+> +        natural_width cr0_guest_host_mask;
+> +        natural_width cr4_guest_host_mask;
+> +        natural_width cr0_read_shadow;
+> +        natural_width cr4_read_shadow;
+> +        /* Last remnants of cr3_target_value[0-3]. */
+> +        natural_width dead_space[4];
+> +        natural_width exit_qualification;
+> +        natural_width guest_linear_address;
+> +        natural_width guest_cr0;
+> +        natural_width guest_cr3;
+> +        natural_width guest_cr4;
+> +        natural_width guest_es_base;
+> +        natural_width guest_cs_base;
+> +        natural_width guest_ss_base;
+> +        natural_width guest_ds_base;
+> +        natural_width guest_fs_base;
+> +        natural_width guest_gs_base;
+> +        natural_width guest_ldtr_base;
+> +        natural_width guest_tr_base;
+> +        natural_width guest_gdtr_base;
+> +        natural_width guest_idtr_base;
+> +        natural_width guest_dr7;
+> +        natural_width guest_rsp;
+> +        natural_width guest_rip;
+> +        natural_width guest_rflags;
+> +        natural_width guest_pending_dbg_exceptions;
+> +        natural_width guest_sysenter_esp;
+> +        natural_width guest_sysenter_eip;
+> +        natural_width host_cr0;
+> +        natural_width host_cr3;
+> +        natural_width host_cr4;
+> +        natural_width host_fs_base;
+> +        natural_width host_gs_base;
+> +        natural_width host_tr_base;
+> +        natural_width host_gdtr_base;
+> +        natural_width host_idtr_base;
+> +        natural_width host_ia32_sysenter_esp;
+> +        natural_width host_ia32_sysenter_eip;
+> +        natural_width host_rsp;
+> +        natural_width host_rip;
+> +        natural_width paddingl[8]; /* room for future expansion */
+> +        u32 pin_based_vm_exec_control;
+> +        u32 cpu_based_vm_exec_control;
+> +        u32 exception_bitmap;
+> +        u32 page_fault_error_code_mask;
+> +        u32 page_fault_error_code_match;
+> +        u32 cr3_target_count;
+> +        u32 vm_exit_controls;
+> +        u32 vm_exit_msr_store_count;
+> +        u32 vm_exit_msr_load_count;
+> +        u32 vm_entry_controls;
+> +        u32 vm_entry_msr_load_count;
+> +        u32 vm_entry_intr_info_field;
+> +        u32 vm_entry_exception_error_code;
+> +        u32 vm_entry_instruction_len;
+> +        u32 tpr_threshold;
+> +        u32 secondary_vm_exec_control;
+> +        u32 vm_instruction_error;
+> +        u32 vm_exit_reason;
+> +        u32 vm_exit_intr_info;
+> +        u32 vm_exit_intr_error_code;
+> +        u32 idt_vectoring_info_field;
+> +        u32 idt_vectoring_error_code;
+> +        u32 vm_exit_instruction_len;
+> +        u32 vmx_instruction_info;
+> +        u32 guest_es_limit;
+> +        u32 guest_cs_limit;
+> +        u32 guest_ss_limit;
+> +        u32 guest_ds_limit;
+> +        u32 guest_fs_limit;
+> +        u32 guest_gs_limit;
+> +        u32 guest_ldtr_limit;
+> +        u32 guest_tr_limit;
+> +        u32 guest_gdtr_limit;
+> +        u32 guest_idtr_limit;
+> +        u32 guest_es_ar_bytes;
+> +        u32 guest_cs_ar_bytes;
+> +        u32 guest_ss_ar_bytes;
+> +        u32 guest_ds_ar_bytes;
+> +        u32 guest_fs_ar_bytes;
+> +        u32 guest_gs_ar_bytes;
+> +        u32 guest_ldtr_ar_bytes;
+> +        u32 guest_tr_ar_bytes;
+> +        u32 guest_interruptibility_info;
+> +        u32 guest_activity_state;
+> +        u32 guest_sysenter_cs;
+> +        u32 host_ia32_sysenter_cs;
+> +        u32 vmx_preemption_timer_value;
+> +        u32 padding32[7]; /* room for future expansion */
+> +        u16 virtual_processor_id;
+> +        u16 posted_intr_nv;
+> +        u16 guest_es_selector;
+> +        u16 guest_cs_selector;
+> +        u16 guest_ss_selector;
+> +        u16 guest_ds_selector;
+> +        u16 guest_fs_selector;
+> +        u16 guest_gs_selector;
+> +        u16 guest_ldtr_selector;
+> +        u16 guest_tr_selector;
+> +        u16 guest_intr_status;
+> +        u16 host_es_selector;
+> +        u16 host_cs_selector;
+> +        u16 host_ss_selector;
+> +        u16 host_ds_selector;
+> +        u16 host_fs_selector;
+> +        u16 host_gs_selector;
+> +        u16 host_tr_selector;
+> +        u16 guest_pml_index;
+> +};
+> +
+> +/*
+> + * VMCS12_REVISION is an arbitrary id that should be changed if the content or
+> + * layout of struct vmcs12 is changed. MSR_IA32_VMX_BASIC returns this id, and
+> + * VMPTRLD verifies that the VMCS region that L1 is loading contains this id.
+> + *
+> + * IMPORTANT: Changing this value will break save/restore compatibility with
+> + * older kvm releases.
+> + */
+> +#define VMCS12_REVISION 0x11e57ed0
+> +
+> +#endif
+> -- 
+> 2.34.1
 > 
-> 
-> 
-> > Hi Manish,
-> > 
-> > Thanks for your patch! Some comments below.
-> > 
-> > On Mon, Jul 22, 2024 at 10:18:59AM +0000, manish.mishra wrote:
-> > > Date: Mon, 22 Jul 2024 10:18:59 +0000
-> > > From: "manish.mishra" <manish.mishra@nutanix.com>
-> > > Subject: [PATCH] target/i386: Always set leaf 0x1f
-> > > X-Mailer: git-send-email 2.22.3
-> > > 
-> > > QEMU does not set 0x1f in case VM does not have extended CPU topology
-> > > and expects guests to fallback to 0xb. Some versions of windows i.e.
-> > > windows 10, 11 does not like this behavior and expects this leaf to be
-> > > populated. This is observed with windows VMs with secure boot, uefi
-> > > and HyperV role enabled.
-> > > 
-> > > Leaf 0x1f is superset of 0xb, so it makes sense to set 0x1f equivalent
-> > > to 0xb by default and workaround windows issue. This change adds a
-> > > new property 'cpuid-0x1f-enforce' to set leaf 0x1f equivalent to 0xb in
-> > > case extended CPU topology is not present and behave as before otherwise.
-> > > ---
-> > >   hw/i386/pc.c          |  1 +
-> > >   target/i386/cpu.c     | 71 +++++++++++++++++++++++++++----------------
-> > >   target/i386/cpu.h     |  5 +++
-> > >   target/i386/kvm/kvm.c |  4 ++-
-> > >   4 files changed, 53 insertions(+), 28 deletions(-)
-> > > 
-> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > > index c74931d577..4cab04e443 100644
-> > > --- a/hw/i386/pc.c
-> > > +++ b/hw/i386/pc.c
-> > > @@ -85,6 +85,7 @@ GlobalProperty pc_compat_9_0[] = {
-> > >       { TYPE_X86_CPU, "guest-phys-bits", "0" },
-> > >       { "sev-guest", "legacy-vm-type", "on" },
-> > >       { TYPE_X86_CPU, "legacy-multi-node", "on" },
-> > > +    { TYPE_X86_CPU, "cpuid-0x1f-enforce", "false" },
-> > >   };
-> > >   const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
-> > 
-> > Yes, this is needed, but the 9.1 soft freeze is coming close soon, so
-> > you may have to add pc_compat_9_1[] if it doesn't get accepted before
-> > the soft freeze.
-> > 
-> > > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > > index 4688d140c2..f89b2ef335 100644
-> > > --- a/target/i386/cpu.c
-> > > +++ b/target/i386/cpu.c
-> > > @@ -416,6 +416,43 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
-> > >       assert(!(*eax & ~0x1f));
-> > >   }
-> > > +static void encode_topo_cpuid_b(CPUX86State *env, uint32_t count,
-> > > +                                X86CPUTopoInfo *topo_info,
-> > > +                                uint32_t threads_per_pkg,
-> > > +                                uint32_t *eax, uint32_t *ebx,
-> > > +                                uint32_t *ecx, uint32_t *edx)
-> > > +{
-> > > +    X86CPU *cpu = env_archcpu(env);
-> > > +
-> > > +    if (!cpu->enable_cpuid_0xb) {
-> > > +        *eax = *ebx = *ecx = *edx = 0;
-> > > +        return;
-> > > +    }
-> > > +
-> > > +    *ecx = count & 0xff;
-> > > +    *edx = cpu->apic_id;
-> > > +
-> > > +    switch (count) {
-> > > +        case 0:
-> > > +            *eax = apicid_core_offset(topo_info);
-> > > +            *ebx = topo_info->threads_per_core;
-> > > +            *ecx |= CPUID_B_ECX_TOPO_LEVEL_SMT << 8;
-> > > +            break;
-> > > +        case 1:
-> > > +            *eax = apicid_pkg_offset(topo_info);
-> > > +            *ebx = threads_per_pkg;
-> > > +            *ecx |= CPUID_B_ECX_TOPO_LEVEL_CORE << 8;
-> > > +            break;
-> > > +        default:
-> > > +            *eax = 0;
-> > > +            *ebx = 0;
-> > > +            *ecx |= CPUID_B_ECX_TOPO_LEVEL_INVALID << 8;
-> > > +    }
-> > > +
-> > > +    assert(!(*eax & ~0x1f));
-> > > +    *ebx &= 0xffff; /* The count doesn't need to be reliable. */
-> > > +}
-> > > +
-> > >   /* Encode cache info for CPUID[0x80000005].ECX or CPUID[0x80000005].EDX */
-> > >   static uint32_t encode_cache_cpuid80000005(CPUCacheInfo *cache)
-> > >   {
-> > > @@ -6601,33 +6638,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> > >           break;
-> > >       case 0xB:
-> > >           /* Extended Topology Enumeration Leaf */
-> > > -        if (!cpu->enable_cpuid_0xb) {
-> > > -                *eax = *ebx = *ecx = *edx = 0;
-> > > -                break;
-> > > -        }
-> > > -
-> > > -        *ecx = count & 0xff;
-> > > -        *edx = cpu->apic_id;
-> > > -
-> > > -        switch (count) {
-> > > -        case 0:
-> > > -            *eax = apicid_core_offset(&topo_info);
-> > > -            *ebx = topo_info.threads_per_core;
-> > > -            *ecx |= CPUID_B_ECX_TOPO_LEVEL_SMT << 8;
-> > > -            break;
-> > > -        case 1:
-> > > -            *eax = apicid_pkg_offset(&topo_info);
-> > > -            *ebx = threads_per_pkg;
-> > > -            *ecx |= CPUID_B_ECX_TOPO_LEVEL_CORE << 8;
-> > > -            break;
-> > > -        default:
-> > > -            *eax = 0;
-> > > -            *ebx = 0;
-> > > -            *ecx |= CPUID_B_ECX_TOPO_LEVEL_INVALID << 8;
-> > > -        }
-> > > -
-> > > -        assert(!(*eax & ~0x1f));
-> > > -        *ebx &= 0xffff; /* The count doesn't need to be reliable. */
-> > > +        encode_topo_cpuid_b(env, count, &topo_info, threads_per_pkg,
-> > > +                            eax, ebx, ecx, edx);
-> > >           break;
-> > >       case 0x1C:
-> > >           if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-> > > @@ -6639,6 +6651,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> > >           /* V2 Extended Topology Enumeration Leaf */
-> > >           if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-> > >               *eax = *ebx = *ecx = *edx = 0;
-> > > +            if (cpu->enable_cpuid_0x1f_enforce) {
-> > > +                encode_topo_cpuid_b(env, count, &topo_info, threads_per_pkg,
-> > > +                                    eax, ebx, ecx, edx);
-> > > +            }
-> > 
-> > encode_topo_cpuid_b() is not necessary since encode_topo_cpuid1f() could
-> > encode SMT/core levels with the same type code as 0x0b.
-> > 
-> > So here we just need tweak the encoding condition:
-> > 
-> > -        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-> > +        if (!x86_has_extended_topo(env->avail_cpu_topo) &&
-> > +            !cpu->enable_cpuid_0x1f_enforce) {
-> >               *eax = *ebx = *ecx = *edx = 0;
-> >               break;
-> >           }
-> > 
-> >           encode_topo_cpuid1f(env, count, &topo_info, eax, ebx, ecx, edx);
-> >           break;
-> > 
-> > Then wrapping encode_topo_cpuid_b() could also be omitted, which keeps the
-> > code changes as minor as possible.
-> > 
-> > >               break;
-> > >           }
-> > > @@ -8316,6 +8332,7 @@ static Property x86_cpu_properties[] = {
-> > >       DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-> > >       DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
-> > >       DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-> > > +    DEFINE_PROP_BOOL("cpuid-0x1f-enforce", X86CPU, enable_cpuid_0x1f_enforce, true),
-> > >       DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
-> > >       DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
-> > >       DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
-> > > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > > index 1e121acef5..718b9f2b0b 100644
-> > > --- a/target/i386/cpu.h
-> > > +++ b/target/i386/cpu.h
-> > > @@ -2102,6 +2102,11 @@ struct ArchCPU {
-> > >       /* Compatibility bits for old machine types: */
-> > >       bool enable_cpuid_0xb;
-> > > +    /* Always return values for 0x1f leaf. In cases where extended CPU topology
-> > > +     * is not supported, return values equivalent of leaf 0xb.
-> > 
-> > s/is not supported/is not configured/
-> > 
-> > > +     */
-> > > +    bool enable_cpuid_0x1f_enforce;
-> > > +
-> > >       /* Enable auto level-increase for all CPUID leaves */
-> > >       bool full_cpuid_auto_level;
-> > > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> > > index becca2efa5..a9c6f02900 100644
-> > > --- a/target/i386/kvm/kvm.c
-> > > +++ b/target/i386/kvm/kvm.c
-> > > @@ -1799,6 +1799,7 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
-> > >       uint32_t limit, i, j;
-> > >       uint32_t unused;
-> > >       struct kvm_cpuid_entry2 *c;
-> > > +    X86CPU *cpu = env_archcpu(env);
-> > >       cpu_x86_cpuid(env, 0, 0, &limit, &unused, &unused, &unused);
-> > > @@ -1831,7 +1832,8 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
-> > >               break;
-> > >           }
-> > >           case 0x1f:
-> > > -            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-> > > +            if (!x86_has_extended_topo(env->avail_cpu_topo) &&
-> > > +                !cpu->enable_cpuid_0x1f_enforce) {
-> > >                   cpuid_i--;
-> > >                   break;
-> > >               }
-> > 
-> > In addition to the above changes, we need to adjust the min_level of the
-> > CPUID to ensure that 0x1f can be encoded:
-> > 
-> > @@ -7466,7 +7466,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-> >            * cpu->vendor_cpuid_only has been unset for compatibility with older
-> >            * machine types.
-> >            */
-> > -        if (x86_has_extended_topo(env->avail_cpu_topo) &&
-> > +        if ((x86_has_extended_topo(env->avail_cpu_topo) ||
-> > +            cpu->enable_cpuid_0x1f_enforce) &&
-> >               (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-> >               x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-> >           }
-> > 
-> > Thanks,
-> > Zhao
-> > 
-> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
