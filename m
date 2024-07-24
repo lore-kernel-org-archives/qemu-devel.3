@@ -4,35 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15FEC3DA61
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 04:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092BEC3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 04:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWTub-0007Eu-RA; Wed, 24 Jul 2024 00:47:37 -0400
+	id 1sWU0j-00053z-GQ; Wed, 24 Jul 2024 00:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWTuZ-0007DF-Oj; Wed, 24 Jul 2024 00:47:35 -0400
+ id 1sWU0h-00052Q-Vx; Wed, 24 Jul 2024 00:53:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sWTuX-0007d7-NU; Wed, 24 Jul 2024 00:47:35 -0400
+ id 1sWU0f-0001eO-9E; Wed, 24 Jul 2024 00:53:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C9F97D270;
- Wed, 24 Jul 2024 07:47:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 36D887D275;
+ Wed, 24 Jul 2024 07:53:38 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41F661121F8;
- Wed, 24 Jul 2024 07:47:31 +0300 (MSK)
-Message-ID: <9dfc4a6a-da91-4185-a800-40c80dd9a0f6@tls.msk.ru>
-Date: Wed, 24 Jul 2024 07:47:31 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0BA291121FD;
+ Wed, 24 Jul 2024 07:53:49 +0300 (MSK)
+Message-ID: <1c89931e-d800-452b-8dbd-5c433149f723@tls.msk.ru>
+Date: Wed, 24 Jul 2024 07:53:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] chardev/char-win-stdio.c: restore old console mode
-To: songziming <s.ziming@hotmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
+Subject: Re: [PATCH v2 1/3] hw/cxl/cxl-host: Fix segmentation fault when
+ getting cxl-fmw property
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, mst@redhat.com,
+ qemu-devel@nongnu.org
+Cc: linux-cxl@vger.kernel.org, Markus Armbruster <armbru@redhat.com>,
+ Li Zhijian <lizhijian@fujitsu.com>, linuxarm@huawei.com,
+ Zhao Liu <zhao1.liu@linux.intel.com>, Xingtao Yao <yaoxt.fnst@fujitsu.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240705113956.941732-1-Jonathan.Cameron@huawei.com>
+ <20240705113956.941732-2-Jonathan.Cameron@huawei.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -59,7 +64,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ME3P282MB25488BE7C39BF0C35CD0DA5D8CA82@ME3P282MB2548.AUSP282.PROD.OUTLOOK.COM>
+In-Reply-To: <20240705113956.941732-2-Jonathan.Cameron@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -84,17 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-22.07.2024 12:52, songziming wrote:
-> If I use `-serial stdio` on Windows, after QEMU exits, the terminal
-> could not handle arrow keys and tab any more. Because stdio backend
-> on Windows sets console mode to virtual terminal input when starts,
-> but does not restore the old mode when finalize.
+05.07.2024 14:39, Jonathan Cameron via wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> This small patch saves the old console mode and set it back.
+> QEMU crashes (Segmentation fault) when getting cxl-fmw property via
+> qmp:
+> 
+> (QEMU) qom-get path=machine property=cxl-fmw
+> 
+> This issue is caused by accessing wrong callback (opaque) type in
+> machine_get_cfmw().
+> 
+> cxl_machine_init() sets the callback as `CXLState *` type but
+> machine_get_cfmw() treats the callback as
+> `CXLFixedMemoryWindowOptionsList **`.
+> 
+> Fix this error by casting opaque to `CXLState *` type in
+> machine_get_cfmw().
+> 
+> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter.")
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+> Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+> Link: https://lore.kernel.org/r/20240704093404.1848132-1-zhao1.liu@linux.intel.com
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
 Is this a stable@ material?
 
 Thanks,
 
 /mjt
+
 
