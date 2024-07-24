@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19A4C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 21:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54716C3DA63
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 21:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWjRB-0000jj-8f; Wed, 24 Jul 2024 17:22:17 -0400
+	id 1sWjRE-0000y0-6L; Wed, 24 Jul 2024 17:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sWjQy-0000A3-9i; Wed, 24 Jul 2024 17:22:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1sWjQy-0000A4-9c; Wed, 24 Jul 2024 17:22:04 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sWjQs-0000VU-N3; Wed, 24 Jul 2024 17:22:02 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OKTDoR011710;
+ id 1sWjQu-0000VT-AF; Wed, 24 Jul 2024 17:22:02 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OKujph028111;
  Wed, 24 Jul 2024 21:21:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- 36ZikRcxWUWh11gxfYMDQ6X+ntoqbwVjYSjFO6Bf2oo=; b=H6EzIPcUNwwenzQ/
- raef9qp2Zu/MJlEFhEx0JtqReGpvaxHvyI7luWJWzaxgDNnXTMq7Sz0pUlJcs4/P
- RX3q/2qc7g9WQlztrIpF9yHrVyV/7QG26e0mFpHqtcPbjQmRVGcXhPrTuG89cCQG
- LSaWF5H+suY3Yk8iPM0XSV2DwzxZdp53jvDM4ExDPnTNN+ZO0LV0SlP3Gu2S2WGw
- v0H8FukGH8NtKfGSbiHt+V4b+g06S3MbNlBdCA4WhA/mRxZTU+hhepTh8LbR2iWY
- RPFLc8Pe4HNkZ8FRQW2LSq7xIh1Xcx7lhu06dziCadaWkh1j3AFs5KmZKDrge7AC
- fBvxuw==
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=WL0BIHYsBeJCapukG04x/DzV9z
+ mjrJcmAdGArXJvAZY=; b=EvNRma5cycSBDW2ti2wr0sKpvRlPCQjU4SdlEWb5nj
+ Anh5oVGiuo9B/wrAAtxAxi0363AMsj2MViRttCYuLyS4V1vjSmaDhnlwNSbBWMjV
+ YKHngGgRZgnreQMeN4cyP4ewuKTOV9W0OpZpaoggBHh+bvsYDbeG4BQJVok3A6pk
+ x47p5j7p1OmMbfbG/ppK2fsZGy61eVv8D/BtrpmfvVtetpN1OdJvthyuqZOfs4EX
+ 9HowB3wyP0K+AceHm1VB8FI62JyyoGDk5sHNS12lZfc3/PBY+0blxZ9/SZm2IW4N
+ fGZYSC+VF5nEEOnx7qh/PK6p6Giw5dAjDIjXfQymxHUw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k8pf030j-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k6wv8d78-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Wed, 24 Jul 2024 21:21:46 +0000 (GMT)
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46OLLki3031273;
- Wed, 24 Jul 2024 21:21:46 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k8pf030h-1
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46OLLjkb005213;
+ Wed, 24 Jul 2024 21:21:45 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40k6wv8d76-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2024 21:21:46 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46OJcr15007900; Wed, 24 Jul 2024 21:21:45 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gxna23cj-1
+ Wed, 24 Jul 2024 21:21:45 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46OJSgiW005876; Wed, 24 Jul 2024 21:21:44 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gy2pj1gh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2024 21:21:45 +0000
+ Wed, 24 Jul 2024 21:21:44 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46OLLeNO54198760
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46OLLc9X54984994
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jul 2024 21:21:42 GMT
+ Wed, 24 Jul 2024 21:21:40 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 140B520078;
- Wed, 24 Jul 2024 21:21:40 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D936620074;
+ by IMSVA (Postfix) with ESMTP id 95CD620040;
  Wed, 24 Jul 2024 21:21:38 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E7BD20073;
+ Wed, 24 Jul 2024 21:21:37 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jul 2024 21:21:38 +0000 (GMT)
+ Wed, 24 Jul 2024 21:21:37 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
  npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH v4 01/11] pnv/xive2: XIVE2 Cache Watch,
- Cache Flush and Sync Injection support
-Date: Wed, 24 Jul 2024 16:21:20 -0500
-Message-Id: <20240724212130.26811-2-kowal@linux.ibm.com>
+Subject: [PATCH v4 00/11] XIVE changes for Cache Watch, VSTs, STT and info pic
+Date: Wed, 24 Jul 2024 16:21:19 -0500
+Message-Id: <20240724212130.26811-1-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240724212130.26811-1-kowal@linux.ibm.com>
-References: <20240724212130.26811-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 1smujVg529aHE6z8O4p76Qrd89wCjfAo
-X-Proofpoint-GUID: b6yFHB4YmS78VZfgDVtDajqXAlEQeUmz
+X-Proofpoint-GUID: EfNv3iaIY6soOtAbLPXu1x1YLx6ZxNZG
+X-Proofpoint-ORIG-GUID: g6ltgv4xSbsCX25BcrYCJ9CHPr7u7inP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-24_24,2024-07-24_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- lowpriorityscore=0 priorityscore=1501 spamscore=0 mlxscore=0
- mlxlogscore=999 malwarescore=0 bulkscore=0 impostorscore=0 phishscore=0
- adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2407240150
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ bulkscore=0 mlxlogscore=769
+ priorityscore=1501 mlxscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ adultscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2407240150
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -115,592 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+From: Michael Kowal <kowal@linux.vnet.ibm.com>
 
-XIVE offers a 'cache watch facility', which allows software to read/update
-a potentially cached table entry with no software lock. There's one such
-facility in the Virtualization Controller (VC) to update the ESB and END
-entries and one in the Presentation Controller (PC) to update the
-NVP/NVG/NVC entries.
+These changes provide enhanced support of the External Interrupt Virtualization
+Engine.  The changes are focused on the following areas:
+ - Cache Watch, Cache Flush and Sync Injection
+ - Virtual Structure Tables
+ - Set Translation Table
+ - 'info pic' command data that is dumped
 
-Each facility has 4 cache watch engines to control the updates and
-firmware can request an available engine by querying the hardware
-'watch_assign' register of the VC or PC. The engine is then reserved and
-is released after the data is updated by reading the 'watch_spec' register
-(which also allows to check for a conflict during the update).
-If no engine is available, the special value 0xFF is returned and
-firmware is expected to repeat the request until an engine becomes
-available.
+Version 4 changes:
+- Added Reviewed-by Tags to patch sets 1-8
+- split patch set 9 into 3 patch sets, 9, 10 and 11
 
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
----
- hw/intc/pnv_xive2_regs.h |  90 ++++++++++++++
- hw/intc/pnv_xive2.c      | 251 +++++++++++++++++++++++++++++++++------
- 2 files changed, 305 insertions(+), 36 deletions(-)
+Frederic Barrat (9):
+  pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync Injection support
+  pnv/xive2: Add NVG and NVC to cache watch facility
+  pnv/xive2: Configure Virtualization Structure Tables through the PC
+  pnv/xive2: Enable VST NVG and NVC index compression
+  pnv/xive2: Set Translation Table for the NVC port space
+  pnv/xive2: Fail VST entry address computation if table has no VSD
+  pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
+  pnv/xive2: Refine TIMA 'info pic' output
+  pnv/xive2: Dump more END state with 'info pic'
 
-diff --git a/hw/intc/pnv_xive2_regs.h b/hw/intc/pnv_xive2_regs.h
-index 7165dc8704..f8e4a677c6 100644
---- a/hw/intc/pnv_xive2_regs.h
-+++ b/hw/intc/pnv_xive2_regs.h
-@@ -283,6 +283,15 @@
- #define   VC_ENDC_SYNC_QUEUE_HARD               PPC_BIT(6)
- #define   VC_QUEUE_COUNT                        7
- 
-+/* ENDC cache watch assign */
-+#define X_VC_ENDC_WATCH_ASSIGN                  0x186
-+#define VC_ENDC_WATCH_ASSIGN                    0x430
-+
-+/* ENDC configuration register */
-+#define X_VC_ENDC_CFG                           0x188
-+#define VC_ENDC_CFG                             0x440
-+#define   VC_ENDC_CFG_CACHE_WATCH_ASSIGN        PPC_BITMASK(32, 35)
-+
- /* ENDC cache watch specification 0  */
- #define X_VC_ENDC_WATCH0_SPEC                   0x1A0
- #define VC_ENDC_WATCH0_SPEC                     0x500
-@@ -302,6 +311,42 @@
- #define VC_ENDC_WATCH0_DATA2                    0x530
- #define VC_ENDC_WATCH0_DATA3                    0x538
- 
-+/* ENDC cache watch 1  */
-+#define X_VC_ENDC_WATCH1_SPEC                   0x1A8
-+#define VC_ENDC_WATCH1_SPEC                     0x540
-+#define X_VC_ENDC_WATCH1_DATA0                  0x1AC
-+#define X_VC_ENDC_WATCH1_DATA1                  0x1AD
-+#define X_VC_ENDC_WATCH1_DATA2                  0x1AE
-+#define X_VC_ENDC_WATCH1_DATA3                  0x1AF
-+#define VC_ENDC_WATCH1_DATA0                    0x560
-+#define VC_ENDC_WATCH1_DATA1                    0x568
-+#define VC_ENDC_WATCH1_DATA2                    0x570
-+#define VC_ENDC_WATCH1_DATA3                    0x578
-+
-+/* ENDC cache watch 2  */
-+#define X_VC_ENDC_WATCH2_SPEC                   0x1B0
-+#define VC_ENDC_WATCH2_SPEC                     0x580
-+#define X_VC_ENDC_WATCH2_DATA0                  0x1B4
-+#define X_VC_ENDC_WATCH2_DATA1                  0x1B5
-+#define X_VC_ENDC_WATCH2_DATA2                  0x1B6
-+#define X_VC_ENDC_WATCH2_DATA3                  0x1B7
-+#define VC_ENDC_WATCH2_DATA0                    0x5A0
-+#define VC_ENDC_WATCH2_DATA1                    0x5A8
-+#define VC_ENDC_WATCH2_DATA2                    0x5B0
-+#define VC_ENDC_WATCH2_DATA3                    0x5B8
-+
-+/* ENDC cache watch 3  */
-+#define X_VC_ENDC_WATCH3_SPEC                   0x1B8
-+#define VC_ENDC_WATCH3_SPEC                     0x5C0
-+#define X_VC_ENDC_WATCH3_DATA0                  0x1BC
-+#define X_VC_ENDC_WATCH3_DATA1                  0x1BD
-+#define X_VC_ENDC_WATCH3_DATA2                  0x1BE
-+#define X_VC_ENDC_WATCH3_DATA3                  0x1BF
-+#define VC_ENDC_WATCH3_DATA0                    0x5E0
-+#define VC_ENDC_WATCH3_DATA1                    0x5E8
-+#define VC_ENDC_WATCH3_DATA2                    0x5F0
-+#define VC_ENDC_WATCH3_DATA3                    0x5F8
-+
- /*
-  * PC LSB1
-  */
-@@ -358,6 +403,15 @@
- #define  PC_NXC_FLUSH_POLL_BLOCK_ID_MASK        PPC_BITMASK(36, 39)
- #define  PC_NXC_FLUSH_POLL_OFFSET_MASK          PPC_BITMASK(40, 63) /* 24-bit */
- 
-+/* NxC Cache watch assign */
-+#define X_PC_NXC_WATCH_ASSIGN                   0x286
-+#define PC_NXC_WATCH_ASSIGN                     0x430
-+
-+/* NxC Proc config */
-+#define X_PC_NXC_PROC_CONFIG                    0x28A
-+#define PC_NXC_PROC_CONFIG                      0x450
-+#define   PC_NXC_PROC_CONFIG_WATCH_ASSIGN       PPC_BITMASK(0, 3)
-+
- /* NxC Cache Watch 0 Specification */
- #define X_PC_NXC_WATCH0_SPEC                    0x2A0
- #define PC_NXC_WATCH0_SPEC                      0x500
-@@ -381,6 +435,42 @@
- #define PC_NXC_WATCH0_DATA2                     0x530
- #define PC_NXC_WATCH0_DATA3                     0x538
- 
-+/* NxC Cache Watch 1 */
-+#define X_PC_NXC_WATCH1_SPEC                    0x2A8
-+#define PC_NXC_WATCH1_SPEC                      0x540
-+#define X_PC_NXC_WATCH1_DATA0                   0x2AC
-+#define X_PC_NXC_WATCH1_DATA1                   0x2AD
-+#define X_PC_NXC_WATCH1_DATA2                   0x2AE
-+#define X_PC_NXC_WATCH1_DATA3                   0x2AF
-+#define PC_NXC_WATCH1_DATA0                     0x560
-+#define PC_NXC_WATCH1_DATA1                     0x568
-+#define PC_NXC_WATCH1_DATA2                     0x570
-+#define PC_NXC_WATCH1_DATA3                     0x578
-+
-+/* NxC Cache Watch 2 */
-+#define X_PC_NXC_WATCH2_SPEC                    0x2B0
-+#define PC_NXC_WATCH2_SPEC                      0x580
-+#define X_PC_NXC_WATCH2_DATA0                   0x2B4
-+#define X_PC_NXC_WATCH2_DATA1                   0x2B5
-+#define X_PC_NXC_WATCH2_DATA2                   0x2B6
-+#define X_PC_NXC_WATCH2_DATA3                   0x2B7
-+#define PC_NXC_WATCH2_DATA0                     0x5A0
-+#define PC_NXC_WATCH2_DATA1                     0x5A8
-+#define PC_NXC_WATCH2_DATA2                     0x5B0
-+#define PC_NXC_WATCH2_DATA3                     0x5B8
-+
-+/* NxC Cache Watch 3 */
-+#define X_PC_NXC_WATCH3_SPEC                    0x2B8
-+#define PC_NXC_WATCH3_SPEC                      0x5C0
-+#define X_PC_NXC_WATCH3_DATA0                   0x2BC
-+#define X_PC_NXC_WATCH3_DATA1                   0x2BD
-+#define X_PC_NXC_WATCH3_DATA2                   0x2BE
-+#define X_PC_NXC_WATCH3_DATA3                   0x2BF
-+#define PC_NXC_WATCH3_DATA0                     0x5E0
-+#define PC_NXC_WATCH3_DATA1                     0x5E8
-+#define PC_NXC_WATCH3_DATA2                     0x5F0
-+#define PC_NXC_WATCH3_DATA3                     0x5F8
-+
- /*
-  * TCTXT Registers
-  */
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 2fb4fa29d4..af9ab68fc6 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -329,40 +329,48 @@ static int pnv_xive2_write_end(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
-                               word_number);
- }
- 
--static int pnv_xive2_end_update(PnvXive2 *xive)
-+static int pnv_xive2_end_update(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(VC_ENDC_WATCH_INDEX,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    int i;
-+    uint8_t  blk;
-+    uint32_t idx;
-+    int i, spec_reg, data_reg;
-     uint64_t endc_watch[4];
- 
-+    assert(watch_engine < ARRAY_SIZE(endc_watch));
-+
-+    spec_reg = (VC_ENDC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (VC_ENDC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID, xive->vc_regs[spec_reg]);
-+    idx = GETFIELD(VC_ENDC_WATCH_INDEX, xive->vc_regs[spec_reg]);
-+
-     for (i = 0; i < ARRAY_SIZE(endc_watch); i++) {
--        endc_watch[i] =
--            cpu_to_be64(xive->vc_regs[(VC_ENDC_WATCH0_DATA0 >> 3) + i]);
-+        endc_watch[i] = cpu_to_be64(xive->vc_regs[data_reg + i]);
-     }
- 
-     return pnv_xive2_vst_write(xive, VST_END, blk, idx, endc_watch,
-                               XIVE_VST_WORD_ALL);
- }
- 
--static void pnv_xive2_end_cache_load(PnvXive2 *xive)
-+static void pnv_xive2_end_cache_load(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(VC_ENDC_WATCH_INDEX,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
-+    uint8_t  blk;
-+    uint32_t idx;
-     uint64_t endc_watch[4] = { 0 };
--    int i;
-+    int i, spec_reg, data_reg;
-+
-+    assert(watch_engine < ARRAY_SIZE(endc_watch));
-+
-+    spec_reg = (VC_ENDC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (VC_ENDC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID, xive->vc_regs[spec_reg]);
-+    idx = GETFIELD(VC_ENDC_WATCH_INDEX, xive->vc_regs[spec_reg]);
- 
-     if (pnv_xive2_vst_read(xive, VST_END, blk, idx, endc_watch)) {
-         xive2_error(xive, "VST: no END entry %x/%x !?", blk, idx);
-     }
- 
-     for (i = 0; i < ARRAY_SIZE(endc_watch); i++) {
--        xive->vc_regs[(VC_ENDC_WATCH0_DATA0 >> 3) + i] =
--            be64_to_cpu(endc_watch[i]);
-+        xive->vc_regs[data_reg + i] = be64_to_cpu(endc_watch[i]);
-     }
- }
- 
-@@ -379,40 +387,48 @@ static int pnv_xive2_write_nvp(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
-                               word_number);
- }
- 
--static int pnv_xive2_nvp_update(PnvXive2 *xive)
-+static int pnv_xive2_nvp_update(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID,
--                            xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(PC_NXC_WATCH_INDEX,
--                            xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    int i;
-+    uint8_t  blk;
-+    uint32_t idx;
-+    int i, spec_reg, data_reg;
-     uint64_t nxc_watch[4];
- 
-+    assert(watch_engine < ARRAY_SIZE(nxc_watch));
-+
-+    spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
-+    idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
-+
-     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
--        nxc_watch[i] =
--            cpu_to_be64(xive->pc_regs[(PC_NXC_WATCH0_DATA0 >> 3) + i]);
-+        nxc_watch[i] = cpu_to_be64(xive->pc_regs[data_reg + i]);
-     }
- 
-     return pnv_xive2_vst_write(xive, VST_NVP, blk, idx, nxc_watch,
-                               XIVE_VST_WORD_ALL);
- }
- 
--static void pnv_xive2_nvp_cache_load(PnvXive2 *xive)
-+static void pnv_xive2_nvp_cache_load(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID,
--                           xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(PC_NXC_WATCH_INDEX,
--                           xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
-+    uint8_t  blk;
-+    uint32_t idx;
-     uint64_t nxc_watch[4] = { 0 };
--    int i;
-+    int i, spec_reg, data_reg;
-+
-+    assert(watch_engine < ARRAY_SIZE(nxc_watch));
-+
-+    spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
-+    idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
- 
-     if (pnv_xive2_vst_read(xive, VST_NVP, blk, idx, nxc_watch)) {
-         xive2_error(xive, "VST: no NVP entry %x/%x !?", blk, idx);
-     }
- 
-     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
--        xive->pc_regs[(PC_NXC_WATCH0_DATA0 >> 3) + i] =
--            be64_to_cpu(nxc_watch[i]);
-+        xive->pc_regs[data_reg + i] = be64_to_cpu(nxc_watch[i]);
-     }
- }
- 
-@@ -964,12 +980,70 @@ static const MemoryRegionOps pnv_xive2_ic_cq_ops = {
-     },
- };
- 
-+static uint8_t pnv_xive2_cache_watch_assign(uint64_t engine_mask,
-+                                            uint64_t *state)
-+{
-+    uint8_t val = 0xFF;
-+    int i;
-+
-+    for (i = 3; i >= 0; i--) {
-+        if (BIT(i) & engine_mask) {
-+            if (!(BIT(i) & *state)) {
-+                *state |= BIT(i);
-+                val = 3 - i;
-+                break;
-+            }
-+        }
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_cache_watch_release(uint64_t *state, uint8_t watch_engine)
-+{
-+    uint8_t engine_bit = 3 - watch_engine;
-+
-+    if (*state & BIT(engine_bit)) {
-+        *state &= ~BIT(engine_bit);
-+    }
-+}
-+
-+static uint8_t pnv_xive2_endc_cache_watch_assign(PnvXive2 *xive)
-+{
-+    uint64_t engine_mask = GETFIELD(VC_ENDC_CFG_CACHE_WATCH_ASSIGN,
-+                                    xive->vc_regs[VC_ENDC_CFG >> 3]);
-+    uint64_t state = xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3];
-+    uint8_t val;
-+
-+    /*
-+     * We keep track of which engines are currently busy in the
-+     * VC_ENDC_WATCH_ASSIGN register directly. When the firmware reads
-+     * the register, we don't return its value but the ID of an engine
-+     * it can use.
-+     * There are 4 engines. 0xFF means no engine is available.
-+     */
-+    val = pnv_xive2_cache_watch_assign(engine_mask, &state);
-+    if (val != 0xFF) {
-+        xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3] = state;
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_endc_cache_watch_release(PnvXive2 *xive,
-+                                               uint8_t watch_engine)
-+{
-+    uint64_t state = xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3];
-+
-+    pnv_xive2_cache_watch_release(&state, watch_engine);
-+    xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3] = state;
-+}
-+
- static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
-                                      unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint64_t val = 0;
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1000,24 +1074,44 @@ static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
-         val = xive->vc_regs[reg];
-         break;
- 
-+    case VC_ENDC_WATCH_ASSIGN:
-+        val = pnv_xive2_endc_cache_watch_assign(xive);
-+        break;
-+
-+    case VC_ENDC_CFG:
-+        val = xive->vc_regs[reg];
-+        break;
-+
-     /*
-      * END cache updates
-      */
-     case VC_ENDC_WATCH0_SPEC:
-+    case VC_ENDC_WATCH1_SPEC:
-+    case VC_ENDC_WATCH2_SPEC:
-+    case VC_ENDC_WATCH3_SPEC:
-+        watch_engine = (offset - VC_ENDC_WATCH0_SPEC) >> 6;
-         xive->vc_regs[reg] &= ~(VC_ENDC_WATCH_FULL | VC_ENDC_WATCH_CONFLICT);
-+        pnv_xive2_endc_cache_watch_release(xive, watch_engine);
-         val = xive->vc_regs[reg];
-         break;
- 
-     case VC_ENDC_WATCH0_DATA0:
-+    case VC_ENDC_WATCH1_DATA0:
-+    case VC_ENDC_WATCH2_DATA0:
-+    case VC_ENDC_WATCH3_DATA0:
-         /*
-          * Load DATA registers from cache with data requested by the
-          * SPEC register
-          */
--        pnv_xive2_end_cache_load(xive);
-+        watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
-+        pnv_xive2_end_cache_load(xive, watch_engine);
-         val = xive->vc_regs[reg];
-         break;
- 
-     case VC_ENDC_WATCH0_DATA1 ... VC_ENDC_WATCH0_DATA3:
-+    case VC_ENDC_WATCH1_DATA1 ... VC_ENDC_WATCH1_DATA3:
-+    case VC_ENDC_WATCH2_DATA1 ... VC_ENDC_WATCH2_DATA3:
-+    case VC_ENDC_WATCH3_DATA1 ... VC_ENDC_WATCH3_DATA3:
-         val = xive->vc_regs[reg];
-         break;
- 
-@@ -1063,6 +1157,7 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1095,19 +1190,32 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
-         /* EAS update */
-         break;
- 
-+    case VC_ENDC_CFG:
-+        break;
-+
-     /*
-      * END cache updates
-      */
-     case VC_ENDC_WATCH0_SPEC:
-+    case VC_ENDC_WATCH1_SPEC:
-+    case VC_ENDC_WATCH2_SPEC:
-+    case VC_ENDC_WATCH3_SPEC:
-          val &= ~VC_ENDC_WATCH_CONFLICT; /* HW will set this bit */
-         break;
- 
-     case VC_ENDC_WATCH0_DATA1 ... VC_ENDC_WATCH0_DATA3:
-+    case VC_ENDC_WATCH1_DATA1 ... VC_ENDC_WATCH1_DATA3:
-+    case VC_ENDC_WATCH2_DATA1 ... VC_ENDC_WATCH2_DATA3:
-+    case VC_ENDC_WATCH3_DATA1 ... VC_ENDC_WATCH3_DATA3:
-         break;
-     case VC_ENDC_WATCH0_DATA0:
-+    case VC_ENDC_WATCH1_DATA0:
-+    case VC_ENDC_WATCH2_DATA0:
-+    case VC_ENDC_WATCH3_DATA0:
-         /* writing to DATA0 triggers the cache write */
-+        watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
-         xive->vc_regs[reg] = val;
--        pnv_xive2_end_update(xive);
-+        pnv_xive2_end_update(xive, watch_engine);
-         break;
- 
- 
-@@ -1157,12 +1265,43 @@ static const MemoryRegionOps pnv_xive2_ic_vc_ops = {
-     },
- };
- 
-+static uint8_t pnv_xive2_nxc_cache_watch_assign(PnvXive2 *xive)
-+{
-+    uint64_t engine_mask = GETFIELD(PC_NXC_PROC_CONFIG_WATCH_ASSIGN,
-+                                    xive->pc_regs[PC_NXC_PROC_CONFIG >> 3]);
-+    uint64_t state = xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3];
-+    uint8_t val;
-+
-+    /*
-+     * We keep track of which engines are currently busy in the
-+     * PC_NXC_WATCH_ASSIGN register directly. When the firmware reads
-+     * the register, we don't return its value but the ID of an engine
-+     * it can use.
-+     * There are 4 engines. 0xFF means no engine is available.
-+     */
-+    val = pnv_xive2_cache_watch_assign(engine_mask, &state);
-+    if (val != 0xFF) {
-+        xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3] = state;
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_nxc_cache_watch_release(PnvXive2 *xive,
-+                                              uint8_t watch_engine)
-+{
-+    uint64_t state = xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3];
-+
-+    pnv_xive2_cache_watch_release(&state, watch_engine);
-+    xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3] = state;
-+}
-+
- static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
-                                      unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint64_t val = -1;
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1173,24 +1312,44 @@ static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
-         val = xive->pc_regs[reg];
-         break;
- 
-+    case PC_NXC_WATCH_ASSIGN:
-+        val = pnv_xive2_nxc_cache_watch_assign(xive);
-+        break;
-+
-+    case PC_NXC_PROC_CONFIG:
-+        val = xive->pc_regs[reg];
-+        break;
-+
-     /*
-      * cache updates
-      */
-     case PC_NXC_WATCH0_SPEC:
-+    case PC_NXC_WATCH1_SPEC:
-+    case PC_NXC_WATCH2_SPEC:
-+    case PC_NXC_WATCH3_SPEC:
-+        watch_engine = (offset - PC_NXC_WATCH0_SPEC) >> 6;
-         xive->pc_regs[reg] &= ~(PC_NXC_WATCH_FULL | PC_NXC_WATCH_CONFLICT);
-+        pnv_xive2_nxc_cache_watch_release(xive, watch_engine);
-         val = xive->pc_regs[reg];
-         break;
- 
-     case PC_NXC_WATCH0_DATA0:
-+    case PC_NXC_WATCH1_DATA0:
-+    case PC_NXC_WATCH2_DATA0:
-+    case PC_NXC_WATCH3_DATA0:
-        /*
-         * Load DATA registers from cache with data requested by the
-         * SPEC register
-         */
--        pnv_xive2_nvp_cache_load(xive);
-+        watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
-+        pnv_xive2_nvp_cache_load(xive, watch_engine);
-         val = xive->pc_regs[reg];
-         break;
- 
-     case PC_NXC_WATCH0_DATA1 ... PC_NXC_WATCH0_DATA3:
-+    case PC_NXC_WATCH1_DATA1 ... PC_NXC_WATCH1_DATA3:
-+    case PC_NXC_WATCH2_DATA1 ... PC_NXC_WATCH2_DATA3:
-+    case PC_NXC_WATCH3_DATA1 ... PC_NXC_WATCH3_DATA3:
-         val = xive->pc_regs[reg];
-         break;
- 
-@@ -1219,6 +1378,7 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
- 
-@@ -1231,19 +1391,32 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
-     case PC_VSD_TABLE_DATA:
-         break;
- 
-+    case PC_NXC_PROC_CONFIG:
-+        break;
-+
-     /*
-      * cache updates
-      */
-     case PC_NXC_WATCH0_SPEC:
-+    case PC_NXC_WATCH1_SPEC:
-+    case PC_NXC_WATCH2_SPEC:
-+    case PC_NXC_WATCH3_SPEC:
-         val &= ~PC_NXC_WATCH_CONFLICT; /* HW will set this bit */
-         break;
- 
-     case PC_NXC_WATCH0_DATA1 ... PC_NXC_WATCH0_DATA3:
-+    case PC_NXC_WATCH1_DATA1 ... PC_NXC_WATCH1_DATA3:
-+    case PC_NXC_WATCH2_DATA1 ... PC_NXC_WATCH2_DATA3:
-+    case PC_NXC_WATCH3_DATA1 ... PC_NXC_WATCH3_DATA3:
-         break;
-     case PC_NXC_WATCH0_DATA0:
-+    case PC_NXC_WATCH1_DATA0:
-+    case PC_NXC_WATCH2_DATA0:
-+    case PC_NXC_WATCH3_DATA0:
-         /* writing to DATA0 triggers the cache write */
-+        watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
-         xive->pc_regs[reg] = val;
--        pnv_xive2_nvp_update(xive);
-+        pnv_xive2_nvp_update(xive, watch_engine);
-         break;
- 
-    /* case PC_NXC_FLUSH_CTRL: */
-@@ -1814,6 +1987,12 @@ static void pnv_xive2_reset(void *dev)
-     xive->cq_regs[CQ_XIVE_CFG >> 3] |=
-         SETFIELD(CQ_XIVE_CFG_HYP_HARD_BLOCK_ID, 0ull, xive->chip->chip_id);
- 
-+    /* VC and PC cache watch assign mechanism */
-+    xive->vc_regs[VC_ENDC_CFG >> 3] =
-+        SETFIELD(VC_ENDC_CFG_CACHE_WATCH_ASSIGN, 0ull, 0b0111);
-+    xive->pc_regs[PC_NXC_PROC_CONFIG >> 3] =
-+        SETFIELD(PC_NXC_PROC_CONFIG_WATCH_ASSIGN, 0ull, 0b0111);
-+
-     /* Set default page size to 64k */
-     xive->ic_shift = xive->esb_shift = xive->end_shift = 16;
-     xive->nvc_shift = xive->nvpg_shift = xive->tm_shift = 16;
--- 
+Michael Kowal (1):
+  pnv/xive2: Structure/define alignment changes
+
+Nicholas Piggin (1):
+  pnv/xive: Support cache flush and queue sync inject with notifications
+
+ hw/intc/pnv_xive2_regs.h    | 108 +++++++
+ include/hw/ppc/pnv_chip.h   |   1 +
+ include/hw/ppc/xive2_regs.h |   9 +
+ hw/intc/pnv_xive2.c         | 566 ++++++++++++++++++++++++++++++------
+ hw/intc/xive.c              |  12 +-
+ hw/intc/xive2.c             |  33 ++-
+ 6 files changed, 633 insertions(+), 96 deletions(-)
+
+--
 2.43.0
 
 
