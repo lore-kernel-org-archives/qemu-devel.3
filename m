@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29132C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50406C3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jul 2024 02:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWRze-0006aL-7b; Tue, 23 Jul 2024 22:44:43 -0400
+	id 1sWSDB-00048p-DL; Tue, 23 Jul 2024 22:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sWRzV-0006Yk-7t; Tue, 23 Jul 2024 22:44:34 -0400
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWSD9-000480-Q6
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:58:39 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sWRzS-0006Rl-5n; Tue, 23 Jul 2024 22:44:32 -0400
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-4928d2f45e2so1363741137.0; 
- Tue, 23 Jul 2024 19:44:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sWSD8-0001eI-5e
+ for qemu-devel@nongnu.org; Tue, 23 Jul 2024 22:58:39 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2cb6662ba3aso323063a91.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jul 2024 19:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721789067; x=1722393867; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OjE9bHM+7VMQ1ZrAw/PpnOKSkmeUm2Q6befBxSOhlSs=;
- b=JEn2l081JGRNQCn5lfm2mLUPqdLPFd+zKNb801mJv9uU9r26mxD+OETDK4XchFnq9F
- S4l2z8RHCFxi3Dlaeap5I71x1is0DciXYSmh6dpeMGZlsI8jFHQaOo6v5EwCiSSt/ka3
- E8OaRtsMLa2vEr5RFLd/8FJgPi+6CLEv7H8DdZl9VLaffSdVqgV67Ohmw7bg26Z4uNpc
- ibVqOeQcRhqQ+XqjvcK7vvNinY3ypujj3WK1+5QagTBIwOTuADGo3ZEmGZ0t0/ebwC94
- N9aNH7K9ACiYFIB6o5KPzZL+OQBvRT+KQTAesu6Gzp6nklywSwwXJv3m8l6BI5rFRwFA
- RLIg==
+ d=linaro.org; s=google; t=1721789916; x=1722394716; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RHra870W0UMXidD5WJs462EBk+2460EXTNYCSm+SuLk=;
+ b=nM5mk6WhcWuy21/fstqnp2eKNZX656I+h+MD+1PksYXhRN9gUQJSVhHv35dG0yJgHM
+ QuRIBQV6U1xtLRgoA5DljuRFm+zTJaPGzF+UJKKq0ezlD14QpO9G0vn5VAwYO4VDDYlg
+ dvO5UGiL9i635sW0aWl7KDGBIiSPctm8qbJJ6EypSz3jlFtvCn8BNmywJVj9Cm+VFvel
+ RZstixFoaK+1HVSZJD3zx5LsMN4xMr1DI8NrWpSLQGOgnP3uFirUp00jbt/hDfHKD+9P
+ dUAtJQ9FKGDW6Nw+92FQtX7XVm2UsXpLgIRXDxTVC2evjCLWEH91yF159C0rvCi9pd0c
+ 6L/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721789067; x=1722393867;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OjE9bHM+7VMQ1ZrAw/PpnOKSkmeUm2Q6befBxSOhlSs=;
- b=UuiZQuTMmNB+X1v64AF0YK7yKiSlAjCZverK3PVd9mOwsCAdoc0UZB/Adc1byx0Xeh
- GrvUaCupG/UlStFMxLLGlcNqeHxAoDbbc5WWKvMSHOG4HKaPyO+QuR3IS873Ja+lTo6v
- 2GQGU/VSPPQhCaBTPuiSeFMvOHaFAqapwj4+BHaIooH1lfY0T3xzKfL5n9rytljWbToZ
- 49aiwog800xNWXe944mFQ+i2dDGvumWYKet1Buu9k/M7UQuJq1ji/TjG+vSsq9m7TeES
- uY16UvwtSGSEuSN1YDUKZeHNfHS4ZIZGfChJBhyl7mX75ifCb5caxc/XTTnRRl2E7srY
- COmw==
+ d=1e100.net; s=20230601; t=1721789916; x=1722394716;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RHra870W0UMXidD5WJs462EBk+2460EXTNYCSm+SuLk=;
+ b=A8pCxzdyr/+iAlsAMZzfveo0qcb/w40mBQrFgFn9d8E0NemR6jRmDAYz+DOJpr5Kc8
+ powlovv1i0cLdQwOjcF34KMzFKCKups3ydH0qicbbDQ3GrX3Bao8FGhJZVxyZqRcWD+4
+ zjVztZZbIklT7EzdeQcjhXy/omL05gIHhBfEVEuQ0na+Xxv2AZvwitTVAvHoX6ZjQ1w3
+ TQ0sguKh36Aui96Q1lHhzo7MVZGlWPMH3VmLfF1qIZLnpJWi3rAc0pt5bGk5l+dXIVRN
+ 3XdlA2JVUmYcfv0UycVTZfT133Mxy8iC1zDXVrDXIwlHrIqtcNeKDMjVrWQo8Ld11c99
+ /BgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlN6evAV4i5C5L7QpJY0hPOtV6EjpOm5sJlcdSLJ0Ub5nfhpUwrIYnIBnaq67iJ5F8Q0mCdLNQD9UnC0SXJKfSbbUO4Is=
-X-Gm-Message-State: AOJu0YwL4avelq1gVMa27Eo19fChJJkJ2XgwgaSdqYebP9lHxLd6gocN
- dHNjlelunZuTKak5p4iFws4Xn3+4OXuCJyetkHLsfYVCMU3I8tjapcXwJHHyqJ9xPSlEF3Bm3Yv
- DPvdE8yvhDr6Obc+kRA7Kr7zaeP0=
-X-Google-Smtp-Source: AGHT+IE7Y28RIaR5uPCQ1b69+Rm8t+h4LkW7MCnC9JOhEq9g/CZPBFicAYAvGCAIVU/MTLqEyv7Qw1NqHdZ62PcYZM0=
-X-Received: by 2002:a05:6102:1523:b0:492:94a5:fa1e with SMTP id
- ada2fe7eead31-493c19eb05dmr2033143137.22.1721789067158; Tue, 23 Jul 2024
- 19:44:27 -0700 (PDT)
+ AJvYcCWfZWV5mMtgDEKYSExuuXbCNJrVQ4Lfi/RiieFxQTyujcWIqmyIOhnhCuvrcZqbqIeKxMNIkoGuMaR92VA77rvaSbya1ZE=
+X-Gm-Message-State: AOJu0Yy7czQ0qTWeDcZhmaPwH66iVwx5nWkqBBNMM6HVLWxOxwzCJIzH
+ FP3W3pNVID/4a3oOH58WTFGjs1TLkyseYtyU4YD65+34lqcvqUld8uz5yQ0ITrQXrftOpkd07sZ
+ Y3sQRoQ==
+X-Google-Smtp-Source: AGHT+IHDmSTsI0ACQU5MreosaB5JdAY+47k2JFEfT2hNGmnYBxeZQvVZqz+HUcr8JxSJrXfuL87HVA==
+X-Received: by 2002:a17:90b:33cb:b0:2c9:75a7:5c25 with SMTP id
+ 98e67ed59e1d1-2cdb9443005mr893069a91.15.1721789916101; 
+ Tue, 23 Jul 2024 19:58:36 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-79f0bb06e79sm7019297a12.41.2024.07.23.19.58.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jul 2024 19:58:35 -0700 (PDT)
+Message-ID: <0a9491c4-c1cc-430a-a7fc-b88fe154f61f@linaro.org>
+Date: Wed, 24 Jul 2024 12:58:28 +1000
 MIME-Version: 1.0
-References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 24 Jul 2024 12:44:01 +1000
-Message-ID: <CAKmqyKN=S9o32K0G8k5NqyMs=Xm+gSNBgnbRi3AjbvOubXoDwA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/8] target/riscv: Expose RV32 cpu to RV64 QEMU
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, philmd@linaro.org, alex.bennee@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/11] target/i386, HPET changes for QEMU 9.1 soft freeze
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240723141529.551737-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240723141529.551737-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,71 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 20, 2024 at 9:15=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
->
-> This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
-> qemu-system-riscv64 can directly boot a RV32 Linux.
->
-> This patch set has been tested with 6.9.0 Linux Image.
-> And add an avocado tuxrun test in tests/avocado.
->
-> v6:
->   Use TUXRUN test case instead of boot_linux_console
->   Add any32 and max32 cpu for RV64 QEMU
->
-> v5:
->   Rebase to master and add tags
->
-> v4:
->   Drop UL completely in PATCH v3 2/7, 4/7, 5/7.
->   Avocado: Add "if=3Dnone" to "-drive" option in QEMU command line
->
-> v3:
->   Rebase to the master branch
->
-> v2:
->   Remove the line that was inadvertently left in PATCH v1 4/6.
->   Add an avocado test.
->
-> v1:
->   https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00501.html
->
->
-> LIU Zhiwei (2):
->   target/riscv: Add any32 and max32 CPU for RV64 QEMU
->   tests/avocado: Boot Linux for RV32 cpu on RV64 QEMU
->
-> TANG Tiancheng (6):
->   target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
->   target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
->   target/riscv: Correct SXL return value for RV32 in RV64 QEMU
->   target/riscv: Detect sxl to set bit width for RV32 in RV64
->   target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
->   target/riscv: Enable RV32 CPU support in RV64 QEMU
+On 7/24/24 00:15, Paolo Bonzini wrote:
+> The following changes since commit a7ddb48bd1363c8bcdf42776d320289c42191f01:
+> 
+>    Merge tag 'pull-aspeed-20240721' ofhttps://github.com/legoater/qemu into staging (2024-07-22 07:52:05 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> 
+> for you to fetch changes up to 7c912ffb59e8137091894d767433e65c3df8b0bf:
+> 
+>    hpet: avoid timer storms on periodic timers (2024-07-22 19:19:44 +0200)
+> 
+> ----------------------------------------------------------------
+> * target/i386/kvm: support for reading RAPL MSRs using a helper program
+> * hpet: emulation improvements
 
-Thanks!
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Applied to riscv-to-apply.next
-
-Alistair
-
->
->  configs/targets/riscv64-softmmu.mak |  2 +-
->  hw/riscv/boot.c                     | 35 +++++++++++++++++++----------
->  hw/riscv/sifive_u.c                 |  3 ++-
->  include/hw/riscv/boot.h             |  4 +++-
->  include/hw/riscv/boot_opensbi.h     | 29 ++++++++++++++++++++++++
->  target/riscv/cpu-qom.h              |  2 ++
->  target/riscv/cpu.c                  | 30 +++++++++++++++++--------
->  target/riscv/cpu.h                  |  5 ++++-
->  target/riscv/cpu_helper.c           | 25 +++++++++++++++------
->  target/riscv/pmp.c                  |  2 +-
->  tests/avocado/tuxrun_baselines.py   | 16 +++++++++++++
->  11 files changed, 120 insertions(+), 33 deletions(-)
->
-> --
-> 2.25.1
->
->
+r~
 
