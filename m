@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B4EC3DA70
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D81C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Ae-00013k-BX; Thu, 25 Jul 2024 19:46:52 -0400
+	id 1sX8Af-00018m-Fj; Thu, 25 Jul 2024 19:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8AR-0000Bv-OY
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:39 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sX8AX-0000a7-9v
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:45 -0400
+Received: from mail-il1-x129.google.com ([2607:f8b0:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8AP-0005Lv-SB
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:39 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70d333d57cdso351644b3a.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:37 -0700 (PDT)
+ id 1sX8AV-0005NR-5X
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:44 -0400
+Received: by mail-il1-x129.google.com with SMTP id
+ e9e14a558f8ab-381f24d6bc4so4098725ab.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951196; x=1722555996;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951202; x=1722556002;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XpTED6uOZV4AODyPSsvTHdTqj2NIb+fx5aC8tDZo5rs=;
- b=TwTqwSkZ9R1GCqBM5jrwoBL5WUoVd2OyA06dvOQh5+5PPFC8BwQSK/ll98PPGT8o1F
- wusVhFpqqdQN/5uvYicMklaRJ+WlnvNWJNGX7jQOskKpj9C5WdH4pl7stUaAM7hhYJ+P
- h4ssgFjARCX+tsc1s6e1kAA0QhWMQ/hP9NLAgVR7Y7HOovkA6cms0eeUsUZm10iGZxHD
- E+fC3tHs/f12vLxdtauhjacatmDZeJ1bh2RFsE8CJ1H+lsLGkXswCq24gT6D5UH0YVTN
- Ayc6bmfGVUaH34pMwqZg2yNaimPuklVG9pok4C4bhhygd/FdL2iHWiO03ieg5pdrCY20
- +Q+w==
+ bh=uj9qOhBpCT9W/nbC5avAHQrsYFSH2V3flkgQB5x2ClI=;
+ b=RHWukBa5KReBnH/1nZxlBJ+n/1PQ/B7nQCNbiSTmP4ZVSBX9Tv6D3NmHfMeDGS6Ynr
+ C82ms7PvNOOdKeZkGWAqde5WxYaJxKTZTPWp9lNb2k/g8n3MR0HoK+gUcbRArtS7xqxJ
+ EU9I2fUOQzdi5F4mxG4ZMYYjSERjZ9MeAslA361gbS9zwkwR4Jl+DDKx6dQhSKUUGnPs
+ nn2YwNxE0f/WEb3/q8nCROmlnbCPLJCS6WRbhYX3lgnwN7YDwXkPKnVsldnGnY1dLqsC
+ qeIXKkazDdiZGhEUTcduFJB5a+23PFEGwRbq9IPXlGRbjoNIDTOOTElbEtQ+4hW3ZvMQ
+ +sDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951196; x=1722555996;
+ d=1e100.net; s=20230601; t=1721951202; x=1722556002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XpTED6uOZV4AODyPSsvTHdTqj2NIb+fx5aC8tDZo5rs=;
- b=n6ac7Bn0j+sRRtd5BL/PavYrd+VXKzOiHkVMe1DrMlAJitxg7w/8cEd/aK07LuDK+8
- Pu9d68cF9Z2CibvVzVjjaiV1Hz3HOsDKxk0v6WPkmX0TYkBondt8anqpAM/GaI2qQUpY
- lYQpR8oHLDeCHewOzO+VjpL9C7adoSzEeL25u6ZCV5p3k4FUEO/Z1o9g7+YDWaywRJxr
- rNKccYKKoFSCv4B6tHGDFEhWZ55vWwWiRCbUqNBtJCaySpZ7WitUxpmtAjn8Vi7RRtLx
- VzHMwWinY0EsFi4L03Exe7KDDIAOnAze400neC7gLsDhoR+ZsPxfuUqaKR3s2z+p307f
- Eb/g==
+ bh=uj9qOhBpCT9W/nbC5avAHQrsYFSH2V3flkgQB5x2ClI=;
+ b=c3Nzsk6nkzuzldDLjHtz1CtN0PoHe0PFqOPmgLd76TO7glQ3oxDijkOOX3oy0W/tZE
+ RAVh5XObbUb68Z6wFENxt0fMToaesNy510B39Wl5TYryhMVP1qP2zhrE32hh4de5kWi9
+ jwpdMWRs4AVcbc4syjoEI5wpRm3L2DaJu4qL1ROIrlFgAfjwWtkoRvtNi167t7yZOuUM
+ bY1RXPu8pjJXOArrD4WA0fl5mHd/sT/AC3rok0ZQaJs+ePIzM3ZlDFOA1/UEviwhfwj1
+ XEhi2pkFU6r+8m5Ry5eBTsanqY6WC1cJUY5nY5ANT4OXd7/tVBWPZF+Na5WOOh5gLti7
+ gavw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKpR2e7dpL1r7DtSgjHNqvtOnVmqSf+mY1VDwRPLta3OSvo+NDNTkAoDR5wZHjKxYNQkP5zjGXhxWEyW/fze9j60W2QmQ=
-X-Gm-Message-State: AOJu0YxpQnQj6XQCKMimnrWPzzDtWDfJOulk2/4CfKMuZXb7hZ3BAsFo
- 6EJwD2IMYj6JoCKRP8YVhSwU8nTqQMRvJ/aO0qdRCDkK0VmCqAm2mdZP2zk2UTY=
-X-Google-Smtp-Source: AGHT+IFI0J2JekyB983Um2t6CxnIQhKGi57Sap+WgRpr4QXi3k+FAZtMU7q1m/NG/gWxcK6i7wDk/Q==
-X-Received: by 2002:a05:6a00:8597:b0:70a:f3de:3f2 with SMTP id
- d2e1a72fcca58-70eae8520d5mr4121007b3a.3.1721951196414; 
- Thu, 25 Jul 2024 16:46:36 -0700 (PDT)
+ AJvYcCXhH73h2mgaL8DKx54kIps9x7DIDsP/s99IeZSJPDx6Ch6xRbuTtL3SaqM2zS8ToPfj116AE7PIRHx09UJds6HLjpRUBRE=
+X-Gm-Message-State: AOJu0YysLFezAJvZ1C9XAXLV4zoIBW4dYOtIAwNKCC2ohlpBLRS9uCl7
+ 0WXkn6dUGC9ref4MGX0vYZike9wIGT/HafiFXe83RVsyrx3fM/1XuuHdTsAUBBk=
+X-Google-Smtp-Source: AGHT+IFZF2Y150hG36srXsae5j+LoDyBCvqWbbzlzdW4nMtoZOcidZNSbXQSx6jPlXjLHZFJuh7B3A==
+X-Received: by 2002:a05:6e02:13af:b0:398:b11a:4286 with SMTP id
+ e9e14a558f8ab-39a23fae551mr44546515ab.14.1721951201901; 
+ Thu, 25 Jul 2024 16:46:41 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.35
+ d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:46:36 -0700 (PDT)
+ Thu, 25 Jul 2024 16:46:41 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
  andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
  bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH 10/24] target/riscv: Add zicfiss extension
-Date: Thu, 25 Jul 2024 16:45:59 -0700
-Message-ID: <20240725234614.3850142-11-debug@rivosinc.com>
+Subject: [PATCH 14/24] target/riscv: compressed encodings for sspush and
+ sspopchk
+Date: Thu, 25 Jul 2024 16:46:03 -0700
+Message-ID: <20240725234614.3850142-15-debug@rivosinc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240725234614.3850142-1-debug@rivosinc.com>
 References: <20240725234614.3850142-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::129;
+ envelope-from=debug@rivosinc.com; helo=mail-il1-x129.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,80 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-zicfiss [1] riscv cpu extension enables backward control flow integrity.
+sspush/sspopchk have compressed encodings carved out of zcmops.
+compressed sspush is designated as c.mop.1 while compressed sspopchk
+is designated as c.mop.5.
 
-This patch sets up space for zicfiss extension in cpuconfig. And imple-
-ments dependency on zicsr, zimop and zcmop extensions.
-
-[1] - https://github.com/riscv/riscv-cfi
+Note that c.sspush x1 exists while c.sspush x5 doesn't. Similarly
+c.sspopchk x5 exists while c.sspopchk x1 doesn't.
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 Co-developed-by: Jim Shu <jim.shu@sifive.com>
 Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 ---
- target/riscv/cpu.c         |  2 ++
- target/riscv/cpu_cfg.h     |  1 +
- target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
- 3 files changed, 18 insertions(+)
+ target/riscv/insn16.decode | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e1526c7ab5..54fcf380ff 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -107,6 +107,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
-+    ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
-     ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-     ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
-     ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-@@ -1482,6 +1483,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
-     MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-     MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-+    MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
-     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
-     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 88d5defbb5..2499f38407 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -68,6 +68,7 @@ struct RISCVCPUConfig {
-     bool ext_zicbop;
-     bool ext_zicboz;
-     bool ext_zicfilp;
-+    bool ext_zicfiss;
-     bool ext_zicond;
-     bool ext_zihintntl;
-     bool ext_zihintpause;
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ed19586c9d..4fd2fd7a28 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -618,6 +618,21 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         cpu->cfg.ext_zihpm = false;
-     }
- 
-+    if (cpu->cfg.ext_zicfiss) {
-+        if (!cpu->cfg.ext_zicsr) {
-+            error_setg(errp, "zicfiss extension requires zicsr extension");
-+            return;
-+        }
-+        if (!cpu->cfg.ext_zimop) {
-+            error_setg(errp, "zicfiss extension requires zimop extension");
-+            return;
-+        }
-+        if (cpu->cfg.ext_zca && !cpu->cfg.ext_zcmop) {
-+            error_setg(errp, "zicfiss with zca requires zcmop extension");
-+            return;
-+        }
-+    }
-+
-     if (!cpu->cfg.ext_zihpm) {
-         cpu->cfg.pmu_mask = 0;
-         cpu->pmu_avail_ctrs = 0;
+diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
+index 3953bcf82d..d9fb74fef6 100644
+--- a/target/riscv/insn16.decode
++++ b/target/riscv/insn16.decode
+@@ -69,10 +69,12 @@
+ # Formats 16:
+ @cr        ....  ..... .....  .. &r      rs2=%rs2_5       rs1=%rd     %rd
+ @ci        ... . ..... .....  .. &i      imm=%imm_ci      rs1=%rd     %rd
++@c_sspop   ... . ..... .....  .. &i      imm=0      rs1=5     rd=0
+ @cl_q      ... . .....  ..... .. &i      imm=%uimm_cl_q   rs1=%rs1_3  rd=%rs2_3
+ @cl_d      ... ... ... .. ... .. &i      imm=%uimm_cl_d   rs1=%rs1_3  rd=%rs2_3
+ @cl_w      ... ... ... .. ... .. &i      imm=%uimm_cl_w   rs1=%rs1_3  rd=%rs2_3
+ @cs_2      ... ... ... .. ... .. &r      rs2=%rs2_3       rs1=%rs1_3  rd=%rs1_3
++@c_sspush  ... ... ... .. ... .. &s      imm=0 rs1=0 rs2=1
+ @cs_q      ... ... ... .. ... .. &s      imm=%uimm_cl_q   rs1=%rs1_3  rs2=%rs2_3
+ @cs_d      ... ... ... .. ... .. &s      imm=%uimm_cl_d   rs1=%rs1_3  rs2=%rs2_3
+ @cs_w      ... ... ... .. ... .. &s      imm=%uimm_cl_w   rs1=%rs1_3  rs2=%rs2_3
+@@ -140,6 +142,8 @@ sw                110  ... ... .. ... 00 @cs_w
+ addi              000 .  .....  ..... 01 @ci
+ addi              010 .  .....  ..... 01 @c_li
+ {
++  sspush          011 0  00001  00000 01 @c_sspush # c.sspush x1 carving out of zcmops
++  sspopchk        011 0  00101  00000 01 @c_sspop # c.sspopchk x5 carving out of zcmops
+   c_mop_n         011 0 0 n:3 1 00000 01
+   illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
+   addi            011 .  00010  ..... 01 @c_addi16sp
 -- 
 2.44.0
 
