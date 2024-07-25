@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550B4C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E3FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Al-0001Yl-C2; Thu, 25 Jul 2024 19:46:59 -0400
+	id 1sX8Ab-0000py-6i; Thu, 25 Jul 2024 19:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Aj-0001SJ-Sc
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:57 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sX8AQ-00005g-6C
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:39 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Ai-0005RN-BW
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:57 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70aec66c936so380856b3a.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:55 -0700 (PDT)
+ id 1sX8AO-0005LY-Gp
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:37 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-70938328a0aso212303a34.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951215; x=1722556015;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951195; x=1722555995;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w3J0a7Kk8VH78Rf/KPYKxAa9BurTiYRdK3RsGWQBTas=;
- b=KDft8ywDUmfAdVLgDqkQFaXE2UIA0e/5k80nTz48axenhr2TKZ9jHjR6XS4Z+mIwik
- AtEHCqs9LY4HQcfZPjxE77CPXAwQw2w7Vv2g3uQk/3R9yIJq90E/XTL1LOSDAyCZhi44
- GUwgZPlmIKTyDD42X0HXCcrNfFI9ItbseQ+OkW1J8H6mC+X4/ZmYzILgYrmWX25rgzPl
- 5l3NWgIi2m/ws+hP6P1YzWHDLDN4FxfaTYsifIgDmt56DVqme122tP3kptyg+6Xa39m1
- Ga7Tv5U51+8emzguAzkkPf0UpxO5dyPsyZRTL4ZE6RLBxK3YhehsbI2z0dXacutbW5Hx
- uIBw==
+ bh=hFgFtJisZmDduK/TVKWagBehgT0Nl+9kjWGTzeVvu0Q=;
+ b=xj706uYh9ZCe2IEFcIETPrOvpjR7MDL0latOS4E1pSF6IqQN5G2jQBLsvq+ODFqFsc
+ PEsEoiNmCsQnlUJHgFxXnjsnkHyvVg/kdY4fg83kt/94ZvRJ8kqf5B0ciV54fd1MSJ0J
+ T0+uOGzqKp5bhl1jb4ZQonhIqf4TCm+Fg1VMhAymnjLw18ZjNesC6FIKnT5L5uBGRmEZ
+ 2+HzT/2jEQc7Pycux+eFc9hF46aYK57Kd24IFD9JF8TsRaEGnQ/m1qz5rvTNoSAiv7G8
+ YuUgYW9ifpEuPwEG1cnH6EET3MSKT0c2PZK+e0tPIkk2v7JbaHDT+9WUdUZ4W86+BPWA
+ oxZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951215; x=1722556015;
+ d=1e100.net; s=20230601; t=1721951195; x=1722555995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w3J0a7Kk8VH78Rf/KPYKxAa9BurTiYRdK3RsGWQBTas=;
- b=EEib/jEOyR2NgiMRJ2CZSfYxQeZT18rlq6pjcORq1PIcrIxM6uAGpFgtSVpojVffjX
- R++nUB3+eyQrjCNn6wF+gB9Bu6Z960umU8GY7RiILOETpdPLlX9sscYDpxNXRlrRUd7c
- xMO32f3BstuPSvBvV0Pzn0OfcUD2WB2eyLQR4ZM+xndU8zthCdmfy55Q1Xd+ousSGsdY
- tRKs0TrYBFMdjmqy4P5hjL7F7G19Xr7a/Nessf4wCo7vY6JxWdQRzwCv5z7Q+KDYkobm
- XqW+QHrUtcCKZuGhb+cSO7J5Ctf+C9GVqrmL3T6SDxMfZxUPeP0vA/Y3BfUQGewW21DD
- HSxw==
+ bh=hFgFtJisZmDduK/TVKWagBehgT0Nl+9kjWGTzeVvu0Q=;
+ b=e8J2ttyAlehtOX7fgbY8njY6qZ5cTxYZXfZOnjuqEzAZx4ykDuZENJUOoizIZp2Yd8
+ QinZgz3zdMYOsiIicHxuHjgDvU44m7g++B167199Q1WpWt29uXZrH43S6wR1oALJnP7k
+ f2UEZVSqAN7A3X2HoNjov999ARxslHkUgccPqPa+d2GhWaU2KfDtCIKGigsBiCiq/Wks
+ 3Ma5c43pcG1ugmNBfVyXUJ8u4qAoaetYSI6p6HKv7CD3ulhxDTpnneufbXKRJqvDFV/F
+ hkcJ0U8oNX1g0xdRSyzfDoNEQ1e2+nN52PjaX6DJKglnPZQcymTvJ4R5i8QKJXzQVs1X
+ vbFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDpBKxb6hUdc2Lyy6xFag+yOfINk8FB5P/Kkqkp8dS5FnjXxpNl8hEHufmO4zrTvG5/6j+DrgAFQ+JNKcq91i2FeIQ23Y=
-X-Gm-Message-State: AOJu0YyeRV/1X3LYbe+5Fdd/xckX/efk07lnmALdv4IjFHDIDM8NHSFx
- XDzTjBl/Sd8XTQ8qdNp13YpBZrU4Mg658pp8XOZoN2JiDM0dwbgSwW8x6UiSiHk=
-X-Google-Smtp-Source: AGHT+IE6fe7ud2CzHt6R4CiQKeHUQrgDRpPpp6tLebVMZb6di1NmrdU/7LPVB4BVPsJCShBbFwyxlQ==
-X-Received: by 2002:a05:6a00:66e4:b0:706:3580:ac4c with SMTP id
- d2e1a72fcca58-70eaa887cc0mr5009740b3a.17.1721951215014; 
- Thu, 25 Jul 2024 16:46:55 -0700 (PDT)
+ AJvYcCXlKj6lmZO4KSM1rQToEiz/W3XuvHk1Ffz7nRIXuYB/NXOT7ry4cu6SNo/8veRDYSPI2TCjsfewa755MAG/emFBI5Tgm2I=
+X-Gm-Message-State: AOJu0YyXYyxiHpxBRTHKLajglw2Dycq+Sk0HyYaw4OgYN+oUA49LJKy/
+ WzWlS5qW4WMIzxYAFIEkCAY6nKmRGrdoE6AvmMw2i1Rdt0wLhh6E+U0Ts15V9HM=
+X-Google-Smtp-Source: AGHT+IFbvynicoEyXFBjazSX2AbqmrA7N2ek8na4f8LxgVxjG3lJzvKH7r5eWOM2ZBLpc9vAC90DXg==
+X-Received: by 2002:a05:6870:89a3:b0:261:1046:66fc with SMTP id
+ 586e51a60fabf-266cc0efd61mr4010498fac.4.1721951195155; 
+ Thu, 25 Jul 2024 16:46:35 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.53
+ d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:46:54 -0700 (PDT)
+ Thu, 25 Jul 2024 16:46:34 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
  andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
  bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH 24/24] linux-user/riscv: Adding zicfiss/lp extension in
- hwprobe syscall
-Date: Thu, 25 Jul 2024 16:46:13 -0700
-Message-ID: <20240725234614.3850142-25-debug@rivosinc.com>
+Subject: [PATCH 09/24] linux-user/riscv: implement indirect branch tracking
+ prctls
+Date: Thu, 25 Jul 2024 16:45:58 -0700
+Message-ID: <20240725234614.3850142-10-debug@rivosinc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240725234614.3850142-1-debug@rivosinc.com>
 References: <20240725234614.3850142-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=debug@rivosinc.com; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,39 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add zicfiss/lp extensions in the ext0 key of hwprobe syscall.
-It is aligned with Linux CFI patchset.
+Implements indirect branch tracking prctls for riscv. Setting and clearing
+branch tracking prctl simply turns on/off `ufcfien` field in `env`.
+tb flush is needed because branch tracking itself leverages tb creation
+logic.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
+locking branch tracking (forward cfi) is not implemented yet (no need yet)
+but added for completeness (kernel patches have this prctl)
+
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Jesse Huang <jesse.huang@sifive.com>
+Co-developed-by: Jim Shu <jim.shu@sifive.com>
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 ---
- linux-user/syscall.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ linux-user/riscv/target_prctl.h | 43 +++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f879be7cfe..f2f2164ee5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8882,6 +8882,8 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
- #define     RISCV_HWPROBE_EXT_ZTSO          (1ULL << 33)
- #define     RISCV_HWPROBE_EXT_ZACAS         (1ULL << 34)
- #define     RISCV_HWPROBE_EXT_ZICOND        (1ULL << 35)
-+#define     RISCV_HWPROBE_EXT_ZICFILP       (1ULL << 36)
-+#define     RISCV_HWPROBE_EXT_ZICFISS       (1ULL << 37)
- 
- #define RISCV_HWPROBE_KEY_CPUPERF_0     5
- #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
-@@ -9000,6 +9002,10 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-                      RISCV_HWPROBE_EXT_ZACAS : 0;
-             value |= cfg->ext_zicond ?
-                      RISCV_HWPROBE_EXT_ZICOND : 0;
-+            value |= cfg->ext_zicfilp ?
-+                     RISCV_HWPROBE_EXT_ZICFILP : 0;
-+            value |= cfg->ext_zicfiss ?
-+                     RISCV_HWPROBE_EXT_ZICFISS : 0;
-             __put_user(value, &pair->value);
-             break;
-         case RISCV_HWPROBE_KEY_CPUPERF_0:
+diff --git a/linux-user/riscv/target_prctl.h b/linux-user/riscv/target_prctl.h
+index eb53b31ad5..d7f9f954c9 100644
+--- a/linux-user/riscv/target_prctl.h
++++ b/linux-user/riscv/target_prctl.h
+@@ -1 +1,44 @@
+ /* No special prctl support required. */
++#ifndef RISCV_TARGET_PRCTL_H
++#define RISCV_TARGET_PRCTL_H
++
++/*
++ * -TARGET_EINVAL: Unsupported/Invalid flag for this architecture
++ * -TARGET_EACCES: try to set an already set CFI feature
++ * -TARGET_ENOENT: CFI feature is not supported by CPU
++ */
++static abi_long do_prctl_cfi(CPUArchState *env,
++                                 abi_long option, abi_long flag)
++{
++    if (env_archcpu(env)->cfg.ext_zicfilp) {
++
++        switch (option) {
++        case PR_GET_INDIR_BR_LP_STATUS:
++            abi_ulong fcfi_status = 0;
++            /* indirect branch tracking is enabled on the task or not */
++            fcfi_status |= (env->ufcfien ? PR_INDIR_BR_LP_ENABLE : 0);
++            return copy_to_user(flag, &fcfi_status, sizeof(fcfi_status)) ? \
++                   -EFAULT : 0;
++
++        case PR_SET_INDIR_BR_LP_STATUS:
++            /* if any other bit is set, its invalid param */
++            if (flag & ~PR_INDIR_BR_LP_ENABLE) {
++                return -TARGET_EINVAL;
++            }
++            /* set or clear branch tracking */
++            env->ufcfien = (flag & PR_INDIR_BR_LP_ENABLE);
++            tb_flush(env_cpu(env));
++            return 0;
++
++        /* locking not implemented (also not needed for qemu-user) yet */
++        case PR_LOCK_INDIR_BR_LP_STATUS:
++            return -TARGET_EINVAL;
++        }
++    }
++
++    return -TARGET_ENOENT;
++}
++
++#define do_prctl_cfi do_prctl_cfi
++
++#endif
 -- 
 2.44.0
 
