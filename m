@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53319C52CDA
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC9E3C49EA1
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8It-0006Mw-2M; Thu, 25 Jul 2024 19:55:23 -0400
+	id 1sX8Jg-0002yd-2O; Thu, 25 Jul 2024 19:56:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Iq-00064I-JD; Thu, 25 Jul 2024 19:55:20 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1sX8JX-0001uD-Eh; Thu, 25 Jul 2024 19:56:06 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Io-0000p3-Q2; Thu, 25 Jul 2024 19:55:20 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-7a2123e9ad5so238221a12.1; 
- Thu, 25 Jul 2024 16:55:17 -0700 (PDT)
+ id 1sX8JV-00012O-Ey; Thu, 25 Jul 2024 19:56:03 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2cd2f89825fso306489a91.1; 
+ Thu, 25 Jul 2024 16:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951716; x=1722556516; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951759; x=1722556559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xijc/4hj1e9Cv15QuxISSCdUEPCfH65xyo31i+c5EP8=;
- b=XGXn6QWdCzoko5f4yEdM0bP/SXQFgWQur3COVcszgcN7RJt6uYxDu+XQ6KTUjCq+tk
- 8B9/MKDGQRMi0K0Pqa2UcRO3kcFC/zqXpEDsUvC4z7VS1/5qQb3Zb2GXeRaV4bGRxAYp
- kzikluConS5RSXeGD1fwjXG69Pc2uEwDIQUCM/s9G/cjmEErvHlQzQiLaHTsHEewrFRY
- pXEZ2u1McFMqcHexqtYuGq5OXWSpQxwS/7qWEDoZ35CwT2iXflKE0DOchsI/AthNaX0l
- 0eZ3s8jFKheg7mcn503+d52MuMrCbEDaDLW8UJaOhIZBmm+OwIGh5HJehJz0k+n9RXzF
- OkSw==
+ bh=KlYy55viqqVF2VCFTUUxxhloxGG2P4zq4cEUU0+GbS0=;
+ b=OharIRxerPHz+1Ku0ow2MQa05l7kp1sJ4IUoR9o5Z1PVeGDJwUo3kJAOqc1yaMSmM3
+ ClzzDLccr1mnfFP4g+SNKVZiG8GseSEACN/AJ/+r8oMmp8oDbH/LNkVItVcy+RumH9KV
+ /ZbrKg2Ea0SJkrLVQcGu7+t0DNx3GS24VJB9KUUKC3OTPnyxJ2ayIMC7aVIa2wtdl4lz
+ imulfV1W+I9x3nKndVy4/AwwSNDki72VhSLL9byM26PbF1LQEfwXTAqJiQ931FpKBcZA
+ Q/8/cVMJ8ZwFgL4PkvZxRHyroS/O27VjJCcEAdfH1i8k8noBl+l81oYvGA53zoR1zDNW
+ EHpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951716; x=1722556516;
+ d=1e100.net; s=20230601; t=1721951759; x=1722556559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xijc/4hj1e9Cv15QuxISSCdUEPCfH65xyo31i+c5EP8=;
- b=Tc9inltUuRTZrSRDuEQA0RDKgkz9fkGOvcqQkdJW5Rt2bTC1NXXEbwbYoX6ZoyWy+j
- 4z9DZ/KFGY8Is5yFhkkgmpftjQfkj8mTTP9VYlfcsg+YK4iwVwDUfznpotyFKwflIVwl
- gXlV3EN6yZLaEi5BukGM6F415yBzoGwgSuyY3ck8jomvjYJ+BiX8tkM/qyA3Mdeu0Ihr
- 8Ugz3bFixxtuXxLrDcpBsOqvtDpmEhFkdRVv69q0mIrkF9E4ozMlZ7H41Lg9BXbMF9It
- 7p6E8hc8Bz6KcXIxs9IBti2wxI85oPrxRoGwiVZCJjs8OIklQZiLYL9yEpFwWFLhCXKZ
- e4Lw==
+ bh=KlYy55viqqVF2VCFTUUxxhloxGG2P4zq4cEUU0+GbS0=;
+ b=OprgnAGf3JqutlKr9TU5CvUCTS4+bIDBJi/heoXXZkVOMXf8Xn5sP6fPuvO6WTmd0y
+ gwoO1geH316W9mcZB7Qa6PXVFyxGX8Na8722tzgmzcvVPc7u7SSlQbVLLzvr/iKmDv1j
+ 1s7/dVnvVw6woi/KS392dayOqLMzOTcQ6lxJuHaOk017Q7gKTgpHQvqicpMfaeoYrcgI
+ JReqjdHr0n0nNf+qzdwhpKW6L7BkijHFaxPEiBdYVHK8D7E3/qWbsvJyVcItGSGzxDzp
+ aRXhlRVawVrE/NZ1LELpMCOrt3SjgJBKgCcOxPOzNT8eM4v1ixbLFNP6rrlFx5sK5Q0O
+ i6Ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVE3gcTZ71kwilLqUOSI6x/wyxzwWGN5KhejWCT7/iLL3uqBIjIZ/Ppt1jv3UdpJ/I/4XUzE5Te834noXCMmSwn7wIB
-X-Gm-Message-State: AOJu0YyX3Li6rNB5kIdj6ZBipOMPQXprcdNPlrmHBRyLcFP/aw8UjXW/
- 5vcOR/MTjDx28qOD9Hrve0ZHAypHnJXS00QvFNn0/gnz8vHz63XUvohxMQ==
-X-Google-Smtp-Source: AGHT+IEDDzA9AoAEhEezcu7/biaGMQV1jV7odWvx5Q/IUkKdHl8Jo3NKgTDaqSrMWfsbGpAylwjcJA==
-X-Received: by 2002:a17:90b:384b:b0:2c9:a831:3b7d with SMTP id
- 98e67ed59e1d1-2cdb9442d61mr10948294a91.18.1721951716413; 
- Thu, 25 Jul 2024 16:55:16 -0700 (PDT)
+ AJvYcCVk+WaBHXM+o0wrqYVSfXCQP4H3Oh9pn0SDA5AKRUtvpV8QIkUnO30H3eoTG29bzjBpUksCugd+yb3E1OMRh4re70M5
+X-Gm-Message-State: AOJu0Yz5BjahyqWdDute/wP4iuVRGgaCKeOsLEgn5u9qvOQp9t8xT5kr
+ QX95LNNsAp4gIDa7DHgeeEkO/Pv0vy+lPsu2aX5EcfU99mkXSpM7Dspvjg==
+X-Google-Smtp-Source: AGHT+IF5tnfXeBAn32gfpC0H/jU7B8lXFfxwPL85HfAHhdys1QcfEJpIo4wpm/xHw/il2ytkcGJSNA==
+X-Received: by 2002:a17:90b:1a85:b0:2c9:5c7c:815d with SMTP id
+ 98e67ed59e1d1-2cf2ea135dcmr3973302a91.22.1721951759152; 
+ Thu, 25 Jul 2024 16:55:59 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.13
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:55:15 -0700 (PDT)
+ Thu, 25 Jul 2024 16:55:58 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Aditya Gupta <adityag@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/96] ppc/pnv: Update Power10's cfam id to use Power10 DD2
-Date: Fri, 26 Jul 2024 09:52:46 +1000
-Message-ID: <20240725235410.451624-14-npiggin@gmail.com>
+Subject: [PULL 26/96] ppc: Add has_smt_siblings property to CPUPPCState
+Date: Fri, 26 Jul 2024 09:52:59 +1000
+Message-ID: <20240725235410.451624-27-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,48 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+The decision to branch out to a slower SMT path in instruction
+emulation will become a bit more complicated with the way that
+"big-core" topology that will be implemented in subsequent changes.
+Hide these details from the wider CPU emulation code with a bool
+has_smt_siblings flag that can be set by machine initialisation.
 
-Power10 DD1.0 was dropped in:
-
-    commit 8f054d9ee825 ("ppc: Drop support for POWER9 and POWER10 DD1 chips")
-
-Use the newer Power10 DD2 chips cfam id.
-
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c            | 2 +-
- tests/qtest/pnv-xscom.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/pnv_core.c       |  3 +++
+ hw/ppc/spapr_cpu_core.c | 12 +++++++++---
+ target/ppc/cpu.h        |  3 ++-
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 6b41d1d2dd..13cebd6ab9 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2087,7 +2087,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
-     PnvChipClass *k = PNV_CHIP_CLASS(klass);
-     static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 7bda29b9c7..8cfa94fbfa 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -288,6 +288,9 @@ static void pnv_core_realize(DeviceState *dev, Error **errp)
+         cpu = POWERPC_CPU(obj);
  
--    k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
-+    k->chip_cfam_id = 0x220da04980000000ull; /* P10 DD2.0 (with NX) */
-     k->cores_mask = POWER10_CORE_MASK;
-     k->chip_pir = pnv_chip_pir_p10;
-     k->intc_create = pnv_chip_power10_intc_create;
-diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-index 6f62941744..5aa1701ea7 100644
---- a/tests/qtest/pnv-xscom.h
-+++ b/tests/qtest/pnv-xscom.h
-@@ -56,7 +56,7 @@ static const PnvChip pnv_chips[] = {
-         .chip_type  = PNV_CHIP_POWER10,
-         .cpu_model  = "POWER10",
-         .xscom_base = 0x000603fc00000000ull,
--        .cfam_id    = 0x120da04900008000ull,
-+        .cfam_id    = 0x220da04980000000ull,
-         .first_core = 0x0,
-         .num_i2c    = 4,
-     },
+         pc->threads[i] = POWERPC_CPU(obj);
++        if (cc->nr_threads > 1) {
++            cpu->env.has_smt_siblings = true;
++        }
+ 
+         snprintf(name, sizeof(name), "thread[%d]", i);
+         object_property_add_child(OBJECT(pc), name, obj);
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index b228c1d498..56090abcd1 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -349,9 +349,15 @@ static void spapr_cpu_core_realize(DeviceState *dev, Error **errp)
+     qemu_register_reset(spapr_cpu_core_reset_handler, sc);
+     sc->threads = g_new0(PowerPCCPU *, cc->nr_threads);
+     for (i = 0; i < cc->nr_threads; i++) {
+-        sc->threads[i] = spapr_create_vcpu(sc, i, errp);
+-        if (!sc->threads[i] ||
+-            !spapr_realize_vcpu(sc->threads[i], spapr, sc, i, errp)) {
++        PowerPCCPU *cpu;
++
++        cpu = spapr_create_vcpu(sc, i, errp);
++        sc->threads[i] = cpu;
++        if (cpu && cc->nr_threads > 1) {
++            cpu->env.has_smt_siblings = true;
++        }
++
++        if (!cpu || !spapr_realize_vcpu(cpu, spapr, sc, i, errp)) {
+             spapr_cpu_core_unrealize(dev);
+             return;
+         }
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 417b284318..321ed2da75 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1248,6 +1248,7 @@ struct CPUArchState {
+     int access_type;
+ 
+     /* For SMT processors */
++    bool has_smt_siblings;
+     int core_index;
+ 
+ #if !defined(CONFIG_USER_ONLY)
+@@ -1514,7 +1515,7 @@ struct PowerPCCPUClass {
+ 
+ static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
+ {
+-    return cs->nr_threads == 1;
++    return !POWERPC_CPU(cs)->env.has_smt_siblings;
+ }
+ 
+ static inline bool ppc_cpu_lpar_single_threaded(CPUState *cs)
 -- 
 2.45.2
 
