@@ -4,68 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01305C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E791C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWwBj-0002CX-V8; Thu, 25 Jul 2024 06:59:12 -0400
+	id 1sWwKC-0000SX-BP; Thu, 25 Jul 2024 07:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sWwBi-0002A1-64; Thu, 25 Jul 2024 06:59:10 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWwK9-0000Qt-CH
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:07:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sWwBf-0003tU-SG; Thu, 25 Jul 2024 06:59:09 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WV79d5jBwz6K9Gq;
- Thu, 25 Jul 2024 18:56:37 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id B2103140594;
- Thu, 25 Jul 2024 18:59:03 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 25 Jul
- 2024 11:59:03 +0100
-Date: Thu, 25 Jul 2024 11:59:02 +0100
-To: Markus Armbruster <armbru@redhat.com>
-CC: Zhao Liu <zhao1.liu@intel.com>, <berrange@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, "Michael S.Tsirkin " <mst@redhat.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eric Blake <eblake@redhat.com>, "Marcelo
- Tosatti" <mtosatti@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>, "Sia Jee
- Heng" <jeeheng.sia@starfivetech.com>, <qemu-devel@nongnu.org>,
- <kvm@vger.kernel.org>, <qemu-riscv@nongnu.org>, <qemu-arm@nongnu.org>,
- "Zhenyu Wang" <zhenyu.z.wang@intel.com>, Dapeng Mi
- <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
-Message-ID: <20240725115902.000037e4@Huawei.com>
-In-Reply-To: <20240725115059.000016c5@Huawei.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-3-zhao1.liu@intel.com>
- <87wmld361y.fsf@pond.sub.org> <Zp5tBHBoeXZy44ys@intel.com>
- <87h6cfowei.fsf@pond.sub.org> <ZqEV8uErCn+QkOw8@intel.com>
- <871q3hua56.fsf@pond.sub.org> <20240725115059.000016c5@Huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWwK5-00073O-4X
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:07:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721905666;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QT2qBWKWjRgVF/NaP0JTsRomnVoQ99mUQg6tYZ3y3Hk=;
+ b=QZUxWCHNj7t6naRmIxxz+8CDANgsNtbXw3j9IcNIxkaNWUvo9Q7jbENVQfjHLn4yocGHNm
+ e0DKW0SNmwtr4ASXrv6vK3xJUE8CvhWdjjgP8DhqbfG5b6L5y2xRyuvuUafH5wNKDkr4D8
+ esAs8TU9cYaGDZOJeY1SMNL2IwNWlSA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-i1LTZ2WCMyGVv06RSf6Vew-1; Thu,
+ 25 Jul 2024 07:07:43 -0400
+X-MC-Unique: i1LTZ2WCMyGVv06RSf6Vew-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9850C1955F65; Thu, 25 Jul 2024 11:07:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.144])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F4831955D45; Thu, 25 Jul 2024 11:07:37 +0000 (UTC)
+Date: Thu, 25 Jul 2024 12:07:34 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 00/23] Convert avocado tests to normal Python unittests
+Message-ID: <ZqIx9kGMyUShbzUR@redhat.com>
+References: <20240724175248.1389201-1-thuth@redhat.com>
+ <6d609ff1-c4df-4960-be5f-4b29c5911879@linaro.org>
+ <ZqIhJSbT2qQKJ7lj@redhat.com>
+ <df67c0be-e0d1-4ac2-9a88-2765417875ac@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <df67c0be-e0d1-4ac2-9a88-2765417875ac@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,99 +91,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jul 2024 11:50:59 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+On Thu, Jul 25, 2024 at 08:42:31PM +1000, Richard Henderson wrote:
+> On 7/25/24 19:55, Daniel P. Berrangé wrote:
+> > On Thu, Jul 25, 2024 at 09:35:22AM +1000, Richard Henderson wrote:
+> > > On 7/25/24 03:52, Thomas Huth wrote:
+> > > > The Avocado v88 that we use in QEMU is already on a life support
+> > > > system: It is not supported by upstream anymore, and with the latest
+> > > > versions of Python, it won't work anymore since it depends on the
+> > > > "imp" module that has been removed in Python 3.12.
+> > > > 
+> > > > There have been several attempts to update the test suite in QEMU
+> > > > to a newer version of Avocado, but so far no attempt has successfully
+> > > > been merged yet.
+> > > > 
+> > > > Additionally, the whole "make check" test suite in QEMU is using the
+> > > > meson test runner nowadays, so running the python-based tests via the
+> > > > Avocodo test runner looks and feels quite like an oddball, requiring
+> > > > the users to deal with the knowledge of multiple test runners in
+> > > > parallel (e.g. the timeout settings work completely differently).
+> > > > 
+> > > > So instead of trying to update the python-based test suite in QEMU
+> > > > to a newer version of Avocado, we should try to better integrate
+> > > > it with the meson test runner instead. Indeed most tests work quite
+> > > > nicely without the Avocado framework already, as you can see with
+> > > > this patch series - it does not convert all tests, just a subset so
+> > > > far, but this already proves that many tests only need small modifi-
+> > > > cations to work without Avocado.
+> > > > 
+> > > > Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
+> > > > classes (e.g. based on cloud-init images or using SSH) really depend
+> > > > on the Avocado framework, so we'd need a solution for those if we
+> > > > want to continue using them. One solution might be to simply use the
+> > > > required functions from avocado.utils for these tests, and still run
+> > > > them via the meson test runner instead, but that needs some further
+> > > > investigation that will be done later.
+> > > > 
+> > > > 
+> > > > Now if you want to try out these patches: Apply the patches, then
+> > > > recompile and then run:
+> > > > 
+> > > >    make check-functional
+> > > > 
+> > > > You can also run single targets e.g. with:
+> > > > 
+> > > >    make check-functional-ppc
+> > > > 
+> > > > You can also run the tests without any test runner now by
+> > > > setting the PYTHONPATH environment variable to the "python" folder
+> > > > of your source tree, and by specifying the build directory via
+> > > > QEMU_BUILD_ROOT (if autodetection fails) and by specifying the
+> > > > QEMU binary via QEMU_TEST_QEMU_BINARY. For example:
+> > > > 
+> > > >    export PYTHONPATH=$HOME/qemu/python
+> > > >    export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
+> > > >    export QEMU_BUILD_ROOT=$HOME/qemu/build
+> > > >    ~/qemu/tests/functional/test_virtio_version.py
+> > > > 
+> > > > The logs of the tests can be found in the build directory under
+> > > > tests/functional/<arch>/<testname> - console log and general logs will
+> > > > be put in separate files there.
+> > > > 
+> > > > Still to be done: Update the documentation for this new test framework.
+> > > 
+> > > I'll say again that the download *must* be handled separately from the test
+> > > with timeout. This is an absolute show-stopper.
+> > > 
+> > > I've tried this twice now, from a decently fast connection in central
+> > > Brisbane, and have had multiple downloads be canceled by the timeout.  Since
+> > > the download isn't clever enough to pick up where it left off, it will never
+> > > succeed.
+> > 
+> > This is a tricky problem the way the tests are currently written, given the
+> > desire for a minimal-change from the old avocado impl.
+> > 
+> > IIUC, avocado already had a per-test timeout, so would suffer the same
+> > problem with downloads exploding the "normal" running time when cached.
+> 
+> Avocado runs a first pass doing all of the downloads, and only afterward
+> runs the actual timed tests.  I don't know the specifics of how, but it
+> certainly obvious in the logging.
 
-Resending as this bounced due (I think) to an address typo.
+Oh interesting, I found how it does it..
 
-> Hi Markus, Zhao Liu
-> 
-> From the ARM server side this is something I want to see as well.
-> So I can comment on why we care.
-> 
-> > >> This series adds a way to configure caches.
-> > >> 
-> > >> Structure of the configuration data: a list
-> > >> 
-> > >>     [{"name": N, "topo": T}, ...]
-> > >> 
-> > >> where N can be "l1d", "l1i", "l2", or "l3",
-> > >>   and T can be "invalid", "thread", "core", "module", "cluster",
-> > >>                "die", "socket", "book", "drawer", or "default".
-> > >> 
-> > >> What's the use case?  The commit messages don't tell.    
-> > >
-> > > i386 has the default cache topology model: l1 per core/l2 per core/l3
-> > > per die.
-> > >
-> > > Cache topology affects scheduler performance, e.g., kernel's cluster
-> > > scheduling.
-> > >
-> > > Of course I can hardcode some cache topology model in the specific cpu
-> > > model that corresponds to the actual hardware, but for -cpu host/max,
-> > > the default i386 cache topology model has no flexibility, and the
-> > > host-cpu-cache option doesn't have enough fine-grained control over the
-> > > cache topology.
-> > >
-> > > So I want to provide a way to allow user create more fleasible cache
-> > > topology. Just like cpu topology.    
-> > 
-> > 
-> > So the use case is exposing a configurable cache topology to the guest
-> > in order to increase performance.  Performance can increase when the
-> > configured virtual topology is closer to the physical topology than a
-> > default topology would be.  This can be the case with CPU host or max.
-> > 
-> > Correct?  
-> 
-> That is definitely why we want it on arm64 where this info fills in
-> the topology we can't get from the CPU registers.
-> (we should have patches on top of this to send out shortly).
-> 
-> As a side note we also need this for MPAM emulation for TCG
-> (any maybe eventually paravirtualized MPAM) as this is needed
-> to build the right PPTT to describe the caches which we then
-> query to figure out association of MPAM controls with particularly
-> caches.
-> 
-> Size configuration is something we'll need down the line (presenting
-> only part of an L3 may make sense if it's shared by multiple VMs
-> or partitioned with MPAM) but that's a future question.
-> 
-> 
-> >   
-> > >> Why does that use case make no sense without SMP?    
-> > >
-> > > As the example I mentioned, for Intel hyrbid architecture, P cores has
-> > > l2 per core and E cores has l2 per module. Then either setting the l2
-> > > topology level as core nor module, can emulate the real case.
-> > >
-> > > Even considering the more extreme case of Intel 14th MTL CPU, where
-> > > some E cores have L3 and some don't even have L3. As well as the last
-> > > time you and Daniel mentioned that in the future we could consider
-> > > covering more cache properties such as cache size. But the l3 size can
-> > > be different in the same system, like AMD's x3D technology. So
-> > > generally configuring properties for @name in a list can't take into
-> > > account the differences of heterogeneous caches with the same @name.
-> > >
-> > > Hope my poor english explains the problem well. :-)    
-> > 
-> > I think I understand why you want to configure caches.  My question was
-> > about the connection to SMP.
-> > 
-> > Say we run a guest with a single core, no SMP.  Could configuring caches
-> > still be useful then?  
-> 
-> Probably not useful to configure topology (sizes are a separate question)
-> - any sensible default should be fine.
-> 
-> Jonathan
-> 
-> 
+The file avocado/plugins/assets.py will build an AST of the python
+code in a test file, look for all 'fetch_asset' calls, then extract
+the parameters to these calls, and donwload them. This is clever.
+Basically avoids the refactoring that I suggested.
+
+So yeah, that is a gap.
+
+Practically speaking, we have a choice of either  calling into this
+avocado python lib as is, or copying tthat python lib into QEMU.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
