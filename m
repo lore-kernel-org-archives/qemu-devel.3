@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03569C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E6BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsNw-0008GO-1f; Thu, 25 Jul 2024 02:55:32 -0400
+	id 1sWsQQ-00053o-AV; Thu, 25 Jul 2024 02:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsNj-00088w-Fv
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:55:19 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsQP-0004zz-7l
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:58:05 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsNh-0008FG-0h
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:55:18 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2ef2cce8c08so6438951fa.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:55:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsQM-0000tK-AD
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:58:04 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-368557c9e93so261157f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721890513; x=1722495313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721890680; x=1722495480; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iieLEtpk7YAafGJtNDUE6uuRJhpc8FI+839Sz9VFd8I=;
- b=v/IA4J39DiCMayGpThMJHQsBva1iDe7wbnzZDXY4ryXjmZ7wWdeFhmBKjG5R/Sq2WO
- vlUUedm566pI/cPnGPzdTNw7xC6RbQBjTx7UTWYEzeQ1F4kcW6RqeGOP/bndXsufmgxJ
- Sj/Ur5aCSdkG46Y6bg944VP29fxFfM18pKRrYSToEo9YN2Tr23frsD/h3evf7V4mT4hd
- IFPUFpkh2S27Zc/Bp3R1ti7xjGgKxBCSCerny+CO2ct2/PPWrV1rrih8DeRh5Ga7PkDi
- acjdSua9fQ7QOoeZesnbqde0vBwHh+vWJBEQqjFZu00G9R7lnPYlsUkmlQ/XPmaVd6sL
- Li+Q==
+ bh=PeGEmRBAOhT/xkRbn6ISbWil2tWD4PNocyMx9/v0nys=;
+ b=W5aJsVMStgMHgh9fwRa/EP8kSG8YlVBqtaXZUYtF44h5er/f97FMLl9pfe8B700pOy
+ Uv5x8MM9CJadiHVQMCPYVnmJxIXZPtBZFoaGoFg6SrruUr6wcN2vSjJBiPgS4Ho8StBL
+ LbCG6z6qYDjQY0GrNCPbN/2lpAI5TBPHpConCL/x5AS687X28tkSUgP27n0T6f3R2xz8
+ LNGRRjbwmiu90UoEf9A3ZqB8GuCjT4dV6gJS6cI5Kozu5+TB0IiB60Ytm15hoUHMqcRK
+ qK7FjzgdTTvSD0gsTCoFhbcDRwO0cKJ01jAn/S4S5mTjZLubfj7TapH3JAn2lXWQGI8p
+ jPKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721890513; x=1722495313;
+ d=1e100.net; s=20230601; t=1721890680; x=1722495480;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iieLEtpk7YAafGJtNDUE6uuRJhpc8FI+839Sz9VFd8I=;
- b=tgobgZTCzYMYPRacF5ma1km9RlT8NuVSlEfCZapQ3ugM5pm/z7+DjkoEb5bnItlO4c
- nu+O68BU8FiQ9F5FvyrmZAUczFBF6rWhkmh8i0EF9Ms+u5n+34t0v4Nrh9H7E+QhKxxR
- gVfN3ACE8FQmmiTnZ3ZxFpX8SlSSJYD03mrj76iKSDiFGLukJaygXXXHpGsaDSXU6UyD
- PFCmVFPDdmL7yyzlGmBUclqaACwqgurOo8XaAEwUzZr0w63dYsKEwzjUrpOlz47LWfVo
- 22al13atm4G7UYiT8j6vZrXmdnN4AwXitARrX16l/tN87VKwWNqKl/YkDk3O4agwyxFz
- Pt/A==
+ bh=PeGEmRBAOhT/xkRbn6ISbWil2tWD4PNocyMx9/v0nys=;
+ b=auhtj0a0C0o8hjcxjpv1YeKpgtGX4Z9mspuwxigTe/ZMgsMrHZ493f5tkO+AvRyjvZ
+ GexfuefdIAcSP75c4X0ai6YvO+5dHgCRYh+YLtmBtzVeayN1OT2KyV1Q27bllEtPbcwM
+ /7zAwFEoZ40v6LVhopwcIMIlg3xnvQaEnXZekEIbROWGlD11T9Ust4Kd36HeGKnxR+tJ
+ o4l+7X4cv53e+FHb/9armLscqIRBIGYhZuNn0Q5fYsqZNFWq2Ky+bRO0KO/z36J0ZZBx
+ vAgwspWDyihH8oPIplUFkc44UN0Sqo+y/W0sHVwNaaXy9rwwrsCXAhkY4R1RiBELiFMD
+ rcyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhh7EJ/ISonx7khrv+dpfwezw91DxxIxB6AsJ9AtxinaE9cE2y5gAZ/vq1yFQwJr9pxmCwG4cuMpzP7mLtIQrxkrgNoYE=
-X-Gm-Message-State: AOJu0YyDgcPcgUAPnHnc+CKYXXMNmdOtJo47COYENmaApe9gCbwqXg3L
- PKq4RrYrSCo8MSctYlBYM07EYz9L9yvOUudqyZ21003IE+/Vov97tSM2vqFHniQ=
-X-Google-Smtp-Source: AGHT+IHwWDbTogcuR6AJr0c3QKWfNvM99uXGNIhZqzbi09DdPXW3fQCR1fA7hBZNUkLSssYnkL+LIA==
-X-Received: by 2002:a2e:998d:0:b0:2ef:2b44:9977 with SMTP id
- 38308e7fff4ca-2f03db7e00cmr6051571fa.18.1721890512542; 
- Wed, 24 Jul 2024 23:55:12 -0700 (PDT)
+ AJvYcCWLPYdTyuUxTn69lMTMTptYcrdeVqKufA5O2AbOROxRxnApRmrkJmvbZx+uAuiYzeu+fxU9xfegcNX9Xq98yiF4eNzXJDo=
+X-Gm-Message-State: AOJu0Yy2yqzC/DSNr4BQJVIo0GOoOLHsPls2nSVMUZmXjZMuuUtcNAZp
+ /eXp2WOkRKiCvm73Gz0o1fe45BXZHgWCSpzpUdwIYnvPweLNe7BW0w76tpaAzKQ=
+X-Google-Smtp-Source: AGHT+IFYd+86a4CdMeD8vAECR5ncKuYu2L+tqZOQR0k/0s7mBlAjDuinyINICZUilr2ZdZIOD9NEgg==
+X-Received: by 2002:adf:f281:0:b0:367:9851:4f22 with SMTP id
+ ffacd0b85a97d-36b36443da6mr555218f8f.58.1721890680067; 
+ Wed, 24 Jul 2024 23:58:00 -0700 (PDT)
 Received: from [192.168.114.175] (164.170.88.92.rev.sfr.net. [92.88.170.164])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f9372a5asm61161575e9.15.2024.07.24.23.55.11
+ ffacd0b85a97d-36b367c0aa1sm1070972f8f.21.2024.07.24.23.57.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 23:55:12 -0700 (PDT)
-Message-ID: <d60683bf-724a-474a-ae97-6ec2eac775a9@linaro.org>
-Date: Thu, 25 Jul 2024 08:55:09 +0200
+ Wed, 24 Jul 2024 23:57:59 -0700 (PDT)
+Message-ID: <0fb1abd0-5031-4098-8e76-7f65fcbbddcb@linaro.org>
+Date: Thu, 25 Jul 2024 08:57:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/23] tests/functional: Convert simple avocado tests
- into standalone python tests
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-References: <20240724175248.1389201-1-thuth@redhat.com>
- <20240724175248.1389201-6-thuth@redhat.com>
+Subject: Re: [PATCH 2/4] hw/misc/bcm2835_property: Avoid overflow in OTP
+ access properties
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240723131029.1159908-1-peter.maydell@linaro.org>
+ <20240723131029.1159908-3-peter.maydell@linaro.org>
+ <a8291990-e161-4a43-a1c9-69040f1f6f93@linaro.org>
+ <CAFEAcA8GPPy4P330P8kgbCxf=S+f8WGmB6tnAHN5bXxxyN9U=A@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240724175248.1389201-6-thuth@redhat.com>
+In-Reply-To: <CAFEAcA8GPPy4P330P8kgbCxf=S+f8WGmB6tnAHN5bXxxyN9U=A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,55 +99,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
-
-On 24/7/24 19:52, Thomas Huth wrote:
-> These test are rather simple and don't need any modifications apart
-> from adjusting the "from avocado_qemu" line. To ease debugging, make
-> the files executable and add a shebang line and Python '__main__'
-> handling, too, so that these tests can now be run by executing them
-> directly.
+On 24/7/24 14:31, Peter Maydell wrote:
+> On Wed, 24 Jul 2024 at 08:06, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Hi Peter,
+>>
+>> On 23/7/24 15:10, Peter Maydell wrote:
+>>> Coverity points out that in our handling of the property
+>>> RPI_FWREQ_SET_CUSTOMER_OTP we have a potential overflow.  This
+>>> happens because we read start_num and number from the guest as
+>>> unsigned 32 bit integers, but then the variable 'n' we use as a loop
+>>> counter as we iterate from start_num to start_num + number is only an
+>>> "int".  That means that if the guest passes us a very large start_num
+>>> we will interpret it as negative.  This will result in an assertion
+>>> failure inside bcm2835_otp_set_row(), which checks that we didn't
+>>> pass it an invalid row number.
+>>>
+>>> A similar issue applies to all the properties for accessing OTP rows
+>>> where we are iterating through with a start and length read from the
+>>> guest.
+>>>
+>>> Use uint32_t for the loop counter to avoid this problem. Because in
+>>> all cases 'n' is only used as a loop counter, we can do this as
+>>> part of the for(), restricting its scope to exactly where we need it.
+>>>
+>>> Resolves: Coverity CID 1549401
+>>> Cc: qemu-stable@nongnu.org
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>>> ---
+>>>    hw/misc/bcm2835_property.c | 9 ++++-----
+>>>    1 file changed, 4 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
+>>> index e28fdca9846..7eb623b4e90 100644
+>>> --- a/hw/misc/bcm2835_property.c
+>>> +++ b/hw/misc/bcm2835_property.c
+>>> @@ -30,7 +30,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+>>>        uint32_t tot_len;
+>>>        size_t resplen;
+>>>        uint32_t tmp;
+>>> -    int n;
+>>>        uint32_t start_num, number, otp_row;
+>>>
+>>>        /*
+>>> @@ -337,7 +336,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
+>>>
+>>>                resplen = 8 + 4 * number;
+>>>
+>>> -            for (n = start_num; n < start_num + number &&
+>>> +            for (uint32_t n = start_num; n < start_num + number &&
+>>>                     n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
+>>
+>> I find not making the counter size explicit and use 'unsigned'
+>> simpler, since using 32-bit in particular doesn't bring much here.
+>> Is there a reason I'm missing?
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/meson.build                  |  5 ++
->   .../test_cpu_queries.py}                      |  7 ++-
->   .../test_empty_cpu_model.py}                  |  7 ++-
->   .../test_mem_addr_space.py}                   | 52 +++----------------
->   .../test_pc_cpu_hotplug_props.py}             | 11 ++--
->   .../test_virtio_version.py}                   |  8 +--
->   6 files changed, 34 insertions(+), 56 deletions(-)
->   rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
->   mode change 100644 => 100755
->   rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
->   mode change 100644 => 100755
->   rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
->   mode change 100644 => 100755
->   rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
->   mode change 100644 => 100755
->   rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
->   mode change 100644 => 100755
+> I just wanted to match the types between n and start_num and
+> number (where the latter two should be uint32_t because we load
+> them from the guest as 32-bit values). Otherwise we're relying
+> on "unsigned" being at least 32 bit -- it is, but if we need
+> it to be 32 bit then why not use the type that is guaranteed
+> and says specifically that it's 32 bits ?
 
-
-> @@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
->       # for all 32-bit cases, pci64_hole_size is 0.
->       def test_phybits_low_pse36(self):
->           """
-> -        :avocado: tags=machine:q35
-> -        :avocado: tags=arch:x86_64
-
-Could we keep the tags, but renaming as:
-
-           qemu-test-tag=machine:q35
-           qemu-test-tag=arch:x86_64
-
-?
-
-I'm OK to implement the equivalent feature in QEMU functional framework.
-
->           With pse36 feature ON, a processor has 36 bits of addressing. So it can
->           access up to a maximum of 64GiB of memory. Memory hotplug region begins
->           at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
-
+Yes OK no problem.
 
