@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B46C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF8AC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWvkc-0004uW-KW; Thu, 25 Jul 2024 06:31:10 -0400
+	id 1sWvpE-00019T-Sb; Thu, 25 Jul 2024 06:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWvkU-0004ru-3X
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:31:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWvkS-0003YW-6j
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:31:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721903458;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aZK9LxFBnm3IoZ/YBJppRyPC+Fm2g1RcmIVHeFzxpPs=;
- b=TClv2EFc784XsJdJH4fya+ZU/WaA9FUBOYVL8cLQ7ajQ42lO11hQXYCVAuGMK4jpewxRoC
- Ou+5RsfBo5JW82BaHQvJjTg4YEpzz8ZxoobTnBOAzkvvnNuIHfgchkvbbggyJsKF17SzuA
- mbml2iZP3ojV4mnJue7IPyP8/NpOApI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-0OFbcQhONRWEss-T_qEvrQ-1; Thu, 25 Jul 2024 06:30:57 -0400
-X-MC-Unique: 0OFbcQhONRWEss-T_qEvrQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3687a1a6846so440858f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:30:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWvpA-00016x-HY
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:35:53 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWvp7-0004Oq-6T
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:35:51 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5ab2baf13d9so912984a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:35:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721903747; x=1722508547; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=w5KerTRvkuy9w4kv3vS5mRyABQJuA2uQKXsWkiI4WfA=;
+ b=Rvil3irn/zcGsLiEIBXrnJAk0LyaY2XdRlGYbWZctGmEf6Gp10xrvD5Mz6rjrZLyl5
+ Mv1hz0tU4A8TjA3TQ658YOArGN3gt4s1rFY4ArrqEOjr8oaVl00s7R0z4B+QGUUzbZPG
+ ROGwuw1kaQm4Y3n9+9z4MQRY+cLrXQgD1J9NTj4z+KKJjT6HsupfjaL/fzgW84K3HybW
+ GLpX3iBWtG4xYSgZsAJQMLEFA5tPiB60Y9SpT2lJxqCmNyCOfcihTM7bYZOFiKZ3qgRT
+ gU4WdcWrZ+ZSeCuwm4TvLIO4hiM8jFnGthQy59ER3ttzf15b5+unn+4juf8R8Em6yCMt
+ OyoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721903456; x=1722508256;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aZK9LxFBnm3IoZ/YBJppRyPC+Fm2g1RcmIVHeFzxpPs=;
- b=F6qdvtCjd+KMraGlwMuUzwUoQmhZbf2d41VrMYWTG2vLO+HKEZ0W/v+k9mtZMiT/n0
- JiMgPUd4n5/vcu1yYlTTNfAKJkWVsUhMNVl+wBLhraQ21a+a0Lvmsq0dNpFSqqKxvLsR
- 6cjx1tSml1aJm+tpScFtRzRW561CkJ4bKQRQb3NwpJ6jkYSGAu32ZLQYpd8ZV/4Kegpm
- /ndGwYqJTkvR+XfgEeYY9G7bd3ABrBCfHWrIjMFOKLZQOYa11czaR7gECTzLWQB3k9t/
- s3dlqu+u+XqqRsfr3P/DFtAFDfTX2Yo0EsIQqbEVTcyE+wq9fwm6IQOXW8OMWM9HOSvZ
- lUrA==
-X-Gm-Message-State: AOJu0YyFs9XyBx7Zoy71VjcDpNY3OYH2/Fjm2bUr5K3jhPxedyL+0hdV
- NmB9b3Uj2q3Xtori7eLD5scnTFjb85A0+bwobCTF96Xo89hJpqCdy//Eyuj+C4Sh1/dkzN0h3ZG
- cwBybzhW3IAX0kPq0wKmevO7UIsvHPsAVTqkoT8e71oyTjhlZFYFA6vsPBT3rd/qpUt4ZNzCcOR
- uGTe/GPAAYjvSqb4UDprwG0VrEz8M=
-X-Received: by 2002:adf:a348:0:b0:368:41bd:149b with SMTP id
- ffacd0b85a97d-36b319fadf0mr1678363f8f.34.1721903456035; 
- Thu, 25 Jul 2024 03:30:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcDutNrvHUFbnn5cdcirSop6Dgf8wv39yfSFcReZgLWsn5XNBVJ1MR9sAVC8qChgeEIuvZJgybvO9bqtXAedw=
-X-Received: by 2002:adf:a348:0:b0:368:41bd:149b with SMTP id
- ffacd0b85a97d-36b319fadf0mr1678352f8f.34.1721903455693; Thu, 25 Jul 2024
- 03:30:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721903747; x=1722508547;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w5KerTRvkuy9w4kv3vS5mRyABQJuA2uQKXsWkiI4WfA=;
+ b=JVcMvAgJVIwB4t4xXfv5n8cReS0+QAcaiBIxjF3X09z1TrwLL9NNaG16Lkb4HvJc7N
+ PN/kYGeDV2mRHIoAYTcAcbJ6ogHJxXoZfc0VNs7WhpZG58dF2j5OcYNf//Ju7zqVti6e
+ v7UNWdyvRJNbkvnaXOer6sHXRaWaEfhn6+C1k5TscgfDNpW1eh49/CDUyEWOtYyDQt7G
+ T0o2UGnIZxseBIHLQp1HOrAxRxcmc6ABhfGdGX5Djmf+D1RSRu1Apbu44Sp8vnQ8NWhB
+ n+8b1YPA8w8kCG4D69eEfCrdoCcokvY85rm2bwECE3Ud7gsQc0Owaoh+GJMU+mYHEws0
+ YU3g==
+X-Gm-Message-State: AOJu0Yw3csHE0y57L3x4WrP921HNJPb3HeLjcDj4dzCTTitjJilCaL78
+ dGJanxzJ6ay44jgW8hqjspKEkjk5pYaBN/1EfVy5cvpYFiGAVFa78wCB05hAmVMkA3RdIbdOUcX
+ zaskfJfnLJm+wkvqxw3UGveKxuIo814P+hUoqgA==
+X-Google-Smtp-Source: AGHT+IEcBYBM3u3BO1medaOE4ZDBSfard0UumxmemZPpsEyAGf4fpl2NSLGhyrGGWvZ67s6IQvdgbkFzTWZsaNzJM4c=
+X-Received: by 2002:a05:6402:26ce:b0:5a0:c709:aa0b with SMTP id
+ 4fb4d7f45d1cf-5ac2c1c441bmr1896028a12.24.1721903747061; Thu, 25 Jul 2024
+ 03:35:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240723141529.551737-1-pbonzini@redhat.com>
- <20240723141529.551737-4-pbonzini@redhat.com>
- <CAFEAcA-+BmDLzsjwBdJLHpRobxwUEZhW2M90qYReFkKQdu32Bw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-+BmDLzsjwBdJLHpRobxwUEZhW2M90qYReFkKQdu32Bw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 25 Jul 2024 12:30:44 +0200
-Message-ID: <CABgObfa=-A2oqbpcZ7CQRqvQKxVrCqwyt9Ej6UEEwOkbN-SZXg@mail.gmail.com>
-Subject: Re: [PULL 03/11] tools: build qemu-vmsr-helper
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Anthony Harivel <aharivel@redhat.com>
+References: <cover.1721731723.git.mst@redhat.com>
+ <08c328682231b64878fc052a11091bea39577a6f.1721731723.git.mst@redhat.com>
+In-Reply-To: <08c328682231b64878fc052a11091bea39577a6f.1721731723.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jul 2024 11:35:35 +0100
+Message-ID: <CAFEAcA-3_d1c7XSXWkFubD-LsW5c5i95e6xxV09r2C9yGtzcdA@mail.gmail.com>
+Subject: Re: [PULL v2 37/61] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Salil Mehta <salil.mehta@huawei.com>, 
+ Gavin Shan <gshan@redhat.com>, Vishnu Pajjuri <vishnu@os.amperecomputing.com>, 
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Xianglai Li <lixianglai@loongson.cn>, 
+ Miguel Luis <miguel.luis@oracle.com>, Shaoqin Huang <shahuang@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,72 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 12:28=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
-> > +    if (r < 0) {
-> > +        error_report_err(local_err);
-> > +        goto out;
+On Tue, 23 Jul 2024 at 11:58, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> Here we have a check for r < 0 that forces an early exit...
+> From: Salil Mehta <salil.mehta@huawei.com>
 >
-> > +    }
-> > +
-> > +    while (r < 0) {
+> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU thread
+> is spawned. This is common to all the architectures as of now.
 >
-> ...but then immediately we do a while (r < 0). r cannot be < 0
-> here because we just checked that, so this while loop will
-> never execute and the whole loop body is dead code.
+> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but the
+> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doesn't
+> support vCPU removal. Therefore, its representative KVM vCPU object/context in
+> Qemu is parked.
 >
-> What was the intention here ?
+> Refactor architecture common logic so that some APIs could be reused by vCPU
+> Hotplug code of some architectures likes ARM, Loongson etc. Update new/old APIs
+> with trace events. New APIs qemu_{create,park,unpark}_vcpu() can be externally
+> called. No functional change is intended here.
 
-The intention was to have "while (r >=3D 0)" which is effectively an
-infinite loop.
+Hi; Coverity points out an issue with this code (CID 1558552):
 
-Paolo
+> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> +{
+> +    struct KVMParkedVcpu *cpu;
+> +    int kvm_fd = -ENOENT;
+> +
+> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> +        if (cpu->vcpu_id == vcpu_id) {
+> +            QLIST_REMOVE(cpu, node);
+> +            kvm_fd = cpu->kvm_fd;
+> +            g_free(cpu);
+> +        }
+> +    }
 
->
->
-> > +        /*
-> > +         * Read the requested MSR
-> > +         * Only RAPL MSR in rapl-msr-index.h is allowed
-> > +         */
-> > +        r =3D qio_channel_read_all(QIO_CHANNEL(client->ioc),
-> > +                                (char *) &request, sizeof(request), &l=
-ocal_err);
-> > +        if (r < 0) {
-> > +            error_report_err(local_err);
-> > +            break;
-> > +        }
-> > +
-> > +        if (!is_msr_allowed(request[0])) {
-> > +            error_report("Requested unallowed msr: %d", request[0]);
-> > +            break;
-> > +        }
-> > +
-> > +        vmsr =3D vmsr_read_msr(request[0], request[1]);
-> > +
-> > +        if (!is_tid_present(peer_pid, request[2])) {
-> > +            error_report("Requested TID not in peer PID: %d %d",
-> > +                peer_pid, request[2]);
-> > +            vmsr =3D 0;
-> > +        }
-> > +
-> > +        r =3D qio_channel_write_all(QIO_CHANNEL(client->ioc),
-> > +                                  (char *) &vmsr,
-> > +                                  sizeof(vmsr),
-> > +                                  &local_err);
-> > +        if (r < 0) {
-> > +            error_report_err(local_err);
-> > +            break;
-> > +        }
-> > +    }
-> > +out:
-> > +    object_unref(OBJECT(client->ioc));
-> > +    g_free(client);
-> > +}
->
-> thanks
-> -- PMM
->
+If you are going to remove an entry from a list as you
+iterate over it, you can't use QLIST_FOREACH(), because
+QLIST_FOREACH will look at the next pointer of the
+iteration variable at the end of the loop when it
+wants to advance to the next node. In this case we've
+already freed 'cpu', so it would be reading freed memory.
 
+Should we break out of the loop when we find the entry?
+
+If we do need to continue iteration after removing the
+list node, you need to use QLIST_FOREACH_SAFE() to do
+the list iteration.
+
+> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
+> -{
+> -    struct KVMParkedVcpu *cpu;
+> -
+> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> -        if (cpu->vcpu_id == vcpu_id) {
+> -            int kvm_fd;
+> -
+> -            QLIST_REMOVE(cpu, node);
+> -            kvm_fd = cpu->kvm_fd;
+> -            g_free(cpu);
+> -            return kvm_fd;
+
+In this old piece of code we were OK using QLIST_FOREACH
+because we returned immediately we took the node off
+the list and didn't continue the iteration.
+
+> -        }
+> -    }
+> -
+> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
+> -}
+
+thanks
+-- PMM
 
