@@ -4,134 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83791C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03569C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsHg-0002Ak-HK; Thu, 25 Jul 2024 02:49:04 -0400
+	id 1sWsNw-0008GO-1f; Thu, 25 Jul 2024 02:55:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sWsHe-00029N-If
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:49:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sWsHc-0006pE-GQ
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:49:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721890139;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k2wGgR81IQDLYvnUbF/jrg5eMSA3bN9rDhcIoUf5k70=;
- b=i/lklJ0zcgVnJvN/rVa/aXmw2rBDf8QExesRQ+nto4X3y9xlRsM3wHOWYelZnh0GXmwD5r
- MucWYvoz3872CEEEkINnd85fQP3VT3lATvu8VRi+ZsePpO5DjVkHXwe6R9rNmD3M7m88e0
- sMdImPsDFphda8pTW49SJLIsxluX9oI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-9nPqkF5SM16Tdbr0D-JFXA-1; Thu, 25 Jul 2024 02:48:57 -0400
-X-MC-Unique: 9nPqkF5SM16Tdbr0D-JFXA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-428040f49f9so4126045e9.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:48:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsNj-00088w-Fv
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:55:19 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsNh-0008FG-0h
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:55:18 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2ef2cce8c08so6438951fa.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:55:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721890513; x=1722495313; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=iieLEtpk7YAafGJtNDUE6uuRJhpc8FI+839Sz9VFd8I=;
+ b=v/IA4J39DiCMayGpThMJHQsBva1iDe7wbnzZDXY4ryXjmZ7wWdeFhmBKjG5R/Sq2WO
+ vlUUedm566pI/cPnGPzdTNw7xC6RbQBjTx7UTWYEzeQ1F4kcW6RqeGOP/bndXsufmgxJ
+ Sj/Ur5aCSdkG46Y6bg944VP29fxFfM18pKRrYSToEo9YN2Tr23frsD/h3evf7V4mT4hd
+ IFPUFpkh2S27Zc/Bp3R1ti7xjGgKxBCSCerny+CO2ct2/PPWrV1rrih8DeRh5Ga7PkDi
+ acjdSua9fQ7QOoeZesnbqde0vBwHh+vWJBEQqjFZu00G9R7lnPYlsUkmlQ/XPmaVd6sL
+ Li+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721890136; x=1722494936;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k2wGgR81IQDLYvnUbF/jrg5eMSA3bN9rDhcIoUf5k70=;
- b=KTbFldN3r3ky93r22mgQBdoeA/GGO/vmGjpFmgdaCuZC6k7kiVEFtgD2JgU8E7v0eT
- aYH2RrqDPizSQaD0Xx3mQtPrEFKE2YFKjnDc+f/86Bv3vxCqYchNbm/2TGJaYuUHin8s
- 2GqtWTZc+0p1Bc/s2G1IZcOHSqMmBGcnmfNmDLGmPguNe9tZLdjjtntat06pRLr/F0Ir
- UVuax6smlEz9sSjb24ykVUjbEN/0Pa+RfI32+MhcYMK0anKehsLQLXIrayD9mHwjLf6q
- 3eNEs27WPRDjejYn6Z5sp6kDuAiCo4NPFTM/bGNjbQlwaCJUN5PFkXPxiR7Cz+7xiK+a
- IbGw==
-X-Gm-Message-State: AOJu0YwrX7N8kncQgyAHD3/JfLE2MzkFyrFpwrv09rZAFPgVOCkVywKL
- p17TBqTSYHVgF+JW+pxb/NlCpTCeKdV71r04SQqgnEhNtxhnC6oCf/4pf22DCV89wybqw1uSard
- U8SQq7cIHRcXxmB3lxDn412xCMlCDds7+igRhpZUORnanpKc2qYvY+4E7jzd1tIf22sFKn8LKTf
- XjW6aOiOb1NwbWxV2v11uC9zO+/yGoJcHokik=
-X-Received: by 2002:a05:600c:b8d:b0:427:ff3b:7a20 with SMTP id
- 5b1f17b1804b1-42806bdb344mr7843125e9.27.1721890136448; 
- Wed, 24 Jul 2024 23:48:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAcUzj6udeaD4KgRV0ZG1LZGwz+QN9+d6OUoJtvLhyTVrsnzvFFyB8Qa/NDIpUJ97yLSIexw==
-X-Received: by 2002:a05:600c:b8d:b0:427:ff3b:7a20 with SMTP id
- 5b1f17b1804b1-42806bdb344mr7842945e9.27.1721890136021; 
- Wed, 24 Jul 2024 23:48:56 -0700 (PDT)
-Received: from [192.168.100.100] ([37.170.239.86])
+ d=1e100.net; s=20230601; t=1721890513; x=1722495313;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iieLEtpk7YAafGJtNDUE6uuRJhpc8FI+839Sz9VFd8I=;
+ b=tgobgZTCzYMYPRacF5ma1km9RlT8NuVSlEfCZapQ3ugM5pm/z7+DjkoEb5bnItlO4c
+ nu+O68BU8FiQ9F5FvyrmZAUczFBF6rWhkmh8i0EF9Ms+u5n+34t0v4Nrh9H7E+QhKxxR
+ gVfN3ACE8FQmmiTnZ3ZxFpX8SlSSJYD03mrj76iKSDiFGLukJaygXXXHpGsaDSXU6UyD
+ PFCmVFPDdmL7yyzlGmBUclqaACwqgurOo8XaAEwUzZr0w63dYsKEwzjUrpOlz47LWfVo
+ 22al13atm4G7UYiT8j6vZrXmdnN4AwXitARrX16l/tN87VKwWNqKl/YkDk3O4agwyxFz
+ Pt/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhh7EJ/ISonx7khrv+dpfwezw91DxxIxB6AsJ9AtxinaE9cE2y5gAZ/vq1yFQwJr9pxmCwG4cuMpzP7mLtIQrxkrgNoYE=
+X-Gm-Message-State: AOJu0YyDgcPcgUAPnHnc+CKYXXMNmdOtJo47COYENmaApe9gCbwqXg3L
+ PKq4RrYrSCo8MSctYlBYM07EYz9L9yvOUudqyZ21003IE+/Vov97tSM2vqFHniQ=
+X-Google-Smtp-Source: AGHT+IHwWDbTogcuR6AJr0c3QKWfNvM99uXGNIhZqzbi09DdPXW3fQCR1fA7hBZNUkLSssYnkL+LIA==
+X-Received: by 2002:a2e:998d:0:b0:2ef:2b44:9977 with SMTP id
+ 38308e7fff4ca-2f03db7e00cmr6051571fa.18.1721890512542; 
+ Wed, 24 Jul 2024 23:55:12 -0700 (PDT)
+Received: from [192.168.114.175] (164.170.88.92.rev.sfr.net. [92.88.170.164])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428054b9196sm19075175e9.0.2024.07.24.23.48.55
+ 5b1f17b1804b1-427f9372a5asm61161575e9.15.2024.07.24.23.55.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 23:48:55 -0700 (PDT)
-Message-ID: <58363488-4058-4470-8bda-5068381712bb@redhat.com>
-Date: Thu, 25 Jul 2024 08:48:54 +0200
+ Wed, 24 Jul 2024 23:55:12 -0700 (PDT)
+Message-ID: <d60683bf-724a-474a-ae97-6ec2eac775a9@linaro.org>
+Date: Thu, 25 Jul 2024 08:55:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] net: update netdev stream/dgram man page
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Jason Wang <jasowang@redhat.com>, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240704124834.81958-1-lvivier@redhat.com>
+Subject: Re: [PATCH v2 05/23] tests/functional: Convert simple avocado tests
+ into standalone python tests
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
+References: <20240724175248.1389201-1-thuth@redhat.com>
+ <20240724175248.1389201-6-thuth@redhat.com>
 Content-Language: en-US
-From: Laurent Vivier <lvivier@redhat.com>
-Autocrypt: addr=lvivier@redhat.com; keydata=
- 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
-In-Reply-To: <20240704124834.81958-1-lvivier@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240724175248.1389201-6-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,31 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/07/2024 14:48, Laurent Vivier wrote:
-> Add the description of "-netdev stream" and "-netdev dgram" in the QEMU
-> manpage.
-> 
-> Add some examples on how to use them, including a way to use
-> "-netdev stream" and "passt" in place of "-netdev user".
-> ("passt" is a non privileged translation proxy between layer-2,
-> like "-netdev stream", and layer-4 on host, like TCP, UDP,
-> ICMP/ICMPv6 echo)
-> 
-> v2:
->    - split patch
->    - update unix socket description with stream and datagram words.
-> 
-> Laurent Vivier (4):
->    net: update netdev stream/dgram man page
->    net: update netdev stream man page with unix socket
->    net: update netdev dgram man page with unix socket
->    net: update netdev stream man page with the reconnect parameter
-> 
->   qemu-options.hx | 189 ++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 189 insertions(+)
-> 
-ping
+Hi Thomas,
 
-cc: qemu-trivial
+On 24/7/24 19:52, Thomas Huth wrote:
+> These test are rather simple and don't need any modifications apart
+> from adjusting the "from avocado_qemu" line. To ease debugging, make
+> the files executable and add a shebang line and Python '__main__'
+> handling, too, so that these tests can now be run by executing them
+> directly.
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/meson.build                  |  5 ++
+>   .../test_cpu_queries.py}                      |  7 ++-
+>   .../test_empty_cpu_model.py}                  |  7 ++-
+>   .../test_mem_addr_space.py}                   | 52 +++----------------
+>   .../test_pc_cpu_hotplug_props.py}             | 11 ++--
+>   .../test_virtio_version.py}                   |  8 +--
+>   6 files changed, 34 insertions(+), 56 deletions(-)
+>   rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
+>   mode change 100644 => 100755
+
+
+> @@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
+>       # for all 32-bit cases, pci64_hole_size is 0.
+>       def test_phybits_low_pse36(self):
+>           """
+> -        :avocado: tags=machine:q35
+> -        :avocado: tags=arch:x86_64
+
+Could we keep the tags, but renaming as:
+
+           qemu-test-tag=machine:q35
+           qemu-test-tag=arch:x86_64
+
+?
+
+I'm OK to implement the equivalent feature in QEMU functional framework.
+
+>           With pse36 feature ON, a processor has 36 bits of addressing. So it can
+>           access up to a maximum of 64GiB of memory. Memory hotplug region begins
+>           at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
 
 
