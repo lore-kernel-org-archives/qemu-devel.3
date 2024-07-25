@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC78BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3384BC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8MW-0002H6-0i; Thu, 25 Jul 2024 19:59:08 -0400
+	id 1sX8Ls-00089s-0X; Thu, 25 Jul 2024 19:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8MT-00027q-O2; Thu, 25 Jul 2024 19:59:05 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sX8Lj-0007AX-Gr; Thu, 25 Jul 2024 19:58:20 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8MS-0001gw-0v; Thu, 25 Jul 2024 19:59:05 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2cd1661174cso333630a91.0; 
- Thu, 25 Jul 2024 16:59:03 -0700 (PDT)
+ id 1sX8Lh-0001X7-Oj; Thu, 25 Jul 2024 19:58:19 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-7a0c6ab3354so359539a12.0; 
+ Thu, 25 Jul 2024 16:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951942; x=1722556742; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951896; x=1722556696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LKRPGBmRnbNiPvs2erSAGInevUpGEmgofL60Ya+Yjt4=;
- b=iE4OKuzKRGTv0dHOBoV9TaVtuBVypSAAn4h6oEYOODhWs9rx36bUi6DB2DVaw/2ysj
- k2dA+VhHxRB9VVLh6Es5mJG9/hL6fLgIBc+JgRX7MSR80lkl6e3HJTjugzh8j/9jsztz
- VsclTj/+mTt3XLbg6cJI6K5jmsWCKJxbo8rsLjN2nrwT6EW5ZmBjkCLHEqu7u2DsJYWa
- R2ygt59J2bW6ETUx8FuZypxjLGGa3sFZ6EgsGtyHa3my0ayCk6IIGuwUoP4f4RfU6oaU
- bPmHxaEy2nrSM8za8/Gv8+4C1N3/ME04gO+a0Zz+j+SqI9I/gShlymDzYr2YT0YqPG0i
- T4mw==
+ bh=9X3FsJ02xLaACuboI7a4PZGJHAR59UJfBjdSV3wDRKg=;
+ b=JyXB8SEa19u03TK+wKkoldLEA4xh2Ncl0JvyFjMs2zOejedYD46FjgNbMAx/AYa5Oz
+ tmTZVr6+XuOFgGZcPdnY7tApeYzOy0fKn5sbTnSYGV+Hp5nEV5Moy3Ct/tY797t5BCcx
+ 1fW2QBzNPwjr8S3iJWOXxSrSPRmXOSu5iQTvwtLXil7fXAR7MBmma4VSvV5TKuKAHlh9
+ SmG2LXbjRIQbQhZ1vHwXxkfu1+aVCgumGSiGxulsvczvpyrPwYzYNnGVluryMN5/1VOG
+ kLEZO3MmtZX6WafH0cwPTKR29CTGfAHmmMdFQmyJoRDluu1VJvMKzL8m/3NpO7Msbxqm
+ ywEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951942; x=1722556742;
+ d=1e100.net; s=20230601; t=1721951896; x=1722556696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LKRPGBmRnbNiPvs2erSAGInevUpGEmgofL60Ya+Yjt4=;
- b=S9peN+Iu7vPjs2Qe5zdTbyB8PgmDMMlAXOU69nUJ4ZZf2f3uOrwicrWToUVXBPlGR/
- /yt42pVk0MtZJnz06A8nP/FFapo00nnL8fzoyrkQPnfE7awgv1N8opYeFBLcax/nSox2
- wXXjuzI8W2TlFdLpR0XqLcsk+REjPWABq8zGaso0Puy4t6yfrLbS2brIykC86z+einVR
- QxKS2txf5UNQTgEt4yQb4TPfcT5uCNbxC+XlD+I80W0+nEhUS+HbH1XUVIfqRbYGEkgn
- 9nsLLTrCEdU13VlGDPjLbLqlOFx8Qe/BXpQTRLqvhooSpUiZdZ782KGBpZLMjJlZRggI
- vuCg==
+ bh=9X3FsJ02xLaACuboI7a4PZGJHAR59UJfBjdSV3wDRKg=;
+ b=iEtpx2K+VUQ/FdclTVuY+tG5lBVBk/xrT64KF8ZpFkk9MEEnQNp6sh+WKw4rzfyIu1
+ ccnubheemjCsrqRLImiliIjSptNWhEtxfC6yIX2r7SshCuRLEZW3vyzfXWcSGStny3Io
+ uoQXKeQKs0eeJVSxVxdwl4qFZsM0i3EEUwlVpK8K8HtNMBrN7ZYJ/9V9C5Q0HRQZ69TB
+ xQx738NjII3+lEvbp9FZzGQ+qf1uvciTuBLF98I0Im3GVX0hwnl7SwH9s4JVz0yOeNbI
+ Z7YY0FYXDHGUaL2wFSZaGwfnItMlm5WrP3oAoVWcBR9muRWOZpELG/mpMKmgFExOzD36
+ sEXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVweK460ZJCeXKfVISstjghPBcCS/q8OW2gOOC0YH0fS28yDA6TUQ31hn0FQ9ACl8K5mEkMeVVX0Bwn4Ibo2GyiuHtu
-X-Gm-Message-State: AOJu0YxDCIfuHJFfMxubgKAno6/th460dicsZ0dHkFlsMyZBHDRMyAIe
- KDKVMccOqmv1ureckpm4upR6NIMvzzdN5rEVacm9JaSuzO34TOYBK/mmDg==
-X-Google-Smtp-Source: AGHT+IH3eFVuSJNco5LBdn/FMBy41iP/DZ4rmSWO5CrzFU63e5SivWSu+PDKfHX3OUbGStS8YMqMoA==
-X-Received: by 2002:a17:90a:4dcf:b0:2c9:5ecd:e3c5 with SMTP id
- 98e67ed59e1d1-2cf238ccaabmr4759827a91.33.1721951941944; 
- Thu, 25 Jul 2024 16:59:01 -0700 (PDT)
+ AJvYcCVK8TVkujspaeytQ4lmqrH+26XrDG4ZbVdJ86OIFV/S1NT7T6peeuK/Of/uI5f/nG2yZ/Adj2gGzlvvcv0Q5swl84b1
+X-Gm-Message-State: AOJu0YwKGzi/NkapHuMz4YaGo1MfGWfuvj8UCKr2yrGITg+vIFi95DfL
+ Lt0srtbkCwz8dMyw4ux0DxF3ftltpZ6K4wWPtXMUjXkHM5F1j6f9AOjlwA==
+X-Google-Smtp-Source: AGHT+IGPu28tAwgrMZ/kCyoViW6sHBxl/1FAUzcco9OYlLSGRotlXXxH0+n/1Ft42SKoB1h3+iHGgQ==
+X-Received: by 2002:a17:90b:3a82:b0:2c9:be63:b641 with SMTP id
+ 98e67ed59e1d1-2cf2ea1918fmr4273542a91.24.1721951895656; 
+ Thu, 25 Jul 2024 16:58:15 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.59
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:59:01 -0700 (PDT)
+ Thu, 25 Jul 2024 16:58:15 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 79/96] target/ppc/mmu_common.c: Simplify a switch statement
-Date: Fri, 26 Jul 2024 09:53:52 +1000
-Message-ID: <20240725235410.451624-80-npiggin@gmail.com>
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 64/96] target/ppc : Update VSX storage access insns to use
+ tcg_gen_qemu _ld/st_i128.
+Date: Fri, 26 Jul 2024 09:53:37 +1000
+Message-ID: <20240725235410.451624-65-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,56 +96,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-In mmu6xx_get_physical_address() the switch handles all cases so the
-default is never reached and can be dropped. Also group together cases
-which just return -4.
+Updated many VSX instructions to use tcg_gen_qemu_ld/st_i128, instead of using
+tcg_gen_qemu_ld/st_i64 consecutively.
+Introduced functions {get,set}_vsr_full to facilitate the above & for future use.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+ target/ppc/translate/vsx-impl.c.inc | 74 +++++++++++++----------------
+ 1 file changed, 33 insertions(+), 41 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 0152e8d875..b2993e8563 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -375,15 +375,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-     case ACCESS_INT:
-         /* Integer load/store : only access allowed */
-         break;
--    case ACCESS_CODE:
--        /* No code fetch is allowed in direct-store areas */
--        return -4;
--    case ACCESS_FLOAT:
--        /* Floating point load/store */
--        return -4;
--    case ACCESS_RES:
--        /* lwarx, ldarx or srwcx. */
--        return -4;
-     case ACCESS_CACHE:
-         /*
-          * dcba, dcbt, dcbtst, dcbf, dcbi, dcbst, dcbz, or icbi
-@@ -393,12 +384,10 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
-          */
-         ctx->raddr = eaddr;
-         return 0;
--    case ACCESS_EXT:
--        /* eciwx or ecowx */
--        return -4;
--    default:
--        qemu_log_mask(CPU_LOG_MMU, "ERROR: instruction should not need address"
--                                   " translation\n");
-+    case ACCESS_CODE: /* No code fetch is allowed in direct-store areas */
-+    case ACCESS_FLOAT: /* Floating point load/store */
-+    case ACCESS_RES: /* lwarx, ldarx or srwcx. */
-+    case ACCESS_EXT: /* eciwx or ecowx */
-         return -4;
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index 26ebf3fedf..40a87ddc4a 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -10,6 +10,16 @@ static inline void set_cpu_vsr(int n, TCGv_i64 src, bool high)
+     tcg_gen_st_i64(src, tcg_env, vsr64_offset(n, high));
+ }
+ 
++static inline void get_vsr_full(TCGv_i128 dst, int reg)
++{
++    tcg_gen_ld_i128(dst, tcg_env, vsr_full_offset(reg));
++}
++
++static inline void set_vsr_full(int reg, TCGv_i128 src)
++{
++    tcg_gen_st_i128(src, tcg_env, vsr_full_offset(reg));
++}
++
+ static inline TCGv_ptr gen_vsr_ptr(int reg)
+ {
+     TCGv_ptr r = tcg_temp_new_ptr();
+@@ -196,20 +206,17 @@ static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
+ static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
+ {
+     TCGv EA;
+-    TCGv_i64 xth, xtl;
++    TCGv_i128 data;
+ 
+     REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+ 
+-    xth = tcg_temp_new_i64();
+-    xtl = tcg_temp_new_i64();
++    data = tcg_temp_new_i128();
+     gen_set_access_type(ctx, ACCESS_INT);
+     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+-    tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
+-    tcg_gen_addi_tl(EA, EA, 8);
+-    tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
+-    set_cpu_vsr(a->rt, xth, true);
+-    set_cpu_vsr(a->rt, xtl, false);
++    tcg_gen_qemu_ld_i128(data, EA, ctx->mem_idx,
++                         MO_BE | MO_128 | MO_ATOM_IFALIGN_PAIR);
++    set_vsr_full(a->rt, data);
+     return true;
+ }
+ 
+@@ -385,20 +392,17 @@ static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
+ static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
+ {
+     TCGv EA;
+-    TCGv_i64 xsh, xsl;
++    TCGv_i128 data;
+ 
+     REQUIRE_VSX(ctx);
+     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
+ 
+-    xsh = tcg_temp_new_i64();
+-    xsl = tcg_temp_new_i64();
+-    get_cpu_vsr(xsh, a->rt, true);
+-    get_cpu_vsr(xsl, a->rt, false);
++    data = tcg_temp_new_i128();
+     gen_set_access_type(ctx, ACCESS_INT);
+     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+-    tcg_gen_qemu_st_i64(xsh, EA, ctx->mem_idx, MO_BEUQ);
+-    tcg_gen_addi_tl(EA, EA, 8);
+-    tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
++    get_vsr_full(data, a->rt);
++    tcg_gen_qemu_st_i128(data, EA, ctx->mem_idx,
++                         MO_BE | MO_128 | MO_ATOM_IFALIGN_PAIR);
+     return true;
+ }
+ 
+@@ -2175,13 +2179,13 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
+                      int rt, bool store, bool paired)
+ {
+     TCGv ea;
+-    TCGv_i64 xt;
++    TCGv_i128 data;
+     MemOp mop;
+     int rt1, rt2;
+ 
+-    xt = tcg_temp_new_i64();
++    data = tcg_temp_new_i128();
+ 
+-    mop = DEF_MEMOP(MO_UQ);
++    mop = DEF_MEMOP(MO_128 | MO_ATOM_IFALIGN_PAIR);
+ 
+     gen_set_access_type(ctx, ACCESS_INT);
+     ea = do_ea_calc(ctx, ra, displ);
+@@ -2195,32 +2199,20 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
      }
-     if ((access_type == MMU_DATA_STORE || ctx->key != 1) &&
+ 
+     if (store) {
+-        get_cpu_vsr(xt, rt1, !ctx->le_mode);
+-        tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
+-        gen_addr_add(ctx, ea, ea, 8);
+-        get_cpu_vsr(xt, rt1, ctx->le_mode);
+-        tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
++        get_vsr_full(data, rt1);
++        tcg_gen_qemu_st_i128(data, ea, ctx->mem_idx, mop);
+         if (paired) {
+-            gen_addr_add(ctx, ea, ea, 8);
+-            get_cpu_vsr(xt, rt2, !ctx->le_mode);
+-            tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
+-            gen_addr_add(ctx, ea, ea, 8);
+-            get_cpu_vsr(xt, rt2, ctx->le_mode);
+-            tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
++            gen_addr_add(ctx, ea, ea, 16);
++            get_vsr_full(data, rt2);
++            tcg_gen_qemu_st_i128(data, ea, ctx->mem_idx, mop);
+         }
+     } else {
+-        tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
+-        set_cpu_vsr(rt1, xt, !ctx->le_mode);
+-        gen_addr_add(ctx, ea, ea, 8);
+-        tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
+-        set_cpu_vsr(rt1, xt, ctx->le_mode);
++        tcg_gen_qemu_ld_i128(data, ea, ctx->mem_idx, mop);
++        set_vsr_full(rt1, data);
+         if (paired) {
+-            gen_addr_add(ctx, ea, ea, 8);
+-            tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
+-            set_cpu_vsr(rt2, xt, !ctx->le_mode);
+-            gen_addr_add(ctx, ea, ea, 8);
+-            tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
+-            set_cpu_vsr(rt2, xt, ctx->le_mode);
++            gen_addr_add(ctx, ea, ea, 16);
++            tcg_gen_qemu_ld_i128(data, ea, ctx->mem_idx, mop);
++            set_vsr_full(rt2, data);
+         }
+     }
+     return true;
 -- 
 2.45.2
 
