@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7933EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074D8C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWx4L-0006we-0W; Thu, 25 Jul 2024 07:55:37 -0400
+	id 1sWx5Q-0002WN-Hg; Thu, 25 Jul 2024 07:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx4G-0006tR-Cq
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:55:33 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx5L-0002AH-1c
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:56:40 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx4D-0005gd-S4
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:55:32 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-427ffae0b91so8501815e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:55:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx5I-00060K-Ez
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:56:38 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso526763f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721908528; x=1722513328; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7cCESP5JeZ2kHt8lDaLGJAB8/MkMiOSoef+y4UUI4TQ=;
- b=PsYYD8KVLKhpRkhsU/prcJaw1S8gAlA8OQGwud2qsEVP3VUC9KTxG4+LnqRg7gJGOx
- O75BnURtaiQ/DEW5He2OOc9ScqiK4zkTkxkH+0KcI51EmvoVNWmcNQtoYUhAn67suhhF
- 1fA3Uk4EzBHPZoifU+XRBTieoCJecnvy2qSgIDcneUNiM1ng8LOtjnOlIk3k9dmWEHmz
- DtEx9Bm7lHof0yEwD26akkueYYO7iHlOWPOjsonVwdmHIxP2R0floEw5wYav0N2eOLMU
- MiGI5A/an1LQSYFRRKrN16AO3RBUJXpq0zOqjmRXO3uPw+2zpbR0nK/3xtn7pxyr9Qtr
- rMtg==
+ d=linaro.org; s=google; t=1721908594; x=1722513394; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=SNRaLDhXuaXBbogo9lc9RUzaiHflqExCllZdrRfY1c4=;
+ b=Flf/JSxouVXCUDzeGkx/yMHuaSgWWdx6XQXSSCoSQ7Podt6InNawYF29B9cOi2bUwZ
+ ZctSjYsRA5IgdkXub3aI6K7Uvt1tQjCsJz9Ru8MT9uCRVR2RqW0is8PXWurWBgadsAPu
+ 17kQMGOIvRUJaK2QokEAwDHs+Ko+BiC7UUSeLlDyRp8UGiWcT/6DE6QJWD1ZtJBnVKZg
+ sa4hiE1gptfVVp7tKnyPj63H1ijvb/FIIAfYcQ+A6/GtCP9Z2zmPiHExER9DhTVZKJeO
+ jm8frcVx/1faJiCQry0YTV8HnkDoeOZ4c35U2NbD2aFQJKVk4hVkGoqiDceKrqDTJf7D
+ MnLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721908528; x=1722513328;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1721908594; x=1722513394;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7cCESP5JeZ2kHt8lDaLGJAB8/MkMiOSoef+y4UUI4TQ=;
- b=taaE+IhBlODwUlUg0FvN+bMLVnrf08qpKSnOv/6x4F6Zzt2sixhpOZR7Q24Q2t5cAL
- V+5ab5QUGybzkN+dpgQ5IxvPJzBvUvwSs2p84rGT1cTVpDOBCwcCpRux5p29yocRi1lW
- YdCdIQjvfWvDPeJVzwv1b/A5mM/HHxw6Wu4k8c5/nEX1o32R7OOnOdTLp0gHUcIQ9ZOO
- d03pMGt8uEhsZyVPXQo2ZAsA/fuvNXMyRcolzE1AlLL05dc8EdfCQbv3XzRssAj8kAGD
- MbczdGJFS9SkuLufDWUKz7O5uv84ngGNQ88CWc0ESXiwGZcNaJqes0p+QoV/6cJgSch8
- 7UKg==
+ bh=SNRaLDhXuaXBbogo9lc9RUzaiHflqExCllZdrRfY1c4=;
+ b=SFDsr9NMbIc/sltCUT43xHDwlO5e1WxxI4c/thDxFc+QwkrB65jvtW1dwu9E4Z1wbf
+ OFQfQGqFv6zTZrPoZOVGM9c8hfLpmVzA8unZYqQQDlk5TkJ/vTccTr6sTSsBJjxqz4fm
+ Kfn5ERL8vRHXkwmciUujWXKQKEgMd+jCrz//WrSRaU/iaYMC6sblNTvykd/H4mWFA6wp
+ Sioxm7wn5xUO4zoQ57LwHVfxnlOOeCVlb8dLieKopHnFePfs6xZmsoybo27OpflT1pLN
+ lCXXtleZf1apgjKWKA6uRBV6a9/qf5lI395NsYlIb4T2QjMLnk0nZNHpJhiNdI519PW+
+ xfEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQk2eDIz8QjeSBeOWob6jK7WC0Ove7gqVLcC2gcyqmKmyHe/h1UsORaF28HSCInWL2YPsBQpgz2JuFYmsLkZjUUyCO2BM=
-X-Gm-Message-State: AOJu0Yw/gvpKYvkoQ0Hm6bXvJXFWlIDagQZJplZzey2XRvgf4kl0cPVc
- q5ZchNW5c+nfvBma/d+v9k7jw7rwL3hmzv8w47lvcQN+K4Oc5QKJ3c8HfEO9wOc=
-X-Google-Smtp-Source: AGHT+IELfbdRh2q4I8c0OyxQVxhtRSYMnqKBLFy5QQeQLFrde9jDrC1rfzUBn51UTAIgZr5EFf18Xw==
-X-Received: by 2002:a05:600c:1392:b0:426:5f09:cf53 with SMTP id
- 5b1f17b1804b1-42806b8f816mr17001825e9.15.1721908527890; 
- Thu, 25 Jul 2024 04:55:27 -0700 (PDT)
+ AJvYcCVWAYuGU+ELWwyB0gTArcrPlpxCD4IcmeUJgfeh7zNizHP+bKh8i5faAOThe7Kty1D+/MvX2yQfNeOgF56Q/vlxqPZnkqc=
+X-Gm-Message-State: AOJu0YwvyN9ASu+BI/6x1HxB6zYCsHM6J6qxhBbYmpCv+P6fFMSN0Fcj
+ jqkYC0JEEOgC1tRaXDWzKGlvsEN1Ok0C3K2oWGSVWsLwwJwmhFPByClIjwD22lk=
+X-Google-Smtp-Source: AGHT+IEhaD+zGagEKOj3m50/9uk4Vbqwj4eoZFp+NVJ5M/Z7gikORJQbTPtrIwwZ0K950VfGmH+Z1w==
+X-Received: by 2002:a5d:6d8a:0:b0:362:ad01:5435 with SMTP id
+ ffacd0b85a97d-36b31baa14dmr2324315f8f.29.1721908594355; 
+ Thu, 25 Jul 2024 04:56:34 -0700 (PDT)
 Received: from [192.168.1.102] ([176.187.216.35])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857c39sm1948475f8f.79.2024.07.25.04.55.26
+ ffacd0b85a97d-36b36857f23sm1949092f8f.78.2024.07.25.04.56.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 04:55:27 -0700 (PDT)
-Message-ID: <21dcdff1-d720-4205-af98-0fbd6de6ad59@linaro.org>
-Date: Thu, 25 Jul 2024 13:55:24 +0200
+ Thu, 25 Jul 2024 04:56:33 -0700 (PDT)
+Message-ID: <2172b10d-6100-4f91-9b33-d2482254d4ea@linaro.org>
+Date: Thu, 25 Jul 2024 13:56:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/23] tests/functional: Convert most ppc avocado tests
- into standalone tests
+Subject: Re: [PATCH v2 05/23] tests/functional: Convert simple avocado tests
+ into standalone python tests
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>,
@@ -72,21 +73,21 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
 References: <20240724175248.1389201-1-thuth@redhat.com>
- <20240724175248.1389201-18-thuth@redhat.com>
+ <20240724175248.1389201-6-thuth@redhat.com>
+ <d60683bf-724a-474a-ae97-6ec2eac775a9@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240724175248.1389201-18-thuth@redhat.com>
+In-Reply-To: <d60683bf-724a-474a-ae97-6ec2eac775a9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,30 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/24 19:52, Thomas Huth wrote:
-> Nothing thrilling in here, just straight forward conversions.
+On 25/7/24 08:55, Philippe Mathieu-Daudé wrote:
+> Hi Thomas,
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS                                   |  8 ++--
->   tests/functional/meson.build                  | 10 +++++
->   .../test_ppc64_powernv.py}                    | 45 +++++--------------
->   .../test_ppc64_pseries.py}                    | 45 +++++--------------
->   .../test_ppc_40p.py}                          | 37 ++++++---------
->   .../test_ppc_mpc8544ds.py}                    | 19 ++++----
->   .../test_ppc_virtex_ml507.py}                 | 19 ++++----
->   7 files changed, 71 insertions(+), 112 deletions(-)
->   rename tests/{avocado/ppc_powernv.py => functional/test_ppc64_powernv.py} (80%)
->   mode change 100644 => 100755
->   rename tests/{avocado/ppc_pseries.py => functional/test_ppc64_pseries.py} (83%)
->   mode change 100644 => 100755
->   rename tests/{avocado/ppc_prep_40p.py => functional/test_ppc_40p.py} (78%)
->   mode change 100644 => 100755
->   rename tests/{avocado/ppc_mpc8544ds.py => functional/test_ppc_mpc8544ds.py} (75%)
->   mode change 100644 => 100755
->   rename tests/{avocado/ppc_virtex_ml507.py => functional/test_ppc_virtex_ml507.py} (78%)
->   mode change 100644 => 100755
+> On 24/7/24 19:52, Thomas Huth wrote:
+>> These test are rather simple and don't need any modifications apart
+>> from adjusting the "from avocado_qemu" line. To ease debugging, make
+>> the files executable and add a shebang line and Python '__main__'
+>> handling, too, so that these tests can now be run by executing them
+>> directly.
+>>
+>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/functional/meson.build                  |  5 ++
+>>   .../test_cpu_queries.py}                      |  7 ++-
+>>   .../test_empty_cpu_model.py}                  |  7 ++-
+>>   .../test_mem_addr_space.py}                   | 52 +++----------------
+>>   .../test_pc_cpu_hotplug_props.py}             | 11 ++--
+>>   .../test_virtio_version.py}                   |  8 +--
+>>   6 files changed, 34 insertions(+), 56 deletions(-)
+>>   rename tests/{avocado/cpu_queries.py => 
+>> functional/test_cpu_queries.py} (89%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/empty_cpu_model.py => 
+>> functional/test_empty_cpu_model.py} (84%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/mem-addr-space-check.py => 
+>> functional/test_mem_addr_space.py} (93%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/pc_cpu_hotplug_props.py => 
+>> functional/test_pc_cpu_hotplug_props.py} (90%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/virtio_version.py => 
+>> functional/test_virtio_version.py} (98%)
+>>   mode change 100644 => 100755
+> 
+> 
+>> @@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
+>>       # for all 32-bit cases, pci64_hole_size is 0.
+>>       def test_phybits_low_pse36(self):
+>>           """
+>> -        :avocado: tags=machine:q35
+>> -        :avocado: tags=arch:x86_64
+> 
+> Could we keep the tags, but renaming as:
+> 
+>            qemu-test-tag=machine:q35
+>            qemu-test-tag=arch:x86_64
+> 
+> ?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Bah, let's just remove that for now, since this feature implementation
+might use a different format.
+
+> 
+> I'm OK to implement the equivalent feature in QEMU functional framework.
+> 
+>>           With pse36 feature ON, a processor has 36 bits of 
+>> addressing. So it can
+>>           access up to a maximum of 64GiB of memory. Memory hotplug 
+>> region begins
+>>           at 4 GiB boundary when "above_4g_mem_size" is 0 (this would 
+>> be true when
+> 
 
 
