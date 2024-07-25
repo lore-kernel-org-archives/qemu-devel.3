@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7828C3DA70
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DAEC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Ic-0004U9-C6; Thu, 25 Jul 2024 19:55:06 -0400
+	id 1sX8IU-0003l4-3m; Thu, 25 Jul 2024 19:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Ia-0004Cz-0z; Thu, 25 Jul 2024 19:55:04 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1sX8IS-0003dU-Ap; Thu, 25 Jul 2024 19:54:56 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8IY-0000aw-4b; Thu, 25 Jul 2024 19:55:03 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2cb5e0b020eso313868a91.2; 
- Thu, 25 Jul 2024 16:55:01 -0700 (PDT)
+ id 1sX8IQ-0000a5-Pp; Thu, 25 Jul 2024 19:54:56 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-70d1c655141so397118b3a.1; 
+ Thu, 25 Jul 2024 16:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951700; x=1722556500; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951692; x=1722556492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EaTaKDTXNh3V2EaFkWYN7OVGHBwhKJU9StJXUF+pwj4=;
- b=kZ2tC/jxH4XmMfZR45cROqIgbfTaALJdLA25eqfiM9BuqTcYcCd7FzdOsV5dLPH39f
- ZN4QO6In8AXQ6yP/Byft/pAuwLa/UJ2Ad2Pc7iZrLsXtoMt2l8R684KrK9NsW4AAFUnY
- +ubA0O1JcYkE9XZzb9IgmqhcVDEGlnEl4RquBA8RfdHdYjsTnWVK5ZStKYyghugoltMV
- ftyWGux1swzOa9BfiiK5dF/nMjnpZyEyEn1QLYzzAyVZDfjxU6eeujzvKPFLBcBhd3EG
- 54oHtQlTmEmMiGmP7BjLpd1QVPLX6dt7DwySP89uIwtuNYEzQPbmJr9aF51FiWnniAsq
- dAsw==
+ bh=hvWrzrnQVMo86cmX8a3zehjixqrcjJKeO5PkRaLW3bM=;
+ b=JRpvwiezIunYLbXPTgYzRKnYlEUakAZhtCMNdiiTVTZgdZwoAxYNIsyj3LJyhdKF95
+ EUp+LN098sX2aRy0nkwBcPW4yzh+vFXqcyDaKzyZkAJdS5Bhy8tGgCmBPi4V9LcfDMta
+ 2zE7K8kQs34mLkn8TF7zZgGk7mGyRrtBrmTBmu6Mn3Lurq+Dm7T9EYSLHsIl2pVJQSv8
+ e6HCgc+DGewNQUSZDRd3eKtY0uKTj1HV5C1tDKqF/r1l7ea6uFuUitV6jQfSqs+Mn/gP
+ p49KP9UHktBTcs5z4iryoYeMehgCLwev2KvSlOJJbiCDYP+4YxUowWMqiv1TXkckwIX/
+ y7Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951700; x=1722556500;
+ d=1e100.net; s=20230601; t=1721951692; x=1722556492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EaTaKDTXNh3V2EaFkWYN7OVGHBwhKJU9StJXUF+pwj4=;
- b=TBhwkr/QAtv8rF1JO8SyVySci82eMs/oqnH2USTI+1EYLt6LZeDv551YQMNIRdy422
- mZib6o1ZQv8ChKzW6N9LdYbytPKlITxrXFbAaicSSeDdr6fVK8z4QAqmJypoLSQCXzVg
- E3z6OEmx/a8I2jlvsYtc3DAr6Ll8MdMjNqcsL4o6TbU2q92yBJCoriAwItc/4ExNviFA
- m8904Gzghs0ejmPpogEqmPFdCKTw6WzD943523Se0+ZUIXaFfy9jCE6CGi4DJRkr8RCB
- ORNkjHTTR6puobBbXdHtYGlrI9r+W3+NYEKJnV722TNc5jvVcBk1tgLjhDOwH8xcMMQm
- pfAQ==
+ bh=hvWrzrnQVMo86cmX8a3zehjixqrcjJKeO5PkRaLW3bM=;
+ b=qo8Q9dpad2D33q0K+57NiWolBPemzVvwYGMYxr2xqc9ALyTGjTfqHiemc+GpwtkWIU
+ rLJeVoIrESY7zhhMaqbntTwuXt4IVuS32a5TQLgNw2zUfEesWUEoKn/yAsbPFqm40lyU
+ 0qM7yV1KvUT736OM9EvFGyHYZuqDkRGhJ++M2iHnnDjiMFCM98EBdsiMJHrWOKtXabTO
+ Fg8vb+kik3oYlT912GEayfHE/OVNYxhKw7/ck4IKeJkGQKftSt+2Ps7iOUHwWldR7QtI
+ 3gNSGrRg3Wr+TOWVLQaMj+t0K17IU64enKePfJq1D4K2ZX7ZqB+8T8XHcy26Qh34Gvl5
+ bWGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZTTvFAx1Q4C3ArXz4xJ9fxw+B/QXO16sC+fKNbkXT5gL4FLBaUHsxub78Mp8+FqnfUaA6SC7x6Saekj8cFev5QBAM
-X-Gm-Message-State: AOJu0YzQ2XKiCeYT1bLqEOOOLmv/ijPGUtRzOK0Cbyx90mvgPnjnqj3T
- V+xaDCRsIxYyTD1VEuK2tpNfOC0tIu6hNZvzvqunoUb/kiJo3hz+1Sxhjg==
-X-Google-Smtp-Source: AGHT+IFWw0MfBFMtUZGkdksWwz/535MMiVdYvKsit/rOOyx1vQvZYnQysyODGVtbflZypaE/FJBEZg==
-X-Received: by 2002:a17:90a:5d8a:b0:2c9:7fba:d895 with SMTP id
- 98e67ed59e1d1-2cf2ec03a51mr3983846a91.38.1721951700040; 
- Thu, 25 Jul 2024 16:55:00 -0700 (PDT)
+ AJvYcCV79NHXNXHRYPojK+LBEiteUEwAdd5wUuUx2lockalqYxyubT04x4g1dQcCgZO46lW6bqm6aifi+b+78p8AKpeMbPsr
+X-Gm-Message-State: AOJu0YwHirlEUNWPlFWppsOj8h+5B+D+GfAtjZZuqtQAmYw5PKypOfSK
+ +YDJVOTiPa4VAwHlfGIhqafTju1CU0YyykXutOzdks0FE0DuPk09lhL20Q==
+X-Google-Smtp-Source: AGHT+IFtH28YYuRWTMtS00hU0UIdGjwRsbCgE6bmShxvreWot4A+fSsDBa7fe1VfUC6915d/qQJ65w==
+X-Received: by 2002:a05:6a21:32aa:b0:1c2:8dd5:71d9 with SMTP id
+ adf61e73a8af0-1c47b17afffmr4360188637.4.1721951692444; 
+ Thu, 25 Jul 2024 16:54:52 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.54.56
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.54.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:54:59 -0700 (PDT)
+ Thu, 25 Jul 2024 16:54:51 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Omar Sandoval <osandov@osandov.com>, Thomas Huth <thuth@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 08/96] target/ppc/arch_dump: set prstatus pid to cpuid
-Date: Fri, 26 Jul 2024 09:52:41 +1000
-Message-ID: <20240725235410.451624-9-npiggin@gmail.com>
+Subject: [PULL 06/96] cpu-common.c: export cpu_get_free_index to be reused
+ later
+Date: Fri, 26 Jul 2024 09:52:39 +1000
+Message-ID: <20240725235410.451624-7-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,111 +95,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Omar Sandoval <osandov@osandov.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Every other architecture does this, and debuggers need it to be able to
-identify which prstatus note corresponds to which CPU.
+This helper provides an easy way to identify the next available free cpu
+index which can be used for vcpu creation. Until now, this is being
+called at a very later stage and there is a need to be able to call it
+earlier (for now, with ppc64) hence the need to export.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Omar Sandoval <osandov@osandov.com>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/arch_dump.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ cpu-common.c              | 7 ++++---
+ include/exec/cpu-common.h | 2 ++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/arch_dump.c b/target/ppc/arch_dump.c
-index a8315659d9..f45474133a 100644
---- a/target/ppc/arch_dump.c
-+++ b/target/ppc/arch_dump.c
-@@ -47,9 +47,14 @@ struct PPCUserRegStruct {
- } QEMU_PACKED;
- 
- struct PPCElfPrstatus {
--    char pad1[112];
-+    char pad1[32]; /* 32 == offsetof(struct elf_prstatus, pr_pid) */
-+    uint32_t pid;
-+    char pad2[76]; /* 76 == offsetof(struct elf_prstatus, pr_reg) -
-+                            offsetof(struct elf_prstatus, pr_ppid) */
-     struct PPCUserRegStruct pr_reg;
--    char pad2[40];
-+    char pad3[40]; /* 40 == sizeof(struct elf_prstatus) -
-+                            offsetof(struct elf_prstatus, pr_reg) -
-+                            sizeof(struct user_pt_regs) */
- } QEMU_PACKED;
- 
- 
-@@ -96,7 +101,7 @@ typedef struct NoteFuncArg {
-     DumpState *state;
- } NoteFuncArg;
- 
--static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
-+static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
- {
-     int i;
-     reg_t cr;
-@@ -109,6 +114,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
- 
-     prstatus = &note->contents.prstatus;
-     memset(prstatus, 0, sizeof(*prstatus));
-+    prstatus->pid = cpu_to_dump32(s, id);
-     reg = &prstatus->pr_reg;
- 
-     for (i = 0; i < 32; i++) {
-@@ -127,7 +133,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
-     reg->ccr = cpu_to_dump_reg(s, cr);
+diff --git a/cpu-common.c b/cpu-common.c
+index 7ae136f98c..6b262233a3 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -57,14 +57,12 @@ void cpu_list_unlock(void)
+     qemu_mutex_unlock(&qemu_cpu_list_lock);
  }
  
--static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-+static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+-static bool cpu_index_auto_assigned;
+ 
+-static int cpu_get_free_index(void)
++int cpu_get_free_index(void)
  {
-     int i;
-     struct PPCElfFpregset  *fpregset;
-@@ -146,7 +152,7 @@ static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-     fpregset->fpscr = cpu_to_dump_reg(s, cpu->env.fpscr);
- }
+     CPUState *some_cpu;
+     int max_cpu_index = 0;
  
--static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-+static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+-    cpu_index_auto_assigned = true;
+     CPU_FOREACH(some_cpu) {
+         if (some_cpu->cpu_index >= max_cpu_index) {
+             max_cpu_index = some_cpu->cpu_index + 1;
+@@ -83,8 +81,11 @@ unsigned int cpu_list_generation_id_get(void)
+ 
+ void cpu_list_add(CPUState *cpu)
  {
-     int i;
-     struct PPCElfVmxregset *vmxregset;
-@@ -178,7 +184,7 @@ static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-     vmxregset->vscr.u32[3] = cpu_to_dump32(s, ppc_get_vscr(&cpu->env));
- }
++    static bool cpu_index_auto_assigned;
++
+     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
++        cpu_index_auto_assigned = true;
+         cpu->cpu_index = cpu_get_free_index();
+         assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     } else {
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 240ee04369..2e1b499cb7 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -35,6 +35,8 @@ void cpu_list_lock(void);
+ void cpu_list_unlock(void);
+ unsigned int cpu_list_generation_id_get(void);
  
--static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-+static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
- {
-     int i;
-     struct PPCElfVsxregset *vsxregset;
-@@ -195,7 +201,7 @@ static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-     }
- }
++int cpu_get_free_index(void);
++
+ void tcg_iommu_init_notifier_list(CPUState *cpu);
+ void tcg_iommu_free_notifier_list(CPUState *cpu);
  
--static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
-+static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
- {
-     struct PPCElfSperegset *speregset;
-     Note *note = &arg->note;
-@@ -211,7 +217,7 @@ static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
- 
- static const struct NoteFuncDescStruct {
-     int contents_size;
--    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu);
-+    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu, int id);
- } note_func[] = {
-     {sizeof_field(Note, contents.prstatus),  ppc_write_elf_prstatus},
-     {sizeof_field(Note, contents.fpregset),  ppc_write_elf_fpregset},
-@@ -282,7 +288,7 @@ static int ppc_write_all_elf_notes(const char *note_name,
-         arg.note.hdr.n_descsz = cpu_to_dump32(s, nf->contents_size);
-         strncpy(arg.note.name, note_name, sizeof(arg.note.name));
- 
--        (*nf->note_contents_func)(&arg, cpu);
-+        (*nf->note_contents_func)(&arg, cpu, id);
- 
-         note_size =
-             sizeof(arg.note) - sizeof(arg.note.contents) + nf->contents_size;
 -- 
 2.45.2
 
