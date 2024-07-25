@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F13CC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0BDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 12:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWx7d-0003b5-AS; Thu, 25 Jul 2024 07:59:01 -0400
+	id 1sWxA4-0005ny-SW; Thu, 25 Jul 2024 08:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx7X-00038j-Az
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:58:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWx7V-0006Wf-C2
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:58:54 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4279c924ca7so5876435e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721908731; x=1722513531; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NRLR+5V6b6XMBXjA9GnVWntzKIjZB9UfCVpwzPPLvAA=;
- b=qYCt7wX9phi/duZNL6hCbDxt/qRLFu2HAkpFIWU80/GZqB5aq0zvmw3HijDKTVvfD4
- 9qRW4OfIGmZaBu0y22Wew+w3mR5qZFC9YRps3qUUVd7wcsVZugjnXR+yg+5M9sByel87
- fruauTq9jmcVCrBqdNHbCBBKVYSM1rP0sybnwtCaFnD/f9P3Ty7rDbPyvtPcSmTbwqv1
- 0CUym09qpiQncFlubybbdsFVgNIadJHfe3m+v0qWs6jDjygt+JVVM+TW2visFyAQ4sAs
- n8RGkhofMwZKfnW3IrwxPupmEDn2jfASTnyLe2vA1djNfoO6CozuG/x01J0XLqOeMaKt
- sbiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721908731; x=1722513531;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NRLR+5V6b6XMBXjA9GnVWntzKIjZB9UfCVpwzPPLvAA=;
- b=feOv2QQTpBIUsN4jsYskV3HVPpCvXAxA/+uB4x/S3m+F1fhm45nwgvCnQ8ERgd9UkU
- GRO1vXkmyqJ6dRzkH6fbYHpRJS8volH1nbt2TTa2FSQL1HkNccFb+FwSbfP3fBFdw7MK
- xGcmsHXcl4zfq2b8jCj4HHRUpJEVShvqJxjAVSEO5aP82HltHiqE+9XEM+UHPX4XxSCM
- L7AQKxtxAMq+z433RTau9cImH+mS7APFhEd48G9XtBJhvo4foj2X1cTv5hfjHFM8m02B
- CVewhWKrDW3oIQzdUyFH3yCcvlPPKeHv68ILGVsgPq0RoKtrSoRAAm4KScVwmln93yZR
- ry0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDUEIbWHW6DzKewRBncjcJksr0r4W/bVrtKF3MrVjxnbzn7LdQmEc+dKxwr+lfmg0h7mG3hH8QyNym9ZUGGbn7SL5YmDw=
-X-Gm-Message-State: AOJu0YzTSxYh96ZDGScyA4RUMtf1eUerTSWlCq9LLj6G+XoO81wchyu7
- vFr3+SxIGJk6nTUnDD0Fe3jycYE6UeleQgsIt0zSliLt7GGnNAxN4XksqWRTD0w=
-X-Google-Smtp-Source: AGHT+IEnKrncsvSd4yRNRJ/PdAF8JVmDvTJm/XgeTOdHpP1oy35oDwEMNoXx8IkBUdeuOnyao2T69A==
-X-Received: by 2002:a05:600c:46d4:b0:426:6960:34ac with SMTP id
- 5b1f17b1804b1-42806bedd4emr11598775e9.36.1721908731139; 
- Thu, 25 Jul 2024 04:58:51 -0700 (PDT)
-Received: from [192.168.1.102] ([176.187.216.35])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f93592b6sm75950485e9.3.2024.07.25.04.58.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 04:58:50 -0700 (PDT)
-Message-ID: <5c882618-d977-4531-9f4a-ed1ae7d130df@linaro.org>
-Date: Thu, 25 Jul 2024 13:58:48 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWx9R-0003Dr-CE
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:01:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sWx9P-0008W5-FM
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:00:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721908850;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ys2kUGxklyDGscsOVEN9kILYtzx3YDKJ1q7CjI4xn9U=;
+ b=iLNrTagtzzlmuRUSc/ZZGpGhxvZ7Di9Sv8qnuy+q0jv0BZoQ8wB+u+svJ/ltV8ATGAlLyp
+ pLY9OhFRfMKdwkF9GFh5JFENXQV0QlChrI5oerjUvJRoTRfKUL+Y7o2YWutHTPhIIKUopL
+ dgVOcpSM1qhtV4fnYDHh+ydg4ngObGI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-p9345v9QP3yM6LJRRw8iOg-1; Thu,
+ 25 Jul 2024 08:00:46 -0400
+X-MC-Unique: p9345v9QP3yM6LJRRw8iOg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75078195608A; Thu, 25 Jul 2024 12:00:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.144])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 423C51955D45; Thu, 25 Jul 2024 12:00:22 +0000 (UTC)
+Date: Thu, 25 Jul 2024 13:00:15 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Cochran <richardcochran@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
+ "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
+ "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
+ "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+Message-ID: <ZqI-TyjlMe-G_xFs@redhat.com>
+References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+ <20240725012730-mutt-send-email-mst@kernel.org>
+ <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
+ <ZqI3ntUR6bfY1kxo@redhat.com>
+ <603aa858ca961a5c4fdfc9b44834343adf1c73d2.camel@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/23] tests/Makefile.include: Increase the level of
- indentation in the help text
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-References: <20240724175248.1389201-1-thuth@redhat.com>
- <20240724175248.1389201-4-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240724175248.1389201-4-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <603aa858ca961a5c4fdfc9b44834343adf1c73d2.camel@infradead.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,19 +103,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/24 19:52, Thomas Huth wrote:
-> The next patch is going to add some entries that need more space between
-> the command and the help text, so let's increase the indentation here
-> first.
+On Thu, Jul 25, 2024 at 12:53:34PM +0100, David Woodhouse wrote:
+> On Thu, 2024-07-25 at 12:31 +0100, Daniel P. Berrangé wrote:
+> > On Thu, Jul 25, 2024 at 10:56:05AM +0100, David Woodhouse wrote:
+> > > Hi Michael, thanks for the review!
+> > > 
+> > > On Thu, 2024-07-25 at 01:48 -0400, Michael S. Tsirkin wrote:
+> > > > Do you want to just help complete virtio-rtc then? Would be easier than
+> > > > trying to keep two specs in sync.
+> > > 
+> > > The ACPI version is much more lightweight and doesn't take up a
+> > > valuable PCI slot#. (I know, you can do virtio without PCI but that's
+> > > complex in other ways).
+> > 
+> > In general it shouldn't have to take up a PCI slot, that's just
+> > a common default policy. virtio-devices only need a dedicated
+> > slot if there's a need to do hotplug/unplug of them. There is a
+> > set of core devices for which hotplug doesn't make sense, which
+> > could all be put as functions in the same slot. ie virtio-rng,
+> > virtio-balloon and virtio-rtc, could all live in one slot.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/Makefile.include | 30 +++++++++++++++---------------
->   1 file changed, 15 insertions(+), 15 deletions(-)
+> But if you don't have any virtio devices already, you still need one
+> slot to put them in.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Perhaps - it may still be practical to be a function within a slot
+shared with non-virtio PCI devices too.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
