@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9648C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459CFC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsof-0006xP-2w; Thu, 25 Jul 2024 03:23:09 -0400
+	id 1sWsoV-0006R5-Ur; Thu, 25 Jul 2024 03:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1sWsoZ-0006h0-SF
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:23:05 -0400
+ id 1sWsoT-0006I1-W3
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:58 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1sWsoY-0001Pi-AN
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:23:03 -0400
+ id 1sWsoR-0001Gw-Nn
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721892182; x=1753428182;
+ t=1721892176; x=1753428176;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=hEJIsWDYfFTtEa1W706+mMe0OCLnShBTQaakw4gSz8Q=;
- b=VGIRqV922stGTL+3/UdR3MDzOrvey08sZR7BbIiRt1NYAhIhJC1tD9ip
- p58iLeyRXBc6FRmnkz/3o2HmN/J3pQK9B9Z3CqTjWw1wEazIiw8KJkQv0
- B3nPIHAY1Wd4JWh4cnOZhkG143N1WsIZ9mmukHs9BwzNUB6Q+u4VfEPlH
- yH434buJKnKAW8jIFRHozSqq5XVzZQvNAZkZbhn165tWe37HwF/r/3DaA
- IeErZRSzk5/dlrDcMCWovsVMzMaFTep/uDXF+J8iXYYGqMFutVw1v86so
- cxzDXQjTPTxwC/LY5QJZ8W5ZAf1rh8niPFAADQ8rkFK5Rupa3qCYPZHjn A==;
-X-CSE-ConnectionGUID: PUsSsObqSbmLQSKKLdBcNQ==
-X-CSE-MsgGUID: GdTVBAagRXGd0HEViIBHTw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30754016"
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="30754016"
+ bh=PifPO2VLSml++/yyEHfyB9LD6kSBnEg6UWh8hpYvOM8=;
+ b=eYmZfkh5hE4npvdwm3MiVwt7mMUbQjxrExr7yytsqRWKE8oFstwHROAo
+ QHOe+DqJ3MnCRTJ+d1KYSpGssIp4F6yKWI0eWyHmJHL0vOGLXElvAwTdl
+ eB+ITclFUJ9pUPR7MitmMSt8mbmjtpG/DMcjXYgpPE02tl3Q/x+6gA5Sq
+ QU0J08rNkwwFgaoJYPU2TYD+TybP1KqRqEWtg3Yo3zj2urdxmCXJLK+8o
+ on9fm8j/e3Z4qaOjHCFMHvb6jYnSM5D1OPmesBGm04C/84i660CBiYawm
+ 7Ry0YG12ZoWCgOTawIzbYZTUQeYitLHZAVx9ROEJ4qWZhvdGrReR4USNF g==;
+X-CSE-ConnectionGUID: zJDEY3W1TEOjA7TJ+Sg0ag==
+X-CSE-MsgGUID: MN/BdN2tQcaRi1jHrB4BeA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30753988"
+X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="30753988"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 00:23:01 -0700
-X-CSE-ConnectionGUID: /vvKROvzSbqAL9fMxU/uyw==
-X-CSE-MsgGUID: hWGUxWa3R/yK5BGhLtSg/g==
+ 25 Jul 2024 00:22:53 -0700
+X-CSE-ConnectionGUID: gFgeME1KR7eAyTzj7cKk1A==
+X-CSE-MsgGUID: xo48P9PiTWaGNySerO1iQA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="52858206"
+X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="52858168"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 00:22:58 -0700
+ 25 Jul 2024 00:22:50 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Peter Xu <peterx@redhat.com>,
@@ -57,9 +57,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  Wang Wei W <wei.w.wang@intel.com>, Peng Chao P <chao.p.peng@intel.com>,
  Gao Chao <chao.gao@intel.com>, Wu Hao <hao.wu@intel.com>,
  Xu Yilun <yilun.xu@intel.com>
-Subject: [RFC PATCH 6/6] RAMBlock: make guest_memfd require coordinate discard
-Date: Thu, 25 Jul 2024 03:21:15 -0400
-Message-ID: <20240725072118.358923-7-chenyi.qiang@intel.com>
+Subject: [RFC PATCH 4/6] memory: Register the RamDiscardManager instance upon
+ guest_memfd creation
+Date: Thu, 25 Jul 2024 03:21:13 -0400
+Message-ID: <20240725072118.358923-5-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20240725072118.358923-1-chenyi.qiang@intel.com>
 References: <20240725072118.358923-1-chenyi.qiang@intel.com>
@@ -89,27 +90,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As guest_memfd is now managed by guest_memfd_manager with
-RamDiscardManager, only block uncoordinated discard.
+Instantiate a new guest_memfd_manager object and register it in the
+target MemoryRegion. From this point, other subsystems such as VFIO can
+register their listeners in guest_memfd_manager and receive conversion
+events through RamDiscardManager.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- system/physmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ system/physmem.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/system/physmem.c b/system/physmem.c
-index 98072ae246..ffd68debf0 100644
+index 33d09f7571..98072ae246 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -1849,7 +1849,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         assert(kvm_enabled());
-         assert(new_block->guest_memfd < 0);
+@@ -53,6 +53,7 @@
+ #include "sysemu/hostmem.h"
+ #include "sysemu/hw_accel.h"
+ #include "sysemu/xen-mapcache.h"
++#include "sysemu/guest-memfd-manager.h"
+ #include "trace/trace-root.h"
  
--        if (ram_block_discard_require(true) < 0) {
-+        if (ram_block_coordinated_discard_require(true) < 0) {
-             error_setg_errno(errp, errno,
-                              "cannot set up private guest memory: discard currently blocked");
-             error_append_hint(errp, "Are you using assigned devices?\n");
+ #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
+@@ -1861,6 +1862,12 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+             qemu_mutex_unlock_ramlist();
+             goto out_free;
+         }
++
++        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
++        GuestMemfdManagerClass *gmmc = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
++        g_assert(new_block->mr);
++        gmmc->realize(OBJECT(gmm), new_block->mr, new_block->mr->size);
++        memory_region_set_ram_discard_manager(gmm->mr, RAM_DISCARD_MANAGER(gmm));
+     }
+ 
+     new_ram_size = MAX(old_ram_size,
+@@ -2118,6 +2125,8 @@ static void reclaim_ramblock(RAMBlock *block)
+ 
+     if (block->guest_memfd >= 0) {
+         close(block->guest_memfd);
++        g_assert(block->mr);
++        object_unref(OBJECT(block->mr->rdm));
+         ram_block_discard_require(false);
+     }
+ 
 -- 
 2.43.5
 
