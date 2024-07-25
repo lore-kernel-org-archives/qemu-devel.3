@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC7EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6C3C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWzDw-0004rp-RJ; Thu, 25 Jul 2024 10:13:40 -0400
+	id 1sWzNQ-0002r0-KO; Thu, 25 Jul 2024 10:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sWzDs-0004pw-8x
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:13:37 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sWzDq-0006fw-Kf
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:13:36 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-369cb9f086aso608746f8f.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721916813; x=1722521613; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MhaQHPxEUXRm9BJ+jDoFhbXwUq/0jmn/JQd/gOROiGQ=;
- b=AizZqBw8dp279hmv/2/Txmah/Nc86VqVC9GHaYzi4EwykEMcU1Py6e4UtsjKDFlv4t
- Nurwh7JAXV47js330KvKVhSjrjk/t1sn/ub9uWmULBN9kUTJyDLQIICqvFjfnR8/2Xpj
- gdLdR1upl9H139dbaANFBp99YqpXLTZRwnxONdw215RfF4J6yU72LRm0xEnlxAuoO/h+
- f3wm3WqRGJoIpiz+jaiD1sFbvbw58ZMSvziX0ZF24HlOezO1ET130pPpAFp6ixBJFWnA
- CxL4RnkXTCqO9uoGvVTMlVwnI6+st8iybQgXEQBbEVgoCfcEROoBu1rXgvnm6sServ4H
- SR2g==
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sWzNO-0002qS-Na
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:23:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sWzNL-0000oU-N1
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:23:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721917402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UjkH55pUAqJ3BIpsEuBD/w0IaUj3TAvuda9Tz/kMjiw=;
+ b=Wt1RdJRD5+9pAJTnw1xHNrWmSqoKwPDi3uqMc5Yy6fmiqayL/zlFwR2+bl7fyFD2S7g6xT
+ MnhyezYAL/EAmdO4N5D9mxWvgHb1m972a/LE0nl+uWNb6wLs6GpS83/2hThHd2ocpg3Wtj
+ E4fBvplH8Snuv7ozGLmRg+l2ul5acEM=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-435-PahcZxnENIO_CIxZ2Wk-iw-1; Thu, 25 Jul 2024 10:22:11 -0400
+X-MC-Unique: PahcZxnENIO_CIxZ2Wk-iw-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-665a6dd38c8so31234867b3.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:22:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721916813; x=1722521613;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MhaQHPxEUXRm9BJ+jDoFhbXwUq/0jmn/JQd/gOROiGQ=;
- b=F7xSRSpAH26EgQhlebH702i7DKH4/jhax5tM/QaGMksjRVTSMjcQvZ8KO5wso4iG17
- ZyRohmwf1gwB5oUb0NKEcm0VzagleJtD3GowBzTWjCl+ZlBpyGdcmtsAC5jz0peGc75R
- pQLQmVUvO84J8bxEmnMF63PbpADqclGpnDaohXVBFk84rdZVdSKpldN4yHrwMww8LCFS
- NxgRo/fscZWP0f9JpOIvG0t3gWiDlYFdnk479N5ock93OG5F1WtvwC5uc8kWSBT5rN0v
- mw3LmCyJwiJSddbyCVgu4cF6ANrlAFivd+r9MptHCpAg/kQqBKU/vIU0miZH8XnaMDDa
- y5zw==
-X-Gm-Message-State: AOJu0Ywc/kxyDZF5S3kaSXayt9slbLCuu2xJvL4omk6AzOl1oHtUZFSq
- aCpziD9wa71XBPP1jW+DyHqzvaPvFmnAREk/N5Qtvwd7NNixB2ArKCkcohJ2hOEiHXyA1sHADV2
- A3FvMHH0iSLhaC9eNnJo4pQXauGi7MawJWXzRDQ==
-X-Google-Smtp-Source: AGHT+IF7i/uLXoNhU7qpEJZPkP7GqGq17PejVmREnBNIR3RE2g92VaP7NyEzzPe00U3DRNleTY+ow9tjbf6jZ6P0ia8=
-X-Received: by 2002:a05:6000:12cf:b0:367:9088:fecc with SMTP id
- ffacd0b85a97d-36b31ac9b9dmr1984076f8f.7.1721916812656; Thu, 25 Jul 2024
- 07:13:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1721917329; x=1722522129;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UjkH55pUAqJ3BIpsEuBD/w0IaUj3TAvuda9Tz/kMjiw=;
+ b=eVc5UJ/02C+ppmvp3bEtCl6v2NP3sHk2Z7o4f1/nNw+71qoERmBCH+XJ2hOTbHlV4H
+ fQ1+pUN7Smx5szXnglsLyyBV6QUxSa1K0jX205zSr1Car7H1RQakVS4hR8L/A3BHZ0Fe
+ PdzNmXQqjGdprQ3n1Z9t/V6qHl1fBDLv0XlqlKSYMiOT09rdN4Zmo5bahA2jRz7lBcgE
+ cM1Ejic+DTX9ViI4dHxbKu5jzyGC5j+SZ9bh8M4blJN+xkKMcR/jS1mR1z6WJ9/T0Yid
+ o03UEcrU5KCrbsmpJipoqEC/QWvejTLXGbEtRivcVEfJvAvU07y9xPN29XfQy/EkTQ1c
+ qYpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUupYDwhT+nC/jdytnnSBBhhzRVNpTqxBsDjy21TnVx7IR257elNqUpLB5kwZCjRxTayvPJ1GZimE8TAmaG9E5yhD704ZE=
+X-Gm-Message-State: AOJu0YzBtLrIWnoie5XFw+zGDeUF9OJPjkeHRikMzAqOLd81TsMh2Srh
+ fm7yMeoMQjtmxZUwwk3HnCOI4UkW0APF7z4NSY595HyySGc19HoStlz2xaL5f7kLSV7wa/3t7To
+ k34h6CLmo1SKXhkUkEq8heFX5/6IahQjKYNhMLWKcDj3oI7TWStvOhXKCag+VeNYXEGS96O7or+
+ aBUiZ+A+YEuSnk4hPw2VUv0DQ87R4=
+X-Received: by 2002:a0d:fc81:0:b0:65f:93c1:feea with SMTP id
+ 00721157ae682-675109209edmr28370777b3.1.1721917328663; 
+ Thu, 25 Jul 2024 07:22:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGiFycFWURGNWhULXjyRfG2vnEYSG0uAuWlktqUGtOi5Nz74hdip6d5agcEndw/Fi+IEEDApka4IzULl7T7rWU=
+X-Received: by 2002:a0d:fc81:0:b0:65f:93c1:feea with SMTP id
+ 00721157ae682-675109209edmr28370547b3.1.1721917328277; Thu, 25 Jul 2024
+ 07:22:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230302123029.153265-1-pbonzini@redhat.com>
- <20230302123029.153265-58-pbonzini@redhat.com>
- <CAFEAcA92Rd7f3Ngn8_nYZCxJptAD2DcP+oHCiXii6vTHMCUamQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA92Rd7f3Ngn8_nYZCxJptAD2DcP+oHCiXii6vTHMCUamQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jul 2024 15:12:51 +0100
-Message-ID: <CAFEAcA9g=eQo7kO+Z76+zHH8Vo+=bh_yRej1-N+-0iCnsuSr_A@mail.gmail.com>
-Subject: Re: [PULL 57/62] hw/xen: Support MSI mapping to PIRQ
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, David Woodhouse <dwmw@amazon.co.uk>,
- Paul Durrant <paul@xen.org>
+References: <20240716112614.1755692-1-thuth@redhat.com>
+In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
+From: Cleber Rosa <crosa@redhat.com>
+Date: Thu, 25 Jul 2024 10:21:54 -0400
+Message-ID: <CA+bd_6LbLbR5hEqUhn5Vutf1k5HsB4Zg=qYF-Tq_pOrxDeWo1A@mail.gmail.com>
+Subject: Re: [PATCH v1 00/11] Convert avocado tests to normal Python unittests
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=crosa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,70 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Dec 2023 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, Jul 16, 2024 at 7:28=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
 >
-> On Thu, 2 Mar 2023 at 12:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > From: David Woodhouse <dwmw@amazon.co.uk>
-> >
-> > The way that Xen handles MSI PIRQs is kind of awful.
-> >
-> > There is a special MSI message which targets a PIRQ. The vector in the
-> > low bits of data must be zero. The low 8 bits of the PIRQ# are in the
-> > destination ID field, the extended destination ID field is unused, and
-> > instead the high bits of the PIRQ# are in the high 32 bits of the address.
+> The Avocado v88 that we use in QEMU is already on a life support
+> system: It is not supported by upstream anymore, and with the latest
+> versions of Python, it won't work anymore since it depends on the
+> "imp" module that has been removed in Python 3.12.
 >
-> Hi; Coverity thinks this change introduced a locking error
-> (CID 1527403):
->
->
-> > @@ -1226,21 +1256,54 @@ int xen_evtchn_bind_pirq_op(struct evtchn_bind_pirq *pirq)
-> >          return -EINVAL;
-> >      }
-> >
-> > -    QEMU_LOCK_GUARD(&s->port_lock);
-> > +    QEMU_IOTHREAD_LOCK_GUARD();
->
-> We used to take the port_lock before looking at s->pirq[pirq->pirq].port,
-> but now we don't...
->
-> >      if (s->pirq[pirq->pirq].port) {
-> >          return -EBUSY;
-> >      }
-> >
-> > +    qemu_mutex_lock(&s->port_lock);
->
-> ...until down here after that "exit if already allocated" check.
-> So Coverity thinks that two threads might both get into
-> the "take the lock, allocate a port, set the port field in the
-> struct" codepath simultaneously.
->
-> > +
-> >      ret = allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
-> >                          &pirq->port);
-> >      if (ret) {
-> > +        qemu_mutex_unlock(&s->port_lock);
-> >          return ret;
-> >      }
-> >
-> >      s->pirq[pirq->pirq].port = pirq->port;
-> >      trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
-> >
-> > +    qemu_mutex_unlock(&s->port_lock);
-> > +
->
-> I think in practice the iothread-lock guard will prevent this,
-> but it does look rather odd. Is there a reason not to have
-> the port lock for the whole stretch of "check whether we've
-> already allocated this, and if not then allocate it" code ?
 
-Ping? This is still in Coverity's list of untriaged issues.
-I'm inclined to say we should take the port_lock before the
-EBUSY check. Using the WITH_QEMU_LOCK_GUARD(&s->port_lock) {...}
-would make this straightforward and avoid having to do
-explicit unlock in the early-return codepath (both here and
-in the allocate_port() failed codepath).
+Hi Thomas,
 
-thanks
--- PMM
+Let me start by saying that this is my attempt to explain the context
+of the lack of updates on QEMU when it comes to the Avocado update,
+and point to the actual updates.
+
+> There have been several attempts to update the test suite in QEMU
+> to a newer version of Avocado, but so far no attempt has successfully
+> been merged yet.
+>
+
+So, we've seen in the past an attempt to update Avocado from 88.1 to a
+regular release, and the troubles it caused, including a revert.  My
+take was that a LTS version should be used, but during this time,
+Avocado experienced a rewrite and having it replacing the old
+implementation in a production level project such as QEMU was tricky.
+Then 103.0 LTS was released, and there was extensive work to test the
+QEMU tests before that release was cut.  Additionally, there was
+further work, but unfortunately not posted yet, to make use of 103.0
+features in the existing tests[2].   I've tested on GitLab with tests
+running in parallel, cutting job times in 1/3[2].  A side node is
+that, because 103.0 is an LTS release, it will receive the needed bug
+fixes and updates that we deem necessary, including things we find in
+QEMU tests.  In fact, 103.1[3] is in the works.
+
+> Additionally, the whole "make check" test suite in QEMU is using the
+> meson test runner nowadays, so running the python-based tests via the
+> Avocodo test runner looks and feels quite like an oddball, requiring
+> the users to deal with the knowledge of multiple test runners in
+> parallel (e.g. the timeout settings work completely differently).
+>
+
+Now I believe we can be very much in sync here.  I've thought for a
+while that there's no reason for Avocado to cooperate or be compatible
+with Meson.  There's no reason why users can't simply pick how the
+test gets run.  In fact, with the new Avocado architecture, you don't
+even need to run "avocado" to run an "avocado-instrumented" test.  You
+could pretty much run "avocado-runner-avocado-instrumented" with the
+right parameters through Meson.
+
+> So instead of trying to update the python-based test suite in QEMU
+> to a newer version of Avocado, we should maybe try to better integrate
+> it with the meson test runner instead. Indeed most tests work quite
+> nicely without the Avocado framework already, as you can see with
+> this patch series - it does not convert all tests, just a subset so
+> far, but this already proves that many tests only need small modifi-
+> cations to work without Avocado.
+>
+> Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
+> classes (e.g. based on cloud-init images or using SSH) really depend
+> on the Avocado framework, so we'd need a solution for those if we
+> want to continue using them. One solution might be to simply use the
+> required functions from avocado.utils for these tests, and still run
+> them via the meson test runner instead, but that needs some further
+> investigation that will be done later.
+>
+
+So, I believe this type of higher level testing is something that
+needs to remain, and even grow.  Speaking for Red Hat, I see the
+movement of QE contributing more Avocado-VT style tests into QEMU
+itself.  This means way more libraries and features that go into a
+common set of utilities and features (more on that later) than it
+currently exists in avocado.utils.
+
+This brings the autils[4] initiative into the picture.  We're about
+80% done with the project structure, and after that, it will be a
+common utility project (such as the cloudinit and ssh) which can be
+released automatically when the maintainer votes (through GitHub) that
+a new release is needed.  With that, we can have all the existing QEMU
+tests (and more) running in either meson or Avocado (for users that
+want Avocado runner only features, such as dependency resolution,
+container support, etc).
+
+Now, if you think any of this makes sense, I'd love to cooperate with
+you on an update that does both: update Avocado, and allow for the
+execution of all tests through meson.
+
+Thanks and I'm very very sorry for the delay in this update.
+- Cleber.
+
+[1] https://gitlab.com/cleber.gnu/qemu/-/commits/WIP/avocado_test_updates_l=
+ts?ref_type=3Dheads
+[2] https://gitlab.com/cleber.gnu/qemu/-/jobs/7085879478
+[3] https://github.com/avocado-framework/avocado/pull/5953
+[4] https://github.com/avocado-framework/autils
+
 
