@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B0BC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53319C52CDA
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8JD-0007z8-4X; Thu, 25 Jul 2024 19:55:43 -0400
+	id 1sX8It-0006Mw-2M; Thu, 25 Jul 2024 19:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8J5-0007KW-OK; Thu, 25 Jul 2024 19:55:38 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1sX8Iq-00064I-JD; Thu, 25 Jul 2024 19:55:20 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8J2-0000xI-3R; Thu, 25 Jul 2024 19:55:34 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2cb55418470so291378a91.1; 
- Thu, 25 Jul 2024 16:55:31 -0700 (PDT)
+ id 1sX8Io-0000p3-Q2; Thu, 25 Jul 2024 19:55:20 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7a2123e9ad5so238221a12.1; 
+ Thu, 25 Jul 2024 16:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951730; x=1722556530; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951716; x=1722556516; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/yX63KTDQl//4HUcSi0eiTmjyFrfp+jQwa5dnnwjd9o=;
- b=UBBMLFEM4Gu2EscK0EXNgMBA9vwp/6hZW4JdGrHNKJzPVLnj3o0WRnk6Eth3jBnEx4
- MsvHPGzJ06/KWC6UDNo5qzPN5CvkNbxXaVg+BYiTzuqpHgCGKeNgWFWICgFcUrYDVUtx
- XvZZzKBBhAl0Wm/pAJt6uJ1fInGLU0uoY2bAlZhfrnoB7PWTt9+2ndomPRs9jcoGgRr8
- LEIq3qi4BkpwgW3shMFld9Cxsz2TuKCUGn3GbWQi/QgEnhUTVi1DEQL2x41tYLkZwxtd
- h/WFoAauHP6E8cGhbrupPkDTOAU7d2vITJEptX3RvsVhvVA6UXvxfayOtb36bZDHGPPt
- hpLg==
+ bh=xijc/4hj1e9Cv15QuxISSCdUEPCfH65xyo31i+c5EP8=;
+ b=XGXn6QWdCzoko5f4yEdM0bP/SXQFgWQur3COVcszgcN7RJt6uYxDu+XQ6KTUjCq+tk
+ 8B9/MKDGQRMi0K0Pqa2UcRO3kcFC/zqXpEDsUvC4z7VS1/5qQb3Zb2GXeRaV4bGRxAYp
+ kzikluConS5RSXeGD1fwjXG69Pc2uEwDIQUCM/s9G/cjmEErvHlQzQiLaHTsHEewrFRY
+ pXEZ2u1McFMqcHexqtYuGq5OXWSpQxwS/7qWEDoZ35CwT2iXflKE0DOchsI/AthNaX0l
+ 0eZ3s8jFKheg7mcn503+d52MuMrCbEDaDLW8UJaOhIZBmm+OwIGh5HJehJz0k+n9RXzF
+ OkSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951730; x=1722556530;
+ d=1e100.net; s=20230601; t=1721951716; x=1722556516;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/yX63KTDQl//4HUcSi0eiTmjyFrfp+jQwa5dnnwjd9o=;
- b=KdNzrpobWnq/D/gRNQ4rVmwbdgKcKmmKC4q17EMicGCdJ4ZsRtCGCWoYh4Nqq9WuD0
- /Ze2wUUOhlP4GJYC2TMztpwGsvKc/JPJK5yD8INUaRcUC4l+MoSDH3PLTD+GVfXJoKF2
- 0KzjpukuJhebZH6DNZ1La1Dn5KCv3yjGOZxkwZLeLkqBFWMxLBqxW0T+fy8rwJRDsxnD
- xeSx4hgolz7BvomvIioWaUjwmeKgOd0NbkJ+bvfhCDY1Fizevltly8E3skzxCVLIwb4a
- fjBiR0k5fSqg9EvgW3dI3vJQNGHGxXveiZ9yLldU3wPlDOWfXAE2YyHR8UTyu2H33dpd
- Ca2Q==
+ bh=xijc/4hj1e9Cv15QuxISSCdUEPCfH65xyo31i+c5EP8=;
+ b=Tc9inltUuRTZrSRDuEQA0RDKgkz9fkGOvcqQkdJW5Rt2bTC1NXXEbwbYoX6ZoyWy+j
+ 4z9DZ/KFGY8Is5yFhkkgmpftjQfkj8mTTP9VYlfcsg+YK4iwVwDUfznpotyFKwflIVwl
+ gXlV3EN6yZLaEi5BukGM6F415yBzoGwgSuyY3ck8jomvjYJ+BiX8tkM/qyA3Mdeu0Ihr
+ 8Ugz3bFixxtuXxLrDcpBsOqvtDpmEhFkdRVv69q0mIrkF9E4ozMlZ7H41Lg9BXbMF9It
+ 7p6E8hc8Bz6KcXIxs9IBti2wxI85oPrxRoGwiVZCJjs8OIklQZiLYL9yEpFwWFLhCXKZ
+ e4Lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUR6Ogr7C9cvRc0himqGdhcQo8/3nH98My+YCPP82OqgqQKjl/pb7WgGqAyt4JIX3JVpiPck9ogBBXgzg4pdktvt6EJ
-X-Gm-Message-State: AOJu0YxEUe/Y6/JQGUx2qwJPXLnE2i91sbRkV7IpqtXCJceQ08ONCVub
- msE13NoZZB8A7bWIml5bWDsXG4J+ErZEg51Ih6lpITAkUmfP3a1AXs/X/w==
-X-Google-Smtp-Source: AGHT+IGrdoIp2QihDlIishWs/Zlz+xj6vk4nvLx+qZ6Wkd1xLHRMQmu85NkBVKGAl3UICh15wPubAg==
-X-Received: by 2002:a17:90b:1b51:b0:2c8:da73:af7d with SMTP id
- 98e67ed59e1d1-2cf2e9ab11cmr4045173a91.3.1721951730127; 
- Thu, 25 Jul 2024 16:55:30 -0700 (PDT)
+ AJvYcCVE3gcTZ71kwilLqUOSI6x/wyxzwWGN5KhejWCT7/iLL3uqBIjIZ/Ppt1jv3UdpJ/I/4XUzE5Te834noXCMmSwn7wIB
+X-Gm-Message-State: AOJu0YyX3Li6rNB5kIdj6ZBipOMPQXprcdNPlrmHBRyLcFP/aw8UjXW/
+ 5vcOR/MTjDx28qOD9Hrve0ZHAypHnJXS00QvFNn0/gnz8vHz63XUvohxMQ==
+X-Google-Smtp-Source: AGHT+IEDDzA9AoAEhEezcu7/biaGMQV1jV7odWvx5Q/IUkKdHl8Jo3NKgTDaqSrMWfsbGpAylwjcJA==
+X-Received: by 2002:a17:90b:384b:b0:2c9:a831:3b7d with SMTP id
+ 98e67ed59e1d1-2cdb9442d61mr10948294a91.18.1721951716413; 
+ Thu, 25 Jul 2024 16:55:16 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.27
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:55:29 -0700 (PDT)
+ Thu, 25 Jul 2024 16:55:15 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 17/96] ppc/pnv: Implement ADU access to LPC space
-Date: Fri, 26 Jul 2024 09:52:50 +1000
-Message-ID: <20240725235410.451624-18-npiggin@gmail.com>
+ Aditya Gupta <adityag@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 13/96] ppc/pnv: Update Power10's cfam id to use Power10 DD2
+Date: Fri, 26 Jul 2024 09:52:46 +1000
+Message-ID: <20240725235410.451624-14-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,286 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-One of the functions of the ADU is indirect memory access engines that
-send and receive data via ADU registers.
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-This implements the ADU LPC memory access functionality sufficiently
-for IBM proprietary firmware to access the UART and print characters
-to the serial port as it does on real hardware.
+Power10 DD1.0 was dropped in:
 
-This requires a linkage between adu and lpc, which allows adu to
-perform memory access in the lpc space.
+    commit 8f054d9ee825 ("ppc: Drop support for POWER9 and POWER10 DD1 chips")
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Use the newer Power10 DD2 chips cfam id.
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c             |  4 ++
- hw/ppc/pnv_adu.c         | 95 ++++++++++++++++++++++++++++++++++++++++
- hw/ppc/pnv_lpc.c         | 12 ++---
- include/hw/ppc/pnv_adu.h |  7 +++
- include/hw/ppc/pnv_lpc.h |  5 +++
- 5 files changed, 117 insertions(+), 6 deletions(-)
+ hw/ppc/pnv.c            | 2 +-
+ tests/qtest/pnv-xscom.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 689197cbb7..91ff1be21f 100644
+index 6b41d1d2dd..13cebd6ab9 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -1663,6 +1663,8 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
-     }
+@@ -2087,7 +2087,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
+     PnvChipClass *k = PNV_CHIP_CLASS(klass);
+     static const int i2c_ports_per_engine[PNV10_CHIP_MAX_I2C] = {14, 14, 2, 16};
  
-     /* ADU */
-+    object_property_set_link(OBJECT(&chip9->adu), "lpc", OBJECT(&chip9->lpc),
-+                             &error_abort);
-     if (!qdev_realize(DEVICE(&chip9->adu), NULL, errp)) {
-         return;
-     }
-@@ -1929,6 +1931,8 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-     }
- 
-     /* ADU */
-+    object_property_set_link(OBJECT(&chip10->adu), "lpc", OBJECT(&chip10->lpc),
-+                             &error_abort);
-     if (!qdev_realize(DEVICE(&chip10->adu), NULL, errp)) {
-         return;
-     }
-diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
-index 8279bc8b26..81b7d6e526 100644
---- a/hw/ppc/pnv_adu.c
-+++ b/hw/ppc/pnv_adu.c
-@@ -21,11 +21,18 @@
- #include "hw/ppc/pnv.h"
- #include "hw/ppc/pnv_adu.h"
- #include "hw/ppc/pnv_chip.h"
-+#include "hw/ppc/pnv_lpc.h"
- #include "hw/ppc/pnv_xscom.h"
- #include "trace.h"
- 
-+#define ADU_LPC_BASE_REG     0x40
-+#define ADU_LPC_CMD_REG      0x41
-+#define ADU_LPC_DATA_REG     0x42
-+#define ADU_LPC_STATUS_REG   0x43
-+
- static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
- {
-+    PnvADU *adu = PNV_ADU(opaque);
-     uint32_t offset = addr >> 3;
-     uint64_t val = 0;
- 
-@@ -34,6 +41,24 @@ static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
-     case 0x12:     /* log register */
-     case 0x13:     /* error register */
-         break;
-+    case ADU_LPC_BASE_REG:
-+        /*
-+         * LPC Address Map in Pervasive ADU Workbook
-+         *
-+         * return PNV10_LPCM_BASE(chip) & PPC_BITMASK(8, 31);
-+         * XXX: implement as class property, or get from LPC?
-+         */
-+        qemu_log_mask(LOG_UNIMP, "ADU: LPC_BASE_REG is not implemented\n");
-+        break;
-+    case ADU_LPC_CMD_REG:
-+        val = adu->lpc_cmd_reg;
-+        break;
-+    case ADU_LPC_DATA_REG:
-+        val = adu->lpc_data_reg;
-+        break;
-+    case ADU_LPC_STATUS_REG:
-+        val = PPC_BIT(0); /* ack / done */
-+        break;
- 
-     default:
-         qemu_log_mask(LOG_UNIMP, "ADU Unimplemented read register: Ox%08x\n",
-@@ -45,9 +70,30 @@ static uint64_t pnv_adu_xscom_read(void *opaque, hwaddr addr, unsigned width)
-     return val;
- }
- 
-+static bool lpc_cmd_read(PnvADU *adu)
-+{
-+    return !!(adu->lpc_cmd_reg & PPC_BIT(0));
-+}
-+
-+static bool lpc_cmd_write(PnvADU *adu)
-+{
-+    return !lpc_cmd_read(adu);
-+}
-+
-+static uint32_t lpc_cmd_addr(PnvADU *adu)
-+{
-+    return (adu->lpc_cmd_reg & PPC_BITMASK(32, 63)) >> PPC_BIT_NR(63);
-+}
-+
-+static uint32_t lpc_cmd_size(PnvADU *adu)
-+{
-+    return (adu->lpc_cmd_reg & PPC_BITMASK(5, 11)) >> PPC_BIT_NR(11);
-+}
-+
- static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
-                                 unsigned width)
- {
-+    PnvADU *adu = PNV_ADU(opaque);
-     uint32_t offset = addr >> 3;
- 
-     trace_pnv_adu_xscom_write(addr, val);
-@@ -58,6 +104,47 @@ static void pnv_adu_xscom_write(void *opaque, hwaddr addr, uint64_t val,
-     case 0x13:     /* error register */
-         break;
- 
-+    case ADU_LPC_BASE_REG:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "ADU: Changing LPC_BASE_REG is not implemented\n");
-+        break;
-+
-+    case ADU_LPC_CMD_REG:
-+        adu->lpc_cmd_reg = val;
-+        if (lpc_cmd_read(adu)) {
-+            uint32_t lpc_addr = lpc_cmd_addr(adu);
-+            uint32_t lpc_size = lpc_cmd_size(adu);
-+            uint64_t data = 0;
-+
-+            pnv_lpc_opb_read(adu->lpc, lpc_addr, (void *)&data, lpc_size);
-+
-+            /*
-+             * ADU access is performed within 8-byte aligned sectors. Smaller
-+             * access sizes don't get formatted to the least significant byte,
-+             * but rather appear in the data reg at the same offset as the
-+             * address in memory. This shifts them into that position.
-+             */
-+            adu->lpc_data_reg = be64_to_cpu(data) >> ((lpc_addr & 7) * 8);
-+        }
-+        break;
-+
-+    case ADU_LPC_DATA_REG:
-+        adu->lpc_data_reg = val;
-+        if (lpc_cmd_write(adu)) {
-+            uint32_t lpc_addr = lpc_cmd_addr(adu);
-+            uint32_t lpc_size = lpc_cmd_size(adu);
-+            uint64_t data;
-+
-+            data = cpu_to_be64(val) >> ((lpc_addr & 7) * 8); /* See above */
-+            pnv_lpc_opb_write(adu->lpc, lpc_addr, (void *)&data, lpc_size);
-+        }
-+        break;
-+
-+    case ADU_LPC_STATUS_REG:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "ADU: Changing LPC_STATUS_REG is not implemented\n");
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_UNIMP, "ADU Unimplemented write register: Ox%08x\n",
-                                                                      offset);
-@@ -78,18 +165,26 @@ static void pnv_adu_realize(DeviceState *dev, Error **errp)
- {
-     PnvADU *adu = PNV_ADU(dev);
- 
-+    assert(adu->lpc);
-+
-     /* XScom regions for ADU registers */
-     pnv_xscom_region_init(&adu->xscom_regs, OBJECT(dev),
-                           &pnv_adu_xscom_ops, adu, "xscom-adu",
-                           PNV9_XSCOM_ADU_SIZE);
- }
- 
-+static Property pnv_adu_properties[] = {
-+    DEFINE_PROP_LINK("lpc", PnvADU, lpc, TYPE_PNV_LPC, PnvLpcController *),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
- static void pnv_adu_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = pnv_adu_realize;
-     dc->desc = "PowerNV ADU";
-+    device_class_set_props(dc, pnv_adu_properties);
-     dc->user_creatable = false;
- }
- 
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index 0f14e180af..f8aad955b5 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -236,16 +236,16 @@ int pnv_dt_lpc(PnvChip *chip, void *fdt, int root_offset, uint64_t lpcm_addr,
-  * TODO: rework to use address_space_stq() and address_space_ldq()
-  * instead.
-  */
--static bool opb_read(PnvLpcController *lpc, uint32_t addr, uint8_t *data,
--                     int sz)
-+bool pnv_lpc_opb_read(PnvLpcController *lpc, uint32_t addr,
-+                      uint8_t *data, int sz)
- {
-     /* XXX Handle access size limits and FW read caching here */
-     return !address_space_read(&lpc->opb_as, addr, MEMTXATTRS_UNSPECIFIED,
-                                data, sz);
- }
- 
--static bool opb_write(PnvLpcController *lpc, uint32_t addr, uint8_t *data,
--                      int sz)
-+bool pnv_lpc_opb_write(PnvLpcController *lpc, uint32_t addr,
-+                       uint8_t *data, int sz)
- {
-     /* XXX Handle access size limits here */
-     return !address_space_write(&lpc->opb_as, addr, MEMTXATTRS_UNSPECIFIED,
-@@ -277,7 +277,7 @@ static void pnv_lpc_do_eccb(PnvLpcController *lpc, uint64_t cmd)
-     }
- 
-     if (cmd & ECCB_CTL_READ) {
--        success = opb_read(lpc, opb_addr, data, sz);
-+        success = pnv_lpc_opb_read(lpc, opb_addr, data, sz);
-         if (success) {
-             lpc->eccb_stat_reg = ECCB_STAT_OP_DONE |
-                     (((uint64_t)data[0]) << 24 |
-@@ -294,7 +294,7 @@ static void pnv_lpc_do_eccb(PnvLpcController *lpc, uint64_t cmd)
-         data[2] = lpc->eccb_data_reg >>  8;
-         data[3] = lpc->eccb_data_reg;
- 
--        success = opb_write(lpc, opb_addr, data, sz);
-+        success = pnv_lpc_opb_write(lpc, opb_addr, data, sz);
-         lpc->eccb_stat_reg = ECCB_STAT_OP_DONE;
-     }
-     /* XXX Which error bit (if any) to signal OPB error ? */
-diff --git a/include/hw/ppc/pnv_adu.h b/include/hw/ppc/pnv_adu.h
-index b5f308627b..f9dbd8c8b3 100644
---- a/include/hw/ppc/pnv_adu.h
-+++ b/include/hw/ppc/pnv_adu.h
-@@ -10,6 +10,7 @@
- #define PPC_PNV_ADU_H
- 
- #include "hw/ppc/pnv.h"
-+#include "hw/ppc/pnv_lpc.h"
- #include "hw/qdev-core.h"
- 
- #define TYPE_PNV_ADU "pnv-adu"
-@@ -19,6 +20,12 @@ OBJECT_DECLARE_TYPE(PnvADU, PnvADUClass, PNV_ADU)
- struct PnvADU {
-     DeviceState xd;
- 
-+    /* LPCMC (LPC Master Controller) access engine */
-+    PnvLpcController *lpc;
-+    uint64_t     lpc_base_reg;
-+    uint64_t     lpc_cmd_reg;
-+    uint64_t     lpc_data_reg;
-+
-     MemoryRegion xscom_regs;
- };
- 
-diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
-index e0fd5e4130..174add4c53 100644
---- a/include/hw/ppc/pnv_lpc.h
-+++ b/include/hw/ppc/pnv_lpc.h
-@@ -109,6 +109,11 @@ struct PnvLpcClass {
-     DeviceRealize parent_realize;
- };
- 
-+bool pnv_lpc_opb_read(PnvLpcController *lpc, uint32_t addr,
-+                      uint8_t *data, int sz);
-+bool pnv_lpc_opb_write(PnvLpcController *lpc, uint32_t addr,
-+                       uint8_t *data, int sz);
-+
- ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp);
- int pnv_dt_lpc(PnvChip *chip, void *fdt, int root_offset,
-                uint64_t lpcm_addr, uint64_t lpcm_size);
+-    k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
++    k->chip_cfam_id = 0x220da04980000000ull; /* P10 DD2.0 (with NX) */
+     k->cores_mask = POWER10_CORE_MASK;
+     k->chip_pir = pnv_chip_pir_p10;
+     k->intc_create = pnv_chip_power10_intc_create;
+diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
+index 6f62941744..5aa1701ea7 100644
+--- a/tests/qtest/pnv-xscom.h
++++ b/tests/qtest/pnv-xscom.h
+@@ -56,7 +56,7 @@ static const PnvChip pnv_chips[] = {
+         .chip_type  = PNV_CHIP_POWER10,
+         .cpu_model  = "POWER10",
+         .xscom_base = 0x000603fc00000000ull,
+-        .cfam_id    = 0x120da04900008000ull,
++        .cfam_id    = 0x220da04980000000ull,
+         .first_core = 0x0,
+         .num_i2c    = 4,
+     },
 -- 
 2.45.2
 
