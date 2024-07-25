@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D4AC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BEEC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWwro-0002Tw-RO; Thu, 25 Jul 2024 07:42:40 -0400
+	id 1sWwyz-0004tv-ME; Thu, 25 Jul 2024 07:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWwrh-0001vz-Re; Thu, 25 Jul 2024 07:42:34 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sWwrf-0001i4-2w; Thu, 25 Jul 2024 07:42:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721907751; x=1753443751;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=KygXsTO1/7PsKHbHPRlx3mwu6GzCfvzBN5TuN2US15g=;
- b=Ch0utKZ4ilEHD2/h7WNZoi9umqJXXx5djwUrfEVs/KXffFQDrDyJKzbd
- FmIxyTDBwhZJwWF8lPm7pis/ahd8Dn/M1ClzfrtUxlSXXrSM/KcBAX43w
- oksLxH03MrICiVXRzYvPikwv0ziwkBF/Bzp5Qwt/SqwlRyrJ9jfgL50R4
- qufIjnKnXalIspy37M2THYhjYIq2QaAdk/2fjtBBhhTbvSrcYK+QpMZHa
- ZChtzbXMYuc7BHjzP3snrgUgQ6VsmPKCcRbULcSv78ZZz7UtYRJSlp7GB
- 2IkMgzV9zySSyJFz1i4YbmXt9sOkMOAh6VC0Umd86jiXT6/Hj29EO0gML A==;
-X-CSE-ConnectionGUID: gcZAz1gOSwSvfhSU1LCaIQ==
-X-CSE-MsgGUID: nU33LRjFS8qvuNDT8DAEtw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="19818826"
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="19818826"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 04:42:28 -0700
-X-CSE-ConnectionGUID: 2Wsp4k4PRGSWlLWNJZuuKw==
-X-CSE-MsgGUID: utSt5rtmS7CpNGoEk5uI9Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="83895660"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 25 Jul 2024 04:42:23 -0700
-Date: Thu, 25 Jul 2024 19:58:08 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Markus Armbruster <armbru@redhat.com>, berrange@redhat.com,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S.Tsirkin " <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 2/8] qapi/qom: Introduce smp-cache object
-Message-ID: <ZqI90B1jkfO4N5a5@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-3-zhao1.liu@intel.com>
- <87wmld361y.fsf@pond.sub.org> <Zp5tBHBoeXZy44ys@intel.com>
- <87h6cfowei.fsf@pond.sub.org> <ZqEV8uErCn+QkOw8@intel.com>
- <871q3hua56.fsf@pond.sub.org> <20240725115059.000016c5@Huawei.com>
- <20240725115902.000037e4@Huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWwyv-0004qR-Ts
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:50:02 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWwyu-00037j-4x
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:50:01 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3684bea9728so472424f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721908198; x=1722512998; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b+NxrlB5rX7BGR0AltB7CeIZMcUIPzmHDSdUAkb1Sgk=;
+ b=oMOz7FIbBlVuZYPGoxnM2Y82h1MDdG+/OJfECDp0a2Ikeps8UOlHknBjj9VmfFgrAJ
+ QAA1df/GsmcaoWMR59/7NaWhCJYt8C+voNwZF7szF60a4Kq7p6N8Jn5REq8ef8Zr08+J
+ wMvr2mrCnOCb41tDtDShQe366QJ+ALrMm3tSVLGHxfjHK/H28JOvnhm1ubD2Gg57H67e
+ XgHSkBOcAKe6JwPTISv1J+NbU4se117wOGQfVkZWMMB0T6kf5Q0rIT0sPVc2ovi3ICpE
+ 3mK/lUzo8pQfbeJrgL5Hw+z+e33GOPY4cocWtThy9AWWs5RHmSDY1Xn+vTAga2eXnrUt
+ Cq5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721908198; x=1722512998;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b+NxrlB5rX7BGR0AltB7CeIZMcUIPzmHDSdUAkb1Sgk=;
+ b=TtpDfkp8mIELA4IIwVKZrAXfai/j4y+x6A1AyubJ3BRQmxOwbe40HTZyNW8qVo8E3u
+ hhchYj7vPKSEvkeecZhX2x8COKeLU7vnWp3hDJuzg5f1Ci68UFKZiVzn1e+BxvDwLsoN
+ A8/72kCzCsV/xJbMtIJwBxJAbG+CuwXduRpfQwSpeiBFvLAqzW/7hjBPI38jx93x8QZ6
+ uy1E7Oul2y8tJxQcG6wyxFslKRRkuIBJEI4tAbqgoAK8bPnae++ZeY+hpQvHX/oSxzWf
+ ZXflPMWztGfOH4D8Ocpe5gkphX9HL4/gNcXPuqsS0KeZitAzjLFFp1XkhZAOFcDntPiT
+ gFKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWz76qKLxE/J+o9eaMupsftTSwFEL01ZK7mZ/GIX3AF0fBLEbGjyWBZO+uYxQ5z4IirMYn8bno2yg6n/Z7NtRNUA2PDm30=
+X-Gm-Message-State: AOJu0YwHPY8i/6XGjCMJLFBZfleIX6hw5CD3xvEe3YvoHpi9OQIm4UrM
+ IMgyOOhDwCDdjYsPpTGUJnb1TY1M9ketqYUbH2aJM/4vFHFGLsOXssvFsYJyu/Q=
+X-Google-Smtp-Source: AGHT+IGLGddsWNNoWsqNTgg6oKh8n0W1xeWGkShIcqrj8gbsRSiHw9dHLXX5BTQbNdIdQU51BHcGZw==
+X-Received: by 2002:adf:f38c:0:b0:367:9803:bfe7 with SMTP id
+ ffacd0b85a97d-36b367b1d98mr1381217f8f.53.1721908197912; 
+ Thu, 25 Jul 2024 04:49:57 -0700 (PDT)
+Received: from [192.168.1.102] ([176.187.216.35])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b36862271sm1904114f8f.98.2024.07.25.04.49.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 04:49:56 -0700 (PDT)
+Message-ID: <916e3941-5dd6-48bd-804f-ec8f1f925843@linaro.org>
+Date: Thu, 25 Jul 2024 13:49:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240725115902.000037e4@Huawei.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] hw/misc/bcm2835_property: Fix handling of
+ FRAMEBUFFER_SET_PALETTE
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20240723131029.1159908-1-peter.maydell@linaro.org>
+ <20240723131029.1159908-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240723131029.1159908-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,25 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Jonathon!
+On 23/7/24 15:10, Peter Maydell wrote:
+> The documentation of the "Set palette" mailbox property at
+> https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#set-palette
+> says it has the form:
+> 
+>      Length: 24..1032
+>      Value:
+>          u32: offset: first palette index to set (0-255)
+>          u32: length: number of palette entries to set (1-256)
+>          u32...: RGBA palette values (offset to offset+length-1)
+> 
+> We get this wrong in a couple of ways:
+>   * we aren't checking the offset and length are in range, so the guest
+>     can make us spin for a long time by providing a large length
+>   * the bounds check on our loop is wrong: we should iterate through
+>     'length' palette entries, not 'length - offset' entries
+> 
+> Fix the loop to implement the bounds checks and get the loop
+> condition right. In the process, make the variables local to
+> this switch case, rather than function-global, so it's clearer
+> what type they are when reading the code.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/misc/bcm2835_property.c | 27 ++++++++++++++++-----------
+>   1 file changed, 16 insertions(+), 11 deletions(-)
 
-On Thu, Jul 25, 2024 at 11:59:02AM +0100, Jonathan Cameron wrote:
-
-[snip]
-
-> > > I think I understand why you want to configure caches.  My question was
-> > > about the connection to SMP.
-> > > 
-> > > Say we run a guest with a single core, no SMP.  Could configuring caches
-> > > still be useful then?  
-> > 
-> > Probably not useful to configure topology (sizes are a separate question)
-> > - any sensible default should be fine.
-> >
-
-Yes, I agree.
-
-Regards,
-Zhao
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
