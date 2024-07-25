@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4539C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211DAC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWwVo-0008Qr-0C; Thu, 25 Jul 2024 07:19:56 -0400
+	id 1sWwY6-0004dZ-5J; Thu, 25 Jul 2024 07:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWwVn-0008QF-0A
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:19:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1sWwY4-0004cT-1M
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:22:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sWwVk-0002hm-K0
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:19:54 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1sWwXz-0003B3-Us
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:22:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721906390;
+ s=mimecast20190719; t=1721906529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bHE0suzOgVJ4VVXqlkK337VRdBbbDv13WLL+YcRUsCM=;
- b=XR8JA9SNDIp5zcBTLVvSUNruHQcaJSM+9eLPxr5ilq/UHv7rVwZXH//NcGdJ2zqPpdGeNs
- UKR6NSi3FpBIEx5YxkmTF4ckpehlY2CaZQl1+K/AfJxItIPtipx5u5zakpNN4Uk7+ny80n
- WbbZa/cYd1IubtPcaPFqjL90+nRYU7g=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W/RcU6ENJ/Nt41p8RxOylXqN7jgSp+MCYSjVSMYB2J4=;
+ b=ihx0xHnrX7E1EBjinfuSfneLAta0vqSWYWszfr5MFK8UGlB3Xtoxd90qGH6PF6Bx0YeKr9
+ 0PNCotksf2G9D0qtYA9vjDR6o6j6Y8MEbKHWz5Gl0TEOO5zVCZ1HNCFnkaKp+y3w2hetOD
+ E3OXVymsdQ+d3VPvzWaN+uW8DSZ7+rA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-QyNctCJwNYWRZW8sRthC1Q-1; Thu, 25 Jul 2024 07:19:48 -0400
-X-MC-Unique: QyNctCJwNYWRZW8sRthC1Q-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-427b57e3c6fso6146785e9.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:19:48 -0700 (PDT)
+ us-mta-67-GDxkEo6YOj2elQaybVHeFQ-1; Thu, 25 Jul 2024 07:21:01 -0400
+X-MC-Unique: GDxkEo6YOj2elQaybVHeFQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-36860dd1fe8so162319f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:21:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721906387; x=1722511187;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bHE0suzOgVJ4VVXqlkK337VRdBbbDv13WLL+YcRUsCM=;
- b=Dl+IyLO3fmI7C5OVApp2YAfNojJ7ABiuSa1fi7WYDdmQyUlNAc8CHUgaNxbv633ffX
- p13XZGVewlRO4Ja1eHx5Io3UlXEot4C4AiPsf5S/s2VVXYV2+JCjC1W/RDjyfObvQzjW
- EEAjwhDOL80h1Le5T2/eZrPuzOiXW7CLGrjD4d8zzshg4aPiymzrDSYMs0oH03CBNbIz
- XbcvDiVmcQopN5hQEkkinb/SQw1Zvz9UcJei4RMdXsBx7p3xTiHXFIPIg/FLV91lehRV
- rQ56MZVsdcwEYjh6/+TGoTqzexbzSSf+EKglUzEERcNyov3QZOuv7oAKw9yMDV7OW5bx
- /wFA==
+ d=1e100.net; s=20230601; t=1721906460; x=1722511260;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W/RcU6ENJ/Nt41p8RxOylXqN7jgSp+MCYSjVSMYB2J4=;
+ b=Cc71B3xd572+B03utB3apJOWq46uA5ukTIiSLCCx82pozVddfZLYTFvh8hI0fwn5Ic
+ dRuntFWiPxhcQasGucpnrrYIdzdhGi9WSD7foZyAU/UziYWHs0NTfWJzArYfjwzIeVVG
+ mOZatR0+YYSC8vKfTK1GyJjtzydIIqKpPqrE0Obf4i2bEanH+MEKpdUydAg1TZCXktQH
+ T9eTiFh9RRsoF7U1/AvpINC2pGHEHFngUeECh1FuBXkBiZKLwyLMmgvq400dojTZWHO8
+ AoAFA42Ttom5lD12a8BbNqk0RqrcYTIpCBrjCr42lIGqCXJoZ4Tkwsf0NqS2XezXmirN
+ XARA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCiSd6KdM7RJ2Oo4W4VFPH9G9soavUxi35XJ3VOaCIP/I5luryvD94V76gFpE2KPQOm94p9LYN9+R1v69vGt0qnW22xus=
-X-Gm-Message-State: AOJu0Yyp9C8P+zHRyahUdCNvCwfpsvFKDg4dZKUvv1swS75zAKE65r0f
- e6QGQA97nAVczNlU35h9Z1a1aUSGh2pGakpP3en5Y/ikBdNx0EO4918ao2wwxzSy9dgm0tc/nI1
- mh2HB8HaLB+JAb8ftpsDhAYbG5vadoGd2akQzFNoeWg65VRFcXoqHkoYIbah/cwQ1R0Eb1PgyBE
- xsrPIfgwVruB3kQ+S9Aox4wNM1vrg=
-X-Received: by 2002:a05:600c:a4b:b0:426:54c9:dfe5 with SMTP id
- 5b1f17b1804b1-42806b82ed6mr13762765e9.10.1721906387526; 
- Thu, 25 Jul 2024 04:19:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKQbc0fIoNgRHg+IjcatcgW82Rg5bxAfH7vHwq+UFlfspazktSMBrtVM44VIeOe4OzV9W/Wpr6GLD2/gbnxug=
-X-Received: by 2002:a05:600c:a4b:b0:426:54c9:dfe5 with SMTP id
- 5b1f17b1804b1-42806b82ed6mr13762515e9.10.1721906387065; Thu, 25 Jul 2024
- 04:19:47 -0700 (PDT)
+ AJvYcCXGPrNnEtE/m/g9rf2kr2GWHoMHJB6n/VpXLP0JTSwDnUgH8OT/3ov7/pqRgxD5AHQ8Ovi/54wRmPhK@nongnu.org
+X-Gm-Message-State: AOJu0Yxwno0aBosR5EDgwNvCvuBQPII/K2vUivLThfE8Yez/ptrZyVDm
+ Zp0iJEZldvbnwqWPxMbmtf8FL92ogro9air0LRbdtFBBhnFpruMnN4oAXLkkBeYuJZLJ6iqj25x
+ ijaVHMPalduzfwEO4wbFBGrkNYNUAqN/3DSaFRbfcDQOzzl0/nPZ2
+X-Received: by 2002:a05:600c:4511:b0:425:7ac6:96f9 with SMTP id
+ 5b1f17b1804b1-428053c0936mr8553315e9.0.1721906460438; 
+ Thu, 25 Jul 2024 04:21:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs0hS+4jr12gekyxSSo+/sBI5EgsvR7qp+YV72mbT4WUmt0CTs2xCHVE2M9xlSdygkPfJGjA==
+X-Received: by 2002:a05:600c:4511:b0:425:7ac6:96f9 with SMTP id
+ 5b1f17b1804b1-428053c0936mr8553185e9.0.1721906459941; 
+ Thu, 25 Jul 2024 04:20:59 -0700 (PDT)
+Received: from ?IPV6:2a0d:3341:b231:be10::f71? ([2a0d:3341:b231:be10::f71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42807246ca4sm22683535e9.11.2024.07.25.04.20.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 04:20:59 -0700 (PDT)
+Message-ID: <541d338f-bffc-4393-a501-92d01e5c8edb@redhat.com>
+Date: Thu, 25 Jul 2024 13:20:57 +0200
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
- <h4gxy.dr366knvycy@linaro.org>
- <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
- <h61ku.ipxyjqsxu75@linaro.org>
- <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
- <h6cgm.o8scn84hx1ry@linaro.org>
-In-Reply-To: <h6cgm.o8scn84hx1ry@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 25 Jul 2024 13:19:34 +0200
-Message-ID: <CABgObfbyw0qPM_T=SpGyHYD02x2jOdSy5nfwKpOx-WruhkJe9Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qeemu-devel@nongnu.org, qemu-devel <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+To: David Woodhouse <dwmw2@infradead.org>,
+ Richard Cochran <richardcochran@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org,
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>,
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>,
+ "Chashper, David" <chashper@amazon.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>
+Cc: "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org,
+ Stephen Boyd <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+Content-Language: en-US
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,93 +118,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 12:14=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> >Unfortunately that's a *mut, not a &mut. A &mut must be unique, so the c=
-ast
-> >in pl011_read() is undefined behavior.
->
-> Actually it's:
->
->   unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
->
-> And you can ensure there's no disjoint borrowing by making a wrapper
-> function that mutably borrows self, e.g.
->
-> fn accept_input(&mut self) {
->   unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
-> }
->
-> This is not undefined behavior, since the cast in pl011_read creates a
-> mutable reference that does not outlive the same call to pl011_read.
+Hi,
 
-pl011_receive (called by qemu_chr_fe_accept_input) creates a mutable
-reference that *overlaps* the lifetime of the outer reference created
-by pl011_read. This is undefined behavior. You're effectively writing:
+Just a bunch of 'nits below
 
-fn main() {
-    let mut foo =3D String::from("foo");
-    let x =3D &mut foo;
-    let y =3D &mut foo;
-    print!("{}", y);
-    print!("{}", x);       // does not compile
-}
+On 7/24/24 19:16, David Woodhouse wrote:
+> diff --git a/drivers/ptp/ptp_vmclock.c b/drivers/ptp/ptp_vmclock.c
+> new file mode 100644
+> index 000000000000..9c508c21c062
+> --- /dev/null
+> +++ b/drivers/ptp/ptp_vmclock.c
 
-And even if you're hiding it like this:
+[...]
 
-fn main() {
-    let mut foo =3D String::from("foo");
-    let x =3D &mut foo;
-    let x_ptr: *mut String =3D x as *mut _;
-    let y =3D &mut foo;
-    print!("{}", y);
-    print!("{}", unsafe { &mut *x_ptr });
-}
+> +/*
+> + * Multiply a 64-bit count by a 64-bit tick 'period' in units of seconds >> 64
+> + * and add the fractional second part of the reference time.
+> + *
+> + * The result is a 128-bit value, the top 64 bits of which are seconds, and
+> + * the low 64 bits are (seconds >> 64).
+> + *
+> + * If __int128 isn't available, perform the calculation 32 bits at a time to
+> + * avoid overflow.
+> + */
+> +static inline uint64_t mul_u64_u64_shr_add_u64(uint64_t *res_hi, uint64_t delta,
+> +					       uint64_t period, uint8_t shift,
+> +					       uint64_t frac_sec)
 
-It's still wrong. Quoting the docs:
+Please, no 'inline' in \.c files
 
-https://doc.rust-lang.org/nightly/nomicon/references.html
--> "A mutable reference cannot be aliased"
+> +{
+> +	unsigned __int128 res = (unsigned __int128)delta * period;
+> +
+> +	res >>= shift;
+> +	res += frac_sec;
+> +	*res_hi = res >> 64;
+> +	return (uint64_t)res;
+> +}
+> +
+> +static inline bool tai_adjust(struct vmclock_abi *clk, uint64_t *sec)
+> +{
 
-https://doc.rust-lang.org/nightly/nomicon/aliasing.html
--> "variables and pointers alias if they refer to overlapping regions
-of memory."
+Same here
 
-https://doc.rust-lang.org/reference/behavior-considered-undefined.html
--> "Rust programs must never cause undefined behavior. It is the
-programmer's responsibility when writing unsafe code to ensure that
-any safe code interacting with the unsafe code cannot trigger these
-behaviors."
+> +	if (likely(clk->time_type == VMCLOCK_TIME_UTC))
+> +		return true;
+> +
+> +	if (clk->time_type == VMCLOCK_TIME_TAI &&
+> +	    (clk->flags & VMCLOCK_FLAG_TAI_OFFSET_VALID)) {
+> +		if (sec)
+> +			*sec += clk->tai_offset_sec;
+> +		return true;
+> +	}
+> +	return false;
+> +}
+> +
+> +static int vmclock_get_crosststamp(struct vmclock_state *st,
+> +				   struct ptp_system_timestamp *sts,
+> +				   struct system_counterval_t *system_counter,
+> +				   struct timespec64 *tspec)
+> +{
+> +	ktime_t deadline = ktime_add(ktime_get(), VMCLOCK_MAX_WAIT);
+> +	struct system_time_snapshot systime_snapshot;
+> +	uint64_t cycle, delta, seq, frac_sec;
+> +
+> +#ifdef CONFIG_X86
+> +	/*
+> +	 * We'd expect the hypervisor to know this and to report the clock
+> +	 * status as VMCLOCK_STATUS_UNRELIABLE. But be paranoid.
+> +	 */
+> +	if (check_tsc_unstable())
+> +		return -EINVAL;
+> +#endif
+> +
+> +	while (1) {
+> +		seq = st->clk->seq_count & ~1ULL;
+> +		virt_rmb();
 
-The QEMU code has even more layers hiding the problem but it's the
-same thing: there are two &mut that are alive at the same time, and
-refer to the same region of memory.
+Please document which other barrier pair witht this one
 
-> Please demonstrate a scenario where said problem shows up, otherwise
-> it's just hand-waving on a undefined (pun intended ;) ) hypothetical.
+> +
+> +		if (st->clk->clock_status == VMCLOCK_STATUS_UNRELIABLE)
+> +			return -EINVAL;
+> +
+> +		/*
+> +		 * When invoked for gettimex64(), fill in the pre/post system
+> +		 * times. The simple case is when system time is based on the
+> +		 * same counter as st->cs_id, in which case all three times
+> +		 * will be derived from the *same* counter value.
+> +		 *
+> +		 * If the system isn't using the same counter, then the value
+> +		 * from ktime_get_snapshot() will still be used as pre_ts, and
+> +		 * ptp_read_system_postts() is called to populate postts after
+> +		 * calling get_cycles().
+> +		 *
+> +		 * The conversion to timespec64 happens further down, outside
+> +		 * the seq_count loop.
+> +		 */
+> +		if (sts) {
+> +			ktime_get_snapshot(&systime_snapshot);
+> +			if (systime_snapshot.cs_id == st->cs_id) {
+> +				cycle = systime_snapshot.cycles;
+> +			} else {
+> +				cycle = get_cycles();
+> +				ptp_read_system_postts(sts);
+> +			}
+> +		} else
+> +			cycle = get_cycles();
 
-Again: there's no "scenario where the problem shows up", you just
-can't do that; the code is wrong.
+Please use the brackets even for the else case
 
-I'm not saying you should fix it now, because it's complicated to fix
-it and in particular to fix it the right way. But I think it is a
-requirement for merging Rust code that the community understands the
-extra complexity introduced by writing Rust code that interacts with C
-APIs, and does not hand wave it away as not a problem.
+[...]
+> +static int ptp_vmclock_get_time_fn(ktime_t *device_time,
+> +				   struct system_counterval_t *system_counter,
+> +				   void *ctx)
+> +{
+> +	struct vmclock_state *st = ctx;
+> +	struct timespec64 tspec;
+> +	int ret;
+> +
+> +#ifdef SUPPORT_KVMCLOCK
+> +	if (READ_ONCE(st->sys_cs_id) == CSID_X86_KVM_CLK)
+> +		ret = vmclock_get_crosststamp_kvmclock(st, NULL, system_counter,
+> +						       &tspec);
+> +	else
+> +#endif
+> +		ret = vmclock_get_crosststamp(st, NULL, system_counter, &tspec);
+> +
+> +	if (!ret)
+> +		*device_time = timespec64_to_ktime(tspec);
+> +
+> +	return ret;
+> +}
+> +
+> +
 
-> >> Do you perhaps agree with adding a FIXME comment to replace the linker
-> >> attributes with ctor when we get the cargo dependency story in meson
-> >> sorted out?
-> >
-> >Yes, that's fine.
->
-> Thanks! We also have to keep in mind we would like Debian to be able to
-> package this, so we should be very conservative on what dependencies we
-> use.
+Please, don't add 2 consecutive blank lines.
 
-If we add Rust dependencies, Debian will have to figure out how to
-package them in order to build QEMU. But I agree that it's a good idea
-to add them slowly.
+Cheers,
 
 Paolo
 
