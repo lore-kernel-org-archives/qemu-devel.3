@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459CFC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184A9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsoV-0006R5-Ur; Thu, 25 Jul 2024 03:22:59 -0400
+	id 1sWsoW-0006RO-0w; Thu, 25 Jul 2024 03:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1sWsoT-0006I1-W3
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:58 -0400
+ id 1sWsoP-00060b-Hg
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:53 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1sWsoR-0001Gw-Nn
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:57 -0400
+ id 1sWsoM-0001Gw-Rn
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:22:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1721892176; x=1753428176;
+ t=1721892171; x=1753428171;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=PifPO2VLSml++/yyEHfyB9LD6kSBnEg6UWh8hpYvOM8=;
- b=eYmZfkh5hE4npvdwm3MiVwt7mMUbQjxrExr7yytsqRWKE8oFstwHROAo
- QHOe+DqJ3MnCRTJ+d1KYSpGssIp4F6yKWI0eWyHmJHL0vOGLXElvAwTdl
- eB+ITclFUJ9pUPR7MitmMSt8mbmjtpG/DMcjXYgpPE02tl3Q/x+6gA5Sq
- QU0J08rNkwwFgaoJYPU2TYD+TybP1KqRqEWtg3Yo3zj2urdxmCXJLK+8o
- on9fm8j/e3Z4qaOjHCFMHvb6jYnSM5D1OPmesBGm04C/84i660CBiYawm
- 7Ry0YG12ZoWCgOTawIzbYZTUQeYitLHZAVx9ROEJ4qWZhvdGrReR4USNF g==;
-X-CSE-ConnectionGUID: zJDEY3W1TEOjA7TJ+Sg0ag==
-X-CSE-MsgGUID: MN/BdN2tQcaRi1jHrB4BeA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30753988"
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="30753988"
+ bh=PzDthdOyXi8jqps5YCnKqKm2ZMk1q6Qbjz/AdVU9fYE=;
+ b=e4fM1FUJLzU/+FWrqn4xTI4YNCVqmHxEnvREricLtOy+KqoR4vKxFDlj
+ I841c0xBhyy65RtdvwLpc//JwwLZjRjTfr806ZPtchGqD8QbuCb2pdO8n
+ tAG/Ol0XsOneQeCyRxLgOyfmlUEDN+Sp5Nlqnr0QVqwXs78vWW73PWaKd
+ m2oR5mp0vEIeb5Mq+u1qnH/tBUbSDhw2JfKASqVdRdmtl3+WR3wnYHwNo
+ i6Y2KwV2t7ACw1BorDrAz1ul4GlwmZGpgmRVxp48VO9GH7FAJX1g9pcif
+ 3VqH4Sls4A4oPMoRRYvtpS39+GsXmNt6B0a2wtZHeqhFQWRVSqmuh8vlh A==;
+X-CSE-ConnectionGUID: pUPC0BqpRneFXvz0blCSwQ==
+X-CSE-MsgGUID: 4/rO0yr2TCWijGeQf7/Y3w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30753963"
+X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="30753963"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 00:22:53 -0700
-X-CSE-ConnectionGUID: gFgeME1KR7eAyTzj7cKk1A==
-X-CSE-MsgGUID: xo48P9PiTWaGNySerO1iQA==
+ 25 Jul 2024 00:22:50 -0700
+X-CSE-ConnectionGUID: BmOnfm53TROM4l4nb2FKiw==
+X-CSE-MsgGUID: 1Cs7+M5qSK6v2R8gqF5zBQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="52858168"
+X-IronPort-AV: E=Sophos;i="6.09,235,1716274800"; d="scan'208";a="52858161"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 00:22:50 -0700
+ 25 Jul 2024 00:22:46 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Peter Xu <peterx@redhat.com>,
@@ -57,10 +57,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  Wang Wei W <wei.w.wang@intel.com>, Peng Chao P <chao.p.peng@intel.com>,
  Gao Chao <chao.gao@intel.com>, Wu Hao <hao.wu@intel.com>,
  Xu Yilun <yilun.xu@intel.com>
-Subject: [RFC PATCH 4/6] memory: Register the RamDiscardManager instance upon
- guest_memfd creation
-Date: Thu, 25 Jul 2024 03:21:13 -0400
-Message-ID: <20240725072118.358923-5-chenyi.qiang@intel.com>
+Subject: [RFC PATCH 3/6] KVM: Notify the state change via RamDiscardManager
+ helper during shared/private conversion
+Date: Thu, 25 Jul 2024 03:21:12 -0400
+Message-ID: <20240725072118.358923-4-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20240725072118.358923-1-chenyi.qiang@intel.com>
 References: <20240725072118.358923-1-chenyi.qiang@intel.com>
@@ -90,50 +90,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instantiate a new guest_memfd_manager object and register it in the
-target MemoryRegion. From this point, other subsystems such as VFIO can
-register their listeners in guest_memfd_manager and receive conversion
-events through RamDiscardManager.
+Once exit to userspace to convert the page from private to shared or
+vice versa at runtime, notify the state change via the
+guest_memfd_state_change() helper so that other registered subsystems
+like VFIO can be notified.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- system/physmem.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ accel/kvm/kvm-all.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 33d09f7571..98072ae246 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -53,6 +53,7 @@
- #include "sysemu/hostmem.h"
- #include "sysemu/hw_accel.h"
- #include "sysemu/xen-mapcache.h"
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 854cb86b22..94bbbbd2de 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -48,6 +48,7 @@
+ #include "kvm-cpus.h"
+ #include "sysemu/dirtylimit.h"
+ #include "qemu/range.h"
 +#include "sysemu/guest-memfd-manager.h"
- #include "trace/trace-root.h"
  
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-@@ -1861,6 +1862,12 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
+ #include "hw/boards.h"
+ #include "sysemu/stats.h"
+@@ -2852,6 +2853,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     RAMBlock *rb;
+     void *addr;
+     int ret = -1;
++    GuestMemfdManager *gmm;
+ 
+     trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
+ 
+@@ -2914,6 +2916,11 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
+     rb = qemu_ram_block_from_host(addr, false, &offset);
+ 
++    gmm = GUEST_MEMFD_MANAGER(mr->rdm);
++    if (gmm) {
++        guest_memfd_state_change(gmm, offset, size, to_private);
++    }
 +
-+        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
-+        GuestMemfdManagerClass *gmmc = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
-+        g_assert(new_block->mr);
-+        gmmc->realize(OBJECT(gmm), new_block->mr, new_block->mr->size);
-+        memory_region_set_ram_discard_manager(gmm->mr, RAM_DISCARD_MANAGER(gmm));
-     }
- 
-     new_ram_size = MAX(old_ram_size,
-@@ -2118,6 +2125,8 @@ static void reclaim_ramblock(RAMBlock *block)
- 
-     if (block->guest_memfd >= 0) {
-         close(block->guest_memfd);
-+        g_assert(block->mr);
-+        object_unref(OBJECT(block->mr->rdm));
-         ram_block_discard_require(false);
-     }
- 
+     if (to_private) {
+         if (rb->page_size != qemu_real_host_page_size()) {
+             /*
 -- 
 2.43.5
 
