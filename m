@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FA9C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 05:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF63C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 05:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWrQs-0003M2-7o; Thu, 25 Jul 2024 01:54:30 -0400
+	id 1sWrRp-0005ti-IG; Thu, 25 Jul 2024 01:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWrQq-0003KT-D6
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:54:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sWrRn-0005lh-6y
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:55:27 -0400
+Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWrQo-0005sH-4N
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:54:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721886864;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Dh3yyuBj9HXf2A5cEfYqf0NaFgetwfgWSnefr6wKli8=;
- b=Sg/oqDl3/zMVoIHGHP/9dA9o42bLVI+uErD2W0FnHd5ht+/ozbOH1kk/KqA3weiw0r/QCZ
- Od2bx09pFEGgeEtbU1d6dIsOCp+DW3DmB8qZ9O18JPcbJ8TGLi565oG7HHWD3VbiL3bKv8
- IwAsX6opCb1rXSkEfI1XuzfQyxyk9kE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-kh7x8InlPJuolAgAxFeNkA-1; Thu, 25 Jul 2024 01:54:21 -0400
-X-MC-Unique: kh7x8InlPJuolAgAxFeNkA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36832c7023bso357233f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 22:54:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721886860; x=1722491660;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dh3yyuBj9HXf2A5cEfYqf0NaFgetwfgWSnefr6wKli8=;
- b=JKCybj1pZgp1pPKoiTG8w7AEsjUYARxEhwPnt9LZ68E/02atqHtpxMNo4YvJTv5SdH
- +GahEbGcZEMtz34Kpmb6DWegD4/pva1MswKSPrS9r9YUCd3+hgp6oDO+CRiqZY1wxjFI
- GYu1f13GSocl+UUo/aW3mbuEN6GPGvNsvxRRq/W82SqSwQJlpOYAXlRcnQ9JdeHf+RD6
- MnlIr8e825AyJsSdca+C915hAMCOIg2f7aryqZKhfy/MpXDRfvjE1kqWkUglsA7wTBOe
- z3o1kbNz5IkDRywF59X/WvZPYh88NIV+wO8Ea53/XvUR0Q30A0BCUQGjdvrj0xse9yQE
- tV2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSybG6PAmwbhePZ2hvYqGrEeq/3agj1VBabwa2rO9aCj3oCWFe9AVB6thuiLIIP0zGVS5bSD5MVdFmCUSoNIu+6hnQ4Gc=
-X-Gm-Message-State: AOJu0YxkmIPLQfgHsLVb/OnL3Xh3ze+zaXBXVwX56Kby7HwwpxHIinTQ
- cRoBVZDeR/D71bHoROZi1C9Xe7hrvFcXhFKrvypHoHfKY5+0UaFTjYHwIeLovHEfdr4dzQTzLWA
- +RCcGfIy1FoI2tmEZsbfXTw343B4Ix+4LtW8ZDtZ9+iwkuNZG/sFq
-X-Received: by 2002:a05:6000:1942:b0:368:3038:8290 with SMTP id
- ffacd0b85a97d-36b36421ac8mr707595f8f.39.1721886860524; 
- Wed, 24 Jul 2024 22:54:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHI3Abal444WmsilGMojUOB9llheQDVQUaMgG30HCOZkmwXntXo9Fy/JkeXGpR8m6xgr9AF9A==
-X-Received: by 2002:a05:6000:1942:b0:368:3038:8290 with SMTP id
- ffacd0b85a97d-36b36421ac8mr707561f8f.39.1721886859582; 
- Wed, 24 Jul 2024 22:54:19 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1ed:8427:35e3:731c:3106:ee46])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857dcesm900105f8f.85.2024.07.24.22.54.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 22:54:18 -0700 (PDT)
-Date: Thu, 25 Jul 2024 01:54:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Richard Cochran <richardcochran@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
- "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
- "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
- "Christopher S . Hall" <christopher.s.hall@intel.com>,
- Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
- netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-Message-ID: <20240725015120-mutt-send-email-mst@kernel.org>
-References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sWrRk-0006Cb-MF
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:55:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721886924; x=1753422924;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=9ujSvd0zJhEIPXUzE24m+pcOZthTL15sfms1Y715el0=;
+ b=t+Qp46Ab5jqQ6sfAzqCFxOoHg2hWMPDpMScSVt7ozFvqrmNzmVpqK2N9
+ RVAnov3s2cgz3WDZaL2QfhSru4XFCZ0+RUKsNvuuDHLLJofPyWFGPg00V
+ Mdabsln5LJP4sGVdKfBIgsmLMhmJR6xix0z7L2WFJixnwyk50Rxrix+Nr
+ 7mtAZ3C8I3oSQfVPlJ6udZmSX/ZXs21gEoR/C4NQBIjd/WMR4eZm2GZPd
+ wdnzWmJSqnWnjS+dkqaYScnpsDolx4feeBYMHm99HjFM5m0aK/tRS7TQU
+ sMS7E80PLBU4Cz2p5i1LrBCpqOzvvYd2bDXoaBWd7bUW20UkxzcQ5qK8w Q==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="156486993"
+X-IronPort-AV: E=Sophos;i="6.09,235,1716217200"; d="scan'208";a="156486993"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jul 2024 14:55:21 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 63FFCD801F
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 14:55:19 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id AE9B6D8BAF
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 14:55:18 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 40FFD200897C7
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 14:55:18 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id E182B1A000A;
+ Thu, 25 Jul 2024 13:55:17 +0800 (CST)
+To: qemu-devel@nongnu.org
+Cc: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH] scripts/coccinelle: New range.cocci
+Date: Thu, 25 Jul 2024 01:54:47 -0400
+Message-ID: <20240725055447.14512-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28550.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28550.005
+X-TMASE-Result: 10--8.409100-10.000000
+X-TMASE-MatchedRID: /Sl7yZT/bBLUm6Z+Xo4l3Do39wOA02LhyiKgKtIyB4rcPQu44z7O5NAO
+ OSAF0cTNUh5maKIJAx8bYA1xraQblC/7QU2czuUNA9lly13c/gFSuvtBzlaEqLs3Yh2IOCYzm0I
+ 5Q/LYFVp7MSP7SLpuGCYjJHuLr7WemTaP8DfBDAWeAiCmPx4NwBnUJ0Ek6yhjxEHRux+uk8h+IC
+ quNi0WJOX0vX5tzOgwZbrpuSlaQsmRdj19zxdZJ7ryUM76bJG3ftwZ3X11IV0=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.61.253;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,32 +90,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 06:16:37PM +0100, David Woodhouse wrote:
-> From: David Woodhouse <dwmw@amazon.co.uk>
-> 
-> The vmclock "device" provides a shared memory region with precision clock
-> information. By using shared memory, it is safe across Live Migration.
-> 
-> Like the KVM PTP clock, this can convert TSC-based cross timestamps into
-> KVM clock values. Unlike the KVM PTP clock, it does so only when such is
-> actually helpful.
-> 
-> The memory region of the device is also exposed to userspace so it can be
-> read or memory mapped by application which need reliable notification of
-> clock disruptions.
-> 
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+This is the semantic patch from commit 7b3e371526 "cxl/mailbox: make
+range overlap check more readable"
 
-one other thing worth mentioning is that this design can't work
-with confidential computing setups. By comparison, mapping e.g. a
-range in a PCI BAR would work for these setups.
-Is there a reason this functionality is not interesting for
-confidential VMs?
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+---
+ scripts/coccinelle/range.cocci | 49 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+ create mode 100644 scripts/coccinelle/range.cocci
 
+diff --git a/scripts/coccinelle/range.cocci b/scripts/coccinelle/range.cocci
+new file mode 100644
+index 000000000000..21b07945ccb2
+--- /dev/null
++++ b/scripts/coccinelle/range.cocci
+@@ -0,0 +1,49 @@
++/*
++  Usage:
++
++    spatch \
++           --macro-file scripts/cocci-macro-file.h \
++           --sp-file scripts/coccinelle/range.cocci \
++           --keep-comments \
++           --in-place \
++           --dir .
++
++  Description:
++    Find out the range overlap check and use ranges_overlap() instead.
++
++  Note:
++    This pattern cannot accurately match the region overlap check, and you
++    need to manually delete the use cases that do not meet the conditions.
++
++    In addition, the parameters of ranges_overlap() may be filled incorrectly,
++    and some use cases may be better to use range_overlaps_range().
++*/
++
++@@
++expression E1, E2, E3, E4;
++@@
++(
++- E2 <= E3 || E1 >= E4
+++ !ranges_overlap(E1, E2, E3, E4)
++|
++
++- (E2 <= E3) || (E1 >= E4)
+++ !ranges_overlap(E1, E2, E3, E4)
++|
++
++- E1 < E4 && E2 > E3
+++ ranges_overlap(E1, E2, E3, E4)
++|
++
++- (E1 < E4) && (E2 > E3)
+++ ranges_overlap(E1, E2, E3, E4)
++|
++
++- (E1 >= E3 && E1 < E4) || (E2 > E3 && E2 <= E4)
+++ ranges_overlap(E1, E2, E3, E4)
++
++|
++- ((E1 >= E3) && (E1 < E4)) || ((E2 > E3) && (E2 <= E4))
+++ ranges_overlap(E1, E2, E3, E4)
++)
++
 -- 
-MST
+2.41.0
 
 
