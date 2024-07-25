@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3021C3DA61
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 03:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED17C3DA63
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 03:29:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWp0a-0001ME-1s; Wed, 24 Jul 2024 23:19:12 -0400
+	id 1sWp9t-0006bt-C5; Wed, 24 Jul 2024 23:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <seven.yi.lee@gmail.com>)
- id 1sWp0Y-0001Le-8O
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:19:10 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <seven.yi.lee@gmail.com>)
- id 1sWp0W-0005nn-JG
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:19:09 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2cd34c8c588so374862a91.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 20:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721877546; x=1722482346; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qcMpgLGL9j8l9kfydq+cIbgvN8tsuQS15sWlL0Mt2Ko=;
- b=B2gSeB5PjQv2AoPX9pO8JkQuzKr0jZ3omwwZAk0ja7ZJS7r+pxW3zZW1pTJV4xlruX
- xM4tLw/jHWH3WvvANE+FaO+Fj1CXLlRDuIdibC0JgZ1mVS85GSwLUspA2z211/a2s5RJ
- ynDaZVqW+oZ8ALZ/hFXFksR0Tvb0plbOwzTtwXTf1AphU5k3M8oqUuMeHcpSRoaLnqsS
- xaaI26d0wec6ueaMaGg1v8czaHbXAGg6h0P2oznLB8eUmtzDyXEyXtvgFOx/SVCIFaEV
- 3wFZhausdXfOAzqtDwHAk2xbpFm1oo+lGSqR9m4Mx2YJJ9BaYv2u9lrc7uv17GBGQ4Ue
- j/lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721877546; x=1722482346;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qcMpgLGL9j8l9kfydq+cIbgvN8tsuQS15sWlL0Mt2Ko=;
- b=ijodFcochc5hpIadNsxZcIlsowwpKH55cEAaOmgoJXG2I72KfhxOsleTmEyRTrM+mQ
- PnFiMnWkyL433Q36s7h67crUC9qkJapLGEGpB6XlbWEGbSiCOI7dRt+VYY2M21dpUAIV
- pzN+PHnrPz+5vpZ1h/zAvBxavor4ZhIhHS1xfolCD83mfHbLLyRVyHcaUTMF6oy4P1Y3
- NVA2xDFadhAokRiBUziLotUN9lls0Gi3ValdX4xljD0pPqEY4P0kyxgW4V8+YiWy4fnH
- +UG4VQVQGGAvZvtVUoi/Iso8kl0G7WfIYlRKT6dnIQPWh3xLpyaVPbxnppKzAuWPDepA
- ib+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4jZgo1ithLU87TCZoqqKLtXEJQTO5bbSYxixYJDtjB4sDyDY78ILRvcLulxiZ2BcPdr3MV33KmNaDNNT29KWT4JRUUAI=
-X-Gm-Message-State: AOJu0YxSr1sxRmXqVX8PsDxSnZwqiqdBEa4lbXMmKnDhYRBDTNAwldoD
- ZN2wXcKygmeJnmjoI0t8vJ9VzGl/vCDVhe6fM3diF6scaEDuEBKx
-X-Google-Smtp-Source: AGHT+IFjiJPrFUPEK8uaoLTVAcloAi5xV3LthBV6+YSeYUOAIzq9Yo77dmuFi9H6yej/5tPV2vYbOg==
-X-Received: by 2002:a17:90a:8985:b0:2c2:c149:ca4 with SMTP id
- 98e67ed59e1d1-2cf2ebb95b5mr446525a91.43.1721877546371; 
- Wed, 24 Jul 2024 20:19:06 -0700 (PDT)
-Received: from localhost.localdomain ([2401:300:0:2:6482:27ff:fed7:6de1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb738825dsm2455524a91.8.2024.07.24.20.19.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 20:19:06 -0700 (PDT)
-From: YeeLi <seven.yi.lee@gmail.com>
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sWp9r-0006bC-0i
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:28:47 -0400
+Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sWp9o-0000gO-Ju
+ for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:28:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1721878124; x=1753414124;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=q71uB79MLTMHxUKtUITTX0EiNe+QmZcWINslj/ZPBCo=;
+ b=H8inZxd0LlV7y/qVsrAUMSkbZKJithnd4ZUqmbEXGvEYkmEDs2YX+W0o
+ T9EUxQRMU7uemAQ0OAmO4P/hlwe06J16HV8vlQSVbdQhY8CZUxHWRNwmO
+ UdYbztjCGnq3+azS4G/svSIAbojFJPh6FHnFFQD8IXOyauwY3CpYAg7M5
+ kmArVDxvjLRzrA5kK6MxljjLhvEfF0+f2Rgo6lB9FUoq7c5Vr0JSwinO4
+ Uos3sCV6VoTFGdO+BJ/0vmXRTM1qZZuvCPJHHW9z4NV/Ww4sCiurZ0OI6
+ Z5feVLE9sI6VwToKJfJ9giD4wzu6QKwGLDzaFVCsG42VN+CRqdatona33 Q==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="147339275"
+X-IronPort-AV: E=Sophos;i="6.09,234,1716217200"; d="scan'208";a="147339275"
+Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
+ by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jul 2024 12:28:36 +0900
+Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
+ [192.168.87.59])
+ by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id E5776D64AF
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:31 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 3DEF3BDC96
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:31 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id C292C200894A9
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:30 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 2C4C81A0002;
+ Thu, 25 Jul 2024 11:28:30 +0800 (CST)
 To: mst@redhat.com,
-	yi.l.liu@intel.com,
-	jasowang@redhat.com
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- qemu-devel@nongnu.org, yeeli <seven.yi.lee@gmail.com>
-Subject: [PATCH] intel_iommu: Fix for IQA reg read dropped DW field
-Date: Thu, 25 Jul 2024 11:18:58 +0800
-Message-Id: <20240725031858.1529902-1-seven.yi.lee@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	marcel.apfelbaum@gmail.com
+Cc: qemu-devel@nongnu.org,
+	Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH v3] pci-bridge: avoid linking a single downstream port more
+ than once
+Date: Wed, 24 Jul 2024 23:27:31 -0400
+Message-ID: <20240725032731.13032-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=seven.yi.lee@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28550.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28550.004
+X-TMASE-Result: 10--6.084500-10.000000
+X-TMASE-MatchedRID: R1u6Jncx2x16bMYbioM9qazGfgakLdjaBGvINcfHqhcOabErRKSRvb8F
+ Hrw7frluf146W0iUu2tMCgkc3/BmTUq8tM/A6m4SqhcdnP91eXEIKmZZt8RasgZZ8N3RvTMxo8W
+ MkQWv6iV3LAytsQR4e/nZI3fdS4AA3QfwsVk0Ubv+efAnnZBiL5K13zeQcKlRK8AfkNzU08AJcS
+ grLhDLvZKYEo/aw2FqqLGnhZGRR+QLKQDU6lJ9TAj6L/Sqyb7X9wRqOteiI67IA5FeZngbOY0Wi
+ v3Nj8beW4wbpXTb5DJKKve1kh3RY37qSWrndbmQn0bOriG5BVc=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.61.252;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,72 +94,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: yeeli <seven.yi.lee@gmail.com>
+Since the downstream port is not checked, two slots can be linked to
+a single port. However, this can prevent the driver from detecting the
+device properly.
 
-If VT-D hardware supports scalable mode, Linux will set the IQA DW field
-(bit11). In qemu, the vtd_mem_write and vtd_update_iq_dw set DW field well.
-However, vtd_mem_read the DW field wrong because "& VTD_IQA_QS" dropped the
-value of DW.
-Replace "&VTD_IQA_QS" with "& (VTD_IQA_QS | VTD_IQA_DW_MASK)" could save
-the DW field.
+It is necessary to ensure that a downstream port is not linked more than
+once.
 
-Test patch as below:
+Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 
-config the "x-scalable-mode" option:
-"-device intel-iommu,caching-mode=on,x-scalable-mode=on,aw-bits=48"
-
-After Linux OS boot, check the IQA_REG DW Field by usage 1 or 2:
-
-1. IOMMU_DEBUGFS:
-Before fix:
-cat /sys/kernel/debug/iommu/intel/iommu_regset |grep IQA
-IQA             	0x90		0x00000001001da001
-
-After fix:
-cat /sys/kernel/debug/iommu/intel/iommu_regset |grep IQA
-IQA             	0x90		0x00000001001da801
-
-Check DW field(bit11) is 1.
-
-2. devmem2 read the IQA_REG (offset 0x90):
-Before fix:
-devmem2 0xfed90090
-/dev/mem opened.
-Memory mapped at address 0x7f72c795b000.
-Value at address 0xFED90090 (0x7f72c795b090): 0x1DA001
-
-After fix:
-devmem2 0xfed90090
-/dev/mem opened.
-Memory mapped at address 0x7fc95281c000.
-Value at address 0xFED90090 (0x7fc95281c090): 0x1DA801
-
-Check DW field(bit11) is 1.
-
-Signed-off-by: yeeli <seven.yi.lee@gmail.com>
 ---
- hw/i386/intel_iommu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+V2[2] -> V3:
+ - Move this check into pcie_cap_init()
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 9a768f0b44..16d2885fcc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2947,7 +2947,9 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+V1[1] -> V2:
+ - Move downstream port check forward
+
+[1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
+[2] https://lore.kernel.org/qemu-devel/20240717085621.55315-1-yaoxt.fnst@fujitsu.com
+---
+ hw/pci/pcie.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 4b2f0805c6e0..aa154ec4b054 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -192,6 +192,13 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
  
-     /* Invalidation Queue Address Register, 64-bit */
-     case DMAR_IQA_REG:
--        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS);
-+        val = s->iq |
-+              (vtd_get_quad(s, DMAR_IQA_REG) &
-+              (VTD_IQA_QS | VTD_IQA_DW_MASK));
-         if (size == 4) {
-             val = val & ((1ULL << 32) - 1);
-         }
+     assert(pci_is_express(dev));
+ 
++    if (pci_is_express_downstream_port(dev) &&
++        pcie_find_port_by_pn(pci_get_bus(dev), port)) {
++        pos = -EBUSY;
++        error_setg(errp, "Can't link port, error %d", pos);
++        return pos;
++    }
++
+     pos = pci_add_capability(dev, PCI_CAP_ID_EXP, offset,
+                              PCI_EXP_VER2_SIZEOF, errp);
+     if (pos < 0) {
 -- 
-2.34.1
+2.41.0
 
 
