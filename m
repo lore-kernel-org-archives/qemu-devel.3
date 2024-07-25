@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6C3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B513C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWzNQ-0002r0-KO; Thu, 25 Jul 2024 10:23:28 -0400
+	id 1sWzRx-0007jP-Vj; Thu, 25 Jul 2024 10:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sWzNO-0002qS-Na
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:23:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sWzNL-0000oU-N1
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:23:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721917402;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UjkH55pUAqJ3BIpsEuBD/w0IaUj3TAvuda9Tz/kMjiw=;
- b=Wt1RdJRD5+9pAJTnw1xHNrWmSqoKwPDi3uqMc5Yy6fmiqayL/zlFwR2+bl7fyFD2S7g6xT
- MnhyezYAL/EAmdO4N5D9mxWvgHb1m972a/LE0nl+uWNb6wLs6GpS83/2hThHd2ocpg3Wtj
- E4fBvplH8Snuv7ozGLmRg+l2ul5acEM=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-PahcZxnENIO_CIxZ2Wk-iw-1; Thu, 25 Jul 2024 10:22:11 -0400
-X-MC-Unique: PahcZxnENIO_CIxZ2Wk-iw-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-665a6dd38c8so31234867b3.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:22:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721917329; x=1722522129;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sWzRu-0007iZ-33
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:28:07 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sWzRq-00030a-Va
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:28:04 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-70ea2f25bfaso720327b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:28:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721917681; x=1722522481; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UjkH55pUAqJ3BIpsEuBD/w0IaUj3TAvuda9Tz/kMjiw=;
- b=eVc5UJ/02C+ppmvp3bEtCl6v2NP3sHk2Z7o4f1/nNw+71qoERmBCH+XJ2hOTbHlV4H
- fQ1+pUN7Smx5szXnglsLyyBV6QUxSa1K0jX205zSr1Car7H1RQakVS4hR8L/A3BHZ0Fe
- PdzNmXQqjGdprQ3n1Z9t/V6qHl1fBDLv0XlqlKSYMiOT09rdN4Zmo5bahA2jRz7lBcgE
- cM1Ejic+DTX9ViI4dHxbKu5jzyGC5j+SZ9bh8M4blJN+xkKMcR/jS1mR1z6WJ9/T0Yid
- o03UEcrU5KCrbsmpJipoqEC/QWvejTLXGbEtRivcVEfJvAvU07y9xPN29XfQy/EkTQ1c
- qYpg==
+ bh=qRNH78SPPa5G0rhyn2Ej3PTDaLde8EB/MLkgyd8OQHQ=;
+ b=eXcveN0Uixtb/lNVN+G68kFNgkYJECxQbrnvB/x67s/hiGLmdQlxRRPb5xV00n6TWC
+ OBzPZlBb0pKpaEcxftYNVVpKNZMdRq+ACKWxBb8zAEms/70adNnGzKbS82Eypz3Xll6V
+ nBc9rqnG2iSFBFGLy0/u5Om1y1cEyJ1+ApGDVBGto6HU35SseVY2dcAWVGTzRSq2kizz
+ UEi2XjdzZEU8QXQUmoHO2xZLheL/2SAdclTAHBnc6cRdkz8v8QdshNDUDd/ANXRvUKO8
+ XziSOz6Pma7HF1D8TgoeXb8epyOuU9tnlwPt3LBXuL8GISE40fyR33zoIJBuEjjh2S6Q
+ NTaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721917681; x=1722522481;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qRNH78SPPa5G0rhyn2Ej3PTDaLde8EB/MLkgyd8OQHQ=;
+ b=OrGKLOgblva52vBWszp7q9JDC7ELw38ykjKFQ1SpFhf6YqcUMyURrgM35DcUwTd8ps
+ 1E8pCSIs518M5Ns2p2PPNlh8tZT4Sjdx/OdAKNH72KXykv7riWoAxm70XxxtoQxoa1us
+ 3/9pW7jKNY8l5l2UKyAK7nqSr7KX67UUSHvcVE1FwVBA2eiyQtvN14+Avw7bskX4AO7B
+ bPnZdIl0Ho0QPuPD4IzZtaSPOzlMVGQ5u6EoO/Xt9cF8UUkRe/c+6NteTFmo62yYHDT7
+ q/frpJEwEbpQgzeH6aN5BoM7ucUwnyMz09u4tqxRD8duEUVMTu0s+LvCcNeUR2el377I
+ zBpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUupYDwhT+nC/jdytnnSBBhhzRVNpTqxBsDjy21TnVx7IR257elNqUpLB5kwZCjRxTayvPJ1GZimE8TAmaG9E5yhD704ZE=
-X-Gm-Message-State: AOJu0YzBtLrIWnoie5XFw+zGDeUF9OJPjkeHRikMzAqOLd81TsMh2Srh
- fm7yMeoMQjtmxZUwwk3HnCOI4UkW0APF7z4NSY595HyySGc19HoStlz2xaL5f7kLSV7wa/3t7To
- k34h6CLmo1SKXhkUkEq8heFX5/6IahQjKYNhMLWKcDj3oI7TWStvOhXKCag+VeNYXEGS96O7or+
- aBUiZ+A+YEuSnk4hPw2VUv0DQ87R4=
-X-Received: by 2002:a0d:fc81:0:b0:65f:93c1:feea with SMTP id
- 00721157ae682-675109209edmr28370777b3.1.1721917328663; 
- Thu, 25 Jul 2024 07:22:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiFycFWURGNWhULXjyRfG2vnEYSG0uAuWlktqUGtOi5Nz74hdip6d5agcEndw/Fi+IEEDApka4IzULl7T7rWU=
-X-Received: by 2002:a0d:fc81:0:b0:65f:93c1:feea with SMTP id
- 00721157ae682-675109209edmr28370547b3.1.1721917328277; Thu, 25 Jul 2024
- 07:22:08 -0700 (PDT)
+ AJvYcCUCtRSjg9XcOTg57EQCMYboGar4Om3J17NWTLOajoMa/NI9d8L479+sOqrkaQM9r6dzoOCoUnR1e9y7YMUQviRQW712AxU=
+X-Gm-Message-State: AOJu0Yz5mbvndlV1hQDFhMtGD6FzcTRiS7mv2f/fcs+cZmNQUp0OGkql
+ 0OF4xdUarErCuh4PwhyUwdxEw1KuFGjEXQjCTPZ4akS2kwdMA8CmCD8ccDK+/9Q=
+X-Google-Smtp-Source: AGHT+IE/gKJylySwMG77UlV+1JVTqizBS2jSeSU8zCC4Vn4WKKqV4YWRgpru+REtsLTANwUJLIRTrg==
+X-Received: by 2002:a05:6a20:9192:b0:1c0:e564:d718 with SMTP id
+ adf61e73a8af0-1c47b4ae364mr2353738637.37.1721917681030; 
+ Thu, 25 Jul 2024 07:28:01 -0700 (PDT)
+Received: from [192.168.0.102] ([187.75.37.66])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead71228dsm1179165b3a.47.2024.07.25.07.27.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 07:28:00 -0700 (PDT)
+Subject: Re: [PATCH 1/4] gdbstub: Use specific MMU index when probing MTE
+ addresses
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, alex.bennee@linaro.org
+Cc: peter.maydell@linaro.org
+References: <20240722160709.1677430-1-gustavo.romero@linaro.org>
+ <20240722160709.1677430-2-gustavo.romero@linaro.org>
+ <707d1076-4f29-4089-b7ae-0bdd3e1305ee@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <7b1833f8-cfad-c989-df77-d057129fbd4b@linaro.org>
+Date: Thu, 25 Jul 2024 11:27:57 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-References: <20240716112614.1755692-1-thuth@redhat.com>
-In-Reply-To: <20240716112614.1755692-1-thuth@redhat.com>
-From: Cleber Rosa <crosa@redhat.com>
-Date: Thu, 25 Jul 2024 10:21:54 -0400
-Message-ID: <CA+bd_6LbLbR5hEqUhn5Vutf1k5HsB4Zg=qYF-Tq_pOrxDeWo1A@mail.gmail.com>
-Subject: Re: [PATCH v1 00/11] Convert avocado tests to normal Python unittests
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=crosa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+In-Reply-To: <707d1076-4f29-4089-b7ae-0bdd3e1305ee@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-0.699,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,99 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 16, 2024 at 7:28=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> The Avocado v88 that we use in QEMU is already on a life support
-> system: It is not supported by upstream anymore, and with the latest
-> versions of Python, it won't work anymore since it depends on the
-> "imp" module that has been removed in Python 3.12.
->
+Hi Richard,
 
-Hi Thomas,
+On 7/24/24 7:14 AM, Richard Henderson wrote:
+> On 7/23/24 02:07, Gustavo Romero wrote:
+>> +    /* Find out the current translation regime for probe. */
+>> +    mmu_index = arm_mmu_idx(env) & ARM_MMU_IDX_COREIDX_MASK;
+> 
+> The official interface is cpu_mmu_index().
+> 
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Let me start by saying that this is my attempt to explain the context
-of the lack of updates on QEMU when it comes to the Avocado update,
-and point to the actual updates.
+Thanks for the review! I'll change it in v2.
 
-> There have been several attempts to update the test suite in QEMU
-> to a newer version of Avocado, but so far no attempt has successfully
-> been merged yet.
->
+I'm just wondering if you plan to review patches 3/4 and 4/4 in
+this series too so I could wait for the reviews before sending v2.
 
-So, we've seen in the past an attempt to update Avocado from 88.1 to a
-regular release, and the troubles it caused, including a revert.  My
-take was that a LTS version should be used, but during this time,
-Avocado experienced a rewrite and having it replacing the old
-implementation in a production level project such as QEMU was tricky.
-Then 103.0 LTS was released, and there was extensive work to test the
-QEMU tests before that release was cut.  Additionally, there was
-further work, but unfortunately not posted yet, to make use of 103.0
-features in the existing tests[2].   I've tested on GitLab with tests
-running in parallel, cutting job times in 1/3[2].  A side node is
-that, because 103.0 is an LTS release, it will receive the needed bug
-fixes and updates that we deem necessary, including things we find in
-QEMU tests.  In fact, 103.1[3] is in the works.
 
-> Additionally, the whole "make check" test suite in QEMU is using the
-> meson test runner nowadays, so running the python-based tests via the
-> Avocodo test runner looks and feels quite like an oddball, requiring
-> the users to deal with the knowledge of multiple test runners in
-> parallel (e.g. the timeout settings work completely differently).
->
-
-Now I believe we can be very much in sync here.  I've thought for a
-while that there's no reason for Avocado to cooperate or be compatible
-with Meson.  There's no reason why users can't simply pick how the
-test gets run.  In fact, with the new Avocado architecture, you don't
-even need to run "avocado" to run an "avocado-instrumented" test.  You
-could pretty much run "avocado-runner-avocado-instrumented" with the
-right parameters through Meson.
-
-> So instead of trying to update the python-based test suite in QEMU
-> to a newer version of Avocado, we should maybe try to better integrate
-> it with the meson test runner instead. Indeed most tests work quite
-> nicely without the Avocado framework already, as you can see with
-> this patch series - it does not convert all tests, just a subset so
-> far, but this already proves that many tests only need small modifi-
-> cations to work without Avocado.
->
-> Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
-> classes (e.g. based on cloud-init images or using SSH) really depend
-> on the Avocado framework, so we'd need a solution for those if we
-> want to continue using them. One solution might be to simply use the
-> required functions from avocado.utils for these tests, and still run
-> them via the meson test runner instead, but that needs some further
-> investigation that will be done later.
->
-
-So, I believe this type of higher level testing is something that
-needs to remain, and even grow.  Speaking for Red Hat, I see the
-movement of QE contributing more Avocado-VT style tests into QEMU
-itself.  This means way more libraries and features that go into a
-common set of utilities and features (more on that later) than it
-currently exists in avocado.utils.
-
-This brings the autils[4] initiative into the picture.  We're about
-80% done with the project structure, and after that, it will be a
-common utility project (such as the cloudinit and ssh) which can be
-released automatically when the maintainer votes (through GitHub) that
-a new release is needed.  With that, we can have all the existing QEMU
-tests (and more) running in either meson or Avocado (for users that
-want Avocado runner only features, such as dependency resolution,
-container support, etc).
-
-Now, if you think any of this makes sense, I'd love to cooperate with
-you on an update that does both: update Avocado, and allow for the
-execution of all tests through meson.
-
-Thanks and I'm very very sorry for the delay in this update.
-- Cleber.
-
-[1] https://gitlab.com/cleber.gnu/qemu/-/commits/WIP/avocado_test_updates_l=
-ts?ref_type=3Dheads
-[2] https://gitlab.com/cleber.gnu/qemu/-/jobs/7085879478
-[3] https://github.com/avocado-framework/avocado/pull/5953
-[4] https://github.com/avocado-framework/autils
-
+Cheers,
+Gustavo
 
