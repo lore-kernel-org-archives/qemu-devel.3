@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B848C3DA61
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 03:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B027C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 05:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWpMq-0004Zd-EB; Wed, 24 Jul 2024 23:42:12 -0400
+	id 1sWrHc-0001VR-Nw; Thu, 25 Jul 2024 01:44:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sWpMo-0004Y4-Gv; Wed, 24 Jul 2024 23:42:10 -0400
-Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
+ id 1sWrHa-0001Qt-N9; Thu, 25 Jul 2024 01:44:54 -0400
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sWpMm-0005Na-MM; Wed, 24 Jul 2024 23:42:10 -0400
-Received: by mail-ua1-x92a.google.com with SMTP id
- a1e0cc1a2514c-81f91171316so833047241.0; 
- Wed, 24 Jul 2024 20:42:06 -0700 (PDT)
+ id 1sWrHZ-0002UX-1R; Thu, 25 Jul 2024 01:44:54 -0400
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-824ae03efbfso112953241.3; 
+ Wed, 24 Jul 2024 22:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721878924; x=1722483724; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721886291; x=1722491091; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=POTSvW4GB0oP/asXqx/ZLllbqkVmfufVLTDOC7y4eJM=;
- b=ZrMpBizJ9jqyd40eU20yHrzcdCNaVYLk1xBXpOh0ZE+LqaQKO5UCRZe5pERxUGuJT4
- r5+65cTeBV+hgzIMVcbzvGnoPMmFEoxLi0fjkO71+hX1dOMmUGRovSnK13QPl5QBnxCE
- +wkplg8cjf9tmd71bBWAL0L+MUhYywaamZvJr7/cfsUMWfDQf4aixNL1F+Mq56GqlJTd
- KG6I5A6VssqteUbWhp0In1tx+hfUFNFmFFqKnPbpoU/dKmX3oIndMj3ou508KScLxD1j
- loTzp+w3Bu6hR1ori8/IYr0e6JIXB3qDuP6vtY8lIlHGhEMuU6YE9rAze0YDAIrg605R
- X+xg==
+ bh=tSgHSXqHWOY5LCFI9i3cLpY9SQ75BCmkY93ynPWmb5k=;
+ b=AyZmm1KfwhqfVcnY886Z8iKDu68zkZiT8uHW15WHl30zDsSwWSG8FVciwyo0fNoVjB
+ m6xx2wQOA4PQBV+veOKzp5ZDiPojWrbydIS5sMv1LRk/Jmapkye02PnujFeDJ3V9RNZu
+ nQspocYsTq6WARhOOZKuFiGxt2BkGxqcS1RzO2LxeiQ1BAb9maMRR6sho3K50+9P8cCG
+ oAZg+iJxiJFTwBIGASOQs18AlmLzA88r0lj8rWBdPo4uHi7u9Elsdtnodn6nPSXJ0APq
+ bRwrBL5WiR1Gr8VqvNLBbPOKLmTuFXUN55DBghngZTqLiYdjfAYnRhltgfzGVl+7B5DM
+ jehw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721878924; x=1722483724;
+ d=1e100.net; s=20230601; t=1721886291; x=1722491091;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=POTSvW4GB0oP/asXqx/ZLllbqkVmfufVLTDOC7y4eJM=;
- b=OVwNQjIDJTT8hCJZSA8zqd34UrT14w0/b5XmC0pizHbI8X3z9npnClBVnVVhxchlvk
- TZL/lq3qZIsKJiDuF75dIAnDZtWLfhcfQ0olBB/O3UjZGP9SMgvSo7YtS7HGeZ7Vlfvz
- In/jHYik9nrHCDgmTGLSB2cbc69ooT/8rUAfhAUDCex72FwlgHpRDlnOIaHRL1rnDq8d
- 1ywF3Q+VNDF3Ac4B9e6r6DPz+2kSQJ3PhMB7sFC4feS23LMYbymBiKub5sr1e5V6cjRK
- eFrD1UtFmG4XBTdf0DeIHybzNTuuGeN+Y14rDacygCTgfKAvly8rwqHDPOl2SexN4OUG
- upAA==
+ bh=tSgHSXqHWOY5LCFI9i3cLpY9SQ75BCmkY93ynPWmb5k=;
+ b=Kb+6pNQMutmytp7t39hiC/6U7ZSeYiO7Pvkn6nklucuPzduE557wMp3O9zjCI4T6fK
+ WEsAXKxqceg/WMxJ8+er0S56CB09Kmw/nXxOBu5DwLK0UmY+JsoXUWeb5s3WUyiJ5smJ
+ INJsoyuwMDwwAu7787D24RSEHpdGb/4PFoKnZkDROoesjNEEB58XSPNmLdq2og5MkrAX
+ dou362hiq1fzNc+G/99/g8flMHlodrxYuW1QdPKtAY4qNU1DH9oJNhq7YWIPi6JsYmCz
+ NE6KDTZRkFSS6j/2TQaBE9O0UXoaEfWHA244njaDELL9PGu6mU2xZsuLlqJTTHxVM2Oh
+ Uf2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVu+FxmCH4sJTRdgwNYZZpULC4/YC+VwClAkk2TuzL2z68xoIlwzCFABBJJ1v2Rr+/grfpefQskQq7AHv3Jb94DXHxq1/s=
-X-Gm-Message-State: AOJu0YwTJZuDqo6ZW5BGtxPy7rAPF/Yj82hXUtSBHX00JlUpBPDVrmt2
- qkOXcEdMZj51y/jatULOwJ5M/wrzN6PEVYMSV64LGl2xn20i1xE+MDn0ejNTknvryXm1r02xzIp
- gjmc9/PsGCKw44+sZljOk5NcrQjw=
-X-Google-Smtp-Source: AGHT+IGZZm/l8CXY82JCSXncRoN8V+jFzOvkfI2HO9nBqJAAIR4Ult959DejUbcxtEgisHxzvLeQDdi3aRTT0jebHBI=
-X-Received: by 2002:a05:6102:2b91:b0:492:98bf:75ef with SMTP id
- ada2fe7eead31-493d63bbd50mr1578395137.8.1721878924564; Wed, 24 Jul 2024
- 20:42:04 -0700 (PDT)
+ AJvYcCXJR6Azk+oP8iJGKIyugkaRqlH5pBUYZpFZwVwCf2Wk+VzdTLSbqiKG7b8i1/kgZP9k2SIHfxEBFf8bDYgzTONFIpJpoiaCDN5vyvbRlw9J+x57H8ImPezbcbY=
+X-Gm-Message-State: AOJu0YxtU54zb2CSPehRnt4ZbKPxfY1d0RMU/i8vS2NTz1+DBjNNa0Fp
+ oDeUkrYl9qt0v9IeHQ65u36FvtYLxeZkzp4LenZTTDbk7kKbR3Jtg5IzcX2NDuGPrV8MTFPgOQU
+ QApK1enJvIITE9m0f0bDvSZULMQjSE3Ln6fQ=
+X-Google-Smtp-Source: AGHT+IGJc0nVutNOErhgDlU/C0IxCJrQlisHmOKYSsRLSCPQyQZU6s+sza8N1z7q5Yi6X6R7bI55UCYg7vZgafwL4sI=
+X-Received: by 2002:a05:6102:1494:b0:492:9c32:5344 with SMTP id
+ ada2fe7eead31-493d9b05940mr1351735137.18.1721886291490; Wed, 24 Jul 2024
+ 22:44:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
- <20240708173501.426225-14-dbarboza@ventanamicro.com>
- <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
- <ff35d3bb-b4d3-4a28-848c-1bd6668c35ec@ventanamicro.com>
-In-Reply-To: <ff35d3bb-b4d3-4a28-848c-1bd6668c35ec@ventanamicro.com>
+References: <20240724175248.1389201-1-thuth@redhat.com>
+ <20240724175248.1389201-16-thuth@redhat.com>
+In-Reply-To: <20240724175248.1389201-16-thuth@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 25 Jul 2024 13:41:38 +1000
-Message-ID: <CAKmqyKNyYoV+Ny6N06cmDA3pVhbN=5x5DO9Cm93Zq+0N8onCZQ@mail.gmail.com>
-Subject: Re: [PATCH v5 13/13] docs/specs: add riscv-iommu
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, frank.chang@sifive.com, tjeznach@rivosinc.com, 
- jason.chien@sifive.com
+Date: Thu, 25 Jul 2024 15:44:25 +1000
+Message-ID: <CAKmqyKPpfMdJfFwT1a38a8s_sNPJ7dBu9u_JQMR6khFRf_RJ9A@mail.gmail.com>
+Subject: Re: [PATCH v2 15/23] tests/functional: Convert the riscv_opensbi
+ avocado test into a standalone test
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>, 
+ qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,101 +99,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 10:56=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Thu, Jul 25, 2024 at 3:56=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
 >
+> The avocado test defined test functions for both, riscv32 and riscv64.
+> Since we can run the whole file with multiple targets in the new
+> framework, we can now consolidate the functions so we have to only
+> define one function per machine now.
 >
->
-> On 7/19/24 6:34 AM, Alistair Francis wrote:
-> > On Tue, Jul 9, 2024 at 3:37=E2=80=AFAM Daniel Henrique Barboza
-> > <dbarboza@ventanamicro.com> wrote:
-> >>
-> >> Add a simple guideline to use the existing RISC-V IOMMU support we jus=
-t
-> >> added.
-> >>
-> >> This doc will be updated once we add the riscv-iommu-sys device.
-> >>
-> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> >> ---
-> >>   docs/specs/index.rst       |  1 +
-> >>   docs/specs/riscv-iommu.rst | 55 ++++++++++++++++++++++++++++++++++++=
-++
-> >>   docs/system/riscv/virt.rst | 13 +++++++++
-> >>   3 files changed, 69 insertions(+)
-> >>   create mode 100644 docs/specs/riscv-iommu.rst
-> >>
-> >> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-> >> index 1484e3e760..c68cd9ae6c 100644
-> >> --- a/docs/specs/index.rst
-> >> +++ b/docs/specs/index.rst
-> >> @@ -33,3 +33,4 @@ guest hardware that is specific to QEMU.
-> >>      virt-ctlr
-> >>      vmcoreinfo
-> >>      vmgenid
-> >> +   riscv-iommu
-> >> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
-> >> new file mode 100644
-> >> index 0000000000..fa38ff7667
-> >> --- /dev/null
-> >> +++ b/docs/specs/riscv-iommu.rst
-> >> @@ -0,0 +1,55 @@
-> >> +.. _riscv-iommu:
-> >> +
-> >> +RISC-V IOMMU support for RISC-V machines
-> >> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >> +
-> >> +QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU sp=
-ec
-> >> +version 1.0 [1].
-> >> +
-> >> +The emulation includes a PCI reference device, riscv-iommu-pci, that =
-QEMU
-> >> +RISC-V boards can use.  The 'virt' RISC-V machine is compatible with =
-this
-> >> +device.
-> >> +
-> >> +A platform device that implements the RISC-V IOMMU will be added in t=
-he
-> >> +future.
-> >> +
-> >> +
-> >> +riscv-iommu-pci reference device
-> >> +--------------------------------
-> >> +
-> >> +This device implements the RISC-V IOMMU emulation as recommended by t=
-he section
-> >> +"Integrating an IOMMU as a PCIe device" of [1]: a PCI device with bas=
-e class 08h,
-> >> +sub-class 06h and programming interface 00h.
-> >> +
-> >> +As a reference device it doesn't implement anything outside of the sp=
-ecification,
-> >> +so it uses a generic default PCI ID given by QEMU: 1b36:0014.
-> >> +
-> >> +To include the device in the 'virt' machine:
-> >> +
-> >> +.. code-block:: bash
-> >> +
-> >> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
-> >
-> > We should add a sentence saying what this does. As in what should a
-> > user expect after they have done this
->
-> I suppose we can add a boilerplate sentence about what an IOMMU does, but=
- aside
-> from that I'm not sure what to say about user expectation. If you're addi=
-ng an
-> IOMMU (or any device in QEMU) it's expected that the user has some idea o=
-f what
-> the device is supposed to do in the board and so on hehe
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-That's fair and I don't think we need to describe what an IOMMU does,
-I more meant the fact it's attached via PCI.
-
-We specifically say a "platform device will be added later" so I think
-we should just be clear on what a PCI IOMMU is
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  tests/avocado/riscv_opensbi.py         | 63 --------------------------
+>  tests/functional/meson.build           |  8 ++++
+>  tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
+>  3 files changed, 44 insertions(+), 63 deletions(-)
+>  delete mode 100644 tests/avocado/riscv_opensbi.py
+>  create mode 100755 tests/functional/test_riscv_opensbi.py
+>
+> diff --git a/tests/avocado/riscv_opensbi.py b/tests/avocado/riscv_opensbi=
+.py
+> deleted file mode 100644
+> index bfff9cc3c3..0000000000
+> --- a/tests/avocado/riscv_opensbi.py
+> +++ /dev/null
+> @@ -1,63 +0,0 @@
+> -# OpenSBI boot test for RISC-V machines
+> -#
+> -# Copyright (c) 2022, Ventana Micro
+> -#
+> -# This work is licensed under the terms of the GNU GPL, version 2 or
+> -# later.  See the COPYING file in the top-level directory.
+> -
+> -from avocado_qemu import QemuSystemTest
+> -from avocado_qemu import wait_for_console_pattern
+> -
+> -class RiscvOpenSBI(QemuSystemTest):
+> -    """
+> -    :avocado: tags=3Daccel:tcg
+> -    """
+> -    timeout =3D 5
+> -
+> -    def boot_opensbi(self):
+> -        self.vm.set_console()
+> -        self.vm.launch()
+> -        wait_for_console_pattern(self, 'Platform Name')
+> -        wait_for_console_pattern(self, 'Boot HART MEDELEG')
+> -
+> -    def test_riscv32_spike(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv32
+> -        :avocado: tags=3Dmachine:spike
+> -        """
+> -        self.boot_opensbi()
+> -
+> -    def test_riscv64_spike(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv64
+> -        :avocado: tags=3Dmachine:spike
+> -        """
+> -        self.boot_opensbi()
+> -
+> -    def test_riscv32_sifive_u(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv32
+> -        :avocado: tags=3Dmachine:sifive_u
+> -        """
+> -        self.boot_opensbi()
+> -
+> -    def test_riscv64_sifive_u(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv64
+> -        :avocado: tags=3Dmachine:sifive_u
+> -        """
+> -        self.boot_opensbi()
+> -
+> -    def test_riscv32_virt(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv32
+> -        :avocado: tags=3Dmachine:virt
+> -        """
+> -        self.boot_opensbi()
+> -
+> -    def test_riscv64_virt(self):
+> -        """
+> -        :avocado: tags=3Darch:riscv64
+> -        :avocado: tags=3Dmachine:virt
+> -        """
+> -        self.boot_opensbi()
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index a2c0398b03..ebc6e2d1c6 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -55,6 +55,14 @@ tests_ppc_thorough =3D [
+>    'ppc_bamboo',
+>  ]
+>
+> +tests_riscv32_quick =3D [
+> +  'riscv_opensbi',
+> +]
+> +
+> +tests_riscv64_quick =3D [
+> +  'riscv_opensbi',
+> +]
+> +
+>  tests_s390x_thorough =3D [
+>    's390x_ccw_virtio',
+>    's390x_topology',
+> diff --git a/tests/functional/test_riscv_opensbi.py b/tests/functional/te=
+st_riscv_opensbi.py
+> new file mode 100755
+> index 0000000000..d077e40f42
+> --- /dev/null
+> +++ b/tests/functional/test_riscv_opensbi.py
+> @@ -0,0 +1,36 @@
+> +#!/usr/bin/env python3
+> +#
+> +# OpenSBI boot test for RISC-V machines
+> +#
+> +# Copyright (c) 2022, Ventana Micro
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from qemu_test import QemuSystemTest
+> +from qemu_test import wait_for_console_pattern
+> +
+> +class RiscvOpenSBI(QemuSystemTest):
+> +
+> +    timeout =3D 5
+> +
+> +    def boot_opensbi(self):
+> +        self.vm.set_console()
+> +        self.vm.launch()
+> +        wait_for_console_pattern(self, 'Platform Name')
+> +        wait_for_console_pattern(self, 'Boot HART MEDELEG')
+> +
+> +    def test_riscv_spike(self):
+> +        self.set_machine('spike')
+> +        self.boot_opensbi()
+> +
+> +    def test_riscv_sifive_u(self):
+> +        self.set_machine('sifive_u')
+> +        self.boot_opensbi()
+> +
+> +    def test_riscv_virt(self):
+> +        self.set_machine('virt')
+> +        self.boot_opensbi()
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
+> --
+> 2.45.2
+>
+>
 
