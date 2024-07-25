@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203CAC3DA7E
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 09:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3386C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 09:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWvCl-0004gO-3Y; Thu, 25 Jul 2024 05:56:11 -0400
+	id 1sWvDU-0005Qo-K6; Thu, 25 Jul 2024 05:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWvCk-0004fi-Cs
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:56:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWvDF-0005KJ-5m
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:56:42 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sWvCh-00025D-VC
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:56:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721901366;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+otPD/B2Tfj9WNYYvA4M0Hj/B6mGr+kOOzNSFwBTe0c=;
- b=MzBresbr9xCU7OgYbIj3oclFb3yRX7zaMDxumUQ0xjXJ32LSgk5n2lpgxBHWNORS2fVHuA
- RnvivU19prBJMbgPMLRSOViWozg/VU4beEYl92GMZkx9mU56Yu737xFJKU6D2d5bfEaRda
- jMRNVEkzfrL/ogd/chDIwfM355TvZwc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-Z29EJvYaPPGaL4ndmz9S7g-1; Thu,
- 25 Jul 2024 05:56:02 -0400
-X-MC-Unique: Z29EJvYaPPGaL4ndmz9S7g-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DCE21955D44; Thu, 25 Jul 2024 09:56:01 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.144])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FAB019560AE; Thu, 25 Jul 2024 09:55:54 +0000 (UTC)
-Date: Thu, 25 Jul 2024 10:55:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 00/23] Convert avocado tests to normal Python unittests
-Message-ID: <ZqIhJSbT2qQKJ7lj@redhat.com>
-References: <20240724175248.1389201-1-thuth@redhat.com>
- <6d609ff1-c4df-4960-be5f-4b29c5911879@linaro.org>
+ (Exim 4.90_1) (envelope-from
+ <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sWvD9-00028h-H4
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:56:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=NoHdoUNeLmfHI5iwlppoWV2frr16ZLxf2s8E8Afs+u8=; b=G37yyxegAudRmueUo2y6ZXfpBT
+ WbK78Xl8vVglPstTZQ0vjn7VmExgtloGfXSm3A4ZMDLJ2TI2OWUoTtkW976dLqXOTdie9EfqDNn+1
+ jVsjvDEncj1nWY0/11TFKLt878zVCtClmZyZ7vYBDnUHa+5+JK1V4ZWcL7xidRj8tnZtDNcVVeKau
+ 8PtZO18vh3uNcJZZJQWGtAVucFoB7ATWQjR/tZ7FzEe9UfhKNWw7oMOg0eAzvPQ2H7oCG59JbLzMY
+ KQjo+LpxwX7LIBjJxsy01o5/jrxpsMBfNivcjqIy2G723PV+wbxyAYQcLTDsDHHhyxU1r8mYlI5s0
+ 13keeUKQ==;
+Received: from [2001:8b0:10b:5:25df:2ae1:4889:ee99]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sWvCh-00000008ltP-3FON; Thu, 25 Jul 2024 09:56:07 +0000
+Message-ID: <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+From: David Woodhouse <dwmw2@infradead.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Richard Cochran <richardcochran@gmail.com>, Peter Hilber
+ <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org, 
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>, 
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>, "Chashper,
+ David" <chashper@amazon.com>, "Mohamed Abuelfotoh, Hazem"
+ <abuehaze@amazon.com>,  "Christopher S . Hall"
+ <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>, John
+ Stultz <jstultz@google.com>,  netdev@vger.kernel.org, Stephen Boyd
+ <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
+ <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>, Mark Rutland
+ <mark.rutland@arm.com>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,  Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, qemu-devel <qemu-devel@nongnu.org>, Simon
+ Horman <horms@kernel.org>
+Date: Thu, 25 Jul 2024 10:56:05 +0100
+In-Reply-To: <20240725012730-mutt-send-email-mst@kernel.org>
+References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+ <20240725012730-mutt-send-email-mst@kernel.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-Hh5AJCYJEgXbGuGNszvM"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6d609ff1-c4df-4960-be5f-4b29c5911879@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,146 +88,316 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 09:35:22AM +1000, Richard Henderson wrote:
-> On 7/25/24 03:52, Thomas Huth wrote:
-> > The Avocado v88 that we use in QEMU is already on a life support
-> > system: It is not supported by upstream anymore, and with the latest
-> > versions of Python, it won't work anymore since it depends on the
-> > "imp" module that has been removed in Python 3.12.
-> > 
-> > There have been several attempts to update the test suite in QEMU
-> > to a newer version of Avocado, but so far no attempt has successfully
-> > been merged yet.
-> > 
-> > Additionally, the whole "make check" test suite in QEMU is using the
-> > meson test runner nowadays, so running the python-based tests via the
-> > Avocodo test runner looks and feels quite like an oddball, requiring
-> > the users to deal with the knowledge of multiple test runners in
-> > parallel (e.g. the timeout settings work completely differently).
-> > 
-> > So instead of trying to update the python-based test suite in QEMU
-> > to a newer version of Avocado, we should try to better integrate
-> > it with the meson test runner instead. Indeed most tests work quite
-> > nicely without the Avocado framework already, as you can see with
-> > this patch series - it does not convert all tests, just a subset so
-> > far, but this already proves that many tests only need small modifi-
-> > cations to work without Avocado.
-> > 
-> > Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
-> > classes (e.g. based on cloud-init images or using SSH) really depend
-> > on the Avocado framework, so we'd need a solution for those if we
-> > want to continue using them. One solution might be to simply use the
-> > required functions from avocado.utils for these tests, and still run
-> > them via the meson test runner instead, but that needs some further
-> > investigation that will be done later.
-> > 
-> > 
-> > Now if you want to try out these patches: Apply the patches, then
-> > recompile and then run:
-> > 
-> >   make check-functional
-> > 
-> > You can also run single targets e.g. with:
-> > 
-> >   make check-functional-ppc
-> > 
-> > You can also run the tests without any test runner now by
-> > setting the PYTHONPATH environment variable to the "python" folder
-> > of your source tree, and by specifying the build directory via
-> > QEMU_BUILD_ROOT (if autodetection fails) and by specifying the
-> > QEMU binary via QEMU_TEST_QEMU_BINARY. For example:
-> > 
-> >   export PYTHONPATH=$HOME/qemu/python
-> >   export QEMU_TEST_QEMU_BINARY=qemu-system-x86_64
-> >   export QEMU_BUILD_ROOT=$HOME/qemu/build
-> >   ~/qemu/tests/functional/test_virtio_version.py
-> > 
-> > The logs of the tests can be found in the build directory under
-> > tests/functional/<arch>/<testname> - console log and general logs will
-> > be put in separate files there.
-> > 
-> > Still to be done: Update the documentation for this new test framework.
-> 
-> I'll say again that the download *must* be handled separately from the test
-> with timeout. This is an absolute show-stopper.
-> 
-> I've tried this twice now, from a decently fast connection in central
-> Brisbane, and have had multiple downloads be canceled by the timeout.  Since
-> the download isn't clever enough to pick up where it left off, it will never
-> succeed.
 
-This is a tricky problem the way the tests are currently written, given the
-desire for a minimal-change from the old avocado impl.
+--=-Hh5AJCYJEgXbGuGNszvM
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-IIUC, avocado already had a per-test timeout, so would suffer the same
-problem with downloads exploding the "normal" running time when cached.
+Hi Michael, thanks for the review!
 
-To address this we'll need a refactoring to enable us to declare the
-required "assets" externally from the test code.
+On Thu, 2024-07-25 at 01:48 -0400, Michael S. Tsirkin wrote:
+> On Wed, Jul 24, 2024 at 06:16:37PM +0100, David Woodhouse wrote:
+> > From: David Woodhouse <dwmw@amazon.co.uk>
+> >=20
+> > The vmclock "device" provides a shared memory region with precision clo=
+ck
+> > information. By using shared memory, it is safe across Live Migration.
+> >=20
+> > Like the KVM PTP clock, this can convert TSC-based cross timestamps int=
+o
+> > KVM clock values. Unlike the KVM PTP clock, it does so only when such i=
+s
+> > actually helpful.
+> >=20
+> > The memory region of the device is also exposed to userspace so it can =
+be
+> > read or memory mapped by application which need reliable notification o=
+f
+> > clock disruptions.
+> >=20
+> > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> > ---
+> > QEMU implementation at
+> > https://git.infradead.org/users/dwmw2/qemu.git/shortlog/refs/heads/vmcl=
+ock
+> >=20
+> > Although the ACPI device implemented in QEMU (and some other
+> > hypervisor) stands alone, most of the fields and values herein are
+> > aligned as much as possible with the nascent virtio-rtc specification,
+> > with the intent that a version of the same structure can be
+> > incorporated into that standard.
+>=20
+> Do you want to just help complete virtio-rtc then? Would be easier than
+> trying to keep two specs in sync.
 
-Taking one simple example
+The ACPI version is much more lightweight and doesn't take up a
+valuable PCI slot#. (I know, you can do virtio without PCI but that's
+complex in other ways).
 
-  class LinuxInitrd(QemuSystemTest):
+So I do see these existing in parallel, and I'm happy for the VMCLOCK
+device to defer to the shared memory structure in the virtio-rtc
+specification once that's final.
 
-      def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
+I've done my best to ensure we have a fair chance of it being adopted
+as-is, and it's versioned so if virtio-rtc gets published with v2 of
+the structure, that's also OK.
+>=20
 
-          kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora/li'
-                        'nux/releases/18/Fedora/x86_64/os/images/pxeboot/vmlinuz')
-          kernel_hash = '41464f68efe42b9991250bed86c7081d2ccdbb21'
-          kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-          ...snip...
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (st->clk->magic !=3D VMCL=
+OCK_MAGIC ||
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 st->clk->=
+size < sizeof(*st->clk) ||
+>=20
+>=20
+> This is a problem and what I mention below.
+> As structure will evolve, sizeof(*st->clk) will grow,
+> then it will fail on old hosts.
 
-  if __name__ == '__main__':
-      QemuSystemTest.main()
+Potentially, yes. At the time a guest starts to support a larger
+version of the struct, it would need to check for the size of the v1
+structure.
+
+We certainly *allow* for the structure to evolve, but as you say this
+is ABI. So we've tried to plan ahead and avoid having to change it
+unless something *really* surprising happens in the field of leap
+seconds.
 
 
-Consider if we declared all required assets as class level variable
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* If the structure is big e=
+nough, it can be mapped to userspace */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (st->clk->size >=3D PAGE_=
+SIZE) {
+>=20
+> This is also part of ABI. And a problematic one since linux can
+> increase PAGE_SIZE at any time for its own reasons.
 
-  class LinuxInitrd(QemuSystemTest):
+Yes. For it to be mapped to userspace, the hypervisor has to put it
+into a memory region which is large enough for the page granularity
+that the guest happens to use.
 
-      ASSETS = {
-         "fedora18": {
-	    "url": ('https://archives.fedoraproject.org/pub/archive/fedora/li'
-                     'nux/releases/18/Fedora/x86_64/os/images/pxeboot/vmlinuz'),
-            "hash": "'41464f68efe42b9991250bed86c7081d2ccdbb21'"
-	 }
-      }
+The hypervisor implementations so far (for x86 in QEMU since there
+seems to be no ACPI support for Arm?, and for x86+Arm in my other pet
+hypervisor) expose a 4KiB region.
 
-Then, we change the 'fetch_asset' method to take an asset name, not a
-URL+hash:
+So if the guest uses larger pages (and can't cope with using 4KiB PTEs
+for MMIO mappings), then it can't use this feature unless the
+hypervisor gives it a larger region. I think that's OK.
 
-      def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
-          kernel_path = self.fetch_asset("fedora18")
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0st->miscdev.minor =3D MISC_DYNAMIC_MINOR;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0st->miscdev.fops =3D &vmclock_miscdev_fops;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0st->miscdev.name =3D st->name;
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0ret =3D misc_register(&st->miscdev);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0if (ret)
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0goto o=
+ut;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0}
+>=20
+> Hmm so you want to map a page to userspace, but who will
+> keep the clock in that memory page up to date?
+> Making hypervisor do it will mean stealing a bunch
+> of hypervisor time and we don't *know* userspace is
+> going to use it.
 
-Now, 'fetch_asset' would lookup the URL + hash in the self.__class__.ASSETS
-dict, so the test would run exactly as before.
+I think it should scale OK. The bulk of the actual *calculations* are
+done only once by the hypervisor on an NTP skew adjustment anyway,
+rather than per-VM. That gives the period of the actual host counter,
+and the reference time.
 
-Finally, we modify QemuSystemTest.main() so that knows to look for a
-'--fetch-assets' parameter in sys.argv. When it see --fetch-assets,
-instead of running each test, it should download everything found in
-the ASSETS class variables.
+Where TSC scaling *isn't* occurring, all that the VMM needs to do is
+copy that information, applying the appropriate TSC offset. I think it
+should be mostly in the noise compared with other VMM overhead?
 
-This now gives us the ability to  run a separate '--fetch-assets'
-invokation with elevated timeout, while runing tests with a normal
-timeout.
+Where TSC scaling is in use, it's a little more complex. The counter
+value at the reference time needs to be converted using the standard
+mul-and-shift TSC scaling method. But the counter *period* needs to
+undergo the reverse conversion. That would be a bit more work if done
+na=C3=AFvely with a right shift and then a *division*, but an appropriate
+efficient conversion to match the frequency scaling could be
+precalculated, much as KVM already does in kvm_get_time_scale()? Then
+the conversion of the counter period could just be a mul and shift too.
 
-This is all a non-trivial amount of work though, so I don't think
-it is reasonable todo this as part of the immediate conversion in
-this series.
+If it's just the TSC scaling which pushes it over the edge, then
+*maybe* we could add the raw host=E2=86=92guest TSC scaling information to =
+the
+structure and make it the guest's problem? I'm not sure I'm overly fond
+of that approach.
 
-The only short term option is to configure meson run tests with a
-massively larger timeout, until we're able to enable some pre-caching
-mechansim.
+(You mention feature negotiation later, so we'll come back to that...)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > +static const struct acpi_device_id vmclock_acpi_ids[] =3D {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0{ "VMCLOCK", 0 },
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0{}
+> > +};
+> > +MODULE_DEVICE_TABLE(acpi, vmclock_acpi_ids);
+>=20
+> This is also part of ABI.
+> How do we know no one in the world happens to have a CID like this?
+> We should just reserve a valid HID, I think.
 
+Ack. This was largely just based on the existing VMGENID code. Can I
+assign a QEMUxxxx HID for it?
+
+> > +struct vmclock_abi {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* CONSTANT FIELDS */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0uint32_t magic;
+> > +#define VMCLOCK_MAGIC=C2=A0=C2=A00x4b4c4356 /* "VCLK" */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0uint32_t size;=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* Size of region containin=
+g this structure */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0uint16_t version;=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0/* 1 */
+>=20
+> I think we need to document how will compatibility be handled,
+> otherwise people will just go
+> (assert(size =3D=3D sizeof(struct vmclock_abi))
+> and we can't extend it ever.
+
+As you noted, the existing guest code only checks for it being large
+*enough*. I've let this "specification" be implementation-led for the
+time being, as I'm planning for Peter to accept it into the virtio-rtc
+spec and for *that* to be the formal definition, where such admonitions
+would reside.=20
+
+> I also feel some kind of negotiation so host can detect guest
+> expectations would be a good idea, basically a la virtio feature
+> negotiation.
+>=20
+> Also, I think it's not great that host is just expected to
+> poke at this memory at all times. Being able to know that e.g.
+> system is being shut down and so no need to poke
+> at memory would be good.
+
+Fair enough. I think that when used in virtio-rtc, doing it through
+feature negotiation is probably the right answer?
+
+For the ACPI device, perhaps we can just add an ACPI method to
+enable/disable the timekeeping (the disruption signal can always be
+operational).
+
+
+--=-Hh5AJCYJEgXbGuGNszvM
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzI1MDk1NjA1WjAvBgkqhkiG9w0BCQQxIgQgJctIkNkm
++V4R2hSCHZrJtXI51BoiKnAP69cBtgsFW08wgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgB6sZLebi3i3k3Fv1IcDx6pBo7R4pt+LUCb
+6Mdx90Afjqat7bM5OoycqvlBhSgmdIqredfrHLtyLhkswlrWjnR58XWOJgBL/euT6R9IsQB2bJHP
+uVWu5vtZOn3kYjvDX2W7JERgwdZ8dDRTbjuI6r5V1lkTOw2tg0wCxtDZgoD4uPLxsw0GkkEWEsgT
+orqa+C9kwKgzwUm97BQFyLO7F1zjo9BR2MPCFLeGuNkLtHg/JYOW1UIGIJ+m1chazpP26xSfe2Us
+496slGAe+6incFZz14vHJwazfPImJ20tNumd1jHihmTt2lLeHcpme8A9IjwI1QXTDNA2vcpMGA+0
+/jjDc5aLJsyGESvZnyO8MAMkLHSwHGU3Hhs6JCrOc4IAbO5BmoPq0me7eyjDhY1lworePKLZV4pY
+Q/lpQFLJX4x4A0DC0tp0a1SDN3cBn2/P0rA5ZNb7E40qd4nNo6F2d7sZLbJ3JpOjdYth3QmonTJ6
+0ZShE3A1f/I7bgfH+C/E9xl1FrPY/yTRGcoZKeEu6Zg6xONpd9KqhrK6VNCK5TTsNK2bxqSUA3tQ
+Wforp95dmnm4Bd+jSgNLVlMueh2JG2J7ha/nca2YTP3ZM7T02op+Zc6Hd4PCIZHx3l8uaF0k1B6o
+eOiCuSdM2WUEn/wxKRBSCkLah8d7JHpIJ+fB8O9IwQAAAAAAAA==
+
+
+--=-Hh5AJCYJEgXbGuGNszvM--
 
