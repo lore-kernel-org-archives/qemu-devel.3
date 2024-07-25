@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48250C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70934C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWrbl-0001Xa-IL; Thu, 25 Jul 2024 02:05:45 -0400
+	id 1sWrpO-0002hG-KF; Thu, 25 Jul 2024 02:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWrbj-0001PZ-B2
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:05:43 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWrpN-0002gV-Ou
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:19:49 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWrbh-0001tk-9t
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:05:43 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2cb64529a36so455677a91.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:05:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWrpL-0006BE-7L
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:19:49 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2eeb1ba040aso8439121fa.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721887539; x=1722492339; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ykyzOXDf1aFweIz87FKCn4XcbntHBbCG3Yl+QmCq46s=;
- b=opBqB8jltk5cEFtfWNLutCZYUkLTWmnnB3i2ZAiqwNDQqm+T1Hfy4ibDXj6oA6kkSX
- ziSUfm/H1C/wVziqIvfDMd1JqiwSyWMU/jkp/+PMHkeqfSj2MQW556O9SVzzlGeKZcfk
- QEFKUdX9K9AeZ//+8qiF319SyBkjEqb2RZdtR47psQUhJsyWTxAaUc115/tWwBSOt8rg
- rHL5NtGRNvKqf0MvbnnN3hLTKnLaqnxl0uYvwmwgOTnv/EP6Eldxbaj8VVB33VQdEilp
- 8sKNa1HZEE7P59NnUdwFg32xps8iLISS4icCeB5vULYkkcippWZYOF5Z86osJ40ENXp2
- eqGQ==
+ d=linaro.org; s=google; t=1721888385; x=1722493185; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=m0UXmcumamfjUjzfgaFUZpl610CiLJrhhjKD1Mn/muU=;
+ b=CA+b6h8FXU1d06qqUHvYSh7DWXqmaG9L/Ws86tO5jZBeBawKZNHwiUTnHRjvv5ITDY
+ FJb1dVgA0ty/64PBIAHMccW1+KeU7SOsWJP4ufRe06GbD5sEQN9Stf1hkfZuClsIvlLD
+ Ct9CJHHxG2D8N3sPihHLCA0ab16vnUsbrqi/L+G7qdpskeXkMhKRkuJvPeHagwzrXZap
+ z5NHsnxAOPO9eaLGV2lXHWzizSTXgniiMZQX8l/tbe+hCC/Nod+6YuxybOYsV8NER8I4
+ l46nVjuDOp4V6zPuXBcuvvFWb/cVugKvlrwu8Jdd72YhwZLhQcj54zuZ8kBNAI9IthEu
+ XJOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721887539; x=1722492339;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ykyzOXDf1aFweIz87FKCn4XcbntHBbCG3Yl+QmCq46s=;
- b=IrvcqYDynDbJIdAhxwH3XF+gA1uWHbIoyvnz88M9JFzT5u7dSF75IaaAlvOEtwzbs+
- CCkvetDU5uUaJ0Ormcbw1cnmrc4Jp9KL+6A7nNfiS2P97fqoeWEOzefmgBtDaRNjrdOV
- IbGxf8VWt5gGaZwwRv66Ez5pVwEgAKrM0VG5VyI5MMBBtS8EKfuR2PDAxm9EMYfwRN+Y
- 3Z3cs5IBjim3zYYHG50X4AwQykUh+d90UjRm5ubtFGh0Mjp39dvIaRn0x7QKetJZEfom
- SHGkAmKyl8bzDSnkJlqmHaTZzcj7wiELuvRfPn8FbuIQMERMeZrsUUxVwBqfZBSzCz2K
- 3tcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW27aaLHDArRUVWFxPQDeDI6jprlHuVSaEAX/2M7cIYDNNJTyAOQoJvWSjTUX6RtsChqfQ9pfLYhh1XTlwyQ3EKvbjs8ho=
-X-Gm-Message-State: AOJu0Yzuf4FbBeR2LEipAEbPpzj2ovD1qg/XAmbLj3lnJ3g1QyR0gozX
- Y5e1hQs38YBlPFT2eokyx342bfJGjyiU+TSCZAimIG+FXW876z5phCMoAx2OD3k=
-X-Google-Smtp-Source: AGHT+IGLg6B/TRPNqCdhViGi7/l7OX/kx3zf7HFwVYzHmEf2fYmeGRTdJuTN5yvTFvJRnmleD2NsQA==
-X-Received: by 2002:a17:90b:314d:b0:2cb:f9e:3bfb with SMTP id
- 98e67ed59e1d1-2cf238ec69dmr1970682a91.32.1721887539355; 
- Wed, 24 Jul 2024 23:05:39 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ d=1e100.net; s=20230601; t=1721888385; x=1722493185;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=m0UXmcumamfjUjzfgaFUZpl610CiLJrhhjKD1Mn/muU=;
+ b=ZOsmxBMlVz8FNirsqtm9JgBqBvH+deJiFGE9Vh4gq2Bqye0Rrspvx7ZQWnfkfwTg/N
+ yZPFu/QkL0Uy3jY+4854zTQk93/eS36VFXiT2F6dh095vzWIvljLoJXrS7rHQZHHGzyh
+ tUm7+/QfSIVkSr3tjpKUzQv5HEtVj0dQa/AFDByz3n/xxMeyuWRFQJTpf5eZuQT+snc6
+ E3tv+VtKQbWzzkoof2Wjyd3Y5BgaeiPxL9wEueGjqIwwCs0buiZ19E3dugUJE5YjBjez
+ vwfZ4y9okb87ahUjTWNRLk6bzupBzWLZ7ktPte19niAHpRvz1+2eqRgBoW8QmWv3r6cm
+ jwZw==
+X-Gm-Message-State: AOJu0Yz3qMRvF26SNYw+7ZQJPAdOj2eKWqBRuXahkg8vNMhc/WsxQAeQ
+ YJJGmS76QtI0Y1Row0w2IdAwu/nxy+9fjm8Kan17Bn4UJkCq9FIKMFkn2fHef2U=
+X-Google-Smtp-Source: AGHT+IGMRQcpevm+Lp3ilyc0t/LoZE6GIFv1iwtJlw8Y829Fzeuwzqi8kHtJp7vlM8wRHDX5Q46PPQ==
+X-Received: by 2002:a2e:a376:0:b0:2ee:7d37:49bd with SMTP id
+ 38308e7fff4ca-2f039cdfff7mr12856911fa.22.1721888384363; 
+ Wed, 24 Jul 2024 23:19:44 -0700 (PDT)
+Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c9c9a1sm667341a91.24.2024.07.24.23.05.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 23:05:38 -0700 (PDT)
-Message-ID: <abdab05e-3001-4a6f-afdc-05fc997657ee@linaro.org>
-Date: Thu, 25 Jul 2024 16:05:32 +1000
+ 4fb4d7f45d1cf-5ac63590d76sm459794a12.24.2024.07.24.23.19.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jul 2024 23:19:44 -0700 (PDT)
+Date: Thu, 25 Jul 2024 08:47:40 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qeemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
+ <h4gxy.dr366knvycy@linaro.org>
+ <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
+In-Reply-To: <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
+Message-ID: <h61ku.ipxyjqsxu75@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 5/5] target/riscv: Inline unit-stride ld/st and
- corresponding functions for performance
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240717133936.713642-1-max.chou@sifive.com>
- <20240717133936.713642-6-max.chou@sifive.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240717133936.713642-6-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,111 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/24 23:39, Max Chou wrote:
-> In the vector unit-stride load/store helper functions. the vext_ldst_us
-> & vext_ldst_whole functions corresponding most of the execution time.
-> Inline the functions can avoid the function call overhead to improve the
-> helper function performance.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/riscv/vector_helper.c | 56 +++++++++++++++++++-----------------
->   1 file changed, 30 insertions(+), 26 deletions(-)
+On Wed, 24 Jul 2024 13:34, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>On Wed, Jul 24, 2024 at 11:58 AM Manos Pitsidianakis
+><manos.pitsidianakis@linaro.org> wrote:
+>> >In my opinion we should start with cargo workspaces as the
+>> >known-imperfect (but good enough) solution, so that it could be evolved
+>> >later.  It is important that any change that deviates from common Rust
+>> >conventions is documented, and v4 provided a nice basis to build upon,
+>> >with documentation coming as things settle.  This is why I explicitly
+>> >didn't include Kconfig in the TODO list in my review of v4.
+>>
+>> After working with the latest meson releases, it seems we will soon have
+>> a good enough way of handling all this with meson. It makes me sceptical
+>> of adding cargo wrappers and using a build system out of meson when we
+>> might be able to drop all that soonish. We might as well bite the bullet
+>> now to avoid working on something we know we will remove.
+>
+>Ehh, as you say below it's complicated. Sometimes worse is better.
+>Personally I wouldn't have minded keeping the v4 approach as a "known
+>evil"; but if you can make the Cargo subprojects work, that would be
+>fine for me. What I don't like is the vendoring and handwritten (I
+>think?) meson.build, I think that's worse than the v4.
+>
+>> >Also, of the code changes (as opposed to the build system changes) that
+>> >I had asked for in the review of v4, almost none of them have been
+>> >applied.  I'm copying them here for future reference:
+>>
+>> Thanks, this helps a lot.
+>>
+>> >❌ TODO comments when the code is doing potential undefined behavior
+>>
+>> Do you mean like Rust's safety comments?
+>
+>No I meant comments where we have known instances of undefined
+>behavior. The two I had in my emails are
+>
+>(in pl011_init):
+>// TODO: this assumes that "all zeroes" is a valid state for all fields of
+>// PL011State. This is not necessarily true of any #[repr(Rust)] structs,
+>// including bilge-generated types. It should instead use MaybeUninit.
+>
+>(before the call to qemu_chr_fe_accept_input):
+>// TODO: this causes a callback that creates another "&mut self".
+>// This is forbidden by Rust aliasing rules and has to be fixed
+>// using interior mutability.
 
-You'll want to mark vext_page_ldst_us similarly.
+You mean that we can have a call stack that looks something like...
+
+<qemu code>
+|_ pl011_read
+  |_ PL011State::read()
+     |_ qemu_chr_fe_accept_input()
+      |_ pl011_read
+        |_ PL011State::read()
+
+If I understand correctly, this does not create another "&mut self", 
+because a mutable reference of self is passed to 
+qemu_chr_fe_accept_input(), and only exists until it returns.
+
+In any case, I agree that these subtleties must be examined thoroughly 
+in general. In this case though PL011State has only Copy fields and no 
+side effects when dropped. This means that adding interior mutability 
+e.g. with Cell would have exactly the same behavior.
+
+But your bringing it up makes me wonder whether we can detect any bad 
+behaviors with miri... It does not play well with FFI boundaries but 
+it's possible to mock them in some cases. I will look into the two TODOs 
+you mention and also if it's possible to verify the correct behavior 
+whenever possible!
 
 
-r~
+>
+>> https://std-dev-guide.rust-lang.org/policy/safety-comments.html
+>>
+>> These can be required by lints which is really helpful. At this point
+>> the UART library has safety comments (which needs to be reviewed for
+>> validity). I plan on adding some at the macros in qemu-api as well.
+>>
+>> >
+>> >❌ a trait to store the CStr corresponding to the structs
+>>
+>> I don't know yet if that is helpful in our usecase, because the strings
+>> must be visible from C, thus be (rust, not c) statics, unmangled and
+>> marked as #[used] for the linker. It makes sense from the Rust POV but
+>> must also be FFI-accessible.
+>
+>Why do they have to be #[used]? You have
+>
+>+                #[used]
+>+                static TYPE_NAME: &::core::ffi::CStr = $tname;
+>+                $tname.as_ptr()
+>
+>but since the cstr crate (and c"" literal) promise to return a
+>&'static CStr, I thought it could be just
+>
+>    $tname.as_ptr()
+>
+>About traits, I meant something like
+>
+>pub unsafe trait ObjectType: Sized {
+>     const TYPE_NAME: &'static CStr;
+>}
+>
+>So that you can put the trait declaration in the pl011 crate and the
+>type_info! macro can do
+>
+><$t as ObjectType>::TYPE_NAME.as_ptr()
+>
+>(also for the parent).
 
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 2e675b4220c..95394c425ed 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -150,18 +150,20 @@ typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
->                                      uint32_t idx, void *vd, uintptr_t retaddr);
->   typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
->   
-> -#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)                         \
-> -static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,                \
-> -                       uint32_t byte_off, void *vd, uintptr_t retaddr)  \
-> -{                                                                       \
-> -    ETYPE *cur = vd + byte_off;                                         \
-> -    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);                   \
-> -}                                                                       \
-> -                                                                        \
-> -static void NAME##_host(void *vd, uint32_t byte_off, void *host)        \
-> -{                                                                       \
-> -    ETYPE val = LDSUF##_p(host);                                        \
-> -    *(ETYPE *)(vd + byte_off) = val;                                    \
-> +#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)                 \
-> +static inline QEMU_ALWAYS_INLINE                                \
-> +void NAME##_tlb(CPURISCVState *env, abi_ptr addr,               \
-> +                uint32_t byte_off, void *vd, uintptr_t retaddr) \
-> +{                                                               \
-> +    ETYPE *cur = vd + byte_off;                                 \
-> +    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);           \
-> +}                                                               \
-> +                                                                \
-> +static inline QEMU_ALWAYS_INLINE                                \
-> +void NAME##_host(void *vd, uint32_t byte_off, void *host)       \
-> +{                                                               \
-> +    ETYPE val = LDSUF##_p(host);                                \
-> +    *(ETYPE *)(vd + byte_off) = val;                            \
->   }
->   
->   GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
-> @@ -169,18 +171,20 @@ GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw)
->   GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
->   GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
->   
-> -#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)                         \
-> -static void NAME##_tlb(CPURISCVState *env, abi_ptr addr,                \
-> -                       uint32_t byte_off, void *vd, uintptr_t retaddr)  \
-> -{                                                                       \
-> -    ETYPE data = *(ETYPE *)(vd + byte_off);                             \
-> -    cpu_##STSUF##_data_ra(env, addr, data, retaddr);                    \
-> -}                                                                       \
-> -                                                                        \
-> -static void NAME##_host(void *vd, uint32_t byte_off, void *host)        \
-> -{                                                                       \
-> -    ETYPE val = *(ETYPE *)(vd + byte_off);                              \
-> -    STSUF##_p(host, val);                                               \
-> +#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)                 \
-> +static inline QEMU_ALWAYS_INLINE                                \
-> +void NAME##_tlb(CPURISCVState *env, abi_ptr addr,               \
-> +                uint32_t byte_off, void *vd, uintptr_t retaddr) \
-> +{                                                               \
-> +    ETYPE data = *(ETYPE *)(vd + byte_off);                     \
-> +    cpu_##STSUF##_data_ra(env, addr, data, retaddr);            \
-> +}                                                               \
-> +                                                                \
-> +static inline QEMU_ALWAYS_INLINE                                \
-> +void NAME##_host(void *vd, uint32_t byte_off, void *host)       \
-> +{                                                               \
-> +    ETYPE val = *(ETYPE *)(vd + byte_off);                      \
-> +    STSUF##_p(host, val);                                       \
->   }
->   
->   GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
-> @@ -366,7 +370,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
->       }
->   }
->   
-> -static void
-> +static inline QEMU_ALWAYS_INLINE void
->   vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->                vext_ldst_elem_fn_tlb *ldst_tlb,
->                vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
-> @@ -695,7 +699,7 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb)
->   /*
->    * load and store whole register instructions
->    */
-> -static void
-> +static inline QEMU_ALWAYS_INLINE void
->   vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->                   vext_ldst_elem_fn_tlb *ldst_tlb,
->                   vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
+That was my approach at the beginning but I was having issues with the 
+linker stripping the <some const value>.as_ptr() and it would point to 
+invalid memory; I checked it again and I think using #[used] just for 
+the TypeInfo struct declaration might be enough so these can be removed.
 
+>
+>> >❌ a trait to generate all-zero structs without having to type "unsafe {
+>> >MaybeUninit::zeroed().assume_init() }"
+>>
+>> Traits cannot have const fns at the moment (traits cannot have
+>> type-level effects like const or async but it's WIP to get them into
+>> rustc), so this cannot be used for statics and consts.
+>
+>Ah, I see. Anyhow, I've been looking at the Linux kernel's pinned-init
+>crate (https://rust-for-linux.com/pinned-init) and it provides a
+>Zeroable macro including #[derive] support. So that has gone lower in
+>my priority.
+>
+>> >❌ I'd like to use ctor instead of non-portable linker magic,
+>>
+>> The linker sections are pretty much standard and in fact ctor uses the
+>> same linker attributes. Would writing our own constructor macro be a
+>> solution for you? My reasoning is that 1) we support our own specific
+>> platforms and it's better for portability to reflect that in our source
+>> tree and 2) it avoids the external dependency, linker sections do not
+>> change so any ctor update would be in the API or adding more platform
+>> support,  not fixes in what we target.
+>
+>I'd still like to give someone else the burden. :) Writing our own
+>constructor macro would be more work for little gain.
+
+Well, it's just that I personally don't view adding __attribute__ 
+manually in only two places is a burden but I've no strong preference 
+over it.
+
+I'm looking at the ctor dependencies and they are a few:
+https://github.com/mmastrac/rust-ctor/blob/cc3ab9160ed9dc3bdf20d735352b519abc2913e9/Cargo.lock
+
+Do you perhaps agree with adding a FIXME comment to replace the linker 
+attributes with ctor when we get the cargo dependency story in meson 
+sorted out?
+
+Manos
 
