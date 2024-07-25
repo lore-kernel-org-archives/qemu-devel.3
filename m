@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B55FC49EA1
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C622C52CD8
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Al-0001ZW-Gy; Thu, 25 Jul 2024 19:46:59 -0400
+	id 1sX8Af-00018h-Ff; Thu, 25 Jul 2024 19:46:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Ah-0001Fv-3N
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:55 -0400
-Received: from mail-il1-x135.google.com ([2607:f8b0:4864:20::135])
+ id 1sX8Ab-0000qO-6X
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:49 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Af-0005QS-F8
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:54 -0400
-Received: by mail-il1-x135.google.com with SMTP id
- e9e14a558f8ab-396675b83afso5227885ab.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:53 -0700 (PDT)
+ id 1sX8AZ-0005OZ-Cs
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:48 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70d23caf8ddso378224b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951212; x=1722556012;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951206; x=1722556006;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pr/AcYF8z8+IP/7vhXiuKTgBOUJ+TMutbX74doKlSC0=;
- b=ntDSUzG6MmYG6OUg8KNM7WlxM2nia6knEiqj1ulzgwa1+AX/28E5NX/jjfUFFHxDM+
- LCONJ/Ao44JhgcGkCakF4kEhynuGL6ChHJE/gf5WJhgduf66KDuoiT1QbTJUVwpO4ytJ
- tjToCrqnIKROnIFgMNn4gKdz8KtlJR1iSD0IQVOjZbKDasmb0n5vjlvDKGqTEV230Ftq
- 2ATCaC8qZGOiBxGRttcXUVWlm5KHkMXexn2U/+jzbw4KT9Xdc4F4ZjpHNTkLIjTaWWNU
- INVpPoszi2d+rxX/KvfgKb9jrgTtqmgBLSQPp0wKzfB1GrPoj2YF1PCsnQAYMsT1+MaR
- wK6A==
+ bh=266neMCz6T2Ay7h8fQ0tNZU+3Glrf37EuuzFIpKJGMw=;
+ b=V40ovafz2wZW7akzOmpRyHCleewJ91KSgIJRblUXFYMDWVi02hGh7AR8K5kRkR/q93
+ mr4OM3L3bIGfpc+wYmbiRUrlwY456UA1ed3sXMnhX7XgF+AHtqjMGAXWCnOq7oT8rbBa
+ iRcm13Sk/Z+JiY80PONbStuHtoyAJeN90JxDf4nJ9KKG4tVte0KSvdXTQlkN4zF3mkKm
+ fOL/wEElNs1aieieuzUE1B/Y8aVvETRaFzBDKU9W8Nt53zOpLvNnUOHeRkt0+LTh2DeW
+ XLMW+lSO/Izix0Nn+5Ufr+eXd4JlQQzHqDK1nmXY4Im1o344BTxx9BMug7k8vqbhisZ6
+ /1FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951212; x=1722556012;
+ d=1e100.net; s=20230601; t=1721951206; x=1722556006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pr/AcYF8z8+IP/7vhXiuKTgBOUJ+TMutbX74doKlSC0=;
- b=ImCtXgzCuoA9Os22HV/yD6iRhVjxhZWfhs3X8DJkoj1oaQAsUNktN06rkBMjZTmwpl
- D+/ZUcxJXwDje2J6ll5uuCa6h26kXH8Z3JO/51eDXtKYvc3wyT8xMatzfTGWyGfdJ/Ta
- 85ua6V+mW2Myz5JMYK93MyVMww/36+T5Orl54K1DTKp3SnYPwp9jKGXaK/uSUKKvD8uY
- fbAOtSWvoBdhBaMhHqaXM/Sltn1pjRfH0huKjvh/C7qa5zoWGmEYwRnlhPT4Xw1xX3km
- VKn8lpHKYzHsCvTtYphWMdmUCUt3EBy15oEg6yLqEr0hVYO4J1R16O9rCgUC6WLY2T6B
- 8paA==
+ bh=266neMCz6T2Ay7h8fQ0tNZU+3Glrf37EuuzFIpKJGMw=;
+ b=tNTTd+q6jgdWWIfiQdFYe+cFuUn1lquy7fssprGtgv9VQa5KlWgEPnzCyC56GjJqcN
+ 6KQkX5Pph1lESP3aJ749/V0vXUeprZCddQmD0VTF0Oy6hRbqf0loc5YK6b+hTQ8+s1rO
+ eqQxR68G7CMKEWKwVW3TOykQRS7/kC3vVVaZ8iOFeLS5OlvAROuo7lGBsLGS9ww60AJD
+ CJL6cKfFMyplh8tHV8L3yRCDGW0wcqSmAbZs3bG4OkbJXqijcqrVQP3mUG3vjOUvZqsx
+ Xk9CRMEpqS36D8FE4l/+RpGY6lhj68E4oSTMEmAzpPQP6ZLs3IZi3rUFGlxoppOgtJFY
+ oyYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXt/CEMIQPVSa/ObbG5RPOeunGx2ZweSEU8D4WrfCgNr2tQ+bX/3VlJ0tAnD1FeBd7UnIqTYbfOYUCg9aaZl7znVzyHfqk=
-X-Gm-Message-State: AOJu0Yz98rWqOTKj24b41Vpq5UN0Nfjo3dOyuL2cTkdEedEu366jT4Oy
- raDBaqsDstgmrONzKWkojc+CUrwQhhFEQH/SatLRXpktit+qGwr0rgU8IHAd/oc=
-X-Google-Smtp-Source: AGHT+IGcdW1SVlYT8aaYuRJ2NT56u847S4tWBxqF8BhuvmVsaEhXUSDkqYTW7Bh4Yox8c5xv4purew==
-X-Received: by 2002:a92:c562:0:b0:383:5520:cc48 with SMTP id
- e9e14a558f8ab-39a23aed069mr45058685ab.0.1721951212300; 
- Thu, 25 Jul 2024 16:46:52 -0700 (PDT)
+ AJvYcCVajzvoGRFdv5//eUYXjTb7RYFP1DUGePsXz0/r/DHXebVJrqAxdV73RHQwlU25Cl6D/w54Vw/d/1BY+Uy8iAmVwOCXhl8=
+X-Gm-Message-State: AOJu0YworJgMSG89qgP2yYTrkciw9bHABGqseot3eY7+7aVub2gdWEnK
+ JQ1+O7BizPH4sisgnrStjaUZrtcUHdcwScsFw4l/le/iZvCHc6TWHufq7+7PM5k=
+X-Google-Smtp-Source: AGHT+IGR+8jNZStWg61YEuAhAHicYqabmloH5slM50NZuNqDWNNWS20+SNGQsneM0/ca3rQERQzNdA==
+X-Received: by 2002:a05:6a00:21d2:b0:706:5d85:61a5 with SMTP id
+ d2e1a72fcca58-70eae8e4676mr4146460b3a.8.1721951205860; 
+ Thu, 25 Jul 2024 16:46:45 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.51
+ d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:46:52 -0700 (PDT)
+ Thu, 25 Jul 2024 16:46:45 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
  andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
  bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH 22/24] linux-user: permit RISC-V CFI dynamic entry in VDSO
-Date: Thu, 25 Jul 2024 16:46:11 -0700
-Message-ID: <20240725234614.3850142-23-debug@rivosinc.com>
+Subject: [PATCH 17/24] linux-user/syscall: introduce prctl for shadow stack
+ enable/disable
+Date: Thu, 25 Jul 2024 16:46:06 -0700
+Message-ID: <20240725234614.3850142-18-debug@rivosinc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240725234614.3850142-1-debug@rivosinc.com>
 References: <20240725234614.3850142-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::135;
- envelope-from=debug@rivosinc.com; helo=mail-il1-x135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=debug@rivosinc.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,33 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V CFI use new processor-specific dynamic entry in ELF. Permit it in
-VDSO post-processing script.
+Each application enables shadow stack for itself via prctl. Using prctl
+codes as proposed in riscv cfi patches on kernel mailing list [1]
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
+[1] - https://lore.kernel.org/all/20240403234054.2020347-1-debug@rivosinc.com/
+
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Jim Shu <jim.shu@sifive.com>
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+Co-developed-by: Jesse Huang <jesse.huang@sifive.com>
 ---
- linux-user/gen-vdso-elfn.c.inc | 7 +++++++
- 1 file changed, 7 insertions(+)
+ linux-user/syscall.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/linux-user/gen-vdso-elfn.c.inc b/linux-user/gen-vdso-elfn.c.inc
-index 95856eb839..59c818eb11 100644
---- a/linux-user/gen-vdso-elfn.c.inc
-+++ b/linux-user/gen-vdso-elfn.c.inc
-@@ -273,6 +273,13 @@ static void elfN(process)(FILE *outf, void *buf, bool need_bswap)
-                 errors++;
-                 break;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index ec157c1088..f879be7cfe 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6295,6 +6295,18 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+ # define PR_SME_VL_INHERIT   (1 << 17)
+ #endif
  
-+            case PT_LOPROC + 2:
-+                /* RISCV_ZICFILP_PLT: for RISC-V zicfilp extension */
-+                if (ehdr->e_machine == EM_RISCV) {
-+                    break;
-+                }
-+                goto do_default;
-+
-             case PT_LOPROC + 3:
-                 if (ehdr->e_machine == EM_PPC64) {
-                     break;  /* DT_PPC64_OPT: integer bitmask */
++#ifndef PR_GET_SHADOW_STACK_STATUS
++# define PR_GET_SHADOW_STACK_STATUS     71
++#endif
++#ifndef PR_SET_SHADOW_STACK_STATUS
++# define PR_SET_SHADOW_STACK_STATUS     72
++# define PR_SHADOW_STACK_ENABLE         (1UL << 0)
++# define PR_SHADOW_STACK_WRITE          (1UL << 1)
++# define PR_SHADOW_STACK_PUSH           (1UL << 2)
++#endif
++#ifndef PR_LOCK_SHADOW_STACK_STATUS
++# define PR_LOCK_SHADOW_STACK_STATUS    73
++#endif
+ #ifndef PR_GET_INDIR_BR_LP_STATUS
+ # define PR_GET_INDIR_BR_LP_STATUS      74
+ #endif
+@@ -6488,6 +6500,9 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+     case PR_SET_TSC:
+         /* Disable to prevent the target disabling stuff we need. */
+         return -TARGET_EINVAL;
++    case PR_GET_SHADOW_STACK_STATUS:
++    case PR_SET_SHADOW_STACK_STATUS:
++    case PR_LOCK_SHADOW_STACK_STATUS:
+     case PR_GET_INDIR_BR_LP_STATUS:
+     case PR_SET_INDIR_BR_LP_STATUS:
+     case PR_LOCK_INDIR_BR_LP_STATUS:
 -- 
 2.44.0
 
