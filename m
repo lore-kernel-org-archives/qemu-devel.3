@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C959CC3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B91C3DA7F
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8N6-0005Zv-Fh; Thu, 25 Jul 2024 19:59:45 -0400
+	id 1sX8Kl-0000yZ-Od; Thu, 25 Jul 2024 19:57:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Ms-000422-R8; Thu, 25 Jul 2024 19:59:31 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1sX8Ki-0000r4-U9; Thu, 25 Jul 2024 19:57:16 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Mr-0001lO-0V; Thu, 25 Jul 2024 19:59:30 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7a103ac7be3so307706a12.3; 
- Thu, 25 Jul 2024 16:59:28 -0700 (PDT)
+ id 1sX8Kh-0001Kq-6C; Thu, 25 Jul 2024 19:57:16 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-76cb5b6b3e4so292519a12.1; 
+ Thu, 25 Jul 2024 16:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951967; x=1722556767; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951833; x=1722556633; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qnH5h8uNaL1eOAmJuCUwBb3iL6jnZdT02PMg2QjED74=;
- b=cas9rT/xeWCIGQXpjpOLu9cFXc1kDPTMgN7BMtZMFAsobEveceg6cC4w0S6yhOKE/P
- JXT8iXlBZn7cO47ZaDTIYgcG89Js8rL/Qa1cVjxmkduFWGHld7v9mmF9NWuet3ZWod/i
- tSsHj8DOU6cBwKKXzXv4+hET3D7taAoMCi0xUEabwajpuikkXsMj9tYuR4m5H63sUXiX
- Mr7CtHt3BQMiKYaKOMLM1ImBWdtf3THrMHsUAh7EOCaXyhOr2BR+Jt2L+XXTSLskKVN1
- m+Ru6E2/q/KJGxq/gVqQtBtsyvIWceRntY7Fj68cR8FQLjzd01L95Ow0usg+gixsYXhM
- V4Sw==
+ bh=TQ6H5pSLiuZ7uuSY0SB7J25bCXUaO9FF8fBD9NzKeUU=;
+ b=O4VgyeXZWMAIrr4Svb+vJ4BNoIU2ZoMiaOxS4iPTDQZGka0kw1BbBdyyQYDriiVd3E
+ 7kd1n6bQ968C6UTKvIhqEBcsjcnmF/9EiKrSSmz9GMZf940vg/fXZjMbtB3lBuMYj/Cv
+ RJaUoEVf1fsNxQrpO9ho0YwG7iRxAZplQ/ZX8zf6HUIma1q+5vL8dUnEs1qRh/v56ifx
+ NFaEGHa6084J8MXl6Nns9Zngcvs7conY4NPksuir2Nt44Z9xaaEmI9lEinDlhzzIIZJD
+ Qb8SGyWawlAv0EwsHw2AnIqNIfDRTAIaczWaFOOEyRAYUeb4C9Iotkfmnbfwyff28YzR
+ De7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951967; x=1722556767;
+ d=1e100.net; s=20230601; t=1721951833; x=1722556633;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qnH5h8uNaL1eOAmJuCUwBb3iL6jnZdT02PMg2QjED74=;
- b=jwKeqAXFkYXDAy+oiMQx4pA1lwN4KbU7KyZnZn8m0/I6PXi9Y4cTuW7Rd284AE/JRL
- on11eUMKE2zGxq4g/fPahEOKWU7rkN3mxZbOENSFZgEMe/xuDyUFuLzOEMbzOwBiQbIb
- gi38dbb8OMLRLmneV8mAU3Cerlh+nTaKb6W0KXpXTKPxm41/62JaQXWiM7jXRInMNs14
- m/ubBsS/YZp2ItxhiMOAlBQNvYRJ7xQbL2d1pACKY9GewTlSoqNeYGzrygBs1vLzlgVn
- S04vD6ZoDJdJF98XV3DAcA3L9e1XcnEaEac8JumO/8q7DDXhezQAJ6pejpXgxQRgB1eL
- d38A==
+ bh=TQ6H5pSLiuZ7uuSY0SB7J25bCXUaO9FF8fBD9NzKeUU=;
+ b=HGKueoLxuAd2WVR5Skwievmuv7oKR+cGLyVxMyhTO7iVZBVCBzX3HNqAx3ooUVbdZ9
+ CWka12MdgY4QxKG3wq9sem597cWXOSNX1tlaGIKAYRn8tNKE7cC3y9UdfKZLIuVVl7vC
+ SL7AQ+8HGnPuvK5y4nGz667mV7ArfhPbQY40+qVzVSA8M9MZ/IVGD1y05ARFvKndJVeW
+ 2WH09RNJOJvGIMS15HaF3gPfL2w/MA3g65JFo1Pivr8EDiPa3uZ2F9rzx/+YdgPSGi8x
+ /JePMBWqeBMKt9/RThocnDNvKcnN/FiwxleSjNg0cQCeLR6G5Q/XXH/oVs7OJrvk9dzE
+ EfEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtHPF7CcdYOMdRu12x5T0LbR+fh3sJBNA/NuluNlup7EXlUoD43/xxTLntMaQz1Ymr6S4N0q6u+d6zhEtiPINSQX6L
-X-Gm-Message-State: AOJu0YyglmvWjX3ojXIIkz7eyOvW50AjArkNmvJAsY4uN4SvaIoYpUUS
- rbUyEL7n1GsSMzQoIG4dtJmz8GRjQMLDVl7vk2bQdBHZLNmvC1rJXXrLYg==
-X-Google-Smtp-Source: AGHT+IFewWWqqsCskx9Qai0RNNhD3jKtWuYIMYxuxf9ln7+IHjTtaejFkOn7AXl6UZe2eKRRdCRqwQ==
-X-Received: by 2002:a17:90b:4c50:b0:2c4:dfa6:df00 with SMTP id
- 98e67ed59e1d1-2cf2e9ab13dmr3993023a91.8.1721951966685; 
- Thu, 25 Jul 2024 16:59:26 -0700 (PDT)
+ AJvYcCX4LTKFlKy8xz+OaiRBk8MqvH4cszyHgAMkLWLLSIC0J6R5D2HmF8M3opDzYvOEClFrsIU35XkqOaeaiYYq9jPBe7sq
+X-Gm-Message-State: AOJu0YyCm92SiA8hlOG2ETpfMdATOgWEDjL1LQcG978qXsMh/oWQyxOK
+ OcVq5dfQMrNUm4U9yTfHAwvC+Wh4BseBEEw9ieXWt1hbCi1weLCHy4f2Ag==
+X-Google-Smtp-Source: AGHT+IFHJylrExSWERwp3XmXpXV6AgNpFpm2reAfVnRdndZrGUXa2la/OqREn4JL9vfrelsj+fgGow==
+X-Received: by 2002:a17:90a:b118:b0:2c6:ee50:5af4 with SMTP id
+ 98e67ed59e1d1-2cf2e9ab0b7mr3866095a91.6.1721951833185; 
+ Thu, 25 Jul 2024 16:57:13 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.24
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:59:26 -0700 (PDT)
+ Thu, 25 Jul 2024 16:57:12 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 87/96] target/ppc/mmu_common.c: Rename function parameter
-Date: Fri, 26 Jul 2024 09:54:00 +1000
-Message-ID: <20240725235410.451624-88-npiggin@gmail.com>
+ Frederic Barrat <fbarrat@linux.ibm.com>,
+ Michael Kowal <kowal@linux.vnet.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 47/96] pnv/xive2: Enable VST NVG and NVC index compression
+Date: Fri, 26 Jul 2024 09:53:20 +1000
+Message-ID: <20240725235410.451624-48-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,79 +97,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-Rename parameter of get_bat_6xx_tlb() from virtual to eaddr to match
-other functions.
+Enable NVG and NVC VST tables for index compression which indicates the number
+of bits the address is shifted to the right for the table accesses.
+The compression values are defined as:
+   0000 - No compression
+   0001 - 1 bit shift
+   0010 - 2 bit shift
+   ....
+   1000 - 8 bit shift
+   1001-1111 - No compression
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ hw/intc/pnv_xive2.c      | 20 ++++++++++++++++++++
+ hw/intc/pnv_xive2_regs.h |  2 ++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index ede409eb99..110936ca83 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -221,7 +221,7 @@ static inline void bat_size_prot(CPUPPCState *env, target_ulong *blp,
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index 33e76633b5..c3b5bfe61f 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -217,6 +217,20 @@ static uint64_t pnv_xive2_vst_addr_indirect(PnvXive2 *xive, uint32_t type,
+     return pnv_xive2_vst_addr_direct(xive, type, vsd, (idx % vst_per_page));
  }
  
- static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
--                           target_ulong virtual, MMUAccessType access_type)
-+                           target_ulong eaddr, MMUAccessType access_type)
++static uint8_t pnv_xive2_nvc_table_compress_shift(PnvXive2 *xive)
++{
++    uint8_t shift =  GETFIELD(PC_NXC_PROC_CONFIG_NVC_TABLE_COMPRESS,
++                              xive->pc_regs[PC_NXC_PROC_CONFIG >> 3]);
++    return shift > 8 ? 0 : shift;
++}
++
++static uint8_t pnv_xive2_nvg_table_compress_shift(PnvXive2 *xive)
++{
++    uint8_t shift = GETFIELD(PC_NXC_PROC_CONFIG_NVG_TABLE_COMPRESS,
++                             xive->pc_regs[PC_NXC_PROC_CONFIG >> 3]);
++    return shift > 8 ? 0 : shift;
++}
++
+ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
+                                    uint32_t idx)
  {
-     target_ulong *BATlt, *BATut, *BATu, *BATl;
-     target_ulong BEPIl, BEPIu, bl;
-@@ -230,7 +230,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     bool ifetch = access_type == MMU_INST_FETCH;
- 
-     qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func__,
--                  ifetch ? 'I' : 'D', virtual);
-+                  ifetch ? 'I' : 'D', eaddr);
-     if (ifetch) {
-         BATlt = env->IBAT[1];
-         BATut = env->IBAT[0];
-@@ -246,15 +246,15 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-         bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
-         qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
-                       TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
--                      ifetch ? 'I' : 'D', i, virtual, *BATu, *BATl);
--        if ((virtual & 0xF0000000) == BEPIu &&
--            ((virtual & 0x0FFE0000) & ~bl) == BEPIl) {
-+                      ifetch ? 'I' : 'D', i, eaddr, *BATu, *BATl);
-+        if ((eaddr & 0xF0000000) == BEPIu &&
-+            ((eaddr & 0x0FFE0000) & ~bl) == BEPIl) {
-             /* BAT matches */
-             if (valid != 0) {
-                 /* Get physical address */
-                 ctx->raddr = (*BATl & 0xF0000000) |
--                    ((virtual & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
--                    (virtual & 0x0001F000);
-+                    ((eaddr & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
-+                    (eaddr & 0x0001F000);
-                 /* Compute access rights */
-                 ctx->prot = prot;
-                 if (check_prot_access_type(ctx->prot, access_type)) {
-@@ -273,7 +273,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     if (ret < 0) {
-         if (qemu_log_enabled()) {
-             qemu_log_mask(CPU_LOG_MMU, "no BAT match for "
--                          TARGET_FMT_lx ":\n", virtual);
-+                          TARGET_FMT_lx ":\n", eaddr);
-             for (i = 0; i < 4; i++) {
-                 BATu = &BATut[i];
-                 BATl = &BATlt[i];
-@@ -284,7 +284,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-                               " BATu " TARGET_FMT_lx " BATl " TARGET_FMT_lx
-                               "\n\t" TARGET_FMT_lx " " TARGET_FMT_lx " "
-                               TARGET_FMT_lx "\n", __func__, ifetch ? 'I' : 'D',
--                              i, virtual, *BATu, *BATl, BEPIu, BEPIl, bl);
-+                              i, eaddr, *BATu, *BATl, BEPIu, BEPIl, bl);
-             }
-         }
+@@ -238,6 +252,12 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
+         return xive ? pnv_xive2_vst_addr(xive, type, blk, idx) : 0;
      }
+ 
++    if (type == VST_NVG) {
++        idx >>= pnv_xive2_nvg_table_compress_shift(xive);
++    } else if (type == VST_NVC) {
++        idx >>= pnv_xive2_nvc_table_compress_shift(xive);
++    }
++
+     if (VSD_INDIRECT & vsd) {
+         return pnv_xive2_vst_addr_indirect(xive, type, vsd, idx);
+     }
+diff --git a/hw/intc/pnv_xive2_regs.h b/hw/intc/pnv_xive2_regs.h
+index ca05255d20..e8b87b3d2c 100644
+--- a/hw/intc/pnv_xive2_regs.h
++++ b/hw/intc/pnv_xive2_regs.h
+@@ -427,6 +427,8 @@
+ #define X_PC_NXC_PROC_CONFIG                    0x28A
+ #define PC_NXC_PROC_CONFIG                      0x450
+ #define   PC_NXC_PROC_CONFIG_WATCH_ASSIGN       PPC_BITMASK(0, 3)
++#define   PC_NXC_PROC_CONFIG_NVG_TABLE_COMPRESS PPC_BITMASK(32, 35)
++#define   PC_NXC_PROC_CONFIG_NVC_TABLE_COMPRESS PPC_BITMASK(36, 39)
+ 
+ /* NxC Cache Watch 0 Specification */
+ #define X_PC_NXC_WATCH0_SPEC                    0x2A0
 -- 
 2.45.2
 
