@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BF0C52CD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D584C3DA49
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8NG-0006Ka-62; Thu, 25 Jul 2024 19:59:55 -0400
+	id 1sX8MN-0001XL-U8; Thu, 25 Jul 2024 19:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Mv-0004V2-Ja; Thu, 25 Jul 2024 19:59:34 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1sX8MC-00011z-8D; Thu, 25 Jul 2024 19:58:50 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Mt-0001lj-Pl; Thu, 25 Jul 2024 19:59:33 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2cb53da06a9so271973a91.0; 
- Thu, 25 Jul 2024 16:59:30 -0700 (PDT)
+ id 1sX8M9-0001dQ-UL; Thu, 25 Jul 2024 19:58:47 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-7a263f6439eso253894a12.3; 
+ Thu, 25 Jul 2024 16:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951969; x=1722556769; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951923; x=1722556723; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iKp6OWilW+wJjA8X4BcH+9kkT2W9skS4KPMDra0yBgg=;
- b=e/4BWfkmxwIOPYS6J3SH+8Vz2zUsplGm3Wl78ZihHDUhZQktrZ98IJohepbfhxEnpB
- 7qBSHPENktO7uDbCY6uXKvLwDmhhMPhZw97N/OZSSBu7YVA1uYaEFFLldDq6kYTP1N/U
- cguznqUUgtPiHZCWvKyYiHtOg/fnxlvhUtsfgjGgolKY19S77eGDoajYcRae9gOD/fM1
- LYB1IX+ke1pULyRhWHwOPdo+xtdWEZsx3ydHzEULf9/URJAG5gx/UArDizxHxyJsx2Jp
- 6jwR8eoMWVaQOV8tw1hkFspj/xHEDP5C61LOR6lCyBr/DdrdG6DO2qQtGPbM811/H81z
- Ueig==
+ bh=kFW8mrexW3DWNbaozHBTt6yJbtLNBcqpBAa9gzkDLL4=;
+ b=flTSLJD2XvkpNOHATgRVmjRsniFfw+dkHXmucoZJRN8KtI+HbleKS+LJUk4HAwQa4T
+ R1dShKhjuSIMb6tiKw9pQ3uYxpbzFz2NuvNxsYbOTRI6ewPGvkVDK3+2qcoo02DpQNIY
+ lU8xUYAB8QYGIfy8qvnppkwa3eqbzSM6h6FXXV3IRTcptMEdp1IUzP/JkodnhGNCtann
+ 6p4QlW+KVBlRPeXxryDDU8VP7NJBFznMUYoX5MEv5K1RoD+iTlajYifDR5D8IT3nQnyv
+ lU+E8618JOHIsuVM8HVJI5tVTn81afc4ME83NsF3vreOEjgkFRtw+CZljqyEJOIVXttz
+ FD0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951969; x=1722556769;
+ d=1e100.net; s=20230601; t=1721951923; x=1722556723;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iKp6OWilW+wJjA8X4BcH+9kkT2W9skS4KPMDra0yBgg=;
- b=Xa+3h0WyPv0nv/fWbctACWeL3ZtV/epxlv5vlripZDwmrBVjj4e61H0QFlQiks3CxX
- HI28t3YJhTgDS8uKluO1DJGjVl716hbBYO0/WEDrBBX+cHyD5XZ4eBXgW2ALzHGRVZGS
- 2sgUaueVsJYwQZs6/8tLFhW9EdnxMBbN2in+N3gGGUAjZiqT3P/ND5jyJNcJOqCSfouP
- R5NAmIkHzWBFYh0GMK041nhJO5yb/ZTl+fFJq1Add4PMIqRp09qFgUdNP2ykMP4J+vY8
- HHyynX5JcXBkesbCXaTctCMHu9OwWxbAhQ7IGI0sRp2QABtzedlqdRbb9VFkes0lHW3u
- DbGg==
+ bh=kFW8mrexW3DWNbaozHBTt6yJbtLNBcqpBAa9gzkDLL4=;
+ b=jvFLzxRwak7comM4ZxpkzKY96gTregI7PPA9M4i27NJ0N+1nDd9m89JkkdpHa++/Ll
+ RfWtux5grN9RHlAPfuAG3GBv6CYEYFqye0YkNPyzU4XrDYZ6t7uZ0cWZUoSO9W180Yy1
+ bxnB0kRgBRkG8j6raHk15ahiDeqHr/CN90TSXg457Eo7O4hl/Z1YtvFyqJFJgWbGKRmG
+ BcETumxfPyl9fcc7a2SoWh3mus7tJ1xo7j4LsdkIZ7kk4RSXoV4NnhEDMucdQMjGIYEc
+ GKGBxkhtOA9VNSltc0+zS3mlhPLF9kVN3Da3dv0ZJ9wwmyhFL3G8ePeMd6EGY44dzT5d
+ 9/1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNcUUVj8QXlcmyOmpfkq3a1aidWvtGOQDzyjDL8qV4QKjKASUxgV7Nhok+0GG5YwkvibGIZeqs0hDLyKmti+YuyiLv
-X-Gm-Message-State: AOJu0YzajxjDLtZHsT2yjj0eDUwXhOJ8fs7PMoP3Q+cHjK5/Gy7ivn2l
- vjnVRJTZB0t2n3zDY9MX3fUrvFgBPoZiyEKZmG3WjpGWk+josut2/3OY9g==
-X-Google-Smtp-Source: AGHT+IEt3THaTvhfarD4zGysFpzBT4BZIlSHNB4j3Kf3bLXopURVKz3wkBKKsXQOTHEyyWA7Tj+3KA==
-X-Received: by 2002:a17:90a:f190:b0:2c9:90fa:b9f8 with SMTP id
- 98e67ed59e1d1-2cf216586e5mr7365299a91.10.1721951969558; 
- Thu, 25 Jul 2024 16:59:29 -0700 (PDT)
+ AJvYcCW8vuHEiY/eWb03qrfCMUMd9FOeTAqWde6UJGmUMM6sAeYGtmHwERBfRRUzfXw3NkqQw8wFHTTZdNBVbiTpf+DHP5Ix
+X-Gm-Message-State: AOJu0YxpsAuz4lS6F/SgOUlpKcPMoa8Vi4fu2aCEzKXrabmwjfangvKY
+ T5VtWs6jy30vOAfgLLGAumL6X5I/tBDbjwb0W9dQ+m/F8y3mXntfww402w==
+X-Google-Smtp-Source: AGHT+IFOQs5GpS/Thp3N26gKXSzwzht42Jo5vyFFox8hmuUFNdbOi/lr3Gb0bHhVqv7IwnKJR9xb4w==
+X-Received: by 2002:a17:90b:390a:b0:2c9:6a38:54e4 with SMTP id
+ 98e67ed59e1d1-2cf2ebcf4b5mr3609969a91.41.1721951923543; 
+ Thu, 25 Jul 2024 16:58:43 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.27
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:59:29 -0700 (PDT)
+ Thu, 25 Jul 2024 16:58:43 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 88/96] target/ppc/mmu_common.c: Use defines instead of numeric
- constants
-Date: Fri, 26 Jul 2024 09:54:01 +1000
-Message-ID: <20240725235410.451624-89-npiggin@gmail.com>
+Subject: [PULL 73/96] target/ppc/mmu_common.c: Remove unused field from
+ mmu_ctx_t
+Date: Fri, 26 Jul 2024 09:53:46 +1000
+Message-ID: <20240725235410.451624-74-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,80 +97,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Replace some BAT related constants with defines from mmu-hash32.h
+The eaddr field of mmu_ctx_t is set once but never used so can be
+removed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ target/ppc/mmu_common.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 110936ca83..aa002bba35 100644
+index 28adb3ca10..0a07023f48 100644
 --- a/target/ppc/mmu_common.c
 +++ b/target/ppc/mmu_common.c
-@@ -201,7 +201,7 @@ static inline void bat_size_prot(CPUPPCState *env, target_ulong *blp,
-     target_ulong bl;
-     int pp, valid, prot;
+@@ -40,7 +40,6 @@
+ /* Context used internally during MMU translations */
+ typedef struct {
+     hwaddr raddr;      /* Real address             */
+-    hwaddr eaddr;      /* Effective address        */
+     int prot;          /* Protection bits          */
+     hwaddr hash[2];    /* Pagetable hash values    */
+     target_ulong ptem; /* Virtual segment ID | API */
+@@ -348,7 +347,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  
--    bl = (*BATu & 0x00001FFC) << 15;
-+    bl = (*BATu & BATU32_BL) << 15;
-     valid = 0;
-     prot = 0;
-     if ((!FIELD_EX64(env->msr, MSR, PR) && (*BATu & 0x00000002)) ||
-@@ -241,19 +241,19 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-     for (i = 0; i < env->nb_BATs; i++) {
-         BATu = &BATut[i];
-         BATl = &BATlt[i];
--        BEPIu = *BATu & 0xF0000000;
--        BEPIl = *BATu & 0x0FFE0000;
-+        BEPIu = *BATu & BATU32_BEPIU;
-+        BEPIl = *BATu & BATU32_BEPIL;
-         bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
-         qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu "
-                       TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func__,
-                       ifetch ? 'I' : 'D', i, eaddr, *BATu, *BATl);
--        if ((eaddr & 0xF0000000) == BEPIu &&
--            ((eaddr & 0x0FFE0000) & ~bl) == BEPIl) {
-+        if ((eaddr & BATU32_BEPIU) == BEPIu &&
-+            ((eaddr & BATU32_BEPIL) & ~bl) == BEPIl) {
-             /* BAT matches */
-             if (valid != 0) {
-                 /* Get physical address */
--                ctx->raddr = (*BATl & 0xF0000000) |
--                    ((eaddr & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
-+                ctx->raddr = (*BATl & BATU32_BEPIU) |
-+                    ((eaddr & BATU32_BEPIL & bl) | (*BATl & BATU32_BEPIL)) |
-                     (eaddr & 0x0001F000);
-                 /* Compute access rights */
-                 ctx->prot = prot;
-@@ -277,9 +277,9 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-             for (i = 0; i < 4; i++) {
-                 BATu = &BATut[i];
-                 BATl = &BATlt[i];
--                BEPIu = *BATu & 0xF0000000;
--                BEPIl = *BATu & 0x0FFE0000;
--                bl = (*BATu & 0x00001FFC) << 15;
-+                BEPIu = *BATu & BATU32_BEPIU;
-+                BEPIl = *BATu & BATU32_BEPIL;
-+                bl = (*BATu & BATU32_BL) << 15;
-                 qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx
-                               " BATu " TARGET_FMT_lx " BATl " TARGET_FMT_lx
-                               "\n\t" TARGET_FMT_lx " " TARGET_FMT_lx " "
-@@ -520,9 +520,9 @@ static void mmu6xx_dump_BATs(CPUPPCState *env, int type)
-     for (i = 0; i < env->nb_BATs; i++) {
-         BATu = &BATut[i];
-         BATl = &BATlt[i];
--        BEPIu = *BATu & 0xF0000000;
--        BEPIl = *BATu & 0x0FFE0000;
--        bl = (*BATu & 0x00001FFC) << 15;
-+        BEPIu = *BATu & BATU32_BEPIU;
-+        BEPIl = *BATu & BATU32_BEPIL;
-+        bl = (*BATu & BATU32_BL) << 15;
-         qemu_printf("%s BAT%d BATu " TARGET_FMT_lx
-                     " BATl " TARGET_FMT_lx "\n\t" TARGET_FMT_lx " "
-                     TARGET_FMT_lx " " TARGET_FMT_lx "\n",
+     /* Perform segment based translation when no BATs matched */
+     pr = FIELD_EX64(env->msr, MSR, PR);
+-    ctx->eaddr = eaddr;
+ 
+     sr = env->sr[eaddr >> 28];
+     ctx->key = (((sr & 0x20000000) && pr) ||
 -- 
 2.45.2
 
