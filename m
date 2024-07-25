@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77804C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F2BC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 11:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWwl2-00082t-51; Thu, 25 Jul 2024 07:35:40 -0400
+	id 1sWwqc-0005jG-UY; Thu, 25 Jul 2024 07:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWwl0-000824-6c
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:35:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWwkx-0007Jr-E3
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:35:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721907333;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=I4aqT93+5qt3mwXcMIl/LzXlhfg6b83h4ER6KhHL2Xc=;
- b=hQnTRIGSyg2g0bMvXzsFTduVmQnpzJtvXQxTltlzLV70rY8h9WAK76X8iUx8NQ2+OUlI8W
- GtU+fC8rWsMsp3otKljWoAnIbAm9wUDNDZwIpUxG0jR0f1oPibfyikWfaSXX5thangbqza
- OKIbtMgsoCXM1Tn/LZt45UYR3M/F4IU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-DIMZb9fPPo-wpWcWL6Sqrw-1; Thu,
- 25 Jul 2024 07:35:27 -0400
-X-MC-Unique: DIMZb9fPPo-wpWcWL6Sqrw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B14541956095; Thu, 25 Jul 2024 11:35:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BB953000194; Thu, 25 Jul 2024 11:35:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC24F21F4B8B; Thu, 25 Jul 2024 13:35:21 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Guoyi Tu <tugy@chinatelecom.cn>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  Eric Blake
- <eblake@redhat.com>,  qemu-devel@nongnu.org,  dengpc12@chinatelecom.cn,
- zhangl161@chinatelecom.cn,
- Paolo Bonzini <pbonzini@redhat.com>, Yang Zhong <yang.zhong@intel.com>
-Subject: Re: [PATCH] misc: introduce strim-memory qapi to support free
- memory trimming
-In-Reply-To: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn> (Guoyi
- Tu's message of "Fri, 28 Jun 2024 18:22:48 +0800")
-References: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn>
-Date: Thu, 25 Jul 2024 13:35:21 +0200
-Message-ID: <87h6cdogau.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sWwqb-0005im-6D
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:41:25 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sWwqZ-0001aj-7n
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 07:41:24 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7a263f6439eso501510a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 04:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1721907681; x=1722512481; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4BjiPeeHBWLhSj4uJU2ToVH3O0/femhQQB0EUVqahOo=;
+ b=SGswuBpF6BGf4ZnBxdDhQ1aEyy7+GUh023IGRbNhT/MoMXQHLbXjIlFxiiol+ckEKk
+ ltN619HsLaqIXR+LMNQy9NuxYlW5VB5mre+oStbllsm0oradY8HcTO+kReWWMJ5LstQ2
+ bVergTru58bhRiMbLvDHUdXo1h1JD1TgANY09jmhtTFRNQN5hB4JbN8bVGjF+0WSREq3
+ i/CdHONUNslf6fSyzlZglBVxki7u+9FbM8mI03O1PoOFmJwjd99qGGyNw/yNBzh28iPv
+ ZH4Ae0IhOE5LtXGUNaxuXxmQPdCZNN0smLRbeXYKnydVaBD2zLx76h32fZeCZ3Rpqjnl
+ GPvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721907681; x=1722512481;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4BjiPeeHBWLhSj4uJU2ToVH3O0/femhQQB0EUVqahOo=;
+ b=KDKrbETPJu/Z8rIiB8nci58E4eX4BvI68TZeX80a/pjLlMVtyu1/OOHUVX16s+7EGb
+ DdfKV+c4vjt1O4OfzQ667FZZmLszAUnx4SpmwhLpZTFY1eaZaLHUcQhvpyW7B2K0B8uz
+ 8rCgl/ovkMZLuYL8B7voiAsOzIPvcNERxPEs6vl4jZXY8DeeXLKYJuHTGv+r+xGPnpej
+ VtuKdfo4JP7lCt6IUz5rYjiT7INqf6KWbV99OBIke5LVBAi3+EOq7YisG7pmcOfIrzU7
+ UeGzYvyeIY8SYrS9m3KdvA3Afb70T0cyrPaXrm1KPhsMJQ8YkFzJFvQ7IgsiBDwAsbGl
+ dewA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQNQ1sYK2X3IqTHFCDX4vylfhYrV/OUHGUY/Tc8o5dmC5Hr8rB/rh/JU0rzbYyBAS6Fs8b28QwV7ot3b9YW0hJlClbUEQ=
+X-Gm-Message-State: AOJu0YyaHya9g4pBOAcJ46AxfQxezYy4xffJBTHL5Mm+TkS5v4Wg7u21
+ u9DvYPEBh+l9tmZaJv1jLig2Cl2D7TlYZEgJN83ygDcmqDGvhBj8mDNWw5MbSaQ=
+X-Google-Smtp-Source: AGHT+IFb5FsvM9EEWWw2n+gVgpg7QtSUNe0zmpOlNbHfhFgLdLEtJb0LC9/EbeNfi94XmCdBURdELw==
+X-Received: by 2002:a05:6a20:a11a:b0:1c2:905c:db0 with SMTP id
+ adf61e73a8af0-1c47b4aef68mr1670792637.33.1721907681468; 
+ Thu, 25 Jul 2024 04:41:21 -0700 (PDT)
+Received: from [192.168.68.110] ([179.193.8.144])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7c8c6f4sm12146155ad.24.2024.07.25.04.41.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 04:41:21 -0700 (PDT)
+Message-ID: <565a0b5c-bf9b-4ae0-8332-14c2e986604d@ventanamicro.com>
+Date: Thu, 25 Jul 2024 08:41:17 -0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1] target/riscv: Remove the deprecated 'any' CPU type
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, devel@lists.libvirt.org,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20240724130717.95629-1-philmd@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240724130717.95629-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,215 +102,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guoyi Tu <tugy@chinatelecom.cn> writes:
 
-> In the test environment, we conducted IO stress tests on all storage disks
-> within a virtual machine that had five storage devices mounted.During 
-> testing,
-> we found that the qemu process allocated a large amount of memory (~800MB)
-> to handle these IO operations.
->
-> When the test ended, although qemu called free() to release the allocated
-> memory, the memory was not actually returned to the operating system, as
-> observed via the top command.
->
-> Upon researching the glibc memory management mechanism, we found that when
-> small chunks of memory are allocated in user space and then released with
-> free(),  the glibc memory management mechanism does not necessarily return
-> this memory to the operating system. Instead, it retains the memory until
-> certain conditions are met for release.
 
-Yes.
-
-> For virtual machines that only have business operations during specific
-> periods,  they remain idle most of the time. However, the qemu process
-> still occupies a large amount of memory resources, leading to significant
-> memory resource waste.
-
-Mitigation: the memory free()'s but not returned to the OS can be paged
-out.
-
-> To address this issue, this patch introduces an API to actively reclaim
-> idle memory within the qemu process. This API effectively calls 
-> malloc_trim()
-> to notify glibc to trim free memory. With this api, the management tool
-> can monitor the virtual machine's state and call this API during idle times
-> to free up the memory occupied by the virtual machine, thereby allowing more
-> virtual machines to be provisioned.
-
-How does this affect the test case you described above?
-
-There's an existing use of malloc_trim() in util/rcu.c's
-call_rcu_thread().  It's from commit 5a22ab71623:
-
-    rcu: reduce more than 7MB heap memory by malloc_trim()
-    
-    Since there are some issues in memory alloc/free machenism
-    in glibc for little chunk memory, if Qemu frequently
-    alloc/free little chunk memory, the glibc doesn't alloc
-    little chunk memory from free list of glibc and still
-    allocate from OS, which make the heap size bigger and bigger.
-    
-    This patch introduce malloc_trim(), which will free heap
-    memory when there is no rcu call during rcu thread loop.
-    malloc_trim() can be enabled/disabled by --enable-malloc-trim/
-    --disable-malloc-trim in the Qemu configure command. The
-    default malloc_trim() is enabled for libc.
-    
-    Below are test results from smaps file.
-    (1)without patch
-    55f0783e1000-55f07992a000 rw-p 00000000 00:00 0  [heap]
-    Size:              21796 kB
-    Rss:               14260 kB
-    Pss:               14260 kB
-    
-    (2)with patch
-    55cc5fadf000-55cc61008000 rw-p 00000000 00:00 0  [heap]
-    Size:              21668 kB
-    Rss:                6940 kB
-    Pss:                6940 kB
-    
-    Signed-off-by: Yang Zhong <yang.zhong@intel.com>
-    Message-Id: <1513775806-19779-1-git-send-email-yang.zhong@intel.com>
-    Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-How would the malloc_trim() you propose interact with this one?
-
-> Signed-off-by: Guoyi Tu <tugy@chinatelecom.cn>
-> Signed-off-by: dengpengcheng <dengpc12@chinatelecom.cn>
+On 7/24/24 10:07 AM, Philippe Mathieu-Daudé wrote:
+> The 'any' CPU is deprecated since commit f57d5f8004b
+> ("target/riscv: deprecate the 'any' CPU type"). Users
+> are better off using the default CPUs or the 'max' CPU.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hmp-commands.hx       | 13 +++++++++++++
->   include/monitor/hmp.h |  1 +
->   monitor/hmp-cmds.c    | 14 ++++++++++++++
->   monitor/qmp-cmds.c    | 18 ++++++++++++++++++
->   qapi/misc.json        | 13 +++++++++++++
->   5 files changed, 59 insertions(+)
->
-> diff --git a/hmp-commands.hx b/hmp-commands.hx
-> index 06746f0afc..0fde22fc71 100644
-> --- a/hmp-commands.hx
-> +++ b/hmp-commands.hx
-> @@ -1858,4 +1858,17 @@ SRST
->   ``xen-event-list``
->     List event channels in the guest
->   ERST
-> +
-> +    {
-> +        .name       = "trim-memory",
-> +        .args_type  = "reserved:l?",
-> +        .params     = "[reserved]",
-> +        .help       = "trim momory",
-> +        .cmd        = hmp_trim_memory,
-> +    },
-> +
-> +SRST
-> +``trim-memory`` *reserved*
-> +  try to release free memory and keep reserved bytes of free memory 
-> untrimmed
-> +ERST
->   #endif
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index 954f3c83ad..547cde0056 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -181,5 +181,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
->   void hmp_info_mtree(Monitor *mon, const QDict *qdict);
->   void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
->   void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
-> +void hmp_trim_memory(Monitor *mon, const QDict *qdict);
->
->   #endif
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index ea79148ee8..f842e43315 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -460,3 +460,17 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
->      monitor_printf(mon, "dtb dumped to %s", filename);
->  }
->  #endif
-> +
-> +void hmp_trim_memory(Monitor *mon, const QDict *qdict)
-> +{
-> +    int64_t reserved;
-> +    bool has_reserved = qdict_haskey(qdict, "reserved");
-> +    Error *err = NULL;
-> +
-> +    if (has_reserved) {
-> +        reserved = qdict_get_int(qdict, "reserved");
-> +    }
-> +
-> +    qmp_trim_memory(has_reserved, reserved, &err);
-> +    hmp_handle_error(mon, err);
-> +}
-> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-> index f84a0dc523..878a7a646a 100644
-> --- a/monitor/qmp-cmds.c
-> +++ b/monitor/qmp-cmds.c
-> @@ -31,6 +31,7 @@
->  #include "qapi/type-helpers.h"
->  #include "hw/mem/memory-device.h"
->  #include "hw/intc/intc.h"
-> +#include <malloc.h>
->
->  NameInfo *qmp_query_name(Error **errp)
->  {
-> @@ -161,6 +162,23 @@ void qmp_add_client(const char *protocol, const 
-> char *fdname,
->      }
->  }
->
-> +void qmp_trim_memory(bool has_reserved, int64_t reserved, Error **errp)
-> +{
-> +#if defined(CONFIG_MALLOC_TRIM)
-> +    if (!has_reserved) {
-> +        reserved = 1024 * 1024;
-> +    }
-> +    if (reserved < 0) {
-> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-> +                   "reserved", "a >0 reserved");
-> +        return;
-> +    }
-> +    malloc_trim(reserved);
-> +#else
-> +    error_setg(errp, "malloc_trim feature not configured");
+>   docs/about/deprecated.rst       | 13 -------------
+>   docs/about/removed-features.rst |  8 ++++++++
+>   target/riscv/cpu-qom.h          |  1 -
+>   target/riscv/cpu.c              | 28 ----------------------------
+>   4 files changed, 8 insertions(+), 42 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 88f0f037865..0ac49b15b44 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -347,19 +347,6 @@ QEMU's ``vhost`` feature, which would eliminate the high latency costs under
+>   which the 9p ``proxy`` backend currently suffers. However as of to date nobody
+>   has indicated plans for such kind of reimplementation unfortunately.
+>   
+> -RISC-V 'any' CPU type ``-cpu any`` (since 8.2)
+> -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> -
+> -The 'any' CPU type was introduced back in 2018 and has been around since the
+> -initial RISC-V QEMU port. Its usage has always been unclear: users don't know
+> -what to expect from a CPU called 'any', and in fact the CPU does not do anything
+> -special that isn't already done by the default CPUs rv32/rv64.
+> -
+> -After the introduction of the 'max' CPU type, RISC-V now has a good coverage
+> -of generic CPUs: rv32 and rv64 as default CPUs and 'max' as a feature complete
+> -CPU for both 32 and 64 bit builds. Users are then discouraged to use the 'any'
+> -CPU type starting in 8.2.
+> -
+>   RISC-V CPU properties which start with capital 'Z' (since 8.2)
+>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index fc7b28e6373..f3e9474a73e 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -850,6 +850,14 @@ The RISC-V no MMU cpus have been removed. The two CPUs: ``rv32imacu-nommu`` and
+>   ``rv64imacu-nommu`` can no longer be used. Instead the MMU status can be specified
+>   via the CPU ``mmu`` option when using the ``rv32`` or ``rv64`` CPUs.
+>   
+> +RISC-V 'any' CPU type ``-cpu any`` (removed in 9.1)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''
 
-Have you tried making the entire command conditional instead?  Like...
+With the '9.1' changed to '9.2':
 
-> +#endif
-> +}
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
 > +
->   char *qmp_human_monitor_command(const char *command_line, bool 
-> has_cpu_index,
->                                   int64_t cpu_index, Error **errp)
+> +The 'any' CPU type was introduced back in 2018 and was around since the
+> +initial RISC-V QEMU port. Its usage was always been unclear: users don't know
+> +what to expect from a CPU called 'any', and in fact the CPU does not do anything
+> +special that isn't already done by the default CPUs rv32/rv64.
+> +
+>   ``compat`` property of server class POWER CPUs (removed in 6.0)
+>   '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>   
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 3670cfe6d9a..4464c0fd7a3 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -29,7 +29,6 @@
+>   #define RISCV_CPU_TYPE_SUFFIX "-" TYPE_RISCV_CPU
+>   #define RISCV_CPU_TYPE_NAME(name) (name RISCV_CPU_TYPE_SUFFIX)
+>   
+> -#define TYPE_RISCV_CPU_ANY              RISCV_CPU_TYPE_NAME("any")
+>   #define TYPE_RISCV_CPU_MAX              RISCV_CPU_TYPE_NAME("max")
+>   #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
+>   #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index a90808a3bac..4bda754b013 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -438,27 +438,6 @@ static void set_satp_mode_default_map(RISCVCPU *cpu)
+>   }
+>   #endif
+>   
+> -static void riscv_any_cpu_init(Object *obj)
+> -{
+> -    RISCVCPU *cpu = RISCV_CPU(obj);
+> -    CPURISCVState *env = &cpu->env;
+> -    riscv_cpu_set_misa_ext(env, RVI | RVM | RVA | RVF | RVD | RVC | RVU);
+> -
+> -#ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(RISCV_CPU(obj),
+> -        riscv_cpu_mxl(&RISCV_CPU(obj)->env) == MXL_RV32 ?
+> -        VM_1_10_SV32 : VM_1_10_SV57);
+> -#endif
+> -
+> -    env->priv_ver = PRIV_VERSION_LATEST;
+> -
+> -    /* inherited from parent obj via riscv_cpu_init() */
+> -    cpu->cfg.ext_zifencei = true;
+> -    cpu->cfg.ext_zicsr = true;
+> -    cpu->cfg.mmu = true;
+> -    cpu->cfg.pmp = true;
+> -}
+> -
+>   static void riscv_max_cpu_init(Object *obj)
 >   {
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index ec30e5c570..00e6f2f650 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -605,3 +605,16 @@
->   { 'event': 'VFU_CLIENT_HANGUP',
->     'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
->               'dev-id': 'str', 'dev-qom-path': 'str' } }
-> +
-> +##
-> +# @trim-memory:
-> +#
-> +# try to release free memory
-> +#
-> +# @reserved: specifies the amount of free space to leave untrimmed.
-> +#            default to 1MB if not specified.
-> +#
-> +# Since: 9.0
-> +##
-> +{'command': 'trim-memory',
-> + 'data': {'*reserved': 'int'} }
-
-... so:
-
-   { 'command': 'trim-memory',
-     'data': {'*reserved': 'int'},
-     'if': 'CONFIG_MALLOC_TRIM' }
-
-Could we do without the argument?
-
+>       RISCVCPU *cpu = RISCV_CPU(obj);
+> @@ -1161,11 +1140,6 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+>       RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
+>       Error *local_err = NULL;
+>   
+> -    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_CPU_ANY) != NULL) {
+> -        warn_report("The 'any' CPU is deprecated and will be "
+> -                    "removed in the future.");
+> -    }
+> -
+>       cpu_exec_realizefn(cs, &local_err);
+>       if (local_err != NULL) {
+>           error_propagate(errp, local_err);
+> @@ -2952,7 +2926,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>           .abstract = true,
+>       },
+>   #if defined(TARGET_RISCV32)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV32,  riscv_any_cpu_init),
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV32,  riscv_max_cpu_init),
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE32,    MXL_RV32,  rv32_base_cpu_init),
+>       DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_IBEX,       MXL_RV32,  rv32_ibex_cpu_init),
+> @@ -2962,7 +2935,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>       DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32I,        MXL_RV32,  rv32i_bare_cpu_init),
+>       DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV32E,        MXL_RV32,  rv32e_bare_cpu_init),
+>   #elif defined(TARGET_RISCV64)
+> -    DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_ANY,       MXL_RV64,  riscv_any_cpu_init),
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_MAX,       MXL_RV64,  riscv_max_cpu_init),
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE64,    MXL_RV64,  rv64_base_cpu_init),
+>       DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_SIFIVE_E51, MXL_RV64,  rv64_sifive_e_cpu_init),
 
