@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D783DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408BCC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8MJ-0001GH-QO; Thu, 25 Jul 2024 19:58:57 -0400
+	id 1sX8Kd-0000ZX-KL; Thu, 25 Jul 2024 19:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8M8-0000oI-Jj; Thu, 25 Jul 2024 19:58:46 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1sX8KI-0007xt-UX; Thu, 25 Jul 2024 19:56:51 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8M6-0001cv-L8; Thu, 25 Jul 2024 19:58:44 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2cb5787b4a5so293892a91.2; 
- Thu, 25 Jul 2024 16:58:41 -0700 (PDT)
+ id 1sX8KH-0001C1-4N; Thu, 25 Jul 2024 19:56:50 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2cb4c584029so313449a91.3; 
+ Thu, 25 Jul 2024 16:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951921; x=1722556721; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951807; x=1722556607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=naPSdzkvhaTRmj8A7vk/OXZ43J641gE5v9nRWII2ceA=;
- b=jiy2EChE6dl1DnocL7pyLFnbFsRz4/vKVd9xrIFvPSpOfam+WkJsNhV00siyFMbhQd
- x4lCWvlVferxbYmurmrI/tOEjCDBfrmnMqel8QhTn3mv0ryn6X1W6G1sOI7mGQfQezxe
- PteVhxgmGue2lxtr/BF5sJj6Me23Lr43KFxJJLA0SS0Ppnqxue09DwfRg7ZuYjX445Pk
- 2cn15Rpo1LCI0FJvv5QODhssjrlG01yrurfmI2RuhRz7i8pYRubSkx+sbmF//Zesz1PN
- nkvsG0IKZ79psoHOLQ9N2UDFyCLCKZs8UGRyN7yvEGN/yMnUq8ViVuOgEQoYmLRSqTDp
- I9iw==
+ bh=EHytyYpHltvdiANf66nUebY3WyMwQaE5bfBMAngpnes=;
+ b=iCmEzaa6aq1v6/sT1ocWVEnXx8vs/bmjeF1NFsHfNgVG/VCKCX2jAwi4uuZrnt6tgF
+ T0UeTd4UAMAbNzr0Gw5FWLvE5He7L8uRVTC92/ceztL5Frtpye9C8os5q16GkSZ9w7Fk
+ +/+ukzZ1A29oy9YJtJmIUB45LFhrUOW0H0g6zm1ooBLNgAEAXHkfqNm4nXhS2vCZO0wN
+ Lq7HWKrkIvo0ZnZf5BWFKBoCSXON2LCrdc1EnO8PJQn93kNS4i6pUcDJ56ewzUYgyTNv
+ yfV1C4yBgwh0G5smUID7i1G3lM41gaIvcgQ3mAlwweG50/F8UAYOsfdNqssEn4EYGmwB
+ CKTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951921; x=1722556721;
+ d=1e100.net; s=20230601; t=1721951807; x=1722556607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=naPSdzkvhaTRmj8A7vk/OXZ43J641gE5v9nRWII2ceA=;
- b=X0WtWbWk+nTZZthNkUVlT/9ITkZVeC7yOTN3JFVbVP5S7uNo/w+sMCGph/nrsAhl2M
- Ku+msYmxrLQvX/mN4nIftIXzKtm3qFQCr8w8BkBltYsO6trHQxNeasd2Pe8XaLEejlam
- 07jM6d1Y55FjpI0lxAQbjYDCwwidoOV63g5f+6rrYhB70OxvJe1KdnGZU/24T9wAgHEO
- 2YrMW/Pr3ihPdXxdKbAdbeYEaa8OTH29jDZ80nF5Mu7YOfQMjbLy2sYc1VuOhFQktoMf
- tYh05yW8OGRsWjw48D9DqCVY0kDMmjxTTGhZFJqADSV85pNVrUl2DLx8QAlsTGTPrfId
- 0OIg==
+ bh=EHytyYpHltvdiANf66nUebY3WyMwQaE5bfBMAngpnes=;
+ b=gRBtM5rTC3cU2fgjCpOnCO0iWGWt8haUnTktSXhBbhKymqKAW/MuXmCFlI+m+NZxjK
+ 1Zg5R8JdRx92SXRN9yDfxw2XdzsgkRtO4MCFtIinowIrHyes2IwEvHbP2iydBCOpXUM8
+ U6qfQ0v2dtnuqZ0X7h13aeo4PX3QxXo1XF/qVNbXmpn0rWqn+T8UNZ7KDIrjtrjTHj0g
+ xV7FD+UKi7mcY4bsKv0GP2lLgMVecRLaKhFyvglXXLjVgKTQb6U+1ylQJlvLVYiXBcnb
+ kWnKzql5hrOINwhFZbR/90DQOLkCAlBNk171Dp6hucnkHoDgru87vaUY2EVxi+qIk8bT
+ ZePw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzBEqAox2CtSMWmrWco7MoAaI2FAhCFXpUACsGCWNI51JC24shqurAJz6/uGd3T55iPhEtQjBdDJFnMDSC5ifBw+lE
-X-Gm-Message-State: AOJu0Yz+OpwTzeUiJSQgDsvza82YcriUNv0Du9nbal+cFCfGeI+FZogw
- wFzuHYc2PCWpftG90+XCim7GYmF1yxnHsYp47DLoxcB7v8xzvVlhD731WQ==
-X-Google-Smtp-Source: AGHT+IGsdHXyKvc4JaMOAPSIZZAGsFpNqTRZeoXJs061Jo0nZWDInFpXlDvfJMX7vv6FuT34xu/XkQ==
-X-Received: by 2002:a17:90a:520a:b0:2c9:6aae:ac08 with SMTP id
- 98e67ed59e1d1-2cf237a29f6mr5536545a91.17.1721951920648; 
- Thu, 25 Jul 2024 16:58:40 -0700 (PDT)
+ AJvYcCWNKNVGRuoTQy2Nyg+WblT4WVrwQlZ05LxSceQpSUExmaX0vHNV+FF4nfvNROvjNZOW+P9gRZH9+/gWtBsUbdbC6I6X
+X-Gm-Message-State: AOJu0Ywll1fcKiGtorNTqnTq6JpkYvQ9BUUjHQsv3JaC51nr76xYpfOI
+ z0ncQdKeD9FRNsvdZKKJI+HXM5+A5SI5tLWiOD8NJMPxc/X3uyMfVcYSVQ==
+X-Google-Smtp-Source: AGHT+IEPfFHXRx/lsVKJo29gsFJ60Z69efqjrJp+JCzpaX9w+FpRiQecgy029Exam7qZm38ZBm8Abw==
+X-Received: by 2002:a17:90a:f00f:b0:2cc:f2c1:88fb with SMTP id
+ 98e67ed59e1d1-2cf2379b39cmr4752725a91.16.1721951807121; 
+ Thu, 25 Jul 2024 16:56:47 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.38
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:58:40 -0700 (PDT)
+ Thu, 25 Jul 2024 16:56:46 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 72/96] target/ppc/mmu_common.c: Simplify ppc6xx_tlb_pte_check()
-Date: Fri, 26 Jul 2024 09:53:45 +1000
-Message-ID: <20240725235410.451624-73-npiggin@gmail.com>
+ Chalapathi V <chalapathi.v@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 40/96] hw/ppc: SPI controller wiring to P10 chip
+Date: Fri, 26 Jul 2024 09:53:13 +1000
+Message-ID: <20240725235410.451624-41-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,73 +97,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
 
-Invert conditions to avoid deep nested ifs and return early instead.
-Remove some obvious comments that don't add more clarity.
+In this commit, create SPI controller on p10 chip and connect cs irq.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+The QOM tree of pnv-spi and seeprom are.
+/machine (powernv10-machine)
+  /chip[0] (power10_v2.0-pnv-chip)
+    /pib_spic[2] (pnv-spi)
+      /pnv-spi-bus.2 (SSI)
+      /xscom-spi[0] (memory-region)
+
+/machine (powernv10-machine)
+  /peripheral-anon (container)
+    /device[0] (25csm04)
+      /WP#[0] (irq)
+      /ssi-gpio-cs[0] (irq)
+
+(qemu) qom-get /machine/peripheral-anon /device[76] "parent_bus"
+"/machine/chip[0]/pib_spic[2]/pnv-spi-bus.2"
+
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 43 ++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 24 deletions(-)
+ hw/ppc/pnv.c              | 21 ++++++++++++++++++++-
+ hw/ssi/pnv_spi.c          |  8 ++++++++
+ include/hw/ppc/pnv_chip.h |  3 +++
+ 3 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index a5ae11394d..28adb3ca10 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -99,31 +99,26 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-                                 MMUAccessType access_type)
- {
-     /* Check validity and table match */
--    if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
--        /* Check vsid & api */
--        if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
--            if (ctx->raddr != (hwaddr)-1ULL) {
--                /* all matches should have equal RPN, WIMG & PP */
--                if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
--                    qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
--                    return -3;
--                }
--            }
--            /* Keep the matching PTE information */
--            ctx->raddr = pte1;
--            ctx->prot = ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, ctx->nx);
--            if (check_prot_access_type(ctx->prot, access_type)) {
--                /* Access granted */
--                qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
--                return 0;
--            } else {
--                /* Access right violation */
--                qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
--                return -2;
--            }
--        }
-+    if (!pte_is_valid(pte0) || ((pte0 >> 6) & 1) != pteh ||
-+        (pte0 & PTE_PTEM_MASK) != ctx->ptem) {
-+        return -1;
-+    }
-+    /* all matches should have equal RPN, WIMG & PP */
-+    if (ctx->raddr != (hwaddr)-1ULL &&
-+        (ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
-+        qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
-+        return -3;
-+    }
-+    /* Keep the matching PTE information */
-+    ctx->raddr = pte1;
-+    ctx->prot = ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, ctx->nx);
-+    if (check_prot_access_type(ctx->prot, access_type)) {
-+        qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
-+        return 0;
-+    } else {
-+        qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
-+        return -2;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index a3560d25b7..3526852685 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1962,6 +1962,11 @@ static void pnv_chip_power10_instance_init(Object *obj)
+     for (i = 0; i < pcc->i2c_num_engines; i++) {
+         object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], TYPE_PNV_I2C);
      }
--    return -1;
++
++    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
++        object_initialize_child(obj, "pib_spic[*]", &chip10->pib_spic[i],
++                                TYPE_PNV_SPI);
++    }
  }
  
- static int pte_update_flags(mmu_ctx_t *ctx, target_ulong *pte1p,
+ static void pnv_chip_power10_quad_realize(Pnv10Chip *chip10, Error **errp)
+@@ -2185,7 +2190,21 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+                               qdev_get_gpio_in(DEVICE(&chip10->psi),
+                                                PSIHB9_IRQ_SBE_I2C));
+     }
+-
++    /* PIB SPI Controller */
++    for (i = 0; i < PNV10_CHIP_MAX_PIB_SPIC; i++) {
++        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "spic_num",
++                                i, &error_fatal);
++        /* pib_spic[2] connected to 25csm04 which implements 1 byte transfer */
++        object_property_set_int(OBJECT(&chip10->pib_spic[i]), "transfer_len",
++                                (i == 2) ? 1 : 4, &error_fatal);
++        if (!sysbus_realize(SYS_BUS_DEVICE(OBJECT
++                                        (&chip10->pib_spic[i])), errp)) {
++            return;
++        }
++        pnv_xscom_add_subregion(chip, PNV10_XSCOM_PIB_SPIC_BASE +
++                                i * PNV10_XSCOM_PIB_SPIC_SIZE,
++                                &chip10->pib_spic[i].xscom_spic_regs);
++    }
+ }
+ 
+ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+index cdff3f9621..c1297ab733 100644
+--- a/hw/ssi/pnv_spi.c
++++ b/hw/ssi/pnv_spi.c
+@@ -1051,9 +1051,17 @@ static void operation_sequencer(PnvSpi *s)
+ static void do_reset(DeviceState *dev)
+ {
+     PnvSpi *s = PNV_SPI(dev);
++    DeviceState *ssi_dev;
+ 
+     trace_pnv_spi_reset();
+ 
++    /* Connect cs irq */
++    ssi_dev = ssi_get_cs(s->ssi_bus, 0);
++    if (ssi_dev) {
++        qemu_irq cs_line = qdev_get_gpio_in_named(ssi_dev, SSI_GPIO_CS, 0);
++        qdev_connect_gpio_out_named(DEVICE(s), "cs", 0, cs_line);
++    }
++
+     /* Reset all N1 and N2 counters, and other constants */
+     s->N2_bits = 0;
+     s->N2_bytes = 0;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index ee1649babc..de34cbdc96 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -7,6 +7,7 @@
+ #include "hw/ppc/pnv_core.h"
+ #include "hw/ppc/pnv_homer.h"
+ #include "hw/ppc/pnv_n1_chiplet.h"
++#include "hw/ssi/pnv_spi.h"
+ #include "hw/ppc/pnv_lpc.h"
+ #include "hw/ppc/pnv_occ.h"
+ #include "hw/ppc/pnv_psi.h"
+@@ -123,6 +124,8 @@ struct Pnv10Chip {
+     PnvSBE       sbe;
+     PnvHomer     homer;
+     PnvN1Chiplet     n1_chiplet;
++#define PNV10_CHIP_MAX_PIB_SPIC 6
++    PnvSpi pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
+ 
+     uint32_t     nr_quads;
+     PnvQuad      *quads;
 -- 
 2.45.2
 
