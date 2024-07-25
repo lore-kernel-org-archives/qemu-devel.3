@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8444AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B356C3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8JI-0000R9-NM; Thu, 25 Jul 2024 19:55:48 -0400
+	id 1sX8Mc-0002fd-VV; Thu, 25 Jul 2024 19:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JE-0008CF-Il; Thu, 25 Jul 2024 19:55:44 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1sX8Ma-0002ZV-IQ; Thu, 25 Jul 2024 19:59:12 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JC-0000yq-0A; Thu, 25 Jul 2024 19:55:44 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2cb4b6ecb3dso296749a91.3; 
- Thu, 25 Jul 2024 16:55:41 -0700 (PDT)
+ id 1sX8MY-0001hc-90; Thu, 25 Jul 2024 19:59:12 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70d23caf8ddso385925b3a.0; 
+ Thu, 25 Jul 2024 16:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951740; x=1722556540; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951948; x=1722556748; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=k+axtswt3uHvq++TX88XGUFlG9QQghy5se0XFWQkqKY=;
- b=hB0zdy/CYRbp/2iK7xMjkzACwKIs5VieQRiRPxPVOHZ/QIN5esA9Mz5q8Kzbc7JsNI
- +SFfNNnAJov+zFqVvSO4MdTFmH2NSzCn0gFWpPmb5r7NlaUThMV9m227ysJJSQ3CdmMT
- 9QVaAkXMI7txvOn+8tUbdcnDZuTdWDc2DN8NzHw4bmFrQS8LRmoIIlYoKsLqm9jo+YuS
- PEAKHd6zvFcBgtJf8vzV8sBb970hNzNEyifyvYZlD+ux64MH5jA0WOwHJCUDM3gLGtY9
- 0zwQcET3doNhh/Z/pvF0YYHiqw8qv4y3U6oEHCIjUUQqWEEco33+ntaIPCuNxHX56gVh
- fPqw==
+ bh=iaO08R+8F39gfoSuZ4CkZ1qLHXPlBgrMMgGX8DGwSNw=;
+ b=WRBd3zRi4WRLQicsrSrHceV09aUvH7A+m6MlEecujBaFKwitziRi21pmq3QViqC0Lk
+ jC/AMMvpyoQYc/Du9NvX8RlNMLa/cU8GzfstUhQvCsQOcGGX/lj92XixKc9ggxPr+nqT
+ 1DCvE8kgAO3XuzFAARDTNUD11gx27jF9pL5dosjuNZvyBybAc3kRlgNfj+1ODo53t5T4
+ 1NJFIcqVwuVwn9wJUD6sYqEB/uOwOvdWaMp0X+Js4QKRXku0hsKjQX6JtMnZKq8Tp/Xr
+ rGHoNp6z7JIOlNyVqEoRX96aas/dooZQZJIDNpvIMUfalzHWlEVETldI7H3zfkviR5OO
+ vCEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951740; x=1722556540;
+ d=1e100.net; s=20230601; t=1721951948; x=1722556748;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k+axtswt3uHvq++TX88XGUFlG9QQghy5se0XFWQkqKY=;
- b=pTv7Gmq5lSGRhxjXoBT5aylQBWhIJgiXYn4txhWbLj+nnuyPuFlYmtd1rEr+vs8WD2
- ZH8kd9XgFmgi0CG6UGaeUjS85biGxsT1Wu3Te1TJf5gbrli0zeu1mkpi+hu3ezoEUQrh
- TBts36wyJRwGNxVr9/Mgnk7XgpjI/9ug41jNc4WJCRm/Mrh+2B6e869n0wKxF+MiTEt9
- btnFDeYsoFL4GQyXjhHQcuMZtCzx59wezmBFZcHyY94D/fOjsp3iHFPteIFnKJWmowrM
- qLGl7Gg3SfTwY/UvvL8ih6jAjZXgaNO8WktPrRODJvM2hDUzV7jhtWjPhV+7DKk6Qrvz
- AlFw==
+ bh=iaO08R+8F39gfoSuZ4CkZ1qLHXPlBgrMMgGX8DGwSNw=;
+ b=Oc1DFoUTJ/+VmJWXPFC/NfwzORro9EZpoBFd51+zVrU5pXizKu7j4w/GAR9N31aynj
+ NWGs5qQpy5uNvMkVmmMX28ZjbYSAVp+TGdbHKe9npGzaMoZ359QDTtDPmCZjqEO5IhX9
+ xyV+HWRUZ58hT1Vf+92/PRkChWSnHDyJZ+XidkP0VtEfo1RWnnjvbJ16Ys8BqlyqMjFC
+ 0LeinVF5BvkNwt19MOQTXITFoCQbRPQv7jJdFQonpCzkENILL6V04oOeXrdwYOMroEAO
+ Whb9QI0EK/Hj+n412isGHz7KVnURFnsxS5MQGgy401GHkasgqZktO1UzG3W+gR7T9Fdj
+ HOnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaGjxnW0k4Ww1lyjKWsQyNbs237PgHYiapIMnwW6eaL87eHbviSaXkRPRPqaIgJ5g7+oOUvni+wvEBvCzJQeMX5WXw
-X-Gm-Message-State: AOJu0YzwGoFyDSwNobOYQI6LoGehIoOAfIz6dgMYvScbIW+MRoimHKmp
- /uS6LkBx2i/ArfYFyubdyDrpEOW3i0zBb6DeCDFG+6zLmqw9NFmTzcLIGA==
-X-Google-Smtp-Source: AGHT+IGY2A+GBhrHUe+4IXiLpQI0ijv7fjTbbV2cJ34mmZL9kjs1/53Zo8F/EyqULZdInNOY7okSXA==
-X-Received: by 2002:a17:90a:a018:b0:2c5:10a6:e989 with SMTP id
- 98e67ed59e1d1-2cf239351c6mr5144770a91.35.1721951739872; 
- Thu, 25 Jul 2024 16:55:39 -0700 (PDT)
+ AJvYcCXJqYt5W/D4A9htZsw43W8DH9l1nJqVBW235q5NBnZxI4vD2KEK8rHKx6kNha6ymJ9AQuwND+5rDcWrXUE7DMZNNjoW
+X-Gm-Message-State: AOJu0YysoBlfIPiM/Iz64oOiTwEBCXPaidhak27ekwnXXy8g9PadkfDI
+ FTTlsOZ7FKzepYk+SJ7wmJd7pHSNIBPgoCrBYjWwzkV6gyViWBSiIJYLPA==
+X-Google-Smtp-Source: AGHT+IHvsNbXZf6+oXH01fO10VXzmUmBuEYieHTmcPrCFhEc51kbbWjBDmv0KKNJM2dsQhBZmDT6/g==
+X-Received: by 2002:a05:6a20:9148:b0:1c0:f23b:d35a with SMTP id
+ adf61e73a8af0-1c47b140b46mr4595635637.5.1721951948038; 
+ Thu, 25 Jul 2024 16:59:08 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.37
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:55:39 -0700 (PDT)
+ Thu, 25 Jul 2024 16:59:07 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 20/96] ppc/pnv: Move timebase state into PnvCore
-Date: Fri, 26 Jul 2024 09:52:53 +1000
-Message-ID: <20240725235410.451624-21-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 81/96] target/ppc/mmu_common.c: Remove ptem field from mmu_ctx_t
+Date: Fri, 26 Jul 2024 09:53:54 +1000
+Message-ID: <20240725235410.451624-82-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,274 +94,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The timebase state machine is per per-core state and can be driven
-by any thread in the core. It is currently implemented as a hack
-where the state is in a CPU structure and only thread 0's state is
-accessed by the chiptod, which limits programming the timebase
-side of the state machine to thread 0 of a core.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Move the state out into PnvCore and share it among all threads.
+Instead of passing around ptem in context use it once in the same
+function so it can be removed from mmu_ctx_t.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_chiptod.c         |  7 ++---
- include/hw/ppc/pnv_core.h    | 17 ++++++++++
- target/ppc/cpu.h             | 21 -------------
- target/ppc/timebase_helper.c | 60 +++++++++++++++++++++---------------
- 4 files changed, 55 insertions(+), 50 deletions(-)
+ target/ppc/mmu_common.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
-index 3831a72101..1e41fe557a 100644
---- a/hw/ppc/pnv_chiptod.c
-+++ b/hw/ppc/pnv_chiptod.c
-@@ -364,8 +364,7 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
-             qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
-                           " TOD_MOVE_TOD_TO_TB_REG with no slave target\n");
-         } else {
--            PowerPCCPU *cpu = chiptod->slave_pc_target->threads[0];
--            CPUPPCState *env = &cpu->env;
-+            PnvCore *pc = chiptod->slave_pc_target;
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 784e833ff2..339df377e8 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -41,7 +41,6 @@
+ typedef struct {
+     hwaddr raddr;      /* Real address             */
+     int prot;          /* Protection bits          */
+-    target_ulong ptem; /* Virtual segment ID | API */
+     int key;           /* Access key               */
+ } mmu_ctx_t;
  
-             /*
-              * Moving TOD to TB will set the TB of all threads in a
-@@ -377,8 +376,8 @@ static void pnv_chiptod_xscom_write(void *opaque, hwaddr addr,
-              * thread 0.
-              */
+@@ -95,16 +94,18 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
  
--            if (env->pnv_tod_tbst.tb_ready_for_tod) {
--                env->pnv_tod_tbst.tod_sent_to_tb = 1;
-+            if (pc->tod_state.tb_ready_for_tod) {
-+                pc->tod_state.tod_sent_to_tb = 1;
-             } else {
-                 qemu_log_mask(LOG_GUEST_ERROR, "pnv_chiptod: xscom write reg"
-                               " TOD_MOVE_TOD_TO_TB_REG with TB not ready to"
-diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-index 29cab9dfd9..ffec8516ae 100644
---- a/include/hw/ppc/pnv_core.h
-+++ b/include/hw/ppc/pnv_core.h
-@@ -25,6 +25,20 @@
- #include "hw/ppc/pnv.h"
- #include "qom/object.h"
- 
-+/* Per-core ChipTOD / TimeBase state */
-+typedef struct PnvCoreTODState {
-+    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-+    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-+
-+    /*
-+     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-+     * is polled for such events. These are just used to ensure firmware
-+     * performs the polling at least a few times.
-+     */
-+    int tb_state_timer;
-+    int tb_sync_pulse_timer;
-+} PnvCoreTODState;
-+
- #define TYPE_PNV_CORE "powernv-cpu-core"
- OBJECT_DECLARE_TYPE(PnvCore, PnvCoreClass,
-                     PNV_CORE)
-@@ -38,6 +52,9 @@ struct PnvCore {
-     uint32_t pir;
-     uint32_t hwid;
-     uint64_t hrmor;
-+
-+    PnvCoreTODState tod_state;
-+
-     PnvChip *chip;
- 
-     MemoryRegion xscom_regs;
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 2015e603d4..c78d6ca91a 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1196,21 +1196,6 @@ DEXCR_ASPECT(SRAPD, 4)
- DEXCR_ASPECT(NPHIE, 5)
- DEXCR_ASPECT(PHIE, 6)
- 
--/*****************************************************************************/
--/* PowerNV ChipTOD and TimeBase State Machine */
--struct pnv_tod_tbst {
--    int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
--    int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
--
--    /*
--     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
--     * is polled for such events. These are just used to ensure firmware
--     * performs the polling at least a few times.
--     */
--    int tb_state_timer;
--    int tb_sync_pulse_timer;
--};
--
- /*****************************************************************************/
- /* The whole PowerPC CPU context */
- 
-@@ -1291,12 +1276,6 @@ struct CPUArchState {
-     uint32_t tlb_need_flush; /* Delayed flush needed */
- #define TLB_NEED_LOCAL_FLUSH   0x1
- #define TLB_NEED_GLOBAL_FLUSH  0x2
--
--#if defined(TARGET_PPC64)
--    /* PowerNV chiptod / timebase facility state. */
--    /* Would be nice to put these into PnvCore */
--    struct pnv_tod_tbst pnv_tod_tbst;
--#endif
- #endif
- 
-     /* Other registers */
-diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-index 39d397416e..b02535bbd5 100644
---- a/target/ppc/timebase_helper.c
-+++ b/target/ppc/timebase_helper.c
-@@ -217,7 +217,13 @@ void helper_store_booke_tsr(CPUPPCState *env, target_ulong val)
-     store_booke_tsr(env, val);
- }
- 
--#if defined(TARGET_PPC64)
-+#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-+/*
-+ * qemu-user breaks with pnv headers, so they go under ifdefs for now.
-+ * A clean up may be to move powernv specific registers and helpers into
-+ * target/ppc/pnv_helper.c
-+ */
-+#include "hw/ppc/pnv_core.h"
- /*
-  * POWER processor Timebase Facility
-  */
-@@ -298,8 +304,17 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
-     }
- }
- 
-+static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
-+{
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-+
-+    return &pc->tod_state;
-+}
-+
- static void tb_state_machine_step(CPUPPCState *env)
+ static int ppc6xx_tlb_check(CPUPPCState *env,
+                             mmu_ctx_t *ctx, target_ulong eaddr,
+-                            MMUAccessType access_type, bool nx)
++                            MMUAccessType access_type, target_ulong ptem,
++                            bool nx)
  {
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
-     uint64_t tfmr = env->spr[SPR_TFMR];
-     unsigned int tbst = tfmr_get_tb_state(tfmr);
+     ppc6xx_tlb_t *tlb;
+     target_ulong *pte1p;
+     int nr, best, way, ret;
++    bool is_code = (access_type == MMU_INST_FETCH);
  
-@@ -307,15 +322,15 @@ static void tb_state_machine_step(CPUPPCState *env)
-         return;
-     }
- 
--    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
--        env->pnv_tod_tbst.tb_sync_pulse_timer--;
-+    if (tod_state->tb_sync_pulse_timer) {
-+        tod_state->tb_sync_pulse_timer--;
-     } else {
-         tfmr |= TFMR_TB_SYNC_OCCURED;
-         write_tfmr(env, tfmr);
-     }
- 
--    if (env->pnv_tod_tbst.tb_state_timer) {
--        env->pnv_tod_tbst.tb_state_timer--;
-+    if (tod_state->tb_state_timer) {
-+        tod_state->tb_state_timer--;
-         return;
-     }
- 
-@@ -332,20 +347,20 @@ static void tb_state_machine_step(CPUPPCState *env)
-     } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
-         if (tbst == TBST_SYNC_WAIT) {
-             tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
--            env->pnv_tod_tbst.tb_state_timer = 3;
-+            tod_state->tb_state_timer = 3;
-         } else if (tbst == TBST_GET_TOD) {
--            if (env->pnv_tod_tbst.tod_sent_to_tb) {
-+            if (tod_state->tod_sent_to_tb) {
-                 tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
-                 tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
--                env->pnv_tod_tbst.tb_ready_for_tod = 0;
--                env->pnv_tod_tbst.tod_sent_to_tb = 0;
-+                tod_state->tb_ready_for_tod = 0;
-+                tod_state->tod_sent_to_tb = 0;
+     best = -1;
+     ret = -1; /* No TLB found */
+     for (way = 0; way < env->nb_ways; way++) {
+-        nr = ppc6xx_tlb_getnum(env, eaddr, way, access_type == MMU_INST_FETCH);
++        nr = ppc6xx_tlb_getnum(env, eaddr, way, is_code);
+         tlb = &env->tlb.tlb6[nr];
+         /* This test "emulates" the PTE index match for hardware TLBs */
+         if ((eaddr & TARGET_PAGE_MASK) != tlb->EPN) {
+@@ -124,7 +125,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
+                       access_type == MMU_INST_FETCH ? 'I' : 'D');
+         /* Check validity and table match */
+         if (!pte_is_valid(tlb->pte0) || ((tlb->pte0 >> 6) & 1) != 0 ||
+-            (tlb->pte0 & PTE_PTEM_MASK) != ctx->ptem) {
++            (tlb->pte0 & PTE_PTEM_MASK) != ptem) {
+             continue;
+         }
+         /* all matches should have equal RPN, WIMG & PP */
+@@ -164,6 +165,10 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
              }
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
-                           "state machine in invalid state 0x%x\n", tbst);
-             tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-             tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
--            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+            tod_state->tb_ready_for_tod = 0;
          }
      }
- 
-@@ -361,6 +376,8 @@ target_ulong helper_load_tfmr(CPUPPCState *env)
- 
- void helper_store_tfmr(CPUPPCState *env, target_ulong val)
++    if (ret == -1) {
++        int r = is_code ? SPR_ICMP : SPR_DCMP;
++        env->spr[r] = ptem;
++    }
+ #if defined(DUMP_PAGE_TABLES)
+     if (qemu_loglevel_mask(CPU_LOG_MMU)) {
+         CPUState *cs = env_cpu(env);
+@@ -293,7 +298,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
  {
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCoreTODState *tod_state = cpu_get_tbst(cpu);
-     uint64_t tfmr = env->spr[SPR_TFMR];
-     uint64_t clear_on_write;
-     unsigned int tbst = tfmr_get_tb_state(tfmr);
-@@ -384,14 +401,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
-      * after the second mfspr.
-      */
-     tfmr &= ~TFMR_TB_SYNC_OCCURED;
--    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
--
--    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
--        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
--        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
--                                 "driven by thread 0\n");
--        goto out;
--    }
-+    tod_state->tb_sync_pulse_timer = 1;
+     PowerPCCPU *cpu = env_archcpu(env);
+     hwaddr hash;
+-    target_ulong vsid, sr, pgidx;
++    target_ulong vsid, sr, pgidx, ptem;
+     bool pr, ds, nx;
  
-     if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
-                         (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
-@@ -399,7 +409,7 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
-                                        "MOVE_CHIP_TOD_TO_TB both set\n");
-         tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-         tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
--        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+        tod_state->tb_ready_for_tod = 0;
-         goto out;
+     /* First try to find a BAT entry if there are any */
+@@ -320,7 +325,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+                   access_type == MMU_DATA_STORE, type);
+     pgidx = (eaddr & ~SEGMENT_MASK_256M) >> TARGET_PAGE_BITS;
+     hash = vsid ^ pgidx;
+-    ctx->ptem = (vsid << 7) | (pgidx >> 10);
++    ptem = (vsid << 7) | (pgidx >> 10); /* Virtual segment ID | API */
+ 
+     qemu_log_mask(CPU_LOG_MMU, "pte segment: key=%d ds %d nx %d vsid "
+                   TARGET_FMT_lx "\n", ctx->key, ds, nx, vsid);
+@@ -339,7 +344,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+         /* Initialize real address with an invalid value */
+         ctx->raddr = (hwaddr)-1ULL;
+         /* Software TLB search */
+-        return ppc6xx_tlb_check(env, ctx, eaddr, access_type, nx);
++        return ppc6xx_tlb_check(env, ctx, eaddr, access_type, ptem, nx);
      }
  
-@@ -413,8 +423,8 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
-         tfmr &= ~TFMR_LOAD_TOD_MOD;
-         tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
-         tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
--        env->pnv_tod_tbst.tb_ready_for_tod = 0;
--        env->pnv_tod_tbst.tod_sent_to_tb = 0;
-+        tod_state->tb_ready_for_tod = 0;
-+        tod_state->tod_sent_to_tb = 0;
-         goto out;
-     }
- 
-@@ -427,19 +437,19 @@ void helper_store_tfmr(CPUPPCState *env, target_ulong val)
- 
-     if (tfmr & TFMR_LOAD_TOD_MOD) {
-         /* Wait for an arbitrary 3 mfspr until the next state transition. */
--        env->pnv_tod_tbst.tb_state_timer = 3;
-+        tod_state->tb_state_timer = 3;
-     } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
-         if (tbst == TBST_NOT_SET) {
-             tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
--            env->pnv_tod_tbst.tb_ready_for_tod = 1;
--            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
-+            tod_state->tb_ready_for_tod = 1;
-+            tod_state->tb_state_timer = 3; /* arbitrary */
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
-                                            "not in TB not set state 0x%x\n",
-                                            tbst);
-             tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-             tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
--            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+            tod_state->tb_ready_for_tod = 0;
-         }
-     }
- 
+     /* Direct-store segment : absolutely *BUGGY* for now */
+@@ -741,7 +746,7 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
+             cs->exception_index = POWERPC_EXCP_IFTLB;
+             env->error_code = 1 << 18;
+             env->spr[SPR_IMISS] = eaddr;
+-            env->spr[SPR_ICMP] = 0x80000000 | ctx.ptem;
++            env->spr[SPR_ICMP] |= 0x80000000;
+             goto tlb_miss;
+         case -2:
+             /* Access rights violation */
+@@ -772,7 +777,7 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
+                 env->error_code = 0;
+             }
+             env->spr[SPR_DMISS] = eaddr;
+-            env->spr[SPR_DCMP] = 0x80000000 | ctx.ptem;
++            env->spr[SPR_DCMP] |= 0x80000000;
+ tlb_miss:
+             env->error_code |= ctx.key << 19;
+             env->spr[SPR_HASH1] = ppc_hash32_hpt_base(cpu) +
 -- 
 2.45.2
 
