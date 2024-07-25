@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70934C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257FDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWrpO-0002hG-KF; Thu, 25 Jul 2024 02:19:50 -0400
+	id 1sWruJ-0007mE-99; Thu, 25 Jul 2024 02:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWrpN-0002gV-Ou
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:19:49 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWrpL-0006BE-7L
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:19:49 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba040aso8439121fa.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:19:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721888385; x=1722493185; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=m0UXmcumamfjUjzfgaFUZpl610CiLJrhhjKD1Mn/muU=;
- b=CA+b6h8FXU1d06qqUHvYSh7DWXqmaG9L/Ws86tO5jZBeBawKZNHwiUTnHRjvv5ITDY
- FJb1dVgA0ty/64PBIAHMccW1+KeU7SOsWJP4ufRe06GbD5sEQN9Stf1hkfZuClsIvlLD
- Ct9CJHHxG2D8N3sPihHLCA0ab16vnUsbrqi/L+G7qdpskeXkMhKRkuJvPeHagwzrXZap
- z5NHsnxAOPO9eaLGV2lXHWzizSTXgniiMZQX8l/tbe+hCC/Nod+6YuxybOYsV8NER8I4
- l46nVjuDOp4V6zPuXBcuvvFWb/cVugKvlrwu8Jdd72YhwZLhQcj54zuZ8kBNAI9IthEu
- XJOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721888385; x=1722493185;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=m0UXmcumamfjUjzfgaFUZpl610CiLJrhhjKD1Mn/muU=;
- b=ZOsmxBMlVz8FNirsqtm9JgBqBvH+deJiFGE9Vh4gq2Bqye0Rrspvx7ZQWnfkfwTg/N
- yZPFu/QkL0Uy3jY+4854zTQk93/eS36VFXiT2F6dh095vzWIvljLoJXrS7rHQZHHGzyh
- tUm7+/QfSIVkSr3tjpKUzQv5HEtVj0dQa/AFDByz3n/xxMeyuWRFQJTpf5eZuQT+snc6
- E3tv+VtKQbWzzkoof2Wjyd3Y5BgaeiPxL9wEueGjqIwwCs0buiZ19E3dugUJE5YjBjez
- vwfZ4y9okb87ahUjTWNRLk6bzupBzWLZ7ktPte19niAHpRvz1+2eqRgBoW8QmWv3r6cm
- jwZw==
-X-Gm-Message-State: AOJu0Yz3qMRvF26SNYw+7ZQJPAdOj2eKWqBRuXahkg8vNMhc/WsxQAeQ
- YJJGmS76QtI0Y1Row0w2IdAwu/nxy+9fjm8Kan17Bn4UJkCq9FIKMFkn2fHef2U=
-X-Google-Smtp-Source: AGHT+IGMRQcpevm+Lp3ilyc0t/LoZE6GIFv1iwtJlw8Y829Fzeuwzqi8kHtJp7vlM8wRHDX5Q46PPQ==
-X-Received: by 2002:a2e:a376:0:b0:2ee:7d37:49bd with SMTP id
- 38308e7fff4ca-2f039cdfff7mr12856911fa.22.1721888384363; 
- Wed, 24 Jul 2024 23:19:44 -0700 (PDT)
-Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac63590d76sm459794a12.24.2024.07.24.23.19.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jul 2024 23:19:44 -0700 (PDT)
-Date: Thu, 25 Jul 2024 08:47:40 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qeemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
- "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
- Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
-User-Agent: meli 0.8.6
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
- <h4gxy.dr366knvycy@linaro.org>
- <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
-In-Reply-To: <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
-Message-ID: <h61ku.ipxyjqsxu75@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWruG-0007jT-1N
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:24:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWruD-0007Kw-8d
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:24:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721888687;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZPMaVxL0QqXqcPl3QO8nmEoN+w2zBU0FOWWZV9muy/Q=;
+ b=KnuR6vD6/sNuSnTRHOwZ+m+OOnq4XBvSYyTQ2fRF7C1YAJzWT094bX5e5l1bHXSR+FUUm4
+ 8nZITfKmhyjXKfS9B1nooEzs5FxpygEk8jEHwod5216v6S6q5h3R2COUcXEw/GlXzIGKVy
+ tF40V/MVdbCn9bO3GiLWoc3NtJFlthA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-Sn0Z2CWINm-H1OpxsTF4og-1; Thu,
+ 25 Jul 2024 02:24:43 -0400
+X-MC-Unique: Sn0Z2CWINm-H1OpxsTF4og-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A1ED1955D4B; Thu, 25 Jul 2024 06:24:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBA52195605A; Thu, 25 Jul 2024 06:24:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9439D21E668F; Thu, 25 Jul 2024 08:24:37 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Collin Walling <walling@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  thuth@redhat.com,
+ david@redhat.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,  Jiri Denemark
+ <jdenemar@redhat.com>
+Subject: Re: [PATCH v3] target/s390x: filter deprecated properties based on
+ model expansion type
+In-Reply-To: <9f8023a4-3edd-476f-9243-677138be3921@linux.ibm.com> (Collin
+ Walling's message of "Wed, 24 Jul 2024 15:42:00 -0400")
+References: <20240719181741.35146-1-walling@linux.ibm.com>
+ <87h6cksk4h.fsf@pond.sub.org>
+ <28ea8260-a411-4651-8e2a-1fcc009f5043@linux.ibm.com>
+ <87bk2nrzou.fsf@pond.sub.org>
+ <9f8023a4-3edd-476f-9243-677138be3921@linux.ibm.com>
+Date: Thu, 25 Jul 2024 08:24:37 +0200
+Message-ID: <87cyn2ugyi.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,156 +90,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jul 2024 13:34, Paolo Bonzini <pbonzini@redhat.com> wrote:
->On Wed, Jul 24, 2024 at 11:58 AM Manos Pitsidianakis
-><manos.pitsidianakis@linaro.org> wrote:
->> >In my opinion we should start with cargo workspaces as the
->> >known-imperfect (but good enough) solution, so that it could be evolved
->> >later.  It is important that any change that deviates from common Rust
->> >conventions is documented, and v4 provided a nice basis to build upon,
->> >with documentation coming as things settle.  This is why I explicitly
->> >didn't include Kconfig in the TODO list in my review of v4.
->>
->> After working with the latest meson releases, it seems we will soon have
->> a good enough way of handling all this with meson. It makes me sceptical
->> of adding cargo wrappers and using a build system out of meson when we
->> might be able to drop all that soonish. We might as well bite the bullet
->> now to avoid working on something we know we will remove.
->
->Ehh, as you say below it's complicated. Sometimes worse is better.
->Personally I wouldn't have minded keeping the v4 approach as a "known
->evil"; but if you can make the Cargo subprojects work, that would be
->fine for me. What I don't like is the vendoring and handwritten (I
->think?) meson.build, I think that's worse than the v4.
->
->> >Also, of the code changes (as opposed to the build system changes) that
->> >I had asked for in the review of v4, almost none of them have been
->> >applied.  I'm copying them here for future reference:
->>
->> Thanks, this helps a lot.
->>
->> >❌ TODO comments when the code is doing potential undefined behavior
->>
->> Do you mean like Rust's safety comments?
->
->No I meant comments where we have known instances of undefined
->behavior. The two I had in my emails are
->
->(in pl011_init):
->// TODO: this assumes that "all zeroes" is a valid state for all fields of
->// PL011State. This is not necessarily true of any #[repr(Rust)] structs,
->// including bilge-generated types. It should instead use MaybeUninit.
->
->(before the call to qemu_chr_fe_accept_input):
->// TODO: this causes a callback that creates another "&mut self".
->// This is forbidden by Rust aliasing rules and has to be fixed
->// using interior mutability.
+Collin Walling <walling@linux.ibm.com> writes:
 
-You mean that we can have a call stack that looks something like...
+> On 7/24/24 3:56 AM, Markus Armbruster wrote:
+>> Collin Walling <walling@linux.ibm.com> writes:
+> Let me try to explain the purpose of @deprecated-props and see if it
+> helps bring us closer to some semblance of a mutual understanding so we
+> can work together on a concise documentation for this field.
+>
+> s390 has been announcing features as deprecated for some time now, which
+> was fine as a way to let users know that they should tune their guests
+> to no longer user these features.  Now that we are approaching the
+> release of generations that will drop these deprecated features
+> outright, we encounter an issue: if users have not been mindful with
+> disabling these announced-deprecated-features, then their guests running
+> on older models will not be able to migrate to machines running on newer
+> hardware.
+>
+> To alleviate this, I've added the @deprecated-props array to the
+> CpuModelInfo struct, and this field is populated by a
+> query-cpu-model-expansion* return.  It is up the the user/management app
+> to make use of this data.
+>
+> On the libvirt side (currently in development), I am able to easily
+> retrieve the host-model with a full expansion, parse the
+> @deprecated-props, and then cache them for later use (e.g. when
+> reporting the host-model with these features disabled, or enabling a
+> user to define their domain with deprecated-features disabled via a
+> convenient XML attribute).
+>
+> tl;dr @deprecated-props is only reported via a
+> query-cpu-model-expansion, and it is up to the user/management app to
+> figure out what to do with them.
 
-<qemu code>
-|_ pl011_read
-  |_ PL011State::read()
-     |_ qemu_chr_fe_accept_input()
-      |_ pl011_read
-        |_ PL011State::read()
+Got it.
 
-If I understand correctly, this does not create another "&mut self", 
-because a mutable reference of self is passed to 
-qemu_chr_fe_accept_input(), and only exists until it returns.
+Permit me a digression.  In QAPI/QMP, we do something similar: we expose
+deprecation in introspection (query-qmp-schema), and what to do with the
+information is up to the management application.  We provide one more
+tool to it: policy for handling deprecated interfaces, set with -compat.
+It permits "testing the future".  See qapi/compat.json for details.
+Whether such a thing would be usful in your case I can't say.
 
-In any case, I agree that these subtleties must be examined thoroughly 
-in general. In this case though PL011State has only Copy fields and no 
-side effects when dropped. This means that adding interior mutability 
-e.g. with Cell would have exactly the same behavior.
+>> On closer examination, more questions on CpuModelInfo emerge.  Uses:
+>> 
+>
+> I will attempt to expand on each input @model (CpuModelInfo) as if they
+> were documented in the file.
+>
+>> * query-cpu-model-comparison both arguments
+>> 
+>>   Documentation doesn't say how exactly the command uses the members of
+>>   CpuModelInfo, i.e. @name, @props, @deprecated-props.  Can you tell me?
+>> 
+>
+> Note: Compares ModelA and ModelB.
+>
+> Both @models must include @name.  @props is optional.  @deprecated-props
+> is ignored.
+>
+> @name: the name of the CPU model definition to look up.  The definition
+> will be compared against the generation, GA level, and a static set of
+> properties of the opposing model.
+>
+> @props: a set of additional properties to include in the model's set of
+> properties to be compared.
+>
+> @deprecated-props: ignored.  The user should consider these properties
+> beforehand and decide if these properties should be disabled/omitted on
+> the respective model.
+>
+>> * query-cpu-model-expansion argument @model and return value member
+>>   @model.
+>> 
+>>   The other argument is the expansion type, on which the value of return
+>>   value model.deprecated-props depends, I believe.  Fine.
+>> 
+>>   Documentation doesn't say how exactly the command uses the members of
+>>   CpuModelInfo arguments, i.e. @name, @props, @deprecated-props.  Can
+>>   you tell me?
+>> 
+>
+> The @model must include @name.  @props is optional.  @deprecated-props
+> is ignored.
+>
+> @name: the name of the CPU model definition to look up.  The definition
+> is associated with a set of properties that will populate the return data.
+>
+> @props: a set of additional properties to include in the model's set of
+> expanded properties.
+>
+> @deprecated-props: ignored.  The user should consider these properties
+> beforehand and decide if these properties should be disabled/omitted on
+> the model.
 
-But your bringing it up makes me wonder whether we can detect any bad 
-behaviors with miri... It does not play well with FFI boundaries but 
-it's possible to mock them in some cases. I will look into the two TODOs 
-you mention and also if it's possible to verify the correct behavior 
-whenever possible!
+Return value member @model will have @name, may have @props and
+@deprecated-props.
 
+Absent @props is the same as {}.  Only x86 uses {}.
 
->
->> https://std-dev-guide.rust-lang.org/policy/safety-comments.html
->>
->> These can be required by lints which is really helpful. At this point
->> the UART library has safety comments (which needs to be reviewed for
->> validity). I plan on adding some at the macros in qemu-api as well.
->>
->> >
->> >❌ a trait to store the CStr corresponding to the structs
->>
->> I don't know yet if that is helpful in our usecase, because the strings
->> must be visible from C, thus be (rust, not c) statics, unmangled and
->> marked as #[used] for the linker. It makes sense from the Rust POV but
->> must also be FFI-accessible.
->
->Why do they have to be #[used]? You have
->
->+                #[used]
->+                static TYPE_NAME: &::core::ffi::CStr = $tname;
->+                $tname.as_ptr()
->
->but since the cstr crate (and c"" literal) promise to return a
->&'static CStr, I thought it could be just
->
->    $tname.as_ptr()
->
->About traits, I meant something like
->
->pub unsafe trait ObjectType: Sized {
->     const TYPE_NAME: &'static CStr;
->}
->
->So that you can put the trait declaration in the pl011 crate and the
->type_info! macro can do
->
-><$t as ObjectType>::TYPE_NAME.as_ptr()
->
->(also for the parent).
+Absent @deprecated-props is the same as {}.  No target uses {}.  Can be
+present only on S390.
 
-That was my approach at the beginning but I was having issues with the 
-linker stripping the <some const value>.as_ptr() and it would point to 
-invalid memory; I checked it again and I think using #[used] just for 
-the TypeInfo struct declaration might be enough so these can be removed.
+Aside: returning the same thing in two different ways, like absent and
+{}, is slightly more complex than necessary.  But let's ignore that
+here.
 
+>> * query-cpu-model-baseline both arguments and return value member
+>>   @model.
+>> 
+>>   Same, except we don't have an expansion type here.  So same question,
+>>   plus another one: how does return value model.deprecated-props behave?
+>> 
 >
->> >❌ a trait to generate all-zero structs without having to type "unsafe {
->> >MaybeUninit::zeroed().assume_init() }"
->>
->> Traits cannot have const fns at the moment (traits cannot have
->> type-level effects like const or async but it's WIP to get them into
->> rustc), so this cannot be used for statics and consts.
+> Note: Creates a baseline model based on ModelA and ModelB.
 >
->Ah, I see. Anyhow, I've been looking at the Linux kernel's pinned-init
->crate (https://rust-for-linux.com/pinned-init) and it provides a
->Zeroable macro including #[derive] support. So that has gone lower in
->my priority.
+> The @models must include @name.  @props is optional.  @deprecated-props
+> is ignored.
 >
->> >❌ I'd like to use ctor instead of non-portable linker magic,
->>
->> The linker sections are pretty much standard and in fact ctor uses the
->> same linker attributes. Would writing our own constructor macro be a
->> solution for you? My reasoning is that 1) we support our own specific
->> platforms and it's better for portability to reflect that in our source
->> tree and 2) it avoids the external dependency, linker sections do not
->> change so any ctor update would be in the API or adding more platform
->> support,  not fixes in what we target.
+> @name: the name of the CPU model definition to look up.  The definition,
+> GA level, and a static set of properties will be used to determine the
+> maximum model between ModelA and ModelB.
 >
->I'd still like to give someone else the burden. :) Writing our own
->constructor macro would be more work for little gain.
+> @props: a set of additional properties to include in the model's set of
+> properties to be baselined.
+>
+> @deprecated-props: ignored.  The user should consider these properties
+> beforehand and decide if these properties should be disabled/omitted on
+> the respective model.
 
-Well, it's just that I personally don't view adding __attribute__ 
-manually in only two places is a burden but I've no strong preference 
-over it.
+Return value member @model is just like in query-cpu-model-expansion.
 
-I'm looking at the ctor dependencies and they are a few:
-https://github.com/mmastrac/rust-ctor/blob/cc3ab9160ed9dc3bdf20d735352b519abc2913e9/Cargo.lock
+Unlike query-cpu-model-expansion, we don't have an expansion type.  The
+value of @deprecated-props depends on the expansion type.  Do we assume
+a type?  Which one?
 
-Do you perhaps agree with adding a FIXME comment to replace the linker 
-attributes with ctor when we get the cargo dependency story in meson 
-sorted out?
+>> If you can't answer my questions, we need to find someone who can.
+>> 
+>
+> Hopefully this provides clarity on how CpuModelInfo and its respective
+> fields are used in each command.  @David should be able to fill in any
+> missing areas / expand / offer corrections.
+>
+>> [...]
 
-Manos
+This helps, thanks!
+
+Arguments that are silently ignored is bad interface design.
+
+Observe: when CpuModelInfo is an argument, @deprecated-props is always
+ignored.  When it's a return value, absent means {}, and it can be
+present only for certain targets (currently S390).
+
+The reason we end up with an argument we ignore is laziness: we use the
+same type for both roles.  We can fix that easily:
+
+    { 'struct': 'CpuModel',
+      'data': { 'name': 'str',
+                '*props': 'any' } }
+
+    { 'struct': 'CpuModelInfo',
+      'base': 'CpuModel',
+      'data': { '*deprecated-props': ['str'] } }
+
+Use CpuModel for arguments, CpuModelInfo for return values.
+
+Since @deprecated-props is used only by some targets, I'd make it
+conditional, i.e. 'if': 'TARGET_S390X'.
+
+Thoughts?
+
 
