@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53F6C3DA70
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B16C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Kh-0000ml-R6; Thu, 25 Jul 2024 19:57:15 -0400
+	id 1sX8L5-0002Cl-Nc; Thu, 25 Jul 2024 19:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8KU-0008UO-4o; Thu, 25 Jul 2024 19:57:07 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sX8L3-0001zs-36; Thu, 25 Jul 2024 19:57:37 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8KP-0001F2-DO; Thu, 25 Jul 2024 19:57:01 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70d2b921cd1so397917b3a.1; 
- Thu, 25 Jul 2024 16:56:56 -0700 (PDT)
+ id 1sX8L1-0001Ph-8D; Thu, 25 Jul 2024 19:57:36 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2cb57e25387so312497a91.3; 
+ Thu, 25 Jul 2024 16:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951815; x=1722556615; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951853; x=1722556653; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EbWRhBypg9ncX8tjgEJfqHKDS9MMmbofNHo4/pGJbAg=;
- b=GiECRKRKAx/odOeTTyX/zA9OPLkJHPPRAZ+fOnhzvob/kPdTfa+uUqfeE/Bj1bpJs/
- NX6u7lqxed/dTOE3Gsv6fouyHJaStPiriGbxeS2dFWzdQ36ocnj37oOsk1suiOJ7+Dfq
- N83bHZHUg+2fsMS8LXBkHuFP4U0MZ4Y37GsxklGdhO+e1EyTaxCHeBn/nJeQF9zA7ZSh
- Go3Ed/9tqJOsn28A3Vy8eAyjF4TtITffNKtJftMoqOMnRcuPc9JkDiC7P3eCz1zT7QAP
- XDANSOgDBWyw+pcEMFH5Ao/zT1ac+S2XGbiSX9DKpvS2IJiby+Zhs1lDV8FtOBkm6gqC
- d3qg==
+ bh=VUv4NqlnXySQF9jn8Uwsa6TDpSmluDe+/wcl41bzcMI=;
+ b=jMXKhxABSClT6EHBdJGnYIlTxXFp/tM+meOc19FazHt2RfUa8g3ZFy+7NDA6lvbSLy
+ uGe5gETPBmNrkRMYK4ibzp5BHuhTR1wcR2j5Jwej33EYh6j18pDKKyrLy4VW1KX0R2P5
+ LNP5/76H3+zJiqIFYyL2kWRDLltJd8DCnTxaw8We3w1dKX1MbrQqvESkfjxXm1286N1+
+ B03tk1lxRnsVyBbwoWDJOe68OVgQ7yMdsiC6ZJQ+n8c4ckooRccR9Tok1I1Dy6+lV/HN
+ p4XeU2uwb6kEYsN/U/IlU9fBpsnHfH4W20t1iAuivLasqEVnexgCYAv9MbDTbox5lYo+
+ aMlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951815; x=1722556615;
+ d=1e100.net; s=20230601; t=1721951853; x=1722556653;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EbWRhBypg9ncX8tjgEJfqHKDS9MMmbofNHo4/pGJbAg=;
- b=NoI8rBQBytXJEOBR9satnSxuDLHOpAbk9j/pyD2fZs0Z7eWNvg2GrLcL8cKTQJClfE
- p+G4pPjrIV+2YyPMVtvvYaxjNawocjK6Kh69ORbdW/AtNCaLoSGRdatrvnw08VoK7gLv
- v4EFyLS7PNt5Gi/srP/U6jmUZyDasj/lbVjTosIcpGmrzlSo1kgSMIXbpBMulLdwFWpF
- R9uRLQtjDsDYLMDdpNBecFdAm3o1H3QZVZHfis2kAd0RAAuE5pa84JcDFMU/FufLrUCi
- U3O2Awo0pqC5narnPY8cSQYTlRzRoEcsfqur1/2e0wGhojK/W+ZSD+ZjUrnILye9RL5K
- H4EQ==
+ bh=VUv4NqlnXySQF9jn8Uwsa6TDpSmluDe+/wcl41bzcMI=;
+ b=eZvPMhjbOrQRDiu3HF90eshPmPf1WV/9cY9BH8praP67Kz3H6jVxpZbsxrkk5zL6vk
+ giltss8Effks7enbiPYZkY0wU6ZssQZk2/GgH3tyKLT50OMrdo5xLQIISbPK1/QydvWm
+ Y5R4h4ne5ejleOWSW5+Yb0QR9vzHiPHsWN2+11un3pYsaFlQUhQTOzb+HmLPU35v5Zef
+ 85gVFsAhpB9QiGyM7F9qAMv8lYL2GGnkhEtZ0V1udbsRreJcsk2thjs8+WP0uJ87Jf1i
+ xEemRJh1tXEm2QjLbOkBTKY51EC9Ikg+sURtNyZhC+bPbKgV9gh3xrN5pwPuT2lEbUCy
+ QHhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX170DUYWlVimonXHO8qbYqWyZFgzCoTgmoL2OcdiU/JH2WuIwbz16PqMUaz7g+cwlnwkoA7IQc5sVmDrCPRFgVOdXz
-X-Gm-Message-State: AOJu0YzkxVkeScXrU0ee8xQrEx0L1gx4O7Peys9zP8ZUhz/cEzh3kSkP
- 0lZv5QoDwxQEiVr1lT3xR5lCqXgZ1UDNouAWpITH1Yhwse7Um8orNpJaMA==
-X-Google-Smtp-Source: AGHT+IGGazZ7WqA0X7PKTxVEyXt2gETgnhOGjZTqO/3VjxeWdqcjuiO7RVp70Eo09f/On+kTMSr5eg==
-X-Received: by 2002:a05:6a21:78a5:b0:1c3:ea21:dc31 with SMTP id
- adf61e73a8af0-1c47b4113a6mr4870973637.42.1721951814975; 
- Thu, 25 Jul 2024 16:56:54 -0700 (PDT)
+ AJvYcCU+rPmJSodqA2lrOtrIbzzsrUn/BypYHTRjt8rfhaRZr1MUUwGOpHdci5czLjpDoQ5a8TUGj2Oua+CG7EZoVy80v8Lb
+X-Gm-Message-State: AOJu0Yzga+vE2gHc6xsZwsLMP0+33I7diO6+XKJD8Wmq5JxQS4k9NMIC
+ qqWZC6iPzEM28LuW1x2Kb2r/a3bkztGzZJw37BbI6R3Vv47velTJESjd5A==
+X-Google-Smtp-Source: AGHT+IED06H3Do7ZXMA/AO4yUnJoBY1SQt60I5fJykt3WrHArq1DNK+KNlxAVE5GEHhR3V1rDwCy8w==
+X-Received: by 2002:a17:90a:39ca:b0:2c8:6308:ad78 with SMTP id
+ 98e67ed59e1d1-2cf2ebd4811mr4073196a91.34.1721951852891; 
+ Thu, 25 Jul 2024 16:57:32 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.51
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:56:54 -0700 (PDT)
+ Thu, 25 Jul 2024 16:57:32 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Frederic Barrat <fbarrat@linux.ibm.com>,
  Michael Kowal <kowal@linux.vnet.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 42/96] pnv/xive2: XIVE2 Cache Watch,
- Cache Flush and Sync Injection support
-Date: Fri, 26 Jul 2024 09:53:15 +1000
-Message-ID: <20240725235410.451624-43-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 52/96] pnv/xive2: Dump more END state with 'info pic'
+Date: Fri, 26 Jul 2024 09:53:25 +1000
+Message-ID: <20240725235410.451624-53-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,590 +99,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-XIVE offers a 'cache watch facility', which allows software to read/update
-a potentially cached table entry with no software lock. There's one such
-facility in the Virtualization Controller (VC) to update the ESB and END
-entries and one in the Presentation Controller (PC) to update the
-NVP/NVG/NVC entries.
-
-Each facility has 4 cache watch engines to control the updates and
-firmware can request an available engine by querying the hardware
-'watch_assign' register of the VC or PC. The engine is then reserved and
-is released after the data is updated by reading the 'watch_spec' register
-(which also allows to check for a conflict during the update).
-If no engine is available, the special value 0xFF is returned and
-firmware is expected to repeat the request until an engine becomes
-available.
+Additional END state 'info pic' information as added.  The 'ignore',
+'crowd' and 'precluded escalation control' bits of an Event Notification
+Descriptor are all used when delivering an interrupt targeting a VP-group
+or crowd.
 
 Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
 Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/pnv_xive2.c      | 251 +++++++++++++++++++++++++++++++++------
- hw/intc/pnv_xive2_regs.h |  90 ++++++++++++++
- 2 files changed, 305 insertions(+), 36 deletions(-)
+ hw/intc/xive2.c             | 7 +++++--
+ include/hw/ppc/xive2_regs.h | 7 +++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 2fb4fa29d4..af9ab68fc6 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -329,40 +329,48 @@ static int pnv_xive2_write_end(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
-                               word_number);
- }
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index ac914b3d1c..1f150685bf 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -89,7 +89,7 @@ void xive2_end_pic_print_info(Xive2End *end, uint32_t end_idx, GString *buf)
+     pq = xive_get_field32(END2_W1_ESn, end->w1);
  
--static int pnv_xive2_end_update(PnvXive2 *xive)
-+static int pnv_xive2_end_update(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(VC_ENDC_WATCH_INDEX,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    int i;
-+    uint8_t  blk;
-+    uint32_t idx;
-+    int i, spec_reg, data_reg;
-     uint64_t endc_watch[4];
+     g_string_append_printf(buf,
+-                           "  %08x %c%c %c%c%c%c%c%c%c%c%c%c "
++                           "  %08x %c%c %c%c%c%c%c%c%c%c%c%c%c %c%c "
+                            "prio:%d nvp:%02x/%04x",
+                            end_idx,
+                            pq & XIVE_ESB_VAL_P ? 'P' : '-',
+@@ -98,12 +98,15 @@ void xive2_end_pic_print_info(Xive2End *end, uint32_t end_idx, GString *buf)
+                            xive2_end_is_enqueue(end)  ? 'q' : '-',
+                            xive2_end_is_notify(end)   ? 'n' : '-',
+                            xive2_end_is_backlog(end)  ? 'b' : '-',
++                           xive2_end_is_precluded_escalation(end) ? 'p' : '-',
+                            xive2_end_is_escalate(end) ? 'e' : '-',
+                            xive2_end_is_escalate_end(end) ? 'N' : '-',
+                            xive2_end_is_uncond_escalation(end)   ? 'u' : '-',
+                            xive2_end_is_silent_escalation(end)   ? 's' : '-',
+                            xive2_end_is_firmware1(end)   ? 'f' : '-',
+                            xive2_end_is_firmware2(end)   ? 'F' : '-',
++                           xive2_end_is_ignore(end) ? 'i' : '-',
++                           xive2_end_is_crowd(end)  ? 'c' : '-',
+                            priority, nvp_blk, nvp_idx);
  
-+    assert(watch_engine < ARRAY_SIZE(endc_watch));
-+
-+    spec_reg = (VC_ENDC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (VC_ENDC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID, xive->vc_regs[spec_reg]);
-+    idx = GETFIELD(VC_ENDC_WATCH_INDEX, xive->vc_regs[spec_reg]);
-+
-     for (i = 0; i < ARRAY_SIZE(endc_watch); i++) {
--        endc_watch[i] =
--            cpu_to_be64(xive->vc_regs[(VC_ENDC_WATCH0_DATA0 >> 3) + i]);
-+        endc_watch[i] = cpu_to_be64(xive->vc_regs[data_reg + i]);
+     if (qaddr_base) {
+@@ -676,7 +679,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
      }
  
-     return pnv_xive2_vst_write(xive, VST_END, blk, idx, endc_watch,
-                               XIVE_VST_WORD_ALL);
- }
+     found = xive_presenter_notify(xrtr->xfb, format, nvp_blk, nvp_idx,
+-                          xive_get_field32(END2_W6_IGNORE, end.w7),
++                          xive2_end_is_ignore(&end),
+                           priority,
+                           xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7));
  
--static void pnv_xive2_end_cache_load(PnvXive2 *xive)
-+static void pnv_xive2_end_cache_load(PnvXive2 *xive, uint8_t watch_engine)
+diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+index ec5d6ec2d6..4349d009d0 100644
+--- a/include/hw/ppc/xive2_regs.h
++++ b/include/hw/ppc/xive2_regs.h
+@@ -97,6 +97,7 @@ typedef struct Xive2End {
+         uint32_t       w6;
+ #define END2_W6_FORMAT_BIT         PPC_BIT32(0)
+ #define END2_W6_IGNORE             PPC_BIT32(1)
++#define END2_W6_CROWD              PPC_BIT32(2)
+ #define END2_W6_VP_BLOCK           PPC_BITMASK32(4, 7)
+ #define END2_W6_VP_OFFSET          PPC_BITMASK32(8, 31)
+ #define END2_W6_VP_OFFSET_GEN1     PPC_BITMASK32(13, 31)
+@@ -111,6 +112,8 @@ typedef struct Xive2End {
+ #define xive2_end_is_notify(end)                \
+     (be32_to_cpu((end)->w0) & END2_W0_UCOND_NOTIFY)
+ #define xive2_end_is_backlog(end)  (be32_to_cpu((end)->w0) & END2_W0_BACKLOG)
++#define xive2_end_is_precluded_escalation(end)          \
++    (be32_to_cpu((end)->w0) & END2_W0_PRECL_ESC_CTL)
+ #define xive2_end_is_escalate(end)                      \
+     (be32_to_cpu((end)->w0) & END2_W0_ESCALATE_CTL)
+ #define xive2_end_is_uncond_escalation(end)              \
+@@ -123,6 +126,10 @@ typedef struct Xive2End {
+     (be32_to_cpu((end)->w0) & END2_W0_FIRMWARE1)
+ #define xive2_end_is_firmware2(end)              \
+     (be32_to_cpu((end)->w0) & END2_W0_FIRMWARE2)
++#define xive2_end_is_ignore(end)                \
++    (be32_to_cpu((end)->w6) & END2_W6_IGNORE)
++#define xive2_end_is_crowd(end)                 \
++    (be32_to_cpu((end)->w6) & END2_W6_CROWD)
+ 
+ static inline uint64_t xive2_end_qaddr(Xive2End *end)
  {
--    uint8_t  blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(VC_ENDC_WATCH_INDEX,
--                           xive->vc_regs[(VC_ENDC_WATCH0_SPEC >> 3)]);
-+    uint8_t  blk;
-+    uint32_t idx;
-     uint64_t endc_watch[4] = { 0 };
--    int i;
-+    int i, spec_reg, data_reg;
-+
-+    assert(watch_engine < ARRAY_SIZE(endc_watch));
-+
-+    spec_reg = (VC_ENDC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (VC_ENDC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(VC_ENDC_WATCH_BLOCK_ID, xive->vc_regs[spec_reg]);
-+    idx = GETFIELD(VC_ENDC_WATCH_INDEX, xive->vc_regs[spec_reg]);
- 
-     if (pnv_xive2_vst_read(xive, VST_END, blk, idx, endc_watch)) {
-         xive2_error(xive, "VST: no END entry %x/%x !?", blk, idx);
-     }
- 
-     for (i = 0; i < ARRAY_SIZE(endc_watch); i++) {
--        xive->vc_regs[(VC_ENDC_WATCH0_DATA0 >> 3) + i] =
--            be64_to_cpu(endc_watch[i]);
-+        xive->vc_regs[data_reg + i] = be64_to_cpu(endc_watch[i]);
-     }
- }
- 
-@@ -379,40 +387,48 @@ static int pnv_xive2_write_nvp(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
-                               word_number);
- }
- 
--static int pnv_xive2_nvp_update(PnvXive2 *xive)
-+static int pnv_xive2_nvp_update(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID,
--                            xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(PC_NXC_WATCH_INDEX,
--                            xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    int i;
-+    uint8_t  blk;
-+    uint32_t idx;
-+    int i, spec_reg, data_reg;
-     uint64_t nxc_watch[4];
- 
-+    assert(watch_engine < ARRAY_SIZE(nxc_watch));
-+
-+    spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
-+    idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
-+
-     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
--        nxc_watch[i] =
--            cpu_to_be64(xive->pc_regs[(PC_NXC_WATCH0_DATA0 >> 3) + i]);
-+        nxc_watch[i] = cpu_to_be64(xive->pc_regs[data_reg + i]);
-     }
- 
-     return pnv_xive2_vst_write(xive, VST_NVP, blk, idx, nxc_watch,
-                               XIVE_VST_WORD_ALL);
- }
- 
--static void pnv_xive2_nvp_cache_load(PnvXive2 *xive)
-+static void pnv_xive2_nvp_cache_load(PnvXive2 *xive, uint8_t watch_engine)
- {
--    uint8_t  blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID,
--                           xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
--    uint32_t idx = GETFIELD(PC_NXC_WATCH_INDEX,
--                           xive->pc_regs[(PC_NXC_WATCH0_SPEC >> 3)]);
-+    uint8_t  blk;
-+    uint32_t idx;
-     uint64_t nxc_watch[4] = { 0 };
--    int i;
-+    int i, spec_reg, data_reg;
-+
-+    assert(watch_engine < ARRAY_SIZE(nxc_watch));
-+
-+    spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
-+    data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
-+    blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
-+    idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
- 
-     if (pnv_xive2_vst_read(xive, VST_NVP, blk, idx, nxc_watch)) {
-         xive2_error(xive, "VST: no NVP entry %x/%x !?", blk, idx);
-     }
- 
-     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
--        xive->pc_regs[(PC_NXC_WATCH0_DATA0 >> 3) + i] =
--            be64_to_cpu(nxc_watch[i]);
-+        xive->pc_regs[data_reg + i] = be64_to_cpu(nxc_watch[i]);
-     }
- }
- 
-@@ -964,12 +980,70 @@ static const MemoryRegionOps pnv_xive2_ic_cq_ops = {
-     },
- };
- 
-+static uint8_t pnv_xive2_cache_watch_assign(uint64_t engine_mask,
-+                                            uint64_t *state)
-+{
-+    uint8_t val = 0xFF;
-+    int i;
-+
-+    for (i = 3; i >= 0; i--) {
-+        if (BIT(i) & engine_mask) {
-+            if (!(BIT(i) & *state)) {
-+                *state |= BIT(i);
-+                val = 3 - i;
-+                break;
-+            }
-+        }
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_cache_watch_release(uint64_t *state, uint8_t watch_engine)
-+{
-+    uint8_t engine_bit = 3 - watch_engine;
-+
-+    if (*state & BIT(engine_bit)) {
-+        *state &= ~BIT(engine_bit);
-+    }
-+}
-+
-+static uint8_t pnv_xive2_endc_cache_watch_assign(PnvXive2 *xive)
-+{
-+    uint64_t engine_mask = GETFIELD(VC_ENDC_CFG_CACHE_WATCH_ASSIGN,
-+                                    xive->vc_regs[VC_ENDC_CFG >> 3]);
-+    uint64_t state = xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3];
-+    uint8_t val;
-+
-+    /*
-+     * We keep track of which engines are currently busy in the
-+     * VC_ENDC_WATCH_ASSIGN register directly. When the firmware reads
-+     * the register, we don't return its value but the ID of an engine
-+     * it can use.
-+     * There are 4 engines. 0xFF means no engine is available.
-+     */
-+    val = pnv_xive2_cache_watch_assign(engine_mask, &state);
-+    if (val != 0xFF) {
-+        xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3] = state;
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_endc_cache_watch_release(PnvXive2 *xive,
-+                                               uint8_t watch_engine)
-+{
-+    uint64_t state = xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3];
-+
-+    pnv_xive2_cache_watch_release(&state, watch_engine);
-+    xive->vc_regs[VC_ENDC_WATCH_ASSIGN >> 3] = state;
-+}
-+
- static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
-                                      unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint64_t val = 0;
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1000,24 +1074,44 @@ static uint64_t pnv_xive2_ic_vc_read(void *opaque, hwaddr offset,
-         val = xive->vc_regs[reg];
-         break;
- 
-+    case VC_ENDC_WATCH_ASSIGN:
-+        val = pnv_xive2_endc_cache_watch_assign(xive);
-+        break;
-+
-+    case VC_ENDC_CFG:
-+        val = xive->vc_regs[reg];
-+        break;
-+
-     /*
-      * END cache updates
-      */
-     case VC_ENDC_WATCH0_SPEC:
-+    case VC_ENDC_WATCH1_SPEC:
-+    case VC_ENDC_WATCH2_SPEC:
-+    case VC_ENDC_WATCH3_SPEC:
-+        watch_engine = (offset - VC_ENDC_WATCH0_SPEC) >> 6;
-         xive->vc_regs[reg] &= ~(VC_ENDC_WATCH_FULL | VC_ENDC_WATCH_CONFLICT);
-+        pnv_xive2_endc_cache_watch_release(xive, watch_engine);
-         val = xive->vc_regs[reg];
-         break;
- 
-     case VC_ENDC_WATCH0_DATA0:
-+    case VC_ENDC_WATCH1_DATA0:
-+    case VC_ENDC_WATCH2_DATA0:
-+    case VC_ENDC_WATCH3_DATA0:
-         /*
-          * Load DATA registers from cache with data requested by the
-          * SPEC register
-          */
--        pnv_xive2_end_cache_load(xive);
-+        watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
-+        pnv_xive2_end_cache_load(xive, watch_engine);
-         val = xive->vc_regs[reg];
-         break;
- 
-     case VC_ENDC_WATCH0_DATA1 ... VC_ENDC_WATCH0_DATA3:
-+    case VC_ENDC_WATCH1_DATA1 ... VC_ENDC_WATCH1_DATA3:
-+    case VC_ENDC_WATCH2_DATA1 ... VC_ENDC_WATCH2_DATA3:
-+    case VC_ENDC_WATCH3_DATA1 ... VC_ENDC_WATCH3_DATA3:
-         val = xive->vc_regs[reg];
-         break;
- 
-@@ -1063,6 +1157,7 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1095,19 +1190,32 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
-         /* EAS update */
-         break;
- 
-+    case VC_ENDC_CFG:
-+        break;
-+
-     /*
-      * END cache updates
-      */
-     case VC_ENDC_WATCH0_SPEC:
-+    case VC_ENDC_WATCH1_SPEC:
-+    case VC_ENDC_WATCH2_SPEC:
-+    case VC_ENDC_WATCH3_SPEC:
-          val &= ~VC_ENDC_WATCH_CONFLICT; /* HW will set this bit */
-         break;
- 
-     case VC_ENDC_WATCH0_DATA1 ... VC_ENDC_WATCH0_DATA3:
-+    case VC_ENDC_WATCH1_DATA1 ... VC_ENDC_WATCH1_DATA3:
-+    case VC_ENDC_WATCH2_DATA1 ... VC_ENDC_WATCH2_DATA3:
-+    case VC_ENDC_WATCH3_DATA1 ... VC_ENDC_WATCH3_DATA3:
-         break;
-     case VC_ENDC_WATCH0_DATA0:
-+    case VC_ENDC_WATCH1_DATA0:
-+    case VC_ENDC_WATCH2_DATA0:
-+    case VC_ENDC_WATCH3_DATA0:
-         /* writing to DATA0 triggers the cache write */
-+        watch_engine = (offset - VC_ENDC_WATCH0_DATA0) >> 6;
-         xive->vc_regs[reg] = val;
--        pnv_xive2_end_update(xive);
-+        pnv_xive2_end_update(xive, watch_engine);
-         break;
- 
- 
-@@ -1157,12 +1265,43 @@ static const MemoryRegionOps pnv_xive2_ic_vc_ops = {
-     },
- };
- 
-+static uint8_t pnv_xive2_nxc_cache_watch_assign(PnvXive2 *xive)
-+{
-+    uint64_t engine_mask = GETFIELD(PC_NXC_PROC_CONFIG_WATCH_ASSIGN,
-+                                    xive->pc_regs[PC_NXC_PROC_CONFIG >> 3]);
-+    uint64_t state = xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3];
-+    uint8_t val;
-+
-+    /*
-+     * We keep track of which engines are currently busy in the
-+     * PC_NXC_WATCH_ASSIGN register directly. When the firmware reads
-+     * the register, we don't return its value but the ID of an engine
-+     * it can use.
-+     * There are 4 engines. 0xFF means no engine is available.
-+     */
-+    val = pnv_xive2_cache_watch_assign(engine_mask, &state);
-+    if (val != 0xFF) {
-+        xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3] = state;
-+    }
-+    return val;
-+}
-+
-+static void pnv_xive2_nxc_cache_watch_release(PnvXive2 *xive,
-+                                              uint8_t watch_engine)
-+{
-+    uint64_t state = xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3];
-+
-+    pnv_xive2_cache_watch_release(&state, watch_engine);
-+    xive->pc_regs[PC_NXC_WATCH_ASSIGN >> 3] = state;
-+}
-+
- static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
-                                      unsigned size)
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint64_t val = -1;
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
-     /*
-@@ -1173,24 +1312,44 @@ static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
-         val = xive->pc_regs[reg];
-         break;
- 
-+    case PC_NXC_WATCH_ASSIGN:
-+        val = pnv_xive2_nxc_cache_watch_assign(xive);
-+        break;
-+
-+    case PC_NXC_PROC_CONFIG:
-+        val = xive->pc_regs[reg];
-+        break;
-+
-     /*
-      * cache updates
-      */
-     case PC_NXC_WATCH0_SPEC:
-+    case PC_NXC_WATCH1_SPEC:
-+    case PC_NXC_WATCH2_SPEC:
-+    case PC_NXC_WATCH3_SPEC:
-+        watch_engine = (offset - PC_NXC_WATCH0_SPEC) >> 6;
-         xive->pc_regs[reg] &= ~(PC_NXC_WATCH_FULL | PC_NXC_WATCH_CONFLICT);
-+        pnv_xive2_nxc_cache_watch_release(xive, watch_engine);
-         val = xive->pc_regs[reg];
-         break;
- 
-     case PC_NXC_WATCH0_DATA0:
-+    case PC_NXC_WATCH1_DATA0:
-+    case PC_NXC_WATCH2_DATA0:
-+    case PC_NXC_WATCH3_DATA0:
-        /*
-         * Load DATA registers from cache with data requested by the
-         * SPEC register
-         */
--        pnv_xive2_nvp_cache_load(xive);
-+        watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
-+        pnv_xive2_nvp_cache_load(xive, watch_engine);
-         val = xive->pc_regs[reg];
-         break;
- 
-     case PC_NXC_WATCH0_DATA1 ... PC_NXC_WATCH0_DATA3:
-+    case PC_NXC_WATCH1_DATA1 ... PC_NXC_WATCH1_DATA3:
-+    case PC_NXC_WATCH2_DATA1 ... PC_NXC_WATCH2_DATA3:
-+    case PC_NXC_WATCH3_DATA1 ... PC_NXC_WATCH3_DATA3:
-         val = xive->pc_regs[reg];
-         break;
- 
-@@ -1219,6 +1378,7 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
- {
-     PnvXive2 *xive = PNV_XIVE2(opaque);
-     uint32_t reg = offset >> 3;
-+    uint8_t watch_engine;
- 
-     switch (offset) {
- 
-@@ -1231,19 +1391,32 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
-     case PC_VSD_TABLE_DATA:
-         break;
- 
-+    case PC_NXC_PROC_CONFIG:
-+        break;
-+
-     /*
-      * cache updates
-      */
-     case PC_NXC_WATCH0_SPEC:
-+    case PC_NXC_WATCH1_SPEC:
-+    case PC_NXC_WATCH2_SPEC:
-+    case PC_NXC_WATCH3_SPEC:
-         val &= ~PC_NXC_WATCH_CONFLICT; /* HW will set this bit */
-         break;
- 
-     case PC_NXC_WATCH0_DATA1 ... PC_NXC_WATCH0_DATA3:
-+    case PC_NXC_WATCH1_DATA1 ... PC_NXC_WATCH1_DATA3:
-+    case PC_NXC_WATCH2_DATA1 ... PC_NXC_WATCH2_DATA3:
-+    case PC_NXC_WATCH3_DATA1 ... PC_NXC_WATCH3_DATA3:
-         break;
-     case PC_NXC_WATCH0_DATA0:
-+    case PC_NXC_WATCH1_DATA0:
-+    case PC_NXC_WATCH2_DATA0:
-+    case PC_NXC_WATCH3_DATA0:
-         /* writing to DATA0 triggers the cache write */
-+        watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
-         xive->pc_regs[reg] = val;
--        pnv_xive2_nvp_update(xive);
-+        pnv_xive2_nvp_update(xive, watch_engine);
-         break;
- 
-    /* case PC_NXC_FLUSH_CTRL: */
-@@ -1814,6 +1987,12 @@ static void pnv_xive2_reset(void *dev)
-     xive->cq_regs[CQ_XIVE_CFG >> 3] |=
-         SETFIELD(CQ_XIVE_CFG_HYP_HARD_BLOCK_ID, 0ull, xive->chip->chip_id);
- 
-+    /* VC and PC cache watch assign mechanism */
-+    xive->vc_regs[VC_ENDC_CFG >> 3] =
-+        SETFIELD(VC_ENDC_CFG_CACHE_WATCH_ASSIGN, 0ull, 0b0111);
-+    xive->pc_regs[PC_NXC_PROC_CONFIG >> 3] =
-+        SETFIELD(PC_NXC_PROC_CONFIG_WATCH_ASSIGN, 0ull, 0b0111);
-+
-     /* Set default page size to 64k */
-     xive->ic_shift = xive->esb_shift = xive->end_shift = 16;
-     xive->nvc_shift = xive->nvpg_shift = xive->tm_shift = 16;
-diff --git a/hw/intc/pnv_xive2_regs.h b/hw/intc/pnv_xive2_regs.h
-index 7165dc8704..f8e4a677c6 100644
---- a/hw/intc/pnv_xive2_regs.h
-+++ b/hw/intc/pnv_xive2_regs.h
-@@ -283,6 +283,15 @@
- #define   VC_ENDC_SYNC_QUEUE_HARD               PPC_BIT(6)
- #define   VC_QUEUE_COUNT                        7
- 
-+/* ENDC cache watch assign */
-+#define X_VC_ENDC_WATCH_ASSIGN                  0x186
-+#define VC_ENDC_WATCH_ASSIGN                    0x430
-+
-+/* ENDC configuration register */
-+#define X_VC_ENDC_CFG                           0x188
-+#define VC_ENDC_CFG                             0x440
-+#define   VC_ENDC_CFG_CACHE_WATCH_ASSIGN        PPC_BITMASK(32, 35)
-+
- /* ENDC cache watch specification 0  */
- #define X_VC_ENDC_WATCH0_SPEC                   0x1A0
- #define VC_ENDC_WATCH0_SPEC                     0x500
-@@ -302,6 +311,42 @@
- #define VC_ENDC_WATCH0_DATA2                    0x530
- #define VC_ENDC_WATCH0_DATA3                    0x538
- 
-+/* ENDC cache watch 1  */
-+#define X_VC_ENDC_WATCH1_SPEC                   0x1A8
-+#define VC_ENDC_WATCH1_SPEC                     0x540
-+#define X_VC_ENDC_WATCH1_DATA0                  0x1AC
-+#define X_VC_ENDC_WATCH1_DATA1                  0x1AD
-+#define X_VC_ENDC_WATCH1_DATA2                  0x1AE
-+#define X_VC_ENDC_WATCH1_DATA3                  0x1AF
-+#define VC_ENDC_WATCH1_DATA0                    0x560
-+#define VC_ENDC_WATCH1_DATA1                    0x568
-+#define VC_ENDC_WATCH1_DATA2                    0x570
-+#define VC_ENDC_WATCH1_DATA3                    0x578
-+
-+/* ENDC cache watch 2  */
-+#define X_VC_ENDC_WATCH2_SPEC                   0x1B0
-+#define VC_ENDC_WATCH2_SPEC                     0x580
-+#define X_VC_ENDC_WATCH2_DATA0                  0x1B4
-+#define X_VC_ENDC_WATCH2_DATA1                  0x1B5
-+#define X_VC_ENDC_WATCH2_DATA2                  0x1B6
-+#define X_VC_ENDC_WATCH2_DATA3                  0x1B7
-+#define VC_ENDC_WATCH2_DATA0                    0x5A0
-+#define VC_ENDC_WATCH2_DATA1                    0x5A8
-+#define VC_ENDC_WATCH2_DATA2                    0x5B0
-+#define VC_ENDC_WATCH2_DATA3                    0x5B8
-+
-+/* ENDC cache watch 3  */
-+#define X_VC_ENDC_WATCH3_SPEC                   0x1B8
-+#define VC_ENDC_WATCH3_SPEC                     0x5C0
-+#define X_VC_ENDC_WATCH3_DATA0                  0x1BC
-+#define X_VC_ENDC_WATCH3_DATA1                  0x1BD
-+#define X_VC_ENDC_WATCH3_DATA2                  0x1BE
-+#define X_VC_ENDC_WATCH3_DATA3                  0x1BF
-+#define VC_ENDC_WATCH3_DATA0                    0x5E0
-+#define VC_ENDC_WATCH3_DATA1                    0x5E8
-+#define VC_ENDC_WATCH3_DATA2                    0x5F0
-+#define VC_ENDC_WATCH3_DATA3                    0x5F8
-+
- /*
-  * PC LSB1
-  */
-@@ -358,6 +403,15 @@
- #define  PC_NXC_FLUSH_POLL_BLOCK_ID_MASK        PPC_BITMASK(36, 39)
- #define  PC_NXC_FLUSH_POLL_OFFSET_MASK          PPC_BITMASK(40, 63) /* 24-bit */
- 
-+/* NxC Cache watch assign */
-+#define X_PC_NXC_WATCH_ASSIGN                   0x286
-+#define PC_NXC_WATCH_ASSIGN                     0x430
-+
-+/* NxC Proc config */
-+#define X_PC_NXC_PROC_CONFIG                    0x28A
-+#define PC_NXC_PROC_CONFIG                      0x450
-+#define   PC_NXC_PROC_CONFIG_WATCH_ASSIGN       PPC_BITMASK(0, 3)
-+
- /* NxC Cache Watch 0 Specification */
- #define X_PC_NXC_WATCH0_SPEC                    0x2A0
- #define PC_NXC_WATCH0_SPEC                      0x500
-@@ -381,6 +435,42 @@
- #define PC_NXC_WATCH0_DATA2                     0x530
- #define PC_NXC_WATCH0_DATA3                     0x538
- 
-+/* NxC Cache Watch 1 */
-+#define X_PC_NXC_WATCH1_SPEC                    0x2A8
-+#define PC_NXC_WATCH1_SPEC                      0x540
-+#define X_PC_NXC_WATCH1_DATA0                   0x2AC
-+#define X_PC_NXC_WATCH1_DATA1                   0x2AD
-+#define X_PC_NXC_WATCH1_DATA2                   0x2AE
-+#define X_PC_NXC_WATCH1_DATA3                   0x2AF
-+#define PC_NXC_WATCH1_DATA0                     0x560
-+#define PC_NXC_WATCH1_DATA1                     0x568
-+#define PC_NXC_WATCH1_DATA2                     0x570
-+#define PC_NXC_WATCH1_DATA3                     0x578
-+
-+/* NxC Cache Watch 2 */
-+#define X_PC_NXC_WATCH2_SPEC                    0x2B0
-+#define PC_NXC_WATCH2_SPEC                      0x580
-+#define X_PC_NXC_WATCH2_DATA0                   0x2B4
-+#define X_PC_NXC_WATCH2_DATA1                   0x2B5
-+#define X_PC_NXC_WATCH2_DATA2                   0x2B6
-+#define X_PC_NXC_WATCH2_DATA3                   0x2B7
-+#define PC_NXC_WATCH2_DATA0                     0x5A0
-+#define PC_NXC_WATCH2_DATA1                     0x5A8
-+#define PC_NXC_WATCH2_DATA2                     0x5B0
-+#define PC_NXC_WATCH2_DATA3                     0x5B8
-+
-+/* NxC Cache Watch 3 */
-+#define X_PC_NXC_WATCH3_SPEC                    0x2B8
-+#define PC_NXC_WATCH3_SPEC                      0x5C0
-+#define X_PC_NXC_WATCH3_DATA0                   0x2BC
-+#define X_PC_NXC_WATCH3_DATA1                   0x2BD
-+#define X_PC_NXC_WATCH3_DATA2                   0x2BE
-+#define X_PC_NXC_WATCH3_DATA3                   0x2BF
-+#define PC_NXC_WATCH3_DATA0                     0x5E0
-+#define PC_NXC_WATCH3_DATA1                     0x5E8
-+#define PC_NXC_WATCH3_DATA2                     0x5F0
-+#define PC_NXC_WATCH3_DATA3                     0x5F8
-+
- /*
-  * TCTXT Registers
-  */
 -- 
 2.45.2
 
