@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F8CC3DA70
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A6D1C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Jo-0004PM-Vn; Thu, 25 Jul 2024 19:56:21 -0400
+	id 1sX8Lo-0007EB-Mg; Thu, 25 Jul 2024 19:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Jm-00043X-MT; Thu, 25 Jul 2024 19:56:18 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sX8LS-0005tU-KF; Thu, 25 Jul 2024 19:58:08 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Jk-00015B-PJ; Thu, 25 Jul 2024 19:56:18 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7a92098ec97so323217a12.2; 
- Thu, 25 Jul 2024 16:56:16 -0700 (PDT)
+ id 1sX8LQ-0001Uk-3b; Thu, 25 Jul 2024 19:58:02 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70d25b5b6b0so347328b3a.2; 
+ Thu, 25 Jul 2024 16:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951774; x=1722556574; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951878; x=1722556678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o65ZpuREqQHuJJIrkFlt8ZtiXhnybS4cdkf3qbW4U8Q=;
- b=d63Qmw7209aCkrmR5WHiqyjvhpE+HS/9x6V8hd4LDjrho9+q5mHf96+BTI/Dp84+U1
- TLooURtV5a5f9mAL5kLk4cSX/pKPtwmU7d58O2i5GEI6fLeuhpppsfNGFh5QBqKy++on
- gzQSME+/yqVKY3tuiz+3Xape4UaO6/zDB0MhxVukMUgHZB4BbS8LyLjU17v0QJV2PUOR
- SYvFiTloIsutExozgmfNInheEf9oNHjvb7fyUh5kbKWjUxX8Q/QrwIPUah8kFVBSoOmG
- ZK1tPRVJpJAcSFbG2BvyvrtW1d73/QOS53iY1yD0+mqHvrgr7Zg9SkZpu2Z0cO4oIZJd
- mWBQ==
+ bh=B6NNf4u8aGBgUo+N3C/04sAy5MT6SljQKd+JhyyeJrg=;
+ b=gUxWYI+WVUFHdrfdSCoHCNvWsbYW922im93DeWszpXli+HFL3c/9bWhMFX0z9nr6Qz
+ CQjAXQbIbmc80wTnRfl3rU/TpH2bNKcobJuRADW8wlYgIv3OmlsvmiY8AZeE1eeSmkY7
+ 4FaH4Yt2VDzjX/GMEaSbHJyYc6pib2t8eo/ETXcVwPHIvJtNRLtYiDD3Vbo6PQbBlDj2
+ 2zlgAfV20g+ykVunAyu9+Z9rUOP6v0EaAsjtSJAnanfqXUAlRXD6ZGhmJGNXKxoMuqXD
+ yftMev8MMGmX7cFGtfhTWzyTx2C9rQjgvhlJyRn5iySZF6etMPyoVBH7xnkThkNers5V
+ tv4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951775; x=1722556575;
+ d=1e100.net; s=20230601; t=1721951878; x=1722556678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o65ZpuREqQHuJJIrkFlt8ZtiXhnybS4cdkf3qbW4U8Q=;
- b=khmxRrmGCLf9zieFz4GJGvNZT6jONLua4rtCl1V1LMnYnQyMoF5wRaiWPI/yERkxyn
- 4m0vuTEELGsb9ump4O9UDzGwOS8ie+LEU+nT3k7e2klur5oGOuA4nLEuRO7wOLLj5SSG
- 6K/ueIXS8mzTV9YEKlT5yF7ZRaARW4vRP8YX6gPUqURc8HGOCW+uxsozBBDrG8u/uvEE
- 8OrICUlnkWda6CfAMB2nmd+jyqMX7FC5GlDKFSOxx0SnoC4DeGJOrsvgZVbiuwIFDIi1
- DcLomx0WiBCnlcI6SOYYkw1lQOoPwiHqc90ip9OH7czgibTWreTAvXJzc+upcZQZHhbM
- 0NEQ==
+ bh=B6NNf4u8aGBgUo+N3C/04sAy5MT6SljQKd+JhyyeJrg=;
+ b=MtQJxqJAK8au16jC+0V1dJEC6fRmTX2BoaR2LerzXp8GgErJIQAuI2buDcnvKFqe3S
+ 31wpzPmvmKxPFulGe9nVLMq/X6rWnpd6lTJxsw3CUd+ANYNppjnUGFROUlvdJQw/S/IP
+ nP2Q4z/+iqjq01MImVW7TPWBn1mtor8y31ce863z2YOxNf2rbA5Kq8ZsruF2VvXmtVvw
+ QLMHw7/TftlGoXXMQvZfX5KdihGJAfYrP4dIvVMTSVleVctusP16RfaxFsi24W9y2+xO
+ Lhz8RHunLSEpYcU3yVGiBbgjBpBqXeIdurMw0d5IMtVZrJbR5XeEqUsG4h4RuHj0ukt1
+ mo4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3l8OoCKdEZ+AnrWbHBDIFbWsguN6Z8CqM6xwyLCdwryM9NvGhXHWAtiJMsIa4xro4pPtS6QCIIN6cjUqYchp1AMLJ
-X-Gm-Message-State: AOJu0YxBR8PbuJSYHLAogs9Az0b/kugylbBM5rrjaPMWsWpsqv1ksnSW
- W02yHBY+WhthiqkarQLsR52HdD9pJhg6qvv7e265AC3oSE310SdWCZl5wg==
-X-Google-Smtp-Source: AGHT+IGr27iydW2CgDl3QMsmmGrdRtaDIn8jKf3UfMs4vCN5mzQwtNsifZkPfKgki9RSJh3gdN18fQ==
-X-Received: by 2002:a17:90a:e650:b0:2c9:9f50:3f9d with SMTP id
- 98e67ed59e1d1-2cf23786e22mr5025358a91.5.1721951774566; 
- Thu, 25 Jul 2024 16:56:14 -0700 (PDT)
+ AJvYcCWuLfdvdO9irU1udwxt3HpKaUJBT/BENYc6JReppZg1xUn75+DfRFRjK5S0+tb8FQTiHQg+QhwgKcGDIvQxfvZefzcE
+X-Gm-Message-State: AOJu0YxBPrZq4Kt/W64sUpFo+upRnIM2vd+n/e2nU/Y74GcDkco8ELLw
+ 2k1M9j9bqDiUPjjffed6AX1aOHSmlMP0Jxjhx0zr4bD7jcvwJkS97X4CQw==
+X-Google-Smtp-Source: AGHT+IEN7igXr1p2xNuImy99aPjdavavdp812aIvj63QQuSinGkIbHnAM7zkNqgJXO9Ap3ifuL+Mww==
+X-Received: by 2002:a05:6a21:3396:b0:1c0:f26e:2296 with SMTP id
+ adf61e73a8af0-1c472c55c7emr5849839637.48.1721951877894; 
+ Thu, 25 Jul 2024 16:57:57 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.11
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:56:13 -0700 (PDT)
+ Thu, 25 Jul 2024 16:57:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 31/96] ppc/pnv: Add POWER10 ChipTOD quirk for big-core
-Date: Fri, 26 Jul 2024 09:53:04 +1000
-Message-ID: <20240725235410.451624-32-npiggin@gmail.com>
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 59/96] target/ppc: Move VSX vector with length storage access
+ insns to decodetree.
+Date: Fri, 26 Jul 2024 09:53:32 +1000
+Message-ID: <20240725235410.451624-60-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,128 +96,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-POWER10 has a quirk in its ChipTOD addressing that requires the even
-small-core to be selected even when programming the odd small-core.
-This allows skiboot chiptod init to run in big-core mode.
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Moving the following instructions to decodetree specification :
+
+        {l, st}xvl(l)           : X-form
+
+The changes were verified by validating that the tcg-ops generated by those
+instructions remain the same, which were captured using the '-d in_asm,op' flag.
+
+Also added a new function do_ea_calc_ra to calculate the effective address :
+EA <- (RA == 0) ? 0 : GPR[RA], which is now used by the above-said insns,
+and shall be used later by (p){lx, stx}vp insns.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+[np: Fix 32-bit build]
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c                 | 7 ++++++-
- hw/ppc/pnv_core.c            | 2 ++
- include/hw/ppc/pnv.h         | 1 +
- include/hw/ppc/pnv_core.h    | 7 +++++++
- target/ppc/timebase_helper.c | 9 +++++++++
- 5 files changed, 25 insertions(+), 1 deletion(-)
+ target/ppc/helper.h                 |  8 +--
+ target/ppc/insn32.decode            |  6 ++
+ target/ppc/mem_helper.c             |  8 +--
+ target/ppc/translate.c              | 17 ++++++
+ target/ppc/translate/vsx-impl.c.inc | 94 ++++++++++++++++++++---------
+ target/ppc/translate/vsx-ops.c.inc  |  8 ---
+ 6 files changed, 96 insertions(+), 45 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index a1c2cbbc3f..4605a49d28 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2290,11 +2290,12 @@ static void pnv_chip_core_sanitize(PnvMachineState *pnv, PnvChip *chip,
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 13f20bb243..85be749004 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -277,10 +277,10 @@ DEF_HELPER_3(STVEBX, void, env, avr, tl)
+ DEF_HELPER_3(STVEHX, void, env, avr, tl)
+ DEF_HELPER_3(STVEWX, void, env, avr, tl)
+ #if defined(TARGET_PPC64)
+-DEF_HELPER_4(lxvl, void, env, tl, vsr, tl)
+-DEF_HELPER_4(lxvll, void, env, tl, vsr, tl)
+-DEF_HELPER_4(stxvl, void, env, tl, vsr, tl)
+-DEF_HELPER_4(stxvll, void, env, tl, vsr, tl)
++DEF_HELPER_4(LXVL, void, env, tl, vsr, tl)
++DEF_HELPER_4(LXVLL, void, env, tl, vsr, tl)
++DEF_HELPER_4(STXVL, void, env, tl, vsr, tl)
++DEF_HELPER_4(STXVLL, void, env, tl, vsr, tl)
+ #endif
+ DEF_HELPER_4(vsumsws, void, env, avr, avr, avr)
+ DEF_HELPER_4(vsum2sws, void, env, avr, avr, avr)
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index f2661df918..e87b034159 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -1006,6 +1006,12 @@ STXSIHX         011111 ..... ..... ..... 1110101101 .   @X_TSX
+ STXSIWX         011111 ..... ..... ..... 0010001100 .   @X_TSX
+ STXSSPX         011111 ..... ..... ..... 1010001100 .   @X_TSX
  
- static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
- {
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-+    PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(pnv);
-     Error *error = NULL;
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
-     const char *typename = pnv_chip_core_typename(chip);
-     int i, core_hwid;
--    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
- 
-     if (!object_class_by_name(typename)) {
-         error_setg(errp, "Unable to find PowerNV CPU Core '%s'", typename);
-@@ -2335,8 +2336,11 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
-                                 &error_fatal);
-         object_property_set_bool(OBJECT(pnv_core), "big-core", chip->big_core,
-                                 &error_fatal);
-+        object_property_set_bool(OBJECT(pnv_core), "quirk-tb-big-core",
-+                                pmc->quirk_tb_big_core, &error_fatal);
-         object_property_set_link(OBJECT(pnv_core), "chip", OBJECT(chip),
-                                  &error_abort);
++LXVL            011111 ..... ..... ..... 0100001101 .   @X_TSX
++LXVLL           011111 ..... ..... ..... 0100101101 .   @X_TSX
 +
-         qdev_realize(DEVICE(pnv_core), NULL, &error_fatal);
- 
-         /* Each core has an XSCOM MMIO region */
-@@ -2650,6 +2654,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-     pmc->max_smt_threads = 4;
-+    pmc->quirk_tb_big_core = true;
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
- 
-     xfc->match_nvt = pnv10_xive_match_nvt;
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 43cfeaa2d4..1783795b23 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -364,6 +364,8 @@ static Property pnv_core_properties[] = {
-     DEFINE_PROP_UINT32("hwid", PnvCore, hwid, 0),
-     DEFINE_PROP_UINT64("hrmor", PnvCore, hrmor, 0),
-     DEFINE_PROP_BOOL("big-core", PnvCore, big_core, false),
-+    DEFINE_PROP_BOOL("quirk-tb-big-core", PnvCore, tod_state.big_core_quirk,
-+                     false),
-     DEFINE_PROP_LINK("chip", PnvCore, chip, TYPE_PNV_CHIP, PnvChip *),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 283ddd50e7..c56d152889 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -77,6 +77,7 @@ struct PnvMachineClass {
-     const char *compat;
-     int compat_size;
-     int max_smt_threads;
-+    bool quirk_tb_big_core;
- 
-     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
-     void (*i2c_init)(PnvMachineState *pnv);
-diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-index 50164e9e1f..c8784777a4 100644
---- a/include/hw/ppc/pnv_core.h
-+++ b/include/hw/ppc/pnv_core.h
-@@ -27,6 +27,13 @@
- 
- /* Per-core ChipTOD / TimeBase state */
- typedef struct PnvCoreTODState {
-+    /*
-+     * POWER10 DD2.0 - big core TFMR drives the state machine on the even
-+     * small core. Skiboot has a workaround that targets the even small core
-+     * for CHIPTOD_TO_TB ops.
-+     */
-+    bool big_core_quirk;
++STXVL           011111 ..... ..... ..... 0110001101 .   @X_TSX
++STXVLL          011111 ..... ..... ..... 0110101101 .   @X_TSX
 +
-     int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-     int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+ ## VSX Vector Binary Floating-Point Sign Manipulation Instructions
  
-diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-index d86112d60a..73120323b4 100644
---- a/target/ppc/timebase_helper.c
-+++ b/target/ppc/timebase_helper.c
-@@ -218,6 +218,7 @@ void helper_store_booke_tsr(CPUPPCState *env, target_ulong val)
-  * target/ppc/pnv_helper.c
-  */
- #include "hw/ppc/pnv_core.h"
-+#include "hw/ppc/pnv_chip.h"
- /*
-  * POWER processor Timebase Facility
-  */
-@@ -302,6 +303,14 @@ static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
- {
-     PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
- 
-+    if (pc->big_core && pc->tod_state.big_core_quirk) {
-+        /* Must operate on the even small core */
-+        int core_id = CPU_CORE(pc)->core_id;
-+        if (core_id & 1) {
-+            pc = pc->chip->cores[core_id & ~1];
-+        }
-+    }
-+
-     return &pc->tod_state;
+ XVABSDP         111100 ..... 00000 ..... 111011001 ..   @XX2
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 953dd08d5d..51b137febd 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -475,8 +475,8 @@ void helper_##name(CPUPPCState *env, target_ulong addr,                 \
+     *xt = t;                                                            \
  }
  
+-VSX_LXVL(lxvl, 0)
+-VSX_LXVL(lxvll, 1)
++VSX_LXVL(LXVL, 0)
++VSX_LXVL(LXVLL, 1)
+ #undef VSX_LXVL
+ 
+ #define VSX_STXVL(name, lj)                                       \
+@@ -504,8 +504,8 @@ void helper_##name(CPUPPCState *env, target_ulong addr,           \
+     }                                                             \
+ }
+ 
+-VSX_STXVL(stxvl, 0)
+-VSX_STXVL(stxvll, 1)
++VSX_STXVL(STXVL, 0)
++VSX_STXVL(STXVLL, 1)
+ #undef VSX_STXVL
+ #undef GET_NB
+ #endif /* TARGET_PPC64 */
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index cba943a49d..46aabce82b 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2543,6 +2543,7 @@ static inline void gen_align_no_le(DisasContext *ctx)
+                       (ctx->opcode & 0x03FF0000) | POWERPC_EXCP_ALIGN_LE);
+ }
+ 
++/* EA <- {(ra == 0) ? 0 : GPR[ra]} + displ */
+ static TCGv do_ea_calc(DisasContext *ctx, int ra, TCGv displ)
+ {
+     TCGv ea = tcg_temp_new();
+@@ -2557,6 +2558,22 @@ static TCGv do_ea_calc(DisasContext *ctx, int ra, TCGv displ)
+     return ea;
+ }
+ 
++#if defined(TARGET_PPC64)
++/* EA <- (ra == 0) ? 0 : GPR[ra] */
++static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
++{
++    TCGv EA = tcg_temp_new();
++    if (!ra) {
++        tcg_gen_movi_tl(EA, 0);
++    } else if (NARROW_MODE(ctx)) {
++        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
++    } else {
++        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
++    }
++    return EA;
++}
++#endif
++
+ /***                             Integer load                              ***/
+ #define DEF_MEMOP(op) ((op) | ctx->default_tcg_memop_mask)
+ #define BSWAP_MEMOP(op) ((op) | (ctx->default_tcg_memop_mask ^ MO_BSWAP))
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index de2a26a213..46bab49215 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -232,36 +232,72 @@ static void gen_lxvb16x(DisasContext *ctx)
+     set_cpu_vsr(xT(ctx->opcode), xtl, false);
+ }
+ 
+-#ifdef TARGET_PPC64
+-#define VSX_VECTOR_LOAD_STORE_LENGTH(name)                         \
+-static void gen_##name(DisasContext *ctx)                          \
+-{                                                                  \
+-    TCGv EA;                                                       \
+-    TCGv_ptr xt;                                                   \
+-                                                                   \
+-    if (xT(ctx->opcode) < 32) {                                    \
+-        if (unlikely(!ctx->vsx_enabled)) {                         \
+-            gen_exception(ctx, POWERPC_EXCP_VSXU);                 \
+-            return;                                                \
+-        }                                                          \
+-    } else {                                                       \
+-        if (unlikely(!ctx->altivec_enabled)) {                     \
+-            gen_exception(ctx, POWERPC_EXCP_VPU);                  \
+-            return;                                                \
+-        }                                                          \
+-    }                                                              \
+-    EA = tcg_temp_new();                                           \
+-    xt = gen_vsr_ptr(xT(ctx->opcode));                             \
+-    gen_set_access_type(ctx, ACCESS_INT);                          \
+-    gen_addr_register(ctx, EA);                                    \
+-    gen_helper_##name(tcg_env, EA, xt, cpu_gpr[rB(ctx->opcode)]);  \
+-}
+-
+-VSX_VECTOR_LOAD_STORE_LENGTH(lxvl)
+-VSX_VECTOR_LOAD_STORE_LENGTH(lxvll)
+-VSX_VECTOR_LOAD_STORE_LENGTH(stxvl)
+-VSX_VECTOR_LOAD_STORE_LENGTH(stxvll)
++#if defined(TARGET_PPC64)
++static bool do_ld_st_vl(DisasContext *ctx, arg_X *a,
++                        void (*helper)(TCGv_ptr, TCGv, TCGv_ptr, TCGv))
++{
++    TCGv EA;
++    TCGv_ptr xt;
++    if (a->rt < 32) {
++        REQUIRE_VSX(ctx);
++    } else {
++        REQUIRE_VECTOR(ctx);
++    }
++    xt = gen_vsr_ptr(a->rt);
++    gen_set_access_type(ctx, ACCESS_INT);
++    EA = do_ea_calc_ra(ctx, a->ra);
++    helper(tcg_env, EA, xt, cpu_gpr[a->rb]);
++    return true;
++}
++#endif
++
++static bool trans_LXVL(DisasContext *ctx, arg_LXVL *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    return do_ld_st_vl(ctx, a, gen_helper_LXVL);
++#else
++    qemu_build_not_reached();
+ #endif
++    return true;
++}
++
++static bool trans_LXVLL(DisasContext *ctx, arg_LXVLL *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    return do_ld_st_vl(ctx, a, gen_helper_LXVLL);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_STXVL(DisasContext *ctx, arg_STXVL *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    return do_ld_st_vl(ctx, a, gen_helper_STXVL);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
++
++static bool trans_STXVLL(DisasContext *ctx, arg_STXVLL *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
++#if defined(TARGET_PPC64)
++    return do_ld_st_vl(ctx, a, gen_helper_STXVLL);
++#else
++    qemu_build_not_reached();
++#endif
++    return true;
++}
+ 
+ static bool do_stxs(DisasContext *ctx, arg_X *a,
+                     void (*op)(DisasContext *, TCGv_i64, TCGv))
+diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
+index d44cb55836..7f4326c974 100644
+--- a/target/ppc/translate/vsx-ops.c.inc
++++ b/target/ppc/translate/vsx-ops.c.inc
+@@ -4,19 +4,11 @@ GEN_HANDLER_E(lxvdsx, 0x1F, 0x0C, 0x0A, 0, PPC_NONE, PPC2_VSX),
+ GEN_HANDLER_E(lxvw4x, 0x1F, 0x0C, 0x18, 0, PPC_NONE, PPC2_VSX),
+ GEN_HANDLER_E(lxvh8x, 0x1F, 0x0C, 0x19, 0, PPC_NONE,  PPC2_ISA300),
+ GEN_HANDLER_E(lxvb16x, 0x1F, 0x0C, 0x1B, 0, PPC_NONE, PPC2_ISA300),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER_E(lxvl, 0x1F, 0x0D, 0x08, 0, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(lxvll, 0x1F, 0x0D, 0x09, 0, PPC_NONE, PPC2_ISA300),
+-#endif
+ 
+ GEN_HANDLER_E(stxvd2x, 0x1F, 0xC, 0x1E, 0, PPC_NONE, PPC2_VSX),
+ GEN_HANDLER_E(stxvw4x, 0x1F, 0xC, 0x1C, 0, PPC_NONE, PPC2_VSX),
+ GEN_HANDLER_E(stxvh8x, 0x1F, 0x0C, 0x1D, 0, PPC_NONE,  PPC2_ISA300),
+ GEN_HANDLER_E(stxvb16x, 0x1F, 0x0C, 0x1F, 0, PPC_NONE, PPC2_ISA300),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER_E(stxvl, 0x1F, 0x0D, 0x0C, 0, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(stxvll, 0x1F, 0x0D, 0x0D, 0, PPC_NONE, PPC2_ISA300),
+-#endif
+ 
+ GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_VSX207),
+ GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_VSX207),
 -- 
 2.45.2
 
