@@ -4,91 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EDAC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 05:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FA9C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 05:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWrO9-0005vA-SM; Thu, 25 Jul 2024 01:51:41 -0400
+	id 1sWrQs-0003M2-7o; Thu, 25 Jul 2024 01:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWrO6-0005nh-KM
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:51:38 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sWrO4-0004tF-Bx
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:51:38 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fed72d23a7so3280185ad.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 22:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721886694; x=1722491494; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TZLdUhiHiJY+HDjHkpTdKEGF6p5T/aXwZgHKgsEq930=;
- b=hSpc7CeWQruUicGl+eG/3UIfbIeFTGz5Pb0S3sv2qTmKrSV7Krn/5CACpszeVAK7KF
- IGS2jK+SUPO304t1HCUpVGiRtigSvZWd13XpWp3Dd/y7UNuyPNU1eqXIJsmFySVxdJpn
- TiTCoMir/XoBtyyXlhG2fhN+UhdsePHhCL6CxFJnpZr1R5N4Ym3rlaIzzkuJy+DbRpBV
- j/vB8fRudZ5AoRNKzVafUF0fxCPsrQyY9YQxbhoexf69eHV+q+0r2C9rH6rN29xmAntp
- Zhqs15SVMrTwLa7164C4cIiH3U7RkKcUNpsmxByc1Zmty/AE/2+nJDySGII9vSXb8Qzk
- CYsg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWrQq-0003KT-D6
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:54:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWrQo-0005sH-4N
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 01:54:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721886864;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dh3yyuBj9HXf2A5cEfYqf0NaFgetwfgWSnefr6wKli8=;
+ b=Sg/oqDl3/zMVoIHGHP/9dA9o42bLVI+uErD2W0FnHd5ht+/ozbOH1kk/KqA3weiw0r/QCZ
+ Od2bx09pFEGgeEtbU1d6dIsOCp+DW3DmB8qZ9O18JPcbJ8TGLi565oG7HHWD3VbiL3bKv8
+ IwAsX6opCb1rXSkEfI1XuzfQyxyk9kE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-kh7x8InlPJuolAgAxFeNkA-1; Thu, 25 Jul 2024 01:54:21 -0400
+X-MC-Unique: kh7x8InlPJuolAgAxFeNkA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36832c7023bso357233f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 22:54:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721886694; x=1722491494;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TZLdUhiHiJY+HDjHkpTdKEGF6p5T/aXwZgHKgsEq930=;
- b=T315Rqz4w5YD+XckZ43Go5azCaiRLIGduCe266wrkM6mvpKb/IY6XvHiJvF1/GQJPY
- QbyPsLhTtLWSi3TbFIRWimP82E2J8pruL2M8vk7jYIhUBb7aqYSZwbhkMVo4ePnfr7ZU
- Qky65dXJebMDwGgx1j65/aj5c6lFU4fygld+JgmVDlIg0DCDl6fiMagrxFKH2dMMCgkH
- syQuI2oW0thT8zdVsq4kzi9GygpNjthHufb9PpJR/KsSTeClPeEu8xFuXqmnwdTiKxFi
- Uml+iuA16k3M8tDgFMxPmBMRb1+9S4xecl+gTpYG7+XONv9D0yVSHMSTIrrovV+DzzSy
- U33w==
+ d=1e100.net; s=20230601; t=1721886860; x=1722491660;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Dh3yyuBj9HXf2A5cEfYqf0NaFgetwfgWSnefr6wKli8=;
+ b=JKCybj1pZgp1pPKoiTG8w7AEsjUYARxEhwPnt9LZ68E/02atqHtpxMNo4YvJTv5SdH
+ +GahEbGcZEMtz34Kpmb6DWegD4/pva1MswKSPrS9r9YUCd3+hgp6oDO+CRiqZY1wxjFI
+ GYu1f13GSocl+UUo/aW3mbuEN6GPGvNsvxRRq/W82SqSwQJlpOYAXlRcnQ9JdeHf+RD6
+ MnlIr8e825AyJsSdca+C915hAMCOIg2f7aryqZKhfy/MpXDRfvjE1kqWkUglsA7wTBOe
+ z3o1kbNz5IkDRywF59X/WvZPYh88NIV+wO8Ea53/XvUR0Q30A0BCUQGjdvrj0xse9yQE
+ tV2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1JEqtydEahcofnjlMiJWOxzWOsnHvMdhhZm5T7ExdwVQSxKnz0j1spgj47AfwFfyzDZrw4M6X0nRdVTcpyW1+BXGA4K4=
-X-Gm-Message-State: AOJu0YyNVJhD81WnZtd19P+R6/760q3L3en/pXKcR4myfRLKOIuCl1nc
- IXO/VoGhYiE8xuyO56k50r4x3Xx16g5JIFFRqQXlMr/zqlTvzACr2O8pb/twOq0=
-X-Google-Smtp-Source: AGHT+IEZt7Ca3iM0ki8iXJWD3eY4u2YxFVg4h7RU95+r2cdZnP3lLnvoVKtPLrgHTso93ctUPQLJjA==
-X-Received: by 2002:a17:902:db03:b0:1fa:925b:5b77 with SMTP id
- d9443c01a7336-1fed9390996mr10668325ad.64.1721886693539; 
- Wed, 24 Jul 2024 22:51:33 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ AJvYcCXSybG6PAmwbhePZ2hvYqGrEeq/3agj1VBabwa2rO9aCj3oCWFe9AVB6thuiLIIP0zGVS5bSD5MVdFmCUSoNIu+6hnQ4Gc=
+X-Gm-Message-State: AOJu0YxkmIPLQfgHsLVb/OnL3Xh3ze+zaXBXVwX56Kby7HwwpxHIinTQ
+ cRoBVZDeR/D71bHoROZi1C9Xe7hrvFcXhFKrvypHoHfKY5+0UaFTjYHwIeLovHEfdr4dzQTzLWA
+ +RCcGfIy1FoI2tmEZsbfXTw343B4Ix+4LtW8ZDtZ9+iwkuNZG/sFq
+X-Received: by 2002:a05:6000:1942:b0:368:3038:8290 with SMTP id
+ ffacd0b85a97d-36b36421ac8mr707595f8f.39.1721886860524; 
+ Wed, 24 Jul 2024 22:54:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHI3Abal444WmsilGMojUOB9llheQDVQUaMgG30HCOZkmwXntXo9Fy/JkeXGpR8m6xgr9AF9A==
+X-Received: by 2002:a05:6000:1942:b0:368:3038:8290 with SMTP id
+ ffacd0b85a97d-36b36421ac8mr707561f8f.39.1721886859582; 
+ Wed, 24 Jul 2024 22:54:19 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1ed:8427:35e3:731c:3106:ee46])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7f1e880sm5390085ad.185.2024.07.24.22.51.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 22:51:33 -0700 (PDT)
-Message-ID: <a02bcaba-0712-44f2-924f-8972a4f98ce7@linaro.org>
-Date: Thu, 25 Jul 2024 15:51:26 +1000
+ ffacd0b85a97d-36b36857dcesm900105f8f.85.2024.07.24.22.54.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jul 2024 22:54:18 -0700 (PDT)
+Date: Thu, 25 Jul 2024 01:54:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Richard Cochran <richardcochran@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
+ "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
+ "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
+ "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+Message-ID: <20240725015120-mutt-send-email-mst@kernel.org>
+References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 2/5] target/riscv: rvv: Provide a fast path using
- direct access to host ram for unmasked unit-stride load/store
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240717133936.713642-1-max.chou@sifive.com>
- <20240717133936.713642-3-max.chou@sifive.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240717133936.713642-3-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,135 +115,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/24 23:39, Max Chou wrote:
-> @@ -199,7 +212,7 @@ static void
->   vext_ldst_stride(void *vd, void *v0, target_ulong base,
->                    target_ulong stride, CPURISCVState *env,
->                    uint32_t desc, uint32_t vm,
-> -                 vext_ldst_elem_fn *ldst_elem,
-> +                 vext_ldst_elem_fn_tlb * ldst_elem,
+On Wed, Jul 24, 2024 at 06:16:37PM +0100, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The vmclock "device" provides a shared memory region with precision clock
+> information. By using shared memory, it is safe across Live Migration.
+> 
+> Like the KVM PTP clock, this can convert TSC-based cross timestamps into
+> KVM clock values. Unlike the KVM PTP clock, it does so only when such is
+> actually helpful.
+> 
+> The memory region of the device is also exposed to userspace so it can be
+> read or memory mapped by application which need reliable notification of
+> clock disruptions.
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 
-Extra space: "type *var"
+one other thing worth mentioning is that this design can't work
+with confidential computing setups. By comparison, mapping e.g. a
+range in a PCI BAR would work for these setups.
+Is there a reason this functionality is not interesting for
+confidential VMs?
 
->                    uint32_t log2_esz, uintptr_t ra)
->   {
->       uint32_t i, k;
-> @@ -221,7 +234,8 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
->                   continue;
->               }
->               target_ulong addr = base + stride * i + (k << log2_esz);
-> -            ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
-> +            ldst_elem(env, adjust_addr(env, addr),
-> +                      (i + k * max_elems) << log2_esz, vd, ra);
+-- 
+MST
 
-Is this some sort of bug fix?  It doesn't seem related...
-If it is a bug fix, it should be a separate patch.
-
->   /*
->    * unit-stride: access elements stored contiguously in memory
->    */
->   
->   /* unmasked unit-stride load and store operation */
-> +static void
-> +vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-> +                  uint32_t elems, uint32_t nf, uint32_t max_elems,
-> +                  uint32_t log2_esz, bool is_load,
-> +                  vext_ldst_elem_fn_tlb *ldst_tlb,
-> +                  vext_ldst_elem_fn_host *ldst_host, uintptr_t ra)
-> +{
-> +    void *host;
-> +    int i, k, flags;
-> +    uint32_t esz = 1 << log2_esz;
-> +    uint32_t size = (elems * nf) << log2_esz;
-> +    uint32_t evl = env->vstart + elems;
-> +    int mmu_index = riscv_env_mmu_index(env, false);
-> +    MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
-
-You may want to pass in mmu_index, so that it is computed once in the caller.
-
-> +
-> +    /* Check page permission/pmp/watchpoint/etc. */
-> +    flags = probe_access_flags(env, adjust_addr(env, addr), size, access_type,
-> +                               mmu_index, true, &host, ra);
-> +
-> +    if (host && flags == 0) {
-
-If flags == 0, host will always be non-null.
-You only need flags == 0.
-
->   static void
->   vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-> -             vext_ldst_elem_fn *ldst_elem, uint32_t log2_esz, uint32_t evl,
-> -             uintptr_t ra)
-> +             vext_ldst_elem_fn_tlb *ldst_tlb,
-> +             vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
-> +             uint32_t evl, uintptr_t ra, bool is_load)
->   {
-> -    uint32_t i, k;
-> +    uint32_t k;
-> +    target_ulong page_split, elems, addr;
->       uint32_t nf = vext_nf(desc);
->       uint32_t max_elems = vext_max_elems(desc, log2_esz);
->       uint32_t esz = 1 << log2_esz;
-> +    uint32_t msize = nf * esz;
->   
->       VSTART_CHECK_EARLY_EXIT(env);
->   
-> -    /* load bytes from guest memory */
-> -    for (i = env->vstart; i < evl; env->vstart = ++i) {
-> -        k = 0;
-> -        while (k < nf) {
-> -            target_ulong addr = base + ((i * nf + k) << log2_esz);
-> -            ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
-> -            k++;
-> +    while (env->vstart < evl) {
-
-VSTART_CHECK_EARLY_EXIT has taken care of this condition for the first page.
-We know that one contiguous operation can only consume 1024 bytes, so cannot cross two 
-pages.  Therefore this loop executes exactly once or twice.
-
-I think it would be better to unroll this by hand:
-
-     calc page range
-     if (likely(elems)) {
-         vext_page_ldst_us(... elems ...);
-     }
-     if (unlikely(env->vstart < evl)) {
-         if (unlikely(page_split % msize)) {
-            ...
-         }
-         vext_page_ldst_us(... evl - vstart ...);
-     }
-
-> +        /* Calculate page range */
-> +        addr = base + ((env->vstart * nf) << log2_esz);
-> +        page_split = -(addr | TARGET_PAGE_MASK);
-> +        /* Get number of elements */
-> +        elems = page_split / msize;
-> +        if (unlikely(env->vstart + elems >= evl)) {
-> +            elems = evl - env->vstart;
-> +        }
-> +
-> +        /* Load/store elements in page */
-> +        vext_page_ldst_us(env, vd, addr, elems, nf, max_elems, log2_esz,
-> +                          is_load, ldst_tlb, ldst_host, ra);
-> +
-> +        /* Cross page element */
-> +        if (unlikely((page_split % msize) != 0 && (env->vstart + 1) < evl)) {
-> +            for (k = 0; k < nf; k++) {
-> +                addr = base + ((env->vstart * nf + k) << log2_esz);
-> +                ldst_tlb(env, adjust_addr(env, addr),
-> +                         (k * max_elems + env->vstart) << log2_esz, vd, ra);
-> +            }
-> +            env->vstart++;
->           }
->       }
-> -    env->vstart = 0;
->   
-> +    env->vstart = 0;
->       vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
->   }
-
-
-r~
 
