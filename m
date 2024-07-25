@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C2BC3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F8CC3DA70
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8MP-0001o1-K9; Thu, 25 Jul 2024 19:59:01 -0400
+	id 1sX8Jo-0004PM-Vn; Thu, 25 Jul 2024 19:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8MH-0001MZ-V0; Thu, 25 Jul 2024 19:58:55 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sX8Jm-00043X-MT; Thu, 25 Jul 2024 19:56:18 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8MF-0001eb-Dw; Thu, 25 Jul 2024 19:58:52 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2cb5b783c15so306298a91.2; 
- Thu, 25 Jul 2024 16:58:50 -0700 (PDT)
+ id 1sX8Jk-00015B-PJ; Thu, 25 Jul 2024 19:56:18 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7a92098ec97so323217a12.2; 
+ Thu, 25 Jul 2024 16:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951929; x=1722556729; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951774; x=1722556574; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nX6Lsm4o6dTs9bwPh6BsVax+d/K0njHWy4wuZsxBu9o=;
- b=HpqsXZotx6D/YyQSTR4usU+kqGRwV65mVtJ6qrtNGOzS54M7LwINJY4TysQOLrsd0e
- Kd5wvR/0iT88k+vtByDhVImob+pgN0eW/jpJlUuOo9OwxqU17s/qM999SnXvK9vdsxYd
- BgvBX3hbuMr9yF3TeXJK81gVUB7b0zn+FJgYcnaVciFW/c66iOT6XwKSMzByHW1I/oGX
- nM2+2szrN1zH6d98AXrVVJjZF0k/GytBHeAEm9TlXimS5WHoXa154yfA39fUmozlh93q
- FqSUTIJlA2EV4948XHY8UExhj5RYKhjma65ECntK+wrx2YwAvZTmpfqtrq6NjBDcv259
- LehA==
+ bh=o65ZpuREqQHuJJIrkFlt8ZtiXhnybS4cdkf3qbW4U8Q=;
+ b=d63Qmw7209aCkrmR5WHiqyjvhpE+HS/9x6V8hd4LDjrho9+q5mHf96+BTI/Dp84+U1
+ TLooURtV5a5f9mAL5kLk4cSX/pKPtwmU7d58O2i5GEI6fLeuhpppsfNGFh5QBqKy++on
+ gzQSME+/yqVKY3tuiz+3Xape4UaO6/zDB0MhxVukMUgHZB4BbS8LyLjU17v0QJV2PUOR
+ SYvFiTloIsutExozgmfNInheEf9oNHjvb7fyUh5kbKWjUxX8Q/QrwIPUah8kFVBSoOmG
+ ZK1tPRVJpJAcSFbG2BvyvrtW1d73/QOS53iY1yD0+mqHvrgr7Zg9SkZpu2Z0cO4oIZJd
+ mWBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951929; x=1722556729;
+ d=1e100.net; s=20230601; t=1721951775; x=1722556575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nX6Lsm4o6dTs9bwPh6BsVax+d/K0njHWy4wuZsxBu9o=;
- b=FA/2mbw6Jt1Lxl30hHB90Y+wzn2hD6tdNFXBt3ZhqpqfbLF60INtGLI2SnzKDyj1jh
- 4fZzSwsWKAwxYp0NH3c5un9GhYuo/GkWne72dfRK+FSx2wdJWRBZaB8XzkK5sy4UrPtg
- tpYrr0++HnxNPBQX6nHbmtn4iPCYWx0oogpmXjzo4K+1tcZnGIJcGDE262hIA2uBa75E
- hFH0jaM4TAgtVdBD6noBRr06bENQVOHb9AUwVx11uNjPrF7K4ZgN/CEVe23w2BzFkAW/
- YGviUXr/Jlr8Nc+XEJXxEyB+ZqkluO4Ri0P5/KBMv3SD/MEm3y9TGWkPhT+1ykIsEyYC
- DPBQ==
+ bh=o65ZpuREqQHuJJIrkFlt8ZtiXhnybS4cdkf3qbW4U8Q=;
+ b=khmxRrmGCLf9zieFz4GJGvNZT6jONLua4rtCl1V1LMnYnQyMoF5wRaiWPI/yERkxyn
+ 4m0vuTEELGsb9ump4O9UDzGwOS8ie+LEU+nT3k7e2klur5oGOuA4nLEuRO7wOLLj5SSG
+ 6K/ueIXS8mzTV9YEKlT5yF7ZRaARW4vRP8YX6gPUqURc8HGOCW+uxsozBBDrG8u/uvEE
+ 8OrICUlnkWda6CfAMB2nmd+jyqMX7FC5GlDKFSOxx0SnoC4DeGJOrsvgZVbiuwIFDIi1
+ DcLomx0WiBCnlcI6SOYYkw1lQOoPwiHqc90ip9OH7czgibTWreTAvXJzc+upcZQZHhbM
+ 0NEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyxWhDSMPfbfDQiB97v5FVasScMJJVFgI0U4plHTL5Il5Ei5c4arbpqywXulfHDGM/rQrw3ztkHezL9aE4K4wVIB0N
-X-Gm-Message-State: AOJu0YwLBV7tsnI+UrrbmOT8WZO/pTLA9EzO7EbZTBpNk3JgujmFrAgV
- 3ZMT1PdKN1QRbFHr4ygQ//83B0h4BRGIfx6hQCN5M5xMcTwwBJ7NKygR4A==
-X-Google-Smtp-Source: AGHT+IGOhcIi8u9pkOADy4h4ZS+v2swJ2HprnKNRZ16yt7f3oV9wabSaI+q+TGj5fb8ZsjauSHNc/g==
-X-Received: by 2002:a17:90b:3810:b0:2c9:6d07:18f4 with SMTP id
- 98e67ed59e1d1-2cf239063c4mr5296152a91.35.1721951929549; 
- Thu, 25 Jul 2024 16:58:49 -0700 (PDT)
+ AJvYcCX3l8OoCKdEZ+AnrWbHBDIFbWsguN6Z8CqM6xwyLCdwryM9NvGhXHWAtiJMsIa4xro4pPtS6QCIIN6cjUqYchp1AMLJ
+X-Gm-Message-State: AOJu0YxBR8PbuJSYHLAogs9Az0b/kugylbBM5rrjaPMWsWpsqv1ksnSW
+ W02yHBY+WhthiqkarQLsR52HdD9pJhg6qvv7e265AC3oSE310SdWCZl5wg==
+X-Google-Smtp-Source: AGHT+IGr27iydW2CgDl3QMsmmGrdRtaDIn8jKf3UfMs4vCN5mzQwtNsifZkPfKgki9RSJh3gdN18fQ==
+X-Received: by 2002:a17:90a:e650:b0:2c9:9f50:3f9d with SMTP id
+ 98e67ed59e1d1-2cf23786e22mr5025358a91.5.1721951774566; 
+ Thu, 25 Jul 2024 16:56:14 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.47
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:58:49 -0700 (PDT)
+ Thu, 25 Jul 2024 16:56:13 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 75/96] target/ppc/mmu_common.c: Remove pte_update_flags()
-Date: Fri, 26 Jul 2024 09:53:48 +1000
-Message-ID: <20240725235410.451624-76-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 31/96] ppc/pnv: Add POWER10 ChipTOD quirk for big-core
+Date: Fri, 26 Jul 2024 09:53:04 +1000
+Message-ID: <20240725235410.451624-32-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,84 +95,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+POWER10 has a quirk in its ChipTOD addressing that requires the even
+small-core to be selected even when programming the odd small-core.
+This allows skiboot chiptod init to run in big-core mode.
 
-This function is used only once, its return value is ignored and one
-of its parameter is a return value from a previous call. It is better
-to inline it in the caller and remove it.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 41 +++++++++++++----------------------------
- 1 file changed, 13 insertions(+), 28 deletions(-)
+ hw/ppc/pnv.c                 | 7 ++++++-
+ hw/ppc/pnv_core.c            | 2 ++
+ include/hw/ppc/pnv.h         | 1 +
+ include/hw/ppc/pnv_core.h    | 7 +++++++
+ target/ppc/timebase_helper.c | 9 +++++++++
+ 5 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index e3537c63c0..c4902b7632 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -119,39 +119,14 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-     }
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index a1c2cbbc3f..4605a49d28 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2290,11 +2290,12 @@ static void pnv_chip_core_sanitize(PnvMachineState *pnv, PnvChip *chip,
+ 
+ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+ {
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(pnv);
+     Error *error = NULL;
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
+     const char *typename = pnv_chip_core_typename(chip);
+     int i, core_hwid;
+-    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+ 
+     if (!object_class_by_name(typename)) {
+         error_setg(errp, "Unable to find PowerNV CPU Core '%s'", typename);
+@@ -2335,8 +2336,11 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
+                                 &error_fatal);
+         object_property_set_bool(OBJECT(pnv_core), "big-core", chip->big_core,
+                                 &error_fatal);
++        object_property_set_bool(OBJECT(pnv_core), "quirk-tb-big-core",
++                                pmc->quirk_tb_big_core, &error_fatal);
+         object_property_set_link(OBJECT(pnv_core), "chip", OBJECT(chip),
+                                  &error_abort);
++
+         qdev_realize(DEVICE(pnv_core), NULL, &error_fatal);
+ 
+         /* Each core has an XSCOM MMIO region */
+@@ -2650,6 +2654,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
+     pmc->compat = compat;
+     pmc->compat_size = sizeof(compat);
+     pmc->max_smt_threads = 4;
++    pmc->quirk_tb_big_core = true;
+     pmc->dt_power_mgt = pnv_dt_power_mgt;
+ 
+     xfc->match_nvt = pnv10_xive_match_nvt;
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 43cfeaa2d4..1783795b23 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -364,6 +364,8 @@ static Property pnv_core_properties[] = {
+     DEFINE_PROP_UINT32("hwid", PnvCore, hwid, 0),
+     DEFINE_PROP_UINT64("hrmor", PnvCore, hrmor, 0),
+     DEFINE_PROP_BOOL("big-core", PnvCore, big_core, false),
++    DEFINE_PROP_BOOL("quirk-tb-big-core", PnvCore, tod_state.big_core_quirk,
++                     false),
+     DEFINE_PROP_LINK("chip", PnvCore, chip, TYPE_PNV_CHIP, PnvChip *),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 283ddd50e7..c56d152889 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -77,6 +77,7 @@ struct PnvMachineClass {
+     const char *compat;
+     int compat_size;
+     int max_smt_threads;
++    bool quirk_tb_big_core;
+ 
+     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
+     void (*i2c_init)(PnvMachineState *pnv);
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index 50164e9e1f..c8784777a4 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -27,6 +27,13 @@
+ 
+ /* Per-core ChipTOD / TimeBase state */
+ typedef struct PnvCoreTODState {
++    /*
++     * POWER10 DD2.0 - big core TFMR drives the state machine on the even
++     * small core. Skiboot has a workaround that targets the even small core
++     * for CHIPTOD_TO_TB ops.
++     */
++    bool big_core_quirk;
++
+     int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
+     int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
+ 
+diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
+index d86112d60a..73120323b4 100644
+--- a/target/ppc/timebase_helper.c
++++ b/target/ppc/timebase_helper.c
+@@ -218,6 +218,7 @@ void helper_store_booke_tsr(CPUPPCState *env, target_ulong val)
+  * target/ppc/pnv_helper.c
+  */
+ #include "hw/ppc/pnv_core.h"
++#include "hw/ppc/pnv_chip.h"
+ /*
+  * POWER processor Timebase Facility
+  */
+@@ -302,6 +303,14 @@ static PnvCoreTODState *cpu_get_tbst(PowerPCCPU *cpu)
+ {
+     PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+ 
++    if (pc->big_core && pc->tod_state.big_core_quirk) {
++        /* Must operate on the even small core */
++        int core_id = CPU_CORE(pc)->core_id;
++        if (core_id & 1) {
++            pc = pc->chip->cores[core_id & ~1];
++        }
++    }
++
+     return &pc->tod_state;
  }
  
--static int pte_update_flags(mmu_ctx_t *ctx, target_ulong *pte1p,
--                            int ret, MMUAccessType access_type)
--{
--    int store = 0;
--
--    /* Update page flags */
--    if (!(*pte1p & 0x00000100)) {
--        /* Update accessed flag */
--        *pte1p |= 0x00000100;
--        store = 1;
--    }
--    if (!(*pte1p & 0x00000080)) {
--        if (access_type == MMU_DATA_STORE && ret == 0) {
--            /* Update changed flag */
--            *pte1p |= 0x00000080;
--            store = 1;
--        } else {
--            /* Force page fault for first write access */
--            ctx->prot &= ~PAGE_WRITE;
--        }
--    }
--
--    return store;
--}
--
- /* Software driven TLB helpers */
- 
- static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
-                             target_ulong eaddr, MMUAccessType access_type)
- {
-     ppc6xx_tlb_t *tlb;
--    int nr, best, way;
--    int ret;
-+    target_ulong *pte1p;
-+    int nr, best, way, ret;
- 
-     best = -1;
-     ret = -1; /* No TLB found */
-@@ -204,7 +179,17 @@ done:
-                       " prot=%01x ret=%d\n",
-                       ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
-         /* Update page flags */
--        pte_update_flags(ctx, &env->tlb.tlb6[best].pte1, ret, access_type);
-+        pte1p = &env->tlb.tlb6[best].pte1;
-+        *pte1p |= 0x00000100; /* Update accessed flag */
-+        if (!(*pte1p & 0x00000080)) {
-+            if (access_type == MMU_DATA_STORE && ret == 0) {
-+                /* Update changed flag */
-+                *pte1p |= 0x00000080;
-+            } else {
-+                /* Force page fault for first write access */
-+                ctx->prot &= ~PAGE_WRITE;
-+            }
-+        }
-     }
- #if defined(DUMP_PAGE_TABLES)
-     if (qemu_loglevel_mask(CPU_LOG_MMU)) {
 -- 
 2.45.2
 
