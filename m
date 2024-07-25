@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B32C3DA70
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E63CC3DA49
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8JV-0001P7-1r; Thu, 25 Jul 2024 19:56:02 -0400
+	id 1sX8IN-0003Ex-Dy; Thu, 25 Jul 2024 19:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JK-0000kl-P6; Thu, 25 Jul 2024 19:55:50 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1sX8IL-000379-ST; Thu, 25 Jul 2024 19:54:49 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JI-000108-Sj; Thu, 25 Jul 2024 19:55:50 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2cdadce1a57so315705a91.2; 
- Thu, 25 Jul 2024 16:55:48 -0700 (PDT)
+ id 1sX8IK-0000Z7-5x; Thu, 25 Jul 2024 19:54:49 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-71871d5e087so301190a12.1; 
+ Thu, 25 Jul 2024 16:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951747; x=1722556547; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951686; x=1722556486; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZHlxYwrr7y+TDyTGITO+2F55IlAj3JG/hAH0hQ7ZGIo=;
- b=RhopzTawGpS5hI+K+//AxzvaLDFW3JvYKP0+PJchQ01hmlhCKTP3kQ9O9T5iftb1jF
- fhPGu9IcCOZKemZtYpu+uPfXoRsHrbXaMyWAX4O3tSSWOk9DOc4rJpsob5TpV5W71d1q
- c2p/JM6G6t4mTL7y0pifv5SIlfM3BHrZ+hOFG35DX0APtBcpEI8K32I9PqweUYUIthqc
- sq2yxofn25p34dzrYfgn5ldkAkVxs2X1Kk6eb+bNaVgzu7ccpJxcFQ8uhCJExqIZtztD
- E0VQvCH+VzCcSuLjwAwSBbylAKSHnTCoaP5yIvKpdnJvHoqveX3Wj4no1Y4HHZ8AYJjA
- 9a6Q==
+ bh=HQJi1PrM5zA7kCEnyW3c73oAAhgPkkSN6T49J0Hm5N0=;
+ b=kNJ4eFg7DDY1t3+HedTR62ME5OaL+nHP1iJHmg/8E0rhS0J7JosE3D6nQQCrY7l4Ky
+ 4Sj5gidEs9lLuB9nvA9D/ihDHf3rk4qhzAF9LQgqBOIPGjvQ8mwsZBAp/9MoDt8k0ZMd
+ pTD2f8AyujaQFcFvozH89ZwrxpPrN0fADCyHFR1QhCFtdjNlmf6eZcTP6VQ3pb3fkC2P
+ xoGBQcyh0gGiokLHnu3nkqya6vHDU/zxP5xgqCUSjwpNu1uEJJEcb3cIAfhxcRzBzNSq
+ noUZZ0SFb7ksMSirFvVvlDa/bX2xYw5iV8s6aBMUJXlaqeIib68prhhN7ZVDCT59nc44
+ tNCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951747; x=1722556547;
+ d=1e100.net; s=20230601; t=1721951686; x=1722556486;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZHlxYwrr7y+TDyTGITO+2F55IlAj3JG/hAH0hQ7ZGIo=;
- b=eWPZN9tC1x58KWW7+6G9CwrojLHtobh49zhnEBgaFaGXoK5dypx6VnFGmEWrv/5dEj
- PjqfeEf9vz4H8LHSCNHn1IS/n00Bkf3LfXasSxJoAGhSIg8+3xXxNm0WGccffWnxWUgy
- iszUMHua2bZ6zeFChc2zqhKNyvSUhtYzp3LIKcLQrt/XPz9I8tVTOwQNDDoKbpD094Zx
- ePBS+5JLFQj4HYgd7i6ebKVg0g2hy6Om/un6OFTvH4gbeLxkPV5NBCPWHnT3ADHZ8VJg
- sI9zFxy0ukzx7JDjar3FrwZ2K4qOEpQvJPqpV4Y34d6DxbDJ4h7cM5tal9IdIQNXn/aB
- xrwg==
+ bh=HQJi1PrM5zA7kCEnyW3c73oAAhgPkkSN6T49J0Hm5N0=;
+ b=XjxUkUEceLcpQIcNmLZHNUEZ9rHPWx1nbyUI5UTn7Y+YpyjUHViW7xlIWgk6owLmii
+ q2zNR2zTLLYscOlKVYLfM9dePXuNZUkUxTNgDVIOSP8mFUVtvppNUy4DLtHPOVw95Kg+
+ NRPGCAmTSx7LC5WZHY5wYNb0rsVwEoO2AoLkad+EexbaSGvknjPRlI5/ysPWc1eDWWip
+ /BtV71EooxC9G9SLsQIslf3Kwb17yRXKQjojPcwoFFLHHck4baJq6MVyBLZCeXMdrfSo
+ k/4lV5qpSoWAZhPmyP+rOOruw+yjFL/ubRLG1SvPI8kLlEK8taziBny0fjZnGjyoLWxr
+ 6o6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeKWoKGqLdGNVJ0CKbaLU5XhyDmuieO/TZ3L+zM9CcsKAn5Y3V9LkQhP+o6T88mP5MqASScmEftt5gGBljUmdbdSiA
-X-Gm-Message-State: AOJu0YzzZqUXG8ht9tzwIttng68DGJRbOVoIKkb7JjPsi8QrNmngb8xk
- uO0ZnpgRzgKqRgXPqAQGCcBhMuHAJL/MgpFo1HJfumlueMEI77P6DbSk7Q==
-X-Google-Smtp-Source: AGHT+IGXn8FhUIfY7ycEyTXoiBdJro6SpQOyF4+iSTIa9kfsQlYrJIesUFgZbO0UTLk/eC7vdlw3RA==
-X-Received: by 2002:a17:90a:bc8b:b0:2c9:a015:ac2e with SMTP id
- 98e67ed59e1d1-2cf2379fb79mr4925216a91.14.1721951746765; 
- Thu, 25 Jul 2024 16:55:46 -0700 (PDT)
+ AJvYcCWciQMdmnq/cushPqmYYTtuNmOeCGvWS0/1dCLv+AhwkUUUEhXG4wMgmqsNehuSuf/SDaeiAl4uek5vQZSt2kxewOji
+X-Gm-Message-State: AOJu0Yz2867QEdlCWJQ0iJWUfysiFEUX6GqOr6ExyghiIJMeWhzf6Uhj
+ eiVxVilbOOk2lz15whCe3p0+2ULs0Imua3mXck+ZyOxg5VG44ZwXpVbcKQ==
+X-Google-Smtp-Source: AGHT+IGf9iKrIGlsvpREiwxDr8lnd2RdSFmq5PHDxjTuuNkG5zTzj8mXbzV59QfCmgTtVQ8N8AOcJw==
+X-Received: by 2002:a05:6a20:244f:b0:1c3:ce0f:bfb7 with SMTP id
+ adf61e73a8af0-1c47287a935mr5716337637.21.1721951686325; 
+ Thu, 25 Jul 2024 16:54:46 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.43
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.54.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:55:45 -0700 (PDT)
+ Thu, 25 Jul 2024 16:54:45 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 22/96] ppc/pnv: use class attribute to limit SMT threads for
- different machines
-Date: Fri, 26 Jul 2024 09:52:55 +1000
-Message-ID: <20240725235410.451624-23-npiggin@gmail.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 04/96] ppc/vof: Fix unaligned FDT property access
+Date: Fri, 26 Jul 2024 09:52:37 +1000
+Message-ID: <20240725235410.451624-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,88 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a class attribute to specify the number of SMT threads per core
-permitted for different machines, 8 for powernv8 and 4 for powernv9/10.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+FDT properties are aligned by 4 bytes, not 8 bytes.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c         | 12 +++++++++---
- include/hw/ppc/pnv.h |  1 +
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ hw/ppc/vof.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 91ff1be21f..a84e0e0e30 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -899,6 +899,7 @@ static void pnv_init(MachineState *machine)
-     PnvMachineState *pnv = PNV_MACHINE(machine);
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
-+    int max_smt_threads = pmc->max_smt_threads;
-     char *fw_filename;
-     long fw_size;
-     uint64_t chip_ram_start = 0;
-@@ -997,17 +998,19 @@ static void pnv_init(MachineState *machine)
-     pnv->num_chips =
-         machine->smp.max_cpus / (machine->smp.cores * machine->smp.threads);
- 
--    if (machine->smp.threads > 8) {
--        error_report("Cannot support more than 8 threads/core "
--                     "on a powernv machine");
-+    if (machine->smp.threads > max_smt_threads) {
-+        error_report("Cannot support more than %d threads/core "
-+                     "on %s machine", max_smt_threads, mc->desc);
-         exit(1);
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index e3b430a81f..b5b6514d79 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+     mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
+     g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
+     if (sc == 2) {
+-        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint32_t) * ac));
++        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
+     } else {
+         mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
      }
-+
-     if (!is_power_of_2(machine->smp.threads)) {
-         error_report("Cannot support %d threads/core on a powernv"
-                      "machine because it must be a power of 2",
-                      machine->smp.threads);
-         exit(1);
-     }
-+
-     /*
-      * TODO: should we decide on how many chips we can create based
-      * on #cores and Venice vs. Murano vs. Naples chip type etc...,
-@@ -2490,6 +2493,7 @@ static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
- 
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 8;
- 
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
- }
-@@ -2514,6 +2518,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
- 
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 4;
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
- 
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
-@@ -2538,6 +2543,7 @@ static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
- 
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-+    pmc->max_smt_threads = 4;
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
- 
-     xfc->match_nvt = pnv10_xive_match_nvt;
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 476b136146..1993dededf 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -76,6 +76,7 @@ struct PnvMachineClass {
-     /*< public >*/
-     const char *compat;
-     int compat_size;
-+    int max_smt_threads;
- 
-     void (*dt_power_mgt)(PnvMachineState *pnv, void *fdt);
-     void (*i2c_init)(PnvMachineState *pnv);
 -- 
 2.45.2
 
