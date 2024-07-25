@@ -4,110 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C712C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC7EC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWzBu-0000Te-RU; Thu, 25 Jul 2024 10:11:34 -0400
+	id 1sWzDw-0004rp-RJ; Thu, 25 Jul 2024 10:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWzBt-0000T8-44
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:11:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWzBr-0005nq-9u
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:11:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721916688;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=m+7qqjfSJJedkSM0ho4FvwKX/Ww1MNIJK3ukt4D885M=;
- b=C3WOKJvocm7CyMDobSC6lkN5cHTfn3eyY9+OHTI476Pw0qWzmjmb0w4vhAygPe1WYfBVIj
- C+4N/DnvVRO0gDQIqKn2+9Gcs7MRRFZMdR2GjGBCleC4OFbHCJBYzzTIDgL1ADG/KVZJgx
- RZgnNoKjRXOZFHNo9ZHnAuoZuAP1/5c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-aKh6PcezOEySUQjyMj7Hhg-1; Thu, 25 Jul 2024 10:11:25 -0400
-X-MC-Unique: aKh6PcezOEySUQjyMj7Hhg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-427fc86aaa2so6912165e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:11:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWzDs-0004pw-8x
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:13:37 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWzDq-0006fw-Kf
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:13:36 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-369cb9f086aso608746f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721916813; x=1722521613; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MhaQHPxEUXRm9BJ+jDoFhbXwUq/0jmn/JQd/gOROiGQ=;
+ b=AizZqBw8dp279hmv/2/Txmah/Nc86VqVC9GHaYzi4EwykEMcU1Py6e4UtsjKDFlv4t
+ Nurwh7JAXV47js330KvKVhSjrjk/t1sn/ub9uWmULBN9kUTJyDLQIICqvFjfnR8/2Xpj
+ gdLdR1upl9H139dbaANFBp99YqpXLTZRwnxONdw215RfF4J6yU72LRm0xEnlxAuoO/h+
+ f3wm3WqRGJoIpiz+jaiD1sFbvbw58ZMSvziX0ZF24HlOezO1ET130pPpAFp6ixBJFWnA
+ CxL4RnkXTCqO9uoGvVTMlVwnI6+st8iybQgXEQBbEVgoCfcEROoBu1rXgvnm6sServ4H
+ SR2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721916684; x=1722521484;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m+7qqjfSJJedkSM0ho4FvwKX/Ww1MNIJK3ukt4D885M=;
- b=eTYCRwhtcZBOnSwHMecLUfes2YulB5tI9gp6xo3k1rAzNmBIhpKcZA12YVRs3pfEfq
- sdD+tWMTAWG0fXtbVWywscSBIR0e2y7ieXJSLJkmFCUIQOzfGIy9NbdhWR5i5esd3CcS
- asRadlGNyuWVUq14UjDeJPeel74oGCwmH+1A7mLPz2NQtHzH2mX+gBnHs2sEmf8mPZx2
- wGUTeaJ6a5wKLl5onfc3WeAXFdtEIFOKnPR7zT2nxLHgKXNpcHeX6OD5Gs4VlO8ffLyU
- 8itNc7RpWwZ52Bhe3TOWkSfucnLLZUpPEP1FTbFeWascPmPzZH4xZEo22SIZexMFayc1
- iWNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXShfgujYpG5kbXskDahXYW8ZpsH8Ap8ycRwoJ2WytErk9bs96nLUx8RHLBVCwTnsw0Tr08GvVMjp835vA0Z0O/vFBFSX4=
-X-Gm-Message-State: AOJu0YwRWTGKUPkvdRMBumz5s1Tvw+VPZnWCPbU0yfKDuQLff+tMBVya
- KpAjxqS8Xo/sBPy3Sd+nCpXf7yLeoLJpqZs1jhkX8LD7PfdBPcbLu/JsJuF0kkP5R/GLJIHHGr+
- h5msSY1pdPrtwqJvXtaeyu94W16CYx1OyMr5xtnLw/3wtCQy3w+y/
-X-Received: by 2002:a05:600c:138a:b0:426:6320:226a with SMTP id
- 5b1f17b1804b1-4280548fb4cmr18426205e9.15.1721916684227; 
- Thu, 25 Jul 2024 07:11:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNsRboMyhKaoJYp9kK8awnKz/IQ2dhEpvJdwFDL7IFTPJdpWaM7Aqb1Bj5iTJbBTmDrGoXmQ==
-X-Received: by 2002:a05:600c:138a:b0:426:6320:226a with SMTP id
- 5b1f17b1804b1-4280548fb4cmr18425765e9.15.1721916683628; 
- Thu, 25 Jul 2024 07:11:23 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1ec:81aa:776c:8849:e578:516a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428057a6307sm37266205e9.36.2024.07.25.07.11.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 07:11:23 -0700 (PDT)
-Date: Thu, 25 Jul 2024 10:11:18 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Richard Cochran <richardcochran@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
- "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
- "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
- "Christopher S . Hall" <christopher.s.hall@intel.com>,
- Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
- netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-Message-ID: <20240725100351-mutt-send-email-mst@kernel.org>
-References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
- <20240725012730-mutt-send-email-mst@kernel.org>
- <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
- <20240725081502-mutt-send-email-mst@kernel.org>
- <f55e6dfc4242d69eed465f26d6ad7719193309dc.camel@infradead.org>
- <20240725082828-mutt-send-email-mst@kernel.org>
- <db786be69aed3800f1aca71e8c4c2a6930e3bb0b.camel@infradead.org>
- <20240725083215-mutt-send-email-mst@kernel.org>
- <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
+ d=1e100.net; s=20230601; t=1721916813; x=1722521613;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MhaQHPxEUXRm9BJ+jDoFhbXwUq/0jmn/JQd/gOROiGQ=;
+ b=F7xSRSpAH26EgQhlebH702i7DKH4/jhax5tM/QaGMksjRVTSMjcQvZ8KO5wso4iG17
+ ZyRohmwf1gwB5oUb0NKEcm0VzagleJtD3GowBzTWjCl+ZlBpyGdcmtsAC5jz0peGc75R
+ pQLQmVUvO84J8bxEmnMF63PbpADqclGpnDaohXVBFk84rdZVdSKpldN4yHrwMww8LCFS
+ NxgRo/fscZWP0f9JpOIvG0t3gWiDlYFdnk479N5ock93OG5F1WtvwC5uc8kWSBT5rN0v
+ mw3LmCyJwiJSddbyCVgu4cF6ANrlAFivd+r9MptHCpAg/kQqBKU/vIU0miZH8XnaMDDa
+ y5zw==
+X-Gm-Message-State: AOJu0Ywc/kxyDZF5S3kaSXayt9slbLCuu2xJvL4omk6AzOl1oHtUZFSq
+ aCpziD9wa71XBPP1jW+DyHqzvaPvFmnAREk/N5Qtvwd7NNixB2ArKCkcohJ2hOEiHXyA1sHADV2
+ A3FvMHH0iSLhaC9eNnJo4pQXauGi7MawJWXzRDQ==
+X-Google-Smtp-Source: AGHT+IF7i/uLXoNhU7qpEJZPkP7GqGq17PejVmREnBNIR3RE2g92VaP7NyEzzPe00U3DRNleTY+ow9tjbf6jZ6P0ia8=
+X-Received: by 2002:a05:6000:12cf:b0:367:9088:fecc with SMTP id
+ ffacd0b85a97d-36b31ac9b9dmr1984076f8f.7.1721916812656; Thu, 25 Jul 2024
+ 07:13:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20230302123029.153265-1-pbonzini@redhat.com>
+ <20230302123029.153265-58-pbonzini@redhat.com>
+ <CAFEAcA92Rd7f3Ngn8_nYZCxJptAD2DcP+oHCiXii6vTHMCUamQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA92Rd7f3Ngn8_nYZCxJptAD2DcP+oHCiXii6vTHMCUamQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jul 2024 15:12:51 +0100
+Message-ID: <CAFEAcA9g=eQo7kO+Z76+zHH8Vo+=bh_yRej1-N+-0iCnsuSr_A@mail.gmail.com>
+Subject: Re: [PULL 57/62] hw/xen: Support MSI mapping to PIRQ
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, David Woodhouse <dwmw@amazon.co.uk>,
+ Paul Durrant <paul@xen.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,29 +90,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 02:50:50PM +0100, David Woodhouse wrote:
-> Even if the virtio-rtc specification were official today, and I was
-> able to expose it via PCI, I probably wouldn't do it that way. There's
-> just far more in virtio-rtc than we need; the simple shared memory
-> region is perfectly sufficient for most needs, and especially ours.
+On Tue, 19 Dec 2023 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Thu, 2 Mar 2023 at 12:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > From: David Woodhouse <dwmw@amazon.co.uk>
+> >
+> > The way that Xen handles MSI PIRQs is kind of awful.
+> >
+> > There is a special MSI message which targets a PIRQ. The vector in the
+> > low bits of data must be zero. The low 8 bits of the PIRQ# are in the
+> > destination ID field, the extended destination ID field is unused, and
+> > instead the high bits of the PIRQ# are in the high 32 bits of the address.
+>
+> Hi; Coverity thinks this change introduced a locking error
+> (CID 1527403):
+>
+>
+> > @@ -1226,21 +1256,54 @@ int xen_evtchn_bind_pirq_op(struct evtchn_bind_pirq *pirq)
+> >          return -EINVAL;
+> >      }
+> >
+> > -    QEMU_LOCK_GUARD(&s->port_lock);
+> > +    QEMU_IOTHREAD_LOCK_GUARD();
+>
+> We used to take the port_lock before looking at s->pirq[pirq->pirq].port,
+> but now we don't...
+>
+> >      if (s->pirq[pirq->pirq].port) {
+> >          return -EBUSY;
+> >      }
+> >
+> > +    qemu_mutex_lock(&s->port_lock);
+>
+> ...until down here after that "exit if already allocated" check.
+> So Coverity thinks that two threads might both get into
+> the "take the lock, allocate a port, set the port field in the
+> struct" codepath simultaneously.
+>
+> > +
+> >      ret = allocate_port(s, 0, EVTCHNSTAT_pirq, pirq->pirq,
+> >                          &pirq->port);
+> >      if (ret) {
+> > +        qemu_mutex_unlock(&s->port_lock);
+> >          return ret;
+> >      }
+> >
+> >      s->pirq[pirq->pirq].port = pirq->port;
+> >      trace_kvm_xen_bind_pirq(pirq->pirq, pirq->port);
+> >
+> > +    qemu_mutex_unlock(&s->port_lock);
+> > +
+>
+> I think in practice the iothread-lock guard will prevent this,
+> but it does look rather odd. Is there a reason not to have
+> the port lock for the whole stretch of "check whether we've
+> already allocated this, and if not then allocate it" code ?
 
-I can't stop amazon from shipping whatever in its hypervisor,
-I'd just like to understand this better, if there is a use-case
-not addressed here then we can change virtio to address it.
+Ping? This is still in Coverity's list of untriaged issues.
+I'm inclined to say we should take the port_lock before the
+EBUSY check. Using the WITH_QEMU_LOCK_GUARD(&s->port_lock) {...}
+would make this straightforward and avoid having to do
+explicit unlock in the early-return codepath (both here and
+in the allocate_port() failed codepath).
 
-The rtc driver patch posted is 900 lines, yours is 700 lines, does not
-look like a big difference.  As for using a memory region, this is
-valid, but maybe rtc should be changed to do exactly that?
-E.g. we can easily add a capability describing such a region.
-or put it in device config space.
-
-I mean yes, we can build a new transport for each specific need but in
-the end we'll get a ton of interfaces with unclear compatibility
-requirements.  If effort is instead spent improving common interfaces,
-we get consistency and everyone benefits. That's why I'm trying to
-understand the need here.
-
--- 
-MST
-
+thanks
+-- PMM
 
