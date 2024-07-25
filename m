@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E6BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 06:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA0CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsQQ-00053o-AV; Thu, 25 Jul 2024 02:58:06 -0400
+	id 1sWsUQ-0002D9-EQ; Thu, 25 Jul 2024 03:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsQP-0004zz-7l
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:58:05 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsTw-00025t-1Q
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:01:58 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsQM-0000tK-AD
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 02:58:04 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-368557c9e93so261157f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jul 2024 23:58:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsTt-00027t-9V
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:01:42 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4280854e236so425875e9.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 00:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721890680; x=1722495480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721890898; x=1722495698; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PeGEmRBAOhT/xkRbn6ISbWil2tWD4PNocyMx9/v0nys=;
- b=W5aJsVMStgMHgh9fwRa/EP8kSG8YlVBqtaXZUYtF44h5er/f97FMLl9pfe8B700pOy
- Uv5x8MM9CJadiHVQMCPYVnmJxIXZPtBZFoaGoFg6SrruUr6wcN2vSjJBiPgS4Ho8StBL
- LbCG6z6qYDjQY0GrNCPbN/2lpAI5TBPHpConCL/x5AS687X28tkSUgP27n0T6f3R2xz8
- LNGRRjbwmiu90UoEf9A3ZqB8GuCjT4dV6gJS6cI5Kozu5+TB0IiB60Ytm15hoUHMqcRK
- qK7FjzgdTTvSD0gsTCoFhbcDRwO0cKJ01jAn/S4S5mTjZLubfj7TapH3JAn2lXWQGI8p
- jPKg==
+ bh=OMG/ajioR5kVp5gUE/XSbPZbqWF3BPUaIvWKHTBzci8=;
+ b=C3NK90Au7xzk59IY4khMnIZi3jucy/Z66Z/r0wsJcxhU8rXkMDC0Kq7LcnfpfTuYhR
+ RCloUoTSAIJ6AXy2f4qJLOohPMX4D/z0XlJOIu+plqVawk5FWowqtKxw7DXIm8OyZMkM
+ O5ddMxGPKky2RL7HDVJ53wtDEfrnU5pux/Io0FbYhH6IE0ueOQLV11QYxA1bZiVqZ8w0
+ BOj3YFKjPwnBhIAkuavY70NoRPXJ8GH2XFXUIsEZFMFixVou3w9doOSR7g+hGTiREl9v
+ ICZFqyQ/oLvDUi9PmN/p/vP19nghmLSPicB5X6ko2xpZ0x/WZHITLAVlDknFF29+4QuD
+ uQbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721890680; x=1722495480;
+ d=1e100.net; s=20230601; t=1721890898; x=1722495698;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PeGEmRBAOhT/xkRbn6ISbWil2tWD4PNocyMx9/v0nys=;
- b=auhtj0a0C0o8hjcxjpv1YeKpgtGX4Z9mspuwxigTe/ZMgsMrHZ493f5tkO+AvRyjvZ
- GexfuefdIAcSP75c4X0ai6YvO+5dHgCRYh+YLtmBtzVeayN1OT2KyV1Q27bllEtPbcwM
- /7zAwFEoZ40v6LVhopwcIMIlg3xnvQaEnXZekEIbROWGlD11T9Ust4Kd36HeGKnxR+tJ
- o4l+7X4cv53e+FHb/9armLscqIRBIGYhZuNn0Q5fYsqZNFWq2Ky+bRO0KO/z36J0ZZBx
- vAgwspWDyihH8oPIplUFkc44UN0Sqo+y/W0sHVwNaaXy9rwwrsCXAhkY4R1RiBELiFMD
- rcyg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLPYdTyuUxTn69lMTMTptYcrdeVqKufA5O2AbOROxRxnApRmrkJmvbZx+uAuiYzeu+fxU9xfegcNX9Xq98yiF4eNzXJDo=
-X-Gm-Message-State: AOJu0Yy2yqzC/DSNr4BQJVIo0GOoOLHsPls2nSVMUZmXjZMuuUtcNAZp
- /eXp2WOkRKiCvm73Gz0o1fe45BXZHgWCSpzpUdwIYnvPweLNe7BW0w76tpaAzKQ=
-X-Google-Smtp-Source: AGHT+IFYd+86a4CdMeD8vAECR5ncKuYu2L+tqZOQR0k/0s7mBlAjDuinyINICZUilr2ZdZIOD9NEgg==
-X-Received: by 2002:adf:f281:0:b0:367:9851:4f22 with SMTP id
- ffacd0b85a97d-36b36443da6mr555218f8f.58.1721890680067; 
- Wed, 24 Jul 2024 23:58:00 -0700 (PDT)
+ bh=OMG/ajioR5kVp5gUE/XSbPZbqWF3BPUaIvWKHTBzci8=;
+ b=GcY7Rvvvyj3q5J2FSzmjxus4YCNy+DaFjoAJSDJ6j0BlYcnYI5/Z2GKrchCjlBVWIu
+ dcYatnEi7psR3pTlv52cU4L6Rq4FJmI74JOU5g3oHJg3XmFaz8FBxlxF5xL4PSntA37y
+ J7jF8Cl+/Fzhhd+/3RcWGnHkbjDqm3EauVwjnh6/ZSkp8xUV98QwfY+tCssT0sbKzH6n
+ 2OvrSEqshpJcTtjqOLE7Ig5MUldfiaWYB4fEmwfAZlZV+aei6xZzNF8XFnX6M8p17dA4
+ nIzv0aQQulqUEZsSYoXBDIXGAENdEKr4VXRcPijUSc6KrcG27RdQYr5UV/sstZyclElH
+ gZ7Q==
+X-Gm-Message-State: AOJu0YxLsqNotHv3SBDa02GNpcOP6UOx/5BChn15831z9VsV/1gs+mrJ
+ dW3qUbwQ3Ow9KozDQ9DJ4PQyL5Nf6Lz1jiYGzslxG5VRg2gaKM18GrwP7/CZIWo=
+X-Google-Smtp-Source: AGHT+IEDzli1lX56qcdBIAu5fVMARTN7rpYCVBUvGngvXsQj7/BkqXDvyrDQZjpu7QpRciq69UU/+w==
+X-Received: by 2002:a05:600c:4f51:b0:426:5b21:9801 with SMTP id
+ 5b1f17b1804b1-4280574219amr8850295e9.27.1721890897761; 
+ Thu, 25 Jul 2024 00:01:37 -0700 (PDT)
 Received: from [192.168.114.175] (164.170.88.92.rev.sfr.net. [92.88.170.164])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367c0aa1sm1070972f8f.21.2024.07.24.23.57.58
+ 5b1f17b1804b1-4280573f447sm19542095e9.16.2024.07.25.00.01.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jul 2024 23:57:59 -0700 (PDT)
-Message-ID: <0fb1abd0-5031-4098-8e76-7f65fcbbddcb@linaro.org>
-Date: Thu, 25 Jul 2024 08:57:57 +0200
+ Thu, 25 Jul 2024 00:01:37 -0700 (PDT)
+Message-ID: <0d864b83-be52-479f-bd4a-5019425e98b4@linaro.org>
+Date: Thu, 25 Jul 2024 09:01:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/misc/bcm2835_property: Avoid overflow in OTP
- access properties
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240723131029.1159908-1-peter.maydell@linaro.org>
- <20240723131029.1159908-3-peter.maydell@linaro.org>
- <a8291990-e161-4a43-a1c9-69040f1f6f93@linaro.org>
- <CAFEAcA8GPPy4P330P8kgbCxf=S+f8WGmB6tnAHN5bXxxyN9U=A@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] target/riscv: Expose RV32 cpu to RV64 QEMU
+To: Alistair Francis <alistair23@gmail.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com,
+ bmeng.cn@gmail.com, alex.bennee@linaro.org
+References: <20240719231149.1364-1-zhiwei_liu@linux.alibaba.com>
+ <CAKmqyKN=S9o32K0G8k5NqyMs=Xm+gSNBgnbRi3AjbvOubXoDwA@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8GPPy4P330P8kgbCxf=S+f8WGmB6tnAHN5bXxxyN9U=A@mail.gmail.com>
+In-Reply-To: <CAKmqyKN=S9o32K0G8k5NqyMs=Xm+gSNBgnbRi3AjbvOubXoDwA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,70 +97,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/24 14:31, Peter Maydell wrote:
-> On Wed, 24 Jul 2024 at 08:06, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Hi Peter,
->>
->> On 23/7/24 15:10, Peter Maydell wrote:
->>> Coverity points out that in our handling of the property
->>> RPI_FWREQ_SET_CUSTOMER_OTP we have a potential overflow.  This
->>> happens because we read start_num and number from the guest as
->>> unsigned 32 bit integers, but then the variable 'n' we use as a loop
->>> counter as we iterate from start_num to start_num + number is only an
->>> "int".  That means that if the guest passes us a very large start_num
->>> we will interpret it as negative.  This will result in an assertion
->>> failure inside bcm2835_otp_set_row(), which checks that we didn't
->>> pass it an invalid row number.
->>>
->>> A similar issue applies to all the properties for accessing OTP rows
->>> where we are iterating through with a start and length read from the
->>> guest.
->>>
->>> Use uint32_t for the loop counter to avoid this problem. Because in
->>> all cases 'n' is only used as a loop counter, we can do this as
->>> part of the for(), restricting its scope to exactly where we need it.
->>>
->>> Resolves: Coverity CID 1549401
->>> Cc: qemu-stable@nongnu.org
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->>> ---
->>>    hw/misc/bcm2835_property.c | 9 ++++-----
->>>    1 file changed, 4 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
->>> index e28fdca9846..7eb623b4e90 100644
->>> --- a/hw/misc/bcm2835_property.c
->>> +++ b/hw/misc/bcm2835_property.c
->>> @@ -30,7 +30,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
->>>        uint32_t tot_len;
->>>        size_t resplen;
->>>        uint32_t tmp;
->>> -    int n;
->>>        uint32_t start_num, number, otp_row;
->>>
->>>        /*
->>> @@ -337,7 +336,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
->>>
->>>                resplen = 8 + 4 * number;
->>>
->>> -            for (n = start_num; n < start_num + number &&
->>> +            for (uint32_t n = start_num; n < start_num + number &&
->>>                     n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
->>
->> I find not making the counter size explicit and use 'unsigned'
->> simpler, since using 32-bit in particular doesn't bring much here.
->> Is there a reason I'm missing?
-> 
-> I just wanted to match the types between n and start_num and
-> number (where the latter two should be uint32_t because we load
-> them from the guest as 32-bit values). Otherwise we're relying
-> on "unsigned" being at least 32 bit -- it is, but if we need
-> it to be 32 bit then why not use the type that is guaranteed
-> and says specifically that it's 32 bits ?
+Hi Alistair,
 
-Yes OK no problem.
+On 24/7/24 04:44, Alistair Francis wrote:
+> On Sat, Jul 20, 2024 at 9:15 AM LIU Zhiwei <zhiwei_liu@linux.alibaba.com> wrote:
+>>
+>> This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
+>> qemu-system-riscv64 can directly boot a RV32 Linux.
+>>
+>> This patch set has been tested with 6.9.0 Linux Image.
+>> And add an avocado tuxrun test in tests/avocado.
+>>
+>> v6:
+>>    Use TUXRUN test case instead of boot_linux_console
+>>    Add any32 and max32 cpu for RV64 QEMU
+>>
+>> v5:
+>>    Rebase to master and add tags
+>>
+>> v4:
+>>    Drop UL completely in PATCH v3 2/7, 4/7, 5/7.
+>>    Avocado: Add "if=none" to "-drive" option in QEMU command line
+>>
+>> v3:
+>>    Rebase to the master branch
+>>
+>> v2:
+>>    Remove the line that was inadvertently left in PATCH v1 4/6.
+>>    Add an avocado test.
+>>
+>> v1:
+>>    https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00501.html
+>>
+>>
+>> LIU Zhiwei (2):
+>>    target/riscv: Add any32 and max32 CPU for RV64 QEMU
+>>    tests/avocado: Boot Linux for RV32 cpu on RV64 QEMU
+>>
+>> TANG Tiancheng (6):
+>>    target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
+>>    target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
+>>    target/riscv: Correct SXL return value for RV32 in RV64 QEMU
+>>    target/riscv: Detect sxl to set bit width for RV32 in RV64
+>>    target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
+>>    target/riscv: Enable RV32 CPU support in RV64 QEMU
+> 
+> Thanks!
+> 
+> Applied to riscv-to-apply.next
+
+Please don't add the 'any32' CPU type, we are removing 'any':
+https://lore.kernel.org/qemu-devel/20240724130717.95629-1-philmd@linaro.org/
 
