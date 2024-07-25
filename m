@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F438C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E824DC3DA70
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Ai-0001K9-2e; Thu, 25 Jul 2024 19:46:56 -0400
+	id 1sX8I1-0001mA-Ph; Thu, 25 Jul 2024 19:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Ac-0000vu-KH
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:50 -0400
-Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sX8Hz-0001ev-SD; Thu, 25 Jul 2024 19:54:27 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sX8Aa-0005P3-Mf
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 19:46:50 -0400
-Received: by mail-il1-x12b.google.com with SMTP id
- e9e14a558f8ab-396eb81a1cfso4662425ab.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 16:46:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sX8Hx-0000X7-IW; Thu, 25 Jul 2024 19:54:27 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7a18ba4143bso367833a12.2; 
+ Thu, 25 Jul 2024 16:54:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1721951207; x=1722556007;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U1RafRXULaoeGB+gXsUlffAxqhChP6/g1AGQdC0LRV0=;
- b=26/NHMHNVKWjvOi0FcWMOY3yGlWGPjC0bf4CgWBl9GclR5uu+drvebaCA9BWQ9rdmi
- pB9bxyqTbz6dssu6sT7xnE80zS2CjNC7VqrfZeIEjO2jGi36k/xr5ftzcii9vKrWo/DM
- 8ThAMVe8FPdnRd0sjq3VLHxOnIERmkb/K34iF5xl9nHpUqt1ApR+LITSdXpTLaOuZ0Z4
- wuBjiWeNZK4GzsMFrj0t5avJuqirgXsIUKQ84K+INlqKE9FTVf/4L2Aw2ggWTSAMIPGb
- bCIXSkw02mWKYghSpLQEkUtdkTF35Q7jJQmnqp89EQgDs6DCF84YoxH6H6Ng6ODCDkyY
- FCMQ==
+ d=gmail.com; s=20230601; t=1721951663; x=1722556463; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vuTASRrnNMFHwIdLbtElTK9PwZQwiC9049mukLPYNt0=;
+ b=fjnXgJauWjIjDXjxvGqiBhqfD5pjiBELLdvZ2E6451H/7Mn2GbPXMtxTgF56d98elN
+ xj9XIz61BVn85XvIicaEtSro6sR3ub5e8fqTZ+yVDy4rber9P/QqvgEV3PUamEAOcEIZ
+ GUZZZ0EXxoKfgmpuG7W8dBmn5FKDqSZHrlrfCwfOlNKFhxDLTwrNQR5rCHIZVJDeq0e9
+ nB1LIxw33EIp6MCAKXLcKJZcmts45zHNQRdGNeV/wMZEqphLJOEsFg4cGWzGx0Ave7Q/
+ Be0ZQ+dW2bJtkEHgDDBD9hUjpfYFfuZHw/51eC9OGuE/Ug8XQYwtDfDm8MiLVxRxAbSW
+ PxXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951207; x=1722556007;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U1RafRXULaoeGB+gXsUlffAxqhChP6/g1AGQdC0LRV0=;
- b=BbUNrjJ9C7DQTf1tLnb9WcWzz8QyCQfDbQgxo6y3Fb2AE9oujh5VUQaqi5it93/VFx
- 3MuLr43BWZxgm7hxIv53VeJuDP8xf9L5yf8gpE2FfTgzACs9FVufxxv6vlQ7GvsbzfHe
- 0Nli37c36LXVNcKoCg4Nub6iTkpyWy+MeukapFSJufLf+z9SbJk4Co7B9vB/zQfHJ9Ge
- b//8MTpy8vAE3QrNLaBtJ0mDI8ZZxpGGZZE80R9jQ66uYWQGoPOITtDHXwRfte8S0n0j
- 8ZGXqTaTh/UgD5lBkjumcPo3tC3Ouzr3lC3RtrBP62TBDtFCeV5F7RSy0VsqezKuRDoX
- WBLw==
+ d=1e100.net; s=20230601; t=1721951663; x=1722556463;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vuTASRrnNMFHwIdLbtElTK9PwZQwiC9049mukLPYNt0=;
+ b=VWNThFF0JZ5/zk8Q2QXRDEoIMlGKi5XCHW7GzHqVxTaHBY1dgKzqq7vKFXT3X6tWJI
+ 4DF1B0eWeag/Q2Y+CQeOSg6yverpQQTU3qH35AtLj0Od+ZRMAI8Uq3N4+0rOTC+pZfra
+ 08tq8mXBRWFyhvfpj4M9e9A6wOkJmKrxH46sBv45LTgDFcppt8I5ED7zu3eXZLkR5Nna
+ 3o9Ws7VSBm3gSAhLHDWr3a/TRrVP3NwczfwhsOqgShM0LTP/tWC2qXE/B50IceA6R2DQ
+ fCA9SYmWJHDMhL51dLPBjoQOfys0w5ZXNaHujxby1Lz3U2zAnRIJGemrRLw4iEQidgsV
+ 3/Dw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUZQeMHctZv8BH5is2kAlbDyfzRTxjf1pZft99g/muqtoAUhSuHukaahrw263Fe558H/x4+GmRG6g43vBDX5RltWuNdiY=
-X-Gm-Message-State: AOJu0YyUZ53WuIUjqd10JJZMPB0+Qfba1DxyQFlsRsI1BDcPrdoBjadw
- vhIX+6+/PegHJAWcfEYmt7MBFsM/tWzpTxPUAJYIcXySFEzKQxysDv+ok8tprtE=
-X-Google-Smtp-Source: AGHT+IGy9MqWIDoryJ9a1TUhuvKpi76++J/YXW9VofOVUL5C6siHdDEm9/l6rf1Bb14RQ6thdTsBTA==
-X-Received: by 2002:a05:6e02:12e2:b0:396:b0d:8018 with SMTP id
- e9e14a558f8ab-39a217e0d7amr59304055ab.6.1721951207117; 
- Thu, 25 Jul 2024 16:46:47 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ AJvYcCWC6OoOboMkJK3Dow2UyP2O2i0dawnQI9JJ+Cz7bpCe93g5HaVeiq9Mx2ZH/ow52P9FF3H6xIuY63jGlqgt+MrkYls1
+X-Gm-Message-State: AOJu0YwWcalJMTH42YnWu+8k+Ye2YECUqhyu9WUX8GtwKpqLUNmwIMRf
+ i+iqam1Zc/OhmS1thJ/05ztzlLeJQ5LyxLTZuD0ViWN+YUlHH2XsYjWcww==
+X-Google-Smtp-Source: AGHT+IEKByv5kxY468rmsaiMmAolAp5QfkoW3DMscqdWrlq1LJaiiSKcqt3FOAAcBeYLMno5detNWw==
+X-Received: by 2002:a17:90a:bc8a:b0:2cc:ef14:89e3 with SMTP id
+ 98e67ed59e1d1-2cf2e9dc2efmr3680593a91.15.1721951663085; 
+ Thu, 25 Jul 2024 16:54:23 -0700 (PDT)
+Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8128d0sm1647565b3a.118.2024.07.25.16.46.46
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.54.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:46:46 -0700 (PDT)
-From: Deepak Gupta <debug@rivosinc.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
- andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH 18/24] linux-user/riscv: setup/teardown zicfiss shadow stack
- for qemu-user
-Date: Thu, 25 Jul 2024 16:46:07 -0700
-Message-ID: <20240725234614.3850142-19-debug@rivosinc.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240725234614.3850142-1-debug@rivosinc.com>
-References: <20240725234614.3850142-1-debug@rivosinc.com>
+ Thu, 25 Jul 2024 16:54:22 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 00/96] ppc-for-9.1-2 queue
+Date: Fri, 26 Jul 2024 09:52:33 +1000
+Message-ID: <20240725235410.451624-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
- envelope-from=debug@rivosinc.com; helo=mail-il1-x12b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,181 +92,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implements shadow stack related prctls for qemu-user on riscv. Allocates
-shadow stack from host memory using `target_mmap` and tears down when
-user issues prctl to disable using `target_munmap`.
+Apologies this is so late after soft-freeze, apologies. I was waiting
+on "accel/kvm: Extract common KVM vCPU {creation,parking} code" to be
+merged upsream then ran into last minute CI problems. This PR is very
+contained to ppc code so I hope it will not inconvenience anybody.
 
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-Co-developed-by: Jesse Huang <jesse.huang@sifive.com>
-Co-developed-by: Jim Shu <jim.shu@sifive.com>
-Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
----
- linux-user/riscv/cpu_loop.c     | 50 +++++++++++++++++++++++++++++++++
- linux-user/riscv/target_cpu.h   |  7 +++++
- linux-user/riscv/target_prctl.h | 27 ++++++++++++++++++
- target/riscv/cpu.c              |  4 +++
- target/riscv/cpu.h              |  1 +
- 5 files changed, 89 insertions(+)
+Thanks,
+Nick
 
-diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
-index 52c49c2e42..22670b68e0 100644
---- a/linux-user/riscv/cpu_loop.c
-+++ b/linux-user/riscv/cpu_loop.c
-@@ -25,6 +25,7 @@
- #include "signal-common.h"
- #include "elf.h"
- #include "semihosting/common-semi.h"
-+#include "user-mmap.h"
- 
- void cpu_loop(CPURISCVState *env)
- {
-@@ -94,6 +95,55 @@ void cpu_loop(CPURISCVState *env)
-     }
- }
- 
-+#define ZICFISS_GUARD_SIZE  (2UL * TARGET_PAGE_SIZE)
-+#define ZICFISS_STACK_SIZE  (16UL * TARGET_PAGE_SIZE)
-+#define ZICFISS_THREAD_SIZE (ZICFISS_STACK_SIZE + ZICFISS_GUARD_SIZE)
-+
-+void zicfiss_shadow_stack_alloc(CPUArchState *env)
-+{
-+    uintptr_t new_base;
-+
-+    /* SS page should be surrounded by two guard pages */
-+    new_base = (uintptr_t) target_mmap(0, ZICFISS_THREAD_SIZE, PROT_NONE,
-+                                  MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    if ((intptr_t)new_base == -1) {
-+        perror("shadow stack alloc failure");
-+        exit(EXIT_FAILURE);
-+    }
-+    new_base += TARGET_PAGE_SIZE;
-+    int ret = mprotect((void *)new_base, ZICFISS_STACK_SIZE,
-+                       PROT_READ | PROT_WRITE);
-+    if (ret == -1) {
-+        perror("shadow stack mprotect failure");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    env->ssp_base = new_base;
-+    env->ssp = new_base + ZICFISS_STACK_SIZE;
-+}
-+
-+void zicfiss_shadow_stack_release(CPUArchState *env)
-+{
-+    abi_ulong mmap_base;
-+
-+    if (env->ssp == 0) {
-+        perror("release empty shadow stack");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    /* It should match shadow stack allocation. */
-+    mmap_base = env->ssp_base - TARGET_PAGE_SIZE;
-+
-+    int ret = target_munmap(mmap_base, ZICFISS_THREAD_SIZE);
-+    if (ret == -1) {
-+        perror("shadow stack release failure");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    env->ssp_base = 0;
-+    env->ssp = 0;
-+}
-+
- void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-diff --git a/linux-user/riscv/target_cpu.h b/linux-user/riscv/target_cpu.h
-index 9c642367a3..bba54d93eb 100644
---- a/linux-user/riscv/target_cpu.h
-+++ b/linux-user/riscv/target_cpu.h
-@@ -1,6 +1,9 @@
- #ifndef RISCV_TARGET_CPU_H
- #define RISCV_TARGET_CPU_H
- 
-+extern void zicfiss_shadow_stack_alloc(CPUArchState *env);
-+extern void zicfiss_shadow_stack_release(CPUArchState *env);
-+
- static inline void cpu_clone_regs_child(CPURISCVState *env, target_ulong newsp,
-                                         unsigned flags)
- {
-@@ -9,6 +12,10 @@ static inline void cpu_clone_regs_child(CPURISCVState *env, target_ulong newsp,
-     }
- 
-     env->gpr[xA0] = 0;
-+
-+    if (flags & CLONE_VM) {
-+        zicfiss_shadow_stack_alloc(env);
-+    }
- }
- 
- static inline void cpu_clone_regs_parent(CPURISCVState *env, unsigned flags)
-diff --git a/linux-user/riscv/target_prctl.h b/linux-user/riscv/target_prctl.h
-index d7f9f954c9..6293d61519 100644
---- a/linux-user/riscv/target_prctl.h
-+++ b/linux-user/riscv/target_prctl.h
-@@ -13,6 +13,33 @@ static abi_long do_prctl_cfi(CPUArchState *env,
-     if (env_archcpu(env)->cfg.ext_zicfilp) {
- 
-         switch (option) {
-+        case PR_GET_SHADOW_STACK_STATUS:
-+            abi_ulong bcfi_status = 0;
-+            /* indirect branch tracking is enabled on the task or not */
-+            bcfi_status |= (env->ubcfien ? PR_INDIR_BR_LP_ENABLE : 0);
-+            return copy_to_user(flag, &bcfi_status, sizeof(bcfi_status)) ? \
-+                   -EFAULT : 0;
-+
-+        case PR_SET_SHADOW_STACK_STATUS:
-+            /* if any other bit is set, its invalid param */
-+            if (flag & ~PR_SHADOW_STACK_ENABLE) {
-+                return -TARGET_EINVAL;
-+            }
-+
-+           if ((flag & PR_SHADOW_STACK_ENABLE)
-+                && (env->ssp == 0 && !env->ubcfien)) {
-+                    zicfiss_shadow_stack_alloc(env);
-+            } else {
-+                zicfiss_shadow_stack_release(env);
-+            }
-+            env->ubcfien = (flag & PR_SHADOW_STACK_ENABLE);
-+            tb_flush(env_cpu(env));
-+            return 0;
-+
-+        /* locking not implemented (also not needed for qemu-user) yet */
-+        case PR_LOCK_SHADOW_STACK_STATUS:
-+            return -TARGET_EINVAL;
-+
-         case PR_GET_INDIR_BR_LP_STATUS:
-             abi_ulong fcfi_status = 0;
-             /* indirect branch tracking is enabled on the task or not */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e1ff246c24..5a34eee10c 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1001,6 +1001,10 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
-     /* on reset ssp is set to 0 */
-     env->ssp = 0;
- 
-+#ifdef CONFIG_USER_ONLY
-+    env->ssp_base = 0;
-+#endif
-+
-     /*
-      * Bits 10, 6, 2 and 12 of mideleg are read only 1 when the Hypervisor
-      * extension is enabled.
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 82475490ab..af89fc1268 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -232,6 +232,7 @@ struct CPUArchState {
-     uint32_t elf_flags;
-     bool ufcfien;
-     bool ubcfien;
-+    target_ulong ssp_base;
- #endif
- 
- #ifndef CONFIG_USER_ONLY
--- 
-2.44.0
+The following changes since commit 029e13a8a56a2931e7c24c0db52ae7256b932cb0:
 
+  Merge tag 'bsd-user-for-9.1-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-07-25 09:53:57 +1000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-2-20240726-1
+
+for you to fetch changes up to d741ecffd2ca260ce7875a4596f17736b5ccb7c3:
+
+  target/ppc: Remove includes from mmu-book3s-v3.h (2024-07-26 09:51:34 +1000)
+
+----------------------------------------------------------------
+
+* Fixes for pseries migration bugs.
+* Graceful handling of vCPU hotplug failure in KVM.
+* Many improvements to powernv machine model.
+* Move more instructions to decodetree.
+* Most of the remaining large MMU cleanup.
+
+----------------------------------------------------------------
+Aditya Gupta (1):
+      ppc/pnv: Update Power10's cfam id to use Power10 DD2
+
+Akihiko Odaki (2):
+      spapr: Free stdout path
+      ppc/vof: Fix unaligned FDT property access
+
+BALATON Zoltan (32):
+      target/ppc: Reorganise and rename ppc_hash32_pp_prot()
+      target/ppc/mmu_common.c: Remove local name for a constant
+      target/ppc/mmu_common.c: Remove single use local variable
+      target/ppc/mmu_common.c: Remove single use local variable
+      target/ppc/mmu_common.c: Remove another single use local variable
+      target/ppc/mmu_common.c: Remove yet another single use local variable
+      target/ppc/mmu_common.c: Return directly in ppc6xx_tlb_pte_check()
+      target/ppc/mmu_common.c: Simplify ppc6xx_tlb_pte_check()
+      target/ppc/mmu_common.c: Remove unused field from mmu_ctx_t
+      target/ppc/mmu_common.c: Remove hash field from mmu_ctx_t
+      target/ppc/mmu_common.c: Remove pte_update_flags()
+      target/ppc/mmu_common.c: Remove nx field from mmu_ctx_t
+      target/ppc/mmu_common.c: Convert local variable to bool
+      target/ppc/mmu_common.c: Remove single use local variable
+      target/ppc/mmu_common.c: Simplify a switch statement
+      target/ppc/mmu_common.c: Inline and remove ppc6xx_tlb_pte_check()
+      target/ppc/mmu_common.c: Remove ptem field from mmu_ctx_t
+      target/ppc: Add function to get protection key for hash32 MMU
+      target/ppc/mmu-hash32.c: Inline and remove ppc_hash32_pte_prot()
+      target/ppc/mmu_common.c: Init variable in function that relies on it
+      target/ppc/mmu_common.c: Remove key field from mmu_ctx_t
+      target/ppc/mmu_common.c: Stop using ctx in ppc6xx_tlb_check()
+      target/ppc/mmu_common.c: Rename function parameter
+      target/ppc/mmu_common.c: Use defines instead of numeric constants
+      target/ppc: Remove bat_size_prot()
+      target/ppc/mmu_common.c: Stop using ctx in get_bat_6xx_tlb()
+      target/ppc/mmu_common.c: Remove mmu_ctx_t
+      target/ppc/mmu-hash32.c: Inline and remove ppc_hash32_pte_raddr()
+      target/ppc/mmu-hash32.c: Move get_pteg_offset32() to the header
+      target/ppc: Unexport some functions from mmu-book3s-v3.h
+      target/ppc/mmu-radix64: Remove externally unused parts from header
+      target/ppc: Remove includes from mmu-book3s-v3.h
+
+Chalapathi V (6):
+      ppc/pnv: Remove ppc target dependency from pnv_xscom.h
+      hw/ssi: Add SPI model
+      hw/ssi: Extend SPI model
+      hw/block: Add Microchip's 25CSM04 to m25p80
+      hw/ppc: SPI controller wiring to P10 chip
+      tests/qtest: Add pnv-spi-seeprom qtest
+
+Chinmay Rath (12):
+      target/ppc: Move VMX integer add/sub saturate insns to decodetree.
+      target/ppc: Improve VMX integer add/sub saturate instructions.
+      target/ppc: Move ISA300 flag check out of do_helper_XX3.
+      target/ppc: Move VSX arithmetic and max/min insns to decodetree.
+      target/ppc: Move VSX logical instructions to decodetree.
+      target/ppc: Moving VSX scalar storage access insns to decodetree.
+      target/ppc: Move VSX vector with length storage access insns to decodetree.
+      target/ppc: Move VSX vector storage access insns to decodetree.
+      target/ppc: Move VSX fp compare insns to decodetree.
+      target/ppc: Move get/set_avr64 functions to vmx-impl.c.inc.
+      target/ppc: Update VMX storage access insns to use tcg_gen_qemu_ld/st_i128.
+      target/ppc : Update VSX storage access insns to use tcg_gen_qemu _ld/st_i128.
+
+Frederic Barrat (9):
+      pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync Injection support
+      pnv/xive2: Add NVG and NVC to cache watch facility
+      pnv/xive2: Configure Virtualization Structure Tables through the PC
+      pnv/xive2: Enable VST NVG and NVC index compression
+      pnv/xive2: Set Translation Table for the NVC port space
+      pnv/xive2: Fail VST entry address computation if table has no VSD
+      pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
+      pnv/xive2: Refine TIMA 'info pic' output
+      pnv/xive2: Dump more END state with 'info pic'
+
+Glenn Miles (1):
+      ppc/pnv: Fix loss of LPC SERIRQ interrupts
+
+Harsh Prateek Bora (3):
+      accel/kvm: Introduce kvm_create_and_park_vcpu() helper
+      cpu-common.c: export cpu_get_free_index to be reused later
+      target/ppc: handle vcpu hotplug failure gracefully
+
+Michael Kowal (1):
+      pnv/xive2: Structure/define alignment changes
+
+Nicholas Piggin (24):
+      tests/tcg: Skip failing ppc64 multi-threaded tests
+      spapr: Migrate ail-mode-3 spapr cap
+      ppc/pnv: Implement POWER9 LPC PSI serirq outputs and auto-clear function
+      ppc/pnv: Begin a more complete ADU LPC model for POWER9/10
+      ppc/pnv: Implement ADU access to LPC space
+      target/ppc: Fix msgsnd for POWER8
+      ppc/pnv: Add pointer from PnvCPUState to PnvCore
+      ppc/pnv: Move timebase state into PnvCore
+      target/ppc: Move SPR indirect registers into PnvCore
+      ppc/pnv: use class attribute to limit SMT threads for different machines
+      ppc/pnv: Extend chip_pir class method to TIR as well
+      ppc: Add a core_index to CPUPPCState for SMT vCPUs
+      target/ppc: Add helpers to check for SMT sibling threads
+      ppc: Add has_smt_siblings property to CPUPPCState
+      ppc/pnv: Add a big-core mode that joins two regular cores
+      ppc/pnv: Add allow for big-core differences in DT generation
+      ppc/pnv: Implement big-core PVR for Power9/10
+      ppc/pnv: Implement Power9 CPU core thread state indirect register
+      ppc/pnv: Add POWER10 ChipTOD quirk for big-core
+      ppc/pnv: Add big-core machine property
+      ppc/pnv: Add a CPU nmi and resume function
+      ppc/pnv: Implement POWER10 PC xscom registers for direct controls
+      ppc/pnv: Add an LPAR per core machine option
+      pnv/xive: Support cache flush and queue sync inject with notifications
+
+Omar Sandoval (1):
+      target/ppc/arch_dump: set prstatus pid to cpuid
+
+Shivaprasad G Bhat (4):
+      linux-header: PPC: KVM: Update one-reg ids for DEXCR, HASHKEYR and HASHPKEYR
+      target/ppc/cpu_init: Synchronize DEXCR with KVM for migration
+      target/ppc/cpu_init: Synchronize HASHKEYR with KVM for migration
+      target/ppc/cpu_init: Synchronize HASHPKEYR with KVM for migration
+
+ accel/kvm/kvm-all.c                 |   12 +
+ cpu-common.c                        |    7 +-
+ hw/block/m25p80.c                   |    3 +
+ hw/intc/pnv_xive2.c                 |  566 +++++++++++++---
+ hw/intc/pnv_xive2_regs.h            |  108 +++
+ hw/intc/xive.c                      |   12 +-
+ hw/intc/xive2.c                     |   33 +-
+ hw/ppc/Kconfig                      |    3 +
+ hw/ppc/meson.build                  |    1 +
+ hw/ppc/pnv.c                        |  389 +++++++++--
+ hw/ppc/pnv_adu.c                    |  206 ++++++
+ hw/ppc/pnv_chiptod.c                |    7 +-
+ hw/ppc/pnv_core.c                   |  127 +++-
+ hw/ppc/pnv_lpc.c                    |  162 ++++-
+ hw/ppc/pnv_xscom.c                  |    9 -
+ hw/ppc/spapr.c                      |    1 +
+ hw/ppc/spapr_caps.c                 |    1 +
+ hw/ppc/spapr_cpu_core.c             |   16 +-
+ hw/ppc/spapr_vhyp_mmu.c             |   21 +-
+ hw/ppc/spapr_vof.c                  |    2 +-
+ hw/ppc/trace-events                 |    4 +
+ hw/ppc/vof.c                        |    2 +-
+ hw/ssi/Kconfig                      |    4 +
+ hw/ssi/meson.build                  |    1 +
+ hw/ssi/pnv_spi.c                    | 1268 +++++++++++++++++++++++++++++++++++
+ hw/ssi/trace-events                 |   21 +
+ include/exec/cpu-common.h           |    2 +
+ include/hw/ppc/pnv.h                |    8 +
+ include/hw/ppc/pnv_adu.h            |   32 +
+ include/hw/ppc/pnv_chip.h           |   13 +-
+ include/hw/ppc/pnv_core.h           |   31 +
+ include/hw/ppc/pnv_lpc.h            |   22 +-
+ include/hw/ppc/pnv_xscom.h          |   11 +-
+ include/hw/ppc/spapr.h              |    1 +
+ include/hw/ppc/xive2_regs.h         |    9 +
+ include/hw/ssi/pnv_spi.h            |   67 ++
+ include/hw/ssi/pnv_spi_regs.h       |  133 ++++
+ include/sysemu/kvm.h                |    8 +
+ linux-headers/asm-powerpc/kvm.h     |    3 +
+ target/ppc/arch_dump.c              |   24 +-
+ target/ppc/cpu.h                    |   45 +-
+ target/ppc/cpu_init.c               |   38 +-
+ target/ppc/excp_helper.c            |   69 +-
+ target/ppc/fpu_helper.c             |   60 +-
+ target/ppc/helper.h                 |   92 +--
+ target/ppc/insn32.decode            |   98 +++
+ target/ppc/int_helper.c             |   22 +-
+ target/ppc/kvm.c                    |   46 ++
+ target/ppc/mem_helper.c             |    8 +-
+ target/ppc/misc_helper.c            |  111 +--
+ target/ppc/mmu-book3s-v3.c          |    1 -
+ target/ppc/mmu-book3s-v3.h          |   43 --
+ target/ppc/mmu-hash32.c             |   69 +-
+ target/ppc/mmu-hash32.h             |   56 +-
+ target/ppc/mmu-hash64.c             |   50 ++
+ target/ppc/mmu-hash64.h             |    1 +
+ target/ppc/mmu-radix64.c            |   50 ++
+ target/ppc/mmu-radix64.h            |   53 +-
+ target/ppc/mmu_common.c             |  333 ++++-----
+ target/ppc/timebase_helper.c        |   89 +--
+ target/ppc/translate.c              |   27 +-
+ target/ppc/translate/vmx-impl.c.inc |  290 +++++---
+ target/ppc/translate/vmx-ops.c.inc  |   19 +-
+ target/ppc/translate/vsx-impl.c.inc |  592 ++++++++--------
+ target/ppc/translate/vsx-ops.c.inc  |   82 ---
+ tests/qtest/meson.build             |    1 +
+ tests/qtest/pnv-spi-seeprom-test.c  |  110 +++
+ tests/qtest/pnv-xscom.h             |    2 +-
+ tests/tcg/ppc64/Makefile.target     |   12 +
+ 69 files changed, 4417 insertions(+), 1402 deletions(-)
+ create mode 100644 hw/ppc/pnv_adu.c
+ create mode 100644 hw/ssi/pnv_spi.c
+ create mode 100644 include/hw/ppc/pnv_adu.h
+ create mode 100644 include/hw/ssi/pnv_spi.h
+ create mode 100644 include/hw/ssi/pnv_spi_regs.h
+ create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
 
