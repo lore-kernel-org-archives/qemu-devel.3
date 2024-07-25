@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 149D8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAC6C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 07:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWsXj-0002d2-Qj; Thu, 25 Jul 2024 03:05:39 -0400
+	id 1sWsYW-0004xj-PF; Thu, 25 Jul 2024 03:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsXX-000297-AX
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:05:28 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsYP-0004eK-B4
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:06:21 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsXU-0004pq-7v
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:05:25 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2f0407330a3so700411fa.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 00:05:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWsYM-0004zB-3o
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 03:06:20 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-368380828d6so392025f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 00:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721891122; x=1722495922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721891176; x=1722495976; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=geHfL8qXxwEt7ri9JkM1Lltv0Y2JjrwEQxLLPW6vnug=;
- b=PTdMeaXUgwK7HtdBJ6fIoNsSvLMxR9tituU9RumIQiR3icpjudi8v/96Y4k5w+0nk/
- ZSArpBwFyC1LunQ5xomNu5jtupjQBh+6MB+YARs6r9IKvX5XlR4nUCSkum3LB/NFgoKt
- E9l0V70fy7wcVivgrRLwzyQXnlVlMndOxKFs2Y0XnvY6BtlQH3dbShWfhdikoA09wQvw
- MWddIcy9yUOE5KeuIeDvxQED+WlvwGncUAwPs3NsqXZPPIKv91hOyjEksm9ZLQsUtdjS
- eqtktGM7IBOdHFvSuiMQyOHwDAVacHKETQTfp4AjfpTC6k4DGLJrj0InAUgyn1DHY8w8
- dgzA==
+ bh=Aw2QBVGemuhzqF4Oth8Tt/jtSySFymLnqdwPxDq00ds=;
+ b=DiGCnZrHv/I7f7xxoXqr7MBbJvkE7ybFeMP5uQfv1sYKiCVJ7k5r9UNcSDraH/DiaT
+ UDuyhQvkuJHx3/T4Sy4sTRKXG2ceL4la0JpGwyVX83KvG5TfWpwa/ZY16kj1UukKWnmF
+ agoto+xuGAU+hvyOffz6fSB3RmRYiuy50pbTrIlNecuLr2L1/xc0hgJ40ERt0LvPLNEn
+ 2cRJ6QBwUtGpMtSB0qPToRU73m1rQcPJSWaLQNlYTXt+1tb2CwGCyxWkMHt8ICqefRa8
+ iTmfob+asqzqzdiHy3fITh53yBigA0yevGo2U8MkqDHa1zhpgBWla8x+3BCX9nihuLo0
+ QYuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721891122; x=1722495922;
+ d=1e100.net; s=20230601; t=1721891176; x=1722495976;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=geHfL8qXxwEt7ri9JkM1Lltv0Y2JjrwEQxLLPW6vnug=;
- b=RgxMIt/Zd5GO9q/i1zrzKQ3DgrXd2dchmYEw2CEb/zQgWI3sIyg1zRHcDhsi1jPCD6
- De/RArLaz3yrLBEbzY19gMh4B8lhbt2FrNFpWVnm3/yWleZDRnI6vBXCc7dQcggQGG7W
- Nm4ZcKknEpO9FZprs/RBnOHb/wey5yyBXtOEKsyq0ZzzRPD8q/xolD2GpI8YENvXv2LG
- GPxSGEfIir7PM77C2dir/LLDSWYb2IPFXdGeo6F3+5YvzmZZ8WLu7/ITiQdhTr03n3hI
- 7AVEAtpcD7jUf/eZsCEHrbEvEfHhjBao3LYxGs7zBrZShyienUuqI4bydXNB8PM3Pkg0
- w8Yg==
+ bh=Aw2QBVGemuhzqF4Oth8Tt/jtSySFymLnqdwPxDq00ds=;
+ b=VrKac59xvXS+gWWmcqhyaULdPgiqLliRPA4AHXIVtY+FHHngl1rnvPxVC1oKo4ivI/
+ GmalmzMh+wufum3CSopAz5lbuXftp8ABKRafKiHKR+sExiNYqo+jE4H/RuWx8U2bNPOx
+ lasJmPjfpYXoUj55UHSkQNbmOH2jag9TlscGt6K8O7g7Tm+9Jru5ZuRstacnkwlRV9d2
+ PpM9aTG8yB9MlHF2Lt1algUWqIBcrekBVTuZ1q7W3rK0U6z3MLodZOKWHimRaTMPBMwj
+ l/+95PCih7g5TGo2D6IsHGb+oUqwOqhIpLL5HLLHynZ7+Jw3SuBvX8l1AFUkVkkW4AXv
+ ZNaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhm93EyzjrERKkkTt106ZNUfORdfG7wNJrGilAG66SF487lsR5030he0CyNrkPSaYw1JtNMuDU+UE6Ggkk1/8jUGDURrA=
-X-Gm-Message-State: AOJu0YwlH9jRst/QheWFKYFw758yVljAsSq1RWrgYzAI9O6sA/6VEyp5
- vnR9lMKFT6jkvFwNqDtcW/gCCDACenrK0QxUzafzFx+HmmfDkCAoNflJv2OnFq8=
-X-Google-Smtp-Source: AGHT+IHCa4pl04VI6/dflLXcmRbZZn47wUlwQAJH0arnhn3+pEY0jYUJXjYuz7A7h3x+JB8xMqDZdA==
-X-Received: by 2002:a2e:958d:0:b0:2ef:208f:9ec5 with SMTP id
- 38308e7fff4ca-2f039d921a2mr13427371fa.31.1721891122380; 
- Thu, 25 Jul 2024 00:05:22 -0700 (PDT)
+ AJvYcCX2lehBLlfFUT7uPuGwRqbzMSqnBetwI5BUkBmzHnteygMPGfVb67jaBcGN4viaO702e0QdbqIBIphuPit03ULiTHcSeNk=
+X-Gm-Message-State: AOJu0Ywx34qToJNjOR3vctQgVepPBG39Nt8gSuh6usbZ3O17zrjp88KZ
+ cfYyww9yPt/QS4SVE82ur3xCcYV6206XKPwMXgFieTXUffj6uOQKgCjsr1duBe/1X5iOkBJNg1F
+ r
+X-Google-Smtp-Source: AGHT+IG5yeTQ8iGVeAIQTzJZDyvvmB8nG0QdrjaqAHhyHD9N1+dppNOAI1o1KUUumyZ6xuu9RKEcjg==
+X-Received: by 2002:a5d:4844:0:b0:368:584c:3341 with SMTP id
+ ffacd0b85a97d-36b364465e9mr665773f8f.35.1721891176081; 
+ Thu, 25 Jul 2024 00:06:16 -0700 (PDT)
 Received: from [192.168.114.175] (164.170.88.92.rev.sfr.net. [92.88.170.164])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4280574a8a2sm19481215e9.23.2024.07.25.00.05.21
+ 5b1f17b1804b1-428057a6c81sm19529105e9.34.2024.07.25.00.06.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 00:05:21 -0700 (PDT)
-Message-ID: <334e5ecc-212e-475f-a2c1-c9a005f0018b@linaro.org>
-Date: Thu, 25 Jul 2024 09:05:20 +0200
+ Thu, 25 Jul 2024 00:06:15 -0700 (PDT)
+Message-ID: <74b1b095-1958-4887-855c-7bad6c0415f9@linaro.org>
+Date: Thu, 25 Jul 2024 09:06:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-rng: block max-bytes=0
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>
-References: <73a89a42d82ec8b47358f25119b87063e4a6ea57.1721818306.git.mst@redhat.com>
+Subject: Re: [PATCH 0/2] gitlab: expose installed package info in build logs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240724095505.33544-1-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <73a89a42d82ec8b47358f25119b87063e4a6ea57.1721818306.git.mst@redhat.com>
+In-Reply-To: <20240724095505.33544-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,15 +99,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/24 12:51, Michael S. Tsirkin wrote:
-> with max-bytes set to 0, quota is 0 and so device does not work.
-> block this to avoid user confusion
-> 
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->   hw/virtio/virtio-rng.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+On 24/7/24 11:55, Daniel P. Berrangé wrote:
+
+> Daniel P. Berrangé (2):
+>    gitlab: record installed packages in /packages.txt in containers
+>    gitlab: display /packages.txt in build jobs
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
