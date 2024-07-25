@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46557C3DA70
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4677C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Jd-0002Tz-2Y; Thu, 25 Jul 2024 19:56:09 -0400
+	id 1sX8Nr-0001bM-Aj; Thu, 25 Jul 2024 20:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JU-0001cn-0Z; Thu, 25 Jul 2024 19:56:00 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1sX8NB-0005yr-24; Thu, 25 Jul 2024 19:59:51 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8JS-00011g-0n; Thu, 25 Jul 2024 19:55:59 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2cb4b7fef4aso320669a91.0; 
- Thu, 25 Jul 2024 16:55:57 -0700 (PDT)
+ id 1sX8N9-000204-DG; Thu, 25 Jul 2024 19:59:48 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-70d1d6369acso251356b3a.0; 
+ Thu, 25 Jul 2024 16:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951756; x=1722556556; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951985; x=1722556785; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cTyd+lKtpgPwgOkqrwFrFLMEIc8tBrnno+nfiO8IXQY=;
- b=HJ+KmPH9oA4omgWyQCm9kxojE/1WAjbr2IU8dSEJY7JnnPOzP90gOmM7YPEYndlC4L
- uObGZmHDdAgO6KNr9ElEkG4u9C8OGtlGxPMWMvi19Ra9RUmZZG4y3Yn5OQyaPH5fYol4
- WQHd2GjhhP6cBtsF92IQ3rR/ue6jRLaykSkQEonNKqcIckEqC2h9Sam5gOF03bELNHx9
- iPdq5ELYb2K4lnrvsVpQuX0QpUhw/+gys3ZnQoBc2zGgEXU/jxujjeGKriWpL87/ekmA
- o34PJti1O3hXZhIw/gxAxlaWCoE7cJbdKrjb6nTqJ7CeQ45CQq6W+qbJuyYvKGvziRYJ
- NS0g==
+ bh=XSiLxWDKshk0YREcVW5HCex8in/AdqlYXKlWD5yMiVw=;
+ b=TdXC7mGEvmerbGAc0sERQEXZiYYpAbeGPJ7WdRyt6Sl3SfCnSdKSuyZouxttHWkXR3
+ 3m4PPxJFI/cTQe/RqnoGqPmzqH8yzuevTpv+qBYQOqh5vY46VNc/SFTn8yzNwzfvYOaZ
+ 1YLHeCCWkerIflD19kELH/RVkvGEm04Kn4k/cGsmO0qLW1KKhEMJHxQK1z0my8mujKOT
+ 2b3tOZFpFzuN+EA/B8KdhCwplB45p3zYZip3HYoKeLC55OCwOUneUSGjSStNdVyBvHBg
+ Z5DkqA3fNDgiiSIdMyfgaYG3zXDnPoBC3PBDnIdXf/p6rdhQYsBprYKeqBKOFWWqW7YK
+ cH6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951756; x=1722556556;
+ d=1e100.net; s=20230601; t=1721951985; x=1722556785;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cTyd+lKtpgPwgOkqrwFrFLMEIc8tBrnno+nfiO8IXQY=;
- b=N2THrMSSUxyi8HGIMaw9C4YsQCkkk/DSF4/WTlYOQmPQhE//bJnIe6l+qmfZcPahFh
- uTucnWKQECIxJaZ83Ze4i9XkUcRtDW9HYdr5MMOJSbrb+JXdTpZOMsvIA7NQ/dZGNQjF
- 21VpXcd0kPrXi/Ipd5UzDdggXHDuarngUxu8f4MqlXJMWP61azpC5cpatQRjVxZWB85w
- rDwNblevYaZi+q/ptLjEnM7ZZoQE0O+H05ppv0PJFQbcWgfj2PhWWRsGvUxYGKSSOUJ6
- 0IvCDKa3aVBRTE1Gi97EaSNrqL9Z5v7ajHEcPoLRczGRWQ0yY9inoldvrbiMjqjS+Asr
- HKiQ==
+ bh=XSiLxWDKshk0YREcVW5HCex8in/AdqlYXKlWD5yMiVw=;
+ b=ILBulpb/zwwZIcd0Lb/o14pfU3fqz6/+14umFblqHUUBzoRjEtywCoKxl8QxbhwVE2
+ NQ+7OxvONd0mAgnG34fa8XuLOJugacSrZc2QtsdM+4piXMQnzf3kNyM5klerfgZG7iZQ
+ WDuRQggfzatemnDhdGDw8XL0ccrgNc/h7jnFAtWUjhg6PRGmLtyypXvklE0S1L7jdV8p
+ 6CGimpu17syXCm41fFcLKurJRXuHnoxP7kEKfYZaVH31h67TsnbTfIZvS5VolB7xmM4L
+ m3EHdekscbi8wPoeHdNKJRKOLAotdq5UhPY6zXUOdEFHrCRTJlZQ9urYVy4uEJUc37KK
+ NW2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJCXcEfD3uFCWim3yBE9TSKl/7yFa3V6YU/JwmBCBchAz5oDcEpRafflW42zUMNiZiuZhILPcBHLA02J2maeETUs1r
-X-Gm-Message-State: AOJu0Yy71E8V/wEoHKVleKV0PoiZNqRhRjQxkvQNEEXrUBGfuibZkc/I
- qMNhMW3WDcwnnL0KnG07Q/5OxPPYd4ZUS6wAhGSxuYjq50KckE/xEkYSpw==
-X-Google-Smtp-Source: AGHT+IFtqo/1uDqI0QFM69yQrpOcbMKcH4vbyg2PdtobV0IhuH7V4egrkpZSJumgpYQfbFwGu4uUjA==
-X-Received: by 2002:a17:90a:6c8f:b0:2ca:ffa0:6cee with SMTP id
- 98e67ed59e1d1-2cf2eb84487mr3802836a91.31.1721951756113; 
- Thu, 25 Jul 2024 16:55:56 -0700 (PDT)
+ AJvYcCWH7ybTQ8sLxgwHwVGEFTk2pRfLz3p3kAXTFxb8Ve00awkS4eKLPtXBYvREayfgnMjZuzZUzAQihGZ0G0NL3B6l3OUW
+X-Gm-Message-State: AOJu0YwnY/rMNOsqbGLABGvhd7FaR94xDY/mADz6bqAcftDTP5fRVCXD
+ QYdhyDKDKLb5zv0sdDZhYRBvsXmQNwsSb7zEdRBl4qyQG+0lf52eWbl3zw==
+X-Google-Smtp-Source: AGHT+IH0bK3e9Dxxso1o4rcGwcnYtthFhFWYg9bSY9b0EPGu758Fs0wiOehlAidcsHNq3EmYoy+9mA==
+X-Received: by 2002:a17:90a:fa01:b0:2cb:5883:8fb0 with SMTP id
+ 98e67ed59e1d1-2cdb9442ae1mr11106638a91.14.1721951985250; 
+ Thu, 25 Jul 2024 16:59:45 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.53
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:55:55 -0700 (PDT)
+ Thu, 25 Jul 2024 16:59:44 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 25/96] target/ppc: Add helpers to check for SMT sibling threads
-Date: Fri, 26 Jul 2024 09:52:58 +1000
-Message-ID: <20240725235410.451624-26-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 93/96] target/ppc/mmu-hash32.c: Move get_pteg_offset32() to the
+ header
+Date: Fri, 26 Jul 2024 09:54:06 +1000
+Message-ID: <20240725235410.451624-94-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,238 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helpers for TCG code to determine if there are SMT siblings
-sharing per-core and per-lpar registers. This simplifies the
-callers and makes SMT register topology simpler to modify with
-later changes.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+This function is a simple shared function, move it to other similar
+static inline functions in the header.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h             | 11 +++++++++++
- target/ppc/cpu_init.c        |  2 +-
- target/ppc/excp_helper.c     | 17 +++++------------
- target/ppc/misc_helper.c     | 27 ++++++---------------------
- target/ppc/timebase_helper.c | 20 +++++++-------------
- 5 files changed, 30 insertions(+), 47 deletions(-)
+ target/ppc/mmu-hash32.c | 7 -------
+ target/ppc/mmu-hash32.h | 6 +++++-
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 7b52a9bb18..417b284318 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1512,6 +1512,17 @@ struct PowerPCCPUClass {
-     int  (*check_attn)(CPUPPCState *env);
- };
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index c4de1647e2..44b16142ab 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -201,13 +201,6 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
+     return false;
+ }
  
-+static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
+-hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash)
+-{
+-    target_ulong mask = ppc_hash32_hpt_mask(cpu);
+-
+-    return (hash * HASH_PTEG_SIZE_32) & mask;
+-}
+-
+ static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
+                                      bool secondary, target_ulong ptem,
+                                      ppc_hash_pte32_t *pte)
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index bd75f7d647..2838de031c 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -3,7 +3,6 @@
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
+-hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash);
+ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+                       hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
+                       bool guest_visible);
+@@ -102,6 +101,11 @@ static inline void ppc_hash32_store_hpte1(PowerPCCPU *cpu,
+     stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte1);
+ }
+ 
++static inline hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash)
 +{
-+    return cs->nr_threads == 1;
++    return (hash * HASH_PTEG_SIZE_32) & ppc_hash32_hpt_mask(cpu);
 +}
 +
-+static inline bool ppc_cpu_lpar_single_threaded(CPUState *cs)
-+{
-+    return !(POWERPC_CPU(cs)->env.flags & POWERPC_FLAG_SMT_1LPAR) ||
-+           ppc_cpu_core_single_threaded(cs);
-+}
-+
- ObjectClass *ppc_cpu_class_by_name(const char *name);
- PowerPCCPUClass *ppc_cpu_class_by_pvr(uint32_t pvr);
- PowerPCCPUClass *ppc_cpu_class_by_pvr_mask(uint32_t pvr);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 42bb047b54..5ec87c56e4 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6976,7 +6976,7 @@ static void ppc_cpu_realize(DeviceState *dev, Error **errp)
- 
-     pcc->parent_realize(dev, errp);
- 
--    if (env_cpu(env)->nr_threads > 1) {
-+    if (!ppc_cpu_core_single_threaded(cs)) {
-         env->flags |= POWERPC_FLAG_SMT;
-     }
- 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index c0120c8a88..f33fc36db2 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -3005,18 +3005,11 @@ static void msgsnd_core_tir(CPUPPCState *env, uint32_t target_tir, int irq)
+ static inline bool ppc_hash32_key(bool pr, target_ulong sr)
  {
-     PowerPCCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* msgsndp behaves as 1-thread in LPAR-per-thread mode*/
--    }
--
--    if (target_tir >= nr_threads) {
--        return;
--    }
--
--    if (nr_threads == 1) {
--        ppc_set_irq(cpu, irq, 1);
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-+        if (target_tir == 0) {
-+            ppc_set_irq(cpu, irq, 1);
-+        }
-     } else {
-         CPUState *ccs;
- 
-@@ -3071,7 +3064,7 @@ void helper_book3s_msgsnd(CPUPPCState *env, target_ulong rb)
-         brdcast = true;
-     }
- 
--    if (cs->nr_threads == 1 || !brdcast) {
-+    if (ppc_cpu_core_single_threaded(cs) || !brdcast) {
-         ppc_set_irq(cpu, PPC_INTERRUPT_HDOORBELL, 1);
-         return;
-     }
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index de7c8813ec..9789d69664 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -48,9 +48,8 @@ void helper_spr_core_write_generic(CPUPPCState *env, uint32_t sprn,
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1) {
-+    if (ppc_cpu_core_single_threaded(cs)) {
-         env->spr[sprn] = val;
-         return;
-     }
-@@ -195,7 +194,7 @@ void helper_store_ptcr(CPUPPCState *env, target_ulong val)
-             return;
-         }
- 
--        if (cs->nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+        if (ppc_cpu_lpar_single_threaded(cs)) {
-             env->spr[SPR_PTCR] = val;
-             tlb_flush(cs);
-         } else {
-@@ -242,16 +241,12 @@ target_ulong helper_load_dpdes(CPUPPCState *env)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
-     target_ulong dpdes = 0;
- 
-     helper_hfscr_facility_check(env, HFSCR_MSGP, "load DPDES", HFSCR_IC_MSGP);
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
--    }
--
--    if (nr_threads == 1) {
-+    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         if (env->pending_interrupts & PPC_INTERRUPT_DOORBELL) {
-             dpdes = 1;
-         }
-@@ -278,21 +273,11 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-     PowerPCCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
-     helper_hfscr_facility_check(env, HFSCR_MSGP, "store DPDES", HFSCR_IC_MSGP);
- 
--    if (!(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
--        nr_threads = 1; /* DPDES behaves as 1-thread in LPAR-per-thread mode */
--    }
--
--    if (val & ~(nr_threads - 1)) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid DPDES register value "
--                      TARGET_FMT_lx"\n", val);
--        val &= (nr_threads - 1); /* Ignore the invalid bits */
--    }
--
--    if (nr_threads == 1) {
-+    /* DPDES behaves as 1-thread in LPAR-per-thread mode */
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & 0x1);
-         return;
-     }
-diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-index b02535bbd5..d86112d60a 100644
---- a/target/ppc/timebase_helper.c
-+++ b/target/ppc/timebase_helper.c
-@@ -62,9 +62,8 @@ void helper_store_purr(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_purr(env, val);
-         return;
-     }
-@@ -81,9 +80,8 @@ void helper_store_tbl(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbl(env, val);
-         return;
-     }
-@@ -98,9 +96,8 @@ void helper_store_tbu(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbu(env, val);
-         return;
-     }
-@@ -140,9 +137,8 @@ void helper_store_hdecr(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_hdecr(env, val);
-         return;
-     }
-@@ -157,9 +153,8 @@ void helper_store_vtb(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_vtb(env, val);
-         return;
-     }
-@@ -174,9 +169,8 @@ void helper_store_tbu40(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
-     CPUState *ccs;
--    uint32_t nr_threads = cs->nr_threads;
- 
--    if (nr_threads == 1 || !(env->flags & POWERPC_FLAG_SMT_1LPAR)) {
-+    if (ppc_cpu_lpar_single_threaded(cs)) {
-         cpu_ppc_store_tbu40(env, val);
-         return;
-     }
-@@ -293,7 +287,7 @@ static void write_tfmr(CPUPPCState *env, target_ulong val)
- {
-     CPUState *cs = env_cpu(env);
- 
--    if (cs->nr_threads == 1) {
-+    if (ppc_cpu_core_single_threaded(cs)) {
-         env->spr[SPR_TFMR] = val;
-     } else {
-         CPUState *ccs;
+     return pr ? (sr & SR32_KP) : (sr & SR32_KS);
 -- 
 2.45.2
 
