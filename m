@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F348DC3DA70
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 12:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D5CC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 12:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWxDS-0002GD-Po; Thu, 25 Jul 2024 08:05:02 -0400
+	id 1sWxDr-0002nD-ME; Thu, 25 Jul 2024 08:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWxDR-0002F7-QT
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:05:01 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWxDk-0002jW-S9
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:05:21 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWxDO-0000bA-T6
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:05:01 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3686b554cfcso433474f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 05:04:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sWxDi-0000pB-85
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:05:20 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-36844375001so466553f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 05:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721909094; x=1722513894; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721909116; x=1722513916; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KJzZT5Lqe+MAj6BoPpFXBWFKt+GsMGvrj0O2PBvvU3w=;
- b=QvVZrigo7HeJxDYBMnlHHny6q41aLF//Z/Ztfg/u/kaPK/a/+Nz62uLmShI0z0IghN
- UsG+xxPRRGv+aqV1Pq1s7zIf3TzpzijoZXRZLadOfoJpY7Ngr3rxDxgScvqrIf3uXnll
- ux1wBEfBg4JqYcxRwhsGT0sBi6PDfAXYagwd40nY0yQzIDgmjAO6Gp3Oyd75DiCSELyy
- f1Ik6pdoR7zVKO7vEY7pBGGew5z4x1bIgNtSgjk0iDpWnXyd3qgZvimnSpaKlvgJGFeS
- 37iCMJRU+9nFUuDeaRqHZ7DQJWTFIU5sCoxiV98KHb+nl9Cb+sV9BZdQvAv0d3Ry5q8w
- NgzQ==
+ bh=y1v93K5wb0mqRwfvxVKYLdKURPCLFwznmmur8Qg1Qb8=;
+ b=Bpul0iUVMKtuExIDA/mCKUFAnYf10ZOdGOrjv6+22OTNup7wmFtcyCofFQxcu0J1mJ
+ wxCgY0pWbhon04SXkkD79+Gez3jVmkuU5xZEa0+d03+rSqW4deAo8E9D+96jC64Q7pHd
+ 0qpSnwdZNc+o0EEn3SClHJFfrb3Wh7sB9DVAr65l9shMvsXjHGkDn7AuVmmKhaYPwYdq
+ 8gHavtKWdYNUTjyslpaWFm7nkE6ipnUGCMu/RDL+EfPSHO2tt3f6VEco1BZHpzVMiwnj
+ zz13MP1gwkRex8NPuyZNMCp9+0e2aacBdQe1GsvZZAXu1tcF+iKttpNlMB4e8VFVafGH
+ zDag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721909094; x=1722513894;
+ d=1e100.net; s=20230601; t=1721909116; x=1722513916;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KJzZT5Lqe+MAj6BoPpFXBWFKt+GsMGvrj0O2PBvvU3w=;
- b=ewAs9egTYA03vxmJ94isF4tRlJbE735VYP6fgYN9/ksjBBmYX1VcHRglTzxd95mlC9
- PoyAxWSx3UPduCSogEelXf64BWNFQYT0bybVIrbxhSOwXtT7rtzBikBEYUjgsikJ6fa2
- YNBcesaqoCY9G+oVFU7IlKFQWvG+IpOit8W9EVXalXr8xGh5OD7tOqGgR/H07Af7IBt1
- fS12kKHAJY7POZMbiaPNL7Rr3N99fR7dz1AQTShHEaMHU+RYICm/jIZGdvEtBxBSW9y3
- tUKVpKLO5WLmB/x4H4Q9xW7kP4ZuwHCbWWDP5ZmlP6rTSa4LuuxPENLDFCzqbp3HFo9v
- H/Ag==
+ bh=y1v93K5wb0mqRwfvxVKYLdKURPCLFwznmmur8Qg1Qb8=;
+ b=LF1W00bnZbhLFvlBwhDqS5/uxrtMAlMMXR19uwg53lubyrfDPxDPKJ+QQIV84hlLll
+ gnD60WRhkhpPqoF3MY4c1SRCWWRnZKdxyBPVQe8PIgHTQzHCSLch9P/YbnsmBg8JWw5e
+ sfLLYEqp7xetpTkabLoH+syO8et4Tt2u4sIpmsaqW2Q9bFAxcGA0JsCMOy+z2b552N0q
+ bjBwc0ZTmf9/bzwBNpqabw97gEGz7RA8ajaDqK3gqV8HRhQWdXLaGPIigOs6zcPPwJLH
+ oG9sREYVBqHOTD64IPkZ4PLRR1K4yqzUf0ebg6VRYe2aDDM+J5euQRr05xPYHJYNJJ8X
+ IWqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9+kA+Tj6r6zgiY9p0m+4wZ5x3C86aNjFlffnHjwicvIvcmnQ44ROkdIM1r95tOxGSJHYfKQbgkY53RhvnWSYKd1dFgC0=
-X-Gm-Message-State: AOJu0Yy3B/IhEnqVK36LvCppzwU/PDLD+iHQZR2zruDBnS6jICy8ChiS
- xsHGGrGP7RJkss7yL1bwfJtANW1laoXVnLTkDTvZk+BSxFF1k/1ItDgiaLBDEHs=
-X-Google-Smtp-Source: AGHT+IHfBY1eqKqA32kPsP8NWdU5RCfNzBCG++47m4sVjfXoJiIHf9LuTgqH1uci8Q3A+gHtW5NYnQ==
-X-Received: by 2002:adf:efd2:0:b0:367:4dbb:ed4e with SMTP id
- ffacd0b85a97d-36b3193a8f2mr1790893f8f.0.1721909094269; 
- Thu, 25 Jul 2024 05:04:54 -0700 (PDT)
+ AJvYcCWYhOEsyXC6n4jqtg6Z0I0HMp37RKyO0SNSoZ5sQv/+Hv40Hp/ajxnoRF0yPQck54dVUfpUHEDxdIhsVkcNWjnDYcFlJXY=
+X-Gm-Message-State: AOJu0YyTY39MbR63JwuAye1wDyB/A60ZJMt/mIIH3WHclqmowAmJTcHE
+ 9xViY+/hrmSV0DQT+5RAxGsvrCdZyxCeps1jYKtNDz6I+iHh/OUAPy2kUuQj7BI=
+X-Google-Smtp-Source: AGHT+IE4VEarCitsqMKIXcuX9TynqbHaUkVpp48wv98B33pGrp30DbbirUpribYaPkOhlzH7+ltEzg==
+X-Received: by 2002:a5d:4ecf:0:b0:36b:3395:5378 with SMTP id
+ ffacd0b85a97d-36b339555b5mr1455979f8f.18.1721909116172; 
+ Thu, 25 Jul 2024 05:05:16 -0700 (PDT)
 Received: from [192.168.1.102] ([176.187.216.35])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36800cdasm2042583f8f.64.2024.07.25.05.04.52
+ 5b1f17b1804b1-42807246ca4sm24922965e9.11.2024.07.25.05.05.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 05:04:53 -0700 (PDT)
-Message-ID: <24fad245-6410-487f-b70c-1832f2adb267@linaro.org>
-Date: Thu, 25 Jul 2024 14:04:51 +0200
+ Thu, 25 Jul 2024 05:05:15 -0700 (PDT)
+Message-ID: <607efb85-caea-4158-918a-7e4f1df73884@linaro.org>
+Date: Thu, 25 Jul 2024 14:05:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/23] tests/functional: Convert avocado tests that
- just need a small adjustment
+Subject: Re: [PATCH v2 08/23] tests/functional: Convert some tests that
+ download files via fetch_asset()
 To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>,
@@ -72,14 +72,14 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
 References: <20240724175248.1389201-1-thuth@redhat.com>
- <20240724175248.1389201-7-thuth@redhat.com>
+ <20240724175248.1389201-9-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240724175248.1389201-7-thuth@redhat.com>
+In-Reply-To: <20240724175248.1389201-9-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +103,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/7/24 19:52, Thomas Huth wrote:
-> These simple tests can be converted to stand-alone tests quite easily,
-> e.g. by just setting the machine to 'none' now manually or by adding
-> "-cpu" command line parameters, since we don't support the corresponding
-> avocado tags in the new python test framework.
+> Now that we've got a working fetch_asset() function, we can convert
+> some Avocado tests that use this function for downloading their
+> required files.
 > 
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/functional/meson.build                  |  6 ++
->   .../test_info_usernet.py}                     | 11 ++-
->   .../test_ppc_74xx.py}                         | 74 ++++++++-----------
->   .../version.py => functional/test_version.py} | 13 ++--
->   4 files changed, 53 insertions(+), 51 deletions(-)
->   rename tests/{avocado/info_usernet.py => functional/test_info_usernet.py} (87%)
+>   MAINTAINERS                                   | 12 +++----
+>   tests/functional/meson.build                  | 22 +++++++++++++
+>   .../test_arm_n8x0.py}                         | 25 +++++++--------
+>   .../test_avr_mega2560.py}                     | 11 ++++---
+>   .../test_loongarch64_virt.py}                 | 16 ++++++----
+>   .../test_mips64el_loongson3v.py}              | 26 +++++++--------
+>   .../test_netdev_ethtool.py}                   | 32 ++++++-------------
+>   .../ppc_405.py => functional/test_ppc_405.py} | 19 ++++++-----
+>   8 files changed, 86 insertions(+), 77 deletions(-)
+>   rename tests/{avocado/machine_arm_n8x0.py => functional/test_arm_n8x0.py} (71%)
 >   mode change 100644 => 100755
->   rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
+>   rename tests/{avocado/machine_avr6.py => functional/test_avr_mega2560.py} (90%)
 >   mode change 100644 => 100755
->   rename tests/{avocado/version.py => functional/test_version.py} (78%)
+>   rename tests/{avocado/machine_loongarch.py => functional/test_loongarch64_virt.py} (89%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/machine_mips_loongson3v.py => functional/test_mips64el_loongson3v.py} (55%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/netdev-ethtool.py => functional/test_netdev_ethtool.py} (81%)
+>   mode change 100644 => 100755
+>   rename tests/{avocado/ppc_405.py => functional/test_ppc_405.py} (73%)
 >   mode change 100644 => 100755
 
 
-> diff --git a/tests/avocado/version.py b/tests/functional/test_version.py
+> diff --git a/tests/avocado/machine_arm_n8x0.py b/tests/functional/test_arm_n8x0.py
 > old mode 100644
 > new mode 100755
-> similarity index 78%
-> rename from tests/avocado/version.py
-> rename to tests/functional/test_version.py
-> index c6139568a1..5e566d76b1
-> --- a/tests/avocado/version.py
-> +++ b/tests/functional/test_version.py
+> similarity index 71%
+> rename from tests/avocado/machine_arm_n8x0.py
+> rename to tests/functional/test_arm_n8x0.py
+> index 12e9a6803b..d451c80a73
+> --- a/tests/avocado/machine_arm_n8x0.py
+> +++ b/tests/functional/test_arm_n8x0.py
 > @@ -1,3 +1,5 @@
 > +#!/usr/bin/env python3
 > +#
->   # Version check example test
+>   # Functional test that boots a Linux kernel and checks the console
 >   #
->   # Copyright (c) 2018 Red Hat, Inc.
-> @@ -9,17 +11,18 @@
->   # later.  See the COPYING file in the top-level directory.
+>   # Copyright (c) 2020 Red Hat, Inc.
+> @@ -10,9 +12,9 @@
 >   
+>   import os
 >   
+> -from avocado import skipUnless
 > -from avocado_qemu import QemuSystemTest
+> -from avocado_qemu import wait_for_console_pattern
+> +from unittest import skipUnless
 > +from qemu_test import QemuSystemTest
+> +from qemu_test import wait_for_console_pattern
 >   
+>   class N8x0Machine(QemuSystemTest):
+>       """Boots the Linux kernel and checks that the console is operational"""
+> @@ -32,18 +34,15 @@ def __do_test_n8x0(self):
+>           self.vm.launch()
+>           wait_for_console_pattern(self, 'TSC2005 driver initializing')
 >   
->   class Version(QemuSystemTest):
-> -    """
-> -    :avocado: tags=quick
-> -    :avocado: tags=machine:none
-> -    """
-> +
->       def test_qmp_human_info_version(self):
-> +        self.machine = 'none'
+> -    @skipUnless(os.getenv('AVOCADO_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
+> +    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
 
-API is self.set_machine('none'), otherwise:
+We need to update docs/devel/testing.rst which lists the "most used
+[test] variables". But the functional testing chapter need to be
+completely revamped, so meanwhile:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
