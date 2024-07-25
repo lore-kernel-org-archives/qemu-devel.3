@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E74BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A49BC3DA70
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Jj-0003Z4-HL; Thu, 25 Jul 2024 19:56:15 -0400
+	id 1sX8Ik-00057v-6M; Thu, 25 Jul 2024 19:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Jf-0002zS-W9; Thu, 25 Jul 2024 19:56:12 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sX8Ij-00053m-29; Thu, 25 Jul 2024 19:55:13 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Je-00013W-5V; Thu, 25 Jul 2024 19:56:11 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2cf213128a1so263751a91.2; 
- Thu, 25 Jul 2024 16:56:09 -0700 (PDT)
+ id 1sX8Ih-0000no-H7; Thu, 25 Jul 2024 19:55:12 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2cb566d528aso319302a91.1; 
+ Thu, 25 Jul 2024 16:55:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951768; x=1722556568; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951709; x=1722556509; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0cKnQiTUyY7bbeUwr0G4Nd18/JU5PiZeN3Im5S/Z8L0=;
- b=U92KktcCLLwFXyvYSO+s4JHBfSE+IlSwXkmFS5V28pOKwWSTPnPymAhOzdDHa0RuLE
- 1zxfNme8YyY1AavSUhfIfuv1pXbo0ADJzjB7X920XT/og4yUg3OAe6o3JYUOY1BUJV2g
- YkqECWQPbLp91NbAGxQbYdPbMbEeCXm+kPhxSelRjrLsHdXndRHULncnGJ43hW+LzcC3
- kdcP3EpSAY/CfdqNeLZHmbNjil/gN3llOe2phP9HBnc5jWIT/7yBLfR+5zMBWS3w3uCu
- vl5O8/vv0rs6s6ZtMaiTSk3dV9X+Cv6B1vtKsnZDhxAH0b+amBUnmzz8WRkDXkST8Emr
- JDeg==
+ bh=FeqMVWru/YDNxRRHVnu3pLowSIqilhuOUjfYu/akPaE=;
+ b=Susa1QNhk3xfFYkwn+DzTuOMr6SHNq1RmyOqfPNgSedvXyYtRF4LS5kGKboq4HMG3j
+ Bi+jiOLiMUfCfAyG+IydoNv73otbIol6G+xHRxxar28jVBh5r08I8Im59BPqdaraq3mO
+ PzsmT35gF7yG5WEBH7HxTqwr9UoEJlKYDT0IpBaryD+TSkeu0x5rPC96Yk/k6YHz+JM5
+ OmNLiAYlNGNffWoril38GCbvP1jgxa6aTnwnA25QkAubFAZHHG+9igH3i6RmUlFigN0E
+ smXNzgwkM7TFeQJJ38+NUs2lyIIuqcpM8h5jaMU4fQUVuO5I/j5PpTs45sxIQ+se5Wub
+ R8VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951768; x=1722556568;
+ d=1e100.net; s=20230601; t=1721951709; x=1722556509;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0cKnQiTUyY7bbeUwr0G4Nd18/JU5PiZeN3Im5S/Z8L0=;
- b=LoRrrQRuQCEWvF6bd2Sc2Kot9uDOlFoKiHqyEw6irtyi0DwR8T32L/finoRJjcOcef
- M9/4Cl9n8Ik6BABGzVnrOgMwMEyOEnBnLp63D1A8uVihz+Z0Jv2xFSyXyyPLpmF9qLrc
- 7kGxxv4L78RcGOHxdsAkRngFIoXTKqclx/jnCRcHTKgh3fHAlaRx+8USeotgLSvEAqgR
- 5PTY1/ifkrPr7hsCYk7N6jianmfpj0GLhyXUh9ukCmrhezIgGzCJdf5eNQJV2+Yj6Uxk
- VNyqUuDBJXxNtwnsa/oBiVY6OOB27YQ/hF5Oobngzwb+EooM33JG89gV434iOgRSH//D
- YKSA==
+ bh=FeqMVWru/YDNxRRHVnu3pLowSIqilhuOUjfYu/akPaE=;
+ b=IwA+6KUopA7yD3en1WkYL/brs078tWCiZrrBwyd8KNTeTkfgXj3VZw6oq9fCuOOQaF
+ BMl0lMCLEWFI25IEXLOp6DPiBI8mul8VP7oQkbjVXBhXyA7TOCUP4P6MPKYzCH7ZHrrP
+ xTb6waGogNWCI4dGfjyajs+yOb4jox8IvTzKEq7M/ybDItGhAIDdZxWIonRLy8eBkTpG
+ nyRLo/DBo79p01QEWWHEE8jlgAdbrDw8BkLZPa3mQzEoVI5FwMBH2tFfFLERT/WBT3BL
+ VjzBhAmW388jdtvtra47qGEqKjOkeJgc3BkvF1khFIo40daxNrU2tuS8Pm+fT8Rw8TWT
+ l6lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmy8euxa7LWSWe+zQnCCC7ferOE88NsgW7saR0knPvFB9ZIh2OvKueUqm8I9aHlMvSulRqE39pTpJ3+AdIY3NOudGD
-X-Gm-Message-State: AOJu0YzxmfkZU52h9Bgalt1CO5de2r6pC6KU/vvobJYfqewBpi4mi4Vg
- VtGbV56yqSovl5aayf4uIMRCA5chITS/mJxqLJkIJkY0aBgbFsCHY4fyQA==
-X-Google-Smtp-Source: AGHT+IF+FKUhmCTwfx2bNGWoy846mbUqvCED+6GL2A67V3GKJhU8E1dAklbXqHfGbC2oXUHHV2L4+A==
-X-Received: by 2002:a17:90a:64f:b0:2cd:2f63:a429 with SMTP id
- 98e67ed59e1d1-2cf2eb9d1edmr4042653a91.35.1721951768128; 
- Thu, 25 Jul 2024 16:56:08 -0700 (PDT)
+ AJvYcCW3/RLjFirP1hd/TBWpy1SiLvC+AR9p2tQmYrTP4Xo6d14UUQhWkGXDLse3JlJxA+J1TQloA3tU6Qd1TGan0bMj3pGj
+X-Gm-Message-State: AOJu0Yz8mAco6qhyyw4cGHsPAP1TbaTV327Kqy2de9y8xyE3OF0RUWze
+ CkSTPaMOqEz5TKA4ZetkFIqS4RsXL8hZF9+Yusy9pGcCWXLiWI5xnI7k7A==
+X-Google-Smtp-Source: AGHT+IH7wDHNCmtUf2XNPuPx+cnoY8XIyyze+s75u3+stWAsvILqNv6sHs/s3/Jwpvo11ck0X3HEeQ==
+X-Received: by 2002:a17:90b:4c05:b0:2c9:81fd:4c27 with SMTP id
+ 98e67ed59e1d1-2cf2e9fc0fcmr3919284a91.14.1721951709457; 
+ Thu, 25 Jul 2024 16:55:09 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.05
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:56:07 -0700 (PDT)
+ Thu, 25 Jul 2024 16:55:08 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 29/96] ppc/pnv: Implement big-core PVR for Power9/10
-Date: Fri, 26 Jul 2024 09:53:02 +1000
-Message-ID: <20240725235410.451624-30-npiggin@gmail.com>
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Subject: [PULL 11/96] target/ppc/cpu_init: Synchronize HASHKEYR with KVM for
+ migration
+Date: Fri, 26 Jul 2024 09:52:44 +1000
+Message-ID: <20240725235410.451624-12-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power9/10 CPUs have PVR[51] set in small-core mode and clear in big-core
-mode. This is used by skiboot firmware.
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-PVR is not hypervisor-privileged but it is not so important that spapr
-to implement this because it's generally masked out of PVR matching code
-in kernels, and only used by firmware.
+The patch enables HASHKEYR migration by hooking with the
+"KVM one reg" ID KVM_REG_PPC_HASHKEYR.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/ppc/cpu_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 6dc05534d7..43cfeaa2d4 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -58,6 +58,10 @@ static void pnv_core_cpu_reset(PnvCore *pc, PowerPCCPU *cpu)
-     env->nip = 0x10;
-     env->msr |= MSR_HVB; /* Hypervisor mode */
-     env->spr[SPR_HRMOR] = pc->hrmor;
-+    if (pc->big_core) {
-+        /* Clear "small core" bit on Power9/10 (this is set in default PVR) */
-+        env->spr[SPR_PVR] &= ~PPC_BIT(51);
-+    }
-     hreg_compute_hflags(env);
-     ppc_maybe_interrupt(env);
- 
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 7c3ee80661..d311b190c1 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5873,10 +5873,10 @@ static void register_power10_hash_sprs(CPUPPCState *env)
+         ((uint64_t)g_rand_int(rand) << 32) | (uint64_t)g_rand_int(rand);
+     g_rand_free(rand);
+ #endif
+-    spr_register(env, SPR_HASHKEYR, "HASHKEYR",
++    spr_register_kvm(env, SPR_HASHKEYR, "HASHKEYR",
+             SPR_NOACCESS, SPR_NOACCESS,
+             &spr_read_generic, &spr_write_generic,
+-            hashkeyr_initial_value);
++            KVM_REG_PPC_HASHKEYR, hashkeyr_initial_value);
+     spr_register_hv(env, SPR_HASHPKEYR, "HASHPKEYR",
+             SPR_NOACCESS, SPR_NOACCESS,
+             SPR_NOACCESS, SPR_NOACCESS,
 -- 
 2.45.2
 
