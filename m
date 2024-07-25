@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4610C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D01AC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Nn-0000zW-EN; Thu, 25 Jul 2024 20:00:27 -0400
+	id 1sX8K6-0006Kx-02; Thu, 25 Jul 2024 19:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8N2-0005KK-2J; Thu, 25 Jul 2024 19:59:41 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sX8Ju-0005ND-50; Thu, 25 Jul 2024 19:56:27 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8N0-0001nE-Af; Thu, 25 Jul 2024 19:59:39 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fc611a0f8cso850315ad.2; 
- Thu, 25 Jul 2024 16:59:37 -0700 (PDT)
+ id 1sX8Js-00017d-8R; Thu, 25 Jul 2024 19:56:25 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2cb55ff1007so301734a91.0; 
+ Thu, 25 Jul 2024 16:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951976; x=1722556776; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951781; x=1722556581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6k2qzcWLWNIdpDa+Nl/FfE5YNWcPZbMDYvXLJ2XW+Ew=;
- b=hDlrZ+tGuDuyALFOtoGiHYbbYaACJ9NUnvkcjrel+eBgBrBLpp4vVwJCS4Oz6BXeCu
- kvktk7kzMWwsuaQ2osscsh4GSelvSNH79y70xvPEUc7vGrQF5NYlNrpprO4wUKh5Omdj
- TOvW1/lZMtrPz9U1c7WYdBGnpUMXLMFvCPK6k7PdZfZjaiXaUzjQDtbOT/pt4Jlm6SDj
- btuH906ZxkisAYde/cw5JwwLZEq95wExPexZ+T6kgSZ++P1qIsirD8xtFkvbO8znpVZi
- uos3yD6Q+8gqSaeJC5pzGNMxlZg9VY8ySgvZicieDT8l29XiStHCLl0CIShTQVtIZG01
- Oc3w==
+ bh=u4BAed4GN5W2drBonSaP7QJJo+JlLxRQzh1kXuhUdfc=;
+ b=l6Pjq+juooI1st01P2dLBOzJ/jaGV+vU3w+kNDV+KLuyOnv0RpZBaoaxmiSfCyirIo
+ Mcs4Nvxstbce4u9XApfurhiOKqrWku1oZwFmXAGCy4/Esi+KLwPEt5lWrtyposwpd1F1
+ ij46Zj0UUTl5zJv8B6jCP25KaPhMPbiYGe23cWUKKSsMmw1xYxdM56PHobhVJvbIamQ6
+ 86iEAWPv482K+Nrq372wuCqTZsJRlEWzIw3QHLqN8girW88kWiZLFWFqviNh8jWNDGHh
+ Jpir8X50DYaaJ6/3qO2lpBD5lC/ovGNKJ09L1VhBbhLw2HCORK6cjwpFXHC5fJ8be2HU
+ AJ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951976; x=1722556776;
+ d=1e100.net; s=20230601; t=1721951781; x=1722556581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6k2qzcWLWNIdpDa+Nl/FfE5YNWcPZbMDYvXLJ2XW+Ew=;
- b=DZrQxo93kCXnWYYNngBxB9NaPP5l76vhjklu958bqC6PE8xNdW/xKRkb4hiPjs+XEa
- vHoKMdEpr+la1dOaeoRk3ec5XakrN4e0J/fZ2emjp1aN7V4SXDLK37mQ/803T3mxc/LP
- jtQ9bQ9lTBhvxPQ92qRr4gEL3noJUhHos15Ee1wTa9Qyheyi2ZAyzvQkutYFbC4esOdR
- fDX12FxzuZb/JPuX0OD5OuFYfj+AfqSJFLvztOxW6GaOoVPV2D5aGWXnzwb1yPoBS+41
- FR6EM01u6G9Ff5mDlIT0Rr77eM3ZI1JpdXiKYZOQ1WxTywocu1li9FdhC6MoH15sJndE
- vu6g==
+ bh=u4BAed4GN5W2drBonSaP7QJJo+JlLxRQzh1kXuhUdfc=;
+ b=xByQWxogi5wyGiVBp0gUfD/Va9Cu0btYmTEmHCkrAxgh1FQYd444AWWZNW0/nkDUfC
+ UmMV6w2v6/Mu6lIunpioPn5NxzWiUEzf0nvgJPisZtyUC/xmCY6ss/CgSeztq6Z+D6vz
+ E42OHUNfXQD9fO/ahr+VDsE2+CgFl/Cg9EX8sDBuzMQn3qtc+SU4Hu8cjBLrERIWMirI
+ yOWZTGLaw5WJezQhtlmGnl7bg7akjBo8yo5lxl7U6m+1v3oJmWtqwf/Zv3GVYcT6j9S1
+ 3HF6J/OfGm0aNn6OeediP4Q7w8LavhGG7CAuJIAVvUzadqSMfW9UL+00oMTgoo2Ml/sN
+ tsow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVvlJjeQOapl4eACVuvno3tzJPE17yWMADoX6ugFWYh9MXnqDjss2pR+k9HAljfC7qpjBI9A1UpnQ98v1woiAPGqs4
-X-Gm-Message-State: AOJu0Yyesuj7KYYZTFdWymBUqxf+Ww1J+7mRJ4pG4zyiqh47cNC/aYJt
- pywznspy6qY5mX4uoVvCRzN03aVY+BBWWTU31d1wmr3LYtodWKqmSrgadQ==
-X-Google-Smtp-Source: AGHT+IE0zosEt05kk5W3yR+O4FVUDk5d7Te2GxrXj7W1psE3AeqtpwUY87oV/ze/yDW1U+aJcrG6wQ==
-X-Received: by 2002:a17:90a:bcf:b0:2c9:9b16:e004 with SMTP id
- 98e67ed59e1d1-2cf2ec35e56mr3319041a91.43.1721951975967; 
- Thu, 25 Jul 2024 16:59:35 -0700 (PDT)
+ AJvYcCXScmBFzDqWwacCfY6rb0Ig3yWDxy7gDzfCnB9PIdkOgloRVWa8U4fupgZglBOU8rKFoPolj6PEfMpLBPnLr15ATWtD
+X-Gm-Message-State: AOJu0YwwChNbApyujKrlrhViFnsktX9SqRnuFIaiDR2FOneHRC4mE7Up
+ 3BLudHakebgXBqQCATU5zP8DZbB3MtXd+Phguw82Pj/+jeyffyToJHtgHw==
+X-Google-Smtp-Source: AGHT+IFVJIOyNLFrnwcJmSrHfCaR49CBJFHsfbf4OEzXabsiCXJPNR5z+q8HqsMeWay/tGdu3mgClw==
+X-Received: by 2002:a17:90a:b393:b0:2c3:2557:3de8 with SMTP id
+ 98e67ed59e1d1-2cf2eb04476mr3637152a91.33.1721951781237; 
+ Thu, 25 Jul 2024 16:56:21 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.33
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:59:35 -0700 (PDT)
+ Thu, 25 Jul 2024 16:56:20 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 90/96] target/ppc/mmu_common.c: Stop using ctx in
- get_bat_6xx_tlb()
-Date: Fri, 26 Jul 2024 09:54:03 +1000
-Message-ID: <20240725235410.451624-91-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 33/96] ppc/pnv: Add a CPU nmi and resume function
+Date: Fri, 26 Jul 2024 09:53:06 +1000
+Message-ID: <20240725235410.451624-34-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,63 +95,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Power CPUs have an execution control facility that can pause, resume,
+and cause NMIs, among other things. Add a function that will nmi a CPU
+and resume it if it was paused, in preparation for implementing the
+control facility.
 
-Pass raddr and prot in function parameters instead
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ hw/ppc/pnv.c         | 14 +++++++++++++-
+ include/hw/ppc/pnv.h |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 624ed51a92..4770b43630 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -193,7 +193,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, int *prot,
-     return ret;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index d19516c2d7..084cfb9984 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2751,11 +2751,23 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
+          */
+         env->spr[SPR_SRR1] |= SRR1_WAKESCOM;
+     }
++    if (arg.host_int == 1) {
++        cpu_resume(cs);
++    }
++}
++
++/*
++ * Send a SRESET (NMI) interrupt to the CPU, and resume execution if it was
++ * paused.
++ */
++void pnv_cpu_do_nmi_resume(CPUState *cs)
++{
++    async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(1));
  }
  
--static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-+static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, int *prot,
-                            target_ulong eaddr, MMUAccessType access_type,
-                            bool pr)
+ static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
  {
-@@ -224,16 +224,16 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
-             if ((eaddr & BATU32_BEPIU) == BEPIu &&
-                 ((eaddr & BATU32_BEPIL) & ~bl) == BEPIl) {
-                 /* Get physical address */
--                ctx->raddr = (*BATl & BATU32_BEPIU) |
-+                *raddr = (*BATl & BATU32_BEPIU) |
-                     ((eaddr & BATU32_BEPIL & bl) | (*BATl & BATU32_BEPIL)) |
-                     (eaddr & 0x0001F000);
-                 /* Compute access rights */
--                ctx->prot = ppc_hash32_bat_prot(*BATu, *BATl);
--                if (check_prot_access_type(ctx->prot, access_type)) {
-+                *prot = ppc_hash32_bat_prot(*BATu, *BATl);
-+                if (check_prot_access_type(*prot, access_type)) {
-                     qemu_log_mask(CPU_LOG_MMU, "BAT %d match: r " HWADDR_FMT_plx
--                                  " prot=%c%c\n", i, ctx->raddr,
--                                  ctx->prot & PAGE_READ ? 'R' : '-',
--                                  ctx->prot & PAGE_WRITE ? 'W' : '-');
-+                                  " prot=%c%c\n", i, *raddr,
-+                                  *prot & PAGE_READ ? 'R' : '-',
-+                                  *prot & PAGE_WRITE ? 'W' : '-');
-                     ret = 0;
-                 } else {
-                     ret = -2;
-@@ -277,7 +277,8 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+-    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(0));
+ }
  
-     /* First try to find a BAT entry if there are any */
-     if (env->nb_BATs &&
--        get_bat_6xx_tlb(env, ctx, eaddr, access_type, pr) == 0) {
-+        get_bat_6xx_tlb(env, &ctx->raddr, &ctx->prot, eaddr,
-+                        access_type, pr) == 0) {
-         return 0;
-     }
+ static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index c56d152889..b7858d310d 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -112,6 +112,8 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb);
+ #define PNV_FDT_ADDR          0x01000000
+ #define PNV_TIMEBASE_FREQ     512000000ULL
  
++void pnv_cpu_do_nmi_resume(CPUState *cs);
++
+ /*
+  * BMC helpers
+  */
 -- 
 2.45.2
 
