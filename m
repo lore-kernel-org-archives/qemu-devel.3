@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B88C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDEDC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWvUs-0001HT-Qz; Thu, 25 Jul 2024 06:14:54 -0400
+	id 1sWvfN-0003zw-AP; Thu, 25 Jul 2024 06:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWvUr-0001Be-D3
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:53 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWvfM-0003uX-3Z
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:25:44 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sWvUp-0007qX-CX
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:53 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52f008aa351so878301e87.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:14:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWvfJ-0001zo-F4
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:25:43 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-59589a9be92so968209a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721902489; x=1722507289; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=4JTpE/CHLjoamQZwUeX9uxDRoS3ZPI7VpKNBBjyC7Ak=;
- b=D6cTwjMAQv3yeG3KMMxx1kPq7LlN5Yl9yqXk4d7Nk4Yxzm4BAhkpOUx5ppN1s/qaPK
- 9aUmO9czrKm5pqiaHZ6/4pcHs4F0Thpb9ev4iV+TsOyPCjVZT9lOgKVkjQz1Dt9FvInN
- 5kt8gwUkpusykRUfckkSg4CMODbg4tqpAujZTvcIuLd7YjC6i4y+CEgRPEJTCIWvJvNt
- 9QWkHcaHcG1oXpZEzOO3FdCYH6j3+PYmuv1ZOKAxGG4BKbOhVSBIBjWp695E52qtgH/d
- n4mLdlX3ehLowkiDwUDmYg9y7iaoMYZTT44r3BPzb5XJRbTFwoOMOVuUyqkGyKEvfFhT
- VPsA==
+ d=linaro.org; s=google; t=1721903139; x=1722507939; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cfk88cf70gW4Jzzqc9ohoIeWumEFK5WnZk8O4FpBVL0=;
+ b=PXD9BKvUKHBEl9+ITEPWT62DSvn0U+55hEe6wZBwVUYe7zPo512rF5Ts84if00pQFm
+ KLrU2J13r+gsyG0PU4f7CLPnon+fbDRgPMRiogYkNQVq5Q3S55kHAfg5q4tL4dj2848v
+ A+dwVq2InUHFkeVmzMc4z5uCr8jfVrPmIF8KRJsTuYAv8tmHPNv+ULn4E4A4IWVZ307F
+ nrIu/k72lHfTX91wxvqVYkGvfoEaq+/DAvTr/ztiETrWFAyzlz4Sb9CxoveFKhLPZABx
+ bDv95lywku+LSQeeAtmTYZuoLSB78pSqMefY6zfKl9dgByY+lHEEnIilq0HqhfqOiDX3
+ bMPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721902489; x=1722507289;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4JTpE/CHLjoamQZwUeX9uxDRoS3ZPI7VpKNBBjyC7Ak=;
- b=BDnurl3qJgZddXdIZKrsDEhvtBubwY0q9ESXI7Za+UcWk4+diAFs5MqtDuZN9Y6ls8
- oCQ/iGJ4d3Qv1Llgaapjy1bzJr5hkNImqY2UXiyGUiPag09oqJvplLzmCBc3xZDc46r9
- oSUCZnOJbAIWqeppUn/OUHPeb2WOuyS0yca97FHG9lYL1uTz1qyVGriV09w6zSVWjYsZ
- i1YNtpp/NkA6WZx63eDjcwpoc8jtvRQwO94+21eMUGk3ob1R1GB1xxvOx9gdncc6ImB1
- t0b5TppgtcQ2v3+dQ13wTvoUP5mc1oXKwsN4fkcyQCDORC7A/14otBQBl8Mq1EWK+Xgu
- Ml6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpHPfdHneCTsH2ZCnOP3GKaAsHq+rlXmo4cbsbWySWS4kg0HaE63aUia7rbM7jCX1XNoBj6lQrd38SmdW2NwinbvXPA/Y=
-X-Gm-Message-State: AOJu0YwjAsV8fn+QiFatSkKyh5BqPyckq2H6nIZfK8Ti7Rszds8/lfWx
- Z/wgVP8roD1jhCeSOP7oKyuXk94eVuW+rdR3U2+p2FqjmpKauJbqhT2JxS/2sM8=
-X-Google-Smtp-Source: AGHT+IG4E4DiAJg4V4Tnjza3UFmSEWHNrb0ME+UOaLmZvObxERMzER01ZeVN+PslqbhbJXC3N+m7Vw==
-X-Received: by 2002:ac2:51cc:0:b0:52e:9d60:7b4c with SMTP id
- 2adb3069b0e04-52fd60a1de9mr1173642e87.61.1721902488753; 
- Thu, 25 Jul 2024 03:14:48 -0700 (PDT)
-Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab233aasm56922466b.8.2024.07.25.03.14.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 03:14:48 -0700 (PDT)
-Date: Thu, 25 Jul 2024 13:02:25 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qeemu-devel@nongnu.org, qemu-devel <qemu-devel@nongnu.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
- "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
- Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
-User-Agent: meli 0.8.6
-References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
- <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
- <h4gxy.dr366knvycy@linaro.org>
- <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
- <h61ku.ipxyjqsxu75@linaro.org>
- <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
-In-Reply-To: <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
-Message-ID: <h6cgm.o8scn84hx1ry@linaro.org>
+ d=1e100.net; s=20230601; t=1721903139; x=1722507939;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Cfk88cf70gW4Jzzqc9ohoIeWumEFK5WnZk8O4FpBVL0=;
+ b=W9iOw3x06R8FX8lN4RL+MkSoAr66S1XbN2tM9Czqe1e0ENYXZ4m0ghhRxFMsiDFhOJ
+ eIiGXleoQef24JE9wZp5AEOzW5CWvJ+KptJjlio4waF7lxhYe9nbcGveOJkm+J+Cb+vX
+ /I46f2bra9rhZX8pzUtDiAfPhQ2foFnoTy6RNJ/JwA5EprgLIHPlZeq4dv+1QheBUqQi
+ jUQ70V2WsZmBzbOs2cg1MadYl0jn+j8acBP/U5WtGfNoLSi6Sip6ShPvMEk5qLYlBf68
+ ghCBVRhONkL1MgeZwscW2nVd8+hwId1LsNZT+xG/kLXf3JhbyEHq6ezQ01qctx4NLaAe
+ 2A/w==
+X-Gm-Message-State: AOJu0Yy8tWgsim57ACXcVq5wax4sXLfL/O68xa+J21CQYKowaYTDYoxU
+ UpsYn61w9mW9cC/ihKQFEDdxMtPiHQCjbFynPQXDKx3V5s2GZpKe7uwz+/9OGlAMzZn0OrfeblA
+ BjX44ri2iLvgLm6KUy1A95FIRJHxA5Nidf1Ob8A==
+X-Google-Smtp-Source: AGHT+IGjDlNGcaB4Tb2p7QWipXLztktjOU4TlP5w43+UCjHdAy1zyMp+/1OB2NKPrmZmtwL+Oh71cvBv2c0PS3jgjms=
+X-Received: by 2002:a50:955e:0:b0:5a1:7570:8902 with SMTP id
+ 4fb4d7f45d1cf-5ac2ae7aea6mr1246164a12.18.1721903139485; Thu, 25 Jul 2024
+ 03:25:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
+References: <20240723141529.551737-1-pbonzini@redhat.com>
+ <20240723141529.551737-5-pbonzini@redhat.com>
+In-Reply-To: <20240723141529.551737-5-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jul 2024 11:25:28 +0100
+Message-ID: <CAFEAcA925i7y4mZ=+yvRAKftSbKcRJ9J7pAmCSRBKcM7w1hWtA@mail.gmail.com>
+Subject: Re: [PULL 04/11] Add support for RAPL MSRs in KVM/Qemu
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Anthony Harivel <aharivel@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,121 +88,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jul 2024 12:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
->Il gio 25 lug 2024, 08:19 Manos Pitsidianakis <
->manos.pitsidianakis@linaro.org> ha scritto:
+On Tue, 23 Jul 2024 at 15:17, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
->> >(before the call to qemu_chr_fe_accept_input):
->> >// TODO: this causes a callback that creates another "&mut self".
->> >// This is forbidden by Rust aliasing rules and has to be fixed
->> >// using interior mutability.
->>
->> You mean that we can have a call stack that looks something like...
->>
->> <qemu code>
->> |_ pl011_read
->>   |_ PL011State::read()
->>      |_ qemu_chr_fe_accept_input()
->>       |_ pl011_read
->>         |_ PL011State::read()
->>
->> If I understand correctly, this does not create another "&mut self",
->> because a mutable reference of self is passed to
->> qemu_chr_fe_accept_input(), and only exists until it returns.
->>
+> From: Anthony Harivel <aharivel@redhat.com>
 >
->Unfortunately that's a *mut, not a &mut. A &mut must be unique, so the cast
->in pl011_read() is undefined behavior.
+> Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
+> interface (Running Average Power Limit) for advertising the accumulated
+> energy consumption of various power domains (e.g. CPU packages, DRAM,
+> etc.).
+>
+> The consumption is reported via MSRs (model specific registers) like
+> MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
+> 64 bits registers that represent the accumulated energy consumption in
+> micro Joules. They are updated by microcode every ~1ms.
 
-Actually it's:
-
-  unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
-
-And you can ensure there's no disjoint borrowing by making a wrapper 
-function that mutably borrows self, e.g.
-
-fn accept_input(&mut self) {
-  unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
-}
-
-This is not undefined behavior, since the cast in pl011_read creates a 
-mutable reference that does not outlive the same call to pl011_read.
+Hi; Coverity points out a couple of issues with this commit
+(details below).
 
 
->
->In any case, I agree that these subtleties must be examined thoroughly
->> in general. In this case though PL011State has only Copy fields and no
->> side effects when dropped. This means that adding interior mutability
->> e.g. with Cell would have exactly the same behavior.
->>
->
->If you add interior mutability you can operate on a &self; and then
->creating the &mut (via either Cell or RefCell) from the callback is legal.
->
->But your bringing it up makes me wonder whether we can detect any bad
->> behaviors with miri... It does not play well with FFI boundaries but
->> it's possible to mock them in some cases. I will look into the two TODOs
->> you mention and also if it's possible to verify the correct behavior
->> whenever possible!
->>
->
->The most robust way is to write proper bindings to QEMU APIs that enforce
->use of shared references. That will take time; but we'll get there, for now
->it's important just to point out the problem.
+> +static void *kvm_msr_energy_thread(void *data)
+> +{
+> +    KVMState *s = data;
+> +    struct KVMMsrEnergy *vmsr = &s->msr_energy;
+> +
+> +    g_autofree vmsr_package_energy_stat *pkg_stat = NULL;
+> +    g_autofree vmsr_thread_stat *thd_stat = NULL;
+> +    g_autofree CPUState *cpu = NULL;
+> +    g_autofree unsigned int *vpkgs_energy_stat = NULL;
+> +    unsigned int num_threads = 0;
+> +
+> +    X86CPUTopoIDs topo_ids;
+> +
+> +    rcu_register_thread();
+> +
+> +    /* Allocate memory for each package energy status */
+> +    pkg_stat = g_new0(vmsr_package_energy_stat, vmsr->host_topo.maxpkgs);
+> +
+> +    /* Allocate memory for thread stats */
+> +    thd_stat = g_new0(vmsr_thread_stat, 1);
+> +
+> +    /* Allocate memory for holding virtual package energy counter */
+> +    vpkgs_energy_stat = g_new0(unsigned int, vmsr->guest_vsockets);
+> +
+> +    /* Populate the max tick of each packages */
+> +    for (int i = 0; i < vmsr->host_topo.maxpkgs; i++) {
+> +        /*
+> +         * Max numbers of ticks per package
+> +         * Time in second * Number of ticks/second * Number of cores/package
+> +         * ex: 100 ticks/second/CPU, 12 CPUs per Package gives 1200 ticks max
+> +         */
+> +        vmsr->host_topo.maxticks[i] = (MSR_ENERGY_THREAD_SLEEP_US / 1000000)
+> +                        * sysconf(_SC_CLK_TCK)
+> +                        * vmsr->host_topo.pkg_cpu_count[i];
+> +    }
+> +
+> +    while (true) {
+> +        /* Get all qemu threads id */
+> +        g_autofree pid_t *thread_ids =
+> +            thread_ids = vmsr_get_thread_ids(vmsr->pid, &num_threads);
 
-Please demonstrate a scenario where said problem shows up, otherwise 
-it's just hand-waving on a undefined (pun intended ;) ) hypothetical.
+Here you are assigning the same value to the thread_ids variable
+twice. What was the intention here ? (CID 1558553)
 
->
->
->> >> >❌ a trait to generate all-zero structs without having to type "unsafe {
->> >> >MaybeUninit::zeroed().assume_init() }"
->> >>
->> >> Traits cannot have const fns at the moment (traits cannot have
->> >> type-level effects like const or async but it's WIP to get them into
->> >> rustc), so this cannot be used for statics and consts.
->> >
->> >Ah, I see. Anyhow, I've been looking at the Linux kernel's pinned-init
->> >crate (https://rust-for-linux.com/pinned-init) and it provides a
->> >Zeroable macro including #[derive] support. So that has gone lower in
->> >my priority.
->> >
->> >> >❌ I'd like to use ctor instead of non-portable linker magic,
->> >>
->> >> The linker sections are pretty much standard and in fact ctor uses the
->> >> same linker attributes. Would writing our own constructor macro be a
->> >> solution for you? My reasoning is that 1) we support our own specific
->> >> platforms and it's better for portability to reflect that in our source
->> >> tree and 2) it avoids the external dependency, linker sections do not
->> >> change so any ctor update would be in the API or adding more platform
->> >> support,  not fixes in what we target.
->> >
->> >I'd still like to give someone else the burden. :) Writing our own
->> >constructor macro would be more work for little gain.
->>
->> Well, it's just that I personally don't view adding __attribute__
->> manually in only two places is a burden but I've no strong preference
->> over it.
->>
->> I'm looking at the ctor dependencies and they are a few:
->>
->> https://github.com/mmastrac/rust-ctor/blob/cc3ab9160ed9dc3bdf20d735352b519abc2913e9/Cargo.lock
->>
->> Do you perhaps agree with adding a FIXME comment to replace the linker
->> attributes with ctor when we get the cargo dependency story in meson
->> sorted out?
->>
->
->Yes, that's fine.
+> +
+> +        if (thread_ids == NULL) {
+> +            goto clean;
+> +        }
 
-Thanks! We also have to keep in mind we would like Debian to be able to 
-package this, so we should be very conservative on what dependencies we 
-use.
 
->
->Paolo
->
->Manos
->>
->>
+
+> +/* Read the scheduled time for a given thread of a give pid */
+> +void vmsr_read_thread_stat(pid_t pid,
+> +                      unsigned int thread_id,
+> +                      unsigned long long *utime,
+> +                      unsigned long long *stime,
+> +                      unsigned int *cpu_id)
+> +{
+> +    g_autofree char *path = NULL;
+> +    g_autofree char *path_name = NULL;
+> +
+> +    path_name = g_strdup_printf("/proc/%u/task/%d/stat", pid, thread_id);
+> +
+> +    path = g_build_filename(path_name, NULL);
+> +
+> +    FILE *file = fopen(path, "r");
+> +    if (file == NULL) {
+> +        pid = -1;
+> +        return;
+> +    }
+> +
+> +    if (fscanf(file, "%*d (%*[^)]) %*c %*d %*d %*d %*d %*d %*u %*u %*u %*u %*u"
+> +        " %llu %llu %*d %*d %*d %*d %*d %*d %*u %*u %*d %*u %*u"
+> +        " %*u %*u %*u %*u %*u %*u %*u %*u %*u %*d %*u %*u %u",
+> +           utime, stime, cpu_id) != 3)
+> +    {
+> +        pid = -1;
+> +        return;
+
+In this error-exit path we leak 'file', because we opened it but
+didn't close it. (CID 1558557)
+
+Also, both here and in the previous error-exit check we set pid = -1,
+which is pointless because it's a function-local variable and nothing
+is going to see the new value.
+
+> +    }
+> +
+> +    fclose(file);
+> +    return;
+> +}
+
+thanks
+-- PMM
 
