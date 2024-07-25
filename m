@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D584C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819B2C3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8MN-0001XL-U8; Thu, 25 Jul 2024 19:58:59 -0400
+	id 1sX8Kh-0000ke-7b; Thu, 25 Jul 2024 19:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8MC-00011z-8D; Thu, 25 Jul 2024 19:58:50 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1sX8Kb-0000Uf-W3; Thu, 25 Jul 2024 19:57:10 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8M9-0001dQ-UL; Thu, 25 Jul 2024 19:58:47 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7a263f6439eso253894a12.3; 
- Thu, 25 Jul 2024 16:58:45 -0700 (PDT)
+ id 1sX8Ka-0001JK-5H; Thu, 25 Jul 2024 19:57:09 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2cb5243766dso320194a91.0; 
+ Thu, 25 Jul 2024 16:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951923; x=1722556723; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951826; x=1722556626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kFW8mrexW3DWNbaozHBTt6yJbtLNBcqpBAa9gzkDLL4=;
- b=flTSLJD2XvkpNOHATgRVmjRsniFfw+dkHXmucoZJRN8KtI+HbleKS+LJUk4HAwQa4T
- R1dShKhjuSIMb6tiKw9pQ3uYxpbzFz2NuvNxsYbOTRI6ewPGvkVDK3+2qcoo02DpQNIY
- lU8xUYAB8QYGIfy8qvnppkwa3eqbzSM6h6FXXV3IRTcptMEdp1IUzP/JkodnhGNCtann
- 6p4QlW+KVBlRPeXxryDDU8VP7NJBFznMUYoX5MEv5K1RoD+iTlajYifDR5D8IT3nQnyv
- lU+E8618JOHIsuVM8HVJI5tVTn81afc4ME83NsF3vreOEjgkFRtw+CZljqyEJOIVXttz
- FD0A==
+ bh=GPCxFjqA845bFfBDX6QcwlN1hvHVfAlMa5QHleMSePg=;
+ b=DexiS+Rzkh5FpSN9qZRzdrL9glN+vzJ9lqaYZNylp1YdCr1uJh9zM2HkZOIsKig2k5
+ nXGV7q5LdGml5A+eAIznBTWxWAoyWq1/ATynkiJJQ5UfM/5YMq/q2uxQZFnb9dgQ0w9T
+ gv0Pwe3Q6A1Kemk3heNWOXXswQaXhjeG11uvKXGSDOL7g07DF9gZ5iacGFg9BfS1AKI3
+ o0RINsPgtWxO1ULMidB0BwiB0ZFNroUHDYLv540Wm3aENLBVbNyz/gMikT4/o+LoLZ5T
+ D5jA8hNOKixdE+gZnQFr8XEt/nTk34mJqCoTinpG8X/ERPETZmOz1DBz3uGf8GMaQDvL
+ Yq3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951923; x=1722556723;
+ d=1e100.net; s=20230601; t=1721951826; x=1722556626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kFW8mrexW3DWNbaozHBTt6yJbtLNBcqpBAa9gzkDLL4=;
- b=jvFLzxRwak7comM4ZxpkzKY96gTregI7PPA9M4i27NJ0N+1nDd9m89JkkdpHa++/Ll
- RfWtux5grN9RHlAPfuAG3GBv6CYEYFqye0YkNPyzU4XrDYZ6t7uZ0cWZUoSO9W180Yy1
- bxnB0kRgBRkG8j6raHk15ahiDeqHr/CN90TSXg457Eo7O4hl/Z1YtvFyqJFJgWbGKRmG
- BcETumxfPyl9fcc7a2SoWh3mus7tJ1xo7j4LsdkIZ7kk4RSXoV4NnhEDMucdQMjGIYEc
- GKGBxkhtOA9VNSltc0+zS3mlhPLF9kVN3Da3dv0ZJ9wwmyhFL3G8ePeMd6EGY44dzT5d
- 9/1w==
+ bh=GPCxFjqA845bFfBDX6QcwlN1hvHVfAlMa5QHleMSePg=;
+ b=RVi/cSKWztNEQIQAXYWKT4GZd8iQvSgU4eK9loHiWdLdopKAkUxa1ZNKewsW3sWKlF
+ QU7lGUhxH8xBB7lV6zRrWQRB7+VCPTh4hgxA3Axpj/MbwvCYqXcdr2NpuYm3uvJEMT28
+ XEkSQKJx5q04GHFTUGamynnvgPnIl3TCbGAua4jd18LqyR8alHIwPIuYsrVMxIcN021s
+ H3qb/lYbtlvydPy8gd3wPFbW0zEfJmuwWjQz3OgEWDTeG3006nALK0JpIX0JhXigqzeo
+ B21ndOHxy/3VhJLCtigXzLGaZz6QaonWg8ayR7Trzy+d+IZM27ifL7NKJE8GafROyVxX
+ W/oA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8vuHEiY/eWb03qrfCMUMd9FOeTAqWde6UJGmUMM6sAeYGtmHwERBfRRUzfXw3NkqQw8wFHTTZdNBVbiTpf+DHP5Ix
-X-Gm-Message-State: AOJu0YxpsAuz4lS6F/SgOUlpKcPMoa8Vi4fu2aCEzKXrabmwjfangvKY
- T5VtWs6jy30vOAfgLLGAumL6X5I/tBDbjwb0W9dQ+m/F8y3mXntfww402w==
-X-Google-Smtp-Source: AGHT+IFOQs5GpS/Thp3N26gKXSzwzht42Jo5vyFFox8hmuUFNdbOi/lr3Gb0bHhVqv7IwnKJR9xb4w==
-X-Received: by 2002:a17:90b:390a:b0:2c9:6a38:54e4 with SMTP id
- 98e67ed59e1d1-2cf2ebcf4b5mr3609969a91.41.1721951923543; 
- Thu, 25 Jul 2024 16:58:43 -0700 (PDT)
+ AJvYcCUubK3jMt2A+OY6GNdFz042JR6oDjp9p5oIYS84je3jenXbPpkmBywx+gT8/BBT9aHfGvCGgnJmfoD0ARdpYdMyXjKq
+X-Gm-Message-State: AOJu0YwMB0/PUmQRv/ms5uIgnyHxaCefOIBqp4x1VBN2QE2UkeSvm/Tc
+ Um+1an8k0qL/s4zrNJ6WV3rCv/EumpNXEyp+npdADYSBawjHz88uL01HwQ==
+X-Google-Smtp-Source: AGHT+IG5b1pk6J8kn8+iRDOnxeIypGK/xnkGiXhBew6UUMMgkp+VfUbQxBSIcPi7SxlyzZAYkEZIvg==
+X-Received: by 2002:a17:90a:ab0d:b0:2c8:84b:580e with SMTP id
+ 98e67ed59e1d1-2cf23e25a25mr4848404a91.41.1721951825997; 
+ Thu, 25 Jul 2024 16:57:05 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.41
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:58:43 -0700 (PDT)
+ Thu, 25 Jul 2024 16:57:05 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 73/96] target/ppc/mmu_common.c: Remove unused field from
- mmu_ctx_t
-Date: Fri, 26 Jul 2024 09:53:46 +1000
-Message-ID: <20240725235410.451624-74-npiggin@gmail.com>
+ Frederic Barrat <fbarrat@linux.ibm.com>,
+ Michael Kowal <kowal@linux.vnet.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 45/96] pnv/xive2: Add NVG and NVC to cache watch facility
+Date: Fri, 26 Jul 2024 09:53:18 +1000
+Message-ID: <20240725235410.451624-46-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +97,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-The eaddr field of mmu_ctx_t is set once but never used so can be
-removed.
+The cache watch facility uses the same register interface to handle
+entries in the NVP, NVG and NVC tables. A bit-field in the 'watchX
+specification' register tells the table type. So far, that bit-field
+was not read and the code assumed a read/write to the NVP table.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+This patch allows to read/write entries in the NVG and NVC table as
+well.
+
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/intc/pnv_xive2.c | 49 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 38 insertions(+), 11 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 28adb3ca10..0a07023f48 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -40,7 +40,6 @@
- /* Context used internally during MMU translations */
- typedef struct {
-     hwaddr raddr;      /* Real address             */
--    hwaddr eaddr;      /* Effective address        */
-     int prot;          /* Protection bits          */
-     hwaddr hash[2];    /* Pagetable hash values    */
-     target_ulong ptem; /* Virtual segment ID | API */
-@@ -348,7 +347,6 @@ static int mmu6xx_get_physical_address(CPUPPCState *env, mmu_ctx_t *ctx,
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index 3dbbfddacb..561e61682e 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -465,10 +465,30 @@ static int pnv_xive2_write_nvp(Xive2Router *xrtr, uint8_t blk, uint32_t idx,
+                               word_number);
+ }
  
-     /* Perform segment based translation when no BATs matched */
-     pr = FIELD_EX64(env->msr, MSR, PR);
--    ctx->eaddr = eaddr;
+-static int pnv_xive2_nvp_update(PnvXive2 *xive, uint8_t watch_engine)
++static int pnv_xive2_nxc_to_table_type(uint8_t nxc_type, uint32_t *table_type)
+ {
+-    uint8_t  blk;
+-    uint32_t idx;
++    switch (nxc_type) {
++    case PC_NXC_WATCH_NXC_NVP:
++        *table_type = VST_NVP;
++        break;
++    case PC_NXC_WATCH_NXC_NVG:
++        *table_type = VST_NVG;
++        break;
++    case PC_NXC_WATCH_NXC_NVC:
++        *table_type = VST_NVC;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "XIVE: invalid table type for nxc operation\n");
++        return -1;
++    }
++    return 0;
++}
++
++static int pnv_xive2_nxc_update(PnvXive2 *xive, uint8_t watch_engine)
++{
++    uint8_t  blk, nxc_type;
++    uint32_t idx, table_type = -1;
+     int i, spec_reg, data_reg;
+     uint64_t nxc_watch[4];
  
-     sr = env->sr[eaddr >> 28];
-     ctx->key = (((sr & 0x20000000) && pr) ||
+@@ -476,21 +496,24 @@ static int pnv_xive2_nvp_update(PnvXive2 *xive, uint8_t watch_engine)
+ 
+     spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
+     data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
++    nxc_type = GETFIELD(PC_NXC_WATCH_NXC_TYPE, xive->pc_regs[spec_reg]);
+     blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
+     idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
+ 
++    assert(!pnv_xive2_nxc_to_table_type(nxc_type, &table_type));
++
+     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
+         nxc_watch[i] = cpu_to_be64(xive->pc_regs[data_reg + i]);
+     }
+ 
+-    return pnv_xive2_vst_write(xive, VST_NVP, blk, idx, nxc_watch,
++    return pnv_xive2_vst_write(xive, table_type, blk, idx, nxc_watch,
+                               XIVE_VST_WORD_ALL);
+ }
+ 
+-static void pnv_xive2_nvp_cache_load(PnvXive2 *xive, uint8_t watch_engine)
++static void pnv_xive2_nxc_cache_load(PnvXive2 *xive, uint8_t watch_engine)
+ {
+-    uint8_t  blk;
+-    uint32_t idx;
++    uint8_t  blk, nxc_type;
++    uint32_t idx, table_type = -1;
+     uint64_t nxc_watch[4] = { 0 };
+     int i, spec_reg, data_reg;
+ 
+@@ -498,11 +521,15 @@ static void pnv_xive2_nvp_cache_load(PnvXive2 *xive, uint8_t watch_engine)
+ 
+     spec_reg = (PC_NXC_WATCH0_SPEC + watch_engine * 0x40) >> 3;
+     data_reg = (PC_NXC_WATCH0_DATA0 + watch_engine * 0x40) >> 3;
++    nxc_type = GETFIELD(PC_NXC_WATCH_NXC_TYPE, xive->pc_regs[spec_reg]);
+     blk = GETFIELD(PC_NXC_WATCH_BLOCK_ID, xive->pc_regs[spec_reg]);
+     idx = GETFIELD(PC_NXC_WATCH_INDEX, xive->pc_regs[spec_reg]);
+ 
+-    if (pnv_xive2_vst_read(xive, VST_NVP, blk, idx, nxc_watch)) {
+-        xive2_error(xive, "VST: no NVP entry %x/%x !?", blk, idx);
++    assert(!pnv_xive2_nxc_to_table_type(nxc_type, &table_type));
++
++    if (pnv_xive2_vst_read(xive, table_type, blk, idx, nxc_watch)) {
++        xive2_error(xive, "VST: no NXC entry %x/%x in %s table!?",
++                    blk, idx, vst_infos[table_type].name);
+     }
+ 
+     for (i = 0; i < ARRAY_SIZE(nxc_watch); i++) {
+@@ -1432,7 +1459,7 @@ static uint64_t pnv_xive2_ic_pc_read(void *opaque, hwaddr offset,
+         * SPEC register
+         */
+         watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
+-        pnv_xive2_nvp_cache_load(xive, watch_engine);
++        pnv_xive2_nxc_cache_load(xive, watch_engine);
+         val = xive->pc_regs[reg];
+         break;
+ 
+@@ -1506,7 +1533,7 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
+         /* writing to DATA0 triggers the cache write */
+         watch_engine = (offset - PC_NXC_WATCH0_DATA0) >> 6;
+         xive->pc_regs[reg] = val;
+-        pnv_xive2_nvp_update(xive, watch_engine);
++        pnv_xive2_nxc_update(xive, watch_engine);
+         break;
+ 
+    /* case PC_NXC_FLUSH_CTRL: */
 -- 
 2.45.2
 
