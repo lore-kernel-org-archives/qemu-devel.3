@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9279C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 12:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4200C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 12:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWxPZ-0007mj-PP; Thu, 25 Jul 2024 08:17:34 -0400
+	id 1sWxZE-0005Er-FV; Thu, 25 Jul 2024 08:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWxPW-0007lu-3A
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:17:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sWxPS-0003hT-9P
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:17:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721909844;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S3UGu/KRztNRY0Bp3FrBUk5j7TGUvdGU0FLKSCgJsvw=;
- b=WjEZWketa0yiquvy94lDLg026dn26dZaGXbJFOBtXYzJQiVIx9Wgmvgq2DFHs+trJRPPCh
- b70sWYVIFo98Y07furRnuFanzQiRpyKOdst3T+LHpXYTNrSlEEt062/HWxJWpADjYEyTOq
- bMtYM0pxBNAU4+uktjbtd8mlEf5UmuY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-GSJxa0IxO1GFUoLflovuUg-1; Thu, 25 Jul 2024 08:17:22 -0400
-X-MC-Unique: GSJxa0IxO1GFUoLflovuUg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36871eb0a8eso500568f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 05:17:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWxZC-0005DY-Gr
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:27:30 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sWxZA-0007oU-Oy
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 08:27:30 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5a309d1a788so1004726a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 05:27:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1721910447; x=1722515247; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GOh6PKdCbaMoUdlPd1L+eg1JAZ26MYlPj4SLk05TsGk=;
+ b=wS0/ZmP5dJYPEuO+ZQ/CLLcLIk2MMLPTUru+/566sw1bDJ+vo1NkxtqdxgBPJss590
+ pyZUtGNq9/8dbFcRuvmuBOnnO5ZP5Ksej+YyJIogixEwmGOGG6kvrCPOWVEC8+sC4374
+ f0T48n6KtsegXU+b1cIRTwbsc+Bl/TLcrpe5R5hguAz5Ff3Hx5X8YgBJfa4Hns6a3DIr
+ xWibUU3w9pDvrRtKmMckXUSwAIWEy57MmANQXByNlSl3rrRZOUxdVmLXANO/1FHeSzDz
+ /jCTrbcSirlIVmfeoNBBlCKaDlz15d+d5DcUlrweq8tumYmkk/SF7dL7pBofrCDhLAvm
+ rjqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721909841; x=1722514641;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S3UGu/KRztNRY0Bp3FrBUk5j7TGUvdGU0FLKSCgJsvw=;
- b=ix+06ol52uNjU3ps4l55twPkxwdkYc0vPYJgYBPhDpzTx9tIrmhTwy09WApfiSwKcx
- FeIv5CSxDzMNalXW7XRDwWfm0UZcBBhnqrC13iKUXJsokq9xg+gbkMZdXQU0fdQR6tEb
- lr1x0oIsZMnl/90KCjtzp3+wklAmcekKqLgI4tw289EUxvSU3Pg494+KZAdwlv+YbSpn
- TOJtNdeqTrbLbAijCBpW1OsJYGHx/ta9DsliPMDstXjS3nKPA4wnOKPtL+Sbu3C8anum
- gwMdLHhfW/TuMyl0F/8jvY3kGrP7q2S83SEa3xAFDn03U28TeLB8I/pF0/bST29QFVta
- yRwA==
+ d=1e100.net; s=20230601; t=1721910447; x=1722515247;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GOh6PKdCbaMoUdlPd1L+eg1JAZ26MYlPj4SLk05TsGk=;
+ b=e4ehSOgOXqoQ7bXOdq5FhgE/ilVs2PEvf+fqoTN3m15XCgLPVvEfqKPa6Pfn89G2gb
+ d/XOO2ogqH03qZR5R8EYcnaqo1hHWk8+xW/1lool7/Kd6pKrrFK1jmX3cNL1QPZTZpof
+ GdpT/XKYtWjcfopkvWfZvv2sncy0WiCWNnleYt1NgW+6T3CcgtKfrn93buynTvWnWDnV
+ vPTErtdQKwxFSiANdqHIkahf214XkrCaIbLSuW6IerxpqQXzQVRzpnO4BPLY3lE81ENg
+ LwGtgfDnVNylWiyB8ZQpkn6/oPcQuDW+sk9FwHAklSovLww/2udzpfMNw/TYm8aWrKf2
+ SZ+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVquyP4wBlN1/8sM6Z+chLx2e7IPDhfYKMwntKwmidqsLcqDHR+3/NOfjfY3oy+y7NKh1xvoSonvU1I4vgXuJaaehLz/iY=
-X-Gm-Message-State: AOJu0Yz5Rz/eb7KTO/HqfuQxvPaG7n5jqrghFkbU17e5kJKiiP1jV/Y1
- 72WnBWe/Um0eGo3pFDAyaRNafyf/FMfMm4mum79LgDY70CLrOorlw10dQYtW1W/5Hw3Ns4qPOcr
- S1l/TSjLkQqKM0nVPZWqPfIs/ldk6y9tOB+Pug84via/yh2FuKynw
-X-Received: by 2002:a05:6000:10c4:b0:367:f281:260e with SMTP id
- ffacd0b85a97d-36b31ac7126mr1799095f8f.3.1721909841500; 
- Thu, 25 Jul 2024 05:17:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEKfa12+yv+9oCURpazLfKX3NylqFM0NYsmdlmyULxdYJys5id/PrGbgGHwZdmlDCg2IQWng==
-X-Received: by 2002:a05:6000:10c4:b0:367:f281:260e with SMTP id
- ffacd0b85a97d-36b31ac7126mr1799053f8f.3.1721909840718; 
- Thu, 25 Jul 2024 05:17:20 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f8:1b05:4ed8:7577:e2b:7ae3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36863aa7sm1983920f8f.109.2024.07.25.05.17.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 05:17:20 -0700 (PDT)
-Date: Thu, 25 Jul 2024 08:17:14 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Richard Cochran <richardcochran@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
- "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
- "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
- "Christopher S . Hall" <christopher.s.hall@intel.com>,
- Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
- netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-Message-ID: <20240725081502-mutt-send-email-mst@kernel.org>
-References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
- <20240725012730-mutt-send-email-mst@kernel.org>
- <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
+ AJvYcCUJ2IxqqvOG/K08jQ5KmF+qNXALvTBEPv/F4Hyzs3ZtaQyhVF1py4lhwfYcXG6XrRyGbU3j2HMg7hJDwlawKgyS0Jluois=
+X-Gm-Message-State: AOJu0YxcYBLT4kfxwQMN6N9Jo6VU7MfvNp9mDAwFifNe9aKfDu8KDaSX
+ AL7KVub/QKWngWN05OgZ1/snBwOfVHy3YnD/F0/g5YVBkw5lhNNbYYGi9wdjIvv1+ZuaRI0RlUQ
+ fkKD+rqJPtWFM7RlgQZKogVMWkkxvalCas0A8qg==
+X-Google-Smtp-Source: AGHT+IEDyBxEvxBsN9vTBlpY82wdgrQiPGM2Bk6P5qhTyE3mo4k/VO1Rtgxf/JjCjs5r4jLmFPukfq3rbKZL28GZa7s=
+X-Received: by 2002:a50:ab55:0:b0:57d:456:e838 with SMTP id
+ 4fb4d7f45d1cf-5ac6519c7d8mr1304019a12.31.1721910446680; Thu, 25 Jul 2024
+ 05:27:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <cover.1721731723.git.mst@redhat.com>
+ <08c328682231b64878fc052a11091bea39577a6f.1721731723.git.mst@redhat.com>
+ <CAFEAcA-3_d1c7XSXWkFubD-LsW5c5i95e6xxV09r2C9yGtzcdA@mail.gmail.com>
+ <8f5fcf0c1deb4f199d86441f79298629@huawei.com>
+In-Reply-To: <8f5fcf0c1deb4f199d86441f79298629@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jul 2024 13:27:15 +0100
+Message-ID: <CAFEAcA9-gVBLAH9PaFrPmBLD5tHXMZ+-2m+pRvtjodOBaBa0GQ@mail.gmail.com>
+Subject: Re: [PULL v2 37/61] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Gavin Shan <gshan@redhat.com>,
+ Vishnu Pajjuri <vishnu@os.amperecomputing.com>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Xianglai Li <lixianglai@loongson.cn>, 
+ Miguel Luis <miguel.luis@oracle.com>, Shaoqin Huang <shahuang@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,18 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 10:56:05AM +0100, David Woodhouse wrote:
-> > Do you want to just help complete virtio-rtc then? Would be easier than
-> > trying to keep two specs in sync.
-> 
-> The ACPI version is much more lightweight and doesn't take up a
-> valuable PCI slot#. (I know, you can do virtio without PCI but that's
-> complex in other ways).
-> 
+On Thu, 25 Jul 2024 at 13:05, Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> HI Peter,
+>
+> >  From: Peter Maydell <peter.maydell@linaro.org>
+> >  Sent: Thursday, July 25, 2024 11:36 AM
+> >  To: Michael S. Tsirkin <mst@redhat.com>
+> >
+> >  On Tue, 23 Jul 2024 at 11:58, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >  >
+> >  > From: Salil Mehta <salil.mehta@huawei.com>
+> >  >
+> >  > KVM vCPU creation is done once during the vCPU realization when Qemu
+> >  > vCPU thread is spawned. This is common to all the architectures as of now.
+> >  >
+> >  > Hot-unplug of vCPU results in destruction of the vCPU object in QOM
+> >  > but the corresponding KVM vCPU object in the Host KVM is not destroyed
+> >  > as KVM doesn't support vCPU removal. Therefore, its representative KVM
+> >  > vCPU object/context in Qemu is parked.
+> >  >
+> >  > Refactor architecture common logic so that some APIs could be reused
+> >  > by vCPU Hotplug code of some architectures likes ARM, Loongson etc.
+> >  > Update new/old APIs with trace events. New APIs
+> >  > qemu_{create,park,unpark}_vcpu() can be externally called. No functional
+> >  change is intended here.
+> >
+> >  Hi; Coverity points out an issue with this code (CID 1558552):
+> >
+> >  > +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id) {
+> >  > +    struct KVMParkedVcpu *cpu;
+> >  > +    int kvm_fd = -ENOENT;
+> >  > +
+> >  > +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> >  > +        if (cpu->vcpu_id == vcpu_id) {
+> >  > +            QLIST_REMOVE(cpu, node);
+> >  > +            kvm_fd = cpu->kvm_fd;
+> >  > +            g_free(cpu);
+> >  > +        }
+> >  > +    }
+> >
+> >  If you are going to remove an entry from a list as you iterate over it, you
+> >  can't use QLIST_FOREACH(), because QLIST_FOREACH will look at the next
+> >  pointer of the iteration variable at the end of the loop when it wants to
+> >  advance to the next node. In this case we've already freed 'cpu', so it would
+> >  be reading freed memory.
+> >
+> >  Should we break out of the loop when we find the entry?
+>
+>
+> Thanks for identifying this. Yes, a  break is missing. Should I send a fix for this
+> now or you can incorporate it?
 
-Hmm, should we support virtio over ACPI? Just asking.
+The code is already in upstream git, so please send a patch
+to fix the bug.
 
--- 
-MST
-
+thanks
+-- PMM
 
