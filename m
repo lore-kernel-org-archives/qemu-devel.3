@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51822C3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D28CAC49EA1
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8L1-0001um-TW; Thu, 25 Jul 2024 19:57:35 -0400
+	id 1sX8JF-0008Jg-H5; Thu, 25 Jul 2024 19:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Kq-0001H7-Ly; Thu, 25 Jul 2024 19:57:25 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1sX8JB-0007ii-0D; Thu, 25 Jul 2024 19:55:41 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Ko-0001NY-Bh; Thu, 25 Jul 2024 19:57:23 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2cb585375f6so303122a91.3; 
- Thu, 25 Jul 2024 16:57:21 -0700 (PDT)
+ id 1sX8J9-0000y5-5j; Thu, 25 Jul 2024 19:55:40 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2cb56c2c30eso256558a91.1; 
+ Thu, 25 Jul 2024 16:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951840; x=1722556640; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951737; x=1722556537; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+87aLDu/AZjA6A8xbSUdBt1RgtjjD/tVl2VZXlpWFaU=;
- b=GeXIh9I8+VxbHnXAAJazJ5ve955uQUPhRUaiPipP7dXd0+UaxaEh9+ntJnzg5z5Z1O
- akbgerZIKlKEgExZS9gVTdFP57arqcqTP9u69yb8QPMyu/cBrc/Kse6cZrXjyRif5bgl
- /qDWoArWZ4dwL/grqBPDOE7+I13hx99IF+Su2jBQPkq9U7wxbSoxRog6Uca/MX8I6Tu3
- ACY0XWc0z2c+3CRmM3sVXcQxi81XJ1333hJi7EcSS60FzE5XyZQxQ+F2K1FF5o930Eef
- IFjpUa/Hncr3ZRB6pyoka1pA9EcMjI4q1LtpNPvtJI5U1Bk0frNwqG7Mvh9yMaATX8Yq
- VaSw==
+ bh=OAlgpIQYgFpaRkyINeUW5affW7H0QVJ5/b4EoIQ4G54=;
+ b=kMj29tKxYylNuhJssSR17DJDmYgxiBCm5ldD0kkmBHulftb/rG6r+eDKs5TgNjsbGO
+ zfdvGMUPjCZqso61LAfq8WyclgMbsmzxguTDikceYQ33TnZZILkCGhpWTl/TN+rGSk1I
+ cOQ4qgxAkJb1tDwmOKLY1hwZwfmcJzjxQsbmElUkNWoSYXACCpYhGBLq6W5SXGMzGThY
+ jAZrPyLB7x6d/WsicblJaGHzcyTuQxdZXyVWgw6ohW+egoehsUKXL1DZooE0Uyok1zy6
+ D87yLgFRxlgg1NUbPJrfLM1xHRmXWW2LBOxgpIrpq7N1VdD28LrgoMGwsaDYgSALySJE
+ QhRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951840; x=1722556640;
+ d=1e100.net; s=20230601; t=1721951737; x=1722556537;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+87aLDu/AZjA6A8xbSUdBt1RgtjjD/tVl2VZXlpWFaU=;
- b=dieO+7m6U93FjzDjpo1/0bF6Gb7j3wEZQ0zo9iWg11hgS/0S/kdmXRn5cECBiv1n8L
- 8HmEOBuJEAjHoacBgPnJXq3foOch6AWOJPdy2L6S8B3UU/IaF0BsvJKWbPQThtF5Az0F
- xaPz6LpEnm2asHHuB2oMoaEz06Xmqp4IkBZT9iKPQ/zCCsG0uOQdKcFjfksXMZPtYVvu
- cY5dsoDRBZ6XknwUYGQhPEOYFxCzjpXbLa+bzWAkfZZsncoRWR6BEfYBT1jyMk14rc92
- rwmdH3sKAATcs331jOvhaFV3/VgOd94bh8pQB8HnuV4yy+YcenYfWPRVC0mrJaSgdEvo
- 0S7w==
+ bh=OAlgpIQYgFpaRkyINeUW5affW7H0QVJ5/b4EoIQ4G54=;
+ b=I4MLVjnDTB5AmA160L/jbuYMBZ7cBpkxT8ovB/4+SDI0V7+2zMjfdUgCfrC5O+LOgO
+ yvDhZGPmQ9/3wl8+BzbkzekVl77Z5OI/ZQHyn9UTN8LQLX5hAeb2+z7i38nib5t4pyP7
+ /Cq3/2nQj3uJv2i18SjqV2rv9UsF5UC4YT7lEV30jFVEPuEdta/0qqWT/9p0Nk5NrRhV
+ GtILjm+ZpelVNCtQ9KfdvY/KsrXQEXePK7fJXbpCfLNn+CV8XDvAfAmxT1FcE+v3AbPS
+ dQRW6QZKFgMF39KyVDVEJe0zDDlB7FtTE55kzgBrKDy0q6TESxGhaIiKz6HD09Ufsa6n
+ GHGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQ39Q4roNMX3klFoq5bzTQztvupIvwQ+hpu2h7Ke0CdT5xDizjuuYj5fyJjafHlRgGBvqECB6sJMEfS9PsG5QHIXkg
-X-Gm-Message-State: AOJu0YwbNVQcvWlJIXvI4cxrTBy9SpDAAJotMO+pYkclzMrsmbhwJYLL
- FzaJ3V9gN7ip7Fasv7UZb1fYO+haB1sD0KfWjEA0BP57V8zqnPGhFi0RcQ==
-X-Google-Smtp-Source: AGHT+IFfWMOI7949SOzS96XZADOYijxVTWtqbXDrHoEfRPWveKEXCzzOyWxBY8GFgv3k9PvcTGpERw==
-X-Received: by 2002:a17:90a:f311:b0:2c9:7cf3:4aea with SMTP id
- 98e67ed59e1d1-2cf237a2a2bmr5548968a91.17.1721951840463; 
- Thu, 25 Jul 2024 16:57:20 -0700 (PDT)
+ AJvYcCVFTBlZyeuru+8FbVZWVvBLqAmpwRZBfpzaNRbFR/IPQEFv3DKLuW30CJUOsdjAfGROswxDGDCg7pc3Ee+XkuCQFV1U
+X-Gm-Message-State: AOJu0YwHV04eoW8SzZRBxRRiQdrUFrutx0H/ooqH7xj28UHOVPJZzIGC
+ 74t1yeit0tpwF97J+3mA9/Rqfo6dGcKM3He3wtNpHjteZWB7YuzG58I3HQ==
+X-Google-Smtp-Source: AGHT+IFcoIvAuYpIU5q2wU/5CBKzuRLL9jpJ0rjXQs5zT4vqXfU9VGNS54Lhzmog4llwubSP9l/dYQ==
+X-Received: by 2002:a17:90a:4e0e:b0:2c9:6abd:ca64 with SMTP id
+ 98e67ed59e1d1-2cf21547c29mr7440204a91.9.1721951736657; 
+ Thu, 25 Jul 2024 16:55:36 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.17
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.55.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:57:20 -0700 (PDT)
+ Thu, 25 Jul 2024 16:55:36 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Frederic Barrat <fbarrat@linux.ibm.com>,
- Michael Kowal <kowal@linux.vnet.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 49/96] pnv/xive2: Fail VST entry address computation if table
- has no VSD
-Date: Fri, 26 Jul 2024 09:53:22 +1000
-Message-ID: <20240725235410.451624-50-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 19/96] ppc/pnv: Add pointer from PnvCPUState to PnvCore
+Date: Fri, 26 Jul 2024 09:52:52 +1000
+Message-ID: <20240725235410.451624-20-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,37 +96,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+This helps move core state from CPU to core structures.
 
-Fail VST entry address computation if firmware doesn't define a descriptor
-for one of the Virtualization Structure Tables (VST), there's no point in
-trying to compute the address of its entry.  Abort the operation and log
-an error.
-
-Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/pnv_xive2.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/ppc/pnv_core.c         | 3 +++
+ include/hw/ppc/pnv_core.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 08b9166a09..9fbd44f974 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -244,6 +244,11 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index f40ab721d6..2da271ffb6 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -278,6 +278,7 @@ static void pnv_core_realize(DeviceState *dev, Error **errp)
+     pc->threads = g_new(PowerPCCPU *, cc->nr_threads);
+     for (i = 0; i < cc->nr_threads; i++) {
+         PowerPCCPU *cpu;
++        PnvCPUState *pnv_cpu;
+ 
+         obj = object_new(typename);
+         cpu = POWERPC_CPU(obj);
+@@ -288,6 +289,8 @@ static void pnv_core_realize(DeviceState *dev, Error **errp)
+         object_property_add_child(OBJECT(pc), name, obj);
+ 
+         cpu->machine_data = g_new0(PnvCPUState, 1);
++        pnv_cpu = pnv_cpu_state(cpu);
++        pnv_cpu->pnv_core = pc;
+ 
+         object_unref(obj);
      }
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index c6d62fd145..29cab9dfd9 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -54,6 +54,7 @@ struct PnvCoreClass {
+ #define PNV_CORE_TYPE_NAME(cpu_model) cpu_model PNV_CORE_TYPE_SUFFIX
  
-     vsd = xive->vsds[type][blk];
-+    if (vsd == 0) {
-+        xive2_error(xive, "VST: vsd == 0 block id %d for VST %s %d !?",
-+                   blk, info->name, idx);
-+        return 0;
-+    }
+ typedef struct PnvCPUState {
++    PnvCore *pnv_core;
+     Object *intc;
+ } PnvCPUState;
  
-     /* Remote VST access */
-     if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
 -- 
 2.45.2
 
