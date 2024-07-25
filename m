@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE2AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A00C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Nv-0002RL-VR; Thu, 25 Jul 2024 20:00:36 -0400
+	id 1sX8KA-00074D-8P; Thu, 25 Jul 2024 19:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8NK-0006i0-Jp; Thu, 25 Jul 2024 19:59:59 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sX8K5-0006iF-WB; Thu, 25 Jul 2024 19:56:38 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8NI-0002Hl-VH; Thu, 25 Jul 2024 19:59:58 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70ea93aa9bdso354979b3a.0; 
- Thu, 25 Jul 2024 16:59:56 -0700 (PDT)
+ id 1sX8Ju-00018H-L1; Thu, 25 Jul 2024 19:56:37 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2cb674b48ccso286022a91.2; 
+ Thu, 25 Jul 2024 16:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951995; x=1722556795; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951784; x=1722556584; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4XteVHqBd7jEgyDB44R+ilPurEblvDxIq4jl6JsrUcw=;
- b=kJ6zVrMZToHNyGwndd/yppPYdCLxtCJGo4svwa4BwHr42UQtVHqpRGKvFUHAliNCgm
- r9Cq4uu6pq+BpiSc1UdCKZkPXujdSk9sCNYZEiou+97HtYi91DtJQX2fmh2Prxin8yQ5
- icg+OZKUlPIp7cRPm5tgXsNn7hra/0jGyqd8iaRXV72JJHfJ93X+yENGyA+eeVnTwkqn
- /qortB8Wf2zvJUvtt1MnPZYbqYdjkpIDA6OJoFftc4utxE85fMYZpx3+hipt1EHW0xos
- Rp646mRZnt1fPwbHks3XIYkUAS3tS1f0mxy9LbL8UVG/nskbci6oR/CrNq4MbExMPzg2
- z0pg==
+ bh=TPAo/5UsDUqdv7/0v3ddGXr9oVUdDXufbQUlg/ff5ng=;
+ b=LTECS+5HnxuAuLmtlL7HguOtvNERf/rGVpgiD09X58VyxPkAuMLWzA8xg418SN/E/t
+ ej3SXmeTSqzJpstYY92GRWuj2dIk6AlW3nvsnm7W2P1QTtPBwoqT9556EcEhklZ+qTyf
+ 0MDKjE6DCCaWyFF9YLfaU745lJf5hK8m5ehiU6eOd4D5gjb81SI1gkbYvXZUy0Q7TBYj
+ zj3f+aJ6z5aeIyQB6hypgYATJZFUcWOeaj3WC0xCXnhPs98QbG1FAxo0lHM0Y58dPtut
+ EuY6qx7cxn6LDzI1sQUr00p1SAOCYlR1g/ncpw7befgQTePs8Y0C34M4/uccVEdh8wph
+ VXIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951995; x=1722556795;
+ d=1e100.net; s=20230601; t=1721951784; x=1722556584;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4XteVHqBd7jEgyDB44R+ilPurEblvDxIq4jl6JsrUcw=;
- b=N0w/qiaqKsTL1zPyOOO4agL610zD91gRxJM0+RDjk6wT+TGIesxuaPGcIq1I6ZruC7
- xo0NvM9NaL33HTjUQlXhy5AwR7Y0zImLXHSQRwLfULlyvE8JBWLuCdcg5HDInMyspjAt
- lw18++C88h5P2NLdoApToxge5iu2jvQDI2xiGks22BJF0kYHv1dbrNzwVmk7j6dwswwl
- u5ZWRC9n09ALDJjfjfbeyeohHPlnZa5Uz9e3Wk/8Ck2RfmwclE8urEO8INuqLMksCbvf
- duvYo113MOpS8dxkpVaOFVY2xazWTcBSF3h3pk0fjAK0aMZIkq5qHyHJ4SITbeOEB6Zc
- dUxw==
+ bh=TPAo/5UsDUqdv7/0v3ddGXr9oVUdDXufbQUlg/ff5ng=;
+ b=PFpt8NA5Bs47jxgmrg2CV5qN0zV+esfi5L1VWRKaQBFM1zAym7yYFa8En2hk/At5eG
+ 5zHfZEPbwwce9Ci/2lSY21Z90drQzJMoJlI0d7ppHMVxT5PZLBeVGzS/PrLp8YE13Rum
+ 3DE91yKRA2iytPhvWmfh95+qdNEXKs60gm7/rBoPYrQvDsvgExqdKAiW5QtMW5OBLv4h
+ +R55C5ASkUUK0fYaLhLwShapw5rONXw/sQt+7VCblkWRvZY9GTAiGUS/X5WPmGY9teCS
+ I1hI6YGfuLLrDj/bySqAlSD5eQtxhluhFkB/Bucr9+cvjM7teyH2tDhZdmoHGv5F1bjT
+ mtTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgMFDz/QER76OwU5OJ9QLX4qlTAs6+15tIIB1jCUw/xzRlmfhVoMdJf//QHS/FEc0ext1Ih5SI187AzXRdK2Wd6se/
-X-Gm-Message-State: AOJu0YzTLcdprBO74nPmASZ20X9h+XwSIWTE/uYG7xD+jJHk/l95ulng
- ss3ha1Gm+SzkqszC6/zKOD3Y2Z0r3hr+IFGRXU9aTxmrS+g9Cvt08dMlww==
-X-Google-Smtp-Source: AGHT+IFtHT/DT5LfNSnDTFLXyIIpWcMjUGVsNR9i6eyqu84wOmEUFuupUc+ZBTyJLbHPXC/t5H2KOw==
-X-Received: by 2002:a05:6a20:d70a:b0:1bd:248d:990d with SMTP id
- adf61e73a8af0-1c47284fde4mr6014759637.25.1721951994715; 
- Thu, 25 Jul 2024 16:59:54 -0700 (PDT)
+ AJvYcCUwb7IWi34hcMBkEaFQ1F0Tu7LXY9f/sVxjoRyui+9h+voLil4UI+jfmPyi73mD4VJLDyYBu/tuGFX9aLhz9K8UA2CF
+X-Gm-Message-State: AOJu0YwLOCpbV2RQUD+MOcdjmAqfk7pbj0oTfs3N0nit+gBxd/F8EBGy
+ B6eI4M5M/uf9yKviv4OSZ1/8HfcuftldAdj4lfwgp2xGkS8UMuFHC4Zjsw==
+X-Google-Smtp-Source: AGHT+IFjkEE4uQGFPF59YGFRZOnqGZOI7hdVyPEgGVidRXnoFxjjqQP5utzM8XU5qNP54ibWN1Fx3g==
+X-Received: by 2002:a17:90a:4dc4:b0:2c9:6f03:6fd6 with SMTP id
+ 98e67ed59e1d1-2cf2e9d72a7mr4135551a91.17.1721951783859; 
+ Thu, 25 Jul 2024 16:56:23 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.59.52
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:59:54 -0700 (PDT)
+ Thu, 25 Jul 2024 16:56:23 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 96/96] target/ppc: Remove includes from mmu-book3s-v3.h
-Date: Fri, 26 Jul 2024 09:54:09 +1000
-Message-ID: <20240725235410.451624-97-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-ppc@nongnu.org
+Subject: [PULL 34/96] ppc/pnv: Implement POWER10 PC xscom registers for direct
+ controls
+Date: Fri, 26 Jul 2024 09:53:07 +1000
+Message-ID: <20240725235410.451624-35-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +94,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+The PC unit in the processor core contains xscom registers that provide
+low level status and control of the CPU.
 
-Drop includes from header that is not needed by the header itself and
-only include them from C files that really need it.
+This implements "direct controls", sufficient for skiboot firmware,
+which uses it to send NMI IPIs between CPUs.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
+POWER10 is sufficiently different from POWER9 (particularly with respect
+to QME and special wakeup) that it is not trivial to implement POWER9
+support by reusing the code.
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu-book3s-v3.h | 3 ---
- target/ppc/mmu-hash64.c    | 1 +
- target/ppc/mmu-radix64.c   | 1 +
- 3 files changed, 2 insertions(+), 3 deletions(-)
+ hw/ppc/pnv_core.c         | 89 ++++++++++++++++++++++++++++++++++++---
+ include/hw/ppc/pnv_core.h |  3 ++
+ 2 files changed, 87 insertions(+), 5 deletions(-)
 
-diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-index 263ce55c1f..be66e26604 100644
---- a/target/ppc/mmu-book3s-v3.h
-+++ b/target/ppc/mmu-book3s-v3.h
-@@ -20,9 +20,6 @@
- #ifndef PPC_MMU_BOOK3S_V3_H
- #define PPC_MMU_BOOK3S_V3_H
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 1783795b23..4484fe8c6a 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -185,16 +185,40 @@ static const MemoryRegionOps pnv_core_power9_xscom_ops = {
+  */
  
--#include "mmu-hash64.h"
--#include "mmu-books.h"
--
- #ifndef CONFIG_USER_ONLY
+ #define PNV10_XSCOM_EC_CORE_THREAD_STATE    0x412
++#define PNV10_XSCOM_EC_CORE_THREAD_INFO     0x413
++#define PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS 0x449
++#define PNV10_XSCOM_EC_CORE_RAS_STATUS      0x454
  
- /*
-diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-index 7bc0323f26..5e1983e334 100644
---- a/target/ppc/mmu-hash64.c
-+++ b/target/ppc/mmu-hash64.c
-@@ -31,6 +31,7 @@
- #include "hw/hw.h"
- #include "internal.h"
- #include "mmu-book3s-v3.h"
-+#include "mmu-books.h"
- #include "helper_regs.h"
+ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+                                            unsigned int width)
+ {
++    PnvCore *pc = PNV_CORE(opaque);
++    int nr_threads = CPU_CORE(pc)->nr_threads;
++    int i;
+     uint32_t offset = addr >> 3;
+     uint64_t val = 0;
  
- #ifdef CONFIG_TCG
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index cf9619e847..be7a45f254 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -28,6 +28,7 @@
- #include "internal.h"
- #include "mmu-radix64.h"
- #include "mmu-book3s-v3.h"
-+#include "mmu-books.h"
+     switch (offset) {
+     case PNV10_XSCOM_EC_CORE_THREAD_STATE:
+-        val = 0;
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++
++            if (cs->halted) {
++                val |= PPC_BIT(56 + i);
++            }
++        }
++        break;
++    case PNV10_XSCOM_EC_CORE_THREAD_INFO:
++        break;
++    case PNV10_XSCOM_EC_CORE_RAS_STATUS:
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++            if (cs->stopped) {
++                val |= PPC_BIT(0 + 8 * i) | PPC_BIT(1 + 8 * i);
++            }
++        }
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+@@ -207,9 +231,46 @@ static uint64_t pnv_core_power10_xscom_read(void *opaque, hwaddr addr,
+ static void pnv_core_power10_xscom_write(void *opaque, hwaddr addr,
+                                          uint64_t val, unsigned int width)
+ {
++    PnvCore *pc = PNV_CORE(opaque);
++    int nr_threads = CPU_CORE(pc)->nr_threads;
++    int i;
+     uint32_t offset = addr >> 3;
  
- /* Radix Partition Table Entry Fields */
- #define PATE1_R_PRTB           0x0FFFFFFFFFFFF000
+     switch (offset) {
++    case PNV10_XSCOM_EC_CORE_DIRECT_CONTROLS:
++        for (i = 0; i < nr_threads; i++) {
++            PowerPCCPU *cpu = pc->threads[i];
++            CPUState *cs = CPU(cpu);
++
++            if (val & PPC_BIT(7 + 8 * i)) { /* stop */
++                val &= ~PPC_BIT(7 + 8 * i);
++                cpu_pause(cs);
++            }
++            if (val & PPC_BIT(6 + 8 * i)) { /* start */
++                val &= ~PPC_BIT(6 + 8 * i);
++                cpu_resume(cs);
++            }
++            if (val & PPC_BIT(4 + 8 * i)) { /* sreset */
++                val &= ~PPC_BIT(4 + 8 * i);
++                pnv_cpu_do_nmi_resume(cs);
++            }
++            if (val & PPC_BIT(3 + 8 * i)) { /* clear maint */
++                /*
++                 * Hardware has very particular cases for where clear maint
++                 * must be used and where start must be used to resume a
++                 * thread. These are not modelled exactly, just treat
++                 * this and start the same.
++                 */
++                val &= ~PPC_BIT(3 + 8 * i);
++                cpu_resume(cs);
++            }
++        }
++        if (val) {
++            qemu_log_mask(LOG_UNIMP, "%s: unimp bits in DIRECT_CONTROLS "
++                                     "0x%016" PRIx64 "\n", __func__, val);
++        }
++        break;
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
+@@ -526,6 +587,7 @@ static const MemoryRegionOps pnv_quad_power10_xscom_ops = {
+ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+                                             unsigned int width)
+ {
++    PnvQuad *eq = PNV_QUAD(opaque);
+     uint32_t offset = addr >> 3;
+     uint64_t val = -1;
+ 
+@@ -533,10 +595,14 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+      * Forth nibble selects the core within a quad, mask it to process read
+      * for any core.
+      */
+-    switch (offset & ~0xf000) {
+-    case P10_QME_SPWU_HYP:
++    switch (offset & ~PPC_BITMASK32(16, 19)) {
+     case P10_QME_SSH_HYP:
+-        return 0;
++        val = 0;
++        if (eq->special_wakeup_done) {
++            val |= PPC_BIT(1); /* SPWU DONE */
++            val |= PPC_BIT(4); /* SSH SPWU DONE */
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp read 0x%08x\n", __func__,
+                       offset);
+@@ -548,9 +614,22 @@ static uint64_t pnv_qme_power10_xscom_read(void *opaque, hwaddr addr,
+ static void pnv_qme_power10_xscom_write(void *opaque, hwaddr addr,
+                                          uint64_t val, unsigned int width)
+ {
++    PnvQuad *eq = PNV_QUAD(opaque);
+     uint32_t offset = addr >> 3;
++    bool set;
++    int i;
+ 
+-    switch (offset) {
++    switch (offset & ~PPC_BITMASK32(16, 19)) {
++    case P10_QME_SPWU_HYP:
++        set = !!(val & PPC_BIT(0));
++        eq->special_wakeup_done = set;
++        for (i = 0; i < 4; i++) {
++            /* These bits select cores in the quad */
++            if (offset & PPC_BIT32(16 + i)) {
++                eq->special_wakeup[i] = set;
++            }
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unimp write 0x%08x\n", __func__,
+                       offset);
+diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
+index c8784777a4..1de79a818e 100644
+--- a/include/hw/ppc/pnv_core.h
++++ b/include/hw/ppc/pnv_core.h
+@@ -109,6 +109,9 @@ OBJECT_DECLARE_TYPE(PnvQuad, PnvQuadClass, PNV_QUAD)
+ struct PnvQuad {
+     DeviceState parent_obj;
+ 
++    bool special_wakeup_done;
++    bool special_wakeup[4];
++
+     uint32_t quad_id;
+     MemoryRegion xscom_regs;
+     MemoryRegion xscom_qme_regs;
 -- 
 2.45.2
 
