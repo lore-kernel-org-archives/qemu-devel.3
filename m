@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42732C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845BEC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Js-0004wG-E0; Thu, 25 Jul 2024 19:56:24 -0400
+	id 1sX8Ls-0008BJ-6y; Thu, 25 Jul 2024 19:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Jq-0004cq-34; Thu, 25 Jul 2024 19:56:22 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1sX8Lq-00083Y-Kq; Thu, 25 Jul 2024 19:58:26 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8Jo-00015g-5y; Thu, 25 Jul 2024 19:56:21 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-2cb566d528aso319675a91.1; 
- Thu, 25 Jul 2024 16:56:19 -0700 (PDT)
+ id 1sX8Lo-0001Zi-8I; Thu, 25 Jul 2024 19:58:26 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2caff99b1c9so284443a91.3; 
+ Thu, 25 Jul 2024 16:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951778; x=1722556578; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951902; x=1722556702; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C6FBdMNHCZUUqDpX7j41+3H0BUDGjqOF7k9dubLKYuI=;
- b=acVoLMbiN5ha5ShsuuW2EXb34hFdtJVxhEgP90ETrukfgcH/4sM7TeQ9JM9RcrC+IZ
- 1b+ddcY2p6eZXu3A6Ok9xp8l1EPJ5JTsvHfXPIW7gFweWfIiUhyi4eExY6lVwD1cfTsv
- m5ymbZIC4PlJnwEnxo2mHXs8kbPEG7jUuN64AJH1x9rxL0JezyxafkA6Sv386UPEWy9F
- tjCzwhW1NzJ3jaWfo+Mv6yLJomo/VPaYDy69C+ZdazULb1jyfz924+miueqZ/w0x1mXM
- rduLPBdiPjV3+8PUgqos2jbTCjL+svThMpaQ/G87bSdwduFpmxFINZtjG6BPgIO7iEJI
- wc5Q==
+ bh=aSwJBZCisw9vXJ6eD8OFwE3uL+nOYcoBzazfj23ZCHM=;
+ b=R6IytXae8r1EL/nAI721FlplcUA+umHS5hy0t9nKrsT2uU5L+92IFjNEqO7N4kKIhU
+ 2J5NrNiF+tC7TQ62rAycSSk8dnbDFV6n1O81x/O5F6j5lh6pIye+xXNr2od7Pn+C72mO
+ 2IoOE9wrhP3+LOr0hefGc8kKaEwvsoyu8mGc4S6SlFiQsGyW4aHxUq2aYvwtz77/1kvq
+ vop5Ym11t6DIi0bCJejCr+ffYqxcLg43b2auzU1pY5mftVBm7qAoyJZgnpOzQWie5csF
+ 7VBTy5GrQnGAsVIwmamOpvyCfyvvd0ROwmIWXqQIK/GA4FakMebyF/isa9OXlNx8TuOg
+ wdjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951778; x=1722556578;
+ d=1e100.net; s=20230601; t=1721951902; x=1722556702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C6FBdMNHCZUUqDpX7j41+3H0BUDGjqOF7k9dubLKYuI=;
- b=el+0b00V33azVzol8ckTjsbE33xWzYtEj+Be/kwP2o/9TL2byAirRlIvY7fJ/G8uWH
- ihle1ZP0UK5WMXJ54OpCjYJWn/4lgqvVLMu3cnp/8kqsu1H7dhoLYdS6OLXNLk9wfWZF
- u/kCYemh/gHH2fo3XmAYEeYgbW5x3w9LdnQXEEuisgftPuO/zpYgsN0hNvfpvssG/VNo
- G82e3kNoyj8clQCMSY0WX8kIx0SmffXedRplZ19C1eTL+wpf7R/nIJF4mt+c2izVWefs
- UAg+XHa8WK8Iz5k69F/NsEfSATPhkvBFe2NLkPyxcZolrFehiQEyy/NdggkikwGd1C64
- JgXg==
+ bh=aSwJBZCisw9vXJ6eD8OFwE3uL+nOYcoBzazfj23ZCHM=;
+ b=OCQc8Ai57y3Bua3fh0AucNkuejFos3Uj7KjvoQUj0Gy2bKYdrD8Z95bLxYTFeCOG3u
+ KzwwUYmqzEwIpj6WIJC6dkJ10vQ4SQC4zePiPhtnxL+wfe1RptAA7X+9dmN9ZaB7GYiE
+ YNUVi/kSpQ8Qh4tI2mIFB3j6/8cXki3FvcPQ1wmrFKN+yPCA/xsiwdgJRTafkZjkhkg6
+ DE7J4+KQCsfWlFI5EEDAv2wN2/NqTOfxB/bSJ80fWD1xEXPwCxpMPHtEqRWDWWxVyTdN
+ cw+NjxXnLTQih6rTsdCt1rM9HAsM6SV24eGfGfPGNjITG9pRViDm1+Nq/af5pZdYlff3
+ KiZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfjlK20tXDA3X7Gl7bzmvI0JF+yZ1NAiuOwX0mNh9ohT0HRi19rkmEUeuwI8LozL+KAIIZSV5EvHMCRE+UPghWRDoY
-X-Gm-Message-State: AOJu0YyoI4lVyuVC4wH9e6bB3b2kR8OJqYn1bHoSMFKDAxdTwXO2sidq
- DVspJ84k8K7XNLGqSNuZB1sOnYMjUpRKWoS+iityVeRBY9/djxEbl+95YQ==
-X-Google-Smtp-Source: AGHT+IEJwJCn+EsCEn82m64pT5EodutAtm/gKt9lY/ipVRpfUB4d4SnzIh9kqP3PMOCC5uGH3XL29g==
-X-Received: by 2002:a17:90a:6788:b0:2c9:7611:e15d with SMTP id
- 98e67ed59e1d1-2cf2ea27054mr3971780a91.20.1721951777957; 
- Thu, 25 Jul 2024 16:56:17 -0700 (PDT)
+ AJvYcCXqsV3cH1iMgVl8hOwuoBq8B/xo1lyu9UcYZD7fr0xAYRl0KAnnq6Se+0YahccsSieviXaxTfkNcc0Za4y2HJvTtQlD
+X-Gm-Message-State: AOJu0Yy0u6ITKdkVssdlKnjayo0zMeNWOVJnvFDqUrH8Mp+CUrH02Cjq
+ 5JsGy08Jam7gcYwbPYuo1dW7uh1ZiniqMSgNDe1abxf6wqu5m7el65yM+Q==
+X-Google-Smtp-Source: AGHT+IEJbJS63pi8J7nV2hMVCZxnIJKFaxrsnOk1xjVdBFK5gB0/Pk6Kp0dm2zt/SUlTIuuj5Qep+A==
+X-Received: by 2002:a17:90a:ba89:b0:2c1:9892:8fb with SMTP id
+ 98e67ed59e1d1-2cf2e9ab041mr3917670a91.5.1721951902143; 
+ Thu, 25 Jul 2024 16:58:22 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.15
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:56:17 -0700 (PDT)
+ Thu, 25 Jul 2024 16:58:21 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 32/96] ppc/pnv: Add big-core machine property
-Date: Fri, 26 Jul 2024 09:53:05 +1000
-Message-ID: <20240725235410.451624-33-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 66/96] target/ppc/mmu_common.c: Remove local name for a constant
+Date: Fri, 26 Jul 2024 09:53:39 +1000
+Message-ID: <20240725235410.451624-67-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,109 +94,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Big-core implementation is complete, so expose it as a machine
-property that may be set with big-core=on option on powernv9 and
-powernv10 machines.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+The mmask local variable is a less descriptive local name for a
+constant. Drop it and use the constant directly in the two places it
+is needed.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c | 61 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 16 deletions(-)
+ target/ppc/mmu_common.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 4605a49d28..d19516c2d7 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2581,6 +2581,34 @@ static int pnv10_xive_match_nvt(XiveFabric *xfb, uint8_t format,
-     return total_count;
- }
- 
-+static bool pnv_machine_get_big_core(Object *obj, Error **errp)
-+{
-+    PnvMachineState *pnv = PNV_MACHINE(obj);
-+    return pnv->big_core;
-+}
-+
-+static void pnv_machine_set_big_core(Object *obj, bool value, Error **errp)
-+{
-+    PnvMachineState *pnv = PNV_MACHINE(obj);
-+    pnv->big_core = value;
-+}
-+
-+static bool pnv_machine_get_hb(Object *obj, Error **errp)
-+{
-+    PnvMachineState *pnv = PNV_MACHINE(obj);
-+
-+    return !!pnv->fw_load_addr;
-+}
-+
-+static void pnv_machine_set_hb(Object *obj, bool value, Error **errp)
-+{
-+    PnvMachineState *pnv = PNV_MACHINE(obj);
-+
-+    if (value) {
-+        pnv->fw_load_addr = 0x8000000;
-+    }
-+}
-+
- static void pnv_machine_power8_class_init(ObjectClass *oc, void *data)
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 08c5b61f76..2618cdec6a 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -98,7 +98,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+                                 target_ulong pte1, int h,
+                                 MMUAccessType access_type)
  {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -2632,6 +2660,12 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
+-    target_ulong ptem, mmask;
++    target_ulong ptem;
+     int ret, pteh, ptev, pp;
  
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
-+
-+    object_class_property_add_bool(oc, "big-core",
-+                                   pnv_machine_get_big_core,
-+                                   pnv_machine_set_big_core);
-+    object_class_property_set_description(oc, "big-core",
-+                              "Use big-core (aka fused-core) mode");
- }
- 
- static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
-@@ -2668,6 +2702,17 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
- 
-     pnv_machine_p10_common_class_init(oc, data);
-     mc->desc = "IBM PowerNV (Non-Virtualized) POWER10";
-+
-+    /*
-+     * This is the parent of POWER10 Rainier class, so properies go here
-+     * rather than common init (which would add them to both parent and
-+     * child which is invalid).
-+     */
-+    object_class_property_add_bool(oc, "big-core",
-+                                   pnv_machine_get_big_core,
-+                                   pnv_machine_set_big_core);
-+    object_class_property_set_description(oc, "big-core",
-+                              "Use big-core (aka fused-core) mode");
- }
- 
- static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
-@@ -2680,22 +2725,6 @@ static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
-     pmc->i2c_init = pnv_rainier_i2c_init;
- }
- 
--static bool pnv_machine_get_hb(Object *obj, Error **errp)
--{
--    PnvMachineState *pnv = PNV_MACHINE(obj);
--
--    return !!pnv->fw_load_addr;
--}
--
--static void pnv_machine_set_hb(Object *obj, bool value, Error **errp)
--{
--    PnvMachineState *pnv = PNV_MACHINE(obj);
--
--    if (value) {
--        pnv->fw_load_addr = 0x8000000;
--    }
--}
--
- static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
- {
-     CPUPPCState *env = cpu_env(cs);
+     ret = -1;
+@@ -108,12 +108,11 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+     if (ptev && h == pteh) {
+         /* Check vsid & api */
+         ptem = pte0 & PTE_PTEM_MASK;
+-        mmask = PTE_CHECK_MASK;
+         pp = pte1 & 0x00000003;
+         if (ptem == ctx->ptem) {
+             if (ctx->raddr != (hwaddr)-1ULL) {
+                 /* all matches should have equal RPN, WIMG & PP */
+-                if ((ctx->raddr & mmask) != (pte1 & mmask)) {
++                if ((ctx->raddr & PTE_CHECK_MASK) != (pte1 & PTE_CHECK_MASK)) {
+                     qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
+                     return -3;
+                 }
 -- 
 2.45.2
 
