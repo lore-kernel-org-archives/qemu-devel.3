@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED17C3DA63
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 03:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B848C3DA61
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 03:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWp9t-0006bt-C5; Wed, 24 Jul 2024 23:28:49 -0400
+	id 1sWpMq-0004Zd-EB; Wed, 24 Jul 2024 23:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sWp9r-0006bC-0i
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:28:47 -0400
-Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sWp9o-0000gO-Ju
- for qemu-devel@nongnu.org; Wed, 24 Jul 2024 23:28:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1721878124; x=1753414124;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=q71uB79MLTMHxUKtUITTX0EiNe+QmZcWINslj/ZPBCo=;
- b=H8inZxd0LlV7y/qVsrAUMSkbZKJithnd4ZUqmbEXGvEYkmEDs2YX+W0o
- T9EUxQRMU7uemAQ0OAmO4P/hlwe06J16HV8vlQSVbdQhY8CZUxHWRNwmO
- UdYbztjCGnq3+azS4G/svSIAbojFJPh6FHnFFQD8IXOyauwY3CpYAg7M5
- kmArVDxvjLRzrA5kK6MxljjLhvEfF0+f2Rgo6lB9FUoq7c5Vr0JSwinO4
- Uos3sCV6VoTFGdO+BJ/0vmXRTM1qZZuvCPJHHW9z4NV/Ww4sCiurZ0OI6
- Z5feVLE9sI6VwToKJfJ9giD4wzu6QKwGLDzaFVCsG42VN+CRqdatona33 Q==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="147339275"
-X-IronPort-AV: E=Sophos;i="6.09,234,1716217200"; d="scan'208";a="147339275"
-Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
- by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2024 12:28:36 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id E5776D64AF
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:31 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 3DEF3BDC96
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:31 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id C292C200894A9
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:28:30 +0900 (JST)
-Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 2C4C81A0002;
- Thu, 25 Jul 2024 11:28:30 +0800 (CST)
-To: mst@redhat.com,
-	marcel.apfelbaum@gmail.com
-Cc: qemu-devel@nongnu.org,
-	Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH v3] pci-bridge: avoid linking a single downstream port more
- than once
-Date: Wed, 24 Jul 2024 23:27:31 -0400
-Message-ID: <20240725032731.13032-1-yaoxt.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sWpMo-0004Y4-Gv; Wed, 24 Jul 2024 23:42:10 -0400
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sWpMm-0005Na-MM; Wed, 24 Jul 2024 23:42:10 -0400
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-81f91171316so833047241.0; 
+ Wed, 24 Jul 2024 20:42:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1721878924; x=1722483724; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=POTSvW4GB0oP/asXqx/ZLllbqkVmfufVLTDOC7y4eJM=;
+ b=ZrMpBizJ9jqyd40eU20yHrzcdCNaVYLk1xBXpOh0ZE+LqaQKO5UCRZe5pERxUGuJT4
+ r5+65cTeBV+hgzIMVcbzvGnoPMmFEoxLi0fjkO71+hX1dOMmUGRovSnK13QPl5QBnxCE
+ +wkplg8cjf9tmd71bBWAL0L+MUhYywaamZvJr7/cfsUMWfDQf4aixNL1F+Mq56GqlJTd
+ KG6I5A6VssqteUbWhp0In1tx+hfUFNFmFFqKnPbpoU/dKmX3oIndMj3ou508KScLxD1j
+ loTzp+w3Bu6hR1ori8/IYr0e6JIXB3qDuP6vtY8lIlHGhEMuU6YE9rAze0YDAIrg605R
+ X+xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721878924; x=1722483724;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=POTSvW4GB0oP/asXqx/ZLllbqkVmfufVLTDOC7y4eJM=;
+ b=OVwNQjIDJTT8hCJZSA8zqd34UrT14w0/b5XmC0pizHbI8X3z9npnClBVnVVhxchlvk
+ TZL/lq3qZIsKJiDuF75dIAnDZtWLfhcfQ0olBB/O3UjZGP9SMgvSo7YtS7HGeZ7Vlfvz
+ In/jHYik9nrHCDgmTGLSB2cbc69ooT/8rUAfhAUDCex72FwlgHpRDlnOIaHRL1rnDq8d
+ 1ywF3Q+VNDF3Ac4B9e6r6DPz+2kSQJ3PhMB7sFC4feS23LMYbymBiKub5sr1e5V6cjRK
+ eFrD1UtFmG4XBTdf0DeIHybzNTuuGeN+Y14rDacygCTgfKAvly8rwqHDPOl2SexN4OUG
+ upAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVu+FxmCH4sJTRdgwNYZZpULC4/YC+VwClAkk2TuzL2z68xoIlwzCFABBJJ1v2Rr+/grfpefQskQq7AHv3Jb94DXHxq1/s=
+X-Gm-Message-State: AOJu0YwTJZuDqo6ZW5BGtxPy7rAPF/Yj82hXUtSBHX00JlUpBPDVrmt2
+ qkOXcEdMZj51y/jatULOwJ5M/wrzN6PEVYMSV64LGl2xn20i1xE+MDn0ejNTknvryXm1r02xzIp
+ gjmc9/PsGCKw44+sZljOk5NcrQjw=
+X-Google-Smtp-Source: AGHT+IGZZm/l8CXY82JCSXncRoN8V+jFzOvkfI2HO9nBqJAAIR4Ult959DejUbcxtEgisHxzvLeQDdi3aRTT0jebHBI=
+X-Received: by 2002:a05:6102:2b91:b0:492:98bf:75ef with SMTP id
+ ada2fe7eead31-493d63bbd50mr1578395137.8.1721878924564; Wed, 24 Jul 2024
+ 20:42:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28550.004
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28550.004
-X-TMASE-Result: 10--6.084500-10.000000
-X-TMASE-MatchedRID: R1u6Jncx2x16bMYbioM9qazGfgakLdjaBGvINcfHqhcOabErRKSRvb8F
- Hrw7frluf146W0iUu2tMCgkc3/BmTUq8tM/A6m4SqhcdnP91eXEIKmZZt8RasgZZ8N3RvTMxo8W
- MkQWv6iV3LAytsQR4e/nZI3fdS4AA3QfwsVk0Ubv+efAnnZBiL5K13zeQcKlRK8AfkNzU08AJcS
- grLhDLvZKYEo/aw2FqqLGnhZGRR+QLKQDU6lJ9TAj6L/Sqyb7X9wRqOteiI67IA5FeZngbOY0Wi
- v3Nj8beW4wbpXTb5DJKKve1kh3RY37qSWrndbmQn0bOriG5BVc=
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.252;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
+ <20240708173501.426225-14-dbarboza@ventanamicro.com>
+ <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
+ <ff35d3bb-b4d3-4a28-848c-1bd6668c35ec@ventanamicro.com>
+In-Reply-To: <ff35d3bb-b4d3-4a28-848c-1bd6668c35ec@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 25 Jul 2024 13:41:38 +1000
+Message-ID: <CAKmqyKNyYoV+Ny6N06cmDA3pVhbN=5x5DO9Cm93Zq+0N8onCZQ@mail.gmail.com>
+Subject: Re: [PATCH v5 13/13] docs/specs: add riscv-iommu
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, frank.chang@sifive.com, tjeznach@rivosinc.com, 
+ jason.chien@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,53 +93,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
-From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the downstream port is not checked, two slots can be linked to
-a single port. However, this can prevent the driver from detecting the
-device properly.
+On Wed, Jul 24, 2024 at 10:56=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 7/19/24 6:34 AM, Alistair Francis wrote:
+> > On Tue, Jul 9, 2024 at 3:37=E2=80=AFAM Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> >>
+> >> Add a simple guideline to use the existing RISC-V IOMMU support we jus=
+t
+> >> added.
+> >>
+> >> This doc will be updated once we add the riscv-iommu-sys device.
+> >>
+> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> >> ---
+> >>   docs/specs/index.rst       |  1 +
+> >>   docs/specs/riscv-iommu.rst | 55 ++++++++++++++++++++++++++++++++++++=
+++
+> >>   docs/system/riscv/virt.rst | 13 +++++++++
+> >>   3 files changed, 69 insertions(+)
+> >>   create mode 100644 docs/specs/riscv-iommu.rst
+> >>
+> >> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+> >> index 1484e3e760..c68cd9ae6c 100644
+> >> --- a/docs/specs/index.rst
+> >> +++ b/docs/specs/index.rst
+> >> @@ -33,3 +33,4 @@ guest hardware that is specific to QEMU.
+> >>      virt-ctlr
+> >>      vmcoreinfo
+> >>      vmgenid
+> >> +   riscv-iommu
+> >> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
+> >> new file mode 100644
+> >> index 0000000000..fa38ff7667
+> >> --- /dev/null
+> >> +++ b/docs/specs/riscv-iommu.rst
+> >> @@ -0,0 +1,55 @@
+> >> +.. _riscv-iommu:
+> >> +
+> >> +RISC-V IOMMU support for RISC-V machines
+> >> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >> +
+> >> +QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU sp=
+ec
+> >> +version 1.0 [1].
+> >> +
+> >> +The emulation includes a PCI reference device, riscv-iommu-pci, that =
+QEMU
+> >> +RISC-V boards can use.  The 'virt' RISC-V machine is compatible with =
+this
+> >> +device.
+> >> +
+> >> +A platform device that implements the RISC-V IOMMU will be added in t=
+he
+> >> +future.
+> >> +
+> >> +
+> >> +riscv-iommu-pci reference device
+> >> +--------------------------------
+> >> +
+> >> +This device implements the RISC-V IOMMU emulation as recommended by t=
+he section
+> >> +"Integrating an IOMMU as a PCIe device" of [1]: a PCI device with bas=
+e class 08h,
+> >> +sub-class 06h and programming interface 00h.
+> >> +
+> >> +As a reference device it doesn't implement anything outside of the sp=
+ecification,
+> >> +so it uses a generic default PCI ID given by QEMU: 1b36:0014.
+> >> +
+> >> +To include the device in the 'virt' machine:
+> >> +
+> >> +.. code-block:: bash
+> >> +
+> >> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
+> >
+> > We should add a sentence saying what this does. As in what should a
+> > user expect after they have done this
+>
+> I suppose we can add a boilerplate sentence about what an IOMMU does, but=
+ aside
+> from that I'm not sure what to say about user expectation. If you're addi=
+ng an
+> IOMMU (or any device in QEMU) it's expected that the user has some idea o=
+f what
+> the device is supposed to do in the board and so on hehe
 
-It is necessary to ensure that a downstream port is not linked more than
-once.
+That's fair and I don't think we need to describe what an IOMMU does,
+I more meant the fact it's attached via PCI.
 
-Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+We specifically say a "platform device will be added later" so I think
+we should just be clear on what a PCI IOMMU is
 
----
-V2[2] -> V3:
- - Move this check into pcie_cap_init()
-
-V1[1] -> V2:
- - Move downstream port check forward
-
-[1] https://lore.kernel.org/qemu-devel/20240704033834.3362-1-yaoxt.fnst@fujitsu.com
-[2] https://lore.kernel.org/qemu-devel/20240717085621.55315-1-yaoxt.fnst@fujitsu.com
----
- hw/pci/pcie.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 4b2f0805c6e0..aa154ec4b054 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -192,6 +192,13 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
- 
-     assert(pci_is_express(dev));
- 
-+    if (pci_is_express_downstream_port(dev) &&
-+        pcie_find_port_by_pn(pci_get_bus(dev), port)) {
-+        pos = -EBUSY;
-+        error_setg(errp, "Can't link port, error %d", pos);
-+        return pos;
-+    }
-+
-     pos = pci_add_capability(dev, PCI_CAP_ID_EXP, offset,
-                              PCI_EXP_VER2_SIZEOF, errp);
-     if (pos < 0) {
--- 
-2.41.0
-
+Alistair
 
