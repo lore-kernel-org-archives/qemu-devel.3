@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4223C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 19:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E10BC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 19:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX4Z0-00072o-CT; Thu, 25 Jul 2024 15:55:46 -0400
+	id 1sX4bX-0003DK-Tu; Thu, 25 Jul 2024 15:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sX4Yu-00071E-Ki
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 15:55:41 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sX4bN-0003AP-FV
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 15:58:14 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sX4Ys-00023Q-86
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 15:55:39 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-427d8f1f363so9923565e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:55:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sX4bH-0002jG-KZ
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 15:58:13 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42802de6f59so9399455e9.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 12:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721937334; x=1722542134; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721937485; x=1722542285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=e2yKmR5zSIeR74NPpZ0XO6cSntL2gdPFBrgOaHXBJvI=;
- b=mRyeUswGtslIJofEvGqe0uPLW7/0Xl2ItBCPcEKQGDonQn9NZWEE5hiyFR/E/upzCy
- 8HS+4lSPnkVggQQG30FBOzS2gRawc8dYLnmJebMAIcZNPmZPNn3CMLEIe77DvJQeAfK5
- lEfhwVRnDh3EdO4MvDUuRTfPhsWeVNyOqxoisWqXX+1eZ7qKY4N86sePNO28403GuTPY
- T/nRFAcnlSKgNNVVAGREsAWCDtznLU/MoP6ws99S1dHON4JTcfG42aZ0S2RQ43W5PN7J
- RbpDcAdV+3UKGt3kHPnS2Mi5PKaMxr4zpHabd5AV58qQcHEtbOVBOLFZa0Rf31C12vz0
- RUxw==
+ bh=08E/n+GUDqaYs2L55EuvfBFjhi4NdHbtQbAAEoYvT6M=;
+ b=G9vRTx+oFJwiANa49eFQy9pljnekkZkFLRo9NT4nPbxjUybrbUMpj6ODMLmDuU8ni2
+ T97Uu+UDHizjxC7AXfh3yKI9IiF1w1LFx0fe4/FZUv6ESYqvvNMC/k3zF6bIR8blL59p
+ jslYrSIqjVnTv61fyEr9OmZ1KQ9p4U/eq54s83vzVmJ5anaPQ58GTAHbc1NFTxf/62M3
+ hl4PjNYMVKLmZb0/EcDQ/+3CZ+o4/cQxAiCdjYL8tswq99Se+b3IYde1O+34qf9MwAHM
+ +grdsEi2P6dk7ESZx3tCg0tsSo8ptURvZeluIvt8vSXMu05M+oEuId0VZie7JdDmFTur
+ //8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721937334; x=1722542134;
+ d=1e100.net; s=20230601; t=1721937485; x=1722542285;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e2yKmR5zSIeR74NPpZ0XO6cSntL2gdPFBrgOaHXBJvI=;
- b=iQ8YIZdhaGahDXBulcNvqmr6nUddO8fmJyjMlhQrYvFNfxjPcRgSvNzwtJ1ygaWqEt
- OoPDaynz91mkM+Z31xzGClFYV4NHsx8Nfm1aRnaRl5q6mAo7ECDsH7D2xG9xi+b8tUsw
- WeyKRa2DDFaNzcp8tgKMWwHYYmKLGjiHpqHiuSxIyVN7DAcx8eEQy/uFDWghmaWdyDYl
- DpQVsoDiMy4GFB4nQ2jXNObEjs9xT7Y9htJt9z6D7I+KdLx5qU2xjnBAFAnb7jMPaTW/
- yOTH0RJolPV0TnLrZrtPJIEPDwHX3VdywBmzMIZwqN+fjuc9EOLSo/bE6AdXBrBgn5oa
- mRPQ==
+ bh=08E/n+GUDqaYs2L55EuvfBFjhi4NdHbtQbAAEoYvT6M=;
+ b=NYiEIEa5H8I/D8+ODKwW0xJWYSwKaGLmmI6Qc1ItLCiqtEjM+DSkU6CCsYwxng9hQN
+ 2CIXLNYNKodZ0s4M9dy9TK9zf3CekOex9ugPoZUHYQcsMk3RFrY/8OLO4/bkcNDrhnG9
+ 848pLIfbL8w/PnlwsOjtZhfDMWFmf1p9BoAkX3qx/1EQkA3YwbzP6VCS/I0ZU3zc5mPM
+ 5XKGN4ookuYs0X2pRRsWYm8hFNZS02RVwolnDPAAQs94jD7gmku17M13EFtqQLsgiI7d
+ q7aajw56lJPTKbkL3UYfCJ/QkA7EQ3Cb2EqVjY+pgLnjy9Th6SgkTzjzSBv9xWwAF1GB
+ MmJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEqwmCyKjvcmT0pd4B+8ymj694l+pm2zgMXGjBUV3FxIz3ur1YYBNqvn3ULvckuSAioxtEFJyOs7P9SxuWXUWummuZ92I=
-X-Gm-Message-State: AOJu0YwhdLeAvyZfxSluc+AbOv9MdJSzhteCzcRU9WgvKeDQhArZDpzS
- M4i9qhVG5gdfsHwipHWfS+6UBXSf2ukkkbjcjBcnQndu3thjTT6aBV/41WVc5rVjKHJMmt1cYHP
- p+NU=
-X-Google-Smtp-Source: AGHT+IG01xvrtMDIuNH7b3psmVCmygASwFRyGV48D7VwXPQ8F5dOw+vz42UZxlaPETAp/iASJr8HTw==
-X-Received: by 2002:a05:600c:5487:b0:426:5fe1:ec7a with SMTP id
- 5b1f17b1804b1-42806be7443mr22549405e9.31.1721937333811; 
- Thu, 25 Jul 2024 12:55:33 -0700 (PDT)
+ AJvYcCUL68bVxP1uDbOkEuJd/PL0m6b6r+0AC7mUDHPT4uv5M5XUUFpHtmWgAGe3UVvNPbkvHcKFBwFL/hMKOmHvgMaxuK+6z6s=
+X-Gm-Message-State: AOJu0YyP/T3Rt46PYB4/VEBINNLt3T5dPpDVb14SFMbmk3KcDCV7c1YN
+ 0JVCmm0+1JjwXCoEwdqhe0xfiIVPDaHGCw19apnl0yoiTcx4iNb0iPzrTZ+PsVI=
+X-Google-Smtp-Source: AGHT+IGMyU0f9+kVFbmISeNr7L1KMhVjswFa5Qjbq5K58etVaEKUuWrg1ZkLWj10yVr8YEY0lIc+hg==
+X-Received: by 2002:a05:600c:3549:b0:427:faa6:5648 with SMTP id
+ 5b1f17b1804b1-4280550c3cbmr22056595e9.3.1721937484732; 
+ Thu, 25 Jul 2024 12:58:04 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.216.35])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42805749f46sm48480755e9.22.2024.07.25.12.55.32
+ 5b1f17b1804b1-427f1f52b8dsm78004675e9.1.2024.07.25.12.58.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 12:55:33 -0700 (PDT)
-Message-ID: <3723cd77-e617-4278-9922-b67f690c08ba@linaro.org>
-Date: Thu, 25 Jul 2024 21:55:31 +0200
+ Thu, 25 Jul 2024 12:58:04 -0700 (PDT)
+Message-ID: <3601c8e8-4e45-4e91-9ed0-ea57ed8f90da@linaro.org>
+Date: Thu, 25 Jul 2024 21:57:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/cache.c: Remove redundant check of
- l2_access
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20240725164851.1930964-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] accel/kvm/kvm-all: Fixes the missing break in vCPU unpark
+ logic
+To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, peter.maydell@linaro.org
+Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, richard.henderson@linaro.org, imammedo@redhat.com,
+ andrew.jones@linux.dev, david@redhat.com, eric.auger@redhat.com,
+ oliver.upton@linux.dev, pbonzini@redhat.com, will@kernel.org,
+ gshan@redhat.com, rafael@kernel.org, alex.bennee@linaro.org,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ npiggin@gmail.com, harshpb@linux.ibm.com, linuxarm@huawei.com
+References: <20240725145132.99355-1-salil.mehta@huawei.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240725164851.1930964-1-peter.maydell@linaro.org>
+In-Reply-To: <20240725145132.99355-1-salil.mehta@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,19 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/7/24 18:48, Peter Maydell wrote:
-> In append_stats_line(), we have an expression
->     l2_access ? l2_miss_rate : 0.0
-> But this is inside an if (l2_access && l2_misses) { ... } block,
-> so Coverity points out that the false part of the ?: is dead code.
+On 25/7/24 16:51, Salil Mehta wrote:
+> Loop should exit prematurely on successfully finding out the parked vCPU (struct
+> KVMParkedVcpu) in the 'struct KVMState' maintained 'kvm_parked_vcpus' list of
+> parked vCPUs.
 > 
-> Remove the unnecessary test.
-> 
-> Resolves: Coverity CID 1522458
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: Coverity CID 1558552
+> Fixes: 08c3286822 ("accel/kvm: Extract common KVM vCPU {creation,parking} code")
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-ID: <CAFEAcA-3_d1c7XSXWkFubD-LsW5c5i95e6xxV09r2C9yGtzcdA@mail.gmail.com>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 > ---
->   contrib/plugins/cache.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   accel/kvm/kvm-all.c | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
