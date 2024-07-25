@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65139C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B88C3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 10:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWvUE-0006cm-Uv; Thu, 25 Jul 2024 06:14:14 -0400
+	id 1sWvUs-0001HT-Qz; Thu, 25 Jul 2024 06:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sWvUD-0006We-6X
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:13 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWvUr-0001Be-D3
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:53 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sWvUB-0007C5-9E
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:12 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-595856e2336so1236444a12.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:14:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sWvUp-0007qX-CX
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 06:14:53 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52f008aa351so878301e87.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 03:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721902449; x=1722507249; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oaVuSzjCd769g598xAbZ0xUurICMeyYA4zs1YaIXjaI=;
- b=VHrTxptSTMKcFTiZd2Jy7PXhz8HCjZUYiEPrDWZ59/Q+H9aeDt9odW9N4V07kW4huS
- w+x5eywhdgK/zDEXVVMYTSk1jGYpANElG5sNnpQOf2dH3EkJEufXiN0MfwApRjUXJNM+
- OsBgA2X5UrbyN6bdYtNhlGrWuDfQNh5Icg3LxPWN6RVeYUPhz2j+0QOmKsiGyGbkcMxt
- puEceJIhX2wVYyXFwWtyPI7NwSHLtm1lXx29jailGbR1ZIvGsUfH/EOZEi7RIhjfgt7B
- KNmvrkt4j/WI6IFOQmVRMIzOEs6mF+H1cfCmbwssDD4z/XZAYXx2fFov38ci/QkVyybk
- b3aA==
+ d=linaro.org; s=google; t=1721902489; x=1722507289; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=4JTpE/CHLjoamQZwUeX9uxDRoS3ZPI7VpKNBBjyC7Ak=;
+ b=D6cTwjMAQv3yeG3KMMxx1kPq7LlN5Yl9yqXk4d7Nk4Yxzm4BAhkpOUx5ppN1s/qaPK
+ 9aUmO9czrKm5pqiaHZ6/4pcHs4F0Thpb9ev4iV+TsOyPCjVZT9lOgKVkjQz1Dt9FvInN
+ 5kt8gwUkpusykRUfckkSg4CMODbg4tqpAujZTvcIuLd7YjC6i4y+CEgRPEJTCIWvJvNt
+ 9QWkHcaHcG1oXpZEzOO3FdCYH6j3+PYmuv1ZOKAxGG4BKbOhVSBIBjWp695E52qtgH/d
+ n4mLdlX3ehLowkiDwUDmYg9y7iaoMYZTT44r3BPzb5XJRbTFwoOMOVuUyqkGyKEvfFhT
+ VPsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721902449; x=1722507249;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oaVuSzjCd769g598xAbZ0xUurICMeyYA4zs1YaIXjaI=;
- b=L1JYTNS/H8VF+XuJ53NtG75XMAVo+EPI5AxDB2CyQO5og31LsGilam8Rgotf7oUSLy
- GZVr+bCZ+jFfqD72f8kRHjh9XbK7NbNMu6D8gECqIRjiJ7FZtK62GTSBJZgM3D1IKY1d
- +ZfNOz6dD6SBX9sNg15GSbXUpsXmAD/C+mjcaX+529XRK6WZQL2g/+2Iq2TH86KBsy8M
- F/9Up+bXP7Lt5hBP29BdqTVBRJIL+F/XCYUrySxrp1zwlyvPhWXF2hwhHmjqs9tkNLcq
- 7H8QJbMIi9Im77P5/yLB4b1QLEVpyngvG9SRj9B+ZVuMryfe72yWZD7lhcFY9E2vbLZo
- ZJPg==
-X-Gm-Message-State: AOJu0Yw3xswu5JSgUQS1nv9QelwOtXVfR+Kh98zhPBNPePaCJq6mr00o
- qqhyfYVJpXefV8+NUhnkOqA1uHW9+uRyC9absgJb4xn6NAK+S6wsSj507XtMatI=
-X-Google-Smtp-Source: AGHT+IGSQ6GSyyMqRCAKFCMe5kXcCIATkdHc3vuSCWgu7gsNwKxK4W5fLXLf49jbbuDTxheYaT2Qpw==
-X-Received: by 2002:a05:6402:27d4:b0:5a0:edfa:e5a9 with SMTP id
- 4fb4d7f45d1cf-5ac141eb32emr2634705a12.12.1721902449237; 
- Thu, 25 Jul 2024 03:14:09 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac63b59cbbsm651758a12.47.2024.07.25.03.14.08
+ d=1e100.net; s=20230601; t=1721902489; x=1722507289;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4JTpE/CHLjoamQZwUeX9uxDRoS3ZPI7VpKNBBjyC7Ak=;
+ b=BDnurl3qJgZddXdIZKrsDEhvtBubwY0q9ESXI7Za+UcWk4+diAFs5MqtDuZN9Y6ls8
+ oCQ/iGJ4d3Qv1Llgaapjy1bzJr5hkNImqY2UXiyGUiPag09oqJvplLzmCBc3xZDc46r9
+ oSUCZnOJbAIWqeppUn/OUHPeb2WOuyS0yca97FHG9lYL1uTz1qyVGriV09w6zSVWjYsZ
+ i1YNtpp/NkA6WZx63eDjcwpoc8jtvRQwO94+21eMUGk3ob1R1GB1xxvOx9gdncc6ImB1
+ t0b5TppgtcQ2v3+dQ13wTvoUP5mc1oXKwsN4fkcyQCDORC7A/14otBQBl8Mq1EWK+Xgu
+ Ml6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpHPfdHneCTsH2ZCnOP3GKaAsHq+rlXmo4cbsbWySWS4kg0HaE63aUia7rbM7jCX1XNoBj6lQrd38SmdW2NwinbvXPA/Y=
+X-Gm-Message-State: AOJu0YwjAsV8fn+QiFatSkKyh5BqPyckq2H6nIZfK8Ti7Rszds8/lfWx
+ Z/wgVP8roD1jhCeSOP7oKyuXk94eVuW+rdR3U2+p2FqjmpKauJbqhT2JxS/2sM8=
+X-Google-Smtp-Source: AGHT+IG4E4DiAJg4V4Tnjza3UFmSEWHNrb0ME+UOaLmZvObxERMzER01ZeVN+PslqbhbJXC3N+m7Vw==
+X-Received: by 2002:ac2:51cc:0:b0:52e:9d60:7b4c with SMTP id
+ 2adb3069b0e04-52fd60a1de9mr1173642e87.61.1721902488753; 
+ Thu, 25 Jul 2024 03:14:48 -0700 (PDT)
+Received: from meli-email.org (adsl-231.37.6.1.tellas.gr. [37.6.1.231])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acab233aasm56922466b.8.2024.07.25.03.14.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 03:14:08 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8934B5F863;
- Thu, 25 Jul 2024 11:14:07 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9=20?=
- <berrange@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 0/2] gitlab: expose installed package info in build logs
-In-Reply-To: <h6b6l.5yloo5aflex@linaro.org> (Manos Pitsidianakis's message of
- "Thu, 25 Jul 2024 12:42:18 +0300")
-References: <20240724095505.33544-1-berrange@redhat.com>
- <h6b6l.5yloo5aflex@linaro.org>
-Date: Thu, 25 Jul 2024 11:14:07 +0100
-Message-ID: <87a5i5ok28.fsf@draig.linaro.org>
+ Thu, 25 Jul 2024 03:14:48 -0700 (PDT)
+Date: Thu, 25 Jul 2024 13:02:25 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qeemu-devel@nongnu.org, qemu-devel <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
+ <h4gxy.dr366knvycy@linaro.org>
+ <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
+ <h61ku.ipxyjqsxu75@linaro.org>
+ <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
+In-Reply-To: <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
+Message-ID: <h6cgm.o8scn84hx1ry@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,62 +111,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
-
-> Hello Daniel,
+On Thu, 25 Jul 2024 12:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>Il gio 25 lug 2024, 08:19 Manos Pitsidianakis <
+>manos.pitsidianakis@linaro.org> ha scritto:
 >
-> On Wed, 24 Jul 2024 12:55, "Daniel P. Berrang=C3=A9" <berrange@redhat.com=
-> wrote:
->>Many times we see a build job start failing, we wonder if the installed
->>packages have changed since the last passing build. We can rarely
->>diagnose this, however, since we only have the new container image, not
->>the old one.
+>> >(before the call to qemu_chr_fe_accept_input):
+>> >// TODO: this causes a callback that creates another "&mut self".
+>> >// This is forbidden by Rust aliasing rules and has to be fixed
+>> >// using interior mutability.
+>>
+>> You mean that we can have a call stack that looks something like...
+>>
+>> <qemu code>
+>> |_ pl011_read
+>>   |_ PL011State::read()
+>>      |_ qemu_chr_fe_accept_input()
+>>       |_ pl011_read
+>>         |_ PL011State::read()
+>>
+>> If I understand correctly, this does not create another "&mut self",
+>> because a mutable reference of self is passed to
+>> qemu_chr_fe_accept_input(), and only exists until it returns.
 >>
 >
-> APT allows you to specify to pin package versions when installing;
-> wouldn't that help ensure our tests are deterministic?
+>Unfortunately that's a *mut, not a &mut. A &mut must be unique, so the cast
+>in pl011_read() is undefined behavior.
 
-Generally we want track the latest LTS version and usually the distros
-are pretty good about being cautious about updates. I think the recent
-case was because BSD's have a different policy about updating python.
+Actually it's:
 
-IOW this is a nice to have for debugging but I don't think we want to
-freeze the acceptable package set for any given install.
+  unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
 
-> Furthermore, a gitlab cron job pipeline can be set up to run every
-> e.g. few months and inform of any updates so that we can manually bump
-> them.
+And you can ensure there's no disjoint borrowing by making a wrapper 
+function that mutably borrows self, e.g.
+
+fn accept_input(&mut self) {
+  unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
+}
+
+This is not undefined behavior, since the cast in pl011_read creates a 
+mutable reference that does not outlive the same call to pl011_read.
+
+
 >
-> Manos
+>In any case, I agree that these subtleties must be examined thoroughly
+>> in general. In this case though PL011State has only Copy fields and no
+>> side effects when dropped. This means that adding interior mutability
+>> e.g. with Cell would have exactly the same behavior.
+>>
 >
+>If you add interior mutability you can operate on a &self; and then
+>creating the &mut (via either Cell or RefCell) from the callback is legal.
 >
->>The lcitool generated containers create a /packages.txt file whose
->>content is intended to be output in the build phase, so record the
->>packages associated with the build.
+>But your bringing it up makes me wonder whether we can detect any bad
+>> behaviors with miri... It does not play well with FFI boundaries but
+>> it's possible to mock them in some cases. I will look into the two TODOs
+>> you mention and also if it's possible to verify the correct behavior
+>> whenever possible!
 >>
->>This adds packages.txt to the manually written containers, and modifies
->>the build jobs to display this content. This will improve our future
->>debuggability of CI problems.
->>
->>Daniel P. Berrang=C3=A9 (2):
->>  gitlab: record installed packages in /packages.txt in containers
->>  gitlab: display /packages.txt in build jobs
->>
->> .gitlab-ci.d/buildtest-template.yml                      | 1 +
->> .gitlab-ci.d/crossbuild-template.yml                     | 2 ++
->> tests/docker/dockerfiles/debian-all-test-cross.docker    | 3 ++-
->> tests/docker/dockerfiles/debian-hexagon-cross.docker     | 3 ++-
->> tests/docker/dockerfiles/debian-legacy-test-cross.docker | 3 ++-
->> tests/docker/dockerfiles/debian-loongarch-cross.docker   | 3 ++-
->> tests/docker/dockerfiles/debian-tricore-cross.docker     | 3 ++-
->> tests/docker/dockerfiles/debian-xtensa-cross.docker      | 3 ++-
->> 8 files changed, 15 insertions(+), 6 deletions(-)
->>
->> -- 2.45.2
->>
->>
+>
+>The most robust way is to write proper bindings to QEMU APIs that enforce
+>use of shared references. That will take time; but we'll get there, for now
+>it's important just to point out the problem.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Please demonstrate a scenario where said problem shows up, otherwise 
+it's just hand-waving on a undefined (pun intended ;) ) hypothetical.
+
+>
+>
+>> >> >❌ a trait to generate all-zero structs without having to type "unsafe {
+>> >> >MaybeUninit::zeroed().assume_init() }"
+>> >>
+>> >> Traits cannot have const fns at the moment (traits cannot have
+>> >> type-level effects like const or async but it's WIP to get them into
+>> >> rustc), so this cannot be used for statics and consts.
+>> >
+>> >Ah, I see. Anyhow, I've been looking at the Linux kernel's pinned-init
+>> >crate (https://rust-for-linux.com/pinned-init) and it provides a
+>> >Zeroable macro including #[derive] support. So that has gone lower in
+>> >my priority.
+>> >
+>> >> >❌ I'd like to use ctor instead of non-portable linker magic,
+>> >>
+>> >> The linker sections are pretty much standard and in fact ctor uses the
+>> >> same linker attributes. Would writing our own constructor macro be a
+>> >> solution for you? My reasoning is that 1) we support our own specific
+>> >> platforms and it's better for portability to reflect that in our source
+>> >> tree and 2) it avoids the external dependency, linker sections do not
+>> >> change so any ctor update would be in the API or adding more platform
+>> >> support,  not fixes in what we target.
+>> >
+>> >I'd still like to give someone else the burden. :) Writing our own
+>> >constructor macro would be more work for little gain.
+>>
+>> Well, it's just that I personally don't view adding __attribute__
+>> manually in only two places is a burden but I've no strong preference
+>> over it.
+>>
+>> I'm looking at the ctor dependencies and they are a few:
+>>
+>> https://github.com/mmastrac/rust-ctor/blob/cc3ab9160ed9dc3bdf20d735352b519abc2913e9/Cargo.lock
+>>
+>> Do you perhaps agree with adding a FIXME comment to replace the linker
+>> attributes with ctor when we get the cargo dependency story in meson
+>> sorted out?
+>>
+>
+>Yes, that's fine.
+
+Thanks! We also have to keep in mind we would like Debian to be able to 
+package this, so we should be very conservative on what dependencies we 
+use.
+
+>
+>Paolo
+>
+>Manos
+>>
+>>
 
