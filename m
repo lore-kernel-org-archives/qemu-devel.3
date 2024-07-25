@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC129C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56FAC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8M4-0000Yx-8t; Thu, 25 Jul 2024 19:58:40 -0400
+	id 1sX8L4-000253-EU; Thu, 25 Jul 2024 19:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8M2-0000TI-3C; Thu, 25 Jul 2024 19:58:38 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sX8Kv-0001Vz-9J; Thu, 25 Jul 2024 19:57:30 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8M0-0001c0-Bs; Thu, 25 Jul 2024 19:58:37 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70ea93aa9bdso354338b3a.0; 
- Thu, 25 Jul 2024 16:58:35 -0700 (PDT)
+ id 1sX8Ks-0001Oc-Ti; Thu, 25 Jul 2024 19:57:28 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7163489149eso336034a12.1; 
+ Thu, 25 Jul 2024 16:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951914; x=1722556714; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951845; x=1722556645; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lYJbTtKocMlV5G6K8YUjMXMGEB4/lAQjLTAOrmm/oIg=;
- b=kzgpI+PYNoro24mtI1l3XIZsIfoX/lzzDe6i4AjZOvW2aiynlhWZqV0q/bFmQh9tfJ
- bht0wRGk/EZ+VWuuhl6ompXEaPiGBpcGOdVa+Lnm9/5ZgoQVuekR+Y/etqkpKmRRy/bn
- lWanS2msbP4QYxbz+MQel4x+EyOVS8CuMMsaZIIaJz3ifY9M6HDcQTtXdr937kbkXjP7
- fucrE+i6I1wvQr0lK+sLayP1vjHrOxHV4LAd9QdRBTp3bzMgLbMMk+/iMp9EtO+nq7H4
- 2l80oeLsYgB1T/ee+dAS6E0BO77ylWknHwoyzsKotWzhKOcYFsoPX9QyTi72tTKuGU4/
- Rt+A==
+ bh=Dhji2tzCt7V0bCKi9OaRajRAvFKebIz+tSdljnjixRU=;
+ b=jLiyRsLduOdXP3dJjt0zF8vNdw629j+PHpJUHEmu4FrtMCjTny/DBIDlgIUOosV41k
+ WG67WnI2XqG3szsBjhI/itFaMOWvRkQYNgS2cpEGs+y+/QpDOJJjiIRt/KAg/xye518C
+ vP+hQiqbydTz1FJLzlAxdDxQbZyDsRgz7CmaR3u9ZiROmgv+Wimw2eyp1Kxz87drlA3z
+ AaxnGdKULyHcxzfLfjwHsOMZngbcgYghttD44puM8TaP/T1u7K/gP1BesSul4LVBeLUx
+ UDEoondmwPyyoryeB7PqCAqAeWZqRnqF930Al1xCb7m7tm3nBgqldTGVYX7zBeOzRv/U
+ xTMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951914; x=1722556714;
+ d=1e100.net; s=20230601; t=1721951845; x=1722556645;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lYJbTtKocMlV5G6K8YUjMXMGEB4/lAQjLTAOrmm/oIg=;
- b=vxdNuHOrPEvbkRgO2ZXtUl9k0Mkiina7bjzSGDJDkZpHIUwVTcoXOHypWw/aUOaz28
- E1HTzvfB2NOnCo4ZSrc19C/Tx4KWrKKKaNr3zUS+uiNObq/+wa1baFyz7ePn4qXR9vDD
- N2nH6XzfVTeE047gp/XnyEgsUAJSggp95VinWV8a8GHWqcMBOum6YOJRBEZl8ouxnhcU
- 1hZm+pZsCyiX+z3NtZLYmviTXU6b8UyWWKRSSFf5yJH5B64jfl7ob2I93gdRxcMwwhsV
- AfITGQz4vA0K16nvvdwvIF1mG3qZKvnCSH3ZBGyVCIHNOTw3lJZBWI3yc5oKcbq4VgOP
- Wj+w==
+ bh=Dhji2tzCt7V0bCKi9OaRajRAvFKebIz+tSdljnjixRU=;
+ b=JzOguyCcNAqhYZbNU691ESPOnrn5zGD71IrRba7/T40HhhzAZtLnOLMuQItQuBHMvR
+ b9u138qkK2DkemEqctT4M73bocxk8PdbACKd6tJRbVkIq9wvXRwfuu45jBGY4xXSGY/x
+ KUyD26l8qbZlCGKz2hP6SNeTTY7+Wpge5UmfZrKFU6+RVNp2P1hwI4TS/39GlTgF9USU
+ nXglVohmjKqkj80E6qICCx8+RHK49NQojX9ixueWnWWp6vjQeBPeCl4GHbATAAlio3wJ
+ GFJrWmhBU5JvQTZ+C3wxhyE1C32B/feW6EMvLU/5cG8OhcqpkMBJ9c3DX8Uu4FhUs8yT
+ H2Lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVByklHXvRiLlKCM4DViVw1mDkyM21V1YZ1U8ugtTkasuDv+0WI+k08FsstbW+z2OK559iABy0OnQVsj0IhTCCiw3mr
-X-Gm-Message-State: AOJu0Yz0I3iWsHlf34p33y7GVRsedV11lgBCV50whGTcb6PHA0h2Vrx7
- lcGWwZDFk6nhQGTJQQ4Rqu0IyrygoxAQBsaX0vmkri9lgBrar3EA2CqJMA==
-X-Google-Smtp-Source: AGHT+IFyXw1QVaMBVI9N3UFxuWxBZliXGdJcPrjMORoMPpBQAIAxDvpl5c/dwWxSXwD6YrzGBBHAhQ==
-X-Received: by 2002:a05:6a20:c70b:b0:1bd:2cea:f6ee with SMTP id
- adf61e73a8af0-1c47285e3e7mr4912600637.27.1721951914344; 
- Thu, 25 Jul 2024 16:58:34 -0700 (PDT)
+ AJvYcCUeqdJtxqPHPsNqTfEhC9tcgNfQJNSKdKEbrs7Td/eTCMrtX+I46XkTf1SIhAU4lcRePuwteEZ6Jz3NdEBabrW5u73v
+X-Gm-Message-State: AOJu0YzKwQg3EgttDSGlIw+j6MCn4j4xirVfDgKNK315LIwtZJ3ryHeM
+ FQJJVmXebHj3ReyoK4oWfNIsa+1V2mewMOOw5IEWl3h+izU45Nq48Ok44Q==
+X-Google-Smtp-Source: AGHT+IExY5WcUiBmtdbK40DSFUFaomZ5d9Kwz63bcUdSLW1s6pt2v4c0YeC4cONdYnrSfTunCNHOHw==
+X-Received: by 2002:a17:90a:b704:b0:2cb:4f14:2a70 with SMTP id
+ 98e67ed59e1d1-2cf2eb6b180mr3763254a91.30.1721951844440; 
+ Thu, 25 Jul 2024 16:57:24 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.58.31
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:58:33 -0700 (PDT)
+ Thu, 25 Jul 2024 16:57:23 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 70/96] target/ppc/mmu_common.c: Remove yet another single use
- local variable
-Date: Fri, 26 Jul 2024 09:53:43 +1000
-Message-ID: <20240725235410.451624-71-npiggin@gmail.com>
+ Frederic Barrat <fbarrat@linux.ibm.com>,
+ Michael Kowal <kowal@linux.vnet.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 50/96] pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
+Date: Fri, 26 Jul 2024 09:53:23 +1000
+Message-ID: <20240725235410.451624-51-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,48 +97,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-In ppc6xx_tlb_pte_check() the pp variable is used only once to pass it
-to a function parameter with the same name. Remove the local and
-inline the value. Also use named constant for the hex value to make it
-clearer.
+Moving xive2_nvp_pic_print_info() to align with the other "pic_print_info"
+functions.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_common.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/intc/pnv_xive2.c         | 27 ---------------------------
+ hw/intc/xive2.c             | 26 ++++++++++++++++++++++++++
+ include/hw/ppc/xive2_regs.h |  2 ++
+ 3 files changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index b21f52290f..799d2ced9b 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -98,13 +98,12 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-                                 target_ulong pte1, int pteh,
-                                 MMUAccessType access_type)
- {
--    int ret, pp;
-+    int ret;
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index 9fbd44f974..78609105a8 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -2436,33 +2436,6 @@ static void pnv_xive2_register_types(void)
  
-     ret = -1;
-     /* Check validity and table match */
-     if (pte_is_valid(pte0) && ((pte0 >> 6) & 1) == pteh) {
-         /* Check vsid & api */
--        pp = pte1 & 0x00000003;
-         if ((pte0 & PTE_PTEM_MASK) == ctx->ptem) {
-             if (ctx->raddr != (hwaddr)-1ULL) {
-                 /* all matches should have equal RPN, WIMG & PP */
-@@ -115,7 +114,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-             }
-             /* Keep the matching PTE information */
-             ctx->raddr = pte1;
--            ctx->prot = ppc_hash32_prot(ctx->key, pp, ctx->nx);
-+            ctx->prot = ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, ctx->nx);
-             if (check_prot_access_type(ctx->prot, access_type)) {
-                 /* Access granted */
-                 qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+ type_init(pnv_xive2_register_types)
+ 
+-static void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx,
+-                                     GString *buf)
+-{
+-    uint8_t  eq_blk = xive_get_field32(NVP2_W5_VP_END_BLOCK, nvp->w5);
+-    uint32_t eq_idx = xive_get_field32(NVP2_W5_VP_END_INDEX, nvp->w5);
+-
+-    if (!xive2_nvp_is_valid(nvp)) {
+-        return;
+-    }
+-
+-    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x",
+-                           nvp_idx, eq_blk, eq_idx,
+-                           xive_get_field32(NVP2_W2_IPB, nvp->w2));
+-    /*
+-     * When the NVP is HW controlled, more fields are updated
+-     */
+-    if (xive2_nvp_is_hw(nvp)) {
+-        g_string_append_printf(buf, " CPPR:%02x",
+-                               xive_get_field32(NVP2_W2_CPPR, nvp->w2));
+-        if (xive2_nvp_is_co(nvp)) {
+-            g_string_append_printf(buf, " CO:%04x",
+-                                   xive_get_field32(NVP2_W1_CO_THRID, nvp->w1));
+-        }
+-    }
+-    g_string_append_c(buf, '\n');
+-}
+-
+ /*
+  * If the table is direct, we can compute the number of PQ entries
+  * provisioned by FW.
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 3e7238c663..ac914b3d1c 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -137,6 +137,32 @@ void xive2_end_eas_pic_print_info(Xive2End *end, uint32_t end_idx,
+                            (uint32_t) xive_get_field64(EAS2_END_DATA, eas->w));
+ }
+ 
++void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf)
++{
++    uint8_t  eq_blk = xive_get_field32(NVP2_W5_VP_END_BLOCK, nvp->w5);
++    uint32_t eq_idx = xive_get_field32(NVP2_W5_VP_END_INDEX, nvp->w5);
++
++    if (!xive2_nvp_is_valid(nvp)) {
++        return;
++    }
++
++    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x",
++                           nvp_idx, eq_blk, eq_idx,
++                           xive_get_field32(NVP2_W2_IPB, nvp->w2));
++    /*
++     * When the NVP is HW controlled, more fields are updated
++     */
++    if (xive2_nvp_is_hw(nvp)) {
++        g_string_append_printf(buf, " CPPR:%02x",
++                               xive_get_field32(NVP2_W2_CPPR, nvp->w2));
++        if (xive2_nvp_is_co(nvp)) {
++            g_string_append_printf(buf, " CO:%04x",
++                                   xive_get_field32(NVP2_W1_CO_THRID, nvp->w1));
++        }
++    }
++    g_string_append_c(buf, '\n');
++}
++
+ static void xive2_end_enqueue(Xive2End *end, uint32_t data)
+ {
+     uint64_t qaddr_base = xive2_end_qaddr(end);
+diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+index 4e5e17cd89..ec5d6ec2d6 100644
+--- a/include/hw/ppc/xive2_regs.h
++++ b/include/hw/ppc/xive2_regs.h
+@@ -194,6 +194,8 @@ static inline uint32_t xive2_nvp_blk(uint32_t cam_line)
+     return (cam_line >> XIVE2_NVP_SHIFT) & 0xf;
+ }
+ 
++void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf);
++
+ /*
+  * Notification Virtual Group or Crowd (NVG/NVC)
+  */
 -- 
 2.45.2
 
