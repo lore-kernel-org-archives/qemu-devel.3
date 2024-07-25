@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D21E5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 20:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14DDC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 20:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX55x-0006Rl-3X; Thu, 25 Jul 2024 16:29:50 -0400
+	id 1sX56Z-00074O-Br; Thu, 25 Jul 2024 16:30:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sX55u-0006OB-7c
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 16:29:46 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1sX56V-00073q-Q0
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 16:30:23 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sX55r-0004Fi-Lw
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 16:29:45 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2f035ae1083so6817771fa.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 13:29:43 -0700 (PDT)
+ id 1sX56U-0004Xx-0U
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 16:30:23 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2f01e9f53e3so7382151fa.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 13:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721939382; x=1722544182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1721939420; x=1722544220; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NgOb7V7h2OaLljhVsZYmHTZ0Z+pQ91WYYq1oDqM9mcQ=;
- b=NATkoQnqWwBf8/edxfEbsURtjWu8aw8bLt4ClTiLsrQWcXJlcPCyEcGV1mK2IYQh5j
- GMxQ/dYqI9KkYufnqpa5v0tEvfMSoFMBq3JI6g969NrkHndIz7y9eGmFGeF4PBHSD0Fo
- 6tFnWMuyq4SNEwtrVXGy8QR6gBgOcHVAoBNzCt9rkWMyAd5oWmIOqh6zkIr8vMF+Kk8Y
- 6PGRtuvJT742/gQuYDti1DMTesLaSgBVHpuYUupZ4FKhP22dsuHihixWRKcfAU/ZGQii
- dqsbwLi5MLBTabPS/1ly59zU7m0QTpf7LBNVs6JlCVrR1foQAxu0LAFX+lo8TDa2rfxo
- BtvA==
+ :reply-to; bh=8GiNrMrOXdE29zDz/EWenwdZ8aZTTPaV6uRz2wPhMT0=;
+ b=EpGQ62XcWbBWGXsNSHCO0cSkvQdhnqJhW8tOHjULhSPh/UXrGDATYtoc9ewI/oQ19r
+ 8FLi+tf2CdTKhhiNfXuI+uelOylxbIw9HMxvhWRSXLbnGYFQRiMwytGls9PzSB498G4v
+ RrORXW0Esg19XISJVwMbmbauflmFGLzs9MWuYpF9h8kBmUnTmH2l7R/ogpjgoxJSVDWp
+ zzn7LVbF22fS3VPedm2O64g6ubzECvfAkb5hbWNpIPKIjdskvfLZBXB/AMdlvO8lZIgf
+ YlzzR8flhoooknn0QPC7lES+NI6a42gpsSZhGYq7WYEK/vRdKJVZLiRsepMU/bZipKyq
+ Pckg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721939382; x=1722544182;
+ d=1e100.net; s=20230601; t=1721939420; x=1722544220;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NgOb7V7h2OaLljhVsZYmHTZ0Z+pQ91WYYq1oDqM9mcQ=;
- b=s4cxs39GKnI+tmZgMNTBTuoIT63lBB4WQ+YoFzZGwf9Ie42se86imX0b+unKk7z2Rq
- NGbOMzPg8EvsnRP1rfz+MZlELS27MQkxqFYorgn3RfLK5tk6ZFeVzPIngv7Uqji0ghDk
- 5N/SgIjmyGWVxafIG3yjF8RlSMdxw/3atXgV6czL9kHNn2/0rEBO3AbvNPDh7x0tBf5i
- ZahRiku2sC+ymr86L81SjLjT+S67dywrz+QBNAv/ukfoYjFjyq7leT776fNzhOnnyM5c
- XPBxNN0ZtWalbilix3A6lF6kOdUyFaDZixZwT7LZn4ABr69pE/1LZmsnX58ElIwb9Jks
- zXsg==
-X-Gm-Message-State: AOJu0Yxcuqmr90MiglcZPz5R09EaqQQEd0rPZn+uW41VJzVjIUc3lvHK
- 7n1lxwF4is1CTlpHNOCUZN6IaE1UiBtE1xVOy3c6iy2sTAEztiuq0SgOTcaH0h8=
-X-Google-Smtp-Source: AGHT+IGWf4ZddWeRQzTw71BXkfALvBN0DrBRmplT/O+Zlfvmqif0y9vCudCemj2vWW5lhSfJONZA9g==
-X-Received: by 2002:a05:651c:a08:b0:2ef:2e3f:35da with SMTP id
- 38308e7fff4ca-2f03dbfbb32mr25159211fa.45.1721939381177; 
- Thu, 25 Jul 2024 13:29:41 -0700 (PDT)
+ bh=8GiNrMrOXdE29zDz/EWenwdZ8aZTTPaV6uRz2wPhMT0=;
+ b=ni4R0EyL1HhNqvx/2j2OQcRIqI6tPZkY3uM6xOcwphj0ljeTB/tFwmI0a4L1V75hAH
+ 0Bs2b4jMO5agfeWM8htBBQVArFgPRZ5fIICYTwmhj5vlQKCX/n8Te2l8jC9lHj3BslAy
+ 6KcbTByfasPpFIAFP5EKOCyFXPAr+FQA/Q8huiMp1OVjzc1c4enjaAqD22q5yrzXUmoL
+ eqNVkyZdM6LL/fGm/psoJi0jwOMbmc+XABLEHBWmC8NrlVPLA/9oJwmATUdpbVRWxaTE
+ wQV9Ko5DtN7ODnWiCDB6bk4l250XeFCobHDi2dEcKHU3jJBwMrnOzDemvsO5PFBM0JRu
+ ZgPw==
+X-Gm-Message-State: AOJu0YyI7GJs8Hzapy2Q9gd4/juPOAcgl+5EdN8cuqtJlAwHq62oR0Tj
+ 58KijQZcVfMsOpD6drYNOXzHmADfoBV5VeMu8CKbUIZEfDRbGmUo3BiAT6gatcw=
+X-Google-Smtp-Source: AGHT+IGic2uTnpcYVeqgS+q3/0FevwTIzQkWAToksiNSQ05N468gxgjbF8zlNNEsJs/bAuQyksPdAA==
+X-Received: by 2002:a05:6512:3089:b0:52c:ddef:4eb7 with SMTP id
+ 2adb3069b0e04-52fd602bc31mr2728917e87.20.1721939420028; 
+ Thu, 25 Jul 2024 13:30:20 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac64eb3c1esm1119263a12.78.2024.07.25.13.29.39
+ a640c23a62f3a-a7acab23394sm105590166b.26.2024.07.25.13.30.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 13:29:39 -0700 (PDT)
+ Thu, 25 Jul 2024 13:30:19 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B67595F863;
- Thu, 25 Jul 2024 21:29:38 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7AEB85F863;
+ Thu, 25 Jul 2024 21:30:18 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-ppc@nongnu.org,  Daniel Henrique Barboza
- <danielhb413@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2] tests/tcg: Skip failing ppc64 multi-threaded tests
-In-Reply-To: <87wml9mdbf.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Thu, 25 Jul 2024 21:22:44 +0100")
-References: <20240725154003.428065-1-npiggin@gmail.com>
- <87wml9mdbf.fsf@draig.linaro.org>
-Date: Thu, 25 Jul 2024 21:29:38 +0100
-Message-ID: <87sevxmczx.fsf@draig.linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] contrib/plugins/cache.c: Remove redundant check of
+ l2_access
+In-Reply-To: <20240725164851.1930964-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Thu, 25 Jul 2024 17:48:51 +0100")
+References: <20240725164851.1930964-1-peter.maydell@linaro.org>
+Date: Thu, 25 Jul 2024 21:30:18 +0100
+Message-ID: <87o76lmcyt.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,58 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-> Nicholas Piggin <npiggin@gmail.com> writes:
+> In append_stats_line(), we have an expression
+>    l2_access ? l2_miss_rate : 0.0
+> But this is inside an if (l2_access && l2_misses) { ... } block,
+> so Coverity points out that the false part of the ?: is dead code.
 >
->> In Gitlab CI, some ppc64 multi-threaded tcg tests crash when run in the
->> clang-user job with an assertion failure in glibc that seems to
->> indicate corruption:
->>
->>   signals: allocatestack.c:223: allocate_stack:
->>     Assertion `powerof2 (pagesize_m1 + 1)' failed.
->>
->> Disable these tests for now.
->>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>  tests/tcg/ppc64/Makefile.target | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.=
-target
->> index 8c3e4e4038..509a20be2b 100644
->> --- a/tests/tcg/ppc64/Makefile.target
->> +++ b/tests/tcg/ppc64/Makefile.target
->> @@ -11,6 +11,18 @@ config-cc.mak: Makefile
->>=20=20
->>  -include config-cc.mak
->>=20=20
->> +# multi-threaded tests are known to fail (e.g., clang-user CI job)
->> +# See: https://gitlab.com/qemu-project/qemu/-/issues/2456
+> Remove the unnecessary test.
 >
-> Given this is only a problem with clang can we only apply these
-> workaround if we detect "clang" in $(CC)?
+> Resolves: Coverity CID 1522458
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-ifeq ($(findstring clang,$(CC)),clang)
-...
-endif
+Queued to maintainer/for-9.1, thanks.
 
-should do the trick
+> ---
+>  contrib/plugins/cache.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> +run-signals: signals
->> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
->> +run-plugin-signals-with-%:
->> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
->> +
->> +run-threadcount: threadcount
->> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
->> +run-plugin-threadcount-with-%:
->> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
->> +
->>  ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
->>  PPC64_TESTS=3Dbcdsub non_signalling_xscv
->>  endif
+> diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+> index c5c8ac75a9c..512ef6776b7 100644
+> --- a/contrib/plugins/cache.c
+> +++ b/contrib/plugins/cache.c
+> @@ -558,7 +558,7 @@ static void append_stats_line(GString *line,
+>                                 "  %-12" PRIu64 " %-11" PRIu64 " %10.4lf%=
+%",
+>                                 l2_access,
+>                                 l2_misses,
+> -                               l2_access ? l2_miss_rate : 0.0);
+> +                               l2_miss_rate);
+>      }
+>=20=20
+>      g_string_append(line, "\n");
 
 --=20
 Alex Benn=C3=A9e
