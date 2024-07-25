@@ -4,84 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0901BC3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 13:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39559C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 14:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWysM-0000qr-SH; Thu, 25 Jul 2024 09:51:23 -0400
+	id 1sWz55-0006os-DU; Thu, 25 Jul 2024 10:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sWysH-0000ld-UG
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 09:51:19 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWz52-0006nd-Vk
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:04:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sWysD-0000iJ-Ie
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 09:51:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=vk8ftkEloTDmgVQjnQ2iYhXXaVbPFaXEcgIaO48eYi8=; b=wLR3Oe6fZY+9UjCJD3V3ZYrXzk
- dAdr0S6z23yQndVM21mcSn0X8mZBm5PvRDqVVJwGj90r+D/LfhGDjidCvzotNzuGdwAiro8MUG+lX
- iI8tLu78d2qV1tEt1xG2QGg/i8n3oO3fhvDKIdi8RN0xMCxsv6kNOcP1RHxryvprYKLMPHvPWZkFG
- thMnWAwuL2mDxkhz2DaSmZP85ugzjkxrA23Aq+PfUarhyyx8R8qPVuzlA8087Poh3D4CLvcQQIUoV
- 6I6D1vOYLcoKbquxdS/nCZG1PmzMVWgqcKVPOuhNldeCWSqOAaAKFUXLYrTp1xjYDJma8r/h/iXcl
- FZe5s+yQ==;
-Received: from [2001:8b0:10b:5:25df:2ae1:4889:ee99]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1sWyrr-00000008ydC-3XU3; Thu, 25 Jul 2024 13:50:51 +0000
-Message-ID: <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-From: David Woodhouse <dwmw2@infradead.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Richard Cochran <richardcochran@gmail.com>, Peter Hilber
- <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org, 
- virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>, 
- virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>, "Chashper,
- David" <chashper@amazon.com>, "Mohamed Abuelfotoh, Hazem"
- <abuehaze@amazon.com>,  "Christopher S . Hall"
- <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>, John
- Stultz <jstultz@google.com>,  netdev@vger.kernel.org, Stephen Boyd
- <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
- <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>, Mark Rutland
- <mark.rutland@arm.com>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>,  Alexandre Belloni
- <alexandre.belloni@bootlin.com>, qemu-devel <qemu-devel@nongnu.org>, Simon
- Horman <horms@kernel.org>
-Date: Thu, 25 Jul 2024 14:50:50 +0100
-In-Reply-To: <20240725083215-mutt-send-email-mst@kernel.org>
-References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
- <20240725012730-mutt-send-email-mst@kernel.org>
- <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
- <20240725081502-mutt-send-email-mst@kernel.org>
- <f55e6dfc4242d69eed465f26d6ad7719193309dc.camel@infradead.org>
- <20240725082828-mutt-send-email-mst@kernel.org>
- <db786be69aed3800f1aca71e8c4c2a6930e3bb0b.camel@infradead.org>
- <20240725083215-mutt-send-email-mst@kernel.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-loKIDtCwkHQLuYx6LBJ1"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sWz4x-0003oN-OO
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 10:04:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721916258;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=saCgkOZn0HdWWcQvpvi9Ls19Rjizl57+Xq/J8ZaLQ4s=;
+ b=LZ1XX2sBGTQAO2HEtxjgKRkSYvWBGegQLv7xqrQ+TEIw8bOMNk/UeSEVO9Bqq/9sJR24YB
+ JxGigyt8rNKGgTR7O96uyZA9qlpZveIar+PyR+SsRZDa6CkWudaiOX86pKp9PTTChIwp/f
+ Ex8aaDRVniXqcZFAaVEoyYW5WRZCO80=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-8RMK9JS1OfyewVTYZbcyTA-1; Thu, 25 Jul 2024 10:04:17 -0400
+X-MC-Unique: 8RMK9JS1OfyewVTYZbcyTA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-36865706f5eso584264f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 07:04:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721916256; x=1722521056;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=saCgkOZn0HdWWcQvpvi9Ls19Rjizl57+Xq/J8ZaLQ4s=;
+ b=XfpvaSRX5mPdWqKzeKVYpExYwTuVNGF4BwVyf3MsyH4ETOh7EpoxXf4uxK6wuJc9oz
+ fqHU858E82pI+6YPR9os05jwO20XIw0xjfiolNL+Ux3qKc4+MfOpiNhog2Ga9Qa5tgo9
+ JEr57UUY2pwg8BEdHe+4cOAToVs7dFhVhL9sWSG7Ua7TGF6u7smDxaJ+OxSYoGujxsPQ
+ 4xD88t+iVIk0woSk27hDapzS/g0Xsaj+HeTOg3itX77NuUy8VC0lgEkrFtgyhsNwISjW
+ inaipeZsdKDc2NRb/yeDXYk8bYRV7k/HAk1lKMyAznDF/gd3k1mF434s5D6iyS1lRcOg
+ rYCg==
+X-Gm-Message-State: AOJu0Yy7j8s45aokaB095YSjBQQjKRzrOMMUPzwG9NS5mXRO/7dc7tVg
+ btkqudt+NZEPtrhlXy7WYG8hJnvSLoZMl9JNyQrWHFdHywAEbDBZV0W99x+BZs18wGYx2shlDeg
+ 9vswUVrWr11futbhk7NrxG6ndRh0hjiAmtdITu6AB1CtnLb7BWHaQ
+X-Received: by 2002:a5d:45cf:0:b0:367:2945:4093 with SMTP id
+ ffacd0b85a97d-36b36404e69mr1510675f8f.40.1721916255791; 
+ Thu, 25 Jul 2024 07:04:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwL6wrZtpBw6QykADbooPfXaToyq8nHUEXSGuRQ7THzhdQbwNo8165LXTsYIxsVMkYgkaBuA==
+X-Received: by 2002:a5d:45cf:0:b0:367:2945:4093 with SMTP id
+ ffacd0b85a97d-36b36404e69mr1510624f8f.40.1721916255277; 
+ Thu, 25 Jul 2024 07:04:15 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c706:2c00:5f6:3120:375a:3e4?
+ (p200300cbc7062c0005f63120375a03e4.dip0.t-ipconnect.de.
+ [2003:cb:c706:2c00:5f6:3120:375a:3e4])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-428057b6dbbsm38355795e9.44.2024.07.25.07.04.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 07:04:14 -0700 (PDT)
+Message-ID: <ace9bb98-1415-460f-b8f5-e50607fbce20@redhat.com>
+Date: Thu, 25 Jul 2024 16:04:12 +0200
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/6] Enable shared device assignment
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Edgecombe Rick P <rick.p.edgecombe@intel.com>,
+ Wang Wei W <wei.w.wang@intel.com>, Peng Chao P <chao.p.peng@intel.com>,
+ Gao Chao <chao.gao@intel.com>, Wu Hao <hao.wu@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20240725072118.358923-1-chenyi.qiang@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240725072118.358923-1-chenyi.qiang@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,192 +156,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> Open
+> ====
+> Implementing a RamDiscardManager to notify VFIO of page conversions
+> causes changes in semantics: private memory is treated as discarded (or
+> hot-removed) memory. This isn't aligned with the expectation of current
+> RamDiscardManager users (e.g. VFIO or live migration) who really
+> expect that discarded memory is hot-removed and thus can be skipped when
+> the users are processing guest memory. Treating private memory as
+> discarded won't work in future if VFIO or live migration needs to handle
+> private memory. e.g. VFIO may need to map private memory to support
+> Trusted IO and live migration for confidential VMs need to migrate
+> private memory.
 
---=-loKIDtCwkHQLuYx6LBJ1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+"VFIO may need to map private memory to support Trusted IO"
 
-On Thu, 2024-07-25 at 08:33 -0400, Michael S. Tsirkin wrote:
-> On Thu, Jul 25, 2024 at 01:31:19PM +0100, David Woodhouse wrote:
-> > On Thu, 2024-07-25 at 08:29 -0400, Michael S. Tsirkin wrote:
-> > > On Thu, Jul 25, 2024 at 01:27:49PM +0100, David Woodhouse wrote:
-> > > > On Thu, 2024-07-25 at 08:17 -0400, Michael S. Tsirkin wrote:
-> > > > > On Thu, Jul 25, 2024 at 10:56:05AM +0100, David Woodhouse wrote:
-> > > > > > > Do you want to just help complete virtio-rtc then? Would be e=
-asier than
-> > > > > > > trying to keep two specs in sync.
-> > > > > >=20
-> > > > > > The ACPI version is much more lightweight and doesn't take up a
-> > > > > > valuable PCI slot#. (I know, you can do virtio without PCI but =
-that's
-> > > > > > complex in other ways).
-> > > > > >=20
-> > > > >=20
-> > > > > Hmm, should we support virtio over ACPI? Just asking.
-> > > >=20
-> > > > Given that we support virtio DT bindings, and the ACPI "PRP0001" de=
-vice
-> > > > exists with a DSM method which literally returns DT properties,
-> > > > including such properties as "compatible=3Dvirtio,mmio" ... do we
-> > > > already?
-> > > >=20
-> > > >=20
-> > >=20
-> > > In a sense, but you are saying that is too complex?
-> > > Can you elaborate?
-> >=20
-> > No, I think it's fine. I encourage the use of the PRP0001 device to
-> > expose DT devices through ACPI. I was just reminding you of its
-> > existence.
->=20
-> Confused. You said "I know, you can do virtio without PCI but that's
-> complex in other ways" as the explanation why you are doing a custom
-> protocol.
+I've been told that the way we handle shared memory won't be the way 
+this is going to work with guest_memfd. KVM will coordinate directly 
+with VFIO or $whatever and update the IOMMU tables itself right in the 
+kernel; the pages are pinned/owned by guest_memfd, so that will just 
+work. So I don't consider that currently a concern. guest_memfd private 
+memory is not mapped into user page tables and as it currently seems it 
+never will be.
 
-Ah, apologies, I wasn't thinking that far back in the conversation.
+Similarly: live migration. We cannot simply migrate that memory the 
+traditional way. We even have to track the dirty state differently.
 
-If we wanted to support virtio over ACPI, I think PRP0001 can be made
-to work and isn't too complex (even though it probably doesn't yet work
-out of the box).
+So IMHO, treating both memory as discarded == don't touch it the usual 
+way might actually be a feature not a bug ;)
 
-But for the VMCLOCK thing, yes, the simple ACPI device is a lot simpler
-than virtio-rtc and much more attractive.
+> 
+> There are two possible ways to mitigate the semantics changes.
+> 1. Develop a new mechanism to notify the page conversions between
+> private and shared. For example, utilize the notifier_list in QEMU. VFIO
+> registers its own handler and gets notified upon page conversions. This
+> is a clean approach which only touches the notifier workflow. A
+> challenge is that for device hotplug, existing shared memory should be
+> mapped in IOMMU. This will need additional changes.
+> 
+> 2. Extend the existing RamDiscardManager interface to manage not only
+> the discarded/populated status of guest memory but also the
+> shared/private status. RamDiscardManager users like VFIO will be
+> notified with one more argument indicating what change is happening and
+> can take action accordingly. It also has challenges e.g. QEMU allows
+> only one RamDiscardManager, how to support virtio-mem for confidential
+> VMs would be a problem. And some APIs like .is_populated() exposed by
+> RamDiscardManager are meaningless to shared/private memory. So they may
+> need some adjustments.
 
-Even if the virtio-rtc specification were official today, and I was
-able to expose it via PCI, I probably wouldn't do it that way. There's
-just far more in virtio-rtc than we need; the simple shared memory
-region is perfectly sufficient for most needs, and especially ours.
+Think of all of that in terms of "shared memory is populated, private 
+memory is some inaccessible stuff that needs very special way and other 
+means for device assignment, live migration, etc.". Then it actually 
+quite makes sense to use of RamDiscardManager (AFAIKS :) ).
 
-I have reworked
-https://git.infradead.org/users/dwmw2/linux.git/shortlog/refs/heads/vmclock
-to take your other feedback into account.
+> 
+> Testing
+> =======
+> This patch series is tested based on the internal TDX KVM/QEMU tree.
+> 
+> To facilitate shared device assignment with the NIC, employ the legacy
+> type1 VFIO with the QEMU command:
+> 
+> qemu-system-x86_64 [...]
+>      -device vfio-pci,host=XX:XX.X
+> 
+> The parameter of dma_entry_limit needs to be adjusted. For example, a
+> 16GB guest needs to adjust the parameter like
+> vfio_iommu_type1.dma_entry_limit=4194304.
 
-It's now more flexible about the size handling, and explicitly checking
-that specific fields are present before using them.=20
+But here you note the biggest real issue I see (not related to 
+RAMDiscardManager, but that we have to prepare for conversion of each 
+possible private page to shared and back): we need a single IOMMU 
+mapping for each 4 KiB page.
 
-I think I'm going to add a method on the ACPI device to enable the
-precise clock information. I haven't done that in the driver yet; it
-still just consumes the precise clock information if it happens to be
-present already. The enable method can be added in a compatible fashion
-(the failure mode is that guests which don't invoke this method when
-the hypervisor needs them to will see only the disruption signal and
-not precise time).
-
-For the HID I'm going to use AMZNVCLK. I had used QEMUVCLK in the QEMU
-patches, but I'll change that to use AMZNVCLK too when I repost the
-QEMU patch.
-
---=-loKIDtCwkHQLuYx6LBJ1
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzI1MTM1MDUwWjAvBgkqhkiG9w0BCQQxIgQgsbQ3t8uA
-ASg+8b6G+SWR3z8H+ztVRe4jKHm0STaYRLQwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgCrSDZvw86eYK/v2rxlu2M5gXr3NDupyrU4
-tcrRISa86H252AteS+/3E/quf6yoiL8ERmAMtCJUrgxi4/G5eY5IlG914NazcDXEFlUSF9iRTOEg
-rvzo10fujPPSyLTo+jBMAbmQ8jA4ki7STHALvx3YAZmtrQtC2DS28n1728NG2E3GzbNH3Yazpg+e
-ORIzOjc6hEKBJt0+wZEE9xD5c9V5FlANz1cR3z105rT1Ugo9qEeV1ZH90k+6juwfJw15HxFgplG5
-P8B/SPPKrN2KdbOYCirF3a7qyjXJJ5L9N2P34zN7SgYvxrHODlTHDY1ICZf+RGa23rIzD3wp4pEY
-BFa6RTaXdELJtEeuX5WqTXXbm3SOyH+p1mQi5LFoqrAXGb9HIEnwL7wXoxwvzkfMQgd6jUly0Rsk
-Vgyf76cVTVr70DhjL53UNPS1YRkePV+RLo/g7Ox02UqkRHxSdoE4ODm4HeuVV1s0Xc9JjX12RRKa
-q+nyPTsrQ4H6vE3S29eayQ1eBi75FGtnTzoptKPW0c930EvoNjhpvQJraNnK5l879BQKEa+AJBqT
-4LjqjdG8hzoYOZShzUNJRqzGz1617CWPjttT21elD9w3Cn8YoBxs7/NmbU4q8R7yPRpaf6J7GzjE
-gxtTlyhd1Il5ZrA8E8Y2FOUXY5gs1Hs6aGqRGLWZwAAAAAAAAA==
+Doesn't that mean that we limit shared memory to 4194304*4096 == 16 GiB. 
+Does it even scale then?
 
 
---=-loKIDtCwkHQLuYx6LBJ1--
+There is the alternative of having in-place private/shared conversion 
+when we also let guest_memfd manage some shared memory. It has plenty of 
+downsides, but for the problem at hand it would mean that we don't 
+discard on shared/private conversion.
+
+But whenever we want to convert memory shared->private we would 
+similarly have to from IOMMU page tables via VFIO. (the in-place 
+conversion will only be allowed if any additional references on a page 
+are gone -- when it is inaccessible by userspace/kernel).
+
+Again, if IOMMU page tables would be managed by KVM in the kernel 
+without user space intervention/vfio this would work with device 
+assignment just fine. But I guess it will take a while until we actually 
+have that option.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
