@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F19C3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 22:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDF7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 22:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX6nN-0001Wb-88; Thu, 25 Jul 2024 18:18:45 -0400
+	id 1sX6px-0005uj-8X; Thu, 25 Jul 2024 18:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sX6nM-0001W6-K1
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 18:18:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sX6pr-0005tx-Nl
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 18:21:20 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sX6nK-00074i-EE
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 18:18:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721945918;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HwJxYl9HwQAgidt1DiQRgQtKQdwECr8kF+9Zm1O0SpM=;
- b=IgC9mMhDmPjoVCeGB/gmmKlu7ce+Rj7OEBcWydd+4ub52ZiT4GbIIh360nD54NNjy1jHIF
- EyVkew4Ph4YWEHyLm+TdQpu0PkPelyFp2PaUw0GRfQ+TZN7LN7vqAbT5p23T9h6s6iKiZR
- MzLlISTY1O8yEXnQwIOysstKpsYKbls=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-qvHwi5WMN_yP4xJahOvSdQ-1; Thu, 25 Jul 2024 18:18:35 -0400
-X-MC-Unique: qvHwi5WMN_yP4xJahOvSdQ-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e0b3e3b912aso61750276.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 15:18:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721945914; x=1722550714;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HwJxYl9HwQAgidt1DiQRgQtKQdwECr8kF+9Zm1O0SpM=;
- b=YcEROHOU6L+wGtcbuVn+0FeRDzLM5x2fKycJry0QDcoVBZuMIIeiyc+tilQLrHoiQ9
- 9SVqGvt2NzvRpdRk6DRWRk0CoEo1sLO2nGKGGGmhI4+QzqU1a3so2iFYCKFUJ/bQbXwB
- nMfQsdSJ3AXeOjMYfGyDHp50xa+GIoJev6bfUjUwWjxIiZqL0XKIRFN1JxZRZpgF9Vkt
- pfunb6TVA89XtRQbGjf6KgfCN9zTXaEiXMP6S14TG9QZe1Ij2YBiiDctad4YXBev7bfS
- kVBfqg+BGsF5fHr1iu3wwKL9l1WutKLDs/GbvZ+w4L6gxYnDzU3kxySCvHy4ovXCA4xb
- XA7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIfHKr9uOe4i9N9DJgWwpsF7xVSqM8elhWBx4uzS2XwRHQqPmhbprSVDKOwDVw8oxIkuk57VcIqRBz@nongnu.org
-X-Gm-Message-State: AOJu0YxHRSKJfMhjCHQmyqVD2c3N4T8y2qvKLDvcKm5K+mcMZbdalVU6
- XuGs+WSVRNnxfv4CSWLiy44tlkQVQ4opwwc5p5O2C5fLj2OGxpd0l3ahCgQ2F7N0xAyRPQ5EEbX
- H+PO4wkM2XHY6B6HIZZfOgjjv901yGbmC7ieSzzmuLbd9xwZoBylS
-X-Received: by 2002:a05:6902:1b03:b0:e0b:3a7d:928d with SMTP id
- 3f1490d57ef6-e0b3a7d9399mr1029193276.1.1721945914478; 
- Thu, 25 Jul 2024 15:18:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEl+0a3VjKP4iKm2+LuK31w3Tw8MtzeRmD01GaAHnm/htF7y18oofb9uZZIl3/Up6mSI/PuIA==
-X-Received: by 2002:a05:6902:1b03:b0:e0b:3a7d:928d with SMTP id
- 3f1490d57ef6-e0b3a7d9399mr1029172276.1.1721945914050; 
- Thu, 25 Jul 2024 15:18:34 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb3fae79d9sm11003666d6.125.2024.07.25.15.18.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 15:18:33 -0700 (PDT)
-Date: Thu, 25 Jul 2024 18:18:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yuri Benditovich <yuri.benditovich@daynix.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, mst@redhat.com, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZqLPLBnbfD5r6z7D@x1n>
-References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
- <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sX6po-0007d9-Ou
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 18:21:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=Dg7K/417NvApt2K3Da82DhX0FHPQCNOJE+h1X2JsfjM=; b=nmFWztvg/vnmJQrfeYMlx9DLDO
+ ag2bmFa2Y1stIL0R2brKxjr5EhRZpCP4V740XmyYtBQgvZsimJcn966hQVaAhTC6pM/pED+Knrl+o
+ ldQdr2Qx3se/kMO5A9tupBy7KOszxoyOqPVZD6lBLrpDaC93vBdgIEY33yzsHZpncN1uFvm8FSMxN
+ /NOBueCJM8TmO/xvrPrL2hCiLLpITXHS1oy2Q1MlL7BomGlzwoLFOkiCYHHrEGa5+OrZ4tepTsPIl
+ /JIADCxjPa3hDEItLY3zr4JlSh6ZCUJqVdfX3H7bZRpxOLtgJJmQQjFPhpcCKeqIAEIG6rhP8xEwZ
+ i/MjumxA==;
+Received: from [2001:8b0:10b:5::bb3] (helo=u3832b3a9db3152.infradead.org)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sX6pV-00000009RSN-35le; Thu, 25 Jul 2024 22:20:57 +0000
+Message-ID: <9261e393083bcd151a017a5af3345a1364b3e0f3.camel@infradead.org>
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+From: David Woodhouse <dwmw2@infradead.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Richard Cochran <richardcochran@gmail.com>, Peter Hilber
+ <peter.hilber@opensynergy.com>, linux-kernel@vger.kernel.org, 
+ virtualization@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-rtc@vger.kernel.org, "Ridoux, Julien" <ridouxj@amazon.com>, 
+ virtio-dev@lists.linux.dev, "Luu, Ryan" <rluu@amazon.com>, "Chashper,
+ David" <chashper@amazon.com>, "Mohamed Abuelfotoh, Hazem"
+ <abuehaze@amazon.com>,  "Christopher S . Hall"
+ <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>, John
+ Stultz <jstultz@google.com>,  netdev@vger.kernel.org, Stephen Boyd
+ <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
+ <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>, Mark Rutland
+ <mark.rutland@arm.com>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,  Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, qemu-devel <qemu-devel@nongnu.org>, Simon
+ Horman <horms@kernel.org>
+Date: Thu, 25 Jul 2024 23:20:56 +0100
+In-Reply-To: <20240725174327-mutt-send-email-mst@kernel.org>
+References: <20240725083215-mutt-send-email-mst@kernel.org>
+ <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
+ <20240725100351-mutt-send-email-mst@kernel.org>
+ <2a27205bfc61e19355d360f428a98e2338ff68c3.camel@infradead.org>
+ <20240725122603-mutt-send-email-mst@kernel.org>
+ <0959390cad71b451dc19e5f9396d3f4fdb8fd46f.camel@infradead.org>
+ <20240725163843-mutt-send-email-mst@kernel.org>
+ <d62925d94a28b4f8e07d14c1639023f3b78b0769.camel@infradead.org>
+ <20240725170328-mutt-send-email-mst@kernel.org>
+ <c5a48c032a2788ecd98bbcec71f6f3fb0fb65e8c.camel@infradead.org>
+ <20240725174327-mutt-send-email-mst@kernel.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-8c3XA+w5NAQzNDyHSpXa"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230731223148.1002258-5-yuri.benditovich@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+24aa3f22b0bcc14e6bb8+7641+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,139 +99,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> USO features of virtio-net device depend on kernel ability
-> to support them, for backward compatibility by default the
-> features are disabled on 8.0 and earlier.
-> 
-> Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
 
-Looks like this patch broke migration when the VM starts on a host that has
-USO supported, to another host that doesn't..
+--=-8c3XA+w5NAQzNDyHSpXa
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yuri, would it be possible we always keep all the USO* features off by
-default (so this feature bit never affects migration ABI), but then:
+On Thu, 2024-07-25 at 17:47 -0400, Michael S. Tsirkin wrote:
+> On Thu, Jul 25, 2024 at 10:29:18PM +0100, David Woodhouse wrote:
+> > Those people included me. I wanted to interrupt all the vCPUs, even the
+> > ones which were in userspace at the moment of migration, and have the
+> > kernel deal with passing it on to userspace via a different ABI.
+> >=20
+> > It ends up being complex and intricate, and requiring a lot of new
+> > kernel and userspace support. I gave up on it in the end for snapshots,
+> > and didn't go there again for this.
+>=20
+> ok I believe you, I am just curious how come you need userspace
+> support - what I imagine would live completely in kernel ...
 
-  - only enable them when the user specified ON
+Userspace doesn't even make a system call for gettimeofday() any more;
+the relevant information is exposed to userspace through the vDSO.
 
-  - meanwhile, if detecting host feature doesn't support USO*, it could
-    fail qemu from boot, rather than silently turning it from ON->OFF
+If userspace needs to know that the time has been disrupted by LM, then
+fundamentally that either needs to be exposed directly to it as well,
+or userspace needs to go back to making actual system calls to get the
+time (which is slow, and not acceptable for the same use cases which
+care about it being accurate).
 
-?
+So how do we make it available in a form that's mappable directly to
+userspace?=20
 
-Silently flipping the bit may cause migration issues like this.
+Well, we could have a hypervisor enlightenment, where the guest kernel
+uses an MSR or hypercall to tell the hypervisor "please write the
+information to <this> GPA", and provides an address within the vDSO
+information page. Which isn't nice for Confidential Compute, and is
+hard to allow for expansion in the size of the structure. And is much
+more complex to support consistently across different hypervisors and
+different architectures.
 
-Or any suggestion on how to fix migration?
+We *could* attempt to contrive a system where we indeed interrupt *all*
+vCPUs and the kernel then updates something in the vDSO page before
+running userspace again. That could work in theory and *might* be a bit
+simpler than what we were trying to do for VMGENID/snapshots, but it's
+still complex and would take an eternity to deploy to actual users, and
+would probably never work for non-Linux. And imposes an even higher
+cost on the guest kernel when LM occurs.
 
-Thanks,
+Or there's this method, where the hypervisor puts it in a shared memory
+region which is just a PCI BAR or an ACPI _CRS or attached to virtio
+(we really don't care how it's discovered). There's a nit that it now
+has to be page sized, and a guest which has larger pages than the
+hypervisor expects is going to have to use a small PTE to map it (or
+not support that mode). But I think that's reasonable.
 
-> ---
->  hw/core/machine.c   |  4 ++++
->  hw/net/virtio-net.c | 31 +++++++++++++++++++++++++++++--
->  2 files changed, 33 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index f0d35c6401..a725e76738 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -38,10 +38,14 @@
->  #include "exec/confidential-guest-support.h"
->  #include "hw/virtio/virtio.h"
->  #include "hw/virtio/virtio-pci.h"
-> +#include "hw/virtio/virtio-net.h"
->  
->  GlobalProperty hw_compat_8_0[] = {
->      { "migration", "multifd-flush-after-each-section", "on"},
->      { TYPE_PCI_DEVICE, "x-pcie-ari-nextfn-1", "on" },
-> +    { TYPE_VIRTIO_NET, "host_uso", "off"},
-> +    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-> +    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
->  };
->  const size_t hw_compat_8_0_len = G_N_ELEMENTS(hw_compat_8_0);
->  
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index d2311e7d6e..bd0ead94fe 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -659,6 +659,15 @@ static int peer_has_ufo(VirtIONet *n)
->      return n->has_ufo;
->  }
->  
-> +static int peer_has_uso(VirtIONet *n)
-> +{
-> +    if (!peer_has_vnet_hdr(n)) {
-> +        return 0;
-> +    }
-> +
-> +    return qemu_has_uso(qemu_get_queue(n->nic)->peer);
-> +}
-> +
->  static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->                                         int version_1, int hash_report)
->  {
-> @@ -796,6 +805,10 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
->          virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
->          virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
->  
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-> +
->          virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
->      }
->  
-> @@ -804,6 +817,12 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
->          virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
->      }
->  
-> +    if (!peer_has_uso(n)) {
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
-> +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-> +    }
-> +
->      if (!get_vhost_net(nc->peer)) {
->          return features;
->      }
-> @@ -864,14 +883,16 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
->              !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)));
->  }
->  
-> -static uint64_t virtio_net_guest_offloads_by_features(uint32_t features)
-> +static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
->  {
->      static const uint64_t guest_offloads_mask =
->          (1ULL << VIRTIO_NET_F_GUEST_CSUM) |
->          (1ULL << VIRTIO_NET_F_GUEST_TSO4) |
->          (1ULL << VIRTIO_NET_F_GUEST_TSO6) |
->          (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
-> -        (1ULL << VIRTIO_NET_F_GUEST_UFO);
-> +        (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
-> +        (1ULL << VIRTIO_NET_F_GUEST_USO4) |
-> +        (1ULL << VIRTIO_NET_F_GUEST_USO6);
->  
->      return guest_offloads_mask & features;
->  }
-> @@ -3924,6 +3945,12 @@ static Property virtio_net_properties[] = {
->      DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
->      DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
->      DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
-> +    DEFINE_PROP_BIT64("guest_uso4", VirtIONet, host_features,
-> +                      VIRTIO_NET_F_GUEST_USO4, true),
-> +    DEFINE_PROP_BIT64("guest_uso6", VirtIONet, host_features,
-> +                      VIRTIO_NET_F_GUEST_USO6, true),
-> +    DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
-> +                      VIRTIO_NET_F_HOST_USO, true),
->      DEFINE_PROP_END_OF_LIST(),
->  };
->  
-> -- 
-> 2.34.3
-> 
-> 
+Having gone around in circles a few times, I'm fairly sure that
+exposing a memory region which the hypervisor updates directly is the
+simplest and cleanest way of doing it and getting it in the hands of
+users.
 
--- 
-Peter Xu
+We're rolling out the AMZNVCLK device for internal use cases, and plan
+to add it in public instances some time later. This is the guest driver
+which consumes that, and I've separately posted the QEMU patch to
+provide the same device. Because I absolutely do want this to be
+standardised across hypervisors, for the reasons you point out. You're
+preaching to the choir there; I even got Microsoft to implement the
+same 15-bit MSI extensions that we added to KVM :)
 
+Supporting the disruption signal is the critical part, which allows
+applications to abort operations until their clock is good again.
+Providing the actual clock information on the new host, so that
+applications can keep running immediately, is what I'll be working on
+next.
+
+I'd love virtio-rtc to adopt this structure too, and I've done my best
+to ensure that that's feasible, but I can't take a dependency on that
+and wait for it (and as discussed, wouldn't use the virtio form in my
+environment anyway).
+
+> mutt sucks less ;)
+
+So does 'nc' but Evolution can talk to the corporate Exchange calendar
+and email. And I'm used to it and can mostly cope with its quirks :)
+
+--=-8c3XA+w5NAQzNDyHSpXa
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzI1MjIyMDU2WjAvBgkqhkiG9w0BCQQxIgQgAEiIOJ3h
+BB5/n7N6nqZi/Xk9XKyBYqFDIn22iQ+yBL8wgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBPqqhFXVaSpEOw7VDjzk6A5WQsS/PL1yqt
+QfgkTzKrEiRwenEuBQwlEcrzc8qq2HyEQpwlm3nKhizHcAvYbjcL416R797v1//+yUrn4nPNRWMJ
+o3AGEzm1FfED1mVJhTnqvloNogm5yu/0h4nDQmEDA/GEehN/nGyveVx/9xBzH8jMe6yAu3jKPM7p
+ggH3yB6RlCxuvI1EMOWicoJp1hepBJcn1D991kAGwUCSiCY9PHO/FQtvyr7jiOX32JbqPZ7O2BG0
+tTkeXX7YVKh8/ycFIrdKYBwrGwyxixCltvsQexEOxju7j1oa2vldu1KLP1l3igKTdltFstm9kdQy
+By6/Qu0+rUQxwsOM2V9DwOWxgnyym782YD7A64DTNrNRnHvnP5iB5DikTMiUV9NdpQP3K+OwahS0
+ijgYCdixNfK1lHk11Wkr20gcaw7L+KfIoaBHe7NVY9cuV8qoP6LtUeEqXIYtTYHh3rKtL9rrkXDs
+5oE3/Cnb+fPI/AnFOnyxZ1PUMAUlJg6ZsRVJGKV600L4TW0ReJRqVxpZgaBzbXT4Yuw6g5nINTNl
+BHWWQ2eUC+KLui07d1lkLV0NIkluWbLrMyHUrWm3wQbjY2K04EQMjWPDKn7hOng4KzNDzWgbWasc
+rDEQ9Glmxol9ZZpq8EGw01SphHcHyT3AERor5coihwAAAAAAAA==
+
+
+--=-8c3XA+w5NAQzNDyHSpXa--
 
