@@ -4,53 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2825DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 08:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6025FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 08:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWtSe-0003kH-G8; Thu, 25 Jul 2024 04:04:28 -0400
+	id 1sWtk4-0007aY-3c; Thu, 25 Jul 2024 04:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Lhbq=OZ=kaod.org=clg@ozlabs.org>)
- id 1sWtSc-0003dp-Sc; Thu, 25 Jul 2024 04:04:26 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sWtk0-0007Zt-Kr
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 04:22:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Lhbq=OZ=kaod.org=clg@ozlabs.org>)
- id 1sWtSZ-0007vn-Sd; Thu, 25 Jul 2024 04:04:26 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WV3Ls2cyPz4x1V;
- Thu, 25 Jul 2024 18:04:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WV3Lp0jbhz4wnt;
- Thu, 25 Jul 2024 18:04:17 +1000 (AEST)
-Message-ID: <040392dd-882a-4180-8051-355e7f020c61@kaod.org>
-Date: Thu, 25 Jul 2024 10:04:15 +0200
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sWtjy-0005rx-3F
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 04:22:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721895740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R5L2VlGsOvjUuuxv4O2i/zUCGIp1tif4qxNc7cuC61g=;
+ b=WSTV8Na6dBrDfbSlxcArNuo54YTIhtcNhoMK68Q3bFev3Eh4VVLmhhsPRr9bOfnLnSnGsT
+ 3Tv4iRVNHKYLCFDoUa3C069YnV5c1+oGZpNMHNsSpalyQJ/KdXHcd2BJekuAhW4QVpJkfa
+ akYSkzsK+19kb6/2G9gW8B/O6WPPKaI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-136-yrBDFfNmPG6mEzrTisMh1w-1; Thu, 25 Jul 2024 04:22:18 -0400
+X-MC-Unique: yrBDFfNmPG6mEzrTisMh1w-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4272718b9b0so5062405e9.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 01:22:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721895737; x=1722500537;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R5L2VlGsOvjUuuxv4O2i/zUCGIp1tif4qxNc7cuC61g=;
+ b=nI6rqRUbtOBUkSWiHvBSAnMcRmsfeZwM71M+7C+DduWORmaw8zQAHWBl9T+Rh3MIrj
+ S2ETHt0UZec/hx+wYCpg/KUMNphiBFDyKtC4uSb2q5tiCUxKwf04TNJe02pgp4EwEsfP
+ hAikwVBmAK13HUxcY1E3sZX0HXkcYXiyVofAD0psFvq0w76babo1Ju+9ovaWbaGem7Jb
+ zGmK7YziJhNgmM9OytzsfmCDFIuk90Fb4pwTIlOmSfTxmnuZOcm6itjlvlcIKQEV1/jd
+ AairhuT+pbKszu8cCZ19XWNvLBw0ZjDhxkXoq5DiY85yrGtcu5uM1O1RuwCeWakgxS0h
+ IOyQ==
+X-Gm-Message-State: AOJu0YyGFy6Gz58LX1vyE3M98aUNaXN8HlU6thuRux1+4207HJ9LfFnw
+ rRyzCwHhJbz2jUNtYs95kfaTnFSiajylDrlQciKNNnXuye3W2seuS0lYSsvVFOy2Malnkj+vwxP
+ hMJV9zZ0H5V8xCPf6O0s0mxgZAmVdNdPQkoueiazoYLCedpdn6J4J
+X-Received: by 2002:a05:600c:4447:b0:426:63b8:2cce with SMTP id
+ 5b1f17b1804b1-4280550c294mr11224855e9.7.1721895737331; 
+ Thu, 25 Jul 2024 01:22:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnivFspuNVuZWeVC3H/MtuBHwdJgQhXpIsxRRDy69PtBWuys8PqmyVFFF+HJhBrGnPbTNNnQ==
+X-Received: by 2002:a05:600c:4447:b0:426:63b8:2cce with SMTP id
+ 5b1f17b1804b1-4280550c294mr11224665e9.7.1721895736893; 
+ Thu, 25 Jul 2024 01:22:16 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427f9413547sm64816585e9.44.2024.07.25.01.22.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jul 2024 01:22:16 -0700 (PDT)
+Date: Thu, 25 Jul 2024 10:22:15 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Song Gao <gaosong@loongson.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>
+Subject: Re: [PATCH 1/3] acpi/ged: Implement S3 and S4 sleep
+Message-ID: <20240725102215.4046ecc2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240613-loongarch64-sleep-v1-1-d2ef0aaa543a@flygoat.com>
+References: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
+ <20240613-loongarch64-sleep-v1-1-d2ef0aaa543a@flygoat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/11] pnv/xive2: Move xive2_nvp_pic_print_info() to
- xive2.c
-To: Michael Kowal <kowal@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com
-References: <20240724212130.26811-1-kowal@linux.ibm.com>
- <20240724212130.26811-10-kowal@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240724212130.26811-10-kowal@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Lhbq=OZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,116 +106,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/24 23:21, Michael Kowal wrote:
-> From: Frederic Barrat <fbarrat@linux.ibm.com>
+On Thu, 13 Jun 2024 18:30:15 +0100
+Jiaxun Yang <jiaxun.yang@flygoat.com> wrote:
+
+> Implement S3 and S4 sleep with ACPI_GED_REG_SLEEP_CTL.SLP_TYP
+> writes.
 > 
-> Moving xive2_nvp_pic_print_info() to align with the other "pic_print_info"
-> functions.
+> Implement wakeup callback and WAK_STS register to inform guest
+> about current states.
 > 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
+> All new functions are gated by "slp-typs" property, it is defaulted
+> to S5 only and machines can opt-in for S3 and S4.
 
+subject says S3 + S4 and don't mention S5
+the same happens throughout the series, please fix it up
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+PS:
+please reference relevant ACPI portions in the patch below,
+so reader could easily find and understand what code does.
 
-Thanks,
-
-C.
-
-
+> 
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
->   include/hw/ppc/xive2_regs.h |  2 ++
->   hw/intc/pnv_xive2.c         | 27 ---------------------------
->   hw/intc/xive2.c             | 26 ++++++++++++++++++++++++++
->   3 files changed, 28 insertions(+), 27 deletions(-)
+>  hw/acpi/generic_event_device.c         | 70 ++++++++++++++++++++++++++++++----
+>  include/hw/acpi/generic_event_device.h | 12 +++++-
+>  2 files changed, 73 insertions(+), 9 deletions(-)
 > 
-> diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-> index 4e5e17cd89..ec5d6ec2d6 100644
-> --- a/include/hw/ppc/xive2_regs.h
-> +++ b/include/hw/ppc/xive2_regs.h
-> @@ -194,6 +194,8 @@ static inline uint32_t xive2_nvp_blk(uint32_t cam_line)
->       return (cam_line >> XIVE2_NVP_SHIFT) & 0xf;
->   }
->   
-> +void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf);
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 2d6e91b124e5..f1fc99c04011 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -11,6 +11,7 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qapi-events-run-state.h"
+>  #include "hw/acpi/acpi.h"
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "hw/irq.h"
+> @@ -186,24 +187,53 @@ static const MemoryRegionOps ged_evt_ops = {
+>  
+>  static uint64_t ged_regs_read(void *opaque, hwaddr addr, unsigned size)
+>  {
+> +    GEDState *ged_st = opaque;
 > +
->   /*
->    * Notification Virtual Group or Crowd (NVG/NVC)
->    */
-> diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> index 9fe3ec9a67..4740c56347 100644
-> --- a/hw/intc/pnv_xive2.c
-> +++ b/hw/intc/pnv_xive2.c
-> @@ -2436,33 +2436,6 @@ static void pnv_xive2_register_types(void)
->   
->   type_init(pnv_xive2_register_types)
->   
-> -static void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx,
-> -                                     GString *buf)
-> -{
-> -    uint8_t  eq_blk = xive_get_field32(NVP2_W5_VP_END_BLOCK, nvp->w5);
-> -    uint32_t eq_idx = xive_get_field32(NVP2_W5_VP_END_INDEX, nvp->w5);
-> -
-> -    if (!xive2_nvp_is_valid(nvp)) {
-> -        return;
-> -    }
-> -
-> -    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x",
-> -                           nvp_idx, eq_blk, eq_idx,
-> -                           xive_get_field32(NVP2_W2_IPB, nvp->w2));
-> -    /*
-> -     * When the NVP is HW controlled, more fields are updated
-> -     */
-> -    if (xive2_nvp_is_hw(nvp)) {
-> -        g_string_append_printf(buf, " CPPR:%02x",
-> -                               xive_get_field32(NVP2_W2_CPPR, nvp->w2));
-> -        if (xive2_nvp_is_co(nvp)) {
-> -            g_string_append_printf(buf, " CO:%04x",
-> -                                   xive_get_field32(NVP2_W1_CO_THRID, nvp->w1));
-> -        }
-> -    }
-> -    g_string_append_c(buf, '\n');
-> -}
-> -
->   /*
->    * If the table is direct, we can compute the number of PQ entries
->    * provisioned by FW.
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index 3e7238c663..ac914b3d1c 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -137,6 +137,32 @@ void xive2_end_eas_pic_print_info(Xive2End *end, uint32_t end_idx,
->                              (uint32_t) xive_get_field64(EAS2_END_DATA, eas->w));
->   }
->   
-> +void xive2_nvp_pic_print_info(Xive2Nvp *nvp, uint32_t nvp_idx, GString *buf)
-> +{
-> +    uint8_t  eq_blk = xive_get_field32(NVP2_W5_VP_END_BLOCK, nvp->w5);
-> +    uint32_t eq_idx = xive_get_field32(NVP2_W5_VP_END_INDEX, nvp->w5);
-> +
-> +    if (!xive2_nvp_is_valid(nvp)) {
-> +        return;
+> +    switch (addr) {
+> +    case ACPI_GED_REG_SLEEP_STS:
+> +        return ged_st->sleep_sts;
+> +    default:
+> +        break;
 > +    }
 > +
-> +    g_string_append_printf(buf, "  %08x end:%02x/%04x IPB:%02x",
-> +                           nvp_idx, eq_blk, eq_idx,
-> +                           xive_get_field32(NVP2_W2_IPB, nvp->w2));
-> +    /*
-> +     * When the NVP is HW controlled, more fields are updated
-> +     */
-> +    if (xive2_nvp_is_hw(nvp)) {
-> +        g_string_append_printf(buf, " CPPR:%02x",
-> +                               xive_get_field32(NVP2_W2_CPPR, nvp->w2));
-> +        if (xive2_nvp_is_co(nvp)) {
-> +            g_string_append_printf(buf, " CO:%04x",
-> +                                   xive_get_field32(NVP2_W1_CO_THRID, nvp->w1));
+>      return 0;
+>  }
+>  
+>  static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
+>                             unsigned int size)
+>  {
+> -    bool slp_en;
+> -    int slp_typ;
+> +    GEDState *ged_st = opaque;
+> +    AcpiGedState *s = container_of(ged_st, AcpiGedState, ged_state);
+>  
+>      switch (addr) {
+>      case ACPI_GED_REG_SLEEP_CTL:
+> -        slp_typ = (data >> 2) & 0x07;
+> -        slp_en  = (data >> 5) & 0x01;
+maybe use defines instead of magic numbers, it's also good to add
+coments here referring to concrete chapter in APCI spec that describe
+what these numbers are.
+
+> -        if (slp_en && slp_typ == 5) {
+                                    ^^^
+ditto
+
+> -            qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+> +        if (data & ACPI_GED_SLP_EN) {
+> +            switch (extract8(data, 2, 3)) {
+> +            case ACPI_GED_SLP_TYP_S3:
+> +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S3)) {
+
+why not use existing helpers like test_bit()
+the same applies to following bit checks
+
+> +                    qemu_system_suspend_request();
+> +                }
+> +                break;
+> +            case ACPI_GED_SLP_TYP_S4:
+> +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S4)) {
+> +                    qapi_event_send_suspend_disk();
+> +                    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+> +                }
+> +                break;
+> +            case ACPI_GED_SLP_TYP_S5:
+> +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S5)) {
+> +                    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+> +                }
+> +                break;
+> +            default:
+> +                break;
+> +            }
+>          }
+>          return;
+>      case ACPI_GED_REG_SLEEP_STS:
+> +        if (data & ACPI_GED_WAK_STS) {
+> +            ged_st->sleep_sts &= ~ACPI_GED_WAK_STS;
 > +        }
-> +    }
-> +    g_string_append_c(buf, '\n');
+>          return;
+>      case ACPI_GED_REG_RESET:
+>          if (data == ACPI_GED_RESET_VALUE) {
+> @@ -223,6 +253,14 @@ static const MemoryRegionOps ged_regs_ops = {
+>      },
+>  };
+>  
+> +static void acpi_ged_notify_wakeup(Notifier *notifier, void *data)
+> +{
+> +    GEDState *ged_st = container_of(notifier, GEDState, wakeup);
+> +
+> +    ged_st->sleep_sts |= ACPI_GED_WAK_STS;
+
+describe somewhere workflow how it is supposed to work 
+(commit message or add ged specific doc in docs/specs/
+as the 1st patch)
+
 > +}
 > +
->   static void xive2_end_enqueue(Xive2End *end, uint32_t data)
->   {
->       uint64_t qaddr_base = xive2_end_qaddr(end);
+> +
+>  static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
+>                                      DeviceState *dev, Error **errp)
+>  {
+> @@ -305,6 +343,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+>  
+>  static Property acpi_ged_properties[] = {
+>      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+> +    DEFINE_PROP_UINT32("slp-typs", AcpiGedState, slp_typs_bitmap,
+> +                        (1 << ACPI_GED_SLP_TYP_S5)),
+
+I'd default to everything enabled, and use compat mechanism
+to disable it on older machine types.
+
+You have to do this as ged is also used by versioned arm/virt machine
+
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>  
+> @@ -320,10 +360,11 @@ static const VMStateDescription vmstate_memhp_state = {
+>  
+>  static const VMStateDescription vmstate_ged_state = {
+>      .name = "acpi-ged-state",
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINT32(sel, GEDState),
+> +        VMSTATE_UINT8(sleep_sts, GEDState),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
+
+see for example
+commit 829600a519386c7b188d5d813e78ba69bf0bd323
+    hpet: recover timer offset correctly
+
+
+
+> @@ -371,6 +412,18 @@ static const VMStateDescription vmstate_acpi_ged = {
+>      }
+>  };
+>  
+> +static void acpi_ged_realize(DeviceState *dev, Error **errp)
+> +{
+> +    AcpiGedState *s = ACPI_GED(dev);
+> +    GEDState *ged_st = &s->ged_state;
+> +
+> +    if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S3)) {
+> +        ged_st->wakeup.notify = acpi_ged_notify_wakeup;
+> +        qemu_register_wakeup_notifier(&ged_st->wakeup);
+> +        qemu_register_wakeup_support();
+> +    }
+> +}
+> +
+>  static void acpi_ged_initfn(Object *obj)
+>  {
+>      DeviceState *dev = DEVICE(obj);
+> @@ -409,6 +462,7 @@ static void acpi_ged_class_init(ObjectClass *class, void *data)
+>      AcpiDeviceIfClass *adevc = ACPI_DEVICE_IF_CLASS(class);
+>  
+>      dc->desc = "ACPI Generic Event Device";
+> +    dc->realize = acpi_ged_realize;
+
+realize was added recently (currently in master),
+please rebase on top of current master tree
+
+>      device_class_set_props(dc, acpi_ged_properties);
+>      dc->vmsd = &vmstate_acpi_ged;
+>  
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index ba84ce021477..1ea3cb848679 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -80,9 +80,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>  /* ACPI_GED_REG_RESET value for reset*/
+>  #define ACPI_GED_RESET_VALUE       0x42
+>  
+> -/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP value for S5 (aka poweroff) */
+> +/* ACPI_GED_REG_SLEEP_CTL.SLP_EN bit */
+> +#define ACPI_GED_SLP_EN            (1 << 5)
+> +
+> +/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP values */
+> +#define ACPI_GED_SLP_TYP_S3        0x03
+> +#define ACPI_GED_SLP_TYP_S4        0x04
+>  #define ACPI_GED_SLP_TYP_S5        0x05
+>  
+> +#define ACPI_GED_WAK_STS           (1 << 7)
+> +
+>  #define GED_DEVICE      "GED"
+>  #define AML_GED_EVT_REG "EREG"
+>  #define AML_GED_EVT_SEL "ESEL"
+> @@ -99,7 +106,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>  typedef struct GEDState {
+>      MemoryRegion evt;
+>      MemoryRegion regs;
+> +    Notifier     wakeup;
+>      uint32_t     sel;
+> +    uint8_t      sleep_sts;
+>  } GEDState;
+>  
+>  struct AcpiGedState {
+> @@ -108,6 +117,7 @@ struct AcpiGedState {
+>      MemoryRegion container_memhp;
+>      GEDState ged_state;
+>      uint32_t ged_event_bitmap;
+> +    uint32_t slp_typs_bitmap;
+>      qemu_irq irq;
+>      AcpiGhesState ghes_state;
+>  };
+> 
 
 
