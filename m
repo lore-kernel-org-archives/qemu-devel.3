@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E63CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E74BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 23:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8IN-0003Ex-Dy; Thu, 25 Jul 2024 19:54:51 -0400
+	id 1sX8Jj-0003Z4-HL; Thu, 25 Jul 2024 19:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8IL-000379-ST; Thu, 25 Jul 2024 19:54:49 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1sX8Jf-0002zS-W9; Thu, 25 Jul 2024 19:56:12 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8IK-0000Z7-5x; Thu, 25 Jul 2024 19:54:49 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-71871d5e087so301190a12.1; 
- Thu, 25 Jul 2024 16:54:47 -0700 (PDT)
+ id 1sX8Je-00013W-5V; Thu, 25 Jul 2024 19:56:11 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2cf213128a1so263751a91.2; 
+ Thu, 25 Jul 2024 16:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951686; x=1722556486; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1721951768; x=1722556568; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HQJi1PrM5zA7kCEnyW3c73oAAhgPkkSN6T49J0Hm5N0=;
- b=kNJ4eFg7DDY1t3+HedTR62ME5OaL+nHP1iJHmg/8E0rhS0J7JosE3D6nQQCrY7l4Ky
- 4Sj5gidEs9lLuB9nvA9D/ihDHf3rk4qhzAF9LQgqBOIPGjvQ8mwsZBAp/9MoDt8k0ZMd
- pTD2f8AyujaQFcFvozH89ZwrxpPrN0fADCyHFR1QhCFtdjNlmf6eZcTP6VQ3pb3fkC2P
- xoGBQcyh0gGiokLHnu3nkqya6vHDU/zxP5xgqCUSjwpNu1uEJJEcb3cIAfhxcRzBzNSq
- noUZZ0SFb7ksMSirFvVvlDa/bX2xYw5iV8s6aBMUJXlaqeIib68prhhN7ZVDCT59nc44
- tNCA==
+ bh=0cKnQiTUyY7bbeUwr0G4Nd18/JU5PiZeN3Im5S/Z8L0=;
+ b=U92KktcCLLwFXyvYSO+s4JHBfSE+IlSwXkmFS5V28pOKwWSTPnPymAhOzdDHa0RuLE
+ 1zxfNme8YyY1AavSUhfIfuv1pXbo0ADJzjB7X920XT/og4yUg3OAe6o3JYUOY1BUJV2g
+ YkqECWQPbLp91NbAGxQbYdPbMbEeCXm+kPhxSelRjrLsHdXndRHULncnGJ43hW+LzcC3
+ kdcP3EpSAY/CfdqNeLZHmbNjil/gN3llOe2phP9HBnc5jWIT/7yBLfR+5zMBWS3w3uCu
+ vl5O8/vv0rs6s6ZtMaiTSk3dV9X+Cv6B1vtKsnZDhxAH0b+amBUnmzz8WRkDXkST8Emr
+ JDeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951686; x=1722556486;
+ d=1e100.net; s=20230601; t=1721951768; x=1722556568;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HQJi1PrM5zA7kCEnyW3c73oAAhgPkkSN6T49J0Hm5N0=;
- b=XjxUkUEceLcpQIcNmLZHNUEZ9rHPWx1nbyUI5UTn7Y+YpyjUHViW7xlIWgk6owLmii
- q2zNR2zTLLYscOlKVYLfM9dePXuNZUkUxTNgDVIOSP8mFUVtvppNUy4DLtHPOVw95Kg+
- NRPGCAmTSx7LC5WZHY5wYNb0rsVwEoO2AoLkad+EexbaSGvknjPRlI5/ysPWc1eDWWip
- /BtV71EooxC9G9SLsQIslf3Kwb17yRXKQjojPcwoFFLHHck4baJq6MVyBLZCeXMdrfSo
- k/4lV5qpSoWAZhPmyP+rOOruw+yjFL/ubRLG1SvPI8kLlEK8taziBny0fjZnGjyoLWxr
- 6o6Q==
+ bh=0cKnQiTUyY7bbeUwr0G4Nd18/JU5PiZeN3Im5S/Z8L0=;
+ b=LoRrrQRuQCEWvF6bd2Sc2Kot9uDOlFoKiHqyEw6irtyi0DwR8T32L/finoRJjcOcef
+ M9/4Cl9n8Ik6BABGzVnrOgMwMEyOEnBnLp63D1A8uVihz+Z0Jv2xFSyXyyPLpmF9qLrc
+ 7kGxxv4L78RcGOHxdsAkRngFIoXTKqclx/jnCRcHTKgh3fHAlaRx+8USeotgLSvEAqgR
+ 5PTY1/ifkrPr7hsCYk7N6jianmfpj0GLhyXUh9ukCmrhezIgGzCJdf5eNQJV2+Yj6Uxk
+ VNyqUuDBJXxNtwnsa/oBiVY6OOB27YQ/hF5Oobngzwb+EooM33JG89gV434iOgRSH//D
+ YKSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWciQMdmnq/cushPqmYYTtuNmOeCGvWS0/1dCLv+AhwkUUUEhXG4wMgmqsNehuSuf/SDaeiAl4uek5vQZSt2kxewOji
-X-Gm-Message-State: AOJu0Yz2867QEdlCWJQ0iJWUfysiFEUX6GqOr6ExyghiIJMeWhzf6Uhj
- eiVxVilbOOk2lz15whCe3p0+2ULs0Imua3mXck+ZyOxg5VG44ZwXpVbcKQ==
-X-Google-Smtp-Source: AGHT+IGf9iKrIGlsvpREiwxDr8lnd2RdSFmq5PHDxjTuuNkG5zTzj8mXbzV59QfCmgTtVQ8N8AOcJw==
-X-Received: by 2002:a05:6a20:244f:b0:1c3:ce0f:bfb7 with SMTP id
- adf61e73a8af0-1c47287a935mr5716337637.21.1721951686325; 
- Thu, 25 Jul 2024 16:54:46 -0700 (PDT)
+ AJvYcCUmy8euxa7LWSWe+zQnCCC7ferOE88NsgW7saR0knPvFB9ZIh2OvKueUqm8I9aHlMvSulRqE39pTpJ3+AdIY3NOudGD
+X-Gm-Message-State: AOJu0YzxmfkZU52h9Bgalt1CO5de2r6pC6KU/vvobJYfqewBpi4mi4Vg
+ VtGbV56yqSovl5aayf4uIMRCA5chITS/mJxqLJkIJkY0aBgbFsCHY4fyQA==
+X-Google-Smtp-Source: AGHT+IF+FKUhmCTwfx2bNGWoy846mbUqvCED+6GL2A67V3GKJhU8E1dAklbXqHfGbC2oXUHHV2L4+A==
+X-Received: by 2002:a17:90a:64f:b0:2cd:2f63:a429 with SMTP id
+ 98e67ed59e1d1-2cf2eb9d1edmr4042653a91.35.1721951768128; 
+ Thu, 25 Jul 2024 16:56:08 -0700 (PDT)
 Received: from wheely.local0.net ([203.220.44.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.54.42
+ 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.56.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:54:45 -0700 (PDT)
+ Thu, 25 Jul 2024 16:56:07 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 04/96] ppc/vof: Fix unaligned FDT property access
-Date: Fri, 26 Jul 2024 09:52:37 +1000
-Message-ID: <20240725235410.451624-5-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 29/96] ppc/pnv: Implement big-core PVR for Power9/10
+Date: Fri, 26 Jul 2024 09:53:02 +1000
+Message-ID: <20240725235410.451624-30-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
 References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,31 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Power9/10 CPUs have PVR[51] set in small-core mode and clear in big-core
+mode. This is used by skiboot firmware.
 
-FDT properties are aligned by 4 bytes, not 8 bytes.
+PVR is not hypervisor-privileged but it is not so important that spapr
+to implement this because it's generally masked out of PVR matching code
+in kernels, and only used by firmware.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/vof.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/pnv_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index e3b430a81f..b5b6514d79 100644
---- a/hw/ppc/vof.c
-+++ b/hw/ppc/vof.c
-@@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
-     mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
-     g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
-     if (sc == 2) {
--        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint32_t) * ac));
-+        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
-     } else {
-         mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
-     }
+diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+index 6dc05534d7..43cfeaa2d4 100644
+--- a/hw/ppc/pnv_core.c
++++ b/hw/ppc/pnv_core.c
+@@ -58,6 +58,10 @@ static void pnv_core_cpu_reset(PnvCore *pc, PowerPCCPU *cpu)
+     env->nip = 0x10;
+     env->msr |= MSR_HVB; /* Hypervisor mode */
+     env->spr[SPR_HRMOR] = pc->hrmor;
++    if (pc->big_core) {
++        /* Clear "small core" bit on Power9/10 (this is set in default PVR) */
++        env->spr[SPR_PVR] &= ~PPC_BIT(51);
++    }
+     hreg_compute_hflags(env);
+     ppc_maybe_interrupt(env);
+ 
 -- 
 2.45.2
 
