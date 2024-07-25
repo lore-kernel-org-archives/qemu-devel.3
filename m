@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA538C3DA5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 08:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258DFC3DA5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jul 2024 09:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sWuFV-0005tH-Dx; Thu, 25 Jul 2024 04:54:57 -0400
+	id 1sWuRc-0003dX-3H; Thu, 25 Jul 2024 05:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sWuFT-0005sU-C5
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 04:54:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWuRa-0003bb-Om
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:07:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sWuFQ-0006te-Hi
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 04:54:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sWuRY-00041d-Lo
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 05:07:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721897691;
+ s=mimecast20190719; t=1721898444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QoQlxriUVfkZ2L4MTnMj5U4bx/ftW7bYQlieTKZ8dLE=;
- b=Hb24JNMnRKAMKPKHkzf44fVal0DLtiywoEOhqxujtgZDTCP2XqfwHWjzh+bREIkX5BEj8J
- CtS6UPH2ClfPdNZbeMvVMwhIjRGbm8L7wqNrwUU46jxZj9x3ufbgju6SMF2gaFQ7PAE3lc
- tQRcj/lCqG1xKSqFWlvp2v/OPzlaND4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-J0wdKYonMfmR7FvU_e4Z_A-1; Thu, 25 Jul 2024 04:54:47 -0400
-X-MC-Unique: J0wdKYonMfmR7FvU_e4Z_A-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3683f34d8d9so392866f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 01:54:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721897686; x=1722502486;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QoQlxriUVfkZ2L4MTnMj5U4bx/ftW7bYQlieTKZ8dLE=;
- b=PTvWzSPocwt21wn2xNHd+ZJiyCRJuI6Yh70Wm32xBl3/4TBSGvx8HEIlYiq0GcoZVH
- vsCrMYxXEb7hjvYgd03HXc/sJMwgliqO8IbrwUuEOgLYy9ZJnvme0d4te1ThVpgW9U9J
- aFjJnvCCHqiQAY2TwstZOcIRx42NzFMWwmB9m40fLLGG23QQsJxB41XCO//jjWLlPY/m
- +youatDoyEtAEW59yRA+7Z4gsQEiOxSaRzcYF1Orh3Kswwuz2pANFZt0Oo88KIYPRDwi
- ctXVIcGJgE6un8D/wtkvPdEk/qpZgr8m7DQVt7mitz897xx6yDcNrFB5viH+NB2kuTz4
- vz7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgVGt6+dNdCSJi45/yXAoKlLjCFBJHNoj68dz4oUZ+Guos8RoGADPVMkvhKWWLmBGudKKmjXDIINQywGuQ5GWzOIpmyqY=
-X-Gm-Message-State: AOJu0YxB0oZKiKN+GvbNBtx0aXlhAP1pxEf84lBn16/q09qGBrPB3t9Y
- RI8MDbSwABGe4aNKjBQoeOO83eO9o7IDKIBdl2wU4c5dRWurEY8YWy8CzAeeL2b7QiQQ2NMXa5E
- I/Dy2h4FX+8Z9tFsdAstkNOisIVDb/2sQORQDZcsSr8Hc4TPKTmEp
-X-Received: by 2002:adf:db51:0:b0:367:9903:a79 with SMTP id
- ffacd0b85a97d-36b364117f9mr871869f8f.48.1721897686342; 
- Thu, 25 Jul 2024 01:54:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZZHD17d1rCB41bwio+OVOtANABM4RPoxVbNZlCW3mLX/9hTefpMxHE2uYGznTY+GfOTNY2w==
-X-Received: by 2002:adf:db51:0:b0:367:9903:a79 with SMTP id
- ffacd0b85a97d-36b364117f9mr871856f8f.48.1721897685911; 
- Thu, 25 Jul 2024 01:54:45 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862489sm1381799f8f.105.2024.07.25.01.54.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 01:54:45 -0700 (PDT)
-Date: Thu, 25 Jul 2024 10:54:44 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Song Gao <gaosong@loongson.cn>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>
-Subject: Re: [PATCH 1/3] acpi/ged: Implement S3 and S4 sleep
-Message-ID: <20240725105444.5ac4f0ec@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240725042431-mutt-send-email-mst@kernel.org>
-References: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
- <20240613-loongarch64-sleep-v1-1-d2ef0aaa543a@flygoat.com>
- <20240725102215.4046ecc2@imammedo.users.ipa.redhat.com>
- <20240725042431-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ bh=Odg2VfpZQzItX8XVDoBrE1SWurkxPgm1LLiGA3X9lMQ=;
+ b=hD1PNaCZ4cboKJfZvrZ4fMIDMF7ngP+MnqBwqmeJG3x32m1p+MhImyz8OcAKgv3teb653x
+ 1vgPwj04fOKV9Wy2T/s5Jfcyq4hbE3EDr4UrZER4jFTUkkXg43ezVruawKhsEiXJZVKmvD
+ rK+cnce2QYJO/86gJ9nfvTuwkAXYr4k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-fqqc_YYzOjK9_6D4psav9Q-1; Thu,
+ 25 Jul 2024 05:07:20 -0400
+X-MC-Unique: fqqc_YYzOjK9_6D4psav9Q-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B19FC1955D48; Thu, 25 Jul 2024 09:07:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37AD41955D42; Thu, 25 Jul 2024 09:07:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DFD0C21F4B8B; Thu, 25 Jul 2024 11:07:12 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
+In-Reply-To: <ZqEN1kZaQcuY4UPG@intel.com> (Zhao Liu's message of "Wed, 24 Jul
+ 2024 22:21:10 +0800")
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-9-zhao1.liu@intel.com>
+ <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
+ <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
+Date: Thu, 25 Jul 2024 11:07:12 +0200
+Message-ID: <87le1psuv3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.136,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,272 +99,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jul 2024 04:30:42 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-> On Thu, Jul 25, 2024 at 10:22:15AM +0200, Igor Mammedov wrote:
-> > On Thu, 13 Jun 2024 18:30:15 +0100
-> > Jiaxun Yang <jiaxun.yang@flygoat.com> wrote:
-> >   
-> > > Implement S3 and S4 sleep with ACPI_GED_REG_SLEEP_CTL.SLP_TYP
-> > > writes.
-> > > 
-> > > Implement wakeup callback and WAK_STS register to inform guest
-> > > about current states.
-> > > 
-> > > All new functions are gated by "slp-typs" property, it is defaulted
-> > > to S5 only and machines can opt-in for S3 and S4.  
-> > 
-> > subject says S3 + S4 and don't mention S5
-> > the same happens throughout the series, please fix it up
-> > 
-> > PS:
-> > please reference relevant ACPI portions in the patch below,
-> > so reader could easily find and understand what code does.
-> >   
-> > > 
-> > > Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> > > ---
-> > >  hw/acpi/generic_event_device.c         | 70 ++++++++++++++++++++++++++++++----
-> > >  include/hw/acpi/generic_event_device.h | 12 +++++-
-> > >  2 files changed, 73 insertions(+), 9 deletions(-)
-> > > 
-> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > index 2d6e91b124e5..f1fc99c04011 100644
-> > > --- a/hw/acpi/generic_event_device.c
-> > > +++ b/hw/acpi/generic_event_device.c
-> > > @@ -11,6 +11,7 @@
-> > >  
-> > >  #include "qemu/osdep.h"
-> > >  #include "qapi/error.h"
-> > > +#include "qapi/qapi-events-run-state.h"
-> > >  #include "hw/acpi/acpi.h"
-> > >  #include "hw/acpi/generic_event_device.h"
-> > >  #include "hw/irq.h"
-> > > @@ -186,24 +187,53 @@ static const MemoryRegionOps ged_evt_ops = {
-> > >  
-> > >  static uint64_t ged_regs_read(void *opaque, hwaddr addr, unsigned size)
-> > >  {
-> > > +    GEDState *ged_st = opaque;
-> > > +
-> > > +    switch (addr) {
-> > > +    case ACPI_GED_REG_SLEEP_STS:
-> > > +        return ged_st->sleep_sts;
-> > > +    default:
-> > > +        break;
-> > > +    }
-> > > +
-> > >      return 0;
-> > >  }
-> > >  
-> > >  static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
-> > >                             unsigned int size)
-> > >  {
-> > > -    bool slp_en;
-> > > -    int slp_typ;
-> > > +    GEDState *ged_st = opaque;
-> > > +    AcpiGedState *s = container_of(ged_st, AcpiGedState, ged_state);
-> > >  
-> > >      switch (addr) {
-> > >      case ACPI_GED_REG_SLEEP_CTL:
-> > > -        slp_typ = (data >> 2) & 0x07;
-> > > -        slp_en  = (data >> 5) & 0x01;  
-> > maybe use defines instead of magic numbers, it's also good to add
-> > coments here referring to concrete chapter in APCI spec that describe
-> > what these numbers are.  
-> 
-> In fact if you add comments you do not need defines.
-> One time use defines are a waste of time and hard to parse.
-> 
->  slp_typ = (data >> 2 /* x Yz */ ) & 0x07 /* bits 0 to 3 */;
-> 
-> is clearer than
-> 
-> #define ACPI_S3_X_YZ 2
-> #define ACPI_S3_MASK 7
-> 
-> because that "x Yz" can match spec text *exactly*, you do
-> text search and you find where it is. With macros
-> you have to guess.
+> Hi Markus and Daniel,
+>
+> I have the questions about the -object per cache implementation:
+>
+> On Wed, Jul 24, 2024 at 02:39:29PM +0200, Markus Armbruster wrote:
+>> Date: Wed, 24 Jul 2024 14:39:29 +0200
+>> From: Markus Armbruster <armbru@redhat.com>
+>> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+>>  object
+>> 
+>> Zhao Liu <zhao1.liu@intel.com> writes:
+>> 
+>> > Hi Markus,
+>> >
+>> > On Mon, Jul 22, 2024 at 03:37:43PM +0200, Markus Armbruster wrote:
+>> >> Date: Mon, 22 Jul 2024 15:37:43 +0200
+>> >> From: Markus Armbruster <armbru@redhat.com>
+>> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+>> >>  object
+>> >> 
+>> >> Zhao Liu <zhao1.liu@intel.com> writes:
+>> >> 
+>> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+>> >> 
+>> >> This patch is just documentation.  The code got added in some previous
+>> >> patch.  Would it make sense to squash this patch into that previous
+>> >> patch?
+>> >
+>> > OK, I'll merge them.
+>> >
+>> >> > ---
+>> >> > Changes since RFC v2:
+>> >> >  * Rewrote the document of smp-cache object.
+>> >> >
+>> >> > Changes since RFC v1:
+>> >> >  * Use "*_cache=topo_level" as -smp example as the original "level"
+>> >> >    term for a cache has a totally different meaning. (Jonathan)
+>> >> > ---
+>> >> >  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
+>> >> >  1 file changed, 58 insertions(+)
+>> >> >
+>> >> > diff --git a/qemu-options.hx b/qemu-options.hx
+>> >> > index 8ca7f34ef0c8..4b84f4508a6e 100644
+>> >> > --- a/qemu-options.hx
+>> >> > +++ b/qemu-options.hx
+>> >> > @@ -159,6 +159,15 @@ SRST
+>> >> >          ::
+>> >> >  
+>> >> >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+>> >> > +
+>> >> > +    ``smp-cache='id'``
+>> >> > +        Allows to configure cache property (now only the cache topology level).
+>> >> > +
+>> >> > +        For example:
+>> >> > +        ::
+>> >> > +
+>> >> > +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
+>> >> > +            -machine smp-cache=cache
+>> >> >  ERST
+>> >> >  
+>> >> >  DEF("M", HAS_ARG, QEMU_OPTION_M,
+>> >> > @@ -5871,6 +5880,55 @@ SRST
+>> >> >          ::
+>> >> >  
+>> >> >              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
+>> >> > +
+>> >> > +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
+>> >> > +        Create an smp-cache object that configures machine's cache
+>> >> > +        property. Currently, cache property only include cache topology
+>> >> > +        level.
+>> >> > +
+>> >> > +        This option must be written in JSON format to support JSON list.
+>> >> 
+>> >> Why?
+>> >
+>> > I'm not familiar with this, so I hope you could educate me if I'm wrong.
+>> >
+>> > All I know so far is for -object that defining a list can only be done in
+>> > JSON format and not with a numeric index like a keyval based option, like:
+>> >
+>> > -object smp-cache,id=cache0,caches.0.name=l1i,caches.0.topo=core: Parameter 'caches' is missing
+>> >
+>> > the above doesn't work.
+>> >
+>> > Is there any other way to specify a list in command line?
+>> 
+>> The command line is a big, sprawling mess :)
+>> 
+>> -object supports either a JSON or a QemuOpts argument.  *Not* keyval!
+>> 
+>> Both QemuOpts and keyval parse something like KEY=VALUE,...  Keyval
+>> supports arrays and objects via dotted keys.  QemuOpts doesn't natively
+>> support arrays and objects, but its users can hack around that
+>> limitation in various ways.  -object doesn't.  So you're right, it's
+>> JSON or bust here.
+>> 
+>> However, if we used one object per cache instead, we could get something
+>> like
+>> 
+>>     -object smp-cache,name=l1d,...
+>>     -object smp-cache,name=l1u,...
+>>     -object smp-cache,name=l2,...
+>>     ...
+>
+> Current, I use -object to create a smp_cache object, and link it to
+> MachineState by -machine,smp-cache=obj_id.
+>
+> Then for the objects per cache, how could I link them to machine?
+>
+> Is it possible that I create something static in smp_cache.c and expose
+> all the cache information to machine through some interface?
 
-seconded, I'd also prefer comments (for 1-off use) that
-match spec _exactly_ so reader could easily find relevant
-place in spec
+Good questions.  However, before we head deeper into the weeds here, I
+feel we should discuss the things below.  And before we do that, I need
+a clear understanding of the use case.  Elsewhere in this thread, I just
+described the use case as I understand it.  Please reply there.  I'll
+then come back to this message.
 
-> build_amd_iommu is a nice example I think.
-> 
-> >   
-> > > -        if (slp_en && slp_typ == 5) {  
-> >                                     ^^^
-> > ditto  
-> 
-> this is deleted code, isn't it?
-yep, sorry.
-(a cup of coffee wasn't enough)
- 
-> > > -            qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-> > > +        if (data & ACPI_GED_SLP_EN) {
-> > > +            switch (extract8(data, 2, 3)) {
-> > > +            case ACPI_GED_SLP_TYP_S3:
-> > > +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S3)) {  
-> > 
-> > why not use existing helpers like test_bit()
-> > the same applies to following bit checks
-> >   
-> > > +                    qemu_system_suspend_request();
-> > > +                }
-> > > +                break;
-> > > +            case ACPI_GED_SLP_TYP_S4:
-> > > +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S4)) {
-> > > +                    qapi_event_send_suspend_disk();
-> > > +                    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-> > > +                }
-> > > +                break;
-> > > +            case ACPI_GED_SLP_TYP_S5:
-> > > +                if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S5)) {
-> > > +                    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-> > > +                }
-> > > +                break;
-> > > +            default:
-> > > +                break;
-> > > +            }
-> > >          }
-> > >          return;
-> > >      case ACPI_GED_REG_SLEEP_STS:
-> > > +        if (data & ACPI_GED_WAK_STS) {
-> > > +            ged_st->sleep_sts &= ~ACPI_GED_WAK_STS;
-> > > +        }
-> > >          return;
-> > >      case ACPI_GED_REG_RESET:
-> > >          if (data == ACPI_GED_RESET_VALUE) {
-> > > @@ -223,6 +253,14 @@ static const MemoryRegionOps ged_regs_ops = {
-> > >      },
-> > >  };
-> > >  
-> > > +static void acpi_ged_notify_wakeup(Notifier *notifier, void *data)
-> > > +{
-> > > +    GEDState *ged_st = container_of(notifier, GEDState, wakeup);
-> > > +
-> > > +    ged_st->sleep_sts |= ACPI_GED_WAK_STS;  
-> > 
-> > describe somewhere workflow how it is supposed to work 
-> > (commit message or add ged specific doc in docs/specs/
-> > as the 1st patch)
-> >   
-> > > +}
-> > > +
-> > > +
-> > >  static void acpi_ged_device_plug_cb(HotplugHandler *hotplug_dev,
-> > >                                      DeviceState *dev, Error **errp)
-> > >  {
-> > > @@ -305,6 +343,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-> > >  
-> > >  static Property acpi_ged_properties[] = {
-> > >      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-> > > +    DEFINE_PROP_UINT32("slp-typs", AcpiGedState, slp_typs_bitmap,
-> > > +                        (1 << ACPI_GED_SLP_TYP_S5)),  
-> > 
-> > I'd default to everything enabled, and use compat mechanism
-> > to disable it on older machine types.
-> > 
-> > You have to do this as ged is also used by versioned arm/virt machine
-> >   
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > >  };
-> > >  
-> > > @@ -320,10 +360,11 @@ static const VMStateDescription vmstate_memhp_state = {
-> > >  
-> > >  static const VMStateDescription vmstate_ged_state = {
-> > >      .name = "acpi-ged-state",
-> > > -    .version_id = 1,
-> > > -    .minimum_version_id = 1,
-> > > +    .version_id = 2,
-> > > +    .minimum_version_id = 2,
-> > >      .fields = (const VMStateField[]) {
-> > >          VMSTATE_UINT32(sel, GEDState),
-> > > +        VMSTATE_UINT8(sleep_sts, GEDState),
-> > >          VMSTATE_END_OF_LIST()
-> > >      }
-> > >  };  
-> > 
-> > see for example
-> > commit 829600a519386c7b188d5d813e78ba69bf0bd323
-> >     hpet: recover timer offset correctly
-> > 
-> > 
-> >   
-> > > @@ -371,6 +412,18 @@ static const VMStateDescription vmstate_acpi_ged = {
-> > >      }
-> > >  };
-> > >  
-> > > +static void acpi_ged_realize(DeviceState *dev, Error **errp)
-> > > +{
-> > > +    AcpiGedState *s = ACPI_GED(dev);
-> > > +    GEDState *ged_st = &s->ged_state;
-> > > +
-> > > +    if (s->slp_typs_bitmap & (1 << ACPI_GED_SLP_TYP_S3)) {
-> > > +        ged_st->wakeup.notify = acpi_ged_notify_wakeup;
-> > > +        qemu_register_wakeup_notifier(&ged_st->wakeup);
-> > > +        qemu_register_wakeup_support();
-> > > +    }
-> > > +}
-> > > +
-> > >  static void acpi_ged_initfn(Object *obj)
-> > >  {
-> > >      DeviceState *dev = DEVICE(obj);
-> > > @@ -409,6 +462,7 @@ static void acpi_ged_class_init(ObjectClass *class, void *data)
-> > >      AcpiDeviceIfClass *adevc = ACPI_DEVICE_IF_CLASS(class);
-> > >  
-> > >      dc->desc = "ACPI Generic Event Device";
-> > > +    dc->realize = acpi_ged_realize;  
-> > 
-> > realize was added recently (currently in master),
-> > please rebase on top of current master tree
-> >   
-> > >      device_class_set_props(dc, acpi_ged_properties);
-> > >      dc->vmsd = &vmstate_acpi_ged;
-> > >  
-> > > diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-> > > index ba84ce021477..1ea3cb848679 100644
-> > > --- a/include/hw/acpi/generic_event_device.h
-> > > +++ b/include/hw/acpi/generic_event_device.h
-> > > @@ -80,9 +80,16 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
-> > >  /* ACPI_GED_REG_RESET value for reset*/
-> > >  #define ACPI_GED_RESET_VALUE       0x42
-> > >  
-> > > -/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP value for S5 (aka poweroff) */
-> > > +/* ACPI_GED_REG_SLEEP_CTL.SLP_EN bit */
-> > > +#define ACPI_GED_SLP_EN            (1 << 5)
-> > > +
-> > > +/* ACPI_GED_REG_SLEEP_CTL.SLP_TYP values */
-> > > +#define ACPI_GED_SLP_TYP_S3        0x03
-> > > +#define ACPI_GED_SLP_TYP_S4        0x04
-> > >  #define ACPI_GED_SLP_TYP_S5        0x05
-> > >  
-> > > +#define ACPI_GED_WAK_STS           (1 << 7)
-> > > +
-> > >  #define GED_DEVICE      "GED"
-> > >  #define AML_GED_EVT_REG "EREG"
-> > >  #define AML_GED_EVT_SEL "ESEL"
-> > > @@ -99,7 +106,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
-> > >  typedef struct GEDState {
-> > >      MemoryRegion evt;
-> > >      MemoryRegion regs;
-> > > +    Notifier     wakeup;
-> > >      uint32_t     sel;
-> > > +    uint8_t      sleep_sts;
-> > >  } GEDState;
-> > >  
-> > >  struct AcpiGedState {
-> > > @@ -108,6 +117,7 @@ struct AcpiGedState {
-> > >      MemoryRegion container_memhp;
-> > >      GEDState ged_state;
-> > >      uint32_t ged_event_bitmap;
-> > > +    uint32_t slp_typs_bitmap;
-> > >      qemu_irq irq;
-> > >      AcpiGhesState ghes_state;
-> > >  };
-> > >   
-> 
+[...]
 
 
